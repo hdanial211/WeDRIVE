@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard | WeDRIVE</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <style>
@@ -38,13 +38,12 @@
       display: flex; align-items: center; gap: 10px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .brand-icon-sm {
-      width: 36px; height: 36px; background: linear-gradient(135deg, #60A5FA, #2563EB);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    .brand-logo-sm {
+      width: 40px; height: 40px; object-fit: contain;
     }
-    .brand-icon-sm .material-icons-round { color: white; font-size: 20px; }
-    .sidebar-brand span { color: white; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .brand-text-img {
+      height: 20px; width: auto; object-fit: contain;
+    }
     .sidebar-user {
       padding: 16px 20px;
       display: flex; align-items: center; gap: 10px;
@@ -192,8 +191,8 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <div class="brand-icon-sm"><span class="material-icons-round">directions_car</span></div>
-      <span>WeDRIVE</span>
+      <img src="logo.png" alt="Logo" class="brand-logo-sm" />
+      <img src="logo-text.png" alt="WeDRIVE" class="brand-text-img" />
     </div>
     <div class="sidebar-user">
       <div class="avatar">AD</div>

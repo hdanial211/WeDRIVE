@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign In | WeDRIVE</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <style>
@@ -65,15 +65,14 @@
       margin-bottom: 60px;
       z-index: 1;
     }
-    .brand-icon {
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, #60A5FA, #2563EB);
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+    .brand-logo {
+      width: 52px; height: 52px;
+      object-fit: contain;
     }
-    .brand-icon .material-icons-round { color: white; font-size: 28px; }
-    .brand-name { color: white; font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+    .brand-text-img {
+      height: 28px; width: auto;
+      object-fit: contain;
+    }
     .hero-text { z-index: 1; }
     .hero-text h1 {
       color: white;
@@ -196,8 +195,8 @@
   <!-- Left Panel -->
   <div class="left-panel">
     <div class="brand">
-      <div class="brand-icon"><span class="material-icons-round">directions_car</span></div>
-      <span class="brand-name">WeDRIVE</span>
+      <img src="logo.png" alt="WeDRIVE Logo" class="brand-logo" />
+      <img src="logo-text.png" alt="WeDRIVE" class="brand-text-img" />
     </div>
     <div class="hero-text">
       <h1>Smart Fleet.<br/><span>AI-Powered</span><br/>Rentals.</h1>

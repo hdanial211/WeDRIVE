@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Book a Car | WeDRIVE</title>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <style>
@@ -33,13 +33,12 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     .nav-brand { display: flex; align-items: center; gap: 10px; }
-    .brand-icon {
-      width: 40px; height: 40px; background: linear-gradient(135deg, #60A5FA, #2563EB);
-      border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    .brand-logo {
+      width: 44px; height: 44px; object-fit: contain;
     }
-    .brand-icon .material-icons-round { color: white; font-size: 24px; }
-    .brand-name { font-size: 22px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; }
+    .brand-text-img {
+      height: 24px; width: auto; object-fit: contain;
+    }
     .nav-links { display: flex; align-items: center; gap: 4px; }
     .nav-link {
       padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500;
@@ -297,8 +296,8 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-brand">
-      <div class="brand-icon"><span class="material-icons-round">directions_car</span></div>
-      <span class="brand-name">WeDRIVE</span>
+      <img src="logo.png" alt="Logo" class="brand-logo" />
+      <img src="logo-text.png" alt="WeDRIVE" class="brand-text-img" />
     </div>
     <div class="nav-links">
       <a href="customer.html" class="nav-link active">Browse Cars</a>
