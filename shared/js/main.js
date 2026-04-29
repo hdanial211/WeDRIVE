@@ -53,8 +53,9 @@
       var base = link.getAttribute('href').replace(/theme_(day|night)\.css$/, '');
       link.href = base + (mode === 'night' ? NIGHT_HREF : DAY_HREF);
     }
-    /* Sync body class — allows CSS to target night-specific styles */
-    document.body.classList.toggle('night-mode', mode === 'night');
+    /* Sync root class — allows CSS to target night-specific styles immediately */
+    document.documentElement.classList.toggle('night-mode', mode === 'night');
+    if (document.body) document.body.classList.toggle('night-mode', mode === 'night');
     localStorage.setItem(THEME_KEY, mode);
     updateThemeBtns(mode, animate);
   }
@@ -88,10 +89,15 @@
     applyTheme(saved, false);
   }
 
+  // Run immediately so if script is in <head>, it prevents FOUC
+  initTheme();
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTheme);
-  } else {
-    initTheme();
+    document.addEventListener('DOMContentLoaded', function() {
+        // Re-apply to body once it exists
+        var saved = localStorage.getItem(THEME_KEY) || 'day';
+        if (document.body) document.body.classList.toggle('night-mode', saved === 'night');
+    });
   }
 })();
 

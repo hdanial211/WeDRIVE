@@ -143,15 +143,6 @@
   // ─── INIT ───────────────────────────────────────────────────────────────────
 
   function init() {
-    // Fade body in (handles incoming page transition)
-    document.body.style.opacity = '0';
-    anime({
-      targets:  'body',
-      opacity:  [0, 1],
-      duration: 400,
-      easing:   'easeOutQuad'
-    });
-
     runNavbarAnimation();
     runPageOpenAnimation();
     initScrollReveal();

@@ -128,6 +128,11 @@
   transform: translateY(0);
 }
 
+.reveal-onload {
+  opacity: 0; /* Prevents FOUC before JS anime.js starts */
+}
+
+
 .reveal-left {
   opacity: 0;
   transform: translateX(-32px);
