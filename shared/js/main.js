@@ -419,152 +419,109 @@
 
 
 /* =====================================================
-   SECTION 5: MOUSE PARALLAX & HOVER EFFECTS
+   SECTION 5: CURSOR GLOW (SPOTLIGHT EFFECT)
    =====================================================
- * Activates automatically on pages with:
- *   [data-parallax]  on a container  -> blobs follow mouse
- *   .spotlight       on a container  -> cursor glow spotlight
- *   .tilt-card       on any element  -> 3D tilt on hover
+ * Smooth glowing circle that follows the mouse with
+ * a slight easing lag — premium feel like the
+ * Antigravity landing page.
  *
- * index.html left-panel gets parallax + spotlight automatically
- * if it has class .left-panel and is inside body.
+ * Enable on any page:
+ *   <body data-cursor-glow>              <- default size & color
+ *   <body data-cursor-glow="600">       <- custom radius px
  *
- * No extra HTML needed for .left-panel — auto-detected.
+ * The glow is a fixed radial gradient overlay.
+ * Works on both light and dark backgrounds.
+ * Automatically hides when mouse leaves the window.
  */
 
 (function () {
   'use strict';
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function initCursorGlow() {
+    var body = document.body;
+    if (!body.hasAttribute('data-cursor-glow')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if ('ontouchstart' in window) return; // skip on touch devices
 
-  var RAF    = window.requestAnimationFrame;
-  var mouseX = 0;
-  var mouseY = 0;
-  var curX   = 0;
-  var curY   = 0;
+    var radius = parseInt(body.getAttribute('data-cursor-glow'), 10) || 500;
 
-  /* ── Smooth lerp mouse tracking ── */
-  document.addEventListener('mousemove', function (e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
+    /* Create overlay element */
+    var glow = document.createElement('div');
+    glow.id = 'cursor-glow';
+    glow.style.cssText = [
+      'position:fixed',
+      'inset:0',
+      'pointer-events:none',
+      'z-index:9998',
+      'opacity:0',
+      'transition:opacity 0.4s ease',
+      'will-change:background'
+    ].join(';');
+    body.appendChild(glow);
 
-  /* ── 1. BLOB PARALLAX on .left-panel ── */
-  function initBlobParallax() {
-    var panel  = document.querySelector('.left-panel');
-    if (!panel) return;
+    /* Smooth tracking with lerp */
+    var mouseX = window.innerWidth  / 2;
+    var mouseY = window.innerHeight / 2;
+    var currentX = mouseX;
+    var currentY = mouseY;
+    var visible = false;
+    var raf;
 
-    // We move the pseudo-elements via CSS vars injected on the panel
-    var depthBefore = 0.022; // stronger parallax
-    var depthAfter  = 0.014;
-    var w = panel.offsetWidth;
-    var h = panel.offsetHeight;
-    var rect = panel.getBoundingClientRect();
+    function lerp(a, b, t) { return a + (b - a) * t; }
 
-    function tick() {
-      // Only active when mouse is anywhere on page
-      var relX = mouseX - rect.left;
-      var relY = mouseY - rect.top;
-
-      // Smooth follow
-      curX += (relX - curX) * 0.07;
-      curY += (relY - curY) * 0.07;
-
-      var cx = w / 2;
-      var cy = h / 2;
-      var dx = curX - cx;
-      var dy = curY - cy;
-
-      panel.style.setProperty('--blob1-x', (dx * depthBefore).toFixed(2) + 'px');
-      panel.style.setProperty('--blob1-y', (dy * depthBefore).toFixed(2) + 'px');
-      panel.style.setProperty('--blob2-x', (-dx * depthAfter).toFixed(2) + 'px');
-      panel.style.setProperty('--blob2-y', (-dy * depthAfter).toFixed(2) + 'px');
-
-      RAF(tick);
+    function getColor() {
+      /* Blue/violet glow — adapts slightly for night mode */
+      var saved = localStorage.getItem('wedrive-theme') || 'day';
+      return saved === 'night'
+        ? 'rgba(96,165,250,0.10)'    // blue tint night
+        : 'rgba(59,130,246,0.12)';   // blue tint day
     }
 
-    // Refresh rect on resize
-    window.addEventListener('resize', function () {
-      rect = panel.getBoundingClientRect();
-      w    = panel.offsetWidth;
-      h    = panel.offsetHeight;
-    });
+    function updateGlow() {
+      /* Lerp toward target — 0.08 = smooth lag */
+      currentX = lerp(currentX, mouseX, 0.08);
+      currentY = lerp(currentY, mouseY, 0.08);
 
-    RAF(tick);
-  }
+      glow.style.background = [
+        'radial-gradient(circle ' + radius + 'px at',
+        currentX.toFixed(1) + 'px',
+        currentY.toFixed(1) + 'px,',
+        getColor() + ',',
+        'transparent 70%)'
+      ].join(' ');
 
-  /* ── 2. CURSOR SPOTLIGHT on .left-panel ── */
-  function initSpotlight() {
-    var panel = document.querySelector('.left-panel');
-    if (!panel) return;
+      raf = requestAnimationFrame(updateGlow);
+    }
 
-    panel.style.setProperty('--spot-x', '-200px');
-    panel.style.setProperty('--spot-y', '-200px');
+    /* Start loop */
+    raf = requestAnimationFrame(updateGlow);
 
+    /* Mouse move */
     document.addEventListener('mousemove', function (e) {
-      var rect = panel.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
-        panel.style.setProperty('--spot-x', x.toFixed(0) + 'px');
-        panel.style.setProperty('--spot-y', y.toFixed(0) + 'px');
-        panel.classList.add('spotlight-active');
-      } else {
-        panel.classList.remove('spotlight-active');
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!visible) {
+        visible = true;
+        glow.style.opacity = '1';
       }
-    });
-  }
+    }, { passive: true });
 
-  /* ── 3. 3D TILT on .tilt-card elements ── */
-  function initTiltCards() {
-    document.querySelectorAll('.tilt-card').forEach(function (card) {
-      card.addEventListener('mousemove', function (e) {
-        var rect   = card.getBoundingClientRect();
-        var x      = e.clientX - rect.left;
-        var y      = e.clientY - rect.top;
-        var cx     = rect.width  / 2;
-        var cy     = rect.height / 2;
-        var rotY   =  ((x - cx) / cx) * 8;
-        var rotX   = -((y - cy) / cy) * 8;
-        card.style.transform =
-          'perspective(600px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) scale(1.02)';
-      });
-      card.addEventListener('mouseleave', function () {
-        card.style.transform = '';
-      });
+    /* Hide when mouse leaves window */
+    document.addEventListener('mouseleave', function () {
+      visible = false;
+      glow.style.opacity = '0';
     });
-  }
 
-  /* ── 4. FEATURE ITEM lift ── */
-  function initFeatureLift() {
-    document.querySelectorAll('.feature-item').forEach(function (el) {
-      el.addEventListener('mouseenter', function () {
-        el.style.transform  = 'translateX(8px)';
-        el.style.transition = 'transform 0.3s ease';
-        var icon = el.querySelector('.feature-icon');
-        if (icon) {
-          icon.style.background = 'rgba(59,130,246,0.35)';
-          icon.style.transition = 'background 0.3s ease';
-        }
-      });
-      el.addEventListener('mouseleave', function () {
-        el.style.transform = '';
-        var icon = el.querySelector('.feature-icon');
-        if (icon) icon.style.background = '';
-      });
+    /* Show again when mouse enters */
+    document.addEventListener('mouseenter', function () {
+      visible = true;
+      glow.style.opacity = '1';
     });
-  }
-
-  function init() {
-    initBlobParallax();
-    initSpotlight();
-    initTiltCards();
-    initFeatureLift();
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', initCursorGlow);
   } else {
-    init();
+    initCursorGlow();
   }
 })();

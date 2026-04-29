@@ -54,8 +54,6 @@
       top: -120px; right: -120px;
       animation: blobFloat1 9s ease-in-out infinite;
       filter: blur(2px);
-      /* parallax offset from JS */
-      translate: var(--blob1-x, 0px) var(--blob1-y, 0px);
     }
     .left-panel::after {
       content: '';
@@ -66,31 +64,6 @@
       bottom: -90px; left: -90px;
       animation: blobFloat2 12s ease-in-out infinite;
       filter: blur(3px);
-      /* counter-parallax from JS */
-      translate: var(--blob2-x, 0px) var(--blob2-y, 0px);
-    }
-
-    /* Cursor spotlight overlay */
-    .left-panel .spotlight-overlay {
-      display: none;
-    }
-    .left-panel.spotlight-active::before {
-      /* spotlight is added via radial gradient on the panel itself */
-    }
-    .left-panel {
-      --spot-x: -300px;
-      --spot-y: -300px;
-    }
-    .left-panel.spotlight-active {
-      background-image:
-        radial-gradient(circle 220px at var(--spot-x) var(--spot-y),
-          rgba(255,255,255,0.07) 0%,
-          transparent 70%),
-        linear-gradient(135deg,
-          var(--hero-bg-start, #1E293B) 0%,
-          var(--hero-bg-mid,   #0F172A) 40%,
-          var(--hero-bg-end,   #1D4ED8) 75%,
-          var(--hero-bg-start, #1E293B) 100%);
     }
     @keyframes blobFloat1 {
       0%   { transform: translate(0, 0)      scale(1);    }
@@ -214,7 +187,7 @@
     }
   </style>
 </head>
-<body data-particles="10">
+<body data-particles="10" data-cursor-glow>
   <!-- Left Panel -->
   <div class="left-panel">
     <div class="brand">
