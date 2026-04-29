@@ -88,14 +88,26 @@
 // --- GLOBAL CHATBOT LOGIC ---
 
 window.chatOpen = false;
+window.chatbotData = null; // Cache for API data
 
-window.toggleChat = function() {
+window.toggleChat = async function() {
   window.chatOpen = !window.chatOpen;
   document.getElementById('chatbot-panel').classList.toggle('open', window.chatOpen);
   document.getElementById('fab-icon').textContent = window.chatOpen ? 'close' : 'smart_toy';
   document.getElementById('notif-badge').style.display = 'none';
+  
   if (window.chatOpen && document.getElementById('chat-messages').children.length === 0) {
-    window.addChatMsg('Hi! I\'m your <strong>WeDRIVE AI Assistant</strong>.<br/>I can help you find the perfect car, assist with booking, or answer any questions. How can I help?', false);
+    window.showTypingIndicator();
+    try {
+      if (!window.chatbotData) {
+        window.chatbotData = await window.WeDriveAPI.getChatbotSettings();
+      }
+      window.removeTyping();
+      window.addChatMsg(window.chatbotData.greeting, false);
+    } catch (e) {
+      window.removeTyping();
+      window.addChatMsg('Hi! I am your WeDRIVE AI Assistant. How can I help?', false);
+    }
   }
   if (window.chatOpen) setTimeout(() => document.getElementById('chat-input').focus(), 300);
 };
@@ -137,14 +149,6 @@ window.showTypingIndicator = function() {
 
 window.removeTyping = function() { const t = document.getElementById('chat-typing'); if (t) t.remove(); };
 
-window.botReplies = {
-  available: ['We have <strong>6 cars available</strong> right now! Scroll down to browse all options or use the filters above.', true],
-  recommend: ['Based on popular choices, I recommend the <strong>Honda CR-V 2024</strong> — great for families and weekend trips! Here is a quick look:', true],
-  book: ['Booking is easy! Just:<br/>1. Select your car below<br/>2. Click <strong>Book Now</strong><br/>3. Fill in your dates<br/>4. Complete payment<br/><br/>Need help choosing a car?', false],
-  payment: ["We accept:<br/>Credit/Debit Card (Visa, Mastercard)<br/>Online Banking (FPX)<br/>eWallet (Touch'n Go, GrabPay)<br/>Cash at counter", false],
-  default: ['Thanks for your message! I am here to help with car rentals. You can also browse cars below or use the filter chips to narrow your search.', false]
-};
-
 window.getReply = function(msg) {
   const m = msg.toLowerCase();
   if (m.includes('available') || m.includes('car') && m.includes('today')) return 'available';
@@ -154,18 +158,27 @@ window.getReply = function(msg) {
   return 'default';
 };
 
-window.sendChat = function() {
+window.sendChat = async function() {
   const input = document.getElementById('chat-input');
   const msg = input.value.trim();
   if (!msg) return;
   window.addChatMsg(msg, true);
   input.value = ''; input.style.height = 'auto';
   window.showTypingIndicator();
+  
+  // Ensure we have API data
+  if (!window.chatbotData) {
+      try { window.chatbotData = await window.WeDriveAPI.getChatbotSettings(); } 
+      catch (e) { window.chatbotData = { replies: { default: "I'm having trouble connecting. Please try again later." } }; }
+  }
+
   setTimeout(() => {
     window.removeTyping();
     const key = window.getReply(msg);
-    const [reply, showCar] = window.botReplies[key];
-    window.addChatMsg(reply, false, showCar);
+    const replyText = window.chatbotData.replies[key] || window.chatbotData.replies['default'];
+    // Hardcode UI element display logic (e.g. show car card for recommend/available)
+    const showCar = (key === 'available' || key === 'recommend');
+    window.addChatMsg(replyText, false, showCar);
   }, 1000);
 };
 

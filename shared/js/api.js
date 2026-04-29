@@ -126,6 +126,53 @@ window.WeDriveAPI = {
             });
             return await res.json();
         }
+    },
+
+    /**
+     * Get Chatbot replies.
+     * Used in: chatbot.js and admin.html (Settings)
+     */
+    getChatbotSettings: async function() {
+        if (!window.AppConfig.USE_REAL_DB) {
+            // Simulated DB: check localStorage first, otherwise load default
+            const localSettings = localStorage.getItem('wedrive_chatbot_settings');
+            if (localSettings) {
+                return JSON.parse(localSettings);
+            }
+            
+            // Default replies based on original chatbot.js
+            return {
+                greeting: "Hi! I'm your <strong>WeDRIVE AI Assistant</strong>.<br/>I can help you find the perfect car, assist with booking, or answer any questions. How can I help?",
+                replies: {
+                    available: "We have <strong>6 cars available</strong> right now! Scroll down to browse all options or use the filters above.",
+                    recommend: "Based on popular choices, I recommend the <strong>Honda CR-V 2024</strong> — great for families and weekend trips! Here is a quick look:",
+                    book: "Booking is easy! Just:<br/>1. Select your car below<br/>2. Click <strong>Book Now</strong><br/>3. Fill in your dates<br/>4. Complete payment<br/><br/>Need help choosing a car?",
+                    payment: "We accept:<br/>Credit/Debit Card (Visa, Mastercard)<br/>Online Banking (FPX)<br/>eWallet (Touch'n Go, GrabPay)<br/>Cash at counter",
+                    default: "Thanks for your message! I am here to help with car rentals. You can also browse cars below or use the filter chips to narrow your search."
+                }
+            };
+        } else {
+            // In a real app, fetch from database endpoint
+            // const res = await fetch(window.AppConfig.API_BASE_URL + "/chatbot/settings");
+            // return await res.json();
+            return {};
+        }
+    },
+
+    /**
+     * Update Chatbot replies.
+     * Used in: admin.html (Chatbot Settings)
+     */
+    updateChatbotSettings: async function(newSettings) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(newSettings));
+            return { success: true };
+        } else {
+            // In a real app, POST to database endpoint
+            // const res = await fetch(window.AppConfig.API_BASE_URL + "/chatbot/settings", { method: 'POST', body: JSON.stringify(newSettings) });
+            // return await res.json();
+            return { success: true };
+        }
     }
 
     // You can add more functions here later:
