@@ -20,3 +20,5 @@ Mana-mana file yang tidak digunakan, masukkan ke folder bin
 Path contoh: /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/bin
 
 Susun semua file supaya kemas dan tidak berselerak; gunakan folder baru untuk setiap kumpulan fail berkaitan.
+
+CSS & JS: gunakan file yang sama di folder yang sama untuk semua HTML; jangan tukar-tukar theme.
