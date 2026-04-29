@@ -10,42 +10,17 @@
   <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
   <link rel="stylesheet" href="../css/admin.css" />
 
 </head>
 <body>
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <img src="../../shared/logo/wedrive-icon.png" alt="Logo" class="brand-logo-sm" />
-      <div class="brand-text">
-        <span class="we">We</span><span class="drive">DRIVE</span>
-      </div>
-    </div>
-    <div class="sidebar-user">
-      <div class="avatar">AD</div>
-      <div class="user-info">
-        <div class="name">Admin</div>
-        <div class="role">Fleet Manager</div>
-      </div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section">Main</div>
-      <a class="nav-item active"><span class="material-icons-round">dashboard</span> <span data-key="admin_dashboard">Dashboard</span></a>
-      <a class="nav-item" href="admin.html"><span class="material-icons-round">directions_car</span> <span data-key="sidebar_fleet">Fleet</span></a>
-      <a class="nav-item"><span class="material-icons-round">pending_actions</span> <span data-key="sidebar_bookings">Bookings</span></a>
-      <a class="nav-item"><span class="material-icons-round">payments</span> <span data-key="sidebar_reports">Reports</span></a>
-      <div class="nav-section">Intelligence</div>
-      <a class="nav-item"><span class="material-icons-round">psychology</span> <span data-key="sidebar_ai">AI Insights</span></a>
-      <a class="nav-item"><span class="material-icons-round">health_and_safety</span> <span data-key="sidebar_customers">Customers</span></a>
-      <a class="nav-item" href="../../customer/pages/chatbot.html"><span class="material-icons-round">smart_toy</span> <span data-key="sidebar_ai">AI Chatbot</span></a>
-      <div class="nav-section">System</div>
-      <a class="nav-item"><span class="material-icons-round">settings</span> <span data-key="sidebar_settings">Settings</span></a>
-    </nav>
-    <div class="sidebar-footer">
-      <a class="nav-item logout" href="../../index.html"><span class="material-icons-round">logout</span> <span data-key="sidebar_logout">Logout</span></a>
-    </div>
-  </aside>
+  <!-- SIDEBAR - loaded from shared/components/sidebar-admin.html -->
+  <div id="sidebar-placeholder"
+       data-component="sidebar-admin"
+       data-page="admin">
+  </div>
+
 
   <!-- MAIN -->
   <main class="main">
@@ -167,6 +142,7 @@
       </div>
     </div>
   </main>
+  <script src="../../shared/js/sidebar-loader.js"></script>
   <script src="../../shared/js/main.js"></script>
   <script src="../js/admin.js"></script>
 </body>

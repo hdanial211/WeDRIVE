@@ -1,0 +1,95 @@
+<!--
+  WeDRIVE - Admin Sidebar Component
+  shared/components/sidebar-admin.html
+
+  Loaded via fetch() into #sidebar-placeholder on every admin page.
+  Active link is detected automatically by sidebar-loader.js using window.location.pathname.
+
+  Link href values must match the actual file paths relative to admin/pages/.
+  Logo path resolves via data-base-path set on #sidebar-placeholder by the loader.
+-->
+<aside class="sidebar" id="admin-sidebar">
+
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <img data-logo src="" alt="WeDRIVE Logo" class="brand-logo-sm" />
+    <div class="brand-text">
+      <span class="we">We</span><span class="drive">DRIVE</span>
+    </div>
+  </div>
+
+  <!-- User info -->
+  <div class="sidebar-user">
+    <div class="avatar">AD</div>
+    <div class="user-info">
+      <div class="name">Admin</div>
+      <div class="role">Fleet Manager</div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <div class="nav-section">Main</div>
+
+    <a class="nav-item" data-page="admin"
+       data-href="admin.html">
+      <span class="material-icons-round">dashboard</span>
+      <span data-key="admin_dashboard">Dashboard</span>
+    </a>
+
+    <a class="nav-item" data-page="fleet"
+       data-href="admin.html">
+      <span class="material-icons-round">directions_car</span>
+      <span data-key="sidebar_fleet">Fleet</span>
+    </a>
+
+    <a class="nav-item" data-page="bookings"
+       data-href="#">
+      <span class="material-icons-round">pending_actions</span>
+      <span data-key="sidebar_bookings">Bookings</span>
+    </a>
+
+    <a class="nav-item" data-page="reports"
+       data-href="#">
+      <span class="material-icons-round">payments</span>
+      <span data-key="sidebar_reports">Reports</span>
+    </a>
+
+    <div class="nav-section">Intelligence</div>
+
+    <a class="nav-item" data-page="ai-insights"
+       data-href="#">
+      <span class="material-icons-round">psychology</span>
+      <span data-key="sidebar_ai">AI Insights</span>
+    </a>
+
+    <a class="nav-item" data-page="customers"
+       data-href="#">
+      <span class="material-icons-round">health_and_safety</span>
+      <span data-key="sidebar_customers">Customers</span>
+    </a>
+
+    <a class="nav-item" data-page="chatbot"
+       data-href="../../customer/pages/chatbot.html">
+      <span class="material-icons-round">smart_toy</span>
+      <span>AI Chatbot</span>
+    </a>
+
+    <div class="nav-section">System</div>
+
+    <a class="nav-item" data-page="settings"
+       data-href="#">
+      <span class="material-icons-round">settings</span>
+      <span data-key="sidebar_settings">Settings</span>
+    </a>
+  </nav>
+
+  <!-- Footer -->
+  <div class="sidebar-footer">
+    <a class="nav-item logout" data-href="../../index.html">
+      <span class="material-icons-round">logout</span>
+      <span data-key="sidebar_logout">Logout</span>
+    </a>
+  </div>
+
+</aside>

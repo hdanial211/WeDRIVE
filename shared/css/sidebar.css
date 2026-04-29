@@ -1,0 +1,147 @@
+/**
+ * WeDRIVE - Shared Sidebar CSS
+ * shared/css/sidebar.css
+ *
+ * Shared styles for all sidebar components loaded via sidebar-loader.js.
+ * Import this in any page that uses a shared sidebar component.
+ *
+ * Variables depend on the active theme (theme_day.css / theme_night.css).
+ * Sidebar is always dark regardless of page theme.
+ */
+
+/* ── Layout ── */
+#sidebar-placeholder {
+  display: contents; /* transparent wrapper - no extra box */
+}
+
+.sidebar {
+  width: 240px;
+  background: #0F172A;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: width 0.3s ease;
+}
+
+/* ── Brand ── */
+.sidebar-brand {
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand-logo-sm {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.brand-text {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.brand-text .we    { color: #3B82F6; }
+.brand-text .drive { color: #ffffff; }
+
+/* ── User info ── */
+.sidebar-user {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.user-info .name { color: #ffffff;   font-size: 13px; font-weight: 600; }
+.user-info .role { color: #94A3B8; font-size: 11px; }
+
+/* ── Navigation ── */
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+
+.nav-section {
+  padding: 12px 20px 6px;
+  color: #94A3B8;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  color: #94A3B8;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  border-right: 3px solid transparent;
+}
+
+.nav-item:hover {
+  color: #ffffff;
+  background: #1E293B;
+}
+
+.nav-item.active {
+  color: #ffffff;
+  background: rgba(59, 130, 246, 0.15);
+  border-right-color: #3B82F6;
+}
+
+.nav-item .material-icons-round {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* ── Footer ── */
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-item.logout       { color: #EF4444; }
+.nav-item.logout:hover { color: #ffffff; background: rgba(239, 68, 68, 0.1); }
+
+/* ── Slide-in animation on load ── */
+.sidebar {
+  animation: sidebarSlideIn 0.3s ease both;
+}
+
+@keyframes sidebarSlideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
