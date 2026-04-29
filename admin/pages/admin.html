@@ -58,13 +58,25 @@
           <span class="material-icons-round">notifications</span>
           <div class="notif-dot"></div>
         </div>
-        <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Toggle Language">
-          <span class="material-icons-round">translate</span>
-          <span class="lang-label">BM</span>
+        <!-- Language Toggle -->
+        <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Tukar ke Bahasa Malaysia">
+          <span class="toggle-icon-left" style="font-size:10px;font-weight:800;left:8px;">EN</span>
+          <span class="toggle-knob-icon">
+            <span class="material-icons-round" style="font-size:13px;">translate</span>
+          </span>
+          <span class="toggle-icon-right" style="font-size:10px;font-weight:800;right:7px;">BM</span>
         </button>
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-          <span class="material-icons-round">dark_mode</span>
-          <span class="theme-label">Night Mode</span>
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch to Night Mode">
+          <span class="toggle-icon-left">
+            <span class="material-icons-round" style="font-size:13px;">light_mode</span>
+          </span>
+          <span class="toggle-knob-icon">
+            <span class="material-icons-round">light_mode</span>
+          </span>
+          <span class="toggle-icon-right">
+            <span class="material-icons-round" style="font-size:13px;">dark_mode</span>
+          </span>
         </button>
         <button class="btn-primary-sm">
           <span class="material-icons-round" style="font-size:16px">add</span> <span data-key="admin_add_vehicle">Add Vehicle</span>

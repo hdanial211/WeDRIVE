@@ -37,7 +37,7 @@
   /**
    * Apply translation pack to all data-key elements on the page.
    */
-  function applyTranslation(data) {
+  function applyTranslation(data, animate) {
     // Text content
     document.querySelectorAll('[data-key]').forEach(function (el) {
       const key = el.getAttribute('data-key');
@@ -65,35 +65,54 @@
       if (data[key] !== undefined) el.innerHTML = data[key];
     });
 
-    // Update lang toggle button label
-    updateLangBtn(data);
+    // Update lang toggle pill switch
+    updateLangBtn(data, animate);
 
     // Update page title if key exists
     if (data['page_title']) document.title = data['page_title'];
   }
 
   /**
-   * Update the label inside .lang-toggle buttons.
+   * Update the lang pill toggle switch state.
+   * EN = not active (knob left), BM = active (knob right)
    */
-  function updateLangBtn(data) {
+  function updateLangBtn(data, animate) {
     document.querySelectorAll('.lang-toggle').forEach(function (btn) {
-      const label = btn.querySelector('.lang-label');
-      if (label && data['lang_toggle']) label.textContent = data['lang_toggle'];
+      const knobIcon = btn.querySelector('.toggle-knob-icon .material-icons-round');
+      const currentLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
+
+      if (currentLang === 'bm') {
+        btn.classList.add('active');
+        btn.setAttribute('aria-label', 'Switch to English');
+      } else {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-label', 'Tukar ke Bahasa Malaysia');
+      }
+
+      // Ripple animation
+      if (animate) {
+        btn.classList.remove('ripple');
+        void btn.offsetWidth;
+        btn.classList.add('ripple');
+        setTimeout(() => btn.classList.remove('ripple'), 450);
+      }
     });
   }
 
   /**
    * Load a language pack and apply it.
+   * @param {string} lang - 'en' or 'bm'
+   * @param {boolean} animate - whether to trigger ripple on toggle btns
    */
-  function loadLanguage(lang) {
+  function loadLanguage(lang, animate) {
     fetch(resolveLangPath(lang))
       .then(function (res) {
         if (!res.ok) throw new Error('Language file not found: ' + lang);
         return res.json();
       })
       .then(function (data) {
-        applyTranslation(data);
         localStorage.setItem(STORAGE_KEY, lang);
+        applyTranslation(data, animate);
       })
       .catch(function (err) {
         console.warn('[WeDRIVE Lang]', err.message);
@@ -106,7 +125,7 @@
    */
   window.toggleLanguage = function () {
     const current = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
-    loadLanguage(current === 'en' ? 'bm' : 'en');
+    loadLanguage(current === 'en' ? 'bm' : 'en', true);
   };
 
   /**

@@ -144,26 +144,163 @@ tr:hover td { background: var(--table-row-hover) !important; }
 .chat-input:focus { border-color: var(--primary) !important; }
 .chat-input-wrap { border-top-color: var(--border-color) !important; }
 
-/* THEME TOGGLE BUTTON */
-.theme-toggle {
-  display: flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: 8px; cursor: pointer;
-  background: var(--theme-btn-bg); color: var(--theme-btn-color);
-  border: 1.5px solid var(--theme-btn-border);
-  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
-  transition: all 0.2s;
-}
-.theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
-.theme-toggle .material-icons-round { font-size: 18px; }
 
-/* LANGUAGE TOGGLE BUTTON */
+/* ═══════════════════════════════════════════════════
+   iOS-STYLE PILL TOGGLE SWITCHES
+   Theme (☀ / 🌙) & Language (EN / BM)
+   ═══════════════════════════════════════════════════ */
+
+/* ── Shared pill container ── */
+.theme-toggle,
 .lang-toggle {
-  display: flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: 8px; cursor: pointer;
-  background: var(--theme-btn-bg); color: var(--theme-btn-color);
-  border: 1.5px solid var(--theme-btn-border);
-  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
-  transition: all 0.2s;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 68px;
+  height: 34px;
+  border-radius: 34px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+  background: #e2e8f0;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,.12), 0 1px 3px rgba(0,0,0,.08);
+  transition: background 0.35s cubic-bezier(.4,0,.2,1),
+              box-shadow 0.35s ease;
+  font-family: 'Inter', sans-serif;
 }
-.lang-toggle:hover { border-color: var(--primary); color: var(--primary); }
-.lang-toggle .material-icons-round { font-size: 18px; }
+
+/* ── Active (night / BM) state ── */
+.theme-toggle.active,
+.lang-toggle.active {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: inset 0 1px 4px rgba(99,102,241,.3), 0 2px 8px rgba(99,102,241,.35);
+}
+
+/* ── Knob (the sliding circle) ── */
+.theme-toggle::before,
+.lang-toggle::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1),
+              box-shadow 0.25s ease;
+  z-index: 1;
+}
+
+/* ── Knob slides right when active ── */
+.theme-toggle.active::before,
+.lang-toggle.active::before {
+  transform: translateX(34px);
+  box-shadow: 0 3px 10px rgba(99,102,241,.35);
+}
+
+/* ── Icon labels (left & right) ── */
+.toggle-icon-left,
+.toggle-icon-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .3px;
+  pointer-events: none;
+  transition: opacity 0.25s ease, color 0.25s ease;
+  z-index: 2;
+}
+
+/* ── Left icon: always sits under the knob at rest ── */
+.toggle-icon-left {
+  left: 7px;
+  color: #374151;
+}
+/* ── Right icon: visible at rest, hidden when active ── */
+.toggle-icon-right {
+  right: 7px;
+  color: #94a3b8;
+}
+
+/* ── When active: left icon becomes white (under knob on right) ── */
+.theme-toggle.active .toggle-icon-left,
+.lang-toggle.active .toggle-icon-left {
+  color: rgba(255,255,255,.55);
+}
+.theme-toggle.active .toggle-icon-right,
+.lang-toggle.active .toggle-icon-right {
+  color: #fff;
+}
+
+/* ── Material icon inside knob (overlay on top of ::before) ── */
+.toggle-knob-icon {
+  position: absolute;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  z-index: 3;
+}
+.toggle-knob-icon .material-icons-round {
+  font-size: 15px;
+  color: #374151;
+  transition: color 0.25s ease, transform 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Knob icon slides with the knob ── */
+.theme-toggle.active .toggle-knob-icon,
+.lang-toggle.active .toggle-knob-icon {
+  transform: translateX(34px);
+}
+.theme-toggle.active .toggle-knob-icon .material-icons-round,
+.lang-toggle.active .toggle-knob-icon .material-icons-round {
+  color: #6366f1;
+}
+
+/* ── Hover scale pulse ── */
+.theme-toggle:hover,
+.lang-toggle:hover {
+  transform: scale(1.04);
+}
+.theme-toggle:active,
+.lang-toggle:active {
+  transform: scale(0.97);
+}
+
+/* ── Ripple on click ── */
+@keyframes toggleRipple {
+  0%   { box-shadow: 0 0 0 0 rgba(99,102,241,.45); }
+  100% { box-shadow: 0 0 0 10px rgba(99,102,241,0); }
+}
+.theme-toggle.ripple,
+.lang-toggle.ripple {
+  animation: toggleRipple 0.4s ease-out;
+}
+
+/* ── Sun icon spin when switching to day ── */
+@keyframes sunSpin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.theme-toggle:not(.active) .toggle-knob-icon .material-icons-round {
+  animation: sunSpin 8s linear infinite;
+}
+
+/* ── Moon wobble when switching to night ── */
+@keyframes moonBob {
+  0%, 100% { transform: rotate(-10deg); }
+  50%       { transform: rotate(10deg); }
+}
+.theme-toggle.active .toggle-knob-icon .material-icons-round {
+  animation: moonBob 3s ease-in-out infinite;
+}

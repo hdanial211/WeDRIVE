@@ -1,81 +1,82 @@
 /**
- * WeDRIVE - Theme Toggle System
+ * WeDRIVE - Theme Toggle System (iOS Pill Switch)
  * shared/js/theme.js
  *
- * Usage: include this script in every HTML page
- * It auto-applies the saved theme and exposes toggleTheme()
+ * Manages the day/night pill toggle switch.
+ * The HTML structure for the toggle button:
+ *
+ *   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+ *     <span class="toggle-icon-left">☀</span>
+ *     <span class="toggle-knob-icon">
+ *       <span class="material-icons-round">light_mode</span>
+ *     </span>
+ *     <span class="toggle-icon-right">🌙</span>
+ *   </button>
  */
 
 (function () {
   const STORAGE_KEY = 'wedrive-theme';
-  const DAY_HREF   = 'theme_day.css';
-  const NIGHT_HREF = 'theme_night.css';
-
-  /**
-   * Resolve the correct path to shared/css/ relative to the current page.
-   * Works for pages at any depth (root, admin/pages/, customer/pages/, etc.)
-   */
-  function resolveSharedCssPath(filename) {
-    const depth = window.location.pathname.split('/').filter(Boolean).length;
-    // Each folder level needs one "../" to climb up
-    // We climb up (depth - 1) times then go into shared/css/
-    // But since we are dealing with file:// paths or server paths, 
-    // we rely on the <link> tag's initial href pattern set by each HTML file.
-    return filename;
-  }
+  const DAY_HREF    = 'theme_day.css';
+  const NIGHT_HREF  = 'theme_night.css';
 
   /**
    * Apply a theme by swapping the href of #theme-link
-   * and updating the toggle button icon/text.
+   * and updating all toggle buttons on the page.
    */
-  function applyTheme(mode) {
+  function applyTheme(mode, animate) {
     const link = document.getElementById('theme-link');
-    if (!link) return;
-
-    // Preserve the base path prefix (e.g. "../../shared/css/")
-    const currentHref = link.getAttribute('href');
-    const basePath = currentHref.replace(/theme_(day|night)\.css$/, '');
-
-    link.href = basePath + (mode === 'night' ? NIGHT_HREF : DAY_HREF);
+    if (link) {
+      const currentHref = link.getAttribute('href');
+      const basePath    = currentHref.replace(/theme_(day|night)\.css$/, '');
+      link.href = basePath + (mode === 'night' ? NIGHT_HREF : DAY_HREF);
+    }
     localStorage.setItem(STORAGE_KEY, mode);
-    updateToggleBtn(mode);
+    updateToggleBtns(mode, animate);
   }
 
   /**
-   * Update all theme toggle buttons on the page.
+   * Update all .theme-toggle pill switches to reflect current mode.
    */
-  function updateToggleBtn(mode) {
+  function updateToggleBtns(mode, animate) {
     document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-      const icon = btn.querySelector('.material-icons-round');
-      const label = btn.querySelector('.theme-label');
+      const knobIcon = btn.querySelector('.toggle-knob-icon .material-icons-round');
+
       if (mode === 'night') {
-        if (icon) icon.textContent = 'light_mode';
-        if (label) label.textContent = 'Day Mode';
+        btn.classList.add('active');
+        if (knobIcon) knobIcon.textContent = 'dark_mode';
         btn.setAttribute('aria-label', 'Switch to Day Mode');
       } else {
-        if (icon) icon.textContent = 'dark_mode';
-        if (label) label.textContent = 'Night Mode';
+        btn.classList.remove('active');
+        if (knobIcon) knobIcon.textContent = 'light_mode';
         btn.setAttribute('aria-label', 'Switch to Night Mode');
       }
+
+      // Ripple animation
+      if (animate) {
+        btn.classList.remove('ripple');
+        void btn.offsetWidth; // reflow
+        btn.classList.add('ripple');
+        setTimeout(() => btn.classList.remove('ripple'), 450);
+      }
+
       btn.dataset.currentTheme = mode;
     });
   }
 
   /**
    * Public: toggle between day and night.
-   * Called by onclick on the button.
    */
   window.toggleTheme = function () {
     const current = localStorage.getItem(STORAGE_KEY) || 'day';
-    applyTheme(current === 'night' ? 'day' : 'night');
+    applyTheme(current === 'night' ? 'day' : 'night', true);
   };
 
   /**
-   * Init: run as soon as DOM is ready.
+   * Init on DOM ready.
    */
   function init() {
     const saved = localStorage.getItem(STORAGE_KEY) || 'day';
-    applyTheme(saved);
+    applyTheme(saved, false);
   }
 
   if (document.readyState === 'loading') {
