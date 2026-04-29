@@ -22,13 +22,16 @@
       overflow: hidden;
     }
 
-    /* Left Panel */
+    /* Left Panel — animated gradient */
     .left-panel {
       flex: 1;
       background: linear-gradient(135deg,
         var(--hero-bg-start, #1E293B) 0%,
-        var(--hero-bg-mid,   #0F172A) 50%,
-        var(--hero-bg-end,   #1D4ED8) 100%);
+        var(--hero-bg-mid,   #0F172A) 40%,
+        var(--hero-bg-end,   #1D4ED8) 75%,
+        var(--hero-bg-start, #1E293B) 100%);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease infinite;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -36,7 +39,11 @@
       padding: 60px;
       position: relative;
       overflow: hidden;
-      transition: background 0.4s ease;
+    }
+    @keyframes gradientShift {
+      0%   { background-position:   0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position:   0% 50%; }
     }
     .left-panel::before {
       content: '';

@@ -53,10 +53,10 @@
   --input-border: #30363D;
   --input-focus-bg: #161B22;
 
-  /* Hero (same gradient, darker) */
-  --hero-bg-start: #010409;
-  --hero-bg-mid: #0D1117;
-  --hero-bg-end: #1D4ED8;
+  /* Hero (deep dark purple-black in night mode) */
+  --hero-bg-start: #020408;
+  --hero-bg-mid: #060D1A;
+  --hero-bg-end: #0D2347;
 
   /* AI Card */
   --ai-card-bg-start: #161B22;
