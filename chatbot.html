@@ -35,7 +35,16 @@
     }
     .nav-brand { display: flex; align-items: center; gap: 10px; }
     .brand-logo { width: 40px; height: 40px; object-fit: contain; }
-    .brand-text-img { height: 22px; width: auto; object-fit: contain; }
+    .brand-text {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
+    .brand-text .we { color: #3B82F6; }
+    .brand-text .drive { color: #FFFFFF; }
     .nav-links { display: flex; gap: 4px; }
     .nav-link { padding: 7px 14px; border-radius: 7px; font-size: 13px; color: #94A3B8; text-decoration: none; transition: all 0.2s; }
     .nav-link:hover { color: white; background: rgba(255,255,255,0.07); }
@@ -198,7 +207,9 @@
   <nav class="navbar">
     <div class="nav-brand">
       <img src="logo.png?v=3" alt="Logo" class="brand-logo" />
-      <img src="wedrive-text-cropped.png" alt="WeDRIVE" class="brand-text-img" />
+      <div class="brand-text">
+        <span class="we">We</span><span class="drive">DRIVE</span>
+      </div>
     </div>
     <div class="nav-links">
       <a href="customer.html" class="nav-link">Browse Cars</a>

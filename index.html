@@ -69,17 +69,16 @@
       width: 52px; height: 52px;
       object-fit: contain;
     }
-    .brand-text-wrapper {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 4px 10px;
-      border-radius: 8px;
+    .brand-text {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1;
       display: flex;
       align-items: center;
     }
-    .brand-text-img {
-      height: 24px; width: auto;
-      object-fit: contain;
-    }
+    .brand-text .we { color: #3B82F6; }
+    .brand-text .drive { color: white; }
     .hero-text { z-index: 1; }
     .hero-text h1 {
       color: white;
@@ -203,8 +202,8 @@
   <div class="left-panel">
     <div class="brand">
       <img src="logo.png?v=3" alt="WeDRIVE Logo" class="brand-logo" />
-      <div class="brand-text-wrapper">
-        <img src="wedrive-text-cropped.png" alt="WeDRIVE" class="brand-text-img" />
+      <div class="brand-text">
+        <span class="we">We</span><span class="drive">DRIVE</span>
       </div>
     </div>
     <div class="hero-text">

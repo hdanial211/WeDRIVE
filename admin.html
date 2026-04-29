@@ -41,16 +41,16 @@
     .brand-logo-sm {
       width: 40px; height: 40px; object-fit: contain;
     }
-    .brand-text-wrapper {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 3px 8px;
-      border-radius: 6px;
+    .brand-text {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1;
       display: flex;
       align-items: center;
     }
-    .brand-text-img {
-      height: 16px; width: auto; object-fit: contain;
-    }
+    .brand-text .we { color: #3B82F6; }
+    .brand-text .drive { color: white; }
     .sidebar-user {
       padding: 16px 20px;
       display: flex; align-items: center; gap: 10px;
@@ -199,8 +199,8 @@
   <aside class="sidebar">
     <div class="sidebar-brand">
       <img src="logo.png?v=3" alt="Logo" class="brand-logo-sm" />
-      <div class="brand-text-wrapper">
-        <img src="wedrive-text-cropped.png" alt="WeDRIVE" class="brand-text-img" />
+      <div class="brand-text">
+        <span class="we">We</span><span class="drive">DRIVE</span>
       </div>
     </div>
     <div class="sidebar-user">
