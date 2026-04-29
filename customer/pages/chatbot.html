@@ -7,6 +7,8 @@
   <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -220,6 +222,10 @@
     <div class="ai-status">
       <div class="status-dot"></div>
       AI Online · Gemini powered
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" style="margin-left:12px;">
+        <span class="material-icons-round">dark_mode</span>
+        <span class="theme-label">Night Mode</span>
+      </button>
     </div>
   </nav>
 
@@ -410,5 +416,6 @@
       addMessage('👋 Hello again! Starting a new conversation. How can I help you today?');
     }
   </script>
+  <script src="../../shared/js/theme.js"></script>
 </body>
 </html>

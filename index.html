@@ -7,6 +7,8 @@
   <link rel="icon" type="image/png" href="shared/logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="shared/css/theme_day.css" />
+  <link rel="stylesheet" href="shared/css/theme_overrides.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -277,6 +279,12 @@
     </div>
   </div>
 
+  <!-- THEME TOGGLE (fixed position) -->
+  <button class="theme-toggle" onclick="toggleTheme()" style="position:fixed;top:16px;right:20px;z-index:9999;">
+    <span class="material-icons-round">dark_mode</span>
+    <span class="theme-label">Night Mode</span>
+  </button>
+
   <script>
     function handleLogin(e) {
       e.preventDefault();
@@ -297,5 +305,6 @@
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
   </script>
+  <script src="shared/js/theme.js"></script>
 </body>
 </html>

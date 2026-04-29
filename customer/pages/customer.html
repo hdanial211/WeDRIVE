@@ -7,6 +7,8 @@
   <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../css/customer.css" />
 </head>
 <body>
@@ -25,6 +27,10 @@
       <a href="#" class="nav-link" onclick="toggleChat(); return false;">AI Assistant</a>
     </div>
     <div class="nav-actions">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span class="material-icons-round">dark_mode</span>
+        <span class="theme-label">Night Mode</span>
+      </button>
       <button class="btn-outline" onclick="window.location='../../index.html'">Log In</button>
       <button class="btn-primary">Sign Up</button>
     </div>
@@ -120,5 +126,6 @@
   </div>
 
   <script src="../js/customer.js"></script>
+  <script src="../../shared/js/theme.js"></script>
 </body>
 </html>

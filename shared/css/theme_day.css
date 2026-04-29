@@ -1,0 +1,87 @@
+/* =============================================
+   WeDRIVE - Day Mode Theme (Default)
+   Light, clean, professional
+   ============================================= */
+:root {
+  /* Brand */
+  --primary: #3B82F6;
+  --primary-dark: #1D4ED8;
+  --primary-light: #EFF6FF;
+
+  /* Background layers */
+  --bg-body: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-2: #F1F5F9;
+  --bg-surface-3: #E2E8F0;
+
+  /* Sidebar (stays dark in day mode for contrast) */
+  --sidebar-bg: #0F172A;
+  --sidebar-hover: #1E293B;
+  --sidebar-text: #94A3B8;
+  --sidebar-text-active: #FFFFFF;
+
+  /* Text */
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  /* Borders */
+  --border-color: #E2E8F0;
+  --border-light: #F1F5F9;
+
+  /* Cards */
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.10);
+
+  /* Topbar / Navbar */
+  --topbar-bg: #FFFFFF;
+  --topbar-border: #E2E8F0;
+  --navbar-bg: #FFFFFF;
+
+  /* Status */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+  /* Table */
+  --table-row-hover: #F8FAFC;
+  --table-border: #F1F5F9;
+
+  /* Input */
+  --input-bg: #F8FAFC;
+  --input-border: #E2E8F0;
+  --input-focus-bg: #FFFFFF;
+
+  /* Hero (stays dark for visual impact) */
+  --hero-bg-start: #1E293B;
+  --hero-bg-mid: #0F172A;
+  --hero-bg-end: #1D4ED8;
+
+  /* AI Card (stays dark) */
+  --ai-card-bg-start: #1E293B;
+  --ai-card-bg-end: #0F172A;
+
+  /* Chat panel header (stays dark) */
+  --chat-header-start: #1E293B;
+  --chat-header-end: #0F172A;
+  --chat-bubble-bot-bg: #F8FAFC;
+  --chat-bubble-bot-text: #1E293B;
+  --chat-bubble-user-bg: #1E293B;
+  --chat-bubble-user-text: #FFFFFF;
+  --chat-input-bg: #F8FAFC;
+
+  /* Toggle button */
+  --theme-btn-bg: #F1F5F9;
+  --theme-btn-color: #475569;
+  --theme-btn-border: #E2E8F0;
+
+  /* Legacy variable aliases (for backward compat) */
+  --navy: #1E293B;
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-400: #94A3B8;
+  --slate-600: #475569;
+  --white: #FFFFFF;
+}

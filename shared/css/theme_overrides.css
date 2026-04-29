@@ -1,0 +1,157 @@
+/* =============================================
+   WeDRIVE - Theme-Aware Overrides
+   Applied on top of module CSS to make all
+   components respond to theme variables
+   ============================================= */
+
+/* Base layer — background & text */
+body {
+  background: var(--bg-body) !important;
+  color: var(--text-primary) !important;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* NAVBAR / TOPBAR */
+.navbar, .topbar {
+  background: var(--navbar-bg, var(--topbar-bg)) !important;
+  border-bottom-color: var(--border-color) !important;
+  transition: background 0.3s ease;
+}
+.topbar h1 { color: var(--text-primary) !important; }
+.topbar p { color: var(--text-muted) !important; }
+.nav-link { color: var(--text-secondary) !important; }
+.nav-link:hover { background: var(--bg-surface-2) !important; color: var(--text-primary) !important; }
+.nav-link.active { color: var(--primary) !important; background: var(--primary-light) !important; }
+.brand-text .drive { color: var(--text-primary) !important; }
+
+/* SIDEBAR */
+.sidebar { background: var(--sidebar-bg) !important; transition: background 0.3s ease; }
+.nav-item { color: var(--sidebar-text) !important; }
+.nav-item:hover { color: var(--sidebar-text-active) !important; background: var(--sidebar-hover) !important; }
+.nav-item.active { color: var(--sidebar-text-active) !important; }
+.user-info .name { color: var(--sidebar-text-active) !important; }
+.user-info .role { color: var(--sidebar-text) !important; }
+.nav-section { color: var(--sidebar-text) !important; }
+
+/* BUTTONS */
+.btn-icon {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+}
+.btn-icon:hover { background: var(--bg-surface-2) !important; }
+.btn-icon .material-icons-round { color: var(--text-secondary) !important; }
+.btn-outline {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+.btn-outline:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+
+/* CARDS */
+.card, .stat-card {
+  background: var(--card-bg) !important;
+  box-shadow: var(--card-shadow) !important;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover, .stat-card:hover { box-shadow: var(--card-shadow-hover) !important; }
+.card-header h3 { color: var(--text-primary) !important; }
+.stat-info .label { color: var(--text-muted) !important; }
+.stat-info .value { color: var(--text-primary) !important; }
+
+/* TABLE */
+td { color: var(--text-primary) !important; border-top-color: var(--table-border) !important; }
+th { color: var(--text-muted) !important; }
+tr:hover td { background: var(--table-row-hover) !important; }
+
+/* ACTION BUTTONS */
+.action-btn {
+  background: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+.action-btn:hover { background: var(--primary-light) !important; border-color: var(--primary) !important; }
+.action-btn span:not(.material-icons-round) { color: var(--text-primary) !important; }
+
+/* SEARCH BOX */
+.search-box { background: var(--card-bg) !important; }
+.search-field input, .search-field select {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+.search-field input:focus, .search-field select:focus {
+  background: var(--input-focus-bg) !important;
+  border-color: var(--primary) !important;
+}
+
+/* FILTER CHIPS */
+.filter-chip {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+.filter-chip:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+.filter-chip.active { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+.results-count { color: var(--text-muted) !important; }
+
+/* CAR CARDS */
+.car-card { background: var(--card-bg) !important; box-shadow: var(--card-shadow) !important; }
+.car-card:hover { box-shadow: var(--card-shadow-hover) !important; }
+.car-body h3 { color: var(--text-primary) !important; }
+.car-body .car-type { color: var(--text-muted) !important; }
+.spec { color: var(--text-secondary) !important; }
+.spec .material-icons-round { color: var(--text-muted) !important; }
+.car-footer { border-top-color: var(--border-light) !important; }
+
+/* HERO (keeps dark gradient regardless of theme) */
+.hero {
+  background: linear-gradient(135deg, var(--hero-bg-start) 0%, var(--hero-bg-mid) 60%, var(--hero-bg-end) 100%) !important;
+}
+
+/* AI CARD (keeps dark) */
+.ai-card {
+  background: linear-gradient(135deg, var(--ai-card-bg-start) 0%, var(--ai-card-bg-end) 100%) !important;
+}
+
+/* CHAT PANEL */
+.chatbot-panel { background: var(--card-bg) !important; }
+.chat-panel-header {
+  background: linear-gradient(135deg, var(--chat-header-start), var(--chat-header-end)) !important;
+}
+.chat-suggestions {
+  background: var(--bg-surface-2) !important;
+  border-bottom-color: var(--border-light) !important;
+}
+.sug-chip {
+  background: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+.sug-chip:hover { border-color: var(--primary) !important; color: var(--primary) !important; background: var(--primary-light) !important; }
+.chat-msg.bot .chat-bubble {
+  background: var(--chat-bubble-bot-bg) !important;
+  color: var(--chat-bubble-bot-text) !important;
+  border-color: var(--border-color) !important;
+}
+.chat-msg.user .chat-bubble {
+  background: var(--chat-bubble-user-bg) !important;
+  color: var(--chat-bubble-user-text) !important;
+}
+.chat-input {
+  background: var(--chat-input-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+.chat-input:focus { border-color: var(--primary) !important; }
+.chat-input-wrap { border-top-color: var(--border-color) !important; }
+
+/* THEME TOGGLE BUTTON */
+.theme-toggle {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; cursor: pointer;
+  background: var(--theme-btn-bg); color: var(--theme-btn-color);
+  border: 1.5px solid var(--theme-btn-border);
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+.theme-toggle .material-icons-round { font-size: 18px; }

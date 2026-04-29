@@ -1,0 +1,87 @@
+/* =============================================
+   WeDRIVE - Night Mode Theme
+   Deep dark, elegant, easy on the eyes
+   ============================================= */
+:root {
+  /* Brand */
+  --primary: #60A5FA;
+  --primary-dark: #3B82F6;
+  --primary-light: rgba(96,165,250,0.12);
+
+  /* Background layers */
+  --bg-body: #0D1117;
+  --bg-surface: #161B22;
+  --bg-surface-2: #21262D;
+  --bg-surface-3: #30363D;
+
+  /* Sidebar */
+  --sidebar-bg: #010409;
+  --sidebar-hover: #161B22;
+  --sidebar-text: #8B949E;
+  --sidebar-text-active: #F0F6FC;
+
+  /* Text */
+  --text-primary: #F0F6FC;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7681;
+
+  /* Borders */
+  --border-color: #30363D;
+  --border-light: #21262D;
+
+  /* Cards */
+  --card-bg: #161B22;
+  --card-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.6);
+
+  /* Topbar / Navbar */
+  --topbar-bg: #161B22;
+  --topbar-border: #30363D;
+  --navbar-bg: #161B22;
+
+  /* Status */
+  --success: #3FB950;
+  --warning: #D29922;
+  --danger: #F85149;
+
+  /* Table */
+  --table-row-hover: #21262D;
+  --table-border: #21262D;
+
+  /* Input */
+  --input-bg: #0D1117;
+  --input-border: #30363D;
+  --input-focus-bg: #161B22;
+
+  /* Hero (same gradient, darker) */
+  --hero-bg-start: #010409;
+  --hero-bg-mid: #0D1117;
+  --hero-bg-end: #1D4ED8;
+
+  /* AI Card */
+  --ai-card-bg-start: #161B22;
+  --ai-card-bg-end: #010409;
+
+  /* Chat panel header */
+  --chat-header-start: #161B22;
+  --chat-header-end: #010409;
+  --chat-bubble-bot-bg: #21262D;
+  --chat-bubble-bot-text: #F0F6FC;
+  --chat-bubble-user-bg: #3B82F6;
+  --chat-bubble-user-text: #FFFFFF;
+  --chat-input-bg: #0D1117;
+
+  /* Toggle button */
+  --theme-btn-bg: #21262D;
+  --theme-btn-color: #F0F6FC;
+  --theme-btn-border: #30363D;
+
+  /* Legacy variable aliases */
+  --navy: #F0F6FC;
+  --slate-50: #0D1117;
+  --slate-100: #21262D;
+  --slate-200: #30363D;
+  --slate-400: #8B949E;
+  --slate-600: #8B949E;
+  --white: #F0F6FC;
+}
