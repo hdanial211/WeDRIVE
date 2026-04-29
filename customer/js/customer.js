@@ -4,21 +4,12 @@
  * Switch to real API endpoint when backend is ready.
  */
 
-// ─── DATA SOURCE ─────────────────────────────────────────────────────────────
-// Determine path depending on whether we are in root (index.html) or customer/pages/
-const isRoot = !window.location.pathname.includes('customer/pages');
-const DATA_URL = isRoot ? 'shared/dummy/customer.json' : '../../shared/dummy/customer.json';
-
 let allCars = []; // Global cars list populated after fetch
 
 // ─── FETCH & INITIALISE ───────────────────────────────────────────────────────
-fetch(DATA_URL)
-  .then(res => {
-    if (!res.ok) throw new Error('Failed to load car data');
-    return res.json();
-  })
-  .then(data => {
-    allCars = data.cars;
+window.WeDriveAPI.getCars()
+  .then(cars => {
+    allCars = cars;
     renderCars(allCars);
   })
   .catch(() => {

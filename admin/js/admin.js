@@ -4,15 +4,8 @@
  * Switch to real API endpoint when backend is ready.
  */
 
-// ─── DATA SOURCE ─────────────────────────────────────────────────────────────
-const DATA_URL = '../../shared/dummy/admin.json';
-
 // ─── FETCH & INITIALISE ───────────────────────────────────────────────────────
-fetch(DATA_URL)
-  .then(res => {
-    if (!res.ok) throw new Error('Failed to load admin data');
-    return res.json();
-  })
+window.WeDriveAPI.getAdminData()
   .then(data => {
     populateStats(data.stats);
     populateFleet(data.fleet);
