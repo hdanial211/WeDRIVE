@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign In | WeDRIVE</title>
+  <title>Sign Up | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
@@ -44,50 +44,67 @@
   <!-- Right Panel -->
   <div class="right-panel">
     <div class="login-card reveal-onload" data-dir="right">
-      <h2 data-key="login_welcome">Welcome back</h2>
-      <p data-key="login_subtitle">Sign in to your WeDRIVE account to continue</p>
+      <h2 data-key="signup_welcome">Create an account</h2>
+      <p data-key="signup_subtitle">Join WeDRIVE to experience smart car rentals</p>
 
-      <form onsubmit="handleLogin(event)">
+      <form onsubmit="handleSignup(event)">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="fname" data-key="signup_fname">First Name</label>
+                <div class="input-wrap">
+                    <span class="material-icons-round">person</span>
+                    <input type="text" id="fname" placeholder="John" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lname" data-key="signup_lname">Last Name</label>
+                <div class="input-wrap">
+                    <span class="material-icons-round">person_outline</span>
+                    <input type="text" id="lname" placeholder="Doe" required />
+                </div>
+            </div>
+        </div>
         <div class="form-group">
-          <label for="email" data-key="login_email">Email Address</label>
+          <label for="email" data-key="signup_email">Email Address</label>
           <div class="input-wrap">
             <span class="material-icons-round">mail</span>
-            <input type="email" id="email" data-key-ph="login_email_ph" placeholder="you@example.com" required />
+            <input type="email" id="email" data-key-ph="signup_email_ph" placeholder="you@example.com" required />
           </div>
         </div>
         <div class="form-group">
-          <label for="password" data-key="login_password">Password</label>
+          <label for="password" data-key="signup_password">Password</label>
           <div class="input-wrap">
             <span class="material-icons-round">lock</span>
-            <input type="password" id="password" data-key-ph="login_password_ph" placeholder="Enter your password" required />
+            <input type="password" id="password" data-key-ph="signup_password_ph" placeholder="Create a password" required minlength="6" />
           </div>
         </div>
-        <div class="form-options">
-          <label class="remember">
-            <input type="checkbox" />
-            <span data-key="login_remember">Remember me</span>
-          </label>
-          <a href="#" class="forgot" data-key="login_forgot">Forgot password?</a>
+        <div class="form-group">
+          <label for="confirm-password" data-key="signup_cpassword">Confirm Password</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">lock_outline</span>
+            <input type="password" id="confirm-password" data-key-ph="signup_cpassword_ph" placeholder="Confirm your password" required minlength="6" />
+          </div>
         </div>
-        <button type="submit" class="btn-primary" id="login-btn">
-          <span class="material-icons-round" style="font-size:18px">login</span>
-          <span data-key="login_btn">Sign In</span>
+        
+        <button type="submit" class="btn-primary" id="signup-btn" style="margin-top: 10px;">
+          <span class="material-icons-round" style="font-size:18px">person_add</span>
+          <span data-key="signup_btn">Create Account</span>
         </button>
       </form>
 
       <div class="divider" data-key="login_or">or continue with</div>
 
-      <button class="btn-social" onclick="alert('Google login coming soon!')">
+      <button class="btn-social" onclick="alert('Google signup coming soon!')">
         <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
-        <span data-key="login_google">Continue with Google</span>
+        <span data-key="signup_google">Sign up with Google</span>
       </button>
-      <button class="btn-social" onclick="alert('Apple login coming soon!')">
+      <button class="btn-social" onclick="alert('Apple signup coming soon!')">
         <img src="../../shared/logo/apple-logo.svg" alt="Apple" class="apple-logo" />
-        <span data-key="login_apple">Continue with Apple</span>
+        <span data-key="signup_apple">Sign up with Apple</span>
       </button>
 
       <div class="signup-link">
-        <span data-key="login_no_account">Don't have an account?</span> <a href="signup.html" data-key="login_signup_link">Sign up</a>
+        <span data-key="signup_have_account">Already have an account?</span> <a href="login.html" data-key="signup_login_link">Sign in</a>
       </div>
     </div>
   </div>
@@ -103,32 +120,35 @@
   </div>
 
   <script>
-    async function handleLogin(e) {
+    async function handleSignup(e) {
       e.preventDefault();
+      const fname = document.getElementById('fname').value;
+      const lname = document.getElementById('lname').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      const btn = document.getElementById('login-btn');
-      btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Signing in...';
+      const confirmPassword = document.getElementById('confirm-password').value;
+      
+      if (password !== confirmPassword) {
+          alert('Passwords do not match!');
+          return;
+      }
+      
+      const btn = document.getElementById('signup-btn');
+      btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Creating...';
       btn.disabled = true;
 
       try {
-        const response = await window.WeDriveAPI.loginUser(email, password);
+        // Since we don't have a real API for signup yet, simulate a short delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
-        if (response.success) {
-          if (response.role === 'admin') {
-            window.location.href = '../../admin/pages/admin.html';
-          } else {
-            window.location.href = 'customer.html';
-          }
-        } else {
-          alert('Login failed. Please check your credentials.');
-          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
-          btn.disabled = false;
-        }
+        // Simulating successful account creation
+        alert(`Account created successfully for ${fname} ${lname}! Please sign in.`);
+        window.location.href = 'login.html';
+        
       } catch (err) {
-        console.error('Login error:', err);
-        alert('An error occurred during login.');
-        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
+        console.error('Signup error:', err);
+        alert('An error occurred during sign up.');
+        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">person_add</span><span data-key="signup_btn">Create Account</span>';
         btn.disabled = false;
       }
     }
