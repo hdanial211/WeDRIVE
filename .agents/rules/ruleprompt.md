@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 INSTRUCTIONS:
 
 Mesti ingat setiap kali saya prompt untuk buat website atau coding mesti theme dia sama macam yang lain 

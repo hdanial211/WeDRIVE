@@ -41,8 +41,15 @@
     .brand-logo-sm {
       width: 40px; height: 40px; object-fit: contain;
     }
+    .brand-text-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+    }
     .brand-text-img {
-      height: 20px; width: auto; object-fit: contain;
+      height: 16px; width: auto; object-fit: contain;
     }
     .sidebar-user {
       padding: 16px 20px;
@@ -192,7 +199,9 @@
   <aside class="sidebar">
     <div class="sidebar-brand">
       <img src="logo.png?v=3" alt="Logo" class="brand-logo-sm" />
-      <img src="logo-text-white.png" alt="WeDRIVE" class="brand-text-img" />
+      <div class="brand-text-wrapper">
+        <img src="wedrive-text-cropped.png" alt="WeDRIVE" class="brand-text-img" />
+      </div>
     </div>
     <div class="sidebar-user">
       <div class="avatar">AD</div>

@@ -69,8 +69,15 @@
       width: 52px; height: 52px;
       object-fit: contain;
     }
+    .brand-text-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+    }
     .brand-text-img {
-      height: 28px; width: auto;
+      height: 24px; width: auto;
       object-fit: contain;
     }
     .hero-text { z-index: 1; }
@@ -196,7 +203,9 @@
   <div class="left-panel">
     <div class="brand">
       <img src="logo.png?v=3" alt="WeDRIVE Logo" class="brand-logo" />
-      <img src="logo-text-white.png" alt="WeDRIVE" class="brand-text-img" />
+      <div class="brand-text-wrapper">
+        <img src="wedrive-text-cropped.png" alt="WeDRIVE" class="brand-text-img" />
+      </div>
     </div>
     <div class="hero-text">
       <h1>Smart Fleet.<br/><span>AI-Powered</span><br/>Rentals.</h1>
