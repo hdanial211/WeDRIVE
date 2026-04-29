@@ -209,21 +209,21 @@
       </div>
     </div>
     <div class="hero-text">
-      <h1>Smart Fleet.<br/><span>AI-Powered</span><br/>Rentals.</h1>
-      <p>The most advanced car rental management system — powered by AI and built for the modern fleet operator.</p>
+      <h1><span data-key="hero_line1">Smart Fleet.</span><br/><span data-key="hero_line2">AI-Powered</span><br/><span data-key="hero_line3">Rentals.</span></h1>
+      <p data-key="hero_desc">The most advanced car rental management system — powered by AI and built for the modern fleet operator.</p>
     </div>
     <div class="features">
       <div class="feature-item">
         <div class="feature-icon"><span class="material-icons-round">psychology</span></div>
-        <div class="feature-text">AI-powered demand forecasting & recommendations</div>
+        <div class="feature-text" data-key="feature_ai">AI-powered demand forecasting &amp; recommendations</div>
       </div>
       <div class="feature-item">
         <div class="feature-icon"><span class="material-icons-round">smart_toy</span></div>
-        <div class="feature-text">24/7 AI chatbot for booking support</div>
+        <div class="feature-text" data-key="feature_chat">24/7 AI chatbot for booking support</div>
       </div>
       <div class="feature-item">
         <div class="feature-icon"><span class="material-icons-round">analytics</span></div>
-        <div class="feature-text">Real-time fleet analytics & reporting</div>
+        <div class="feature-text" data-key="feature_stats">Real-time fleet analytics &amp; reporting</div>
       </div>
     </div>
   </div>
@@ -231,59 +231,65 @@
   <!-- Right Panel -->
   <div class="right-panel">
     <div class="login-card">
-      <h2>Welcome back</h2>
-      <p>Sign in to your WeDRIVE account to continue</p>
+      <h2 data-key="login_welcome">Welcome back</h2>
+      <p data-key="login_subtitle">Sign in to your WeDRIVE account to continue</p>
 
       <form onsubmit="handleLogin(event)">
         <div class="form-group">
-          <label for="email">Email Address</label>
+          <label for="email" data-key="login_email">Email Address</label>
           <div class="input-wrap">
             <span class="material-icons-round">mail</span>
-            <input type="email" id="email" placeholder="you@example.com" required />
+            <input type="email" id="email" data-key-ph="login_email_ph" placeholder="you@example.com" required />
           </div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password" data-key="login_password">Password</label>
           <div class="input-wrap">
             <span class="material-icons-round">lock</span>
-            <input type="password" id="password" placeholder="Enter your password" required />
+            <input type="password" id="password" data-key-ph="login_password_ph" placeholder="Enter your password" required />
           </div>
         </div>
         <div class="form-options">
           <label class="remember">
             <input type="checkbox" />
-            <span>Remember me</span>
+            <span data-key="login_remember">Remember me</span>
           </label>
-          <a href="#" class="forgot">Forgot password?</a>
+          <a href="#" class="forgot" data-key="login_forgot">Forgot password?</a>
         </div>
         <button type="submit" class="btn-primary" id="login-btn">
           <span class="material-icons-round" style="font-size:18px">login</span>
-          Sign In
+          <span data-key="login_btn">Sign In</span>
         </button>
       </form>
 
-      <div class="divider">or continue with</div>
+      <div class="divider" data-key="login_or">or continue with</div>
 
       <button class="btn-social" onclick="alert('Google login coming soon!')">
         <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
-        Continue with Google
+        <span data-key="login_google">Continue with Google</span>
       </button>
       <button class="btn-social" onclick="alert('Apple login coming soon!')">
         <img src="shared/logo/apple-logo.svg" alt="Apple" />
-        Continue with Apple
+        <span data-key="login_apple">Continue with Apple</span>
       </button>
 
       <div class="signup-link">
-        Don't have an account? <a href="customer/pages/customer.html">Sign up as Customer</a>
+        <span data-key="login_no_account">Don't have an account?</span> <a href="customer/pages/customer.html" data-key="login_signup_link">Sign up as Customer</a>
       </div>
     </div>
   </div>
 
-  <!-- THEME TOGGLE (fixed position) -->
-  <button class="theme-toggle" onclick="toggleTheme()" style="position:fixed;top:16px;right:20px;z-index:9999;">
-    <span class="material-icons-round">dark_mode</span>
-    <span class="theme-label">Night Mode</span>
-  </button>
+  <!-- THEME + LANG TOGGLES (fixed position) -->
+  <div style="position:fixed;top:16px;right:20px;z-index:9999;display:flex;gap:8px;">
+    <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Toggle Language">
+      <span class="material-icons-round">translate</span>
+      <span class="lang-label">BM</span>
+    </button>
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span class="material-icons-round">dark_mode</span>
+      <span class="theme-label">Night Mode</span>
+    </button>
+  </div>
 
   <script>
     function handleLogin(e) {
@@ -306,5 +312,6 @@
     document.head.appendChild(style);
   </script>
   <script src="shared/js/theme.js"></script>
+  <script src="shared/js/lang.js"></script>
 </body>
 </html>

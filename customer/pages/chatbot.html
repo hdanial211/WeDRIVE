@@ -221,8 +221,12 @@
     </div>
     <div class="ai-status">
       <div class="status-dot"></div>
-      AI Online · Gemini powered
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" style="margin-left:12px;">
+      <span data-key="chatbot_status">AI Online · Gemini powered</span>
+      <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Toggle Language" style="margin-left:12px;">
+        <span class="material-icons-round">translate</span>
+        <span class="lang-label">BM</span>
+      </button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" style="margin-left:4px;">
         <span class="material-icons-round">dark_mode</span>
         <span class="theme-label">Night Mode</span>
       </button>
@@ -417,5 +421,6 @@
     }
   </script>
   <script src="../../shared/js/theme.js"></script>
+  <script src="../../shared/js/lang.js"></script>
 </body>
 </html>

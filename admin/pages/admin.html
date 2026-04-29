@@ -29,19 +29,19 @@
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">Main</div>
-      <a class="nav-item active"><span class="material-icons-round">dashboard</span> Dashboard</a>
-      <a class="nav-item" href="admin.html"><span class="material-icons-round">directions_car</span> Vehicle Fleet</a>
-      <a class="nav-item"><span class="material-icons-round">pending_actions</span> Active Rentals</a>
-      <a class="nav-item"><span class="material-icons-round">payments</span> Financials</a>
+      <a class="nav-item active"><span class="material-icons-round">dashboard</span> <span data-key="admin_dashboard">Dashboard</span></a>
+      <a class="nav-item" href="admin.html"><span class="material-icons-round">directions_car</span> <span data-key="sidebar_fleet">Fleet</span></a>
+      <a class="nav-item"><span class="material-icons-round">pending_actions</span> <span data-key="sidebar_bookings">Bookings</span></a>
+      <a class="nav-item"><span class="material-icons-round">payments</span> <span data-key="sidebar_reports">Reports</span></a>
       <div class="nav-section">Intelligence</div>
-      <a class="nav-item"><span class="material-icons-round">psychology</span> AI Predictions</a>
-      <a class="nav-item"><span class="material-icons-round">health_and_safety</span> Health Reports</a>
-      <a class="nav-item" href="../../customer/pages/chatbot.html"><span class="material-icons-round">smart_toy</span> AI Chatbot</a>
+      <a class="nav-item"><span class="material-icons-round">psychology</span> <span data-key="sidebar_ai">AI Insights</span></a>
+      <a class="nav-item"><span class="material-icons-round">health_and_safety</span> <span data-key="sidebar_customers">Customers</span></a>
+      <a class="nav-item" href="../../customer/pages/chatbot.html"><span class="material-icons-round">smart_toy</span> <span data-key="sidebar_ai">AI Chatbot</span></a>
       <div class="nav-section">System</div>
-      <a class="nav-item"><span class="material-icons-round">settings</span> Settings</a>
+      <a class="nav-item"><span class="material-icons-round">settings</span> <span data-key="sidebar_settings">Settings</span></a>
     </nav>
     <div class="sidebar-footer">
-      <a class="nav-item logout" href="../../index.html"><span class="material-icons-round">logout</span> Logout</a>
+      <a class="nav-item logout" href="../../index.html"><span class="material-icons-round">logout</span> <span data-key="sidebar_logout">Logout</span></a>
     </div>
   </aside>
 
@@ -58,12 +58,16 @@
           <span class="material-icons-round">notifications</span>
           <div class="notif-dot"></div>
         </div>
+        <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Toggle Language">
+          <span class="material-icons-round">translate</span>
+          <span class="lang-label">BM</span>
+        </button>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
           <span class="material-icons-round">dark_mode</span>
           <span class="theme-label">Night Mode</span>
         </button>
         <button class="btn-primary-sm">
-          <span class="material-icons-round" style="font-size:16px">add</span> Add Vehicle
+          <span class="material-icons-round" style="font-size:16px">add</span> <span data-key="admin_add_vehicle">Add Vehicle</span>
         </button>
       </div>
     </div>
@@ -162,6 +166,7 @@
     </div>
   </main>
   <script src="../../shared/js/theme.js"></script>
+  <script src="../../shared/js/lang.js"></script>
   <script src="../js/admin.js"></script>
 </body>
 </html>

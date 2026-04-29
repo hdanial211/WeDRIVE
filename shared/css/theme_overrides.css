@@ -155,3 +155,15 @@ tr:hover td { background: var(--table-row-hover) !important; }
 }
 .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
 .theme-toggle .material-icons-round { font-size: 18px; }
+
+/* LANGUAGE TOGGLE BUTTON */
+.lang-toggle {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; cursor: pointer;
+  background: var(--theme-btn-bg); color: var(--theme-btn-color);
+  border: 1.5px solid var(--theme-btn-border);
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  transition: all 0.2s;
+}
+.lang-toggle:hover { border-color: var(--primary); color: var(--primary); }
+.lang-toggle .material-icons-round { font-size: 18px; }
