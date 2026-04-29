@@ -22,3 +22,9 @@ Path contoh: /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGRE
 Susun semua file supaya kemas dan tidak berselerak; gunakan folder baru untuk setiap kumpulan fail berkaitan.
 
 CSS & JS: gunakan file yang sama di folder yang sama untuk semua HTML; jangan tukar-tukar theme.
+
+8. Projek ini menyokong:
+   - Night mode & Day mode (toggle theme)
+   - Bahasa English & Melayu (dynamic language)
+
+9. Susun folder supaya kemas, tidak berselerak, dan mudah maintain.
