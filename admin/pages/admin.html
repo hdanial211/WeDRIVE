@@ -26,8 +26,8 @@
   <main class="main">
     <div class="topbar">
       <div>
-        <h1>Dashboard Overview</h1>
-        <p>Real-time metrics and AI fleet insights</p>
+        <h1 data-key="admin_welcome">Good morning, Admin</h1>
+        <p data-key="admin_subtitle">Here is what is happening with your fleet today.</p>
       </div>
       <div class="topbar-actions">
         <div class="btn-icon"><span class="material-icons-round">search</span></div>
@@ -54,7 +54,7 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-info">
-            <div class="label">Total Vehicles</div>
+            <div class="label" data-key="admin_stat_vehicles">Total Vehicles</div>
             <div class="value" id="stat-vehicles">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +12 this month</div>
           </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-info">
-            <div class="label">Active Rentals</div>
+            <div class="label" data-key="admin_stat_rentals">Active Rentals</div>
             <div class="value" id="stat-rentals">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +8 today</div>
           </div>
@@ -70,7 +70,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-info">
-            <div class="label">Revenue (Today)</div>
+            <div class="label" data-key="admin_stat_revenue">Revenue (Today)</div>
             <div class="value" id="stat-revenue" style="font-size:24px">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +18% vs last month</div>
           </div>
@@ -78,7 +78,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-info">
-            <div class="label">New Customers</div>
+            <div class="label" data-key="admin_stat_customers">New Customers</div>
             <div class="value" id="stat-customers">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +3% this week</div>
           </div>
@@ -90,29 +90,29 @@
       <div class="grid-2">
         <div class="ai-card">
           <div class="ai-card-header">
-            <div class="ai-badge"><span class="material-icons-round" style="font-size:14px">psychology</span> AI Forecast</div>
+            <div class="ai-badge"><span class="material-icons-round" style="font-size:14px">psychology</span> <span data-key="admin_ai_badge">AI Forecast</span></div>
           </div>
-          <h3>Demand Surge Expected 🚗</h3>
-          <p style="margin-top:8px">Expected <strong style="color:#60A5FA">high demand</strong> for SUVs and Vans this upcoming weekend due to local events in Melaka. Consider repositioning 8 units from low-demand zones.</p>
+          <h3 data-key="admin_ai_title">Demand Surge Expected</h3>
+          <p style="margin-top:8px" data-key="admin_ai_desc">Expected high demand for SUVs and Vans this upcoming weekend due to local events in Melaka. Consider repositioning 8 units from low-demand zones.</p>
           <div class="ai-tags">
-            <span class="ai-tag">SUVs ↑</span>
-            <span class="ai-tag">Vans ↑</span>
-            <span class="ai-tag">Weekend Surge</span>
+            <span class="ai-tag">SUVs</span>
+            <span class="ai-tag">Vans</span>
+            <span class="ai-tag">Weekend</span>
             <span class="ai-tag">+23% predicted</span>
           </div>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <h3>Quick Actions</h3>
+            <h3 data-key="admin_quick_title">Quick Actions</h3>
           </div>
           <div class="actions-grid">
-            <div class="action-btn"><span class="material-icons-round">add_circle</span><span>Add Car</span></div>
-            <div class="action-btn"><span class="material-icons-round">receipt_long</span><span>New Booking</span></div>
-            <div class="action-btn"><span class="material-icons-round">build</span><span>Maintenance</span></div>
-            <div class="action-btn"><span class="material-icons-round">file_download</span><span>Export Report</span></div>
-            <div class="action-btn" onclick="window.location='../../customer/pages/chatbot.html'"><span class="material-icons-round">smart_toy</span><span>AI Chatbot</span></div>
-            <div class="action-btn"><span class="material-icons-round">people</span><span>Customers</span></div>
+            <div class="action-btn"><span class="material-icons-round">add_circle</span><span data-key="admin_q_add">Add Car</span></div>
+            <div class="action-btn"><span class="material-icons-round">receipt_long</span><span data-key="admin_q_booking">New Booking</span></div>
+            <div class="action-btn"><span class="material-icons-round">build</span><span data-key="admin_q_maint">Maintenance</span></div>
+            <div class="action-btn"><span class="material-icons-round">file_download</span><span data-key="admin_q_export">Export Report</span></div>
+            <div class="action-btn"><span class="material-icons-round">smart_toy</span><span data-key="admin_q_chatbot">AI Chatbot</span></div>
+            <div class="action-btn"><span class="material-icons-round">people</span><span data-key="admin_q_customers">Customers</span></div>
           </div>
         </div>
       </div>
@@ -120,19 +120,19 @@
       <!-- FLEET TABLE -->
       <div class="card">
         <div class="card-header">
-          <h3>Current Fleet Status</h3>
-          <button class="btn-primary-sm">View All</button>
+          <h3 data-key="admin_fleet_title">Current Fleet Status</h3>
+          <button class="btn-primary-sm" data-key="admin_view_all">View All</button>
         </div>
         <table>
           <thead>
             <tr>
-              <th>Vehicle</th>
-              <th>Plate No.</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Daily Rate</th>
-              <th>Last Service</th>
-              <th>Action</th>
+              <th data-key="admin_th_vehicle">Vehicle</th>
+              <th data-key="admin_th_plate">Plate No.</th>
+              <th data-key="admin_th_type">Type</th>
+              <th data-key="admin_th_status">Status</th>
+              <th data-key="admin_th_rate">Daily Rate</th>
+              <th data-key="admin_th_service">Last Service</th>
+              <th data-key="admin_th_action">Action</th>
             </tr>
           </thead>
           <tbody id="fleet-tbody">
@@ -147,4 +147,3 @@
   <script src="../js/admin.js"></script>
 </body>
 </html>
-

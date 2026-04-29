@@ -12,19 +12,10 @@
   <link rel="stylesheet" href="../../shared/css/animation.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --primary: #3B82F6;
-      --primary-dark: #1D4ED8;
-      --navy: #1E293B;
-      --slate-50: #F8FAFC;
-      --slate-100: #F1F5F9;
-      --slate-200: #E2E8F0;
-      --slate-400: #94A3B8;
-      --slate-600: #475569;
-    }
+    /* All colors via theme_day.css / theme_night.css vars */
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--slate-50);
+      background: var(--bg-body, #F8FAFC);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
