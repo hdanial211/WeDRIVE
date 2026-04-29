@@ -42,3 +42,5 @@ Path contoh: /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGRE
 10.Data dummy / frontend data mesti disimpan secara tersusun dan boleh sync dengan backend apabila backend sudah siap.
 
 11.Pakai sidebar yang sama
+
+12.Setiap kali tambah/buang file/folder update file ni /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/PROJECT_STRUCTURE.md

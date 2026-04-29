@@ -61,7 +61,7 @@
 <body data-particles data-cursor-glow>
 
   <!-- LOGIN BANNER -->
-  <div class="login-banner">
+  <div class="login-banner reveal-onload">
     <span class="material-icons-round" style="font-size:18px">lock</span>
     <span data-key="browse_banner">Sign in to unlock booking and AI recommendations</span>
     <a href="customer/pages/login.html" data-key="browse_signin_btn">Sign In Now</a>
@@ -93,9 +93,9 @@
 
   <!-- HERO -->
   <section class="hero">
-    <h1 data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
-    <p data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
-    <div class="hero-cta">
+    <h1 class="reveal-onload" data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
+    <p class="reveal-onload" data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
+    <div class="hero-cta reveal-onload">
       <a href="customer/pages/login.html" class="hero-btn-primary">
         <span class="material-icons-round" style="font-size:18px">login</span>
         <span data-key="hero_cta_login">Sign In to Book</span>
@@ -105,7 +105,7 @@
         <span data-key="hero_cta_signup">Create Free Account</span>
       </a>
     </div>
-    <div class="search-box">
+    <div class="search-box reveal-onload">
       <div class="search-grid">
         <div class="search-field">
           <label data-key="cust_pickup_loc">Pick-up Location</label>
@@ -138,7 +138,7 @@
 
   <!-- CONTENT -->
   <div class="content">
-    <div class="filter-bar">
+    <div class="filter-bar reveal-on-scroll">
       <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
       <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
       <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
@@ -154,24 +154,24 @@
 
   <!-- HOW IT WORKS -->
   <section id="how" style="background:var(--bg-body,#F8FAFC); padding: 60px 40px; text-align:center; border-top: 1px solid var(--border,#E2E8F0)">
-    <h2 style="font-size:28px; font-weight:700; margin-bottom:8px;" data-key="how_title">How It Works</h2>
-    <p style="color:#64748B; margin-bottom:40px;" data-key="how_sub">Get on the road in 3 simple steps</p>
+    <h2 class="reveal-on-scroll" style="font-size:28px; font-weight:700; margin-bottom:8px;" data-key="how_title">How It Works</h2>
+    <p class="reveal-on-scroll" style="color:#64748B; margin-bottom:40px;" data-key="how_sub">Get on the road in 3 simple steps</p>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; max-width:900px; margin:0 auto;">
-      <div style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <div class="reveal-on-scroll" data-delay="0" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
         <div style="width:52px;height:52px;background:#EFF6FF;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
           <span class="material-icons-round" style="color:#3B82F6;font-size:26px">person_add</span>
         </div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step1_title">Create Account</h3>
         <p style="font-size:13px;color:#64748B;" data-key="how_step1_desc">Sign up free and verify your driver's licence</p>
       </div>
-      <div style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <div class="reveal-on-scroll" data-delay="120" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
         <div style="width:52px;height:52px;background:#F0FDF4;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
           <span class="material-icons-round" style="color:#10B981;font-size:26px">directions_car</span>
         </div>
         <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step2_title">Choose Your Car</h3>
         <p style="font-size:13px;color:#64748B;" data-key="how_step2_desc">Browse AI-recommended vehicles that suit your needs</p>
       </div>
-      <div style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <div class="reveal-on-scroll" data-delay="240" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
         <div style="width:52px;height:52px;background:#FFF7ED;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
           <span class="material-icons-round" style="color:#F59E0B;font-size:26px">receipt_long</span>
         </div>
@@ -179,7 +179,7 @@
         <p style="font-size:13px;color:#64748B;" data-key="how_step3_desc">Instant confirmation, pay securely, pick up and go</p>
       </div>
     </div>
-    <div style="margin-top:40px">
+    <div class="reveal-on-scroll" style="margin-top:40px">
       <a href="customer/pages/login.html" style="display:inline-flex;align-items:center;gap:8px;background:#3B82F6;color:white;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#3B82F6'">
         <span class="material-icons-round">rocket_launch</span>
         <span data-key="how_cta">Get Started Free</span>
@@ -192,6 +192,8 @@
 
   <script src="shared/js/api.js"></script>
   <script src="customer/js/customer.js"></script>
+  <script src="shared/js/anime.min.js"></script>
+  <script src="shared/js/animate.js"></script>
   <script src="shared/js/main.js"></script>
   <script>
     // Override: Book button → redirect to login for guests

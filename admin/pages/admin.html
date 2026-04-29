@@ -52,7 +52,7 @@
     <div class="content">
       <!-- STATS -->
       <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="admin_stat_vehicles">Total Vehicles</div>
             <div class="value" id="stat-vehicles">--</div>
@@ -60,7 +60,7 @@
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="admin_stat_rentals">Active Rentals</div>
             <div class="value" id="stat-rentals">--</div>
@@ -68,7 +68,7 @@
           </div>
           <div class="stat-icon green"><span class="material-icons-round">pending_actions</span></div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="admin_stat_revenue">Revenue (Today)</div>
             <div class="value" id="stat-revenue" style="font-size:24px">--</div>
@@ -76,7 +76,7 @@
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">payments</span></div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="admin_stat_customers">New Customers</div>
             <div class="value" id="stat-customers">--</div>
@@ -88,7 +88,7 @@
 
       <!-- AI + QUICK ACTIONS -->
       <div class="grid-2">
-        <div class="ai-card">
+        <div class="ai-card reveal-on-scroll">
           <div class="ai-card-header">
             <div class="ai-badge"><span class="material-icons-round" style="font-size:14px">psychology</span> <span data-key="admin_ai_badge">AI Forecast</span></div>
           </div>
@@ -102,7 +102,7 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card reveal-on-scroll">
           <div class="card-header">
             <h3 data-key="admin_quick_title">Quick Actions</h3>
           </div>
@@ -118,7 +118,7 @@
       </div>
 
       <!-- FLEET TABLE -->
-      <div class="card">
+      <div class="card reveal-on-scroll">
         <div class="card-header">
           <h3 data-key="admin_fleet_title">Current Fleet Status</h3>
           <button class="btn-primary-sm" data-key="admin_view_all">View All</button>
@@ -147,6 +147,8 @@
   <script src="../../shared/js/sidebar-loader.js"></script>
   <script src="../../shared/js/main.js"></script>
   <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
   <script src="../js/admin.js"></script>
 </body>
 </html>

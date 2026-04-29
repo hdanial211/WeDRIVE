@@ -48,13 +48,13 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-greeting" id="hero-greeting">
+    <div class="hero-greeting reveal-onload" id="hero-greeting">
       <span class="material-icons-round" style="font-size:20px;vertical-align:middle">waving_hand</span>
       <span data-key="cust_welcome">Welcome back!</span>
     </div>
-    <h1 data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
-    <p data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
-    <div class="search-box">
+    <h1 class="reveal-onload" data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
+    <p class="reveal-onload" data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
+    <div class="search-box reveal-onload">
       <div class="search-grid">
         <div class="search-field">
           <label data-key="cust_pickup_loc">Pick-up Location</label>
@@ -87,7 +87,7 @@
 
   <!-- CONTENT -->
   <div class="content">
-    <div class="filter-bar">
+    <div class="filter-bar reveal-on-scroll">
       <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
       <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
       <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
@@ -145,6 +145,8 @@
 
   <script src="../../shared/js/api.js"></script>
   <script src="../js/customer.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
   <script src="../../shared/js/main.js"></script>
 </body>
 </html>

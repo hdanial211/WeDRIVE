@@ -50,6 +50,8 @@ AI CAR RENTAL SYSTEM/
         +-- main.js             # Skrip Utama (Theme, Lang, Footer Auto-Load)
         +-- sidebar-loader.js   # Pemuat Sidebar Admin
         +-- api.js              # API & CONFIGURATION (Pusat Database)
+        +-- anime.min.js        # Library animasi (Anime.js v3)
+        +-- animate.js          # Modul animasi WeDRIVE (page open + scroll reveal)
 ```
 
 ---
