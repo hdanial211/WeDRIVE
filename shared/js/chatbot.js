@@ -141,7 +141,7 @@ window.botReplies = {
   available: ['We have <strong>6 cars available</strong> right now! Scroll down to browse all options or use the filters above.', true],
   recommend: ['Based on popular choices, I recommend the <strong>Honda CR-V 2024</strong> — great for families and weekend trips! Here is a quick look:', true],
   book: ['Booking is easy! Just:<br/>1. Select your car below<br/>2. Click <strong>Book Now</strong><br/>3. Fill in your dates<br/>4. Complete payment<br/><br/>Need help choosing a car?', false],
-  payment: ['We accept:<br/>Credit/Debit Card (Visa, Mastercard)<br/>Online Banking (FPX)<br/>eWallet (Touch\\'n Go, GrabPay)<br/>Cash at counter', false],
+  payment: ["We accept:<br/>Credit/Debit Card (Visa, Mastercard)<br/>Online Banking (FPX)<br/>eWallet (Touch'n Go, GrabPay)<br/>Cash at counter", false],
   default: ['Thanks for your message! I am here to help with car rentals. You can also browse cars below or use the filter chips to narrow your search.', false]
 };
 
