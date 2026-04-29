@@ -105,5 +105,10 @@
 
   "theme_day":   "Mod Siang",
   "theme_night": "Mod Malam",
-  "lang_toggle": "EN"
+  "lang_toggle": "EN",
+
+  "cust_hero_title":  "Cari Kereta Sewa Terbaik Anda",
+  "cust_hero_sub":    "Cadangan berkuasa AI · Harga terbaik dijamin · Tempahan segera",
+  "cust_pickup_loc":  "Lokasi Pengambilan",
+  "cust_showing":     "Menunjukkan kereta tersedia"
 }

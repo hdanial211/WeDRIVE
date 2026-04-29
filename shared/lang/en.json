@@ -105,5 +105,10 @@
 
   "theme_day":   "Day Mode",
   "theme_night": "Night Mode",
-  "lang_toggle": "BM"
+  "lang_toggle": "BM",
+
+  "cust_hero_title":  "Find Your Perfect Rental Car",
+  "cust_hero_sub":    "AI-powered recommendations · Best prices guaranteed · Instant booking",
+  "cust_pickup_loc":  "Pick-up Location",
+  "cust_showing":     "Showing cars available"
 }

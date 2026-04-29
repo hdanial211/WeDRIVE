@@ -41,26 +41,26 @@
 
   <!-- HERO -->
   <section class="hero">
-    <h1>Find Your Perfect <span>Rental Car</span></h1>
-    <p>AI-powered recommendations · Best prices guaranteed · Instant booking</p>
+    <h1 data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
+    <p data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
     <div class="search-box">
       <div class="search-grid">
         <div class="search-field">
-          <label>Pick-up Location</label>
+          <label data-key="cust_pickup_loc">Pick-up Location</label>
           <div class="input-wrap">
             <span class="material-icons-round">location_on</span>
             <input type="text" placeholder="Melaka, Malaysia" />
           </div>
         </div>
         <div class="search-field">
-          <label>Pick-up Date</label>
+          <label data-key="search_from">Pick-up Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">calendar_today</span>
             <input type="date" />
           </div>
         </div>
         <div class="search-field">
-          <label>Return Date</label>
+          <label data-key="search_to">Return Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">event</span>
             <input type="date" />
@@ -68,7 +68,7 @@
         </div>
         <button class="btn-search">
           <span class="material-icons-round" style="font-size:18px">search</span>
-          Search
+          <span data-key="search_btn">Search</span>
         </button>
       </div>
     </div>
@@ -77,13 +77,13 @@
   <!-- CONTENT -->
   <div class="content">
     <div class="filter-bar">
-      <button class="filter-chip active" onclick="filterCars('all', this)">All Cars</button>
-      <button class="filter-chip" onclick="filterCars('sedan', this)">Sedan</button>
-      <button class="filter-chip" onclick="filterCars('suv', this)">SUV</button>
-      <button class="filter-chip" onclick="filterCars('hatchback', this)">Hatchback</button>
-      <button class="filter-chip" onclick="filterCars('van', this)">Van</button>
-      <button class="filter-chip" onclick="filterCars('luxury', this)">Luxury</button>
-      <span class="results-count">Showing <strong>6</strong> cars available</span>
+      <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
+      <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
+      <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
+      <button class="filter-chip" onclick="filterCars('hatchback', this)" data-key="filter_hatch">Hatchback</button>
+      <button class="filter-chip" onclick="filterCars('van', this)" data-key="filter_van">Van</button>
+      <button class="filter-chip" onclick="filterCars('luxury', this)" data-key="filter_luxury">Luxury</button>
+      <span class="results-count" data-key="cust_showing">Showing <strong>6</strong> cars available</span>
     </div>
 
     <div class="cars-grid" id="cars-grid">
@@ -97,8 +97,8 @@
       <div class="chat-bot-info">
         <div class="chat-bot-avatar"><span class="material-icons-round">smart_toy</span></div>
         <div>
-          <div class="chat-bot-name">WeDRIVE AI</div>
-          <div class="chat-bot-status"><div class="status-dot-sm"></div> Online · Ready to help</div>
+          <div class="chat-bot-name" data-key="chatbot_bot_name">WeDRIVE AI</div>
+          <div class="chat-bot-status"><div class="status-dot-sm"></div> <span data-key="chatbot_bot_status">Online · Ready to help</span></div>
         </div>
       </div>
       <button class="chat-close-btn" onclick="toggleChat()">
@@ -106,14 +106,15 @@
       </button>
     </div>
     <div class="chat-suggestions">
-      <button class="sug-chip" onclick="quickSend('Cars available today?')">Available cars</button>
-      <button class="sug-chip" onclick="quickSend('Recommend me a car')">Recommend</button>
-      <button class="sug-chip" onclick="quickSend('How to book?')">How to book</button>
-      <button class="sug-chip" onclick="quickSend('Payment options?')">Payment</button>
+      <button class="sug-chip" onclick="quickSend('Cars available today?')" data-key="chatbot_q1">Available cars</button>
+      <button class="sug-chip" onclick="quickSend('Recommend me a car')" data-key="chatbot_q2">Recommend</button>
+      <button class="sug-chip" onclick="quickSend('How to book?')" data-key="chatbot_q3">How to book</button>
+      <button class="sug-chip" onclick="quickSend('Payment options?')" data-key="chatbot_q4">Payment</button>
     </div>
     <div class="chat-messages" id="chat-messages"></div>
     <div class="chat-input-wrap">
       <textarea class="chat-input" id="chat-input" rows="1"
+        data-key-ph="chatbot_input_ph"
         placeholder="Ask about cars, bookings..."
         onkeydown="chatKey(event)" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"
       ></textarea>
@@ -124,7 +125,7 @@
   <!-- CHATBOT FAB -->
   <div class="chatbot-fab" id="chatbot-fab" onclick="toggleChat()">
     <span class="material-icons-round" id="fab-icon">smart_toy</span>
-    <div class="fab-label">AI Assistant</div>
+    <div class="fab-label" data-key="nav_ai">AI Assistant</div>
     <div class="notif-badge" id="notif-badge">1</div>
   </div>
 
