@@ -104,12 +104,12 @@ window.addChatMsg = function(text, isUser = false, showCar = false) {
   const msgs = document.getElementById('chat-messages');
   const t = new Date().toLocaleTimeString('en-MY', { hour:'2-digit', minute:'2-digit' });
   const div = document.createElement('div');
-  div.className = \`chat-msg \${isUser ? 'user' : 'bot'}\`;
-  div.innerHTML = \`
-    <div class="chat-avatar">\${isUser ? 'U' : '<span class="material-icons-round" style="font-size:15px">smart_toy</span>'}</div>
+  div.className = `chat-msg ${isUser ? 'user' : 'bot'}`;
+  div.innerHTML = `
+    <div class="chat-avatar">${isUser ? 'U' : '<span class="material-icons-round" style="font-size:15px">smart_toy</span>'}</div>
     <div>
-      <div class="chat-bubble">\${text}</div>
-      \${showCar ? \`
+      <div class="chat-bubble">${text}</div>
+      ${showCar ? `
       <div class="mini-car-card">
         <div class="mini-car-icon"><span class="material-icons-round">directions_car</span></div>
         <div class="mini-car-info">
@@ -117,9 +117,9 @@ window.addChatMsg = function(text, isUser = false, showCar = false) {
           <div class="c-price">RM 200/day · SUV · Hybrid</div>
         </div>
         <button class="mini-book-btn" onclick="document.getElementById('cars-grid') ? document.getElementById('cars-grid').scrollIntoView({behavior:'smooth'}) : window.location.href='customer/pages/customer.html'">View</button>
-      </div>\` : ''}
-      <div class="chat-time">\${t}</div>
-    </div>\`;
+      </div>` : ''}
+      <div class="chat-time">${t}</div>
+    </div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 };
@@ -128,9 +128,9 @@ window.showTypingIndicator = function() {
   const msgs = document.getElementById('chat-messages');
   const div = document.createElement('div');
   div.className = 'chat-msg bot'; div.id = 'chat-typing';
-  div.innerHTML = \`
+  div.innerHTML = `
     <div class="chat-avatar"><span class="material-icons-round" style="font-size:15px">smart_toy</span></div>
-    <div class="chat-bubble"><div class="typing-indicator"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div></div>\`;
+    <div class="chat-bubble"><div class="typing-indicator"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div></div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 };
