@@ -341,3 +341,78 @@
     init();
   }
 })();
+
+
+/* =====================================================
+   SECTION 4: BACKGROUND PARTICLES
+   =====================================================
+ * Only activates on pages that have: <body data-particles>
+ *
+ * Config via data attributes on <body>:
+ *   data-particles          - enable (required)
+ *   data-particles="8"      - set count (default: 10)
+ *
+ * Example:
+ *   <body data-particles="12">      <- 12 orbs
+ *   <body data-particles>           <- default 10 orbs
+ *
+ * Does NOT override body background — safe for all page layouts.
+ */
+
+(function () {
+  'use strict';
+
+  var R = Math.random;
+
+  function rand(min, max) { return min + R() * (max - min); }
+  function randInt(min, max) { return Math.round(rand(min, max)); }
+  function randPx(min, max) { return rand(min, max).toFixed(1) + 'px'; }
+
+  function spawnParticles() {
+    var body = document.body;
+    if (!body.hasAttribute('data-particles')) return;
+
+    var count = parseInt(body.getAttribute('data-particles'), 10);
+    if (isNaN(count) || count < 1) count = 10;
+    count = Math.min(count, 24); // cap for performance
+
+    // Respect reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < count; i++) {
+      var el = document.createElement('div');
+      el.className = 'bg-particle';
+
+      var size = rand(24, 110);
+
+      // Randomise via CSS custom properties (no JS animation)
+      el.style.cssText = [
+        'width:'              + size.toFixed(0) + 'px',
+        'height:'             + size.toFixed(0) + 'px',
+        'top:'                + rand(0, 92).toFixed(1) + 'vh',
+        'left:'               + rand(0, 95).toFixed(1) + 'vw',
+        '--dur:'              + rand(9, 22).toFixed(1) + 's',
+        '--max-opacity:'      + rand(0.06, 0.22).toFixed(2),
+        '--tx1:'              + randPx(-60, 60),
+        '--ty1:'              + randPx(-60, 40),
+        '--tx2:'              + randPx(-40, 50),
+        '--ty2:'              + randPx(-30, 60),
+        'animation-delay:'   + rand(0, 8).toFixed(1) + 's',
+        'filter:blur('       + rand(0.5, 3).toFixed(1) + 'px)'
+      ].join(';');
+
+      fragment.appendChild(el);
+    }
+
+    // Insert as FIRST children so content z-index stays above
+    body.insertBefore(fragment, body.firstChild);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', spawnParticles);
+  } else {
+    spawnParticles();
+  }
+})();
