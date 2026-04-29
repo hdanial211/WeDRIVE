@@ -71,49 +71,15 @@
     </div>
   </div>
 
-  <!-- CHATBOT PANEL -->
-  <div class="chatbot-panel" id="chatbot-panel">
-    <div class="chat-panel-header">
-      <div class="chat-bot-info">
-        <div class="chat-bot-avatar"><span class="material-icons-round">smart_toy</span></div>
-        <div>
-          <div class="chat-bot-name" data-key="chatbot_bot_name">WeDRIVE AI</div>
-          <div class="chat-bot-status"><div class="status-dot-sm"></div> <span data-key="chatbot_bot_status">Online · Ready to help</span></div>
-        </div>
-      </div>
-      <button class="chat-close-btn" onclick="toggleChat()">
-        <span class="material-icons-round">close</span>
-      </button>
-    </div>
-    <div class="chat-suggestions">
-      <button class="sug-chip" onclick="quickSend('Cars available today?')" data-key="chatbot_q1">Available cars</button>
-      <button class="sug-chip" onclick="quickSend('Recommend me a car')" data-key="chatbot_q2">Recommend</button>
-      <button class="sug-chip" onclick="quickSend('How to book?')" data-key="chatbot_q3">How to book</button>
-      <button class="sug-chip" onclick="quickSend('Payment options?')" data-key="chatbot_q4">Payment</button>
-    </div>
-    <div class="chat-messages" id="chat-messages"></div>
-    <div class="chat-input-wrap">
-      <textarea class="chat-input" id="chat-input" rows="1"
-        data-key-ph="chatbot_input_ph"
-        placeholder="Ask about cars, bookings..."
-        onkeydown="chatKey(event)" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"
-      ></textarea>
-      <button class="chat-send" onclick="sendChat()"><span class="material-icons-round">send</span></button>
-    </div>
-  </div>
-
-  <!-- CHATBOT FAB -->
-  <div class="chatbot-fab" id="chatbot-fab" onclick="toggleChat()">
-    <span class="material-icons-round" id="fab-icon">smart_toy</span>
-    <div class="fab-label" data-key="nav_ai">AI Assistant</div>
-    <div class="notif-badge" id="notif-badge">1</div>
-  </div>
+  <!-- CHATBOT -->
+  <div id="chatbot-placeholder"></div>
 
   <!-- FOOTER -->
   <div id="footer-placeholder"></div>
 
   <script src="../../shared/js/navbar-loader.js"></script>
   <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/chatbot.js"></script>
   <script src="../js/customer.js"></script>
   <script src="../../shared/js/anime.min.js"></script>
   <script src="../../shared/js/animate.js"></script>
