@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign In | WeDRIVE</title>
-  <link rel="icon" type="image/png" href="wedrive-icon.png" />
+  <link rel="icon" type="image/png" href="assets/images/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <style>
@@ -201,7 +201,7 @@
   <!-- Left Panel -->
   <div class="left-panel">
     <div class="brand">
-      <img src="wedrive-icon.png" alt="WeDRIVE Logo" class="brand-logo" />
+      <img src="assets/images/wedrive-icon.png" alt="WeDRIVE Logo" class="brand-logo" />
       <div class="brand-text">
         <span class="we">We</span><span class="drive">DRIVE</span>
       </div>
@@ -267,12 +267,12 @@
         Continue with Google
       </button>
       <button class="btn-social" onclick="alert('Apple login coming soon!')">
-        <img src="apple-logo.svg" alt="Apple" />
+        <img src="assets/images/apple-logo.svg" alt="Apple" />
         Continue with Apple
       </button>
 
       <div class="signup-link">
-        Don't have an account? <a href="customer.html">Sign up as Customer</a>
+        Don't have an account? <a href="pages/customer.html">Sign up as Customer</a>
       </div>
     </div>
   </div>
@@ -287,9 +287,9 @@
       setTimeout(() => {
         // Admin check
         if (email.includes('admin')) {
-          window.location.href = 'admin.html';
+          window.location.href = 'pages/admin.html';
         } else {
-          window.location.href = 'customer.html';
+          window.location.href = 'pages/customer.html';
         }
       }, 1500);
     }
