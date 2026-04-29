@@ -416,3 +416,155 @@
     spawnParticles();
   }
 })();
+
+
+/* =====================================================
+   SECTION 5: MOUSE PARALLAX & HOVER EFFECTS
+   =====================================================
+ * Activates automatically on pages with:
+ *   [data-parallax]  on a container  -> blobs follow mouse
+ *   .spotlight       on a container  -> cursor glow spotlight
+ *   .tilt-card       on any element  -> 3D tilt on hover
+ *
+ * index.html left-panel gets parallax + spotlight automatically
+ * if it has class .left-panel and is inside body.
+ *
+ * No extra HTML needed for .left-panel — auto-detected.
+ */
+
+(function () {
+  'use strict';
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var RAF    = window.requestAnimationFrame;
+  var mouseX = 0;
+  var mouseY = 0;
+  var curX   = 0;
+  var curY   = 0;
+
+  /* ── Smooth lerp mouse tracking ── */
+  document.addEventListener('mousemove', function (e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  /* ── 1. BLOB PARALLAX on .left-panel ── */
+  function initBlobParallax() {
+    var panel  = document.querySelector('.left-panel');
+    if (!panel) return;
+
+    // We move the pseudo-elements via CSS vars injected on the panel
+    var depthBefore = 0.022; // stronger parallax
+    var depthAfter  = 0.014;
+    var w = panel.offsetWidth;
+    var h = panel.offsetHeight;
+    var rect = panel.getBoundingClientRect();
+
+    function tick() {
+      // Only active when mouse is anywhere on page
+      var relX = mouseX - rect.left;
+      var relY = mouseY - rect.top;
+
+      // Smooth follow
+      curX += (relX - curX) * 0.07;
+      curY += (relY - curY) * 0.07;
+
+      var cx = w / 2;
+      var cy = h / 2;
+      var dx = curX - cx;
+      var dy = curY - cy;
+
+      panel.style.setProperty('--blob1-x', (dx * depthBefore).toFixed(2) + 'px');
+      panel.style.setProperty('--blob1-y', (dy * depthBefore).toFixed(2) + 'px');
+      panel.style.setProperty('--blob2-x', (-dx * depthAfter).toFixed(2) + 'px');
+      panel.style.setProperty('--blob2-y', (-dy * depthAfter).toFixed(2) + 'px');
+
+      RAF(tick);
+    }
+
+    // Refresh rect on resize
+    window.addEventListener('resize', function () {
+      rect = panel.getBoundingClientRect();
+      w    = panel.offsetWidth;
+      h    = panel.offsetHeight;
+    });
+
+    RAF(tick);
+  }
+
+  /* ── 2. CURSOR SPOTLIGHT on .left-panel ── */
+  function initSpotlight() {
+    var panel = document.querySelector('.left-panel');
+    if (!panel) return;
+
+    panel.style.setProperty('--spot-x', '-200px');
+    panel.style.setProperty('--spot-y', '-200px');
+
+    document.addEventListener('mousemove', function (e) {
+      var rect = panel.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        panel.style.setProperty('--spot-x', x.toFixed(0) + 'px');
+        panel.style.setProperty('--spot-y', y.toFixed(0) + 'px');
+        panel.classList.add('spotlight-active');
+      } else {
+        panel.classList.remove('spotlight-active');
+      }
+    });
+  }
+
+  /* ── 3. 3D TILT on .tilt-card elements ── */
+  function initTiltCards() {
+    document.querySelectorAll('.tilt-card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect   = card.getBoundingClientRect();
+        var x      = e.clientX - rect.left;
+        var y      = e.clientY - rect.top;
+        var cx     = rect.width  / 2;
+        var cy     = rect.height / 2;
+        var rotY   =  ((x - cx) / cx) * 8;
+        var rotX   = -((y - cy) / cy) * 8;
+        card.style.transform =
+          'perspective(600px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) scale(1.02)';
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* ── 4. FEATURE ITEM lift ── */
+  function initFeatureLift() {
+    document.querySelectorAll('.feature-item').forEach(function (el) {
+      el.addEventListener('mouseenter', function () {
+        el.style.transform  = 'translateX(8px)';
+        el.style.transition = 'transform 0.3s ease';
+        var icon = el.querySelector('.feature-icon');
+        if (icon) {
+          icon.style.background = 'rgba(59,130,246,0.35)';
+          icon.style.transition = 'background 0.3s ease';
+        }
+      });
+      el.addEventListener('mouseleave', function () {
+        el.style.transform = '';
+        var icon = el.querySelector('.feature-icon');
+        if (icon) icon.style.background = '';
+      });
+    });
+  }
+
+  function init() {
+    initBlobParallax();
+    initSpotlight();
+    initTiltCards();
+    initFeatureLift();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
