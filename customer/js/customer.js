@@ -5,8 +5,9 @@
  */
 
 // ─── DATA SOURCE ─────────────────────────────────────────────────────────────
-// When backend is ready, change this URL to the real API endpoint.
-const DATA_URL = '../../shared/dummy/customer.json';
+// Determine path depending on whether we are in root (index.html) or customer/pages/
+const isRoot = !window.location.pathname.includes('customer/pages');
+const DATA_URL = isRoot ? 'shared/dummy/customer.json' : '../../shared/dummy/customer.json';
 
 let allCars = []; // Global cars list populated after fetch
 
@@ -66,6 +67,12 @@ function filterCars(type, btn) {
 function bookCar(id) {
   const car = allCars.find(c => c.id === id);
   if (!car) return;
+  
+  if (window.__GUEST_MODE__) {
+    window.location.href = 'customer/pages/login.html';
+    return;
+  }
+  
   alert(`Booking: ${car.name}\nRM ${car.price}/day\n\nRedirecting to booking confirmation...`);
 }
 

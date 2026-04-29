@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png?v=2" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── All colors from theme_day.css / theme_night.css vars ── */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--slate-50, #F8FAFC);
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Left Panel — animated gradient */
+    .left-panel {
+      flex: 1;
+      background: linear-gradient(135deg,
+        var(--hero-bg-start, #1E293B) 0%,
+        var(--hero-bg-mid,   #0F172A) 40%,
+        var(--hero-bg-end,   #1D4ED8) 75%,
+        var(--hero-bg-start, #1E293B) 100%);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes gradientShift {
+      0%   { background-position:   0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position:   0% 50%; }
+    }
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: rgba(59,130,246,0.18);
+      top: -120px; right: -120px;
+      animation: blobFloat1 9s ease-in-out infinite;
+      filter: blur(2px);
+    }
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(99,102,241,0.12);
+      bottom: -90px; left: -90px;
+      animation: blobFloat2 12s ease-in-out infinite;
+      filter: blur(3px);
+    }
+    @keyframes blobFloat1 {
+      0%   { transform: translate(0, 0)      scale(1);    }
+      33%  { transform: translate(-30px, 40px) scale(1.06); }
+      66%  { transform: translate(20px, -20px) scale(0.96); }
+      100% { transform: translate(0, 0)      scale(1);    }
+    }
+    @keyframes blobFloat2 {
+      0%   { transform: translate(0, 0)       scale(1);    }
+      40%  { transform: translate(35px, -45px) scale(1.08); }
+      70%  { transform: translate(-15px, 25px) scale(0.94); }
+      100% { transform: translate(0, 0)       scale(1);    }
+    }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 60px; z-index: 1; }
+    .brand-logo { width: 52px; height: 52px; object-fit: contain; }
+    .brand-text {
+      font-size: 32px; font-weight: 700;
+      letter-spacing: -0.5px; line-height: 1;
+      display: flex; align-items: center;
+    }
+    .brand-text .we    { color: #3B82F6; }
+    .brand-text .drive { color: white; }
+    .hero-text { z-index: 1; }
+    .hero-text h1 {
+      color: white; font-size: 42px; font-weight: 700;
+      line-height: 1.2; margin-bottom: 20px; letter-spacing: -1px;
+    }
+    .hero-text h1 span { color: #60A5FA; }
+    .hero-text p { color: #94A3B8; font-size: 16px; line-height: 1.7; max-width: 400px; }
+    .features { display: flex; flex-direction: column; gap: 20px; margin-top: 50px; z-index: 1; }
+    .feature-item { display: flex; align-items: center; gap: 14px; }
+    .feature-icon {
+      width: 40px; height: 40px;
+      background: rgba(59,130,246,0.2); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .feature-icon .material-icons-round { color: #60A5FA; font-size: 20px; }
+    .feature-text { color: #CBD5E1; font-size: 14px; }
+
+    /* Right Panel — uses CSS vars so night mode works */
+    .right-panel {
+      width: 480px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px;
+      background: var(--bg-surface, #FFFFFF);
+      transition: background 0.4s ease;
+    }
+    .login-card { width: 100%; max-width: 400px; }
+    .login-card h2 { font-size: 28px; font-weight: 700; color: var(--text-primary, #1E293B); margin-bottom: 8px; }
+    .login-card p  { color: var(--text-secondary, #94A3B8); font-size: 14px; margin-bottom: 36px; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary, #475569); margin-bottom: 8px; }
+    .input-wrap { position: relative; }
+    .input-wrap .material-icons-round {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted, #94A3B8); font-size: 20px;
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 13px 14px 13px 44px;
+      border: 1.5px solid var(--border-color, #E2E8F0);
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text-primary, #1E293B);
+      background: var(--input-bg, #F8FAFC);
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
+      outline: none;
+    }
+    input:focus {
+      border-color: var(--primary, #3B82F6);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+      background: var(--input-focus-bg, #FFFFFF);
+    }
+    .form-options {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 28px;
+    }
+    .remember { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .remember input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--primary, #3B82F6); }
+    .remember span { font-size: 13px; color: var(--text-secondary, #475569); }
+    .forgot { font-size: 13px; color: var(--primary, #3B82F6); text-decoration: none; font-weight: 500; }
+    .forgot:hover { color: var(--primary-dark, #1D4ED8); }
+    .btn-primary {
+      width: 100%; padding: 14px;
+      background: var(--primary, #3B82F6);
+      color: white; border: none; border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--primary-dark, #1D4ED8); box-shadow: 0 4px 14px rgba(59,130,246,0.4); }
+    .btn-primary:active { transform: scale(0.98); }
+    .divider {
+      display: flex; align-items: center; gap: 12px; margin: 24px 0;
+      color: var(--text-muted, #94A3B8); font-size: 13px;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border-color, #E2E8F0); }
+    .btn-social {
+      width: 100%; padding: 13px;
+      border: 1.5px solid var(--border-color, #E2E8F0);
+      background: var(--bg-surface, #FFFFFF);
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+      color: var(--text-primary, #1E293B);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-social:hover { background: var(--bg-surface-2, #F1F5F9); border-color: var(--text-muted, #94A3B8); }
+    .btn-social img { width: 20px; height: 20px; }
+    .signup-link { text-align: center; margin-top: 28px; font-size: 14px; color: var(--text-secondary, #475569); }
+    .signup-link a { color: var(--primary, #3B82F6); font-weight: 600; text-decoration: none; }
+    .signup-link a:hover { color: var(--primary-dark, #1D4ED8); }
+
+    /* Apple logo: black in day mode, white in night mode */
+    .apple-logo {
+      filter: brightness(0);           /* force black, matches day bg */
+      transition: filter 0.35s ease;
+    }
+    body.night-mode .apple-logo {
+      filter: brightness(0) invert(1); /* invert to white for dark bg */
+    }
+
+    @media (max-width: 768px) {
+      .left-panel { display: none; }
+      .right-panel { width: 100%; }
+    }
+  </style>
+</head>
+<body data-particles="10" data-cursor-glow>
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <div class="brand">
+      <img src="../../shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" class="brand-logo" />
+      <div class="brand-text">
+        <span class="we">We</span><span class="drive">DRIVE</span>
+      </div>
+    </div>
+    <div class="hero-text">
+      <h1><span data-key="hero_line1">Smart Fleet.</span><br/><span data-key="hero_line2">AI-Powered</span><br/><span data-key="hero_line3">Rentals.</span></h1>
+      <p data-key="hero_desc">The most advanced car rental management system — powered by AI and built for the modern fleet operator.</p>
+    </div>
+    <div class="features">
+      <div class="feature-item">
+        <div class="feature-icon"><span class="material-icons-round">psychology</span></div>
+        <div class="feature-text" data-key="feature_ai">AI-powered demand forecasting &amp; recommendations</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><span class="material-icons-round">smart_toy</span></div>
+        <div class="feature-text" data-key="feature_chat">24/7 AI chatbot for booking support</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><span class="material-icons-round">analytics</span></div>
+        <div class="feature-text" data-key="feature_stats">Real-time fleet analytics &amp; reporting</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right-panel">
+    <div class="login-card">
+      <h2 data-key="login_welcome">Welcome back</h2>
+      <p data-key="login_subtitle">Sign in to your WeDRIVE account to continue</p>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="email" data-key="login_email">Email Address</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">mail</span>
+            <input type="email" id="email" data-key-ph="login_email_ph" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" data-key="login_password">Password</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">lock</span>
+            <input type="password" id="password" data-key-ph="login_password_ph" placeholder="Enter your password" required />
+          </div>
+        </div>
+        <div class="form-options">
+          <label class="remember">
+            <input type="checkbox" />
+            <span data-key="login_remember">Remember me</span>
+          </label>
+          <a href="#" class="forgot" data-key="login_forgot">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-primary" id="login-btn">
+          <span class="material-icons-round" style="font-size:18px">login</span>
+          <span data-key="login_btn">Sign In</span>
+        </button>
+      </form>
+
+      <div class="divider" data-key="login_or">or continue with</div>
+
+      <button class="btn-social" onclick="alert('Google login coming soon!')">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+        <span data-key="login_google">Continue with Google</span>
+      </button>
+      <button class="btn-social" onclick="alert('Apple login coming soon!')">
+        <img src="../../shared/logo/apple-logo.svg" alt="Apple" class="apple-logo" />
+        <span data-key="login_apple">Continue with Apple</span>
+      </button>
+
+      <div class="signup-link">
+        <span data-key="login_no_account">Don't have an account?</span> <a href="customer.html" data-key="login_signup_link">Sign up as Customer</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEME + LANG ICON BUTTONS (fixed position) -->
+  <div style="position:fixed;top:16px;right:20px;z-index:9999;display:flex;align-items:center;gap:4px;">
+    <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch to Bahasa Melayu">
+      <span class="lang-text">MS</span>
+    </button>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch to Night Mode">
+      <span class="material-icons-round">dark_mode</span>
+    </button>
+  </div>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const btn = document.getElementById('login-btn');
+      btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Signing in...';
+      btn.disabled = true;
+      setTimeout(() => {
+        // Admin check
+        if (email.includes('admin')) {
+          window.location.href = '../../admin/pages/admin.html';
+        } else {
+          window.location.href = 'customer.html';
+        }
+      }, 1500);
+    }
+    const style = document.createElement('style');
+    style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
+    document.head.appendChild(style);
+  </script>
+  <script src="../../shared/js/main.js"></script>
+</body>
+</html>
