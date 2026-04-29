@@ -15,8 +15,8 @@
  *     <span class="material-icons-round">dark_mode</span>
  *   </button>
  *
- * Day mode  -> icon: dark_mode  (click to go night)
- * Night mode -> icon: light_mode (click to go day)
+ * Day mode  -> icon: light_mode (sun, shows current state)
+ * Night mode -> icon: dark_mode  (moon, shows current state)
  *
  * -------------------------------------------------------
  * LANGUAGE TOGGLE
@@ -69,7 +69,8 @@
         setTimeout(function () { btn.classList.remove('pop'); }, 320);
       }
 
-      icon.textContent = mode === 'night' ? 'light_mode' : 'dark_mode';
+      // Show current mode: night -> moon icon | day -> sun icon
+      icon.textContent = mode === 'night' ? 'dark_mode' : 'light_mode';
       btn.setAttribute('aria-label', mode === 'night' ? 'Switch to Day Mode' : 'Switch to Night Mode');
       btn.dataset.mode = mode;
     });
@@ -155,8 +156,7 @@
     document.querySelectorAll('.lang-toggle').forEach(function (btn) {
       var label = btn.querySelector('.lang-text');
       if (label) {
-        // Show the OTHER language label (what user will switch TO)
-        label.textContent = currentLang === 'ms' ? 'EN' : 'MS';
+        label.textContent = currentLang === 'ms' ? 'MS' : 'EN';
       }
       btn.setAttribute('aria-label',
         currentLang === 'ms' ? 'Switch to English' : 'Switch to Bahasa Melayu'
