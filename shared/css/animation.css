@@ -455,12 +455,11 @@
      <body data-particles>
    ─────────────────────────────────────────────────────── */
 
-/* Floating particle orb */
 .bg-particle {
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   opacity: 0;
   animation: particleFloat var(--dur, 12s) ease-in-out infinite,
              particleFadeIn 1.2s ease forwards;
@@ -511,8 +510,3 @@ body.grad-bg {
   animation: gradientShift 18s ease infinite;
 }
 
-/* Ensure page content sits above particles */
-[data-particles] > *:not(.bg-particle) {
-  position: relative;
-  z-index: 1;
-}
