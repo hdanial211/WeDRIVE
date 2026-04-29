@@ -527,3 +527,63 @@
     initCursorGlow();
   }
 })();
+
+/* =====================================================
+   SECTION 4: FOOTER LOADER
+   ===================================================== */
+(function() {
+  'use strict';
+  
+  function resolveBasePath() {
+    var link = document.getElementById('theme-link');
+    if (link) {
+      return link.getAttribute('href').replace(/shared\/css\/.*$/, '');
+    }
+    var parts  = window.location.pathname.split('/').filter(Boolean);
+    var depth  = parts.length > 0 ? parts.length - 1 : 0;
+    return depth === 0 ? '' : '../'.repeat(depth);
+  }
+
+  function loadFooter() {
+    var placeholder = document.getElementById('footer-placeholder');
+    if (!placeholder) return;
+    
+    var base = resolveBasePath();
+    var url = base + 'shared/components/footer.html';
+    
+    // Inject footer.css if not already present
+    if (!document.querySelector('link[href*="footer.css"]')) {
+      var cssLink = document.createElement('link');
+      cssLink.rel = 'stylesheet';
+      cssLink.href = base + 'shared/css/footer.css';
+      document.head.appendChild(cssLink);
+    }
+    
+    fetch(url)
+      .then(function(res) {
+        if (!res.ok) throw new Error('Cannot load footer: ' + url);
+        return res.text();
+      })
+      .then(function(html) {
+        placeholder.innerHTML = html;
+        // Fix data-logo src
+        var logo = placeholder.querySelector('[data-logo]');
+        if (logo) logo.src = base + 'shared/logo/wedrive-icon.png';
+        
+        // Retranslate newly added footer keys
+        if (typeof window.setLanguage === 'function') {
+          var lang = localStorage.getItem('wedrive-lang') || 'en';
+          window.setLanguage(lang);
+        }
+      })
+      .catch(function(err) {
+        console.warn('[WeDRIVE Footer]', err.message);
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadFooter);
+  } else {
+    loadFooter();
+  }
+})();

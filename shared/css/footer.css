@@ -1,0 +1,88 @@
+/* WeDRIVE Footer Styles */
+.wedrive-footer {
+  background-color: var(--bg-card, #FFFFFF);
+  border-top: 1px solid var(--border, #E2E8F0);
+  padding: 40px 40px 20px;
+  margin-top: auto; /* Push to bottom if container is flex */
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.wedrive-footer .footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.wedrive-footer .footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wedrive-footer .footer-brand img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.wedrive-footer .footer-brand .brand-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-base, #1E293B);
+  letter-spacing: -0.5px;
+}
+
+.wedrive-footer .footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.wedrive-footer .footer-links a {
+  color: var(--text-muted, #64748B);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.wedrive-footer .footer-links a:hover {
+  color: #3B82F6; /* brand primary */
+  transform: translateY(-2px);
+}
+
+.wedrive-footer .footer-bottom {
+  max-width: 1200px;
+  margin: 30px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border, #E2E8F0);
+  text-align: center;
+  color: var(--text-muted, #64748B);
+  font-size: 13px;
+}
+
+/* Night mode overrides (optional if using CSS vars, but safe to include) */
+body.night-mode .wedrive-footer {
+  background-color: var(--bg-card);
+  border-top-color: var(--border);
+}
+
+body.night-mode .wedrive-footer .footer-links a:hover {
+  color: #60A5FA;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wedrive-footer .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .wedrive-footer .footer-links {
+    justify-content: center;
+  }
+}

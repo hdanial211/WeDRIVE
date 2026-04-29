@@ -133,5 +133,10 @@
   "nav_ai": "Pembantu AI",
   "nav_customer": "Pelanggan",
   "nav_logout": "Log Keluar",
-  "cust_welcome": "Selamat kembali!"
+  "cust_welcome": "Selamat kembali!",
+  "footer_privacy": "Dasar Privasi",
+  "footer_terms": "Terma Perkhidmatan",
+  "footer_fleet": "Ketersambungan Armada",
+  "footer_faq": "Soalan Lazim",
+  "footer_contact": "Hubungi Kami"
 }

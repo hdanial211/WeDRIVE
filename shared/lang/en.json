@@ -133,5 +133,10 @@
   "nav_ai": "AI Assistant",
   "nav_customer": "Customer",
   "nav_logout": "Logout",
-  "cust_welcome": "Welcome back!"
+  "cust_welcome": "Welcome back!",
+  "footer_privacy": "Privacy Policy",
+  "footer_terms": "Service Terms",
+  "footer_fleet": "Fleet Connectivity",
+  "footer_faq": "FAQ",
+  "footer_contact": "Contact"
 }
