@@ -53,6 +53,8 @@
       var base = link.getAttribute('href').replace(/theme_(day|night)\.css$/, '');
       link.href = base + (mode === 'night' ? NIGHT_HREF : DAY_HREF);
     }
+    /* Sync body class — allows CSS to target night-specific styles */
+    document.body.classList.toggle('night-mode', mode === 'night');
     localStorage.setItem(THEME_KEY, mode);
     updateThemeBtns(mode, animate);
   }

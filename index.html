@@ -181,6 +181,15 @@
     .signup-link a { color: var(--primary, #3B82F6); font-weight: 600; text-decoration: none; }
     .signup-link a:hover { color: var(--primary-dark, #1D4ED8); }
 
+    /* Apple logo: black in day mode, white in night mode */
+    .apple-logo {
+      filter: brightness(0);           /* force black, matches day bg */
+      transition: filter 0.35s ease;
+    }
+    body.night-mode .apple-logo {
+      filter: brightness(0) invert(1); /* invert to white for dark bg */
+    }
+
     @media (max-width: 768px) {
       .left-panel { display: none; }
       .right-panel { width: 100%; }
@@ -257,7 +266,7 @@
         <span data-key="login_google">Continue with Google</span>
       </button>
       <button class="btn-social" onclick="alert('Apple login coming soon!')">
-        <img src="shared/logo/apple-logo.svg" alt="Apple" />
+        <img src="shared/logo/apple-logo.svg" alt="Apple" class="apple-logo" />
         <span data-key="login_apple">Continue with Apple</span>
       </button>
 
