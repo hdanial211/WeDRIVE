@@ -1,0 +1,57 @@
+{
+  "app": {
+    "name": "WeDRIVE",
+    "version": "1.1.17",
+    "tagline": "AI-Powered Car Rental System",
+    "support_email": "wedrive@support.com",
+    "support_phone": "011-10852955",
+    "currency": "RM",
+    "timezone": "Asia/Kuala_Lumpur",
+    "locale": "en-MY"
+  },
+  "theme": {
+    "default": "day",
+    "available": ["day", "night"]
+  },
+  "language": {
+    "default": "en",
+    "available": ["en", "bm"]
+  },
+  "booking": {
+    "min_days": 1,
+    "max_days": 30,
+    "cancellation_policy": {
+      "full_refund_hours": 48,
+      "partial_refund_hours": 24,
+      "partial_refund_percent": 50
+    },
+    "deposit_percent": 20
+  },
+  "payment_methods": [
+    { "id": "fpx",    "label": "Online Banking (FPX)",     "icon": "account_balance" },
+    { "id": "card",   "label": "Credit / Debit Card",      "icon": "credit_card" },
+    { "id": "ewallet","label": "eWallet (TnG / GrabPay)",  "icon": "phone_android" },
+    { "id": "cash",   "label": "Cash at Counter",          "icon": "payments" }
+  ],
+  "car_types": [
+    { "value": "all",      "label": "All Cars" },
+    { "value": "sedan",    "label": "Sedan" },
+    { "value": "suv",      "label": "SUV" },
+    { "value": "hatchback","label": "Hatchback" },
+    { "value": "van",      "label": "Van" },
+    { "value": "luxury",   "label": "Luxury" }
+  ],
+  "status_labels": {
+    "Available":   { "class": "available",   "icon": "check_circle" },
+    "Rented":      { "class": "rented",      "icon": "directions_car" },
+    "Maintenance": { "class": "maintenance", "icon": "build" },
+    "Pending":     { "class": "pending",     "icon": "schedule" },
+    "Confirmed":   { "class": "confirmed",   "icon": "verified" },
+    "Completed":   { "class": "completed",   "icon": "task_alt" }
+  },
+  "data_source": {
+    "mode": "dummy",
+    "note": "Switch 'mode' to 'api' and set 'base_url' when backend is ready.",
+    "base_url": ""
+  }
+}

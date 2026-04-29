@@ -1,14 +1,35 @@
-const cars = [
-  { id:1, name:'Toyota Vios 2023', type:'sedan', label:'Sedan', price:120, fuel:'Petrol', seats:5, trans:'Auto', status:'Available', ai:'High demand today' },
-  { id:2, name:'Honda CR-V 2024', type:'suv', label:'SUV', price:200, fuel:'Hybrid', seats:7, trans:'Auto', status:'Available', ai:'Best for weekend' },
-  { id:3, name:'Perodua Myvi 2023', type:'hatchback', label:'Hatchback', price:80, fuel:'Petrol', seats:5, trans:'Auto', status:'Available', ai:'Budget pick' },
-  { id:4, name:'Toyota Hiace 2022', type:'van', label:'Van', price:350, fuel:'Diesel', seats:12, trans:'Manual', status:'Available', ai:'Group travel' },
-  { id:5, name:'BMW 3 Series 2024', type:'luxury', label:'Luxury', price:450, fuel:'Petrol', seats:5, trans:'Auto', status:'Available', ai:'Premium choice' },
-  { id:6, name:'Honda Jazz 2023', type:'hatchback', label:'Hatchback', price:90, fuel:'Petrol', seats:5, trans:'Auto', status:'Available', ai:'City favourite' },
-];
+/**
+ * WeDRIVE - Customer Module JS
+ * Data fetched from shared/dummy/customer.json
+ * Switch to real API endpoint when backend is ready.
+ */
 
+// ─── DATA SOURCE ─────────────────────────────────────────────────────────────
+// When backend is ready, change this URL to the real API endpoint.
+const DATA_URL = '../../shared/dummy/customer.json';
+
+let allCars = []; // Global cars list populated after fetch
+
+// ─── FETCH & INITIALISE ───────────────────────────────────────────────────────
+fetch(DATA_URL)
+  .then(res => {
+    if (!res.ok) throw new Error('Failed to load car data');
+    return res.json();
+  })
+  .then(data => {
+    allCars = data.cars;
+    renderCars(allCars);
+  })
+  .catch(() => {
+    // Fallback: show error state in grid
+    const grid = document.getElementById('cars-grid');
+    if (grid) grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">Unable to load cars. Please refresh the page.</p>';
+  });
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
 function renderCars(list) {
   const grid = document.getElementById('cars-grid');
+  if (!grid) return;
   grid.innerHTML = list.map(c => `
     <div class="car-card" onclick="bookCar(${c.id})">
       <div class="car-img">
@@ -33,19 +54,22 @@ function renderCars(list) {
   `).join('');
 }
 
+// ─── FILTER ───────────────────────────────────────────────────────────────────
 function filterCars(type, btn) {
   document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const filtered = type === 'all' ? cars : cars.filter(c => c.type === type);
+  const filtered = type === 'all' ? allCars : allCars.filter(c => c.type === type);
   renderCars(filtered);
 }
 
+// ─── BOOKING ──────────────────────────────────────────────────────────────────
 function bookCar(id) {
-  const car = cars.find(c => c.id === id);
-  alert(`Booking ${car.name}\nRM ${car.price}/day\n\nRedirecting to booking confirmation...`);
+  const car = allCars.find(c => c.id === id);
+  if (!car) return;
+  alert(`Booking: ${car.name}\nRM ${car.price}/day\n\nRedirecting to booking confirmation...`);
 }
 
-renderCars(cars);
+
 
 // CHATBOT LOGIC
 let chatOpen = false;

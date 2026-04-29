@@ -74,7 +74,7 @@
         <div class="stat-card">
           <div class="stat-info">
             <div class="label">Total Vehicles</div>
-            <div class="value">150</div>
+            <div class="value" id="stat-vehicles">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +12 this month</div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
@@ -82,23 +82,23 @@
         <div class="stat-card">
           <div class="stat-info">
             <div class="label">Active Rentals</div>
-            <div class="value">42</div>
+            <div class="value" id="stat-rentals">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +8 today</div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">pending_actions</span></div>
         </div>
         <div class="stat-card">
           <div class="stat-info">
-            <div class="label">Revenue (MTD)</div>
-            <div class="value" style="font-size:24px">RM 12,400</div>
+            <div class="label">Revenue (Today)</div>
+            <div class="value" id="stat-revenue" style="font-size:24px">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +18% vs last month</div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">payments</span></div>
         </div>
         <div class="stat-card">
           <div class="stat-info">
-            <div class="label">Fleet Utilization</div>
-            <div class="value">98%</div>
+            <div class="label">New Customers</div>
+            <div class="value" id="stat-customers">--</div>
             <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +3% this week</div>
           </div>
           <div class="stat-icon purple"><span class="material-icons-round">analytics</span></div>
@@ -154,58 +154,15 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td><strong>Toyota Vios 2023</strong></td>
-              <td>ABC 1234</td>
-              <td>Sedan</td>
-              <td><span class="status-badge available"><span class="dot"></span> Available</span></td>
-              <td>RM 120/day</td>
-              <td>12 Apr 2026</td>
-              <td><button class="btn-primary-sm">Manage</button></td>
-            </tr>
-            <tr>
-              <td><strong>Honda CR-V 2024</strong></td>
-              <td>XYZ 5678</td>
-              <td>SUV</td>
-              <td><span class="status-badge rented"><span class="dot"></span> Rented</span></td>
-              <td>RM 200/day</td>
-              <td>5 Apr 2026</td>
-              <td><button class="btn-primary-sm">Manage</button></td>
-            </tr>
-            <tr>
-              <td><strong>Perodua Myvi 2023</strong></td>
-              <td>DEF 9012</td>
-              <td>Hatchback</td>
-              <td><span class="status-badge available"><span class="dot"></span> Available</span></td>
-              <td>RM 80/day</td>
-              <td>18 Apr 2026</td>
-              <td><button class="btn-primary-sm">Manage</button></td>
-            </tr>
-            <tr>
-              <td><strong>Toyota Hiace 2022</strong></td>
-              <td>GHI 3456</td>
-              <td>Van</td>
-              <td><span class="status-badge maintenance"><span class="dot"></span> Maintenance</span></td>
-              <td>RM 350/day</td>
-              <td>2 Apr 2026</td>
-              <td><button class="btn-primary-sm">Manage</button></td>
-            </tr>
-            <tr>
-              <td><strong>BMW 3 Series 2024</strong></td>
-              <td>JKL 7890</td>
-              <td>Luxury</td>
-              <td><span class="status-badge rented"><span class="dot"></span> Rented</span></td>
-              <td>RM 450/day</td>
-              <td>20 Apr 2026</td>
-              <td><button class="btn-primary-sm">Manage</button></td>
-            </tr>
+          <tbody id="fleet-tbody">
+            <!-- Populated by admin.js from shared/dummy/admin.json -->
           </tbody>
         </table>
       </div>
     </div>
   </main>
   <script src="../../shared/js/theme.js"></script>
+  <script src="../js/admin.js"></script>
 </body>
 </html>
 

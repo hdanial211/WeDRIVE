@@ -1,0 +1,115 @@
+{
+  "stats": {
+    "total_vehicles": 6,
+    "active_rentals": 3,
+    "revenue_today": 1240,
+    "new_customers": 4,
+    "revenue_change": "+12.5%",
+    "rentals_change": "+2",
+    "vehicles_change": "0",
+    "customers_change": "+4"
+  },
+  "fleet": [
+    {
+      "id": 1,
+      "name": "Toyota Vios 2023",
+      "plate": "WXY 1234",
+      "type": "Sedan",
+      "status": "Available",
+      "rate": "RM 120/day",
+      "last_service": "10 Apr 2026"
+    },
+    {
+      "id": 2,
+      "name": "Honda CR-V 2024",
+      "plate": "ABC 5678",
+      "type": "SUV",
+      "status": "Rented",
+      "rate": "RM 200/day",
+      "last_service": "05 Apr 2026"
+    },
+    {
+      "id": 3,
+      "name": "Perodua Myvi 2023",
+      "plate": "PQR 9012",
+      "type": "Hatchback",
+      "status": "Available",
+      "rate": "RM 80/day",
+      "last_service": "18 Apr 2026"
+    },
+    {
+      "id": 4,
+      "name": "Toyota Hiace 2022",
+      "plate": "GHI 3456",
+      "type": "Van",
+      "status": "Maintenance",
+      "rate": "RM 350/day",
+      "last_service": "01 Apr 2026"
+    },
+    {
+      "id": 5,
+      "name": "BMW 3 Series 2024",
+      "plate": "JKL 7890",
+      "type": "Luxury",
+      "status": "Rented",
+      "rate": "RM 450/day",
+      "last_service": "20 Apr 2026"
+    },
+    {
+      "id": 6,
+      "name": "Honda Jazz 2023",
+      "plate": "MNO 1122",
+      "type": "Hatchback",
+      "status": "Available",
+      "rate": "RM 90/day",
+      "last_service": "15 Apr 2026"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "BK-2024-001",
+      "customer": "Ahmad Hakim",
+      "car": "Honda CR-V 2024",
+      "pickup": "2024-05-10",
+      "return": "2024-05-13",
+      "days": 3,
+      "total": 600,
+      "status": "Confirmed"
+    },
+    {
+      "id": "BK-2024-002",
+      "customer": "Siti Nurul",
+      "car": "Perodua Myvi 2023",
+      "pickup": "2024-05-12",
+      "return": "2024-05-14",
+      "days": 2,
+      "total": 160,
+      "status": "Pending"
+    },
+    {
+      "id": "BK-2024-003",
+      "customer": "Razif Ismail",
+      "car": "BMW 3 Series 2024",
+      "pickup": "2024-05-08",
+      "return": "2024-05-11",
+      "days": 3,
+      "total": 1350,
+      "status": "Completed"
+    }
+  ],
+  "ai_insights": [
+    "Honda CR-V 2024 has the highest demand this week based on search trends.",
+    "Toyota Hiace is due for scheduled maintenance — revenue impact: RM 350/day.",
+    "Weekend bookings are projected to increase by 28% based on historical data.",
+    "Suggest adding 1 more SUV to fleet — 3 booking requests unmet this week."
+  ],
+  "admins": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "email": "admin@wedrive.my",
+      "role": "Super Admin",
+      "last_login": "2024-05-01 09:15"
+    }
+  ]
+}
