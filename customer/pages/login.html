@@ -287,20 +287,34 @@
   </div>
 
   <script>
-    function handleLogin(e) {
+    async function handleLogin(e) {
       e.preventDefault();
       const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
       const btn = document.getElementById('login-btn');
       btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Signing in...';
       btn.disabled = true;
-      setTimeout(() => {
-        // Admin check
-        if (email.includes('admin')) {
-          window.location.href = '../../admin/pages/admin.html';
+
+      try {
+        const response = await window.WeDriveAPI.loginUser(email, password);
+        
+        if (response.success) {
+          if (response.role === 'admin') {
+            window.location.href = '../../admin/pages/admin.html';
+          } else {
+            window.location.href = 'customer.html';
+          }
         } else {
-          window.location.href = 'customer.html';
+          alert('Login failed. Please check your credentials.');
+          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
+          btn.disabled = false;
         }
-      }, 1500);
+      } catch (err) {
+        console.error('Login error:', err);
+        alert('An error occurred during login.');
+        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
+        btn.disabled = false;
+      }
     }
     const style = document.createElement('style');
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';

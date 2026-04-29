@@ -67,29 +67,8 @@
     <a href="customer/pages/login.html" data-key="browse_signin_btn">Sign In Now</a>
   </div>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <img src="shared/logo/wedrive-icon.png" alt="Logo" class="brand-logo" />
-      <div class="brand-text">
-        <span class="we">We</span><span class="drive">DRIVE</span>
-      </div>
-    </div>
-    <div class="nav-links">
-      <a href="index.html" class="nav-link active" data-key="nav_browse">Browse Cars</a>
-      <a href="#how" class="nav-link" data-key="nav_how">How It Works</a>
-    </div>
-    <div class="nav-actions">
-      <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch Language">
-        <span class="lang-text">MS</span>
-      </button>
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
-        <span class="material-icons-round">dark_mode</span>
-      </button>
-      <button class="btn-outline" onclick="window.location='customer/pages/login.html'" data-key="nav_login">Log In</button>
-      <button class="btn-primary" onclick="window.location='customer/pages/login.html'" data-key="nav_signup">Sign Up</button>
-    </div>
-  </nav>
+  <!-- NAVBAR (Loaded dynamically) -->
+  <div id="navbar-placeholder" data-module="guest"></div>
 
   <!-- HERO -->
   <section class="hero">
@@ -190,6 +169,8 @@
   <!-- FOOTER -->
   <div id="footer-placeholder"></div>
 
+  <script src="shared/js/navbar-loader.js"></script>
+  <script src="shared/js/main.js"></script>
   <script src="shared/js/api.js"></script>
   <script src="customer/js/customer.js"></script>
   <script src="shared/js/anime.min.js"></script>

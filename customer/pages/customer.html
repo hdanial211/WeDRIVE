@@ -12,40 +12,9 @@
   <link rel="stylesheet" href="../../shared/css/animation.css" />
   <link rel="stylesheet" href="../css/customer.css" />
 </head>
-<body>
+<body data-particles="10" data-cursor-glow>
   <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <img src="../../shared/logo/wedrive-icon.png" alt="Logo" class="brand-logo" />
-      <div class="brand-text">
-        <span class="we">We</span><span class="drive">DRIVE</span>
-      </div>
-    </div>
-    <div class="nav-links">
-      <a href="customer.html" class="nav-link active" data-key="nav_browse">Browse Cars</a>
-      <a href="#bookings" class="nav-link" data-key="nav_bookings">My Bookings</a>
-      <a href="#" class="nav-link" data-key="nav_how">How It Works</a>
-      <a href="#" class="nav-link" onclick="toggleChat(); return false;" data-key="nav_ai">AI Assistant</a>
-    </div>
-    <div class="nav-actions">
-      <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch Language">
-        <span class="lang-text">MS</span>
-      </button>
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
-        <span class="material-icons-round">dark_mode</span>
-      </button>
-      <!-- User Avatar -->
-      <div class="user-pill" id="user-pill">
-        <div class="user-av" id="user-av">CU</div>
-        <span class="user-name" id="user-name-nav" data-key="nav_customer">Customer</span>
-      </div>
-      <button class="btn-logout" onclick="window.location='../../index.html'">
-        <span class="material-icons-round" style="font-size:16px">logout</span>
-        <span data-key="nav_logout">Logout</span>
-      </button>
-    </div>
-  </nav>
-
+  <div id="navbar-placeholder" data-module="customer"></div>
   <!-- HERO -->
   <section class="hero">
     <div class="hero-greeting reveal-onload" id="hero-greeting">
@@ -143,6 +112,7 @@
   <!-- FOOTER -->
   <div id="footer-placeholder"></div>
 
+  <script src="../../shared/js/navbar-loader.js"></script>
   <script src="../../shared/js/api.js"></script>
   <script src="../js/customer.js"></script>
   <script src="../../shared/js/anime.min.js"></script>

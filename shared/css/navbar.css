@@ -1,0 +1,237 @@
+/**
+ * WeDRIVE - Shared Navbar Styles
+ * shared/css/navbar.css
+ *
+ * Injected automatically by navbar-loader.js.
+ * Follows the same CSS variable system as theme_day.css / theme_night.css.
+ */
+
+/* ─── BASE NAVBAR ────────────────────────────────────────────────────────────── */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 64px;
+  background: var(--navbar-bg, #FFFFFF);
+  border-bottom: 1px solid var(--border-color, #E2E8F0);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+/* ─── BRAND ──────────────────────────────────────────────────────────────────── */
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.brand-text {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.brand-text .we    { color: var(--text-primary, #1E293B); }
+.brand-text .drive { color: var(--primary, #3B82F6); }
+
+/* ─── NAV LINKS ──────────────────────────────────────────────────────────────── */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary, #475569);
+  text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--primary, #3B82F6);
+  background: var(--primary-light, #EFF6FF);
+}
+
+.nav-link.active {
+  color: var(--primary, #3B82F6);
+  font-weight: 600;
+}
+
+/* ─── ACTIONS ────────────────────────────────────────────────────────────────── */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Language toggle */
+.lang-toggle {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color, #E2E8F0);
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.lang-toggle:hover {
+  border-color: var(--primary, #3B82F6);
+  color: var(--primary, #3B82F6);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color, #E2E8F0);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary, #475569);
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.theme-toggle:hover {
+  border-color: var(--primary, #3B82F6);
+  color: var(--primary, #3B82F6);
+}
+.theme-toggle .material-icons-round { font-size: 18px; }
+
+/* Guest CTA buttons */
+.btn-outline {
+  padding: 8px 18px;
+  border: 1.5px solid var(--border-color, #E2E8F0);
+  border-radius: 8px;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1E293B);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.btn-outline:hover {
+  border-color: var(--primary, #3B82F6);
+  color: var(--primary, #3B82F6);
+}
+
+.btn-primary {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary, #3B82F6);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--primary-dark, #1D4ED8); }
+.btn-primary:active { transform: scale(0.97); }
+
+/* User pill (logged-in state) */
+.user-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 24px;
+  background: var(--bg-surface-2, #F1F5F9);
+  cursor: default;
+}
+.user-av {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary, #3B82F6);
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary, #1E293B);
+}
+
+/* Logout button */
+.btn-logout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color, #E2E8F0);
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.btn-logout:hover {
+  border-color: #EF4444;
+  color: #EF4444;
+  background: #FEF2F2;
+}
+
+/* ─── NIGHT MODE ─────────────────────────────────────────────────────────────── */
+
+body.night-mode .navbar {
+  background: var(--navbar-bg, #1E293B);
+  border-bottom-color: var(--border-color, #334155);
+}
+body.night-mode .brand-text .we { color: var(--text-primary, #F1F5F9); }
+body.night-mode .nav-link { color: var(--text-secondary, #94A3B8); }
+body.night-mode .nav-link:hover,
+body.night-mode .nav-link.active { color: var(--primary, #60A5FA); background: rgba(96,165,250,0.1); }
+body.night-mode .lang-toggle,
+body.night-mode .theme-toggle,
+body.night-mode .btn-outline { border-color: var(--border-color, #334155); color: var(--text-secondary, #94A3B8); }
+body.night-mode .user-pill { background: rgba(255,255,255,0.07); }
+body.night-mode .user-name { color: var(--text-primary, #F1F5F9); }
+body.night-mode .btn-logout { border-color: var(--border-color, #334155); color: var(--text-secondary, #94A3B8); }
+body.night-mode .btn-logout:hover { border-color: #EF4444; color: #EF4444; background: rgba(239,68,68,0.1); }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 16px; height: 56px; }
+  .nav-links { display: none; }
+  .user-name { display: none; }
+  .brand-text { font-size: 17px; }
+}

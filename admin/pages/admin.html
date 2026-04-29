@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../css/admin.css" />
 
 </head>
-<body>
+<body data-particles="6" data-cursor-glow>
   <!-- SIDEBAR - loaded from shared/components/sidebar-admin.html -->
   <div id="sidebar-placeholder"
        data-component="sidebar-admin"
@@ -24,30 +24,8 @@
 
   <!-- MAIN -->
   <main class="main">
-    <div class="topbar">
-      <div>
-        <h1 data-key="admin_welcome">Good morning, Admin</h1>
-        <p data-key="admin_subtitle">Here is what is happening with your fleet today.</p>
-      </div>
-      <div class="topbar-actions">
-        <div class="btn-icon"><span class="material-icons-round">search</span></div>
-        <div class="btn-icon">
-          <span class="material-icons-round">notifications</span>
-          <div class="notif-dot"></div>
-        </div>
-        <!-- Language Toggle -->
-        <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch to Bahasa Melayu">
-          <span class="lang-text">MS</span>
-        </button>
-        <!-- Theme Toggle -->
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch to Night Mode">
-          <span class="material-icons-round">dark_mode</span>
-        </button>
-        <button class="btn-primary-sm">
-          <span class="material-icons-round" style="font-size:16px">add</span> <span data-key="admin_add_vehicle">Add Vehicle</span>
-        </button>
-      </div>
-    </div>
+    <!-- NAVBAR (Loaded dynamically) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
       <!-- STATS -->
@@ -144,6 +122,7 @@
     <!-- FOOTER -->
     <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
   </main>
+  <script src="../../shared/js/navbar-loader.js"></script>
   <script src="../../shared/js/sidebar-loader.js"></script>
   <script src="../../shared/js/main.js"></script>
   <script src="../../shared/js/api.js"></script>

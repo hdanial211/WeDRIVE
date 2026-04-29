@@ -1,7 +1,7 @@
 /* WeDRIVE Footer Styles */
 .wedrive-footer {
-  background-color: var(--bg-card, #FFFFFF);
-  border-top: 1px solid var(--border, #E2E8F0);
+  background-color: var(--card-bg, #FFFFFF);
+  border-top: 1px solid var(--border-color, #E2E8F0);
   padding: 40px 40px 20px;
   margin-top: auto; /* Push to bottom if container is flex */
   font-family: 'Inter', sans-serif;
@@ -33,7 +33,7 @@
 .wedrive-footer .footer-brand .brand-text {
   font-size: 20px;
   font-weight: 700;
-  color: var(--text-base, #1E293B);
+  color: var(--text-primary, #1E293B);
   letter-spacing: -0.5px;
 }
 
@@ -68,8 +68,8 @@
 
 /* Night mode overrides (optional if using CSS vars, but safe to include) */
 body.night-mode .wedrive-footer {
-  background-color: var(--bg-card);
-  border-top-color: var(--border);
+  background-color: var(--card-bg);
+  border-top-color: var(--border-color);
 }
 
 body.night-mode .wedrive-footer .footer-links a:hover {
