@@ -206,3 +206,138 @@
     initLang();
   }
 })();
+
+
+/* =====================================================
+   SECTION 3: SCROLL REVEAL
+   =====================================================
+ * Adds .show (and .active as alias) to any element with:
+ *   .reveal          - fade up
+ *   .reveal-left     - fade from left
+ *   .reveal-right    - fade from right
+ *   .slide-up        - slide up (legacy alias)
+ *   .slide-left      - slide from left (legacy alias)
+ *   .slide-right     - slide from right (legacy alias)
+ *
+ * Usage in HTML:
+ *   <div class="reveal">...</div>
+ *   <div class="reveal delay-2">...</div>
+ *   <div class="reveal-left delay-3">...</div>
+ *
+ * Stagger siblings automatically using .stagger-group on parent:
+ *   <div class="stagger-group">
+ *     <div class="reveal">Card 1</div>
+ *     <div class="reveal">Card 2</div>
+ *     <div class="reveal">Card 3</div>
+ *   </div>
+ */
+
+(function () {
+  'use strict';
+
+  var REVEAL_SELECTORS = [
+    '.reveal',
+    '.reveal-left',
+    '.reveal-right',
+    '.slide-up',
+    '.slide-left',
+    '.slide-right'
+  ].join(', ');
+
+  var REVEAL_POINT = 80; // px from bottom of viewport to trigger
+
+  /* ── Apply stagger delays to children of .stagger-group ── */
+  function applyStagger() {
+    document.querySelectorAll('.stagger-group').forEach(function (group) {
+      var children = group.querySelectorAll(REVEAL_SELECTORS);
+      children.forEach(function (el, i) {
+        if (!el.style.transitionDelay && !el.classList.contains('delay-1') &&
+            !el.classList.contains('delay-2') && !el.classList.contains('delay-3') &&
+            !el.classList.contains('delay-4') && !el.classList.contains('delay-5') &&
+            !el.classList.contains('delay-6')) {
+          el.style.transitionDelay = (i * 0.1).toFixed(1) + 's';
+          el.style.animationDelay  = (i * 0.1).toFixed(1) + 's';
+        }
+      });
+    });
+  }
+
+  /* ── Show a single element ── */
+  function showElement(el) {
+    el.classList.add('show');
+    el.classList.add('active'); // alias for compatibility
+  }
+
+  /* ── Modern: IntersectionObserver ── */
+  function initObserver(elements) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          showElement(entry.target);
+          observer.unobserve(entry.target); // fire once
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -' + REVEAL_POINT + 'px 0px'
+    });
+
+    elements.forEach(function (el) { observer.observe(el); });
+  }
+
+  /* ── Fallback: scroll event ── */
+  function initScrollFallback(elements) {
+    function check() {
+      var wh = window.innerHeight;
+      elements.forEach(function (el) {
+        if (el.classList.contains('show')) return;
+        var top = el.getBoundingClientRect().top;
+        if (top < wh - REVEAL_POINT) {
+          showElement(el);
+        }
+      });
+    }
+    window.addEventListener('scroll', check, { passive: true });
+    check(); // run once on load
+  }
+
+  /* ── Page load animation for above-the-fold elements ── */
+  function revealAboveFold(elements) {
+    var wh = window.innerHeight;
+    elements.forEach(function (el) {
+      var top = el.getBoundingClientRect().top;
+      if (top < wh) {
+        // Small delay so CSS transition has time to register
+        setTimeout(function () { showElement(el); }, 60);
+      }
+    });
+  }
+
+  function init() {
+    applyStagger();
+
+    var elements = Array.prototype.slice.call(
+      document.querySelectorAll(REVEAL_SELECTORS)
+    );
+
+    if (!elements.length) return;
+
+    revealAboveFold(elements);
+
+    var remaining = elements.filter(function (el) {
+      return !el.classList.contains('show');
+    });
+
+    if ('IntersectionObserver' in window) {
+      initObserver(remaining);
+    } else {
+      initScrollFallback(remaining);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
