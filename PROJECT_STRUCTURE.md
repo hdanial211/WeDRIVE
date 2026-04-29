@@ -39,6 +39,8 @@ AI CAR RENTAL SYSTEM/
     |   +-- theme_day.css       # Tema Siang
     |   +-- theme_night.css     # Tema Malam
     |   +-- footer.css          # Gaya Footer
+    |   +-- navbar.css          # Gaya Global Navbar
+    |   +-- chatbot.css         # Gaya Komponen WeDRIVE AI Chatbot
     +-- dummy/
     |   +-- admin.json          # Data Mockup Admin
     |   +-- customer.json       # Data Mockup Kereta
@@ -49,7 +51,9 @@ AI CAR RENTAL SYSTEM/
     +-- js/
         +-- main.js             # Skrip Utama (Theme, Lang, Footer Auto-Load)
         +-- sidebar-loader.js   # Pemuat Sidebar Admin
+        +-- navbar-loader.js    # Pemuat Navbar Global
         +-- api.js              # API & CONFIGURATION (Pusat Database)
+        +-- chatbot.js          # Modul Utama WeDRIVE AI Chatbot
         +-- anime.min.js        # Library animasi (Anime.js v3)
         +-- animate.js          # Modul animasi WeDRIVE (page open + scroll reveal)
 ```
