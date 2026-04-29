@@ -1,17 +1,14 @@
 /**
- * WeDRIVE - Theme Toggle System (iOS Pill Switch)
+ * WeDRIVE - Theme Toggle (Simple Icon Button)
  * shared/js/theme.js
  *
- * Manages the day/night pill toggle switch.
- * The HTML structure for the toggle button:
- *
+ * Button HTML (simple):
  *   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
- *     <span class="toggle-icon-left">☀</span>
- *     <span class="toggle-knob-icon">
- *       <span class="material-icons-round">light_mode</span>
- *     </span>
- *     <span class="toggle-icon-right">🌙</span>
+ *     <span class="material-icons-round">dark_mode</span>
  *   </button>
+ *
+ * Day mode  → icon: dark_mode  (moon, click to go night)
+ * Night mode → icon: light_mode (sun, click to go day)
  */
 
 (function () {
@@ -19,61 +16,43 @@
   const DAY_HREF    = 'theme_day.css';
   const NIGHT_HREF  = 'theme_night.css';
 
-  /**
-   * Apply a theme by swapping the href of #theme-link
-   * and updating all toggle buttons on the page.
-   */
   function applyTheme(mode, animate) {
+    // Swap stylesheet
     const link = document.getElementById('theme-link');
     if (link) {
-      const currentHref = link.getAttribute('href');
-      const basePath    = currentHref.replace(/theme_(day|night)\.css$/, '');
-      link.href = basePath + (mode === 'night' ? NIGHT_HREF : DAY_HREF);
+      const base = link.getAttribute('href').replace(/theme_(day|night)\.css$/, '');
+      link.href  = base + (mode === 'night' ? NIGHT_HREF : DAY_HREF);
     }
     localStorage.setItem(STORAGE_KEY, mode);
-    updateToggleBtns(mode, animate);
+    updateBtns(mode, animate);
   }
 
-  /**
-   * Update all .theme-toggle pill switches to reflect current mode.
-   */
-  function updateToggleBtns(mode, animate) {
+  function updateBtns(mode, animate) {
     document.querySelectorAll('.theme-toggle').forEach(function (btn) {
-      const knobIcon = btn.querySelector('.toggle-knob-icon .material-icons-round');
+      const icon = btn.querySelector('.material-icons-round');
+      if (!icon) return;
 
-      if (mode === 'night') {
-        btn.classList.add('active');
-        if (knobIcon) knobIcon.textContent = 'dark_mode';
-        btn.setAttribute('aria-label', 'Switch to Day Mode');
-      } else {
-        btn.classList.remove('active');
-        if (knobIcon) knobIcon.textContent = 'light_mode';
-        btn.setAttribute('aria-label', 'Switch to Night Mode');
-      }
-
-      // Ripple animation
+      // Trigger pop animation
       if (animate) {
-        btn.classList.remove('ripple');
+        btn.classList.remove('pop');
         void btn.offsetWidth; // reflow
-        btn.classList.add('ripple');
-        setTimeout(() => btn.classList.remove('ripple'), 450);
+        btn.classList.add('pop');
+        setTimeout(() => btn.classList.remove('pop'), 320);
       }
 
-      btn.dataset.currentTheme = mode;
+      // Night mode → show sun (so user can switch back to day)
+      // Day mode   → show moon (so user can switch to night)
+      icon.textContent = mode === 'night' ? 'light_mode' : 'dark_mode';
+      btn.setAttribute('aria-label', mode === 'night' ? 'Switch to Day Mode' : 'Switch to Night Mode');
+      btn.dataset.mode = mode;
     });
   }
 
-  /**
-   * Public: toggle between day and night.
-   */
   window.toggleTheme = function () {
     const current = localStorage.getItem(STORAGE_KEY) || 'day';
     applyTheme(current === 'night' ? 'day' : 'night', true);
   };
 
-  /**
-   * Init on DOM ready.
-   */
   function init() {
     const saved = localStorage.getItem(STORAGE_KEY) || 'day';
     applyTheme(saved, false);

@@ -279,27 +279,13 @@
     </div>
   </div>
 
-  <!-- THEME + LANG PILL TOGGLES (fixed position) -->
-  <div style="position:fixed;top:18px;right:20px;z-index:9999;display:flex;align-items:center;gap:10px;">
-    <!-- Language Toggle: EN(left) → BM(right) -->
-    <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Tukar ke Bahasa Malaysia">
-      <span class="toggle-icon-left" style="font-size:10px;font-weight:800;left:8px;">EN</span>
-      <span class="toggle-knob-icon">
-        <span class="material-icons-round" style="font-size:13px;">translate</span>
-      </span>
-      <span class="toggle-icon-right" style="font-size:10px;font-weight:800;right:7px;">BM</span>
+  <!-- THEME + LANG ICON BUTTONS (fixed position) -->
+  <div style="position:fixed;top:16px;right:20px;z-index:9999;display:flex;align-items:center;gap:4px;">
+    <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch to Bahasa Melayu">
+      <span class="lang-text">MS</span>
     </button>
-    <!-- Theme Toggle: Day(left) → Night(right) -->
     <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch to Night Mode">
-      <span class="toggle-icon-left">
-        <span class="material-icons-round" style="font-size:13px;">light_mode</span>
-      </span>
-      <span class="toggle-knob-icon">
-        <span class="material-icons-round">light_mode</span>
-      </span>
-      <span class="toggle-icon-right">
-        <span class="material-icons-round" style="font-size:13px;">dark_mode</span>
-      </span>
+      <span class="material-icons-round">dark_mode</span>
     </button>
   </div>
 

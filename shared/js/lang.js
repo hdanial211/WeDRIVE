@@ -18,6 +18,7 @@
 (function () {
   const STORAGE_KEY = 'wedrive-lang';
   const DEFAULT_LANG = 'en';
+  // Supported langs: 'en' | 'ms'  (file: shared/lang/en.json | ms.json)
 
   // Resolve path to shared/lang/ relative to this page's depth
   function resolveLangPath(lang) {
@@ -73,36 +74,35 @@
   }
 
   /**
-   * Update the lang pill toggle switch state.
-   * EN = not active (knob left), BM = active (knob right)
+   * Update the lang icon button.
+   * EN = show 'EN', MS = show 'MS'
+   * The .lang-text span holds the label text.
    */
   function updateLangBtn(data, animate) {
+    const currentLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
     document.querySelectorAll('.lang-toggle').forEach(function (btn) {
-      const knobIcon = btn.querySelector('.toggle-knob-icon .material-icons-round');
-      const currentLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
-
-      if (currentLang === 'bm') {
-        btn.classList.add('active');
-        btn.setAttribute('aria-label', 'Switch to English');
-      } else {
-        btn.classList.remove('active');
-        btn.setAttribute('aria-label', 'Tukar ke Bahasa Malaysia');
+      const label = btn.querySelector('.lang-text');
+      if (label) {
+        label.textContent = currentLang === 'ms' ? 'EN' : 'MS';
       }
+      btn.setAttribute('aria-label',
+        currentLang === 'ms' ? 'Switch to English' : 'Switch to Bahasa Melayu'
+      );
 
-      // Ripple animation
+      // Pop animation
       if (animate) {
-        btn.classList.remove('ripple');
+        btn.classList.remove('pop');
         void btn.offsetWidth;
-        btn.classList.add('ripple');
-        setTimeout(() => btn.classList.remove('ripple'), 450);
+        btn.classList.add('pop');
+        setTimeout(() => btn.classList.remove('pop'), 320);
       }
     });
   }
 
   /**
    * Load a language pack and apply it.
-   * @param {string} lang - 'en' or 'bm'
-   * @param {boolean} animate - whether to trigger ripple on toggle btns
+   * @param {string} lang - 'en' or 'ms'
+   * @param {boolean} animate - trigger pop on toggle btn
    */
   function loadLanguage(lang, animate) {
     fetch(resolveLangPath(lang))
@@ -125,7 +125,7 @@
    */
   window.toggleLanguage = function () {
     const current = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
-    loadLanguage(current === 'en' ? 'bm' : 'en', true);
+    loadLanguage(current === 'en' ? 'ms' : 'en', true);
   };
 
   /**
