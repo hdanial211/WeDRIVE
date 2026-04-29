@@ -7,7 +7,17 @@ INSTRUCTIONS:
 1.Setiap kali saya beri prompt untuk buat website atau coding, tema mesti sama macam projek sebelum ini.
 
 2.Setiap kali ada perubahan, mesti push ke GitHub dengan format _._._ Tulis apa perubahan yang dibuat
-Contoh: 1.1.1 Theme Colour Change
+🔹 Contoh perubahan awak
+Version	Contoh Perubahan
+1.1.1	Theme Colour Change / update design button
+1.1.2	Fix hover animation / adjust spacing
+1.2.1	Add Night Mode toggle
+2.1.1	Tambah modul baru (contoh: Admin dashboard)
+🔹 Struktur version _._._
+Format: Major.Minor.Patch
+Major = Perubahan besar / modul baru / redesign keseluruhan
+Minor = Perubahan kecil / tambah feature / improvement
+Patch = Bug fix / tweak kecil / styling update
 
 3.Logo mesti konsisten:
 Ikon di kiri, teks di kanan
