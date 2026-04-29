@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WeDRIVE – AI Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #3B82F6;
+      --primary-dark: #1D4ED8;
+      --navy: #1E293B;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-400: #94A3B8;
+      --slate-600: #475569;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--slate-50);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: #0F172A; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .brand-icon { width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .brand-icon .material-icons-round { color: white; font-size: 18px; }
+    .brand-name { color: white; font-size: 16px; font-weight: 700; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-link { padding: 7px 14px; border-radius: 7px; font-size: 13px; color: #94A3B8; text-decoration: none; transition: all 0.2s; }
+    .nav-link:hover { color: white; background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: #60A5FA; background: rgba(59,130,246,0.1); }
+    .ai-status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #94A3B8; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10B981; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    /* CHAT LAYOUT */
+    .chat-layout { display: flex; flex: 1; height: calc(100vh - 60px); }
+
+    /* SIDEBAR */
+    .chat-sidebar {
+      width: 280px; background: white;
+      border-right: 1px solid var(--slate-200);
+      display: flex; flex-direction: column;
+    }
+    .sidebar-header { padding: 18px 20px; border-bottom: 1px solid var(--slate-100); }
+    .sidebar-header h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+    .btn-new {
+      width: 100%; padding: 10px; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-new:hover { background: var(--primary-dark); }
+    .suggested-section { padding: 16px 20px; border-bottom: 1px solid var(--slate-100); }
+    .suggested-section h4 { font-size: 11px; font-weight: 600; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .suggestion-chip {
+      display: block; padding: 9px 12px; margin-bottom: 6px;
+      border: 1px solid var(--slate-200); border-radius: 8px;
+      font-size: 12px; color: var(--slate-600); cursor: pointer;
+      transition: all 0.2s; background: white;
+    }
+    .suggestion-chip:hover { border-color: var(--primary); color: var(--primary); background: #EFF6FF; }
+    .chat-history { padding: 16px 20px; flex: 1; overflow-y: auto; }
+    .chat-history h4 { font-size: 11px; font-weight: 600; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .history-item {
+      padding: 9px 12px; border-radius: 8px; margin-bottom: 4px;
+      font-size: 12px; color: var(--slate-600); cursor: pointer; transition: background 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .history-item:hover { background: var(--slate-50); }
+    .history-item .material-icons-round { font-size: 16px; color: var(--slate-400); }
+
+    /* MAIN CHAT */
+    .chat-main { flex: 1; display: flex; flex-direction: column; }
+
+    /* CHAT HEADER */
+    .chat-header {
+      padding: 16px 24px;
+      background: white; border-bottom: 1px solid var(--slate-200);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .bot-info { display: flex; align-items: center; gap: 12px; }
+    .bot-avatar {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    }
+    .bot-avatar .material-icons-round { color: white; font-size: 22px; }
+    .bot-details .name { font-size: 15px; font-weight: 700; color: var(--navy); }
+    .bot-details .subtitle { font-size: 12px; color: #10B981; display: flex; align-items: center; gap: 4px; }
+    .header-actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 36px; height: 36px; border: 1px solid var(--slate-200);
+      background: white; border-radius: 8px; display: flex;
+      align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
+    }
+    .icon-btn:hover { background: var(--slate-50); }
+    .icon-btn .material-icons-round { font-size: 18px; color: var(--slate-600); }
+
+    /* MESSAGES */
+    .messages {
+      flex: 1; overflow-y: auto; padding: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+      scroll-behavior: smooth;
+    }
+    .msg { display: flex; gap: 10px; max-width: 75%; }
+    .msg.user { flex-direction: row-reverse; align-self: flex-end; }
+    .msg-avatar {
+      width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;
+    }
+    .msg.bot .msg-avatar { background: linear-gradient(135deg, #3B82F6, #1D4ED8); color: white; }
+    .msg.user .msg-avatar { background: var(--navy); color: white; }
+    .msg-content { display: flex; flex-direction: column; gap: 4px; }
+    .msg.user .msg-content { align-items: flex-end; }
+    .bubble {
+      padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.6;
+    }
+    .msg.bot .bubble {
+      background: white; color: var(--navy);
+      border: 1px solid var(--slate-200);
+      border-top-left-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .msg.bot .bubble.ai-accent { border-left: 3px solid var(--primary); }
+    .msg.user .bubble {
+      background: var(--navy); color: white;
+      border-top-right-radius: 4px;
+    }
+    .msg-time { font-size: 11px; color: var(--slate-400); }
+
+    /* CAR SUGGESTION CARD */
+    .car-suggestion {
+      background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 14px;
+      margin-top: 8px; display: flex; align-items: center; gap: 14px;
+    }
+    .car-sug-icon { width: 48px; height: 48px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .car-sug-icon .material-icons-round { color: var(--primary); font-size: 28px; }
+    .car-sug-info .car-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+    .car-sug-info .car-price { font-size: 13px; color: var(--primary); font-weight: 600; }
+    .car-sug-info .car-tags { display: flex; gap: 6px; margin-top: 4px; }
+    .mini-tag { font-size: 11px; background: white; color: var(--slate-600); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--slate-200); }
+    .btn-book-sm {
+      margin-left: auto; padding: 8px 16px; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
+      font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    }
+
+    /* INPUT AREA */
+    .input-area {
+      padding: 16px 24px;
+      background: white; border-top: 1px solid var(--slate-200);
+    }
+    .input-wrap {
+      display: flex; align-items: flex-end; gap: 10px;
+      background: var(--slate-50); border: 1.5px solid var(--slate-200);
+      border-radius: 14px; padding: 10px 14px; transition: border-color 0.2s;
+    }
+    .input-wrap:focus-within { border-color: var(--primary); background: white; }
+    textarea {
+      flex: 1; border: none; background: transparent; outline: none;
+      font-family: 'Inter', sans-serif; font-size: 14px; color: var(--navy);
+      resize: none; min-height: 22px; max-height: 120px; line-height: 1.5;
+    }
+    textarea::placeholder { color: var(--slate-400); }
+    .send-btn {
+      width: 36px; height: 36px; background: var(--primary); border: none;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+    }
+    .send-btn:hover { background: var(--primary-dark); }
+    .send-btn .material-icons-round { color: white; font-size: 18px; }
+    .input-footer { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 11px; color: var(--slate-400); }
+    .input-footer .material-icons-round { font-size: 14px; }
+
+    /* TYPING INDICATOR */
+    .typing { display: flex; gap: 4px; padding: 14px 16px; align-items: center; }
+    .typing-dot { width: 7px; height: 7px; background: var(--slate-400); border-radius: 50%; animation: bounce 1.2s infinite; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="brand-icon"><span class="material-icons-round">directions_car</span></div>
+      <span class="brand-name">WeDRIVE</span>
+    </div>
+    <div class="nav-links">
+      <a href="customer.html" class="nav-link">Browse Cars</a>
+      <a href="#" class="nav-link">My Bookings</a>
+      <a href="chatbot.html" class="nav-link active">AI Assistant</a>
+      <a href="admin.html" class="nav-link">Admin</a>
+    </div>
+    <div class="ai-status">
+      <div class="status-dot"></div>
+      AI Online · Gemini powered
+    </div>
+  </nav>
+
+  <div class="chat-layout">
+    <!-- SIDEBAR -->
+    <aside class="chat-sidebar">
+      <div class="sidebar-header">
+        <h3>AI Assistant</h3>
+        <button class="btn-new" onclick="clearChat()">
+          <span class="material-icons-round" style="font-size:16px">add</span>
+          New Conversation
+        </button>
+      </div>
+      <div class="suggested-section">
+        <h4>Quick Questions</h4>
+        <div class="suggestion-chip" onclick="sendQuick('What cars are available today?')">🚗 Available cars today</div>
+        <div class="suggestion-chip" onclick="sendQuick('I need a car for 3 days, what do you recommend?')">💡 AI Recommendation</div>
+        <div class="suggestion-chip" onclick="sendQuick('How do I make a booking?')">📋 How to book</div>
+        <div class="suggestion-chip" onclick="sendQuick('What are your payment options?')">💳 Payment options</div>
+        <div class="suggestion-chip" onclick="sendQuick('I want to cancel my booking')">❌ Cancel booking</div>
+      </div>
+      <div class="chat-history">
+        <h4>Recent</h4>
+        <div class="history-item"><span class="material-icons-round">chat</span>Car availability inquiry</div>
+        <div class="history-item"><span class="material-icons-round">chat</span>Booking confirmation</div>
+        <div class="history-item"><span class="material-icons-round">chat</span>Payment help</div>
+      </div>
+    </aside>
+
+    <!-- CHAT MAIN -->
+    <div class="chat-main">
+      <div class="chat-header">
+        <div class="bot-info">
+          <div class="bot-avatar"><span class="material-icons-round">smart_toy</span></div>
+          <div class="bot-details">
+            <div class="name">WeDRIVE AI Assistant</div>
+            <div class="subtitle"><span class="material-icons-round" style="font-size:12px">circle</span> Online · Ready to help</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="icon-btn"><span class="material-icons-round">refresh</span></div>
+          <div class="icon-btn"><span class="material-icons-round">more_vert</span></div>
+        </div>
+      </div>
+
+      <div class="messages" id="messages">
+        <div class="msg bot">
+          <div class="msg-avatar"><span class="material-icons-round" style="font-size:18px">smart_toy</span></div>
+          <div class="msg-content">
+            <div class="bubble ai-accent">
+              👋 Hello! I'm your <strong>WeDRIVE AI Assistant</strong>, powered by Gemini AI.<br/><br/>
+              I can help you with:<br/>
+              • 🚗 Finding and booking rental cars<br/>
+              • 💳 Payment assistance<br/>
+              • 📋 Booking management<br/>
+              • ❓ Any questions about our service<br/><br/>
+              How can I help you today?
+            </div>
+            <div class="msg-time">Just now</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-wrap">
+          <textarea id="user-input" placeholder="Ask me anything about car rentals..." rows="1"
+            onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" onclick="sendMessage()">
+            <span class="material-icons-round">send</span>
+          </button>
+        </div>
+        <div class="input-footer">
+          <span class="material-icons-round">psychology</span>
+          AI responses are generated by Gemini · Always verify booking details
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const responses = {
+      'available': 'Great question! Here are our **available cars** right now:\n\n✅ **Toyota Vios 2023** — RM 120/day (Sedan)\n✅ **Perodua Myvi 2023** — RM 80/day (Hatchback)\n✅ **Honda Jazz 2023** — RM 90/day (Hatchback)\n\nWould you like more details on any of these? I can also help you book one! 🚗',
+      'recommend': 'Based on your request for 3 days, I recommend:',
+      'book': 'Booking with WeDRIVE is super easy! Here\'s how:\n\n1️⃣ Go to **Browse Cars** page\n2️⃣ Select your pick-up & return dates\n3️⃣ Choose your preferred car\n4️⃣ Click **Book Now**\n5️⃣ Complete payment\n\nYou\'ll receive a confirmation email instantly! Would you like me to take you to the booking page?',
+      'payment': 'We accept multiple payment methods:\n\n💳 **Credit/Debit Cards** (Visa, Mastercard)\n🏦 **Online Banking** (FPX)\n📱 **E-Wallet** (Touch\'n Go, GrabPay)\n💰 **Cash** (at pickup counter)\n\nAll payments are secured with SSL encryption. Need help with a specific payment?',
+      'cancel': 'I can help you cancel your booking!\n\nCancellation policy:\n• **48+ hours before pickup** — Full refund ✅\n• **24-48 hours** — 50% refund ⚠️\n• **Less than 24 hours** — No refund ❌\n\nPlease provide your booking ID and I\'ll process the cancellation right away.',
+      'default': 'Thank you for your message! Let me help you with that.\n\nYou can also:\n• 🚗 **Browse available cars** on our website\n• 📞 **Call us** at +60 11-1085 2955\n• 📧 **Email** wedrive@support.com\n\nIs there anything specific about car rentals I can assist you with?'
+    };
+
+    function getResponse(msg) {
+      const lower = msg.toLowerCase();
+      if (lower.includes('available') || lower.includes('car') && lower.includes('today')) return { type: 'available', showCar: true };
+      if (lower.includes('recommend') || lower.includes('3 days') || lower.includes('days')) return { type: 'recommend', showCar: true };
+      if (lower.includes('book') || lower.includes('how')) return { type: 'book' };
+      if (lower.includes('payment') || lower.includes('pay')) return { type: 'payment' };
+      if (lower.includes('cancel')) return { type: 'cancel' };
+      return { type: 'default' };
+    }
+
+    function now() {
+      return new Date().toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function addMessage(text, isUser = false, showCar = false) {
+      const msgs = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = `msg ${isUser ? 'user' : 'bot'}`;
+      div.innerHTML = `
+        <div class="msg-avatar">${isUser ? 'U' : '<span class="material-icons-round" style="font-size:18px">smart_toy</span>'}</div>
+        <div class="msg-content">
+          <div class="bubble ${!isUser ? 'ai-accent' : ''}">${text.replace(/\n/g,'<br/>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>
+          ${showCar ? `
+          <div class="car-suggestion">
+            <div class="car-sug-icon"><span class="material-icons-round">directions_car</span></div>
+            <div class="car-sug-info">
+              <div class="car-name">🏆 Top Pick: Honda CR-V 2024</div>
+              <div class="car-price">RM 200/day</div>
+              <div class="car-tags">
+                <span class="mini-tag">SUV</span>
+                <span class="mini-tag">7 Seats</span>
+                <span class="mini-tag">Hybrid</span>
+              </div>
+            </div>
+            <button class="btn-book-sm" onclick="window.location='customer.html'">Book Now</button>
+          </div>` : ''}
+          <div class="msg-time">${now()}</div>
+        </div>`;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function showTyping() {
+      const msgs = document.getElementById('messages');
+      const div = document.createElement('div');
+      div.className = 'msg bot'; div.id = 'typing';
+      div.innerHTML = `
+        <div class="msg-avatar"><span class="material-icons-round" style="font-size:18px">smart_toy</span></div>
+        <div class="msg-content">
+          <div class="bubble" style="padding:12px 16px">
+            <div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+          </div>
+        </div>`;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('typing');
+      if (t) t.remove();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage(text, true);
+      input.value = '';
+      input.style.height = 'auto';
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        const res = getResponse(text);
+        const reply = responses[res.type] || responses['default'];
+        addMessage(reply, false, res.showCar);
+      }, 1200);
+    }
+
+    function sendQuick(text) {
+      document.getElementById('user-input').value = text;
+      sendMessage();
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function autoResize(el) {
+      el.style.height = 'auto';
+      el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+    }
+
+    function clearChat() {
+      const msgs = document.getElementById('messages');
+      msgs.innerHTML = '';
+      addMessage('👋 Hello again! Starting a new conversation. How can I help you today?');
+    }
+  </script>
+</body>
+</html>

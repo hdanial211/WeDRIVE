@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WeDRIVE – Admin Fleet Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #3B82F6;
+      --primary-dark: #1D4ED8;
+      --navy: #1E293B;
+      --sidebar-bg: #0F172A;
+      --sidebar-hover: #1E293B;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-400: #94A3B8;
+      --slate-600: #475569;
+      --white: #FFFFFF;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--slate-50); display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px; background: var(--sidebar-bg);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    }
+    .sidebar-brand {
+      padding: 24px 20px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .brand-icon-sm {
+      width: 36px; height: 36px; background: var(--primary);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .brand-icon-sm .material-icons-round { color: white; font-size: 20px; }
+    .sidebar-brand span { color: white; font-size: 18px; font-weight: 700; }
+    .sidebar-user {
+      padding: 16px 20px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 14px; font-weight: 600;
+    }
+    .user-info .name { color: white; font-size: 13px; font-weight: 600; }
+    .user-info .role { color: var(--slate-400); font-size: 11px; }
+    .sidebar-nav { flex: 1; padding: 12px 0; }
+    .nav-section { padding: 12px 20px 6px; color: var(--slate-400); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 20px; color: var(--slate-400);
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .nav-item:hover { color: white; background: var(--sidebar-hover); }
+    .nav-item.active { color: white; background: rgba(59,130,246,0.15); border-right: 3px solid var(--primary); }
+    .nav-item .material-icons-round { font-size: 20px; }
+    .sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .nav-item.logout { color: #EF4444; }
+
+    /* MAIN */
+    .main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; }
+
+    /* TOPBAR */
+    .topbar {
+      background: white; padding: 16px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--slate-200);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar h1 { font-size: 20px; font-weight: 700; color: var(--navy); }
+    .topbar p { font-size: 13px; color: var(--slate-400); }
+    .topbar-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-icon {
+      width: 38px; height: 38px; border-radius: 8px;
+      border: 1px solid var(--slate-200); background: white;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; position: relative;
+    }
+    .btn-icon:hover { background: var(--slate-50); border-color: var(--slate-400); }
+    .btn-icon .material-icons-round { font-size: 20px; color: var(--slate-600); }
+    .notif-dot {
+      width: 8px; height: 8px; background: var(--danger);
+      border-radius: 50%; position: absolute; top: 6px; right: 6px;
+    }
+    .btn-primary-sm {
+      padding: 9px 18px; background: var(--primary); color: white;
+      border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 6px; transition: all 0.2s;
+    }
+    .btn-primary-sm:hover { background: var(--primary-dark); }
+
+    /* CONTENT */
+    .content { padding: 28px; flex: 1; }
+
+    /* STATS */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 28px; }
+    .stat-card {
+      background: white; border-radius: 14px; padding: 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      transition: box-shadow 0.2s;
+    }
+    .stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .stat-info .label { font-size: 12px; font-weight: 600; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .stat-info .value { font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1; }
+    .stat-info .change { font-size: 12px; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
+    .change.up { color: var(--success); }
+    .change.down { color: var(--danger); }
+    .stat-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stat-icon .material-icons-round { font-size: 24px; color: white; }
+    .stat-icon.blue { background: linear-gradient(135deg, #3B82F6, #1D4ED8); }
+    .stat-icon.green { background: linear-gradient(135deg, #10B981, #059669); }
+    .stat-icon.amber { background: linear-gradient(135deg, #F59E0B, #D97706); }
+    .stat-icon.purple { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+
+    /* GRID 2COL */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+
+    /* AI INSIGHT */
+    .ai-card {
+      background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+      border-radius: 14px; padding: 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .ai-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .ai-badge {
+      background: rgba(59,130,246,0.2); color: #60A5FA;
+      font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .ai-card h3 { color: white; font-size: 15px; font-weight: 600; }
+    .ai-card p { color: #94A3B8; font-size: 13px; line-height: 1.6; }
+    .ai-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .ai-tag {
+      background: rgba(59,130,246,0.15); color: #60A5FA;
+      font-size: 12px; padding: 4px 12px; border-radius: 20px;
+    }
+
+    /* FLEET TABLE */
+    .card {
+      background: white; border-radius: 14px; padding: 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .card-header h3 { font-size: 16px; font-weight: 700; color: var(--navy); }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: 11px; font-weight: 600; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; padding: 0 12px 12px; }
+    td { padding: 14px 12px; border-top: 1px solid var(--slate-100); font-size: 13px; color: var(--navy); }
+    tr:hover td { background: var(--slate-50); }
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+    }
+    .status-badge.available { background: #D1FAE5; color: #059669; }
+    .status-badge.rented { background: #DBEAFE; color: #2563EB; }
+    .status-badge.maintenance { background: #FEF3C7; color: #D97706; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* QUICK ACTIONS */
+    .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .action-btn {
+      padding: 16px; border: 1.5px solid var(--slate-200);
+      border-radius: 12px; background: white;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .action-btn:hover { border-color: var(--primary); background: #EFF6FF; }
+    .action-btn .material-icons-round { font-size: 24px; color: var(--primary); }
+    .action-btn span { font-size: 12px; font-weight: 600; color: var(--navy); }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon-sm"><span class="material-icons-round">directions_car</span></div>
+      <span>WeDRIVE</span>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar">AD</div>
+      <div class="user-info">
+        <div class="name">Admin</div>
+        <div class="role">Fleet Manager</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <a class="nav-item active"><span class="material-icons-round">dashboard</span> Dashboard</a>
+      <a class="nav-item" href="admin.html"><span class="material-icons-round">directions_car</span> Vehicle Fleet</a>
+      <a class="nav-item"><span class="material-icons-round">pending_actions</span> Active Rentals</a>
+      <a class="nav-item"><span class="material-icons-round">payments</span> Financials</a>
+      <div class="nav-section">Intelligence</div>
+      <a class="nav-item"><span class="material-icons-round">psychology</span> AI Predictions</a>
+      <a class="nav-item"><span class="material-icons-round">health_and_safety</span> Health Reports</a>
+      <a class="nav-item" href="chatbot.html"><span class="material-icons-round">smart_toy</span> AI Chatbot</a>
+      <div class="nav-section">System</div>
+      <a class="nav-item"><span class="material-icons-round">settings</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-item logout" href="index.html"><span class="material-icons-round">logout</span> Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h1>Dashboard Overview</h1>
+        <p>Real-time metrics and AI fleet insights</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="btn-icon"><span class="material-icons-round">search</span></div>
+        <div class="btn-icon">
+          <span class="material-icons-round">notifications</span>
+          <div class="notif-dot"></div>
+        </div>
+        <button class="btn-primary-sm">
+          <span class="material-icons-round" style="font-size:16px">add</span> Add Vehicle
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Total Vehicles</div>
+            <div class="value">150</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +12 this month</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Active Rentals</div>
+            <div class="value">42</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +8 today</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">pending_actions</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Revenue (MTD)</div>
+            <div class="value" style="font-size:24px">RM 12,400</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +18% vs last month</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">payments</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Fleet Utilization</div>
+            <div class="value">98%</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +3% this week</div>
+          </div>
+          <div class="stat-icon purple"><span class="material-icons-round">analytics</span></div>
+        </div>
+      </div>
+
+      <!-- AI + QUICK ACTIONS -->
+      <div class="grid-2">
+        <div class="ai-card">
+          <div class="ai-card-header">
+            <div class="ai-badge"><span class="material-icons-round" style="font-size:14px">psychology</span> AI Forecast</div>
+          </div>
+          <h3>Demand Surge Expected 🚗</h3>
+          <p style="margin-top:8px">Expected <strong style="color:#60A5FA">high demand</strong> for SUVs and Vans this upcoming weekend due to local events in Melaka. Consider repositioning 8 units from low-demand zones.</p>
+          <div class="ai-tags">
+            <span class="ai-tag">SUVs ↑</span>
+            <span class="ai-tag">Vans ↑</span>
+            <span class="ai-tag">Weekend Surge</span>
+            <span class="ai-tag">+23% predicted</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Quick Actions</h3>
+          </div>
+          <div class="actions-grid">
+            <div class="action-btn"><span class="material-icons-round">add_circle</span><span>Add Car</span></div>
+            <div class="action-btn"><span class="material-icons-round">receipt_long</span><span>New Booking</span></div>
+            <div class="action-btn"><span class="material-icons-round">build</span><span>Maintenance</span></div>
+            <div class="action-btn"><span class="material-icons-round">file_download</span><span>Export Report</span></div>
+            <div class="action-btn" onclick="window.location='chatbot.html'"><span class="material-icons-round">smart_toy</span><span>AI Chatbot</span></div>
+            <div class="action-btn"><span class="material-icons-round">people</span><span>Customers</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLEET TABLE -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Current Fleet Status</h3>
+          <button class="btn-primary-sm">View All</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Vehicle</th>
+              <th>Plate No.</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Daily Rate</th>
+              <th>Last Service</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Toyota Vios 2023</strong></td>
+              <td>ABC 1234</td>
+              <td>Sedan</td>
+              <td><span class="status-badge available"><span class="dot"></span> Available</span></td>
+              <td>RM 120/day</td>
+              <td>12 Apr 2026</td>
+              <td><button class="btn-primary-sm">Manage</button></td>
+            </tr>
+            <tr>
+              <td><strong>Honda CR-V 2024</strong></td>
+              <td>XYZ 5678</td>
+              <td>SUV</td>
+              <td><span class="status-badge rented"><span class="dot"></span> Rented</span></td>
+              <td>RM 200/day</td>
+              <td>5 Apr 2026</td>
+              <td><button class="btn-primary-sm">Manage</button></td>
+            </tr>
+            <tr>
+              <td><strong>Perodua Myvi 2023</strong></td>
+              <td>DEF 9012</td>
+              <td>Hatchback</td>
+              <td><span class="status-badge available"><span class="dot"></span> Available</span></td>
+              <td>RM 80/day</td>
+              <td>18 Apr 2026</td>
+              <td><button class="btn-primary-sm">Manage</button></td>
+            </tr>
+            <tr>
+              <td><strong>Toyota Hiace 2022</strong></td>
+              <td>GHI 3456</td>
+              <td>Van</td>
+              <td><span class="status-badge maintenance"><span class="dot"></span> Maintenance</span></td>
+              <td>RM 350/day</td>
+              <td>2 Apr 2026</td>
+              <td><button class="btn-primary-sm">Manage</button></td>
+            </tr>
+            <tr>
+              <td><strong>BMW 3 Series 2024</strong></td>
+              <td>JKL 7890</td>
+              <td>Luxury</td>
+              <td><span class="status-badge rented"><span class="dot"></span> Rented</span></td>
+              <td>RM 450/day</td>
+              <td>20 Apr 2026</td>
+              <td><button class="btn-primary-sm">Manage</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
