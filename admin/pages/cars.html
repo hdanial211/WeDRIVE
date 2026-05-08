@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fleet Management | WeDRIVE</title>
+  <title>Cars Management | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
@@ -25,7 +25,7 @@
       <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="stat-card reveal-onload">
           <div class="stat-info">
-            <div class="label" data-key="fl_stat_total">Total Fleet</div>
+            <div class="label" data-key="fl_stat_total">Total Cars</div>
             <div class="value" id="fl-total">--</div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
@@ -46,17 +46,26 @@
         </div>
       </div>
 
-      <!-- FILTER + SEARCH -->
+      <!-- FILTER + SEARCH + ACTIONS -->
       <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
             <button class="filter-chip active" onclick="filterFleet('all', this)">All</button>
             <button class="filter-chip" onclick="filterFleet('Available', this)">Available</button>
             <button class="filter-chip" onclick="filterFleet('Rented', this)">Rented</button>
           </div>
-          <div class="input-wrap-sm" style="max-width:300px;">
-            <span class="material-icons-round" style="font-size:18px">search</span>
-            <input type="text" id="fl-search" placeholder="Search car name or plate..." oninput="searchFleet(this.value)" />
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div class="input-wrap-sm" style="max-width:260px;">
+              <span class="material-icons-round" style="font-size:18px">search</span>
+              <input type="text" id="fl-search" placeholder="Search car name or plate..." oninput="searchFleet(this.value)" />
+            </div>
+            <button class="btn-outline-sm" onclick="openCarListModal()" title="View list">
+              <span class="material-icons-round" style="font-size:16px">list_alt</span> List View
+            </button>
+            <button class="btn-primary-sm" onclick="addNewCar()">
+              <span class="material-icons-round" style="font-size:16px">add</span>
+              <span data-key="fl_add_car">Add Car</span>
+            </button>
           </div>
         </div>
       </div>
@@ -66,38 +75,40 @@
         <!-- Populated by cars.js -->
       </div>
 
-      <!-- FLEET TABLE (detailed) -->
-      <div class="card reveal-on-scroll" style="margin-top:24px;">
-        <div class="card-header">
-          <h3 data-key="fl_table_title">Fleet Details</h3>
-          <button class="btn-primary-sm" onclick="addNewCar()">
-            <span class="material-icons-round" style="font-size:16px">add</span>
-            <span data-key="fl_add_car">Add Car</span>
-          </button>
-        </div>
-        <div style="overflow-x:auto;">
-          <table>
-            <thead>
-              <tr>
-                <th data-key="fl_th_vehicle">Vehicle</th>
-                <th data-key="fl_th_plate">Plate No.</th>
-                <th data-key="fl_th_type">Type</th>
-                <th data-key="fl_th_seats">Seats</th>
-                <th data-key="fl_th_trans">Transmission</th>
-                <th data-key="fl_th_fuel">Fuel</th>
-                <th data-key="fl_th_rate">Daily Rate</th>
-                <th data-key="fl_th_status">Status</th>
-                <th data-key="fl_th_action">Action</th>
-              </tr>
-            </thead>
-            <tbody id="fleet-tbody"></tbody>
-          </table>
-        </div>
-      </div>
     </div>
 
     <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
   </main>
+
+  <!-- CARS LIST MODAL -->
+  <div id="cars-list-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-container" style="max-width:960px;width:95%;">
+      <div class="modal-header">
+        <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">list_alt</span> Cars List</h3>
+        <button class="modal-close-btn" onclick="closeCarListModal()">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body" style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th data-key="fl_th_vehicle">Vehicle</th>
+              <th data-key="fl_th_plate">Plate No.</th>
+              <th data-key="fl_th_type">Type</th>
+              <th data-key="fl_th_seats">Seats</th>
+              <th data-key="fl_th_trans">Transmission</th>
+              <th data-key="fl_th_fuel">Fuel</th>
+              <th data-key="fl_th_rate">Daily Rate</th>
+              <th data-key="fl_th_status">Status</th>
+              <th data-key="fl_th_action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="fleet-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
   <script src="../../shared/js/navbar-loader.js"></script>
   <script src="../../shared/js/sidebar-loader.js"></script>

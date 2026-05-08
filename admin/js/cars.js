@@ -151,3 +151,28 @@ function manageCar(id) {
 function addNewCar() {
   alert('Add New Car - Feature will be available when backend is ready.');
 }
+
+/* ── Cars List Modal ── */
+function openCarListModal() {
+  const modal = document.getElementById('cars-list-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCarListModal() {
+  const modal = document.getElementById('cars-list-modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Close modal on backdrop click
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('modal-overlay')) {
+    closeCarListModal();
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeCarListModal();
+});
