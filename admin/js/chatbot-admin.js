@@ -1,17 +1,20 @@
 /**
- * WeDRIVE - AI Chatbot Settings (Google Gemini)
+ * WeDRIVE - AI Chatbot Settings (Google Gemini + Grok Backup)
  * admin/js/chatbot-admin.js
  *
- * Uses Google Gemini API free tier (gemini-2.0-flash)
+ * Primary: Google Gemini API (gemini-2.0-flash) — free tier
+ * Backup:  Grok AI (xAI) — auto-fallback if Gemini fails
  * Settings stored in localStorage for demo/FYP purposes.
  */
 
 const STORAGE_KEY = 'wedrive_chatbot_settings';
 const GEMINI_MODEL = 'gemini-2.0-flash';
+const GROK_MODEL = 'grok-3-mini-fast';
 
 // ─── Default Settings ───────────────────────────────────────────────────────
 const DEFAULT_SETTINGS = {
   apiKey: '',
+  grokKey: '',
   systemPrompt: `You are WeDRIVE Bot, a friendly and helpful AI assistant for WeDRIVE car rental service based in Melaka, Malaysia.
 
 Your role:
@@ -71,13 +74,14 @@ window.saveSettings = function() {
 
   const settings = {
     apiKey: document.getElementById('api-key').value.trim(),
+    grokKey: document.getElementById('grok-key').value.trim(),
     systemPrompt: document.getElementById('system-prompt').value.trim(),
     promoContext: document.getElementById('promo-context').value.trim(),
     greeting: document.getElementById('greeting-msg').value.trim()
   };
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-  updateStatusBadge(settings.apiKey);
+  updateStatusBadge(settings);
   showToast('Settings saved successfully!', false);
 
   setTimeout(() => {
@@ -88,9 +92,11 @@ window.saveSettings = function() {
 
 // ─── Test Connection ────────────────────────────────────────────────────────
 window.testConnection = async function() {
-  const apiKey = document.getElementById('api-key').value.trim();
-  if (!apiKey) {
-    showToast('Please enter an API key first', true);
+  const geminiKey = document.getElementById('api-key').value.trim();
+  const grokKey = document.getElementById('grok-key').value.trim();
+
+  if (!geminiKey && !grokKey) {
+    showToast('Please enter at least one API key', true);
     return;
   }
 
@@ -99,48 +105,132 @@ window.testConnection = async function() {
   btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">autorenew</span> Testing...';
   btn.disabled = true;
 
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: 'Say "Connected!" in one word.' }] }]
-      })
-    });
+  const results = [];
 
-    if (res.ok) {
-      updateStatusBadge(apiKey, true);
-      showToast('✅ Connected to Gemini API successfully!', false);
-    } else {
-      const err = await res.json();
-      updateStatusBadge('', false);
-      showToast('❌ API Error: ' + (err.error?.message || 'Invalid key'), true);
+  // Test Gemini
+  if (geminiKey) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${geminiKey}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: 'Say "OK" in one word.' }] }]
+        })
+      });
+      results.push({ provider: 'Gemini', ok: res.ok });
+    } catch {
+      results.push({ provider: 'Gemini', ok: false });
     }
-  } catch (e) {
-    updateStatusBadge('', false);
-    showToast('❌ Connection failed: ' + e.message, true);
-  } finally {
-    btn.innerHTML = original;
-    btn.disabled = false;
   }
+
+  // Test Grok
+  if (grokKey) {
+    try {
+      const res = await fetch('https://api.x.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${grokKey}`
+        },
+        body: JSON.stringify({
+          model: GROK_MODEL,
+          messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
+          max_tokens: 10
+        })
+      });
+      results.push({ provider: 'Grok', ok: res.ok });
+    } catch {
+      results.push({ provider: 'Grok', ok: false });
+    }
+  }
+
+  const connected = results.filter(r => r.ok);
+  const failed = results.filter(r => !r.ok);
+
+  if (connected.length > 0) {
+    const names = connected.map(r => r.provider).join(' + ');
+    const failMsg = failed.length > 0 ? ` (${failed[0].provider} failed)` : '';
+    updateStatusBadge({ apiKey: geminiKey, grokKey }, true);
+    showToast(`✅ ${names} connected!${failMsg}`, false);
+  } else {
+    updateStatusBadge({}, false);
+    showToast('❌ All connections failed — check your API keys', true);
+  }
+
+  btn.innerHTML = original;
+  btn.disabled = false;
 };
 
-// ─── Send Test Message ──────────────────────────────────────────────────────
+// ─── Gemini API Call ────────────────────────────────────────────────────────
+async function callGemini(apiKey, systemText, history) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: systemText }] },
+      contents: history
+    })
+  });
+
+  if (!res.ok) throw new Error(`Gemini ${res.status}`);
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini.';
+}
+
+// ─── Grok API Call ──────────────────────────────────────────────────────────
+async function callGrok(grokKey, systemText, history) {
+  // Convert Gemini history format to OpenAI format
+  const messages = [
+    { role: 'system', content: systemText }
+  ];
+  for (const msg of history) {
+    messages.push({
+      role: msg.role === 'model' ? 'assistant' : 'user',
+      content: msg.parts[0].text
+    });
+  }
+
+  const res = await fetch('https://api.x.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${grokKey}`
+    },
+    body: JSON.stringify({
+      model: GROK_MODEL,
+      messages,
+      max_tokens: 512
+    })
+  });
+
+  if (!res.ok) throw new Error(`Grok ${res.status}`);
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || 'No response from Grok.';
+}
+
+// ─── Send Test Message (with fallback) ──────────────────────────────────────
 window.sendTestMsg = async function() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   if (!text) return;
 
-  const apiKey = document.getElementById('api-key').value.trim();
-  if (!apiKey) {
-    showToast('Set API key first to test the chatbot', true);
+  const geminiKey = document.getElementById('api-key').value.trim();
+  const grokKey = document.getElementById('grok-key').value.trim();
+
+  if (!geminiKey && !grokKey) {
+    showToast('Set at least one API key to test', true);
     return;
   }
 
   // Add user message
   appendMsg(text, 'user');
   input.value = '';
+
+  // Disable send
+  const sendBtn = document.getElementById('send-btn');
+  sendBtn.disabled = true;
 
   // Add typing indicator
   const typingEl = appendTyping();
@@ -150,47 +240,54 @@ window.sendTestMsg = async function() {
   const promoContext = document.getElementById('promo-context').value.trim();
   const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '');
 
-  // Add to history
+  // Add to history (Gemini format)
   chatHistory.push({ role: 'user', parts: [{ text }] });
 
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: fullSystem }] },
-        contents: chatHistory
-      })
-    });
+  let reply = '';
+  let usedProvider = '';
 
-    typingEl.remove();
-
-    if (res.ok) {
-      const data = await res.json();
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not generate a response.';
-      chatHistory.push({ role: 'model', parts: [{ text: reply }] });
-      appendMsg(reply, 'bot');
-    } else {
-      const err = await res.json();
-      appendMsg('⚠️ Error: ' + (err.error?.message || 'API request failed'), 'bot');
+  // Try Gemini first, then Grok
+  if (geminiKey) {
+    try {
+      reply = await callGemini(geminiKey, fullSystem, chatHistory);
+      usedProvider = 'Gemini';
+    } catch (e) {
+      console.warn('Gemini failed, trying Grok...', e.message);
     }
-  } catch (e) {
-    typingEl.remove();
-    appendMsg('⚠️ Connection error: ' + e.message, 'bot');
   }
+
+  // Fallback to Grok
+  if (!reply && grokKey) {
+    try {
+      reply = await callGrok(grokKey, fullSystem, chatHistory);
+      usedProvider = 'Grok';
+    } catch (e) {
+      console.error('Grok also failed:', e.message);
+    }
+  }
+
+  typingEl.remove();
+
+  if (reply) {
+    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+    const providerTag = usedProvider === 'Grok' ? ' <span style="font-size:10px;opacity:0.6;margin-left:4px;">via Grok</span>' : '';
+    appendMsg(reply + providerTag, 'bot');
+  } else {
+    appendMsg('⚠️ Both APIs failed. Please check your API keys.', 'bot');
+  }
+
+  sendBtn.disabled = false;
 };
 
 // ─── Toggle API Key Visibility ──────────────────────────────────────────────
-window.toggleKey = function() {
-  const input = document.getElementById('api-key');
-  const icon = document.querySelector('.toggle-eye');
+window.toggleKey = function(inputId, iconEl) {
+  const input = document.getElementById(inputId);
   if (input.type === 'password') {
     input.type = 'text';
-    icon.textContent = 'visibility';
+    iconEl.textContent = 'visibility';
   } else {
     input.type = 'password';
-    icon.textContent = 'visibility_off';
+    iconEl.textContent = 'visibility_off';
   }
 };
 
@@ -199,7 +296,6 @@ function appendMsg(text, who) {
   const container = document.getElementById('chat-messages');
   const div = document.createElement('div');
   div.className = `msg ${who}`;
-  // Simple markdown-like: **bold** and newlines
   div.innerHTML = text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br>');
@@ -218,11 +314,17 @@ function appendTyping() {
   return div;
 }
 
-function updateStatusBadge(apiKey, forceConnected) {
+function updateStatusBadge(settings, forceConnected) {
   const badge = document.getElementById('api-status');
-  if (forceConnected || (apiKey && apiKey.length > 10)) {
+  const hasGemini = settings?.apiKey?.length > 10;
+  const hasGrok = settings?.grokKey?.length > 10;
+
+  if (forceConnected || hasGemini || hasGrok) {
+    const providers = [];
+    if (hasGemini) providers.push('Gemini');
+    if (hasGrok) providers.push('Grok');
     badge.className = 'api-status connected';
-    badge.innerHTML = '<span class="dot-indicator"></span> Connected';
+    badge.innerHTML = `<span class="dot-indicator"></span> ${providers.join(' + ') || 'Connected'}`;
   } else {
     badge.className = 'api-status disconnected';
     badge.innerHTML = '<span class="dot-indicator"></span> Not Connected';
@@ -244,11 +346,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const settings = loadSettings();
 
   document.getElementById('api-key').value = settings.apiKey;
+  document.getElementById('grok-key').value = settings.grokKey || '';
   document.getElementById('system-prompt').value = settings.systemPrompt;
   document.getElementById('promo-context').value = settings.promoContext;
   document.getElementById('greeting-msg').value = settings.greeting;
 
-  updateStatusBadge(settings.apiKey);
+  updateStatusBadge(settings);
 
   // Show greeting in test chat
   if (settings.greeting) {
