@@ -116,6 +116,13 @@
         const response = await window.WeDriveAPI.loginUser(email, password);
         
         if (response.success) {
+          // Save session to local storage for Auth Guard
+          localStorage.setItem('wedrive_session', JSON.stringify({
+            email: email,
+            role: response.role,
+            timestamp: new Date().getTime()
+          }));
+
           if (response.role === 'admin') {
             window.location.href = '../../admin/pages/admin.html';
           } else {

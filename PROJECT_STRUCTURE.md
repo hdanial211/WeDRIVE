@@ -11,36 +11,42 @@ WeDRIVE dibina menggunakan struktur berasaskan komponen dan modul supaya kemas d
 ```text
 AI CAR RENTAL SYSTEM/
 |
-+-- index.html                  # Landing Page Utama (Guest)
++-- index.html                  # Halaman Log Masuk (Entry Point)
++-- guest.html                  # Landing Page (Browse tanpa login)
 |
 +-- admin/                      # Modul Admin
 |   +-- pages/
 |   |   +-- admin.html          # Admin Dashboard
+|   |   +-- chatbot.html        # Admin Chatbot Settings
 |   +-- css/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
 |       +-- admin.js            # Logik Admin (kini menggunakan WeDriveAPI)
+|       +-- chatbot-admin.js    # Logik Chatbot Settings
 |
 +-- customer/                   # Modul Customer / Pengguna
 |   +-- pages/
-|   |   +-- login.html          # Halaman Log Masuk
+|   |   +-- signup.html         # Halaman Daftar Akaun
 |   |   +-- customer.html       # Customer Dashboard (Pilih Kereta)
 |   +-- css/
-|   |   +-- login.css           # Gaya Log Masuk
 |   |   +-- customer.css        # Gaya Customer
 |   +-- js/
 |       +-- customer.js         # Logik Customer (kini menggunakan WeDriveAPI)
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- components/
-    |   +-- sidebar.html        # Admin Sidebar
+    |   +-- sidebar-admin.html  # Admin Sidebar
     |   +-- footer.html         # Footer yang diguna semua page
     +-- css/
     |   +-- theme_day.css       # Tema Siang
     |   +-- theme_night.css     # Tema Malam
+    |   +-- theme_overrides.css # Pengatasan tema
+    |   +-- auth.css            # Gaya halaman Login & Sign Up
+    |   +-- sidebar.css         # Gaya Sidebar Admin
     |   +-- footer.css          # Gaya Footer
     |   +-- navbar.css          # Gaya Global Navbar
     |   +-- chatbot.css         # Gaya Komponen WeDRIVE AI Chatbot
+    |   +-- animation.css       # Gaya animasi (reveal, particles, dll)
     +-- dummy/
     |   +-- admin.json          # Data Mockup Admin
     |   +-- customer.json       # Data Mockup Kereta
@@ -50,6 +56,7 @@ AI CAR RENTAL SYSTEM/
     +-- logo/                   # Gambar Logo
     +-- js/
         +-- main.js             # Skrip Utama (Theme, Lang, Footer Auto-Load)
+        +-- auth-guard.js       # Pelindung halaman (Auth Guard)
         +-- sidebar-loader.js   # Pemuat Sidebar Admin
         +-- navbar-loader.js    # Pemuat Navbar Global
         +-- api.js              # API & CONFIGURATION (Pusat Database)

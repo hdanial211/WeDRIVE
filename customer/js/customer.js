@@ -60,7 +60,7 @@ function bookCar(id) {
   if (!car) return;
   
   if (window.__GUEST_MODE__) {
-    window.location.href = 'customer/pages/login.html';
+    window.location.href = 'index.html';
     return;
   }
   

@@ -105,7 +105,15 @@
       </button>
 
       <div class="signup-link">
-        <span data-key="signup_have_account">Already have an account?</span> <a href="login.html" data-key="signup_login_link">Sign in</a>
+        <span data-key="signup_have_account">Already have an account?</span> <a href="../../index.html" data-key="signup_login_link">Sign in</a>
+      </div>
+
+      <!-- Continue as Guest -->
+      <div class="guest-link">
+        <a href="../../guest.html" class="btn-guest">
+          <span class="material-icons-round" style="font-size:18px">visibility</span>
+          <span data-key="login_guest">Continue as Guest</span>
+        </a>
       </div>
     </div>
   </div>
@@ -144,7 +152,7 @@
         
         // Simulating successful account creation
         alert(`Account created successfully for ${fname} ${lname}! Please sign in.`);
-        window.location.href = 'login.html';
+        window.location.href = '../../index.html';
         
       } catch (err) {
         console.error('Signup error:', err);

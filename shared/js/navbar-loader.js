@@ -34,15 +34,15 @@
   // ─── LINK DEFINITIONS ───────────────────────────────────────────────────────
 
   var NAV_CONFIG = {
-    // Guest-facing pages (index.html)
+    // Guest-facing pages (guest.html)
     guest: {
       links: [
-        { key: 'nav_browse', href: '{base}index.html',       label: 'Browse Cars', id: 'nl-browse' },
-        { key: 'nav_how',    href: '{base}index.html#how',   label: 'How It Works', id: 'nl-how'    }
+        { key: 'nav_browse', href: '{base}guest.html',       label: 'Browse Cars', id: 'nl-browse' },
+        { key: 'nav_how',    href: '{base}guest.html#how',   label: 'How It Works', id: 'nl-how'    }
       ],
       actions: `
-        <button class="btn-outline" onclick="window.location='{base}customer/pages/login.html'" data-key="nav_login">Log In</button>
-        <button class="btn-primary" onclick="window.location='{base}customer/pages/login.html'" data-key="nav_signup">Sign Up</button>
+        <button class="btn-outline" onclick="window.location='{base}index.html'" data-key="nav_login">Log In</button>
+        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup.html'" data-key="nav_signup">Sign Up</button>
       `
     },
 

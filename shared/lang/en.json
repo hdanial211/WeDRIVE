@@ -26,6 +26,7 @@
   "login_apple":       "Continue with Apple",
   "login_no_account":  "Don't have an account?",
   "login_signup_link": "Sign up as Customer",
+  "login_guest":       "Continue as Guest",
 
   "signup_welcome":      "Create an account",
   "signup_subtitle":     "Join WeDRIVE to experience smart car rentals",

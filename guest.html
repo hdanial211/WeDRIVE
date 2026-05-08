@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Browse Cars | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="shared/logo/wedrive-icon.png?v=2" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="shared/css/theme_day.css" />
+  <link rel="stylesheet" href="shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="shared/css/animation.css" />
+  <link rel="stylesheet" href="customer/css/customer.css" />
+  <style>
+    /* LOGIN BANNER */
+    .login-banner {
+      background: linear-gradient(90deg, #1D4ED8, #3B82F6);
+      color: white; text-align: center; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      font-size: 14px; font-weight: 500;
+    }
+    .login-banner a {
+      background: white; color: #1D4ED8; font-weight: 700;
+      padding: 6px 18px; border-radius: 20px; text-decoration: none;
+      font-size: 13px; transition: all 0.2s;
+    }
+    .login-banner a:hover { background: #EFF6FF; }
+
+    /* Lock overlay on car card */
+    .btn-book-guest {
+      padding: 9px 20px; background: #94A3B8; color: white;
+      border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-book-guest:hover { background: #1D4ED8; }
+
+    /* Guest hero CTA */
+    .hero-cta {
+      display: flex; gap: 12px; justify-content: center; margin-top: 8px;
+      margin-bottom: 28px; position: relative; z-index: 1;
+    }
+    .hero-cta .hero-btn-primary {
+      padding: 12px 28px; background: #3B82F6; color: white; border: none;
+      border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 15px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .hero-cta .hero-btn-primary:hover { background: #1D4ED8; transform: translateY(-2px); }
+    .hero-cta .hero-btn-outline {
+      padding: 12px 28px; border: 2px solid rgba(255,255,255,0.4); color: white;
+      background: rgba(255,255,255,0.08); border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      backdrop-filter: blur(4px);
+    }
+    .hero-cta .hero-btn-outline:hover { background: rgba(255,255,255,0.15); }
+  </style>
+</head>
+<body data-particles data-cursor-glow>
+
+  <!-- LOGIN BANNER -->
+  <div class="login-banner reveal-onload">
+    <span class="material-icons-round" style="font-size:18px">lock</span>
+    <span data-key="browse_banner">Sign in to unlock booking and AI recommendations</span>
+    <a href="index.html" data-key="browse_signin_btn">Sign In Now</a>
+  </div>
+
+  <!-- NAVBAR (Loaded dynamically) -->
+  <div id="navbar-placeholder" data-module="guest"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 class="reveal-onload" data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
+    <p class="reveal-onload" data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
+    <div class="hero-cta reveal-onload">
+      <a href="index.html" class="hero-btn-primary">
+        <span class="material-icons-round" style="font-size:18px">login</span>
+        <span data-key="hero_cta_login">Sign In to Book</span>
+      </a>
+      <a href="index.html" class="hero-btn-outline">
+        <span class="material-icons-round" style="font-size:18px">person_add</span>
+        <span data-key="hero_cta_signup">Create Free Account</span>
+      </a>
+    </div>
+    <div class="search-box reveal-onload">
+      <div class="search-grid">
+        <div class="search-field">
+          <label data-key="cust_pickup_loc">Pick-up Location</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">location_on</span>
+            <input type="text" placeholder="Melaka, Malaysia" />
+          </div>
+        </div>
+        <div class="search-field">
+          <label data-key="search_from">Pick-up Date</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">calendar_today</span>
+            <input type="date" />
+          </div>
+        </div>
+        <div class="search-field">
+          <label data-key="search_to">Return Date</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">event</span>
+            <input type="date" />
+          </div>
+        </div>
+        <button class="btn-search" onclick="window.location='index.html'">
+          <span class="material-icons-round" style="font-size:18px">search</span>
+          <span data-key="search_btn">Search</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <div class="filter-bar reveal-on-scroll">
+      <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
+      <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
+      <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
+      <button class="filter-chip" onclick="filterCars('hatchback', this)" data-key="filter_hatch">Hatchback</button>
+      <button class="filter-chip" onclick="filterCars('van', this)" data-key="filter_van">Van</button>
+      <button class="filter-chip" onclick="filterCars('luxury', this)" data-key="filter_luxury">Luxury</button>
+      <span class="results-count" data-key="cust_showing">Showing cars available</span>
+    </div>
+    <div class="cars-grid" id="cars-grid">
+      <!-- Car cards injected by JS — Book btn redirects to login for guests -->
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="background:var(--bg-body,#F8FAFC); padding: 60px 40px; text-align:center; border-top: 1px solid var(--border,#E2E8F0)">
+    <h2 class="reveal-on-scroll" style="font-size:28px; font-weight:700; margin-bottom:8px;" data-key="how_title">How It Works</h2>
+    <p class="reveal-on-scroll" style="color:#64748B; margin-bottom:40px;" data-key="how_sub">Get on the road in 3 simple steps</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; max-width:900px; margin:0 auto;">
+      <div class="reveal-on-scroll" data-delay="0" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+        <div style="width:52px;height:52px;background:#EFF6FF;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+          <span class="material-icons-round" style="color:#3B82F6;font-size:26px">person_add</span>
+        </div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step1_title">Create Account</h3>
+        <p style="font-size:13px;color:#64748B;" data-key="how_step1_desc">Sign up free and verify your driver's licence</p>
+      </div>
+      <div class="reveal-on-scroll" data-delay="120" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+        <div style="width:52px;height:52px;background:#F0FDF4;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+          <span class="material-icons-round" style="color:#10B981;font-size:26px">directions_car</span>
+        </div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step2_title">Choose Your Car</h3>
+        <p style="font-size:13px;color:#64748B;" data-key="how_step2_desc">Browse AI-recommended vehicles that suit your needs</p>
+      </div>
+      <div class="reveal-on-scroll" data-delay="240" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+        <div style="width:52px;height:52px;background:#FFF7ED;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+          <span class="material-icons-round" style="color:#F59E0B;font-size:26px">receipt_long</span>
+        </div>
+        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step3_title">Book & Drive</h3>
+        <p style="font-size:13px;color:#64748B;" data-key="how_step3_desc">Instant confirmation, pay securely, pick up and go</p>
+      </div>
+    </div>
+    <div class="reveal-on-scroll" style="margin-top:40px">
+      <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;background:#3B82F6;color:white;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#3B82F6'">
+        <span class="material-icons-round">rocket_launch</span>
+        <span data-key="how_cta">Get Started Free</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CHATBOT -->
+  <div id="chatbot-placeholder"></div>
+
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
+
+  <script src="shared/js/navbar-loader.js"></script>
+  <script src="shared/js/api.js"></script>
+  <script src="shared/js/chatbot.js"></script>
+  <script src="customer/js/customer.js"></script>
+  <script src="shared/js/anime.min.js"></script>
+  <script src="shared/js/animate.js"></script>
+  <script src="shared/js/main.js"></script>
+  <script>
+    // Override: Book button → redirect to login for guests
+    window.__GUEST_MODE__ = true;
+  </script>
+</body>
+</html>
