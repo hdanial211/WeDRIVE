@@ -70,8 +70,8 @@
     admin: {
       links: [
         { key: 'admin_nav_dash',  href: '{base}admin/pages/admin.html', label: 'Dashboard',  id: 'nl-dash'  },
-        { key: 'admin_nav_cars',  href: '#cars',                         label: 'Cars',        id: 'nl-cars'  },
-        { key: 'admin_nav_users', href: '#users',                        label: 'Customers',   id: 'nl-users' }
+        { key: 'admin_nav_cars',  href: '{base}admin/pages/cars.html',      label: 'Cars',        id: 'nl-cars'  },
+        { key: 'admin_nav_users', href: '{base}admin/pages/customers.html', label: 'Customers',   id: 'nl-users' }
       ],
       actions: `
         <div class="user-pill" id="user-pill">
