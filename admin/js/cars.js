@@ -148,19 +148,7 @@ function applyFilters() {
 
 /* ── Actions ── */
 function manageCar(id) {
-  const car = allFleet.find(c => c.id === id);
-  if (!car) return;
-  alert(
-    `Vehicle: ${car.name}\n` +
-    `Plate: ${car.plate}\n` +
-    `Type: ${car.type}\n` +
-    `Status: ${car.status}\n` +
-    `Fuel: ${car.fuel}\n` +
-    `Transmission: ${car.transmission}\n` +
-    `Mileage: ${car.mileage.toLocaleString()} km\n` +
-    `Rate: ${car.rate}\n` +
-    `Last Service: ${car.last_service}`
-  );
+  window.location.href = `car-detail.html?id=${id}`;
 }
 
 function addNewCar() {

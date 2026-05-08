@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vehicle Details | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="fleet"></div>
+
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+
+      <!-- BACK BUTTON -->
+      <div style="margin-bottom: 20px;">
+        <button class="btn-back" onclick="window.location.href='cars.html'">
+          <span class="material-icons-round">arrow_back</span>
+          <span data-key="cd_back">Back to Fleet</span>
+        </button>
+      </div>
+
+      <!-- CAR HERO -->
+      <div class="card car-hero reveal-onload">
+        <div class="car-hero-grid">
+          <!-- Car Image -->
+          <div class="car-hero-image" id="cd-image">
+            <span class="material-icons-round" style="font-size:80px;color:var(--primary);opacity:0.5;">directions_car</span>
+          </div>
+
+          <!-- Car Overview -->
+          <div class="car-hero-info">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+              <h1 id="cd-name" style="font-size:28px;font-weight:700;color:var(--navy);margin:0;">--</h1>
+              <span class="status-badge" id="cd-status">--</span>
+            </div>
+            <p style="color:var(--slate-400);font-size:14px;font-weight:600;margin:0 0 20px;" id="cd-plate-type">--</p>
+
+            <div class="car-quick-stats">
+              <div class="cq-stat">
+                <span class="material-icons-round">local_gas_station</span>
+                <div>
+                  <div class="cq-label">Fuel Type</div>
+                  <div class="cq-value" id="cd-fuel">--</div>
+                </div>
+              </div>
+              <div class="cq-stat">
+                <span class="material-icons-round">settings</span>
+                <div>
+                  <div class="cq-label">Transmission</div>
+                  <div class="cq-value" id="cd-trans">--</div>
+                </div>
+              </div>
+              <div class="cq-stat">
+                <span class="material-icons-round">speed</span>
+                <div>
+                  <div class="cq-label">Mileage</div>
+                  <div class="cq-value" id="cd-mileage">--</div>
+                </div>
+              </div>
+              <div class="cq-stat">
+                <span class="material-icons-round">build</span>
+                <div>
+                  <div class="cq-label">Last Service</div>
+                  <div class="cq-value" id="cd-service">--</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;display:flex;align-items:center;gap:16px;">
+              <div style="font-size:28px;font-weight:800;color:var(--primary);" id="cd-rate">--</div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn-primary-sm" onclick="updateStatus()">
+                  <span class="material-icons-round" style="font-size:14px">sync</span>
+                  <span>Update Status</span>
+                </button>
+                <button class="btn-outline-sm" onclick="editDetails()">
+                  <span class="material-icons-round" style="font-size:14px">edit</span>
+                  <span>Edit Details</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT FORM -->
+      <div class="card reveal-on-scroll" id="edit-section" style="display:none; margin-top:24px;">
+        <div class="card-header">
+          <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">edit_note</span> Edit Vehicle Details</h3>
+          <button class="btn-outline-sm" onclick="cancelEdit()">Cancel</button>
+        </div>
+        <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
+          <div class="form-group">
+            <label data-key="cd_edit_name">Vehicle Name</label>
+            <input type="text" id="edit-name" required />
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_plate">Plate Number</label>
+            <input type="text" id="edit-plate" required />
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_type">Vehicle Type</label>
+            <select id="edit-type">
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Van">Van</option>
+              <option value="Luxury">Luxury</option>
+              <option value="MPV">MPV</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_fuel">Fuel Type</label>
+            <select id="edit-fuel">
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Electric">Electric</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_trans">Transmission</label>
+            <select id="edit-trans">
+              <option value="Auto">Auto</option>
+              <option value="Manual">Manual</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_rate">Daily Rate (RM)</label>
+            <input type="number" id="edit-rate" required />
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_mileage">Mileage (km)</label>
+            <input type="number" id="edit-mileage" required />
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_service">Last Service Date</label>
+            <input type="text" id="edit-service" required />
+          </div>
+          <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;margin-top:8px;">
+            <button type="button" class="btn-outline-sm" onclick="cancelEdit()">Cancel</button>
+            <button type="submit" class="btn-primary-sm" style="padding:10px 24px;">
+              <span class="material-icons-round" style="font-size:14px">save</span> Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- BOOKING HISTORY -->
+      <div class="card reveal-on-scroll" style="margin-top:24px;">
+        <div class="card-header">
+          <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">history</span> Booking History</h3>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Pick-up</th>
+                <th>Return</th>
+                <th>Days</th>
+                <th>Total</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="cd-bookings-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="stats-grid reveal-on-scroll" style="grid-template-columns:repeat(3,1fr);margin-top:24px;">
+        <div class="card" style="padding:24px;text-align:center;cursor:pointer;" onclick="scheduleService()">
+          <span class="material-icons-round" style="font-size:36px;color:#F59E0B;margin-bottom:8px;display:block;">build_circle</span>
+          <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:0 0 4px;">Schedule Service</h4>
+          <p style="font-size:12px;color:var(--slate-400);margin:0;">Set next maintenance date</p>
+        </div>
+        <div class="card" style="padding:24px;text-align:center;cursor:pointer;" onclick="viewInsurance()">
+          <span class="material-icons-round" style="font-size:36px;color:#3B82F6;margin-bottom:8px;display:block;">verified_user</span>
+          <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:0 0 4px;">Insurance Info</h4>
+          <p style="font-size:12px;color:var(--slate-400);margin:0;">View coverage details</p>
+        </div>
+        <div class="card" style="padding:24px;text-align:center;cursor:pointer;" onclick="deleteCar()">
+          <span class="material-icons-round" style="font-size:36px;color:#EF4444;margin-bottom:8px;display:block;">delete_forever</span>
+          <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:0 0 4px;">Remove Vehicle</h4>
+          <p style="font-size:12px;color:var(--slate-400);margin:0;">Decommission from fleet</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
+  </main>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/main.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../js/car-detail.js"></script>
+</body>
+</html>

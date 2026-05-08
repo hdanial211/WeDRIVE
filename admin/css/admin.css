@@ -237,3 +237,44 @@ tr:hover td { background: var(--slate-50); }
 
 /* STATUS BADGE RENTED */
 .status-badge.rented { background: #DBEAFE; color: #2563EB; }
+
+/* CAR DETAIL PAGE */
+.btn-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: 2px solid var(--slate-200);
+  color: var(--slate-600); font-size: 14px; font-weight: 600;
+  padding: 10px 20px; border-radius: 10px; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-back:hover { border-color: var(--primary); color: var(--primary); }
+
+.car-hero-grid {
+  display: grid; grid-template-columns: 340px 1fr; gap: 32px; align-items: center;
+}
+.car-hero-image {
+  width: 100%; height: 220px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--slate-50), var(--slate-100));
+  display: flex; align-items: center; justify-content: center;
+}
+.car-quick-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cq-stat {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--slate-50); padding: 12px 16px; border-radius: 10px;
+}
+.cq-stat .material-icons-round { font-size: 20px; color: var(--primary); }
+.cq-label { font-size: 11px; color: var(--slate-400); font-weight: 600; text-transform: uppercase; }
+.cq-value { font-size: 14px; color: var(--navy); font-weight: 700; }
+
+.btn-outline-sm {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: transparent; border: 2px solid var(--slate-200);
+  color: var(--slate-600); font-size: 13px; font-weight: 600;
+  padding: 8px 16px; border-radius: 8px; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-outline-sm:hover { border-color: var(--primary); color: var(--primary); }
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
