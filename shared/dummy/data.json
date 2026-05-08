@@ -398,53 +398,6 @@
       "busiest_month": "April"
     }
   },
-  "ai_insights": [
-    {
-      "id": 1,
-      "type": "demand",
-      "title": "SUV Demand Surge Expected",
-      "desc": "Expected high demand for SUVs this weekend due to Melaka tourism event. Consider repositioning 3 units.",
-      "confidence": 92,
-      "tags": ["SUV", "Weekend", "+28% predicted"],
-      "priority": "high"
-    },
-    {
-      "id": 2,
-      "type": "maintenance",
-      "title": "Scheduled Maintenance Alert",
-      "desc": "Toyota Hiace (GHI 3456) has exceeded 65,000km. Recommend full service within 7 days.",
-      "confidence": 98,
-      "tags": ["Maintenance", "Hiace", "Urgent"],
-      "priority": "high"
-    },
-    {
-      "id": 3,
-      "type": "pricing",
-      "title": "Dynamic Pricing Opportunity",
-      "desc": "Honda CR-V has 85% utilization. AI suggests increasing rate to RM 230/day during peak hours.",
-      "confidence": 76,
-      "tags": ["Pricing", "CR-V", "+15% revenue"],
-      "priority": "medium"
-    },
-    {
-      "id": 4,
-      "type": "fleet",
-      "title": "Fleet Expansion Recommendation",
-      "desc": "3 SUV booking requests unmet this week. Adding 1 more SUV could generate RM 2,400/month extra revenue.",
-      "confidence": 84,
-      "tags": ["Fleet", "SUV", "Expansion"],
-      "priority": "medium"
-    },
-    {
-      "id": 5,
-      "type": "customer",
-      "title": "Customer Retention Alert",
-      "desc": "Farah Zainal registered 10 days ago but has not made a booking. Consider sending promotional offer.",
-      "confidence": 68,
-      "tags": ["Retention", "Promo", "New User"],
-      "priority": "low"
-    }
-  ],
   "settings": {
     "company_name": "WeDRIVE Sdn Bhd",
     "company_email": "admin@wedrive.my",
