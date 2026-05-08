@@ -49,7 +49,7 @@ Booking Policy:
 - Weekly Rate: Book 7+ days and get 15% discount
 - New Customer: First-time renters get RM 30 off`,
 
-  greeting: "Hi there! I'm WeDRIVE Bot 🚗 How can I help you today?"
+  greeting: "Hi there! I'm WeDRIVE Bot. How can I help you today?"
 };
 
 // ─── Conversation History (for test chat) ───────────────────────────────────

@@ -25,9 +25,8 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- bookings.html       # Pengurusan Tempahan
 |   |   +-- customers.html      # Pengurusan Pelanggan
 |   |   +-- reports.html        # Laporan & Analitik
-|   |   +-- ai-insights.html    # AI Insights & Cadangan
 |   |   +-- settings.html       # Tetapan Sistem
-|   |   +-- chatbot.html        # Admin Chatbot Settings
+|   |   +-- chatbot.html        # AI Chatbot Settings (Gemini + Grok)
 |   +-- css/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
@@ -37,9 +36,8 @@ AI CAR RENTAL SYSTEM/
 |       +-- bookings.js         # Logik Tempahan
 |       +-- customers.js        # Logik Pelanggan
 |       +-- reports.js          # Logik Laporan
-|       +-- ai-insights.js      # Logik AI Insights
 |       +-- settings.js         # Logik Tetapan
-|       +-- chatbot-admin.js    # Logik Chatbot Settings
+|       +-- chatbot-admin.js    # Logik AI Chatbot (Gemini + Grok API)
 |
 +-- customer/                   # Modul Customer / Pengguna
 |   +-- pages/
@@ -65,8 +63,7 @@ AI CAR RENTAL SYSTEM/
     |   +-- chatbot.css         # Gaya Komponen WeDRIVE AI Chatbot
     |   +-- animation.css       # Gaya animasi (reveal, particles, dll)
     +-- dummy/
-    |   +-- admin.json          # Data Mockup Admin
-    |   +-- customer.json       # Data Mockup Kereta
+    |   +-- data.json            # Data Mockup Tunggal (Single Source of Truth)
     +-- lang/
     |   +-- en.json             # Bahasa Inggeris
     |   +-- ms.json             # Bahasa Melayu
