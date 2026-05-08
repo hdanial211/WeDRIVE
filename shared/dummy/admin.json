@@ -17,7 +17,11 @@
       "type": "Sedan",
       "status": "Available",
       "rate": "RM 120/day",
-      "last_service": "10 Apr 2026"
+      "last_service": "10 Apr 2026",
+      "mileage": 34500,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "image": "toyota-vios.jpg"
     },
     {
       "id": 2,
@@ -26,7 +30,11 @@
       "type": "SUV",
       "status": "Rented",
       "rate": "RM 200/day",
-      "last_service": "05 Apr 2026"
+      "last_service": "05 Apr 2026",
+      "mileage": 12300,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "image": "honda-crv.jpg"
     },
     {
       "id": 3,
@@ -35,7 +43,11 @@
       "type": "Hatchback",
       "status": "Available",
       "rate": "RM 80/day",
-      "last_service": "18 Apr 2026"
+      "last_service": "18 Apr 2026",
+      "mileage": 28700,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "image": "perodua-myvi.jpg"
     },
     {
       "id": 4,
@@ -44,7 +56,11 @@
       "type": "Van",
       "status": "Maintenance",
       "rate": "RM 350/day",
-      "last_service": "01 Apr 2026"
+      "last_service": "01 Apr 2026",
+      "mileage": 67200,
+      "fuel": "Diesel",
+      "transmission": "Manual",
+      "image": "toyota-hiace.jpg"
     },
     {
       "id": 5,
@@ -53,7 +69,11 @@
       "type": "Luxury",
       "status": "Rented",
       "rate": "RM 450/day",
-      "last_service": "20 Apr 2026"
+      "last_service": "20 Apr 2026",
+      "mileage": 8900,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "image": "bmw-3series.jpg"
     },
     {
       "id": 6,
@@ -62,54 +82,268 @@
       "type": "Hatchback",
       "status": "Available",
       "rate": "RM 90/day",
-      "last_service": "15 Apr 2026"
+      "last_service": "15 Apr 2026",
+      "mileage": 19800,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "image": "honda-jazz.jpg"
     }
   ],
   "bookings": [
     {
-      "id": "BK-2024-001",
+      "id": "BK-2026-001",
       "customer": "Ahmad Hakim",
+      "email": "ahmad@gmail.com",
+      "phone": "011-10852955",
       "car": "Honda CR-V 2024",
-      "pickup": "2024-05-10",
-      "return": "2024-05-13",
+      "plate": "ABC 5678",
+      "pickup": "2026-05-10",
+      "return": "2026-05-13",
+      "pickup_loc": "Melaka Sentral",
       "days": 3,
       "total": 600,
-      "status": "Confirmed"
+      "status": "Confirmed",
+      "payment": "Paid",
+      "created_at": "2026-05-08 14:20"
     },
     {
-      "id": "BK-2024-002",
+      "id": "BK-2026-002",
       "customer": "Siti Nurul",
+      "email": "siti@gmail.com",
+      "phone": "012-3456789",
       "car": "Perodua Myvi 2023",
-      "pickup": "2024-05-12",
-      "return": "2024-05-14",
+      "plate": "PQR 9012",
+      "pickup": "2026-05-12",
+      "return": "2026-05-14",
+      "pickup_loc": "KLIA2",
       "days": 2,
       "total": 160,
-      "status": "Pending"
+      "status": "Pending",
+      "payment": "Unpaid",
+      "created_at": "2026-05-09 09:45"
     },
     {
-      "id": "BK-2024-003",
+      "id": "BK-2026-003",
       "customer": "Razif Ismail",
+      "email": "razif@yahoo.com",
+      "phone": "013-9876543",
       "car": "BMW 3 Series 2024",
-      "pickup": "2024-05-08",
-      "return": "2024-05-11",
+      "plate": "JKL 7890",
+      "pickup": "2026-05-08",
+      "return": "2026-05-11",
+      "pickup_loc": "Dataran Pahlawan",
       "days": 3,
       "total": 1350,
-      "status": "Completed"
+      "status": "Completed",
+      "payment": "Paid",
+      "created_at": "2026-05-06 16:30"
+    },
+    {
+      "id": "BK-2026-004",
+      "customer": "Nurul Aina",
+      "email": "aina@gmail.com",
+      "phone": "014-5551234",
+      "car": "Toyota Vios 2023",
+      "plate": "WXY 1234",
+      "pickup": "2026-05-15",
+      "return": "2026-05-18",
+      "pickup_loc": "Ayer Keroh",
+      "days": 3,
+      "total": 360,
+      "status": "Pending",
+      "payment": "Unpaid",
+      "created_at": "2026-05-09 11:00"
+    },
+    {
+      "id": "BK-2026-005",
+      "customer": "Hafiz Rahman",
+      "email": "hafiz@outlook.com",
+      "phone": "016-7890123",
+      "car": "Honda Jazz 2023",
+      "plate": "MNO 1122",
+      "pickup": "2026-05-20",
+      "return": "2026-05-22",
+      "pickup_loc": "Melaka Sentral",
+      "days": 2,
+      "total": 180,
+      "status": "Confirmed",
+      "payment": "Paid",
+      "created_at": "2026-05-09 15:10"
     }
   ],
-  "ai_insights": [
-    "Honda CR-V 2024 has the highest demand this week based on search trends.",
-    "Toyota Hiace is due for scheduled maintenance — revenue impact: RM 350/day.",
-    "Weekend bookings are projected to increase by 28% based on historical data.",
-    "Suggest adding 1 more SUV to fleet — 3 booking requests unmet this week."
+  "customers": [
+    {
+      "id": 1,
+      "name": "Ahmad Hakim",
+      "email": "ahmad@gmail.com",
+      "phone": "011-10852955",
+      "ic": "990515-04-XXXX",
+      "license": "D12345678",
+      "total_bookings": 5,
+      "total_spent": 2400,
+      "status": "Active",
+      "joined": "2026-01-15",
+      "last_booking": "2026-05-08"
+    },
+    {
+      "id": 2,
+      "name": "Siti Nurul",
+      "email": "siti@gmail.com",
+      "phone": "012-3456789",
+      "ic": "000820-01-XXXX",
+      "license": "D98765432",
+      "total_bookings": 2,
+      "total_spent": 520,
+      "status": "Active",
+      "joined": "2026-03-20",
+      "last_booking": "2026-05-09"
+    },
+    {
+      "id": 3,
+      "name": "Razif Ismail",
+      "email": "razif@yahoo.com",
+      "phone": "013-9876543",
+      "ic": "950310-06-XXXX",
+      "license": "D11223344",
+      "total_bookings": 8,
+      "total_spent": 5800,
+      "status": "Active",
+      "joined": "2025-11-05",
+      "last_booking": "2026-05-06"
+    },
+    {
+      "id": 4,
+      "name": "Nurul Aina",
+      "email": "aina@gmail.com",
+      "phone": "014-5551234",
+      "ic": "010425-04-XXXX",
+      "license": "D55667788",
+      "total_bookings": 1,
+      "total_spent": 360,
+      "status": "Active",
+      "joined": "2026-05-01",
+      "last_booking": "2026-05-09"
+    },
+    {
+      "id": 5,
+      "name": "Hafiz Rahman",
+      "email": "hafiz@outlook.com",
+      "phone": "016-7890123",
+      "ic": "980712-10-XXXX",
+      "license": "D99887766",
+      "total_bookings": 3,
+      "total_spent": 890,
+      "status": "Active",
+      "joined": "2026-02-10",
+      "last_booking": "2026-05-09"
+    },
+    {
+      "id": 6,
+      "name": "Farah Zainal",
+      "email": "farah@gmail.com",
+      "phone": "019-2345678",
+      "ic": "970630-04-XXXX",
+      "license": "D44332211",
+      "total_bookings": 0,
+      "total_spent": 0,
+      "status": "Inactive",
+      "joined": "2026-04-20",
+      "last_booking": "-"
+    }
   ],
+  "reports": {
+    "monthly_revenue": [
+      { "month": "Jan", "revenue": 8500 },
+      { "month": "Feb", "revenue": 9200 },
+      { "month": "Mar", "revenue": 11800 },
+      { "month": "Apr", "revenue": 14500 },
+      { "month": "May", "revenue": 6200 }
+    ],
+    "car_utilization": [
+      { "car": "Honda CR-V", "utilization": 85 },
+      { "car": "BMW 3 Series", "utilization": 78 },
+      { "car": "Toyota Vios", "utilization": 65 },
+      { "car": "Honda Jazz", "utilization": 52 },
+      { "car": "Perodua Myvi", "utilization": 48 },
+      { "car": "Toyota Hiace", "utilization": 30 }
+    ],
+    "summary": {
+      "total_revenue": 50200,
+      "total_bookings": 42,
+      "avg_rental_days": 2.8,
+      "customer_satisfaction": 4.6,
+      "popular_car": "Honda CR-V 2024",
+      "busiest_month": "April"
+    }
+  },
+  "ai_insights": [
+    {
+      "id": 1,
+      "type": "demand",
+      "title": "SUV Demand Surge Expected",
+      "desc": "Expected high demand for SUVs this weekend due to Melaka tourism event. Consider repositioning 3 units.",
+      "confidence": 92,
+      "tags": ["SUV", "Weekend", "+28% predicted"],
+      "priority": "high"
+    },
+    {
+      "id": 2,
+      "type": "maintenance",
+      "title": "Scheduled Maintenance Alert",
+      "desc": "Toyota Hiace (GHI 3456) has exceeded 65,000km. Recommend full service within 7 days.",
+      "confidence": 98,
+      "tags": ["Maintenance", "Hiace", "Urgent"],
+      "priority": "high"
+    },
+    {
+      "id": 3,
+      "type": "pricing",
+      "title": "Dynamic Pricing Opportunity",
+      "desc": "Honda CR-V has 85% utilization. AI suggests increasing rate to RM 230/day during peak hours.",
+      "confidence": 76,
+      "tags": ["Pricing", "CR-V", "+15% revenue"],
+      "priority": "medium"
+    },
+    {
+      "id": 4,
+      "type": "fleet",
+      "title": "Fleet Expansion Recommendation",
+      "desc": "3 SUV booking requests unmet this week. Adding 1 more SUV could generate RM 2,400/month extra revenue.",
+      "confidence": 84,
+      "tags": ["Fleet", "SUV", "Expansion"],
+      "priority": "medium"
+    },
+    {
+      "id": 5,
+      "type": "customer",
+      "title": "Customer Retention Alert",
+      "desc": "Farah Zainal registered 10 days ago but has not made a booking. Consider sending promotional offer.",
+      "confidence": 68,
+      "tags": ["Retention", "Promo", "New User"],
+      "priority": "low"
+    }
+  ],
+  "settings": {
+    "company_name": "WeDRIVE Sdn Bhd",
+    "company_email": "admin@wedrive.my",
+    "company_phone": "011-10852955",
+    "company_address": "Lot 123, Jalan Hang Tuah, 75300 Melaka",
+    "currency": "MYR",
+    "tax_rate": 6,
+    "min_rental_days": 1,
+    "max_rental_days": 30,
+    "late_fee_per_hour": 25,
+    "deposit_percentage": 20,
+    "operating_hours": "08:00 - 22:00",
+    "pickup_locations": ["Melaka Sentral", "KLIA2", "Dataran Pahlawan", "Ayer Keroh", "Jonker Street"]
+  },
   "admins": [
     {
       "id": 1,
       "name": "Admin",
       "email": "admin@wedrive.my",
       "role": "Super Admin",
-      "last_login": "2024-05-01 09:15"
+      "last_login": "2026-05-09 09:15"
     }
   ]
 }

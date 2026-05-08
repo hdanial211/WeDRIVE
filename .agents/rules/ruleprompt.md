@@ -46,3 +46,4 @@ Path contoh: /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGRE
 12.Setiap kali tambah/buang file/folder update file ni /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/PROJECT_STRUCTURE.md
 
 13.Lepas semua page dah siap n dah testing baru kita semua kene back to html ,x boleh direct ke page lain
+Auth Guard	Aktif - redirect ke login(SIAP SEMUA)	DISABLED (development mode)

@@ -20,11 +20,21 @@ AI CAR RENTAL SYSTEM/
 +-- admin/                      # Modul Admin
 |   +-- pages/
 |   |   +-- admin.html          # Admin Dashboard
+|   |   +-- bookings.html       # Pengurusan Tempahan
+|   |   +-- customers.html      # Pengurusan Pelanggan
+|   |   +-- reports.html        # Laporan & Analitik
+|   |   +-- ai-insights.html    # AI Insights & Cadangan
+|   |   +-- settings.html       # Tetapan Sistem
 |   |   +-- chatbot.html        # Admin Chatbot Settings
 |   +-- css/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
-|       +-- admin.js            # Logik Admin (kini menggunakan WeDriveAPI)
+|       +-- admin.js            # Logik Dashboard
+|       +-- bookings.js         # Logik Tempahan
+|       +-- customers.js        # Logik Pelanggan
+|       +-- reports.js          # Logik Laporan
+|       +-- ai-insights.js      # Logik AI Insights
+|       +-- settings.js         # Logik Tetapan
 |       +-- chatbot-admin.js    # Logik Chatbot Settings
 |
 +-- customer/                   # Modul Customer / Pengguna

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bookings | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+
+  <!-- AUTH GUARD -->
+  <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="bookings"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- STATS ROW -->
+      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="bk_stat_total">Total Bookings</div>
+            <div class="value" id="bk-total">--</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">receipt_long</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="bk_stat_confirmed">Confirmed</div>
+            <div class="value" id="bk-confirmed">--</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">check_circle</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="bk_stat_pending">Pending</div>
+            <div class="value" id="bk-pending">--</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">hourglass_top</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="bk_stat_revenue">Total Revenue</div>
+            <div class="value" id="bk-revenue" style="font-size:24px">--</div>
+          </div>
+          <div class="stat-icon purple"><span class="material-icons-round">payments</span></div>
+        </div>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="filter-chip active" onclick="filterBookings('all', this)" data-key="filter_all">All</button>
+            <button class="filter-chip" onclick="filterBookings('Confirmed', this)" data-key="bk_f_confirmed">Confirmed</button>
+            <button class="filter-chip" onclick="filterBookings('Pending', this)" data-key="bk_f_pending">Pending</button>
+            <button class="filter-chip" onclick="filterBookings('Completed', this)" data-key="bk_f_completed">Completed</button>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <div class="input-wrap-sm">
+              <span class="material-icons-round" style="font-size:18px">search</span>
+              <input type="text" id="bk-search" placeholder="Search bookings..." oninput="searchBookings(this.value)" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOOKINGS TABLE -->
+      <div class="card reveal-on-scroll">
+        <div class="card-header">
+          <h3 data-key="bk_table_title">Booking Records</h3>
+          <button class="btn-primary-sm" onclick="alert('Add booking form coming soon')">
+            <span class="material-icons-round" style="font-size:16px">add</span>
+            <span data-key="bk_add">New Booking</span>
+          </button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th data-key="bk_th_id">Booking ID</th>
+                <th data-key="bk_th_customer">Customer</th>
+                <th data-key="bk_th_car">Vehicle</th>
+                <th data-key="bk_th_pickup">Pick-up</th>
+                <th data-key="bk_th_return">Return</th>
+                <th data-key="bk_th_total">Total (RM)</th>
+                <th data-key="bk_th_payment">Payment</th>
+                <th data-key="bk_th_status">Status</th>
+                <th data-key="bk_th_action">Action</th>
+              </tr>
+            </thead>
+            <tbody id="bookings-tbody">
+              <!-- Populated by bookings.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
+  </main>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/main.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../js/bookings.js"></script>
+</body>
+</html>

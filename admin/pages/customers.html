@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customers | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="customers"></div>
+
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- STATS -->
+      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cu_stat_total">Total Customers</div>
+            <div class="value" id="cu-total">--</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">people</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cu_stat_active">Active</div>
+            <div class="value" id="cu-active">--</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">person</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cu_stat_inactive">Inactive</div>
+            <div class="value" id="cu-inactive">--</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">person_off</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cu_stat_spent">Total Spent</div>
+            <div class="value" id="cu-spent" style="font-size:24px">--</div>
+          </div>
+          <div class="stat-icon purple"><span class="material-icons-round">payments</span></div>
+        </div>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+          <div class="input-wrap-sm" style="flex:1; max-width:360px;">
+            <span class="material-icons-round" style="font-size:18px">search</span>
+            <input type="text" id="cu-search" placeholder="Search by name, email or phone..." oninput="searchCustomers(this.value)" />
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="card reveal-on-scroll">
+        <div class="card-header">
+          <h3 data-key="cu_table_title">Customer Records</h3>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th data-key="cu_th_name">Name</th>
+                <th data-key="cu_th_email">Email</th>
+                <th data-key="cu_th_phone">Phone</th>
+                <th data-key="cu_th_license">License</th>
+                <th data-key="cu_th_bookings">Bookings</th>
+                <th data-key="cu_th_spent">Total Spent</th>
+                <th data-key="cu_th_status">Status</th>
+                <th data-key="cu_th_joined">Joined</th>
+                <th data-key="cu_th_action">Action</th>
+              </tr>
+            </thead>
+            <tbody id="customers-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
+  </main>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/main.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../js/customers.js"></script>
+</body>
+</html>

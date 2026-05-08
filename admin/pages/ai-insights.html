@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Insights | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="ai-insights"></div>
+
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- AI HEADER CARD -->
+      <div class="ai-card reveal-onload" style="margin-bottom:28px;">
+        <div class="ai-card-header">
+          <div class="ai-badge"><span class="material-icons-round" style="font-size:14px">psychology</span> <span data-key="ai_badge">WeDRIVE AI Engine</span></div>
+        </div>
+        <h3 data-key="ai_header_title" style="font-size:20px;">Smart Fleet Intelligence</h3>
+        <p style="margin-top:8px" data-key="ai_header_desc">AI-powered analytics and recommendations to optimize your fleet operations, pricing strategy, and customer retention.</p>
+        <div class="ai-tags" style="margin-top:16px;">
+          <span class="ai-tag">Demand Prediction</span>
+          <span class="ai-tag">Dynamic Pricing</span>
+          <span class="ai-tag">Fleet Optimization</span>
+          <span class="ai-tag">Customer Retention</span>
+        </div>
+      </div>
+
+      <!-- FILTER -->
+      <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="filter-chip active" onclick="filterInsights('all', this)">All</button>
+          <button class="filter-chip" onclick="filterInsights('high', this)">High Priority</button>
+          <button class="filter-chip" onclick="filterInsights('medium', this)">Medium</button>
+          <button class="filter-chip" onclick="filterInsights('low', this)">Low</button>
+        </div>
+      </div>
+
+      <!-- INSIGHTS GRID -->
+      <div id="insights-grid" class="insights-grid">
+        <!-- Populated by ai-insights.js -->
+      </div>
+    </div>
+
+    <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
+  </main>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/main.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../js/ai-insights.js"></script>
+</body>
+</html>

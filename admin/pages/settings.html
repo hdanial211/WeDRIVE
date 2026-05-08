@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Settings | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="settings"></div>
+
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- COMPANY DETAILS -->
+      <div class="card reveal-onload" style="margin-bottom:20px;">
+        <div class="card-header">
+          <h3 data-key="st_company_title">Company Details</h3>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label data-key="st_name">Company Name</label>
+            <input type="text" id="st-name" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_email">Email</label>
+            <input type="email" id="st-email" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_phone">Phone</label>
+            <input type="text" id="st-phone" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_address">Address</label>
+            <input type="text" id="st-address" class="form-input" />
+          </div>
+        </div>
+      </div>
+
+      <!-- RENTAL SETTINGS -->
+      <div class="card reveal-on-scroll" style="margin-bottom:20px;">
+        <div class="card-header">
+          <h3 data-key="st_rental_title">Rental Configuration</h3>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label data-key="st_currency">Currency</label>
+            <input type="text" id="st-currency" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_tax">Tax Rate (%)</label>
+            <input type="number" id="st-tax" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_min_days">Min Rental Days</label>
+            <input type="number" id="st-min-days" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_max_days">Max Rental Days</label>
+            <input type="number" id="st-max-days" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_late_fee">Late Fee (RM/hour)</label>
+            <input type="number" id="st-late-fee" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_deposit">Deposit (%)</label>
+            <input type="number" id="st-deposit" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label data-key="st_hours">Operating Hours</label>
+            <input type="text" id="st-hours" class="form-input" />
+          </div>
+        </div>
+      </div>
+
+      <!-- PICKUP LOCATIONS -->
+      <div class="card reveal-on-scroll" style="margin-bottom:20px;">
+        <div class="card-header">
+          <h3 data-key="st_locations_title">Pick-up Locations</h3>
+        </div>
+        <div id="locations-list" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+      </div>
+
+      <!-- SAVE -->
+      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
+        <button class="btn-primary-sm" onclick="saveSettings()" style="padding:12px 28px; font-size:14px;">
+          <span class="material-icons-round" style="font-size:18px">save</span>
+          <span data-key="st_save">Save Changes</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
+  </main>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/main.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../js/settings.js"></script>
+</body>
+</html>
