@@ -89,6 +89,66 @@ window.saveSettings = function() {
     btn.disabled = false;
   }, 600);
 };
+// ─── Test Single Key (inline button) ────────────────────────────────────────
+window.testSingleKey = async function(provider) {
+  const isGemini = provider === 'gemini';
+  const inputId = isGemini ? 'api-key' : 'grok-key';
+  const key = document.getElementById(inputId).value.trim();
+  const statusEl = document.getElementById(`status-${provider}`);
+  const btn = document.getElementById(`btn-test-${provider}`);
+
+  if (!key) {
+    statusEl.className = 'key-status fail';
+    statusEl.innerHTML = '<span class="material-icons-round">close</span> Please enter a key first';
+    return;
+  }
+
+  const original = btn.innerHTML;
+  btn.innerHTML = '<span class="material-icons-round" style="font-size:16px">autorenew</span> Testing...';
+  btn.disabled = true;
+  statusEl.className = 'key-status';
+  statusEl.innerHTML = '';
+
+  try {
+    let ok = false;
+    if (isGemini) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${key}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: 'Say "OK".' }] }] })
+      });
+      ok = res.ok;
+    } else {
+      const res = await fetch('https://api.x.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+        body: JSON.stringify({ model: GROK_MODEL, messages: [{ role: 'user', content: 'Say "OK".' }], max_tokens: 10 })
+      });
+      ok = res.ok;
+    }
+
+    if (ok) {
+      statusEl.className = 'key-status ok';
+      statusEl.innerHTML = `<span class="material-icons-round">check_circle</span> ${isGemini ? 'Gemini' : 'Grok'} connected successfully`;
+    } else {
+      statusEl.className = 'key-status fail';
+      statusEl.innerHTML = `<span class="material-icons-round">error</span> Invalid key — check and try again`;
+    }
+  } catch (e) {
+    statusEl.className = 'key-status fail';
+    statusEl.innerHTML = `<span class="material-icons-round">error</span> Connection failed: ${e.message}`;
+  }
+
+  btn.innerHTML = original;
+  btn.disabled = false;
+
+  // Update header badge
+  updateStatusBadge({
+    apiKey: document.getElementById('api-key').value.trim(),
+    grokKey: document.getElementById('grok-key').value.trim()
+  });
+};
 
 // ─── Test Connection ────────────────────────────────────────────────────────
 window.testConnection = async function() {
