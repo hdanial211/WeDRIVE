@@ -25,7 +25,7 @@
 
   function resolveBase() {
     var path = window.location.pathname;
-    if (path.includes('/admin/pages/') || path.includes('/customer/pages/')) {
+    if (path.includes('/admin/pages/') || path.includes('/customer/pages/') || path.includes('/guest/pages/')) {
       return '../../';
     }
     return '';  // root level (index.html)
@@ -37,8 +37,8 @@
     // Guest-facing pages (guest.html)
     guest: {
       links: [
-        { key: 'nav_browse', href: '{base}guest.html',       label: 'Browse Cars', id: 'nl-browse' },
-        { key: 'nav_how',    href: '{base}guest.html#how',   label: 'How It Works', id: 'nl-how'    }
+        { key: 'nav_browse', href: '{base}guest/pages/guest.html',       label: 'Browse Cars', id: 'nl-browse' },
+        { key: 'nav_how',    href: '{base}guest/pages/guest.html#how',   label: 'How It Works', id: 'nl-how'    }
       ],
       actions: `
         <button class="btn-outline" onclick="window.location='{base}index.html'" data-key="nav_login">Log In</button>

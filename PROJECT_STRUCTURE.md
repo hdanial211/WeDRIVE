@@ -12,7 +12,10 @@ WeDRIVE dibina menggunakan struktur berasaskan komponen dan modul supaya kemas d
 AI CAR RENTAL SYSTEM/
 |
 +-- index.html                  # Halaman Log Masuk (Entry Point)
-+-- guest.html                  # Landing Page (Browse tanpa login)
+|
++-- guest/                      # Modul Tetamu (Browse tanpa login)
+|   +-- pages/
+|       +-- guest.html          # Landing Page (Browse Cars)
 |
 +-- admin/                      # Modul Admin
 |   +-- pages/
