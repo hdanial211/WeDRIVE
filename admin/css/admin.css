@@ -499,6 +499,49 @@ tr:hover td { background: var(--slate-50); }
 [data-theme="dark"] .cal-cell.past { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); }
 [data-theme="dark"] .cal-day-info { background: rgba(255,255,255,0.03); }
 
+/* Range selection highlights */
+.cal-cell.cal-range-start,
+.cal-cell.cal-range-end {
+  background: linear-gradient(135deg, #3B82F6, #2563EB) !important;
+  color: #fff !important;
+  border-color: #1D4ED8 !important;
+  box-shadow: 0 4px 14px rgba(59,130,246,0.4);
+  transform: scale(1.05);
+  z-index: 2;
+}
+.cal-cell.cal-range-start .cal-badge,
+.cal-cell.cal-range-end .cal-badge { background: #fff !important; }
+
+.cal-cell.cal-range-mid {
+  background: rgba(59,130,246,0.15) !important;
+  color: var(--primary) !important;
+  border-color: rgba(59,130,246,0.3) !important;
+}
+.cal-cell.cal-range-mid .cal-badge { background: var(--primary) !important; }
+
+[data-theme="dark"] .cal-cell.cal-range-start,
+[data-theme="dark"] .cal-cell.cal-range-end {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8) !important;
+  color: #fff !important;
+}
+[data-theme="dark"] .cal-cell.cal-range-mid {
+  background: rgba(59,130,246,0.2) !important;
+  color: #93C5FD !important;
+}
+
+/* Btn primary small (for Confirm Booking) */
+.btn-primary-sm {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border: none; border-radius: 10px;
+  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  color: #fff; font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-primary-sm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(59,130,246,0.4);
+}
+
 @media (max-width: 640px) {
   .cal-cell { min-height: 52px; border-radius: 8px; }
   .cal-cell .cal-day { font-size: 13px; }

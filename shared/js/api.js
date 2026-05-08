@@ -54,13 +54,12 @@ window.WeDriveAPI = {
      */
     getCars: async function() {
         if (!window.AppConfig.USE_REAL_DB) {
-            // Fetch from dummy file
-            const res = await fetch(getDummyPath('customer.json'));
+            // Single source of truth: admin.json → fleet[]
+            const res = await fetch(getDummyPath('admin.json'));
             if (!res.ok) throw new Error('Failed to load dummy car data');
             const data = await res.json();
-            return data.cars;
+            return data.fleet || [];
         } else {
-            // Fetch from real database
             const res = await fetch(window.AppConfig.API_BASE_URL + window.AppConfig.endpoints.cars);
             if (!res.ok) throw new Error('Database Error: Failed to fetch cars');
             return await res.json();

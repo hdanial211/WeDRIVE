@@ -60,7 +60,7 @@ function renderFleetCards(fleet) {
         </span>
       </div>
 
-      <div style="font-size:12px;color:var(--slate-400);font-weight:600;margin-bottom:12px;">${car.plate} · ${car.type}</div>
+      <div style="font-size:12px;color:var(--slate-400);font-weight:600;margin-bottom:12px;">${car.plate} · ${car.label || car.type}</div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;">
         <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
@@ -98,7 +98,7 @@ function renderFleetTable(fleet) {
     <tr>
       <td><strong>${car.name}</strong></td>
       <td>${car.plate}</td>
-      <td>${car.type}</td>
+      <td>${car.label || car.type}</td>
       <td>${car.seats || 5} Seats</td>
       <td>${car.transmission}</td>
       <td>${car.fuel}</td>

@@ -47,7 +47,7 @@ function renderCarDetails(car) {
 
   // Name & plate
   document.getElementById('cd-name').textContent = car.name;
-  document.getElementById('cd-plate-type').textContent = `${car.plate} · ${car.type}`;
+  document.getElementById('cd-plate-type').textContent = `${car.plate} · ${car.label || car.type}`;
 
   // Status badge
   const statusEl = document.getElementById('cd-status');
@@ -297,7 +297,7 @@ function updateStatus() {
 
 /* ── Quick Actions ── */
 function viewInsurance() {
-  alert(`Insurance Info for ${carData.name}\n\nPlate: ${carData.plate}\nType: ${carData.type}\n\nInsurance details will be available when backend is integrated.`);
+  alert(`Insurance Info for ${carData.name}\n\nPlate: ${carData.plate}\nType: ${carData.label || carData.type}\n\nInsurance details will be available when backend is integrated.`);
 }
 
 function deleteCar() {
@@ -323,13 +323,19 @@ function showToast(msg, type) {
 }
 
 /* ══════════════════════════════════════════════
-   BOOKING CALENDAR
+   BOOKING CALENDAR — Range Selection
+   First click = Pickup date, Second click = Return date
    ══════════════════════════════════════════════ */
+
+let calPickup = null;   // Selected pickup date string
+let calReturn = null;   // Selected return date string
 
 function initCalendar() {
   const now = new Date();
   calYear = now.getFullYear();
-  calMonth = now.getMonth(); // 0-indexed
+  calMonth = now.getMonth();
+  calPickup = null;
+  calReturn = null;
   renderCalendar();
 }
 
@@ -345,26 +351,27 @@ function calendarNext() {
   renderCalendar();
 }
 
+function clearCalendarSelection() {
+  calPickup = null;
+  calReturn = null;
+  renderCalendar();
+  document.getElementById('cal-day-info').style.display = 'none';
+}
+
 function renderCalendar() {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
                        'July', 'August', 'September', 'October', 'November', 'December'];
 
-  // Update header
   document.getElementById('cal-month-label').textContent = `${monthNames[calMonth]} ${calYear}`;
 
-  // Get bookings for this car
   const carBookings = getCarBookings();
-
-  // Build date status map
   const statusMap = buildDateStatusMap(carBookings);
+  const rateNum = parseInt((carData.rate || '').replace(/[^0-9]/g, '')) || 0;
+  const rateLabel = `RM ${rateNum}`;
 
-  // Get daily rate from carData
-  const rate = carData.rate || 'RM 0/day';
-
-  // Calculate grid
   const firstDay = new Date(calYear, calMonth, 1);
   const lastDay = new Date(calYear, calMonth + 1, 0);
-  const startOffset = (firstDay.getDay() + 6) % 7; // Monday = 0
+  const startOffset = (firstDay.getDay() + 6) % 7;
   const totalDays = lastDay.getDate();
 
   const today = new Date();
@@ -373,43 +380,55 @@ function renderCalendar() {
   const grid = document.getElementById('cal-days-grid');
   let html = '';
 
-  // Empty cells before first day
   for (let i = 0; i < startOffset; i++) {
     html += '<div class="cal-cell empty"></div>';
   }
 
-  // Day cells
   for (let d = 1; d <= totalDays; d++) {
     const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
     const dateObj = new Date(calYear, calMonth, d);
     dateObj.setHours(0, 0, 0, 0);
 
     let status = 'available';
-    let bookingInfo = null;
     const isPast = dateObj < today;
 
     if (isPast) {
       status = 'past';
     } else if (statusMap[dateStr]) {
       status = statusMap[dateStr].status;
-      bookingInfo = statusMap[dateStr].booking;
     }
 
     const isToday = dateObj.getTime() === today.getTime();
+
+    // Check if this date is in selected range
+    let rangeClass = '';
+    if (calPickup && !calReturn && dateStr === calPickup) {
+      rangeClass = ' cal-range-start';
+    } else if (calPickup && calReturn) {
+      if (dateStr === calPickup) rangeClass = ' cal-range-start';
+      else if (dateStr === calReturn) rangeClass = ' cal-range-end';
+      else if (dateStr > calPickup && dateStr < calReturn) rangeClass = ' cal-range-mid';
+    }
+
     const todayClass = isToday ? ' today' : '';
+    const clickable = status !== 'past';
 
     html += `
-    <div class="cal-cell ${status}${todayClass}" onclick="selectCalDay('${dateStr}', '${status}')" data-date="${dateStr}">
+    <div class="cal-cell ${status}${todayClass}${rangeClass}" 
+         ${clickable ? `onclick="selectCalDay('${dateStr}', '${status}')"` : ''}
+         data-date="${dateStr}">
       <span class="cal-badge"></span>
       <span class="cal-day">${d}</span>
-      <span class="cal-rate">${status !== 'past' ? rate.replace('/day', '') : ''}</span>
+      <span class="cal-rate">${status !== 'past' ? rateLabel : ''}</span>
     </div>`;
   }
 
   grid.innerHTML = html;
+  updateCalendarInfo();
 
-  // Hide info panel
-  document.getElementById('cal-day-info').style.display = 'none';
+  // Show/hide clear button
+  const clearBtn = document.getElementById('cal-clear-btn');
+  if (clearBtn) clearBtn.style.display = (calPickup || calReturn) ? 'inline-flex' : 'none';
 }
 
 function getCarBookings() {
@@ -419,16 +438,12 @@ function getCarBookings() {
 
 function buildDateStatusMap(bookings) {
   const map = {};
-
   bookings.forEach(b => {
     const pickup = new Date(b.pickup);
     const returnDate = new Date(b.return);
-
-    // For each day in the booking range
     const current = new Date(pickup);
     while (current <= returnDate) {
       const dateStr = current.toISOString().slice(0, 10);
-
       let status;
       if (b.status === 'Confirmed' || b.status === 'Completed') {
         status = 'booked';
@@ -437,62 +452,159 @@ function buildDateStatusMap(bookings) {
       } else {
         status = 'available';
       }
-
-      // Booked takes priority over pending
       if (!map[dateStr] || (status === 'booked' && map[dateStr].status === 'pending')) {
         map[dateStr] = { status, booking: b };
       }
-
       current.setDate(current.getDate() + 1);
     }
   });
-
   return map;
 }
 
 function selectCalDay(dateStr, status) {
-  if (status === 'past') return;
+  // If clicking a booked/pending date, just show info
+  if (status === 'booked' || status === 'pending') {
+    showBookingInfo(dateStr, status);
+    return;
+  }
 
-  // Highlight selected cell
-  document.querySelectorAll('.cal-cell').forEach(c => c.classList.remove('selected'));
-  const cell = document.querySelector(`.cal-cell[data-date="${dateStr}"]`);
-  if (cell) cell.classList.add('selected');
+  // Range selection logic
+  if (!calPickup || (calPickup && calReturn)) {
+    // First click or reset — set pickup
+    calPickup = dateStr;
+    calReturn = null;
+  } else {
+    // Second click — set return
+    if (dateStr < calPickup) {
+      // Clicked before pickup — swap
+      calReturn = calPickup;
+      calPickup = dateStr;
+    } else if (dateStr === calPickup) {
+      // Same date — clear
+      calPickup = null;
+      calReturn = null;
+    } else {
+      // Check if any booked days exist in range
+      const statusMap = buildDateStatusMap(getCarBookings());
+      let hasConflict = false;
+      const checkDate = new Date(calPickup);
+      const endDate = new Date(dateStr);
+      while (checkDate <= endDate) {
+        const ds = checkDate.toISOString().slice(0, 10);
+        if (statusMap[ds] && statusMap[ds].status === 'booked') {
+          hasConflict = true;
+          break;
+        }
+        checkDate.setDate(checkDate.getDate() + 1);
+      }
+      if (hasConflict) {
+        showToast('Cannot select this range — contains booked dates.', 'info');
+        return;
+      }
+      calReturn = dateStr;
+    }
+  }
+
+  renderCalendar();
+}
+
+function showBookingInfo(dateStr, status) {
+  const carBookings = getCarBookings();
+  const booking = carBookings.find(b => {
+    const pickup = new Date(b.pickup);
+    const ret = new Date(b.return);
+    const d = new Date(dateStr);
+    return d >= pickup && d <= ret;
+  });
+
+  if (!booking) return;
 
   const infoPanel = document.getElementById('cal-day-info');
   const date = new Date(dateStr);
   const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const statusLabel = booking.status === 'Pending' ? 'Pending Confirmation' : 'Confirmed Booking';
+  const statusIcon = booking.status === 'Pending' ? 'schedule' : 'event_busy';
 
-  if (status === 'available') {
-    infoPanel.innerHTML = `
-      <div class="info-title">${formattedDate}</div>
-      <div class="info-detail">
-        <strong>Status:</strong> Available for booking<br>
-        <strong>Rate:</strong> ${carData.rate}
-      </div>`;
-  } else {
-    // Find booking for this date
-    const carBookings = getCarBookings();
-    const booking = carBookings.find(b => {
-      const pickup = new Date(b.pickup);
-      const ret = new Date(b.return);
-      const d = new Date(dateStr);
-      return d >= pickup && d <= ret;
-    });
-
-    if (booking) {
-      const statusLabel = booking.status === 'Pending' ? 'Pending Confirmation' : 'Confirmed Booking';
-      infoPanel.innerHTML = `
-        <div class="info-title">${formattedDate}</div>
-        <div class="info-detail">
-          <strong>Status:</strong> ${statusLabel}<br>
-          <strong>Booking ID:</strong> ${booking.id}<br>
-          <strong>Customer:</strong> ${booking.customer}<br>
-          <strong>Period:</strong> ${booking.pickup} to ${booking.return} (${booking.days} days)<br>
-          <strong>Total:</strong> RM ${booking.total.toLocaleString()}<br>
-          <strong>Payment:</strong> ${booking.payment}
-        </div>`;
-    }
-  }
-
+  infoPanel.innerHTML = `
+    <div class="info-title">
+      <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px;">${statusIcon}</span>
+      ${formattedDate}
+    </div>
+    <div class="info-detail">
+      <strong>Status:</strong> ${statusLabel}<br>
+      <strong>Booking ID:</strong> ${booking.id}<br>
+      <strong>Customer:</strong> ${booking.customer}<br>
+      <strong>Period:</strong> ${booking.pickup} to ${booking.return} (${booking.days} days)<br>
+      <strong>Total:</strong> RM ${booking.total.toLocaleString()}<br>
+      <strong>Payment:</strong> ${booking.payment}
+    </div>`;
   infoPanel.style.display = 'block';
+}
+
+function updateCalendarInfo() {
+  const infoPanel = document.getElementById('cal-day-info');
+  const rateNum = parseInt((carData.rate || '').replace(/[^0-9]/g, '')) || 0;
+
+  if (calPickup && calReturn) {
+    // Full range selected — show summary
+    const p = new Date(calPickup);
+    const r = new Date(calReturn);
+    const days = Math.round((r - p) / (1000 * 60 * 60 * 24));
+    const total = days * rateNum;
+
+    const fmtPickup = p.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    const fmtReturn = r.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    infoPanel.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div class="info-title">
+            <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px;">date_range</span>
+            Booking Summary
+          </div>
+          <div class="info-detail">
+            <strong>Pickup:</strong> ${fmtPickup}<br>
+            <strong>Return:</strong> ${fmtReturn}<br>
+            <strong>Duration:</strong> ${days} day${days > 1 ? 's' : ''}<br>
+            <strong>Rate:</strong> RM ${rateNum}/day<br>
+            <strong>Estimated Total:</strong> <span style="color:var(--primary);font-weight:800;font-size:16px;">RM ${total.toLocaleString()}</span>
+          </div>
+        </div>
+        <button class="btn-primary-sm" onclick="confirmBookingRange()" style="height:fit-content;">
+          <span class="material-icons-round" style="font-size:16px">check_circle</span>
+          Confirm Booking
+        </button>
+      </div>`;
+    infoPanel.style.display = 'block';
+  } else if (calPickup && !calReturn) {
+    // Only pickup selected
+    const p = new Date(calPickup);
+    const fmtPickup = p.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+    infoPanel.innerHTML = `
+      <div class="info-title">
+        <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px;">flight_takeoff</span>
+        Pickup: ${fmtPickup}
+      </div>
+      <div class="info-detail" style="color:var(--primary);">
+        Now select the <strong>return date</strong> to complete the range.
+      </div>`;
+    infoPanel.style.display = 'block';
+  } else {
+    infoPanel.style.display = 'none';
+  }
+}
+
+function confirmBookingRange() {
+  if (!calPickup || !calReturn) return;
+  const p = new Date(calPickup);
+  const r = new Date(calReturn);
+  const days = Math.round((r - p) / (1000 * 60 * 60 * 24));
+  const rateNum = parseInt((carData.rate || '').replace(/[^0-9]/g, '')) || 0;
+  const total = days * rateNum;
+
+  alert(`Booking Confirmed (Demo Mode)\n\nVehicle: ${carData.name}\nPickup: ${calPickup}\nReturn: ${calReturn}\nDays: ${days}\nTotal: RM ${total}\n\nThis will be saved when backend is integrated.`);
+
+  clearCalendarSelection();
+  showToast('Booking created successfully (demo)', 'success');
 }

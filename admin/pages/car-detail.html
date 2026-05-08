@@ -96,6 +96,9 @@
         <div class="card-header">
           <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">calendar_month</span> Booking Calendar</h3>
           <div style="display:flex;align-items:center;gap:8px;">
+            <button class="btn-outline-sm" onclick="clearCalendarSelection()" id="cal-clear-btn" style="display:none;color:#DC2626;border-color:#DC2626;">
+              <span class="material-icons-round" style="font-size:14px">close</span> Clear
+            </button>
             <button class="btn-outline-sm" onclick="calendarPrev()" id="cal-prev-btn">
               <span class="material-icons-round" style="font-size:16px">chevron_left</span>
             </button>
@@ -105,7 +108,11 @@
             </button>
           </div>
         </div>
-        <div style="padding:0 24px 8px;">
+        <div style="padding:4px 24px 4px;">
+          <p style="font-size:12px;color:var(--slate-400);margin:0 0 8px;">
+            <span class="material-icons-round" style="font-size:14px;vertical-align:middle;">info</span>
+            Click a green date to set <strong>pickup</strong>, then click another to set <strong>return</strong>.
+          </p>
           <!-- Day headers -->
           <div class="cal-grid cal-header">
             <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
@@ -120,7 +127,7 @@
           <div class="cal-legend-item"><span class="cal-dot pending"></span> Pending</div>
           <div class="cal-legend-item"><span class="cal-dot past"></span> Past</div>
         </div>
-        <!-- Selected day info -->
+        <!-- Selected day info / Booking summary -->
         <div id="cal-day-info" class="cal-day-info" style="display:none;"></div>
       </div>
 
