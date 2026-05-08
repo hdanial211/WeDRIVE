@@ -54,8 +54,8 @@ window.WeDriveAPI = {
      */
     getCars: async function() {
         if (!window.AppConfig.USE_REAL_DB) {
-            // Single source of truth: admin.json → fleet[]
-            const res = await fetch(getDummyPath('admin.json'));
+            // Single source of truth: data.json → fleet[]
+            const res = await fetch(getDummyPath('data.json'));
             if (!res.ok) throw new Error('Failed to load dummy car data');
             const data = await res.json();
             return data.fleet || [];
@@ -72,7 +72,7 @@ window.WeDriveAPI = {
      */
     getBookings: async function() {
         if (!window.AppConfig.USE_REAL_DB) {
-            const res = await fetch(getDummyPath('admin.json'));
+            const res = await fetch(getDummyPath('data.json'));
             if (!res.ok) throw new Error('Failed to load dummy booking data');
             const data = await res.json();
             return data.bookings || [];
@@ -89,7 +89,7 @@ window.WeDriveAPI = {
      */
     getAdminData: async function() {
         if (!window.AppConfig.USE_REAL_DB) {
-            const res = await fetch(getDummyPath('admin.json'));
+            const res = await fetch(getDummyPath('data.json'));
             if (!res.ok) throw new Error('Failed to load dummy admin data');
             return await res.json();
         } else {

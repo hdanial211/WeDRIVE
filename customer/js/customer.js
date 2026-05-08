@@ -1,6 +1,6 @@
 /**
  * WeDRIVE - Customer Module JS
- * Data fetched from shared/dummy/admin.json (single source of truth)
+ * Data fetched from shared/dummy/data.json (single source of truth)
  * Switch to real API endpoint when backend is ready.
  */
 

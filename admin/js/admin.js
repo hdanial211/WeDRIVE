@@ -1,6 +1,6 @@
 /**
  * WeDRIVE - Admin Module JS
- * Data fetched from shared/dummy/admin.json
+ * Data fetched from shared/dummy/data.json
  * Switch to real API endpoint when backend is ready.
  */
 
