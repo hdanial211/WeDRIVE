@@ -59,7 +59,7 @@
           <div class="user-av" id="user-av">CU</div>
           <span class="user-name" id="user-name-nav" data-key="nav_customer">Customer</span>
         </div>
-        <button class="btn-logout" onclick="window.location='{base}index.html'">
+        <button class="btn-logout" onclick="window.location='{base}customer/pages/customer.html'">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
         </button>
@@ -78,7 +78,7 @@
           <div class="user-av" id="user-av">AD</div>
           <span class="user-name" id="user-name-nav">Admin</span>
         </div>
-        <button class="btn-logout" onclick="window.location='{base}index.html'">
+        <button class="btn-logout" onclick="window.location='{base}admin/pages/admin.html'">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
         </button>
