@@ -22,7 +22,7 @@
 
     <div class="content">
       <!-- STATS -->
-      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="fl_stat_total">Total Fleet</div>
@@ -44,13 +44,6 @@
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">car_rental</span></div>
         </div>
-        <div class="stat-card reveal-onload">
-          <div class="stat-info">
-            <div class="label" data-key="fl_stat_maintenance">Maintenance</div>
-            <div class="value" id="fl-maintenance">--</div>
-          </div>
-          <div class="stat-icon red"><span class="material-icons-round">build</span></div>
-        </div>
       </div>
 
       <!-- FILTER + SEARCH -->
@@ -60,7 +53,6 @@
             <button class="filter-chip active" onclick="filterFleet('all', this)">All</button>
             <button class="filter-chip" onclick="filterFleet('Available', this)">Available</button>
             <button class="filter-chip" onclick="filterFleet('Rented', this)">Rented</button>
-            <button class="filter-chip" onclick="filterFleet('Maintenance', this)">Maintenance</button>
           </div>
           <div class="input-wrap-sm" style="max-width:300px;">
             <span class="material-icons-round" style="font-size:18px">search</span>
@@ -90,11 +82,10 @@
                 <th data-key="fl_th_vehicle">Vehicle</th>
                 <th data-key="fl_th_plate">Plate No.</th>
                 <th data-key="fl_th_type">Type</th>
-                <th data-key="fl_th_fuel">Fuel</th>
+                <th data-key="fl_th_seats">Seats</th>
                 <th data-key="fl_th_trans">Transmission</th>
-                <th data-key="fl_th_mileage">Mileage</th>
+                <th data-key="fl_th_fuel">Fuel</th>
                 <th data-key="fl_th_rate">Daily Rate</th>
-                <th data-key="fl_th_service">Last Service</th>
                 <th data-key="fl_th_status">Status</th>
                 <th data-key="fl_th_action">Action</th>
               </tr>

@@ -1,6 +1,7 @@
 /**
  * WeDRIVE - Fleet / Cars Module JS
  * admin/js/cars.js
+ * Focus: Rental only (no maintenance/service/mileage)
  */
 
 let allFleet = [];
@@ -21,12 +22,10 @@ function populateFleetStats(fleet) {
   const total = fleet.length;
   const available = fleet.filter(c => c.status === 'Available').length;
   const rented = fleet.filter(c => c.status === 'Rented').length;
-  const maintenance = fleet.filter(c => c.status === 'Maintenance').length;
 
   document.getElementById('fl-total').textContent = total;
   document.getElementById('fl-available').textContent = available;
   document.getElementById('fl-rented').textContent = rented;
-  document.getElementById('fl-maintenance').textContent = maintenance;
 }
 
 /* ── Card Grid ── */
@@ -40,16 +39,18 @@ function renderFleetCards(fleet) {
   grid.innerHTML = fleet.map(car => {
     const statusColors = {
       'Available': { bg: '#D1FAE5', text: '#059669', icon: 'check_circle' },
-      'Rented': { bg: '#DBEAFE', text: '#2563EB', icon: 'car_rental' },
-      'Maintenance': { bg: '#FEE2E2', text: '#DC2626', icon: 'build' }
+      'Rented': { bg: '#DBEAFE', text: '#2563EB', icon: 'car_rental' }
     };
     const sc = statusColors[car.status] || statusColors['Available'];
 
     return `
     <div class="card car-card reveal-on-scroll">
-      <!-- Car Icon Placeholder -->
-      <div style="width:100%;height:140px;background:linear-gradient(135deg,var(--slate-50),var(--slate-100));border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-        <span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;">directions_car</span>
+      <!-- Car Image -->
+      <div style="width:100%;height:160px;background:linear-gradient(135deg,var(--slate-50),var(--slate-100));border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden;">
+        ${car.images && car.images.length > 0
+          ? `<img src="../../shared/images/cars/${car.images[0]}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`
+          : `<span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;">directions_car</span>`
+        }
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
@@ -61,18 +62,15 @@ function renderFleetCards(fleet) {
 
       <div style="font-size:12px;color:var(--slate-400);font-weight:600;margin-bottom:12px;">${car.plate} · ${car.type}</div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;">
         <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
-          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">local_gas_station</span> ${car.fuel}
+          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">airline_seat_recline_normal</span> ${car.seats || 5} Seats
         </div>
         <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
           <span class="material-icons-round" style="font-size:14px;color:var(--primary)">settings</span> ${car.transmission}
         </div>
         <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
-          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">speed</span> ${car.mileage.toLocaleString()} km
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
-          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">event</span> ${car.last_service}
+          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">local_gas_station</span> ${car.fuel}
         </div>
       </div>
 
@@ -91,21 +89,20 @@ function renderFleetTable(fleet) {
   const tbody = document.getElementById('fleet-tbody');
   if (!tbody) return;
   if (fleet.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:#94A3B8;padding:40px">No vehicles found</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94A3B8;padding:40px">No vehicles found</td></tr>';
     return;
   }
   tbody.innerHTML = fleet.map(car => {
-    const statusClass = car.status === 'Available' ? 'available' : car.status === 'Rented' ? 'rented' : 'maintenance';
+    const statusClass = car.status === 'Available' ? 'available' : 'rented';
     return `
     <tr>
       <td><strong>${car.name}</strong></td>
       <td>${car.plate}</td>
       <td>${car.type}</td>
-      <td>${car.fuel}</td>
+      <td>${car.seats || 5} Seats</td>
       <td>${car.transmission}</td>
-      <td>${car.mileage.toLocaleString()} km</td>
+      <td>${car.fuel}</td>
       <td><strong>${car.rate}</strong></td>
-      <td>${car.last_service}</td>
       <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${car.status}</span></td>
       <td>
         <button class="btn-primary-sm" onclick="manageCar(${car.id})" style="font-size:12px;padding:6px 12px">

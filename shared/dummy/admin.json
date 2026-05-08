@@ -17,11 +17,10 @@
       "type": "Sedan",
       "status": "Available",
       "rate": "RM 120/day",
-      "last_service": "10 Apr 2026",
-      "mileage": 34500,
       "fuel": "Petrol",
       "transmission": "Auto",
-      "image": "toyota-vios.jpg"
+      "seats": 5,
+      "images": ["toyota-vios-2023.png"]
     },
     {
       "id": 2,
@@ -30,11 +29,10 @@
       "type": "SUV",
       "status": "Rented",
       "rate": "RM 200/day",
-      "last_service": "05 Apr 2026",
-      "mileage": 12300,
       "fuel": "Petrol",
       "transmission": "Auto",
-      "image": "honda-crv.jpg"
+      "seats": 5,
+      "images": ["honda-crv-2024.png"]
     },
     {
       "id": 3,
@@ -43,24 +41,22 @@
       "type": "Hatchback",
       "status": "Available",
       "rate": "RM 80/day",
-      "last_service": "18 Apr 2026",
-      "mileage": 28700,
       "fuel": "Petrol",
       "transmission": "Auto",
-      "image": "perodua-myvi.jpg"
+      "seats": 5,
+      "images": ["perodua-myvi-2023.png"]
     },
     {
       "id": 4,
       "name": "Toyota Hiace 2022",
       "plate": "GHI 3456",
       "type": "Van",
-      "status": "Maintenance",
+      "status": "Available",
       "rate": "RM 350/day",
-      "last_service": "01 Apr 2026",
-      "mileage": 67200,
       "fuel": "Diesel",
       "transmission": "Manual",
-      "image": "toyota-hiace.jpg"
+      "seats": 12,
+      "images": ["toyota-hiace-2022.png"]
     },
     {
       "id": 5,
@@ -69,11 +65,10 @@
       "type": "Luxury",
       "status": "Rented",
       "rate": "RM 450/day",
-      "last_service": "20 Apr 2026",
-      "mileage": 8900,
       "fuel": "Petrol",
       "transmission": "Auto",
-      "image": "bmw-3series.jpg"
+      "seats": 5,
+      "images": ["bmw-3series-2024.png"]
     },
     {
       "id": 6,
@@ -82,11 +77,10 @@
       "type": "Hatchback",
       "status": "Available",
       "rate": "RM 90/day",
-      "last_service": "15 Apr 2026",
-      "mileage": 19800,
       "fuel": "Petrol",
       "transmission": "Auto",
-      "image": "honda-jazz.jpg"
+      "seats": 5,
+      "images": ["honda-jazz-2023.png"]
     }
   ],
   "bookings": [

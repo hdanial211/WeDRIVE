@@ -1,10 +1,14 @@
 /**
  * WeDRIVE - Car Detail / Manage Module JS
  * admin/js/car-detail.js
+ * Focus: Rental only (seats, transmission, fuel — no mileage/service)
  */
 
 let carData = null;
 let allBookings = [];
+const IMG_BASE = '../../shared/images/cars/';
+const MAX_IMAGES = 10;
+let currentMainIndex = 0;
 
 // Get car ID from URL params
 const urlParams = new URLSearchParams(window.location.search);
@@ -25,7 +29,11 @@ window.WeDriveAPI.getAdminData()
       return;
     }
 
+    // Ensure images array exists
+    if (!carData.images) carData.images = [];
+
     renderCarDetails(carData);
+    renderCarImages(carData);
     renderBookingHistory(carData, allBookings);
   })
   .catch(err => console.error('Car detail load error:', err));
@@ -42,28 +50,81 @@ function renderCarDetails(car) {
   // Status badge
   const statusEl = document.getElementById('cd-status');
   const statusMap = {
-    'Available':   { cls: 'available',   icon: 'check_circle' },
-    'Rented':      { cls: 'rented',      icon: 'car_rental'   },
-    'Maintenance': { cls: 'maintenance', icon: 'build'        }
+    'Available': { cls: 'available', icon: 'check_circle' },
+    'Rented':    { cls: 'rented',    icon: 'car_rental'   }
   };
   const sm = statusMap[car.status] || statusMap['Available'];
   statusEl.className = `status-badge ${sm.cls}`;
   statusEl.innerHTML = `<span class="dot"></span> ${car.status}`;
 
-  // Quick stats
-  document.getElementById('cd-fuel').textContent = car.fuel;
+  // Quick stats (rental-focused)
+  document.getElementById('cd-seats').textContent = (car.seats || 5) + ' Seater';
   document.getElementById('cd-trans').textContent = car.transmission;
-  document.getElementById('cd-mileage').textContent = car.mileage.toLocaleString() + ' km';
-  document.getElementById('cd-service').textContent = car.last_service;
+  document.getElementById('cd-fuel').textContent = car.fuel;
 
   // Rate
   document.getElementById('cd-rate').textContent = car.rate;
 }
 
+/* ── Render Car Images (Main + Thumbnails) ── */
+function renderCarImages(car) {
+  const mainImg = document.getElementById('cd-main-img');
+  const fallback = document.getElementById('cd-img-fallback');
+  const thumbContainer = document.getElementById('cd-thumbnails');
+
+  if (car.images && car.images.length > 0) {
+    const firstSrc = car.images[0].startsWith('data:') ? car.images[0] : IMG_BASE + car.images[0];
+    mainImg.src = firstSrc;
+    mainImg.alt = car.name;
+    mainImg.style.display = 'block';
+    fallback.style.display = 'none';
+
+    mainImg.onerror = function() {
+      mainImg.style.display = 'none';
+      fallback.style.display = 'flex';
+    };
+
+    // Thumbnails
+    if (car.images.length > 1) {
+      thumbContainer.innerHTML = car.images.map((img, idx) => {
+        const src = img.startsWith('data:') ? img : IMG_BASE + img;
+        return `
+        <div class="car-thumb ${idx === 0 ? 'active' : ''}" onclick="switchImage(${idx})">
+          <img src="${src}" alt="${car.name} ${idx+1}" onerror="this.parentElement.style.display='none';" />
+        </div>`;
+      }).join('');
+      thumbContainer.style.display = 'flex';
+    } else {
+      thumbContainer.style.display = 'none';
+    }
+  } else {
+    mainImg.style.display = 'none';
+    fallback.style.display = 'flex';
+    thumbContainer.style.display = 'none';
+  }
+}
+
+/* ── Switch Main Image ── */
+function switchImage(idx) {
+  if (!carData.images || idx >= carData.images.length) return;
+  currentMainIndex = idx;
+
+  const mainImg = document.getElementById('cd-main-img');
+  const fallback = document.getElementById('cd-img-fallback');
+  const src = carData.images[idx].startsWith('data:') ? carData.images[idx] : IMG_BASE + carData.images[idx];
+  mainImg.src = src;
+  mainImg.style.display = 'block';
+  fallback.style.display = 'none';
+
+  // Update active thumbnail
+  document.querySelectorAll('.car-thumb').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+}
+
 /* ── Booking History ── */
 function renderBookingHistory(car, bookings) {
   const tbody = document.getElementById('cd-bookings-tbody');
-  // Filter bookings for this car
   const carBookings = bookings.filter(b => b.plate === car.plate);
 
   if (carBookings.length === 0) {
@@ -99,8 +160,100 @@ function editDetails() {
   document.getElementById('edit-fuel').value = carData.fuel;
   document.getElementById('edit-trans').value = carData.transmission;
   document.getElementById('edit-rate').value = parseInt(carData.rate.replace(/[^0-9]/g, ''));
-  document.getElementById('edit-mileage').value = carData.mileage;
-  document.getElementById('edit-service').value = carData.last_service;
+  document.getElementById('edit-seats').value = carData.seats || 5;
+
+  // Populate images grid
+  renderEditImagesGrid();
+}
+
+/* ── Render Edit Images Grid ── */
+function renderEditImagesGrid() {
+  const grid = document.getElementById('edit-images-grid');
+  const countLabel = document.getElementById('img-count-label');
+  const imgs = carData.images || [];
+
+  countLabel.textContent = `${imgs.length}/${MAX_IMAGES} photos`;
+
+  if (imgs.length === 0) {
+    grid.innerHTML = '<div style="color:var(--slate-400);font-size:13px;padding:20px;text-align:center;border:2px dashed var(--slate-200);border-radius:12px;">No photos yet. Click "Add Photo" to upload.</div>';
+    return;
+  }
+
+  grid.innerHTML = imgs.map((img, idx) => {
+    const src = img.startsWith('data:') ? img : IMG_BASE + img;
+    return `
+    <div class="edit-img-item">
+      <img src="${src}" alt="Photo ${idx+1}" />
+      <button type="button" class="edit-img-remove" onclick="removeImage(${idx})" title="Remove photo">
+        <span class="material-icons-round" style="font-size:16px;">close</span>
+      </button>
+      ${idx === 0 ? '<span class="edit-img-main-badge">Main</span>' : `<button type="button" class="edit-img-set-main" onclick="setMainImage(${idx})" title="Set as main photo"><span class="material-icons-round" style="font-size:12px;">star</span></button>`}
+    </div>`;
+  }).join('');
+}
+
+/* ── Handle Image Upload ── */
+function handleImageUpload(event) {
+  const files = event.target.files;
+  if (!files || files.length === 0) return;
+
+  const currentCount = (carData.images || []).length;
+  const remaining = MAX_IMAGES - currentCount;
+
+  if (remaining <= 0) {
+    showToast(`Maximum ${MAX_IMAGES} photos allowed.`, 'info');
+    event.target.value = '';
+    return;
+  }
+
+  const toProcess = Math.min(files.length, remaining);
+  if (files.length > remaining) {
+    showToast(`Only ${remaining} more photo(s) can be added. Taking first ${toProcess}.`, 'info');
+  }
+
+  let processed = 0;
+  for (let i = 0; i < toProcess; i++) {
+    const file = files[i];
+    if (!file.type.startsWith('image/')) continue;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      if (!carData.images) carData.images = [];
+      carData.images.push(e.target.result);
+      processed++;
+      if (processed >= toProcess) {
+        renderEditImagesGrid();
+        renderCarImages(carData);
+        showToast(`${processed} photo(s) added!`, 'success');
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  event.target.value = '';
+}
+
+/* ── Remove Image ── */
+function removeImage(idx) {
+  if (!carData.images || idx >= carData.images.length) return;
+  if (confirm('Remove this photo?')) {
+    carData.images.splice(idx, 1);
+    if (currentMainIndex >= carData.images.length) currentMainIndex = 0;
+    renderEditImagesGrid();
+    renderCarImages(carData);
+    showToast('Photo removed.', 'success');
+  }
+}
+
+/* ── Set Main Image ── */
+function setMainImage(idx) {
+  if (!carData.images || idx >= carData.images.length) return;
+  const img = carData.images.splice(idx, 1)[0];
+  carData.images.unshift(img);
+  currentMainIndex = 0;
+  renderEditImagesGrid();
+  renderCarImages(carData);
+  showToast('Main photo updated!', 'success');
 }
 
 function cancelEdit() {
@@ -117,20 +270,19 @@ function saveCarEdit(e) {
   carData.fuel = document.getElementById('edit-fuel').value;
   carData.transmission = document.getElementById('edit-trans').value;
   carData.rate = 'RM ' + document.getElementById('edit-rate').value + '/day';
-  carData.mileage = parseInt(document.getElementById('edit-mileage').value);
-  carData.last_service = document.getElementById('edit-service').value;
+  carData.seats = parseInt(document.getElementById('edit-seats').value);
 
   // Re-render
   renderCarDetails(carData);
+  renderCarImages(carData);
   cancelEdit();
 
-  // Toast notification
   showToast('Vehicle details updated successfully!', 'success');
 }
 
 /* ── Update Status ── */
 function updateStatus() {
-  const statuses = ['Available', 'Rented', 'Maintenance'];
+  const statuses = ['Available', 'Rented'];
   const currentIdx = statuses.indexOf(carData.status);
   const nextStatus = statuses[(currentIdx + 1) % statuses.length];
 
@@ -142,10 +294,6 @@ function updateStatus() {
 }
 
 /* ── Quick Actions ── */
-function scheduleService() {
-  alert(`Schedule Service for ${carData.name}\n\nCurrent mileage: ${carData.mileage.toLocaleString()} km\nLast service: ${carData.last_service}\n\nThis feature will be available when backend is ready.`);
-}
-
 function viewInsurance() {
   alert(`Insurance Info for ${carData.name}\n\nPlate: ${carData.plate}\nType: ${carData.type}\n\nInsurance details will be available when backend is integrated.`);
 }
