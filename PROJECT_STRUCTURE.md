@@ -20,6 +20,7 @@ AI CAR RENTAL SYSTEM/
 +-- admin/                      # Modul Admin
 |   +-- pages/
 |   |   +-- admin.html          # Admin Dashboard
+|   |   +-- cars.html            # Pengurusan Fleet (Kereta)
 |   |   +-- bookings.html       # Pengurusan Tempahan
 |   |   +-- customers.html      # Pengurusan Pelanggan
 |   |   +-- reports.html        # Laporan & Analitik
@@ -30,6 +31,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
 |       +-- admin.js            # Logik Dashboard
+|       +-- cars.js             # Logik Fleet Management
 |       +-- bookings.js         # Logik Tempahan
 |       +-- customers.js        # Logik Pelanggan
 |       +-- reports.js          # Logik Laporan

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fleet Management | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="fleet"></div>
+
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- STATS -->
+      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="fl_stat_total">Total Fleet</div>
+            <div class="value" id="fl-total">--</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="fl_stat_available">Available</div>
+            <div class="value" id="fl-available">--</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">check_circle</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="fl_stat_rented">Rented</div>
+            <div class="value" id="fl-rented">--</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">car_rental</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="fl_stat_maintenance">Maintenance</div>
+            <div class="value" id="fl-maintenance">--</div>
+          </div>
+          <div class="stat-icon red"><span class="material-icons-round">build</span></div>
+        </div>
+      </div>
+
+      <!-- FILTER + SEARCH -->
+      <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="filter-chip active" onclick="filterFleet('all', this)">All</button>
+            <button class="filter-chip" onclick="filterFleet('Available', this)">Available</button>
+            <button class="filter-chip" onclick="filterFleet('Rented', this)">Rented</button>
+            <button class="filter-chip" onclick="filterFleet('Maintenance', this)">Maintenance</button>
+          </div>
+          <div class="input-wrap-sm" style="max-width:300px;">
+            <span class="material-icons-round" style="font-size:18px">search</span>
+            <input type="text" id="fl-search" placeholder="Search car name or plate..." oninput="searchFleet(this.value)" />
+          </div>
+        </div>
+      </div>
+
+      <!-- CAR CARDS GRID -->
+      <div id="fleet-grid" class="fleet-grid">
+        <!-- Populated by cars.js -->
+      </div>
+
+      <!-- FLEET TABLE (detailed) -->
+      <div class="card reveal-on-scroll" style="margin-top:24px;">
+        <div class="card-header">
+          <h3 data-key="fl_table_title">Fleet Details</h3>
+          <button class="btn-primary-sm" onclick="addNewCar()">
+            <span class="material-icons-round" style="font-size:16px">add</span>
+            <span data-key="fl_add_car">Add Car</span>
+          </button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th data-key="fl_th_vehicle">Vehicle</th>
+                <th data-key="fl_th_plate">Plate No.</th>
+                <th data-key="fl_th_type">Type</th>
+                <th data-key="fl_th_fuel">Fuel</th>
+                <th data-key="fl_th_trans">Transmission</th>
+                <th data-key="fl_th_mileage">Mileage</th>
+                <th data-key="fl_th_rate">Daily Rate</th>
+                <th data-key="fl_th_service">Last Service</th>
+                <th data-key="fl_th_status">Status</th>
+                <th data-key="fl_th_action">Action</th>
+              </tr>
+            </thead>
+            <tbody id="fleet-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
+  </main>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/main.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../js/cars.js"></script>
+</body>
+</html>

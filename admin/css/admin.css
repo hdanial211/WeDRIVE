@@ -230,3 +230,10 @@ tr:hover td { background: var(--slate-50); }
 .status-badge.completed { background: #D1FAE5; color: #059669; }
 .status-badge.cancelled { background: #FEE2E2; color: #DC2626; }
 
+/* FLEET GRID */
+.fleet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.car-card { transition: transform 0.2s, box-shadow 0.2s; cursor: default; }
+.car-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+
+/* STATUS BADGE RENTED */
+.status-badge.rented { background: #DBEAFE; color: #2563EB; }
