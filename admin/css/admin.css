@@ -392,3 +392,115 @@ tr:hover td { background: var(--slate-50); }
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+/* ── Booking Calendar ── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.cal-header div {
+  text-align: center; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; color: var(--slate-400);
+  padding: 10px 0 6px; letter-spacing: 0.5px;
+}
+.cal-cell {
+  position: relative;
+  min-height: 68px; border-radius: 10px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+.cal-cell:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.cal-cell.selected { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+.cal-cell .cal-day {
+  font-size: 16px; font-weight: 700; line-height: 1;
+}
+.cal-cell .cal-rate {
+  font-size: 10px; font-weight: 600; margin-top: 4px; opacity: 0.85;
+}
+.cal-cell .cal-badge {
+  position: absolute; top: 4px; right: 4px;
+  width: 6px; height: 6px; border-radius: 50%;
+}
+
+/* Status Colors */
+.cal-cell.available {
+  background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
+  color: #065F46;
+}
+.cal-cell.available .cal-badge { background: #059669; }
+
+.cal-cell.booked {
+  background: linear-gradient(135deg, #FEE2E2, #FECACA);
+  color: #991B1B;
+}
+.cal-cell.booked .cal-badge { background: #DC2626; }
+
+.cal-cell.pending {
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  color: #92400E;
+}
+.cal-cell.pending .cal-badge { background: #D97706; }
+
+.cal-cell.past {
+  background: var(--slate-100);
+  color: var(--slate-400);
+  cursor: default; opacity: 0.6;
+}
+.cal-cell.past:hover { transform: none; box-shadow: none; }
+
+.cal-cell.empty {
+  background: transparent; cursor: default;
+  min-height: auto;
+}
+.cal-cell.empty:hover { transform: none; box-shadow: none; }
+
+.cal-cell.today {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.25);
+}
+
+/* Legend */
+.cal-legend {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  padding: 14px 24px; border-top: 1px solid var(--slate-200);
+}
+.cal-legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--slate-600);
+}
+.cal-dot {
+  width: 12px; height: 12px; border-radius: 4px;
+}
+.cal-dot.available { background: linear-gradient(135deg, #34D399, #059669); }
+.cal-dot.booked { background: linear-gradient(135deg, #F87171, #DC2626); }
+.cal-dot.pending { background: linear-gradient(135deg, #FBBF24, #D97706); }
+.cal-dot.past { background: var(--slate-300); }
+
+/* Day info panel */
+.cal-day-info {
+  padding: 16px 24px; border-top: 1px solid var(--slate-200);
+  background: var(--slate-50); border-radius: 0 0 16px 16px;
+}
+.cal-day-info .info-title {
+  font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 6px;
+}
+.cal-day-info .info-detail {
+  font-size: 12px; color: var(--slate-600); line-height: 1.6;
+}
+.cal-day-info .info-detail strong { color: var(--navy); }
+
+/* Dark mode overrides */
+[data-theme="dark"] .cal-cell.available { background: linear-gradient(135deg, #064E3B, #065F46); color: #6EE7B7; }
+[data-theme="dark"] .cal-cell.booked { background: linear-gradient(135deg, #7F1D1D, #991B1B); color: #FCA5A5; }
+[data-theme="dark"] .cal-cell.pending { background: linear-gradient(135deg, #78350F, #92400E); color: #FCD34D; }
+[data-theme="dark"] .cal-cell.past { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); }
+[data-theme="dark"] .cal-day-info { background: rgba(255,255,255,0.03); }
+
+@media (max-width: 640px) {
+  .cal-cell { min-height: 52px; border-radius: 8px; }
+  .cal-cell .cal-day { font-size: 13px; }
+  .cal-cell .cal-rate { font-size: 9px; }
+}

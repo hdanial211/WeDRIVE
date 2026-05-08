@@ -9,6 +9,7 @@ let allBookings = [];
 const IMG_BASE = '../../shared/images/cars/';
 const MAX_IMAGES = 10;
 let currentMainIndex = 0;
+let calYear, calMonth; // Calendar state
 
 // Get car ID from URL params
 const urlParams = new URLSearchParams(window.location.search);
@@ -35,6 +36,7 @@ window.WeDriveAPI.getAdminData()
     renderCarDetails(carData);
     renderCarImages(carData);
     renderBookingHistory(carData, allBookings);
+    initCalendar();
   })
   .catch(err => console.error('Car detail load error:', err));
 
@@ -318,4 +320,179 @@ function showToast(msg, type) {
   toast.innerHTML = `<span class="material-icons-round" style="font-size:18px">${icon}</span> ${msg}`;
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 3000);
+}
+
+/* ══════════════════════════════════════════════
+   BOOKING CALENDAR
+   ══════════════════════════════════════════════ */
+
+function initCalendar() {
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth(); // 0-indexed
+  renderCalendar();
+}
+
+function calendarPrev() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+}
+
+function calendarNext() {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar();
+}
+
+function renderCalendar() {
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+
+  // Update header
+  document.getElementById('cal-month-label').textContent = `${monthNames[calMonth]} ${calYear}`;
+
+  // Get bookings for this car
+  const carBookings = getCarBookings();
+
+  // Build date status map
+  const statusMap = buildDateStatusMap(carBookings);
+
+  // Get daily rate from carData
+  const rate = carData.rate || 'RM 0/day';
+
+  // Calculate grid
+  const firstDay = new Date(calYear, calMonth, 1);
+  const lastDay = new Date(calYear, calMonth + 1, 0);
+  const startOffset = (firstDay.getDay() + 6) % 7; // Monday = 0
+  const totalDays = lastDay.getDate();
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const grid = document.getElementById('cal-days-grid');
+  let html = '';
+
+  // Empty cells before first day
+  for (let i = 0; i < startOffset; i++) {
+    html += '<div class="cal-cell empty"></div>';
+  }
+
+  // Day cells
+  for (let d = 1; d <= totalDays; d++) {
+    const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dateObj = new Date(calYear, calMonth, d);
+    dateObj.setHours(0, 0, 0, 0);
+
+    let status = 'available';
+    let bookingInfo = null;
+    const isPast = dateObj < today;
+
+    if (isPast) {
+      status = 'past';
+    } else if (statusMap[dateStr]) {
+      status = statusMap[dateStr].status;
+      bookingInfo = statusMap[dateStr].booking;
+    }
+
+    const isToday = dateObj.getTime() === today.getTime();
+    const todayClass = isToday ? ' today' : '';
+
+    html += `
+    <div class="cal-cell ${status}${todayClass}" onclick="selectCalDay('${dateStr}', '${status}')" data-date="${dateStr}">
+      <span class="cal-badge"></span>
+      <span class="cal-day">${d}</span>
+      <span class="cal-rate">${status !== 'past' ? rate.replace('/day', '') : ''}</span>
+    </div>`;
+  }
+
+  grid.innerHTML = html;
+
+  // Hide info panel
+  document.getElementById('cal-day-info').style.display = 'none';
+}
+
+function getCarBookings() {
+  if (!carData || !allBookings) return [];
+  return allBookings.filter(b => b.plate === carData.plate);
+}
+
+function buildDateStatusMap(bookings) {
+  const map = {};
+
+  bookings.forEach(b => {
+    const pickup = new Date(b.pickup);
+    const returnDate = new Date(b.return);
+
+    // For each day in the booking range
+    const current = new Date(pickup);
+    while (current <= returnDate) {
+      const dateStr = current.toISOString().slice(0, 10);
+
+      let status;
+      if (b.status === 'Confirmed' || b.status === 'Completed') {
+        status = 'booked';
+      } else if (b.status === 'Pending') {
+        status = 'pending';
+      } else {
+        status = 'available';
+      }
+
+      // Booked takes priority over pending
+      if (!map[dateStr] || (status === 'booked' && map[dateStr].status === 'pending')) {
+        map[dateStr] = { status, booking: b };
+      }
+
+      current.setDate(current.getDate() + 1);
+    }
+  });
+
+  return map;
+}
+
+function selectCalDay(dateStr, status) {
+  if (status === 'past') return;
+
+  // Highlight selected cell
+  document.querySelectorAll('.cal-cell').forEach(c => c.classList.remove('selected'));
+  const cell = document.querySelector(`.cal-cell[data-date="${dateStr}"]`);
+  if (cell) cell.classList.add('selected');
+
+  const infoPanel = document.getElementById('cal-day-info');
+  const date = new Date(dateStr);
+  const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+  if (status === 'available') {
+    infoPanel.innerHTML = `
+      <div class="info-title">${formattedDate}</div>
+      <div class="info-detail">
+        <strong>Status:</strong> Available for booking<br>
+        <strong>Rate:</strong> ${carData.rate}
+      </div>`;
+  } else {
+    // Find booking for this date
+    const carBookings = getCarBookings();
+    const booking = carBookings.find(b => {
+      const pickup = new Date(b.pickup);
+      const ret = new Date(b.return);
+      const d = new Date(dateStr);
+      return d >= pickup && d <= ret;
+    });
+
+    if (booking) {
+      const statusLabel = booking.status === 'Pending' ? 'Pending Confirmation' : 'Confirmed Booking';
+      infoPanel.innerHTML = `
+        <div class="info-title">${formattedDate}</div>
+        <div class="info-detail">
+          <strong>Status:</strong> ${statusLabel}<br>
+          <strong>Booking ID:</strong> ${booking.id}<br>
+          <strong>Customer:</strong> ${booking.customer}<br>
+          <strong>Period:</strong> ${booking.pickup} to ${booking.return} (${booking.days} days)<br>
+          <strong>Total:</strong> RM ${booking.total.toLocaleString()}<br>
+          <strong>Payment:</strong> ${booking.payment}
+        </div>`;
+    }
+  }
+
+  infoPanel.style.display = 'block';
 }
