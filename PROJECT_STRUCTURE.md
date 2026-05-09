@@ -27,6 +27,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- reports.html        # Laporan & Analitik
 |   |   +-- settings.html       # Tetapan Sistem
 |   |   +-- chatbot.html        # AI Chatbot Settings (Gemini + Grok)
+|   |   +-- marketing.html      # Marketing (Banners, Promo Codes, Seasonal Pricing)
 |   +-- css/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
@@ -38,6 +39,7 @@ AI CAR RENTAL SYSTEM/
 |       +-- reports.js          # Logik Laporan
 |       +-- settings.js         # Logik Tetapan
 |       +-- chatbot-admin.js    # Logik AI Chatbot (Gemini + Grok API)
+|       +-- marketing.js        # Logik Marketing (Banners, Promos, Seasonal)
 |
 +-- customer/                   # Modul Customer / Pengguna
 |   +-- pages/
@@ -75,6 +77,7 @@ AI CAR RENTAL SYSTEM/
         +-- navbar-loader.js    # Pemuat Navbar Global
         +-- api.js              # API & CONFIGURATION (Pusat Database)
         +-- chatbot.js          # Modul Utama WeDRIVE AI Chatbot
+        +-- promo-banner.js     # Promo Banner Display (guest & customer pages)
         +-- anime.min.js        # Library animasi (Anime.js v3)
         +-- animate.js          # Modul animasi WeDRIVE (page open + scroll reveal)
 ```

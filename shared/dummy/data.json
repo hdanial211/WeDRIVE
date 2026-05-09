@@ -467,5 +467,97 @@
       "Confirmed":   { "class": "confirmed",   "icon": "verified" },
       "Completed":   { "class": "completed",   "icon": "task_alt" }
     }
+  },
+  "marketing": {
+    "banners": [
+      {
+        "id": "BN-001",
+        "title": "Raya Special Offer!",
+        "message": "Book any car for 3 days or more this Hari Raya and get 15% off. Use code RAYA2026.",
+        "color": "#7c3aed",
+        "active": true,
+        "start_date": "2026-03-20",
+        "end_date": "2026-04-10"
+      },
+      {
+        "id": "BN-002",
+        "title": "School Holiday Promo",
+        "message": "Planning a road trip? Enjoy free GPS and child seat for bookings above 5 days!",
+        "color": "#0ea5e9",
+        "active": false,
+        "start_date": "2026-05-30",
+        "end_date": "2026-06-15"
+      }
+    ],
+    "promo_codes": [
+      {
+        "id": "PC-001",
+        "code": "RAYA2026",
+        "description": "Hari Raya 2026 discount",
+        "type": "percent",
+        "value": 15,
+        "min_days": 3,
+        "usage_limit": 100,
+        "usage_count": 12,
+        "active": true,
+        "expiry": "2026-04-10"
+      },
+      {
+        "id": "PC-002",
+        "code": "WEDRIVE30",
+        "description": "New customer welcome discount",
+        "type": "fixed",
+        "value": 30,
+        "min_days": 1,
+        "usage_limit": 50,
+        "usage_count": 5,
+        "active": true,
+        "expiry": "2026-12-31"
+      },
+      {
+        "id": "PC-003",
+        "code": "HOLIDAY15",
+        "description": "School holiday special",
+        "type": "percent",
+        "value": 10,
+        "min_days": 2,
+        "usage_limit": 200,
+        "usage_count": 0,
+        "active": false,
+        "expiry": "2026-06-15"
+      }
+    ],
+    "seasonal_pricing": [
+      {
+        "id": "SP-001",
+        "name": "Hari Raya",
+        "start_date": "2026-03-28",
+        "end_date": "2026-04-10",
+        "adjustment_type": "percent",
+        "adjustment_value": 30,
+        "direction": "increase",
+        "active": true
+      },
+      {
+        "id": "SP-002",
+        "name": "School Holiday",
+        "start_date": "2026-05-30",
+        "end_date": "2026-06-15",
+        "adjustment_type": "percent",
+        "adjustment_value": 20,
+        "direction": "increase",
+        "active": false
+      },
+      {
+        "id": "SP-003",
+        "name": "Weekday Special",
+        "start_date": "2026-05-11",
+        "end_date": "2026-05-15",
+        "adjustment_type": "percent",
+        "adjustment_value": 10,
+        "direction": "decrease",
+        "active": true
+      }
+    ]
   }
 }
