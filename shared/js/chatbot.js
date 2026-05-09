@@ -12,7 +12,7 @@
 
   function resolveBase() {
     var path = window.location.pathname;
-    if (path.includes('/admin/pages/') || path.includes('/customer/pages/')) {
+    if (path.includes('/admin/pages/') || path.includes('/customer/pages/') || path.includes('/guest/pages/')) {
       return '../../';
     }
     return '';  // root level
