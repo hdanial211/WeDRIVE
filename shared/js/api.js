@@ -167,13 +167,59 @@ window.WeDriveAPI = {
             localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(newSettings));
             return { success: true };
         } else {
-            // In a real app, POST to database endpoint
-            // const res = await fetch(window.AppConfig.API_BASE_URL + "/chatbot/settings", { method: 'POST', body: JSON.stringify(newSettings) });
-            // return await res.json();
             return { success: true };
         }
+    },
+
+    /**
+     * Get the full data.json (all sections).
+     * Used in: marketing.js, promo-banner.js
+     */
+    getData: async function() {
+        if (!window.AppConfig.USE_REAL_DB) {
+            const res = await fetch(getDummyPath('data.json'));
+            if (!res.ok) throw new Error('Failed to load data.json');
+            return await res.json();
+        } else {
+            const res = await fetch(window.AppConfig.API_BASE_URL + '/data');
+            if (!res.ok) throw new Error('Database Error: Failed to fetch data');
+            return await res.json();
+        }
+    },
+
+    /**
+     * Get marketing data (banners, promo codes, seasonal pricing).
+     * Used in: marketing.js, promo-banner.js
+     */
+    getMarketing: async function() {
+        const data = await window.WeDriveAPI.getData();
+        // Merge with any admin-saved overrides in localStorage
+        try {
+            const stored = JSON.parse(localStorage.getItem('wedrive_marketing') || 'null');
+            if (stored) return { ...data.marketing, ...stored };
+        } catch {}
+        return data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
+    },
+
+    /**
+     * Save marketing data to localStorage.
+     * Used in: marketing.js
+     */
+    saveMarketing: async function(marketingObj) {
+        localStorage.setItem('wedrive_marketing', JSON.stringify(marketingObj));
+        return { success: true };
+    },
+
+    /**
+     * Get customer list.
+     * Used in: admin customers page
+     */
+    getCustomers: async function() {
+        const data = await window.WeDriveAPI.getData();
+        return data.customers || [];
     }
 
     // You can add more functions here later:
     // createBooking(), updateCarStatus(), deleteCustomer(), etc.
 };
+

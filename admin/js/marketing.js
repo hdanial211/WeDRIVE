@@ -10,10 +10,9 @@ let MKT = { banners: [], promo_codes: [], seasonal_pricing: [] };
 // ── Init ──────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
   try {
-    const data = await window.WeDriveAPI.getData();
-    MKT = data.marketing || MKT;
+    MKT = await window.WeDriveAPI.getMarketing();
   } catch (e) {
-    console.warn('Marketing: using local fallback', e);
+    console.warn('Marketing: failed to load', e);
   }
   renderAll();
   updateStats();
@@ -342,17 +341,11 @@ document.querySelectorAll('.mkt-modal-overlay').forEach(el => {
 
 // ── Storage ───────────────────────────────────────────────────────────────────
 function saveToStorage() {
-  try {
-    const existing = JSON.parse(localStorage.getItem('wedrive_marketing') || '{}');
-    localStorage.setItem('wedrive_marketing', JSON.stringify({ ...existing, ...MKT }));
-  } catch (e) { console.warn('Storage error', e); }
+  window.WeDriveAPI.saveMarketing(MKT).catch(e => console.warn('Save failed', e));
 }
 
 function loadFromStorage() {
-  try {
-    const stored = JSON.parse(localStorage.getItem('wedrive_marketing') || 'null');
-    if (stored) MKT = { ...MKT, ...stored };
-  } catch (e) {}
+  // Handled by WeDriveAPI.getMarketing() on init
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────

@@ -162,10 +162,17 @@
 </head>
 <body>
 
-  <div class="layout">
-    <div id="sidebar-placeholder"></div>
+  <!-- SIDEBAR -->
+  <div id="sidebar-placeholder"
+       data-page="marketing">
+  </div>
 
-    <main class="main-content">
+  <!-- MAIN -->
+  <main class="main">
+    <!-- NAVBAR -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
       <div class="page-header reveal-up">
         <div>
           <h1 class="page-title">Marketing</h1>
@@ -229,8 +236,8 @@
           <span class="material-icons-round">add</span> Add Seasonal Rate
         </button>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 
   <!-- ── BANNER MODAL ───────────────────────────── -->
   <div class="mkt-modal-overlay" id="modal-banner">
