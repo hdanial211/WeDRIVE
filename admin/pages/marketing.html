@@ -18,152 +18,115 @@
   <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
 
   <style>
-    /* ── Marketing Page Layout ───────────────────── */
-    .mkt-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
-    .mkt-tab {
-      padding: 10px 22px; border-radius: 10px; border: 2px solid var(--border-color);
-      background: var(--card-bg); color: var(--text-muted); font-weight: 600;
-      cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px;
-      transition: all .2s;
-    }
-    .mkt-tab.active {
-      background: var(--accent); color: #fff; border-color: var(--accent);
-    }
-    .mkt-tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+    /* ── Marketing-specific only (not duplicating admin.css) ── */
 
-    .mkt-section { display: none; }
-    .mkt-section.active { display: block; }
+    /* Tab bar: reuse .filter-chip from admin.css, add tab container */
+    .mkt-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
 
-    /* ── Cards ───────────────────────────────────── */
-    .mkt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; margin-bottom: 24px; }
+    /* Stats: reuse .stats-grid layout, custom 4-col */
+    .mkt-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
 
-    .mkt-card {
-      background: var(--card-bg); border: 1px solid var(--border-color);
-      border-radius: 14px; padding: 20px; position: relative;
-      transition: box-shadow .2s;
-    }
-    .mkt-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+    /* Card grid */
+    .mkt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; margin-bottom: 20px; }
 
-    .mkt-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-    .mkt-card-title { font-weight: 700; font-size: 15px; color: var(--text-color); }
-    .mkt-card-actions { display: flex; gap: 8px; }
+    /* Card action icons */
+    .mkt-card-actions { display: flex; gap: 4px; }
     .mkt-card-actions button {
-      border: none; background: none; cursor: pointer; padding: 4px;
-      color: var(--text-muted); border-radius: 6px; transition: all .2s;
+      border: none; background: none; cursor: pointer; padding: 6px;
+      color: var(--slate-400); border-radius: 8px; transition: all .2s;
+      display: flex; align-items: center;
     }
-    .mkt-card-actions button:hover { background: var(--border-color); color: var(--accent); }
+    .mkt-card-actions button:hover { background: var(--slate-100); color: var(--primary); }
+    .mkt-card-actions button.danger:hover { background: #fee2e2; color: var(--danger); }
+    .card-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
 
-    .mkt-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
-    }
-    .mkt-badge.active-badge { background: #dcfce7; color: #16a34a; }
-    .mkt-badge.inactive-badge { background: #f1f5f9; color: #64748b; }
-    .mkt-badge.expired-badge { background: #fee2e2; color: #dc2626; }
+    /* Detail text */
+    .mkt-detail { font-size: 13px; color: var(--slate-400); margin-top: 4px; }
+    .mkt-detail span { color: var(--navy); font-weight: 600; }
 
-    .mkt-detail { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
-    .mkt-detail span { color: var(--text-color); font-weight: 500; }
-
-    /* Banner preview */
+    /* Banner preview strip inside card */
     .banner-preview {
-      border-radius: 10px; padding: 14px 18px; color: #fff; margin-bottom: 14px;
+      border-radius: 10px; padding: 12px 16px; color: #fff; margin-bottom: 14px;
       display: flex; align-items: center; gap: 12px;
     }
     .banner-preview .material-icons-round { font-size: 22px; opacity: .9; }
-    .banner-preview-text { flex: 1; }
     .banner-preview-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
-    .banner-preview-msg { font-size: 13px; opacity: .9; }
+    .banner-preview-msg { font-size: 12px; opacity: .9; }
 
-    /* Promo code chip */
+    /* Promo chip */
     .promo-code-chip {
-      display: inline-block; background: var(--accent);
-      color: #fff; font-family: monospace; font-size: 16px; font-weight: 700;
-      padding: 6px 14px; border-radius: 8px; letter-spacing: 2px; margin-bottom: 10px;
+      display: inline-block; background: var(--primary);
+      color: #fff; font-family: monospace; font-size: 15px; font-weight: 700;
+      padding: 5px 12px; border-radius: 8px; letter-spacing: 2px; margin-bottom: 10px;
     }
-    .promo-usage-bar { height: 6px; background: var(--border-color); border-radius: 3px; margin-top: 10px; }
-    .promo-usage-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width .4s; }
+    .promo-usage-bar { height: 5px; background: var(--slate-200); border-radius: 3px; margin-top: 10px; }
+    .promo-usage-fill { height: 100%; background: var(--primary); border-radius: 3px; transition: width .4s; }
 
-    /* Seasonal tag */
-    .season-dir-up { color: #ef4444; font-weight: 700; }
-    .season-dir-down { color: #16a34a; font-weight: 700; }
+    /* Seasonal direction */
+    .dir-up   { color: var(--danger);   font-weight: 700; }
+    .dir-down { color: var(--success);  font-weight: 700; }
 
-    /* Add Button */
+    /* Add dashed button */
     .mkt-add-btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px; border: 2px dashed var(--border-color); border-radius: 14px;
-      background: transparent; color: var(--text-muted); cursor: pointer;
+      padding: 14px; border: 2px dashed var(--slate-200); border-radius: 12px;
+      background: transparent; color: var(--slate-400); cursor: pointer;
       font-size: 14px; font-weight: 600; width: 100%; transition: all .2s;
+      font-family: 'Inter', sans-serif;
     }
-    .mkt-add-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(124,58,237,.05); }
+    .mkt-add-btn:hover { border-color: var(--primary); color: var(--primary); background: #EFF6FF; }
 
-    /* Stats row */
-    .mkt-stats { display: flex; gap: 14px; margin-bottom: 24px; flex-wrap: wrap; }
-    .mkt-stat {
-      flex: 1; min-width: 140px; background: var(--card-bg);
-      border: 1px solid var(--border-color); border-radius: 12px; padding: 16px 20px;
-    }
-    .mkt-stat-val { font-size: 26px; font-weight: 800; color: var(--accent); }
-    .mkt-stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    /* Tabs: show/hide sections */
+    .mkt-section { display: none; }
+    .mkt-section.active { display: block; }
 
-    /* Modal */
-    .mkt-modal-overlay {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5);
-      z-index: 1000; align-items: center; justify-content: center;
+    /* Modal form layout extras */
+    .modal-footer {
+      padding: 16px 24px; border-top: 1px solid var(--slate-200);
+      display: flex; justify-content: flex-end; gap: 10px;
     }
-    .mkt-modal-overlay.open { display: flex; }
-    .mkt-modal {
-      background: var(--card-bg); border-radius: 18px; padding: 32px;
-      width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    .form-color-input {
+      width: 100%; height: 44px; padding: 4px 8px;
+      border: 1.5px solid var(--slate-200); border-radius: 10px; cursor: pointer;
     }
-    .mkt-modal h3 { font-size: 18px; font-weight: 700; margin-bottom: 24px; color: var(--text-color); }
-    .mkt-form-row { margin-bottom: 16px; }
-    .mkt-form-row label {
-      display: block; font-size: 13px; font-weight: 600; color: var(--text-muted);
-      margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px;
-    }
-    .mkt-form-row input, .mkt-form-row select, .mkt-form-row textarea {
-      width: 100%; padding: 10px 14px; border-radius: 10px;
-      border: 1.5px solid var(--border-color); background: var(--bg-color);
-      color: var(--text-color); font-size: 14px; font-family: 'Inter', sans-serif;
-      transition: border-color .2s; box-sizing: border-box;
-    }
-    .mkt-form-row input:focus, .mkt-form-row select:focus, .mkt-form-row textarea:focus {
-      outline: none; border-color: var(--accent);
-    }
-    .mkt-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .mkt-modal-actions { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; }
-    .btn-cancel {
-      padding: 10px 20px; border-radius: 10px; border: 1.5px solid var(--border-color);
-      background: transparent; color: var(--text-muted); font-weight: 600; cursor: pointer;
-    }
-    .btn-save {
-      padding: 10px 24px; border-radius: 10px; border: none;
-      background: var(--accent); color: #fff; font-weight: 700; cursor: pointer;
-    }
-    .btn-save:hover { opacity: .9; }
+    .form-color-input:focus { outline: none; border-color: var(--primary); }
 
     /* Toggle switch */
-    .toggle-wrap { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
-    .toggle-switch { position: relative; width: 44px; height: 24px; }
+    .toggle-wrap { display: flex; align-items: center; gap: 10px; padding: 4px 0; }
+    .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
     .toggle-slider {
-      position: absolute; inset: 0; background: var(--border-color);
+      position: absolute; inset: 0; background: var(--slate-200);
       border-radius: 24px; cursor: pointer; transition: .3s;
     }
     .toggle-slider:before {
       content: ''; position: absolute; width: 18px; height: 18px;
       background: #fff; border-radius: 50%; left: 3px; top: 3px; transition: .3s;
     }
-    .toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+    .toggle-switch input:checked + .toggle-slider { background: var(--primary); }
     .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); }
-    .toggle-label { font-size: 14px; font-weight: 600; color: var(--text-color); }
+    .toggle-label { font-size: 14px; font-weight: 500; color: var(--navy); }
+
+    /* Page header */
+    .page-header { margin-bottom: 24px; }
+    .page-header h1 { font-size: 26px; font-weight: 700; color: var(--navy); }
+    .page-header p  { font-size: 13px; color: var(--slate-400); margin-top: 2px; }
+
+    /* Toast */
+    #mkt-toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--navy); color: #fff;
+      padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 600;
+      display: none; z-index: 99999; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      align-items: center; gap: 8px;
+    }
   </style>
 </head>
-<body>
+<body data-particles="6" data-cursor-glow>
 
   <!-- SIDEBAR -->
   <div id="sidebar-placeholder"
+       data-component="sidebar-admin"
        data-page="marketing">
   </div>
 
@@ -173,100 +136,131 @@
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
-      <div class="page-header reveal-up">
+
+      <!-- Page Header -->
+      <div class="header-action reveal-on-scroll">
         <div>
-          <h1 class="page-title">Marketing</h1>
-          <p class="page-subtitle">Manage banners, promo codes, and seasonal pricing</p>
+          <h1 data-key="mkt_title">Marketing</h1>
+          <p class="subtitle" data-key="mkt_subtitle" style="margin-top: 4px; color: var(--text-muted);">Manage banners, promo codes, and seasonal pricing</p>
         </div>
       </div>
 
-      <!-- Stats -->
+      <!-- Stats (reuse stat-card from admin.css) -->
       <div class="mkt-stats reveal-up">
-        <div class="mkt-stat">
-          <div class="mkt-stat-val" id="stat-active-banners">0</div>
-          <div class="mkt-stat-label">Active Banners</div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_active_banners">Active Banners</div>
+            <div class="value" id="stat-active-banners">0</div>
+          </div>
+          <div class="stat-icon purple">
+            <span class="material-icons-round">campaign</span>
+          </div>
         </div>
-        <div class="mkt-stat">
-          <div class="mkt-stat-val" id="stat-active-codes">0</div>
-          <div class="mkt-stat-label">Active Promo Codes</div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_active_promos">Active Promo Codes</div>
+            <div class="value" id="stat-active-codes">0</div>
+          </div>
+          <div class="stat-icon blue">
+            <span class="material-icons-round">confirmation_number</span>
+          </div>
         </div>
-        <div class="mkt-stat">
-          <div class="mkt-stat-val" id="stat-total-uses">0</div>
-          <div class="mkt-stat-label">Total Code Uses</div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_code_uses">Total Code Uses</div>
+            <div class="value" id="stat-total-uses">0</div>
+          </div>
+          <div class="stat-icon green">
+            <span class="material-icons-round">bar_chart</span>
+          </div>
         </div>
-        <div class="mkt-stat">
-          <div class="mkt-stat-val" id="stat-active-seasons">0</div>
-          <div class="mkt-stat-label">Active Seasonal Rates</div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_active_seasonal">Active Seasonal Rates</div>
+            <div class="value" id="stat-active-seasons">0</div>
+          </div>
+          <div class="stat-icon amber">
+            <span class="material-icons-round">event</span>
+          </div>
         </div>
       </div>
 
-      <!-- Tabs -->
+      <!-- Tabs (reuse filter-chip from admin.css) -->
       <div class="mkt-tabs reveal-up">
-        <button class="mkt-tab active" id="tab-banners" onclick="switchTab('banners')">
-          <span class="material-icons-round" style="font-size:18px">campaign</span> Banners
+        <button class="filter-chip active" id="tab-banners" onclick="switchTab('banners')">
+          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">campaign</span><span data-key="mkt_btn_banners">Banners</span>
         </button>
-        <button class="mkt-tab" id="tab-promos" onclick="switchTab('promos')">
-          <span class="material-icons-round" style="font-size:18px">confirmation_number</span> Promo Codes
+        <button class="filter-chip" id="tab-promos" onclick="switchTab('promos')">
+          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">confirmation_number</span><span data-key="mkt_btn_promos">Promo Codes</span>
         </button>
-        <button class="mkt-tab" id="tab-seasonal" onclick="switchTab('seasonal')">
-          <span class="material-icons-round" style="font-size:18px">event</span> Seasonal Pricing
+        <button class="filter-chip" id="tab-seasonal" onclick="switchTab('seasonal')">
+          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">event</span><span data-key="mkt_btn_seasonal">Seasonal Pricing</span>
         </button>
       </div>
 
-      <!-- ── BANNERS TAB ─────────────────────────── -->
+      <!-- BANNERS TAB -->
       <div class="mkt-section active reveal-up" id="section-banners">
         <div class="mkt-grid" id="banners-grid"></div>
         <button class="mkt-add-btn" onclick="openModal('banner')">
-          <span class="material-icons-round">add</span> Add New Banner
+          <span class="material-icons-round">add</span> <span data-key="mkt_add_banner">Add New Banner</span>
         </button>
       </div>
 
-      <!-- ── PROMO CODES TAB ─────────────────────── -->
+      <!-- PROMO CODES TAB -->
       <div class="mkt-section reveal-up" id="section-promos">
         <div class="mkt-grid" id="promos-grid"></div>
         <button class="mkt-add-btn" onclick="openModal('promo')">
-          <span class="material-icons-round">add</span> Add New Promo Code
+          <span class="material-icons-round">add</span> <span data-key="mkt_add_promo">Add New Promo Code</span>
         </button>
       </div>
 
-      <!-- ── SEASONAL PRICING TAB ───────────────── -->
+      <!-- SEASONAL PRICING TAB -->
       <div class="mkt-section reveal-up" id="section-seasonal">
         <div class="mkt-grid" id="seasonal-grid"></div>
         <button class="mkt-add-btn" onclick="openModal('seasonal')">
-          <span class="material-icons-round">add</span> Add Seasonal Rate
+          <span class="material-icons-round">add</span> <span data-key="mkt_add_seasonal">Add Seasonal Rate</span>
         </button>
       </div>
-    </div>
+
+    </div><!-- /content -->
   </main>
 
-  <!-- ── BANNER MODAL ───────────────────────────── -->
-  <div class="mkt-modal-overlay" id="modal-banner">
-    <div class="mkt-modal">
-      <h3 id="modal-banner-title">Add Banner</h3>
+  <!-- BANNER MODAL (reuse modal-overlay, modal-container, modal-header, modal-body from admin.css) -->
+  <div class="modal-overlay" id="modal-banner" style="display:none">
+    <div class="modal-container" style="width:100%;max-width:520px">
+      <div class="modal-header">
+        <h3 id="modal-banner-title">
+          <span class="material-icons-round" style="color:var(--primary);margin-right:8px;font-size:22px">campaign</span>
+          Add Banner
+        </h3>
+        <button class="modal-close-btn" onclick="closeModal('banner')">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
       <input type="hidden" id="banner-edit-id" />
-      <div class="mkt-form-row">
-        <label>Banner Title</label>
-        <input type="text" id="banner-title" placeholder="e.g. Raya Special Offer!" />
-      </div>
-      <div class="mkt-form-row">
-        <label>Message</label>
-        <textarea id="banner-message" rows="3" placeholder="Promo details shown to customers..."></textarea>
-      </div>
-      <div class="mkt-form-grid">
-        <div class="mkt-form-row">
-          <label>Start Date</label>
-          <input type="date" id="banner-start" />
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom:16px">
+          <label>Banner Title</label>
+          <input type="text" class="form-input" id="banner-title" placeholder="e.g. Raya Special Offer!" />
         </div>
-        <div class="mkt-form-row">
-          <label>End Date</label>
-          <input type="date" id="banner-end" />
+        <div class="form-group" style="margin-bottom:16px">
+          <label>Message</label>
+          <textarea class="form-input" id="banner-message" rows="3" placeholder="Promo details shown to customers..." style="resize:vertical"></textarea>
         </div>
-      </div>
-      <div class="mkt-form-row">
-        <label>Banner Color</label>
-        <input type="color" id="banner-color" value="#7c3aed" style="height:44px; padding:4px;" />
-      </div>
-      <div class="mkt-form-row">
+        <div class="form-grid" style="margin-bottom:16px">
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" class="form-input" id="banner-start" />
+          </div>
+          <div class="form-group">
+            <label>End Date</label>
+            <input type="date" class="form-input" id="banner-end" />
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label>Banner Color</label>
+          <input type="color" class="form-color-input" id="banner-color" value="#3B82F6" />
+        </div>
         <div class="toggle-wrap">
           <label class="toggle-switch">
             <input type="checkbox" id="banner-active" checked />
@@ -275,54 +269,65 @@
           <span class="toggle-label">Active (visible to customers)</span>
         </div>
       </div>
-      <div class="mkt-modal-actions">
-        <button class="btn-cancel" onclick="closeModal('banner')">Cancel</button>
-        <button class="btn-save" onclick="saveBanner()">Save Banner</button>
+      <div class="modal-footer">
+        <button class="btn-back" onclick="closeModal('banner')" data-key="mkt_btn_cancel">Cancel</button>
+        <button class="btn-primary-sm" onclick="saveBanner()">
+          <span class="material-icons-round" style="font-size:16px">save</span> <span data-key="mkt_btn_save">Save</span>
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- ── PROMO CODE MODAL ───────────────────────── -->
-  <div class="mkt-modal-overlay" id="modal-promo">
-    <div class="mkt-modal">
-      <h3 id="modal-promo-title">Add Promo Code</h3>
+  <!-- PROMO CODE MODAL -->
+  <div class="modal-overlay" id="modal-promo" style="display:none">
+    <div class="modal-container" style="width:100%;max-width:520px">
+      <div class="modal-header">
+        <h3 id="modal-promo-title">
+          <span class="material-icons-round" style="color:var(--primary);margin-right:8px;font-size:22px">confirmation_number</span>
+          Add Promo Code
+        </h3>
+        <button class="modal-close-btn" onclick="closeModal('promo')">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
       <input type="hidden" id="promo-edit-id" />
-      <div class="mkt-form-row">
-        <label>Promo Code</label>
-        <input type="text" id="promo-code" placeholder="e.g. RAYA2026" style="text-transform:uppercase;font-weight:700;letter-spacing:2px;" />
-      </div>
-      <div class="mkt-form-row">
-        <label>Description</label>
-        <input type="text" id="promo-desc" placeholder="e.g. Hari Raya 2026 discount" />
-      </div>
-      <div class="mkt-form-grid">
-        <div class="mkt-form-row">
-          <label>Discount Type</label>
-          <select id="promo-type">
-            <option value="percent">Percentage (%)</option>
-            <option value="fixed">Fixed Amount (RM)</option>
-          </select>
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom:16px">
+          <label>Promo Code</label>
+          <input type="text" class="form-input" id="promo-code" placeholder="e.g. RAYA2026"
+                 style="text-transform:uppercase;font-weight:700;letter-spacing:2px;font-family:monospace" />
         </div>
-        <div class="mkt-form-row">
-          <label>Discount Value</label>
-          <input type="number" id="promo-value" placeholder="e.g. 15" min="1" />
+        <div class="form-group" style="margin-bottom:16px">
+          <label>Description</label>
+          <input type="text" class="form-input" id="promo-desc" placeholder="e.g. Hari Raya 2026 discount" />
         </div>
-      </div>
-      <div class="mkt-form-grid">
-        <div class="mkt-form-row">
-          <label>Min Rental Days</label>
-          <input type="number" id="promo-min-days" value="1" min="1" />
+        <div class="form-grid" style="margin-bottom:16px">
+          <div class="form-group">
+            <label>Discount Type</label>
+            <select class="form-input" id="promo-type">
+              <option value="percent">Percentage (%)</option>
+              <option value="fixed">Fixed Amount (RM)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Discount Value</label>
+            <input type="number" class="form-input" id="promo-value" placeholder="e.g. 15" min="1" />
+          </div>
         </div>
-        <div class="mkt-form-row">
-          <label>Usage Limit</label>
-          <input type="number" id="promo-limit" placeholder="e.g. 100" min="1" />
+        <div class="form-grid" style="margin-bottom:16px">
+          <div class="form-group">
+            <label>Min Rental Days</label>
+            <input type="number" class="form-input" id="promo-min-days" value="1" min="1" />
+          </div>
+          <div class="form-group">
+            <label>Usage Limit</label>
+            <input type="number" class="form-input" id="promo-limit" placeholder="e.g. 100" min="1" />
+          </div>
         </div>
-      </div>
-      <div class="mkt-form-row">
-        <label>Expiry Date</label>
-        <input type="date" id="promo-expiry" />
-      </div>
-      <div class="mkt-form-row">
+        <div class="form-group" style="margin-bottom:16px">
+          <label>Expiry Date</label>
+          <input type="date" class="form-input" id="promo-expiry" />
+        </div>
         <div class="toggle-wrap">
           <label class="toggle-switch">
             <input type="checkbox" id="promo-active" checked />
@@ -331,46 +336,56 @@
           <span class="toggle-label">Active</span>
         </div>
       </div>
-      <div class="mkt-modal-actions">
-        <button class="btn-cancel" onclick="closeModal('promo')">Cancel</button>
-        <button class="btn-save" onclick="savePromo()">Save Code</button>
+      <div class="modal-footer">
+        <button class="btn-back" onclick="closeModal('promo')" data-key="mkt_btn_cancel">Cancel</button>
+        <button class="btn-primary-sm" onclick="savePromo()">
+          <span class="material-icons-round" style="font-size:16px">save</span> <span data-key="mkt_btn_save">Save</span>
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- ── SEASONAL PRICING MODAL ─────────────────── -->
-  <div class="mkt-modal-overlay" id="modal-seasonal">
-    <div class="mkt-modal">
-      <h3 id="modal-seasonal-title">Add Seasonal Rate</h3>
+  <!-- SEASONAL PRICING MODAL -->
+  <div class="modal-overlay" id="modal-seasonal" style="display:none">
+    <div class="modal-container" style="width:100%;max-width:520px">
+      <div class="modal-header">
+        <h3 id="modal-seasonal-title">
+          <span class="material-icons-round" style="color:var(--primary);margin-right:8px;font-size:22px">event</span>
+          Add Seasonal Rate
+        </h3>
+        <button class="modal-close-btn" onclick="closeModal('seasonal')">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
       <input type="hidden" id="seasonal-edit-id" />
-      <div class="mkt-form-row">
-        <label>Event Name</label>
-        <input type="text" id="seasonal-name" placeholder="e.g. Hari Raya, School Holiday" />
-      </div>
-      <div class="mkt-form-grid">
-        <div class="mkt-form-row">
-          <label>Start Date</label>
-          <input type="date" id="seasonal-start" />
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom:16px">
+          <label>Event Name</label>
+          <input type="text" class="form-input" id="seasonal-name" placeholder="e.g. Hari Raya, School Holiday" />
         </div>
-        <div class="mkt-form-row">
-          <label>End Date</label>
-          <input type="date" id="seasonal-end" />
+        <div class="form-grid" style="margin-bottom:16px">
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" class="form-input" id="seasonal-start" />
+          </div>
+          <div class="form-group">
+            <label>End Date</label>
+            <input type="date" class="form-input" id="seasonal-end" />
+          </div>
         </div>
-      </div>
-      <div class="mkt-form-grid">
-        <div class="mkt-form-row">
-          <label>Price Direction</label>
-          <select id="seasonal-direction">
-            <option value="increase">Increase (Surcharge)</option>
-            <option value="decrease">Decrease (Discount)</option>
-          </select>
+        <div class="form-grid" style="margin-bottom:16px">
+          <div class="form-group">
+            <label>Price Direction</label>
+            <select class="form-input" id="seasonal-direction">
+              <option value="increase">Increase (Surcharge)</option>
+              <option value="decrease">Decrease (Discount)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Adjustment (%)</label>
+            <input type="number" class="form-input" id="seasonal-value" placeholder="e.g. 30" min="1" max="100" />
+          </div>
         </div>
-        <div class="mkt-form-row">
-          <label>Adjustment (%)</label>
-          <input type="number" id="seasonal-value" placeholder="e.g. 30" min="1" max="100" />
-        </div>
-      </div>
-      <div class="mkt-form-row">
         <div class="toggle-wrap">
           <label class="toggle-switch">
             <input type="checkbox" id="seasonal-active" checked />
@@ -379,24 +394,22 @@
           <span class="toggle-label">Active</span>
         </div>
       </div>
-      <div class="mkt-modal-actions">
-        <button class="btn-cancel" onclick="closeModal('seasonal')">Cancel</button>
-        <button class="btn-save" onclick="saveSeasonal()">Save Rate</button>
+      <div class="modal-footer">
+        <button class="btn-back" onclick="closeModal('seasonal')" data-key="mkt_btn_cancel">Cancel</button>
+        <button class="btn-primary-sm" onclick="saveSeasonal()">
+          <span class="material-icons-round" style="font-size:16px">save</span> <span data-key="mkt_btn_save">Save</span>
+        </button>
       </div>
     </div>
   </div>
 
   <!-- Toast -->
-  <div id="toast" style="
-    position:fixed; bottom:24px; right:24px; background:#1e293b; color:#fff;
-    padding:12px 20px; border-radius:12px; font-size:14px; font-weight:600;
-    display:none; z-index:9999; box-shadow:0 8px 24px rgba(0,0,0,.2);
-    align-items:center; gap:8px;
-  "></div>
+  <div id="mkt-toast"></div>
 
   <script src="../../shared/js/api.js"></script>
   <script src="../../shared/js/main.js"></script>
   <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
   <script src="../../shared/js/animate.js"></script>
   <script src="../js/marketing.js"></script>
 </body>

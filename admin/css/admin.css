@@ -547,3 +547,106 @@ tr:hover td { background: var(--slate-50); }
   .cal-cell .cal-day { font-size: 13px; }
   .cal-cell .cal-rate { font-size: 9px; }
 }
+
+/* ══════════════════════════════════════════
+   ADMIN CALENDAR OVERVIEW (calendar.html)
+   ══════════════════════════════════════════ */
+
+.adm-cal-header {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--slate-200);
+}
+.adm-cal-header div {
+  text-align: center; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; color: var(--slate-400);
+  padding: 14px 0; letter-spacing: 0.5px;
+  background: var(--slate-50);
+}
+.adm-cal-header div:first-child { color: #EF4444; }
+.adm-cal-header div:last-child { color: #3B82F6; }
+
+.adm-cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+}
+
+.adm-cal-cell {
+  position: relative;
+  min-height: 100px; padding: 8px 10px;
+  border: 1px solid var(--slate-100);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex; flex-direction: column;
+  background: white;
+}
+.adm-cal-cell:hover {
+  background: #EFF6FF;
+  z-index: 2;
+  box-shadow: 0 4px 16px rgba(59,130,246,0.15);
+}
+.adm-cal-cell.empty {
+  background: var(--slate-50); cursor: default;
+  min-height: 40px;
+}
+.adm-cal-cell.empty:hover { background: var(--slate-50); box-shadow: none; }
+.adm-cal-cell.past {
+  background: var(--slate-50); opacity: 0.55;
+}
+.adm-cal-cell.past:hover { background: var(--slate-50); box-shadow: none; transform: none; }
+.adm-cal-cell.today {
+  border: 2px solid var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+  background: #EFF6FF;
+}
+
+.adm-cal-day-num {
+  font-size: 14px; font-weight: 700; color: var(--navy);
+  margin-bottom: 4px;
+}
+.adm-cal-day-num.today-num {
+  background: var(--primary); color: white;
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+}
+
+.adm-cal-indicators {
+  display: flex; gap: 4px; margin-bottom: 4px;
+}
+.adm-cal-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.adm-cal-dot.booking { background: linear-gradient(135deg, #3B82F6, #2563EB); }
+.adm-cal-dot.event { background: linear-gradient(135deg, #8B5CF6, #6D28D9); }
+.adm-cal-dot.seasonal { background: linear-gradient(135deg, #F59E0B, #D97706); }
+
+.adm-cal-seasonal {
+  font-size: 10px; font-weight: 700; color: #D97706;
+  background: #FEF3C7; padding: 2px 6px; border-radius: 4px;
+  display: inline-block; margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+.adm-cal-cars {
+  font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 3px;
+  margin-top: auto;
+}
+.adm-cal-cars.rented { color: #2563EB; }
+.adm-cal-cars.available { color: #059669; }
+
+/* Dark mode */
+[data-theme="dark"] .adm-cal-header div { background: rgba(255,255,255,0.03); }
+[data-theme="dark"] .adm-cal-cell { background: var(--card-bg); border-color: rgba(255,255,255,0.06); }
+[data-theme="dark"] .adm-cal-cell:hover { background: rgba(59,130,246,0.1); }
+[data-theme="dark"] .adm-cal-cell.empty { background: rgba(255,255,255,0.02); }
+[data-theme="dark"] .adm-cal-cell.past { background: rgba(255,255,255,0.02); }
+[data-theme="dark"] .adm-cal-cell.today { background: rgba(59,130,246,0.1); }
+[data-theme="dark"] .adm-cal-day-num { color: var(--text-primary); }
+[data-theme="dark"] .adm-cal-seasonal { background: rgba(245,158,11,0.15); color: #FBBF24; }
+
+@media (max-width: 768px) {
+  .adm-cal-cell { min-height: 70px; padding: 6px; }
+  .adm-cal-day-num { font-size: 12px; }
+  .adm-cal-seasonal { font-size: 9px; }
+  .adm-cal-cars { font-size: 9px; }
+}

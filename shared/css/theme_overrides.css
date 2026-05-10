@@ -40,12 +40,12 @@ body {
 }
 .btn-icon:hover { background: var(--bg-surface-2) !important; }
 .btn-icon .material-icons-round { color: var(--text-secondary) !important; }
-.btn-outline {
+.btn-outline, .btn-back {
   background: var(--bg-surface) !important;
   border-color: var(--border-color) !important;
   color: var(--text-primary) !important;
 }
-.btn-outline:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+.btn-outline:hover, .btn-back:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
 
 /* CARDS */
 .card, .stat-card {

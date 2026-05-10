@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendar | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../shared/css/sidebar.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+
+  <!-- AUTH GUARD -->
+  <script src="../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="calendar"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- PAGE HEADER -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div>
+          <h1 style="font-size:24px;font-weight:700;color:var(--navy)" data-key="cal_title">Calendar Overview</h1>
+          <p style="font-size:13px;color:var(--slate-400);margin-top:4px" data-key="cal_subtitle">Monitor bookings, events and seasonal pricing at a glance</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button class="btn-outline" id="cal-prev" style="padding:8px 14px;border-radius:10px;border:1.5px solid var(--slate-200);background:white;cursor:pointer;display:flex;align-items:center;gap:4px">
+            <span class="material-icons-round" style="font-size:18px">chevron_left</span>
+          </button>
+          <button class="btn-outline" id="cal-today" style="padding:8px 18px;border-radius:10px;border:1.5px solid var(--slate-200);background:white;cursor:pointer;font-weight:600;font-size:13px;font-family:'Inter',sans-serif" data-key="cal_today">Today</button>
+          <button class="btn-outline" id="cal-next" style="padding:8px 14px;border-radius:10px;border:1.5px solid var(--slate-200);background:white;cursor:pointer;display:flex;align-items:center;gap:4px">
+            <span class="material-icons-round" style="font-size:18px">chevron_right</span>
+          </button>
+          <span id="cal-month-label" style="font-size:18px;font-weight:700;color:var(--navy);min-width:180px;text-align:center"></span>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_bookings">Bookings This Month</div>
+            <div class="value" id="cal-stat-bookings">0</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">event_available</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_cars_rented">Cars Rented Today</div>
+            <div class="value" id="cal-stat-rented">0</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">directions_car</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_events">Active Events</div>
+            <div class="value" id="cal-stat-events">0</div>
+          </div>
+          <div class="stat-icon purple"><span class="material-icons-round">celebration</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_revenue">Revenue This Month</div>
+            <div class="value" id="cal-stat-revenue" style="font-size:24px">RM 0</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">payments</span></div>
+        </div>
+      </div>
+
+      <!-- LEGEND -->
+      <div class="card reveal-on-scroll" style="margin-bottom:20px;padding:14px 22px">
+        <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--slate-600)">
+            <span style="width:12px;height:12px;border-radius:4px;background:linear-gradient(135deg,#3B82F6,#2563EB);display:inline-block"></span>
+            <span data-key="cal_legend_booking">Booking</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--slate-600)">
+            <span style="width:12px;height:12px;border-radius:4px;background:linear-gradient(135deg,#8B5CF6,#6D28D9);display:inline-block"></span>
+            <span data-key="cal_legend_event">Event / Promo</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--slate-600)">
+            <span style="width:12px;height:12px;border-radius:4px;background:linear-gradient(135deg,#F59E0B,#D97706);display:inline-block"></span>
+            <span data-key="cal_legend_seasonal">Seasonal Pricing</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--slate-600)">
+            <span style="width:12px;height:12px;border-radius:4px;background:linear-gradient(135deg,#10B981,#059669);display:inline-block"></span>
+            <span data-key="cal_legend_available">Available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALENDAR GRID -->
+      <div class="card reveal-on-scroll" style="padding:0;overflow:hidden">
+        <!-- Day headers -->
+        <div class="adm-cal-header">
+          <div data-key="cal_sun">Sun</div>
+          <div data-key="cal_mon">Mon</div>
+          <div data-key="cal_tue">Tue</div>
+          <div data-key="cal_wed">Wed</div>
+          <div data-key="cal_thu">Thu</div>
+          <div data-key="cal_fri">Fri</div>
+          <div data-key="cal_sat">Sat</div>
+        </div>
+        <!-- Calendar cells rendered by JS -->
+        <div class="adm-cal-grid" id="cal-grid"></div>
+      </div>
+
+      <!-- DAY DETAIL PANEL -->
+      <div class="card reveal-on-scroll" id="cal-detail-panel" style="margin-top:20px;display:none">
+        <div class="card-header">
+          <h3 id="cal-detail-title" style="display:flex;align-items:center;gap:8px">
+            <span class="material-icons-round" style="color:var(--primary)">info</span>
+            <span data-key="cal_detail_title">Day Details</span>
+          </h3>
+          <button class="modal-close-btn" id="cal-detail-close">
+            <span class="material-icons-round">close</span>
+          </button>
+        </div>
+        <div id="cal-detail-body" style="padding-top:12px"></div>
+      </div>
+
+    </div><!-- /content -->
+
+    <!-- FOOTER -->
+    <div id="footer-placeholder" style="margin-top:40px;border-radius:16px;overflow:hidden"></div>
+  </main>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/sidebar-loader.js"></script>
+  <script src="../../shared/js/main.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../js/calendar.js"></script>
+</body>
+</html>

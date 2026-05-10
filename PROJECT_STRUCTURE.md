@@ -28,6 +28,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- settings.html       # Tetapan Sistem
 |   |   +-- chatbot.html        # AI Chatbot Settings (Gemini + Grok)
 |   |   +-- marketing.html      # Marketing (Banners, Promo Codes, Seasonal Pricing)
+|   |   +-- calendar.html       # Calendar Overview (Pantau Tempahan, Acara & Harga Bermusim)
 |   +-- css/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
@@ -40,6 +41,7 @@ AI CAR RENTAL SYSTEM/
 |       +-- settings.js         # Logik Tetapan
 |       +-- chatbot-admin.js    # Logik AI Chatbot (Gemini + Grok API)
 |       +-- marketing.js        # Logik Marketing (Banners, Promos, Seasonal)
+|       +-- calendar.js         # Logik Calendar Overview
 |
 +-- customer/                   # Modul Customer / Pengguna
 |   +-- pages/

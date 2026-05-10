@@ -193,10 +193,19 @@ window.WeDriveAPI = {
      */
     getMarketing: async function() {
         const data = await window.WeDriveAPI.getData();
-        // Merge with any admin-saved overrides in localStorage
         try {
-            const stored = JSON.parse(localStorage.getItem('wedrive_marketing') || 'null');
-            if (stored) return { ...data.marketing, ...stored };
+            const storedStr = localStorage.getItem('wedrive_marketing');
+            if (storedStr) {
+                const stored = JSON.parse(storedStr);
+                // If stored has some data, use it. Otherwise, fallback to dummy data.
+                if (stored && (
+                    (stored.banners && stored.banners.length > 0) || 
+                    (stored.promo_codes && stored.promo_codes.length > 0) || 
+                    (stored.seasonal_pricing && stored.seasonal_pricing.length > 0)
+                )) {
+                    return stored;
+                }
+            }
         } catch {}
         return data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
     },

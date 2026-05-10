@@ -18,9 +18,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   updateStats();
 });
 
-// ── Tab Switching ─────────────────────────────────────────────────────────────
+// ── Tab Switching ─────────────────────────────────────────────────────────────────────
 window.switchTab = function(tab) {
-  document.querySelectorAll('.mkt-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.filter-chip').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.mkt-section').forEach(s => s.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   document.getElementById('section-' + tab).classList.add('active');
@@ -44,6 +44,10 @@ function renderAll() {
   renderBanners();
   renderPromos();
   renderSeasonal();
+  
+  if (typeof setLanguage === 'function') {
+    setLanguage(localStorage.getItem('wedrive-lang') || 'en');
+  }
 }
 
 // ── BANNERS ───────────────────────────────────────────────────────────────────
@@ -54,11 +58,13 @@ function renderBanners() {
   grid.innerHTML = MKT.banners.map((b, i) => {
     const today = new Date().toISOString().slice(0, 10);
     const expired = b.end_date < today;
-    const statusClass = expired ? 'expired-badge' : (b.active ? 'active-badge' : 'inactive-badge');
-    const statusText = expired ? 'Expired' : (b.active ? 'Active' : 'Inactive');
+    const badgeClass = expired ? 'cancelled' : (b.active ? 'available' : 'pending');
+    const statusKey   = expired ? 'mkt_status_expired' : (b.active ? 'mkt_status_active' : 'mkt_status_inactive');
+    const statusText  = expired ? 'Expired' : (b.active ? 'Active' : 'Inactive');
+    const badgeIcon   = expired ? 'schedule'  : (b.active ? 'check_circle' : 'pause_circle');
 
     return `
-    <div class="mkt-card">
+    <div class="card" style="margin-bottom:0">
       <div class="banner-preview" style="background:${b.color}">
         <span class="material-icons-round">campaign</span>
         <div class="banner-preview-text">
@@ -66,24 +72,23 @@ function renderBanners() {
           <div class="banner-preview-msg">${b.message}</div>
         </div>
       </div>
-      <div class="mkt-card-header">
-        <span class="mkt-badge ${statusClass}">
-          <span class="material-icons-round" style="font-size:11px">${expired ? 'schedule' : (b.active ? 'check_circle' : 'pause_circle')}</span>
-          ${statusText}
+      <div class="card-row">
+        <span class="status-badge ${badgeClass}">
+          <span class="dot"></span><span data-key="${statusKey}">${statusText}</span>
         </span>
         <div class="mkt-card-actions">
-          <button onclick="editBanner(${i})" title="Edit">
+          <button onclick="editBanner(${i})" title="Edit" aria-label="Edit">
             <span class="material-icons-round" style="font-size:18px">edit</span>
           </button>
-          <button onclick="toggleBanner(${i})" title="${b.active ? 'Deactivate' : 'Activate'}">
+          <button onclick="toggleBanner(${i})" title="${b.active ? 'Deactivate' : 'Activate'}" aria-label="Toggle">
             <span class="material-icons-round" style="font-size:18px">${b.active ? 'visibility_off' : 'visibility'}</span>
           </button>
-          <button onclick="deleteBanner(${i})" title="Delete" style="color:#ef4444">
+          <button onclick="deleteBanner(${i})" title="Delete" aria-label="Delete" class="danger">
             <span class="material-icons-round" style="font-size:18px">delete</span>
           </button>
         </div>
       </div>
-      <div class="mkt-detail">Date: <span>${b.start_date}</span> to <span>${b.end_date}</span></div>
+      <div class="mkt-detail"><span data-key="mkt_date">Date:</span> <span>${b.start_date}</span> to <span>${b.end_date}</span></div>
     </div>`;
   }).join('');
 }
@@ -146,28 +151,28 @@ function renderPromos() {
   const today = new Date().toISOString().slice(0, 10);
   grid.innerHTML = MKT.promo_codes.map((p, i) => {
     const expired = p.expiry < today;
-    const statusClass = expired ? 'expired-badge' : (p.active ? 'active-badge' : 'inactive-badge');
-    const statusText = expired ? 'Expired' : (p.active ? 'Active' : 'Inactive');
+    const badgeClass  = expired ? 'cancelled' : (p.active ? 'available' : 'pending');
+    const statusKey   = expired ? 'mkt_status_expired' : (p.active ? 'mkt_status_active' : 'mkt_status_inactive');
+    const statusText  = expired ? 'Expired' : (p.active ? 'Active' : 'Inactive');
     const usagePct = p.usage_limit ? Math.min(100, Math.round((p.usage_count / p.usage_limit) * 100)) : 0;
     const discountLabel = p.type === 'percent' ? `${p.value}% off` : `RM ${p.value} off`;
 
     return `
-    <div class="mkt-card">
+    <div class="card" style="margin-bottom:0">
       <div class="promo-code-chip">${p.code}</div>
-      <div class="mkt-card-header">
+      <div class="card-row">
         <div>
-          <div class="mkt-card-title">${discountLabel}</div>
-          <div class="mkt-detail" style="margin-top:4px">${p.description}</div>
+          <div style="font-size:15px;font-weight:700;color:var(--navy)">${discountLabel}</div>
+          <div class="mkt-detail" style="margin-top:2px">${p.description}</div>
         </div>
         <div class="mkt-card-actions">
-          <button onclick="editPromo(${i})"><span class="material-icons-round" style="font-size:18px">edit</span></button>
-          <button onclick="togglePromo(${i})"><span class="material-icons-round" style="font-size:18px">${p.active ? 'visibility_off' : 'visibility'}</span></button>
-          <button onclick="deletePromo(${i})" style="color:#ef4444"><span class="material-icons-round" style="font-size:18px">delete</span></button>
+          <button onclick="editPromo(${i})" aria-label="Edit"><span class="material-icons-round" style="font-size:18px">edit</span></button>
+          <button onclick="togglePromo(${i})" aria-label="Toggle"><span class="material-icons-round" style="font-size:18px">${p.active ? 'visibility_off' : 'visibility'}</span></button>
+          <button onclick="deletePromo(${i})" aria-label="Delete" class="danger"><span class="material-icons-round" style="font-size:18px">delete</span></button>
         </div>
       </div>
-      <span class="mkt-badge ${statusClass}" style="margin-bottom:10px">
-        <span class="material-icons-round" style="font-size:11px">${expired ? 'schedule' : (p.active ? 'check_circle' : 'pause_circle')}</span>
-        ${statusText}
+      <span class="status-badge ${badgeClass}" style="margin-bottom:10px;display:inline-flex">
+        <span class="dot"></span><span data-key="${statusKey}">${statusText}</span>
       </span>
       <div class="mkt-detail">Min: <span>${p.min_days} day(s)</span> &nbsp;|&nbsp; Expires: <span>${p.expiry}</span></div>
       <div class="mkt-detail">Used: <span>${p.usage_count} / ${p.usage_limit}</span></div>
@@ -239,30 +244,30 @@ function renderSeasonal() {
   if (!MKT.seasonal_pricing.length) { grid.innerHTML = ''; return; }
 
   grid.innerHTML = MKT.seasonal_pricing.map((s, i) => {
-    const isUp = s.direction === 'increase';
-    const dirClass = isUp ? 'season-dir-up' : 'season-dir-down';
-    const dirIcon = isUp ? 'trending_up' : 'trending_down';
+    const isUp     = s.direction === 'increase';
+    const dirClass = isUp ? 'dir-up' : 'dir-down';
+    const dirIcon  = isUp ? 'trending_up' : 'trending_down';
     const dirLabel = isUp ? `+${s.adjustment_value}% surcharge` : `-${s.adjustment_value}% discount`;
+    const badgeClass = s.active ? 'available' : 'pending';
 
     return `
-    <div class="mkt-card">
-      <div class="mkt-card-header">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-row">
         <div>
-          <div class="mkt-card-title">${s.name}</div>
+          <div style="font-size:15px;font-weight:700;color:var(--navy)">${s.name}</div>
           <div class="mkt-detail" style="margin-top:4px">
             <span class="material-icons-round ${dirClass}" style="font-size:16px;vertical-align:middle">${dirIcon}</span>
             <span class="${dirClass}">${dirLabel}</span>
           </div>
         </div>
         <div class="mkt-card-actions">
-          <button onclick="editSeasonal(${i})"><span class="material-icons-round" style="font-size:18px">edit</span></button>
-          <button onclick="toggleSeasonal(${i})"><span class="material-icons-round" style="font-size:18px">${s.active ? 'visibility_off' : 'visibility'}</span></button>
-          <button onclick="deleteSeasonal(${i})" style="color:#ef4444"><span class="material-icons-round" style="font-size:18px">delete</span></button>
+          <button onclick="editSeasonal(${i})" aria-label="Edit"><span class="material-icons-round" style="font-size:18px">edit</span></button>
+          <button onclick="toggleSeasonal(${i})" aria-label="Toggle"><span class="material-icons-round" style="font-size:18px">${s.active ? 'visibility_off' : 'visibility'}</span></button>
+          <button onclick="deleteSeasonal(${i})" aria-label="Delete" class="danger"><span class="material-icons-round" style="font-size:18px">delete</span></button>
         </div>
       </div>
-      <span class="mkt-badge ${s.active ? 'active-badge' : 'inactive-badge'}" style="margin-bottom:10px">
-        <span class="material-icons-round" style="font-size:11px">${s.active ? 'check_circle' : 'pause_circle'}</span>
-        ${s.active ? 'Active' : 'Inactive'}
+      <span class="status-badge ${badgeClass}" style="margin:10px 0;display:inline-flex">
+        <span class="dot"></span><span data-key="${s.active ? 'mkt_status_active' : 'mkt_status_inactive'}">${s.active ? 'Active' : 'Inactive'}</span>
       </span>
       <div class="mkt-detail">Period: <span>${s.start_date}</span> to <span>${s.end_date}</span></div>
     </div>`;
@@ -324,19 +329,19 @@ window.saveSeasonal = function() {
 
 // ── Modal ─────────────────────────────────────────────────────────────────────
 window.openModal = function(type) {
-  if (type === 'banner') document.getElementById('banner-edit-id').value = '';
-  if (type === 'promo')  document.getElementById('promo-edit-id').value = '';
+  if (type === 'banner')   document.getElementById('banner-edit-id').value = '';
+  if (type === 'promo')    document.getElementById('promo-edit-id').value = '';
   if (type === 'seasonal') document.getElementById('seasonal-edit-id').value = '';
-  document.getElementById('modal-' + type).classList.add('open');
+  document.getElementById('modal-' + type).style.display = 'flex';
 };
 
 window.closeModal = function(type) {
-  document.getElementById('modal-' + type).classList.remove('open');
+  document.getElementById('modal-' + type).style.display = 'none';
 };
 
 // Close modal clicking backdrop
-document.querySelectorAll('.mkt-modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.style.display = 'none'; });
 });
 
 // ── Storage ───────────────────────────────────────────────────────────────────
@@ -350,7 +355,7 @@ function loadFromStorage() {
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
 function showToast(msg) {
-  const t = document.getElementById('toast');
+  const t = document.getElementById('mkt-toast');
   t.textContent = msg;
   t.style.display = 'flex';
   setTimeout(() => { t.style.display = 'none'; }, 2500);
