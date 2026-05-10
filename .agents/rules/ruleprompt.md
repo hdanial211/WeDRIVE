@@ -2,48 +2,94 @@
 trigger: always_on
 ---
 
-INSTRUCTIONS:
+# WeDRIVE Project Rules
 
-1.Setiap kali saya beri prompt untuk buat website atau coding, tema mesti sama macam projek sebelum ini.
+## 1. Theme & Design Consistency
 
-2.Setiap kali ada perubahan, mesti push ke GitHub dengan format _._._ Tulis apa perubahan yang dibuat
-🔹 Contoh perubahan awak
-Version	Contoh Perubahan
-1.1.1	Theme Colour Change / update design button
-1.1.2	Fix hover animation / adjust spacing
-1.2.1	Add Night Mode toggle
-2.1.1	Tambah modul baru (contoh: Admin dashboard)
-🔹 Struktur version _._._
-Format: Major.Minor.Patch
-Major = Perubahan besar / modul baru / redesign keseluruhan
-Minor = Perubahan kecil / tambah feature / improvement
-Patch = Bug fix / tweak kecil / styling update
+- Setiap perubahan UI mesti ikut tema sedia ada (warna, font, layout).
+- Jangan cipta tema baru melainkan diarahkan oleh user.
 
-3.Logo mesti konsisten:
-Ikon di kiri, teks di kanan
-Buang background (transparent)
-Jangan lupa letak logo pada tab browser
+## 2. Git Version Control
 
-4.Jangan gunakan emoji.
+- Setiap perubahan WAJIB push ke GitHub.
+- Format commit message: `X.X.X Description of changes`
+- JANGAN letak huruf `v` di depan version number.
 
-5.Mana-mana file yang tidak digunakan, masukkan ke folder bin
-Path contoh: /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/bin
+### Struktur Version (Major.Minor.Patch)
 
-6.Susun semua file supaya kemas dan tidak berselerak; gunakan folder baru untuk setiap kumpulan fail berkaitan.
+| Bahagian | Bila guna                                          | Contoh                                    |
+| -------- | -------------------------------------------------- | ----------------------------------------- |
+| Major    | Modul baru / redesign keseluruhan                  | `3.0.0 Redesign full admin dashboard`     |
+| Minor    | Tambah feature / improvement / perubahan sederhana | `2.8.0 Add Calendar Overview module`      |
+| Patch    | Bug fix / tweak kecil / styling update             | `2.8.1 Fix hover animation, adjust spacing` |
 
-7.CSS & JS: gunakan file yang sama di folder yang sama untuk semua HTML; jangan tukar-tukar theme.
+### Peraturan Version
 
-8. Projek ini menyokong:
-   - Night mode & Day mode (toggle theme)
-   - Bahasa English & Melayu (dynamic language)
+- Version MESTI berturutan. Contoh: selepas `2.7.1`, seterusnya ialah `2.7.2` (patch), `2.8.0` (minor), atau `3.0.0` (major). JANGAN lompat ke belakang.
+- Setiap commit WAJIB ada tag di GitHub yang sepadan dengan version number.
 
-9. Susun folder supaya kemas, tidak berselerak, dan mudah maintain.
+## 3. Logo
 
-10.Data dummy / frontend data mesti disimpan secara tersusun dan boleh sync dengan backend apabila backend sudah siap.
+- Ikon di kiri, teks di kanan.
+- Background mesti transparent.
+- Favicon (logo pada tab browser) WAJIB ada di setiap page.
 
-11.Pakai sidebar yang sama
+## 4. No Emoji
 
-12.Setiap kali tambah/buang file/folder update file ni /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/PROJECT_STRUCTURE.md
+- JANGAN gunakan emoji dalam kod, commit message, atau UI.
 
-13.Lepas semua page dah siap n dah testing baru kita semua kene back to html ,x boleh direct ke page lain
-Auth Guard	Aktif - redirect ke login(SIAP SEMUA)	DISABLED (development mode)
+## 5. File Management
+
+- File yang tidak digunakan WAJIB dipindahkan ke folder `bin/`.
+- Path: `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/bin`
+
+## 6. Folder Structure
+
+- Susun semua file supaya kemas, tidak berselerak, dan mudah maintain.
+- Gunakan folder berasingan untuk setiap kumpulan fail berkaitan.
+- Setiap kali tambah atau buang file/folder, WAJIB update file ini:
+  `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/PROJECT_STRUCTURE.md`
+
+## 7. CSS & JS Sharing
+
+- Gunakan fail CSS dan JS yang sama di folder `shared/` untuk semua HTML page.
+- JANGAN buat file CSS/JS baru yang duplicate fungsi sedia ada.
+- Pastikan theme (Day/Night mode) konsisten di semua page.
+
+## 8. Multilingual & Theme Support
+
+Projek ini menyokong:
+- **Theme:** Night mode & Day mode (toggle)
+- **Bahasa:** English & Melayu (dynamic language switching)
+
+Kedua-dua feature ini WAJIB berfungsi di semua page.
+
+## 9. Dummy Data
+
+- Data dummy / frontend data mesti disimpan secara tersusun dalam `shared/data/`.
+- Data mesti boleh sync dengan backend apabila backend sudah siap.
+- Gunakan satu fail data utama (`data.json`) sebagai single source of truth.
+
+## 10. Sidebar
+
+Setiap modul ada sidebar sendiri. Dalam satu modul, SEMUA page WAJIB guna sidebar yang sama.
+
+| Modul    | Sidebar Component                        |
+| -------- | ---------------------------------------- |
+| Admin    | `admin/components/sidebar.html`          |
+| Customer | `customer/components/sidebar.html`       |
+| Guest    | `guest/components/sidebar.html`          |
+
+- Sidebar admin, customer, dan guest adalah BERBEZA antara satu sama lain.
+- Tapi dalam modul yang sama, semua page WAJIB guna sidebar yang konsisten.
+- Load menggunakan `sidebar-loader.js`.
+
+## 11. Auth Guard
+
+| Status Semasa | Penerangan                                  |
+| ------------- | ------------------------------------------- |
+| DISABLED      | Development mode - tiada redirect ke login  |
+| AKTIF         | Akan diaktifkan selepas semua page siap      |
+
+- Semasa development: Auth guard di-disable supaya mudah navigate antara page.
+- Selepas semua page siap dan tested: Auth guard akan diaktifkan semula - redirect ke login page untuk user yang belum login.
