@@ -425,7 +425,97 @@
 
 
 /* ═══════════════════════════════════════════════════════
-   11. STAGGER DELAYS  (pair with .fade-in / .reveal)
+   11. PREMIUM MOTION UTILITIES
+   Reusable premium micro-motion for hero bands, cards, and glass surfaces
+   ═══════════════════════════════════════════════════════ */
+
+@keyframes sheenSweep {
+  0% {
+    transform: translateX(-165%) skewX(-18deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.08;
+  }
+  48% {
+    opacity: 0.42;
+  }
+  100% {
+    transform: translateX(230%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.motion-sheen {
+  position: relative;
+  isolation: isolate;
+}
+
+.motion-sheen::after {
+  content: '';
+  position: absolute;
+  top: -22%;
+  bottom: -22%;
+  left: -30%;
+  width: 34%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-165%) skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.03) 18%,
+    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0.02) 82%,
+    rgba(255,255,255,0) 100%
+  );
+}
+
+.motion-sheen:hover::after,
+.motion-sheen:focus-within::after,
+.motion-sheen.is-inview::after {
+  animation: sheenSweep 1.25s cubic-bezier(.22,1,.36,1) both;
+}
+
+.premium-hover {
+  transition:
+    transform 0.38s cubic-bezier(.22,1,.36,1),
+    box-shadow 0.38s cubic-bezier(.22,1,.36,1),
+    border-color 0.28s ease,
+    filter 0.28s ease;
+  will-change: transform;
+}
+
+.premium-hover:hover {
+  transform: translateY(-8px) scale(1.01);
+  filter: saturate(1.02);
+}
+
+.premium-hover-soft {
+  transition:
+    transform 0.32s cubic-bezier(.22,1,.36,1),
+    box-shadow 0.32s cubic-bezier(.22,1,.36,1);
+}
+
+.premium-hover-soft:hover {
+  transform: translateY(-4px);
+}
+
+.reveal-blur {
+  opacity: 0;
+  filter: blur(10px);
+}
+
+[data-parallax] {
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   12. STAGGER DELAYS  (pair with .fade-in / .reveal)
    ═══════════════════════════════════════════════════════ */
 
 .delay-1 { animation-delay: 0.08s; }
@@ -437,7 +527,7 @@
 
 
 /* ═══════════════════════════════════════════════════════
-   12. REDUCED MOTION OVERRIDE
+   13. REDUCED MOTION OVERRIDE
    Respect user OS preference — disable animations
    ═══════════════════════════════════════════════════════ */
 
@@ -453,7 +543,7 @@
 
 
 /* ═══════════════════════════════════════════════════════
-   13. BACKGROUND PARTICLES  (opt-in: add data-particles on <body>)
+   14. BACKGROUND PARTICLES  (opt-in: add data-particles on <body>)
    ═══════════════════════════════════════════════════════
    Shapes are injected by main.js Section 4.
    To enable on any page, add:
@@ -514,4 +604,3 @@ body.grad-bg {
   background-size: 300% 300%;
   animation: gradientShift 18s ease infinite;
 }
-
