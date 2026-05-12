@@ -451,12 +451,7 @@
           var wrapper = yearInput.parentNode;
           
           var select = document.createElement('select');
-          select.className = 'flatpickr-monthDropdown-months'; // reuse flatpickr styling
-          select.style.marginLeft = '5px';
-          select.style.fontWeight = '600';
-          select.style.width = '80px';
-          select.style.padding = '0 5px';
-          select.style.display = 'inline-block';
+          select.className = 'flatpickr-monthDropdown-months custom-year-select';
           
           var currentYear = new Date().getFullYear();
           for (var i = currentYear; i <= currentYear + 10; i++) {
