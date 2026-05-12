@@ -310,7 +310,7 @@
       var safePlate = escapeHtml(car.plate || '');
       var safeColor = escapeHtml(car.color || '');
       var safeAi = escapeHtml(car.ai || t('aiMatch'));
-      var rating = escapeHtml(car.rating || '4.7');
+      var rating = escapeHtml(car.rating || '⭐ 4.7');
       var reviews = escapeHtml(car.reviews || '0');
       var status = statusKey(car);
       var img = imagePath(car);
@@ -322,7 +322,7 @@
         img ? '    <img src="' + img + '" alt="' + safeName + '" />' : '    <span class="material-icons-round no-img">directions_car</span>',
         '    <div class="car-badges">',
         '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
-        '      <span class="rating-pill"><span class="material-icons-round">star</span>' + rating + '</span>',
+        '      <span class="rating-pill">' + rating + '</span>',
         '    </div>',
         '  </div>',
         '  <div class="car-body">',
