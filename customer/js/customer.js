@@ -321,9 +321,15 @@
       var status = statusKey(car);
       var img = imagePath(car);
       var buttonText = window.__GUEST_MODE__ ? t('signInToBook') : t('bookNow');
-      var plateText = shouldRevealPlate() && safePlate
-        ? escapeHtml(t('plate')) + ': ' + safePlate
-        : escapeHtml(t('plateHidden'));
+      var metaItems = [];
+
+      if (shouldRevealPlate() && safePlate) {
+        metaItems.push('<span>' + escapeHtml(t('plate')) + ': ' + safePlate + '</span>');
+      }
+
+      if (safeColor) {
+        metaItems.push('<span>' + escapeHtml(t('color')) + ': ' + safeColor + '</span>');
+      }
 
       return [
         '<div class="car-card" onclick="bookCar(' + Number(car.id) + ')">',
@@ -340,10 +346,7 @@
         '      <span class="rating-pill"><span class="material-icons-round">reviews</span>' + reviews + ' ' + escapeHtml(t('reviews')) + '</span>',
         '    </div>',
         '    <h3>' + safeName + '</h3>',
-        '    <div class="car-meta">',
-        '      <span>' + plateText + '</span>',
-        '      <span>' + escapeHtml(t('color')) + ': ' + safeColor + '</span>',
-        '    </div>',
+        metaItems.length ? '    <div class="car-meta">' + metaItems.join('') + '</div>' : '',
         '    <div class="car-specs">',
         '      <div class="spec"><span class="material-icons-round">local_gas_station</span>' + safeFuel + '</div>',
         '      <div class="spec"><span class="material-icons-round">event_seat</span>' + Number(car.seats || 0) + ' ' + escapeHtml(t('seats')) + '</div>',
