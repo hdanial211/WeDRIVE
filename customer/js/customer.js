@@ -437,9 +437,45 @@
       });
   }
 
+  function initDatePickers() {
+    var pickupInput = document.getElementById('pickup-date');
+    var returnInput = document.getElementById('return-date');
+
+    if (pickupInput && returnInput && window.flatpickr) {
+      var returnPicker = flatpickr(returnInput, {
+        minDate: "today",
+        dateFormat: "d/m/Y",
+        disableMobile: "true"
+      });
+
+      flatpickr(pickupInput, {
+        minDate: "today",
+        dateFormat: "d/m/Y",
+        disableMobile: "true",
+        onChange: function(selectedDates, dateStr) {
+          returnPicker.set('minDate', dateStr || "today");
+          if (returnPicker.selectedDates[0] && selectedDates[0] && returnPicker.selectedDates[0] < selectedDates[0]) {
+            returnPicker.clear();
+          }
+          setTimeout(function() {
+            if (!returnPicker.selectedDates[0]) {
+              returnPicker.open();
+            }
+          }, 100);
+        }
+      });
+    }
+  }
+
   function init() {
     bindControls();
     loadCars();
+    if (typeof flatpickr !== 'undefined') {
+      initDatePickers();
+    } else {
+      // If loaded asynchronously
+      setTimeout(initDatePickers, 500);
+    }
   }
 
   if (document.readyState === 'loading') {

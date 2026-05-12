@@ -10,6 +10,7 @@
   <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="../css/customer.css" />
 </head>
 <body data-particles="10" data-cursor-glow>
@@ -36,14 +37,14 @@
           <label data-key="search_from">Pick-up Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">calendar_today</span>
-            <input type="date" />
+            <input type="text" id="pickup-date" placeholder="Select date" />
           </div>
         </div>
         <div class="search-field">
           <label data-key="search_to">Return Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">event</span>
-            <input type="date" />
+            <input type="text" id="return-date" placeholder="Select date" />
           </div>
         </div>
         <button class="btn-search">
@@ -80,6 +81,7 @@
   <script src="../../shared/js/navbar-loader.js"></script>
   <script src="../../shared/js/api.js"></script>
   <script src="../../shared/js/chatbot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../js/customer.js"></script>
   <script src="../../shared/js/anime.min.js"></script>
   <script src="../../shared/js/animate.js"></script>

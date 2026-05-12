@@ -10,6 +10,7 @@
   <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="../../customer/css/customer.css" />
 </head>
 <body class="guest-page" data-cursor-glow>
@@ -115,14 +116,14 @@
           <label data-key="search_from">Pick-up Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">calendar_today</span>
-            <input id="pickup-date" type="date" />
+            <input id="pickup-date" type="text" placeholder="Select date" />
           </div>
         </div>
         <div class="search-field">
           <label data-key="search_to">Return Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">event</span>
-            <input id="return-date" type="date" />
+            <input id="return-date" type="text" placeholder="Select date" />
           </div>
         </div>
         <div class="search-field">
@@ -293,6 +294,7 @@
   <script>
     window.__GUEST_MODE__ = true;
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../../customer/js/customer.js"></script>
   <script src="../../shared/js/anime.min.js"></script>
   <script src="../../shared/js/animate.js"></script>
