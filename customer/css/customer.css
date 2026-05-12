@@ -1346,7 +1346,10 @@ body.night-mode .melaka-guide {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.04) !important;
   padding: 10px !important;
   font-family: 'Inter', sans-serif !important;
-  overflow: hidden;
+  overflow: visible !important;
+  min-width: 320px !important;
+  width: auto !important;
+  box-sizing: border-box !important;
 }
 
 .flatpickr-calendar:before,
@@ -1359,6 +1362,7 @@ body.night-mode .melaka-guide {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: visible !important;
 }
 
 .flatpickr-current-month {
@@ -1383,8 +1387,8 @@ body.night-mode .melaka-guide {
 .flatpickr-monthDropdown-months,
 .custom-year-select {
   font-weight: 700 !important;
-  font-size: 16px !important;
-  padding: 6px 12px !important;
+  font-size: 15px !important;
+  padding: 4px 10px !important;
   border-radius: 8px !important;
   background: transparent !important;
   color: #1e293b !important;
@@ -1393,15 +1397,14 @@ body.night-mode .melaka-guide {
   -moz-appearance: none;
   border: 1px solid transparent !important;
   cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  margin: 0 4px !important;
+  transition: background 0.2s ease !important;
+  margin: 0 2px !important;
   height: 32px !important;
-  line-height: 1 !important;
+  min-width: 60px !important;
+  line-height: 32px !important;
   text-align: center;
   box-sizing: border-box !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  vertical-align: middle !important;
 }
 
 .flatpickr-monthDropdown-months:hover,
@@ -1437,4 +1440,25 @@ body.night-mode .melaka-guide {
 
 .flatpickr-innerContainer {
   margin-top: 8px;
+  overflow: visible !important;
+}
+
+.flatpickr-rContainer {
+  width: 100% !important;
+}
+
+.flatpickr-days {
+  width: 100% !important;
+  overflow: visible !important;
+}
+
+.dayContainer {
+  width: 100% !important;
+  min-width: 280px !important;
+  max-width: 100% !important;
+}
+
+.flatpickr-day {
+  max-width: 14.2857% !important;
+  flex: 1 !important;
 }
