@@ -266,8 +266,7 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   text-align: left;
   padding: 64px 40px 48px;
   background:
-    linear-gradient(105deg, rgba(2,6,23,0.94) 0%, rgba(15,23,42,0.9) 45%, rgba(29,78,216,0.72) 100%),
-    url('../../shared/images/cars/honda-crv-2024.png') center right 6% / min(520px, 46vw) no-repeat,
+    linear-gradient(105deg, rgba(2,6,23,0.96) 0%, rgba(15,23,42,0.92) 52%, rgba(29,78,216,0.78) 100%),
     #0F172A !important;
 }
 
@@ -447,6 +446,7 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   background: #D1FAE5;
   border-radius: 999px;
   padding: 5px 9px;
+  white-space: nowrap;
 }
 
 .showcase-main img {
@@ -454,10 +454,12 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   width: 100%;
   aspect-ratio: 1.24;
   object-fit: cover;
+  transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
 .showcase-copy {
   padding: 0 18px 18px;
+  transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
 .showcase-copy span {
@@ -476,10 +478,10 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
 }
 
 .showcase-copy p {
-  color: #475569;
+  color: #1D4ED8;
   margin: 0;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 900;
 }
 
 .showcase-strip {
@@ -493,8 +495,9 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-height: 44px;
+  gap: 8px;
+  min-height: 56px;
+  padding: 8px 10px;
   border-radius: 12px;
   background: rgba(15,23,42,0.42);
   color: #FFFFFF;
@@ -502,8 +505,47 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
 }
 
 .showcase-strip .material-icons-round {
+  flex: 0 0 auto;
   font-size: 17px;
   color: #FBBF24;
+}
+
+.showcase-strip strong {
+  display: block;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.guest-hero-showcase.is-changing .showcase-main img,
+.guest-hero-showcase.is-changing .showcase-copy {
+  opacity: 0.35;
+  transform: translateY(4px);
+}
+
+.showcase-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.showcase-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.42);
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.showcase-dots button.active {
+  width: 24px;
+  background: #FFFFFF;
 }
 
 .guest-search {
@@ -527,6 +569,38 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
 
 .guest-page .guest-search .search-grid {
   grid-template-columns: 1.2fr 1fr 1fr 0.95fr auto;
+}
+
+.guest-search .select-wrap {
+  position: relative;
+}
+
+.guest-search .select-wrap .material-icons-round {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.guest-search .select-wrap select {
+  position: relative;
+  z-index: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  padding-left: 48px !important;
+  padding-right: 38px !important;
+}
+
+.guest-search .select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid var(--text-secondary, #475569);
+  border-bottom: 2px solid var(--text-secondary, #475569);
+  pointer-events: none;
+  transform: translateY(-65%) rotate(45deg);
 }
 
 .guest-content {
@@ -570,7 +644,7 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   line-height: 1.65;
 }
 
-.fleet-tools {
+.car-tools {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -643,6 +717,95 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   background: var(--bg-surface, #FFFFFF);
   border: 1px solid var(--border-color, #E2E8F0);
   box-shadow: var(--card-shadow, 0 1px 4px rgba(0,0,0,0.06));
+}
+
+.melaka-guide {
+  padding: 64px 40px;
+  background: var(--bg-surface, #FFFFFF);
+  border-top: 1px solid var(--border-color, #E2E8F0);
+  border-bottom: 1px solid var(--border-color, #E2E8F0);
+}
+
+.melaka-guide .guest-section-heading {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.melaka-grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.melaka-card {
+  min-height: 248px;
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  border-radius: 18px;
+  background: var(--card-bg, #FFFFFF);
+  border: 1px solid var(--border-color, #E2E8F0);
+  box-shadow: var(--card-shadow, 0 1px 4px rgba(0,0,0,0.06));
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.melaka-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary, #3B82F6);
+  box-shadow: var(--card-shadow-hover, 0 4px 16px rgba(0,0,0,0.10));
+}
+
+.melaka-icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  color: var(--primary, #3B82F6);
+  background: var(--primary-light, #EFF6FF);
+  margin-bottom: 18px;
+}
+
+.melaka-icon .material-icons-round {
+  font-size: 24px;
+}
+
+.melaka-card h3 {
+  color: var(--text-primary, #1E293B);
+  font-size: 18px;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.melaka-card p {
+  color: var(--text-secondary, #475569);
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+
+.melaka-car-tip {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--bg-surface-2, #F1F5F9);
+  color: var(--text-primary, #1E293B);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.melaka-car-tip .material-icons-round {
+  font-size: 15px;
+  color: var(--primary, #3B82F6);
 }
 
 .guest-cars-grid .car-card {
@@ -991,6 +1154,10 @@ body.night-mode .guest-modal-media {
   background: linear-gradient(135deg, #0F172A, #1D4ED8);
 }
 
+body.night-mode .melaka-guide {
+  background: var(--bg-body, #0D1117);
+}
+
 @media (max-width: 1080px) {
   .guest-hero-shell {
     grid-template-columns: 1fr;
@@ -1025,7 +1192,7 @@ body.night-mode .guest-modal-media {
     display: block;
   }
 
-  .fleet-tools {
+  .car-tools {
     justify-content: flex-start;
     margin-top: 18px;
   }
@@ -1034,6 +1201,7 @@ body.night-mode .guest-modal-media {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .melaka-grid,
   .steps-grid,
   .guest-modal-card {
     grid-template-columns: 1fr;
@@ -1129,6 +1297,7 @@ body.night-mode .guest-modal-media {
   }
 
   .guest-content,
+  .melaka-guide,
   .guest-steps {
     padding: 42px 18px;
   }

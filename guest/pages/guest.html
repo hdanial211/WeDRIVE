@@ -38,12 +38,12 @@
           <span data-key="guest_badge">Guest showroom</span>
         </div>
         <h1 class="reveal-onload" data-key-html="guest_hero_title_html">Choose your <span>perfect rental car</span></h1>
-        <p class="reveal-onload" data-key="guest_hero_sub">Browse real fleet options, compare daily rates, and sign in when you are ready to reserve.</p>
+        <p class="reveal-onload" data-key="guest_hero_sub">Browse real car options, compare daily rates, and sign in when you are ready to reserve.</p>
 
         <div class="hero-cta reveal-onload">
-          <a href="#fleet" class="hero-btn-primary">
+          <a href="#cars" class="hero-btn-primary">
             <span class="material-icons-round" aria-hidden="true">directions_car</span>
-            <span data-key="guest_primary_cta">Explore Fleet</span>
+            <span data-key="guest_primary_cta">Explore Cars</span>
           </a>
           <a href="../../customer/pages/signup.html" class="hero-btn-outline">
             <span class="material-icons-round" aria-hidden="true">person_add</span>
@@ -54,7 +54,7 @@
         <div class="guest-metrics">
           <div>
             <strong id="guest-total-cars">6</strong>
-            <span data-key="guest_metric_fleet">Fleet choices</span>
+            <span data-key="guest_metric_cars">Car choices</span>
           </div>
           <div>
             <strong id="guest-start-price">RM 80</strong>
@@ -71,7 +71,7 @@
         <div class="showcase-main">
           <div class="showcase-topline">
             <span data-key="guest_spotlight_label">AI spotlight</span>
-            <span class="showcase-status" data-key="guest_card_available">Available</span>
+            <span class="showcase-status" id="guest-spotlight-status" data-key="guest_card_available">Available</span>
           </div>
           <img id="guest-spotlight-img" src="../../shared/images/cars/honda-crv-2024.png" alt="Featured rental car" />
           <div class="showcase-copy">
@@ -94,6 +94,7 @@
             <strong id="guest-spotlight-fuel">Hybrid</strong>
           </div>
         </div>
+        <div class="showcase-dots" id="guest-spotlight-dots" aria-hidden="true"></div>
       </aside>
     </div>
 
@@ -126,7 +127,7 @@
         </div>
         <div class="search-field">
           <label data-key="search_type">Car Type</label>
-          <div class="input-wrap">
+          <div class="input-wrap select-wrap">
             <span class="material-icons-round">tune</span>
             <select id="search-car-type">
               <option value="all" data-key="guest_type_all">Any type</option>
@@ -147,14 +148,14 @@
   </section>
 
   <!-- CONTENT -->
-  <main class="content guest-content" id="fleet">
+  <main class="content guest-content" id="cars">
     <div class="guest-section-heading reveal-on-scroll">
       <div>
         <span class="section-eyebrow" data-key="nav_browse">Browse Cars</span>
-        <h2 data-key="guest_fleet_title">Fleet ready for every plan</h2>
-        <p data-key="guest_fleet_sub">Compare comfort, capacity, price, and AI notes before you sign in to book.</p>
+        <h2 data-key="guest_cars_title">Cars ready for every plan</h2>
+        <p data-key="guest_cars_sub">Compare comfort, capacity, price, and AI notes before you sign in to book.</p>
       </div>
-      <div class="fleet-tools">
+      <div class="car-tools">
         <label class="guest-switch">
           <input type="checkbox" id="available-toggle" />
           <span></span>
@@ -186,40 +187,74 @@
     </div>
   </main>
 
-  <!-- HOW IT WORKS -->
+  <!-- MELAKA GUIDE -->
+  <section class="melaka-guide" id="melaka">
+    <div class="guest-section-heading reveal-on-scroll">
+      <div>
+        <span class="section-eyebrow" data-key="nav_melaka">Jalan-jalan Melaka</span>
+        <h2 data-key="melaka_title">Rancang trip sekitar Melaka</h2>
+        <p data-key="melaka_sub">Lihat tempat menarik yang dekat dengan pusat bandar supaya customer boleh pilih kereta ikut vibe perjalanan mereka.</p>
+      </div>
+    </div>
+    <div class="melaka-grid">
+      <article class="melaka-card reveal-on-scroll" data-delay="0">
+        <div class="melaka-icon">
+          <span class="material-icons-round" aria-hidden="true">storefront</span>
+        </div>
+        <h3 data-key="melaka_card_1_title">Jonker Walk</h3>
+        <p data-key="melaka_card_1_desc">Lorong warisan dengan kedai antik, kafe, street food, dan suasana malam yang meriah di tengah bandar Melaka.</p>
+        <div class="melaka-car-tip">
+          <span class="material-icons-round" aria-hidden="true">directions_car</span>
+          <span data-key="melaka_card_1_car">Best with compact car</span>
+        </div>
+      </article>
+      <article class="melaka-card reveal-on-scroll" data-delay="120">
+        <div class="melaka-icon">
+          <span class="material-icons-round" aria-hidden="true">directions_boat</span>
+        </div>
+        <h3 data-key="melaka_card_2_title">Melaka River Cruise</h3>
+        <p data-key="melaka_card_2_desc">Naik cruise santai sepanjang sungai sambil tengok mural, jambatan berlampu, dan kawasan bandar warisan dari perspektif lain.</p>
+        <div class="melaka-car-tip">
+          <span class="material-icons-round" aria-hidden="true">airport_shuttle</span>
+          <span data-key="melaka_card_2_car">Best with family SUV</span>
+        </div>
+      </article>
+      <article class="melaka-card reveal-on-scroll" data-delay="240">
+        <div class="melaka-icon">
+          <span class="material-icons-round" aria-hidden="true">museum</span>
+        </div>
+        <h3 data-key="melaka_card_3_title">Stadthuys & Red Square</h3>
+        <p data-key="melaka_card_3_desc">Kawasan ikonik untuk sejarah, bangunan kolonial, muzium, dan sesi bergambar di pusat tarikan UNESCO Melaka.</p>
+        <div class="melaka-car-tip">
+          <span class="material-icons-round" aria-hidden="true">electric_car</span>
+          <span data-key="melaka_card_3_car">Best with easy city car</span>
+        </div>
+      </article>
+      <article class="melaka-card reveal-on-scroll" data-delay="360">
+        <div class="melaka-icon">
+          <span class="material-icons-round" aria-hidden="true">beach_access</span>
+        </div>
+        <h3 data-key="melaka_card_4_title">Pantai Klebang</h3>
+        <p data-key="melaka_card_4_desc">Spot santai tepi pantai yang terkenal dengan coconut shake, sunset, dan ruang luas untuk short evening drive.</p>
+        <div class="melaka-car-tip">
+          <span class="material-icons-round" aria-hidden="true">local_taxi</span>
+          <span data-key="melaka_card_4_car">Best with comfort sedan</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- HOW GUIDE CTA -->
   <section class="guest-steps" id="how">
     <div class="guest-section-heading centered">
       <span class="section-eyebrow" data-key="how_title">How It Works</span>
-      <h2 data-key="guest_steps_title">From browsing to keys in hand</h2>
-      <p data-key="how_sub">Get on the road in 3 simple steps</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card reveal-on-scroll" data-delay="0">
-        <div class="step-icon blue">
-          <span class="material-icons-round" aria-hidden="true">person_add</span>
-        </div>
-        <h3 data-key="how_step1_title">Create Account</h3>
-        <p data-key="how_step1_desc">Sign up free and verify your driver's licence</p>
-      </div>
-      <div class="step-card reveal-on-scroll" data-delay="120">
-        <div class="step-icon green">
-          <span class="material-icons-round" aria-hidden="true">directions_car</span>
-        </div>
-        <h3 data-key="how_step2_title">Choose Your Car</h3>
-        <p data-key="how_step2_desc">Browse AI-recommended vehicles that suit your needs</p>
-      </div>
-      <div class="step-card reveal-on-scroll" data-delay="240">
-        <div class="step-icon amber">
-          <span class="material-icons-round" aria-hidden="true">receipt_long</span>
-        </div>
-        <h3 data-key="how_step3_title">Book & Drive</h3>
-        <p data-key="how_step3_desc">Instant confirmation, pay securely, pick up and go</p>
-      </div>
+      <h2 data-key="tutorial_title">Mahukan panduan penuh cara sewa kereta?</h2>
+      <p data-key="tutorial_sub">Buka page tutorial khas yang terangkan langkah demi langkah, dokumen yang perlu ada, bayaran, pickup, dan apa yang customer perlu buat selepas tempah.</p>
     </div>
     <div class="steps-action reveal-on-scroll">
-      <a href="../../customer/pages/signup.html" class="hero-btn-primary">
-        <span class="material-icons-round" aria-hidden="true">login</span>
-        <span data-key="how_cta">Get Started Free</span>
+      <a href="../../guest/pages/how-it-works.html" class="hero-btn-primary">
+        <span class="material-icons-round" aria-hidden="true">menu_book</span>
+        <span data-key="tutorial_cta">Open Rental Tutorial</span>
       </a>
     </div>
   </section>

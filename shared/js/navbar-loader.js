@@ -37,8 +37,9 @@
     // Guest-facing pages (guest.html)
     guest: {
       links: [
-        { key: 'nav_browse', href: '{base}guest/pages/guest.html',       label: 'Browse Cars', id: 'nl-browse' },
-        { key: 'nav_how',    href: '{base}guest/pages/guest.html#how',   label: 'How It Works', id: 'nl-how'    }
+        { key: 'nav_browse', href: '{base}guest/pages/guest.html',              label: 'Browse Cars', id: 'nl-browse' },
+        { key: 'nav_melaka', href: '{base}guest/pages/explore-melaka.html',       label: 'Jalan-jalan Melaka', id: 'nl-melaka' },
+        { key: 'nav_how',    href: '{base}guest/pages/how-it-works.html',       label: 'How It Works', id: 'nl-how'    }
       ],
       actions: `
         <button class="btn-outline" onclick="window.location='{base}index.html'" data-key="nav_login">Log In</button>

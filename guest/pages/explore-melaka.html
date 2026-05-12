@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore Melaka | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png?v=2" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../customer/css/customer.css" />
+  <style>
+    /* Premium Page Styles */
+    .hero-banner {
+      background: linear-gradient(135deg, #020617 0%, #0F172A 50%, #1D4ED8 100%);
+      padding: 100px 20px 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
+      content: ''; position: absolute; width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(16,185,129,0.1), transparent 70%);
+      bottom: -400px; right: -200px;
+      pointer-events: none;
+    }
+    .hero-banner h1 { color: #FFFFFF; font-size: 56px; font-weight: 800; letter-spacing: -1.5px; margin: 24px 0 16px; }
+    .hero-banner p { color: #94A3B8; font-size: 18px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    
+    .melaka-grid {
+      max-width: 1200px;
+      margin: -60px auto 80px;
+      position: relative;
+      z-index: 10;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .melaka-card {
+      background: var(--bg-surface, #FFFFFF);
+      border: 1px solid var(--border-color, #E2E8F0);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .melaka-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      border-color: var(--primary, #3B82F6);
+    }
+    .card-icon {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      background: var(--primary-light, #EFF6FF);
+      color: var(--primary, #3B82F6);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+    .melaka-card:hover .card-icon {
+      background: var(--primary, #3B82F6);
+      color: white;
+      transform: scale(1.1);
+    }
+    .card-icon .material-icons-round { font-size: 28px; }
+    .melaka-card h3 { color: var(--text-primary, #0F172A); font-size: 22px; margin-bottom: 12px; font-weight: 700; }
+    .melaka-card p { color: var(--text-secondary, #475569); font-size: 15px; line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
+    
+    .car-recommendation {
+      background: var(--bg-surface-2, #F8FAFC);
+      border: 1px solid var(--border-color, #E2E8F0);
+      padding: 12px 16px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .car-recommendation .material-icons-round { color: var(--success, #10B981); }
+    .car-recommendation div { display: flex; flex-direction: column; }
+    .car-recommendation span { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary, #64748B); letter-spacing: 0.5px; }
+    .car-recommendation strong { font-size: 14px; color: var(--text-primary, #1E293B); font-weight: 600; }
+
+    @media (max-width: 992px) {
+      .melaka-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .melaka-grid { grid-template-columns: 1fr; }
+      .hero-banner h1 { font-size: 42px; }
+    }
+  </style>
+</head>
+<body class="guest-page" data-cursor-glow>
+  <div id="navbar-placeholder" data-module="guest"></div>
+  
+  <main class="content" style="padding: 0; max-width: 100%;">
+    <section class="hero-banner">
+      <span class="guest-kicker reveal-onload"><span class="material-icons-round">map</span> EXPLORE MELAKA</span>
+      <h1 class="reveal-onload" style="animation-delay: 0.1s;">Discover The Historic City</h1>
+      <p class="reveal-onload" style="animation-delay: 0.2s;">Plan your trip around Melaka's top attractions and find the perfect AI-recommended vehicle for your journey.</p>
+    </section>
+
+    <div class="melaka-grid">
+      <!-- Card 1 -->
+      <div class="melaka-card reveal-on-scroll">
+        <div class="card-icon"><span class="material-icons-round">storefront</span></div>
+        <h3>Jonker Walk</h3>
+        <p>A bustling heritage street famous for its antique shops, cafes, local street food, and vibrant weekend night market right in the heart of Melaka.</p>
+        <div class="car-recommendation">
+          <span class="material-icons-round">electric_car</span>
+          <div>
+            <span>Best vehicle choice</span>
+            <strong>Compact City Car</strong>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="melaka-card reveal-on-scroll" data-delay="100">
+        <div class="card-icon"><span class="material-icons-round">directions_boat</span></div>
+        <h3>Melaka River Cruise</h3>
+        <p>Take a relaxing 45-minute cruise along the river to see stunning murals, illuminated bridges, and historic kampungs from a unique perspective.</p>
+        <div class="car-recommendation">
+          <span class="material-icons-round">airport_shuttle</span>
+          <div>
+            <span>Best vehicle choice</span>
+            <strong>Family MPV / Van</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="melaka-card reveal-on-scroll" data-delay="200">
+        <div class="card-icon"><span class="material-icons-round">museum</span></div>
+        <h3>Stadthuys & Red Square</h3>
+        <p>The iconic Dutch Square featuring the historic Stadthuys, Christ Church, and various museums. A must-visit spot for photography and history lovers.</p>
+        <div class="car-recommendation">
+          <span class="material-icons-round">directions_car</span>
+          <div>
+            <span>Best vehicle choice</span>
+            <strong>Comfort Sedan</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="melaka-card reveal-on-scroll">
+        <div class="card-icon"><span class="material-icons-round">beach_access</span></div>
+        <h3>Klebang Beach</h3>
+        <p>A perfect spot for a relaxing evening drive to watch the sunset, famous for its original Klebang Coconut Shake and scenic coastal views.</p>
+        <div class="car-recommendation">
+          <span class="material-icons-round">local_taxi</span>
+          <div>
+            <span>Best vehicle choice</span>
+            <strong>Premium SUV</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="melaka-card reveal-on-scroll" data-delay="100">
+        <div class="card-icon"><span class="material-icons-round">fort</span></div>
+        <h3>A'Famosa Fort</h3>
+        <p>Explore the Porta de Santiago, one of the oldest surviving European architectural remains in Southeast Asia, dating back to 1511.</p>
+        <div class="car-recommendation">
+          <span class="material-icons-round">electric_car</span>
+          <div>
+            <span>Best vehicle choice</span>
+            <strong>Compact City Car</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="melaka-card reveal-on-scroll" data-delay="200">
+        <div class="card-icon"><span class="material-icons-round">landscape</span></div>
+        <h3>Taming Sari Tower</h3>
+        <p>Enjoy a breathtaking 360-degree panoramic view of Melaka city from a height of 80 meters in this revolving gyro tower.</p>
+        <div class="car-recommendation">
+          <span class="material-icons-round">directions_car</span>
+          <div>
+            <span>Best vehicle choice</span>
+            <strong>Comfort Sedan</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align:center; padding: 20px 0 80px;">
+      <a href="../../guest/pages/guest.html" class="hero-btn-primary" style="padding: 16px 32px; font-size: 16px;">
+        <span class="material-icons-round">search</span>
+        Browse Available Cars
+      </a>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../../shared/js/navbar-loader.js"></script>
+  <script src="../../shared/js/api.js"></script>
+  <script>window.__GUEST_MODE__ = true;</script>
+  <script src="../../shared/js/anime.min.js"></script>
+  <script src="../../shared/js/animate.js"></script>
+  <script src="../../shared/js/main.js"></script>
+</body>
+</html>

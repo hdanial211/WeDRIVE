@@ -16,6 +16,8 @@ AI CAR RENTAL SYSTEM/
 +-- guest/                      # Modul Tetamu (Browse tanpa login)
 |   +-- pages/
 |       +-- guest.html          # Landing Page (Browse Cars)
+|       +-- explore-melaka.html # Halaman Explore Melaka (Jalan-jalan Melaka)
+|       +-- how-it-works.html   # Halaman Panduan & Tutorial Sewa
 |
 +-- admin/                      # Modul Admin
 |   +-- pages/

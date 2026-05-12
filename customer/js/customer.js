@@ -12,10 +12,14 @@
   var availableOnly = false;
   var controlsBound = false;
   var lastRenderedCars = [];
+  var spotlightCars = [];
+  var spotlightIndex = 0;
+  var spotlightTimer = 0;
 
   var copy = {
     en: {
       seats: 'Seats',
+      seatsShort: 'Seats',
       day: '/day',
       available: 'Available',
       rented: 'Rented',
@@ -33,6 +37,7 @@
     },
     ms: {
       seats: 'Tempat Duduk',
+      seatsShort: 'Tempat',
       day: '/hari',
       available: 'Tersedia',
       rented: 'Disewa',
@@ -145,7 +150,7 @@
 
     document.addEventListener('wedrive:language-applied', function () {
       renderHeroStats();
-      renderSpotlight();
+      renderSpotlight(spotlightIndex, false);
       renderCars(lastRenderedCars.length ? lastRenderedCars : allCars);
     });
   }
@@ -187,8 +192,8 @@
     renderCars(list);
 
     if (shouldScroll) {
-      var fleet = document.getElementById('fleet');
-      if (fleet) fleet.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var carsSection = document.getElementById('cars');
+      if (carsSection) carsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
@@ -209,28 +214,72 @@
     setText('guest-avg-rating', avgRating.toFixed(1));
   }
 
-  function renderSpotlight() {
-    if (!allCars.length) return;
-
+  function buildSpotlightCars() {
     var available = allCars.filter(function (car) { return statusKey(car) === 'available'; });
     var pool = available.length ? available : allCars;
-    var car = pool.slice().sort(function (a, b) {
+    spotlightCars = pool.slice().sort(function (a, b) {
       return Number(b.rating || 0) - Number(a.rating || 0);
-    })[0];
+    }).slice(0, 4);
+  }
+
+  function renderSpotlightDots() {
+    var dots = document.getElementById('guest-spotlight-dots');
+    if (!dots || spotlightCars.length < 2) return;
+
+    dots.innerHTML = spotlightCars.map(function (_, index) {
+      return '<button type="button" class="' + (index === spotlightIndex ? 'active' : '') + '" onclick="switchSpotlight(' + index + ')" aria-label="Show car ' + (index + 1) + '"></button>';
+    }).join('');
+  }
+
+  function renderSpotlight(index, animate) {
+    if (!allCars.length) return;
+    if (!spotlightCars.length) buildSpotlightCars();
+    if (!spotlightCars.length) return;
+
+    spotlightIndex = ((Number(index) || 0) + spotlightCars.length) % spotlightCars.length;
+    var car = spotlightCars[spotlightIndex];
+    var showcase = document.querySelector('.guest-hero-showcase');
     var img = document.getElementById('guest-spotlight-img');
 
-    if (img) {
-      img.src = imagePath(car);
-      img.alt = car.name;
-    }
+    if (animate && showcase) showcase.classList.add('is-changing');
 
-    setText('guest-spotlight-type', car.label || car.type || '');
-    setText('guest-spotlight-name', car.name || '');
-    setText('guest-spotlight-rate', 'RM ' + car.price + t('day'));
-    setText('guest-spotlight-rating', String(car.rating || ''));
-    setText('guest-spotlight-seats', car.seats + ' ' + t('seats'));
-    setText('guest-spotlight-fuel', car.fuel || '');
+    setTimeout(function () {
+      if (img) {
+        img.src = imagePath(car);
+        img.alt = car.name;
+      }
+
+      setText('guest-spotlight-type', car.label || car.type || '');
+      setText('guest-spotlight-name', car.name || '');
+      setText('guest-spotlight-rate', 'RM ' + car.price + t('day'));
+      setText('guest-spotlight-rating', String(car.rating || ''));
+      setText('guest-spotlight-seats', car.seats + ' ' + t('seatsShort'));
+      setText('guest-spotlight-fuel', car.fuel || '');
+      setText('guest-spotlight-status', statusText(car));
+      renderSpotlightDots();
+
+      if (showcase) {
+        setTimeout(function () {
+          showcase.classList.remove('is-changing');
+        }, 90);
+      }
+    }, animate ? 160 : 0);
   }
+
+  function startSpotlightCarousel() {
+    if (spotlightTimer) clearInterval(spotlightTimer);
+    if (spotlightCars.length < 2) return;
+
+    spotlightTimer = setInterval(function () {
+      renderSpotlight(spotlightIndex + 1, true);
+    }, 3800);
+  }
+
+  window.switchSpotlight = function (index) {
+    if (spotlightTimer) clearInterval(spotlightTimer);
+    renderSpotlight(index, true);
+    startSpotlightCarousel();
+  };
 
   function renderCars(list) {
     var grid = document.getElementById('cars-grid');
@@ -376,7 +425,9 @@
       .then(function (cars) {
         allCars = cars || [];
         renderHeroStats();
-        renderSpotlight();
+        buildSpotlightCars();
+        renderSpotlight(0, false);
+        startSpotlightCarousel();
         applyFilters(false);
       })
       .catch(function () {
