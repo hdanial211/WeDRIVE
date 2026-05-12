@@ -463,7 +463,13 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
 }
 
 .showcase-copy {
-  padding: 0 18px 18px;
+  min-height: 150px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
   transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
@@ -472,14 +478,14 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   color: #2563EB;
   font-size: 12px;
   font-weight: 800;
-  margin-bottom: 5px;
+  margin: 0;
 }
 
 .showcase-copy h2 {
   color: #0F172A;
   font-size: 22px;
   line-height: 1.1;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .guest-hero .showcase-copy p {
