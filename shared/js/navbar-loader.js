@@ -108,13 +108,18 @@
     // Build module-specific actions
     var actionsHtml = (config.actions || '').replace(/{base}/g, base);
 
+    var brandLink = base + 'index.html';
+    if (module === 'customer') brandLink = base + 'customer/pages/customer.html';
+    else if (module === 'admin') brandLink = base + 'admin/pages/admin.html';
+    else if (module === 'guest') brandLink = base + 'guest/pages/guest.html';
+
     // Inject navbar HTML
     placeholder.innerHTML = [
       '<nav class="navbar" id="wedrive-navbar">',
-      '  <div class="nav-brand">',
+      '  <a href="' + brandLink + '" class="nav-brand" style="text-decoration: none;">',
       '    <img class="brand-logo" id="navbar-logo" src="' + base + 'shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" />',
       '    <div class="brand-text"><span class="we">We</span><span class="drive">DRIVE</span></div>',
-      '  </div>',
+      '  </a>',
       '  <div class="nav-links" id="navbar-links">' + linksHtml + '</div>',
       '  <div class="nav-actions" id="navbar-actions">',
       '    <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch Language">',
