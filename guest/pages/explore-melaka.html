@@ -103,6 +103,17 @@
       margin: 0;
     }
 
+    .explore-hero-lead {
+      display: inline-block;
+      padding: 16px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(2,6,23,0.56) 0%, rgba(15,23,42,0.34) 100%);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 18px 38px rgba(2,6,23,0.20);
+      backdrop-filter: blur(10px);
+      text-shadow: 0 4px 16px rgba(2,6,23,0.42);
+    }
+
     .explore-stat-row {
       margin-top: 32px;
       display: grid;
@@ -215,8 +226,8 @@
     .explore-showcase {
       position: relative;
       z-index: 3;
-      margin-top: -48px;
-      padding: 0 0 100px;
+      margin-top: -34px;
+      padding: 22px 0 100px;
     }
 
     .explore-shell {
@@ -230,11 +241,20 @@
       justify-content: space-between;
       gap: 24px;
       align-items: end;
+      padding-top: 16px;
       margin-bottom: 30px;
     }
 
     .explore-section-head > div {
       max-width: 760px;
+    }
+
+    .explore-section-head .section-eyebrow {
+      color: #3B82F6;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%);
+      border: 1px solid rgba(148,163,184,0.22);
+      box-shadow: 0 12px 28px rgba(15,23,42,0.06);
+      padding: 10px 18px;
     }
 
     .explore-section-head h2 {
@@ -285,7 +305,7 @@
     .destination-card.wide {
       grid-column: span 12;
       display: grid;
-      grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.08fr);
+      grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
     }
 
     .destination-media {
@@ -304,9 +324,13 @@
     }
 
     .destination-card.wide .destination-media {
-      aspect-ratio: 1.15;
+      aspect-ratio: 0.92;
       height: auto;
       min-height: 0;
+    }
+
+    .destination-card.wide .destination-media img {
+      object-position: center 34%;
     }
 
     .destination-card.wide .destination-body {
@@ -492,6 +516,13 @@
       border-color: rgba(148,163,184,0.18);
     }
 
+    body.night-mode .explore-section-head .section-eyebrow {
+      color: #BFDBFE;
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(148,163,184,0.24);
+      box-shadow: 0 14px 28px rgba(2,6,23,0.22);
+    }
+
     @media (max-width: 1100px) {
       .explore-hero-shell {
         grid-template-columns: 1fr;
@@ -513,7 +544,7 @@
       }
 
       .destination-card.wide .destination-media {
-        min-height: 280px;
+        min-height: 320px;
       }
     }
 
@@ -531,12 +562,13 @@
       }
 
       .explore-showcase {
-        margin-top: -34px;
-        padding-bottom: 80px;
+        margin-top: -24px;
+        padding: 18px 0 80px;
       }
 
       .explore-section-head {
         display: block;
+        padding-top: 12px;
       }
 
       .destination-card.featured,
@@ -590,7 +622,7 @@
         <div class="explore-hero-copy">
           <span class="guest-kicker reveal-onload"><span class="material-icons-round">map</span> <span data-key="explore_kicker">EXPLORE MELAKA</span></span>
           <h1 class="reveal-onload" style="animation-delay: 0.1s;" data-key="explore_title">Discover The Historic City</h1>
-          <p class="reveal-onload" style="animation-delay: 0.2s;" data-key="explore_sub">Plan your trip around Melaka's top attractions and find the perfect AI-recommended vehicle for your journey.</p>
+          <p class="explore-hero-lead reveal-onload" style="animation-delay: 0.2s;" data-key="explore_sub">Plan your trip around Melaka's top attractions and find the perfect AI-recommended vehicle for your journey.</p>
 
           <div class="explore-stat-row reveal-onload" style="animation-delay: 0.3s;">
             <div class="explore-stat">
