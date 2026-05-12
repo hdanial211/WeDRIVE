@@ -1343,13 +1343,9 @@ body.night-mode .melaka-guide {
 .flatpickr-calendar {
   border: none !important;
   border-radius: 16px !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.04) !important;
-  padding: 10px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.06) !important;
+  padding: 8px !important;
   font-family: 'Inter', sans-serif !important;
-  overflow: visible !important;
-  min-width: 320px !important;
-  width: auto !important;
-  box-sizing: border-box !important;
 }
 
 .flatpickr-calendar:before,
@@ -1358,32 +1354,10 @@ body.night-mode .melaka-guide {
 }
 
 .flatpickr-months .flatpickr-month {
-  height: 48px !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible !important;
+  height: 46px !important;
 }
 
-.flatpickr-current-month {
-  padding-top: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  height: auto !important;
-  position: relative !important;
-  width: auto !important;
-  left: auto !important;
-}
-
-.flatpickr-current-month .numInputWrapper {
-  width: auto !important;
-  overflow: visible !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
+/* Month & Year dropdowns - uniform pill style */
 .flatpickr-monthDropdown-months,
 .custom-year-select {
   font-weight: 700 !important;
@@ -1398,13 +1372,9 @@ body.night-mode .melaka-guide {
   border: 1px solid transparent !important;
   cursor: pointer !important;
   transition: background 0.2s ease !important;
-  margin: 0 2px !important;
   height: 32px !important;
   min-width: 60px !important;
-  line-height: 32px !important;
-  text-align: center;
-  box-sizing: border-box !important;
-  vertical-align: middle !important;
+  text-align: center !important;
 }
 
 .flatpickr-monthDropdown-months:hover,
@@ -1412,11 +1382,12 @@ body.night-mode .melaka-guide {
   background: #f1f5f9 !important;
 }
 
+/* Day cells */
 .flatpickr-day {
   border-radius: 8px !important;
   font-weight: 500 !important;
   color: #334155 !important;
-  transition: all 0.2s ease !important;
+  transition: background 0.15s ease, color 0.15s ease !important;
 }
 
 .flatpickr-day:hover {
@@ -1424,8 +1395,8 @@ body.night-mode .melaka-guide {
   color: #0f172a !important;
 }
 
-.flatpickr-day.selected, 
-.flatpickr-day.startRange, 
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
 .flatpickr-day.endRange {
   background: #3b82f6 !important;
   border-color: #3b82f6 !important;
@@ -1439,26 +1410,5 @@ body.night-mode .melaka-guide {
 }
 
 .flatpickr-innerContainer {
-  margin-top: 8px;
-  overflow: visible !important;
-}
-
-.flatpickr-rContainer {
-  width: 100% !important;
-}
-
-.flatpickr-days {
-  width: 100% !important;
-  overflow: visible !important;
-}
-
-.dayContainer {
-  width: 100% !important;
-  min-width: 280px !important;
-  max-width: 100% !important;
-}
-
-.flatpickr-day {
-  max-width: 14.2857% !important;
-  flex: 1 !important;
+  margin-top: 4px;
 }
