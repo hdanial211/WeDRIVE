@@ -157,6 +157,11 @@
     updateLangBtn(animate);
 
     if (data['page_title']) document.title = data['page_title'];
+
+    document.documentElement.lang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+    document.dispatchEvent(new CustomEvent('wedrive:language-applied', {
+      detail: { lang: localStorage.getItem(LANG_KEY) || DEFAULT_LANG }
+    }));
   }
 
   function updateLangBtn(animate) {

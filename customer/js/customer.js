@@ -1,72 +1,399 @@
 /**
- * WeDRIVE - Customer Module JS
- * Data fetched from shared/dummy/data.json (single source of truth)
- * Switch to real API endpoint when backend is ready.
+ * WeDRIVE - Customer and Guest Browse Module
+ * Data is loaded through shared/js/api.js from shared/dummy/data.json.
  */
 
-let allCars = []; // Global cars list populated after fetch
+(function () {
+  'use strict';
 
-// ─── FETCH & INITIALISE ───────────────────────────────────────────────────────
-window.WeDriveAPI.getCars()
-  .then(cars => {
-    allCars = cars;
-    renderCars(allCars);
-  })
-  .catch(() => {
-    // Fallback: show error state in grid
-    const grid = document.getElementById('cars-grid');
-    if (grid) grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">Unable to load cars. Please refresh the page.</p>';
-  });
+  var allCars = [];
+  var currentFilter = 'all';
+  var currentSort = 'recommended';
+  var availableOnly = false;
+  var controlsBound = false;
+  var lastRenderedCars = [];
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
-function renderCars(list) {
-  const grid = document.getElementById('cars-grid');
-  if (!grid) return;
-  grid.innerHTML = list.map(c => `
-    <div class="car-card" onclick="bookCar(${c.id})">
-      <div class="car-img">
-        <span class="material-icons-round no-img">directions_car</span>
-        <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span> ${c.ai}</div>
-      </div>
-      <div class="car-body">
-        <h3>${c.name}</h3>
-        <p class="car-type">${c.label}</p>
-        <div class="car-specs">
-          <div class="spec"><span class="material-icons-round">local_gas_station</span>${c.fuel}</div>
-          <div class="spec"><span class="material-icons-round">event_seat</span>${c.seats} Seats</div>
-          <div class="spec"><span class="material-icons-round">settings</span>${c.trans}</div>
-          <div class="spec"><span class="material-icons-round">check_circle</span>${c.status}</div>
-        </div>
-        <div class="car-footer">
-          <div class="price">RM ${c.price}<span>/day</span></div>
-          <button class="btn-book" onclick="event.stopPropagation();bookCar(${c.id})">Book Now</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
+  var copy = {
+    en: {
+      seats: 'Seats',
+      day: '/day',
+      available: 'Available',
+      rented: 'Rented',
+      bookNow: 'Book Now',
+      signInToBook: 'Sign in to book',
+      locked: 'Guest preview',
+      aiMatch: 'AI match',
+      plate: 'Plate',
+      color: 'Color',
+      reviews: 'reviews',
+      resultsPrefix: 'Showing',
+      resultsSuffix: 'cars available',
+      empty: 'No cars match your filters right now.',
+      booking: 'Booking'
+    },
+    ms: {
+      seats: 'Tempat Duduk',
+      day: '/hari',
+      available: 'Tersedia',
+      rented: 'Disewa',
+      bookNow: 'Tempah Sekarang',
+      signInToBook: 'Log masuk untuk tempah',
+      locked: 'Pratonton tetamu',
+      aiMatch: 'Padanan AI',
+      plate: 'Plat',
+      color: 'Warna',
+      reviews: 'ulasan',
+      resultsPrefix: 'Menunjukkan',
+      resultsSuffix: 'kereta tersedia',
+      empty: 'Tiada kereta sepadan dengan pilihan anda sekarang.',
+      booking: 'Tempahan'
+    }
+  };
 
-// ─── FILTER ───────────────────────────────────────────────────────────────────
-function filterCars(type, btn) {
-  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const filtered = type === 'all' ? allCars : allCars.filter(c => c.type === type);
-  renderCars(filtered);
-}
-
-// ─── BOOKING ──────────────────────────────────────────────────────────────────
-function bookCar(id) {
-  const car = allCars.find(c => c.id === id);
-  if (!car) return;
-  
-  if (window.__GUEST_MODE__) {
-    window.location.href = 'index.html';
-    return;
+  function lang() {
+    return localStorage.getItem('wedrive-lang') === 'ms' ? 'ms' : 'en';
   }
-  
-  alert(`Booking: ${car.name}\nRM ${car.price}/day\n\nRedirecting to booking confirmation...`);
-}
 
+  function t(key) {
+    return (copy[lang()] && copy[lang()][key]) || copy.en[key] || key;
+  }
 
+  function rootPrefix() {
+    return window.location.pathname.includes('/pages/') ? '../../' : '';
+  }
 
+  function imagePath(car) {
+    var file = car && car.images && car.images.length ? car.images[0] : '';
+    return file ? rootPrefix() + 'shared/images/cars/' + file : '';
+  }
 
+  function escapeHtml(value) {
+    return String(value === undefined || value === null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function statusKey(car) {
+    return String(car.status || '').toLowerCase() === 'available' ? 'available' : 'rented';
+  }
+
+  function statusText(car) {
+    var key = statusKey(car);
+    return key === 'available' ? t('available') : t('rented');
+  }
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function bindControls() {
+    if (controlsBound) return;
+    controlsBound = true;
+
+    var searchForm = document.getElementById('guest-search-form');
+    var typeSelect = document.getElementById('search-car-type');
+    var sortSelect = document.getElementById('sort-select');
+    var availableToggle = document.getElementById('available-toggle');
+    var modal = document.getElementById('guest-book-modal');
+
+    if (searchForm) {
+      searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        if (typeSelect) {
+          currentFilter = typeSelect.value || 'all';
+          syncFilterChips();
+        }
+        applyFilters(true);
+      });
+    }
+
+    if (typeSelect) {
+      typeSelect.addEventListener('change', function () {
+        currentFilter = typeSelect.value || 'all';
+        syncFilterChips();
+        applyFilters(false);
+      });
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function () {
+        currentSort = sortSelect.value || 'recommended';
+        applyFilters(false);
+      });
+    }
+
+    if (availableToggle) {
+      availableToggle.addEventListener('change', function () {
+        availableOnly = availableToggle.checked;
+        applyFilters(false);
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) closeGuestPrompt();
+      });
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeGuestPrompt();
+    });
+
+    document.addEventListener('wedrive:language-applied', function () {
+      renderHeroStats();
+      renderSpotlight();
+      renderCars(lastRenderedCars.length ? lastRenderedCars : allCars);
+    });
+  }
+
+  function syncFilterChips() {
+    document.querySelectorAll('.filter-chip').forEach(function (button) {
+      var target = (button.getAttribute('onclick') || '').match(/filterCars\('([^']+)'/);
+      button.classList.toggle('active', !!target && target[1] === currentFilter);
+    });
+
+    var typeSelect = document.getElementById('search-car-type');
+    if (typeSelect && typeSelect.value !== currentFilter) {
+      typeSelect.value = currentFilter;
+    }
+  }
+
+  function applyFilters(shouldScroll) {
+    var list = allCars.slice();
+
+    if (currentFilter !== 'all') {
+      list = list.filter(function (car) { return car.type === currentFilter; });
+    }
+
+    if (availableOnly) {
+      list = list.filter(function (car) { return statusKey(car) === 'available'; });
+    }
+
+    list.sort(function (a, b) {
+      if (currentSort === 'price_asc') return Number(a.price || 0) - Number(b.price || 0);
+      if (currentSort === 'price_desc') return Number(b.price || 0) - Number(a.price || 0);
+      if (currentSort === 'rating_desc') return Number(b.rating || 0) - Number(a.rating || 0);
+
+      var aAvailable = statusKey(a) === 'available' ? 1 : 0;
+      var bAvailable = statusKey(b) === 'available' ? 1 : 0;
+      if (aAvailable !== bAvailable) return bAvailable - aAvailable;
+      return Number(b.rating || 0) - Number(a.rating || 0);
+    });
+
+    renderCars(list);
+
+    if (shouldScroll) {
+      var fleet = document.getElementById('fleet');
+      if (fleet) fleet.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function renderHeroStats() {
+    if (!allCars.length) return;
+
+    var minPrice = allCars.reduce(function (min, car) {
+      return Math.min(min, Number(car.price || min));
+    }, Number(allCars[0].price || 0));
+
+    var ratingTotal = allCars.reduce(function (sum, car) {
+      return sum + Number(car.rating || 0);
+    }, 0);
+    var avgRating = ratingTotal / allCars.length;
+
+    setText('guest-total-cars', String(allCars.length));
+    setText('guest-start-price', 'RM ' + minPrice);
+    setText('guest-avg-rating', avgRating.toFixed(1));
+  }
+
+  function renderSpotlight() {
+    if (!allCars.length) return;
+
+    var available = allCars.filter(function (car) { return statusKey(car) === 'available'; });
+    var pool = available.length ? available : allCars;
+    var car = pool.slice().sort(function (a, b) {
+      return Number(b.rating || 0) - Number(a.rating || 0);
+    })[0];
+    var img = document.getElementById('guest-spotlight-img');
+
+    if (img) {
+      img.src = imagePath(car);
+      img.alt = car.name;
+    }
+
+    setText('guest-spotlight-type', car.label || car.type || '');
+    setText('guest-spotlight-name', car.name || '');
+    setText('guest-spotlight-rate', 'RM ' + car.price + t('day'));
+    setText('guest-spotlight-rating', String(car.rating || ''));
+    setText('guest-spotlight-seats', car.seats + ' ' + t('seats'));
+    setText('guest-spotlight-fuel', car.fuel || '');
+  }
+
+  function renderCars(list) {
+    var grid = document.getElementById('cars-grid');
+    var results = document.getElementById('results-count');
+    if (!grid) return;
+
+    lastRenderedCars = list.slice();
+
+    if (results) {
+      results.innerHTML = t('resultsPrefix') + ' <strong>' + list.length + '</strong> ' + t('resultsSuffix');
+    }
+
+    if (!list.length) {
+      grid.innerHTML = [
+        '<div class="empty-state">',
+        '  <span class="material-icons-round">search_off</span>',
+        '  <strong>' + escapeHtml(t('empty')) + '</strong>',
+        '</div>'
+      ].join('');
+      return;
+    }
+
+    grid.innerHTML = list.map(function (car) {
+      var safeName = escapeHtml(car.name);
+      var safeType = escapeHtml(car.label || car.type || '');
+      var safeFuel = escapeHtml(car.fuel || '');
+      var safeTrans = escapeHtml(car.trans || car.transmission || '');
+      var safePlate = escapeHtml(car.plate || '');
+      var safeColor = escapeHtml(car.color || '');
+      var safeAi = escapeHtml(car.ai || t('aiMatch'));
+      var rating = escapeHtml(car.rating || '4.7');
+      var reviews = escapeHtml(car.reviews || '0');
+      var status = statusKey(car);
+      var img = imagePath(car);
+      var buttonText = window.__GUEST_MODE__ ? t('signInToBook') : t('bookNow');
+
+      return [
+        '<div class="car-card" onclick="bookCar(' + Number(car.id) + ')">',
+        '  <div class="car-img">',
+        img ? '    <img src="' + img + '" alt="' + safeName + '" />' : '    <span class="material-icons-round no-img">directions_car</span>',
+        '    <div class="car-badges">',
+        '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
+        '      <span class="rating-pill"><span class="material-icons-round">star</span>' + rating + '</span>',
+        '    </div>',
+        '  </div>',
+        '  <div class="car-body">',
+        '    <div class="car-topline">',
+        '      <p class="car-type">' + safeType + '</p>',
+        '      <span class="rating-pill"><span class="material-icons-round">reviews</span>' + reviews + ' ' + escapeHtml(t('reviews')) + '</span>',
+        '    </div>',
+        '    <h3>' + safeName + '</h3>',
+        '    <div class="car-meta">',
+        '      <span>' + escapeHtml(t('plate')) + ': ' + safePlate + '</span>',
+        '      <span>' + escapeHtml(t('color')) + ': ' + safeColor + '</span>',
+        '    </div>',
+        '    <div class="car-specs">',
+        '      <div class="spec"><span class="material-icons-round">local_gas_station</span>' + safeFuel + '</div>',
+        '      <div class="spec"><span class="material-icons-round">event_seat</span>' + Number(car.seats || 0) + ' ' + escapeHtml(t('seats')) + '</div>',
+        '      <div class="spec"><span class="material-icons-round">settings</span>' + safeTrans + '</div>',
+        '      <div class="spec"><span class="material-icons-round">verified</span>' + escapeHtml(window.__GUEST_MODE__ ? t('locked') : statusText(car)) + '</div>',
+        '    </div>',
+        '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>',
+        '    <div class="car-footer">',
+        '      <div class="price">RM ' + Number(car.price || 0) + '<span>' + escapeHtml(t('day')) + '</span></div>',
+        '      <button class="btn-book' + (window.__GUEST_MODE__ ? ' btn-book-guest' : '') + '" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
+        '        <span class="material-icons-round" style="font-size:17px">' + (window.__GUEST_MODE__ ? 'lock' : 'event_available') + '</span>',
+        '        ' + escapeHtml(buttonText),
+        '      </button>',
+        '    </div>',
+        '  </div>',
+        '</div>'
+      ].join('');
+    }).join('');
+  }
+
+  function openGuestBookingPrompt(car) {
+    var modal = document.getElementById('guest-book-modal');
+    if (!modal) {
+      window.location.href = rootPrefix() + 'index.html';
+      return;
+    }
+
+    var img = document.getElementById('guest-modal-img');
+    var carLine = document.getElementById('guest-modal-car');
+    var login = modal.querySelector('.guest-modal-actions a:first-child');
+    var signup = modal.querySelector('.guest-modal-actions a:last-child');
+
+    if (img) {
+      img.src = imagePath(car);
+      img.alt = car.name;
+    }
+    if (carLine) {
+      carLine.textContent = car.name + ' - RM ' + car.price + t('day') + ' - ' + statusText(car);
+    }
+    if (login) login.href = rootPrefix() + 'index.html';
+    if (signup) signup.href = rootPrefix() + 'customer/pages/signup.html';
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeGuestPrompt() {
+    var modal = document.getElementById('guest-book-modal');
+    if (!modal) return;
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  window.closeGuestPrompt = closeGuestPrompt;
+
+  window.filterCars = function (type, btn) {
+    currentFilter = type || 'all';
+    document.querySelectorAll('.filter-chip').forEach(function (button) {
+      button.classList.remove('active');
+    });
+    if (btn) btn.classList.add('active');
+    syncFilterChips();
+    applyFilters(false);
+  };
+
+  window.bookCar = function (id) {
+    var car = allCars.find(function (item) { return Number(item.id) === Number(id); });
+    if (!car) return;
+
+    if (window.__GUEST_MODE__) {
+      openGuestBookingPrompt(car);
+      return;
+    }
+
+    alert(t('booking') + ': ' + car.name + '\nRM ' + car.price + t('day'));
+  };
+
+  function loadCars() {
+    var grid = document.getElementById('cars-grid');
+    if (!window.WeDriveAPI || !window.WeDriveAPI.getCars) {
+      if (grid) grid.innerHTML = '<div class="empty-state">Unable to load cars.</div>';
+      return;
+    }
+
+    window.WeDriveAPI.getCars()
+      .then(function (cars) {
+        allCars = cars || [];
+        renderHeroStats();
+        renderSpotlight();
+        applyFilters(false);
+      })
+      .catch(function () {
+        if (grid) {
+          grid.innerHTML = '<div class="empty-state"><span class="material-icons-round">error</span><strong>Unable to load cars. Please refresh the page.</strong></div>';
+        }
+      });
+  }
+
+  function init() {
+    bindControls();
+    loadCars();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

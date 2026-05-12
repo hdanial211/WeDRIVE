@@ -11,60 +11,16 @@
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../customer/css/customer.css" />
-  <style>
-    /* LOGIN BANNER */
-    .login-banner {
-      background: linear-gradient(90deg, #1D4ED8, #3B82F6);
-      color: white; text-align: center; padding: 12px 20px;
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-      font-size: 14px; font-weight: 500;
-    }
-    .login-banner a {
-      background: white; color: #1D4ED8; font-weight: 700;
-      padding: 6px 18px; border-radius: 20px; text-decoration: none;
-      font-size: 13px; transition: all 0.2s;
-    }
-    .login-banner a:hover { background: #EFF6FF; }
-
-    /* Lock overlay on car card */
-    .btn-book-guest {
-      padding: 9px 20px; background: #94A3B8; color: white;
-      border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .btn-book-guest:hover { background: #1D4ED8; }
-
-    /* Guest hero CTA */
-    .hero-cta {
-      display: flex; gap: 12px; justify-content: center; margin-top: 8px;
-      margin-bottom: 28px; position: relative; z-index: 1;
-    }
-    .hero-cta .hero-btn-primary {
-      padding: 12px 28px; background: #3B82F6; color: white; border: none;
-      border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 15px;
-      font-weight: 700; cursor: pointer; transition: all 0.2s;
-      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-    }
-    .hero-cta .hero-btn-primary:hover { background: #1D4ED8; transform: translateY(-2px); }
-    .hero-cta .hero-btn-outline {
-      padding: 12px 28px; border: 2px solid rgba(255,255,255,0.4); color: white;
-      background: rgba(255,255,255,0.08); border-radius: 10px;
-      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 8px;
-      backdrop-filter: blur(4px);
-    }
-    .hero-cta .hero-btn-outline:hover { background: rgba(255,255,255,0.15); }
-  </style>
 </head>
-<body data-particles data-cursor-glow>
+<body class="guest-page" data-cursor-glow>
 
   <!-- LOGIN BANNER -->
   <div class="login-banner reveal-onload">
-    <span class="material-icons-round" style="font-size:18px">lock</span>
-    <span data-key="browse_banner">Sign in to unlock booking and AI recommendations</span>
-    <a href="../../index.html" data-key="browse_signin_btn">Sign In Now</a>
+    <div class="login-banner-inner">
+      <span class="material-icons-round" aria-hidden="true">verified_user</span>
+      <span data-key="browse_banner">Sign in to unlock booking and AI recommendations</span>
+      <a href="../../index.html" data-key="browse_signin_btn">Sign In Now</a>
+    </div>
   </div>
 
   <!-- PROMO BANNER (injected by JS if active) -->
@@ -74,100 +30,221 @@
   <div id="navbar-placeholder" data-module="guest"></div>
 
   <!-- HERO -->
-  <section class="hero">
-    <h1 class="reveal-onload" data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
-    <p class="reveal-onload" data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
-    <div class="hero-cta reveal-onload">
-      <a href="../../index.html" class="hero-btn-primary">
-        <span class="material-icons-round" style="font-size:18px">login</span>
-        <span data-key="hero_cta_login">Sign In to Book</span>
-      </a>
-      <a href="../../index.html" class="hero-btn-outline">
-        <span class="material-icons-round" style="font-size:18px">person_add</span>
-        <span data-key="hero_cta_signup">Create Free Account</span>
-      </a>
+  <section class="hero guest-hero">
+    <div class="guest-hero-shell">
+      <div class="guest-hero-copy">
+        <div class="guest-kicker reveal-onload">
+          <span class="material-icons-round" aria-hidden="true">auto_awesome</span>
+          <span data-key="guest_badge">Guest showroom</span>
+        </div>
+        <h1 class="reveal-onload" data-key-html="guest_hero_title_html">Choose your <span>perfect rental car</span></h1>
+        <p class="reveal-onload" data-key="guest_hero_sub">Browse real fleet options, compare daily rates, and sign in when you are ready to reserve.</p>
+
+        <div class="hero-cta reveal-onload">
+          <a href="#fleet" class="hero-btn-primary">
+            <span class="material-icons-round" aria-hidden="true">directions_car</span>
+            <span data-key="guest_primary_cta">Explore Fleet</span>
+          </a>
+          <a href="../../customer/pages/signup.html" class="hero-btn-outline">
+            <span class="material-icons-round" aria-hidden="true">person_add</span>
+            <span data-key="hero_cta_signup">Create Free Account</span>
+          </a>
+        </div>
+
+        <div class="guest-metrics">
+          <div>
+            <strong id="guest-total-cars">6</strong>
+            <span data-key="guest_metric_fleet">Fleet choices</span>
+          </div>
+          <div>
+            <strong id="guest-start-price">RM 80</strong>
+            <span data-key="guest_metric_from">Starting daily rate</span>
+          </div>
+          <div>
+            <strong id="guest-avg-rating">4.7</strong>
+            <span data-key="guest_metric_rating">Average rating</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="guest-hero-showcase" aria-label="Featured WeDRIVE car">
+        <div class="showcase-main">
+          <div class="showcase-topline">
+            <span data-key="guest_spotlight_label">AI spotlight</span>
+            <span class="showcase-status" data-key="guest_card_available">Available</span>
+          </div>
+          <img id="guest-spotlight-img" src="../../shared/images/cars/honda-crv-2024.png" alt="Featured rental car" />
+          <div class="showcase-copy">
+            <span id="guest-spotlight-type">SUV</span>
+            <h2 id="guest-spotlight-name">Honda CR-V 2024</h2>
+            <p id="guest-spotlight-rate">RM 200/day</p>
+          </div>
+        </div>
+        <div class="showcase-strip">
+          <div>
+            <span class="material-icons-round" aria-hidden="true">star</span>
+            <strong id="guest-spotlight-rating">4.9</strong>
+          </div>
+          <div>
+            <span class="material-icons-round" aria-hidden="true">event_seat</span>
+            <strong id="guest-spotlight-seats">7 Seats</strong>
+          </div>
+          <div>
+            <span class="material-icons-round" aria-hidden="true">local_gas_station</span>
+            <strong id="guest-spotlight-fuel">Hybrid</strong>
+          </div>
+        </div>
+      </aside>
     </div>
-    <div class="search-box reveal-onload">
+
+    <form class="search-box guest-search" id="guest-search-form">
+      <div class="search-title">
+        <span class="material-icons-round" aria-hidden="true">travel_explore</span>
+        <span data-key="guest_search_title">Plan your rental</span>
+      </div>
       <div class="search-grid">
         <div class="search-field">
           <label data-key="cust_pickup_loc">Pick-up Location</label>
           <div class="input-wrap">
             <span class="material-icons-round">location_on</span>
-            <input type="text" placeholder="Melaka, Malaysia" />
+            <input id="search-location" type="text" placeholder="Melaka, Malaysia" data-key-ph="guest_location_ph" />
           </div>
         </div>
         <div class="search-field">
           <label data-key="search_from">Pick-up Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">calendar_today</span>
-            <input type="date" />
+            <input id="pickup-date" type="date" />
           </div>
         </div>
         <div class="search-field">
           <label data-key="search_to">Return Date</label>
           <div class="input-wrap">
             <span class="material-icons-round">event</span>
-            <input type="date" />
+            <input id="return-date" type="date" />
           </div>
         </div>
-        <button class="btn-search" onclick="window.location='../../index.html'">
-          <span class="material-icons-round" style="font-size:18px">search</span>
+        <div class="search-field">
+          <label data-key="search_type">Car Type</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">tune</span>
+            <select id="search-car-type">
+              <option value="all" data-key="guest_type_all">Any type</option>
+              <option value="sedan" data-key="filter_sedan">Sedan</option>
+              <option value="suv" data-key="filter_suv">SUV</option>
+              <option value="hatchback" data-key="filter_hatch">Hatchback</option>
+              <option value="van" data-key="filter_van">Van</option>
+              <option value="luxury" data-key="filter_luxury">Luxury</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-search" type="submit">
+          <span class="material-icons-round" aria-hidden="true">search</span>
           <span data-key="search_btn">Search</span>
         </button>
       </div>
-    </div>
+    </form>
   </section>
 
   <!-- CONTENT -->
-  <div class="content">
-    <div class="filter-bar reveal-on-scroll">
+  <main class="content guest-content" id="fleet">
+    <div class="guest-section-heading reveal-on-scroll">
+      <div>
+        <span class="section-eyebrow" data-key="nav_browse">Browse Cars</span>
+        <h2 data-key="guest_fleet_title">Fleet ready for every plan</h2>
+        <p data-key="guest_fleet_sub">Compare comfort, capacity, price, and AI notes before you sign in to book.</p>
+      </div>
+      <div class="fleet-tools">
+        <label class="guest-switch">
+          <input type="checkbox" id="available-toggle" />
+          <span></span>
+          <strong data-key="guest_available_only">Available only</strong>
+        </label>
+        <label class="sort-control">
+          <span data-key="guest_sort_label">Sort</span>
+          <select id="sort-select">
+            <option value="recommended" data-key="sort_recommended">Recommended</option>
+            <option value="price_asc" data-key="sort_price_low">Lowest price</option>
+            <option value="price_desc" data-key="sort_price_high">Highest price</option>
+            <option value="rating_desc" data-key="sort_rating">Top rated</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-bar guest-filter-bar reveal-on-scroll">
       <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
       <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
       <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
       <button class="filter-chip" onclick="filterCars('hatchback', this)" data-key="filter_hatch">Hatchback</button>
       <button class="filter-chip" onclick="filterCars('van', this)" data-key="filter_van">Van</button>
       <button class="filter-chip" onclick="filterCars('luxury', this)" data-key="filter_luxury">Luxury</button>
-      <span class="results-count" data-key="cust_showing">Showing cars available</span>
+      <span class="results-count" id="results-count" data-key="cust_showing">Showing cars available</span>
     </div>
-    <div class="cars-grid" id="cars-grid">
+    <div class="cars-grid guest-cars-grid" id="cars-grid">
       <!-- Car cards injected by JS — Book btn redirects to login for guests -->
     </div>
-  </div>
+  </main>
 
   <!-- HOW IT WORKS -->
-  <section id="how" style="background:var(--bg-body,#F8FAFC); padding: 60px 40px; text-align:center; border-top: 1px solid var(--border,#E2E8F0)">
-    <h2 class="reveal-on-scroll" style="font-size:28px; font-weight:700; margin-bottom:8px;" data-key="how_title">How It Works</h2>
-    <p class="reveal-on-scroll" style="color:#64748B; margin-bottom:40px;" data-key="how_sub">Get on the road in 3 simple steps</p>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px; max-width:900px; margin:0 auto;">
-      <div class="reveal-on-scroll" data-delay="0" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
-        <div style="width:52px;height:52px;background:#EFF6FF;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-          <span class="material-icons-round" style="color:#3B82F6;font-size:26px">person_add</span>
+  <section class="guest-steps" id="how">
+    <div class="guest-section-heading centered">
+      <span class="section-eyebrow" data-key="how_title">How It Works</span>
+      <h2 data-key="guest_steps_title">From browsing to keys in hand</h2>
+      <p data-key="how_sub">Get on the road in 3 simple steps</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal-on-scroll" data-delay="0">
+        <div class="step-icon blue">
+          <span class="material-icons-round" aria-hidden="true">person_add</span>
         </div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step1_title">Create Account</h3>
-        <p style="font-size:13px;color:#64748B;" data-key="how_step1_desc">Sign up free and verify your driver's licence</p>
+        <h3 data-key="how_step1_title">Create Account</h3>
+        <p data-key="how_step1_desc">Sign up free and verify your driver's licence</p>
       </div>
-      <div class="reveal-on-scroll" data-delay="120" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
-        <div style="width:52px;height:52px;background:#F0FDF4;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-          <span class="material-icons-round" style="color:#10B981;font-size:26px">directions_car</span>
+      <div class="step-card reveal-on-scroll" data-delay="120">
+        <div class="step-icon green">
+          <span class="material-icons-round" aria-hidden="true">directions_car</span>
         </div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step2_title">Choose Your Car</h3>
-        <p style="font-size:13px;color:#64748B;" data-key="how_step2_desc">Browse AI-recommended vehicles that suit your needs</p>
+        <h3 data-key="how_step2_title">Choose Your Car</h3>
+        <p data-key="how_step2_desc">Browse AI-recommended vehicles that suit your needs</p>
       </div>
-      <div class="reveal-on-scroll" data-delay="240" style="padding:28px; background:white; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06)">
-        <div style="width:52px;height:52px;background:#FFF7ED;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-          <span class="material-icons-round" style="color:#F59E0B;font-size:26px">receipt_long</span>
+      <div class="step-card reveal-on-scroll" data-delay="240">
+        <div class="step-icon amber">
+          <span class="material-icons-round" aria-hidden="true">receipt_long</span>
         </div>
-        <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;" data-key="how_step3_title">Book & Drive</h3>
-        <p style="font-size:13px;color:#64748B;" data-key="how_step3_desc">Instant confirmation, pay securely, pick up and go</p>
+        <h3 data-key="how_step3_title">Book & Drive</h3>
+        <p data-key="how_step3_desc">Instant confirmation, pay securely, pick up and go</p>
       </div>
     </div>
-    <div class="reveal-on-scroll" style="margin-top:40px">
-      <a href="../../index.html" style="display:inline-flex;align-items:center;gap:8px;background:#3B82F6;color:white;padding:14px 32px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='#1D4ED8'" onmouseout="this.style.background='#3B82F6'">
-        <span class="material-icons-round">rocket_launch</span>
+    <div class="steps-action reveal-on-scroll">
+      <a href="../../customer/pages/signup.html" class="hero-btn-primary">
+        <span class="material-icons-round" aria-hidden="true">login</span>
         <span data-key="how_cta">Get Started Free</span>
       </a>
     </div>
   </section>
+
+  <!-- GUEST BOOKING PROMPT -->
+  <div class="guest-modal" id="guest-book-modal" aria-hidden="true">
+    <div class="guest-modal-card" role="dialog" aria-modal="true" aria-labelledby="guest-modal-title">
+      <button class="guest-modal-close" type="button" onclick="closeGuestPrompt()" data-key-title="guest_modal_close">
+        <span class="material-icons-round" aria-hidden="true">close</span>
+      </button>
+      <div class="guest-modal-media">
+        <img id="guest-modal-img" src="../../shared/images/cars/toyota-vios-2023.png" alt="Selected rental car" />
+      </div>
+      <div class="guest-modal-body">
+        <span class="section-eyebrow" data-key="guest_card_locked">Booking locked for guests</span>
+        <h2 id="guest-modal-title" data-key="guest_modal_title">Sign in to reserve this car</h2>
+        <p id="guest-modal-text" data-key="guest_modal_text">Create or sign in to your WeDRIVE account to continue with booking, payment, and confirmation.</p>
+        <div class="guest-modal-car" id="guest-modal-car">Toyota Vios 2023</div>
+        <div class="guest-modal-actions">
+          <a href="../../index.html" class="hero-btn-primary" data-key="guest_modal_login">Sign In</a>
+          <a href="../../customer/pages/signup.html" class="hero-btn-outline dark" data-key="guest_modal_signup">Create Account</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
@@ -178,14 +255,13 @@
   <script src="../../shared/js/navbar-loader.js"></script>
   <script src="../../shared/js/api.js"></script>
   <script src="../../shared/js/chatbot.js"></script>
+  <script>
+    window.__GUEST_MODE__ = true;
+  </script>
   <script src="../../customer/js/customer.js"></script>
   <script src="../../shared/js/anime.min.js"></script>
   <script src="../../shared/js/animate.js"></script>
   <script src="../../shared/js/main.js"></script>
   <script src="../../shared/js/promo-banner.js"></script>
-  <script>
-    // Override: Book button redirects to login for guests
-    window.__GUEST_MODE__ = true;
-  </script>
 </body>
 </html>
