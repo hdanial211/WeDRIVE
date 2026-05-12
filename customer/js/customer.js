@@ -442,16 +442,52 @@
     var returnInput = document.getElementById('return-date');
 
     if (pickupInput && returnInput && window.flatpickr) {
-      var returnPicker = flatpickr(returnInput, {
-        minDate: "today",
-        dateFormat: "d/m/Y",
-        disableMobile: "true"
-      });
-
-      flatpickr(pickupInput, {
+      var commonConfig = {
         minDate: "today",
         dateFormat: "d/m/Y",
         disableMobile: "true",
+        onReady: function(selectedDates, dateStr, instance) {
+          var yearInput = instance.currentYearElement;
+          var wrapper = yearInput.parentNode;
+          
+          var select = document.createElement('select');
+          select.className = 'flatpickr-monthDropdown-months'; // reuse flatpickr styling
+          select.style.marginLeft = '5px';
+          select.style.fontWeight = '600';
+          select.style.width = '80px';
+          select.style.padding = '0 5px';
+          select.style.display = 'inline-block';
+          
+          var currentYear = new Date().getFullYear();
+          for (var i = currentYear; i <= currentYear + 10; i++) {
+              var opt = document.createElement('option');
+              opt.value = i;
+              opt.text = i;
+              select.appendChild(opt);
+          }
+          select.value = instance.currentYear;
+          
+          select.addEventListener('change', function(e) {
+              instance.changeYear(Number(e.target.value));
+          });
+          
+          yearInput.style.display = 'none';
+          var arrows = wrapper.querySelectorAll('.arrowUp, .arrowDown');
+          arrows.forEach(function(a) { a.style.display = 'none'; });
+          
+          wrapper.appendChild(select);
+          instance.customYearSelect = select;
+        },
+        onYearChange: function(selectedDates, dateStr, instance) {
+          if (instance.customYearSelect) {
+            instance.customYearSelect.value = instance.currentYear;
+          }
+        }
+      };
+
+      var returnPicker = flatpickr(returnInput, Object.assign({}, commonConfig));
+
+      flatpickr(pickupInput, Object.assign({}, commonConfig, {
         onChange: function(selectedDates, dateStr) {
           returnPicker.set('minDate', dateStr || "today");
           if (returnPicker.selectedDates[0] && selectedDates[0] && returnPicker.selectedDates[0] < selectedDates[0]) {
@@ -463,7 +499,7 @@
             }
           }, 100);
         }
-      });
+      }));
     }
   }
 
