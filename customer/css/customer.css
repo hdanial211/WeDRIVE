@@ -1360,6 +1360,38 @@ body.night-mode .melaka-guide {
 
 .flatpickr-months .flatpickr-month {
   height: 46px !important;
+  overflow: visible !important;
+}
+
+.flatpickr-current-month {
+  left: 50% !important;
+  width: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding-top: 7px !important;
+  transform: translateX(-50%) !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month .custom-year-select,
+.flatpickr-current-month .numInputWrapper {
+  width: 112px !important;
+  min-width: 112px !important;
+}
+
+.flatpickr-current-month .numInputWrapper {
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+
+.flatpickr-current-month .numInputWrapper:hover {
+  background: transparent !important;
 }
 
 /* Month & Year dropdowns - uniform pill style */
@@ -1379,7 +1411,15 @@ body.night-mode .melaka-guide {
   transition: background 0.2s ease !important;
   height: 32px !important;
   min-width: 60px !important;
+  margin: 0 !important;
+  line-height: 32px !important;
   text-align: center !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month .custom-year-select {
+  width: 100% !important;
+  padding: 0 12px !important;
 }
 
 .flatpickr-monthDropdown-months:hover,
