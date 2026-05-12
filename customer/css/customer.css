@@ -477,7 +477,7 @@ body { font-family: 'Inter', sans-serif; background: var(--slate-50); min-height
   margin-bottom: 8px;
 }
 
-.showcase-copy p {
+.guest-hero .showcase-copy p {
   color: #1D4ED8;
   margin: 0;
   font-size: 18px;
