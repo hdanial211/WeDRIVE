@@ -12,193 +12,767 @@
   <link rel="stylesheet" href="../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../customer/css/customer.css?v=2.9.19" />
   <style>
-    /* Premium Page Styles */
-    .hero-banner {
-      background: linear-gradient(135deg, #020617 0%, #0F172A 50%, #1D4ED8 100%);
-      padding: 100px 20px 120px;
-      text-align: center;
+    .explore-page {
+      background: var(--bg-body, #F8FAFC);
+    }
+
+    .explore-hero {
       position: relative;
-      overflow: hidden;
-    }
-    .hero-banner::before {
-      content: ''; position: absolute; width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(16,185,129,0.1), transparent 70%);
-      bottom: -400px; right: -200px;
-      pointer-events: none;
-    }
-    .hero-banner h1 { color: #FFFFFF; font-size: 56px; font-weight: 800; letter-spacing: -1.5px; margin: 24px 0 16px; }
-    .hero-banner p { color: #94A3B8; font-size: 18px; max-width: 600px; margin: 0 auto; line-height: 1.6; }
-    
-    .melaka-grid {
-      max-width: 1200px;
-      margin: -60px auto 80px;
-      position: relative;
-      z-index: 10;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .melaka-card {
-      background: var(--bg-surface, #FFFFFF);
-      border: 1px solid var(--border-color, #E2E8F0);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
+      min-height: 92vh;
       display: flex;
-      flex-direction: column;
+      align-items: flex-end;
+      overflow: hidden;
+      background: #020617;
+    }
+
+    .explore-hero-media,
+    .explore-hero-media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
       height: 100%;
     }
-    .melaka-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-      border-color: var(--primary, #3B82F6);
+
+    .explore-hero-media img {
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(1.05);
     }
-    .card-icon {
-      width: 56px; height: 56px;
-      border-radius: 16px;
-      background: var(--primary-light, #EFF6FF);
-      color: var(--primary, #3B82F6);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 24px;
-      transition: all 0.3s ease;
+
+    .explore-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(2,6,23,0.90) 0%, rgba(2,6,23,0.72) 32%, rgba(2,6,23,0.32) 62%, rgba(2,6,23,0.76) 100%),
+        linear-gradient(180deg, rgba(15,23,42,0.04) 0%, rgba(15,23,42,0.12) 100%);
     }
-    .melaka-card:hover .card-icon {
-      background: var(--primary, #3B82F6);
-      color: white;
-      transform: scale(1.1);
+
+    .explore-hero::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0;
+      height: 180px;
+      background: linear-gradient(180deg, rgba(2,6,23,0) 0%, rgba(2,6,23,0.6) 100%);
     }
-    .card-icon .material-icons-round { font-size: 28px; }
-    .melaka-card h3 { color: var(--text-primary, #0F172A); font-size: 22px; margin-bottom: 12px; font-weight: 700; }
-    .melaka-card p { color: var(--text-secondary, #475569); font-size: 15px; line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
-    
-    .car-recommendation {
-      background: var(--bg-surface-2, #F8FAFC);
+
+    .explore-hero-shell {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 128px 20px 96px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 380px);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .explore-hero-copy {
+      max-width: 720px;
+    }
+
+    .explore-hero .guest-kicker {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 16px 36px rgba(2,6,23,0.18);
+      backdrop-filter: blur(10px);
+      color: #E0F2FE;
+    }
+
+    .explore-hero .guest-kicker .material-icons-round,
+    .explore-hero .guest-kicker span:last-child {
+      color: #E0F2FE;
+    }
+
+    .explore-hero h1 {
+      color: #FFFFFF;
+      font-size: clamp(44px, 6vw, 74px);
+      line-height: 0.98;
+      letter-spacing: 0;
+      margin: 22px 0 18px;
+      text-shadow: 0 16px 40px rgba(2, 6, 23, 0.34);
+    }
+
+    .explore-hero p {
+      color: rgba(226, 232, 240, 0.94);
+      font-size: 18px;
+      line-height: 1.7;
+      max-width: 620px;
+      margin: 0;
+    }
+
+    .explore-stat-row {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 720px;
+    }
+
+    .explore-stat {
+      padding: 18px 18px 16px;
+      min-height: 96px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.40);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 16px 36px rgba(2,6,23,0.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .explore-stat strong {
+      display: block;
+      color: #FFFFFF;
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .explore-stat span {
+      display: block;
+      color: rgba(226,232,240,0.84);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .explore-plan {
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 24px 60px rgba(2,6,23,0.28);
+      backdrop-filter: blur(14px);
+      color: #FFFFFF;
+    }
+
+    .explore-plan-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      color: #BFDBFE;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .explore-plan h2 {
+      margin: 16px 0 18px;
+      font-size: 24px;
+      line-height: 1.18;
+      letter-spacing: 0;
+      color: #FFFFFF;
+    }
+
+    .explore-route-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .explore-route-item {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 14px 0;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .explore-route-item:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .explore-route-item strong {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.14);
+      color: #FFFFFF;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .explore-route-item p {
+      margin: 0;
+      color: rgba(226,232,240,0.92);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .explore-plan .hero-btn-primary {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .explore-showcase {
+      position: relative;
+      z-index: 3;
+      margin-top: -48px;
+      padding: 0 0 100px;
+    }
+
+    .explore-shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .explore-section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    .explore-section-head > div {
+      max-width: 760px;
+    }
+
+    .explore-section-head h2 {
+      color: var(--text-primary, #0F172A);
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.02;
+      margin: 14px 0 0;
+      letter-spacing: 0;
+    }
+
+    .explore-section-head p {
+      color: var(--text-secondary, #475569);
+      font-size: 17px;
+      line-height: 1.75;
+      margin: 14px 0 0;
+    }
+
+    .destination-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .destination-card {
+      grid-column: span 4;
+      background: var(--bg-surface, #FFFFFF);
       border: 1px solid var(--border-color, #E2E8F0);
-      padding: 12px 16px;
-      border-radius: 12px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15,23,42,0.06);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+
+    .destination-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(15,23,42,0.12);
+      border-color: rgba(59,130,246,0.28);
+    }
+
+    .destination-card.featured {
+      grid-column: span 7;
+    }
+
+    .destination-card.tall {
+      grid-column: span 5;
+    }
+
+    .destination-card.wide {
+      grid-column: span 12;
+      display: grid;
+      grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.08fr);
+    }
+
+    .destination-media {
+      position: relative;
+      aspect-ratio: 1.16;
+      background: #CBD5E1;
+      overflow: hidden;
+    }
+
+    .destination-card.featured .destination-media {
+      aspect-ratio: 1.5;
+    }
+
+    .destination-card.tall .destination-media {
+      aspect-ratio: 1.08;
+    }
+
+    .destination-card.wide .destination-media {
+      aspect-ratio: 1.15;
+      height: auto;
+      min-height: 0;
+    }
+
+    .destination-card.wide .destination-body {
+      padding: 30px 28px;
+    }
+
+    .destination-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .destination-card:hover .destination-media img {
+      transform: scale(1.04);
+    }
+
+    .destination-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15,23,42,0.04) 0%, rgba(15,23,42,0.38) 100%);
+    }
+
+    .destination-index {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .destination-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 22px 22px 24px;
+    }
+
+    .destination-pill {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--bg-surface-2, #F8FAFC);
+      color: var(--text-secondary, #475569);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .destination-pill .material-icons-round {
+      font-size: 15px;
+      color: var(--primary, #3B82F6);
+    }
+
+    .destination-body h3 {
+      color: var(--text-primary, #0F172A);
+      font-size: 30px;
+      line-height: 1.08;
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .destination-card:not(.featured):not(.wide) .destination-body h3 {
+      font-size: 24px;
+    }
+
+    .destination-body p {
+      color: var(--text-secondary, #475569);
+      font-size: 16px;
+      line-height: 1.72;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .destination-pairing {
+      margin-top: auto;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-light, #E2E8F0);
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-top: auto;
+      gap: 14px;
     }
-    .car-recommendation .material-icons-round { color: var(--success, #10B981); }
-    .car-recommendation div { display: flex; flex-direction: column; }
-    .car-recommendation span { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary, #64748B); letter-spacing: 0.5px; }
-    .car-recommendation strong { font-size: 14px; color: var(--text-primary, #1E293B); font-weight: 600; }
 
-    @media (max-width: 992px) {
-      .melaka-grid { grid-template-columns: repeat(2, 1fr); }
+    .destination-pairing .material-icons-round {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-light, #EFF6FF);
+      color: var(--primary, #3B82F6);
+      font-size: 22px;
+      flex: 0 0 auto;
     }
+
+    .destination-pairing div {
+      min-width: 0;
+    }
+
+    .destination-pairing div span {
+      display: block;
+      color: var(--text-secondary, #64748B);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .destination-pairing div strong {
+      display: block;
+      color: var(--text-primary, #1E293B);
+      font-size: 15px;
+      line-height: 1.45;
+      margin-top: 3px;
+      font-weight: 700;
+    }
+
+    .explore-cta-band {
+      margin-top: 42px;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #0F172A 0%, #111827 48%, #1D4ED8 100%);
+      box-shadow: 0 26px 70px rgba(15,23,42,0.18);
+    }
+
+    .explore-cta-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0.56) 42%, rgba(2,6,23,0.16) 100%),
+        url('https://commons.wikimedia.org/wiki/Special:FilePath/Melaka%20(Malacca)%20River.jpg') center / cover no-repeat;
+      opacity: 0.96;
+    }
+
+    .explore-cta-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 26px;
+      align-items: center;
+      padding: 30px 34px;
+    }
+
+    .explore-cta-copy h2 {
+      color: #FFFFFF;
+      font-size: 34px;
+      line-height: 1.05;
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+
+    .explore-cta-copy p {
+      color: rgba(226,232,240,0.9);
+      font-size: 16px;
+      line-height: 1.72;
+      max-width: 680px;
+      margin: 0;
+    }
+
+    body.night-mode .destination-card,
+    body.night-mode .explore-hero,
+    body.night-mode .explore-cta-band {
+      border-color: rgba(148,163,184,0.18);
+    }
+
+    @media (max-width: 1100px) {
+      .explore-hero-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .explore-plan {
+        max-width: 560px;
+      }
+
+      .destination-card.featured,
+      .destination-card.tall,
+      .destination-card.wide,
+      .destination-card {
+        grid-column: span 6;
+      }
+
+      .destination-card.wide {
+        grid-template-columns: 1fr;
+      }
+
+      .destination-card.wide .destination-media {
+        min-height: 280px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .explore-hero {
+        min-height: auto;
+      }
+
+      .explore-hero-shell {
+        padding: 118px 18px 84px;
+      }
+
+      .explore-stat-row {
+        grid-template-columns: 1fr;
+      }
+
+      .explore-showcase {
+        margin-top: -34px;
+        padding-bottom: 80px;
+      }
+
+      .explore-section-head {
+        display: block;
+      }
+
+      .destination-card.featured,
+      .destination-card.tall,
+      .destination-card.wide,
+      .destination-card {
+        grid-column: span 12;
+      }
+
+      .explore-cta-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .explore-cta-inner .hero-btn-primary {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
     @media (max-width: 600px) {
-      .melaka-grid { grid-template-columns: 1fr; }
-      .hero-banner h1 { font-size: 42px; }
+      .explore-hero-shell {
+        padding: 108px 16px 78px;
+      }
+
+      .explore-plan {
+        padding: 20px;
+      }
+
+      .destination-body {
+        padding: 18px 18px 22px;
+      }
+
+      .explore-cta-copy h2 {
+        font-size: 28px;
+      }
     }
   </style>
 </head>
 <body class="guest-page" data-cursor-glow>
   <div id="navbar-placeholder" data-module="guest"></div>
   
-  <main class="content" style="padding: 0; max-width: 100%;">
-    <section class="hero-banner">
-      <span class="guest-kicker reveal-onload"><span class="material-icons-round">map</span> <span data-key="explore_kicker">EXPLORE MELAKA</span></span>
-      <h1 class="reveal-onload" style="animation-delay: 0.1s;" data-key="explore_title">Discover The Historic City</h1>
-      <p class="reveal-onload" style="animation-delay: 0.2s;" data-key="explore_sub">Plan your trip around Melaka's top attractions and find the perfect AI-recommended vehicle for your journey.</p>
+  <main class="explore-page">
+    <section class="explore-hero">
+      <div class="explore-hero-media" aria-hidden="true">
+        <img
+          src="https://commons.wikimedia.org/wiki/Special:FilePath/Melaka%20(Malacca)%20River.jpg"
+          alt="Melaka riverfront"
+        />
+      </div>
+      <div class="explore-hero-shell">
+        <div class="explore-hero-copy">
+          <span class="guest-kicker reveal-onload"><span class="material-icons-round">map</span> <span data-key="explore_kicker">EXPLORE MELAKA</span></span>
+          <h1 class="reveal-onload" style="animation-delay: 0.1s;" data-key="explore_title">Discover The Historic City</h1>
+          <p class="reveal-onload" style="animation-delay: 0.2s;" data-key="explore_sub">Plan your trip around Melaka's top attractions and find the perfect AI-recommended vehicle for your journey.</p>
+
+          <div class="explore-stat-row reveal-onload" style="animation-delay: 0.3s;">
+            <div class="explore-stat">
+              <strong>06</strong>
+              <span data-key="explore_stat_1">Curated stops</span>
+            </div>
+            <div class="explore-stat">
+              <strong>18:30</strong>
+              <span data-key="explore_stat_2">Golden-hour friendly</span>
+            </div>
+            <div class="explore-stat">
+              <strong>01</strong>
+              <span data-key="explore_stat_3">Drive-ready loop</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="explore-plan reveal-onload" style="animation-delay: 0.25s;">
+          <span class="explore-plan-label" data-key="explore_plan_label">Private city edit</span>
+          <h2 data-key="explore_plan_title">A polished route for first-time visitors in Melaka</h2>
+          <div class="explore-route-list">
+            <div class="explore-route-item">
+              <strong>01</strong>
+              <p data-key="explore_plan_stop_1">Jonker Walk for old-town energy</p>
+            </div>
+            <div class="explore-route-item">
+              <strong>02</strong>
+              <p data-key="explore_plan_stop_2">River Cruise for a slower evening view</p>
+            </div>
+            <div class="explore-route-item">
+              <strong>03</strong>
+              <p data-key="explore_plan_stop_3">Klebang Beach for a soft sunset finish</p>
+            </div>
+          </div>
+          <a href="../../guest/pages/guest.html" class="hero-btn-primary">
+            <span class="material-icons-round">search</span>
+            <span data-key="explore_cta_btn">Browse Available Cars</span>
+          </a>
+        </aside>
+      </div>
     </section>
 
-    <div class="melaka-grid">
-      <!-- Card 1 -->
-      <div class="melaka-card reveal-on-scroll">
-        <div class="card-icon"><span class="material-icons-round">storefront</span></div>
-        <h3 data-key="explore_card_1_title">Jonker Walk</h3>
-        <p data-key="explore_card_1_desc">A bustling heritage street famous for its antique shops, cafes, local street food, and vibrant weekend night market right in the heart of Melaka.</p>
-        <div class="car-recommendation">
-          <span class="material-icons-round">electric_car</span>
+    <section class="explore-showcase">
+      <div class="explore-shell">
+        <div class="explore-section-head">
           <div>
-            <span data-key="explore_card_1_best">Best vehicle choice</span>
-            <strong data-key="explore_card_1_car">Compact City Car</strong>
+            <span class="section-eyebrow" data-key="explore_section_label">Signature Highlights</span>
+            <h2 data-key="explore_section_title">A more exclusive way to explore Melaka</h2>
+            <p data-key="explore_section_sub">Each stop is paired with the kind of car that suits the mood, pace, and roads around it.</p>
           </div>
         </div>
-      </div>
-      
-      <!-- Card 2 -->
-      <div class="melaka-card reveal-on-scroll" data-delay="100">
-        <div class="card-icon"><span class="material-icons-round">directions_boat</span></div>
-        <h3 data-key="explore_card_2_title">Melaka River Cruise</h3>
-        <p data-key="explore_card_2_desc">Take a relaxing 45-minute cruise along the river to see stunning murals, illuminated bridges, and historic kampungs from a unique perspective.</p>
-        <div class="car-recommendation">
-          <span class="material-icons-round">airport_shuttle</span>
-          <div>
-            <span data-key="explore_card_2_best">Best vehicle choice</span>
-            <strong data-key="explore_card_2_car">Family MPV / Van</strong>
-          </div>
-        </div>
-      </div>
 
-      <!-- Card 3 -->
-      <div class="melaka-card reveal-on-scroll" data-delay="200">
-        <div class="card-icon"><span class="material-icons-round">museum</span></div>
-        <h3 data-key="explore_card_3_title">Stadthuys & Red Square</h3>
-        <p data-key="explore_card_3_desc">The iconic Dutch Square featuring the historic Stadthuys, Christ Church, and various museums. A must-visit spot for photography and history lovers.</p>
-        <div class="car-recommendation">
-          <span class="material-icons-round">directions_car</span>
-          <div>
-            <span data-key="explore_card_3_best">Best vehicle choice</span>
-            <strong data-key="explore_card_3_car">Comfort Sedan</strong>
-          </div>
-        </div>
-      </div>
+        <div class="destination-grid">
+          <article class="destination-card featured">
+            <div class="destination-media">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Jonker%20Street%20Night%20Market%20in%20Melaka,%20Malaysia%20-%2053899340002.jpg" alt="Jonker Walk night market" loading="eager" />
+              <span class="destination-index">01</span>
+            </div>
+            <div class="destination-body">
+              <span class="destination-pill"><span class="material-icons-round">storefront</span><span data-key="explore_pill_1">Melaka Core</span></span>
+              <h3 data-key="explore_card_1_title">Jonker Walk</h3>
+              <p data-key="explore_card_1_desc">A bustling heritage street famous for its antique shops, cafes, local street food, and vibrant weekend night market.</p>
+              <div class="destination-pairing">
+                <span class="material-icons-round">electric_car</span>
+                <div>
+                  <span data-key="explore_card_1_best">Best vehicle choice</span>
+                  <strong data-key="explore_card_1_car">Compact City Car</strong>
+                </div>
+              </div>
+            </div>
+          </article>
 
-      <!-- Card 4 -->
-      <div class="melaka-card reveal-on-scroll">
-        <div class="card-icon"><span class="material-icons-round">beach_access</span></div>
-        <h3 data-key="explore_card_4_title">Klebang Beach</h3>
-        <p data-key="explore_card_4_desc">A perfect spot for a relaxing evening drive to watch the sunset, famous for its original Klebang Coconut Shake and scenic coastal views.</p>
-        <div class="car-recommendation">
-          <span class="material-icons-round">local_taxi</span>
-          <div>
-            <span data-key="explore_card_4_best">Best vehicle choice</span>
-            <strong data-key="explore_card_4_car">Premium SUV</strong>
-          </div>
-        </div>
-      </div>
+          <article class="destination-card tall">
+            <div class="destination-media">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Melaka%20River%20Cruise.jpg" alt="Melaka River Cruise" loading="lazy" />
+              <span class="destination-index">02</span>
+            </div>
+            <div class="destination-body">
+              <span class="destination-pill"><span class="material-icons-round">directions_boat</span><span data-key="explore_pill_2">Waterfront</span></span>
+              <h3 data-key="explore_card_2_title">Melaka River Cruise</h3>
+              <p data-key="explore_card_2_desc">Take a relaxing 45-minute cruise along the river to see stunning murals, illuminated bridges, and historic kampungs.</p>
+              <div class="destination-pairing">
+                <span class="material-icons-round">airport_shuttle</span>
+                <div>
+                  <span data-key="explore_card_2_best">Best vehicle choice</span>
+                  <strong data-key="explore_card_2_car">Family MPV / Van</strong>
+                </div>
+              </div>
+            </div>
+          </article>
 
-      <!-- Card 5 -->
-      <div class="melaka-card reveal-on-scroll" data-delay="100">
-        <div class="card-icon"><span class="material-icons-round">fort</span></div>
-        <h3 data-key="explore_card_5_title">A'Famosa Fort</h3>
-        <p data-key="explore_card_5_desc">Explore the Porta de Santiago, one of the oldest surviving European architectural remains in Southeast Asia, dating back to 1511.</p>
-        <div class="car-recommendation">
-          <span class="material-icons-round">electric_car</span>
-          <div>
-            <span data-key="explore_card_5_best">Best vehicle choice</span>
-            <strong data-key="explore_card_5_car">Compact City Car</strong>
-          </div>
-        </div>
-      </div>
+          <article class="destination-card">
+            <div class="destination-media">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Stadhuys%20melaka.jpg" alt="Stadthuys and Red Square" loading="lazy" />
+              <span class="destination-index">03</span>
+            </div>
+            <div class="destination-body">
+              <span class="destination-pill"><span class="material-icons-round">museum</span><span data-key="explore_pill_3">UNESCO District</span></span>
+              <h3 data-key="explore_card_3_title">Stadthuys & Red Square</h3>
+              <p data-key="explore_card_3_desc">The iconic Dutch Square featuring the historic Stadthuys, Christ Church, and various museums. Perfect for photos.</p>
+              <div class="destination-pairing">
+                <span class="material-icons-round">directions_car</span>
+                <div>
+                  <span data-key="explore_card_3_best">Best vehicle choice</span>
+                  <strong data-key="explore_card_3_car">Comfort Sedan</strong>
+                </div>
+              </div>
+            </div>
+          </article>
 
-      <!-- Card 6 -->
-      <div class="melaka-card reveal-on-scroll" data-delay="200">
-        <div class="card-icon"><span class="material-icons-round">landscape</span></div>
-        <h3 data-key="explore_card_6_title">Taming Sari Tower</h3>
-        <p data-key="explore_card_6_desc">Enjoy a breathtaking 360-degree panoramic view of Melaka city from a height of 80 meters in this revolving gyro tower.</p>
-        <div class="car-recommendation">
-          <span class="material-icons-round">directions_car</span>
-          <div>
-            <span data-key="explore_card_6_best">Best vehicle choice</span>
-            <strong data-key="explore_card_6_car">Comfort Sedan</strong>
-          </div>
+          <article class="destination-card">
+            <div class="destination-media">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Klebang%20Beach.JPG" alt="Klebang Beach" loading="lazy" />
+              <span class="destination-index">04</span>
+            </div>
+            <div class="destination-body">
+              <span class="destination-pill"><span class="material-icons-round">beach_access</span><span data-key="explore_pill_4">Coastal Sunset</span></span>
+              <h3 data-key="explore_card_4_title">Klebang Beach</h3>
+              <p data-key="explore_card_4_desc">A perfect spot for a relaxing evening drive to watch the sunset, famous for its original Klebang Coconut Shake.</p>
+              <div class="destination-pairing">
+                <span class="material-icons-round">local_taxi</span>
+                <div>
+                  <span data-key="explore_card_4_best">Best vehicle choice</span>
+                  <strong data-key="explore_card_4_car">Premium SUV</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="destination-card">
+            <div class="destination-media">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20Famosa%20Melaka.JPG" alt="A'Famosa Fort" loading="lazy" />
+              <span class="destination-index">05</span>
+            </div>
+            <div class="destination-body">
+              <span class="destination-pill"><span class="material-icons-round">fort</span><span data-key="explore_pill_5">Historic Landmark</span></span>
+              <h3 data-key="explore_card_5_title">A'Famosa Fort</h3>
+              <p data-key="explore_card_5_desc">Explore the Porta de Santiago, one of the oldest surviving European architectural remains in Southeast Asia.</p>
+              <div class="destination-pairing">
+                <span class="material-icons-round">electric_car</span>
+                <div>
+                  <span data-key="explore_card_5_best">Best vehicle choice</span>
+                  <strong data-key="explore_card_5_car">Compact City Car</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="destination-card wide">
+            <div class="destination-media">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Taming%20Sari%20Tower.JPG" alt="Taming Sari Tower" loading="lazy" />
+              <span class="destination-index">06</span>
+            </div>
+            <div class="destination-body">
+              <span class="destination-pill"><span class="material-icons-round">landscape</span><span data-key="explore_pill_6">City Outlook</span></span>
+              <h3 data-key="explore_card_6_title">Taming Sari Tower</h3>
+              <p data-key="explore_card_6_desc">Enjoy a breathtaking 360-degree panoramic view of Melaka city from a height of 80 meters in this revolving gyro tower.</p>
+              <div class="destination-pairing">
+                <span class="material-icons-round">directions_car</span>
+                <div>
+                  <span data-key="explore_card_6_best">Best vehicle choice</span>
+                  <strong data-key="explore_card_6_car">Comfort Sedan</strong>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
+
+        <section class="explore-cta-band">
+          <div class="explore-cta-inner">
+            <div class="explore-cta-copy">
+              <h2 data-key="explore_footer_title">Ready to match the route with the right car?</h2>
+              <p data-key="explore_footer_sub">Open the guest showroom and pick a car that fits your Melaka plan before you sign in to continue.</p>
+            </div>
+            <a href="../../guest/pages/guest.html" class="hero-btn-primary">
+              <span class="material-icons-round">directions_car</span>
+              <span data-key="explore_cta_btn">Browse Available Cars</span>
+            </a>
+          </div>
+        </section>
       </div>
-    </div>
-    
-    <div style="text-align:center; padding: 20px 0 80px;">
-      <a href="../../guest/pages/guest.html" class="hero-btn-primary" style="padding: 16px 32px; font-size: 16px;">
-        <span class="material-icons-round">search</span>
-        <span data-key="explore_cta_btn">Browse Available Cars</span>
-      </a>
-    </div>
+    </section>
   </main>
 
   <div id="footer-placeholder"></div>
