@@ -28,6 +28,7 @@
       locked: 'Guest preview',
       aiMatch: 'AI match',
       plate: 'Plate',
+      plateHidden: 'Plate revealed after payment',
       color: 'Color',
       reviews: 'reviews',
       resultsPrefix: 'Showing',
@@ -46,6 +47,7 @@
       locked: 'Pratonton tetamu',
       aiMatch: 'Padanan AI',
       plate: 'Plat',
+      plateHidden: 'Plat dipaparkan selepas bayaran',
       color: 'Warna',
       reviews: 'ulasan',
       resultsPrefix: 'Menunjukkan',
@@ -88,6 +90,10 @@
   function statusText(car) {
     var key = statusKey(car);
     return key === 'available' ? t('available') : t('rented');
+  }
+
+  function shouldRevealPlate() {
+    return window.__REVEAL_PLATE__ === true;
   }
 
   function setText(id, value) {
@@ -315,6 +321,9 @@
       var status = statusKey(car);
       var img = imagePath(car);
       var buttonText = window.__GUEST_MODE__ ? t('signInToBook') : t('bookNow');
+      var plateText = shouldRevealPlate() && safePlate
+        ? escapeHtml(t('plate')) + ': ' + safePlate
+        : escapeHtml(t('plateHidden'));
 
       return [
         '<div class="car-card" onclick="bookCar(' + Number(car.id) + ')">',
@@ -332,7 +341,7 @@
         '    </div>',
         '    <h3>' + safeName + '</h3>',
         '    <div class="car-meta">',
-        '      <span>' + escapeHtml(t('plate')) + ': ' + safePlate + '</span>',
+        '      <span>' + plateText + '</span>',
         '      <span>' + escapeHtml(t('color')) + ': ' + safeColor + '</span>',
         '    </div>',
         '    <div class="car-specs">',
