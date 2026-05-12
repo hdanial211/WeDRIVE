@@ -1375,13 +1375,16 @@ body.night-mode .melaka-guide {
 
 .flatpickr-current-month .numInputWrapper {
   width: auto !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .flatpickr-monthDropdown-months,
 .custom-year-select {
   font-weight: 700 !important;
   font-size: 16px !important;
-  padding: 6px 10px !important;
+  padding: 6px 12px !important;
   border-radius: 8px !important;
   background: transparent !important;
   color: #1e293b !important;
@@ -1391,10 +1394,14 @@ body.night-mode .melaka-guide {
   border: 1px solid transparent !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
-  margin: 0 !important;
-  height: auto !important;
+  margin: 0 4px !important;
+  height: 32px !important;
   line-height: 1 !important;
   text-align: center;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .flatpickr-monthDropdown-months:hover,
