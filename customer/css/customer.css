@@ -1341,11 +1341,16 @@ body.night-mode .melaka-guide {
    FLATPICKR OVERRIDES (WeDRIVE Theme)
    ================================================== */
 .flatpickr-calendar {
+  --fp-body-width: 307.875px;
   border: none !important;
   border-radius: 16px !important;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.06) !important;
   padding: 8px !important;
   font-family: 'Inter', sans-serif !important;
+  width: calc(var(--fp-body-width) + 16px) !important;
+  min-width: calc(var(--fp-body-width) + 16px) !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
 }
 
 .flatpickr-calendar:before,
@@ -1411,4 +1416,22 @@ body.night-mode .melaka-guide {
 
 .flatpickr-innerContainer {
   margin-top: 4px;
+  overflow: visible !important;
+}
+
+.flatpickr-rContainer,
+.flatpickr-weekdays,
+.flatpickr-days,
+.dayContainer {
+  width: var(--fp-body-width) !important;
+  min-width: var(--fp-body-width) !important;
+  max-width: var(--fp-body-width) !important;
+}
+
+@media (max-width: 360px) {
+  .flatpickr-calendar {
+    padding: 0 !important;
+    width: var(--fp-body-width) !important;
+    min-width: var(--fp-body-width) !important;
+  }
 }
