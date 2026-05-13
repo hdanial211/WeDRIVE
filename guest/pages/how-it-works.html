@@ -75,6 +75,7 @@
       font-weight: 900;
       line-height: 0.98;
       letter-spacing: 0;
+      text-wrap: balance;
     }
 
     .how-copy {
@@ -149,7 +150,7 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(470px, 1.1fr);
+      grid-template-columns: minmax(0, 1.04fr) minmax(500px, 0.96fr);
       align-items: center;
       gap: 64px;
       padding: 138px 0 110px;
@@ -168,11 +169,13 @@
 
     .hero-title {
       margin: 20px 0 0;
+      max-width: 680px;
       color: #FFFFFF;
-      font-size: 6.6rem;
+      font-size: clamp(5.1rem, 7vw, 6.2rem);
       font-weight: 900;
       line-height: 0.92;
       letter-spacing: 0;
+      text-wrap: balance;
       text-shadow: 0 22px 54px rgba(2, 6, 23, 0.30);
     }
 
@@ -544,6 +547,7 @@
       font-weight: 900;
       line-height: 1.08;
       letter-spacing: 0;
+      text-wrap: balance;
     }
 
     .quote-panel p {
@@ -606,6 +610,7 @@
       font-weight: 900;
       line-height: 0.98;
       letter-spacing: 0;
+      text-wrap: balance;
     }
 
     .cta-panel p {
