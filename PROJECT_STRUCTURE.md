@@ -58,6 +58,11 @@ AI CAR RENTAL SYSTEM/
     +-- components/
     |   +-- sidebar-admin.html  # Admin Sidebar
     |   +-- footer.html         # Footer yang diguna semua page
+    +-- model/
+    |   +-- 2023 BMW 320i M Sport 2.0/
+    |       +-- full-res/       # 200 frame BMW exterior 360 dalam resolusi asal
+    |       +-- low-res/        # 200 frame BMW exterior 360 untuk viewer web ringan
+    |       +-- source.json     # Metadata sumber dan pattern frame BMW
     +-- css/
     |   +-- theme_day.css       # Tema Siang
     |   +-- theme_night.css     # Tema Malam

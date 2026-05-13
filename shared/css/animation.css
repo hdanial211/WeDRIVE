@@ -1108,6 +1108,29 @@ canvas[data-motion-canvas] {
   text-transform: uppercase;
 }
 
+.premium-vehicle-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.premium-vehicle-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.68);
+  border: 1px solid rgba(148,163,184,0.20);
+  box-shadow: 0 14px 28px rgba(15,23,42,0.06);
+  backdrop-filter: blur(12px);
+  color: #475569;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
 .premium-vehicle-colours {
   display: flex;
   flex-wrap: wrap;
@@ -1233,6 +1256,15 @@ canvas[data-motion-canvas] {
   touch-action: pan-y;
 }
 
+.vehicle-sequence-stage {
+  width: min(500px, 90%);
+  height: 300px;
+  perspective: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .vehicle-3d-stage::before {
   content: '';
   position: absolute;
@@ -1244,6 +1276,34 @@ canvas[data-motion-canvas] {
   border-radius: 999px;
   background: linear-gradient(90deg, rgba(96,165,250,0.18) 0%, rgba(250,204,21,0.54) 50%, rgba(96,165,250,0.18) 100%);
   box-shadow: 0 12px 30px rgba(37,99,235,0.18);
+}
+
+.vehicle-sequence-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 24px;
+  opacity: 0;
+  transform: translateY(10px) scale(0.985);
+  transition: opacity 0.36s ease, transform 0.36s cubic-bezier(.22,1,.36,1);
+  background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(241,245,249,0.94) 100%);
+  box-shadow:
+    0 18px 46px rgba(15,23,42,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.78);
+  filter: drop-shadow(0 28px 48px rgba(15,23,42,0.14));
+}
+
+.vehicle-sequence-stage.is-ready .vehicle-sequence-canvas {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.has-real-sequence .vehicle-floor {
+  opacity: 0.22;
+}
+
+.has-real-sequence .vehicle-shadow {
+  opacity: 0.08;
 }
 
 .vehicle-3d-scene {
@@ -1522,6 +1582,10 @@ canvas[data-motion-canvas] {
     grid-template-columns: 1fr;
   }
 
+  .premium-vehicle-badges {
+    gap: 8px;
+  }
+
   .premium-vehicle-view {
     min-height: 430px;
   }
@@ -1535,6 +1599,12 @@ canvas[data-motion-canvas] {
     width: min(320px, 82vw);
     height: 210px;
     transform: scale(0.88);
+  }
+
+  .vehicle-sequence-stage {
+    width: min(360px, 86vw);
+    height: 236px;
+    transform: none;
   }
 }
 

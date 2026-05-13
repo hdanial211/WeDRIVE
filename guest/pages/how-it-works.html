@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
-  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.12.0" />
+  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.13.0" />
   <link rel="stylesheet" href="../../customer/css/customer.css?v=2.9.19" />
   <style>
     :root {
@@ -799,12 +799,9 @@
             <div class="premium-vehicle-stat premium-hover" data-cursor="hover"><strong data-key="how_3d_stat3_value">0</strong><span data-key="how_3d_stat3_label">Sensitive details before payment</span></div>
           </div>
 
-          <div class="premium-vehicle-colours reveal-on-scroll" data-delay="220">
-            <span data-key="how_3d_colour">Preview colour</span>
-            <button class="vehicle-swatch is-active" type="button" aria-label="Pearl blue" data-vehicle-color data-accent="#60A5FA" data-accent-rgb="96,165,250" data-body="#F8FBFF" data-body-dark="#AFC5E8" data-glass="rgba(37,99,235,0.22)" style="--swatch:linear-gradient(135deg,#F8FBFF 0%,#60A5FA 100%)" data-cursor="media"></button>
-            <button class="vehicle-swatch" type="button" aria-label="Graphite" data-vehicle-color data-accent="#38BDF8" data-accent-rgb="56,189,248" data-body="#CBD5E1" data-body-dark="#64748B" data-glass="rgba(14,165,233,0.24)" style="--swatch:linear-gradient(135deg,#E2E8F0 0%,#334155 100%)" data-cursor="media"></button>
-            <button class="vehicle-swatch" type="button" aria-label="Royal blue" data-vehicle-color data-accent="#2563EB" data-accent-rgb="37,99,235" data-body="#3B82F6" data-body-dark="#1E40AF" data-glass="rgba(219,234,254,0.28)" style="--swatch:linear-gradient(135deg,#93C5FD 0%,#1D4ED8 100%)" data-cursor="media"></button>
-            <button class="vehicle-swatch" type="button" aria-label="Gold line" data-vehicle-color data-accent="#FACC15" data-accent-rgb="250,204,21" data-body="#FFFFFF" data-body-dark="#D6E4F8" data-glass="rgba(37,99,235,0.20)" style="--swatch:linear-gradient(135deg,#FFFFFF 0%,#FACC15 100%)" data-cursor="media"></button>
+          <div class="premium-vehicle-badges reveal-on-scroll" data-delay="220">
+            <span class="premium-vehicle-badge">2023 BMW 320i M Sport 2.0</span>
+            <span class="premium-vehicle-badge" data-key="how_3d_badge_quality">High-res 360 capture</span>
           </div>
         </div>
 
@@ -813,18 +810,20 @@
             <div class="vehicle-orbit" aria-hidden="true"></div>
             <div class="vehicle-floor" aria-hidden="true"></div>
             <div class="vehicle-shadow" aria-hidden="true"></div>
-            <div class="vehicle-3d-stage" data-vehicle-stage data-cursor="drag" aria-label="Interactive 3D car preview">
-              <div class="vehicle-3d-scene" data-vehicle-scene>
-                <div class="vehicle-model" aria-hidden="true">
-                  <div class="vehicle-body">
-                    <span class="vehicle-face vehicle-body-front"></span><span class="vehicle-face vehicle-body-back"></span><span class="vehicle-face vehicle-body-top"></span><span class="vehicle-face vehicle-body-bottom"></span><span class="vehicle-face vehicle-body-left"></span><span class="vehicle-face vehicle-body-right"></span>
-                  </div>
-                  <div class="vehicle-cabin">
-                    <span class="vehicle-face vehicle-cabin-front"></span><span class="vehicle-face vehicle-cabin-back"></span><span class="vehicle-face vehicle-cabin-top"></span><span class="vehicle-face vehicle-cabin-left"></span><span class="vehicle-face vehicle-cabin-right"></span>
-                  </div>
-                  <span class="vehicle-lightbar"></span><span class="vehicle-wheel vehicle-wheel-front-left"></span><span class="vehicle-wheel vehicle-wheel-front-right"></span><span class="vehicle-wheel vehicle-wheel-back-left"></span><span class="vehicle-wheel vehicle-wheel-back-right"></span>
-                </div>
-              </div>
+            <div class="vehicle-3d-stage vehicle-sequence-stage" data-vehicle-stage data-cursor="drag" aria-label="Interactive 360 preview of 2023 BMW 320i M Sport 2.0">
+              <canvas
+                class="vehicle-sequence-canvas"
+                data-vehicle-sequence
+                data-frame-start="0"
+                data-frame-end="199"
+                data-frame-pad="3"
+                data-frame-fit="contain"
+                data-frame-zoom="1.16"
+                data-frame-offset-y="-0.018"
+                data-frame-src-low="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/low-res/frame-{padded}.jpg"
+                data-frame-src-full="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/full-res/frame-{padded}.jpg"
+                aria-label="Interactive 360 preview of 2023 BMW 320i M Sport 2.0"
+              ></canvas>
             </div>
             <div class="vehicle-controls">
               <button class="vehicle-control is-active" type="button" data-vehicle-auto aria-pressed="true" data-cursor="magnetic" data-ripple data-key="how_3d_auto">Auto</button>
@@ -933,7 +932,7 @@
   <script src="../../shared/js/api.js"></script>
   <script>window.__GUEST_MODE__ = true;</script>
   <script src="../../shared/js/anime.min.js"></script>
-  <script src="../../shared/js/animate.js?v=2.12.0"></script>
+  <script src="../../shared/js/animate.js?v=2.13.0"></script>
   <script src="../../shared/js/main.js"></script>
 </body>
 </html>

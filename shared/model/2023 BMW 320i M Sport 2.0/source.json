@@ -1,0 +1,20 @@
+{
+  "model": "2023 BMW 320i M Sport 2.0",
+  "source_viewer": "https://cdn.impel.io/spincar-static/20190909/?_=0e67224d769cec#!customer=Carsome!vin=pm138fv060y623641!disableautospin#!n=true!hideExpandBtn!region=eu",
+  "api_endpoint": "https://api-eu.impel.io/spin/Carsome/pm138fv060y623641?v=20160212",
+  "cdn_prefix": "https://cdn.impel.io/swipetospin-viewers/Carsome/pm138fv060y623641/20260413020404.PW42HLFC/",
+  "frame_start": 0,
+  "frame_end": 199,
+  "frame_count": 200,
+  "frame_pad": 3,
+  "full_res_pattern": "full-res/frame-{padded}.jpg",
+  "low_res_pattern": "low-res/frame-{padded}.jpg",
+  "full_res_size": {
+    "width": 3000,
+    "height": 1688
+  },
+  "low_res_size": {
+    "width": 640,
+    "height": 360
+  }
+}

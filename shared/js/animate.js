@@ -670,6 +670,68 @@
       .replace('{padded}', padded);
   }
 
+  function drawImageToCanvas(canvas, img, options) {
+    var ctx = canvas.getContext('2d');
+    if (!ctx || !img) return;
+
+    resizeCanvas(canvas);
+
+    var contain = false;
+    var zoom = 1;
+    var offsetX = 0;
+    var offsetY = 0;
+
+    if (typeof options === 'object' && options) {
+      contain = !!options.contain;
+      zoom = Math.max(0.2, toNumber(options.zoom, 1));
+      offsetX = toNumber(options.offsetX, 0);
+      offsetY = toNumber(options.offsetY, 0);
+    } else {
+      contain = !!options;
+    }
+
+    var canvasRatio = canvas.width / canvas.height;
+    var imageRatio = img.naturalWidth / img.naturalHeight;
+    var width = canvas.width;
+    var height = canvas.height;
+    var x = 0;
+    var y = 0;
+
+    if (contain) {
+      if (imageRatio > canvasRatio) {
+        width = canvas.width;
+        height = width / imageRatio;
+        y = (canvas.height - height) / 2;
+      } else {
+        height = canvas.height;
+        width = height * imageRatio;
+        x = (canvas.width - width) / 2;
+      }
+    } else if (imageRatio > canvasRatio) {
+      height = canvas.height;
+      width = height * imageRatio;
+      x = (canvas.width - width) / 2;
+    } else {
+      width = canvas.width;
+      height = width / imageRatio;
+      y = (canvas.height - height) / 2;
+    }
+
+    if (Math.abs(zoom - 1) > 0.0001 || offsetX || offsetY) {
+      var baseWidth = width;
+      var baseHeight = height;
+      width = baseWidth * zoom;
+      height = baseHeight * zoom;
+      x -= (width - baseWidth) / 2;
+      y -= (height - baseHeight) / 2;
+      x += canvas.width * offsetX;
+      y += canvas.height * offsetY;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, x, y, width, height);
+  }
+
   function initImageSequences() {
     var canvases = Array.prototype.slice.call(document.querySelectorAll('canvas[data-image-sequence]'));
     if (!canvases.length) return;
@@ -689,52 +751,6 @@
       var loaded = 0;
       var currentFrame = -1;
 
-      function resizeCanvas() {
-        var rect = canvas.getBoundingClientRect();
-        var ratio = window.devicePixelRatio || 1;
-        var width = Math.max(1, Math.round(rect.width * ratio));
-        var height = Math.max(1, Math.round(rect.height * ratio));
-
-        if (canvas.width !== width || canvas.height !== height) {
-          canvas.width = width;
-          canvas.height = height;
-        }
-      }
-
-      function drawImageCover(img) {
-        resizeCanvas();
-
-        var canvasRatio = canvas.width / canvas.height;
-        var imageRatio = img.naturalWidth / img.naturalHeight;
-        var width = canvas.width;
-        var height = canvas.height;
-        var x = 0;
-        var y = 0;
-
-        if (contain) {
-          if (imageRatio > canvasRatio) {
-            width = canvas.width;
-            height = width / imageRatio;
-            y = (canvas.height - height) / 2;
-          } else {
-            height = canvas.height;
-            width = height * imageRatio;
-            x = (canvas.width - width) / 2;
-          }
-        } else if (imageRatio > canvasRatio) {
-          height = canvas.height;
-          width = height * imageRatio;
-          x = (canvas.width - width) / 2;
-        } else {
-          width = canvas.width;
-          height = width / imageRatio;
-          y = (canvas.height - height) / 2;
-        }
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, x, y, width, height);
-      }
-
       function updateFrame() {
         var rect = canvas.getBoundingClientRect();
         var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -747,7 +763,7 @@
 
         if (!frame || !frame.complete || frameIndex === currentFrame) return;
         currentFrame = frameIndex;
-        drawImageCover(frame);
+        drawImageToCanvas(canvas, frame, contain);
       }
 
       for (var index = start; index <= end; index += 1) {
@@ -946,13 +962,290 @@
     requestTick();
   }
 
+  function initVehicleSequenceViewer(viewer, stage, canvas) {
+    var lowPattern = canvas.dataset.frameSrcLow || canvas.dataset.frameSrc;
+    var fullPattern = canvas.dataset.frameSrcFull || '';
+    if (!lowPattern) return false;
+
+    var start = parseInt(canvas.dataset.frameStart || '0', 10);
+    var end = parseInt(canvas.dataset.frameEnd || canvas.dataset.frames || '0', 10);
+    var pad = parseInt(canvas.dataset.framePad || '3', 10);
+    var contain = canvas.dataset.frameFit === 'contain';
+    var drawOptions = {
+      contain: contain,
+      zoom: toNumber(canvas.dataset.frameZoom, 1),
+      offsetX: toNumber(canvas.dataset.frameOffsetX, 0),
+      offsetY: toNumber(canvas.dataset.frameOffsetY, 0)
+    };
+    var frameCount = Math.max(0, end - start + 1);
+    if (!frameCount) return false;
+
+    var lowFrames = new Array(frameCount);
+    var fullFrames = new Array(frameCount);
+    var currentFrame = -1;
+    var currentQuality = '';
+    var frameFloat = 0;
+    var targetFrame = 0;
+    var autoSpin = viewer.dataset.auto !== 'false';
+    var isDragging = false;
+    var startX = 0;
+    var startFrame = 0;
+    var lastX = 0;
+    var velocity = 0;
+    var rafId = null;
+    var fullPreloadIndex = 0;
+    var fullPreloadTimer = null;
+    var lowLoaded = 0;
+
+    function wrapFrame(value) {
+      value = value % frameCount;
+      return value < 0 ? value + frameCount : value;
+    }
+
+    function closestDelta(from, to) {
+      var delta = to - from;
+      if (Math.abs(delta) > frameCount / 2) {
+        delta -= Math.sign(delta) * frameCount;
+      }
+      return delta;
+    }
+
+    function frameUrl(pattern, index) {
+      return buildFrameUrl(pattern, start + index, pad);
+    }
+
+    function setAuto(enabled) {
+      autoSpin = enabled;
+      viewer.classList.toggle('is-auto-spin', enabled);
+
+      var autoButton = viewer.querySelector('[data-vehicle-auto]');
+      if (autoButton) {
+        autoButton.classList.toggle('is-active', enabled);
+        autoButton.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+      }
+    }
+
+    function updateAngleButtons(activeAngle) {
+      Array.prototype.slice.call(viewer.querySelectorAll('[data-vehicle-angle]')).forEach(function (button) {
+        var isActive = button.getAttribute('data-vehicle-angle') === activeAngle;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    function loadFrame(store, pattern, index, callback) {
+      if (!pattern) return;
+
+      var existing = store[index];
+      if (existing) {
+        if (existing.complete && callback) callback(existing, index);
+        return;
+      }
+
+      var image = new Image();
+      image.decoding = 'async';
+      image.onload = function () {
+        if (store === lowFrames) {
+          lowLoaded += 1;
+          canvas.dataset.sequenceLoaded = String(lowLoaded);
+        }
+
+        if (callback) callback(image, index);
+      };
+      image.onerror = function () {
+        store[index] = null;
+      };
+      store[index] = image;
+      image.src = frameUrl(pattern, index);
+    }
+
+    function ensureFullFrame(index) {
+      if (!fullPattern) return;
+
+      loadFrame(fullFrames, fullPattern, index, function () {
+        if (currentFrame === index) {
+          drawFrame(index, true);
+        }
+      });
+    }
+
+    function drawFrame(index, force) {
+      index = wrapFrame(index);
+
+      var high = fullFrames[index];
+      var low = lowFrames[index];
+      var image = high && high.complete ? high : low && low.complete ? low : null;
+      var quality = high && high.complete ? 'full' : low && low.complete ? 'low' : '';
+
+      if (!image) return false;
+      if (!force && currentFrame === index && currentQuality === quality) return true;
+
+      currentFrame = index;
+      currentQuality = quality;
+      canvas.dataset.frameIndex = String(index);
+      canvas.dataset.frameQuality = quality;
+      stage.classList.add('is-ready');
+      viewer.classList.add('has-real-sequence');
+      drawImageToCanvas(canvas, image, drawOptions);
+
+      if (quality !== 'full') {
+        ensureFullFrame(index);
+      }
+
+      return true;
+    }
+
+    function preloadFullResolution() {
+      if (!fullPattern) return;
+      if (fullPreloadTimer) {
+        window.clearTimeout(fullPreloadTimer);
+      }
+
+      function step() {
+        while (fullPreloadIndex < frameCount && fullFrames[fullPreloadIndex]) {
+          fullPreloadIndex += 1;
+        }
+
+        if (fullPreloadIndex >= frameCount) {
+          fullPreloadTimer = null;
+          return;
+        }
+
+        var index = fullPreloadIndex;
+        loadFrame(fullFrames, fullPattern, index, function () {
+          if (currentFrame === index) {
+            drawFrame(index, true);
+          }
+        });
+        fullPreloadIndex += 1;
+        fullPreloadTimer = window.setTimeout(step, 90);
+      }
+
+      fullPreloadTimer = window.setTimeout(step, 320);
+    }
+
+    function render() {
+      if (autoSpin && !prefersReducedMotion) {
+        targetFrame = wrapFrame(targetFrame + 0.18);
+      }
+
+      var delta = closestDelta(frameFloat, targetFrame);
+      frameFloat = wrapFrame(frameFloat + (delta * 0.16));
+      drawFrame(Math.round(frameFloat), false);
+      rafId = window.requestAnimationFrame(render);
+    }
+
+    stage.addEventListener('pointerdown', function (event) {
+      isDragging = true;
+      startX = event.clientX;
+      startFrame = targetFrame;
+      lastX = event.clientX;
+      velocity = 0;
+      setAuto(false);
+      updateAngleButtons('');
+      viewer.classList.add('is-dragging');
+
+      if (stage.setPointerCapture) {
+        stage.setPointerCapture(event.pointerId);
+      }
+    });
+
+    stage.addEventListener('pointermove', function (event) {
+      if (!isDragging) return;
+
+      var delta = event.clientX - startX;
+      velocity = event.clientX - lastX;
+      lastX = event.clientX;
+      targetFrame = wrapFrame(startFrame - (delta * 0.18));
+    });
+
+    function endDrag(event) {
+      if (!isDragging) return;
+      isDragging = false;
+      viewer.classList.remove('is-dragging');
+
+      if (stage.hasPointerCapture && stage.hasPointerCapture(event.pointerId)) {
+        stage.releasePointerCapture(event.pointerId);
+      }
+
+      var momentum = -velocity * 0.08;
+      function glide() {
+        momentum *= 0.94;
+        targetFrame = wrapFrame(targetFrame + momentum);
+        if (Math.abs(momentum) > 0.02) {
+          window.requestAnimationFrame(glide);
+        }
+      }
+
+      glide();
+    }
+
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+
+    Array.prototype.slice.call(viewer.querySelectorAll('[data-vehicle-angle]')).forEach(function (button) {
+      button.addEventListener('click', function () {
+        var angle = button.getAttribute('data-vehicle-angle');
+        var values = {
+          front: 0,
+          side: Math.round(frameCount * 0.25),
+          rear: Math.round(frameCount * 0.5)
+        };
+
+        setAuto(false);
+        targetFrame = wrapFrame(values[angle] || 0);
+        updateAngleButtons(angle);
+        ensureFullFrame(Math.round(targetFrame));
+      });
+    });
+
+    var autoButton = viewer.querySelector('[data-vehicle-auto]');
+    if (autoButton) {
+      autoButton.addEventListener('click', function () {
+        setAuto(!autoSpin);
+        updateAngleButtons('');
+      });
+    }
+
+    window.addEventListener('resize', function () {
+      drawFrame(currentFrame >= 0 ? currentFrame : 0, true);
+    });
+
+    loadFrame(lowFrames, lowPattern, 0, function () {
+      drawFrame(0, true);
+      ensureFullFrame(0);
+      preloadFullResolution();
+    });
+
+    for (var index = 1; index < frameCount; index += 1) {
+      loadFrame(lowFrames, lowPattern, index, function () {
+        drawFrame(Math.round(frameFloat), false);
+      });
+    }
+
+    setAuto(autoSpin);
+    render();
+
+    window.addEventListener('pagehide', function () {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      if (fullPreloadTimer) window.clearTimeout(fullPreloadTimer);
+    }, { once: true });
+
+    return true;
+  }
+
   function initVehicle3D() {
     var viewers = Array.prototype.slice.call(document.querySelectorAll('[data-vehicle-3d]'));
     if (!viewers.length) return;
 
     viewers.forEach(function (viewer) {
-      var scene = viewer.querySelector('[data-vehicle-scene]');
       var stage = viewer.querySelector('[data-vehicle-stage]');
+      var sequenceCanvas = viewer.querySelector('[data-vehicle-sequence]');
+      if (stage && sequenceCanvas && initVehicleSequenceViewer(viewer, stage, sequenceCanvas)) {
+        return;
+      }
+
+      var scene = viewer.querySelector('[data-vehicle-scene]');
       if (!scene || !stage) return;
 
       var rotation = toNumber(viewer.dataset.initialRotation, -24);
