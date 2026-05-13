@@ -291,8 +291,32 @@
     }
 
     .journey-scrolly {
+      --journey-overlap: clamp(560px, 75vh, 820px);
       margin-top: 0;
-      min-height: 180vh;
+      margin-bottom: calc(var(--journey-overlap) * -1);
+      min-height: 205vh;
+      z-index: 1;
+    }
+
+    .journey-scrolly::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: calc(var(--journey-overlap) + 120px);
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0.54) 42%, rgba(2, 6, 23, 0.96) 100%);
+    }
+
+    .journey-scrolly + .how-section {
+      position: relative;
+      z-index: 3;
+      padding-top: 138px;
+      border-top-left-radius: 34px;
+      border-top-right-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, #F7FAFF 26%, #FFFFFF 100%);
+      box-shadow: 0 -34px 84px rgba(15, 23, 42, 0.12);
     }
 
     .premium-scrolly-title {
@@ -688,6 +712,17 @@
 
       .how-section {
         padding: 78px 0;
+      }
+
+      .journey-scrolly {
+        --journey-overlap: 320px;
+        min-height: 190vh;
+      }
+
+      .journey-scrolly + .how-section {
+        padding-top: 108px;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
       }
 
       .hero-premium {
