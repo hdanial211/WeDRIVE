@@ -2,964 +2,925 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How It Works | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../shared/logo/wedrive-icon.png?v=2" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
-  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.11.0" />
+  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.12.0" />
   <link rel="stylesheet" href="../../customer/css/customer.css?v=2.9.19" />
   <style>
+    :root {
+      --how-ink: #0F172A;
+      --how-muted: #64748B;
+      --how-blue: #2563EB;
+      --how-blue-soft: #DBEAFE;
+      --how-gold: #FACC15;
+      --how-line: rgba(148,163,184,0.22);
+      --how-glass: rgba(255,255,255,0.72);
+    }
+
     .how-page {
-      background: var(--bg-body, #F8FAFC);
-    }
-
-    .how-hero {
-      position: relative;
-      min-height: 92vh;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      background: #020617;
-    }
-
-    .how-hero-media,
-    .how-hero-media img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .how-hero-media img {
-      object-fit: cover;
-      object-position: center 34%;
-      filter: saturate(1.04);
-    }
-
-    .how-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      overflow: visible;
       background:
-        linear-gradient(90deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.78) 34%, rgba(2,6,23,0.34) 62%, rgba(2,6,23,0.82) 100%),
-        linear-gradient(180deg, rgba(15,23,42,0.06) 0%, rgba(15,23,42,0.16) 100%);
-    }
-
-    .how-hero::after {
-      content: '';
-      position: absolute;
-      inset: auto 0 0;
-      height: 220px;
-      background: linear-gradient(180deg, rgba(2,6,23,0) 0%, rgba(2,6,23,0.68) 100%);
-    }
-
-    .how-hero-shell {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 132px 20px 102px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 400px);
-      gap: 32px;
-      align-items: end;
-    }
-
-    .how-hero-copy {
-      max-width: 720px;
-    }
-
-    .how-hero .guest-kicker {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 16px 36px rgba(2,6,23,0.18);
-      backdrop-filter: blur(10px);
-      color: #E2E8F0;
-    }
-
-    .how-hero .guest-kicker .material-icons-round,
-    .how-hero .guest-kicker span:last-child {
-      color: #E2E8F0;
-    }
-
-    .how-hero h1 {
-      color: #FFFFFF;
-      font-size: clamp(46px, 6vw, 78px);
-      line-height: 0.96;
-      letter-spacing: 0;
-      margin: 24px 0 18px;
-      text-shadow: 0 18px 42px rgba(2,6,23,0.36);
-      max-width: 680px;
-    }
-
-    .how-hero p {
-      color: rgba(226, 232, 240, 0.94);
-      font-size: 18px;
-      line-height: 1.72;
-      margin: 0;
-    }
-
-    .how-hero-lead {
-      display: inline-block;
-      max-width: 640px;
-      padding: 18px 22px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(2,6,23,0.58) 0%, rgba(15,23,42,0.34) 100%);
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 18px 38px rgba(2,6,23,0.20);
-      backdrop-filter: blur(12px);
-      text-shadow: 0 4px 16px rgba(2,6,23,0.42);
-    }
-
-    .how-stat-row {
-      margin-top: 32px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      max-width: 720px;
-    }
-
-    .how-stat {
-      padding: 18px 18px 16px;
-      min-height: 98px;
-      border-radius: 18px;
-      background: rgba(15,23,42,0.42);
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow: 0 16px 36px rgba(2,6,23,0.18);
-      backdrop-filter: blur(10px);
-    }
-
-    .how-stat strong {
-      display: block;
-      color: #FFFFFF;
-      font-size: 30px;
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .how-stat span {
-      display: block;
-      color: rgba(226,232,240,0.84);
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.45;
-    }
-
-    .how-panel {
-      padding: 24px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 24px 60px rgba(2,6,23,0.28);
-      backdrop-filter: blur(14px);
-      color: #FFFFFF;
-    }
-
-    .how-panel-label {
-      display: inline-flex;
-      align-items: center;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.14);
-      color: #BFDBFE;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .how-panel h2 {
-      margin: 16px 0 20px;
-      font-size: 25px;
-      line-height: 1.18;
-      letter-spacing: 0;
-      color: #FFFFFF;
-    }
-
-    .how-panel-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .how-panel-item {
-      display: grid;
-      grid-template-columns: 42px minmax(0, 1fr);
-      gap: 14px;
-      align-items: start;
-      padding: 14px 0;
-      border-top: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .how-panel-item:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .how-panel-item strong {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.14);
-      color: #FFFFFF;
-      font-size: 13px;
-      font-weight: 800;
-      flex: 0 0 auto;
-    }
-
-    .how-panel-item span {
-      display: block;
-      color: #BFDBFE;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      line-height: 1.3;
-      margin-bottom: 4px;
-    }
-
-    .how-panel-item p {
-      margin: 0;
-      color: rgba(226,232,240,0.92);
-      font-size: 14px;
-      line-height: 1.58;
-    }
-
-    .how-panel-hint {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.12);
-      color: rgba(226,232,240,0.88);
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .how-panel .hero-btn-primary {
-      width: 100%;
-      justify-content: center;
-      margin-top: 18px;
-    }
-
-    .how-journey {
-      position: relative;
-      z-index: 3;
-      margin-top: -40px;
-      padding: 24px 0 32px;
+        radial-gradient(circle at 12% 8%, rgba(96,165,250,0.22) 0%, rgba(96,165,250,0) 34%),
+        linear-gradient(180deg, #F8FBFF 0%, #EEF6FF 38%, #F8FAFC 100%);
+      color: var(--how-ink);
     }
 
     .how-shell {
-      max-width: 1240px;
+      width: min(1240px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 0 20px;
     }
 
-    .how-section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      align-items: end;
-      margin-bottom: 30px;
-      padding-top: 16px;
-    }
-
-    .how-section-head > div {
-      max-width: 840px;
-    }
-
-    .how-section-head .section-eyebrow {
-      color: #3B82F6;
-      background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%);
-      border: 1px solid rgba(148,163,184,0.22);
-      box-shadow: 0 12px 28px rgba(15,23,42,0.06);
-      padding: 10px 18px;
-    }
-
-    .how-section-head h2 {
-      color: var(--text-primary, #0F172A);
-      font-size: clamp(34px, 4vw, 54px);
-      line-height: 1.02;
-      margin: 16px 0 0;
-      letter-spacing: 0;
-    }
-
-    .how-section-head p {
-      color: var(--text-secondary, #475569);
-      font-size: 17px;
-      line-height: 1.78;
-      margin: 14px 0 0;
-    }
-
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-    }
-
-    .how-step-card {
+    .cinema-hero {
       position: relative;
+      min-height: 100vh;
+      display: grid;
+      align-items: end;
+      isolation: isolate;
       overflow: hidden;
-      min-height: 100%;
-      background: var(--bg-surface, #FFFFFF);
-      border: 1px solid var(--border-color, #E2E8F0);
-      border-radius: 28px;
-      padding: 28px;
-      box-shadow: 0 18px 44px rgba(15,23,42,0.07);
-      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      background: #020617;
+      color: #FFFFFF;
     }
 
-    .how-step-card::before {
+    .cinema-hero::before {
       content: '';
       position: absolute;
-      inset: 0 auto auto 0;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, rgba(59,130,246,0) 72%);
-      pointer-events: none;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(circle at 78% 44%, rgba(96,165,250,0.34) 0%, rgba(96,165,250,0) 34%),
+        radial-gradient(circle at 22% 76%, rgba(250,204,21,0.13) 0%, rgba(250,204,21,0) 30%),
+        linear-gradient(125deg, #020617 0%, #0B1738 50%, #173B8F 100%);
     }
 
-    .how-step-card::after {
-      content: attr(data-step);
+    .cinema-hero::after {
+      content: '';
       position: absolute;
-      right: 24px;
-      bottom: 12px;
-      color: rgba(148,163,184,0.10);
-      font-size: 94px;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: 0;
-      pointer-events: none;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.70) 42%, rgba(2,6,23,0.24) 72%, rgba(2,6,23,0.82) 100%),
+        linear-gradient(180deg, rgba(2,6,23,0.16) 0%, rgba(2,6,23,0.00) 48%, rgba(2,6,23,0.82) 100%);
     }
 
-    .how-step-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 28px 58px rgba(15,23,42,0.12);
-      border-color: rgba(59,130,246,0.28);
+    .hero-gridline {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 90px 90px;
+      mask-image: radial-gradient(circle at 72% 48%, black 0%, transparent 66%);
     }
 
-    .how-step-top {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 20px;
-    }
-
-    .how-step-badge {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .how-step-number {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--primary-light, #EFF6FF);
-      color: var(--primary, #3B82F6);
-      font-size: 17px;
-      font-weight: 900;
-      flex: 0 0 auto;
-      box-shadow: inset 0 0 0 1px rgba(59,130,246,0.12);
-    }
-
-    .how-step-stage {
-      display: inline-flex;
-      align-items: center;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: var(--bg-surface-2, #F8FAFC);
-      color: var(--text-secondary, #475569);
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      line-height: 1.2;
-    }
-
-    .how-step-icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, rgba(59,130,246,0.14) 0%, rgba(96,165,250,0.10) 100%);
-      box-shadow: inset 0 0 0 1px rgba(59,130,246,0.10);
-      flex: 0 0 auto;
-    }
-
-    .how-step-icon .material-icons-round {
-      color: var(--primary, #3B82F6);
-      font-size: 28px;
-    }
-
-    .how-step-card h3 {
-      position: relative;
-      z-index: 1;
-      color: var(--text-primary, #0F172A);
-      font-size: 32px;
-      line-height: 1.08;
-      letter-spacing: 0;
-      margin: 0 0 14px;
-      max-width: 500px;
-    }
-
-    .how-step-card p {
-      position: relative;
-      z-index: 1;
-      color: var(--text-secondary, #475569);
-      font-size: 16px;
-      line-height: 1.76;
-      margin: 0;
-    }
-
-    .how-step-requirements {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 22px;
-    }
-
-    .how-req-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: var(--bg-surface-2, #F8FAFC);
-      border: 1px solid var(--border-color, #E2E8F0);
-      color: var(--text-primary, #1E293B);
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .how-req-chip .material-icons-round {
-      color: var(--primary, #3B82F6);
-      font-size: 17px;
-    }
-
-    .how-prep {
-      padding: 18px 0 36px;
-    }
-
-    .how-prep-band {
-      position: relative;
+    .hero-car-stage {
+      position: absolute;
+      right: max(28px, 3vw);
+      bottom: 68px;
+      width: min(620px, 48vw);
+      min-width: 500px;
+      border-radius: 36px;
       overflow: hidden;
-      border-radius: 30px;
-      background: linear-gradient(135deg, #0F172A 0%, #111827 48%, #1D4ED8 100%);
-      box-shadow: 0 26px 70px rgba(15,23,42,0.18);
-      padding: 34px 34px 36px;
+      z-index: -1;
+      opacity: 0.52;
+      animation: heroCarDrift 9s ease-in-out infinite;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 38px 100px rgba(2,6,23,0.46);
+      filter: saturate(1.05);
     }
 
-    .how-prep-band::before {
+    .hero-car-stage::after {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(2,6,23,0.88) 0%, rgba(2,6,23,0.60) 42%, rgba(2,6,23,0.30) 100%),
-        url('https://commons.wikimedia.org/wiki/Special:FilePath/Someone%20handing%20a%20key%20over.jpg') center / cover no-repeat;
-      opacity: 0.95;
+        linear-gradient(90deg, rgba(2,6,23,0.64) 0%, rgba(2,6,23,0.22) 44%, rgba(2,6,23,0.70) 100%),
+        linear-gradient(180deg, rgba(2,6,23,0.12) 0%, rgba(2,6,23,0.44) 100%);
     }
 
-    .how-prep-copy,
-    .how-tip-grid {
-      position: relative;
-      z-index: 1;
+    .hero-car-stage img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
 
-    .how-prep-copy {
-      max-width: 740px;
-      margin-bottom: 24px;
+    .hero-car-stage .hero-car-ghost {
+      display: none;
     }
 
-    .how-prep-copy .section-eyebrow {
-      background: rgba(255,255,255,0.10);
-      color: #BFDBFE;
-      border-color: rgba(255,255,255,0.16);
+    @keyframes heroCarDrift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(-22px, -12px, 0) scale(1.018); }
     }
 
-    .how-prep-copy h2 {
-      color: #FFFFFF;
-      font-size: clamp(32px, 4vw, 48px);
-      line-height: 1.03;
-      margin: 16px 0 0;
-      letter-spacing: 0;
+    @keyframes heroGhostSlide {
+      0%, 100% { transform: translate3d(0, 0, 0) scaleX(-1); }
+      50% { transform: translate3d(34px, -8px, 0) scaleX(-1); }
     }
 
-    .how-prep-copy p {
-      color: rgba(226,232,240,0.92);
-      font-size: 17px;
-      line-height: 1.76;
-      margin: 14px 0 0;
-    }
-
-    .how-tip-grid {
+    .cinema-hero-inner {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: minmax(0, 0.96fr) minmax(330px, 420px);
+      gap: 38px;
+      align-items: end;
+      padding: 148px 0 82px;
     }
 
-    .how-tip-card {
-      padding: 22px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.14);
+    .hero-copy {
+      max-width: 760px;
+    }
+
+    .how-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.11);
+      color: #DBEAFE;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 38px rgba(2,6,23,0.22);
+    }
+
+    .how-pill .material-icons-round {
+      font-size: 17px;
+      color: #FACC15;
+    }
+
+    .hero-copy h1 {
+      margin: 26px 0 20px;
+      color: #FFFFFF;
+      font-size: clamp(56px, 8vw, 104px);
+      line-height: 0.88;
+      letter-spacing: 0;
+      text-shadow: 0 30px 72px rgba(2,6,23,0.45);
+      max-width: 720px;
+    }
+
+    .hero-lead {
+      max-width: 660px;
+      margin: 0;
+      color: rgba(226,232,240,0.92);
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.78;
+    }
+
+    .hero-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      margin-top: 34px;
+    }
+
+    .how-ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.08);
+      color: #FFFFFF;
+      font-weight: 900;
+      text-decoration: none;
       backdrop-filter: blur(12px);
-      box-shadow: 0 16px 34px rgba(2,6,23,0.16);
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
     }
 
-    .how-tip-card .material-icons-round {
-      width: 50px;
-      height: 50px;
+    .how-ghost-btn:hover {
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.30);
+    }
+
+    .hero-status-board {
+      position: relative;
+      padding: 24px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 34px 90px rgba(2,6,23,0.32);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-status-board h2 {
+      color: #FFFFFF;
+      font-size: 25px;
+      line-height: 1.18;
+      margin: 14px 0 18px;
+    }
+
+    .hero-status-board p {
+      color: rgba(226,232,240,0.86);
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 18px 0 0;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .status-steps {
+      display: grid;
+      gap: 12px;
+    }
+
+    .status-step {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      align-items: center;
+      gap: 14px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .status-step strong {
+      width: 48px;
+      height: 48px;
       border-radius: 16px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.12);
-      color: #BFDBFE;
-      font-size: 24px;
-      margin-bottom: 14px;
+      background: rgba(255,255,255,0.13);
+      color: #FFFFFF;
+      font-size: 14px;
     }
 
-    .how-tip-card h3 {
+    .status-step span {
+      display: block;
+      color: #BFDBFE;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .status-step b {
+      display: block;
+      margin-top: 3px;
+      color: rgba(255,255,255,0.94);
+      font-size: 14px;
+      line-height: 1.36;
+    }
+
+    .how-marquee {
+      background: #020617;
       color: #FFFFFF;
-      font-size: 22px;
-      line-height: 1.16;
-      margin: 0 0 10px;
+    }
+
+    .how-marquee .premium-marquee-item {
+      color: rgba(226,232,240,0.22);
+    }
+
+    .how-flow-scrolly {
+      margin-top: 0;
+    }
+
+    .premium-vehicle-showcase {
+      margin-top: 0;
+    }
+
+    .timeline-stage {
+      position: relative;
+      padding: 110px 0;
+      background:
+        radial-gradient(circle at 80% 18%, rgba(96,165,250,0.18) 0%, rgba(96,165,250,0) 32%),
+        linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+    }
+
+    .timeline-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(320px, 0.48fr);
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .timeline-head h2,
+    .handover-copy h2,
+    .final-copy h2 {
+      margin: 16px 0 0;
+      color: var(--how-ink);
+      font-size: clamp(38px, 5vw, 72px);
+      line-height: 0.96;
       letter-spacing: 0;
     }
 
-    .how-tip-card p {
-      color: rgba(226,232,240,0.9);
-      font-size: 15px;
-      line-height: 1.7;
+    .timeline-head p,
+    .handover-copy p,
+    .final-copy p {
       margin: 0;
+      color: #475569;
+      font-size: 17px;
+      line-height: 1.78;
     }
 
-    .how-cta {
-      padding: 12px 0 100px;
+    .light-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      border: 1px solid var(--how-line);
+      color: var(--how-blue);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 12px 28px rgba(15,23,42,0.06);
     }
 
-    .how-cta-band {
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .timeline-card {
       position: relative;
-      overflow: hidden;
+      min-height: 330px;
+      padding: 24px;
       border-radius: 30px;
-      background: linear-gradient(135deg, #0F172A 0%, #111827 48%, #1D4ED8 100%);
-      box-shadow: 0 26px 70px rgba(15,23,42,0.18);
+      overflow: hidden;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(148,163,184,0.22);
+      box-shadow: 0 22px 54px rgba(15,23,42,0.08);
+      backdrop-filter: blur(14px);
     }
 
-    .how-cta-band::before {
+    .timeline-card::before {
+      content: attr(data-step);
+      position: absolute;
+      right: 18px;
+      bottom: 4px;
+      color: rgba(37,99,235,0.08);
+      font-size: 110px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .timeline-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #EFF6FF;
+      color: var(--how-blue);
+      box-shadow: inset 0 0 0 1px rgba(37,99,235,0.12);
+    }
+
+    .timeline-icon .material-icons-round {
+      font-size: 28px;
+    }
+
+    .timeline-card span:not(.material-icons-round) {
+      display: inline-flex;
+      margin: 22px 0 12px;
+      color: var(--how-blue);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .timeline-card h3 {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 12px;
+      color: var(--how-ink);
+      font-size: 27px;
+      line-height: 1.08;
+    }
+
+    .timeline-card p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .handover-stage {
+      position: relative;
+      padding: 106px 0;
+      background: #020617;
+      color: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .handover-stage::before {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(90deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.62) 44%, rgba(2,6,23,0.28) 100%),
-        url('https://commons.wikimedia.org/wiki/Special:FilePath/Someone%20handing%20a%20key%20over.jpg') center 40% / cover no-repeat;
-      opacity: 0.95;
+        radial-gradient(circle at 72% 28%, rgba(96,165,250,0.28) 0%, rgba(96,165,250,0) 38%),
+        linear-gradient(90deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.70) 44%, rgba(37,99,235,0.32) 100%);
     }
 
-    .how-cta-inner {
+    .handover-grid {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 26px;
+      grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1fr);
+      gap: 40px;
       align-items: center;
-      padding: 32px 34px;
     }
 
-    .how-cta-copy h2 {
+    .handover-copy h2,
+    .final-copy h2 {
       color: #FFFFFF;
-      font-size: 36px;
-      line-height: 1.05;
-      margin: 0 0 10px;
-      letter-spacing: 0;
-      max-width: 620px;
     }
 
-    .how-cta-copy p {
-      color: rgba(226,232,240,0.9);
-      font-size: 16px;
-      line-height: 1.72;
-      max-width: 680px;
+    .handover-copy p,
+    .final-copy p {
+      color: rgba(226,232,240,0.88);
+    }
+
+    .handover-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .prep-card {
+      display: grid;
+      grid-template-columns: 60px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 54px rgba(0,0,0,0.22);
+    }
+
+    .prep-card .material-icons-round {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.12);
+      color: #BFDBFE;
+      font-size: 28px;
+    }
+
+    .prep-card h3 {
+      margin: 0 0 8px;
+      color: #FFFFFF;
+      font-size: 22px;
+      line-height: 1.14;
+    }
+
+    .prep-card p {
       margin: 0;
+      color: rgba(226,232,240,0.88);
+      font-size: 15px;
+      line-height: 1.68;
     }
 
-    .how-cta-actions {
+    .final-stage {
+      padding: 92px 0 110px;
+      background:
+        radial-gradient(circle at 24% 10%, rgba(96,165,250,0.20) 0%, rgba(96,165,250,0) 36%),
+        linear-gradient(180deg, #F8FAFC 0%, #EAF3FF 100%);
+    }
+
+    .final-band {
+      position: relative;
+      overflow: hidden;
+      min-height: 340px;
+      border-radius: 38px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.58fr);
+      gap: 30px;
+      align-items: center;
+      padding: 48px;
+      background: linear-gradient(135deg, #0F172A 0%, #123782 54%, #2563EB 100%);
+      box-shadow: 0 34px 90px rgba(37,99,235,0.24);
+      color: #FFFFFF;
+    }
+
+    .final-band::after {
+      content: '';
+      position: absolute;
+      right: -120px;
+      bottom: -120px;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 80px rgba(255,255,255,0.08);
+    }
+
+    .final-copy,
+    .final-actions,
+    .final-signal {
+      position: relative;
+      z-index: 1;
+    }
+
+    .final-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      justify-content: flex-end;
+      margin-top: 28px;
     }
 
-    .how-cta-secondary {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.18);
+    .final-signal {
+      justify-self: end;
+      width: min(100%, 360px);
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(18px);
+    }
+
+    .final-signal strong {
+      display: block;
       color: #FFFFFF;
-      backdrop-filter: blur(10px);
+      font-size: 64px;
+      line-height: 0.92;
     }
 
-    .how-cta-secondary:hover {
-      background: rgba(255,255,255,0.14);
-      border-color: rgba(255,255,255,0.24);
-      color: #FFFFFF;
+    .final-signal span {
+      display: block;
+      margin-top: 12px;
+      color: rgba(226,232,240,0.84);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
     }
 
-    body.night-mode .how-step-card {
+    body.night-mode .timeline-stage,
+    body.night-mode .final-stage {
+      background: #0B1120;
+    }
+
+    body.night-mode .timeline-card {
+      background: rgba(15,23,42,0.72);
       border-color: rgba(148,163,184,0.18);
-      box-shadow: 0 18px 44px rgba(2,6,23,0.22);
     }
 
-    body.night-mode .how-section-head .section-eyebrow {
-      color: #BFDBFE;
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(148,163,184,0.24);
-      box-shadow: 0 14px 28px rgba(2,6,23,0.22);
+    body.night-mode .timeline-card h3,
+    body.night-mode .timeline-head h2 {
+      color: #F8FAFC;
     }
 
-    body.night-mode .how-step-stage,
-    body.night-mode .how-req-chip {
-      border-color: rgba(148,163,184,0.18);
+    body.night-mode .timeline-card p,
+    body.night-mode .timeline-head p {
+      color: rgba(226,232,240,0.78);
     }
 
     @media (max-width: 1100px) {
-      .how-hero-shell {
+      .cinema-hero-inner,
+      .timeline-head,
+      .handover-grid,
+      .final-band {
         grid-template-columns: 1fr;
       }
 
-      .how-panel {
-        max-width: 580px;
+      .hero-car-stage {
+        right: -80px;
+        bottom: 240px;
+        opacity: 0.20;
       }
 
-      .how-grid {
-        grid-template-columns: 1fr;
+      .timeline-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .how-tip-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .how-cta-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .how-cta-actions {
-        justify-content: flex-start;
+      .final-signal {
+        justify-self: stretch;
       }
     }
 
     @media (max-width: 760px) {
-      .how-hero {
+      .how-shell {
+        width: min(100% - 32px, 620px);
+      }
+
+      .cinema-hero {
         min-height: auto;
       }
 
-      .how-hero-shell {
-        padding: 118px 18px 84px;
+      .cinema-hero-inner {
+        padding: 122px 0 76px;
       }
 
-      .how-stat-row {
-        grid-template-columns: 1fr;
+      .hero-copy h1 {
+        font-size: clamp(50px, 15vw, 74px);
       }
 
-      .how-journey {
-        margin-top: -24px;
-        padding: 18px 0 26px;
+      .hero-car-stage {
+        right: -130px;
+        bottom: 300px;
+        min-width: 420px;
+        width: 500px;
+        opacity: 0.16;
       }
 
-      .how-section-head {
-        display: block;
-        padding-top: 12px;
-      }
-
-      .how-step-card {
-        padding: 24px 22px;
-      }
-
-      .how-step-card::after {
-        font-size: 72px;
-        right: 18px;
-      }
-
-      .how-step-top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .how-prep-band,
-      .how-cta-band {
+      .hero-status-board {
+        padding: 20px;
         border-radius: 26px;
       }
 
-      .how-prep-band {
-        padding: 28px 22px 30px;
+      .timeline-stage,
+      .handover-stage,
+      .final-stage {
+        padding: 76px 0;
       }
 
-      .how-cta-inner {
-        padding: 28px 22px;
+      .timeline-grid {
+        grid-template-columns: 1fr;
       }
 
-      .how-cta-actions {
+      .timeline-card {
+        min-height: auto;
+      }
+
+      .handover-grid {
+        gap: 28px;
+      }
+
+      .prep-card {
+        grid-template-columns: 1fr;
+      }
+
+      .final-band {
+        padding: 30px 22px;
+        border-radius: 30px;
+      }
+
+      .final-actions .hero-btn-primary,
+      .final-actions .how-ghost-btn {
         width: 100%;
-      }
-
-      .how-cta-actions .hero-btn-primary,
-      .how-cta-actions .btn-outline {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .how-hero-shell {
-        padding: 108px 16px 78px;
-      }
-
-      .how-hero-lead {
-        padding: 16px 18px;
-        border-radius: 20px;
-      }
-
-      .how-panel {
-        padding: 20px;
-      }
-
-      .how-step-card h3 {
-        font-size: 28px;
-      }
-
-      .how-cta-copy h2,
-      .how-prep-copy h2 {
-        font-size: 30px;
       }
     }
   </style>
 </head>
-<body class="guest-page" data-cursor-glow>
+<body class="guest-page" data-cursor-glow data-cursor-system>
   <div id="navbar-placeholder" data-module="guest"></div>
 
   <main class="how-page">
-    <section class="how-hero">
-      <div class="how-hero-media" aria-hidden="true">
-        <img
-          src="https://commons.wikimedia.org/wiki/Special:FilePath/Someone%20handing%20a%20key%20over.jpg"
-          alt="Car key handover"
-          data-parallax="0.12"
-          data-parallax-scale="0.08"
-        />
+    <section class="cinema-hero">
+      <div class="hero-gridline" aria-hidden="true"></div>
+      <div class="hero-car-stage" aria-hidden="true">
+        <img src="../../shared/images/cars/bmw-3series-2024.png" alt="" data-parallax="0.12" data-parallax-scale="0.06" />
+        <img class="hero-car-ghost" src="../../shared/images/cars/honda-crv-2024.png" alt="" />
       </div>
-      <div class="how-hero-shell">
-        <div class="how-hero-copy">
-          <span class="guest-kicker reveal-onload motion-sheen" data-blur="true"><span class="material-icons-round">menu_book</span> <span data-key="how_tutorial_kicker">TUTORIAL</span></span>
-          <h1 class="reveal-onload reveal-blur" data-delay="120" data-duration="980" data-key="how_page_title">Car Rental Guide</h1>
-          <p class="how-hero-lead reveal-onload motion-sheen reveal-blur" data-delay="220" data-duration="940" data-key="how_page_sub">Follow these simple steps to start renting your dream car with WeDRIVE. From registration to keys in hand.</p>
 
-          <div class="how-stat-row reveal-onload reveal-blur" data-delay="320" data-duration="980">
-            <div class="how-stat">
-              <strong>04</strong>
-              <span data-key="how_hero_stat_1">Clear steps</span>
-            </div>
-            <div class="how-stat">
-              <strong>01</strong>
-              <span data-key="how_hero_stat_2">Account to unlock booking</span>
-            </div>
-            <div class="how-stat">
-              <strong>24/7</strong>
-              <span data-key="how_hero_stat_3">Support if you need help</span>
-            </div>
+      <div class="how-shell cinema-hero-inner">
+        <div class="hero-copy">
+          <span class="how-pill reveal-onload motion-sheen" data-blur="true">
+            <span class="material-icons-round">route</span>
+            <span data-key="how_tutorial_kicker">Guest Guide</span>
+          </span>
+          <h1 class="reveal-onload reveal-blur" data-kinetic="words" data-delay="100" data-duration="980" data-key="how_page_title">From Browse to Pickup Day</h1>
+          <p class="hero-lead reveal-onload reveal-blur" data-delay="260" data-duration="920" data-key="how_page_sub">A calm step-by-step guide to registering, choosing the right car, paying securely, and collecting the keys with confidence.</p>
+
+          <div class="hero-action-row reveal-onload" data-delay="380" data-duration="920">
+            <a href="../../guest/pages/guest.html" class="hero-btn-primary magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
+              <span class="material-icons-round">directions_car</span>
+              <span data-key="nav_browse">Browse Cars</span>
+            </a>
+            <a href="../../customer/pages/signup.html" class="how-ghost-btn magnetic-hover" data-magnetic="0.10" data-cursor="magnetic" data-ripple>
+              <span class="material-icons-round">person_add</span>
+              <span data-key="how_cta_start">Create Your Account</span>
+            </a>
           </div>
         </div>
 
-        <aside class="how-panel reveal-onload motion-sheen premium-hover reveal-blur" data-delay="260" data-duration="980" data-dir="right">
-          <span class="how-panel-label" data-key="how_panel_label">Guest to confirmed</span>
+        <aside class="hero-status-board reveal-onload reveal-blur motion-sheen premium-hover" data-delay="220" data-dir="right" data-duration="960" data-cursor="hover">
+          <span class="how-panel-label" data-key="how_panel_label">Booking flow</span>
           <h2 data-key="how_panel_title">Know what happens before payment, verification, and pickup</h2>
-          <div class="how-panel-list">
-            <div class="how-panel-item">
-              <strong>01</strong>
-              <div>
-                <span data-key="how_step1_stage">Profile setup</span>
-                <p data-key="how_step1_title">Create Account & Verify Profile</p>
-              </div>
-            </div>
-            <div class="how-panel-item">
-              <strong>02</strong>
-              <div>
-                <span data-key="how_step2_stage">Car selection</span>
-                <p data-key="how_step2_title">Choose Your Dream Car</p>
-              </div>
-            </div>
-            <div class="how-panel-item">
-              <strong>03</strong>
-              <div>
-                <span data-key="how_step3_stage">Booking & payment</span>
-                <p data-key="how_step3_title">Book & Pay</p>
-              </div>
-            </div>
-            <div class="how-panel-item">
-              <strong>04</strong>
-              <div>
-                <span data-key="how_step4_stage">Pickup day</span>
-                <p data-key="how_step4_title">Pick Up & Drive!</p>
-              </div>
-            </div>
+          <div class="status-steps">
+            <div class="status-step"><strong>01</strong><div><span data-key="how_step1_stage">Profile setup</span><b data-key="how_step1_title">Create Account & Verify Profile</b></div></div>
+            <div class="status-step"><strong>02</strong><div><span data-key="how_step2_stage">Car selection</span><b data-key="how_step2_title">Choose the Right Car</b></div></div>
+            <div class="status-step"><strong>03</strong><div><span data-key="how_step3_stage">Booking & payment</span><b data-key="how_step3_title">Confirm Booking & Pay</b></div></div>
+            <div class="status-step"><strong>04</strong><div><span data-key="how_step4_stage">Pickup day</span><b data-key="how_step4_title">Arrive, Verify & Collect the Keys</b></div></div>
           </div>
-          <p class="how-panel-hint" data-key="how_panel_hint">You can browse first as a guest, then sign in only when you are ready to continue.</p>
-          <a href="../../guest/pages/guest.html" class="hero-btn-primary">
-            <span class="material-icons-round">directions_car</span>
-            <span data-key="nav_browse">Browse Cars</span>
-          </a>
+          <p data-key="how_panel_hint">You can browse first as a guest, then sign in only when you are ready to continue.</p>
         </aside>
       </div>
     </section>
 
-    <section class="how-journey">
-      <div class="how-shell">
-        <div class="how-section-head">
-          <div>
-            <span class="section-eyebrow reveal-on-scroll motion-sheen" data-blur="true" data-duration="760" data-key="how_section_label">Guided Journey</span>
-            <h2 class="reveal-on-scroll reveal-blur" data-delay="80" data-duration="860" data-key="how_section_title">Everything the customer needs to do, in the right order</h2>
-            <p class="reveal-on-scroll reveal-blur" data-delay="160" data-duration="860" data-key="how_section_sub">Each stage explains what to prepare, what happens next, and why it matters before you take the car.</p>
+    <div class="premium-marquee how-marquee" aria-hidden="true">
+      <div class="premium-marquee-track">
+        <span class="premium-marquee-item" data-key="how_scrolly_dot1">Browse first</span>
+        <span class="premium-marquee-item" data-key="how_scrolly_dot2">AI match</span>
+        <span class="premium-marquee-item" data-key="how_scrolly_dot3">Pay securely</span>
+        <span class="premium-marquee-item" data-key="how_scrolly_dot4">Pickup keys</span>
+        <span class="premium-marquee-item" data-key="how_scrolly_dot1">Browse first</span>
+        <span class="premium-marquee-item" data-key="how_scrolly_dot2">AI match</span>
+        <span class="premium-marquee-item" data-key="how_scrolly_dot3">Pay securely</span>
+        <span class="premium-marquee-item" data-key="how_scrolly_dot4">Pickup keys</span>
+      </div>
+    </div>
+
+    <section class="premium-scrolly how-flow-scrolly" data-scrolly-section>
+      <div class="premium-scrolly-sticky">
+        <div class="premium-scrolly-canvas" aria-hidden="true">
+          <canvas data-motion-canvas data-motion-accent-rgb="96,165,250" data-motion-warm-rgb="250,204,21"></canvas>
+        </div>
+
+        <div class="premium-scrolly-stage">
+          <div class="premium-scrolly-phase-wrap">
+            <article class="premium-scrolly-phase is-active" data-scrolly-phase>
+              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase1_label">Guest browsing</span>
+              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase1_title">Start with full control</h2>
+              <p class="premium-scrolly-copy" data-key="how_scrolly_phase1_copy">Open the guest showroom first. Compare cars, routes, prices, and Melaka trip ideas before you create an account.</p>
+            </article>
+
+            <article class="premium-scrolly-phase" data-scrolly-phase>
+              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase2_label">AI recommendation</span>
+              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase2_title">Let AI narrow the ride</h2>
+              <p class="premium-scrolly-copy" data-key="how_scrolly_phase2_copy">Match the car to your budget, passenger count, driving route, and pickup plan so the choice feels easier and more accurate.</p>
+            </article>
+
+            <article class="premium-scrolly-phase" data-scrolly-phase>
+              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase3_label">Secure confirmation</span>
+              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase3_title">Pay before details unlock</h2>
+              <p class="premium-scrolly-copy" data-key="how_scrolly_phase3_copy">Your booking is only confirmed after payment. Sensitive car details stay hidden until the customer has completed the secure flow.</p>
+            </article>
+
+            <article class="premium-scrolly-phase" data-scrolly-phase>
+              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase4_label">Pickup experience</span>
+              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase4_title">Arrive ready for handover</h2>
+              <p class="premium-scrolly-copy" data-key="how_scrolly_phase4_copy">The customer arrives with verified documents, checks the car condition, receives the keys, and starts the trip with confidence.</p>
+            </article>
+          </div>
+
+          <aside class="premium-scrolly-meter motion-sheen">
+            <div class="premium-scrolly-meter-track">
+              <span class="premium-scrolly-meter-fill"></span>
+            </div>
+            <div class="premium-scrolly-dots">
+              <span class="premium-scrolly-dot is-active" data-scrolly-dot data-step="01" data-key="how_scrolly_dot1">Browse first</span>
+              <span class="premium-scrolly-dot" data-scrolly-dot data-step="02" data-key="how_scrolly_dot2">AI match</span>
+              <span class="premium-scrolly-dot" data-scrolly-dot data-step="03" data-key="how_scrolly_dot3">Pay securely</span>
+              <span class="premium-scrolly-dot" data-scrolly-dot data-step="04" data-key="how_scrolly_dot4">Pickup keys</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="premium-vehicle-showcase" data-vehicle-3d data-initial-rotation="-26" data-auto="true">
+      <div class="premium-vehicle-shell">
+        <div class="premium-vehicle-copy">
+          <span class="premium-vehicle-kicker reveal-on-scroll motion-sheen" data-scramble data-key="how_3d_label">Interactive Preview</span>
+          <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-delay="80" data-key="how_3d_title">Inspect the journey before booking</h2>
+          <p class="reveal-on-scroll reveal-blur" data-delay="140" data-key="how_3d_sub">Explore a lightweight 3D car preview while the real car details stay protected until payment is complete.</p>
+
+          <div class="premium-vehicle-stats reveal-on-scroll" data-delay="180">
+            <div class="premium-vehicle-stat premium-hover" data-cursor="hover"><strong data-key="how_3d_stat1_value">360</strong><span data-key="how_3d_stat1_label">Preview angles</span></div>
+            <div class="premium-vehicle-stat premium-hover" data-cursor="hover"><strong data-key="how_3d_stat2_value">04</strong><span data-key="how_3d_stat2_label">Rental stages</span></div>
+            <div class="premium-vehicle-stat premium-hover" data-cursor="hover"><strong data-key="how_3d_stat3_value">0</strong><span data-key="how_3d_stat3_label">Sensitive details before payment</span></div>
+          </div>
+
+          <div class="premium-vehicle-colours reveal-on-scroll" data-delay="220">
+            <span data-key="how_3d_colour">Preview colour</span>
+            <button class="vehicle-swatch is-active" type="button" aria-label="Pearl blue" data-vehicle-color data-accent="#60A5FA" data-accent-rgb="96,165,250" data-body="#F8FBFF" data-body-dark="#AFC5E8" data-glass="rgba(37,99,235,0.22)" style="--swatch:linear-gradient(135deg,#F8FBFF 0%,#60A5FA 100%)" data-cursor="media"></button>
+            <button class="vehicle-swatch" type="button" aria-label="Graphite" data-vehicle-color data-accent="#38BDF8" data-accent-rgb="56,189,248" data-body="#CBD5E1" data-body-dark="#64748B" data-glass="rgba(14,165,233,0.24)" style="--swatch:linear-gradient(135deg,#E2E8F0 0%,#334155 100%)" data-cursor="media"></button>
+            <button class="vehicle-swatch" type="button" aria-label="Royal blue" data-vehicle-color data-accent="#2563EB" data-accent-rgb="37,99,235" data-body="#3B82F6" data-body-dark="#1E40AF" data-glass="rgba(219,234,254,0.28)" style="--swatch:linear-gradient(135deg,#93C5FD 0%,#1D4ED8 100%)" data-cursor="media"></button>
+            <button class="vehicle-swatch" type="button" aria-label="Gold line" data-vehicle-color data-accent="#FACC15" data-accent-rgb="250,204,21" data-body="#FFFFFF" data-body-dark="#D6E4F8" data-glass="rgba(37,99,235,0.20)" style="--swatch:linear-gradient(135deg,#FFFFFF 0%,#FACC15 100%)" data-cursor="media"></button>
           </div>
         </div>
 
-        <div class="how-grid">
-          <article class="how-step-card reveal-on-scroll motion-sheen premium-hover" data-step="01" data-delay="0" data-duration="860">
-            <div class="how-step-top">
-              <div class="how-step-badge">
-                <span class="how-step-number">01</span>
-                <span class="how-step-stage" data-key="how_step1_stage">Profile setup</span>
-              </div>
-              <div class="how-step-icon">
-                <span class="material-icons-round">verified_user</span>
+        <div class="premium-vehicle-view reveal-on-scroll reveal-blur" data-delay="160">
+          <div class="vehicle-viewer-card motion-spotlight" data-spotlight>
+            <div class="vehicle-orbit" aria-hidden="true"></div>
+            <div class="vehicle-floor" aria-hidden="true"></div>
+            <div class="vehicle-shadow" aria-hidden="true"></div>
+            <div class="vehicle-3d-stage" data-vehicle-stage data-cursor="drag" aria-label="Interactive 3D car preview">
+              <div class="vehicle-3d-scene" data-vehicle-scene>
+                <div class="vehicle-model" aria-hidden="true">
+                  <div class="vehicle-body">
+                    <span class="vehicle-face vehicle-body-front"></span><span class="vehicle-face vehicle-body-back"></span><span class="vehicle-face vehicle-body-top"></span><span class="vehicle-face vehicle-body-bottom"></span><span class="vehicle-face vehicle-body-left"></span><span class="vehicle-face vehicle-body-right"></span>
+                  </div>
+                  <div class="vehicle-cabin">
+                    <span class="vehicle-face vehicle-cabin-front"></span><span class="vehicle-face vehicle-cabin-back"></span><span class="vehicle-face vehicle-cabin-top"></span><span class="vehicle-face vehicle-cabin-left"></span><span class="vehicle-face vehicle-cabin-right"></span>
+                  </div>
+                  <span class="vehicle-lightbar"></span><span class="vehicle-wheel vehicle-wheel-front-left"></span><span class="vehicle-wheel vehicle-wheel-front-right"></span><span class="vehicle-wheel vehicle-wheel-back-left"></span><span class="vehicle-wheel vehicle-wheel-back-right"></span>
+                </div>
               </div>
             </div>
+            <div class="vehicle-controls">
+              <button class="vehicle-control is-active" type="button" data-vehicle-auto aria-pressed="true" data-cursor="magnetic" data-ripple data-key="how_3d_auto">Auto</button>
+              <button class="vehicle-control" type="button" data-vehicle-angle="front" aria-pressed="false" data-cursor="hover" data-ripple data-key="how_3d_front">Front</button>
+              <button class="vehicle-control" type="button" data-vehicle-angle="side" aria-pressed="false" data-cursor="hover" data-ripple data-key="how_3d_side">Side</button>
+              <button class="vehicle-control" type="button" data-vehicle-angle="rear" aria-pressed="false" data-cursor="hover" data-ripple data-key="how_3d_rear">Rear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline-stage">
+      <div class="how-shell">
+        <div class="timeline-head">
+          <div>
+            <span class="light-pill reveal-on-scroll motion-sheen" data-scramble data-key="how_section_label">Guided Journey</span>
+            <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-delay="80" data-key="how_section_title">Everything the customer needs to do, in the right order</h2>
+          </div>
+          <p class="reveal-on-scroll reveal-blur" data-delay="130" data-key="how_section_sub">Each stage explains what to prepare, what happens next, and why it matters before you take the car.</p>
+        </div>
+
+        <div class="timeline-grid">
+          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="01" data-cursor="hover">
+            <div class="timeline-icon"><span class="material-icons-round">verified_user</span></div>
+            <span data-key="how_step1_stage">Profile setup</span>
             <h3 data-key="how_step1_title">Create Account & Verify Profile</h3>
             <p data-key="how_step1_detail">Start by registering a WeDRIVE account for free. You will need to upload your ID and a valid driving license for security and insurance purposes.</p>
-            <div class="how-step-requirements">
-              <div class="how-req-chip"><span class="material-icons-round">badge</span> <span data-key="how_step1_req1">ID Card / Passport</span></div>
-              <div class="how-req-chip"><span class="material-icons-round">drive_eta</span> <span data-key="how_step1_req2">Valid Driving License</span></div>
-            </div>
           </article>
-
-          <article class="how-step-card reveal-on-scroll motion-sheen premium-hover" data-step="02" data-delay="80" data-duration="860" data-dir="right">
-            <div class="how-step-top">
-              <div class="how-step-badge">
-                <span class="how-step-number">02</span>
-                <span class="how-step-stage" data-key="how_step2_stage">Car selection</span>
-              </div>
-              <div class="how-step-icon">
-                <span class="material-icons-round">auto_awesome</span>
-              </div>
-            </div>
-            <h3 data-key="how_step2_title">Choose Your Dream Car</h3>
-            <p data-key="how_step2_detail">Find the perfect car based on budget, passengers, and location. Use our AI recommendation system to get the best car match for your Melaka trip.</p>
-            <div class="how-step-requirements">
-              <div class="how-req-chip"><span class="material-icons-round">psychology_alt</span> <span data-key="how_step2_req1">AI Recommendations</span></div>
-              <div class="how-req-chip"><span class="material-icons-round">filter_alt</span> <span data-key="how_step2_req2">Various Model Options</span></div>
-            </div>
+          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="02" data-delay="80" data-cursor="hover">
+            <div class="timeline-icon"><span class="material-icons-round">auto_awesome</span></div>
+            <span data-key="how_step2_stage">Car selection</span>
+            <h3 data-key="how_step2_title">Choose the Right Car</h3>
+            <p data-key="how_step2_detail">Find the best fit based on budget, passenger count, route, and pickup location. Use our AI recommendation system to narrow the options faster.</p>
           </article>
-
-          <article class="how-step-card reveal-on-scroll motion-sheen premium-hover" data-step="03" data-delay="120" data-duration="860">
-            <div class="how-step-top">
-              <div class="how-step-badge">
-                <span class="how-step-number">03</span>
-                <span class="how-step-stage" data-key="how_step3_stage">Booking & payment</span>
-              </div>
-              <div class="how-step-icon">
-                <span class="material-icons-round">payments</span>
-              </div>
-            </div>
-            <h3 data-key="how_step3_title">Book & Pay</h3>
-            <p data-key="how_step3_detail">Select your desired dates and time. Make payment directly through our secure online payment gateway.</p>
-            <div class="how-step-requirements">
-              <div class="how-req-chip"><span class="material-icons-round">credit_card</span> <span data-key="how_step3_req1">Credit / Debit Card</span></div>
-              <div class="how-req-chip"><span class="material-icons-round">account_balance</span> <span data-key="how_step3_req2">Online Banking (FPX)</span></div>
-            </div>
+          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="03" data-delay="130" data-cursor="hover">
+            <div class="timeline-icon"><span class="material-icons-round">payments</span></div>
+            <span data-key="how_step3_stage">Booking & payment</span>
+            <h3 data-key="how_step3_title">Confirm Booking & Pay</h3>
+            <p data-key="how_step3_detail">Select your preferred dates and time, then complete payment through our secure online gateway to lock the booking.</p>
           </article>
-
-          <article class="how-step-card reveal-on-scroll motion-sheen premium-hover" data-step="04" data-delay="180" data-duration="860" data-dir="right">
-            <div class="how-step-top">
-              <div class="how-step-badge">
-                <span class="how-step-number">04</span>
-                <span class="how-step-stage" data-key="how_step4_stage">Pickup day</span>
-              </div>
-              <div class="how-step-icon">
-                <span class="material-icons-round">key</span>
-              </div>
-            </div>
-            <h3 data-key="how_step4_title">Pick Up & Drive!</h3>
-            <p data-key="how_step4_detail">Arrive at the pickup location at the scheduled time. Our representative will verify details, hand over the keys, and you are ready to drive!</p>
-            <div class="how-step-requirements">
-              <div class="how-req-chip"><span class="material-icons-round">where_to_vote</span> <span data-key="how_step4_req1">Strategic Locations</span></div>
-              <div class="how-req-chip"><span class="material-icons-round">support_agent</span> <span data-key="how_step4_req2">24/7 Customer Support</span></div>
-            </div>
+          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="04" data-delay="180" data-cursor="hover">
+            <div class="timeline-icon"><span class="material-icons-round">key</span></div>
+            <span data-key="how_step4_stage">Pickup day</span>
+            <h3 data-key="how_step4_title">Arrive, Verify & Collect the Keys</h3>
+            <p data-key="how_step4_detail">Arrive at the pickup location on time. Our representative will verify the booking, walk you through the car condition, and hand over the keys.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="how-prep">
-      <div class="how-shell">
-        <div class="how-prep-band motion-sheen">
-          <div class="how-prep-copy">
-            <span class="section-eyebrow reveal-on-scroll motion-sheen" data-blur="true" data-key="how_tip_label">Before You Confirm</span>
-            <h2 class="reveal-on-scroll reveal-blur" data-delay="80" data-duration="860" data-key="how_tip_title">A few details that keep the booking smooth</h2>
-            <p class="reveal-on-scroll reveal-blur" data-delay="160" data-duration="860" data-key="how_tip_sub">Prepare these early so payment, verification, and pickup move faster on the day.</p>
-          </div>
-
-          <div class="how-tip-grid">
-            <article class="how-tip-card reveal-on-scroll motion-sheen premium-hover" data-delay="0" data-duration="820">
-              <span class="material-icons-round">assignment_ind</span>
-              <h3 data-key="how_tip1_title">Use matching identity details</h3>
-              <p data-key="how_tip1_desc">Keep the name on your account, ID, and driving licence consistent to avoid manual checks.</p>
-            </article>
-
-            <article class="how-tip-card reveal-on-scroll motion-sheen premium-hover" data-delay="80" data-duration="820" data-dir="right">
-              <span class="material-icons-round">shield</span>
-              <h3 data-key="how_tip2_title">Check payment readiness</h3>
-              <p data-key="how_tip2_desc">Have your preferred card or FPX banking access ready before locking the booking.</p>
-            </article>
-
-            <article class="how-tip-card reveal-on-scroll motion-sheen premium-hover" data-delay="160" data-duration="820">
-              <span class="material-icons-round">schedule</span>
-              <h3 data-key="how_tip3_title">Arrive on time for pickup</h3>
-              <p data-key="how_tip3_desc">A short, on-time handover helps you inspect the car and start your trip without delay.</p>
-            </article>
-          </div>
+    <section class="handover-stage">
+      <div class="how-shell handover-grid">
+        <div class="handover-copy">
+          <span class="how-pill reveal-on-scroll motion-sheen" data-key="how_tip_label">Before You Confirm</span>
+          <h2 class="reveal-on-scroll reveal-blur kinetic-text kinetic-light" data-scroll-progress data-key="how_tip_title">A few details that keep the booking smooth</h2>
+          <p class="reveal-on-scroll reveal-blur" data-delay="90" data-key="how_tip_sub">Prepare these early so payment, verification, and pickup move faster on the day.</p>
+        </div>
+        <div class="handover-panel">
+          <article class="prep-card reveal-on-scroll motion-sheen premium-hover" data-cursor="hover">
+            <span class="material-icons-round">assignment_ind</span>
+            <div><h3 data-key="how_tip1_title">Use matching identity details</h3><p data-key="how_tip1_desc">Keep the name on your account, ID, and driving licence consistent to avoid manual checks.</p></div>
+          </article>
+          <article class="prep-card reveal-on-scroll motion-sheen premium-hover" data-delay="80" data-cursor="hover">
+            <span class="material-icons-round">shield</span>
+            <div><h3 data-key="how_tip2_title">Check payment readiness</h3><p data-key="how_tip2_desc">Have your preferred card or FPX banking access ready before locking the booking.</p></div>
+          </article>
+          <article class="prep-card reveal-on-scroll motion-sheen premium-hover" data-delay="140" data-cursor="hover">
+            <span class="material-icons-round">schedule</span>
+            <div><h3 data-key="how_tip3_title">Arrive on time for pickup</h3><p data-key="how_tip3_desc">A short, on-time handover helps you inspect the car and start your trip without delay.</p></div>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="how-cta">
+    <section class="final-stage">
       <div class="how-shell">
-        <div class="how-cta-band motion-sheen">
-          <div class="how-cta-inner">
-            <div class="how-cta-copy">
-              <h2 class="reveal-on-scroll reveal-blur" data-duration="860" data-key="how_cta_title">Ready to start with the right car first?</h2>
-              <p class="reveal-on-scroll reveal-blur" data-delay="90" data-duration="860" data-key="how_cta_sub">Browse the guest showroom, compare options, then create your account when you are ready to continue with booking.</p>
-            </div>
-
-            <div class="how-cta-actions reveal-on-scroll" data-delay="140" data-dir="right" data-duration="860">
-              <a href="../../guest/pages/guest.html" class="btn-outline how-cta-secondary btn-anim">
+        <div class="final-band motion-sheen motion-depth" data-scroll-progress data-spotlight>
+          <div class="final-copy">
+            <span class="how-pill reveal-on-scroll motion-sheen" data-key="how_panel_label">Booking flow</span>
+            <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_cta_title">Ready to start with the right car first?</h2>
+            <p class="reveal-on-scroll reveal-blur" data-delay="80" data-key="how_cta_sub">Browse the guest showroom, compare options, then create your account when you are ready to continue with booking.</p>
+            <div class="final-actions reveal-on-scroll" data-delay="120">
+              <a href="../../guest/pages/guest.html" class="how-ghost-btn magnetic-hover" data-magnetic="0.10" data-cursor="magnetic" data-ripple>
                 <span class="material-icons-round">search</span>
                 <span data-key="nav_browse">Browse Cars</span>
               </a>
-              <a href="../../customer/pages/signup.html" class="hero-btn-primary btn-anim">
+              <a href="../../customer/pages/signup.html" class="hero-btn-primary magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
                 <span class="material-icons-round">person_add</span>
-                <span data-key="how_cta_start">Start Registering Now</span>
+                <span data-key="how_cta_start">Create Your Account</span>
               </a>
             </div>
+          </div>
+          <div class="final-signal reveal-on-scroll premium-hover" data-delay="150" data-cursor="hover">
+            <strong data-scramble>0</strong>
+            <span data-key="how_3d_stat3_label">Sensitive details before payment</span>
           </div>
         </div>
       </div>
@@ -972,7 +933,7 @@
   <script src="../../shared/js/api.js"></script>
   <script>window.__GUEST_MODE__ = true;</script>
   <script src="../../shared/js/anime.min.js"></script>
-  <script src="../../shared/js/animate.js?v=2.11.0"></script>
+  <script src="../../shared/js/animate.js?v=2.12.0"></script>
   <script src="../../shared/js/main.js"></script>
 </body>
 </html>
