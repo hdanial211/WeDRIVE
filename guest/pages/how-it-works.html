@@ -289,6 +289,7 @@
 
     .journey-scrolly {
       margin-top: 0;
+      min-height: 280vh;
     }
 
     .premium-scrolly-title {
@@ -364,7 +365,8 @@
       z-index: 1;
       pointer-events: none;
       opacity: 0;
-      background: radial-gradient(circle at var(--tilt-glare-x, 50%) var(--tilt-glare-y, 50%), rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 46%);
+      background: radial-gradient(circle at var(--tilt-glare-x, 50%) var(--tilt-glare-y, 50%), rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 55%);
+      mix-blend-mode: overlay;
       transition: opacity 0.26s ease;
     }
 
@@ -645,6 +647,10 @@
       text-transform: uppercase;
     }
 
+    .feature-tile[data-spotlight]::after {
+      background: radial-gradient(circle 420px at var(--spotlight-x) var(--spotlight-y), rgba(37, 99, 235, 0.18) 0%, rgba(37, 99, 235, 0) 65%);
+    }
+
     @media (max-width: 1180px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -748,7 +754,7 @@
             <span class="material-icons-round">route</span>
             <span data-key="how_new_hero_kicker">Premium rental guide</span>
           </span>
-          <h1 class="hero-title kinetic-light reveal-onload reveal-blur" data-kinetic="words" data-key="how_new_hero_title">Rent with clarity from search to keys</h1>
+          <h1 class="hero-title kinetic-light reveal-onload reveal-blur" data-kinetic="chars" data-key="how_new_hero_title">Rent with clarity from search to keys</h1>
           <p class="hero-lead reveal-onload reveal-blur" data-delay="160" data-key="how_new_hero_sub">A polished step-by-step guide for customers to browse, match, pay, and collect the right car with confidence.</p>
 
           <div class="hero-actions reveal-onload" data-delay="260">
