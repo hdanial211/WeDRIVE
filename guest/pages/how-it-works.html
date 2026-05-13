@@ -9,11 +9,12 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
-  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.14.2" />
+  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.15.0" />
   <link rel="stylesheet" href="../../customer/css/customer.css?v=2.9.19" />
   <style>
     :root {
-      --how-bg: #F7FAFF;
+      --how-bg: #F6FAFF;
+      --how-paper: #FFFFFF;
       --how-ink: #0F172A;
       --how-muted: #53627A;
       --how-soft: #EAF2FF;
@@ -21,15 +22,22 @@
       --how-blue-2: #60A5FA;
       --how-gold: #F6C743;
       --how-line: rgba(82, 105, 143, 0.18);
-      --how-card: rgba(255, 255, 255, 0.78);
       --how-shadow: 0 24px 70px rgba(18, 47, 93, 0.12);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.guest-page {
+      background: var(--how-bg);
     }
 
     .how-page {
       min-height: 100vh;
-      overflow: hidden;
+      overflow: clip;
       background:
-        linear-gradient(180deg, #F8FBFF 0%, #EEF6FF 36%, #FFFFFF 70%, #ECF4FF 100%);
+        linear-gradient(180deg, #F8FBFF 0%, #EEF6FF 32%, #FFFFFF 64%, #F1F7FF 100%);
       color: var(--how-ink);
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -37,11 +45,6 @@
     .how-shell {
       width: min(1240px, calc(100% - 40px));
       margin: 0 auto;
-    }
-
-    .how-section {
-      position: relative;
-      padding: 112px 0;
     }
 
     .how-kicker {
@@ -52,7 +55,7 @@
       padding: 9px 14px;
       border: 1px solid rgba(37, 99, 235, 0.18);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.74);
+      background: rgba(255, 255, 255, 0.78);
       color: var(--how-blue);
       font-size: 12px;
       font-weight: 900;
@@ -69,21 +72,21 @@
 
     .how-title {
       margin: 18px 0 0;
-      max-width: 840px;
+      max-width: 860px;
       color: var(--how-ink);
-      font-size: 4.8rem;
+      font-size: clamp(2.7rem, 5vw, 4.65rem);
       font-weight: 900;
-      line-height: 0.98;
+      line-height: 1.02;
       letter-spacing: 0;
       text-wrap: balance;
     }
 
     .how-copy {
-      max-width: 690px;
+      max-width: 700px;
       margin: 18px 0 0;
       color: var(--how-muted);
       font-size: 1.06rem;
-      font-weight: 600;
+      font-weight: 650;
       line-height: 1.78;
     }
 
@@ -101,11 +104,12 @@
       box-shadow: 0 16px 36px rgba(37, 99, 235, 0.22);
       font-weight: 900;
       text-decoration: none;
+      white-space: nowrap;
     }
 
     .how-action.is-ghost {
       color: var(--how-ink);
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.78);
       box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
     }
 
@@ -113,36 +117,36 @@
       font-size: 20px;
     }
 
-    .hero-premium {
+    .hero-clean {
       position: relative;
       min-height: 100vh;
       display: flex;
-      align-items: stretch;
+      align-items: center;
       overflow: hidden;
       background:
-        linear-gradient(118deg, #071127 0%, #102759 43%, #EEF6FF 43.2%, #FFFFFF 100%);
+        linear-gradient(118deg, #071127 0%, #102A5F 53%, #EEF6FF 53.2%, #FFFFFF 100%);
       color: #FFFFFF;
       isolation: isolate;
     }
 
-    .hero-premium::before {
+    .hero-clean::before {
       content: "";
       position: absolute;
       inset: 0;
       z-index: -1;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
-      background-size: 84px 84px;
-      mask-image: linear-gradient(90deg, black 0%, black 42%, transparent 74%);
+        linear-gradient(rgba(255, 255, 255, 0.052) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.052) 1px, transparent 1px);
+      background-size: 82px 82px;
+      mask-image: linear-gradient(90deg, black 0%, black 54%, transparent 78%);
     }
 
-    .hero-premium::after {
+    .hero-clean::after {
       content: "";
       position: absolute;
       inset: auto 0 0;
-      height: 160px;
-      background: linear-gradient(180deg, rgba(247, 250, 255, 0) 0%, var(--how-bg) 100%);
+      height: 120px;
+      background: linear-gradient(180deg, rgba(246, 250, 255, 0) 0%, var(--how-bg) 100%);
       pointer-events: none;
     }
 
@@ -150,42 +154,45 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1.04fr) minmax(500px, 0.96fr);
+      grid-template-columns: minmax(0, 0.98fr) minmax(520px, 0.92fr);
       align-items: center;
-      gap: 64px;
-      padding: 138px 0 110px;
+      gap: 68px;
+      padding: 132px 0 96px;
     }
 
     .hero-copy {
-      max-width: 760px;
+      max-width: 650px;
     }
 
     .hero-kicker {
-      border-color: rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.10);
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.12);
       color: #DBEAFE;
-      box-shadow: 0 18px 44px rgba(2, 6, 23, 0.20);
+      box-shadow: 0 18px 44px rgba(2, 6, 23, 0.22);
     }
 
     .hero-title {
-      margin: 20px 0 0;
-      max-width: 680px;
+      margin: 22px 0 0;
+      max-width: 650px;
       color: #FFFFFF;
-      font-size: clamp(5.1rem, 7vw, 6.2rem);
+      font-size: clamp(4.45rem, 7.1vw, 6.4rem);
       font-weight: 900;
-      line-height: 0.92;
+      line-height: 0.96;
       letter-spacing: 0;
-      text-wrap: balance;
-      text-shadow: 0 22px 54px rgba(2, 6, 23, 0.30);
+      text-shadow: 0 22px 54px rgba(2, 6, 23, 0.32);
+    }
+
+    .hero-title span {
+      display: block;
     }
 
     .hero-lead {
-      max-width: 620px;
+      max-width: 560px;
       margin: 26px 0 0;
-      color: rgba(226, 232, 240, 0.86);
-      font-size: 1.13rem;
-      font-weight: 600;
-      line-height: 1.82;
+      color: rgba(226, 232, 240, 0.90);
+      font-size: 1.12rem;
+      font-weight: 650;
+      line-height: 1.78;
     }
 
     .hero-actions {
@@ -193,156 +200,442 @@
       flex-wrap: wrap;
       gap: 14px;
       align-items: center;
-      margin-top: 38px;
+      margin-top: 36px;
     }
 
-    .hero-stats {
+    .hero-proof {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 44px;
-      max-width: 620px;
+      gap: 12px;
+      margin-top: 42px;
+      max-width: 650px;
     }
 
-    .hero-stat {
-      min-height: 104px;
+    .proof-card {
+      min-height: 112px;
       padding: 18px;
-      border: 1px solid rgba(96, 165, 250, 0.22);
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 58, 138, 0.86) 100%);
+      border: 1px solid rgba(96, 165, 250, 0.24);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 64, 175, 0.84) 100%);
       box-shadow: 0 18px 44px rgba(2, 6, 23, 0.25);
       backdrop-filter: blur(18px);
     }
 
-    .hero-stat strong {
+    .proof-card strong {
       display: block;
       color: #FFFFFF;
-      font-size: 2.1rem;
+      font-size: 2.05rem;
       line-height: 1;
+      margin-bottom: 12px;
     }
 
-    .hero-stat span {
+    .proof-card span {
       display: block;
-      margin-top: 10px;
-      color: rgba(226, 232, 240, 0.74);
-      font-size: 0.78rem;
-      font-weight: 900;
-      line-height: 1.35;
+      color: rgba(226, 232, 240, 0.80);
+      font-size: 0.82rem;
+      font-weight: 850;
+      line-height: 1.4;
       text-transform: uppercase;
     }
 
     .hero-preview {
-      justify-self: stretch;
-      color: var(--how-ink);
+      position: relative;
+      display: grid;
+      gap: 16px;
     }
 
-    .hero-preview .premium-vehicle-shell {
-      width: 100%;
-      display: block;
-      padding: 0;
-    }
-
-    .hero-preview .premium-vehicle-view {
-      min-height: 510px;
-    }
-
-    .hero-preview .vehicle-viewer-card {
-      width: 100%;
-      min-height: 500px;
+    .preview-panel {
+      position: relative;
+      min-height: 520px;
+      border: 1px solid rgba(37, 99, 235, 0.18);
       border-radius: 8px;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(222, 235, 255, 0.90) 100%);
-      border-color: rgba(37, 99, 235, 0.18);
-      box-shadow: 0 34px 90px rgba(18, 47, 93, 0.20);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(222, 235, 255, 0.92) 100%);
+      box-shadow: 0 34px 90px rgba(18, 47, 93, 0.22);
+      overflow: hidden;
     }
 
-    .hero-preview .vehicle-sequence-stage {
-      width: min(570px, 92%);
-      height: 340px;
-    }
-
-    .preview-caption {
+    .preview-topbar {
       position: absolute;
-      left: 22px;
-      top: 22px;
-      z-index: 3;
+      left: 20px;
+      top: 20px;
+      z-index: 4;
       display: inline-flex;
       align-items: center;
       gap: 9px;
       padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.80);
+      background: rgba(255, 255, 255, 0.82);
       color: var(--how-blue);
       font-size: 12px;
       font-weight: 900;
       text-transform: uppercase;
       box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .preview-stage {
+      position: absolute;
+      inset: 64px 26px 86px;
+      display: grid;
+      place-items: center;
+    }
+
+    .preview-fallback {
+      position: absolute;
+      width: min(92%, 620px);
+      max-height: 100%;
+      object-fit: contain;
+      opacity: 0.98;
+      filter: drop-shadow(0 28px 34px rgba(30, 64, 175, 0.18));
+    }
+
+    .preview-stage .vehicle-sequence-stage {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 640px);
+      height: 360px;
+    }
+
+    .preview-stage canvas {
+      position: relative;
+      z-index: 2;
+    }
+
+    .preview-controls {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      z-index: 4;
+      transform: translateX(-50%);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      width: min(100% - 30px, 470px);
+    }
+
+    .preview-control {
+      min-height: 38px;
+      padding: 0 16px;
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      color: #44546A;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .preview-control:hover,
+    .preview-control.is-active {
+      border-color: rgba(37, 99, 235, 0.38);
+      background: rgba(37, 99, 235, 0.11);
+      color: #1D4ED8;
+    }
+
+    .preview-note {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid rgba(37, 99, 235, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.80);
+      color: #334155;
+      box-shadow: 0 14px 30px rgba(18, 47, 93, 0.08);
+    }
+
+    .preview-note .material-icons-round {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: #EAF2FF;
+      color: var(--how-blue);
+    }
+
+    .preview-note strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--how-ink);
+      font-size: 0.95rem;
+    }
+
+    .preview-note span:last-child {
+      color: var(--how-muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.45;
     }
 
     .trust-band {
       position: relative;
-      z-index: 3;
-      margin-top: -1px;
+      z-index: 2;
+      overflow: hidden;
+      border-top: 1px solid rgba(82, 105, 143, 0.12);
+      border-bottom: 1px solid rgba(82, 105, 143, 0.12);
       background: #FFFFFF;
     }
 
-    .trust-band .premium-marquee-item {
-      color: rgba(15, 23, 42, 0.26);
+    .trust-track {
+      display: flex;
+      width: max-content;
+      gap: 28px;
+      padding: 28px 0;
+      animation: howMarquee 28s linear infinite;
     }
 
-    .journey-scrolly {
-      --journey-overlap: clamp(560px, 75vh, 820px);
-      margin-top: 0;
-      margin-bottom: calc(var(--journey-overlap) * -1);
-      min-height: 205vh;
-      z-index: 1;
+    .trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      color: rgba(15, 23, 42, 0.38);
+      font-size: clamp(1.5rem, 3vw, 2.7rem);
+      font-weight: 900;
+      white-space: nowrap;
+      text-transform: uppercase;
     }
 
-    .journey-scrolly::after {
+    .trust-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--how-blue-2);
+      flex: 0 0 auto;
+    }
+
+    .journey-section {
+      position: relative;
+      padding: 108px 0 96px;
+      background:
+        linear-gradient(180deg, #F6FAFF 0%, #FFFFFF 48%, #F0F6FF 100%);
+    }
+
+    .journey-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.45fr);
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .journey-summary {
+      padding: 20px;
+      border: 1px solid var(--how-line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.80);
+      color: var(--how-muted);
+      box-shadow: 0 18px 44px rgba(18, 47, 93, 0.08);
+    }
+
+    .journey-summary strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--how-ink);
+      font-size: 1rem;
+    }
+
+    .journey-summary span {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step-card {
+      position: relative;
+      min-height: 328px;
+      padding: 22px;
+      border: 1px solid rgba(82, 105, 143, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 18px 44px rgba(18, 47, 93, 0.08);
+      overflow: hidden;
+    }
+
+    .step-card::before {
       content: "";
       position: absolute;
-      inset: auto 0 0;
-      height: calc(var(--journey-overlap) + 120px);
-      pointer-events: none;
-      background:
-        linear-gradient(180deg, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0.54) 42%, rgba(2, 6, 23, 0.96) 100%);
+      inset: 0 0 auto;
+      height: 4px;
+      background: linear-gradient(90deg, var(--how-blue), var(--how-gold));
+      transform: scaleX(0.18);
+      transform-origin: left;
+      transition: transform 0.42s ease;
     }
 
-    .journey-scrolly + .how-section {
-      position: relative;
-      z-index: 3;
-      padding-top: 138px;
-      border-top-left-radius: 34px;
-      border-top-right-radius: 34px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, #F7FAFF 26%, #FFFFFF 100%);
-      box-shadow: 0 -34px 84px rgba(15, 23, 42, 0.12);
+    .step-card:hover::before {
+      transform: scaleX(1);
     }
 
-    .premium-scrolly-title {
-      font-size: 5.6rem;
+    .step-number {
+      width: 52px;
+      height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      border-radius: 8px;
+      background: #EAF2FF;
+      color: var(--how-blue);
+      font-size: 1rem;
+      font-weight: 950;
+    }
+
+    .step-card h3 {
+      margin: 0 0 14px;
+      color: var(--how-ink);
+      font-size: 1.42rem;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .step-card p {
+      margin: 0;
+      color: var(--how-muted);
+      font-size: 0.98rem;
+      font-weight: 650;
+      line-height: 1.68;
+    }
+
+    .step-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 24px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.08);
+      color: #1D4ED8;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .visibility-section {
+      padding: 100px 0;
+      background: #071127;
+      color: #FFFFFF;
+    }
+
+    .visibility-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(500px, 1fr);
+      gap: 38px;
+      align-items: center;
+    }
+
+    .visibility-section .how-title,
+    .visibility-section .how-copy {
+      color: #FFFFFF;
+    }
+
+    .visibility-section .how-copy {
+      color: rgba(226, 232, 240, 0.84);
+    }
+
+    .visibility-board {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .visibility-card {
+      min-height: 250px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.78) 0%, rgba(30, 64, 175, 0.28) 100%);
+      box-shadow: 0 24px 70px rgba(2, 6, 23, 0.25);
+    }
+
+    .visibility-card.is-light {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(219, 234, 254, 0.96) 100%);
+      color: var(--how-ink);
+    }
+
+    .visibility-card > span:first-child {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      font-size: 0.76rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      color: #BFDBFE;
+    }
+
+    .visibility-card.is-light > span:first-child {
+      color: #1D4ED8;
+    }
+
+    .visibility-card h3 {
+      margin: 0 0 16px;
+      font-size: 1.6rem;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .visibility-card ul {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .visibility-card li {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 9px;
+      color: rgba(226, 232, 240, 0.84);
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.46;
+    }
+
+    .visibility-card.is-light li {
+      color: #53627A;
+    }
+
+    .visibility-card .material-icons-round {
+      color: var(--how-gold);
+      font-size: 20px;
+    }
+
+    .car-section {
+      padding: 108px 0;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F2F7FF 100%);
     }
 
     .lineup-head {
       display: grid;
-      grid-template-columns: minmax(0, 0.8fr) minmax(300px, 0.48fr);
-      gap: 40px;
+      grid-template-columns: minmax(0, 0.86fr) minmax(320px, 0.48fr);
+      gap: 34px;
       align-items: end;
       margin-bottom: 42px;
     }
 
     .lineup-note {
-      display: grid;
-      gap: 12px;
-      padding: 18px;
+      padding: 20px;
       border: 1px solid var(--how-line);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.78);
       color: var(--how-muted);
       box-shadow: 0 18px 44px rgba(18, 47, 93, 0.08);
     }
 
     .lineup-note strong {
+      display: block;
+      margin-bottom: 8px;
       color: var(--how-ink);
       font-size: 1rem;
     }
@@ -350,133 +643,102 @@
     .car-lineup {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      perspective: 1200px;
+      gap: 16px;
+      perspective: 1100px;
     }
 
-    .car-tilt-card {
+    .car-card {
       position: relative;
-      min-height: 470px;
+      min-height: 560px;
       display: grid;
-      align-content: space-between;
-      gap: 18px;
-      padding: 18px;
+      grid-template-rows: 250px minmax(0, 1fr);
       border: 1px solid rgba(82, 105, 143, 0.18);
       border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(235, 243, 255, 0.80) 100%);
-      box-shadow: var(--how-shadow);
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 24px 70px rgba(18, 47, 93, 0.10);
       overflow: hidden;
-      isolation: isolate;
-    }
-
-    .car-tilt-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        linear-gradient(145deg, rgba(37, 99, 235, 0.10) 0%, rgba(246, 199, 67, 0.12) 42%, rgba(255, 255, 255, 0) 70%);
-      opacity: 0;
-      transition: opacity 0.28s ease;
-    }
-
-    .car-tilt-card.is-tilting::before,
-    .car-tilt-card:hover::before {
-      opacity: 1;
-    }
-
-    .tilt-glare {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0;
-      background: radial-gradient(circle at var(--tilt-glare-x, 50%) var(--tilt-glare-y, 50%), rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 55%);
-      mix-blend-mode: overlay;
-      transition: opacity 0.26s ease;
-    }
-
-    .car-tilt-card.is-tilting .tilt-glare,
-    .car-tilt-card:hover .tilt-glare {
-      opacity: 1;
-    }
-
-    .car-media,
-    .car-info,
-    .car-meta {
-      position: relative;
-      z-index: 2;
+      transform-style: preserve-3d;
     }
 
     .car-media {
+      position: relative;
       display: grid;
       place-items: center;
-      min-height: 210px;
-      padding: 16px;
-      border-radius: 8px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(221, 234, 255, 0.70));
+      padding: 22px;
+      background:
+        linear-gradient(135deg, rgba(239, 246, 255, 0.94) 0%, rgba(255, 255, 255, 0.96) 56%, rgba(219, 234, 254, 0.80) 100%);
       overflow: hidden;
     }
 
     .car-media img {
-      width: min(100%, 390px);
-      height: 190px;
+      width: min(82%, 310px);
+      max-height: 210px;
       object-fit: contain;
-      filter: drop-shadow(0 28px 30px rgba(15, 23, 42, 0.18));
+      filter: drop-shadow(0 22px 26px rgba(30, 64, 175, 0.16));
       transform: translateZ(34px);
+    }
+
+    .car-body {
+      display: grid;
+      gap: 18px;
+      padding: 24px;
     }
 
     .car-class {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      color: var(--how-blue);
+      gap: 9px;
+      color: #1D4ED8;
       font-size: 0.82rem;
-      font-weight: 900;
+      font-weight: 950;
       text-transform: uppercase;
     }
 
-    .car-info h3 {
-      margin: 10px 0 10px;
-      color: var(--how-ink);
-      font-size: 2rem;
-      font-weight: 900;
-      line-height: 1.06;
+    .car-class .material-icons-round {
+      color: var(--how-gold);
+      font-size: 21px;
     }
 
-    .car-info p {
+    .car-body h3 {
+      margin: 0;
+      color: var(--how-ink);
+      font-size: clamp(1.85rem, 3vw, 2.45rem);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .car-body p {
       margin: 0;
       color: var(--how-muted);
-      font-weight: 650;
-      line-height: 1.66;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.64;
     }
 
     .car-meta {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
+      margin-top: auto;
     }
 
     .car-meta span {
-      min-height: 42px;
+      min-height: 44px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 7px;
       border: 1px solid rgba(82, 105, 143, 0.16);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.68);
+      background: rgba(255, 255, 255, 0.74);
       color: #334155;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       font-weight: 900;
     }
 
-    .features-wrap {
-      background:
-        linear-gradient(180deg, #FFFFFF 0%, #F3F8FF 100%);
-      border-top: 1px solid rgba(82, 105, 143, 0.12);
-      border-bottom: 1px solid rgba(82, 105, 143, 0.12);
+    .feature-section {
+      padding: 100px 0;
+      background: #FFFFFF;
     }
 
     .feature-grid {
@@ -488,18 +750,13 @@
 
     .feature-tile {
       position: relative;
-      min-height: 250px;
+      min-height: 260px;
       padding: 22px;
       border: 1px solid rgba(82, 105, 143, 0.18);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.88);
       box-shadow: 0 18px 44px rgba(18, 47, 93, 0.08);
       overflow: hidden;
-    }
-
-    .feature-tile > * {
-      position: relative;
-      z-index: 1;
     }
 
     .feature-icon {
@@ -508,277 +765,274 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 30px;
       border-radius: 8px;
       background: linear-gradient(135deg, #DBEAFE 0%, #FFFFFF 100%);
       color: var(--how-blue);
       box-shadow: 0 14px 30px rgba(37, 99, 235, 0.10);
     }
 
-    .feature-icon .material-icons-round {
-      font-size: 25px;
-    }
-
     .feature-tile h3 {
-      margin: 26px 0 10px;
+      margin: 0 0 12px;
       color: var(--how-ink);
-      font-size: 1.22rem;
-      font-weight: 900;
-      line-height: 1.2;
+      font-size: 1.26rem;
+      line-height: 1.18;
+      letter-spacing: 0;
     }
 
     .feature-tile p {
       margin: 0;
       color: var(--how-muted);
+      font-size: 0.96rem;
       font-weight: 650;
-      line-height: 1.66;
+      line-height: 1.62;
     }
 
     .quote-section {
-      position: relative;
-      padding: 128px 0;
-      background: #071127;
+      padding: 108px 0;
+      background:
+        linear-gradient(180deg, #071127 0%, #102A5F 100%);
       color: #FFFFFF;
-      overflow: hidden;
-    }
-
-    .quote-section::before {
-      content: "WEDRIVE";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      color: rgba(255, 255, 255, 0.04);
-      font-size: 8rem;
-      font-weight: 900;
-      line-height: 1;
-      white-space: nowrap;
-      pointer-events: none;
     }
 
     .quote-panel {
-      position: relative;
-      z-index: 1;
-      width: min(1000px, calc(100% - 40px));
+      width: min(1120px, calc(100% - 40px));
       margin: 0 auto;
-      text-align: center;
+      padding: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 26px 80px rgba(2, 6, 23, 0.26);
+      backdrop-filter: blur(18px);
     }
 
     .quote-panel blockquote {
-      margin: 22px auto 0;
-      max-width: 940px;
+      margin: 28px 0 0;
+      max-width: 980px;
       color: #FFFFFF;
-      font-size: 3.8rem;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
       font-weight: 900;
-      line-height: 1.08;
+      line-height: 1.05;
       letter-spacing: 0;
       text-wrap: balance;
     }
 
     .quote-panel p {
-      max-width: 620px;
-      margin: 26px auto 0;
-      color: rgba(226, 232, 240, 0.78);
+      max-width: 720px;
+      margin: 24px 0 0;
+      color: rgba(226, 232, 240, 0.84);
       font-size: 1.05rem;
       font-weight: 650;
-      line-height: 1.72;
+      line-height: 1.74;
     }
 
     .final-cta {
       position: relative;
-      min-height: 76vh;
-      display: grid;
-      align-items: center;
+      padding: 104px 0 118px;
+      background: linear-gradient(180deg, #F1F7FF 0%, #FFFFFF 100%);
       overflow: hidden;
-      background:
-        linear-gradient(135deg, #F8FBFF 0%, #EAF2FF 45%, #FFFFFF 100%);
     }
 
     .cta-bg-text {
       position: absolute;
-      left: -2%;
-      top: 10%;
-      color: rgba(37, 99, 235, 0.06);
-      font-size: 8rem;
-      font-weight: 900;
-      line-height: 0.9;
+      left: 50%;
+      top: 28px;
+      transform: translateX(-50%);
+      color: rgba(37, 99, 235, 0.07);
+      font-size: clamp(4rem, 12vw, 11rem);
+      font-weight: 950;
+      line-height: 1;
       white-space: nowrap;
       pointer-events: none;
     }
 
     .cta-panel {
       position: relative;
-      z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
-      gap: 34px;
-      align-items: end;
-      padding: 42px;
-      border: 1px solid rgba(82, 105, 143, 0.16);
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 28px;
+      align-items: center;
+      padding: 34px;
+      border: 1px solid rgba(82, 105, 143, 0.18);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.88);
       box-shadow: var(--how-shadow);
-      backdrop-filter: blur(18px);
       overflow: hidden;
     }
 
-    .cta-panel > * {
-      position: relative;
-      z-index: 1;
-    }
-
     .cta-panel h2 {
-      margin: 16px 0 0;
-      max-width: 760px;
+      margin: 18px 0 0;
       color: var(--how-ink);
-      font-size: 4.4rem;
-      font-weight: 900;
-      line-height: 0.98;
+      font-size: clamp(2.45rem, 5vw, 4.6rem);
+      line-height: 1.02;
       letter-spacing: 0;
-      text-wrap: balance;
     }
 
     .cta-panel p {
-      max-width: 630px;
+      max-width: 690px;
       margin: 18px 0 0;
       color: var(--how-muted);
+      font-size: 1.05rem;
       font-weight: 650;
-      line-height: 1.72;
+      line-height: 1.74;
     }
 
     .cta-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 30px;
+      margin-top: 28px;
     }
 
     .cta-meter {
+      min-height: 220px;
       display: grid;
-      gap: 12px;
-      padding: 22px;
-      border: 1px solid rgba(82, 105, 143, 0.16);
+      align-content: center;
+      padding: 24px;
       border-radius: 8px;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(30, 58, 138, 0.90));
+      background:
+        linear-gradient(135deg, #071127 0%, #173778 100%);
       color: #FFFFFF;
-      box-shadow: 0 24px 64px rgba(15, 23, 42, 0.20);
+      box-shadow: 0 20px 54px rgba(2, 6, 23, 0.18);
     }
 
     .cta-meter strong {
-      font-size: 3rem;
+      display: block;
+      margin-bottom: 14px;
+      color: #FFFFFF;
+      font-size: 4rem;
       line-height: 1;
     }
 
     .cta-meter span {
-      color: rgba(226, 232, 240, 0.74);
-      font-size: 0.8rem;
-      font-weight: 900;
-      line-height: 1.35;
+      color: rgba(226, 232, 240, 0.82);
+      font-weight: 850;
+      line-height: 1.45;
       text-transform: uppercase;
     }
 
-    .feature-tile[data-spotlight]::after {
-      background: radial-gradient(circle 420px at var(--spotlight-x) var(--spotlight-y), rgba(37, 99, 235, 0.18) 0%, rgba(37, 99, 235, 0) 65%);
+    @keyframes howMarquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
     @media (max-width: 1180px) {
-      .hero-grid {
+      .hero-grid,
+      .visibility-grid {
         grid-template-columns: 1fr;
-        gap: 42px;
       }
 
-      .hero-title {
-        font-size: 5.6rem;
+      .hero-clean {
+        background: linear-gradient(180deg, #071127 0%, #102A5F 62%, #F6FAFF 62.2%, #FFFFFF 100%);
       }
 
-      .hero-preview .premium-vehicle-view {
-        min-height: 460px;
+      .hero-clean::before {
+        mask-image: linear-gradient(180deg, black 0%, black 60%, transparent 88%);
       }
 
-      .car-lineup,
+      .hero-preview {
+        max-width: 760px;
+      }
+
+      .step-grid,
       .feature-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .lineup-head,
-      .cta-panel {
+      .car-lineup {
         grid-template-columns: 1fr;
+      }
+
+      .car-card {
+        grid-template-columns: minmax(300px, 0.42fr) minmax(0, 1fr);
+        grid-template-rows: none;
+        min-height: 360px;
+      }
+
+      .car-media {
+        min-height: 100%;
       }
     }
 
-    @media (max-width: 760px) {
-      .how-shell {
-        width: min(100% - 28px, 640px);
-      }
-
-      .how-section {
-        padding: 78px 0;
-      }
-
-      .journey-scrolly {
-        --journey-overlap: 320px;
-        min-height: 190vh;
-      }
-
-      .journey-scrolly + .how-section {
-        padding-top: 108px;
-        border-top-left-radius: 24px;
-        border-top-right-radius: 24px;
-      }
-
-      .hero-premium {
-        background: linear-gradient(180deg, #071127 0%, #102759 58%, #F8FBFF 58.2%, #FFFFFF 100%);
+    @media (max-width: 820px) {
+      .how-shell,
+      .quote-panel {
+        width: min(100% - 28px, 660px);
       }
 
       .hero-grid {
-        padding: 116px 0 70px;
+        padding: 116px 0 72px;
+        gap: 44px;
       }
 
-      .hero-title,
-      .how-title,
-      .premium-scrolly-title,
-      .cta-panel h2 {
-        font-size: 3.25rem;
-        line-height: 1.02;
+      .hero-title {
+        font-size: clamp(3.45rem, 15vw, 4.8rem);
       }
 
-      .hero-lead,
-      .how-copy {
-        font-size: 1rem;
+      .hero-proof,
+      .journey-head,
+      .lineup-head,
+      .visibility-board,
+      .cta-panel {
+        grid-template-columns: 1fr;
       }
 
-      .hero-stats,
-      .car-lineup,
+      .preview-panel {
+        min-height: 420px;
+      }
+
+      .preview-stage {
+        inset: 58px 16px 92px;
+      }
+
+      .preview-stage .vehicle-sequence-stage {
+        height: 250px;
+      }
+
+      .step-grid,
       .feature-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-preview .vehicle-viewer-card {
-        min-height: 390px;
+      .car-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: 230px minmax(0, 1fr);
+        min-height: 0;
       }
 
-      .hero-preview .premium-vehicle-view {
-        min-height: 390px;
+      .quote-panel {
+        padding: 28px;
       }
 
-      .hero-preview .vehicle-sequence-stage {
-        height: 240px;
+      .cta-meter {
+        min-height: 180px;
       }
+    }
 
-      .car-tilt-card {
-        min-height: 430px;
-      }
-
-      .quote-panel blockquote {
+    @media (max-width: 560px) {
+      .how-title,
+      .cta-panel h2 {
         font-size: 2.45rem;
       }
 
-      .quote-section::before,
-      .cta-bg-text {
-        font-size: 4.8rem;
+      .hero-actions,
+      .cta-actions {
+        display: grid;
+        grid-template-columns: 1fr;
       }
 
-      .cta-panel {
-        padding: 24px;
+      .how-action {
+        width: 100%;
+      }
+
+      .preview-controls {
+        gap: 6px;
+      }
+
+      .preview-control {
+        min-height: 34px;
+        padding: 0 12px;
+        font-size: 0.78rem;
       }
     }
   </style>
@@ -787,17 +1041,20 @@
   <div id="navbar-placeholder" data-module="guest"></div>
 
   <main class="how-page">
-    <section class="hero-premium">
+    <section class="hero-clean">
       <div class="how-shell hero-grid">
         <div class="hero-copy">
           <span class="how-kicker hero-kicker reveal-onload motion-sheen">
             <span class="material-icons-round">route</span>
             <span data-key="how_new_hero_kicker">Premium rental guide</span>
           </span>
-          <h1 class="hero-title kinetic-light reveal-onload reveal-blur" data-kinetic="chars" data-key="how_new_hero_title">Rent with clarity from search to keys</h1>
-          <p class="hero-lead reveal-onload reveal-blur" data-delay="160" data-key="how_new_hero_sub">A polished step-by-step guide for customers to browse, match, pay, and collect the right car with confidence.</p>
+          <h1 class="hero-title reveal-onload reveal-blur">
+            <span data-key="how_new_hero_title_line1">Rent smarter,</span>
+            <span data-key="how_new_hero_title_line2">not harder</span>
+          </h1>
+          <p class="hero-lead reveal-onload reveal-blur" data-delay="140" data-key="how_new_hero_sub">A clear rental guide for browsing cars, choosing the right match, paying safely, and collecting keys without confusion.</p>
 
-          <div class="hero-actions reveal-onload" data-delay="260">
+          <div class="hero-actions reveal-onload" data-delay="240">
             <a href="#journey" class="how-action magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
               <span class="material-icons-round">timeline</span>
               <span data-key="how_new_hero_primary">See the journey</span>
@@ -808,118 +1065,160 @@
             </a>
           </div>
 
-          <div class="hero-stats">
-            <div class="hero-stat reveal-onload" data-delay="360">
+          <div class="hero-proof">
+            <div class="proof-card reveal-onload" data-delay="340">
               <strong data-scramble data-key="how_new_stat1_value">04</strong>
-              <span data-key="how_new_stat1_label">Guided rental stages</span>
+              <span data-key="how_new_stat1_label">Rental checkpoints</span>
             </div>
-            <div class="hero-stat reveal-onload" data-delay="430">
+            <div class="proof-card reveal-onload" data-delay="410">
               <strong data-scramble data-key="how_new_stat2_value">200</strong>
-              <span data-key="how_new_stat2_label">Real BMW preview frames</span>
+              <span data-key="how_new_stat2_label">BMW inspection frames</span>
             </div>
-            <div class="hero-stat reveal-onload" data-delay="500">
+            <div class="proof-card reveal-onload" data-delay="480">
               <strong data-scramble data-key="how_new_stat3_value">0</strong>
-              <span data-key="how_new_stat3_label">Private details shown to guests</span>
+              <span data-key="how_new_stat3_label">Plate numbers before payment</span>
             </div>
           </div>
         </div>
 
         <div class="hero-preview reveal-onload" data-delay="220">
-          <div class="premium-vehicle-showcase" data-vehicle-3d data-auto="true">
-            <div class="premium-vehicle-shell">
-              <div class="premium-vehicle-view">
-                <div class="vehicle-viewer-card motion-sheen" data-spotlight>
-                  <span class="preview-caption">
-                    <span class="material-icons-round">view_in_ar</span>
-                    <span data-key="how_new_preview_badge">Live 360 preview</span>
-                  </span>
-                  <div class="vehicle-floor" aria-hidden="true"></div>
-                  <div class="vehicle-orbit" aria-hidden="true"></div>
-                  <div class="vehicle-shadow" aria-hidden="true"></div>
-                  <div class="vehicle-3d-stage vehicle-sequence-stage" data-vehicle-stage data-cursor="drag" data-cursor-label="Drag">
-                    <canvas
-                      class="vehicle-sequence-canvas"
-                      data-vehicle-sequence
-                      data-frame-src-low="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/exterior/low-res/frame-{padded}.jpg"
-                      data-frame-src-full="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/exterior/full-res/frame-{padded}.jpg"
-                      data-frame-start="0"
-                      data-frame-end="199"
-                      data-frame-pad="3"
-                      data-frame-fit="contain"
-                      data-frame-zoom="1.03"
-                      data-frame-offset-y="-0.02"
-                      aria-label="BMW 3 Series interactive exterior preview"></canvas>
-                  </div>
-                  <div class="vehicle-controls" aria-label="BMW preview controls">
-                    <button class="vehicle-control" type="button" data-vehicle-auto data-ripple data-key="how_3d_auto">Auto</button>
-                    <button class="vehicle-control" type="button" data-vehicle-angle="front" data-frame-target="125" data-ripple data-key="how_3d_front">Front</button>
-                    <button class="vehicle-control" type="button" data-vehicle-angle="left" data-frame-target="75" data-ripple data-key="how_3d_left">Left</button>
-                    <button class="vehicle-control" type="button" data-vehicle-angle="rear" data-frame-target="24" data-ripple data-key="how_3d_rear">Rear</button>
-                    <button class="vehicle-control" type="button" data-vehicle-angle="right" data-frame-target="175" data-ripple data-key="how_3d_right">Right</button>
-                  </div>
-                </div>
+          <div class="preview-panel premium-hover-soft" data-vehicle-3d data-auto="true">
+            <span class="preview-topbar">
+              <span class="material-icons-round">view_in_ar</span>
+              <span data-key="how_new_preview_badge">Real 360 preview</span>
+            </span>
+            <div class="preview-stage">
+              <img class="preview-fallback" src="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/exterior/full-res/frame-125.jpg" alt="BMW 3 Series front preview" />
+              <div class="vehicle-3d-stage vehicle-sequence-stage" data-vehicle-stage data-cursor="drag">
+                <canvas
+                  class="vehicle-sequence-canvas"
+                  data-vehicle-sequence
+                  data-frame-src-low="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/exterior/low-res/frame-{padded}.jpg"
+                  data-frame-src-full="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/exterior/full-res/frame-{padded}.jpg"
+                  data-frame-start="0"
+                  data-frame-end="199"
+                  data-frame-pad="3"
+                  data-frame-fit="contain"
+                  data-frame-zoom="1.02"
+                  data-frame-offset-y="-0.02"
+                  aria-label="BMW 3 Series interactive exterior preview"></canvas>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="trust-band premium-marquee" aria-label="WeDRIVE trust highlights">
-      <div class="premium-marquee-track" aria-hidden="true">
-        <span class="premium-marquee-item" data-key="how_new_marquee_1">Browse first</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_2">AI car match</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_3">Secure payment</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_4">Pickup ready</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_5">Details protected</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_1">Browse first</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_2">AI car match</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_3">Secure payment</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_4">Pickup ready</span>
-        <span class="premium-marquee-item" data-key="how_new_marquee_5">Details protected</span>
-      </div>
-    </section>
-
-    <section id="journey" class="journey-scrolly premium-scrolly" data-scrolly-section>
-      <div class="premium-scrolly-sticky">
-        <canvas class="premium-scrolly-canvas" data-motion-canvas data-motion-accent-rgb="96,165,250" data-motion-warm-rgb="246,199,67" aria-hidden="true"></canvas>
-        <div class="premium-scrolly-stage">
-          <div class="premium-scrolly-phase-wrap">
-            <article class="premium-scrolly-phase" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_new_step1_label">01 Browse</span>
-              <h2 class="premium-scrolly-title" data-key="how_new_step1_title">Start as a guest</h2>
-              <p class="premium-scrolly-copy" data-key="how_new_step1_copy">Open the showroom, compare prices, seats, fuel type, and trip fit before creating an account.</p>
-            </article>
-            <article class="premium-scrolly-phase" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_new_step2_label">02 Match</span>
-              <h2 class="premium-scrolly-title" data-key="how_new_step2_title">Let AI narrow the car</h2>
-              <p class="premium-scrolly-copy" data-key="how_new_step2_copy">Use your destination, group size, budget, and comfort needs to choose a car that fits the road.</p>
-            </article>
-            <article class="premium-scrolly-phase" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_new_step3_label">03 Confirm</span>
-              <h2 class="premium-scrolly-title" data-key="how_new_step3_title">Pay securely</h2>
-              <p class="premium-scrolly-copy" data-key="how_new_step3_copy">Complete payment first. Booking confirmation unlocks the private handover flow and sensitive car details.</p>
-            </article>
-            <article class="premium-scrolly-phase" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_new_step4_label">04 Pickup</span>
-              <h2 class="premium-scrolly-title" data-key="how_new_step4_title">Collect with confidence</h2>
-              <p class="premium-scrolly-copy" data-key="how_new_step4_copy">Bring verified documents, inspect the car condition, receive the keys, and start the trip calmly.</p>
-            </article>
-          </div>
-          <aside class="premium-scrolly-meter motion-sheen">
-            <div class="premium-scrolly-meter-track"><span class="premium-scrolly-meter-fill"></span></div>
-            <div class="premium-scrolly-dots">
-              <span class="premium-scrolly-dot" data-step="01" data-scrolly-dot data-key="how_new_dot1">Browse first</span>
-              <span class="premium-scrolly-dot" data-step="02" data-scrolly-dot data-key="how_new_dot2">AI match</span>
-              <span class="premium-scrolly-dot" data-step="03" data-scrolly-dot data-key="how_new_dot3">Pay securely</span>
-              <span class="premium-scrolly-dot" data-step="04" data-scrolly-dot data-key="how_new_dot4">Pickup keys</span>
+            <div class="preview-controls" aria-label="BMW preview controls">
+              <button class="preview-control" type="button" data-vehicle-auto data-ripple data-key="how_3d_auto">Auto</button>
+              <button class="preview-control" type="button" data-vehicle-angle="front" data-frame-target="125" data-ripple data-key="how_3d_front">Front</button>
+              <button class="preview-control" type="button" data-vehicle-angle="left" data-frame-target="75" data-ripple data-key="how_3d_left">Left</button>
+              <button class="preview-control" type="button" data-vehicle-angle="rear" data-frame-target="24" data-ripple data-key="how_3d_rear">Rear</button>
+              <button class="preview-control" type="button" data-vehicle-angle="right" data-frame-target="175" data-ripple data-key="how_3d_right">Right</button>
             </div>
-          </aside>
+          </div>
+          <div class="preview-note reveal-onload" data-delay="320">
+            <span class="material-icons-round">lock</span>
+            <span>
+              <strong data-key="how_new_preview_note_title">Guest-safe preview</strong>
+              <span data-key="how_new_preview_note_copy">Guests inspect the real car visually, while plate and handover details stay hidden until payment is complete.</span>
+            </span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="how-section">
+    <section class="trust-band" aria-label="WeDRIVE trust highlights">
+      <div class="trust-track" aria-hidden="true">
+        <span class="trust-item" data-key="how_new_marquee_1">Browse first</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_2">AI car match</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_3">Secure payment</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_4">Pickup ready</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_5">Details protected</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_1">Browse first</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_2">AI car match</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_3">Secure payment</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_4">Pickup ready</span><span class="trust-dot"></span>
+        <span class="trust-item" data-key="how_new_marquee_5">Details protected</span><span class="trust-dot"></span>
+      </div>
+    </section>
+
+    <section id="journey" class="journey-section">
+      <div class="how-shell">
+        <div class="journey-head">
+          <div>
+            <span class="how-kicker reveal-on-scroll motion-sheen">
+              <span class="material-icons-round">near_me</span>
+              <span data-key="how_new_journey_kicker">Customer journey</span>
+            </span>
+            <h2 class="how-title reveal-on-scroll reveal-blur" data-key="how_new_journey_title">A clean route from browsing to pickup</h2>
+            <p class="how-copy reveal-on-scroll reveal-blur" data-delay="80" data-key="how_new_journey_sub">The page now teaches what matters at each stage, without making the customer scroll through empty visual space.</p>
+          </div>
+          <div class="journey-summary reveal-on-scroll premium-hover-soft" data-delay="120">
+            <strong data-key="how_new_lineup_note_title">What customers should understand</strong>
+            <span data-key="how_new_lineup_note_copy">They can browse public car details first, then sign up, pay securely, and only then receive sensitive pickup information.</span>
+          </div>
+        </div>
+
+        <div class="step-grid">
+          <article class="step-card reveal-on-scroll premium-hover" data-delay="0">
+            <span class="step-number">01</span>
+            <h3 data-key="how_new_step1_title">Browse public details</h3>
+            <p data-key="how_new_step1_copy">Compare photos, price, seats, fuel type, and trip fit before creating an account.</p>
+            <span class="step-tag"><span class="material-icons-round">visibility</span><span data-key="how_new_dot1">Browse first</span></span>
+          </article>
+          <article class="step-card reveal-on-scroll premium-hover" data-delay="90">
+            <span class="step-number">02</span>
+            <h3 data-key="how_new_step2_title">Match the right car</h3>
+            <p data-key="how_new_step2_copy">Use passenger count, route type, luggage, and comfort needs to narrow the car choice.</p>
+            <span class="step-tag"><span class="material-icons-round">psychology</span><span data-key="how_new_dot2">AI match</span></span>
+          </article>
+          <article class="step-card reveal-on-scroll premium-hover" data-delay="180">
+            <span class="step-number">03</span>
+            <h3 data-key="how_new_step3_title">Pay to confirm</h3>
+            <p data-key="how_new_step3_copy">Complete payment first so the booking is locked and private handover details can be released safely.</p>
+            <span class="step-tag"><span class="material-icons-round">credit_score</span><span data-key="how_new_dot3">Pay securely</span></span>
+          </article>
+          <article class="step-card reveal-on-scroll premium-hover" data-delay="270">
+            <span class="step-number">04</span>
+            <h3 data-key="how_new_step4_title">Inspect, collect, drive</h3>
+            <p data-key="how_new_step4_copy">Bring verified documents, inspect the car condition, receive the keys, and start the trip confidently.</p>
+            <span class="step-tag"><span class="material-icons-round">key</span><span data-key="how_new_dot4">Pickup keys</span></span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" class="visibility-section">
+      <div class="how-shell visibility-grid">
+        <div>
+          <span class="how-kicker hero-kicker reveal-on-scroll motion-sheen">
+            <span class="material-icons-round">shield</span>
+            <span data-key="how_new_features_kicker">Protected by design</span>
+          </span>
+          <h2 class="how-title reveal-on-scroll reveal-blur" data-key="how_new_features_title">Clear for guests, private after payment</h2>
+          <p class="how-copy reveal-on-scroll reveal-blur" data-delay="80" data-key="how_new_features_sub">Customers should know enough to choose confidently, but private car identifiers stay hidden until the booking is paid and confirmed.</p>
+        </div>
+
+        <div class="visibility-board">
+          <article class="visibility-card reveal-on-scroll" data-delay="80">
+            <span><span class="material-icons-round">public</span><span data-key="how_new_guest_can_title">Guest can see</span></span>
+            <h3 data-key="how_new_guest_can_head">Decision details</h3>
+            <ul>
+              <li><span class="material-icons-round">check_circle</span><span data-key="how_new_guest_can_1">Car model, category, seats, fuel, and price</span></li>
+              <li><span class="material-icons-round">check_circle</span><span data-key="how_new_guest_can_2">Photos and 360 preview for visual confidence</span></li>
+              <li><span class="material-icons-round">check_circle</span><span data-key="how_new_guest_can_3">AI recommendation and trip suitability</span></li>
+            </ul>
+          </article>
+          <article class="visibility-card is-light reveal-on-scroll" data-delay="160">
+            <span><span class="material-icons-round">lock</span><span data-key="how_new_after_payment_title">After payment</span></span>
+            <h3 data-key="how_new_after_payment_head">Private handover</h3>
+            <ul>
+              <li><span class="material-icons-round">verified</span><span data-key="how_new_after_payment_1">Plate number and exact car identity</span></li>
+              <li><span class="material-icons-round">verified</span><span data-key="how_new_after_payment_2">Pickup contact and handover instructions</span></li>
+              <li><span class="material-icons-round">verified</span><span data-key="how_new_after_payment_3">Final checklist before key collection</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="cars" class="car-section">
       <div class="how-shell">
         <div class="lineup-head">
           <div>
@@ -927,113 +1226,110 @@
               <span class="material-icons-round">directions_car</span>
               <span data-key="how_new_lineup_kicker">Car lineup</span>
             </span>
-            <h2 class="how-title reveal-on-scroll reveal-blur kinetic-text" data-scroll-progress data-key="how_new_lineup_title">Choose by trip style, not guesswork</h2>
+            <h2 class="how-title reveal-on-scroll reveal-blur" data-key="how_new_lineup_title">Choose by trip style, not guesswork</h2>
           </div>
-          <div class="lineup-note reveal-on-scroll premium-hover-soft">
-            <strong data-key="how_new_lineup_note_title">Three clear starting points</strong>
-            <span data-key="how_new_lineup_note_copy">Economy for simple city drives, SUV for family comfort, and luxury for a sharper arrival.</span>
+          <div class="lineup-note reveal-on-scroll premium-hover-soft" data-delay="120">
+            <strong data-key="how_new_lineup_note_title">Three useful starting points</strong>
+            <span data-key="how_new_lineup_note_copy">Economy for city errands, SUV for family luggage, and luxury for business or event arrivals.</span>
           </div>
         </div>
 
         <div class="car-lineup">
-          <article class="car-tilt-card reveal-on-scroll" data-tilt-card data-cursor="media" data-cursor-label="Vios">
-            <span class="tilt-glare" data-tilt-glare aria-hidden="true"></span>
-            <div class="car-media" data-tilt-layer style="--tilt-depth: 34px;">
+          <article class="car-card reveal-on-scroll premium-hover" data-tilt-card>
+            <div class="car-media" data-tilt-layer style="--tilt-depth: 28px;">
               <img src="../../shared/images/cars/toyota-vios-2023.png" alt="Toyota Vios 2023" />
             </div>
-            <div class="car-info" data-tilt-layer>
+            <div class="car-body" data-tilt-layer>
               <span class="car-class"><span class="material-icons-round">savings</span><span data-key="how_new_car1_class">Economy</span></span>
               <h3 data-key="how_new_car1_name">Toyota Vios</h3>
-              <p data-key="how_new_car1_copy">Efficient, easy to park, and ideal for Melaka city routes or quick daily errands.</p>
-            </div>
-            <div class="car-meta" data-tilt-layer>
-              <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
-              <span><span class="material-icons-round">local_gas_station</span><span data-key="how_new_petrol">Petrol</span></span>
+              <p data-key="how_new_car1_copy">Best for simple Melaka city drives, low fuel cost, easy parking, and quick daily errands.</p>
+              <div class="car-meta">
+                <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
+                <span><span class="material-icons-round">local_gas_station</span><span data-key="how_new_petrol">Petrol</span></span>
+              </div>
             </div>
           </article>
 
-          <article class="car-tilt-card reveal-on-scroll" data-delay="90" data-tilt-card data-cursor="media" data-cursor-label="HR-V">
-            <span class="tilt-glare" data-tilt-glare aria-hidden="true"></span>
-            <div class="car-media" data-tilt-layer style="--tilt-depth: 34px;">
+          <article class="car-card reveal-on-scroll premium-hover" data-delay="90" data-tilt-card>
+            <div class="car-media" data-tilt-layer style="--tilt-depth: 28px;">
               <img src="../../shared/images/cars/honda-crv-2024.png" alt="Honda HR-V SUV" />
             </div>
-            <div class="car-info" data-tilt-layer>
+            <div class="car-body" data-tilt-layer>
               <span class="car-class"><span class="material-icons-round">family_restroom</span><span data-key="how_new_car2_class">SUV</span></span>
               <h3 data-key="how_new_car2_name">Honda HR-V</h3>
-              <p data-key="how_new_car2_copy">A comfortable SUV choice for small families, luggage, and smoother out-of-city routes.</p>
-            </div>
-            <div class="car-meta" data-tilt-layer>
-              <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
-              <span><span class="material-icons-round">bolt</span><span data-key="how_new_hybrid">Hybrid</span></span>
+              <p data-key="how_new_car2_copy">Best for families, extra bags, smoother highway comfort, and day trips outside the city.</p>
+              <div class="car-meta">
+                <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
+                <span><span class="material-icons-round">bolt</span><span data-key="how_new_hybrid">Hybrid</span></span>
+              </div>
             </div>
           </article>
 
-          <article class="car-tilt-card reveal-on-scroll" data-delay="180" data-tilt-card data-cursor="media" data-cursor-label="BMW">
-            <span class="tilt-glare" data-tilt-glare aria-hidden="true"></span>
-            <div class="car-media" data-tilt-layer style="--tilt-depth: 34px;">
+          <article class="car-card reveal-on-scroll premium-hover" data-delay="180" data-tilt-card>
+            <div class="car-media" data-tilt-layer style="--tilt-depth: 28px;">
               <img src="../../shared/images/cars/bmw-3series-2024.png" alt="BMW 3 Series" />
             </div>
-            <div class="car-info" data-tilt-layer>
+            <div class="car-body" data-tilt-layer>
               <span class="car-class"><span class="material-icons-round">diamond</span><span data-key="how_new_car3_class">Luxury</span></span>
               <h3 data-key="how_new_car3_name">BMW 3 Series</h3>
-              <p data-key="how_new_car3_copy">Refined performance and premium comfort for business trips, events, and elevated drives.</p>
-            </div>
-            <div class="car-meta" data-tilt-layer>
-              <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
-              <span><span class="material-icons-round">workspace_premium</span><span data-key="how_new_premium">Premium</span></span>
+              <p data-key="how_new_car3_copy">Best for executive travel, weddings, formal events, and customers who want a sharper arrival.</p>
+              <div class="car-meta">
+                <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
+                <span><span class="material-icons-round">workspace_premium</span><span data-key="how_new_premium">Premium</span></span>
+              </div>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="how-section features-wrap">
+    <section id="features" class="feature-section">
       <div class="how-shell">
         <span class="how-kicker reveal-on-scroll motion-sheen">
           <span class="material-icons-round">auto_awesome</span>
-          <span data-key="how_new_features_kicker">Built for calm booking</span>
+          <span data-key="how_new_feature_grid_kicker">Why the flow feels better</span>
         </span>
-        <h2 class="how-title reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_new_features_title">Small details that make the rental feel premium</h2>
-        <p class="how-copy reveal-on-scroll reveal-blur" data-delay="90" data-key="how_new_features_sub">Each step gives customers enough context before they commit, while private car details stay protected until payment is done.</p>
+        <h2 class="how-title reveal-on-scroll reveal-blur" data-key="how_new_feature_grid_title">Useful details, not decoration</h2>
+        <p class="how-copy reveal-on-scroll reveal-blur" data-delay="80" data-key="how_new_feature_grid_sub">Every panel explains what helps customers decide, what protects the business, and what makes pickup smoother.</p>
 
         <div class="feature-grid">
-          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-spotlight data-cursor="hover">
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-spotlight>
             <span class="feature-icon"><span class="material-icons-round">psychology</span></span>
             <h3 data-key="how_new_feature1_title">AI trip matching</h3>
-            <p data-key="how_new_feature1_copy">Recommend cars based on trip distance, passenger count, comfort level, and route style.</p>
+            <p data-key="how_new_feature1_copy">Recommend cars from route type, passenger count, luggage needs, and comfort level.</p>
           </article>
-          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="80" data-spotlight data-cursor="hover">
-            <span class="feature-icon"><span class="material-icons-round">verified_user</span></span>
-            <h3 data-key="how_new_feature2_title">Protected details</h3>
-            <p data-key="how_new_feature2_copy">Guests can compare cars without seeing sensitive identifiers before payment approval.</p>
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="80" data-spotlight>
+            <span class="feature-icon"><span class="material-icons-round">badge</span></span>
+            <h3 data-key="how_new_feature2_title">Plate privacy</h3>
+            <p data-key="how_new_feature2_copy">Guests can compare cars without seeing plate numbers or exact handover details.</p>
           </article>
-          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="160" data-spotlight data-cursor="hover">
-            <span class="feature-icon"><span class="material-icons-round">credit_score</span></span>
-            <h3 data-key="how_new_feature3_title">Secure checkout</h3>
-            <p data-key="how_new_feature3_copy">The payment stage confirms the booking before the pickup flow continues.</p>
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="160" data-spotlight>
+            <span class="feature-icon"><span class="material-icons-round">payments</span></span>
+            <h3 data-key="how_new_feature3_title">Payment gate</h3>
+            <p data-key="how_new_feature3_copy">The booking becomes serious only after secure payment confirms the reservation.</p>
           </article>
-          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="240" data-spotlight data-cursor="hover">
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="240" data-spotlight>
             <span class="feature-icon"><span class="material-icons-round">fact_check</span></span>
             <h3 data-key="how_new_feature4_title">Pickup checklist</h3>
-            <p data-key="how_new_feature4_copy">Customers arrive with documents ready and inspect the car before receiving the keys.</p>
+            <p data-key="how_new_feature4_copy">Customers arrive ready with documents, inspection steps, and key collection expectations.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="quote-section">
+    <section id="confidence" class="quote-section">
       <div class="quote-panel">
         <span class="how-kicker hero-kicker reveal-on-scroll motion-sheen">
           <span class="material-icons-round">format_quote</span>
           <span data-key="how_new_quote_kicker">Customer confidence</span>
         </span>
-        <blockquote class="reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_new_quote">A good rental flow should feel clear before payment, secure during confirmation, and effortless on pickup day.</blockquote>
-        <p class="reveal-on-scroll reveal-blur" data-delay="120" data-key="how_new_quote_sub">That is the experience this page teaches: browse openly, choose carefully, pay securely, then drive with confidence.</p>
+        <blockquote class="reveal-on-scroll reveal-blur" data-key="how_new_quote">A strong rental flow should answer the customer's next question before they need to ask it.</blockquote>
+        <p class="reveal-on-scroll reveal-blur" data-delay="120" data-key="how_new_quote_sub">That is the purpose of this page: remove confusion, protect sensitive details, and make every step feel calm.</p>
       </div>
     </section>
 
-    <section class="final-cta">
-      <div class="cta-bg-text" data-parallax="0.16" aria-hidden="true">READY TO DRIVE</div>
+    <section id="next" class="final-cta">
+      <div class="cta-bg-text" data-parallax="0.12" aria-hidden="true">READY TO DRIVE</div>
       <div class="how-shell">
         <div class="cta-panel motion-sheen" data-spotlight>
           <div>
@@ -1041,9 +1337,9 @@
               <span class="material-icons-round">key</span>
               <span data-key="how_new_cta_kicker">Next step</span>
             </span>
-            <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_new_cta_title">Ready to choose the right car?</h2>
-            <p class="reveal-on-scroll reveal-blur" data-delay="90" data-key="how_new_cta_sub">Start with the guest showroom, compare the cars, and create an account only when you are ready to continue the booking.</p>
-            <div class="cta-actions reveal-on-scroll" data-delay="150">
+            <h2 class="reveal-on-scroll reveal-blur" data-key="how_new_cta_title">Ready to choose the right car?</h2>
+            <p class="reveal-on-scroll reveal-blur" data-delay="80" data-key="how_new_cta_sub">Start with the guest showroom, compare the cars, and create an account only when you are ready to continue the booking.</p>
+            <div class="cta-actions reveal-on-scroll" data-delay="140">
               <a href="../../guest/pages/guest.html" class="how-action magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
                 <span class="material-icons-round">search</span>
                 <span data-key="nav_browse">Browse Cars</span>
@@ -1054,7 +1350,7 @@
               </a>
             </div>
           </div>
-          <aside class="cta-meter reveal-on-scroll" data-delay="190">
+          <aside class="cta-meter reveal-on-scroll" data-delay="180">
             <strong data-scramble data-key="how_new_cta_meter_value">04</strong>
             <span data-key="how_new_cta_meter_label">Steps from browse to pickup</span>
           </aside>
@@ -1069,7 +1365,7 @@
   <script src="../../shared/js/api.js"></script>
   <script>window.__GUEST_MODE__ = true;</script>
   <script src="../../shared/js/anime.min.js"></script>
-  <script src="../../shared/js/animate.js?v=2.14.2"></script>
+  <script src="../../shared/js/animate.js?v=2.15.0"></script>
   <script src="../../shared/js/main.js"></script>
 </body>
 </html>
