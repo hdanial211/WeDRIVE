@@ -23,6 +23,9 @@
  *       data-cursor-label         - optional text inside the pointer ring
  *       data-ripple               - click ripple for buttons / links
  *       data-spotlight            - mouse-follow light field
+ *       data-tilt-card            - pointer-driven 3D card tilt
+ *       data-tilt-layer           - optional inner depth layer for tilt cards
+ *       data-tilt-glare           - optional glare layer for tilt cards
  *       data-kinetic="words|chars" - typography reveal that re-runs after language changes
  *       data-scramble              - subtle text scramble on hover / focus
  *
@@ -519,6 +522,40 @@
       target.appendChild(ripple);
       ripple.addEventListener('animationend', function () {
         ripple.remove();
+      });
+    });
+  }
+
+  function initTiltCards() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('[data-tilt-card]'));
+    if (!cards.length || prefersReducedMotion) return;
+    if (window.matchMedia && !window.matchMedia('(pointer: fine)').matches) return;
+
+    cards.forEach(function (card) {
+      var maxTilt = toNumber(card.dataset.tiltMax, 8);
+
+      card.addEventListener('pointermove', function (event) {
+        var rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        var px = (event.clientX - rect.left) / rect.width;
+        var py = (event.clientY - rect.top) / rect.height;
+        var rotateY = (px - 0.5) * maxTilt * 2;
+        var rotateX = (0.5 - py) * maxTilt * 2;
+
+        card.style.setProperty('--tilt-x', rotateY.toFixed(2) + 'deg');
+        card.style.setProperty('--tilt-y', rotateX.toFixed(2) + 'deg');
+        card.style.setProperty('--tilt-glare-x', (px * 100).toFixed(2) + '%');
+        card.style.setProperty('--tilt-glare-y', (py * 100).toFixed(2) + '%');
+        card.classList.add('is-tilting');
+      });
+
+      card.addEventListener('pointerleave', function () {
+        card.style.setProperty('--tilt-x', '0deg');
+        card.style.setProperty('--tilt-y', '0deg');
+        card.style.setProperty('--tilt-glare-x', '50%');
+        card.style.setProperty('--tilt-glare-y', '50%');
+        card.classList.remove('is-tilting');
       });
     });
   }
@@ -1186,14 +1223,19 @@
     Array.prototype.slice.call(viewer.querySelectorAll('[data-vehicle-angle]')).forEach(function (button) {
       button.addEventListener('click', function () {
         var angle = button.getAttribute('data-vehicle-angle');
+        var frameTarget = button.hasAttribute('data-frame-target')
+          ? parseInt(button.getAttribute('data-frame-target'), 10)
+          : null;
         var values = {
           front: 0,
           side: Math.round(frameCount * 0.25),
-          rear: Math.round(frameCount * 0.5)
+          left: Math.round(frameCount * 0.25),
+          rear: Math.round(frameCount * 0.5),
+          right: Math.round(frameCount * 0.75)
         };
 
         setAuto(false);
-        targetFrame = wrapFrame(values[angle] || 0);
+        targetFrame = wrapFrame(Number.isFinite(frameTarget) ? frameTarget - start : values[angle] || 0);
         updateAngleButtons(angle);
         ensureFullFrame(Math.round(targetFrame));
       });
@@ -1463,6 +1505,7 @@
     initMagneticHover();
     initPremiumCursor();
     initMicroInteractions();
+    initTiltCards();
     initKineticTypography();
     initTextScramble();
     initImageSequences();

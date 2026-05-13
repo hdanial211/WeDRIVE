@@ -9,25 +9,29 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../shared/css/theme_overrides.css" />
-  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.13.0" />
+  <link rel="stylesheet" href="../../shared/css/animation.css?v=2.14.0" />
   <link rel="stylesheet" href="../../customer/css/customer.css?v=2.9.19" />
   <style>
     :root {
+      --how-bg: #F7FAFF;
       --how-ink: #0F172A;
-      --how-muted: #64748B;
+      --how-muted: #53627A;
+      --how-soft: #EAF2FF;
       --how-blue: #2563EB;
-      --how-blue-soft: #DBEAFE;
-      --how-gold: #FACC15;
-      --how-line: rgba(148,163,184,0.22);
-      --how-glass: rgba(255,255,255,0.72);
+      --how-blue-2: #60A5FA;
+      --how-gold: #F6C743;
+      --how-line: rgba(82, 105, 143, 0.18);
+      --how-card: rgba(255, 255, 255, 0.78);
+      --how-shadow: 0 24px 70px rgba(18, 47, 93, 0.12);
     }
 
     .how-page {
-      overflow: visible;
+      min-height: 100vh;
+      overflow: hidden;
       background:
-        radial-gradient(circle at 12% 8%, rgba(96,165,250,0.22) 0%, rgba(96,165,250,0) 34%),
-        linear-gradient(180deg, #F8FBFF 0%, #EEF6FF 38%, #F8FAFC 100%);
+        linear-gradient(180deg, #F8FBFF 0%, #EEF6FF 36%, #FFFFFF 70%, #ECF4FF 100%);
       color: var(--how-ink);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     .how-shell {
@@ -35,646 +39,700 @@
       margin: 0 auto;
     }
 
-    .cinema-hero {
+    .how-section {
+      position: relative;
+      padding: 112px 0;
+    }
+
+    .how-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 38px;
+      padding: 9px 14px;
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--how-blue);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+      text-transform: uppercase;
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .how-kicker .material-icons-round {
+      color: var(--how-gold);
+      font-size: 18px;
+    }
+
+    .how-title {
+      margin: 18px 0 0;
+      max-width: 840px;
+      color: var(--how-ink);
+      font-size: 4.8rem;
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .how-copy {
+      max-width: 690px;
+      margin: 18px 0 0;
+      color: var(--how-muted);
+      font-size: 1.06rem;
+      font-weight: 600;
+      line-height: 1.78;
+    }
+
+    .how-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 22px;
+      border: 1px solid rgba(37, 99, 235, 0.22);
+      border-radius: 999px;
+      color: #FFFFFF;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      box-shadow: 0 16px 36px rgba(37, 99, 235, 0.22);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .how-action.is-ghost {
+      color: var(--how-ink);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .how-action .material-icons-round {
+      font-size: 20px;
+    }
+
+    .hero-premium {
       position: relative;
       min-height: 100vh;
-      display: grid;
-      align-items: end;
-      isolation: isolate;
+      display: flex;
+      align-items: stretch;
       overflow: hidden;
-      background: #020617;
+      background:
+        linear-gradient(118deg, #071127 0%, #102759 43%, #EEF6FF 43.2%, #FFFFFF 100%);
       color: #FFFFFF;
+      isolation: isolate;
     }
 
-    .cinema-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -3;
-      background:
-        radial-gradient(circle at 78% 44%, rgba(96,165,250,0.34) 0%, rgba(96,165,250,0) 34%),
-        radial-gradient(circle at 22% 76%, rgba(250,204,21,0.13) 0%, rgba(250,204,21,0) 30%),
-        linear-gradient(125deg, #020617 0%, #0B1738 50%, #173B8F 100%);
-    }
-
-    .cinema-hero::after {
-      content: '';
+    .hero-premium::before {
+      content: "";
       position: absolute;
       inset: 0;
       z-index: -1;
-      background:
-        linear-gradient(90deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.70) 42%, rgba(2,6,23,0.24) 72%, rgba(2,6,23,0.82) 100%),
-        linear-gradient(180deg, rgba(2,6,23,0.16) 0%, rgba(2,6,23,0.00) 48%, rgba(2,6,23,0.82) 100%);
-    }
-
-    .hero-gridline {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
       background-image:
-        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
-      background-size: 90px 90px;
-      mask-image: radial-gradient(circle at 72% 48%, black 0%, transparent 66%);
+        linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+      background-size: 84px 84px;
+      mask-image: linear-gradient(90deg, black 0%, black 42%, transparent 74%);
     }
 
-    .hero-car-stage {
+    .hero-premium::after {
+      content: "";
       position: absolute;
-      right: max(28px, 3vw);
-      bottom: 68px;
-      width: min(620px, 48vw);
-      min-width: 500px;
-      border-radius: 36px;
-      overflow: hidden;
-      z-index: -1;
-      opacity: 0.52;
-      animation: heroCarDrift 9s ease-in-out infinite;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 38px 100px rgba(2,6,23,0.46);
-      filter: saturate(1.05);
+      inset: auto 0 0;
+      height: 160px;
+      background: linear-gradient(180deg, rgba(247, 250, 255, 0) 0%, var(--how-bg) 100%);
+      pointer-events: none;
     }
 
-    .hero-car-stage::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(2,6,23,0.64) 0%, rgba(2,6,23,0.22) 44%, rgba(2,6,23,0.70) 100%),
-        linear-gradient(180deg, rgba(2,6,23,0.12) 0%, rgba(2,6,23,0.44) 100%);
-    }
-
-    .hero-car-stage img {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-
-    .hero-car-stage .hero-car-ghost {
-      display: none;
-    }
-
-    @keyframes heroCarDrift {
-      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-      50% { transform: translate3d(-22px, -12px, 0) scale(1.018); }
-    }
-
-    @keyframes heroGhostSlide {
-      0%, 100% { transform: translate3d(0, 0, 0) scaleX(-1); }
-      50% { transform: translate3d(34px, -8px, 0) scaleX(-1); }
-    }
-
-    .cinema-hero-inner {
+    .hero-grid {
+      position: relative;
+      z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 0.96fr) minmax(330px, 420px);
-      gap: 38px;
-      align-items: end;
-      padding: 148px 0 82px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(470px, 1.1fr);
+      align-items: center;
+      gap: 64px;
+      padding: 138px 0 110px;
     }
 
     .hero-copy {
       max-width: 760px;
     }
 
-    .how-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 15px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.11);
+    .hero-kicker {
+      border-color: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.10);
       color: #DBEAFE;
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 18px 38px rgba(2,6,23,0.22);
+      box-shadow: 0 18px 44px rgba(2, 6, 23, 0.20);
     }
 
-    .how-pill .material-icons-round {
-      font-size: 17px;
-      color: #FACC15;
-    }
-
-    .hero-copy h1 {
-      margin: 26px 0 20px;
+    .hero-title {
+      margin: 20px 0 0;
       color: #FFFFFF;
-      font-size: clamp(56px, 8vw, 104px);
-      line-height: 0.88;
+      font-size: 6.6rem;
+      font-weight: 900;
+      line-height: 0.92;
       letter-spacing: 0;
-      text-shadow: 0 30px 72px rgba(2,6,23,0.45);
-      max-width: 720px;
+      text-shadow: 0 22px 54px rgba(2, 6, 23, 0.30);
     }
 
     .hero-lead {
-      max-width: 660px;
-      margin: 0;
-      color: rgba(226,232,240,0.92);
-      font-size: clamp(17px, 1.6vw, 21px);
-      line-height: 1.78;
+      max-width: 620px;
+      margin: 26px 0 0;
+      color: rgba(226, 232, 240, 0.86);
+      font-size: 1.13rem;
+      font-weight: 600;
+      line-height: 1.82;
     }
 
-    .hero-action-row {
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
       align-items: center;
-      margin-top: 34px;
+      margin-top: 38px;
     }
 
-    .how-ghost-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.20);
-      background: rgba(255,255,255,0.08);
-      color: #FFFFFF;
-      font-weight: 900;
-      text-decoration: none;
-      backdrop-filter: blur(12px);
-      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+      margin-top: 44px;
+      max-width: 620px;
     }
 
-    .how-ghost-btn:hover {
-      color: #FFFFFF;
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.14);
-      border-color: rgba(255,255,255,0.30);
-    }
-
-    .hero-status-board {
-      position: relative;
-      padding: 24px;
-      border-radius: 30px;
-      background: rgba(255,255,255,0.13);
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 34px 90px rgba(2,6,23,0.32);
+    .hero-stat {
+      min-height: 104px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 44px rgba(2, 6, 23, 0.16);
       backdrop-filter: blur(18px);
     }
 
-    .hero-status-board h2 {
-      color: #FFFFFF;
-      font-size: 25px;
-      line-height: 1.18;
-      margin: 14px 0 18px;
-    }
-
-    .hero-status-board p {
-      color: rgba(226,232,240,0.86);
-      font-size: 14px;
-      line-height: 1.7;
-      margin: 18px 0 0;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .status-steps {
-      display: grid;
-      gap: 12px;
-    }
-
-    .status-step {
-      display: grid;
-      grid-template-columns: 48px minmax(0, 1fr);
-      align-items: center;
-      gap: 14px;
-      padding: 12px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .status-step strong {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.13);
-      color: #FFFFFF;
-      font-size: 14px;
-    }
-
-    .status-step span {
+    .hero-stat strong {
       display: block;
-      color: #BFDBFE;
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-
-    .status-step b {
-      display: block;
-      margin-top: 3px;
-      color: rgba(255,255,255,0.94);
-      font-size: 14px;
-      line-height: 1.36;
-    }
-
-    .how-marquee {
-      background: #020617;
       color: #FFFFFF;
-    }
-
-    .how-marquee .premium-marquee-item {
-      color: rgba(226,232,240,0.22);
-    }
-
-    .how-flow-scrolly {
-      margin-top: 0;
-    }
-
-    .premium-vehicle-showcase {
-      margin-top: 0;
-    }
-
-    .timeline-stage {
-      position: relative;
-      padding: 110px 0;
-      background:
-        radial-gradient(circle at 80% 18%, rgba(96,165,250,0.18) 0%, rgba(96,165,250,0) 32%),
-        linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
-    }
-
-    .timeline-head {
-      display: grid;
-      grid-template-columns: minmax(0, 0.82fr) minmax(320px, 0.48fr);
-      gap: 40px;
-      align-items: end;
-      margin-bottom: 34px;
-    }
-
-    .timeline-head h2,
-    .handover-copy h2,
-    .final-copy h2 {
-      margin: 16px 0 0;
-      color: var(--how-ink);
-      font-size: clamp(38px, 5vw, 72px);
-      line-height: 0.96;
-      letter-spacing: 0;
-    }
-
-    .timeline-head p,
-    .handover-copy p,
-    .final-copy p {
-      margin: 0;
-      color: #475569;
-      font-size: 17px;
-      line-height: 1.78;
-    }
-
-    .light-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.76);
-      border: 1px solid var(--how-line);
-      color: var(--how-blue);
-      font-size: 11px;
-      font-weight: 900;
-      text-transform: uppercase;
-      box-shadow: 0 12px 28px rgba(15,23,42,0.06);
-    }
-
-    .timeline-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .timeline-card {
-      position: relative;
-      min-height: 330px;
-      padding: 24px;
-      border-radius: 30px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.82);
-      border: 1px solid rgba(148,163,184,0.22);
-      box-shadow: 0 22px 54px rgba(15,23,42,0.08);
-      backdrop-filter: blur(14px);
-    }
-
-    .timeline-card::before {
-      content: attr(data-step);
-      position: absolute;
-      right: 18px;
-      bottom: 4px;
-      color: rgba(37,99,235,0.08);
-      font-size: 110px;
-      font-weight: 900;
+      font-size: 2.1rem;
       line-height: 1;
     }
 
-    .timeline-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
+    .hero-stat span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(226, 232, 240, 0.74);
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .hero-preview {
+      justify-self: stretch;
+      color: var(--how-ink);
+    }
+
+    .hero-preview .premium-vehicle-shell {
+      width: 100%;
+      display: block;
+      padding: 0;
+    }
+
+    .hero-preview .premium-vehicle-view {
+      min-height: 510px;
+    }
+
+    .hero-preview .vehicle-viewer-card {
+      width: 100%;
+      min-height: 500px;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(222, 235, 255, 0.90) 100%);
+      border-color: rgba(37, 99, 235, 0.18);
+      box-shadow: 0 34px 90px rgba(18, 47, 93, 0.20);
+    }
+
+    .hero-preview .vehicle-sequence-stage {
+      width: min(570px, 92%);
+      height: 340px;
+    }
+
+    .preview-caption {
+      position: absolute;
+      left: 22px;
+      top: 22px;
+      z-index: 3;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      background: #EFF6FF;
+      gap: 9px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.80);
       color: var(--how-blue);
-      box-shadow: inset 0 0 0 1px rgba(37,99,235,0.12);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
     }
 
-    .timeline-icon .material-icons-round {
-      font-size: 28px;
+    .trust-band {
+      position: relative;
+      z-index: 3;
+      margin-top: -1px;
+      background: #FFFFFF;
     }
 
-    .timeline-card span:not(.material-icons-round) {
+    .trust-band .premium-marquee-item {
+      color: rgba(15, 23, 42, 0.26);
+    }
+
+    .journey-scrolly {
+      margin-top: 0;
+    }
+
+    .premium-scrolly-title {
+      font-size: 5.6rem;
+    }
+
+    .lineup-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(300px, 0.48fr);
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .lineup-note {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid var(--how-line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--how-muted);
+      box-shadow: 0 18px 44px rgba(18, 47, 93, 0.08);
+    }
+
+    .lineup-note strong {
+      color: var(--how-ink);
+      font-size: 1rem;
+    }
+
+    .car-lineup {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      perspective: 1200px;
+    }
+
+    .car-tilt-card {
+      position: relative;
+      min-height: 470px;
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+      padding: 18px;
+      border: 1px solid rgba(82, 105, 143, 0.18);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(235, 243, 255, 0.80) 100%);
+      box-shadow: var(--how-shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .car-tilt-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(145deg, rgba(37, 99, 235, 0.10) 0%, rgba(246, 199, 67, 0.12) 42%, rgba(255, 255, 255, 0) 70%);
+      opacity: 0;
+      transition: opacity 0.28s ease;
+    }
+
+    .car-tilt-card.is-tilting::before,
+    .car-tilt-card:hover::before {
+      opacity: 1;
+    }
+
+    .tilt-glare {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle at var(--tilt-glare-x, 50%) var(--tilt-glare-y, 50%), rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 46%);
+      transition: opacity 0.26s ease;
+    }
+
+    .car-tilt-card.is-tilting .tilt-glare,
+    .car-tilt-card:hover .tilt-glare {
+      opacity: 1;
+    }
+
+    .car-media,
+    .car-info,
+    .car-meta {
+      position: relative;
+      z-index: 2;
+    }
+
+    .car-media {
+      display: grid;
+      place-items: center;
+      min-height: 210px;
+      padding: 16px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(221, 234, 255, 0.70));
+      overflow: hidden;
+    }
+
+    .car-media img {
+      width: min(100%, 390px);
+      height: 190px;
+      object-fit: contain;
+      filter: drop-shadow(0 28px 30px rgba(15, 23, 42, 0.18));
+      transform: translateZ(34px);
+    }
+
+    .car-class {
       display: inline-flex;
-      margin: 22px 0 12px;
+      align-items: center;
+      gap: 8px;
       color: var(--how-blue);
-      font-size: 11px;
+      font-size: 0.82rem;
       font-weight: 900;
       text-transform: uppercase;
     }
 
-    .timeline-card h3 {
-      position: relative;
-      z-index: 1;
-      margin: 0 0 12px;
+    .car-info h3 {
+      margin: 10px 0 10px;
       color: var(--how-ink);
-      font-size: 27px;
-      line-height: 1.08;
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.06;
     }
 
-    .timeline-card p {
+    .car-info p {
+      margin: 0;
+      color: var(--how-muted);
+      font-weight: 650;
+      line-height: 1.66;
+    }
+
+    .car-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .car-meta span {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 1px solid rgba(82, 105, 143, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #334155;
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .features-wrap {
+      background:
+        linear-gradient(180deg, #FFFFFF 0%, #F3F8FF 100%);
+      border-top: 1px solid rgba(82, 105, 143, 0.12);
+      border-bottom: 1px solid rgba(82, 105, 143, 0.12);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 42px;
+    }
+
+    .feature-tile {
+      position: relative;
+      min-height: 250px;
+      padding: 22px;
+      border: 1px solid rgba(82, 105, 143, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 18px 44px rgba(18, 47, 93, 0.08);
+      overflow: hidden;
+    }
+
+    .feature-tile > * {
       position: relative;
       z-index: 1;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #DBEAFE 0%, #FFFFFF 100%);
+      color: var(--how-blue);
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.10);
+    }
+
+    .feature-icon .material-icons-round {
+      font-size: 25px;
+    }
+
+    .feature-tile h3 {
+      margin: 26px 0 10px;
+      color: var(--how-ink);
+      font-size: 1.22rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .feature-tile p {
       margin: 0;
-      color: #475569;
-      font-size: 15px;
+      color: var(--how-muted);
+      font-weight: 650;
+      line-height: 1.66;
+    }
+
+    .quote-section {
+      position: relative;
+      padding: 128px 0;
+      background: #071127;
+      color: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .quote-section::before {
+      content: "WEDRIVE";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255, 255, 255, 0.04);
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .quote-panel {
+      position: relative;
+      z-index: 1;
+      width: min(1000px, calc(100% - 40px));
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .quote-panel blockquote {
+      margin: 22px auto 0;
+      max-width: 940px;
+      color: #FFFFFF;
+      font-size: 3.8rem;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .quote-panel p {
+      max-width: 620px;
+      margin: 26px auto 0;
+      color: rgba(226, 232, 240, 0.78);
+      font-size: 1.05rem;
+      font-weight: 650;
       line-height: 1.72;
     }
 
-    .handover-stage {
+    .final-cta {
       position: relative;
-      padding: 106px 0;
-      background: #020617;
-      color: #FFFFFF;
+      min-height: 76vh;
+      display: grid;
+      align-items: center;
       overflow: hidden;
-    }
-
-    .handover-stage::before {
-      content: '';
-      position: absolute;
-      inset: 0;
       background:
-        radial-gradient(circle at 72% 28%, rgba(96,165,250,0.28) 0%, rgba(96,165,250,0) 38%),
-        linear-gradient(90deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.70) 44%, rgba(37,99,235,0.32) 100%);
+        linear-gradient(135deg, #F8FBFF 0%, #EAF2FF 45%, #FFFFFF 100%);
     }
 
-    .handover-grid {
+    .cta-bg-text {
+      position: absolute;
+      left: -2%;
+      top: 10%;
+      color: rgba(37, 99, 235, 0.06);
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 0.9;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .cta-panel {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1fr);
-      gap: 40px;
-      align-items: center;
-    }
-
-    .handover-copy h2,
-    .final-copy h2 {
-      color: #FFFFFF;
-    }
-
-    .handover-copy p,
-    .final-copy p {
-      color: rgba(226,232,240,0.88);
-    }
-
-    .handover-panel {
-      display: grid;
-      gap: 16px;
-    }
-
-    .prep-card {
-      display: grid;
-      grid-template-columns: 60px minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
-      padding: 22px;
-      border-radius: 26px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 20px 54px rgba(0,0,0,0.22);
-    }
-
-    .prep-card .material-icons-round {
-      width: 60px;
-      height: 60px;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.12);
-      color: #BFDBFE;
-      font-size: 28px;
-    }
-
-    .prep-card h3 {
-      margin: 0 0 8px;
-      color: #FFFFFF;
-      font-size: 22px;
-      line-height: 1.14;
-    }
-
-    .prep-card p {
-      margin: 0;
-      color: rgba(226,232,240,0.88);
-      font-size: 15px;
-      line-height: 1.68;
-    }
-
-    .final-stage {
-      padding: 92px 0 110px;
-      background:
-        radial-gradient(circle at 24% 10%, rgba(96,165,250,0.20) 0%, rgba(96,165,250,0) 36%),
-        linear-gradient(180deg, #F8FAFC 0%, #EAF3FF 100%);
-    }
-
-    .final-band {
-      position: relative;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      gap: 34px;
+      align-items: end;
+      padding: 42px;
+      border: 1px solid rgba(82, 105, 143, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--how-shadow);
+      backdrop-filter: blur(18px);
       overflow: hidden;
-      min-height: 340px;
-      border-radius: 38px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.58fr);
-      gap: 30px;
-      align-items: center;
-      padding: 48px;
-      background: linear-gradient(135deg, #0F172A 0%, #123782 54%, #2563EB 100%);
-      box-shadow: 0 34px 90px rgba(37,99,235,0.24);
-      color: #FFFFFF;
     }
 
-    .final-band::after {
-      content: '';
-      position: absolute;
-      right: -120px;
-      bottom: -120px;
-      width: 520px;
-      height: 520px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow: inset 0 0 80px rgba(255,255,255,0.08);
-    }
-
-    .final-copy,
-    .final-actions,
-    .final-signal {
+    .cta-panel > * {
       position: relative;
       z-index: 1;
     }
 
-    .final-actions {
+    .cta-panel h2 {
+      margin: 16px 0 0;
+      max-width: 760px;
+      color: var(--how-ink);
+      font-size: 4.4rem;
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .cta-panel p {
+      max-width: 630px;
+      margin: 18px 0 0;
+      color: var(--how-muted);
+      font-weight: 650;
+      line-height: 1.72;
+    }
+
+    .cta-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 28px;
+      margin-top: 30px;
     }
 
-    .final-signal {
-      justify-self: end;
-      width: min(100%, 360px);
-      padding: 24px;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.16);
-      backdrop-filter: blur(18px);
-    }
-
-    .final-signal strong {
-      display: block;
+    .cta-meter {
+      display: grid;
+      gap: 12px;
+      padding: 22px;
+      border: 1px solid rgba(82, 105, 143, 0.16);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(30, 58, 138, 0.90));
       color: #FFFFFF;
-      font-size: 64px;
-      line-height: 0.92;
+      box-shadow: 0 24px 64px rgba(15, 23, 42, 0.20);
     }
 
-    .final-signal span {
-      display: block;
-      margin-top: 12px;
-      color: rgba(226,232,240,0.84);
-      font-size: 13px;
+    .cta-meter strong {
+      font-size: 3rem;
+      line-height: 1;
+    }
+
+    .cta-meter span {
+      color: rgba(226, 232, 240, 0.74);
+      font-size: 0.8rem;
       font-weight: 900;
+      line-height: 1.35;
       text-transform: uppercase;
     }
 
-    body.night-mode .timeline-stage,
-    body.night-mode .final-stage {
-      background: #0B1120;
-    }
-
-    body.night-mode .timeline-card {
-      background: rgba(15,23,42,0.72);
-      border-color: rgba(148,163,184,0.18);
-    }
-
-    body.night-mode .timeline-card h3,
-    body.night-mode .timeline-head h2 {
-      color: #F8FAFC;
-    }
-
-    body.night-mode .timeline-card p,
-    body.night-mode .timeline-head p {
-      color: rgba(226,232,240,0.78);
-    }
-
-    @media (max-width: 1100px) {
-      .cinema-hero-inner,
-      .timeline-head,
-      .handover-grid,
-      .final-band {
+    @media (max-width: 1180px) {
+      .hero-grid {
         grid-template-columns: 1fr;
+        gap: 42px;
       }
 
-      .hero-car-stage {
-        right: -80px;
-        bottom: 240px;
-        opacity: 0.20;
+      .hero-title {
+        font-size: 5.6rem;
       }
 
-      .timeline-grid {
+      .hero-preview .premium-vehicle-view {
+        min-height: 460px;
+      }
+
+      .car-lineup,
+      .feature-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .final-signal {
-        justify-self: stretch;
+      .lineup-head,
+      .cta-panel {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 760px) {
       .how-shell {
-        width: min(100% - 32px, 620px);
+        width: min(100% - 28px, 640px);
       }
 
-      .cinema-hero {
-        min-height: auto;
+      .how-section {
+        padding: 78px 0;
       }
 
-      .cinema-hero-inner {
-        padding: 122px 0 76px;
+      .hero-premium {
+        background: linear-gradient(180deg, #071127 0%, #102759 58%, #F8FBFF 58.2%, #FFFFFF 100%);
       }
 
-      .hero-copy h1 {
-        font-size: clamp(50px, 15vw, 74px);
+      .hero-grid {
+        padding: 116px 0 70px;
       }
 
-      .hero-car-stage {
-        right: -130px;
-        bottom: 300px;
-        min-width: 420px;
-        width: 500px;
-        opacity: 0.16;
+      .hero-title,
+      .how-title,
+      .premium-scrolly-title,
+      .cta-panel h2 {
+        font-size: 3.25rem;
+        line-height: 1.02;
       }
 
-      .hero-status-board {
-        padding: 20px;
-        border-radius: 26px;
+      .hero-lead,
+      .how-copy {
+        font-size: 1rem;
       }
 
-      .timeline-stage,
-      .handover-stage,
-      .final-stage {
-        padding: 76px 0;
-      }
-
-      .timeline-grid {
+      .hero-stats,
+      .car-lineup,
+      .feature-grid {
         grid-template-columns: 1fr;
       }
 
-      .timeline-card {
-        min-height: auto;
+      .hero-preview .vehicle-viewer-card {
+        min-height: 390px;
       }
 
-      .handover-grid {
-        gap: 28px;
+      .hero-preview .premium-vehicle-view {
+        min-height: 390px;
       }
 
-      .prep-card {
-        grid-template-columns: 1fr;
+      .hero-preview .vehicle-sequence-stage {
+        height: 240px;
       }
 
-      .final-band {
-        padding: 30px 22px;
-        border-radius: 30px;
+      .car-tilt-card {
+        min-height: 430px;
       }
 
-      .final-actions .hero-btn-primary,
-      .final-actions .how-ghost-btn {
-        width: 100%;
+      .quote-panel blockquote {
+        font-size: 2.45rem;
+      }
+
+      .quote-section::before,
+      .cta-bg-text {
+        font-size: 4.8rem;
+      }
+
+      .cta-panel {
+        padding: 24px;
       }
     }
   </style>
@@ -683,244 +741,277 @@
   <div id="navbar-placeholder" data-module="guest"></div>
 
   <main class="how-page">
-    <section class="cinema-hero">
-      <div class="hero-gridline" aria-hidden="true"></div>
-      <div class="hero-car-stage" aria-hidden="true">
-        <img src="../../shared/images/cars/bmw-3series-2024.png" alt="" data-parallax="0.12" data-parallax-scale="0.06" />
-        <img class="hero-car-ghost" src="../../shared/images/cars/honda-crv-2024.png" alt="" />
-      </div>
-
-      <div class="how-shell cinema-hero-inner">
+    <section class="hero-premium">
+      <div class="how-shell hero-grid">
         <div class="hero-copy">
-          <span class="how-pill reveal-onload motion-sheen" data-blur="true">
+          <span class="how-kicker hero-kicker reveal-onload motion-sheen">
             <span class="material-icons-round">route</span>
-            <span data-key="how_tutorial_kicker">Guest Guide</span>
+            <span data-key="how_new_hero_kicker">Premium rental guide</span>
           </span>
-          <h1 class="reveal-onload reveal-blur" data-kinetic="words" data-delay="100" data-duration="980" data-key="how_page_title">From Browse to Pickup Day</h1>
-          <p class="hero-lead reveal-onload reveal-blur" data-delay="260" data-duration="920" data-key="how_page_sub">A calm step-by-step guide to registering, choosing the right car, paying securely, and collecting the keys with confidence.</p>
+          <h1 class="hero-title kinetic-light reveal-onload reveal-blur" data-kinetic="words" data-key="how_new_hero_title">Rent with clarity from search to keys</h1>
+          <p class="hero-lead reveal-onload reveal-blur" data-delay="160" data-key="how_new_hero_sub">A polished step-by-step guide for customers to browse, match, pay, and collect the right car with confidence.</p>
 
-          <div class="hero-action-row reveal-onload" data-delay="380" data-duration="920">
-            <a href="../../guest/pages/guest.html" class="hero-btn-primary magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
+          <div class="hero-actions reveal-onload" data-delay="260">
+            <a href="#journey" class="how-action magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
+              <span class="material-icons-round">timeline</span>
+              <span data-key="how_new_hero_primary">See the journey</span>
+            </a>
+            <a href="../../guest/pages/guest.html" class="how-action is-ghost magnetic-hover" data-magnetic="0.10" data-cursor="link" data-ripple>
               <span class="material-icons-round">directions_car</span>
               <span data-key="nav_browse">Browse Cars</span>
             </a>
-            <a href="../../customer/pages/signup.html" class="how-ghost-btn magnetic-hover" data-magnetic="0.10" data-cursor="magnetic" data-ripple>
-              <span class="material-icons-round">person_add</span>
-              <span data-key="how_cta_start">Create Your Account</span>
-            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="hero-stat reveal-onload" data-delay="360">
+              <strong data-scramble data-key="how_new_stat1_value">04</strong>
+              <span data-key="how_new_stat1_label">Guided rental stages</span>
+            </div>
+            <div class="hero-stat reveal-onload" data-delay="430">
+              <strong data-scramble data-key="how_new_stat2_value">200</strong>
+              <span data-key="how_new_stat2_label">Real BMW preview frames</span>
+            </div>
+            <div class="hero-stat reveal-onload" data-delay="500">
+              <strong data-scramble data-key="how_new_stat3_value">0</strong>
+              <span data-key="how_new_stat3_label">Private details shown to guests</span>
+            </div>
           </div>
         </div>
 
-        <aside class="hero-status-board reveal-onload reveal-blur motion-sheen premium-hover" data-delay="220" data-dir="right" data-duration="960" data-cursor="hover">
-          <span class="how-panel-label" data-key="how_panel_label">Booking flow</span>
-          <h2 data-key="how_panel_title">Know what happens before payment, verification, and pickup</h2>
-          <div class="status-steps">
-            <div class="status-step"><strong>01</strong><div><span data-key="how_step1_stage">Profile setup</span><b data-key="how_step1_title">Create Account & Verify Profile</b></div></div>
-            <div class="status-step"><strong>02</strong><div><span data-key="how_step2_stage">Car selection</span><b data-key="how_step2_title">Choose the Right Car</b></div></div>
-            <div class="status-step"><strong>03</strong><div><span data-key="how_step3_stage">Booking & payment</span><b data-key="how_step3_title">Confirm Booking & Pay</b></div></div>
-            <div class="status-step"><strong>04</strong><div><span data-key="how_step4_stage">Pickup day</span><b data-key="how_step4_title">Arrive, Verify & Collect the Keys</b></div></div>
+        <div class="hero-preview reveal-onload" data-delay="220">
+          <div class="premium-vehicle-showcase" data-vehicle-3d data-auto="true">
+            <div class="premium-vehicle-shell">
+              <div class="premium-vehicle-view">
+                <div class="vehicle-viewer-card motion-sheen" data-spotlight>
+                  <span class="preview-caption">
+                    <span class="material-icons-round">view_in_ar</span>
+                    <span data-key="how_new_preview_badge">Live 360 preview</span>
+                  </span>
+                  <div class="vehicle-floor" aria-hidden="true"></div>
+                  <div class="vehicle-orbit" aria-hidden="true"></div>
+                  <div class="vehicle-shadow" aria-hidden="true"></div>
+                  <div class="vehicle-3d-stage vehicle-sequence-stage" data-vehicle-stage data-cursor="drag" data-cursor-label="Drag">
+                    <canvas
+                      class="vehicle-sequence-canvas"
+                      data-vehicle-sequence
+                      data-frame-src-low="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/exterior/low-res/frame-{padded}.jpg"
+                      data-frame-src-full="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/exterior/full-res/frame-{padded}.jpg"
+                      data-frame-start="0"
+                      data-frame-end="199"
+                      data-frame-pad="3"
+                      data-frame-fit="contain"
+                      data-frame-zoom="1.03"
+                      data-frame-offset-y="-0.02"
+                      aria-label="BMW 3 Series interactive exterior preview"></canvas>
+                  </div>
+                  <div class="vehicle-controls" aria-label="BMW preview controls">
+                    <button class="vehicle-control" type="button" data-vehicle-auto data-ripple data-key="how_3d_auto">Auto</button>
+                    <button class="vehicle-control" type="button" data-vehicle-angle="front" data-frame-target="125" data-ripple data-key="how_3d_front">Front</button>
+                    <button class="vehicle-control" type="button" data-vehicle-angle="left" data-frame-target="75" data-ripple data-key="how_3d_left">Left</button>
+                    <button class="vehicle-control" type="button" data-vehicle-angle="rear" data-frame-target="24" data-ripple data-key="how_3d_rear">Rear</button>
+                    <button class="vehicle-control" type="button" data-vehicle-angle="right" data-frame-target="175" data-ripple data-key="how_3d_right">Right</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <p data-key="how_panel_hint">You can browse first as a guest, then sign in only when you are ready to continue.</p>
-        </aside>
+        </div>
       </div>
     </section>
 
-    <div class="premium-marquee how-marquee" aria-hidden="true">
-      <div class="premium-marquee-track">
-        <span class="premium-marquee-item" data-key="how_scrolly_dot1">Browse first</span>
-        <span class="premium-marquee-item" data-key="how_scrolly_dot2">AI match</span>
-        <span class="premium-marquee-item" data-key="how_scrolly_dot3">Pay securely</span>
-        <span class="premium-marquee-item" data-key="how_scrolly_dot4">Pickup keys</span>
-        <span class="premium-marquee-item" data-key="how_scrolly_dot1">Browse first</span>
-        <span class="premium-marquee-item" data-key="how_scrolly_dot2">AI match</span>
-        <span class="premium-marquee-item" data-key="how_scrolly_dot3">Pay securely</span>
-        <span class="premium-marquee-item" data-key="how_scrolly_dot4">Pickup keys</span>
+    <section class="trust-band premium-marquee" aria-label="WeDRIVE trust highlights">
+      <div class="premium-marquee-track" aria-hidden="true">
+        <span class="premium-marquee-item" data-key="how_new_marquee_1">Browse first</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_2">AI car match</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_3">Secure payment</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_4">Pickup ready</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_5">Details protected</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_1">Browse first</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_2">AI car match</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_3">Secure payment</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_4">Pickup ready</span>
+        <span class="premium-marquee-item" data-key="how_new_marquee_5">Details protected</span>
       </div>
-    </div>
+    </section>
 
-    <section class="premium-scrolly how-flow-scrolly" data-scrolly-section>
+    <section id="journey" class="journey-scrolly premium-scrolly" data-scrolly-section>
       <div class="premium-scrolly-sticky">
-        <div class="premium-scrolly-canvas" aria-hidden="true">
-          <canvas data-motion-canvas data-motion-accent-rgb="96,165,250" data-motion-warm-rgb="250,204,21"></canvas>
-        </div>
-
+        <canvas class="premium-scrolly-canvas" data-motion-canvas data-motion-accent-rgb="96,165,250" data-motion-warm-rgb="246,199,67" aria-hidden="true"></canvas>
         <div class="premium-scrolly-stage">
           <div class="premium-scrolly-phase-wrap">
-            <article class="premium-scrolly-phase is-active" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase1_label">Guest browsing</span>
-              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase1_title">Start with full control</h2>
-              <p class="premium-scrolly-copy" data-key="how_scrolly_phase1_copy">Open the guest showroom first. Compare cars, routes, prices, and Melaka trip ideas before you create an account.</p>
-            </article>
-
             <article class="premium-scrolly-phase" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase2_label">AI recommendation</span>
-              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase2_title">Let AI narrow the ride</h2>
-              <p class="premium-scrolly-copy" data-key="how_scrolly_phase2_copy">Match the car to your budget, passenger count, driving route, and pickup plan so the choice feels easier and more accurate.</p>
+              <span class="premium-scrolly-kicker" data-key="how_new_step1_label">01 Browse</span>
+              <h2 class="premium-scrolly-title" data-key="how_new_step1_title">Start as a guest</h2>
+              <p class="premium-scrolly-copy" data-key="how_new_step1_copy">Open the showroom, compare prices, seats, fuel type, and trip fit before creating an account.</p>
             </article>
-
             <article class="premium-scrolly-phase" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase3_label">Secure confirmation</span>
-              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase3_title">Pay before details unlock</h2>
-              <p class="premium-scrolly-copy" data-key="how_scrolly_phase3_copy">Your booking is only confirmed after payment. Sensitive car details stay hidden until the customer has completed the secure flow.</p>
+              <span class="premium-scrolly-kicker" data-key="how_new_step2_label">02 Match</span>
+              <h2 class="premium-scrolly-title" data-key="how_new_step2_title">Let AI narrow the car</h2>
+              <p class="premium-scrolly-copy" data-key="how_new_step2_copy">Use your destination, group size, budget, and comfort needs to choose a car that fits the road.</p>
             </article>
-
             <article class="premium-scrolly-phase" data-scrolly-phase>
-              <span class="premium-scrolly-kicker" data-key="how_scrolly_phase4_label">Pickup experience</span>
-              <h2 class="premium-scrolly-title kinetic-text kinetic-light" data-scroll-progress data-progress-start="0.94" data-progress-end="0.24" data-key="how_scrolly_phase4_title">Arrive ready for handover</h2>
-              <p class="premium-scrolly-copy" data-key="how_scrolly_phase4_copy">The customer arrives with verified documents, checks the car condition, receives the keys, and starts the trip with confidence.</p>
+              <span class="premium-scrolly-kicker" data-key="how_new_step3_label">03 Confirm</span>
+              <h2 class="premium-scrolly-title" data-key="how_new_step3_title">Pay securely</h2>
+              <p class="premium-scrolly-copy" data-key="how_new_step3_copy">Complete payment first. Booking confirmation unlocks the private handover flow and sensitive car details.</p>
+            </article>
+            <article class="premium-scrolly-phase" data-scrolly-phase>
+              <span class="premium-scrolly-kicker" data-key="how_new_step4_label">04 Pickup</span>
+              <h2 class="premium-scrolly-title" data-key="how_new_step4_title">Collect with confidence</h2>
+              <p class="premium-scrolly-copy" data-key="how_new_step4_copy">Bring verified documents, inspect the car condition, receive the keys, and start the trip calmly.</p>
             </article>
           </div>
-
           <aside class="premium-scrolly-meter motion-sheen">
-            <div class="premium-scrolly-meter-track">
-              <span class="premium-scrolly-meter-fill"></span>
-            </div>
+            <div class="premium-scrolly-meter-track"><span class="premium-scrolly-meter-fill"></span></div>
             <div class="premium-scrolly-dots">
-              <span class="premium-scrolly-dot is-active" data-scrolly-dot data-step="01" data-key="how_scrolly_dot1">Browse first</span>
-              <span class="premium-scrolly-dot" data-scrolly-dot data-step="02" data-key="how_scrolly_dot2">AI match</span>
-              <span class="premium-scrolly-dot" data-scrolly-dot data-step="03" data-key="how_scrolly_dot3">Pay securely</span>
-              <span class="premium-scrolly-dot" data-scrolly-dot data-step="04" data-key="how_scrolly_dot4">Pickup keys</span>
+              <span class="premium-scrolly-dot" data-step="01" data-scrolly-dot data-key="how_new_dot1">Browse first</span>
+              <span class="premium-scrolly-dot" data-step="02" data-scrolly-dot data-key="how_new_dot2">AI match</span>
+              <span class="premium-scrolly-dot" data-step="03" data-scrolly-dot data-key="how_new_dot3">Pay securely</span>
+              <span class="premium-scrolly-dot" data-step="04" data-scrolly-dot data-key="how_new_dot4">Pickup keys</span>
             </div>
           </aside>
         </div>
       </div>
     </section>
 
-    <section class="premium-vehicle-showcase" data-vehicle-3d data-initial-rotation="-26" data-auto="true">
-      <div class="premium-vehicle-shell">
-        <div class="premium-vehicle-copy">
-          <span class="premium-vehicle-kicker reveal-on-scroll motion-sheen" data-scramble data-key="how_3d_label">Interactive Preview</span>
-          <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-delay="80" data-key="how_3d_title">Inspect the journey before booking</h2>
-          <p class="reveal-on-scroll reveal-blur" data-delay="140" data-key="how_3d_sub">Explore a lightweight 3D car preview while the real car details stay protected until payment is complete.</p>
-
-          <div class="premium-vehicle-stats reveal-on-scroll" data-delay="180">
-            <div class="premium-vehicle-stat premium-hover" data-cursor="hover"><strong data-key="how_3d_stat1_value">360</strong><span data-key="how_3d_stat1_label">Preview angles</span></div>
-            <div class="premium-vehicle-stat premium-hover" data-cursor="hover"><strong data-key="how_3d_stat2_value">04</strong><span data-key="how_3d_stat2_label">Rental stages</span></div>
-            <div class="premium-vehicle-stat premium-hover" data-cursor="hover"><strong data-key="how_3d_stat3_value">0</strong><span data-key="how_3d_stat3_label">Sensitive details before payment</span></div>
-          </div>
-
-          <div class="premium-vehicle-badges reveal-on-scroll" data-delay="220">
-            <span class="premium-vehicle-badge">2023 BMW 320i M Sport 2.0</span>
-            <span class="premium-vehicle-badge" data-key="how_3d_badge_quality">High-res 360 capture</span>
-          </div>
-        </div>
-
-        <div class="premium-vehicle-view reveal-on-scroll reveal-blur" data-delay="160">
-          <div class="vehicle-viewer-card motion-spotlight" data-spotlight>
-            <div class="vehicle-orbit" aria-hidden="true"></div>
-            <div class="vehicle-floor" aria-hidden="true"></div>
-            <div class="vehicle-shadow" aria-hidden="true"></div>
-            <div class="vehicle-3d-stage vehicle-sequence-stage" data-vehicle-stage data-cursor="drag" aria-label="Interactive 360 preview of 2023 BMW 320i M Sport 2.0">
-              <canvas
-                class="vehicle-sequence-canvas"
-                data-vehicle-sequence
-                data-frame-start="0"
-                data-frame-end="199"
-                data-frame-pad="3"
-                data-frame-fit="contain"
-                data-frame-zoom="1.16"
-                data-frame-offset-y="-0.018"
-                data-frame-src-low="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/low-res/frame-{padded}.jpg"
-                data-frame-src-full="../../shared/model/2023%20BMW%20320i%20M%20Sport%202.0/full-res/frame-{padded}.jpg"
-                aria-label="Interactive 360 preview of 2023 BMW 320i M Sport 2.0"
-              ></canvas>
-            </div>
-            <div class="vehicle-controls">
-              <button class="vehicle-control is-active" type="button" data-vehicle-auto aria-pressed="true" data-cursor="magnetic" data-ripple data-key="how_3d_auto">Auto</button>
-              <button class="vehicle-control" type="button" data-vehicle-angle="front" aria-pressed="false" data-cursor="hover" data-ripple data-key="how_3d_front">Front</button>
-              <button class="vehicle-control" type="button" data-vehicle-angle="side" aria-pressed="false" data-cursor="hover" data-ripple data-key="how_3d_side">Side</button>
-              <button class="vehicle-control" type="button" data-vehicle-angle="rear" aria-pressed="false" data-cursor="hover" data-ripple data-key="how_3d_rear">Rear</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="timeline-stage">
+    <section class="how-section">
       <div class="how-shell">
-        <div class="timeline-head">
+        <div class="lineup-head">
           <div>
-            <span class="light-pill reveal-on-scroll motion-sheen" data-scramble data-key="how_section_label">Guided Journey</span>
-            <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-delay="80" data-key="how_section_title">Everything the customer needs to do, in the right order</h2>
+            <span class="how-kicker reveal-on-scroll motion-sheen">
+              <span class="material-icons-round">directions_car</span>
+              <span data-key="how_new_lineup_kicker">Car lineup</span>
+            </span>
+            <h2 class="how-title reveal-on-scroll reveal-blur kinetic-text" data-scroll-progress data-key="how_new_lineup_title">Choose by trip style, not guesswork</h2>
           </div>
-          <p class="reveal-on-scroll reveal-blur" data-delay="130" data-key="how_section_sub">Each stage explains what to prepare, what happens next, and why it matters before you take the car.</p>
+          <div class="lineup-note reveal-on-scroll premium-hover-soft">
+            <strong data-key="how_new_lineup_note_title">Three clear starting points</strong>
+            <span data-key="how_new_lineup_note_copy">Economy for simple city drives, SUV for family comfort, and luxury for a sharper arrival.</span>
+          </div>
         </div>
 
-        <div class="timeline-grid">
-          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="01" data-cursor="hover">
-            <div class="timeline-icon"><span class="material-icons-round">verified_user</span></div>
-            <span data-key="how_step1_stage">Profile setup</span>
-            <h3 data-key="how_step1_title">Create Account & Verify Profile</h3>
-            <p data-key="how_step1_detail">Start by registering a WeDRIVE account for free. You will need to upload your ID and a valid driving license for security and insurance purposes.</p>
+        <div class="car-lineup">
+          <article class="car-tilt-card reveal-on-scroll" data-tilt-card data-cursor="media" data-cursor-label="Vios">
+            <span class="tilt-glare" data-tilt-glare aria-hidden="true"></span>
+            <div class="car-media" data-tilt-layer style="--tilt-depth: 34px;">
+              <img src="../../shared/images/cars/toyota-vios-2023.png" alt="Toyota Vios 2023" />
+            </div>
+            <div class="car-info" data-tilt-layer>
+              <span class="car-class"><span class="material-icons-round">savings</span><span data-key="how_new_car1_class">Economy</span></span>
+              <h3 data-key="how_new_car1_name">Toyota Vios</h3>
+              <p data-key="how_new_car1_copy">Efficient, easy to park, and ideal for Melaka city routes or quick daily errands.</p>
+            </div>
+            <div class="car-meta" data-tilt-layer>
+              <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
+              <span><span class="material-icons-round">local_gas_station</span><span data-key="how_new_petrol">Petrol</span></span>
+            </div>
           </article>
-          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="02" data-delay="80" data-cursor="hover">
-            <div class="timeline-icon"><span class="material-icons-round">auto_awesome</span></div>
-            <span data-key="how_step2_stage">Car selection</span>
-            <h3 data-key="how_step2_title">Choose the Right Car</h3>
-            <p data-key="how_step2_detail">Find the best fit based on budget, passenger count, route, and pickup location. Use our AI recommendation system to narrow the options faster.</p>
+
+          <article class="car-tilt-card reveal-on-scroll" data-delay="90" data-tilt-card data-cursor="media" data-cursor-label="HR-V">
+            <span class="tilt-glare" data-tilt-glare aria-hidden="true"></span>
+            <div class="car-media" data-tilt-layer style="--tilt-depth: 34px;">
+              <img src="../../shared/images/cars/honda-crv-2024.png" alt="Honda HR-V SUV" />
+            </div>
+            <div class="car-info" data-tilt-layer>
+              <span class="car-class"><span class="material-icons-round">family_restroom</span><span data-key="how_new_car2_class">SUV</span></span>
+              <h3 data-key="how_new_car2_name">Honda HR-V</h3>
+              <p data-key="how_new_car2_copy">A comfortable SUV choice for small families, luggage, and smoother out-of-city routes.</p>
+            </div>
+            <div class="car-meta" data-tilt-layer>
+              <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
+              <span><span class="material-icons-round">bolt</span><span data-key="how_new_hybrid">Hybrid</span></span>
+            </div>
           </article>
-          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="03" data-delay="130" data-cursor="hover">
-            <div class="timeline-icon"><span class="material-icons-round">payments</span></div>
-            <span data-key="how_step3_stage">Booking & payment</span>
-            <h3 data-key="how_step3_title">Confirm Booking & Pay</h3>
-            <p data-key="how_step3_detail">Select your preferred dates and time, then complete payment through our secure online gateway to lock the booking.</p>
-          </article>
-          <article class="timeline-card reveal-on-scroll motion-sheen premium-hover" data-step="04" data-delay="180" data-cursor="hover">
-            <div class="timeline-icon"><span class="material-icons-round">key</span></div>
-            <span data-key="how_step4_stage">Pickup day</span>
-            <h3 data-key="how_step4_title">Arrive, Verify & Collect the Keys</h3>
-            <p data-key="how_step4_detail">Arrive at the pickup location on time. Our representative will verify the booking, walk you through the car condition, and hand over the keys.</p>
+
+          <article class="car-tilt-card reveal-on-scroll" data-delay="180" data-tilt-card data-cursor="media" data-cursor-label="BMW">
+            <span class="tilt-glare" data-tilt-glare aria-hidden="true"></span>
+            <div class="car-media" data-tilt-layer style="--tilt-depth: 34px;">
+              <img src="../../shared/images/cars/bmw-3series-2024.png" alt="BMW 3 Series" />
+            </div>
+            <div class="car-info" data-tilt-layer>
+              <span class="car-class"><span class="material-icons-round">diamond</span><span data-key="how_new_car3_class">Luxury</span></span>
+              <h3 data-key="how_new_car3_name">BMW 3 Series</h3>
+              <p data-key="how_new_car3_copy">Refined performance and premium comfort for business trips, events, and elevated drives.</p>
+            </div>
+            <div class="car-meta" data-tilt-layer>
+              <span><span class="material-icons-round">event_seat</span><span data-key="how_new_car_seats_5">5 seats</span></span>
+              <span><span class="material-icons-round">workspace_premium</span><span data-key="how_new_premium">Premium</span></span>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="handover-stage">
-      <div class="how-shell handover-grid">
-        <div class="handover-copy">
-          <span class="how-pill reveal-on-scroll motion-sheen" data-key="how_tip_label">Before You Confirm</span>
-          <h2 class="reveal-on-scroll reveal-blur kinetic-text kinetic-light" data-scroll-progress data-key="how_tip_title">A few details that keep the booking smooth</h2>
-          <p class="reveal-on-scroll reveal-blur" data-delay="90" data-key="how_tip_sub">Prepare these early so payment, verification, and pickup move faster on the day.</p>
-        </div>
-        <div class="handover-panel">
-          <article class="prep-card reveal-on-scroll motion-sheen premium-hover" data-cursor="hover">
-            <span class="material-icons-round">assignment_ind</span>
-            <div><h3 data-key="how_tip1_title">Use matching identity details</h3><p data-key="how_tip1_desc">Keep the name on your account, ID, and driving licence consistent to avoid manual checks.</p></div>
-          </article>
-          <article class="prep-card reveal-on-scroll motion-sheen premium-hover" data-delay="80" data-cursor="hover">
-            <span class="material-icons-round">shield</span>
-            <div><h3 data-key="how_tip2_title">Check payment readiness</h3><p data-key="how_tip2_desc">Have your preferred card or FPX banking access ready before locking the booking.</p></div>
-          </article>
-          <article class="prep-card reveal-on-scroll motion-sheen premium-hover" data-delay="140" data-cursor="hover">
-            <span class="material-icons-round">schedule</span>
-            <div><h3 data-key="how_tip3_title">Arrive on time for pickup</h3><p data-key="how_tip3_desc">A short, on-time handover helps you inspect the car and start your trip without delay.</p></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="final-stage">
+    <section class="how-section features-wrap">
       <div class="how-shell">
-        <div class="final-band motion-sheen motion-depth" data-scroll-progress data-spotlight>
-          <div class="final-copy">
-            <span class="how-pill reveal-on-scroll motion-sheen" data-key="how_panel_label">Booking flow</span>
-            <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_cta_title">Ready to start with the right car first?</h2>
-            <p class="reveal-on-scroll reveal-blur" data-delay="80" data-key="how_cta_sub">Browse the guest showroom, compare options, then create your account when you are ready to continue with booking.</p>
-            <div class="final-actions reveal-on-scroll" data-delay="120">
-              <a href="../../guest/pages/guest.html" class="how-ghost-btn magnetic-hover" data-magnetic="0.10" data-cursor="magnetic" data-ripple>
+        <span class="how-kicker reveal-on-scroll motion-sheen">
+          <span class="material-icons-round">auto_awesome</span>
+          <span data-key="how_new_features_kicker">Built for calm booking</span>
+        </span>
+        <h2 class="how-title reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_new_features_title">Small details that make the rental feel premium</h2>
+        <p class="how-copy reveal-on-scroll reveal-blur" data-delay="90" data-key="how_new_features_sub">Each step gives customers enough context before they commit, while private car details stay protected until payment is done.</p>
+
+        <div class="feature-grid">
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-spotlight data-cursor="hover">
+            <span class="feature-icon"><span class="material-icons-round">psychology</span></span>
+            <h3 data-key="how_new_feature1_title">AI trip matching</h3>
+            <p data-key="how_new_feature1_copy">Recommend cars based on trip distance, passenger count, comfort level, and route style.</p>
+          </article>
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="80" data-spotlight data-cursor="hover">
+            <span class="feature-icon"><span class="material-icons-round">verified_user</span></span>
+            <h3 data-key="how_new_feature2_title">Protected details</h3>
+            <p data-key="how_new_feature2_copy">Guests can compare cars without seeing sensitive identifiers before payment approval.</p>
+          </article>
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="160" data-spotlight data-cursor="hover">
+            <span class="feature-icon"><span class="material-icons-round">credit_score</span></span>
+            <h3 data-key="how_new_feature3_title">Secure checkout</h3>
+            <p data-key="how_new_feature3_copy">The payment stage confirms the booking before the pickup flow continues.</p>
+          </article>
+          <article class="feature-tile reveal-on-scroll premium-hover motion-sheen" data-delay="240" data-spotlight data-cursor="hover">
+            <span class="feature-icon"><span class="material-icons-round">fact_check</span></span>
+            <h3 data-key="how_new_feature4_title">Pickup checklist</h3>
+            <p data-key="how_new_feature4_copy">Customers arrive with documents ready and inspect the car before receiving the keys.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section">
+      <div class="quote-panel">
+        <span class="how-kicker hero-kicker reveal-on-scroll motion-sheen">
+          <span class="material-icons-round">format_quote</span>
+          <span data-key="how_new_quote_kicker">Customer confidence</span>
+        </span>
+        <blockquote class="reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_new_quote">A good rental flow should feel clear before payment, secure during confirmation, and effortless on pickup day.</blockquote>
+        <p class="reveal-on-scroll reveal-blur" data-delay="120" data-key="how_new_quote_sub">That is the experience this page teaches: browse openly, choose carefully, pay securely, then drive with confidence.</p>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="cta-bg-text" data-parallax="0.16" aria-hidden="true">READY TO DRIVE</div>
+      <div class="how-shell">
+        <div class="cta-panel motion-sheen" data-spotlight>
+          <div>
+            <span class="how-kicker reveal-on-scroll">
+              <span class="material-icons-round">key</span>
+              <span data-key="how_new_cta_kicker">Next step</span>
+            </span>
+            <h2 class="reveal-on-scroll reveal-blur" data-kinetic="words" data-key="how_new_cta_title">Ready to choose the right car?</h2>
+            <p class="reveal-on-scroll reveal-blur" data-delay="90" data-key="how_new_cta_sub">Start with the guest showroom, compare the cars, and create an account only when you are ready to continue the booking.</p>
+            <div class="cta-actions reveal-on-scroll" data-delay="150">
+              <a href="../../guest/pages/guest.html" class="how-action magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
                 <span class="material-icons-round">search</span>
                 <span data-key="nav_browse">Browse Cars</span>
               </a>
-              <a href="../../customer/pages/signup.html" class="hero-btn-primary magnetic-hover" data-magnetic="0.12" data-cursor="magnetic" data-ripple>
+              <a href="../../customer/pages/signup.html" class="how-action is-ghost magnetic-hover" data-magnetic="0.10" data-cursor="link" data-ripple>
                 <span class="material-icons-round">person_add</span>
                 <span data-key="how_cta_start">Create Your Account</span>
               </a>
             </div>
           </div>
-          <div class="final-signal reveal-on-scroll premium-hover" data-delay="150" data-cursor="hover">
-            <strong data-scramble>0</strong>
-            <span data-key="how_3d_stat3_label">Sensitive details before payment</span>
-          </div>
+          <aside class="cta-meter reveal-on-scroll" data-delay="190">
+            <strong data-scramble data-key="how_new_cta_meter_value">04</strong>
+            <span data-key="how_new_cta_meter_label">Steps from browse to pickup</span>
+          </aside>
         </div>
       </div>
     </section>
@@ -932,7 +1023,7 @@
   <script src="../../shared/js/api.js"></script>
   <script>window.__GUEST_MODE__ = true;</script>
   <script src="../../shared/js/anime.min.js"></script>
-  <script src="../../shared/js/animate.js?v=2.13.0"></script>
+  <script src="../../shared/js/animate.js?v=2.14.0"></script>
   <script src="../../shared/js/main.js"></script>
 </body>
 </html>
