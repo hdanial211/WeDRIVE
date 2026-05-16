@@ -57,14 +57,13 @@
       links: [
         { key: 'nav_browse',   href: '{base}customer/pages/customer.html',              label: 'Browse Cars',   id: 'nl-browse'   },
         { key: 'nav_bookings', href: '{base}customer/pages/my-bookings/my-bookings.html', label: 'My Bookings',   id: 'nl-bookings' },
-        { key: 'nav_profile',  href: '{base}customer/pages/profile/profile.html',        label: 'Profile',       id: 'nl-profile'  },
         { key: 'nav_ai',       href: '#',                                                label: 'AI Assistant',  id: 'nl-ai', extra: 'onclick="if(typeof toggleChat===\'function\') toggleChat(); return false;"' }
       ],
       actions: `
-        <div class="user-pill" id="user-pill">
+        <a href="{base}customer/pages/profile/profile.html" class="user-pill" id="user-pill" style="text-decoration:none;cursor:pointer;" title="My Profile">
           <div class="user-av" id="user-av">CU</div>
           <span class="user-name" id="user-name-nav" data-key="nav_customer">Customer</span>
-        </div>
+        </a>
         <button class="btn-logout" onclick="window.location='{base}customer/pages/customer.html'">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
