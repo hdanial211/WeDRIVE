@@ -387,7 +387,7 @@
       carLine.textContent = car.name + ' - RM ' + car.price + t('day') + ' - ' + statusText(car);
     }
     if (login) login.href = rootPrefix() + 'index.html';
-    if (signup) signup.href = rootPrefix() + 'customer/pages/signup.html';
+    if (signup) signup.href = rootPrefix() + 'customer/pages/signup/signup.html';
 
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');

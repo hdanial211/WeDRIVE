@@ -47,7 +47,8 @@ AI CAR RENTAL SYSTEM/
 |
 +-- customer/                   # Modul Customer / Pengguna
 |   +-- pages/
-|   |   +-- signup.html         # Halaman Daftar Akaun
+|   |   +-- signup/
+|   |   |   +-- signup.html     # Halaman Daftar Akaun
 |   |   +-- customer.html       # Customer Dashboard (Pilih Kereta)
 |   +-- css/
 |   |   +-- customer.css        # Gaya Customer

@@ -43,7 +43,7 @@
       ],
       actions: `
         <button class="btn-outline" onclick="window.location='{base}index.html'" data-key="nav_login">Log In</button>
-        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup.html'" data-key="nav_signup">Sign Up</button>
+        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup/signup.html'" data-key="nav_signup">Sign Up</button>
       `
     },
 
