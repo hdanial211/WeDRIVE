@@ -28,11 +28,18 @@
     // Retrieve session from localStorage
     const sessionData = localStorage.getItem('wedrive_session');
     
-    // Function to calculate depth based on current path to redirect to login correctly
+    // Function to calculate login path using theme-link base
     function getLoginPath() {
-        const isRoot = !window.location.pathname.includes('/pages/');
-        if (isRoot) return 'login.html';
-        return '../../login.html';
+        var link = document.getElementById('theme-link');
+        if (link) {
+            var base = link.getAttribute('href').replace(/shared\/css\/.*$/, '');
+            return base + 'account/pages/login/login.html';
+        }
+        // Fallback
+        var parts = window.location.pathname.split('/').filter(Boolean);
+        var depth = parts.length > 0 ? parts.length - 1 : 0;
+        var prefix = depth === 0 ? '' : '../'.repeat(depth);
+        return prefix + 'account/pages/login/login.html';
     }
 
     if (!sessionData) {
@@ -50,7 +57,7 @@
             console.warn(`Auth Guard: Unauthorized. Requires role '${requiredRole}'. Redirecting.`);
             if (session.role === 'customer') {
                 // Customer trying to access Admin page -> redirect to login
-                window.location.replace(window.location.pathname.includes('/pages/') ? '../../login.html' : 'login.html');
+                window.location.replace(getLoginPath());
             } else {
                 window.location.replace(getLoginPath());
             }

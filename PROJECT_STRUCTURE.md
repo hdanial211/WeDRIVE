@@ -13,18 +13,32 @@ AI CAR RENTAL SYSTEM/
 |
 +-- index.html                  # Landing Page / Browse Cars (Entry Point)
 |
-+-- login.html                  # Halaman Log Masuk
++-- account/                    # Modul Akaun (Login, Signup, Forgot Password)
+|   +-- pages/
+|   |   +-- login/
+|   |   |   +-- login.html           # Halaman Log Masuk
+|   |   +-- signup/
+|   |   |   +-- signup.html          # Halaman Daftar Akaun Baru
+|   |   +-- forgot-password/
+|   |       +-- forgot-password.html # Halaman Reset Kata Laluan
+|   +-- css/
+|   |   +-- auth.css             # Gaya halaman auth (Login/Signup)
+|   +-- js/
 |
 +-- 404.html                    # Halaman Error 404 (Page Not Found)
 |
 +-- guest/                      # Modul Tetamu (Browse tanpa login)
 |   +-- pages/
-|       +-- explore-melaka/
-|       |   +-- explore-melaka.html  # Halaman Explore Melaka
-|       +-- how-it-works/
-|       |   +-- how-it-works.html    # Halaman Panduan & Tutorial Sewa
-|       +-- pricing/
-|           +-- pricing.html         # Halaman Harga (4 tier pricing)
+|   |   +-- explore-melaka/
+|   |   |   +-- explore-melaka.html  # Halaman Explore Melaka
+|   |   +-- how-it-works/
+|   |   |   +-- how-it-works.html    # Halaman Panduan & Tutorial Sewa
+|   |   +-- pricing/
+|   |       +-- pricing.html         # Halaman Harga (4 tier pricing)
+|   +-- css/
+|   |   +-- guest-pages.css          # Gaya halaman Guest
+|   +-- js/
+|       +-- promo-banner.js          # Logik banner promosi
 |
 +-- admin/                      # Modul Admin
 |   +-- pages/                             # FLOW: Sidebar navigation hierarchy
@@ -84,8 +98,6 @@ AI CAR RENTAL SYSTEM/
 |   |   |   +-- ai-insights.html        # Dashboard AI Insights
 |   |   +-- support/
 |   |   |   +-- support.html            # Pusat Bantuan & Sokongan
-|   |   +-- signup/
-|   |       +-- signup.html             # Halaman Daftar Akaun
 |   +-- css/
 |   |   +-- customer.css                # Gaya utama Customer
 |   |   +-- car-details.css             # Gaya Detail Kereta
@@ -96,8 +108,6 @@ AI CAR RENTAL SYSTEM/
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul
-    |   +-- forgot-password/
-    |   |   +-- forgot-password.html  # Halaman Reset Kata Laluan (link dari Login)
     |   +-- footer/             # Halaman yang dilink dari Footer
     |       +-- about/
     |       |   +-- about.html       # Halaman Tentang Kami

@@ -47,8 +47,8 @@
         { key: 'nav_how',    href: '{base}guest/pages/how-it-works/how-it-works.html',        label: 'How It Works', id: 'nl-how'    }
       ],
       actions: `
-        <button class="btn-outline" onclick="window.location='{base}login.html'" data-key="nav_login">Log In</button>
-        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup/signup.html'" data-key="nav_signup">Sign Up</button>
+        <button class="btn-outline" onclick="window.location='{base}account/pages/login/login.html'" data-key="nav_login">Log In</button>
+        <button class="btn-primary" onclick="window.location='{base}account/pages/signup/signup.html'" data-key="nav_signup">Sign Up</button>
       `
     },
 

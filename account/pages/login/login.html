@@ -4,20 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign In | WeDRIVE</title>
-  <link rel="icon" type="image/png" href="shared/logo/wedrive-icon.png?v=2" />
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <link id="theme-link" rel="stylesheet" href="shared/css/theme_day.css" />
-  <link rel="stylesheet" href="shared/css/theme_overrides.css" />
-  <link rel="stylesheet" href="shared/css/animation.css" />
-  <link rel="stylesheet" href="shared/css/auth.css" />
-  <script src="shared/js/main.js"></script>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../css/auth.css" />
+  <script src="../../../shared/js/main.js"></script>
 </head>
 <body data-particles="10" data-cursor-glow>
   <!-- Left Panel -->
   <div class="left-panel">
-    <a href="index.html" class="brand" style="text-decoration: none;">
-      <img src="shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" class="brand-logo" />
+    <a href="../../../index.html" class="brand" style="text-decoration: none;">
+      <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" class="brand-logo" />
       <div class="brand-text">
         <span class="we">We</span><span class="drive">DRIVE</span>
       </div>
@@ -68,7 +68,7 @@
             <input type="checkbox" />
             <span data-key="login_remember">Remember me</span>
           </label>
-          <a href="#" class="forgot" data-key="login_forgot">Forgot password?</a>
+          <a href="../forgot-password/forgot-password.html" class="forgot" data-key="login_forgot">Forgot password?</a>
         </div>
         <button type="submit" class="btn-primary" id="login-btn">
           <span class="material-icons-round" style="font-size:18px">login</span>
@@ -79,21 +79,21 @@
       <div class="divider" data-key="login_or">or continue with</div>
 
       <button class="btn-social" onclick="alert('Google login coming soon!')">
-        <img src="shared/images/icons/google-color.svg" alt="Google" />
+        <img src="../../../shared/images/icons/google-color.svg" alt="Google" />
         <span data-key="login_google">Continue with Google</span>
       </button>
       <button class="btn-social" onclick="alert('Apple login coming soon!')">
-        <img src="shared/logo/apple-logo.svg" alt="Apple" class="apple-logo" />
+        <img src="../../../shared/logo/apple-logo.svg" alt="Apple" class="apple-logo" />
         <span data-key="login_apple">Continue with Apple</span>
       </button>
 
       <div class="signup-link">
-        <span data-key="login_no_account">Don't have an account?</span> <a href="customer/pages/signup/signup.html" data-key="login_signup_link">Sign up</a>
+        <span data-key="login_no_account">Don't have an account?</span> <a href="../signup/signup.html" data-key="login_signup_link">Sign up</a>
       </div>
 
       <!-- Continue as Guest -->
       <div class="guest-link">
-        <a href="index.html" class="btn-guest">
+        <a href="../../../index.html" class="btn-guest">
           <span class="material-icons-round" style="font-size:18px">visibility</span>
           <span data-key="login_guest">Continue as Guest</span>
         </a>
@@ -132,9 +132,9 @@
           }));
 
           if (response.role === 'admin') {
-            window.location.href = 'admin/pages/dashboard/admin.html';
+            window.location.href = '../../../admin/pages/dashboard/admin.html';
           } else {
-            window.location.href = 'customer/pages/dashboard/customer.html';
+            window.location.href = '../../../customer/pages/dashboard/customer.html';
           }
         } else {
           alert('Login failed. Please check your credentials.');
@@ -152,12 +152,12 @@
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
   </script>
-  <script src="shared/js/api.js"></script>
-  <script src="shared/js/anime.min.js"></script>
-  <script src="shared/js/animate.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
 
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
-  <script src="shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
 </body>
 </html>
