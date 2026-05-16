@@ -13,6 +13,11 @@ AI CAR RENTAL SYSTEM/
 |
 +-- index.html                  # Landing Page / Browse Cars (Entry Point)
 |
++-- docs/                       # Dokumentasi Projek
+|   +-- PROJECT_STRUCTURE.md     # Struktur fail & panduan integrasi
+|   +-- FULL_SYSTEM_FLOWCHART.md # Carta alir sistem penuh
+|   +-- FULL_SYSTEM_FLOWCHART.html # Carta alir sistem (versi visual)
+|
 +-- account/                    # Modul Akaun (Login, Signup, Forgot Password)
 |   +-- pages/
 |   |   +-- login/
@@ -24,8 +29,6 @@ AI CAR RENTAL SYSTEM/
 |   +-- css/
 |   |   +-- auth.css             # Gaya halaman auth (Login/Signup)
 |   +-- js/
-|
-+-- 404.html                    # Halaman Error 404 (Page Not Found)
 |
 +-- guest/                      # Modul Tetamu (Browse tanpa login)
 |   +-- pages/
@@ -111,6 +114,8 @@ AI CAR RENTAL SYSTEM/
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul
+    |   +-- error/
+    |   |   +-- 404.html             # Halaman Error 404 (Page Not Found)
     |   +-- footer/             # Halaman yang dilink dari Footer
     |       +-- about/
     |       |   +-- about.html       # Halaman Tentang Kami
