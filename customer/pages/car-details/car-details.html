@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Car Details | WeDRIVE</title>
+  <meta name="description" content="View detailed specifications, AI insights, and book your perfect rental car with WeDRIVE Melaka.">
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="car-details.css" />
+</head>
+<body data-particles="6" data-cursor-glow>
+  <!-- NAVBAR -->
+  <div id="navbar-placeholder" data-module="customer"></div>
+
+  <!-- BREADCRUMB -->
+  <nav class="breadcrumb reveal-onload" aria-label="Breadcrumb">
+    <a href="../customer.html"><span class="material-icons-round">home</span> Dashboard</a>
+    <span class="material-icons-round sep">chevron_right</span>
+    <span class="current" id="bc-car-name">Tesla Model 3</span>
+  </nav>
+
+  <!-- HERO SECTION - Sticky Car Showcase -->
+  <section class="car-hero" id="car-hero">
+    <div class="hero-gallery reveal-onload">
+      <div class="gallery-main" id="gallery-main">
+        <img src="../../../shared/images/cars/tesla-model3-hero.jpg" alt="Tesla Model 3" id="hero-img" />
+        <div class="gallery-badge">
+          <span class="material-icons-round">smart_toy</span>
+          AI Fleet Status: Optimal
+        </div>
+        <div class="gallery-nav">
+          <button class="gal-dot active" data-idx="0"></button>
+          <button class="gal-dot" data-idx="1"></button>
+          <button class="gal-dot" data-idx="2"></button>
+          <button class="gal-dot" data-idx="3"></button>
+        </div>
+      </div>
+      <div class="gallery-thumbs" id="gallery-thumbs">
+        <img src="../../../shared/images/cars/tesla-model3-hero.jpg" alt="Exterior" class="thumb active" />
+        <img src="../../../shared/images/cars/tesla-model3-side.jpg" alt="Side View" class="thumb" />
+        <div class="thumb thumb-360">
+          <span class="material-icons-round">360</span>
+          <span>360 View</span>
+        </div>
+        <div class="thumb thumb-interior">
+          <span class="material-icons-round">airline_seat_recline_extra</span>
+          <span>Interior</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-info reveal-onload">
+      <div class="info-header">
+        <div>
+          <h1 id="car-title">Tesla Model 3</h1>
+          <p class="car-subtitle" id="car-subtitle">Long Range Dual Motor All-Wheel Drive</p>
+        </div>
+        <span class="model-badge" id="car-year">2024 Model</span>
+      </div>
+
+      <div class="price-block">
+        <span class="price" id="car-price">RM 450</span>
+        <span class="per-day">/ day</span>
+        <div class="ai-price-tag">
+          <span class="material-icons-round">trending_down</span>
+          12% below average
+        </div>
+      </div>
+
+      <div class="availability-list">
+        <p><span class="material-icons-round">verified</span> Available instantly at Melaka Sentral Station</p>
+        <p><span class="material-icons-round">bolt</span> Delivered with 90%+ battery charge</p>
+        <p><span class="material-icons-round">star</span> <strong>4.9</strong> rating from 128 trips</p>
+      </div>
+
+      <button class="btn-book-now" id="btn-book" onclick="window.location='../booking/booking.html'">
+        <span>Book Now for Melaka Trip</span>
+        <span class="material-icons-round">arrow_forward</span>
+      </button>
+
+      <p class="free-cancel"><span class="material-icons-round">event_available</span> Free cancellation up to 24h before pick-up</p>
+    </div>
+  </section>
+
+  <!-- SPECS BENTO GRID -->
+  <section class="specs-section">
+    <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">speed</span> Performance Specifications</h2>
+    <div class="specs-grid">
+      <div class="spec-card reveal-on-scroll" data-tilt>
+        <div class="spec-icon"><span class="material-icons-round">route</span></div>
+        <div class="spec-value" data-count="333">0</div>
+        <div class="spec-label">Est. Range (mi)</div>
+      </div>
+      <div class="spec-card reveal-on-scroll" data-tilt>
+        <div class="spec-icon"><span class="material-icons-round">speed</span></div>
+        <div class="spec-value" data-count="145">0</div>
+        <div class="spec-label">Top Speed (mph)</div>
+      </div>
+      <div class="spec-card reveal-on-scroll" data-tilt>
+        <div class="spec-icon"><span class="material-icons-round">timer</span></div>
+        <div class="spec-value">4.2<small>s</small></div>
+        <div class="spec-label">0-60 mph</div>
+      </div>
+      <div class="spec-card reveal-on-scroll" data-tilt>
+        <div class="spec-icon"><span class="material-icons-round">airline_seat_recline_normal</span></div>
+        <div class="spec-value">5</div>
+        <div class="spec-label">Adults Seating</div>
+      </div>
+      <div class="spec-card reveal-on-scroll" data-tilt>
+        <div class="spec-icon"><span class="material-icons-round">ev_station</span></div>
+        <div class="spec-value">Electric</div>
+        <div class="spec-label">Powertrain</div>
+      </div>
+      <div class="spec-card reveal-on-scroll" data-tilt>
+        <div class="spec-icon"><span class="material-icons-round">settings</span></div>
+        <div class="spec-value">Auto</div>
+        <div class="spec-label">Transmission</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI FEATURES -->
+  <section class="ai-section">
+    <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">memory</span> AI-Optimized Driving Experience</h2>
+    <div class="ai-grid">
+      <div class="ai-card ai-card-large reveal-on-scroll">
+        <h3>Predictive Range Analytics</h3>
+        <p>Our integrated WeDRIVE AI continuously monitors traffic conditions around Melaka, local topography, and your driving habits to provide real-time, highly accurate range estimations, eliminating range anxiety during your coastal drives.</p>
+        <div class="ai-glow"></div>
+      </div>
+      <div class="ai-card reveal-on-scroll">
+        <span class="material-icons-round ai-icon">ac_unit</span>
+        <h3>Smart Climate Control</h3>
+        <p>Pre-conditions the cabin temperature automatically based on predictive boarding algorithms and external weather data.</p>
+      </div>
+      <div class="ai-card reveal-on-scroll">
+        <span class="material-icons-round ai-icon">map</span>
+        <h3>AI Route Planning</h3>
+        <p>Optimized routes around Melaka with real-time traffic, charging stations, and points of interest suggestions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RENTAL POLICY -->
+  <section class="policy-section">
+    <h2 class="section-title reveal-on-scroll">Rental Policy</h2>
+    <div class="policy-card reveal-on-scroll">
+      <div class="policy-item">
+        <span class="material-icons-round">credit_card</span>
+        <div>
+          <h4>Security Deposit</h4>
+          <p>A refundable security deposit of RM 1,500 will be held on your credit card prior to handover.</p>
+        </div>
+      </div>
+      <div class="policy-divider"></div>
+      <div class="policy-item">
+        <span class="material-icons-round">ev_station</span>
+        <div>
+          <h4>Charging Policy</h4>
+          <p>Please return the vehicle with at least 20% charge. Supercharging fees incurred during the rental period will be billed automatically.</p>
+        </div>
+      </div>
+      <div class="policy-divider"></div>
+      <div class="policy-item">
+        <span class="material-icons-round">no_crash</span>
+        <div>
+          <h4>Insurance Coverage</h4>
+          <p>Comprehensive AI-backed insurance is included. Maximum out-of-pocket excess is RM 2,000.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY BOTTOM CTA (mobile) -->
+  <div class="sticky-cta" id="sticky-cta">
+    <div class="sticky-price">
+      <strong>RM 450</strong><span>/ day</span>
+    </div>
+    <button onclick="window.location='../booking/booking.html'">
+      Book Now <span class="material-icons-round">arrow_forward</span>
+    </button>
+  </div>
+
+  <!-- CHATBOT -->
+  <div id="chatbot-placeholder"></div>
+
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
+
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+  <script src="car-details.js"></script>
+</body>
+</html>

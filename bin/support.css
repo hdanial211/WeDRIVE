@@ -1,0 +1,162 @@
+/* ═══════════════════════════════════════════════════════════════
+   SUPPORT & HELP CENTER - Premium Styling
+   WeDRIVE AI Car Rental System
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.support-hero {
+  padding: 60px 32px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.support-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(37,99,235,.06), transparent 70%);
+  pointer-events: none;
+}
+.support-hero-inner { max-width: 600px; margin: 0 auto; position: relative; }
+.hero-icon { font-size: 48px; color: var(--primary, #2563eb); margin-bottom: 12px; display: block; }
+.support-hero h1 { font-size: 32px; font-weight: 800; color: var(--text-primary, #1e293b); margin-bottom: 8px; }
+.support-hero p { font-size: 15px; color: var(--text-muted, #64748b); margin-bottom: 24px; }
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border, rgba(0,0,0,.08));
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.04);
+  transition: border-color .2s, box-shadow .2s;
+}
+.search-bar:focus-within { border-color: var(--primary, #2563eb); box-shadow: 0 4px 20px rgba(37,99,235,.1); }
+.search-bar .material-icons-round { color: var(--text-muted, #94a3b8); font-size: 22px; }
+.search-bar input { flex: 1; border: none; background: none; font-size: 15px; color: var(--text-primary, #1e293b); outline: none; }
+
+/* ── QUICK ACTIONS ────────────────────────────────────────── */
+.quick-actions { max-width: 1100px; margin: 0 auto; padding: 0 32px 48px; }
+.qa-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.qa-card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border, rgba(0,0,0,.06));
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .3s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.qa-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+.qa-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: rgba(37,99,235,.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+.qa-icon .material-icons-round { font-size: 24px; color: var(--primary, #2563eb); }
+.qa-icon.qa-orange { background: rgba(245,158,11,.08); }
+.qa-icon.qa-orange .material-icons-round { color: #f59e0b; }
+.qa-icon.qa-green { background: rgba(16,185,129,.08); }
+.qa-icon.qa-green .material-icons-round { color: #10b981; }
+.qa-icon.qa-purple { background: rgba(139,92,246,.08); }
+.qa-icon.qa-purple .material-icons-round { color: #8b5cf6; }
+.qa-card h3 { font-size: 15px; font-weight: 700; color: var(--text-primary, #1e293b); margin-bottom: 4px; }
+.qa-card p { font-size: 12px; color: var(--text-muted, #64748b); }
+
+/* ── FAQ ──────────────────────────────────────────────────── */
+.faq-section { max-width: 800px; margin: 0 auto; padding: 0 32px 48px; }
+.section-title {
+  font-size: 22px; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 20px;
+  color: var(--text-primary, #1e293b);
+}
+.section-title .material-icons-round { color: var(--primary, #2563eb); font-size: 24px; }
+
+.faq-categories { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.faq-cat {
+  padding: 6px 14px;
+  border: 1px solid var(--border, rgba(0,0,0,.1));
+  border-radius: 100px;
+  background: transparent;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-muted, #64748b);
+  cursor: pointer;
+  transition: all .2s;
+}
+.faq-cat:hover, .faq-cat.active {
+  background: var(--primary, #2563eb);
+  color: #fff;
+  border-color: var(--primary, #2563eb);
+}
+
+.faq-item {
+  border: 1px solid var(--border, rgba(0,0,0,.06));
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  background: var(--card-bg, #fff);
+  transition: box-shadow .2s;
+}
+.faq-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,.04); }
+.faq-q {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  cursor: pointer;
+  text-align: left;
+}
+.faq-arrow { transition: transform .3s; font-size: 20px; color: var(--text-muted, #94a3b8); }
+.faq-item.open .faq-arrow { transform: rotate(180deg); color: var(--primary, #2563eb); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease, padding .3s;
+  padding: 0 20px;
+}
+.faq-item.open .faq-a { max-height: 200px; padding: 0 20px 16px; }
+.faq-a p { font-size: 13px; color: var(--text-muted, #64748b); line-height: 1.7; }
+
+/* ── CONTACT ──────────────────────────────────────────────── */
+.contact-section { max-width: 800px; margin: 0 auto; padding: 0 32px 60px; }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.contact-card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border, rgba(0,0,0,.06));
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  transition: all .3s;
+}
+.contact-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+.contact-card .material-icons-round { font-size: 28px; color: var(--primary, #2563eb); margin-bottom: 8px; }
+.contact-card h4 { font-size: 14px; font-weight: 700; color: var(--text-primary, #1e293b); margin-bottom: 4px; }
+.contact-card p { font-size: 14px; color: var(--primary, #2563eb); font-weight: 600; }
+.contact-card small { font-size: 11px; color: var(--text-muted, #94a3b8); }
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .qa-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; }
+  .support-hero h1 { font-size: 24px; }
+}
+@media (max-width: 500px) {
+  .qa-grid { grid-template-columns: 1fr; }
+}

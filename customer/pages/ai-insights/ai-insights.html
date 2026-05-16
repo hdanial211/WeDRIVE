@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Insights | WeDRIVE</title>
+  <meta name="description" content="AI-powered analytics, eco scores, and smart recommendations for your WeDRIVE car rental experience.">
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="ai-insights.css" />
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="navbar-placeholder" data-module="customer"></div>
+
+  <!-- HERO -->
+  <section class="ai-hero reveal-onload">
+    <div class="ai-hero-inner">
+      <span class="material-icons-round">auto_awesome</span>
+      <h1>AI Insights Dashboard</h1>
+      <p>Your personalized driving analytics powered by WeDRIVE AI</p>
+    </div>
+  </section>
+
+  <div class="ai-content">
+    <!-- STATS ROW -->
+    <div class="ai-stats-row reveal-on-scroll">
+      <div class="ai-stat-card">
+        <span class="material-icons-round">savings</span>
+        <div class="ai-stat-value">RM 342</div>
+        <div class="ai-stat-label">Total Savings</div>
+        <div class="ai-stat-change positive">+18% vs market avg</div>
+      </div>
+      <div class="ai-stat-card">
+        <span class="material-icons-round">eco</span>
+        <div class="ai-stat-value">87<small>/100</small></div>
+        <div class="ai-stat-label">Eco Score</div>
+        <div class="ai-stat-change positive">Top 15% of renters</div>
+      </div>
+      <div class="ai-stat-card">
+        <span class="material-icons-round">route</span>
+        <div class="ai-stat-value">1,240<small>km</small></div>
+        <div class="ai-stat-label">Total Distance</div>
+        <div class="ai-stat-change">Across 5 trips</div>
+      </div>
+      <div class="ai-stat-card">
+        <span class="material-icons-round">star</span>
+        <div class="ai-stat-value">4.9</div>
+        <div class="ai-stat-label">Your Rating</div>
+        <div class="ai-stat-change positive">Excellent renter</div>
+      </div>
+    </div>
+
+    <!-- AI RECOMMENDATIONS -->
+    <section class="ai-reco-section">
+      <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">lightbulb</span> AI Recommendations</h2>
+      <div class="ai-reco-grid">
+        <div class="ai-reco-card reveal-on-scroll">
+          <div class="reco-icon"><span class="material-icons-round">bolt</span></div>
+          <div class="reco-content">
+            <h3>Try Electric Next Time</h3>
+            <p>Based on your 42km average daily drive, a Tesla Model 3 would save you RM85 in fuel costs per trip.</p>
+          </div>
+          <button class="reco-action" onclick="window.location='../car-details/car-details.html'">View Car <span class="material-icons-round">arrow_forward</span></button>
+        </div>
+        <div class="ai-reco-card reveal-on-scroll">
+          <div class="reco-icon reco-green"><span class="material-icons-round">calendar_month</span></div>
+          <div class="reco-content">
+            <h3>Best Time to Book</h3>
+            <p>Our AI predicts prices will drop 22% next Tuesday. Set a price alert to get notified.</p>
+          </div>
+          <button class="reco-action">Set Alert <span class="material-icons-round">notifications</span></button>
+        </div>
+        <div class="ai-reco-card reveal-on-scroll">
+          <div class="reco-icon reco-purple"><span class="material-icons-round">loyalty</span></div>
+          <div class="reco-content">
+            <h3>Unlock Premium Status</h3>
+            <p>Just 2 more bookings to reach Gold tier! Gold members get priority pick-up and 10% off all rentals.</p>
+          </div>
+          <button class="reco-action">Learn More <span class="material-icons-round">arrow_forward</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRIP HISTORY -->
+    <section class="trip-section">
+      <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">history</span> Recent Trip Analysis</h2>
+      <div class="trip-list">
+        <div class="trip-card reveal-on-scroll">
+          <div class="trip-car">
+            <span class="material-icons-round">directions_car</span>
+            <div>
+              <strong>Toyota Vios</strong>
+              <small>Nov 10-12, 2024</small>
+            </div>
+          </div>
+          <div class="trip-stats">
+            <div class="trip-stat"><span>Distance</span><strong>186 km</strong></div>
+            <div class="trip-stat"><span>Cost</span><strong>RM 440</strong></div>
+            <div class="trip-stat"><span>Eco Score</span><strong class="eco-good">92</strong></div>
+          </div>
+        </div>
+        <div class="trip-card reveal-on-scroll">
+          <div class="trip-car">
+            <span class="material-icons-round">directions_car</span>
+            <div>
+              <strong>Honda City</strong>
+              <small>Oct 28-30, 2024</small>
+            </div>
+          </div>
+          <div class="trip-stats">
+            <div class="trip-stat"><span>Distance</span><strong>312 km</strong></div>
+            <div class="trip-stat"><span>Cost</span><strong>RM 660</strong></div>
+            <div class="trip-stat"><span>Eco Score</span><strong class="eco-ok">78</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="chatbot-placeholder"></div>
+  <div id="footer-placeholder"></div>
+
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+</body>
+</html>

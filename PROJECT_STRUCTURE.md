@@ -13,11 +13,25 @@ AI CAR RENTAL SYSTEM/
 |
 +-- index.html                  # Halaman Log Masuk (Entry Point)
 |
++-- 404.html                    # Halaman Error 404 (Page Not Found)
+|
 +-- guest/                      # Modul Tetamu (Browse tanpa login)
 |   +-- pages/
 |       +-- guest.html          # Landing Page (Browse Cars)
 |       +-- explore-melaka.html # Halaman Explore Melaka (Jalan-jalan Melaka)
 |       +-- how-it-works.html   # Halaman Panduan & Tutorial Sewa
+|       +-- pricing/
+|       |   +-- pricing.html    # Halaman Harga (4 tier pricing)
+|       +-- about/
+|       |   +-- about.html      # Halaman Tentang Kami
+|       +-- contact/
+|       |   +-- contact.html    # Halaman Hubungi Kami
+|       +-- faq/
+|       |   +-- faq.html        # Halaman Soalan Lazim
+|       +-- terms/
+|       |   +-- terms.html      # Halaman Terma & Privasi
+|       +-- forgot-password/
+|           +-- forgot-password.html  # Halaman Reset Kata Laluan
 |
 +-- admin/                      # Modul Admin
 |   +-- pages/
@@ -55,6 +69,21 @@ AI CAR RENTAL SYSTEM/
 |   |   |   +-- profile.html     # Pengurusan Profil Customer
 |   |   +-- signup/
 |   |   |   +-- signup.html      # Halaman Daftar Akaun
+|   |   +-- car-details/
+|   |   |   +-- car-details.html # Halaman Detail Kereta (Premium)
+|   |   |   +-- car-details.css  # Gaya Detail Kereta
+|   |   |   +-- car-details.js   # Logik Gallery & Data
+|   |   +-- booking-confirmed/
+|   |   |   +-- booking-confirmed.html # Halaman Pengesahan Tempahan
+|   |   +-- payment/
+|   |   |   +-- payment.html     # Halaman Pembayaran & Checkout
+|   |   +-- receipt/
+|   |   |   +-- receipt.html     # Resit / Invois Tempahan
+|   |   +-- support/
+|   |   |   +-- support.html     # Pusat Bantuan & Sokongan
+|   |   +-- ai-insights/
+|   |   |   +-- ai-insights.html # Dashboard AI Insights
+|   |   |   +-- ai-insights.css  # Gaya AI Insights
 |   |   +-- customer.html        # Customer Dashboard (Pilih Kereta)
 |   +-- css/
 |   |   +-- customer.css         # Gaya Customer
@@ -84,6 +113,8 @@ AI CAR RENTAL SYSTEM/
     |   +-- navbar.css          # Gaya Global Navbar
     |   +-- chatbot.css         # Gaya Komponen WeDRIVE AI Chatbot
     |   +-- animation.css       # Gaya animasi (reveal, particles, dll)
+    |   +-- guest-pages.css    # Gaya dikongsi semua halaman Guest (Pricing, About, FAQ, dll)
+    |   +-- customer-pages.css # Gaya dikongsi semua halaman Customer baru
     +-- dummy/
     |   +-- data.json            # Data Mockup Tunggal (Single Source of Truth)
     +-- lang/

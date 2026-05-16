@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pricing | WeDRIVE</title>
+  <meta name="description" content="Transparent pricing for WeDRIVE car rentals in Melaka. Economy, Sedan, SUV, and Luxury options.">
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../../shared/css/guest-pages.css" />
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="navbar-placeholder" data-module="guest"></div>
+
+  <!-- HERO -->
+  <section class="page-hero reveal-onload">
+    <h1>Transparent Pricing</h1>
+    <p>No hidden fees. AI-optimized rates for the best value in Melaka.</p>
+  </section>
+
+  <!-- PRICING TOGGLE -->
+  <div class="pricing-toggle reveal-on-scroll">
+    <button class="toggle-btn active" data-period="daily">Daily</button>
+    <button class="toggle-btn" data-period="weekly">Weekly <span class="save-badge">Save 15%</span></button>
+  </div>
+
+  <!-- PRICING CARDS -->
+  <section class="pricing-grid">
+    <div class="price-card reveal-on-scroll">
+      <div class="card-header">
+        <span class="material-icons-round card-icon">directions_car</span>
+        <h3>Economy</h3>
+        <p>Perfect for city drives</p>
+      </div>
+      <div class="card-price">
+        <span class="amount" data-daily="120" data-weekly="714">RM 120</span>
+        <span class="period">/ day</span>
+      </div>
+      <ul class="card-features">
+        <li><span class="material-icons-round">check_circle</span> Perodua Axia / Myvi</li>
+        <li><span class="material-icons-round">check_circle</span> 5 seats</li>
+        <li><span class="material-icons-round">check_circle</span> Auto transmission</li>
+        <li><span class="material-icons-round">check_circle</span> Basic insurance included</li>
+        <li><span class="material-icons-round">check_circle</span> Free pick-up at Melaka Sentral</li>
+      </ul>
+      <button class="card-btn" onclick="window.location='guest.html'">Browse Economy Cars</button>
+    </div>
+
+    <div class="price-card popular reveal-on-scroll">
+      <div class="popular-tag">Most Popular</div>
+      <div class="card-header">
+        <span class="material-icons-round card-icon">local_taxi</span>
+        <h3>Sedan</h3>
+        <p>Comfort for families</p>
+      </div>
+      <div class="card-price">
+        <span class="amount" data-daily="220" data-weekly="1309">RM 220</span>
+        <span class="period">/ day</span>
+      </div>
+      <ul class="card-features">
+        <li><span class="material-icons-round">check_circle</span> Toyota Vios / Honda City</li>
+        <li><span class="material-icons-round">check_circle</span> 5 seats</li>
+        <li><span class="material-icons-round">check_circle</span> Auto transmission</li>
+        <li><span class="material-icons-round">check_circle</span> Full insurance included</li>
+        <li><span class="material-icons-round">check_circle</span> Free GPS navigation</li>
+        <li><span class="material-icons-round">check_circle</span> 24/7 roadside assistance</li>
+      </ul>
+      <button class="card-btn primary" onclick="window.location='guest.html'">Browse Sedans</button>
+    </div>
+
+    <div class="price-card reveal-on-scroll">
+      <div class="card-header">
+        <span class="material-icons-round card-icon">airport_shuttle</span>
+        <h3>SUV</h3>
+        <p>Space for adventures</p>
+      </div>
+      <div class="card-price">
+        <span class="amount" data-daily="350" data-weekly="2083">RM 350</span>
+        <span class="period">/ day</span>
+      </div>
+      <ul class="card-features">
+        <li><span class="material-icons-round">check_circle</span> Honda CR-V / Proton X70</li>
+        <li><span class="material-icons-round">check_circle</span> 7 seats</li>
+        <li><span class="material-icons-round">check_circle</span> Auto transmission</li>
+        <li><span class="material-icons-round">check_circle</span> Full insurance included</li>
+        <li><span class="material-icons-round">check_circle</span> Free GPS + child seat</li>
+        <li><span class="material-icons-round">check_circle</span> Priority roadside assistance</li>
+      </ul>
+      <button class="card-btn" onclick="window.location='guest.html'">Browse SUVs</button>
+    </div>
+
+    <div class="price-card luxury reveal-on-scroll">
+      <div class="card-header">
+        <span class="material-icons-round card-icon">stars</span>
+        <h3>Luxury / EV</h3>
+        <p>Premium experience</p>
+      </div>
+      <div class="card-price">
+        <span class="amount" data-daily="450" data-weekly="2678">RM 450</span>
+        <span class="period">/ day</span>
+      </div>
+      <ul class="card-features">
+        <li><span class="material-icons-round">check_circle</span> BMW 320i / Tesla Model 3</li>
+        <li><span class="material-icons-round">check_circle</span> 5 seats, leather interior</li>
+        <li><span class="material-icons-round">check_circle</span> Premium sound system</li>
+        <li><span class="material-icons-round">check_circle</span> Full premium insurance</li>
+        <li><span class="material-icons-round">check_circle</span> AI route planning</li>
+        <li><span class="material-icons-round">check_circle</span> VIP concierge service</li>
+        <li><span class="material-icons-round">check_circle</span> Free EV charging included</li>
+      </ul>
+      <button class="card-btn" onclick="window.location='guest.html'">Browse Luxury</button>
+    </div>
+  </section>
+
+  <!-- AI PRICE INSIGHT -->
+  <section class="ai-price-section reveal-on-scroll">
+    <div class="ai-insight-banner">
+      <span class="material-icons-round">auto_awesome</span>
+      <div>
+        <h3>AI Price Optimization</h3>
+        <p>Our AI continuously adjusts pricing based on demand, season, and fleet availability. Book early for the best rates - our data shows prices are 18% lower when booked 7+ days in advance.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="chatbot-placeholder"></div>
+  <div id="footer-placeholder"></div>
+
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+  <script>
+    // Toggle daily/weekly
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = btn.dataset.period;
+        document.querySelectorAll('.amount').forEach(a => {
+          a.textContent = 'RM ' + a.dataset[p];
+        });
+        document.querySelectorAll('.period').forEach(s => {
+          s.textContent = p === 'weekly' ? '/ week' : '/ day';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking Confirmed | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <style>
+    /* ── BOOKING CONFIRMED ──────────────────────────────────── */
+    .confirmed-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .confirmed-card {
+      width: 100%;
+      max-width: 820px;
+      background: var(--card-bg, #fff);
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.08);
+      border: 1px solid var(--border, rgba(0,0,0,.06));
+      overflow: hidden;
+      animation: cardSlideUp .6s ease-out;
+    }
+    @keyframes cardSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    .confirmed-header {
+      padding: 40px 32px;
+      text-align: center;
+      border-bottom: 1px solid var(--border, rgba(0,0,0,.06));
+      position: relative;
+      overflow: hidden;
+    }
+    .confirmed-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(37,99,235,.06), transparent 70%);
+      pointer-events: none;
+    }
+    .check-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(37,99,235,.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      animation: checkPop .5s cubic-bezier(.4,0,.2,1) .3s both;
+    }
+    @keyframes checkPop {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+    .check-circle .material-icons-round {
+      font-size: 36px;
+      color: var(--primary, #2563eb);
+    }
+    .confirmed-header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-primary, #1e293b);
+      margin-bottom: 6px;
+    }
+    .booking-ref {
+      font-size: 14px;
+      color: var(--text-muted, #64748b);
+    }
+    .booking-ref span {
+      color: var(--primary, #2563eb);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .03em;
+    }
+
+    /* Content Grid */
+    .confirmed-content {
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: 24px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-muted, #64748b);
+      margin-bottom: 12px;
+    }
+
+    /* Car Summary */
+    .car-summary {
+      background: var(--bg, #f8fafc);
+      border: 1px solid var(--border, rgba(0,0,0,.06));
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .car-summary-img {
+      height: 140px;
+      background: var(--card-bg, #e2e8f0);
+      overflow: hidden;
+    }
+    .car-summary-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+    .car-summary-img:hover img { transform: scale(1.05); }
+    .car-summary-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .car-summary-info h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary, #1e293b);
+    }
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary, #475569);
+    }
+    .detail-row .material-icons-round {
+      font-size: 18px;
+      color: var(--text-muted, #94a3b8);
+      margin-top: 1px;
+    }
+    .detail-row small {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted, #94a3b8);
+      font-weight: 600;
+    }
+
+    /* QR Section */
+    .qr-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .qr-box {
+      background: var(--bg, #f8fafc);
+      border: 1px solid var(--border, rgba(0,0,0,.06));
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+    .qr-box p {
+      font-size: 13px;
+      color: var(--text-muted, #64748b);
+      text-align: center;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .qr-code {
+      width: 130px;
+      height: 130px;
+      background: #fff;
+      border: 2px solid rgba(37,99,235,.1);
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .qr-code canvas { width: 100% !important; height: 100% !important; }
+    .qr-placeholder {
+      width: 100%;
+      height: 100%;
+      background: repeating-conic-gradient(#1e293b 0% 25%, #fff 0% 50%) 0 0 / 12px 12px;
+      border-radius: 4px;
+    }
+    .btn-save-wallet {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--primary, #2563eb);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background .2s;
+    }
+    .btn-save-wallet:hover { background: rgba(37,99,235,.06); }
+    .btn-save-wallet .material-icons-round { font-size: 16px; }
+
+    /* AI Insight */
+    .ai-insight {
+      padding: 20px 32px 28px;
+    }
+    .ai-insight-card {
+      background: rgba(37,99,235,.04);
+      border: 1px solid rgba(37,99,235,.12);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-insight-card::after {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      background: rgba(37,99,235,.06);
+      border-radius: 50%;
+      filter: blur(30px);
+    }
+    .ai-badge {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--primary, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ai-badge .material-icons-round { font-size: 18px; color: #fff; }
+    .ai-insight-text h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .03em;
+      color: var(--text-primary, #1e293b);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ai-insight-text h4 .material-icons-round { font-size: 14px; color: var(--primary, #2563eb); }
+    .ai-insight-text p {
+      font-size: 13px;
+      color: var(--text-muted, #64748b);
+      line-height: 1.6;
+    }
+
+    /* Actions */
+    .confirmed-actions {
+      padding: 20px 32px;
+      border-top: 1px solid var(--border, rgba(0,0,0,.06));
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-outline {
+      padding: 10px 20px;
+      border: 1px solid var(--border, rgba(0,0,0,.12));
+      border-radius: 10px;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary, #1e293b);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .2s;
+    }
+    .btn-outline:hover { background: var(--bg, #f1f5f9); }
+    .btn-outline .material-icons-round { font-size: 18px; }
+    .btn-primary-action {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: var(--primary, #2563eb);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .3s;
+    }
+    .btn-primary-action:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,.3); }
+    .btn-primary-action .material-icons-round { font-size: 18px; }
+
+    /* Confetti */
+    .confetti-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px; height: 10px;
+      top: -20px;
+      animation: confettiFall 3s ease-out forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    @media (max-width: 700px) {
+      .confirmed-content { grid-template-columns: 1fr; }
+      .confirmed-actions { justify-content: center; }
+      .confirmed-header h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body data-particles="4" data-cursor-glow>
+  <!-- NAVBAR -->
+  <div id="navbar-placeholder" data-module="customer"></div>
+
+  <!-- CONFETTI -->
+  <div class="confetti-container" id="confetti"></div>
+
+  <!-- MAIN -->
+  <div class="confirmed-wrapper">
+    <main class="confirmed-card">
+      <!-- Header -->
+      <div class="confirmed-header">
+        <div class="check-circle">
+          <span class="material-icons-round">check_circle</span>
+        </div>
+        <h1>Your Car is Ready!</h1>
+        <p class="booking-ref">Booking Reference: <span>WD-9842-AX</span></p>
+      </div>
+
+      <!-- Content -->
+      <div class="confirmed-content">
+        <!-- Left: Summary -->
+        <div>
+          <div class="summary-label">Booking Summary</div>
+          <div class="car-summary">
+            <div class="car-summary-img">
+              <img src="../../../shared/images/cars/tesla-model3-side.jpg" alt="Tesla Model 3" />
+            </div>
+            <div class="car-summary-info">
+              <h3>Tesla Model 3</h3>
+              <div class="detail-row">
+                <span class="material-icons-round">calendar_month</span>
+                <div>
+                  <span>Nov 15 - Nov 18, 2024</span>
+                  <small>10:00 AM Pick-up</small>
+                </div>
+              </div>
+              <div class="detail-row">
+                <span class="material-icons-round">location_on</span>
+                <div>
+                  <span>Melaka Central Hub</span>
+                  <small>Terminal 2, Premium Lane</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: QR -->
+        <div class="qr-section">
+          <div class="summary-label">Digital Key Access</div>
+          <div class="qr-box">
+            <p>Scan at the kiosk to retrieve your physical key card instantly.</p>
+            <div class="qr-code">
+              <div class="qr-placeholder"></div>
+            </div>
+            <button class="btn-save-wallet">
+              <span class="material-icons-round">download</span>
+              Save to Wallet
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Insight -->
+      <div class="ai-insight">
+        <div class="ai-insight-card">
+          <div class="ai-badge">
+            <span class="material-icons-round">bolt</span>
+          </div>
+          <div class="ai-insight-text">
+            <h4><span class="material-icons-round">auto_awesome</span> AI Route Insight</h4>
+            <p>Based on your pick-up location in Melaka, we've pre-loaded top fast-charging stations to your vehicle's navigation. The nearest Supercharger is just 5 minutes away at Dataran Pahlawan.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="confirmed-actions">
+        <button class="btn-outline" onclick="window.print()">
+          <span class="material-icons-round">calendar_add_on</span> Add to Calendar
+        </button>
+        <button class="btn-primary-action" onclick="window.location='../my-bookings/my-bookings.html'">
+          <span class="material-icons-round">list_alt</span> View My Bookings
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
+
+  <!-- CHATBOT -->
+  <div id="chatbot-placeholder"></div>
+  <script src="../../../shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+  <script>
+    // Confetti celebration
+    (function(){
+      const c = document.getElementById('confetti');
+      const colors = ['#2563eb','#60a5fa','#f59e0b','#10b981','#8b5cf6','#ec4899'];
+      for(let i = 0; i < 50; i++){
+        const p = document.createElement('div');
+        p.className = 'confetti-piece';
+        p.style.left = Math.random()*100 + '%';
+        p.style.background = colors[Math.floor(Math.random()*colors.length)];
+        p.style.animationDelay = Math.random()*1.5 + 's';
+        p.style.animationDuration = (2 + Math.random()*2) + 's';
+        p.style.borderRadius = Math.random()>.5 ? '50%' : '2px';
+        p.style.width = (6 + Math.random()*8) + 'px';
+        p.style.height = (6 + Math.random()*8) + 'px';
+        c.appendChild(p);
+      }
+      setTimeout(()=>c.remove(), 5000);
+    })();
+  </script>
+</body>
+</html>

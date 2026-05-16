@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ | WeDRIVE</title>
+  <meta name="description" content="Frequently asked questions about WeDRIVE car rental in Melaka.">
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../../shared/css/guest-pages.css" />
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="navbar-placeholder" data-module="guest"></div>
+  <section class="page-hero reveal-onload">
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about renting with WeDRIVE</p>
+  </section>
+  <div class="faq-page-section">
+    <div class="faq-search-bar reveal-on-scroll">
+      <span class="material-icons-round">search</span>
+      <input type="text" id="faq-search" placeholder="Search for answers..." />
+    </div>
+    <div class="faq-cats reveal-on-scroll">
+      <button class="faq-cat-btn active" data-cat="all">All</button>
+      <button class="faq-cat-btn" data-cat="booking">Booking</button>
+      <button class="faq-cat-btn" data-cat="payment">Payment</button>
+      <button class="faq-cat-btn" data-cat="insurance">Insurance</button>
+      <button class="faq-cat-btn" data-cat="ev">EV</button>
+      <button class="faq-cat-btn" data-cat="cancel">Cancellation</button>
+      <button class="faq-cat-btn" data-cat="melaka">Melaka Tips</button>
+    </div>
+    <div class="faq-accordion" id="faq-list">
+      <div class="faq-acc-item" data-cat="booking"><button class="faq-acc-q"><span>How do I book a car?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>Browse our fleet, select your dates, choose your car, and proceed to checkout. Pay securely online and get instant confirmation with a digital key QR code.</p></div></div>
+      <div class="faq-acc-item" data-cat="booking"><button class="faq-acc-q"><span>Can I modify my booking?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>Yes, modifications are free up to 24 hours before pick-up. Go to My Bookings and click Modify.</p></div></div>
+      <div class="faq-acc-item" data-cat="booking"><button class="faq-acc-q"><span>What documents do I need?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>Valid driving license, IC/passport, and a credit/debit card. International visitors need an International Driving Permit (IDP).</p></div></div>
+      <div class="faq-acc-item" data-cat="payment"><button class="faq-acc-q"><span>What payment methods do you accept?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>Visa, Mastercard, FPX online banking, Touch 'n Go eWallet, and GrabPay.</p></div></div>
+      <div class="faq-acc-item" data-cat="payment"><button class="faq-acc-q"><span>Why do prices change?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>WeDRIVE uses AI-based dynamic pricing based on demand and seasonality. Book early for best rates!</p></div></div>
+      <div class="faq-acc-item" data-cat="payment"><button class="faq-acc-q"><span>Are there hidden fees?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>No hidden fees. The price shown at checkout is what you pay. Security deposit is fully refundable.</p></div></div>
+      <div class="faq-acc-item" data-cat="insurance"><button class="faq-acc-q"><span>Is insurance included?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>Basic comprehensive insurance is included. Upgrade to full coverage (RM35/day) to reduce excess to RM0.</p></div></div>
+      <div class="faq-acc-item" data-cat="ev"><button class="faq-acc-q"><span>Where can I charge my EV in Melaka?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>12+ charging stations around Melaka. Our AI pre-loads nearest stations to the car's navigation.</p></div></div>
+      <div class="faq-acc-item" data-cat="ev"><button class="faq-acc-q"><span>Is EV charging included?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>Home/destination charging is free. Supercharger fees are billed at standard Tesla rates.</p></div></div>
+      <div class="faq-acc-item" data-cat="cancel"><button class="faq-acc-q"><span>What is the cancellation policy?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>48+ hours: Full refund. 24-48 hours: 50% refund. Less than 24 hours: No refund.</p></div></div>
+      <div class="faq-acc-item" data-cat="melaka"><button class="faq-acc-q"><span>What are the best places to visit in Melaka?</span><span class="material-icons-round">expand_more</span></button><div class="faq-acc-a"><p>A Famosa, Jonker Street, Melaka River Cruise, Christ Church, and Stadthuys. Check our Explore Melaka page for AI-curated itineraries!</p></div></div>
+    </div>
+  </div>
+  <div id="chatbot-placeholder"></div>
+  <div id="footer-placeholder"></div>
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+  <script>
+    document.querySelectorAll('.faq-acc-q').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement;const o=i.classList.contains('open');document.querySelectorAll('.faq-acc-item.open').forEach(x=>x.classList.remove('open'));if(!o)i.classList.add('open');});});
+    document.querySelectorAll('.faq-cat-btn').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.faq-cat-btn').forEach(x=>x.classList.remove('active'));c.classList.add('active');const v=c.dataset.cat;document.querySelectorAll('.faq-acc-item').forEach(i=>{i.style.display=(v==='all'||i.dataset.cat===v)?'':'none';});});});
+    document.getElementById('faq-search').addEventListener('input',function(){const q=this.value.toLowerCase();document.querySelectorAll('.faq-acc-item').forEach(i=>{i.style.display=i.textContent.toLowerCase().includes(q)?'':'none';});});
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking Receipt | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <style>
+    body { font-family: Inter, sans-serif; }
+    .receipt-wrapper { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+    .receipt-card { background: var(--card-bg,#fff); border: 1px solid var(--border,rgba(0,0,0,.06)); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.06); overflow: hidden; }
+
+    .receipt-header { padding: 28px 32px; border-bottom: 1px solid var(--border,rgba(0,0,0,.06)); display: flex; justify-content: space-between; align-items: center; }
+    .receipt-logo { display: flex; align-items: center; gap: 10px; }
+    .receipt-logo img { width: 36px; }
+    .receipt-logo span { font-size: 18px; font-weight: 800; color: var(--text-primary,#1e293b); }
+    .receipt-id { text-align: right; }
+    .receipt-id strong { font-size: 13px; color: var(--primary,#2563eb); display: block; }
+    .receipt-id small { font-size: 11px; color: var(--text-muted,#94a3b8); }
+
+    .receipt-body { padding: 24px 32px; }
+    .receipt-section { margin-bottom: 20px; }
+    .receipt-section h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted,#64748b); margin-bottom: 10px; }
+    .receipt-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; color: var(--text-secondary,#475569); }
+    .receipt-row .value { font-weight: 600; color: var(--text-primary,#1e293b); }
+    .receipt-divider { height: 1px; background: var(--border,rgba(0,0,0,.06)); margin: 16px 0; }
+    .receipt-total { display: flex; justify-content: space-between; padding: 12px 0; font-size: 20px; font-weight: 800; color: var(--text-primary,#1e293b); border-top: 2px solid var(--primary,#2563eb); margin-top: 8px; }
+    .receipt-total .total-amount { color: var(--primary,#2563eb); }
+    .receipt-paid { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; background: rgba(16,185,129,.06); border-radius: 8px; font-size: 12px; font-weight: 700; color: #10b981; margin-top: 12px; }
+    .receipt-paid .material-icons-round { font-size: 16px; }
+
+    .receipt-footer { padding: 20px 32px; border-top: 1px solid var(--border,rgba(0,0,0,.06)); text-align: center; }
+    .receipt-footer p { font-size: 12px; color: var(--text-muted,#94a3b8); margin-bottom: 12px; }
+    .receipt-actions { display: flex; gap: 10px; justify-content: center; }
+    .receipt-btn { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .2s; }
+    .receipt-btn.outline { background: transparent; border: 1px solid var(--border,rgba(0,0,0,.1)); color: var(--text-primary,#1e293b); }
+    .receipt-btn.outline:hover { background: var(--bg,#f1f5f9); }
+    .receipt-btn.primary { background: var(--primary,#2563eb); color: #fff; border: none; }
+    .receipt-btn.primary:hover { box-shadow: 0 4px 16px rgba(37,99,235,.3); }
+    .receipt-btn .material-icons-round { font-size: 16px; }
+
+    @media print {
+      .receipt-actions, #navbar-placeholder, #footer-placeholder, #chatbot-placeholder { display: none !important; }
+      .receipt-wrapper { margin: 0; }
+      .receipt-card { box-shadow: none; border: 1px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-placeholder" data-module="customer"></div>
+  <div class="receipt-wrapper">
+    <div class="receipt-card">
+      <div class="receipt-header">
+        <div class="receipt-logo">
+          <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE" />
+          <span>WeDRIVE</span>
+        </div>
+        <div class="receipt-id">
+          <strong>WD-9842-AX</strong>
+          <small>Nov 15, 2024</small>
+        </div>
+      </div>
+      <div class="receipt-body">
+        <div class="receipt-section">
+          <h4>Customer Information</h4>
+          <div class="receipt-row"><span>Name</span><span class="value">Ahmad bin Ali</span></div>
+          <div class="receipt-row"><span>Email</span><span class="value">ahmad@email.com</span></div>
+          <div class="receipt-row"><span>Phone</span><span class="value">+60 12-345 6789</span></div>
+          <div class="receipt-row"><span>License No.</span><span class="value">D12345678</span></div>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-section">
+          <h4>Vehicle Details</h4>
+          <div class="receipt-row"><span>Vehicle</span><span class="value">Tesla Model 3 (2024)</span></div>
+          <div class="receipt-row"><span>Category</span><span class="value">EV Sedan - Luxury</span></div>
+          <div class="receipt-row"><span>Plate No.</span><span class="value">WDR 3388</span></div>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-section">
+          <h4>Rental Period</h4>
+          <div class="receipt-row"><span>Pick-up</span><span class="value">Nov 15, 2024 - 10:00 AM</span></div>
+          <div class="receipt-row"><span>Return</span><span class="value">Nov 18, 2024 - 10:00 AM</span></div>
+          <div class="receipt-row"><span>Duration</span><span class="value">3 Days</span></div>
+          <div class="receipt-row"><span>Location</span><span class="value">Melaka Central Hub</span></div>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-section">
+          <h4>Payment Breakdown</h4>
+          <div class="receipt-row"><span>Base Rate (RM 450 x 3 days)</span><span class="value">RM 1,350.00</span></div>
+          <div class="receipt-row"><span>Service Fee</span><span class="value">RM 50.00</span></div>
+          <div class="receipt-row"><span>Insurance (Basic)</span><span class="value">RM 0.00</span></div>
+          <div class="receipt-row" style="color: #10b981;"><span>AI Dynamic Discount</span><span class="value">- RM 120.00</span></div>
+          <div class="receipt-row"><span>Security Deposit (refundable)</span><span class="value">RM 500.00</span></div>
+          <div class="receipt-total"><span>Total Paid</span><span class="total-amount">RM 1,780.00</span></div>
+          <div class="receipt-paid"><span class="material-icons-round">check_circle</span> Payment Successful - Visa ending 1111</div>
+        </div>
+      </div>
+      <div class="receipt-footer">
+        <p>Thank you for choosing WeDRIVE. For support, contact support@wedrive.my or call +60 6-123 4567</p>
+        <div class="receipt-actions">
+          <button class="receipt-btn outline" onclick="window.print()"><span class="material-icons-round">print</span> Print</button>
+          <button class="receipt-btn outline" onclick="window.print()"><span class="material-icons-round">download</span> Download PDF</button>
+          <button class="receipt-btn primary" onclick="window.location='../my-bookings/my-bookings.html'"><span class="material-icons-round">list_alt</span> My Bookings</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="chatbot-placeholder"></div>
+  <div id="footer-placeholder"></div>
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+</body>
+</html>

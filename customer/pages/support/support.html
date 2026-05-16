@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Support & Help | WeDRIVE</title>
+  <meta name="description" content="Get help with your WeDRIVE car rental. FAQs, AI chat support, and contact information.">
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../../shared/css/customer-pages.css" />
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="navbar-placeholder" data-module="customer"></div>
+
+  <!-- HERO -->
+  <section class="support-hero reveal-onload">
+    <div class="support-hero-inner">
+      <span class="material-icons-round hero-icon">support_agent</span>
+      <h1>How can we help you?</h1>
+      <p>Search our knowledge base or chat with our AI assistant</p>
+      <div class="search-bar">
+        <span class="material-icons-round">search</span>
+        <input type="text" id="faq-search" placeholder="Search for help..." autocomplete="off" />
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK ACTIONS -->
+  <section class="quick-actions">
+    <div class="qa-grid">
+      <div class="qa-card reveal-on-scroll" onclick="if(typeof toggleChat==='function') toggleChat();">
+        <div class="qa-icon"><span class="material-icons-round">smart_toy</span></div>
+        <h3>AI Chat Support</h3>
+        <p>Get instant answers from our AI assistant</p>
+      </div>
+      <a class="qa-card reveal-on-scroll" href="../my-bookings/my-bookings.html">
+        <div class="qa-icon qa-orange"><span class="material-icons-round">calendar_month</span></div>
+        <h3>Manage Booking</h3>
+        <p>View, modify, or cancel your bookings</p>
+      </a>
+      <a class="qa-card reveal-on-scroll" href="../profile/profile.html">
+        <div class="qa-icon qa-green"><span class="material-icons-round">person</span></div>
+        <h3>Account Settings</h3>
+        <p>Update your profile and preferences</p>
+      </a>
+      <div class="qa-card reveal-on-scroll">
+        <div class="qa-icon qa-purple"><span class="material-icons-round">call</span></div>
+        <h3>Emergency Line</h3>
+        <p>24/7 roadside assistance: 1800-WEDRIVE</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">quiz</span> Frequently Asked Questions</h2>
+    <div class="faq-categories reveal-on-scroll">
+      <button class="faq-cat active" data-cat="all">All</button>
+      <button class="faq-cat" data-cat="booking">Booking</button>
+      <button class="faq-cat" data-cat="payment">Payment</button>
+      <button class="faq-cat" data-cat="insurance">Insurance</button>
+      <button class="faq-cat" data-cat="ev">EV & Charging</button>
+      <button class="faq-cat" data-cat="cancel">Cancellation</button>
+    </div>
+    <div class="faq-list" id="faq-list">
+      <!-- Booking -->
+      <div class="faq-item reveal-on-scroll" data-cat="booking">
+        <button class="faq-q"><span>How do I book a car?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>Browse our fleet, select your preferred dates and car, then proceed to checkout. You can pay securely online and receive instant confirmation.</p></div>
+      </div>
+      <div class="faq-item reveal-on-scroll" data-cat="booking">
+        <button class="faq-q"><span>Can I modify my booking?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>Yes, you can modify your booking up to 24 hours before pick-up. Go to My Bookings, select the booking, and click Modify.</p></div>
+      </div>
+      <div class="faq-item reveal-on-scroll" data-cat="booking">
+        <button class="faq-q"><span>What documents do I need?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>You need a valid driving license, IC/passport, and a credit/debit card for the security deposit. International visitors need an International Driving Permit (IDP).</p></div>
+      </div>
+      <!-- Payment -->
+      <div class="faq-item reveal-on-scroll" data-cat="payment">
+        <button class="faq-q"><span>What payment methods do you accept?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>We accept Visa, Mastercard, online banking (FPX), Touch 'n Go eWallet, and GrabPay.</p></div>
+      </div>
+      <div class="faq-item reveal-on-scroll" data-cat="payment">
+        <button class="faq-q"><span>Why do prices change?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>WeDRIVE uses AI-based dynamic pricing that adjusts rates based on demand, seasonality, and fleet availability. Book early for the best rates!</p></div>
+      </div>
+      <!-- Insurance -->
+      <div class="faq-item reveal-on-scroll" data-cat="insurance">
+        <button class="faq-q"><span>Is insurance included?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>Basic comprehensive insurance is included in every rental. You can upgrade to full coverage for RM35/day which reduces the excess to RM0.</p></div>
+      </div>
+      <!-- EV -->
+      <div class="faq-item reveal-on-scroll" data-cat="ev">
+        <button class="faq-q"><span>Where can I charge my EV in Melaka?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>There are 12+ charging stations around Melaka. Our AI navigation pre-loads the nearest stations for you. The closest Supercharger is at Dataran Pahlawan.</p></div>
+      </div>
+      <div class="faq-item reveal-on-scroll" data-cat="ev">
+        <button class="faq-q"><span>Is charging included in the rental price?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>Home/destination charging is free. Supercharger fees are billed directly to your account at the standard Tesla rate.</p></div>
+      </div>
+      <!-- Cancellation -->
+      <div class="faq-item reveal-on-scroll" data-cat="cancel">
+        <button class="faq-q"><span>What is the cancellation policy?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
+        <div class="faq-a"><p>Full refund if cancelled 48+ hours before pick-up. 50% refund for 24-48 hours. No refund for less than 24 hours notice.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">mail</span> Still Need Help?</h2>
+    <div class="contact-grid">
+      <div class="contact-card reveal-on-scroll">
+        <span class="material-icons-round">email</span>
+        <h4>Email Us</h4>
+        <p>support@wedrive.my</p>
+        <small>Response within 24 hours</small>
+      </div>
+      <div class="contact-card reveal-on-scroll">
+        <span class="material-icons-round">phone</span>
+        <h4>Call Us</h4>
+        <p>+60 6-123 4567</p>
+        <small>Mon-Fri, 9AM-6PM</small>
+      </div>
+      <div class="contact-card reveal-on-scroll">
+        <span class="material-icons-round">chat</span>
+        <h4>WhatsApp</h4>
+        <p>+60 11-1234 5678</p>
+        <small>24/7 Available</small>
+      </div>
+    </div>
+  </section>
+
+  <div id="chatbot-placeholder"></div>
+  <div id="footer-placeholder"></div>
+
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+  <script>
+    // FAQ Accordion
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // FAQ Category Filter
+    document.querySelectorAll('.faq-cat').forEach(cat => {
+      cat.addEventListener('click', () => {
+        document.querySelectorAll('.faq-cat').forEach(c => c.classList.remove('active'));
+        cat.classList.add('active');
+        const v = cat.dataset.cat;
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.style.display = (v === 'all' || item.dataset.cat === v) ? '' : 'none';
+        });
+      });
+    });
+
+    // Search
+    document.getElementById('faq-search').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
