@@ -3,74 +3,220 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="WeDRIVE Customer Dashboard - Manage your car rentals, view bookings, and get AI recommendations."/>
   <title>Dashboard | WeDRIVE Customer</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link rel="stylesheet" href="../../css/customer.css?v=2.9.19" />
+  <link rel="stylesheet" href="../../css/customer.css" />
 </head>
 <body data-particles="10" data-cursor-glow>
-  <!-- NAVBAR -->
-  <div id="navbar-placeholder" data-module="customer"></div>
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-greeting reveal-onload" id="hero-greeting">
-      <span class="material-icons-round hero-wave-icon">waving_hand</span>
-      <span data-key="cust_welcome">Welcome back!</span>
-    </div>
-    <h1 class="reveal-onload" data-key="cust_hero_title">Find Your Perfect <span>Rental Car</span></h1>
-    <p class="reveal-onload" data-key="cust_hero_sub">AI-powered recommendations · Best prices guaranteed · Instant booking</p>
-    <div class="search-box reveal-onload">
-      <div class="search-grid">
-        <div class="search-field">
-          <label data-key="cust_pickup_loc">Pick-up Location</label>
-          <div class="input-wrap">
-            <span class="material-icons-round">location_on</span>
-            <input type="text" placeholder="Melaka, Malaysia" />
-          </div>
+
+  <!-- SIDEBAR (Customer) -->
+  <aside class="customer-sidebar" id="customer-sidebar">
+    <div class="sidebar-header">
+      <a href="../../../index.html" class="sidebar-brand">
+        <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE" class="sidebar-logo"/>
+        <span class="sidebar-brand-text">WeDRIVE</span>
+      </a>
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">
+          <span class="material-icons-round">person</span>
         </div>
-        <div class="search-field">
-          <label data-key="search_from">Pick-up Date</label>
-          <div class="input-wrap">
-            <span class="material-icons-round">calendar_today</span>
-            <input type="text" id="pickup-date" placeholder="Select date" />
-          </div>
+        <div>
+          <p class="sidebar-user-name" data-key="cust_welcome">Welcome back</p>
+          <p class="sidebar-user-role" data-key="cust_hero_sub_short">Manage your rentals</p>
         </div>
-        <div class="search-field">
-          <label data-key="search_to">Return Date</label>
-          <div class="input-wrap">
-            <span class="material-icons-round">event</span>
-            <input type="text" id="return-date" placeholder="Select date" />
-          </div>
-        </div>
-        <button class="btn-search">
-          <span class="material-icons-round search-btn-icon">search</span>
-          <span data-key="search_btn">Search</span>
-        </button>
       </div>
     </div>
-  </section>
 
-  <!-- CONTENT -->
-  <div class="content">
-    <div class="filter-bar reveal-on-scroll">
-      <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
-      <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
-      <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
-      <button class="filter-chip" onclick="filterCars('hatchback', this)" data-key="filter_hatch">Hatchback</button>
-      <button class="filter-chip" onclick="filterCars('van', this)" data-key="filter_van">Van</button>
-      <button class="filter-chip" onclick="filterCars('luxury', this)" data-key="filter_luxury">Luxury</button>
-      <span class="results-count" data-key="cust_showing">Showing <strong>6</strong> cars available</span>
+    <nav class="sidebar-nav">
+      <a href="#" class="sidebar-nav-item active" data-page="dashboard">
+        <span class="material-icons-round">dashboard</span>
+        <span data-key="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="../my-bookings/my-bookings.html" class="sidebar-nav-item" data-page="my-bookings">
+        <span class="material-icons-round">calendar_today</span>
+        <span data-key="nav_bookings">My Bookings</span>
+      </a>
+      <a href="../profile/profile.html" class="sidebar-nav-item" data-page="profile">
+        <span class="material-icons-round">person</span>
+        <span data-key="nav_profile">Profile</span>
+      </a>
+      <a href="../ai-insights/ai-insights.html" class="sidebar-nav-item" data-page="ai-insights">
+        <span class="material-icons-round">psychology</span>
+        <span data-key="nav_ai">AI Insights</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-cta">
+      <button class="sidebar-book-btn" onclick="window.scrollTo({top: document.querySelector('.browse-section').offsetTop - 80, behavior:'smooth'})">
+        <span class="material-icons-round">directions_car</span>
+        <span data-key="cust_book_car">Book a Car</span>
+      </button>
     </div>
 
-    <div class="cars-grid" id="cars-grid">
-      <!-- Car cards injected by JS -->
+    <div class="sidebar-footer-nav">
+      <a href="../support/support.html" class="sidebar-nav-item" data-page="support">
+        <span class="material-icons-round">help</span>
+        <span data-key="nav_support">Support</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MOBILE TOP BAR -->
+  <div class="mobile-menu-bar">
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+      <span class="material-icons-round">menu</span>
+    </button>
+    <a href="../../../index.html" class="mobile-brand">
+      <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE" class="mobile-logo"/>
+      <span>WeDRIVE</span>
+    </a>
+    <div class="mobile-actions">
+      <button class="icon-btn theme-toggle" id="theme-toggle-mobile" aria-label="Toggle theme">
+        <span class="material-icons-round">light_mode</span>
+      </button>
     </div>
   </div>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="customer-main" id="customer-main">
+    <!-- UTILITY TOP BAR -->
+    <header class="utility-bar">
+      <div>
+        <h1 class="utility-title" id="hero-greeting">
+          <span data-key="cust_welcome">Welcome back!</span>
+        </h1>
+      </div>
+      <div class="utility-actions">
+        <button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Switch language">
+          <span class="lang-text">EN</span>
+        </button>
+        <button class="icon-btn theme-toggle" id="theme-toggle-desktop" aria-label="Toggle theme">
+          <span class="material-icons-round">light_mode</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="main-content-area">
+
+      <!-- SECTION: Active Booking -->
+      <section class="dash-section" id="active-booking-section">
+        <div class="section-header">
+          <div>
+            <h2 data-key="cust_active_bookings">Active Bookings</h2>
+            <p data-key="cust_active_desc">Your current ongoing rental</p>
+          </div>
+          <a href="../my-bookings/my-bookings.html" class="section-link" data-key="cust_view_all">View All</a>
+        </div>
+
+        <div class="active-booking-card" id="active-booking-card">
+          <!-- AI Status Chip -->
+          <div class="booking-status-chip">
+            <span class="material-icons-round">electric_car</span>
+            <span data-key="cust_optimal">Optimal Battery</span>
+          </div>
+          <div class="booking-image">
+            <img src="../../../shared/images/cars/polestar-2.jpg" alt="Active Rental Car" id="active-car-img"/>
+          </div>
+          <div class="booking-details">
+            <div class="booking-tags">
+              <span class="booking-tag">EV</span>
+              <span class="booking-id">Booking #WD-9942</span>
+            </div>
+            <h3 class="booking-car-name">Polestar 2</h3>
+            <p class="booking-car-sub">Long Range Dual Motor</p>
+            <div class="booking-specs-grid">
+              <div>
+                <p class="spec-label" data-key="cust_return_date">Return Date</p>
+                <p class="spec-value">Oct 24, 10:00 AM</p>
+              </div>
+              <div>
+                <p class="spec-label" data-key="cust_range">Current Range</p>
+                <p class="spec-value spec-highlight">
+                  <span class="material-icons-round">battery_charging_80</span>
+                  245 mi
+                </p>
+              </div>
+            </div>
+            <div class="booking-actions">
+              <button class="btn-primary" data-key="cust_extend">Extend Rental</button>
+              <button class="btn-outline" data-key="cust_digital_key">Digital Key</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION: AI Recommendations -->
+      <section class="dash-section">
+        <div class="section-header">
+          <div>
+            <h2>
+              <span class="material-icons-round section-icon">psychology</span>
+              <span data-key="cust_ai_reco">AI Recommendations for You</span>
+            </h2>
+            <p data-key="cust_ai_reco_desc">Curated based on your rental history</p>
+          </div>
+        </div>
+        <div class="reco-grid" id="reco-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- SECTION: Browse Cars -->
+      <section class="dash-section browse-section">
+        <div class="section-header">
+          <div>
+            <h2 data-key="cust_browse">Browse Available Cars</h2>
+            <p data-key="cust_browse_desc">Find your perfect rental</p>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar-compact">
+          <div class="search-field-compact">
+            <span class="material-icons-round">location_on</span>
+            <input type="text" placeholder="Melaka, Malaysia" data-key-placeholder="cust_pickup_loc"/>
+          </div>
+          <div class="search-field-compact">
+            <span class="material-icons-round">calendar_today</span>
+            <input type="text" id="pickup-date" placeholder="Pick-up Date" data-key-placeholder="search_from"/>
+          </div>
+          <div class="search-field-compact">
+            <span class="material-icons-round">event</span>
+            <input type="text" id="return-date" placeholder="Return Date" data-key-placeholder="search_to"/>
+          </div>
+          <button class="search-btn-compact">
+            <span class="material-icons-round">search</span>
+            <span data-key="search_btn">Search</span>
+          </button>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-bar">
+          <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
+          <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
+          <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
+          <button class="filter-chip" onclick="filterCars('hatchback', this)" data-key="filter_hatch">Hatchback</button>
+          <button class="filter-chip" onclick="filterCars('van', this)" data-key="filter_van">Van</button>
+          <button class="filter-chip" onclick="filterCars('luxury', this)" data-key="filter_luxury">Luxury</button>
+          <span class="results-count" data-key="cust_showing">Showing <strong>6</strong> cars available</span>
+        </div>
+
+        <!-- Car Grid -->
+        <div class="cars-grid" id="cars-grid">
+          <!-- Car cards injected by JS -->
+        </div>
+      </section>
+
+    </div>
+  </main>
 
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
@@ -82,9 +228,22 @@
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../js/customer.js?v=2.9.21"></script>
+  <script src="../../js/customer.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js"></script>
+
+  <!-- Sidebar Mobile Toggle -->
+  <script>
+    (function() {
+      var toggle = document.getElementById('mobile-menu-toggle');
+      var sidebar = document.getElementById('customer-sidebar');
+      var overlay = document.getElementById('sidebar-overlay');
+      function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+      function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+      if (toggle) toggle.addEventListener('click', function() { sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+    })();
+  </script>
 </body>
 </html>
