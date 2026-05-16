@@ -74,16 +74,16 @@
     // Admin dashboard
     admin: {
       links: [
-        { key: 'admin_nav_dash',  href: '{base}admin/pages/admin.html', label: 'Dashboard',  id: 'nl-dash'  },
-        { key: 'admin_nav_cars',  href: '{base}admin/pages/cars.html',      label: 'Cars',        id: 'nl-cars'  },
-        { key: 'admin_nav_users', href: '{base}admin/pages/customers.html', label: 'Customers',   id: 'nl-users' }
+        { key: 'admin_nav_dash',  href: '{base}admin/pages/dashboard/admin.html', label: 'Dashboard',  id: 'nl-dash'  },
+        { key: 'admin_nav_cars',  href: '{base}admin/pages/car/cars.html',         label: 'Cars',        id: 'nl-cars'  },
+        { key: 'admin_nav_users', href: '{base}admin/pages/customer/customers.html', label: 'Customers',   id: 'nl-users' }
       ],
       actions: `
         <div class="user-pill" id="user-pill">
           <div class="user-av" id="user-av">AD</div>
           <span class="user-name" id="user-name-nav">Admin</span>
         </div>
-        <button class="btn-logout" onclick="window.location='{base}admin/pages/admin.html'">
+        <button class="btn-logout" onclick="window.location='{base}admin/pages/dashboard/admin.html'">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
         </button>
@@ -114,7 +114,7 @@
 
     var brandLink = base + 'index.html';
     if (module === 'customer') brandLink = base + 'customer/pages/customer.html';
-    else if (module === 'admin') brandLink = base + 'admin/pages/admin.html';
+    else if (module === 'admin') brandLink = base + 'admin/pages/dashboard/admin.html';
     else if (module === 'guest') brandLink = base + 'index.html';
 
     // Inject navbar HTML

@@ -25,17 +25,27 @@ AI CAR RENTAL SYSTEM/
 |           +-- pricing.html    # Halaman Harga (4 tier pricing)
 |
 +-- admin/                      # Modul Admin
-|   +-- pages/
-|   |   +-- admin.html          # Admin Dashboard
-|   |   +-- cars.html            # Pengurusan Fleet (Kereta)
-|   |   +-- car-detail.html      # Detail & Urus Kereta Individu
-|   |   +-- bookings.html       # Pengurusan Tempahan
-|   |   +-- customers.html      # Pengurusan Pelanggan
-|   |   +-- reports.html        # Laporan & Analitik
-|   |   +-- settings.html       # Tetapan Sistem
-|   |   +-- chatbot.html        # AI Chatbot Settings (Gemini + Grok)
-|   |   +-- marketing.html      # Marketing (Banners, Promo Codes, Seasonal Pricing)
-|   |   +-- calendar.html       # Calendar Overview (Pantau Tempahan, Acara & Harga Bermusim)
+|   +-- pages/                             # FLOW: Sidebar navigation hierarchy
+|   |   +-- dashboard/
+|   |   |   +-- admin.html                 # Admin Dashboard
+|   |   +-- car/
+|   |   |   +-- cars.html                  # Pengurusan Fleet (Kereta)
+|   |   |   +-- car-detail/
+|   |   |       +-- car-detail.html        # Detail & Urus Kereta Individu
+|   |   +-- booking/
+|   |   |   +-- bookings.html              # Pengurusan Tempahan
+|   |   +-- customer/
+|   |   |   +-- customers.html             # Pengurusan Pelanggan
+|   |   +-- report/
+|   |   |   +-- reports.html               # Laporan & Analitik
+|   |   +-- calendar/
+|   |   |   +-- calendar.html              # Calendar Overview
+|   |   +-- chatbot/
+|   |   |   +-- chatbot.html               # AI Chatbot Settings
+|   |   +-- marketing/
+|   |   |   +-- marketing.html             # Marketing (Banners, Promo, Seasonal)
+|   |   +-- setting/
+|   |       +-- settings.html              # Tetapan Sistem
 |   +-- css/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
