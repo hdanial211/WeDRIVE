@@ -62,6 +62,9 @@ AI CAR RENTAL SYSTEM/
 |   |   |   +-- marketing.html             # Marketing (Banners, Promo, Seasonal)
 |   |   +-- setting/
 |   |       +-- settings.html              # Tetapan Sistem
+|   +-- components/
+|   |   +-- sidebar/
+|   |       +-- sidebar-admin.html   # Admin Sidebar Navigation
 |   +-- css/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
@@ -118,7 +121,7 @@ AI CAR RENTAL SYSTEM/
     |       +-- terms/
     |           +-- terms.html       # Halaman Terma & Privasi
     +-- components/
-    |   +-- sidebar-admin.html  # Admin Sidebar
+    |   +-- navbar.html          # Navbar yang diguna semua page
     |   +-- footer.html         # Footer yang diguna semua page
     +-- model/
     |   +-- 2023 BMW 320i M Sport 2.0/

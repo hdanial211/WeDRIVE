@@ -70,7 +70,10 @@
     var component   = placeholder.getAttribute('data-component') || 'sidebar-admin';
     var currentPage = placeholder.getAttribute('data-page') || '';
     var base        = resolveBasePath();
-    var url         = base + 'shared/components/' + component + '.html';
+
+    // Determine which module's sidebar to load
+    var sidebarPath = 'admin/components/sidebar/' + component + '.html';
+    var url         = base + sidebarPath;
 
     fetch(url)
       .then(function (res) {
