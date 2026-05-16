@@ -47,13 +47,19 @@ AI CAR RENTAL SYSTEM/
 |
 +-- customer/                   # Modul Customer / Pengguna
 |   +-- pages/
+|   |   +-- booking/
+|   |   |   +-- booking.html     # Halaman Tempahan Kereta
+|   |   +-- my-bookings/
+|   |   |   +-- my-bookings.html # Senarai & Sejarah Tempahan
+|   |   +-- profile/
+|   |   |   +-- profile.html     # Pengurusan Profil Customer
 |   |   +-- signup/
-|   |   |   +-- signup.html     # Halaman Daftar Akaun
-|   |   +-- customer.html       # Customer Dashboard (Pilih Kereta)
+|   |   |   +-- signup.html      # Halaman Daftar Akaun
+|   |   +-- customer.html        # Customer Dashboard (Pilih Kereta)
 |   +-- css/
-|   |   +-- customer.css        # Gaya Customer
+|   |   +-- customer.css         # Gaya Customer
 |   +-- js/
-|       +-- customer.js         # Logik Customer (kini menggunakan WeDriveAPI)
+|       +-- customer.js          # Logik Customer (kini menggunakan WeDriveAPI)
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- components/

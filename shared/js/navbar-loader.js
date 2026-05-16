@@ -25,6 +25,11 @@
 
   function resolveBase() {
     var path = window.location.pathname;
+    // Check for subfolder pages first (e.g. customer/pages/booking/booking.html)
+    var subfolderPattern = /\/(admin|customer|guest)\/pages\/[^/]+\/[^/]+\.html/;
+    if (subfolderPattern.test(path)) {
+      return '../../../';
+    }
     if (path.includes('/admin/pages/') || path.includes('/customer/pages/') || path.includes('/guest/pages/')) {
       return '../../';
     }
@@ -50,10 +55,10 @@
     // Logged-in customer dashboard
     customer: {
       links: [
-        { key: 'nav_browse',   href: '{base}customer/pages/customer.html',  label: 'Browse Cars',   id: 'nl-browse'   },
-        { key: 'nav_bookings', href: '#bookings',                            label: 'My Bookings',   id: 'nl-bookings' },
-        { key: 'nav_how',      href: '#how',                                 label: 'How It Works',  id: 'nl-how'      },
-        { key: 'nav_ai',       href: '#',                                    label: 'AI Assistant',  id: 'nl-ai', extra: 'onclick="if(typeof toggleChat===\'function\') toggleChat(); return false;"' }
+        { key: 'nav_browse',   href: '{base}customer/pages/customer.html',              label: 'Browse Cars',   id: 'nl-browse'   },
+        { key: 'nav_bookings', href: '{base}customer/pages/my-bookings/my-bookings.html', label: 'My Bookings',   id: 'nl-bookings' },
+        { key: 'nav_profile',  href: '{base}customer/pages/profile/profile.html',        label: 'Profile',       id: 'nl-profile'  },
+        { key: 'nav_ai',       href: '#',                                                label: 'AI Assistant',  id: 'nl-ai', extra: 'onclick="if(typeof toggleChat===\'function\') toggleChat(); return false;"' }
       ],
       actions: `
         <div class="user-pill" id="user-pill">

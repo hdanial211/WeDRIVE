@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Car | WeDRIVE</title>
+  <meta name="description" content="Book your perfect rental car with WeDRIVE - AI-powered recommendations and instant confirmation." />
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="../../css/customer.css?v=3.0.0" />
+  <style>
+    /* ===== BOOKING PAGE ===== */
+    .booking-page { max-width: 1240px; margin: 0 auto; padding: 100px 24px 48px; }
+    .booking-grid { display: grid; grid-template-columns: 1fr 400px; gap: 24px; align-items: start; }
+    .booking-left { display: flex; flex-direction: column; gap: 20px; }
+
+    /* Card base */
+    .bk-card {
+      background: var(--white); border-radius: 16px; padding: 24px;
+      box-shadow: 0 4px 12px rgba(30,41,59,0.05); border: 1px solid var(--slate-200);
+    }
+
+    /* Selected Car Summary */
+    .car-summary { display: flex; gap: 20px; align-items: center; }
+    .car-summary-img { width: 180px; height: 120px; border-radius: 12px; overflow: hidden; background: var(--slate-100); flex-shrink: 0; }
+    .car-summary-img img { width: 100%; height: 100%; object-fit: cover; }
+    .car-summary-info { flex: 1; }
+    .car-summary-info h2 { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .car-summary-tag { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; }
+    .car-summary-price { font-size: 20px; font-weight: 700; color: var(--primary); margin-top: 12px; }
+    .car-rating { display: inline-flex; align-items: center; gap: 4px; background: #EFF6FF; padding: 4px 10px; border-radius: 8px; font-weight: 700; font-size: 14px; color: #1D4ED8; }
+    .car-rating .material-icons-round { font-size: 16px; color: #F59E0B; }
+
+    /* Section title */
+    .bk-section-title { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 600; color: var(--navy); margin-bottom: 16px; }
+    .bk-section-title .material-icons-round { color: var(--primary); font-size: 22px; }
+
+    /* Form fields */
+    .bk-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .bk-form-grid.full { grid-template-columns: 1fr; }
+    .bk-field label { display: block; font-size: 11px; font-weight: 700; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .bk-field input, .bk-field select {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--slate-200); border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: 14px; color: var(--navy); background: var(--slate-50);
+      transition: border-color 0.2s, box-shadow 0.2s; outline: none;
+    }
+    .bk-field input:focus, .bk-field select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+
+    /* Add-ons */
+    .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .addon-item {
+      display: flex; align-items: center; justify-content: space-between; padding: 14px 16px;
+      border: 1px solid var(--slate-200); border-radius: 12px; cursor: pointer; transition: all 0.2s;
+    }
+    .addon-item:hover { background: var(--slate-50); border-color: var(--primary); }
+    .addon-item.checked { background: #EFF6FF; border-color: var(--primary); }
+    .addon-left { display: flex; align-items: center; gap: 10px; }
+    .addon-left input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+    .addon-left span { font-size: 14px; font-weight: 500; color: var(--navy); }
+    .addon-price { font-size: 12px; font-weight: 700; color: var(--slate-400); }
+
+    /* Payment Summary */
+    .payment-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+    .payment-row .label { color: var(--slate-400); }
+    .payment-row .value { color: var(--navy); font-weight: 600; }
+    .payment-total { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: 12px; border-top: 1px solid var(--slate-200); }
+    .payment-total .label { font-size: 18px; font-weight: 600; color: var(--navy); }
+    .payment-total .value { font-size: 28px; font-weight: 700; color: var(--primary); }
+
+    .btn-confirm {
+      width: 100%; margin-top: 20px; padding: 14px 24px; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, #3B82F6, #2563EB); color: white; font-family: 'Inter', sans-serif;
+      font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 14px rgba(59,130,246,0.3);
+    }
+    .btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(59,130,246,0.4); }
+    .btn-confirm:active { transform: scale(0.98); }
+
+    /* Right Sidebar */
+    .booking-sidebar { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 20px; }
+    .sidebar-car-visual { border-radius: 16px; overflow: hidden; position: relative; }
+    .sidebar-car-visual img { width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.5s; }
+    .sidebar-car-visual:hover img { transform: scale(1.04); }
+    .sidebar-badge { position: absolute; top: 12px; right: 12px; background: var(--success); color: white; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; }
+    .sidebar-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; }
+
+    .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 16px; }
+    .spec-chip { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--slate-50); border-radius: 10px; }
+    .spec-chip .material-icons-round { font-size: 18px; color: var(--primary); }
+    .spec-chip span { font-size: 12px; font-weight: 700; color: var(--navy); }
+
+    /* Policy */
+    .policy-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .policy-list li { display: flex; gap: 10px; font-size: 14px; color: var(--slate-600); }
+    .policy-list li .material-icons-round { font-size: 20px; color: var(--primary); flex-shrink: 0; }
+    .policy-link { display: flex; align-items: center; gap: 6px; color: var(--primary); font-weight: 700; font-size: 14px; text-decoration: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--slate-200); }
+    .policy-link:hover { text-decoration: underline; }
+
+    /* AI Insight */
+    .ai-insight {
+      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(37,99,235,0.04));
+      border: 1px solid rgba(59,130,246,0.15); border-radius: 16px; padding: 20px;
+    }
+    .ai-insight-header { display: flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+    .ai-insight-header .material-icons-round { font-size: 20px; }
+    .ai-insight p { font-size: 14px; color: var(--slate-600); line-height: 1.6; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .booking-grid { grid-template-columns: 1fr; }
+      .booking-sidebar { position: static; }
+      .car-summary { flex-direction: column; text-align: center; }
+      .car-summary-img { width: 100%; height: 180px; }
+      .bk-form-grid, .addon-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Night mode overrides */
+    body.night-mode .bk-card { background: var(--card-bg, #1E293B); border-color: rgba(148,163,184,0.15); }
+    body.night-mode .bk-field input, body.night-mode .bk-field select { background: rgba(255,255,255,0.05); border-color: rgba(148,163,184,0.2); color: #E2E8F0; }
+    body.night-mode .addon-item { border-color: rgba(148,163,184,0.2); }
+    body.night-mode .addon-item:hover { background: rgba(59,130,246,0.08); }
+    body.night-mode .addon-item.checked { background: rgba(59,130,246,0.12); }
+    body.night-mode .spec-chip { background: rgba(255,255,255,0.06); }
+    body.night-mode .ai-insight { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.2); }
+  </style>
+</head>
+<body data-particles="10" data-cursor-glow>
+  <!-- NAVBAR -->
+  <div id="navbar-placeholder" data-module="customer"></div>
+
+  <main class="booking-page">
+    <div class="booking-grid">
+      <!-- LEFT: Booking Form -->
+      <div class="booking-left">
+        <!-- Selected Car -->
+        <section class="bk-card reveal-onload" id="car-summary-section">
+          <div class="car-summary">
+            <div class="car-summary-img">
+              <img src="../../../shared/images/cars/tesla-model-3.jpg" alt="Tesla Model 3" onerror="this.src='https://placehold.co/360x240/e2e8f0/94a3b8?text=Car+Photo'" />
+            </div>
+            <div class="car-summary-info">
+              <div style="display:flex;justify-content:space-between;align-items:start;">
+                <div>
+                  <h2 id="booking-car-name">Tesla Model 3</h2>
+                  <span class="car-summary-tag">Luxury -- 2023 Edition</span>
+                </div>
+                <span class="car-rating">
+                  <span class="material-icons-round">star</span> 4.9
+                </span>
+              </div>
+              <p class="car-summary-price" id="booking-price-display">RM250<span style="font-size:14px;font-weight:500;color:var(--slate-400)">/day</span></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Rental Details -->
+        <section class="bk-card reveal-onload">
+          <h3 class="bk-section-title">
+            <span class="material-icons-round">calendar_month</span>
+            <span data-key="bk_rental_details">Rental Details</span>
+          </h3>
+          <div class="bk-form-grid">
+            <div class="bk-field">
+              <label data-key="bk_pickup_date">Pick-up Date</label>
+              <input type="date" id="bk-pickup-date" value="2026-05-20" />
+            </div>
+            <div class="bk-field">
+              <label data-key="bk_return_date">Return Date</label>
+              <input type="date" id="bk-return-date" value="2026-05-22" />
+            </div>
+          </div>
+          <div class="bk-form-grid full" style="margin-top: 12px;">
+            <div class="bk-field">
+              <label data-key="bk_pickup_loc">Pick-up Location</label>
+              <select id="bk-pickup-location">
+                <option>Melaka Sentral Bus Terminal</option>
+                <option>Melaka International Airport</option>
+                <option>Ayer Keroh Toll Plaza</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add-ons -->
+        <section class="bk-card reveal-onload">
+          <h3 class="bk-section-title">
+            <span class="material-icons-round">add_circle</span>
+            <span data-key="bk_addons">Enhance Your Journey</span>
+          </h3>
+          <div class="addon-grid">
+            <label class="addon-item" id="addon-gps">
+              <div class="addon-left">
+                <input type="checkbox" onchange="updateAddons()" />
+                <span data-key="bk_gps">GPS Navigation</span>
+              </div>
+              <span class="addon-price">+RM15/day</span>
+            </label>
+            <label class="addon-item" id="addon-child">
+              <div class="addon-left">
+                <input type="checkbox" onchange="updateAddons()" />
+                <span data-key="bk_child_seat">Child Seat</span>
+              </div>
+              <span class="addon-price">+RM20/day</span>
+            </label>
+            <label class="addon-item checked" id="addon-insurance">
+              <div class="addon-left">
+                <input type="checkbox" checked onchange="updateAddons()" />
+                <span data-key="bk_insurance">Full Insurance</span>
+              </div>
+              <span class="addon-price">+RM35/day</span>
+            </label>
+            <label class="addon-item" id="addon-driver">
+              <div class="addon-left">
+                <input type="checkbox" onchange="updateAddons()" />
+                <span data-key="bk_extra_driver">Extra Driver</span>
+              </div>
+              <span class="addon-price">+RM25/day</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Payment Summary -->
+        <section class="bk-card reveal-onload">
+          <h3 class="bk-section-title" data-key="bk_payment_summary">Payment Summary</h3>
+          <div class="payment-row"><span class="label" id="base-label">Base Rate (2 days)</span><span class="value" id="base-value">RM500.00</span></div>
+          <div class="payment-row"><span class="label" id="addon-label">Add-ons (Full Insurance)</span><span class="value" id="addon-value">RM70.00</span></div>
+          <div class="payment-row"><span class="label" data-key="bk_service_fee">Service Fee (AI-Optimized)</span><span class="value">RM15.00</span></div>
+          <div class="payment-total">
+            <span class="label" data-key="bk_total">Total Price</span>
+            <span class="value" id="total-price">RM585.00</span>
+          </div>
+          <button class="btn-confirm" id="btn-confirm-booking" onclick="confirmBooking()">
+            <span data-key="bk_confirm">Confirm Booking</span>
+            <span class="material-icons-round">arrow_forward</span>
+          </button>
+        </section>
+      </div>
+
+      <!-- RIGHT: Sidebar -->
+      <aside class="booking-sidebar">
+        <div class="bk-card sidebar-car-visual" style="padding:0;overflow:hidden;">
+          <img src="../../../shared/images/cars/tesla-model-3.jpg" alt="Tesla Model 3" onerror="this.src='https://placehold.co/400x200/e2e8f0/94a3b8?text=Car+Photo'" />
+          <span class="sidebar-badge">Available</span>
+          <div class="specs-grid">
+            <div class="spec-chip"><span class="material-icons-round">airline_seat_recline_extra</span><span>5 Seats</span></div>
+            <div class="spec-chip"><span class="material-icons-round">settings</span><span>Automatic</span></div>
+            <div class="spec-chip"><span class="material-icons-round">ev_station</span><span>Electric</span></div>
+            <div class="spec-chip"><span class="material-icons-round">calendar_today</span><span>2023 Model</span></div>
+          </div>
+        </div>
+
+        <div class="bk-card">
+          <h4 class="bk-section-title" data-key="bk_policy">Rental Policy</h4>
+          <ul class="policy-list">
+            <li><span class="material-icons-round">verified</span><span data-key="bk_policy_1">Free cancellation up to 24h before pick-up.</span></li>
+            <li><span class="material-icons-round">history</span><span data-key="bk_policy_2">Instant confirmation after payment.</span></li>
+            <li><span class="material-icons-round">local_gas_station</span><span data-key="bk_policy_3">Full-to-full battery charging policy.</span></li>
+          </ul>
+          <a href="#" class="policy-link" data-key="bk_support">
+            Need help? Contact support
+            <span class="material-icons-round" style="font-size:16px;">support_agent</span>
+          </a>
+        </div>
+
+        <div class="ai-insight">
+          <div class="ai-insight-header">
+            <span class="material-icons-round">bolt</span>
+            <span data-key="bk_ai_title">AI Recommendation</span>
+          </div>
+          <p data-key="bk_ai_msg">Based on your travel dates, this Tesla is in high demand. We predict 95% occupancy this weekend. <strong>Book now to lock in this rate.</strong></p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../../../shared/js/navbar-loader.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+  <script>
+    // Simple addon toggle logic
+    function updateAddons() {
+      document.querySelectorAll('.addon-item').forEach(item => {
+        const cb = item.querySelector('input[type="checkbox"]');
+        item.classList.toggle('checked', cb.checked);
+      });
+    }
+    function confirmBooking() {
+      const btn = document.getElementById('btn-confirm-booking');
+      btn.innerHTML = '<span class="material-icons-round" style="animation:spin 1s linear infinite">refresh</span> Processing...';
+      btn.disabled = true;
+      setTimeout(() => {
+        alert('Booking confirmed! Redirecting to My Bookings...');
+        window.location.href = '../my-bookings/my-bookings.html';
+      }, 1500);
+    }
+    const style = document.createElement('style');
+    style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
