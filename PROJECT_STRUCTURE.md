@@ -81,12 +81,13 @@ AI CAR RENTAL SYSTEM/
 |       +-- customer.js          # Logik Customer (kini menggunakan WeDriveAPI)
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
-    +-- pages/                  # Halaman dikongsi semua modul (About, Contact, FAQ, dll)
-    |   +-- about.html          # Halaman Tentang Kami
-    |   +-- contact.html        # Halaman Hubungi Kami
-    |   +-- faq.html            # Halaman Soalan Lazim
-    |   +-- terms.html          # Halaman Terma & Privasi
-    |   +-- forgot-password.html # Halaman Reset Kata Laluan
+    +-- pages/                  # Halaman dikongsi semua modul
+    |   +-- forgot-password.html # Halaman Reset Kata Laluan (link dari Login)
+    |   +-- footer/             # Halaman yang dilink dari Footer
+    |       +-- about.html      # Halaman Tentang Kami
+    |       +-- contact.html    # Halaman Hubungi Kami
+    |       +-- faq.html        # Halaman Soalan Lazim
+    |       +-- terms.html      # Halaman Terma & Privasi
     +-- components/
     |   +-- sidebar-admin.html  # Admin Sidebar
     |   +-- footer.html         # Footer yang diguna semua page
