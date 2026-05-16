@@ -12,6 +12,11 @@
 
   function resolveBase() {
     var path = window.location.pathname;
+    // Check for subfolder pages first (e.g. customer/pages/booking/booking.html)
+    var subfolderPattern = /\/(admin|customer|guest)\/pages\/[^/]+\/[^/]+\.html/;
+    if (subfolderPattern.test(path)) {
+      return '../../../';
+    }
     if (path.includes('/admin/pages/') || path.includes('/customer/pages/') || path.includes('/guest/pages/')) {
       return '../../';
     }
