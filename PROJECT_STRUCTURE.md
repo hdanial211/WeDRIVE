@@ -21,17 +21,7 @@ AI CAR RENTAL SYSTEM/
 |       +-- explore-melaka.html # Halaman Explore Melaka (Jalan-jalan Melaka)
 |       +-- how-it-works.html   # Halaman Panduan & Tutorial Sewa
 |       +-- pricing/
-|       |   +-- pricing.html    # Halaman Harga (4 tier pricing)
-|       +-- about/
-|       |   +-- about.html      # Halaman Tentang Kami
-|       +-- contact/
-|       |   +-- contact.html    # Halaman Hubungi Kami
-|       +-- faq/
-|       |   +-- faq.html        # Halaman Soalan Lazim
-|       +-- terms/
-|       |   +-- terms.html      # Halaman Terma & Privasi
-|       +-- forgot-password/
-|           +-- forgot-password.html  # Halaman Reset Kata Laluan
+|           +-- pricing.html    # Halaman Harga (4 tier pricing)
 |
 +-- admin/                      # Modul Admin
 |   +-- pages/
@@ -91,6 +81,17 @@ AI CAR RENTAL SYSTEM/
 |       +-- customer.js          # Logik Customer (kini menggunakan WeDriveAPI)
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
+    +-- pages/                  # Halaman dikongsi semua modul
+    |   +-- about/
+    |   |   +-- about.html      # Halaman Tentang Kami
+    |   +-- contact/
+    |   |   +-- contact.html    # Halaman Hubungi Kami
+    |   +-- faq/
+    |   |   +-- faq.html        # Halaman Soalan Lazim
+    |   +-- terms/
+    |   |   +-- terms.html      # Halaman Terma & Privasi
+    |   +-- forgot-password/
+    |       +-- forgot-password.html  # Halaman Reset Kata Laluan
     +-- components/
     |   +-- sidebar-admin.html  # Admin Sidebar
     |   +-- footer.html         # Footer yang diguna semua page

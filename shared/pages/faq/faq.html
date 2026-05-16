@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FAQ | WeDRIVE</title>
   <meta name="description" content="Frequently asked questions about WeDRIVE car rental in Melaka.">
-  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="icon" type="image/png" href="../../logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
-  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
-  <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../../shared/css/guest-pages.css" />
+  <link id="theme-link" rel="stylesheet" href="../../css/theme_day.css" />
+  <link rel="stylesheet" href="../../css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../css/animation.css" />
+  <link rel="stylesheet" href="../../css/guest-pages.css" />
 </head>
 <body data-particles="6" data-cursor-glow>
   <div id="navbar-placeholder" data-module="guest"></div>
@@ -49,12 +49,12 @@
   </div>
   <div id="chatbot-placeholder"></div>
   <div id="footer-placeholder"></div>
-  <script src="../../../shared/js/navbar-loader.js"></script>
-  <script src="../../../shared/js/api.js"></script>
-  <script src="../../../shared/js/chatbot.js"></script>
-  <script src="../../../shared/js/anime.min.js"></script>
-  <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js"></script>
+  <script src="../../js/navbar-loader.js"></script>
+  <script src="../../js/api.js"></script>
+  <script src="../../js/chatbot.js"></script>
+  <script src="../../js/anime.min.js"></script>
+  <script src="../../js/animate.js"></script>
+  <script src="../../js/main.js"></script>
   <script>
     document.querySelectorAll('.faq-acc-q').forEach(b=>{b.addEventListener('click',()=>{const i=b.parentElement;const o=i.classList.contains('open');document.querySelectorAll('.faq-acc-item.open').forEach(x=>x.classList.remove('open'));if(!o)i.classList.add('open');});});
     document.querySelectorAll('.faq-cat-btn').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.faq-cat-btn').forEach(x=>x.classList.remove('active'));c.classList.add('active');const v=c.dataset.cat;document.querySelectorAll('.faq-acc-item').forEach(i=>{i.style.display=(v==='all'||i.dataset.cat===v)?'':'none';});});});
