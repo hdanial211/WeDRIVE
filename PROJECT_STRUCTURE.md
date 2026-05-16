@@ -50,35 +50,25 @@ AI CAR RENTAL SYSTEM/
 |       +-- calendar.js         # Logik Calendar Overview
 |
 +-- customer/                   # Modul Customer / Pengguna
-|   +-- pages/
-|   |   +-- booking/
-|   |   |   +-- booking.html     # Halaman Tempahan Kereta
-|   |   +-- my-bookings/
-|   |   |   +-- my-bookings.html # Senarai & Sejarah Tempahan
-|   |   +-- profile/
-|   |   |   +-- profile.html     # Pengurusan Profil Customer
-|   |   +-- signup/
-|   |   |   +-- signup.html      # Halaman Daftar Akaun
-|   |   +-- car-details/
-|   |   |   +-- car-details.html # Halaman Detail Kereta (Premium)
-|   |   |   +-- car-details.css  # Gaya Detail Kereta
-|   |   |   +-- car-details.js   # Logik Gallery & Data
-|   |   +-- booking-confirmed/
-|   |   |   +-- booking-confirmed.html # Halaman Pengesahan Tempahan
-|   |   +-- payment/
-|   |   |   +-- payment.html     # Halaman Pembayaran & Checkout
-|   |   +-- receipt/
-|   |   |   +-- receipt.html     # Resit / Invois Tempahan
-|   |   +-- support/
-|   |   |   +-- support.html     # Pusat Bantuan & Sokongan
-|   |   +-- ai-insights/
-|   |   |   +-- ai-insights.html # Dashboard AI Insights
-|   |   |   +-- ai-insights.css  # Gaya AI Insights
-|   |   +-- customer.html        # Customer Dashboard (Pilih Kereta)
+|   +-- pages/                           # FLOW: Dashboard > Car Details > Booking > Payment > Confirmed
+|   |   +-- customer.html                # Customer Dashboard (Pilih Kereta)
+|   |   +-- car-details.html             # Detail Kereta (Premium Gallery)
+|   |   +-- booking.html                 # Form Tempahan Kereta
+|   |   +-- payment.html                 # Pembayaran & Checkout
+|   |   +-- booking-confirmed.html       # Pengesahan Tempahan (Confetti + QR)
+|   |   +-- my-bookings.html             # Senarai & Sejarah Tempahan
+|   |   +-- receipt.html                 # Resit / Invois Tempahan
+|   |   +-- profile.html                # Pengurusan Profil Customer
+|   |   +-- ai-insights.html            # Dashboard AI Insights
+|   |   +-- support.html                # Pusat Bantuan & Sokongan
+|   |   +-- signup.html                 # Halaman Daftar Akaun
 |   +-- css/
-|   |   +-- customer.css         # Gaya Customer
+|   |   +-- customer.css                # Gaya utama Customer
+|   |   +-- car-details.css             # Gaya Detail Kereta
+|   |   +-- ai-insights.css             # Gaya AI Insights
 |   +-- js/
-|       +-- customer.js          # Logik Customer (kini menggunakan WeDriveAPI)
+|       +-- customer.js                  # Logik Customer (WeDriveAPI)
+|       +-- car-details.js              # Logik Gallery & Data Kereta
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul
