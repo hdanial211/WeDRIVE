@@ -16,74 +16,9 @@
 </head>
 <body data-particles="10" data-cursor-glow>
 
-  <!-- SIDEBAR (Customer) -->
-  <aside class="customer-sidebar" id="customer-sidebar">
-    <div class="sidebar-header">
-      <a href="../../../index.html" class="sidebar-brand">
-        <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE" class="sidebar-logo"/>
-        <span class="sidebar-brand-text">WeDRIVE</span>
-      </a>
-      <div class="sidebar-user">
-        <div class="sidebar-avatar">
-          <span class="material-icons-round">person</span>
-        </div>
-        <div>
-          <p class="sidebar-user-name" data-key="cust_welcome">Welcome back</p>
-          <p class="sidebar-user-role" data-key="cust_hero_sub_short">Manage your rentals</p>
-        </div>
-      </div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <a href="#" class="sidebar-nav-item active" data-page="dashboard">
-        <span class="material-icons-round">dashboard</span>
-        <span data-key="nav_dashboard">Dashboard</span>
-      </a>
-      <a href="../my-bookings/my-bookings.html" class="sidebar-nav-item" data-page="my-bookings">
-        <span class="material-icons-round">calendar_today</span>
-        <span data-key="nav_bookings">My Bookings</span>
-      </a>
-      <a href="../profile/profile.html" class="sidebar-nav-item" data-page="profile">
-        <span class="material-icons-round">person</span>
-        <span data-key="nav_profile">Profile</span>
-      </a>
-      <a href="../ai-insights/ai-insights.html" class="sidebar-nav-item" data-page="ai-insights">
-        <span class="material-icons-round">psychology</span>
-        <span data-key="nav_ai">AI Insights</span>
-      </a>
-    </nav>
-
-    <div class="sidebar-cta">
-      <button class="sidebar-book-btn" onclick="window.scrollTo({top: document.querySelector('.browse-section').offsetTop - 80, behavior:'smooth'})">
-        <span class="material-icons-round">directions_car</span>
-        <span data-key="cust_book_car">Book a Car</span>
-      </button>
-    </div>
-
-    <div class="sidebar-footer-nav">
-      <a href="../support/support.html" class="sidebar-nav-item" data-page="support">
-        <span class="material-icons-round">help</span>
-        <span data-key="nav_support">Support</span>
-      </a>
-    </div>
-  </aside>
-
-  <!-- MOBILE TOP BAR -->
-  <div class="mobile-menu-bar">
-    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-      <span class="material-icons-round">menu</span>
-    </button>
-    <a href="../../../index.html" class="mobile-brand">
-      <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE" class="mobile-logo"/>
-      <span>WeDRIVE</span>
-    </a>
-    <div class="mobile-actions">
-      <button class="icon-btn theme-toggle" id="theme-toggle-mobile" aria-label="Toggle theme">
-        <span class="material-icons-round">light_mode</span>
-      </button>
-    </div>
-  </div>
-  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <!-- SIDEBAR & MOBILE BAR (loaded by sidebar-loader.js) -->
+  <div id="customer-sidebar-placeholder"></div>
+  <div id="mobile-menu-placeholder"></div>
 
   <!-- MAIN CONTENT -->
   <main class="customer-main" id="customer-main">
@@ -117,7 +52,6 @@
         </div>
 
         <div class="active-booking-card" id="active-booking-card">
-          <!-- AI Status Chip -->
           <div class="booking-status-chip">
             <span class="material-icons-round">electric_car</span>
             <span data-key="cust_optimal">Optimal Battery</span>
@@ -224,6 +158,7 @@
   <!-- FOOTER -->
   <div id="footer-placeholder"></div>
 
+  <script src="../../js/sidebar-loader.js"></script>
   <script src="../../../shared/js/navbar-loader.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
@@ -232,18 +167,5 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js"></script>
-
-  <!-- Sidebar Mobile Toggle -->
-  <script>
-    (function() {
-      var toggle = document.getElementById('mobile-menu-toggle');
-      var sidebar = document.getElementById('customer-sidebar');
-      var overlay = document.getElementById('sidebar-overlay');
-      function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
-      function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
-      if (toggle) toggle.addEventListener('click', function() { sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
-      if (overlay) overlay.addEventListener('click', closeSidebar);
-    })();
-  </script>
 </body>
 </html>

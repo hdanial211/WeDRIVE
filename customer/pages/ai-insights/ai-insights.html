@@ -14,7 +14,29 @@
   <link rel="stylesheet" href="../../css/customer.css" />
 </head>
 <body data-particles="6" data-cursor-glow>
-  <div id="navbar-placeholder" data-module="customer"></div>
+
+  <!-- SIDEBAR & MOBILE BAR -->
+  <div id="customer-sidebar-placeholder"></div>
+  <div id="mobile-menu-placeholder"></div>
+
+  <main class="customer-main" id="customer-main">
+    <!-- UTILITY BAR -->
+    <header class="utility-bar">
+      <div>
+        <h1 class="utility-title">AI Insights</h1>
+        <p class="utility-subtitle">Your personalized driving analytics</p>
+      </div>
+      <div class="utility-actions">
+        <button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Switch language">
+          <span class="lang-text">EN</span>
+        </button>
+        <button class="icon-btn theme-toggle" id="theme-toggle-desktop" aria-label="Toggle theme">
+          <span class="material-icons-round">light_mode</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="main-content-area">
 
   <!-- HERO -->
   <section class="ai-hero reveal-onload">
@@ -120,10 +142,13 @@
       </div>
     </section>
   </div>
+    </div><!-- /.main-content-area -->
+  </main>
 
   <div id="chatbot-placeholder"></div>
   <div id="footer-placeholder"></div>
 
+  <script src="../../js/sidebar-loader.js"></script>
   <script src="../../../shared/js/navbar-loader.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>

@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../../css/customer.css?v=3.0.0" />
   <style>
     /* ===== PROFILE PAGE ===== */
-    .profile-page { max-width: 1240px; margin: 0 auto; padding: 100px 24px 48px; }
+    .profile-page { max-width: 1240px; margin: 0 auto; padding: 24px; }
     .profile-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
 
     /* Profile Sidebar */
@@ -167,10 +167,29 @@
   </style>
 </head>
 <body data-particles="10" data-cursor-glow>
-  <!-- NAVBAR -->
-  <div id="navbar-placeholder" data-module="customer"></div>
 
-  <main class="profile-page">
+  <!-- SIDEBAR & MOBILE BAR -->
+  <div id="customer-sidebar-placeholder"></div>
+  <div id="mobile-menu-placeholder"></div>
+
+  <main class="customer-main" id="customer-main">
+    <!-- UTILITY BAR -->
+    <header class="utility-bar">
+      <div>
+        <h1 class="utility-title" data-key="profile_title">My Profile</h1>
+        <p class="utility-subtitle" data-key="profile_subtitle">Manage your account settings</p>
+      </div>
+      <div class="utility-actions">
+        <button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Switch language">
+          <span class="lang-text">EN</span>
+        </button>
+        <button class="icon-btn theme-toggle" id="theme-toggle-desktop" aria-label="Toggle theme">
+          <span class="material-icons-round">light_mode</span>
+        </button>
+      </div>
+    </header>
+
+  <div class="profile-page">
     <div class="profile-layout">
       <!-- LEFT: Profile Sidebar -->
       <aside class="profile-sidebar">
@@ -339,10 +358,12 @@
         </div>
       </section>
     </div>
+  </div><!-- /.profile-page -->
   </main>
 
   <div id="footer-placeholder"></div>
 
+  <script src="../../js/sidebar-loader.js"></script>
   <script src="../../../shared/js/navbar-loader.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>

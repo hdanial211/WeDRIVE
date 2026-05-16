@@ -14,8 +14,13 @@
   <link rel="stylesheet" href="../../css/customer.css" />
 </head>
 <body data-particles="6" data-cursor-glow>
-  <!-- NAVBAR -->
-  <div id="navbar-placeholder" data-module="customer"></div>
+
+  <!-- SIDEBAR & MOBILE BAR -->
+  <div id="customer-sidebar-placeholder"></div>
+  <div id="mobile-menu-placeholder"></div>
+
+  <main class="customer-main" id="customer-main">
+    <div class="main-content-area">
 
   <!-- BREADCRUMB -->
   <nav class="breadcrumb reveal-onload" aria-label="Breadcrumb">
@@ -186,12 +191,16 @@
     </button>
   </div>
 
+    </div><!-- /.main-content-area -->
+  </main>
+
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
 
   <!-- FOOTER -->
   <div id="footer-placeholder"></div>
 
+  <script src="../../js/sidebar-loader.js"></script>
   <script src="../../../shared/js/navbar-loader.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
