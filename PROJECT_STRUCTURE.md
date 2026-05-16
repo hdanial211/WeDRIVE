@@ -62,17 +62,28 @@ AI CAR RENTAL SYSTEM/
 |
 +-- customer/                   # Modul Customer / Pengguna
 |   +-- pages/                           # FLOW: Dashboard > Car Details > Booking > Payment > Confirmed
-|   |   +-- customer.html                # Customer Dashboard (Pilih Kereta)
-|   |   +-- car-details.html             # Detail Kereta (Premium Gallery)
-|   |   +-- booking.html                 # Form Tempahan Kereta
-|   |   +-- payment.html                 # Pembayaran & Checkout
-|   |   +-- booking-confirmed.html       # Pengesahan Tempahan (Confetti + QR)
-|   |   +-- my-bookings.html             # Senarai & Sejarah Tempahan
-|   |   +-- receipt.html                 # Resit / Invois Tempahan
-|   |   +-- profile.html                # Pengurusan Profil Customer
-|   |   +-- ai-insights.html            # Dashboard AI Insights
-|   |   +-- support.html                # Pusat Bantuan & Sokongan
-|   |   +-- signup.html                 # Halaman Daftar Akaun
+|   |   +-- dashboard/
+|   |   |   +-- customer.html            # Customer Dashboard (Pilih Kereta)
+|   |   +-- car-details/
+|   |   |   +-- car-details.html         # Detail Kereta (Premium Gallery)
+|   |   |   +-- booking/
+|   |   |       +-- booking.html         # Form Tempahan Kereta
+|   |   |       +-- payment/
+|   |   |           +-- payment.html     # Pembayaran & Checkout
+|   |   |           +-- booking-confirmed/
+|   |   |               +-- booking-confirmed.html  # Pengesahan Tempahan
+|   |   +-- my-bookings/
+|   |   |   +-- my-bookings.html         # Senarai & Sejarah Tempahan
+|   |   |   +-- receipt/
+|   |   |       +-- receipt.html         # Resit / Invois Tempahan
+|   |   +-- profile/
+|   |   |   +-- profile.html            # Pengurusan Profil Customer
+|   |   +-- ai-insights/
+|   |   |   +-- ai-insights.html        # Dashboard AI Insights
+|   |   +-- support/
+|   |   |   +-- support.html            # Pusat Bantuan & Sokongan
+|   |   +-- signup/
+|   |       +-- signup.html             # Halaman Daftar Akaun
 |   +-- css/
 |   |   +-- customer.css                # Gaya utama Customer
 |   |   +-- car-details.css             # Gaya Detail Kereta

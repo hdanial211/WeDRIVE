@@ -55,16 +55,16 @@
     // Logged-in customer dashboard
     customer: {
       links: [
-        { key: 'nav_browse',   href: '{base}customer/pages/customer.html',              label: 'Browse Cars',   id: 'nl-browse'   },
-        { key: 'nav_bookings', href: '{base}customer/pages/my-bookings.html',              label: 'My Bookings',   id: 'nl-bookings' },
-        { key: 'nav_ai',       href: '#',                                                label: 'AI Assistant',  id: 'nl-ai', extra: 'onclick="if(typeof toggleChat===\'function\') toggleChat(); return false;"' }
+        { key: 'nav_browse',   href: '{base}customer/pages/dashboard/customer.html',           label: 'Browse Cars',   id: 'nl-browse'   },
+        { key: 'nav_bookings', href: '{base}customer/pages/my-bookings/my-bookings.html',      label: 'My Bookings',   id: 'nl-bookings' },
+        { key: 'nav_ai',       href: '#',                                                      label: 'AI Assistant',  id: 'nl-ai', extra: 'onclick="if(typeof toggleChat===\'function\') toggleChat(); return false;"' }
       ],
       actions: `
-        <a href="{base}customer/pages/profile.html" class="user-pill" id="user-pill" style="text-decoration:none;cursor:pointer;" title="My Profile">
+        <a href="{base}customer/pages/profile/profile.html" class="user-pill" id="user-pill" style="text-decoration:none;cursor:pointer;" title="My Profile">
           <div class="user-av" id="user-av">CU</div>
           <span class="user-name" id="user-name-nav" data-key="nav_customer">Customer</span>
         </a>
-        <button class="btn-logout" onclick="window.location='{base}customer/pages/customer.html'">
+        <button class="btn-logout" onclick="window.location='{base}customer/pages/dashboard/customer.html'">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
         </button>
@@ -113,7 +113,7 @@
     var actionsHtml = (config.actions || '').replace(/{base}/g, base);
 
     var brandLink = base + 'index.html';
-    if (module === 'customer') brandLink = base + 'customer/pages/customer.html';
+    if (module === 'customer') brandLink = base + 'customer/pages/dashboard/customer.html';
     else if (module === 'admin') brandLink = base + 'admin/pages/dashboard/admin.html';
     else if (module === 'guest') brandLink = base + 'index.html';
 
