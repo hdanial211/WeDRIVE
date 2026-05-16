@@ -42,13 +42,13 @@
     // Guest-facing pages (guest.html)
     guest: {
       links: [
-        { key: 'nav_browse', href: '{base}guest/pages/guest.html',              label: 'Browse Cars', id: 'nl-browse' },
+        { key: 'nav_browse', href: '{base}index.html',                            label: 'Browse Cars', id: 'nl-browse' },
         { key: 'nav_melaka', href: '{base}guest/pages/explore-melaka.html',       label: 'Jalan-jalan Melaka', id: 'nl-melaka' },
         { key: 'nav_how',    href: '{base}guest/pages/how-it-works.html',       label: 'How It Works', id: 'nl-how'    }
       ],
       actions: `
-        <button class="btn-outline" onclick="window.location='{base}index.html'" data-key="nav_login">Log In</button>
-        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup/signup.html'" data-key="nav_signup">Sign Up</button>
+        <button class="btn-outline" onclick="window.location='{base}login.html'" data-key="nav_login">Log In</button>
+        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup.html'" data-key="nav_signup">Sign Up</button>
       `
     },
 
@@ -56,11 +56,11 @@
     customer: {
       links: [
         { key: 'nav_browse',   href: '{base}customer/pages/customer.html',              label: 'Browse Cars',   id: 'nl-browse'   },
-        { key: 'nav_bookings', href: '{base}customer/pages/my-bookings/my-bookings.html', label: 'My Bookings',   id: 'nl-bookings' },
+        { key: 'nav_bookings', href: '{base}customer/pages/my-bookings.html',              label: 'My Bookings',   id: 'nl-bookings' },
         { key: 'nav_ai',       href: '#',                                                label: 'AI Assistant',  id: 'nl-ai', extra: 'onclick="if(typeof toggleChat===\'function\') toggleChat(); return false;"' }
       ],
       actions: `
-        <a href="{base}customer/pages/profile/profile.html" class="user-pill" id="user-pill" style="text-decoration:none;cursor:pointer;" title="My Profile">
+        <a href="{base}customer/pages/profile.html" class="user-pill" id="user-pill" style="text-decoration:none;cursor:pointer;" title="My Profile">
           <div class="user-av" id="user-av">CU</div>
           <span class="user-name" id="user-name-nav" data-key="nav_customer">Customer</span>
         </a>
@@ -115,7 +115,7 @@
     var brandLink = base + 'index.html';
     if (module === 'customer') brandLink = base + 'customer/pages/customer.html';
     else if (module === 'admin') brandLink = base + 'admin/pages/admin.html';
-    else if (module === 'guest') brandLink = base + 'guest/pages/guest.html';
+    else if (module === 'guest') brandLink = base + 'index.html';
 
     // Inject navbar HTML
     placeholder.innerHTML = [

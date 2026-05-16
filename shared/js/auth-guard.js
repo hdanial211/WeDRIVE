@@ -31,8 +31,8 @@
     // Function to calculate depth based on current path to redirect to login correctly
     function getLoginPath() {
         const isRoot = !window.location.pathname.includes('/pages/');
-        if (isRoot) return 'index.html';
-        return '../../index.html';
+        if (isRoot) return 'login.html';
+        return '../../login.html';
     }
 
     if (!sessionData) {
@@ -50,7 +50,7 @@
             console.warn(`Auth Guard: Unauthorized. Requires role '${requiredRole}'. Redirecting.`);
             if (session.role === 'customer') {
                 // Customer trying to access Admin page -> redirect to login
-                window.location.replace(window.location.pathname.includes('/pages/') ? '../../index.html' : 'index.html');
+                window.location.replace(window.location.pathname.includes('/pages/') ? '../../login.html' : 'login.html');
             } else {
                 window.location.replace(getLoginPath());
             }

@@ -11,13 +11,14 @@ WeDRIVE dibina menggunakan struktur berasaskan komponen dan modul supaya kemas d
 ```text
 AI CAR RENTAL SYSTEM/
 |
-+-- index.html                  # Halaman Log Masuk (Entry Point)
++-- index.html                  # Landing Page / Browse Cars (Entry Point)
+|
++-- login.html                  # Halaman Log Masuk
 |
 +-- 404.html                    # Halaman Error 404 (Page Not Found)
 |
 +-- guest/                      # Modul Tetamu (Browse tanpa login)
 |   +-- pages/
-|       +-- guest.html          # Landing Page (Browse Cars)
 |       +-- explore-melaka.html # Halaman Explore Melaka (Jalan-jalan Melaka)
 |       +-- how-it-works.html   # Halaman Panduan & Tutorial Sewa
 |       +-- pricing/
