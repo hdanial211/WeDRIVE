@@ -105,9 +105,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- support/
 |   |   |   +-- support.html            # Pusat Bantuan & Sokongan
 |   +-- css/
-|   |   +-- customer.css                # Gaya utama Customer
-|   |   +-- car-details.css             # Gaya Detail Kereta
-|   |   +-- ai-insights.css             # Gaya AI Insights
+|   |   +-- customer.css                # Gaya utama Customer (semua gaya digabung)
 |   +-- js/
 |       +-- customer.js                  # Logik Customer (WeDriveAPI)
 |       +-- car-details.js              # Logik Gallery & Data Kereta

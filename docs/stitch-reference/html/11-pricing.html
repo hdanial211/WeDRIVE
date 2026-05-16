@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WeDRIVE Pricing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004395",
+                        "background": "#f7f9fb",
+                        "tertiary": "#4d5d73",
+                        "on-background": "#191c1e",
+                        "outline": "#727785",
+                        "on-primary-fixed": "#001a42",
+                        "on-secondary-fixed": "#111c2d",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed": "#d8e2ff",
+                        "primary": "#0058be",
+                        "outline-variant": "#c2c6d6",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "secondary-container": "#d5e0f8",
+                        "on-tertiary-container": "#fdfcff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#586377",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-primary-container": "#fefcff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface": "#f7f9fb",
+                        "on-surface-variant": "#424754",
+                        "secondary": "#545f73",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#005ac2",
+                        "inverse-primary": "#adc6ff",
+                        "tertiary-container": "#66768d",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#2170e4",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f7f9fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "container-padding": "24px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-50 bg-surface shadow-[0px_4px_12px_rgba(30,41,59,0.05)]">
+<div class="flex justify-between items-center px-lg py-md max-w-7xl mx-auto">
+<!-- Brand Logo -->
+<div class="font-h2 text-h2 text-primary font-bold tracking-tight">
+                WeDRIVE
+            </div>
+<!-- Navigation Links (Web) -->
+<nav class="hidden md:flex items-center gap-gutter">
+<a class="text-secondary font-body-md text-body-md hover:text-primary-container transition-colors duration-200 cursor-pointer active:scale-95 py-2" href="#">
+                    Browse Cars
+                </a>
+<a class="text-secondary font-body-md text-body-md hover:text-primary-container transition-colors duration-200 cursor-pointer active:scale-95 py-2" href="#">
+                    How it Works
+                </a>
+<a class="text-primary font-bold border-b-2 border-primary font-body-md text-body-md hover:text-primary-container transition-colors duration-200 cursor-pointer active:scale-95 py-2" href="#">
+                    Pricing
+                </a>
+</nav>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<button class="hidden md:block font-label-sm text-label-sm text-secondary hover:text-primary transition-colors">EN/MS</button>
+<button class="flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-sm text-label-sm hover:bg-primary-container transition-colors shadow-sm">
+                    Explore Melaka
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow max-w-7xl mx-auto w-full px-container-padding py-xl flex flex-col gap-xl">
+<!-- Hero Section -->
+<section class="text-center max-w-3xl mx-auto pt-lg pb-md">
+<h1 class="font-h1 text-h1 text-on-surface mb-sm">Transparent, Predictive Pricing.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                High-clarity daily rates optimized by our AI demand forecasting. No hidden fees, just straightforward categories designed for your journey.
+            </p>
+</section>
+<!-- Pricing Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Economy Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-md flex flex-col hover:shadow-[0px_8px_24px_rgba(30,41,59,0.1)] transition-shadow duration-300">
+<div class="h-32 mb-md bg-surface-container rounded-lg overflow-hidden relative flex items-center justify-center">
+<img alt="A sleek, modern compact car parked in a clean, minimalist urban environment. The lighting is bright and professional, highlighting the car's practical design. The scene conveys efficiency and modern mobility, fitting perfectly into a corporate SaaS aesthetic with cool blue and slate gray tones." class="object-cover w-full h-full mix-blend-multiply opacity-90" data-alt="A sleek, modern compact car parked in a clean, minimalist urban environment. The lighting is bright and professional, highlighting the car's practical design. The scene conveys efficiency and modern mobility, fitting perfectly into a corporate SaaS aesthetic with cool blue and slate gray tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwEGsAAAfQW4MS-rczg8bK1VDrEyV9d_txF_PIX0A8XMKctGIn_bGOaNOZALDUkB44z_dpTVAPGDFv8L7tL4h1_2Nuo4FabZ9f0VJ4dvC7vDgtV58GHWmaMWYN1A-eyCW3gAeESsT6RYAVd_oPY1b8rqGmlB44jod8zu3Hxt1gZUfEuAbqQRaXci_Wqgf8Ie7WliE2x_MQpmxsGulLT8g5uAZCenXosCbxUDew7_Usqn-t-8dC8mlu6u7TGqHf5vzung4l9fYoN3Y"/>
+</div>
+<div class="mb-xs">
+<h2 class="font-h2 text-h2 text-on-surface">Economy</h2>
+</div>
+<div class="font-label-sm text-label-sm text-secondary mb-md uppercase tracking-wider">
+                    e.g., Perodua Myvi
+                </div>
+<div class="mb-md flex items-end gap-xs">
+<span class="font-h1 text-h1 text-primary">RM 120</span>
+<span class="font-body-md text-body-md text-secondary pb-1">/ day</span>
+</div>
+<div class="flex-grow flex flex-col gap-sm mb-lg">
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">local_gas_station</span> High Efficiency
+                    </div>
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">group</span> 4 Seats
+                    </div>
+</div>
+<button class="w-full bg-surface-container text-on-surface font-label-sm text-label-sm py-3 rounded-lg hover:bg-surface-variant transition-colors border border-outline-variant">
+                    Select Economy
+                </button>
+</div>
+<!-- Sedan Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-md flex flex-col hover:shadow-[0px_8px_24px_rgba(30,41,59,0.1)] transition-shadow duration-300 relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-primary text-on-primary font-label-sm text-label-sm px-3 py-1 rounded-bl-lg z-10">
+                    Most Popular
+                </div>
+<div class="h-32 mb-md bg-surface-container rounded-lg overflow-hidden relative flex items-center justify-center">
+<img alt="A professional silver sedan parked in a well-lit corporate parking garage. The image is crisp, with high contrast and a polished finish. The lighting emphasizes the car's sleek lines and reliable build, projecting an image of dependable corporate travel within a modern software interface style." class="object-cover w-full h-full mix-blend-multiply opacity-90" data-alt="A professional silver sedan parked in a well-lit corporate parking garage. The image is crisp, with high contrast and a polished finish. The lighting emphasizes the car's sleek lines and reliable build, projecting an image of dependable corporate travel within a modern software interface style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKLQkpzy7ZljJ4HjwcKWwJahd3KGLThGMH14JsVcDuuUiREDURdCPFYKIslSA4XjWt7eEq1ryienFng9MQQb7TYCTYNEf2HLoG8-O9tsHk1U8UB_6z0ObYj8zaE8Flu-72EDtrLBAa7826MfdBE4FsYlEZqH-koU7xDMv1a1KZrtlfs62tWO88Zmqjzvy3fwk7EiWv83Q1dQfhIsZoZLSugIrOYXhuEGY98HJfct6fxx_5jBzCTEJu0FquFJwyXSepdOHW0cYHzVE"/>
+</div>
+<div class="mb-xs">
+<h2 class="font-h2 text-h2 text-on-surface">Sedan</h2>
+</div>
+<div class="font-label-sm text-label-sm text-secondary mb-md uppercase tracking-wider">
+                    e.g., Honda City
+                </div>
+<div class="mb-md flex items-end gap-xs">
+<span class="font-h1 text-h1 text-primary">RM 180</span>
+<span class="font-body-md text-body-md text-secondary pb-1">/ day</span>
+</div>
+<div class="flex-grow flex flex-col gap-sm mb-lg">
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">business_center</span> Ample Trunk Space
+                    </div>
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">group</span> 5 Seats
+                    </div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-sm text-label-sm py-3 rounded-lg hover:bg-primary-container transition-colors shadow-sm">
+                    Select Sedan
+                </button>
+</div>
+<!-- SUV Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-md flex flex-col hover:shadow-[0px_8px_24px_rgba(30,41,59,0.1)] transition-shadow duration-300">
+<div class="h-32 mb-md bg-surface-container rounded-lg overflow-hidden relative flex items-center justify-center">
+<img alt="A robust, modern SUV positioned against a clean architectural background. The vehicle looks capable and spacious, highlighted by bright, neutral lighting that flatters its form. The composition is highly structured and organized, reflecting a high-density, intelligent interface design ethos." class="object-cover w-full h-full mix-blend-multiply opacity-90" data-alt="A robust, modern SUV positioned against a clean architectural background. The vehicle looks capable and spacious, highlighted by bright, neutral lighting that flatters its form. The composition is highly structured and organized, reflecting a high-density, intelligent interface design ethos." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQJEP8NUXk5Q40-ocTWJ7LvVy-g4jCEUCZ407dMSRM5AocGhaDC3qcEbRHmWNvctRCFb0dqzrEIiyqrN2dlgz279WoOSyBP-CNpUvl8D6_kcZtXhKsAGN-u36hMg7JTKSi3vx2ZoPQUI47Ckwcns3E_23IHNp3Myi6CybARdQOKRZcmZidqWoBS4lzs1sVlwdTnGdtdZFmX9AP74-9ut4XDkyQkjuKxSG3y4RVnMKYNGkC86D9s-jVGD-0cvOJmkSLqHh357DG2C8"/>
+</div>
+<div class="mb-xs">
+<h2 class="font-h2 text-h2 text-on-surface">SUV</h2>
+</div>
+<div class="font-label-sm text-label-sm text-secondary mb-md uppercase tracking-wider">
+                    e.g., Proton X70
+                </div>
+<div class="mb-md flex items-end gap-xs">
+<span class="font-h1 text-h1 text-primary">RM 280</span>
+<span class="font-body-md text-body-md text-secondary pb-1">/ day</span>
+</div>
+<div class="flex-grow flex flex-col gap-sm mb-lg">
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">explore</span> Elevated View
+                    </div>
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">airline_seat_recline_extra</span> Premium Comfort
+                    </div>
+</div>
+<button class="w-full bg-surface-container text-on-surface font-label-sm text-label-sm py-3 rounded-lg hover:bg-surface-variant transition-colors border border-outline-variant">
+                    Select SUV
+                </button>
+</div>
+<!-- Luxury Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-md flex flex-col hover:shadow-[0px_8px_24px_rgba(30,41,59,0.1)] transition-shadow duration-300">
+<div class="h-32 mb-md bg-surface-container rounded-lg overflow-hidden relative flex items-center justify-center">
+<img alt="A high-end luxury electric vehicle, like a Tesla Model 3, parked in a futuristic, brilliantly lit showroom setting. The surfaces are highly reflective, emphasizing advanced technology and premium quality. The aesthetic is extremely polished, fitting seamlessly into a top-tier SaaS platform's visual language." class="object-cover w-full h-full mix-blend-multiply opacity-90" data-alt="A high-end luxury electric vehicle, like a Tesla Model 3, parked in a futuristic, brilliantly lit showroom setting. The surfaces are highly reflective, emphasizing advanced technology and premium quality. The aesthetic is extremely polished, fitting seamlessly into a top-tier SaaS platform's visual language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg75b9L-RzylB0qDXLD0YqTBvNTpRv5vBivmBWm-76hdTbKpQR2fJpVbzCOCn1YMjViQAWfTbK_tTSlmvuAyL_EjuvXz5BjP5EGfY-QZl_FwLhJPoeQoly5Qf22JI13FoESqzrkbMlamvMj5ORaQYt00spyTSGlHM1r7JMQSYeElcDNadVnnlCy7pL0y7dJW22zI7lEIRT-HgZ74Y_NyMjlBaTm0DOMjmV444gHRkoAKGvVFpdV9EaWwJF-nHNoU4GbPbS8UIk22Y"/>
+</div>
+<div class="mb-xs">
+<h2 class="font-h2 text-h2 text-on-surface">Luxury</h2>
+</div>
+<div class="font-label-sm text-label-sm text-secondary mb-md uppercase tracking-wider">
+                    e.g., Tesla Model 3
+                </div>
+<div class="mb-md flex items-end gap-xs">
+<span class="font-h1 text-h1 text-primary">RM 450</span>
+<span class="font-body-md text-body-md text-secondary pb-1">/ day</span>
+</div>
+<div class="flex-grow flex flex-col gap-sm mb-lg">
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">bolt</span> Electric / Hybrid
+                    </div>
+<div class="flex items-center gap-sm text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">stars</span> Top Tier Tech
+                    </div>
+</div>
+<button class="w-full bg-surface-container text-on-surface font-label-sm text-label-sm py-3 rounded-lg hover:bg-surface-variant transition-colors border border-outline-variant">
+                    Select Luxury
+                </button>
+</div>
+</section>
+<!-- Standard Inclusions (Bento Highlights) -->
+<section class="mt-md">
+<h3 class="font-h3 text-h3 text-on-surface mb-md">Always Included</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-low rounded-xl p-md flex items-start gap-md border border-outline-variant/50">
+<div class="bg-primary-fixed w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary fill">psychology</span>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface mb-xs">AI Matching</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Our system intelligently matches you with the ideal vehicle based on your itinerary and preferences, ensuring maximum efficiency.
+                        </p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-md flex items-start gap-md border border-outline-variant/50">
+<div class="bg-primary-fixed w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary fill">support_agent</span>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface mb-xs">24/7 Support</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Continuous operational support. If an issue arises, our automated routing connects you instantly to local assistance teams.
+                        </p>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-md flex items-start gap-md border border-outline-variant/50">
+<div class="bg-primary-fixed w-12 h-12 rounded-lg flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary fill">shield_lock</span>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface mb-xs">Basic Insurance</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Baseline coverage is baked into every tier. Drive with confidence knowing core liabilities are systematically managed.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Seasonal Pricing Insight Card -->
+<section class="mt-md mb-xl">
+<div class="bg-surface-container rounded-xl p-lg flex flex-col md:flex-row items-center gap-lg border border-outline-variant shadow-sm relative overflow-hidden">
+<!-- Abstract chart graphic in background -->
+<div class="absolute right-0 bottom-0 w-1/2 h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 100% 100%, #0058be 0%, transparent 60%);"></div>
+<div class="bg-surface-container-lowest w-16 h-16 rounded-full flex items-center justify-center shrink-0 shadow-sm z-10 border border-outline-variant">
+<span class="material-symbols-outlined text-primary text-[32px]">trending_down</span>
+</div>
+<div class="z-10 flex-grow">
+<h3 class="font-h3 text-h3 text-on-surface mb-xs">Dynamic Seasonal Benefits</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                        Our predictive pricing model doesn't just manage peak demand; it actively identifies low-utilization periods. During off-peak seasons, rates automatically adjust downward, passing the logistical savings directly to you.
+                    </p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto bg-surface-container">
+<div class="flex flex-col md:flex-row justify-between items-center px-lg py-xl max-w-7xl mx-auto gap-md">
+<!-- Brand -->
+<div class="font-h3 text-h3 text-on-surface">
+                WeDRIVE
+            </div>
+<!-- Links -->
+<nav class="flex flex-wrap justify-center gap-md py-lg">
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-all" href="#">About Us</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-all" href="#">Contact</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-all" href="#">Terms</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-body-md text-body-md hover:text-primary transition-all" href="#">FAQs</a>
+</nav>
+<!-- Copyright -->
+<div class="text-on-surface-variant font-body-md text-body-md text-center md:text-right">
+                © 2024 WeDRIVE Melaka. All rights reserved.
+            </div>
+</div>
+</footer>
+</body></html>

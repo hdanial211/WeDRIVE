@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WeDRIVE - How it Works</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004395",
+                        "background": "#f7f9fb",
+                        "tertiary": "#4d5d73",
+                        "on-background": "#191c1e",
+                        "outline": "#727785",
+                        "on-primary-fixed": "#001a42",
+                        "on-secondary-fixed": "#111c2d",
+                        "surface-container": "#eceef0",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed": "#d8e2ff",
+                        "primary": "#0058be",
+                        "outline-variant": "#c2c6d6",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "secondary-container": "#d5e0f8",
+                        "on-tertiary-container": "#fdfcff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#586377",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-primary-container": "#fefcff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface": "#f7f9fb",
+                        "on-surface-variant": "#424754",
+                        "secondary": "#545f73",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#005ac2",
+                        "inverse-primary": "#adc6ff",
+                        "tertiary-container": "#66768d",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#2170e4",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-low": "#f2f4f6",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f7f9fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "container-padding": "24px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface-dim shadow-[0px_4px_12px_rgba(30,41,59,0.05)] w-full top-0 sticky z-50">
+<div class="flex justify-between items-center px-lg py-md max-w-7xl mx-auto shadow-sm">
+<!-- Brand -->
+<a class="font-h2 text-h2 text-primary dark:text-primary-fixed font-bold flex items-center gap-sm" href="#">
+<span class="material-symbols-outlined icon-fill">directions_car</span>
+                WeDRIVE
+            </a>
+<!-- Desktop Navigation -->
+<div class="hidden md:flex items-center gap-xl font-body-md text-body-md">
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary-container dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Browse Cars</a>
+<a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary hover:text-primary-container dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">How it Works</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary-container dark:hover:text-primary-fixed-dim transition-colors duration-200" href="#">Pricing</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-md">
+<button class="hidden md:flex items-center gap-sm bg-primary-container text-on-primary-container px-md py-sm rounded-full font-label-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">explore</span>
+                    Explore Melaka
+                </button>
+<button class="text-secondary font-label-sm hover:text-primary transition-colors">EN/MS</button>
+<button class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="py-24 px-container-padding text-center relative overflow-hidden bg-surface-container-lowest border-b border-outline-variant/20">
+<div class="max-w-3xl mx-auto relative z-10">
+<span class="inline-block px-sm py-xs bg-primary-fixed text-on-primary-fixed font-label-sm rounded-full mb-gutter">SIMPLE. SMART. SEAMLESS.</span>
+<h1 class="font-h1 text-h1 text-on-surface mb-gutter">How WeDRIVE Works</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-xl">Experience the future of car rental. Our intelligent platform connects you with the perfect vehicle in three easy steps, powered by advanced matching algorithms.</p>
+<div class="flex justify-center gap-gutter">
+<button class="bg-primary text-on-primary px-xl py-md rounded-lg font-h3 text-h3 hover:bg-primary-container transition-colors shadow-sm cursor-pointer transition-transform active:scale-95">Browse Cars Now</button>
+</div>
+</div>
+<!-- Abstract Background Elements -->
+<div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-40">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] rounded-full bg-secondary-container blur-[100px]"></div>
+<div class="absolute bottom-[-20%] right-[-10%] w-[50%] h-[70%] rounded-full bg-primary-fixed-dim blur-[120px]"></div>
+</div>
+</section>
+<!-- The 3-Step Process (Bento Grid) -->
+<section class="py-24 px-container-padding max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-h2 text-h2 text-on-surface mb-sm">Your Journey in 3 Steps</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Designed for efficiency and peace of mind.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Step 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0px_4px_12px_rgba(30,41,59,0.05)] border border-outline-variant/20 hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mb-md text-on-primary-fixed font-h2 text-h2">1</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-sm">Search &amp; AI Matching</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Enter your dates and preferences. Our system instantly analyzes availability across the fleet, filtering by your specific needs to suggest the ideal car.</p>
+<div class="h-48 rounded-lg bg-surface-container overflow-hidden relative">
+<img alt="UI mockup of a sophisticated car search interface on a mobile device" class="w-full h-full object-cover" data-alt="A close-up, angled view of a sleek smartphone displaying a high-tech car rental search interface. The screen glows with a modern, professional blue and slate gray palette against a bright, corporate SaaS environment. Soft, ambient lighting creates a pristine, forward-thinking mood. High-contrast UI elements like 'AI Match' chips and precise date selectors are visible, emphasizing intelligent software design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAplzMLZKr65QjStzpiFPrOwsikz9xg6XmRFXMDtBr-oEP6-baDrsiE5TQArlFPW6OSSiJpeZeM7-mhB4z6A7JGq8L27tbwGGOBS5EOngP5JxaOuBXjxUd8W-NlO2oi_s0Z2s0gK_Zudg1XbYoU9CfzDZu5fGFCj-c0NFzEMQFG6Wt2AMR7ZAKezVyrnTCbYDx_XsvVUctoEQEsqG2JY71W1ZP02o5xU57Vwnitm-qyJ40CXP8szpBfBih4La_7o1UCX9P8ysDDJNU"/>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0px_4px_12px_rgba(30,41,59,0.05)] border border-outline-variant/20 hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mb-md text-on-primary-fixed font-h2 text-h2">2</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-sm">Seamless Booking</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Review transparent pricing with no hidden fees. Secure your vehicle instantly with a streamlined checkout process optimized for mobile and web.</p>
+<div class="h-48 rounded-lg bg-surface-container overflow-hidden relative">
+<img alt="Person completing a seamless digital transaction on a modern device" class="w-full h-full object-cover" data-alt="A detailed shot of hands smoothly completing a digital booking process on a modern tablet. The interface shows a clean, corporate checkout screen with crisp typography and subtle slate gray ambient shadows. The setting is a well-lit, minimalist office space, conveying reliability and high-clarity transactional efficiency. The overall aesthetic is bright, professional, and reassuringly secure." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPfGT3fBpqCsaKmf0MqJoIjPgqZkFOwiNrENt1msxQIAVd4GRCB93TOW8kJ8N163TjuhCWVuqcQAXLrzPJ8RTQx6kD2KLg0YnXUdZ5qyToLQwqTHx8Es2izHpXFBzzBj_5JTFUAbw1K1yq3a1pdItE_Z97wa-ij65wR-XujQqreGZm_3JGfvYzK51PmY909cx12f3etyL6ycIuaaxHuux90Ip9qqJhXUX8lUbm0Aafd0f_PeBLfhqvdMNWo_NGfG5sZbXj6CeWyug"/>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0px_4px_12px_rgba(30,41,59,0.05)] border border-outline-variant/20 hover:-translate-y-1 transition-transform duration-300">
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mb-md text-on-primary-fixed font-h2 text-h2">3</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-sm">Pick Up &amp; Drive</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Access your digital key or scan your QR code at the designated Melaka location. Unlock, inspect via the app, and hit the road immediately.</p>
+<div class="h-48 rounded-lg bg-surface-container overflow-hidden relative">
+<img alt="Modern car interior with steering wheel and smart dashboard" class="w-full h-full object-cover" data-alt="An inviting view from the driver's seat of a modern, premium car, focusing on the sleek steering wheel and an integrated smart dashboard displaying navigation. The lighting is bright and natural, suggesting an exciting start to a journey. The color palette incorporates subtle professional blues and deep slate navy tones, matching a sophisticated corporate SaaS aesthetic. The mood is empowering and efficient." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqk8pbFh2NcuEQ1FuKoW2CaSZ4T8niUbQGJ_44gURoQ2wDKUtQNTDsdcU-pfd4x-GUHhi9okN5-RkNBe7qoyAXUtxjUf21WAi5Ra3imivM4P7w3kiV46JcC2YvO03wrF5qSKW_BaCrYlGRSVd_-ruq0DlDHXe04o7GnkTDjeU2_qhHBGTIfJTrrRGA1qmSXrbpd6NVY-b5iPgHbgfIDYV-h81reE118JTpNwcMUIxlFtSQ0YTE2QUuGAIte1yqHFlUmpBHXvXrBUg"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Intelligent Systems Section (Glassmorphism / Tech Vibe) -->
+<section class="py-24 px-container-padding bg-surface-container-low border-y border-outline-variant/20">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-xl items-center">
+<div class="lg:w-1/2">
+<span class="inline-flex items-center gap-xs px-sm py-xs bg-secondary-fixed text-on-secondary-fixed font-label-sm rounded-full mb-md">
+<span class="material-symbols-outlined text-[16px]">memory</span>
+                        INTELLIGENT SYSTEMS
+                    </span>
+<h2 class="font-h1 text-h1 text-on-surface mb-md">Driven by Data. Tailored for You.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-gutter">Our platform doesn't just list cars; it anticipates your needs using real-time analytics and predictive availability.</p>
+<div class="space-y-gutter mt-lg">
+<div class="flex gap-md bg-surface-container-lowest p-md rounded-lg shadow-sm border border-outline-variant/10">
+<div class="bg-primary-container text-on-primary-container p-sm rounded-lg h-fit">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-h3 text-h3 text-on-surface mb-xs">Smart Availability</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Live tracking ensures the car you book is the car you get. Predicting turnaround times to maximize options.</p>
+</div>
+</div>
+<div class="flex gap-md bg-surface-container-lowest p-md rounded-lg shadow-sm border border-outline-variant/10">
+<div class="bg-primary-container text-on-primary-container p-sm rounded-lg h-fit">
+<span class="material-symbols-outlined">tune</span>
+</div>
+<div>
+<h4 class="font-h3 text-h3 text-on-surface mb-xs">Personalized Matching</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Algorithms learn from your booking history to suggest vehicle classes that fit your luggage, group size, and driving style.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 w-full relative">
+<!-- Abstract Data Viz UI Mockup -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-outline-variant/20 relative z-10 overflow-hidden">
+<div class="flex justify-between items-center mb-md border-b border-outline-variant/20 pb-sm">
+<div class="font-label-sm text-secondary">LIVE MATCH SCORE</div>
+<div class="font-h3 text-h3 text-primary">98% Fit</div>
+</div>
+<div class="space-y-sm mb-lg">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">luggage</span></div>
+<div class="flex-grow h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[90%] rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">local_gas_station</span></div>
+<div class="flex-grow h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Faux Map/Route -->
+<div class="h-32 bg-secondary-fixed-dim rounded-lg relative overflow-hidden flex items-center justify-center" data-location="Melaka" style="">
+<span class="font-label-sm text-on-secondary-fixed">Optimized Route Mapping Placeholder</span>
+</div>
+</div>
+<!-- Floating Accent -->
+<div class="absolute -bottom-6 -right-6 bg-surface-container-lowest p-md rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-outline-variant/20 flex items-center gap-sm z-20 backdrop-blur-md bg-white/90">
+<span class="material-symbols-outlined text-primary text-[32px]">bolt</span>
+<div>
+<div class="font-h3 text-h3 text-on-surface">Instant Confirm</div>
+<div class="font-label-sm text-secondary">&lt; 1s Response</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-24 px-container-padding max-w-4xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-h2 text-h2 text-on-surface mb-sm">Frequently Asked Questions</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Everything you need to know about renting with WeDRIVE.</p>
+</div>
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<details class="group bg-surface-container-lowest rounded-lg shadow-sm border border-outline-variant/20 [&amp;_summary::-webkit-details-marker]:hidden">
+<summary class="flex items-center justify-between p-md cursor-pointer font-h3 text-h3 text-on-surface">
+                        What do I need to rent a car?
+                        <span class="material-symbols-outlined transition duration-300 group-open:-rotate-180">expand_more</span>
+</summary>
+<div class="px-md pb-md font-body-md text-body-md text-on-surface-variant border-t border-outline-variant/10 pt-sm mt-sm">
+                        You'll need a valid driver's license, a credit card in your name for the security deposit, and an international driving permit if your license is not in English or Malay.
+                    </div>
+</details>
+<!-- FAQ Item 2 -->
+<details class="group bg-surface-container-lowest rounded-lg shadow-sm border border-outline-variant/20 [&amp;_summary::-webkit-details-marker]:hidden">
+<summary class="flex items-center justify-between p-md cursor-pointer font-h3 text-h3 text-on-surface">
+                        How does the Smart Availability work?
+                        <span class="material-symbols-outlined transition duration-300 group-open:-rotate-180">expand_more</span>
+</summary>
+<div class="px-md pb-md font-body-md text-body-md text-on-surface-variant border-t border-outline-variant/10 pt-sm mt-sm">
+                        Our intelligent system tracks real-time return statuses and maintenance schedules. If you see a car available on your dates, it is guaranteed to be ready for you—no double bookings, no last-minute substitutions.
+                    </div>
+</details>
+<!-- FAQ Item 3 -->
+<details class="group bg-surface-container-lowest rounded-lg shadow-sm border border-outline-variant/20 [&amp;_summary::-webkit-details-marker]:hidden">
+<summary class="flex items-center justify-between p-md cursor-pointer font-h3 text-h3 text-on-surface">
+                        Can I cancel or modify my reservation?
+                        <span class="material-symbols-outlined transition duration-300 group-open:-rotate-180">expand_more</span>
+</summary>
+<div class="px-md pb-md font-body-md text-body-md text-on-surface-variant border-t border-outline-variant/10 pt-sm mt-sm">
+                        Yes, you can modify or cancel your booking through the app. Cancellations made 24 hours prior to pickup are fully refundable. Modifications are subject to current car availability and pricing.
+                    </div>
+</details>
+<!-- FAQ Item 4 -->
+<details class="group bg-surface-container-lowest rounded-lg shadow-sm border border-outline-variant/20 [&amp;_summary::-webkit-details-marker]:hidden">
+<summary class="flex items-center justify-between p-md cursor-pointer font-h3 text-h3 text-on-surface">
+                        Where do I pick up the car in Melaka?
+                        <span class="material-symbols-outlined transition duration-300 group-open:-rotate-180">expand_more</span>
+</summary>
+<div class="px-md pb-md font-body-md text-body-md text-on-surface-variant border-t border-outline-variant/10 pt-sm mt-sm">
+                        During the 'Seamless Booking' step, you can select from multiple convenient hubs across Melaka, including the city center and transit stations. Detailed directions and exact bay numbers are provided in your app itinerary.
+                    </div>
+</details>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-highest w-full mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center px-lg py-xl max-w-7xl mx-auto border-t-0">
+<!-- Brand / Copyright -->
+<div class="mb-md md:mb-0 text-center md:text-left">
+<div class="font-h3 text-h3 text-on-surface dark:text-on-surface-variant flex items-center gap-xs justify-center md:justify-start mb-xs">
+<span class="material-symbols-outlined icon-fill text-primary">directions_car</span>
+                     WeDRIVE
+                </div>
+<div class="font-body-md text-body-md text-on-surface-variant dark:text-on-secondary-container">
+                    © 2024 WeDRIVE Melaka. All rights reserved.
+                </div>
+</div>
+<!-- Links -->
+<div class="flex gap-md py-lg flex-wrap justify-center font-body-md text-body-md">
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">About Us</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">Contact</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">Terms</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">FAQs</a>
+</div>
+</div>
+</footer>
+</body></html>

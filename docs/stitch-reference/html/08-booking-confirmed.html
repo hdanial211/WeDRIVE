@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Booking Confirmed - WeDRIVE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#727785",
+                        "outline-variant": "#c2c6d6",
+                        "on-tertiary-container": "#fdfcff",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-primary-container": "#fefcff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#d5e0f8",
+                        "on-secondary-fixed": "#111c2d",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-primary-fixed": "#001a42",
+                        "inverse-on-surface": "#eff1f3",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "surface-container": "#eceef0",
+                        "tertiary": "#4d5d73",
+                        "primary-container": "#2170e4",
+                        "surface-variant": "#e0e3e5",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#424754",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#586377",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "inverse-surface": "#2d3133",
+                        "surface-tint": "#005ac2",
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#545f73",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-bright": "#f7f9fb",
+                        "background": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#adc6ff",
+                        "tertiary-container": "#66768d",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary-fixed": "#d8e2ff",
+                        "primary": "#0058be",
+                        "on-primary": "#ffffff",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e6e8ea",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "container-padding": "24px",
+                        "unit": "4px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Ambient subtle background pattern */
+        body {
+            background-color: theme('colors.background');
+            background-image: radial-gradient(theme('colors.outline-variant') 1px, transparent 1px);
+            background-size: 32px 32px;
+            background-position: -16px -16px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-md md:p-lg antialiased text-on-surface">
+<!-- Main Container -->
+<main class="w-full max-w-[800px] flex flex-col gap-lg">
+<!-- Success Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_24px_rgba(30,41,59,0.08)] overflow-hidden border border-outline-variant/30 flex flex-col">
+<!-- Header Section -->
+<div class="p-xl flex flex-col items-center text-center border-b border-surface-variant">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-md">
+<span class="material-symbols-outlined icon-fill text-[32px] text-primary">check_circle</span>
+</div>
+<h1 class="font-h1 text-h1 text-on-surface mb-sm">Your Car is Ready!</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Booking Reference: <span class="font-label-sm text-label-sm text-primary">WD-9842-AX</span></p>
+</div>
+<!-- Bento Content Grid -->
+<div class="p-lg md:p-xl grid grid-cols-1 md:grid-cols-12 gap-lg bg-surface-bright">
+<!-- Left: Booking Summary -->
+<div class="md:col-span-7 flex flex-col gap-md">
+<h2 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Booking Summary</h2>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/50 overflow-hidden shadow-sm flex flex-col">
+<!-- Car Image Area -->
+<div class="h-32 bg-surface-container flex items-center justify-center overflow-hidden relative group">
+<img alt="Tesla Model 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A sleek, modern white electric sedan parked against a pristine, minimalist concrete background. High-key, soft white studio lighting highlights the aerodynamic curves of the car. The aesthetic is extremely clean, corporate, and technologically advanced, fitting a high-end rental service UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2U--WZFqhwMetPCKcq9NRVmhdfyCUdzCYDknrzgQdWwImiCcitNsAG22ymyw1pBvwjP_tc0nCOjWxGAlb5Y7RS0z8rN2rBmaG-e3heCtnDXXQBESGWdDrZI5tRm_pDmhhDoPP_52jMlsm9HmGLPN_QIri7GbQILudRM4FYvjh7QfKO6h7yKVzgxJJikq588THIgWvo-DO5lcec9WNhQ1GnETa-xZBzeulnb_H8xeWqh2s3e36sblcffwQvh5QpTxPCJ7CUSOtw1Q"/>
+</div>
+<!-- Car Details -->
+<div class="p-md flex flex-col gap-sm">
+<h3 class="font-h3 text-h3 text-on-surface">Tesla Model 3</h3>
+<div class="flex items-start gap-sm mt-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">calendar_month</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Nov 15 - Nov 18, 2024</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant font-normal">10:00 AM Pick-up</p>
+</div>
+</div>
+<div class="flex items-start gap-sm mt-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary mt-0.5">location_on</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Melaka Central Hub</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant font-normal">Terminal 2, Premium Lane</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: QR & Action -->
+<div class="md:col-span-5 flex flex-col gap-md">
+<h2 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Digital Key Access</h2>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/50 p-lg flex flex-col items-center justify-center h-full shadow-sm">
+<p class="font-body-md text-body-md text-center text-on-surface-variant mb-md">Scan at the kiosk to retrieve your physical key card instantly.</p>
+<div class="p-sm bg-white border-2 border-primary/10 rounded-lg shadow-sm mb-md relative group cursor-pointer">
+<div class="absolute inset-0 border border-primary opacity-0 group-hover:opacity-100 rounded-lg transition-opacity duration-300"></div>
+<img alt="Pick-up QR Code" class="w-32 h-32" data-alt="A high-contrast, crisp black and white QR code centered on a clean white background, surrounded by subtle, light blue scanning frame lines. The style is modern, digital, and technical, conveying instant access and secure verification within a clean software interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAO3yHUAHwcnPmPyyOlstRvGwOGDC47svEOy_Hbox9w9PPUDUfnmSdRJVBcRfMl7ejtuyd78Fn0PCMygXFR1rOb6SoHMEs523KHiuJWFeS_OxwqWJ30F9yXTk67xLB-SK46c6HIM6i1j1e45RAYlCLze8diuv-ekfc_VJcwzndsZ_AfrROtFlAz1fCn9QibHFVf3u9luxgtoODtgnq08fjAT_E77EjyUbY0Q4BzDTzvL_3UMao7qMTU1TXggUJGrNvfDnIJduvj_w"/>
+</div>
+<button class="w-full flex items-center justify-center gap-xs font-label-sm text-label-sm text-primary hover:bg-primary/5 py-2 px-4 rounded transition-colors">
+<span class="material-symbols-outlined text-[16px]">download</span>
+                            Save to Wallet
+                        </button>
+</div>
+</div>
+</div>
+<!-- AI Insight Section -->
+<div class="p-lg bg-surface-bright pb-xl">
+<div class="bg-secondary-fixed/30 border border-secondary-fixed-dim/50 rounded-lg p-md flex gap-md items-start shadow-sm relative overflow-hidden">
+<!-- Subtle gradient background for AI feel -->
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 blur-2xl rounded-full"></div>
+<div class="w-8 h-8 rounded-full bg-primary flex shrink-0 items-center justify-center shadow-sm z-10">
+<span class="material-symbols-outlined icon-fill text-[18px] text-on-primary">bolt</span>
+</div>
+<div class="z-10">
+<h4 class="font-label-sm text-label-sm text-on-surface mb-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px] text-primary">auto_awesome</span>
+                            AI Route Insight
+                        </h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Based on your pick-up location in Melaka, we've pre-loaded top fast-charging stations to your vehicle's navigation. The nearest Supercharger is just 5 minutes away at Dataran Pahlawan.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Actions Footer -->
+<div class="p-lg border-t border-surface-variant bg-surface-container-lowest flex flex-col-reverse sm:flex-row gap-md justify-end items-center">
+<button class="w-full sm:w-auto px-lg py-3 rounded-lg border border-outline-variant font-label-sm text-label-sm text-on-surface hover:bg-surface-container transition-colors duration-200 flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">calendar_add_on</span>
+                    Add to Calendar
+                </button>
+<button class="w-full sm:w-auto px-lg py-3 rounded-lg bg-primary font-label-sm text-label-sm text-on-primary shadow-sm hover:bg-on-primary-fixed-variant transition-colors duration-200 flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">list_alt</span>
+                    View My Bookings
+                </button>
+</div>
+</div>
+</main>
+</body></html>

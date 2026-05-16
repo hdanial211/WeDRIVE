@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Insights - WeDRIVE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#727785",
+                        "outline-variant": "#c2c6d6",
+                        "on-tertiary-container": "#fdfcff",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-primary-container": "#fefcff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#d5e0f8",
+                        "on-secondary-fixed": "#111c2d",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-primary-fixed": "#001a42",
+                        "inverse-on-surface": "#eff1f3",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "surface-container": "#eceef0",
+                        "tertiary": "#4d5d73",
+                        "primary-container": "#2170e4",
+                        "surface-variant": "#e0e3e5",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-surface-variant": "#424754",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#586377",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "inverse-surface": "#2d3133",
+                        "surface-tint": "#005ac2",
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#545f73",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-bright": "#f7f9fb",
+                        "background": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#adc6ff",
+                        "tertiary-container": "#66768d",
+                        "surface-container-highest": "#e0e3e5",
+                        "primary-fixed": "#d8e2ff",
+                        "primary": "#0058be",
+                        "on-primary": "#ffffff",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e6e8ea",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "container-padding": "24px",
+                        "unit": "4px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Soft layered shadow for elevation level 1 (Cards) */
+        .shadow-ambient {
+            box-shadow: 0px 4px 12px rgba(30, 41, 59, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface-container-lowest w-full top-0 shadow-sm z-50">
+<div class="flex justify-between items-center w-full px-lg py-md max-w-7xl mx-auto">
+<div class="text-h2 font-h2 font-bold text-primary flex items-center gap-sm">
+<span class="material-symbols-outlined filled text-[28px]">directions_car</span>
+                WeDRIVE
+            </div>
+<div class="hidden md:flex space-x-lg items-center">
+<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200" href="#">Dashboard</a>
+<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200" href="#">My Bookings</a>
+<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200" href="#">Profile</a>
+<a class="font-label-sm text-label-sm text-primary border-b-2 border-primary pb-1" href="#">AI Insights</a>
+</div>
+<div class="flex items-center gap-md text-secondary">
+<button class="hover:text-primary transition-colors duration-200 scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">language</span>
+</button>
+<button class="hover:text-primary transition-colors duration-200 scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-container-padding py-xl flex flex-col gap-xl">
+<!-- Header -->
+<header class="flex flex-col gap-sm">
+<h1 class="font-h1 text-h1 text-on-surface">Your AI Insights</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                We've analyzed your past driving behavior and current network demand to optimize your next rental experience.
+            </p>
+</header>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Total KM -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-ambient flex flex-col gap-md relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Total Distance</div>
+<span class="material-symbols-outlined text-primary bg-primary-fixed rounded-full p-sm">route</span>
+</div>
+<div>
+<div class="font-h1 text-h1 text-on-surface">1,248 <span class="font-h3 text-h3 text-on-surface-variant">km</span></div>
+<div class="font-body-md text-body-md text-tertiary flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">trending_up</span>
+                        +12% vs last month
+                    </div>
+</div>
+<!-- Sparkline decorative -->
+<div class="absolute bottom-0 left-0 w-full h-12 opacity-20 pointer-events-none" style="background: linear-gradient(to top, var(--tw-colors-primary-fixed), transparent);"></div>
+</div>
+<!-- Eco-Score -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-ambient flex flex-col gap-md">
+<div class="flex justify-between items-start">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Eco-Score</div>
+<span class="material-symbols-outlined text-primary bg-primary-fixed rounded-full p-sm">eco</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative w-16 h-16 flex items-center justify-center bg-surface-container rounded-full">
+<div class="absolute inset-0 rounded-full border-4 border-surface-container-high"></div>
+<div class="absolute inset-0 rounded-full border-4 border-primary border-t-transparent border-l-transparent transform rotate-45"></div>
+<span class="font-h3 text-h3 text-on-surface">A-</span>
+</div>
+<div>
+<div class="font-h3 text-h3 text-on-surface">Excellent</div>
+<div class="font-body-md text-body-md text-tertiary">Smooth acceleration habits detected.</div>
+</div>
+</div>
+</div>
+<!-- Savings -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-ambient flex flex-col gap-md">
+<div class="flex justify-between items-start">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">EV Savings Est.</div>
+<span class="material-symbols-outlined text-primary bg-primary-fixed rounded-full p-sm">savings</span>
+</div>
+<div>
+<div class="font-h1 text-h1 text-on-surface">RM 340</div>
+<div class="font-body-md text-body-md text-tertiary mt-xs">Saved by choosing EVs for your last 3 trips instead of ICE vehicles.</div>
+</div>
+</div>
+</section>
+<!-- AI Recommendations -->
+<section class="flex flex-col gap-md">
+<h2 class="font-h2 text-h2 text-on-surface flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+                AI Recommended For You
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Car Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-ambient overflow-hidden flex flex-col group border border-surface-container-highest hover:border-primary-fixed transition-colors duration-200">
+<div class="relative h-48 bg-surface-container-low overflow-hidden">
+<div class="absolute top-sm right-sm bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded flex items-center gap-xs z-10">
+<span class="material-symbols-outlined text-[14px]">bolt</span> 98% Match
+                        </div>
+<img alt="Sleek modern electric car parked in a clean architectural space" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sleek, modern electric sedan parked in front of a minimalist concrete building during golden hour. The soft, warm light highlights the car's aerodynamic curves and metallic silver paint. The aesthetic is clean, high-tech, and aspirational, fitting for a premium EV rental service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJJfIejlUdR4sNeqoHAb5dNjMglB1ZQOW5He84hJehF_w4-67GMoOLQEC5ag7IkTRkZCDG0TINIkyHGH3Yq2SWiBEI7YfNETYC3EkCEbuv5AoihVzMOxQWL7f2OBdAGd6QRq4KuathhQ9ys8TXpiSgLbio1-TyEdkpsIpU4DTz6lsque-k4bEYnhxtyTHJ4tiEWp4xB69k41j62vSl3Yuyado7oLaBf2j1AKuThQKp8cGTuD88KEozOj6vKuh2TZttGL7PsEtzRa4"/>
+</div>
+<div class="p-md flex flex-col gap-md flex-grow">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Tesla Model 3</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Standard Range Plus</p>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="flex items-center gap-xs font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-[18px]">ev_station</span> Electric
+                            </div>
+<div class="flex items-center gap-xs font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-[18px]">airline_seat_recline_normal</span> 5 Seats
+                            </div>
+</div>
+<div class="mt-auto pt-md flex items-center justify-between border-t border-surface-container-highest">
+<div class="font-label-sm text-label-sm text-primary">High Availability Next Wk</div>
+<button class="bg-primary text-on-primary font-label-sm text-label-sm px-md py-sm rounded hover:bg-on-primary-fixed-variant transition-colors duration-200">Book</button>
+</div>
+</div>
+</div>
+<!-- Car Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-ambient overflow-hidden flex flex-col group border border-surface-container-highest hover:border-primary-fixed transition-colors duration-200">
+<div class="relative h-48 bg-surface-container-low overflow-hidden">
+<div class="absolute top-sm right-sm bg-primary text-on-primary font-label-sm text-label-sm px-sm py-xs rounded flex items-center gap-xs z-10">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> Comfort Pick
+                        </div>
+<img alt="Premium hybrid SUV in a modern urban setting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A modern, dark grey premium hybrid SUV parked on a clean urban street with glass office buildings in the background. The lighting is overcast, providing an even, sleek reflection on the car's surface. The composition emphasizes corporate reliability and modern design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByoTE1eXVGHe6JFESsw0njnaTSmovD6wOM2RUZ8_jujWQ65O_-GeFlFES0dKP5E3qvzHBjxqoLLcVJ7NiViIBguxq3cMJUUZft5Q27iwL1hMSovIOM2PiAhaIxPvp8P9r91JXB6mzTOR_2SsZd8oDd7hna24qLtNHgOa8qpDa6i_P6hBP07hEI1Z7Jb-GahLXHDD7ndbjVac6XSCGI0MjFp0eGsnIXa0JZj4A4R8HIPBRI90FnrDDl4MfsQkyJnklGB7k2QpiSLRE"/>
+</div>
+<div class="p-md flex flex-col gap-md flex-grow">
+<div>
+<h3 class="font-h3 text-h3 text-on-surface">Toyota Corolla Cross</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Hybrid V</p>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<div class="flex items-center gap-xs font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-[18px]">local_gas_station</span> Hybrid
+                            </div>
+<div class="flex items-center gap-xs font-body-md text-body-md text-secondary">
+<span class="material-symbols-outlined text-[18px]">work</span> Spacious
+                            </div>
+</div>
+<div class="mt-auto pt-md flex items-center justify-between border-t border-surface-container-highest">
+<div class="font-label-sm text-label-sm text-on-surface-variant">Good for long trips</div>
+<button class="border border-outline font-label-sm text-label-sm px-md py-sm rounded text-on-surface hover:bg-surface-container transition-colors duration-200">View</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Predictive Availability -->
+<section class="bg-surface-container-lowest rounded-xl shadow-ambient p-lg flex flex-col gap-lg border border-surface-container-highest">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">Predictive Availability</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Forecasted demand for EV fleet in Melaka over the next 7 days.</p>
+</div>
+<div class="bg-surface-container px-md py-sm rounded-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">location_on</span>
+<span class="font-label-sm text-label-sm text-on-surface">Melaka Hub</span>
+</div>
+</div>
+<!-- Simplified Bar Chart Representation -->
+<div class="h-48 w-full flex items-end gap-sm md:gap-md pt-lg relative border-b border-surface-container-highest">
+<!-- Y Axis Labels (simplified) -->
+<div class="absolute left-0 top-0 h-full flex flex-col justify-between text-tertiary font-label-sm text-label-sm py-sm hidden md:flex">
+<span>High</span>
+<span>Med</span>
+<span>Low</span>
+</div>
+<div class="flex-grow flex items-end justify-around h-full pl-0 md:pl-xl relative z-10 group">
+<!-- Bars -->
+<div class="w-1/8 bg-primary rounded-t-sm h-[40%] hover:opacity-80 transition-opacity cursor-pointer relative" title="Mon: 40% Demand"></div>
+<div class="w-1/8 bg-primary rounded-t-sm h-[55%] hover:opacity-80 transition-opacity cursor-pointer relative" title="Tue: 55% Demand"></div>
+<div class="w-1/8 bg-primary rounded-t-sm h-[35%] hover:opacity-80 transition-opacity cursor-pointer relative" title="Wed: 35% Demand"></div>
+<div class="w-1/8 bg-primary rounded-t-sm h-[60%] hover:opacity-80 transition-opacity cursor-pointer relative" title="Thu: 60% Demand"></div>
+<div class="w-1/8 bg-primary rounded-t-sm h-[85%] hover:opacity-80 transition-opacity cursor-pointer relative" title="Fri: 85% Demand (High)"></div>
+<div class="w-1/8 bg-primary-fixed-dim rounded-t-sm h-[95%] hover:opacity-80 transition-opacity cursor-pointer relative border border-primary" title="Sat: 95% Demand (Peak)"></div>
+<div class="w-1/8 bg-primary rounded-t-sm h-[70%] hover:opacity-80 transition-opacity cursor-pointer relative" title="Sun: 70% Demand"></div>
+</div>
+</div>
+<!-- X Axis Labels -->
+<div class="flex justify-around pl-0 md:pl-xl font-label-sm text-label-sm text-on-surface-variant">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span class="text-primary font-bold">Sat</span><span>Sun</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant bg-surface-container-low p-md rounded-lg flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">lightbulb</span>
+<span><strong>Insight:</strong> High demand expected this Saturday due to local events. Consider booking your EV by Thursday to secure preferred models.</span>
+</div>
+</section>
+<!-- How It Works -->
+<section class="py-lg flex flex-col gap-lg">
+<h2 class="font-h2 text-h2 text-on-surface text-center">How WeDRIVE AI Works for You</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="flex flex-col items-center text-center gap-md">
+<div class="w-16 h-16 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined filled text-[32px]">database</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface">Data Aggregation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">We securely analyze your past trip distances, vehicle preferences, and regional demand trends.</p>
+</div>
+<div class="flex flex-col items-center text-center gap-md">
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined filled text-[32px]">model_training</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface">Predictive Modeling</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Our algorithms match your profile against upcoming fleet availability to ensure the right Car is ready when you need it.</p>
+</div>
+<div class="flex flex-col items-center text-center gap-md">
+<div class="w-16 h-16 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined filled text-[32px]">insights</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface">Actionable Insights</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Receive personalized recommendations that optimize for cost, comfort, and environmental impact.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container w-full mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-7xl mx-auto gap-md">
+<div class="text-h3 font-h3 font-bold text-primary">
+                WeDRIVE
+            </div>
+<div class="font-body-md text-body-md text-on-surface">
+                © 2024 WeDRIVE AI-Assisted Rentals. All rights reserved.
+            </div>
+<div class="flex gap-md">
+<a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200" href="#">About Us</a>
+<a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200" href="#">Terms</a>
+<a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200" href="#">Privacy</a>
+</div>
+</div>
+</footer>
+</body></html>
