@@ -1,87 +1,136 @@
 /* =============================================
    WeDRIVE - Day Mode Theme (Default)
-   Light, clean, professional
+   Stitch MD3 Design System + Legacy Compat
    ============================================= */
 :root {
-  /* Brand */
-  --primary: #3B82F6;
-  --primary-dark: #1D4ED8;
-  --primary-light: #EFF6FF;
+  /* ── BRAND (Stitch MD3) ──────────────────── */
+  --primary: #0058be;
+  --primary-dark: #004395;
+  --primary-light: #d8e2ff;
+  --primary-container: #2170e4;
+  --on-primary: #ffffff;
+  --on-primary-container: #fefcff;
 
-  /* Background layers */
-  --bg-body: #F8FAFC;
-  --bg-surface: #FFFFFF;
-  --bg-surface-2: #F1F5F9;
-  --bg-surface-3: #E2E8F0;
+  /* ── SURFACE HIERARCHY (MD3) ─────────────── */
+  --bg-body: #f7f9fb;
+  --bg-surface: #f7f9fb;
+  --bg-surface-2: #f2f4f6;
+  --bg-surface-3: #e6e8ea;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f2f4f6;
+  --surface-container: #eceef0;
+  --surface-container-high: #e6e8ea;
+  --surface-container-highest: #e0e3e5;
+  --surface-dim: #d8dadc;
 
-  /* Sidebar (stays dark in day mode for contrast) */
+  /* ── SIDEBAR ─────────────────────────────── */
   --sidebar-bg: #0F172A;
   --sidebar-hover: #1E293B;
   --sidebar-text: #94A3B8;
   --sidebar-text-active: #FFFFFF;
 
-  /* Text */
-  --text-primary: #1E293B;
-  --text-secondary: #475569;
-  --text-muted: #94A3B8;
+  /* ── TEXT ─────────────────────────────────── */
+  --text-primary: #191c1e;
+  --text-secondary: #545f73;
+  --text-muted: #727785;
+  --on-surface: #191c1e;
+  --on-background: #191c1e;
 
-  /* Borders */
-  --border-color: #E2E8F0;
-  --border-light: #F1F5F9;
+  /* ── BORDERS ─────────────────────────────── */
+  --border-color: #c2c6d6;
+  --border-light: #e0e3e5;
+  --outline: #727785;
+  --outline-variant: #c2c6d6;
 
-  /* Cards */
-  --card-bg: #FFFFFF;
+  /* ── CARDS ───────────────────────────────── */
+  --card-bg: #ffffff;
   --card-shadow: 0 1px 4px rgba(0,0,0,0.06);
   --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-ambient: 0px 4px 12px rgba(30, 41, 59, 0.05);
+  --shadow-float: 0px 12px 24px rgba(30, 41, 59, 0.1);
 
-  /* Topbar / Navbar */
-  --topbar-bg: #FFFFFF;
-  --topbar-border: #E2E8F0;
-  --navbar-bg: #FFFFFF;
+  /* ── TOPBAR / NAVBAR ─────────────────────── */
+  --topbar-bg: #ffffff;
+  --topbar-border: #c2c6d6;
+  --navbar-bg: #ffffff;
 
-  /* Status */
+  /* ── STATUS ──────────────────────────────── */
   --success: #10B981;
   --warning: #F59E0B;
-  --danger: #EF4444;
+  --danger: #ba1a1a;
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
 
-  /* Table */
-  --table-row-hover: #F8FAFC;
-  --table-border: #F1F5F9;
+  /* ── SECONDARY & TERTIARY (MD3) ──────────── */
+  --secondary: #545f73;
+  --secondary-container: #d5e0f8;
+  --on-secondary: #ffffff;
+  --tertiary: #4d5d73;
+  --tertiary-container: #66768d;
 
-  /* Input */
-  --input-bg: #F8FAFC;
-  --input-border: #E2E8F0;
-  --input-focus-bg: #FFFFFF;
+  /* ── TABLE ───────────────────────────────── */
+  --table-row-hover: #f2f4f6;
+  --table-border: #e0e3e5;
 
-  /* Hero (stays dark for visual impact) */
+  /* ── INPUT ───────────────────────────────── */
+  --input-bg: #f2f4f6;
+  --input-border: #c2c6d6;
+  --input-focus-bg: #ffffff;
+
+  /* ── HERO (stays dark for visual impact) ─── */
   --hero-bg-start: #1E293B;
   --hero-bg-mid: #0F172A;
-  --hero-bg-end: #1D4ED8;
+  --hero-bg-end: #004395;
 
-  /* AI Card (stays dark) */
+  /* ── AI CARD (stays dark) ────────────────── */
   --ai-card-bg-start: #1E293B;
   --ai-card-bg-end: #0F172A;
 
-  /* Chat panel header (stays dark) */
+  /* ── CHAT PANEL ──────────────────────────── */
   --chat-header-start: #1E293B;
   --chat-header-end: #0F172A;
-  --chat-bubble-bot-bg: #F8FAFC;
-  --chat-bubble-bot-text: #1E293B;
-  --chat-bubble-user-bg: #1E293B;
-  --chat-bubble-user-text: #FFFFFF;
-  --chat-input-bg: #F8FAFC;
+  --chat-bubble-bot-bg: #f2f4f6;
+  --chat-bubble-bot-text: #191c1e;
+  --chat-bubble-user-bg: #0058be;
+  --chat-bubble-user-text: #ffffff;
+  --chat-input-bg: #f2f4f6;
 
-  /* Toggle button */
-  --theme-btn-bg: #F1F5F9;
-  --theme-btn-color: #475569;
-  --theme-btn-border: #E2E8F0;
+  /* ── TOGGLE BUTTON ───────────────────────── */
+  --theme-btn-bg: #eceef0;
+  --theme-btn-color: #545f73;
+  --theme-btn-border: #c2c6d6;
 
-  /* Legacy variable aliases (for backward compat) */
-  --navy: #1E293B;
-  --slate-50: #F8FAFC;
-  --slate-100: #F1F5F9;
-  --slate-200: #E2E8F0;
-  --slate-400: #94A3B8;
-  --slate-600: #475569;
-  --white: #FFFFFF;
+  /* ── TYPOGRAPHY SCALE (Stitch) ────────────── */
+  --font-h1: 700 32px/1.2 'Inter', sans-serif;
+  --font-h2: 600 24px/1.3 'Inter', sans-serif;
+  --font-h3: 600 18px/1.4 'Inter', sans-serif;
+  --font-body-lg: 400 16px/1.6 'Inter', sans-serif;
+  --font-body-md: 400 14px/1.5 'Inter', sans-serif;
+  --font-label-sm: 600 12px/1 'Inter', sans-serif;
+  --letter-h1: -0.02em;
+  --letter-h2: -0.01em;
+  --letter-label: 0.05em;
+
+  /* ── BORDER RADIUS (Stitch) ──────────────── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* ── SPACING (Stitch) ────────────────────── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* ── LEGACY ALIASES (backward compat) ────── */
+  --navy: #191c1e;
+  --slate-50: #f7f9fb;
+  --slate-100: #f2f4f6;
+  --slate-200: #e0e3e5;
+  --slate-400: #727785;
+  --slate-600: #545f73;
+  --white: #ffffff;
 }
