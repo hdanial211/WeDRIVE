@@ -84,6 +84,10 @@ AI CAR RENTAL SYSTEM/
     |   +-- en.json             # Bahasa Inggeris
     |   +-- ms.json             # Bahasa Melayu
     +-- logo/                   # Gambar Logo
+    +-- images/
+    |   +-- cars/               # Gambar kereta (Toyota Vios, BMW, dll)
+    |   +-- melaka/             # Gambar destinasi Melaka (local, dikompres)
+    |   +-- icons/              # Ikon SVG (Google, dll)
     +-- js/
         +-- main.js             # Skrip Utama (Theme, Lang, Footer Auto-Load)
         +-- auth-guard.js       # Pelindung halaman (Auth Guard)
