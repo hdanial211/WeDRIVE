@@ -19,10 +19,12 @@ AI CAR RENTAL SYSTEM/
 |
 +-- guest/                      # Modul Tetamu (Browse tanpa login)
 |   +-- pages/
-|       +-- explore-melaka.html # Halaman Explore Melaka (Jalan-jalan Melaka)
-|       +-- how-it-works.html   # Halaman Panduan & Tutorial Sewa
+|       +-- explore-melaka/
+|       |   +-- explore-melaka.html  # Halaman Explore Melaka
+|       +-- how-it-works/
+|       |   +-- how-it-works.html    # Halaman Panduan & Tutorial Sewa
 |       +-- pricing/
-|           +-- pricing.html    # Halaman Harga (4 tier pricing)
+|           +-- pricing.html         # Halaman Harga (4 tier pricing)
 |
 +-- admin/                      # Modul Admin
 |   +-- pages/                             # FLOW: Sidebar navigation hierarchy
@@ -94,12 +96,17 @@ AI CAR RENTAL SYSTEM/
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul
-    |   +-- forgot-password.html # Halaman Reset Kata Laluan (link dari Login)
+    |   +-- forgot-password/
+    |   |   +-- forgot-password.html  # Halaman Reset Kata Laluan (link dari Login)
     |   +-- footer/             # Halaman yang dilink dari Footer
-    |       +-- about.html      # Halaman Tentang Kami
-    |       +-- contact.html    # Halaman Hubungi Kami
-    |       +-- faq.html        # Halaman Soalan Lazim
-    |       +-- terms.html      # Halaman Terma & Privasi
+    |       +-- about/
+    |       |   +-- about.html       # Halaman Tentang Kami
+    |       +-- contact/
+    |       |   +-- contact.html     # Halaman Hubungi Kami
+    |       +-- faq/
+    |       |   +-- faq.html         # Halaman Soalan Lazim
+    |       +-- terms/
+    |           +-- terms.html       # Halaman Terma & Privasi
     +-- components/
     |   +-- sidebar-admin.html  # Admin Sidebar
     |   +-- footer.html         # Footer yang diguna semua page

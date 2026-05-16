@@ -39,16 +39,16 @@
   // ─── LINK DEFINITIONS ───────────────────────────────────────────────────────
 
   var NAV_CONFIG = {
-    // Guest-facing pages (guest.html)
+    // Guest-facing pages
     guest: {
       links: [
-        { key: 'nav_browse', href: '{base}index.html',                            label: 'Browse Cars', id: 'nl-browse' },
-        { key: 'nav_melaka', href: '{base}guest/pages/explore-melaka.html',       label: 'Jalan-jalan Melaka', id: 'nl-melaka' },
-        { key: 'nav_how',    href: '{base}guest/pages/how-it-works.html',       label: 'How It Works', id: 'nl-how'    }
+        { key: 'nav_browse', href: '{base}index.html',                                       label: 'Browse Cars', id: 'nl-browse' },
+        { key: 'nav_melaka', href: '{base}guest/pages/explore-melaka/explore-melaka.html',    label: 'Jalan-jalan Melaka', id: 'nl-melaka' },
+        { key: 'nav_how',    href: '{base}guest/pages/how-it-works/how-it-works.html',        label: 'How It Works', id: 'nl-how'    }
       ],
       actions: `
         <button class="btn-outline" onclick="window.location='{base}login.html'" data-key="nav_login">Log In</button>
-        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup.html'" data-key="nav_signup">Sign Up</button>
+        <button class="btn-primary" onclick="window.location='{base}customer/pages/signup/signup.html'" data-key="nav_signup">Sign Up</button>
       `
     },
 
