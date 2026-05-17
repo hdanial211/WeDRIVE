@@ -5,6 +5,7 @@
 
   "nav_browse":     "Senarai Kereta",
   "nav_bookings":   "Tempahan Saya",
+  "nav_my_car":     "Kereta Saya",
   "nav_how":        "Cara Guna",
   "nav_melaka":     "Jalan-jalan Melaka",
   "nav_ai":         "Pembantu AI",
@@ -178,6 +179,7 @@
   "how_step3_desc": "Pengesahan segera, bayar dengan selamat, ambil dan jalan",
   "how_cta": "Mula Percuma",
   "nav_bookings": "Tempahan Saya",
+  "nav_my_car": "Kereta Saya",
   "nav_ai": "Pembantu AI",
   "nav_customer": "Pelanggan",
   "nav_logout": "Log Keluar",

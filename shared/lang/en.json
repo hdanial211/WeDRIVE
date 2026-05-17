@@ -5,6 +5,7 @@
 
   "nav_browse":     "Browse Cars",
   "nav_bookings":   "My Bookings",
+  "nav_my_car":     "My Car",
   "nav_how":        "How It Works",
   "nav_melaka":     "Explore Melaka",
   "nav_ai":         "AI Assistant",
@@ -178,6 +179,7 @@
   "how_step3_desc": "Instant confirmation, pay securely, pick up and go",
   "how_cta": "Get Started Free",
   "nav_bookings": "My Bookings",
+  "nav_my_car": "My Car",
   "nav_ai": "AI Assistant",
   "nav_customer": "Customer",
   "nav_logout": "Logout",

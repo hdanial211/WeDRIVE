@@ -41,6 +41,7 @@
   var NAV_ITEMS = [
     { icon: 'dashboard',      key: 'nav_dashboard', label: 'Dashboard',    page: 'dashboard',   href: '{base}customer/pages/dashboard/customer.html' },
     { icon: 'calendar_month', key: 'nav_bookings',  label: 'My Bookings',  page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' },
+    { icon: 'key',            key: 'nav_my_car',    label: 'My Car',       page: 'car-access',  href: '{base}customer/pages/car-access/car-access.html' },
     { icon: 'psychology',     key: 'nav_ai',        label: 'AI Insights',  page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
   ];
 
@@ -57,7 +58,7 @@
     if (path.includes('/profile/')) return 'profile';
     if (path.includes('/ai-insights/')) return 'ai-insights';
     if (path.includes('/support/')) return 'support';
-    if (path.includes('/car-access/')) return 'my-bookings';
+    if (path.includes('/car-access/')) return 'car-access';
     if (path.includes('/car-details/')) return 'car-details';
     return 'dashboard';
   }
