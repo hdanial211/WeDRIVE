@@ -152,6 +152,71 @@
     </div>
   </main>
 
+  <!-- BOOKING CALENDAR POPUP MODAL -->
+  <div class="booking-popup-overlay" id="booking-popup" aria-hidden="true">
+    <div class="booking-popup-card">
+      <button class="booking-popup-close" onclick="closeBookingPopup()" aria-label="Close">
+        <span class="material-icons-round">close</span>
+      </button>
+      
+      <div class="booking-popup-car-preview">
+        <img id="popup-car-img" src="" alt="Car Preview" />
+        <div class="booking-popup-car-info">
+          <span class="popup-car-type" id="popup-car-type">Sedan</span>
+          <h3 id="popup-car-name">Toyota Vios 2023</h3>
+          <p class="popup-car-price" id="popup-car-price">RM 120<span>/day</span></p>
+        </div>
+      </div>
+
+      <div class="booking-popup-dates">
+        <h4>
+          <span class="material-icons-round">event</span>
+          <span data-key="popup_select_dates">Select Your Dates</span>
+        </h4>
+        <div class="popup-date-fields">
+          <div class="popup-date-field">
+            <label for="popup-pickup-date" data-key="popup_pickup">Pick-up Date</label>
+            <div class="popup-date-input-wrap">
+              <span class="material-icons-round">calendar_today</span>
+              <input type="text" id="popup-pickup-date" placeholder="Select date" readonly />
+            </div>
+          </div>
+          <div class="popup-date-field">
+            <label for="popup-return-date" data-key="popup_return">Return Date</label>
+            <div class="popup-date-input-wrap">
+              <span class="material-icons-round">event</span>
+              <input type="text" id="popup-return-date" placeholder="Select date" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="popup-duration" id="popup-duration" style="display:none;">
+          <span class="material-icons-round">timelapse</span>
+          <span id="popup-duration-text">3 days</span>
+          <span class="popup-total" id="popup-total">RM 360</span>
+        </div>
+      </div>
+
+      <div class="booking-popup-location">
+        <label for="popup-location" data-key="popup_pickup_loc">Pick-up Location</label>
+        <div class="popup-date-input-wrap">
+          <span class="material-icons-round">location_on</span>
+          <select id="popup-location" title="Pick-up Location">
+            <option value="Melaka Sentral">Melaka Sentral</option>
+            <option value="KLIA2">KLIA2</option>
+            <option value="Dataran Pahlawan">Dataran Pahlawan</option>
+            <option value="Ayer Keroh">Ayer Keroh</option>
+            <option value="Jonker Street">Jonker Street</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="booking-popup-proceed" id="popup-proceed-btn" onclick="proceedToBooking()" disabled>
+        <span class="material-icons-round">arrow_forward</span>
+        <span data-key="popup_proceed">Continue to Booking</span>
+      </button>
+    </div>
+  </div>
+
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
 

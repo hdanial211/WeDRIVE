@@ -151,7 +151,10 @@
     }
 
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') closeGuestPrompt();
+      if (event.key === 'Escape') {
+        closeGuestPrompt();
+        if (window.closeBookingPopup) window.closeBookingPopup();
+      }
     });
 
     document.addEventListener('wedrive:language-applied', function () {
@@ -414,6 +417,10 @@
     applyFilters(false);
   };
 
+  var selectedBookingCar = null;
+  var popupPickupPicker = null;
+  var popupReturnPicker = null;
+
   window.bookCar = function (id) {
     var car = allCars.find(function (item) { return Number(item.id) === Number(id); });
     if (!car) return;
@@ -423,7 +430,155 @@
       return;
     }
 
-    alert(t('booking') + ': ' + car.name + '\nRM ' + car.price + t('day'));
+    selectedBookingCar = car;
+    openBookingPopup(car);
+  };
+
+  function openBookingPopup(car) {
+    var popup = document.getElementById('booking-popup');
+    if (!popup) return;
+
+    // Populate car info
+    var img = document.getElementById('popup-car-img');
+    if (img) { img.src = imagePath(car); img.alt = car.name; }
+    var nameEl = document.getElementById('popup-car-name');
+    if (nameEl) nameEl.textContent = car.name;
+    var typeEl = document.getElementById('popup-car-type');
+    if (typeEl) typeEl.textContent = car.label || car.type || '';
+    var priceEl = document.getElementById('popup-car-price');
+    if (priceEl) priceEl.innerHTML = 'RM ' + Number(car.price || 0) + '<span>' + t('day') + '</span>';
+
+    // Reset duration/total
+    var durEl = document.getElementById('popup-duration');
+    if (durEl) durEl.style.display = 'none';
+
+    // Reset proceed button
+    var procBtn = document.getElementById('popup-proceed-btn');
+    if (procBtn) procBtn.disabled = true;
+
+    // Initialize Flatpickr on popup inputs
+    initPopupDatePickers(car);
+
+    // Show popup
+    popup.classList.add('active');
+    popup.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Auto-open pickup calendar after a brief delay
+    setTimeout(function() {
+      if (popupPickupPicker) popupPickupPicker.open();
+    }, 350);
+  }
+
+  function initPopupDatePickers(car) {
+    var pickupInput = document.getElementById('popup-pickup-date');
+    var returnInput = document.getElementById('popup-return-date');
+    if (!pickupInput || !returnInput || !window.flatpickr) return;
+
+    // Destroy old instances
+    if (popupPickupPicker) { popupPickupPicker.destroy(); popupPickupPicker = null; }
+    if (popupReturnPicker) { popupReturnPicker.destroy(); popupReturnPicker = null; }
+
+    pickupInput.value = '';
+    returnInput.value = '';
+
+    var commonConfig = {
+      minDate: 'today',
+      dateFormat: 'd/m/Y',
+      disableMobile: 'true',
+
+      onReady: function(selectedDates, dateStr, instance) {
+        var yearInput = instance.currentYearElement;
+        var wrapper = yearInput.parentNode;
+        var select = document.createElement('select');
+        select.className = 'flatpickr-monthDropdown-months custom-year-select';
+        var currentYear = new Date().getFullYear();
+        for (var i = currentYear; i <= currentYear + 3; i++) {
+          var opt = document.createElement('option');
+          opt.value = i; opt.text = i;
+          select.appendChild(opt);
+        }
+        select.value = instance.currentYear;
+        select.addEventListener('change', function(e) { instance.changeYear(Number(e.target.value)); });
+        yearInput.style.display = 'none';
+        var arrows = wrapper.querySelectorAll('.arrowUp, .arrowDown');
+        arrows.forEach(function(a) { a.style.display = 'none'; });
+        wrapper.appendChild(select);
+        instance.customYearSelect = select;
+      },
+      onYearChange: function(selectedDates, dateStr, instance) {
+        if (instance.customYearSelect) instance.customYearSelect.value = instance.currentYear;
+      }
+    };
+
+    popupReturnPicker = flatpickr(returnInput, Object.assign({}, commonConfig, {
+      onChange: function() { updateBookingSummary(car); }
+    }));
+
+    popupPickupPicker = flatpickr(pickupInput, Object.assign({}, commonConfig, {
+      onChange: function(selectedDates, dateStr) {
+        popupReturnPicker.set('minDate', dateStr || 'today');
+        if (popupReturnPicker.selectedDates[0] && selectedDates[0] && popupReturnPicker.selectedDates[0] < selectedDates[0]) {
+          popupReturnPicker.clear();
+        }
+        setTimeout(function() {
+          if (!popupReturnPicker.selectedDates[0]) {
+            popupReturnPicker.open();
+          }
+        }, 150);
+        updateBookingSummary(car);
+      }
+    }));
+  }
+
+  function updateBookingSummary(car) {
+    var durEl = document.getElementById('popup-duration');
+    var durText = document.getElementById('popup-duration-text');
+    var totalEl = document.getElementById('popup-total');
+    var procBtn = document.getElementById('popup-proceed-btn');
+    if (!durEl || !popupPickupPicker || !popupReturnPicker) return;
+
+    var pickup = popupPickupPicker.selectedDates[0];
+    var ret = popupReturnPicker.selectedDates[0];
+
+    if (pickup && ret) {
+      var diff = Math.ceil((ret - pickup) / (1000 * 60 * 60 * 24));
+      if (diff < 1) diff = 1;
+      var total = diff * Number(car.price || 0);
+      durEl.style.display = 'flex';
+      if (durText) durText.textContent = diff + (diff === 1 ? ' day' : ' days');
+      if (totalEl) totalEl.textContent = 'RM ' + total.toLocaleString();
+      if (procBtn) procBtn.disabled = false;
+    } else {
+      durEl.style.display = 'none';
+      if (procBtn) procBtn.disabled = true;
+    }
+  }
+
+  window.closeBookingPopup = function() {
+    var popup = document.getElementById('booking-popup');
+    if (!popup) return;
+    popup.classList.remove('active');
+    popup.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (popupPickupPicker) popupPickupPicker.close();
+    if (popupReturnPicker) popupReturnPicker.close();
+  };
+
+  window.proceedToBooking = function() {
+    if (!selectedBookingCar) return;
+    var pickup = document.getElementById('popup-pickup-date');
+    var ret = document.getElementById('popup-return-date');
+    var loc = document.getElementById('popup-location');
+    var params = [
+      'car=' + encodeURIComponent(selectedBookingCar.id),
+      'name=' + encodeURIComponent(selectedBookingCar.name),
+      'price=' + encodeURIComponent(selectedBookingCar.price),
+      'pickup=' + encodeURIComponent(pickup ? pickup.value : ''),
+      'return=' + encodeURIComponent(ret ? ret.value : ''),
+      'location=' + encodeURIComponent(loc ? loc.value : '')
+    ];
+    window.location.href = '../car-details/booking/booking.html?' + params.join('&');
   };
 
   function loadCars() {
