@@ -116,7 +116,7 @@
       '    <span>WeDRIVE</span>',
       '  </a>',
       '  <div class="mobile-actions">',
-      '    <button class="icon-btn theme-toggle" id="theme-toggle-mobile" aria-label="Toggle theme">',
+      '    <button class="icon-btn theme-toggle" id="theme-toggle-mobile" aria-label="Toggle theme" onclick="toggleTheme()">',
       '      <span class="material-icons-round">light_mode</span>',
       '    </button>',
       '  </div>',
@@ -153,10 +153,10 @@
     var target = document.querySelector('.utility-actions');
     if (!target) return;
     target.innerHTML = [
-      '<button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Switch language">',
+      '<button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Switch language" onclick="toggleLanguage()">',
       '  <span class="lang-text">EN</span>',
       '</button>',
-      '<button class="icon-btn theme-toggle" id="theme-toggle-desktop" aria-label="Toggle theme">',
+      '<button class="icon-btn theme-toggle" id="theme-toggle-desktop" aria-label="Toggle theme" onclick="toggleTheme()">',
       '  <span class="material-icons-round">light_mode</span>',
       '</button>'
     ].join('\n');
