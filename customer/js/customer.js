@@ -114,6 +114,7 @@
     var sortSelect = document.getElementById('sort-select');
     var availableToggle = document.getElementById('available-toggle');
     var modal = document.getElementById('guest-book-modal');
+    var activeBookingCard = document.getElementById('active-booking-card');
 
     if (searchForm) {
       searchForm.addEventListener('submit', function (event) {
@@ -166,6 +167,34 @@
       renderSpotlight(spotlightIndex, false);
       renderCars(lastRenderedCars.length ? lastRenderedCars : allCars);
     });
+
+    if (activeBookingCard) {
+      var goToActiveBooking = function () {
+        var target = activeBookingCard.getAttribute('data-href');
+        if (target) {
+          window.location.href = target;
+        }
+      };
+
+      activeBookingCard.addEventListener('click', function () {
+        goToActiveBooking();
+      });
+
+      activeBookingCard.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          goToActiveBooking();
+        }
+      });
+
+      activeBookingCard.querySelectorAll('button').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          goToActiveBooking();
+        });
+      });
+    }
   }
 
   function syncFilterChips() {

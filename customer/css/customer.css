@@ -200,9 +200,11 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-body, var(--slate-
   border: 1px solid var(--outline-variant, var(--border-color));
   display: flex; gap: var(--space-lg, 24px); align-items: center;
   position: relative; overflow: hidden;
-  transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, transform 0.2s, border-color 0.2s;
+  cursor: pointer;
 }
-.active-booking-card:hover { box-shadow: var(--shadow-float); }
+.active-booking-card:hover { box-shadow: var(--shadow-float); transform: translateY(-2px); border-color: var(--primary); }
+.active-booking-card:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0,88,190,0.18); border-color: var(--primary); }
 .booking-status-chip {
   position: absolute; top: var(--space-md); right: var(--space-md);
   background: var(--primary-container, var(--primary));
