@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Security Settings - WeDRIVE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "outline-variant": "#c2c6d6",
+                        "inverse-primary": "#adc6ff",
+                        "surface-dim": "#d8dadc",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#66768d",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#111c2d",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "outline": "#727785",
+                        "surface-variant": "#e0e3e5",
+                        "primary-container": "#2170e4",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-primary-fixed": "#001a42",
+                        "primary-fixed": "#d8e2ff",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-background": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "primary": "#0058be",
+                        "surface-bright": "#f7f9fb",
+                        "surface": "#f7f9fb",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary-container": "#fefcff",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#fdfcff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#545f73",
+                        "on-surface-variant": "#424754",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "on-secondary-container": "#586377",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#d3e4fe",
+                        "surface-tint": "#005ac2",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "inverse-surface": "#2d3133",
+                        "tertiary": "#4d5d73",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "unit": "4px",
+                        "xl": "32px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h2": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50 shadow-sm dark:shadow-none bg-surface dark:bg-inverse-surface">
+<div class="flex items-center gap-md">
+<h1 class="font-h2 text-h2 font-bold text-primary dark:text-inverse-primary">WeDRIVE</h1>
+<div class="relative hidden md:block ml-xl">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-xl pr-sm py-sm rounded-full bg-surface-container-low border-none text-body-md focus:ring-2 focus:ring-primary w-64 text-on-surface" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="translate">translate</span>
+</button>
+<button class="p-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<button class="p-sm text-on-surface-variant dark:text-outline-variant hover:bg-surface-container-low dark:hover:bg-on-surface-variant transition-colors duration-200 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<img alt="Customer profile avatar" class="w-10 h-10 rounded-full object-cover ml-sm cursor-pointer" data-alt="A professional headshot of a person looking forward, brightly lit with a light blue gradient background, exuding a corporate, reliable SaaS aesthetic perfect for a management dashboard profile image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfHydf2BGZLOW3XQX_bl4A72EuPbbMNuR04ZEpp1ueqOPs-c2_31EgSObQhRbw6G7drUXY0SDDu7wW1By8SyqRmIESpgPmTMBJ-vcJ_BlzcvKRF4Y7ed3pyrhys1CCsPAVu0luiD3GDNaUb3vQbTtPOJVdiRb0L6lc-8b2hizGByGj0-KXPFNXkmzlUroQvbcYCSVaToSmuCRCr7pomPwIJ5Ys0TTPRJUNY0GmRf7-Xd9Bm6rF0cMGXyKRnmj4CV6SYGJQna0h-WE"/>
+</div>
+</header>
+<div class="flex flex-1 relative overflow-hidden">
+<!-- SideNavBar (Web Only) -->
+<nav class="hidden md:flex flex-col h-[calc(100vh-4rem)] sticky left-0 top-16 w-64 p-md border-r border-outline-variant dark:border-outline bg-surface-container-low dark:bg-inverse-surface z-40 overflow-y-auto">
+<div class="flex items-center gap-md mb-xl p-sm">
+<img alt="User Profile Picture" class="w-12 h-12 rounded-full object-cover" data-alt="A professional headshot of a person looking forward, brightly lit with a light blue gradient background, exuding a corporate, reliable SaaS aesthetic perfect for a management dashboard profile image." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrrPyIRAbuo5J2U2CtxAIkMYCjq_WMzzCx068TkebBWROaqk-0VBzns-AFJ4SvaenU6InV4GJRZ_b-aXKQlLJ79GZbW5sOI1ZFndTZRaYYbIWS_Onpe5EA_Zv84sP6VBWsxiGYJ5CSWnKOTiU9r6cWsfgff6fcDJS-OH5efvMYAkmiZiyPv0i7dy-IUrJRQy5UIlROugPpAJlM-6lnU3H1Qo1Mt3DE5AX--BEmhDtmOhEgbuX-t-7nJm47itQI7uFSPP7ksinhIaM"/>
+<div>
+<div class="font-h3 text-h3 text-on-surface dark:text-inverse-on-surface">Alex Johnson</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Premium Member</div>
+</div>
+</div>
+<ul class="flex flex-col gap-sm flex-1">
+<li>
+<a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant hover:bg-surface-container dark:hover:bg-secondary-fixed-dim transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Personal Info</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm cursor-pointer bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined fill" data-icon="security">security</span>
+<span class="font-label-sm text-label-sm">Security</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant hover:bg-surface-container dark:hover:bg-secondary-fixed-dim transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm">Payment Methods</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant hover:bg-surface-container dark:hover:bg-secondary-fixed-dim transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Preferences</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm cursor-pointer text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant hover:bg-surface-container dark:hover:bg-secondary-fixed-dim transition-all duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm">Notifications</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto pt-lg border-t border-outline-variant dark:border-outline">
+<button class="w-full bg-primary text-on-primary py-sm px-md rounded-lg font-label-sm text-label-sm hover:bg-on-primary-fixed-variant transition-colors">
+                    Upgrade to Pro
+                </button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 p-container-padding overflow-y-auto bg-background">
+<div class="max-w-4xl mx-auto space-y-xl">
+<div>
+<h2 class="font-h1 text-h1 text-on-surface mb-xs">Security Settings</h2>
+<p class="text-body-md text-on-surface-variant">Manage your account security, passwords, and authentication methods.</p>
+</div>
+<!-- Bento Grid Layout for Security Settings -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Change Password (Spans 2 columns) -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-sm mb-lg">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<h3 class="font-h2 text-h2 text-on-surface">Change Password</h3>
+</div>
+<form class="space-y-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-secondary-fixed mb-xs">Current Password</label>
+<input class="w-full px-sm py-sm rounded border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary bg-transparent text-body-md text-on-surface transition-colors" placeholder="••••••••" type="password"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-secondary-fixed mb-xs">New Password</label>
+<input class="w-full px-sm py-sm rounded border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary bg-transparent text-body-md text-on-surface transition-colors" placeholder="••••••••" type="password"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-secondary-fixed mb-xs">Confirm New Password</label>
+<input class="w-full px-sm py-sm rounded border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary bg-transparent text-body-md text-on-surface transition-colors" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant mt-sm">
+                                    Password must be at least 8 characters long and include a number and special character.
+                                </div>
+</form>
+</div>
+<div class="mt-lg flex justify-end">
+<button class="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-sm text-label-sm hover:bg-on-primary-fixed-variant transition-colors shadow-sm" type="button">
+                                Update Password
+                            </button>
+</div>
+</div>
+<!-- Two-Factor Authentication (Spans 1 column) -->
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant/30 flex flex-col">
+<div class="flex items-center gap-sm mb-lg">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface">Two-Factor Auth</h3>
+</div>
+<p class="text-body-md text-on-surface-variant mb-lg flex-1">
+                            Add an extra layer of security to your account by requiring a code from your mobile device upon login.
+                        </p>
+<div class="flex items-center justify-between p-md bg-surface rounded-lg border border-outline-variant/50">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface">Authenticator App</div>
+<div class="text-label-sm font-label-sm text-error mt-unit">Currently Disabled</div>
+</div>
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<button class="mt-md w-full border border-primary text-primary px-lg py-sm rounded-lg font-label-sm text-label-sm hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors">
+                            Setup 2FA
+                        </button>
+</div>
+<!-- Active Sessions (Spans full width) -->
+<div class="lg:col-span-3 bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant/30">
+<div class="flex items-center justify-between mb-lg">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="devices">devices</span>
+</div>
+<div>
+<h3 class="font-h2 text-h2 text-on-surface">Active Sessions</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Devices currently logged into your WeDRIVE account.</p>
+</div>
+</div>
+<button class="text-error font-label-sm text-label-sm hover:underline flex items-center gap-unit">
+<span class="material-symbols-outlined" data-icon="logout" style="font-size: 16px;">logout</span>
+                                Terminate All
+                            </button>
+</div>
+<div class="space-y-xs">
+<!-- Session Item 1 (Current) -->
+<div class="flex items-center justify-between p-md rounded-lg bg-surface-bright border border-primary/20">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-tertiary text-[32px]" data-icon="desktop_windows">desktop_windows</span>
+<div>
+<div class="font-h3 text-h3 text-on-surface flex items-center gap-sm">
+                                            MacBook Pro (macOS)
+                                            <span class="bg-primary-container text-on-primary-container px-sm py-unit rounded-full text-[10px] font-bold tracking-wider uppercase">Current</span>
+</div>
+<div class="text-body-md text-on-surface-variant flex items-center gap-sm mt-unit">
+<span>New York, USA</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>Active now</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Session Item 2 -->
+<div class="flex items-center justify-between p-md rounded-lg hover:bg-surface-container-low transition-colors border border-transparent border-b-outline-variant/30">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-tertiary text-[32px]" data-icon="smartphone">smartphone</span>
+<div>
+<div class="font-h3 text-h3 text-on-surface">iPhone 14 Pro (iOS)</div>
+<div class="text-body-md text-on-surface-variant flex items-center gap-sm mt-unit">
+<span>Boston, USA</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>Last active 2 hours ago</span>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors p-sm rounded-full hover:bg-error-container">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Session Item 3 -->
+<div class="flex items-center justify-between p-md rounded-lg hover:bg-surface-container-low transition-colors border border-transparent">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-tertiary text-[32px]" data-icon="laptop_windows">laptop_windows</span>
+<div>
+<div class="font-h3 text-h3 text-on-surface">ThinkPad X1 (Windows)</div>
+<div class="text-body-md text-on-surface-variant flex items-center gap-sm mt-unit">
+<span>London, UK</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>Last active 3 days ago</span>
+</div>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors p-sm rounded-full hover:bg-error-container">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-xl px-container-padding flex flex-col md:flex-row justify-between items-center mt-auto border-t border-outline-variant dark:border-outline bg-surface-container-lowest dark:bg-inverse-surface">
+<div class="font-h3 text-h3 text-primary mb-md md:mb-0">WeDRIVE</div>
+<div class="flex gap-lg items-center mb-md md:mb-0">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Cookie Settings</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Support</a>
+</div>
+<div class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed-dim">
+            © 2024 WeDRIVE Global Fleet Solutions. All rights reserved.
+        </div>
+</footer>
+</body></html>
