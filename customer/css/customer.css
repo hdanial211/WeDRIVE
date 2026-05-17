@@ -3702,6 +3702,252 @@ button.qa-card {
   }
 }
 
+body.night-mode .customer-sidebar {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.26);
+}
+body.night-mode .sidebar-nav-item:hover,
+body.night-mode .sidebar-footer-nav .sidebar-nav-item:hover {
+  background: rgba(255,255,255,0.05);
+  color: #e2e8f0;
+}
+body.night-mode .sidebar-nav-item.active {
+  background: rgba(59,130,246,0.16);
+}
+body.night-mode .utility-bar {
+  background: var(--card-bg);
+}
+body.night-mode .active-booking-card,
+body.night-mode .reco-card,
+body.night-mode .search-bar-compact,
+body.night-mode .mybk-stat,
+body.night-mode .active-rental,
+body.night-mode .mybk-card,
+body.night-mode .ai-stat-card,
+body.night-mode .ai-reco-card,
+body.night-mode .trip-card,
+body.night-mode .qa-card,
+body.night-mode .faq-item,
+body.night-mode .contact-card,
+body.night-mode .confirmed-main .confirmed-card,
+body.night-mode .receipt-main .receipt-card,
+body.night-mode .hero-info,
+body.night-mode .spec-card,
+body.night-mode .ai-card,
+body.night-mode .policy-card,
+body.night-mode .sticky-cta {
+  background: var(--card-bg, #111827);
+  border-color: rgba(148,163,184,0.16);
+  box-shadow: 0 18px 42px rgba(2,6,23,0.32);
+}
+body.night-mode .booking-image,
+body.night-mode .car-img,
+body.night-mode .mybk-card-img,
+body.night-mode .active-rental-img,
+body.night-mode .confirmed-main .car-summary,
+body.night-mode .confirmed-main .qr-box,
+body.night-mode .search-field-compact,
+body.night-mode .faq-cat,
+body.night-mode .search-bar,
+body.night-mode .confirmed-main .ai-insight-card,
+body.night-mode .confirmed-main .car-summary-img,
+body.night-mode .receipt-main .receipt-divider,
+body.night-mode .thumb-360,
+body.night-mode .thumb-interior {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(148,163,184,0.16);
+}
+body.night-mode .section-header p,
+body.night-mode .utility-subtitle,
+body.night-mode .booking-car-sub,
+body.night-mode .booking-id,
+body.night-mode .booking-specs-grid .spec-label,
+body.night-mode .mybk-card-id,
+body.night-mode .mybk-card-label,
+body.night-mode .active-rental-meta,
+body.night-mode .active-rental-price-label,
+body.night-mode .rental-progress-row,
+body.night-mode .ai-stat-label,
+body.night-mode .ai-stat-change,
+body.night-mode .reco-content p,
+body.night-mode .trip-car small,
+body.night-mode .trip-stat span,
+body.night-mode .support-hero p,
+body.night-mode .faq-a p,
+body.night-mode .contact-card small,
+body.night-mode .confirmed-main .booking-ref,
+body.night-mode .confirmed-main .detail-row,
+body.night-mode .confirmed-main .detail-row small,
+body.night-mode .confirmed-main .ai-insight-text p,
+body.night-mode .receipt-main .receipt-id small,
+body.night-mode .receipt-main .receipt-row,
+body.night-mode .receipt-main .receipt-footer p,
+body.night-mode .breadcrumb,
+body.night-mode .breadcrumb a,
+body.night-mode .policy-item p,
+body.night-mode .sticky-price span {
+  color: #94a3b8;
+}
+body.night-mode .search-field-compact input,
+body.night-mode .search-bar input,
+body.night-mode .receipt-main .receipt-btn.outline,
+body.night-mode .btn-outline,
+body.night-mode .active-action-btn.outline,
+body.night-mode .reco-action,
+body.night-mode .faq-q,
+body.night-mode .faq-cat,
+body.night-mode .mybk-page-btn,
+body.night-mode .mybk-tab,
+body.night-mode .gallery-badge,
+body.night-mode .confirmed-main .btn-outline,
+body.night-mode .receipt-main .receipt-row .value,
+body.night-mode .receipt-main .receipt-logo span,
+body.night-mode .policy-item h4,
+body.night-mode .trip-stat strong,
+body.night-mode .trip-car strong,
+body.night-mode .reco-content h3,
+body.night-mode .ai-stat-value,
+body.night-mode .section-title,
+body.night-mode .booking-car-name,
+body.night-mode .mybk-card-name,
+body.night-mode .mybk-card-date,
+body.night-mode .active-rental-body h2,
+body.night-mode .confirmed-main .confirmed-header h1,
+body.night-mode .confirmed-main .car-summary-info h3,
+body.night-mode .confirmed-main .ai-insight-text h4,
+body.night-mode .receipt-main .receipt-section h4,
+body.night-mode .receipt-main .receipt-total,
+body.night-mode .info-header h1,
+body.night-mode .car-subtitle,
+body.night-mode .availability-list p,
+body.night-mode .spec-value {
+  color: #e2e8f0;
+}
+body.night-mode .search-field-compact,
+body.night-mode .search-bar,
+body.night-mode .faq-item,
+body.night-mode .faq-cat,
+body.night-mode .reco-action,
+body.night-mode .mybk-page-btn,
+body.night-mode .btn-outline,
+body.night-mode .active-action-btn.outline,
+body.night-mode .confirmed-main .btn-outline,
+body.night-mode .receipt-main .receipt-btn.outline,
+body.night-mode .gallery-badge,
+body.night-mode .hero-info,
+body.night-mode .policy-divider,
+body.night-mode .price-block,
+body.night-mode .receipt-main .receipt-header,
+body.night-mode .confirmed-main .confirmed-header,
+body.night-mode .confirmed-main .confirmed-actions,
+body.night-mode .receipt-main .receipt-footer {
+  border-color: rgba(148,163,184,0.16);
+}
+body.night-mode .filter-chip {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(148,163,184,0.18);
+  color: #cbd5e1;
+}
+body.night-mode .filter-chip:hover {
+  border-color: var(--primary);
+  color: #93c5fd;
+}
+body.night-mode .filter-chip.active {
+  background: var(--primary);
+  color: #fff;
+}
+body.night-mode .results-count {
+  color: #94a3b8;
+}
+body.night-mode .status-badge.upcoming {
+  background: rgba(37,99,235,0.16);
+  color: #93c5fd;
+}
+body.night-mode .status-badge.upcoming::before { background: #93c5fd; }
+body.night-mode .status-badge.completed {
+  background: rgba(148,163,184,0.14);
+  color: #cbd5e1;
+}
+body.night-mode .status-badge.completed::before { background: #cbd5e1; }
+body.night-mode .status-badge.cancelled {
+  background: rgba(220,38,38,0.14);
+  color: #fca5a5;
+}
+body.night-mode .status-badge.cancelled::before { background: #fca5a5; }
+body.night-mode .status-badge.active {
+  background: rgba(16,185,129,0.16);
+  color: #86efac;
+}
+body.night-mode .status-badge.active::before { background: #86efac; }
+body.night-mode .mybk-stat-icon.blue { background: rgba(59,130,246,0.16); color: #93c5fd; }
+body.night-mode .mybk-stat-icon.green { background: rgba(16,185,129,0.16); color: #86efac; }
+body.night-mode .mybk-stat-icon.slate { background: rgba(148,163,184,0.14); color: #cbd5e1; }
+body.night-mode .active-badge {
+  background: rgba(16,185,129,0.18);
+  color: #86efac;
+}
+body.night-mode .booking-tag,
+body.night-mode .model-badge,
+body.night-mode .reco-chip,
+body.night-mode .thumb-360,
+body.night-mode .thumb-interior {
+  background: rgba(59,130,246,0.14);
+  color: #93c5fd;
+}
+body.night-mode .booking-tag,
+body.night-mode .reco-chip {
+  border-color: rgba(148,163,184,0.12);
+}
+body.night-mode .ai-stat-card:hover,
+body.night-mode .ai-reco-card:hover,
+body.night-mode .trip-card:hover,
+body.night-mode .qa-card:hover,
+body.night-mode .contact-card:hover,
+body.night-mode .faq-item:hover,
+body.night-mode .spec-card:hover,
+body.night-mode .ai-card:hover,
+body.night-mode .reco-card:hover,
+body.night-mode .mybk-card:hover,
+body.night-mode .active-booking-card:hover {
+  box-shadow: 0 20px 48px rgba(2,6,23,0.36);
+}
+body.night-mode .ai-hero::before,
+body.night-mode .support-hero::before,
+body.night-mode .confirmed-main .confirmed-header::before,
+body.night-mode .confirmed-main .ai-insight-card::after,
+body.night-mode .ai-glow {
+  opacity: 0.6;
+}
+body.night-mode .confirmed-main .qr-code {
+  background: #fff;
+  border-color: rgba(96,165,250,0.24);
+}
+body.night-mode .confirmed-main .btn-save-wallet:hover,
+body.night-mode .reco-action:hover,
+body.night-mode .receipt-main .receipt-btn.outline:hover,
+body.night-mode .confirmed-main .btn-outline:hover,
+body.night-mode .active-action-btn.outline:hover,
+body.night-mode .btn-outline:hover {
+  background: rgba(255,255,255,0.06);
+}
+body.night-mode .sticky-cta {
+  background: rgba(15,23,42,0.92);
+}
+body.night-mode .gallery-badge,
+body.night-mode .ai-price-tag,
+body.night-mode .model-badge {
+  backdrop-filter: blur(12px);
+}
+body.night-mode .gallery-badge {
+  background: rgba(15,23,42,0.8);
+}
+body.night-mode .ai-price-tag {
+  background: rgba(5,150,105,0.15);
+  color: #86efac;
+}
+body.night-mode .spec-card::before {
+  background: radial-gradient(circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(96,165,250,.1), transparent 60%);
+}
+
 @media print {
   .customer-sidebar,
   .mobile-menu-bar,
