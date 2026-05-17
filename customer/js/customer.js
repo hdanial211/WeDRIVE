@@ -66,7 +66,7 @@
   }
 
   function rootPrefix() {
-    return window.location.pathname.includes('/pages/') ? '../../' : '';
+    return window.location.pathname.includes('/pages/') ? '../../../' : '';
   }
 
   function imagePath(car) {
