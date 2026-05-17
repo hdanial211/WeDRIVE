@@ -87,10 +87,13 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-body, var(--slate-
 /* Sidebar Footer */
 .sidebar-footer-nav {
   margin-top: auto;
-  padding: 16px 0 0;
-  margin-left: 16px; margin-right: 16px;
+  padding: 8px 0 0;
+  margin-left: 24px; margin-right: 24px;
   border-top: 1px solid var(--outline-variant, var(--border-color));
   display: flex; flex-direction: column; gap: 2px;
+}
+.sidebar-footer-nav .sidebar-nav-item {
+  padding: 10px 16px;
 }
 .sidebar-logout { color: var(--error, #ba1a1a) !important; }
 .sidebar-logout:hover { background: rgba(186, 26, 26, 0.06) !important; }
