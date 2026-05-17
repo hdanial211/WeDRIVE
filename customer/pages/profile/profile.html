@@ -63,9 +63,9 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">badge</span> Basic Details</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>First Name</label><input type="text" value="Alex" /></div>
-                <div class="pf-field"><label>Last Name</label><input type="text" value="Johnson" /></div>
-                <div class="pf-field"><label>Date of Birth</label><input type="text" value="15/10/1985" /></div>
+                <div class="pf-field"><label>First Name</label><input type="text" value="Alex" aria-label="First Name" title="First Name" /></div>
+                <div class="pf-field"><label>Last Name</label><input type="text" value="Johnson" aria-label="Last Name" title="Last Name" /></div>
+                <div class="pf-field"><label>Date of Birth</label><input type="text" value="15/10/1985" aria-label="Date of Birth" title="Date of Birth" /></div>
               </div>
             </section>
 
@@ -73,14 +73,14 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">contacts</span> Contact Information</h3>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span class="material-icons-round">verified</span> Verified</span></label><input type="email" value="alex.johnson@example.com" /></div>
-                <div class="pf-field full"><label>Phone Number</label><input type="tel" value="+60 11-1234 5678" /></div>
+                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span class="material-icons-round">verified</span> Verified</span></label><input type="email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address" /></div>
+                <div class="pf-field full"><label>Phone Number</label><input type="tel" value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" /></div>
               </div>
               <h4 class="pf-sub-title">Residential Address</h4>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Street Address</label><input type="text" value="123 Jalan Melaka Raya, Suite 400" /></div>
-                <div class="pf-field"><label>City</label><input type="text" value="Melaka" /></div>
-                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" value="75000" /></div>
+                <div class="pf-field full"><label>Street Address</label><input type="text" value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address" /></div>
+                <div class="pf-field"><label>City</label><input type="text" value="Melaka" aria-label="City" title="City" /></div>
+                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" value="75000" aria-label="Zip or Postal Code" title="Zip or Postal Code" /></div>
               </div>
             </section>
 
@@ -88,8 +88,8 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">id_card</span> Driving License</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>License Number</label><input type="text" value="DLR-9876543210" /></div>
-                <div class="pf-field"><label>Expiry Date</label><input type="text" value="15/10/2028" /></div>
+                <div class="pf-field"><label>License Number</label><input type="text" value="DLR-9876543210" aria-label="License Number" title="License Number" /></div>
+                <div class="pf-field"><label>Expiry Date</label><input type="text" value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" /></div>
               </div>
             </section>
 
@@ -111,9 +111,9 @@
               <section class="pf-card pf-bento-wide">
                 <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Change Password</h3>
                 <div class="pf-form-grid">
-                  <div class="pf-field full"><label>Current Password</label><input type="password" value="********" /></div>
-                  <div class="pf-field"><label>New Password</label><input type="password" value="********" /></div>
-                  <div class="pf-field"><label>Confirm New Password</label><input type="password" value="********" /></div>
+                  <div class="pf-field full"><label>Current Password</label><input type="password" value="********" aria-label="Current Password" title="Current Password" /></div>
+                  <div class="pf-field"><label>New Password</label><input type="password" value="********" aria-label="New Password" title="New Password" /></div>
+                  <div class="pf-field"><label>Confirm New Password</label><input type="password" value="********" aria-label="Confirm New Password" title="Confirm New Password" /></div>
                 </div>
                 <p class="pf-hint">Password must be at least 8 characters long and include a number and special character.</p>
                 <div class="pf-actions-bar compact"><button class="pf-btn primary" onclick="profileToast('Password updated.')">Update Password</button></div>
@@ -125,7 +125,7 @@
                 <p class="pf-card-desc">Add an extra layer of security to your account by requiring a code from your mobile device upon login.</p>
                 <div class="pf-toggle-row">
                   <div><div class="pf-toggle-label">Authenticator App</div><div class="pf-toggle-status off">Currently Disabled</div></div>
-                  <label class="pf-switch"><input type="checkbox" /><span class="pf-slider"></span></label>
+                  <label class="pf-switch"><input type="checkbox" aria-label="Enable authenticator app" title="Enable authenticator app" /><span class="pf-slider"></span></label>
                 </div>
                 <button class="pf-btn outline full-width" onclick="profileToast('2FA setup coming soon.')">Setup 2FA</button>
               </section>
@@ -233,11 +233,11 @@
               <div class="pf-pref-grid">
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Language</div><div class="pf-pref-desc">Select your preferred app language</div></div>
-                  <select class="pf-select" onchange="profileToast('Language updated.')"><option selected>English (EN)</option><option>Malay (BM)</option></select>
+                  <select class="pf-select" aria-label="Language" title="Language" onchange="profileToast('Language updated.')"><option selected>English (EN)</option><option>Malay (BM)</option></select>
                 </div>
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Theme</div><div class="pf-pref-desc">Choose light or dark mode</div></div>
-                  <select class="pf-select" onchange="profileToast('Theme updated.')"><option selected>Light Mode</option><option>Dark Mode</option><option>System Default</option></select>
+                  <select class="pf-select" aria-label="Theme" title="Theme" onchange="profileToast('Theme updated.')"><option selected>Light Mode</option><option>Dark Mode</option><option>System Default</option></select>
                 </div>
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Measurement Units</div><div class="pf-pref-desc">Distance & speed units</div></div>
@@ -245,7 +245,7 @@
                 </div>
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Currency</div><div class="pf-pref-desc">Display prices in</div></div>
-                  <select class="pf-select"><option selected>MYR (RM)</option><option>USD ($)</option></select>
+                  <select class="pf-select" aria-label="Currency" title="Currency"><option selected>MYR (RM)</option><option>USD ($)</option></select>
                 </div>
               </div>
             </section>
@@ -276,9 +276,9 @@
                 <h3 class="pf-section-title"><span class="material-icons-round">email</span> Email Notifications</h3>
                 <p class="pf-card-desc">Manage email communications to your email address.</p>
                 <div class="pf-notif-list">
-                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Booking Updates</div><div class="pf-toggle-desc">Confirmations, cancellations, and itinerary changes.</div></div><label class="pf-switch"><input type="checkbox" checked /><span class="pf-slider"></span></label></div>
-                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Promotions & Offers</div><div class="pf-toggle-desc">Exclusive deals, seasonal discounts, and partner offers.</div></div><label class="pf-switch"><input type="checkbox" checked /><span class="pf-slider"></span></label></div>
-                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Security Alerts</div><div class="pf-toggle-desc">Login attempts from new devices and password changes.</div></div><label class="pf-switch"><input type="checkbox" checked /><span class="pf-slider"></span></label></div>
+                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Booking Updates</div><div class="pf-toggle-desc">Confirmations, cancellations, and itinerary changes.</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Booking Updates notifications" title="Booking Updates notifications" /><span class="pf-slider"></span></label></div>
+                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Promotions & Offers</div><div class="pf-toggle-desc">Exclusive deals, seasonal discounts, and partner offers.</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Promotions and Offers notifications" title="Promotions and Offers notifications" /><span class="pf-slider"></span></label></div>
+                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Security Alerts</div><div class="pf-toggle-desc">Login attempts from new devices and password changes.</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Security Alerts notifications" title="Security Alerts notifications" /><span class="pf-slider"></span></label></div>
                 </div>
               </section>
 
@@ -286,7 +286,7 @@
               <section class="pf-card">
                 <h3 class="pf-section-title"><span class="material-icons-round">newspaper</span> Newsletter</h3>
                 <p class="pf-card-desc">Subscribe to our newsletter to discover tips & updates delivered to your mailbox.</p>
-                <div class="pf-toggle-row"><div><div class="pf-toggle-label">Subscribe</div></div><label class="pf-switch"><input type="checkbox" checked /><span class="pf-slider"></span></label></div>
+                <div class="pf-toggle-row"><div><div class="pf-toggle-label">Subscribe</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Subscribe to newsletter" title="Subscribe to newsletter" /><span class="pf-slider"></span></label></div>
                 <div class="pf-help-box"><strong>Need Help?</strong><p>If you are not receiving emails, please check your spam folder or spam address/domain is whitelisted.</p><a href="../support/support.html" class="pf-text-btn primary">Contact Support</a></div>
               </section>
             </div>
@@ -295,14 +295,14 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">sms</span> SMS Notifications</h3>
               <p class="pf-card-desc">SMS Notifications route your messages to your phone as text messages.</p>
-              <div class="pf-toggle-row"><div><div class="pf-toggle-label">Enable SMS</div></div><label class="pf-switch"><input type="checkbox" checked /><span class="pf-slider"></span></label></div>
+              <div class="pf-toggle-row"><div><div class="pf-toggle-label">Enable SMS</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Enable SMS notifications" title="Enable SMS notifications" /><span class="pf-slider"></span></label></div>
             </section>
 
             <!-- Push Notifications -->
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">notifications_active</span> Push Notifications</h3>
               <p class="pf-card-desc">App notifications for real-time travel, fleet tracking and quick approvals.</p>
-              <div class="pf-toggle-row"><div><div class="pf-toggle-label">Enable Push</div></div><label class="pf-switch"><input type="checkbox" checked /><span class="pf-slider"></span></label></div>
+              <div class="pf-toggle-row"><div><div class="pf-toggle-label">Enable Push</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Enable push notifications" title="Enable push notifications" /><span class="pf-slider"></span></label></div>
             </section>
 
             <div class="pf-actions-bar">

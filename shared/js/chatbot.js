@@ -61,7 +61,10 @@
     if (!placeholder) return;
 
     var base = resolveBase();
-    
+
+    placeholder.setAttribute('role', 'complementary');
+    placeholder.setAttribute('aria-label', 'AI chatbot');
+
     // Inject HTML
     placeholder.innerHTML = HTML;
 
@@ -116,7 +119,7 @@ window.addChatMsg = function(text, isUser = false, showCar = false) {
   const div = document.createElement('div');
   div.className = `chat-msg ${isUser ? 'user' : 'bot'}`;
   div.innerHTML = `
-    <div class="chat-avatar">${isUser ? 'U' : '<span class="material-icons-round" style="font-size:15px">smart_toy</span>'}</div>
+    <div class="chat-avatar">${isUser ? 'U' : '<span class="material-icons-round chat-avatar-icon">smart_toy</span>'}</div>
     <div>
       <div class="chat-bubble">${text}</div>
       ${showCar ? `
@@ -139,7 +142,7 @@ window.showTypingIndicator = function() {
   const div = document.createElement('div');
   div.className = 'chat-msg bot'; div.id = 'chat-typing';
   div.innerHTML = `
-    <div class="chat-avatar"><span class="material-icons-round" style="font-size:15px">smart_toy</span></div>
+    <div class="chat-avatar"><span class="material-icons-round chat-avatar-icon">smart_toy</span></div>
     <div class="chat-bubble"><div class="typing-indicator"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div></div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;

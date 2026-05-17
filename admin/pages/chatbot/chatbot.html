@@ -255,13 +255,13 @@
 
         <!-- ─── LEFT: Settings ──────────────────── -->
         <div class="card reveal-on-scroll">
-          <div class="card-header" style="flex-wrap: wrap; gap: 8px;">
+          <div class="card-header chatbot-card-header">
             <div>
-              <h3 style="display: flex; align-items: center; gap: 8px;">
-                <span class="material-icons-round" style="color: var(--primary-color);">smart_toy</span>
+              <h3 class="chatbot-title">
+                <span class="material-icons-round chatbot-title-icon">smart_toy</span>
                 AI Chatbot Configuration
               </h3>
-              <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">
+              <p class="chatbot-subtitle">
                 Powered by Google Gemini + Grok AI (auto-fallback)
               </p>
             </div>
@@ -270,15 +270,15 @@
             </span>
           </div>
 
-          <div class="settings-form" style="padding: 24px;">
+          <div class="settings-form chatbot-settings-form">
             <!-- API Key -->
             <div class="info-box">
               <span class="material-icons-round">info</span>
               <div>
                 <strong>Primary:</strong> Get free Gemini key from
-                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color: var(--primary-color); font-weight: 600;">Google AI Studio</a> (15 req/min).<br>
+                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="chatbot-link">Google AI Studio</a> (15 req/min).<br>
                 <strong>Backup:</strong> Get free Grok key from
-                <a href="https://console.x.ai/" target="_blank" rel="noopener" style="color: var(--primary-color); font-weight: 600;">xAI Console</a> (auto-fallback if Gemini fails).
+                <a href="https://console.x.ai/" target="_blank" rel="noopener" class="chatbot-link">xAI Console</a> (auto-fallback if Gemini fails).
               </div>
             </div>
 
@@ -287,7 +287,7 @@
             <div class="form-group">
               <label>
                 <span class="material-icons-round">vpn_key</span>
-                Gemini API Key <span style="font-size:11px; color:var(--text-muted); font-weight:400;">(Primary)</span>
+                Gemini API Key <span class="chatbot-key-note">(Primary)</span>
               </label>
               <div class="api-row">
                 <div class="api-key-wrap">
@@ -304,7 +304,7 @@
             <div class="form-group">
               <label>
                 <span class="material-icons-round">vpn_key</span>
-                Grok API Key <span style="font-size:11px; color:var(--text-muted); font-weight:400;">(Backup)</span>
+                Grok API Key <span class="chatbot-key-note">(Backup)</span>
               </label>
               <div class="api-row">
                 <div class="api-key-wrap">
@@ -350,23 +350,23 @@
               <input type="text" id="greeting-msg" placeholder="Hi! I'm WeDRIVE Bot. How can I help?" />
             </div>
 
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <div class="chatbot-actions">
               <button class="btn-save" onclick="saveSettings()">
-                <span class="material-icons-round" style="font-size: 18px;">save</span> Save Settings
+                <span class="material-icons-round chatbot-icon-sm">save</span> Save Settings
               </button>
               <button class="btn-test" onclick="testConnection()">
-                <span class="material-icons-round" style="font-size: 18px;">bolt</span> Test Connection
+                <span class="material-icons-round chatbot-icon-sm">bolt</span> Test Connection
               </button>
             </div>
           </div>
         </div>
 
         <!-- ─── RIGHT: Live Test Chat ───────────── -->
-        <div class="card reveal-on-scroll" style="padding: 0; overflow: hidden;">
+        <div class="card reveal-on-scroll chatbot-card-flat">
           <div class="chat-container">
             <div class="chat-header">
               <div class="bot-avatar">
-                <span class="material-icons-round" style="font-size: 20px;">smart_toy</span>
+                <span class="material-icons-round chatbot-icon-md">smart_toy</span>
               </div>
               <div class="bot-info">
                 <h4>WeDRIVE Bot</h4>
@@ -380,7 +380,7 @@
               <input type="text" id="chat-input" placeholder="Type a message to test..." 
                      onkeydown="if(event.key==='Enter')sendTestMsg()" />
               <button onclick="sendTestMsg()" id="send-btn">
-                <span class="material-icons-round" style="font-size: 20px;">send</span>
+                <span class="material-icons-round chatbot-icon-md">send</span>
               </button>
             </div>
           </div>
@@ -390,12 +390,12 @@
     </div>
 
     <div id="toast" class="toast">
-      <span class="material-icons-round" style="font-size: 18px;">check_circle</span>
+      <span class="material-icons-round chatbot-icon-sm">check_circle</span>
       <span id="toast-text">Settings saved successfully!</span>
     </div>
 
     <!-- FOOTER -->
-    <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
+    <div id="footer-placeholder" class="admin-footer-shell"></div>
   </main>
 
   <script src="../../../shared/js/navbar-loader.js"></script>

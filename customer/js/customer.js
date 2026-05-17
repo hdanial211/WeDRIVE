@@ -470,7 +470,7 @@
 
     // Reset duration/total
     var durEl = document.getElementById('popup-duration');
-    if (durEl) durEl.style.display = 'none';
+    if (durEl) durEl.hidden = true;
 
     // Reset proceed button
     var procBtn = document.getElementById('popup-proceed-btn');
@@ -605,12 +605,12 @@
       var diff = Math.ceil((ret - pickup) / (1000 * 60 * 60 * 24));
       if (diff < 1) diff = 1;
       var total = diff * Number(car.price || 0);
-      durEl.style.display = 'flex';
+      durEl.hidden = false;
       if (durText) durText.textContent = diff + (diff === 1 ? ' day' : ' days');
       if (totalEl) totalEl.textContent = 'RM ' + total.toLocaleString();
       if (procBtn) procBtn.disabled = false;
     } else {
-      durEl.style.display = 'none';
+      durEl.hidden = true;
       if (procBtn) procBtn.disabled = true;
     }
   }

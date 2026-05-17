@@ -44,7 +44,7 @@
 }
 
 .wedrive-footer .footer-links a {
-  color: var(--text-muted, #64748B);
+  color: var(--on-surface-variant, #424754);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -62,7 +62,7 @@
   padding-top: 20px;
   border-top: 1px solid var(--border, #E2E8F0);
   text-align: center;
-  color: var(--text-muted, #64748B);
+  color: var(--on-surface-variant, #424754);
   font-size: 13px;
 }
 

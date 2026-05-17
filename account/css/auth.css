@@ -290,8 +290,8 @@ body.night-mode .apple-logo {
 
 .reset-card {
   width: min(100%, 456px);
-  background: color-mix(in srgb, var(--surface-container-lowest, #fff) 94%, transparent);
-  border: 1px solid color-mix(in srgb, var(--outline-variant, #c2c6d6) 70%, transparent);
+  background: var(--surface-container-lowest, #fff);
+  border: 1px solid rgba(194, 198, 214, 0.7);
   border-radius: 20px;
   box-shadow: 0 22px 60px rgba(30, 41, 59, 0.1);
   padding: 30px;

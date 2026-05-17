@@ -78,10 +78,10 @@
     var activePage = detectActivePage();
 
     placeholder.innerHTML = [
-      '<aside class="customer-sidebar" id="customer-sidebar">',
+      '<aside class="customer-sidebar" id="customer-sidebar" aria-label="Customer sidebar">',
       '  <div class="sidebar-header">',
       '    <a href="' + base + 'index.html" class="sidebar-brand">',
-      '      <img src="' + base + 'shared/logo/wedrive-icon.png" alt="WeDRIVE" class="sidebar-logo"/>',
+      '      <img src="' + base + 'shared/logo/wedrive-icon.png" alt="" aria-hidden="true" class="sidebar-logo"/>',
       '      <div class="sidebar-brand-group">',
       '        <span class="sidebar-brand-text">WeDRIVE</span>',
       '        <span class="sidebar-brand-sub">Fleet Management</span>',
@@ -94,12 +94,12 @@
       '      <span data-key="cust_new_booking">New Booking</span>',
       '    </button>',
       '  </div>',
-      '  <nav class="sidebar-nav">',
+      '  <nav class="sidebar-nav" aria-label="Customer primary navigation">',
       buildNavItems(NAV_ITEMS, base, activePage),
       '  </nav>',
-      '  <div class="sidebar-footer-nav">',
+      '  <nav class="sidebar-footer-nav" aria-label="Customer account navigation">',
       buildNavItems(FOOTER_ITEMS, base, activePage),
-      '  </div>',
+      '  </nav>',
       '</aside>'
     ].join('\n');
   }
@@ -107,12 +107,12 @@
   function renderMobileBar(placeholder) {
     var base = resolveBase();
     placeholder.innerHTML = [
-      '<div class="mobile-menu-bar" id="mobile-menu-bar">',
+      '<nav class="mobile-menu-bar" id="mobile-menu-bar" aria-label="Customer mobile navigation">',
       '  <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">',
       '    <span class="material-icons-round">menu</span>',
       '  </button>',
       '  <a href="' + base + 'index.html" class="mobile-brand">',
-      '    <img src="' + base + 'shared/logo/wedrive-icon.png" alt="WeDRIVE" class="mobile-logo"/>',
+      '    <img src="' + base + 'shared/logo/wedrive-icon.png" alt="" aria-hidden="true" class="mobile-logo"/>',
       '    <span>WeDRIVE</span>',
       '  </a>',
       '  <div class="mobile-actions">',
@@ -120,7 +120,7 @@
       '      <span class="material-icons-round">light_mode</span>',
       '    </button>',
       '  </div>',
-      '</div>',
+      '</nav>',
       '<div class="sidebar-overlay" id="sidebar-overlay"></div>'
     ].join('\n');
   }

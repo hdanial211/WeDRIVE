@@ -19,7 +19,7 @@
 
   <main class="customer-main" id="customer-main">
     <div class="checkout-wrapper stitch-checkout">
-      <header class="checkout-header reveal-onload">
+      <header class="checkout-header">
         <a class="checkout-back-link" href="../booking.html">
           <span class="material-icons-round">arrow_back</span>
           Back to booking details
@@ -50,7 +50,7 @@
       <div class="checkout-grid">
         <section class="checkout-form-section" aria-label="Payment form">
           <div class="form-card reveal-on-scroll motion-sheen">
-            <h3><span class="material-icons-round">person</span> Driver information</h3>
+            <h2><span class="material-icons-round">person</span> Driver information</h2>
             <div class="form-row">
               <div class="fg">
                 <label for="d-name">Full name</label>
@@ -80,23 +80,23 @@
           </div>
 
           <div class="form-card reveal-on-scroll motion-sheen">
-            <h3><span class="material-icons-round">payment</span> Payment method</h3>
+            <h2><span class="material-icons-round">payment</span> Payment method</h2>
             <div class="pay-methods" role="tablist" aria-label="Payment methods">
-              <button type="button" class="pay-method active" data-method="card" onclick="selectPayMethod('card')">
+              <button type="button" class="pay-method active" id="pay-tab-card" role="tab" aria-selected="true" aria-controls="card-fields" tabindex="0" data-method="card" onclick="selectPayMethod('card')">
                 <span class="material-icons-round">credit_card</span>
                 Card
               </button>
-              <button type="button" class="pay-method" data-method="fpx" onclick="selectPayMethod('fpx')">
+              <button type="button" class="pay-method" id="pay-tab-fpx" role="tab" aria-selected="false" aria-controls="fpx-fields" tabindex="-1" data-method="fpx" onclick="selectPayMethod('fpx')">
                 <span class="material-icons-round">account_balance</span>
                 FPX
               </button>
-              <button type="button" class="pay-method" data-method="ewallet" onclick="selectPayMethod('ewallet')">
+              <button type="button" class="pay-method" id="pay-tab-ewallet" role="tab" aria-selected="false" aria-controls="ewallet-fields" tabindex="-1" data-method="ewallet" onclick="selectPayMethod('ewallet')">
                 <span class="material-icons-round">account_balance_wallet</span>
                 E-wallet
               </button>
             </div>
 
-            <div class="payment-panel visible" id="card-fields">
+            <div class="payment-panel visible" id="card-fields" role="tabpanel" aria-labelledby="pay-tab-card">
               <div class="form-row full">
                 <div class="fg">
                   <label for="cc-num">Card number</label>
@@ -121,7 +121,7 @@
               </div>
             </div>
 
-            <div class="payment-panel" id="fpx-fields">
+            <div class="payment-panel" id="fpx-fields" role="tabpanel" aria-labelledby="pay-tab-fpx">
               <div class="form-row full">
                 <div class="fg">
                   <label for="bank-select">Select bank</label>
@@ -136,7 +136,7 @@
               </div>
             </div>
 
-            <div class="payment-panel" id="ewallet-fields">
+            <div class="payment-panel" id="ewallet-fields" role="tabpanel" aria-labelledby="pay-tab-ewallet">
               <div class="pay-methods compact">
                 <button type="button" class="pay-method active" data-wallet="tng" onclick="selectWallet(this)">
                   <span class="material-icons-round">touch_app</span>
@@ -151,7 +151,7 @@
           </div>
 
           <div class="form-card reveal-on-scroll motion-sheen">
-            <h3><span class="material-icons-round">shield</span> Protection and add-ons</h3>
+            <h2><span class="material-icons-round">shield</span> Protection and add-ons</h2>
             <div class="checkout-addon-list">
               <label class="checkout-addon">
                 <input type="checkbox" id="addon-insurance" checked />
@@ -183,13 +183,13 @@
 
         <aside class="order-summary reveal-on-scroll motion-sheen">
           <div class="summary-top">
-            <h3>Booking summary</h3>
+            <h2>Booking summary</h2>
             <span class="summary-status">Demo ready</span>
           </div>
           <div class="summary-car">
             <img class="summary-car-img" src="../../../../../shared/images/cars/tesla-model3-side.jpg" alt="Tesla Model 3" />
             <div class="summary-car-info">
-              <h4>Tesla Model 3</h4>
+              <h3>Tesla Model 3</h3>
               <p>EV Sedan - 2024</p>
               <p>Nov 15 - Nov 18 (3 days)</p>
             </div>
@@ -231,7 +231,10 @@
   <script>
     function selectPayMethod(method) {
       document.querySelectorAll('.pay-method[data-method]').forEach(function (button) {
-        button.classList.toggle('active', button.dataset.method === method);
+        var isSelected = button.dataset.method === method;
+        button.classList.toggle('active', isSelected);
+        button.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        button.tabIndex = isSelected ? 0 : -1;
       });
       document.getElementById('card-fields').classList.toggle('visible', method === 'card');
       document.getElementById('fpx-fields').classList.toggle('visible', method === 'fpx');

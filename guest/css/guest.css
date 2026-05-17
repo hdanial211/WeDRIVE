@@ -441,6 +441,10 @@ body {
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(10px); text-shadow: 0 4px 16px rgba(2,6,23,0.42);
 }
+.explore-delay-1 { animation-delay: 0.1s; }
+.explore-delay-2 { animation-delay: 0.2s; }
+.explore-delay-25 { animation-delay: 0.25s; }
+.explore-delay-3 { animation-delay: 0.3s; }
 .explore-stat-row { margin-top: 32px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 720px; }
 .explore-stat {
   padding: 18px 18px 16px; min-height: 96px; border-radius: 18px;
@@ -574,7 +578,7 @@ body.night-mode .explore-section-head .section-eyebrow {
   .destination-card.wide .destination-media { min-height: 320px; }
 }
 @media (max-width: 760px) {
-  .explore-hero { min-height: auto; }
+  .explore-hero { min-height: 0; }
   .explore-hero-shell { padding: 118px 18px 84px; }
   .explore-stat-row { grid-template-columns: 1fr; }
   .explore-showcase { margin-top: -24px; padding: 18px 0 80px; }
