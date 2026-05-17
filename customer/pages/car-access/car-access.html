@@ -11,7 +11,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=5.5.2" />
+  <link rel="stylesheet" href="../../css/customer.css?v=5.5.4" />
 </head>
 <body data-particles="8" data-cursor-glow>
   <div id="customer-sidebar-placeholder"></div>
@@ -82,11 +82,11 @@
                 <span class="material-icons-round">lock_open</span>
                 Unlock Car
               </button>
-              <button class="ca-action-btn" type="button" onclick="flashLights()">
+              <button class="ca-action-btn" type="button" id="ca-flash-btn" onclick="flashLights()">
                 <span class="material-icons-round">flare</span>
                 Flash Lights
               </button>
-              <button class="ca-action-btn" type="button" onclick="honkHorn()">
+              <button class="ca-action-btn" type="button" id="ca-honk-btn" onclick="honkHorn()">
                 <span class="material-icons-round">campaign</span>
                 Honk Horn
               </button>
@@ -117,11 +117,11 @@
             </div>
 
             <div class="ca-panel-actions ca-panel-actions-split">
-              <button class="ca-surface-btn ca-surface-btn-quiet" type="button" onclick="refreshSecureCode()">
+              <button class="ca-surface-btn ca-surface-btn-quiet" type="button" id="ca-refresh-btn" onclick="refreshSecureCode()">
                 <span class="material-icons-round">refresh</span>
                 Refresh Code
               </button>
-              <button class="ca-surface-btn ca-surface-btn-outline" type="button" onclick="saveWalletKey(this)">
+              <button class="ca-surface-btn ca-surface-btn-outline" type="button" id="ca-wallet-btn" onclick="saveWalletKey(this)">
                 <span class="material-icons-round">download</span>
                 Save to Wallet
               </button>
@@ -225,11 +225,11 @@
             </div>
 
             <div class="ca-panel-actions ca-panel-actions-split">
-              <button class="ca-surface-btn ca-surface-btn-outline" type="button" onclick="window.location.href='../my-bookings/my-bookings.html'">
+              <button class="ca-surface-btn ca-surface-btn-outline" type="button" id="ca-view-booking-btn" onclick="window.location.href='../my-bookings/my-bookings.html'">
                 <span class="material-icons-round">list_alt</span>
                 View Booking
               </button>
-              <button class="ca-surface-btn ca-surface-btn-primary" type="button" onclick="window.location.href='../car-details/car-details.html'">
+              <button class="ca-surface-btn ca-surface-btn-primary" type="button" id="ca-vehicle-details-btn" onclick="window.location.href='../car-details/car-details.html'">
                 <span class="material-icons-round">directions_car</span>
                 Vehicle Details
               </button>
@@ -273,6 +273,18 @@
 
       function saveState() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function animateControl(buttonId, tone) {
+        var button = document.getElementById(buttonId);
+        if (!button) return;
+        button.classList.remove('is-signaling', 'signal-primary', 'signal-success', 'signal-warning');
+        void button.offsetWidth;
+        button.classList.add('is-signaling');
+        button.classList.add(tone || 'signal-primary');
+        window.setTimeout(function () {
+          button.classList.remove('is-signaling', 'signal-primary', 'signal-success', 'signal-warning');
+        }, 1000);
       }
 
       function toast(message) {
@@ -325,6 +337,7 @@
       }
 
       window.toggleCarLock = function () {
+        animateControl('ca-lock-btn', state.locked ? 'signal-primary' : 'signal-success');
         state.locked = !state.locked;
         saveState();
         render();
@@ -332,6 +345,7 @@
       };
 
       window.flashLights = function () {
+        animateControl('ca-flash-btn', 'signal-warning');
         state.battery = Math.max(60, state.battery - 1);
         saveState();
         render();
@@ -339,6 +353,7 @@
       };
 
       window.honkHorn = function () {
+        animateControl('ca-honk-btn', 'signal-warning');
         state.battery = Math.max(60, state.battery - 1);
         saveState();
         render();
@@ -346,6 +361,7 @@
       };
 
       window.toggleTrunk = function () {
+        animateControl('ca-trunk-btn', state.trunkOpen ? 'signal-primary' : 'signal-success');
         state.trunkOpen = !state.trunkOpen;
         saveState();
         render();
@@ -366,6 +382,7 @@
       };
 
       window.toggleClimate = function () {
+        animateControl('ca-climate-btn', state.climateOn ? 'signal-primary' : 'signal-success');
         state.climateOn = !state.climateOn;
         saveState();
         render();
@@ -373,6 +390,7 @@
       };
 
       window.refreshSecureCode = function () {
+        animateControl('ca-refresh-btn', 'signal-primary');
         state.code = String(Math.floor(100000 + Math.random() * 900000)).replace(/(\d{3})(\d{3})/, '$1 $2');
         document.getElementById('ca-key-code').textContent = state.code;
         document.getElementById('ca-code-timer').textContent = '02:00';
@@ -381,6 +399,7 @@
       };
 
       window.saveWalletKey = function (button) {
+        animateControl('ca-wallet-btn', 'signal-success');
         button.innerHTML = '<span class="material-icons-round">download_done</span> Saved';
         button.disabled = true;
         toast('Digital key saved to your wallet.');
