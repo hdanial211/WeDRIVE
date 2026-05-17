@@ -41,8 +41,7 @@
   var NAV_ITEMS = [
     { icon: 'dashboard',     key: 'nav_dashboard', label: 'Dashboard',   page: 'dashboard',   href: '{base}customer/pages/dashboard/customer.html' },
     { icon: 'calendar_today', key: 'nav_bookings',  label: 'My Bookings', page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' },
-    { icon: 'person',         key: 'nav_profile',   label: 'Profile',     page: 'profile',     href: '{base}customer/pages/profile/profile.html' },
-    { icon: 'psychology',     key: 'nav_ai',        label: 'AI Insights', page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
+    { icon: 'psychology',     key: 'nav_ai',        label: 'AI Assistant', page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
   ];
 
   var FOOTER_ITEMS = [

@@ -148,6 +148,22 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-body, var(--slate-
 .utility-title { font: var(--font-h1); color: var(--text-primary); letter-spacing: var(--letter-h1); }
 .utility-actions { display: flex; align-items: center; gap: var(--space-md, 16px); }
 
+/* Settings icon in utility bar */
+.settings-btn {
+  text-decoration: none;
+  color: #64748b;
+}
+.settings-btn .material-icons-round {
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1), color 0.2s ease;
+}
+.settings-btn:hover .material-icons-round {
+  transform: rotate(90deg);
+}
+.settings-btn.active {
+  color: var(--primary, #3b82f6);
+  background: rgba(59, 130, 246, 0.1);
+}
+
 .main-content-area {
   padding: var(--space-lg, 24px);
   max-width: 1200px;
