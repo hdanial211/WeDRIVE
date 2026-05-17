@@ -11,7 +11,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=5.2.7" />
+  <link rel="stylesheet" href="../../css/customer.css?v=5.2.9" />
 </head>
 <body data-particles="6" data-cursor-glow>
   <div id="customer-sidebar-placeholder"></div>
@@ -138,13 +138,6 @@
                 </label>
               </div>
 
-              <div class="pf-form-grid pf-reverify-grid">
-                <div class="pf-field full">
-                  <label>Verification Contact Number</label>
-                  <input type="tel" id="pf-reverify-phone" value="+60 11-1234 5678" aria-label="Verification Contact Number" title="Verification Contact Number" placeholder="+60 12-345 6789" />
-                </div>
-              </div>
-
               <div class="pf-otp-card">
                 <div class="pf-otp-head">
                   <div>
@@ -152,6 +145,12 @@
                     <p>We send a 6-digit OTP to your verified email before any identity update can be submitted.</p>
                   </div>
                   <div class="pf-otp-badge" id="pf-profile-otp-badge">OTP Required</div>
+                </div>
+                <div class="pf-otp-stack">
+                  <div class="pf-field full">
+                    <label>Verification Contact Number</label>
+                    <input type="tel" id="pf-reverify-phone" value="+60 11-1234 5678" aria-label="Verification Contact Number" title="Verification Contact Number" placeholder="+60 12-345 6789" />
+                  </div>
                 </div>
                 <div class="pf-otp-row">
                   <button class="pf-btn outline" type="button" onclick="sendEmailOtp('profile')"><span class="material-icons-round">mail</span> Send 6-Digit OTP</button>
