@@ -9,11 +9,11 @@
 .chatbot-fab:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(59,130,246,0.6); }
 .chatbot-fab .material-icons-round { color: white; font-size: 26px; }
 .fab-label {
-  position: absolute; right: 68px; background: var(--navy, #1E293B);
-  color: white; font-size: 12px; font-weight: 600; padding: 6px 12px;
-  border-radius: 8px; white-space: nowrap; opacity: 0; transition: opacity 0.2s;
+  position: absolute; right: 68px; background: #111827;
+  color: white; font-size: 12px; font-weight: 700; padding: 6px 12px;
+  border-radius: 8px; white-space: nowrap; display: none;
 }
-.chatbot-fab:hover .fab-label { opacity: 1; }
+.chatbot-fab:hover .fab-label { display: block; }
 .notif-badge {
   position: absolute; top: -4px; right: -4px;
   width: 18px; height: 18px; background: #EF4444;

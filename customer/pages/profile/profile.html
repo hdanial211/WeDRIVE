@@ -11,7 +11,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=5.2.5" />
+  <link rel="stylesheet" href="../../css/customer.css?v=5.2.6" />
 </head>
 <body data-particles="6" data-cursor-glow>
   <div id="customer-sidebar-placeholder"></div>
@@ -145,6 +145,25 @@
                 </div>
               </div>
 
+              <div class="pf-otp-card">
+                <div class="pf-otp-head">
+                  <div>
+                    <strong>Email OTP Verification</strong>
+                    <p>We send a 6-digit OTP to your verified email before any identity update can be submitted.</p>
+                  </div>
+                  <div class="pf-otp-badge" id="pf-profile-otp-badge">OTP Required</div>
+                </div>
+                <div class="pf-otp-row">
+                  <button class="pf-btn outline" type="button" onclick="sendEmailOtp('profile')"><span class="material-icons-round">mail</span> Send 6-Digit OTP</button>
+                  <div class="pf-otp-field">
+                    <label for="pf-profile-otp">Verification Code</label>
+                    <input type="text" id="pf-profile-otp" inputmode="numeric" maxlength="6" aria-label="Profile verification OTP" title="Profile verification OTP" placeholder="123456" />
+                  </div>
+                  <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('profile')"><span class="material-icons-round">verified</span> Verify OTP</button>
+                </div>
+                <p class="pf-otp-note" id="pf-profile-otp-note">OTP not sent yet.</p>
+              </div>
+
               <div class="pf-doc-progress">
                 <div class="pf-doc-progress-copy">
                   <strong id="pf-doc-progress-title">Awaiting documents</strong>
@@ -172,12 +191,32 @@
               <section class="pf-card pf-bento-wide">
                 <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Change Password</h3>
                 <div class="pf-form-grid">
-                  <div class="pf-field full"><label>Current Password</label><input type="password" value="********" aria-label="Current Password" title="Current Password" /></div>
-                  <div class="pf-field"><label>New Password</label><input type="password" value="********" aria-label="New Password" title="New Password" /></div>
-                  <div class="pf-field"><label>Confirm New Password</label><input type="password" value="********" aria-label="Confirm New Password" title="Confirm New Password" /></div>
+                  <div class="pf-field full"><label>Current Password</label><input type="password" id="pf-current-password" value="********" aria-label="Current Password" title="Current Password" /></div>
+                  <div class="pf-field"><label>New Password</label><input type="password" id="pf-new-password" value="********" aria-label="New Password" title="New Password" /></div>
+                  <div class="pf-field"><label>Confirm New Password</label><input type="password" id="pf-confirm-password" value="********" aria-label="Confirm New Password" title="Confirm New Password" /></div>
                 </div>
                 <p class="pf-hint">Password must be at least 8 characters long and include a number and special character.</p>
-                <div class="pf-actions-bar compact"><button class="pf-btn primary" onclick="profileToast('Password updated.')">Update Password</button></div>
+
+                <div class="pf-otp-card pf-otp-inline">
+                  <div class="pf-otp-head">
+                    <div>
+                      <strong>Password change OTP</strong>
+                      <p>An OTP is sent to your verified email before password changes are accepted.</p>
+                    </div>
+                    <div class="pf-otp-badge" id="pf-password-otp-badge">OTP Required</div>
+                  </div>
+                  <div class="pf-otp-row">
+                    <button class="pf-btn outline" type="button" onclick="sendEmailOtp('password')"><span class="material-icons-round">mail</span> Send OTP</button>
+                    <div class="pf-otp-field">
+                      <label for="pf-password-otp">Verification Code</label>
+                      <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6" aria-label="Password change OTP" title="Password change OTP" placeholder="123456" />
+                    </div>
+                    <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('password')"><span class="material-icons-round">verified</span> Verify OTP</button>
+                  </div>
+                  <p class="pf-otp-note" id="pf-password-otp-note">OTP not sent yet.</p>
+                </div>
+
+                <div class="pf-actions-bar compact"><button class="pf-btn primary" type="button" onclick="submitPasswordChange()"><span class="material-icons-round">lock_reset</span> Update Password</button></div>
               </section>
 
               <!-- Two-Factor Auth -->
@@ -404,6 +443,14 @@
       icBack: null,
       license: null
     };
+    var otpConfig = {
+      profile: '314159',
+      password: '628403'
+    };
+    var otpState = {
+      profile: { sent: false, verified: false },
+      password: { sent: false, verified: false }
+    };
 
     function getProfileFieldMap() {
       return {
@@ -484,6 +531,78 @@
       }
     }
 
+    function getOtpElements(flow) {
+      return {
+        badge: document.getElementById('pf-' + flow + '-otp-badge'),
+        note: document.getElementById('pf-' + flow + '-otp-note'),
+        input: document.getElementById('pf-' + flow + '-otp')
+      };
+    }
+
+    function maskEmail(email) {
+      if (!email || email.indexOf('@') === -1) {
+        return 'your verified email';
+      }
+      var parts = email.split('@');
+      var name = parts[0];
+      var domain = parts[1];
+      var visible = name.slice(0, 2);
+      return visible + '***@' + domain;
+    }
+
+    function refreshOtpUi(flow) {
+      var els = getOtpElements(flow);
+      var state = otpState[flow];
+      if (!els.badge || !els.note) {
+        return;
+      }
+      if (state.verified) {
+        els.badge.textContent = 'Verified';
+        els.badge.classList.add('verified');
+        els.note.textContent = 'OTP verified. You can continue with this sensitive action.';
+        return;
+      }
+      els.badge.classList.remove('verified');
+      if (state.sent) {
+        els.badge.textContent = 'Pending OTP';
+        els.note.textContent = 'Check your verified email and enter the 6-digit code. Demo OTP: ' + otpConfig[flow] + '.';
+      } else {
+        els.badge.textContent = 'OTP Required';
+        els.note.textContent = 'OTP not sent yet.';
+      }
+    }
+
+    function sendEmailOtp(flow) {
+      otpState[flow].sent = true;
+      otpState[flow].verified = false;
+      var els = getOtpElements(flow);
+      if (els.input) {
+        els.input.value = '';
+      }
+      refreshOtpUi(flow);
+      var stored = mergeProfileState(readStoredProfile());
+      profileToast('6-digit OTP sent to ' + maskEmail(stored.email) + '.');
+    }
+
+    function verifyEmailOtp(flow) {
+      var els = getOtpElements(flow);
+      if (!otpState[flow].sent) {
+        profileToast('Send OTP first.');
+        return false;
+      }
+      var code = els.input ? els.input.value.trim() : '';
+      if (code !== otpConfig[flow]) {
+        otpState[flow].verified = false;
+        refreshOtpUi(flow);
+        profileToast('Invalid OTP. Please try again.');
+        return false;
+      }
+      otpState[flow].verified = true;
+      refreshOtpUi(flow);
+      profileToast('OTP verified successfully.');
+      return true;
+    }
+
     function getDefaultDocumentMeta(type) {
       if (type === 'icFront') return 'Upload front image';
       if (type === 'icBack') return 'Upload back image';
@@ -545,6 +664,10 @@
         profileToast('Upload IC front, IC back, and driving license first.');
         return;
       }
+      if (!otpState.profile.verified) {
+        profileToast('Verify the 6-digit email OTP before submitting identity changes.');
+        return;
+      }
       var progressTitle = document.getElementById('pf-doc-progress-title');
       var progressText = document.getElementById('pf-doc-progress-text');
       var progressPill = document.getElementById('pf-doc-progress-pill');
@@ -554,6 +677,8 @@
         progressPill.textContent = 'Verified';
       }
       persistProfileState(getProfileVerificationDraft());
+      otpState.profile = { sent: false, verified: false };
+      refreshOtpUi('profile');
       profileToast('Verified profile updated from uploaded documents.');
     }
 
@@ -568,6 +693,8 @@
         updateDocumentMeta(key, sampleFiles[key]);
       });
       updateVerificationProgress();
+      otpState.profile = { sent: true, verified: true };
+      refreshOtpUi('profile');
       persistProfileState(getProfileVerificationDraft());
       var progressTitle = document.getElementById('pf-doc-progress-title');
       var progressText = document.getElementById('pf-doc-progress-text');
@@ -580,8 +707,41 @@
       profileToast('Sample verified profile loaded.');
     }
 
+    function submitPasswordChange() {
+      var currentPassword = document.getElementById('pf-current-password');
+      var newPassword = document.getElementById('pf-new-password');
+      var confirmPassword = document.getElementById('pf-confirm-password');
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        profileToast('Password form is unavailable.');
+        return;
+      }
+      if (!otpState.password.verified) {
+        profileToast('Verify the 6-digit email OTP before updating your password.');
+        return;
+      }
+      if (newPassword.value.trim().length < 8) {
+        profileToast('New password must be at least 8 characters.');
+        return;
+      }
+      if (newPassword.value !== confirmPassword.value) {
+        profileToast('New password and confirmation do not match.');
+        return;
+      }
+      currentPassword.value = '********';
+      newPassword.value = '********';
+      confirmPassword.value = '********';
+      otpState.password = { sent: false, verified: false };
+      refreshOtpUi('password');
+      var passwordOtp = document.getElementById('pf-password-otp');
+      if (passwordOtp) {
+        passwordOtp.value = '';
+      }
+      profileToast('Password updated after OTP verification.');
+    }
+
     function resetProfileDetails() {
       profileDocUploads = { icFront: null, icBack: null, license: null };
+      otpState.profile = { sent: false, verified: false };
       updateDocumentMeta('icFront', getDefaultDocumentMeta('icFront'));
       updateDocumentMeta('icBack', getDefaultDocumentMeta('icBack'));
       updateDocumentMeta('license', getDefaultDocumentMeta('license'));
@@ -594,11 +754,14 @@
       });
       applyProfileState(mergeProfileState(readStoredProfile()));
       updateVerificationProgress();
+      refreshOtpUi('profile');
       profileToast('Profile details restored.');
     }
 
     applyProfileState(mergeProfileState(readStoredProfile()));
     updateVerificationProgress();
+    refreshOtpUi('profile');
+    refreshOtpUi('password');
 
     // Panel switching
     document.querySelectorAll('.pf-inner-link').forEach(function(link) {

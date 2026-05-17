@@ -4853,6 +4853,17 @@ body.night-mode .booking-main .spec-chip {
 .pf-doc-progress-copy strong { display: block; font-size: 14px; color: var(--on-surface); margin-bottom: 4px; }
 .pf-doc-progress-copy p { margin: 0; font-size: 12px; color: var(--on-surface-variant); line-height: 1.5; }
 .pf-doc-progress-pill { border-radius: 999px; padding: 8px 12px; background: rgba(0,67,149,0.14); color: #003a82; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pf-otp-card { margin-top: 20px; padding: 18px; border-radius: 12px; border: 1px solid var(--outline-variant, #c2c6d6); background: var(--surface-container-low, #f2f4f6); }
+.pf-otp-inline { margin-top: 16px; }
+.pf-otp-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.pf-otp-head strong { display: block; font-size: 14px; color: var(--on-surface); margin-bottom: 4px; }
+.pf-otp-head p { margin: 0; font-size: 12px; line-height: 1.5; color: var(--on-surface-variant); }
+.pf-otp-badge { border-radius: 999px; padding: 8px 12px; background: rgba(186,26,26,0.12); color: #b91c1c; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pf-otp-badge.verified { background: rgba(34,197,94,0.14); color: #166534; }
+.pf-otp-row { display: grid; grid-template-columns: auto minmax(180px, 1fr) auto; gap: 12px; align-items: end; }
+.pf-otp-field { display: flex; flex-direction: column; gap: 6px; }
+.pf-otp-field label { color: var(--on-surface-variant, #424754); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.pf-otp-note { margin: 12px 0 0; font-size: 12px; line-height: 1.5; color: var(--on-surface-variant); }
 
 /* Buttons */
 .pf-actions-bar { display: flex; gap: 12px; justify-content: flex-end; padding-top: 8px; }
@@ -4970,12 +4981,16 @@ body.night-mode .pf-field input[readonly] { background: rgba(255,255,255,0.04); 
 body.night-mode .pf-verified-banner-status { background: rgba(34,197,94,0.16); color: #bbf7d0; }
 body.night-mode .pf-doc-card { background: rgba(255,255,255,0.03); border-color: rgba(148,163,184,0.2); }
 body.night-mode .pf-doc-progress { background: rgba(255,255,255,0.04); border-color: rgba(148,163,184,0.16); }
+body.night-mode .pf-otp-card { background: rgba(255,255,255,0.04); border-color: rgba(148,163,184,0.16); }
+body.night-mode .pf-otp-badge { background: rgba(239,68,68,0.16); color: #fecaca; }
+body.night-mode .pf-otp-badge.verified { background: rgba(34,197,94,0.18); color: #bbf7d0; }
 
 /* Profile responsive */
 @media (max-width: 1100px) {
   .pf-bento-grid { grid-template-columns: 1fr; }
   .pf-pref-grid { grid-template-columns: 1fr; }
   .pf-doc-grid { grid-template-columns: 1fr; }
+  .pf-otp-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
   .pf-layout { flex-direction: column; }
@@ -4985,7 +5000,7 @@ body.night-mode .pf-doc-progress { background: rgba(255,255,255,0.04); border-co
   .pf-form-grid { grid-template-columns: 1fr; }
   .pf-car-category-grid { grid-template-columns: repeat(2, 1fr); }
   .pf-pay-secondary { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .pf-verified-banner, .pf-doc-progress { flex-direction: column; align-items: flex-start; }
+  .pf-verified-banner, .pf-doc-progress, .pf-otp-head { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 600px) {
   .pf-car-category-grid { grid-template-columns: 1fr 1fr; }
