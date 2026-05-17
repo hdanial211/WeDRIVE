@@ -42,7 +42,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- pricing/
 |   |       +-- pricing.html         # Halaman Harga (4 tier pricing)
 |   +-- css/
-|   |   +-- guest-pages.css          # Gaya halaman Guest
+|   |   +-- guest.css                # Gaya utama Guest (semua gaya digabung termasuk Explore Melaka)
 |   +-- js/
 |       +-- promo-banner.js          # Logik banner promosi
 |
@@ -112,6 +112,7 @@ AI CAR RENTAL SYSTEM/
 |   +-- js/
 |       +-- customer.js                  # Logik Customer (WeDriveAPI)
 |       +-- car-details.js              # Logik Gallery & Data Kereta
+|       +-- sidebar-loader.js            # Pemuat Sidebar Customer
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul
@@ -148,8 +149,6 @@ AI CAR RENTAL SYSTEM/
     |   +-- navbar.css          # Gaya Global Navbar
     |   +-- chatbot.css         # Gaya Komponen WeDRIVE AI Chatbot
     |   +-- animation.css       # Gaya animasi (reveal, particles, dll)
-    |   +-- guest-pages.css    # Gaya dikongsi semua halaman Guest (Pricing, About, FAQ, dll)
-    |   +-- customer-pages.css # Gaya dikongsi semua halaman Customer baru
     +-- dummy/
     |   +-- data.json            # Data Mockup Tunggal (Single Source of Truth)
     +-- lang/
