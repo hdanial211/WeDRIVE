@@ -2,233 +2,282 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Payment & Checkout | WeDRIVE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Checkout | WeDRIVE</title>
+  <meta name="description" content="Complete your WeDRIVE booking with demo-safe secure checkout." />
   <link rel="icon" type="image/png" href="../../../../../shared/logo/wedrive-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../../../../shared/css/customer.css" />
-  <style>
-    .checkout-wrapper { max-width: 1100px; margin: 0 auto; padding: 24px 32px 60px; }
-    .checkout-header { margin-bottom: 28px; }
-    .checkout-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary,#1e293b); }
-    .checkout-header p { font-size: 14px; color: var(--text-muted,#64748b); }
-    .checkout-steps { display: flex; gap: 12px; margin-bottom: 28px; }
-    .step { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-muted,#94a3b8); }
-    .step.active { color: var(--primary,#2563eb); }
-    .step.done { color: #10b981; }
-    .step-num { width: 28px; height: 28px; border-radius: 50%; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
-    .step.active .step-num { background: var(--primary,#2563eb); color: #fff; border-color: var(--primary,#2563eb); }
-    .step.done .step-num { background: #10b981; color: #fff; border-color: #10b981; }
-    .step-line { width: 40px; height: 2px; background: var(--border,rgba(0,0,0,.1)); }
-
-    .checkout-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: start; }
-
-    /* Left Column */
-    .checkout-form-section { display: flex; flex-direction: column; gap: 20px; }
-    .form-card { background: var(--card-bg,#fff); border: 1px solid var(--border,rgba(0,0,0,.06)); border-radius: 14px; padding: 24px; }
-    .form-card h3 { font-size: 16px; font-weight: 700; color: var(--text-primary,#1e293b); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-    .form-card h3 .material-icons-round { font-size: 20px; color: var(--primary,#2563eb); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-    .form-row.full { grid-template-columns: 1fr; }
-    .fg { display: flex; flex-direction: column; gap: 4px; }
-    .fg label { font-size: 12px; font-weight: 600; color: var(--text-secondary,#475569); }
-    .fg input, .fg select { padding: 10px 12px; border: 1px solid var(--border,rgba(0,0,0,.1)); border-radius: 8px; font-size: 14px; background: var(--bg,#f8fafc); color: var(--text-primary,#1e293b); outline: none; transition: border-color .2s; font-family: Inter,sans-serif; }
-    .fg input:focus, .fg select:focus { border-color: var(--primary,#2563eb); }
-
-    /* Payment Methods */
-    .pay-methods { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-    .pay-method { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border,rgba(0,0,0,.1)); border-radius: 8px; cursor: pointer; transition: all .2s; font-size: 13px; font-weight: 600; color: var(--text-primary,#1e293b); background: transparent; }
-    .pay-method:hover, .pay-method.active { border-color: var(--primary,#2563eb); background: rgba(37,99,235,.04); }
-    .pay-method .material-icons-round { font-size: 18px; color: var(--primary,#2563eb); }
-    .card-fields, .ewallet-fields { display: none; }
-    .card-fields.visible, .ewallet-fields.visible { display: block; }
-
-    /* Right Column - Order Summary */
-    .order-summary { background: var(--card-bg,#fff); border: 1px solid var(--border,rgba(0,0,0,.06)); border-radius: 14px; padding: 24px; position: sticky; top: 90px; }
-    .order-summary h3 { font-size: 16px; font-weight: 700; color: var(--text-primary,#1e293b); margin-bottom: 16px; }
-    .summary-car { display: flex; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--border,rgba(0,0,0,.06)); margin-bottom: 16px; }
-    .summary-car-img { width: 100px; height: 65px; border-radius: 8px; object-fit: cover; background: var(--bg,#f1f5f9); }
-    .summary-car-info h4 { font-size: 15px; font-weight: 700; color: var(--text-primary,#1e293b); }
-    .summary-car-info p { font-size: 12px; color: var(--text-muted,#64748b); }
-    .summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: var(--text-secondary,#475569); }
-    .summary-row.total { border-top: 1px solid var(--border,rgba(0,0,0,.06)); padding-top: 12px; margin-top: 8px; font-size: 16px; font-weight: 800; color: var(--text-primary,#1e293b); }
-    .summary-row .amount { font-weight: 600; }
-    .summary-row.discount .amount { color: #10b981; }
-    .ai-savings { background: rgba(37,99,235,.04); border: 1px solid rgba(37,99,235,.1); border-radius: 8px; padding: 10px 14px; margin: 12px 0; font-size: 12px; color: var(--primary,#2563eb); display: flex; align-items: center; gap: 6px; }
-    .ai-savings .material-icons-round { font-size: 16px; }
-    .btn-pay { width: 100%; padding: 14px; border: none; border-radius: 12px; background: var(--primary,#2563eb); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .3s; margin-top: 16px; }
-    .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,.35); }
-    .pay-secure { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; color: var(--text-muted,#94a3b8); margin-top: 10px; }
-    .pay-secure .material-icons-round { font-size: 14px; }
-
-    /* Promo */
-    .promo-row { display: flex; gap: 8px; margin: 12px 0; }
-    .promo-row input { flex: 1; padding: 8px 12px; border: 1px solid var(--border,rgba(0,0,0,.1)); border-radius: 8px; font-size: 13px; background: var(--bg,#f8fafc); outline: none; }
-    .promo-btn { padding: 8px 16px; border: 1px solid var(--primary,#2563eb); border-radius: 8px; background: transparent; color: var(--primary,#2563eb); font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; }
-    .promo-btn:hover { background: var(--primary,#2563eb); color: #fff; }
-
-    @media (max-width: 800px) {
-      .checkout-grid { grid-template-columns: 1fr; }
-      .order-summary { position: static; }
-      .form-row { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="../../../../css/customer.css" />
 </head>
-<body data-particles="4" data-cursor-glow>
-  <div id="navbar-placeholder" data-module="customer"></div>
-  <div class="checkout-wrapper">
-    <!-- Header -->
-    <div class="checkout-header reveal-onload">
-      <h1>Checkout</h1>
-      <p>Complete your booking securely</p>
-    </div>
+<body class="checkout-page" data-particles="4" data-cursor-glow>
+  <div id="customer-sidebar-placeholder"></div>
+  <div id="mobile-menu-placeholder"></div>
 
-    <!-- Steps -->
-    <div class="checkout-steps reveal-on-scroll">
-      <div class="step done"><span class="step-num">1</span> Select Car</div>
-      <div class="step-line"></div>
-      <div class="step done"><span class="step-num">2</span> Details</div>
-      <div class="step-line"></div>
-      <div class="step active"><span class="step-num">3</span> Payment</div>
-      <div class="step-line"></div>
-      <div class="step"><span class="step-num">4</span> Confirm</div>
-    </div>
-
-    <div class="checkout-grid">
-      <!-- Left -->
-      <div class="checkout-form-section">
-        <!-- Driver Info -->
-        <div class="form-card reveal-on-scroll">
-          <h3><span class="material-icons-round">person</span> Driver Information</h3>
-          <div class="form-row">
-            <div class="fg"><label for="d-name">Full Name</label><input id="d-name" value="Ahmad bin Ali" /></div>
-            <div class="fg"><label for="d-ic">IC / Passport</label><input id="d-ic" value="900101-14-5678" /></div>
+  <main class="customer-main" id="customer-main">
+    <div class="checkout-wrapper stitch-checkout">
+      <header class="checkout-header reveal-onload">
+        <a class="checkout-back-link" href="../booking.html">
+          <span class="material-icons-round">arrow_back</span>
+          Back to booking details
+        </a>
+        <div class="checkout-title-row">
+          <div>
+            <p class="checkout-eyebrow">Secure checkout</p>
+            <h1>Complete your booking</h1>
+            <p>Review the driver details and continue payment. Demo mode accepts any valid-looking details.</p>
           </div>
-          <div class="form-row">
-            <div class="fg"><label for="d-email">Email</label><input id="d-email" type="email" value="ahmad@email.com" /></div>
-            <div class="fg"><label for="d-phone">Phone</label><input id="d-phone" type="tel" value="+60 12-345 6789" /></div>
-          </div>
-          <div class="form-row full">
-            <div class="fg"><label for="d-license">License Number</label><input id="d-license" value="D12345678" /></div>
+          <div class="checkout-secure-pill">
+            <span class="material-icons-round">lock</span>
+            Protected payment
           </div>
         </div>
+      </header>
 
-        <!-- Payment Method -->
-        <div class="form-card reveal-on-scroll">
-          <h3><span class="material-icons-round">payment</span> Payment Method</h3>
-          <div class="pay-methods">
-            <button class="pay-method active" data-method="card" onclick="selectPayMethod('card')"><span class="material-icons-round">credit_card</span> Credit/Debit Card</button>
-            <button class="pay-method" data-method="fpx" onclick="selectPayMethod('fpx')"><span class="material-icons-round">account_balance</span> FPX</button>
-            <button class="pay-method" data-method="ewallet" onclick="selectPayMethod('ewallet')"><span class="material-icons-round">account_balance_wallet</span> E-Wallet</button>
-          </div>
-          <!-- Card Fields -->
-          <div class="card-fields visible" id="card-fields">
-            <div class="form-row full">
-              <div class="fg"><label>Card Number</label><input id="cc-num" placeholder="4111 1111 1111 1111" maxlength="19" /></div>
+      <nav class="checkout-steps reveal-on-scroll" aria-label="Checkout progress">
+        <div class="step done"><span class="step-num">1</span> Select car</div>
+        <div class="step-line"></div>
+        <div class="step done"><span class="step-num">2</span> Details</div>
+        <div class="step-line"></div>
+        <div class="step active"><span class="step-num">3</span> Payment</div>
+        <div class="step-line"></div>
+        <div class="step"><span class="step-num">4</span> Confirm</div>
+      </nav>
+
+      <div class="checkout-grid">
+        <section class="checkout-form-section" aria-label="Payment form">
+          <div class="form-card reveal-on-scroll motion-sheen">
+            <h3><span class="material-icons-round">person</span> Driver information</h3>
+            <div class="form-row">
+              <div class="fg">
+                <label for="d-name">Full name</label>
+                <input id="d-name" value="Ahmad bin Ali" autocomplete="name" />
+              </div>
+              <div class="fg">
+                <label for="d-ic">IC / Passport</label>
+                <input id="d-ic" value="900101-14-5678" />
+              </div>
             </div>
             <div class="form-row">
-              <div class="fg"><label>Expiry</label><input id="cc-exp" placeholder="MM/YY" maxlength="5" /></div>
-              <div class="fg"><label>CVV</label><input id="cc-cvv" placeholder="123" maxlength="4" type="password" /></div>
+              <div class="fg">
+                <label for="d-email">Email</label>
+                <input id="d-email" type="email" value="ahmad@email.com" autocomplete="email" />
+              </div>
+              <div class="fg">
+                <label for="d-phone">Phone</label>
+                <input id="d-phone" type="tel" value="+60 12-345 6789" autocomplete="tel" />
+              </div>
             </div>
             <div class="form-row full">
-              <div class="fg"><label for="cc-name">Cardholder Name</label><input id="cc-name" value="AHMAD BIN ALI" /></div>
-            </div>
-          </div>
-          <!-- FPX -->
-          <div class="card-fields" id="fpx-fields">
-            <div class="form-row full">
-              <div class="fg"><label>Select Bank</label>
-                <select><option>Maybank2u</option><option>CIMB Clicks</option><option>RHB Now</option><option>Public Bank</option><option>Bank Islam</option></select>
+              <div class="fg">
+                <label for="d-license">Driving license number</label>
+                <input id="d-license" value="D12345678" />
               </div>
             </div>
           </div>
-          <!-- E-Wallet -->
-          <div class="ewallet-fields" id="ewallet-fields">
-            <div class="pay-methods">
-              <button class="pay-method active"><span class="material-icons-round">touch_app</span> Touch 'n Go</button>
-              <button class="pay-method"><span class="material-icons-round">shopping_bag</span> GrabPay</button>
+
+          <div class="form-card reveal-on-scroll motion-sheen">
+            <h3><span class="material-icons-round">payment</span> Payment method</h3>
+            <div class="pay-methods" role="tablist" aria-label="Payment methods">
+              <button type="button" class="pay-method active" data-method="card" onclick="selectPayMethod('card')">
+                <span class="material-icons-round">credit_card</span>
+                Card
+              </button>
+              <button type="button" class="pay-method" data-method="fpx" onclick="selectPayMethod('fpx')">
+                <span class="material-icons-round">account_balance</span>
+                FPX
+              </button>
+              <button type="button" class="pay-method" data-method="ewallet" onclick="selectPayMethod('ewallet')">
+                <span class="material-icons-round">account_balance_wallet</span>
+                E-wallet
+              </button>
+            </div>
+
+            <div class="payment-panel visible" id="card-fields">
+              <div class="form-row full">
+                <div class="fg">
+                  <label for="cc-num">Card number</label>
+                  <input id="cc-num" inputmode="numeric" placeholder="4111 1111 1111 1111" maxlength="19" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="fg">
+                  <label for="cc-exp">Expiry</label>
+                  <input id="cc-exp" inputmode="numeric" placeholder="MM/YY" maxlength="5" />
+                </div>
+                <div class="fg">
+                  <label for="cc-cvv">CVV</label>
+                  <input id="cc-cvv" inputmode="numeric" placeholder="123" maxlength="4" type="password" />
+                </div>
+              </div>
+              <div class="form-row full">
+                <div class="fg">
+                  <label for="cc-name">Cardholder name</label>
+                  <input id="cc-name" value="AHMAD BIN ALI" autocomplete="cc-name" />
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-panel" id="fpx-fields">
+              <div class="form-row full">
+                <div class="fg">
+                  <label for="bank-select">Select bank</label>
+                  <select id="bank-select">
+                    <option>Maybank2u</option>
+                    <option>CIMB Clicks</option>
+                    <option>RHB Now</option>
+                    <option>Public Bank</option>
+                    <option>Bank Islam</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-panel" id="ewallet-fields">
+              <div class="pay-methods compact">
+                <button type="button" class="pay-method active" data-wallet="tng" onclick="selectWallet(this)">
+                  <span class="material-icons-round">touch_app</span>
+                  Touch 'n Go
+                </button>
+                <button type="button" class="pay-method" data-wallet="grabpay" onclick="selectWallet(this)">
+                  <span class="material-icons-round">shopping_bag</span>
+                  GrabPay
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Add-ons -->
-        <div class="form-card reveal-on-scroll">
-          <h3><span class="material-icons-round">add_circle</span> Optional Add-ons</h3>
-          <div style="display: flex; flex-direction: column; gap: 10px;">
-            <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-secondary,#475569); cursor: pointer;">
-              <input type="checkbox" id="addon-insurance" /> Full Insurance Coverage (RM 35/day) - Zero excess
-            </label>
-            <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-secondary,#475569); cursor: pointer;">
-              <input type="checkbox" id="addon-gps" checked /> GPS Navigation (Free)
-            </label>
-            <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-secondary,#475569); cursor: pointer;">
-              <input type="checkbox" id="addon-child" /> Child Seat (RM 15/day)
-            </label>
+          <div class="form-card reveal-on-scroll motion-sheen">
+            <h3><span class="material-icons-round">shield</span> Protection and add-ons</h3>
+            <div class="checkout-addon-list">
+              <label class="checkout-addon">
+                <input type="checkbox" id="addon-insurance" checked />
+                <span>
+                  <strong>Premium Cover</strong>
+                  <small>Zero excess liability for body, glass, and tyre damage.</small>
+                </span>
+                <b>RM 135</b>
+              </label>
+              <label class="checkout-addon">
+                <input type="checkbox" id="addon-gps" checked />
+                <span>
+                  <strong>GPS Navigation</strong>
+                  <small>Melaka routes, charger pins, and parking suggestions preloaded.</small>
+                </span>
+                <b>Free</b>
+              </label>
+              <label class="checkout-addon">
+                <input type="checkbox" id="addon-child" />
+                <span>
+                  <strong>Child Seat</strong>
+                  <small>Sanitized and installed before pick-up.</small>
+                </span>
+                <b>RM 45</b>
+              </label>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      <!-- Right: Order Summary -->
-      <div class="order-summary reveal-on-scroll">
-        <h3>Order Summary</h3>
-        <div class="summary-car">
-          <img class="summary-car-img" src="../../../../../shared/images/cars/tesla-model3-side.jpg" alt="Tesla Model 3" />
-          <div class="summary-car-info">
-            <h4>Tesla Model 3</h4>
-            <p>EV Sedan -- 2024</p>
-            <p>Nov 15 - Nov 18 (3 days)</p>
+        <aside class="order-summary reveal-on-scroll motion-sheen">
+          <div class="summary-top">
+            <h3>Booking summary</h3>
+            <span class="summary-status">Demo ready</span>
           </div>
-        </div>
-        <div class="summary-row"><span>Base Rate (3 days)</span><span class="amount">RM 1,350.00</span></div>
-        <div class="summary-row"><span>Service Fee</span><span class="amount">RM 50.00</span></div>
-        <div class="summary-row"><span>Insurance (Basic)</span><span class="amount">Free</span></div>
-        <div class="summary-row discount"><span>AI Dynamic Discount</span><span class="amount">- RM 120.00</span></div>
-        <div class="ai-savings"><span class="material-icons-round">auto_awesome</span> AI saved you RM 120 based on off-peak pricing</div>
-        <div class="promo-row">
-          <input placeholder="Promo code" id="promo-input" />
-          <button class="promo-btn" onclick="document.getElementById('promo-input').value='WELCOME10'; this.textContent='Applied!';">Apply</button>
-        </div>
-        <div class="summary-row"><span>Security Deposit (refundable)</span><span class="amount">RM 500.00</span></div>
-        <div class="summary-row total"><span>Total Due</span><span class="amount">RM 1,780.00</span></div>
-        <button class="btn-pay" id="btn-pay" onclick="window.location='booking-confirmed/booking-confirmed.html'"><span class="material-icons-round">lock</span> Pay RM 1,780.00</button>
-        <div class="pay-secure"><span class="material-icons-round">verified_user</span> Secured by 256-bit SSL encryption</div>
+          <div class="summary-car">
+            <img class="summary-car-img" src="../../../../../shared/images/cars/tesla-model3-side.jpg" alt="Tesla Model 3" />
+            <div class="summary-car-info">
+              <h4>Tesla Model 3</h4>
+              <p>EV Sedan - 2024</p>
+              <p>Nov 15 - Nov 18 (3 days)</p>
+            </div>
+          </div>
+
+          <div class="summary-row"><span>Base rate (3 days)</span><span class="amount">RM 1,350.00</span></div>
+          <div class="summary-row"><span>Premium cover</span><span class="amount">RM 135.00</span></div>
+          <div class="summary-row"><span>Service fee</span><span class="amount">RM 50.00</span></div>
+          <div class="summary-row discount"><span>AI dynamic discount</span><span class="amount">- RM 120.00</span></div>
+          <div class="ai-savings"><span class="material-icons-round">auto_awesome</span> AI found an off-peak Melaka window and reduced the rate.</div>
+
+          <div class="promo-row">
+            <input placeholder="Promo code" id="promo-input" />
+            <button type="button" class="promo-btn" onclick="applyPromo(this)">Apply</button>
+          </div>
+
+          <div class="summary-row"><span>Refundable deposit</span><span class="amount">RM 500.00</span></div>
+          <div class="summary-row total"><span>Total due</span><span class="amount">RM 1,915.00</span></div>
+
+          <button type="button" class="btn-pay" id="btn-pay" onclick="completePayment()">
+            <span class="material-icons-round">lock</span>
+            Pay RM 1,915.00
+          </button>
+          <div class="pay-secure"><span class="material-icons-round">verified_user</span> Demo checkout will approve any filled payment method</div>
+        </aside>
       </div>
     </div>
-  </div>
+  </main>
 
   <div id="chatbot-placeholder"></div>
   <div id="footer-placeholder"></div>
-  <script src="../../../../../shared/js/navbar-loader.js"></script>
+
+  <script src="../../../../js/sidebar-loader.js"></script>
   <script src="../../../../../shared/js/api.js"></script>
   <script src="../../../../../shared/js/chatbot.js"></script>
   <script src="../../../../../shared/js/anime.min.js"></script>
   <script src="../../../../../shared/js/animate.js"></script>
   <script src="../../../../../shared/js/main.js"></script>
   <script>
-    function selectPayMethod(m) {
-      document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('active'));
-      document.querySelector('[data-method="'+m+'"]').classList.add('active');
-      document.getElementById('card-fields').classList.toggle('visible', m==='card');
-      document.getElementById('fpx-fields').classList.toggle('visible', m==='fpx');
-      document.getElementById('ewallet-fields').classList.toggle('visible', m==='ewallet');
+    function selectPayMethod(method) {
+      document.querySelectorAll('.pay-method[data-method]').forEach(function (button) {
+        button.classList.toggle('active', button.dataset.method === method);
+      });
+      document.getElementById('card-fields').classList.toggle('visible', method === 'card');
+      document.getElementById('fpx-fields').classList.toggle('visible', method === 'fpx');
+      document.getElementById('ewallet-fields').classList.toggle('visible', method === 'ewallet');
     }
-    // Auto-format card number
-    const ccNum = document.getElementById('cc-num');
-    if(ccNum) ccNum.addEventListener('input', function(e){
-      let v = this.value.replace(/\D/g,'').substring(0,16);
-      this.value = v.replace(/(.{4})/g,'$1 ').trim();
-    });
-    // Auto-format expiry
-    const ccExp = document.getElementById('cc-exp');
-    if(ccExp) ccExp.addEventListener('input', function(){
-      let v = this.value.replace(/\D/g,'').substring(0,4);
-      if(v.length >= 2) v = v.substring(0,2)+'/'+v.substring(2);
-      this.value = v;
-    });
+
+    function selectWallet(button) {
+      document.querySelectorAll('[data-wallet]').forEach(function (wallet) {
+        wallet.classList.remove('active');
+      });
+      button.classList.add('active');
+    }
+
+    function applyPromo(button) {
+      var input = document.getElementById('promo-input');
+      input.value = input.value.trim() || 'WELCOME10';
+      button.textContent = 'Applied';
+      button.disabled = true;
+      button.classList.add('is-applied');
+    }
+
+    function completePayment() {
+      var button = document.getElementById('btn-pay');
+      button.disabled = true;
+      button.classList.add('is-processing');
+      button.innerHTML = '<span class="material-icons-round spin-icon">refresh</span> Approving demo payment...';
+      window.setTimeout(function () {
+        window.location.href = 'booking-confirmed/booking-confirmed.html';
+      }, 900);
+    }
+
+    var ccNum = document.getElementById('cc-num');
+    if (ccNum) {
+      ccNum.addEventListener('input', function () {
+        var value = this.value.replace(/\D/g, '').substring(0, 16);
+        this.value = value.replace(/(.{4})/g, '$1 ').trim();
+      });
+    }
+
+    var ccExp = document.getElementById('cc-exp');
+    if (ccExp) {
+      ccExp.addEventListener('input', function () {
+        var value = this.value.replace(/\D/g, '').substring(0, 4);
+        this.value = value.length >= 2 ? value.substring(0, 2) + '/' + value.substring(2) : value;
+      });
+    }
   </script>
 </body>
 </html>

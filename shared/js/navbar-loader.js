@@ -24,16 +24,9 @@
   // Resolve the base path to /shared/ from wherever the current page lives.
 
   function resolveBase() {
-    var path = window.location.pathname;
-    // Check for subfolder pages first (e.g. customer/pages/booking/booking.html)
-    var subfolderPattern = /\/(admin|customer|guest)\/pages\/[^/]+\/[^/]+\.html/;
-    if (subfolderPattern.test(path)) {
-      return '../../../';
-    }
-    if (path.includes('/admin/pages/') || path.includes('/customer/pages/') || path.includes('/guest/pages/')) {
-      return '../../';
-    }
-    return '';  // root level (index.html)
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
+    return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
   }
 
   // ─── LINK DEFINITIONS ───────────────────────────────────────────────────────
@@ -57,7 +50,7 @@
       links: [
         { key: 'nav_browse',   href: '{base}customer/pages/dashboard/customer.html',           label: 'Browse Cars',   id: 'nl-browse'   },
         { key: 'nav_bookings', href: '{base}customer/pages/my-bookings/my-bookings.html',      label: 'My Bookings',   id: 'nl-bookings' },
-        { key: 'nav_ai',       href: '#',                                                      label: 'AI Assistant',  id: 'nl-ai', extra: 'onclick="if(typeof toggleChat===\'function\') toggleChat(); return false;"' }
+        { key: 'nav_ai',       href: '{base}customer/pages/ai-insights/ai-insights.html',       label: 'AI Insights',   id: 'nl-ai' }
       ],
       actions: `
         <a href="{base}customer/pages/profile/profile.html" class="user-pill" id="user-pill" style="text-decoration:none;cursor:pointer;" title="My Profile">

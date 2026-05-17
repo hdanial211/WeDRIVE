@@ -12,159 +12,6 @@
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../css/customer.css?v=3.0.0" />
-  <style>
-    /* ===== PROFILE PAGE ===== */
-    .profile-page { max-width: 1240px; margin: 0 auto; padding: 24px; }
-    .profile-layout { display: grid; grid-template-columns: 320px 1fr; gap: 24px; align-items: start; }
-
-    /* Profile Sidebar */
-    .profile-sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 84px; }
-    .pf-card {
-      background: var(--white); border-radius: 16px; padding: 24px;
-      box-shadow: 0 4px 12px rgba(30,41,59,0.05); border: 1px solid var(--slate-200);
-    }
-
-    .profile-avatar-section { text-align: center; }
-    .profile-avatar {
-      width: 96px; height: 96px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px; font-size: 32px; font-weight: 700; color: #1D4ED8;
-      background: #DBEAFE; border: 4px solid var(--slate-100);
-    }
-    .profile-name { font-size: 22px; font-weight: 700; color: var(--navy); }
-    .profile-email { font-size: 14px; color: var(--slate-400); margin-top: 2px; }
-    .profile-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 12px 0; }
-    .profile-badge {
-      display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
-      background: var(--slate-100); border-radius: 999px; font-size: 11px; font-weight: 700; color: var(--slate-600);
-    }
-    .profile-badge .material-icons-round { font-size: 14px; color: var(--primary); }
-    .profile-since { font-size: 12px; font-weight: 600; color: var(--slate-400); }
-
-    /* Quick Stats */
-    .pf-stats { display: flex; flex-direction: column; gap: 0; }
-    .pf-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; }
-    .pf-stat-row + .pf-stat-row { border-top: 1px solid var(--slate-100); }
-    .pf-stat-row .label { font-size: 14px; color: var(--slate-400); }
-    .pf-stat-row .value { font-size: 18px; font-weight: 700; color: var(--primary); }
-    .pf-tier {
-      padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 700;
-      background: #FEF3C7; color: #B45309;
-    }
-
-    /* Nav Menu */
-    .pf-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; }
-    .pf-nav a {
-      display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px;
-      font-size: 15px; font-weight: 500; color: var(--slate-600); text-decoration: none; transition: all 0.2s;
-    }
-    .pf-nav a:hover { background: var(--slate-50); color: var(--navy); }
-    .pf-nav a.active { background: var(--primary); color: white; font-weight: 600; }
-    .pf-nav a .material-icons-round { font-size: 20px; }
-
-    /* Right Content */
-    .profile-content { display: flex; flex-direction: column; gap: 24px; }
-    .pf-section-title { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 24px; }
-
-    /* Form */
-    .pf-form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .pf-form.single { grid-template-columns: 1fr; }
-    .pf-field { display: flex; flex-direction: column; gap: 6px; }
-    .pf-field.full { grid-column: 1 / -1; }
-    .pf-field label { font-size: 11px; font-weight: 700; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; }
-    .pf-field input, .pf-field select {
-      width: 100%; padding: 10px 14px; border: 1px solid var(--slate-200); border-radius: 10px;
-      font-family: 'Inter', sans-serif; font-size: 14px; color: var(--navy); background: var(--white);
-      transition: border-color 0.2s, box-shadow 0.2s; outline: none;
-    }
-    .pf-field input:focus, .pf-field select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
-    .pf-input-verified { position: relative; }
-    .pf-input-verified .material-icons-round { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--primary); }
-    .pf-address-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
-
-    .pf-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 20px; border-top: 1px solid var(--slate-200); grid-column: 1 / -1; }
-    .pf-btn {
-      padding: 10px 24px; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 13px;
-      font-weight: 700; cursor: pointer; transition: all 0.2s; border: none;
-    }
-    .pf-btn.primary { background: var(--primary); color: white; }
-    .pf-btn.primary:hover { background: var(--primary-dark); }
-    .pf-btn.outline { background: transparent; border: 1px solid var(--slate-200); color: var(--slate-600); }
-    .pf-btn.outline:hover { background: var(--slate-50); }
-
-    /* Payment Methods */
-    .payment-card {
-      display: flex; align-items: center; justify-content: space-between; padding: 16px;
-      border: 1px solid var(--slate-200); border-radius: 14px; background: var(--slate-50);
-    }
-    .payment-card + .payment-card { margin-top: 12px; }
-    .payment-card-left { display: flex; align-items: center; gap: 14px; }
-    .payment-card-brand {
-      width: 48px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 800; color: white;
-    }
-    .payment-card-brand.visa { background: #1A1F71; }
-    .payment-card-brand.mc { background: var(--slate-600); }
-    .payment-card-name { font-size: 14px; font-weight: 600; color: var(--navy); }
-    .payment-card-exp { font-size: 12px; color: var(--slate-400); }
-    .payment-card-right { display: flex; align-items: center; gap: 12px; }
-    .payment-primary { font-size: 12px; font-weight: 700; color: var(--slate-400); background: var(--slate-200); padding: 3px 10px; border-radius: 6px; }
-    .payment-set-btn { font-size: 12px; font-weight: 700; color: var(--primary); background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; }
-    .payment-set-btn:hover { text-decoration: underline; }
-    .payment-del-btn { background: none; border: none; color: var(--slate-400); cursor: pointer; transition: color 0.2s; }
-    .payment-del-btn:hover { color: #DC2626; }
-    .add-payment-btn { display: flex; align-items: center; gap: 6px; color: var(--primary); font-weight: 700; font-size: 14px; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; }
-    .add-payment-btn:hover { text-decoration: underline; }
-
-    /* Preferences */
-    .pref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-    .pref-item { display: flex; align-items: center; justify-content: space-between; }
-    .pref-item-info .pref-label { font-size: 14px; font-weight: 600; color: var(--navy); }
-    .pref-item-info .pref-desc { font-size: 12px; color: var(--slate-400); margin-top: 2px; }
-    .pref-toggle { display: flex; background: var(--slate-100); border-radius: 10px; padding: 2px; }
-    .pref-toggle button {
-      padding: 6px 14px; border: none; border-radius: 8px; font-family: 'Inter', sans-serif;
-      font-size: 13px; cursor: pointer; transition: all 0.2s; background: transparent; color: var(--slate-400);
-    }
-    .pref-toggle button.active { background: var(--white); color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-    .pref-checkbox { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-    .pref-checkbox input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
-    .pref-checkbox span { font-size: 14px; color: var(--slate-600); }
-
-    /* Danger Zone */
-    .danger-zone {
-      background: #FEF2F2; border: 1px solid rgba(220,38,38,0.15); border-radius: 16px; padding: 24px;
-    }
-    .danger-zone h3 { font-size: 18px; font-weight: 700; color: #DC2626; margin-bottom: 16px; }
-    .danger-zone-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-    .danger-zone-info .dz-title { font-size: 14px; font-weight: 600; color: #991B1B; }
-    .danger-zone-info .dz-desc { font-size: 12px; color: #B91C1C; opacity: 0.8; margin-top: 2px; }
-    .danger-zone-actions { display: flex; gap: 12px; }
-    .dz-btn { padding: 10px 20px; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all 0.2s; }
-    .dz-btn.download { background: var(--slate-200); color: var(--navy); }
-    .dz-btn.download:hover { background: var(--slate-300, #CBD5E1); }
-    .dz-btn.delete { background: #DC2626; color: white; }
-    .dz-btn.delete:hover { background: #B91C1C; }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .profile-layout { grid-template-columns: 1fr; }
-      .profile-sidebar { position: static; }
-      .pf-form { grid-template-columns: 1fr; }
-      .pf-address-grid { grid-template-columns: 1fr; }
-      .pref-grid { grid-template-columns: 1fr; }
-      .danger-zone-content { flex-direction: column; text-align: center; }
-    }
-
-    /* Night mode */
-    body.night-mode .pf-card { background: var(--card-bg, #1E293B); border-color: rgba(148,163,184,0.15); }
-    body.night-mode .pf-field input, body.night-mode .pf-field select { background: rgba(255,255,255,0.05); border-color: rgba(148,163,184,0.2); color: #E2E8F0; }
-    body.night-mode .payment-card { background: rgba(255,255,255,0.04); border-color: rgba(148,163,184,0.15); }
-    body.night-mode .pref-toggle { background: rgba(255,255,255,0.06); }
-    body.night-mode .pref-toggle button.active { background: rgba(255,255,255,0.1); }
-    body.night-mode .danger-zone { background: rgba(220,38,38,0.08); border-color: rgba(220,38,38,0.2); }
-    body.night-mode .profile-avatar { background: rgba(59,130,246,0.15); border-color: rgba(148,163,184,0.15); }
-    body.night-mode .profile-badge { background: rgba(255,255,255,0.08); color: #94A3B8; }
-  </style>
 </head>
 <body data-particles="10" data-cursor-glow>
 
@@ -172,7 +19,7 @@
   <div id="customer-sidebar-placeholder"></div>
   <div id="mobile-menu-placeholder"></div>
 
-  <main class="customer-main" id="customer-main">
+  <main class="customer-main profile-main" id="customer-main">
     <!-- UTILITY BAR -->
     <header class="utility-bar">
       <div>
@@ -207,7 +54,7 @@
 
         <!-- Quick Stats -->
         <div class="pf-card reveal-onload">
-          <h3 style="font-size:11px;font-weight:700;color:var(--slate-400);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;" data-key="pf_insights">Insights</h3>
+          <h3 class="profile-sidebar-label" data-key="pf_insights">Insights</h3>
           <div class="pf-stats">
             <div class="pf-stat-row"><span class="label" data-key="pf_trips">Total Trips</span><span class="value">12</span></div>
             <div class="pf-stat-row"><span class="label" data-key="pf_points">Loyalty Points</span><span class="value">850</span></div>
@@ -216,13 +63,13 @@
         </div>
 
         <!-- Nav Menu -->
-        <div class="pf-card reveal-onload" style="padding:12px;">
+        <div class="pf-card pf-nav-card reveal-onload">
           <ul class="pf-nav">
-            <li><a href="#" class="active"><span class="material-icons-round">person</span> <span data-key="pf_nav_personal">Personal Info</span></a></li>
-            <li><a href="#"><span class="material-icons-round">security</span> <span data-key="pf_nav_security">Security</span></a></li>
-            <li><a href="#"><span class="material-icons-round">payments</span> <span data-key="pf_nav_payment">Payment Methods</span></a></li>
-            <li><a href="#"><span class="material-icons-round">settings</span> <span data-key="pf_nav_prefs">Preferences</span></a></li>
-            <li><a href="#"><span class="material-icons-round">notifications</span> <span data-key="pf_nav_notif">Notifications</span></a></li>
+            <li><a href="#personal-info" class="active"><span class="material-icons-round">person</span> <span data-key="pf_nav_personal">Personal Info</span></a></li>
+            <li><a href="#security-settings"><span class="material-icons-round">security</span> <span data-key="pf_nav_security">Security</span></a></li>
+            <li><a href="#payment-methods"><span class="material-icons-round">payments</span> <span data-key="pf_nav_payment">Payment Methods</span></a></li>
+            <li><a href="#app-preferences"><span class="material-icons-round">settings</span> <span data-key="pf_nav_prefs">Preferences</span></a></li>
+            <li><a href="#notification-settings"><span class="material-icons-round">notifications</span> <span data-key="pf_nav_notif">Notifications</span></a></li>
           </ul>
         </div>
       </aside>
@@ -230,9 +77,9 @@
       <!-- RIGHT: Content -->
       <section class="profile-content">
         <!-- Personal Information -->
-        <div class="pf-card reveal-onload">
+        <div class="pf-card reveal-onload" id="personal-info">
           <h2 class="pf-section-title" data-key="pf_personal_info">Personal Information</h2>
-          <form class="pf-form" onsubmit="event.preventDefault(); alert('Changes saved!');">
+          <form class="pf-form" onsubmit="event.preventDefault(); profileToast('Changes saved in demo mode.');">
             <div class="pf-field"><label for="pf-fname" data-key="pf_fname">First Name</label><input id="pf-fname" type="text" value="John" /></div>
             <div class="pf-field"><label for="pf-lname" data-key="pf_lname">Last Name</label><input id="pf-lname" type="text" value="Doe" /></div>
             <div class="pf-field full">
@@ -255,17 +102,17 @@
             <div class="pf-field"><label for="pf-license" data-key="pf_license">Driving License Number</label><input id="pf-license" type="text" value="DL-9876543210" /></div>
             <div class="pf-field"><label for="pf-license-exp" data-key="pf_license_exp">License Expiry Date</label><input id="pf-license-exp" type="date" value="2028-12-31" /></div>
             <div class="pf-actions">
-              <button type="button" class="pf-btn outline" data-key="pf_cancel">Cancel</button>
+              <button type="button" class="pf-btn outline" data-key="pf_cancel" onclick="profileToast('No changes applied.')">Cancel</button>
               <button type="submit" class="pf-btn primary" data-key="pf_save">Save Changes</button>
             </div>
           </form>
         </div>
 
         <!-- Payment Methods -->
-        <div class="pf-card reveal-onload">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
-            <h2 class="pf-section-title" style="margin-bottom:0;" data-key="pf_payment_methods">Payment Methods</h2>
-            <button class="add-payment-btn"><span class="material-icons-round" style="font-size:18px;">add_circle</span> <span data-key="pf_add_new">Add New</span></button>
+        <div class="pf-card reveal-onload" id="payment-methods">
+          <div class="payment-methods-head">
+            <h2 class="pf-section-title compact" data-key="pf_payment_methods">Payment Methods</h2>
+            <button class="add-payment-btn" type="button" onclick="profileToast('Demo payment card added.')"><span class="material-icons-round">add_circle</span> <span data-key="pf_add_new">Add New</span></button>
           </div>
           <div class="payment-card">
             <div class="payment-card-left">
@@ -277,7 +124,7 @@
             </div>
             <div class="payment-card-right">
               <span class="payment-primary">Primary</span>
-              <button class="payment-del-btn"><span class="material-icons-round">delete</span></button>
+              <button class="payment-del-btn" type="button" onclick="profileToast('Primary card kept for demo checkout.')"><span class="material-icons-round">delete</span></button>
             </div>
           </div>
           <div class="payment-card">
@@ -289,23 +136,23 @@
               </div>
             </div>
             <div class="payment-card-right">
-              <button class="payment-set-btn" data-key="pf_set_primary">Set Primary</button>
-              <button class="payment-del-btn"><span class="material-icons-round">delete</span></button>
+              <button class="payment-set-btn" type="button" data-key="pf_set_primary" onclick="profileToast('Mastercard set as demo primary.')">Set Primary</button>
+              <button class="payment-del-btn" type="button" onclick="this.closest('.payment-card').remove(); profileToast('Payment card removed.')"><span class="material-icons-round">delete</span></button>
             </div>
           </div>
         </div>
 
         <!-- Preferences -->
-        <div class="pf-card reveal-onload">
+        <div class="pf-card reveal-onload" id="app-preferences">
           <h2 class="pf-section-title" data-key="pf_app_prefs">App Preferences</h2>
           <div class="pref-grid">
             <div>
-              <div class="pref-item" style="margin-bottom:20px;">
+              <div class="pref-item spaced">
                 <div class="pref-item-info">
                   <div class="pref-label" data-key="pf_language">Language</div>
                   <div class="pref-desc" data-key="pf_lang_desc">Choose your display language</div>
                 </div>
-                <select id="pf-language" aria-label="Language" style="padding:8px 14px;border:1px solid var(--slate-200);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;background:var(--slate-50);color:var(--navy);outline:none;">
+                <select id="pf-language" class="pf-language-select" aria-label="Language">
                   <option selected>English</option>
                   <option>Malay</option>
                 </select>
@@ -316,15 +163,15 @@
                   <div class="pref-desc" data-key="pf_theme_desc">Toggle dark/light mode</div>
                 </div>
                 <div class="pref-toggle">
-                  <button class="active"><span class="material-icons-round" style="font-size:16px;">light_mode</span></button>
-                  <button><span class="material-icons-round" style="font-size:16px;">dark_mode</span></button>
+                  <button class="active" type="button"><span class="material-icons-round">light_mode</span></button>
+                  <button type="button"><span class="material-icons-round">dark_mode</span></button>
                 </div>
               </div>
             </div>
             <div>
-              <div style="margin-bottom:16px;">
-                <div class="pref-label" style="margin-bottom:10px;" data-key="pf_notifications">Notifications</div>
-                <div style="display:flex;flex-direction:column;gap:10px;">
+              <div id="notification-settings" class="notification-panel">
+                <div class="pref-label notification-title" data-key="pf_notifications">Notifications</div>
+                <div class="notification-list">
                   <label class="pref-checkbox"><input type="checkbox" checked /><span data-key="pf_notif_booking">Booking updates & alerts</span></label>
                   <label class="pref-checkbox"><input type="checkbox" checked /><span data-key="pf_notif_promo">Promotions & discounts</span></label>
                 </div>
@@ -343,7 +190,7 @@
         </div>
 
         <!-- Danger Zone -->
-        <div class="danger-zone reveal-onload">
+        <div class="danger-zone reveal-onload" id="security-settings">
           <h3 data-key="pf_danger">Danger Zone</h3>
           <div class="danger-zone-content">
             <div class="danger-zone-info">
@@ -351,8 +198,8 @@
               <div class="dz-desc" data-key="pf_data_desc">Manage your data privacy and account status.</div>
             </div>
             <div class="danger-zone-actions">
-              <button class="dz-btn download" data-key="pf_download">Download My Data</button>
-              <button class="dz-btn delete" data-key="pf_delete">Delete Account</button>
+              <button class="dz-btn download" type="button" data-key="pf_download" onclick="profileToast('Demo data export prepared.')">Download My Data</button>
+              <button class="dz-btn delete" type="button" data-key="pf_delete" onclick="profileToast('Account deletion is disabled in demo mode.')">Delete Account</button>
             </div>
           </div>
         </div>
@@ -364,7 +211,6 @@
   <div id="footer-placeholder"></div>
 
   <script src="../../js/sidebar-loader.js"></script>
-  <script src="../../../shared/js/navbar-loader.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
@@ -372,8 +218,7 @@
   <script>
     // Sidebar nav active toggle
     document.querySelectorAll('.pf-nav a').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
+      link.addEventListener('click', function() {
         document.querySelectorAll('.pf-nav a').forEach(l => l.classList.remove('active'));
         this.classList.add('active');
       });
@@ -383,8 +228,23 @@
       btn.addEventListener('click', function() {
         this.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
+        profileToast('Preference updated in demo mode.');
       });
     });
+
+    function profileToast(message) {
+      let toast = document.getElementById('profile-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'profile-toast';
+        toast.className = 'profile-toast';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.classList.add('show');
+      window.clearTimeout(window.profileToastTimer);
+      window.profileToastTimer = window.setTimeout(() => toast.classList.remove('show'), 1800);
+    }
   </script>
 
   <!-- CHATBOT -->

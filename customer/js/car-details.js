@@ -110,9 +110,9 @@
 
       // Update book button link
       const btn = document.getElementById('btn-book');
-      if (btn) btn.onclick = () => { window.location = '../booking/booking.html?id=' + carId; };
+      if (btn) btn.onclick = () => { window.location = 'booking/booking.html?id=' + carId; };
       const stickyBtn = document.querySelector('.sticky-cta button');
-      if (stickyBtn) stickyBtn.onclick = () => { window.location = '../booking/booking.html?id=' + carId; };
+      if (stickyBtn) stickyBtn.onclick = () => { window.location = 'booking/booking.html?id=' + carId; };
     });
   }
 

@@ -53,11 +53,11 @@
   <!-- QUICK ACTIONS -->
   <section class="quick-actions">
     <div class="qa-grid">
-      <div class="qa-card reveal-on-scroll" onclick="if(typeof toggleChat==='function') toggleChat();">
+      <button class="qa-card reveal-on-scroll" type="button" onclick="openSupportChat()">
         <div class="qa-icon"><span class="material-icons-round">smart_toy</span></div>
         <h3>AI Chat Support</h3>
         <p>Get instant answers from our AI assistant</p>
-      </div>
+      </button>
       <a class="qa-card reveal-on-scroll" href="../my-bookings/my-bookings.html">
         <div class="qa-icon qa-orange"><span class="material-icons-round">calendar_month</span></div>
         <h3>Manage Booking</h3>
@@ -68,11 +68,11 @@
         <h3>Account Settings</h3>
         <p>Update your profile and preferences</p>
       </a>
-      <div class="qa-card reveal-on-scroll">
+      <a class="qa-card reveal-on-scroll" href="tel:+6061234567">
         <div class="qa-icon qa-purple"><span class="material-icons-round">call</span></div>
         <h3>Emergency Line</h3>
         <p>24/7 roadside assistance: 1800-WEDRIVE</p>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -91,7 +91,7 @@
       <!-- Booking -->
       <div class="faq-item reveal-on-scroll" data-cat="booking">
         <button class="faq-q"><span>How do I book a car?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
-        <div class="faq-a"><p>Browse our fleet, select your preferred dates and car, then proceed to checkout. You can pay securely online and receive instant confirmation.</p></div>
+        <div class="faq-a"><p>Browse available cars, select your preferred dates and car, then proceed to checkout. You can pay securely online and receive instant confirmation.</p></div>
       </div>
       <div class="faq-item reveal-on-scroll" data-cat="booking">
         <button class="faq-q"><span>Can I modify my booking?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
@@ -108,7 +108,7 @@
       </div>
       <div class="faq-item reveal-on-scroll" data-cat="payment">
         <button class="faq-q"><span>Why do prices change?</span><span class="material-icons-round faq-arrow">expand_more</span></button>
-        <div class="faq-a"><p>WeDRIVE uses AI-based dynamic pricing that adjusts rates based on demand, seasonality, and fleet availability. Book early for the best rates!</p></div>
+        <div class="faq-a"><p>WeDRIVE uses AI-based dynamic pricing that adjusts rates based on demand, seasonality, and car availability. Book early for the best rates!</p></div>
       </div>
       <!-- Insurance -->
       <div class="faq-item reveal-on-scroll" data-cat="insurance">
@@ -136,24 +136,24 @@
   <section class="contact-section">
     <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">mail</span> Still Need Help?</h2>
     <div class="contact-grid">
-      <div class="contact-card reveal-on-scroll">
+      <a class="contact-card reveal-on-scroll" href="mailto:support@wedrive.my?subject=WeDRIVE%20Support%20Request">
         <span class="material-icons-round">email</span>
         <h4>Email Us</h4>
         <p>support@wedrive.my</p>
         <small>Response within 24 hours</small>
-      </div>
-      <div class="contact-card reveal-on-scroll">
+      </a>
+      <a class="contact-card reveal-on-scroll" href="tel:+6061234567">
         <span class="material-icons-round">phone</span>
         <h4>Call Us</h4>
         <p>+60 6-123 4567</p>
         <small>Mon-Fri, 9AM-6PM</small>
-      </div>
-      <div class="contact-card reveal-on-scroll">
+      </a>
+      <a class="contact-card reveal-on-scroll" href="https://wa.me/601112345678?text=Hi%20WeDRIVE%2C%20I%20need%20support" target="_blank" rel="noopener">
         <span class="material-icons-round">chat</span>
         <h4>WhatsApp</h4>
         <p>+60 11-1234 5678</p>
         <small>24/7 Available</small>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -164,13 +164,23 @@
   <div id="footer-placeholder"></div>
 
   <script src="../../js/sidebar-loader.js"></script>
-  <script src="../../../shared/js/navbar-loader.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js"></script>
   <script>
+    // FAQ Accordion
+    function openSupportChat() {
+      if (typeof toggleChat === 'function') {
+        toggleChat();
+        return;
+      }
+      window.location.href = '../../../shared/pages/footer/contact/contact.html';
+    }
+
+    window.openSupportChat = openSupportChat;
+
     // FAQ Accordion
     document.querySelectorAll('.faq-q').forEach(btn => {
       btn.addEventListener('click', () => {

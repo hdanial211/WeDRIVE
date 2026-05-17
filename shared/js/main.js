@@ -112,18 +112,15 @@
   var LANG_KEY     = 'wedrive-lang';
   var DEFAULT_LANG = 'en';
 
+  function resolveProjectBase() {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
+    return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+  }
+
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    var link = document.getElementById('theme-link');
-    if (link) {
-      var base = link.getAttribute('href').replace(/shared\/css\/.*$/, '');
-      return base + 'shared/lang/' + lang + '.json';
-    }
-    // Fallback: derive from pathname depth
-    var parts  = window.location.pathname.split('/').filter(Boolean);
-    var depth  = parts.length > 0 ? parts.length - 1 : 0;
-    var prefix = depth === 0 ? '' : '../'.repeat(depth);
-    return prefix + 'shared/lang/' + lang + '.json';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.json';
   }
 
   function applyTranslation(data, animate) {
@@ -546,10 +543,6 @@
   'use strict';
   
   function resolveBasePath() {
-    var link = document.getElementById('theme-link');
-    if (link) {
-      return link.getAttribute('href').replace(/shared\/css\/.*$/, '');
-    }
     var parts  = window.location.pathname.split('/').filter(Boolean);
     var depth  = parts.length > 0 ? parts.length - 1 : 0;
     return depth === 0 ? '' : '../'.repeat(depth);
@@ -580,6 +573,18 @@
         // Fix data-logo src
         var logo = placeholder.querySelector('[data-logo]');
         if (logo) logo.src = base + 'shared/logo/wedrive-icon.png';
+
+        var footerRoutes = {
+          footer_privacy: base + 'shared/pages/footer/terms/terms.html#privacy',
+          footer_terms: base + 'shared/pages/footer/terms/terms.html',
+          footer_fleet: base + 'shared/pages/footer/about/about.html',
+          footer_faq: base + 'shared/pages/footer/faq/faq.html',
+          footer_contact: base + 'shared/pages/footer/contact/contact.html'
+        };
+        Object.keys(footerRoutes).forEach(function(key) {
+          var link = placeholder.querySelector('[data-key="' + key + '"]');
+          if (link) link.href = footerRoutes[key];
+        });
         
         // Retranslate newly added footer keys
         if (typeof window.setLanguage === 'function') {

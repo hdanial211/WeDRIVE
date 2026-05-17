@@ -1716,6 +1716,19 @@ canvas[data-motion-canvas] {
   to { opacity: var(--max-opacity, 0.18); }
 }
 
+@keyframes stitchFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
 /* Day-mode particles */
 [data-particles] .bg-particle {
   background: radial-gradient(circle at 40% 40%,
