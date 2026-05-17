@@ -11,7 +11,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=5.5.5" />
+  <link rel="stylesheet" href="../../css/customer.css?v=5.5.6" />
 </head>
 <body data-particles="8" data-cursor-glow>
   <div id="customer-sidebar-placeholder"></div>
@@ -29,11 +29,15 @@
     <div class="main-content-area">
       <section class="car-access-shell">
         <div class="ca-hero-card reveal-onload">
-          <div class="ca-hero-media">
-            <img src="../../../shared/images/cars/polestar-2.jpg" alt="Polestar 2 active rental" />
+          <div class="ca-hero-media" id="ca-hero-media">
+            <img src="../../../shared/images/cars/polestar-2.jpg" alt="Polestar 2 active rental" id="ca-hero-image" />
             <div class="ca-live-chip">
               <span class="material-icons-round">sensors</span>
               Connected
+            </div>
+            <div class="ca-hero-state-pill" id="ca-hero-state-pill">
+              <span class="material-icons-round">garage</span>
+              Vehicle Ready
             </div>
           </div>
 
@@ -261,6 +265,10 @@
         code: '482 116',
         battery: 82
       };
+      var heroImages = {
+        closed: '../../../shared/images/cars/polestar-2.jpg',
+        trunkOpen: '../../../shared/images/cars/polestar-2-trunk-open.jpg'
+      };
 
       function loadState() {
         try {
@@ -308,6 +316,9 @@
         var temp = document.getElementById('ca-cabin-temp');
         var tempDisplay = document.getElementById('ca-climate-display');
         var range = document.getElementById('ca-temp-range');
+        var heroImage = document.getElementById('ca-hero-image');
+        var heroMedia = document.getElementById('ca-hero-media');
+        var heroStatePill = document.getElementById('ca-hero-state-pill');
 
         if (lockState) {
           lockState.innerHTML = '<span class="material-icons-round">' + (state.locked ? 'lock' : 'lock_open') + '</span>' + (state.locked ? 'Locked' : 'Unlocked');
@@ -331,6 +342,19 @@
         if (temp) temp.textContent = state.temp + ' C';
         if (tempDisplay) tempDisplay.textContent = state.temp;
         if (range) range.value = String(state.temp);
+        if (heroImage) {
+          heroImage.src = state.trunkOpen ? heroImages.trunkOpen : heroImages.closed;
+          heroImage.alt = state.trunkOpen ? 'Polestar 2 with trunk open' : 'Polestar 2 active rental';
+        }
+        if (heroMedia) {
+          heroMedia.classList.toggle('is-trunk-open', state.trunkOpen);
+        }
+        if (heroStatePill) {
+          heroStatePill.innerHTML = state.trunkOpen
+            ? '<span class="material-icons-round">luggage</span>Trunk Open'
+            : '<span class="material-icons-round">garage</span>Vehicle Ready';
+          heroStatePill.classList.toggle('is-success', state.trunkOpen);
+        }
         document.querySelectorAll('.ca-preset-btn').forEach(function (button) {
           button.classList.toggle('active', Number(button.getAttribute('data-temp')) === state.temp);
         });
