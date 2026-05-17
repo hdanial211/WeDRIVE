@@ -107,18 +107,6 @@ Kedua-dua feature ini WAJIB berfungsi di semua page.
 - Sidebar admin dan customer adalah BERBEZA antara satu sama lain.
 - Dalam modul yang sama, semua page WAJIB guna sidebar yang konsisten.
 
-### Customer Page Layout Pattern
-
-Semua customer page WAJIB ikut struktur ini:
-
-```html
-<div id="customer-sidebar-placeholder"></div>
-<div id="mobile-menu-placeholder"></div>
-<main class="customer-main">
-  <!-- content -->
-</main>
-<script src="../../js/sidebar-loader.js"></script>
-```
 
 ## 11. Auth Guard
 

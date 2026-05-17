@@ -39,13 +39,16 @@
 
   // Sidebar nav items configuration
   var NAV_ITEMS = [
-    { icon: 'dashboard',     key: 'nav_dashboard', label: 'Dashboard',   page: 'dashboard',   href: '{base}customer/pages/dashboard/customer.html' },
-    { icon: 'calendar_today', key: 'nav_bookings',  label: 'My Bookings', page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' },
-    { icon: 'psychology',     key: 'nav_ai',        label: 'AI Assistant', page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
+    { icon: 'dashboard',      key: 'nav_dashboard', label: 'Dashboard',    page: 'dashboard',   href: '{base}customer/pages/dashboard/customer.html' },
+    { icon: 'calendar_month', key: 'nav_bookings',  label: 'My Bookings',  page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' },
+    { icon: 'person',         key: 'nav_profile',   label: 'Profile',      page: 'profile',     href: '{base}customer/pages/profile/profile.html' },
+    { icon: 'psychology',     key: 'nav_ai',        label: 'AI Insights',  page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
   ];
 
   var FOOTER_ITEMS = [
-    { icon: 'help', key: 'nav_support', label: 'Support', page: 'support', href: '{base}customer/pages/support/support.html' }
+    { icon: 'settings', key: 'nav_settings', label: 'Settings', page: 'profile',  href: '{base}customer/pages/profile/profile.html' },
+    { icon: 'help',     key: 'nav_support',  label: 'Support',  page: 'support',  href: '{base}customer/pages/support/support.html' },
+    { icon: 'logout',   key: 'nav_logout',   label: 'Logout',   page: 'logout',   href: '{base}account/login.html', isLogout: true }
   ];
 
   function detectActivePage() {
@@ -63,7 +66,8 @@
     return items.map(function(item) {
       var href = item.href.replace(/{base}/g, base);
       var isActive = (activePage === item.page) ? ' active' : '';
-      return '<a href="' + href + '" class="sidebar-nav-item' + isActive + '" data-page="' + item.page + '">' +
+      var logoutClass = item.isLogout ? ' sidebar-logout' : '';
+      return '<a href="' + href + '" class="sidebar-nav-item' + isActive + logoutClass + '" data-page="' + item.page + '">' +
         '<span class="material-icons-round">' + item.icon + '</span>' +
         '<span data-key="' + item.key + '">' + item.label + '</span>' +
       '</a>';
@@ -79,27 +83,21 @@
       '  <div class="sidebar-header">',
       '    <a href="' + base + 'index.html" class="sidebar-brand">',
       '      <img src="' + base + 'shared/logo/wedrive-icon.png" alt="WeDRIVE" class="sidebar-logo"/>',
-      '      <span class="sidebar-brand-text">WeDRIVE</span>',
+      '      <div class="sidebar-brand-group">',
+      '        <span class="sidebar-brand-text">WeDRIVE</span>',
+      '        <span class="sidebar-brand-sub">Fleet Management</span>',
+      '      </div>',
       '    </a>',
-      '    <div class="sidebar-user">',
-      '      <div class="sidebar-avatar">',
-      '        <span class="material-icons-round">person</span>',
-      '      </div>',
-      '      <div>',
-      '        <p class="sidebar-user-name" data-key="cust_welcome">Welcome back</p>',
-      '        <p class="sidebar-user-role" data-key="cust_hero_sub_short">Manage your rentals</p>',
-      '      </div>',
-      '    </div>',
+      '  </div>',
+      '  <div class="sidebar-cta">',
+      '    <button class="sidebar-book-btn" onclick="window.location=\'' + base + 'customer/pages/dashboard/customer.html\'">',
+      '      <span class="material-icons-round">add</span>',
+      '      <span data-key="cust_new_booking">New Booking</span>',
+      '    </button>',
       '  </div>',
       '  <nav class="sidebar-nav">',
       buildNavItems(NAV_ITEMS, base, activePage),
       '  </nav>',
-      '  <div class="sidebar-cta">',
-      '    <button class="sidebar-book-btn" onclick="window.location=\'' + base + 'customer/pages/dashboard/customer.html\'">',
-      '      <span class="material-icons-round">directions_car</span>',
-      '      <span data-key="cust_book_car">Book a Car</span>',
-      '    </button>',
-      '  </div>',
       '  <div class="sidebar-footer-nav">',
       buildNavItems(FOOTER_ITEMS, base, activePage),
       '  </div>',

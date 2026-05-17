@@ -11,15 +11,15 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=3.0.0" />
+  <link rel="stylesheet" href="../../css/customer.css?v=5.0.0" />
 </head>
-<body data-particles="10" data-cursor-glow>
+<body data-particles="6" data-cursor-glow>
 
   <!-- SIDEBAR & MOBILE BAR -->
   <div id="customer-sidebar-placeholder"></div>
   <div id="mobile-menu-placeholder"></div>
 
-  <main class="customer-main profile-main" id="customer-main">
+  <main class="customer-main" id="customer-main">
     <!-- UTILITY BAR -->
     <header class="utility-bar">
       <div>
@@ -39,176 +39,241 @@
       </div>
     </header>
 
-  <div class="profile-page">
-    <div class="profile-layout">
-      <!-- LEFT: Profile Sidebar -->
-      <aside class="profile-sidebar">
-        <!-- Profile Card -->
-        <div class="pf-card profile-avatar-section reveal-onload">
-          <div class="profile-avatar">JD</div>
-          <h2 class="profile-name">John Doe</h2>
-          <p class="profile-email">john.doe@example.com</p>
-          <div class="profile-badges">
-            <span class="profile-badge"><span class="material-icons-round">verified</span> Email Verified</span>
-            <span class="profile-badge"><span class="material-icons-round">verified</span> Phone Verified</span>
-          </div>
-          <p class="profile-since" data-key="pf_since">Member since Jan 2023</p>
-        </div>
+    <div class="main-content-area">
+      <!-- Profile Layout: Inner Nav + Content -->
+      <div class="pf-layout">
 
-        <!-- Quick Stats -->
-        <div class="pf-card reveal-onload">
-          <h3 class="profile-sidebar-label" data-key="pf_insights">Insights</h3>
-          <div class="pf-stats">
-            <div class="pf-stat-row"><span class="label" data-key="pf_trips">Total Trips</span><span class="value">12</span></div>
-            <div class="pf-stat-row"><span class="label" data-key="pf_points">Loyalty Points</span><span class="value">850</span></div>
-            <div class="pf-stat-row"><span class="label" data-key="pf_tier">Member Tier</span><span class="pf-tier">Gold</span></div>
-          </div>
-        </div>
+        <!-- Inner Profile Nav Sidebar -->
+        <aside class="pf-inner-nav">
+          <nav class="pf-inner-nav-sticky">
+            <ul class="pf-inner-nav-list">
+              <li><a href="#personal-info" class="pf-inner-link active"><span data-key="pf_nav_personal">Personal Info</span><span class="material-icons-round">chevron_right</span></a></li>
+              <li><a href="#security-settings" class="pf-inner-link"><span data-key="pf_nav_security">Security</span></a></li>
+              <li><a href="#payment-methods" class="pf-inner-link"><span data-key="pf_nav_payment">Payment Methods</span></a></li>
+              <li><a href="#app-preferences" class="pf-inner-link"><span data-key="pf_nav_prefs">Preferences</span></a></li>
+              <li><a href="#notification-settings" class="pf-inner-link"><span data-key="pf_nav_notif">Notifications</span></a></li>
+            </ul>
+          </nav>
+        </aside>
 
-        <!-- Nav Menu -->
-        <div class="pf-card pf-nav-card reveal-onload">
-          <ul class="pf-nav">
-            <li><a href="#personal-info" class="active"><span class="material-icons-round">person</span> <span data-key="pf_nav_personal">Personal Info</span></a></li>
-            <li><a href="#security-settings"><span class="material-icons-round">security</span> <span data-key="pf_nav_security">Security</span></a></li>
-            <li><a href="#payment-methods"><span class="material-icons-round">payments</span> <span data-key="pf_nav_payment">Payment Methods</span></a></li>
-            <li><a href="#app-preferences"><span class="material-icons-round">settings</span> <span data-key="pf_nav_prefs">Preferences</span></a></li>
-            <li><a href="#notification-settings"><span class="material-icons-round">notifications</span> <span data-key="pf_nav_notif">Notifications</span></a></li>
-          </ul>
-        </div>
-      </aside>
+        <!-- Profile Content Area -->
+        <div class="pf-content-area">
 
-      <!-- RIGHT: Content -->
-      <section class="profile-content">
-        <!-- Personal Information -->
-        <div class="pf-card reveal-onload" id="personal-info">
-          <h2 class="pf-section-title" data-key="pf_personal_info">Personal Information</h2>
-          <form class="pf-form" onsubmit="event.preventDefault(); profileToast('Changes saved in demo mode.');">
-            <div class="pf-field"><label for="pf-fname" data-key="pf_fname">First Name</label><input id="pf-fname" type="text" value="John" /></div>
-            <div class="pf-field"><label for="pf-lname" data-key="pf_lname">Last Name</label><input id="pf-lname" type="text" value="Doe" /></div>
-            <div class="pf-field full">
-              <label for="pf-email" data-key="pf_email">Email Address</label>
-              <div class="pf-input-verified">
-                <input id="pf-email" type="email" value="john.doe@example.com" />
-                <span class="material-icons-round">verified</span>
+          <!-- Profile Header Card -->
+          <section class="pf-card pf-header-card reveal-onload" id="profile-header">
+            <div class="pf-header-bg-decor"></div>
+            <div class="pf-header-inner">
+              <div class="pf-avatar-wrap">
+                <img class="pf-avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0xg8MWnLYY1jSoFo7nr1L4xT0YV0GGa73F_b-SoPhGeORWm_gdTD3-RVRw3jGA0NbhLM4XV-vec9qwXrndkEQrNGn6TKXMZnH-rl-XvvHM7gMf_3GGf8VDoOHmOLZKO1IknfpOOcPmmsGmlquJlY4HcRLSkCcP4eAHPPb_QDQvAn-2LUsMe3YXWAYfBHEvegR8lY-Tmu1mOsOBOWUFrIC9XorPLkbLK_p43aMAy9M4vo-moNK91KmbZcFzqar436qY6Yb9rvsjzs" alt="John Doe" />
+                <button class="pf-avatar-edit" type="button" onclick="profileToast('Photo upload is demo only.')"><span class="material-icons-round">edit</span></button>
+              </div>
+              <div class="pf-header-info">
+                <div class="pf-header-name-row">
+                  <h2 class="pf-header-name">John Doe</h2>
+                  <span class="pf-badge-gold"><span class="material-icons-round">star</span> Gold Member</span>
+                </div>
+                <p class="pf-header-email">john.doe@example.com</p>
+                <div class="pf-header-stats">
+                  <div class="pf-stat-chip">
+                    <p class="pf-stat-label">Total Trips</p>
+                    <p class="pf-stat-value">12 <span>Cars</span></p>
+                  </div>
+                  <div class="pf-stat-chip">
+                    <p class="pf-stat-label">Loyalty Points</p>
+                    <p class="pf-stat-value primary">850</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="pf-field"><label for="pf-phone" data-key="pf_phone">Phone Number</label><input id="pf-phone" type="tel" value="+60 11-1234 5678" /></div>
-            <div class="pf-field"><label for="pf-dob" data-key="pf_dob">Date of Birth</label><input id="pf-dob" type="date" value="1990-05-15" /></div>
-            <div class="pf-field full">
-              <label for="pf-address" data-key="pf_address">Residential Address</label>
-              <input id="pf-address" type="text" value="123 Jalan Melaka Raya" />
-              <div class="pf-address-grid">
-                <input id="pf-city" type="text" placeholder="City" value="Melaka" aria-label="City" />
-                <input id="pf-postal" type="text" placeholder="Postal Code" value="75000" aria-label="Postal Code" />
+          </section>
+
+          <!-- Personal Information -->
+          <section class="pf-card reveal-onload" id="personal-info">
+            <div class="pf-section-head">
+              <h3 class="pf-section-title" data-key="pf_personal_info">Personal Information</h3>
+              <button class="pf-edit-btn" type="button" id="pf-edit-toggle"><span class="material-icons-round">edit</span> Edit</button>
+            </div>
+            <div class="pf-info-grid" id="pf-info-display">
+              <div class="pf-info-item">
+                <label class="pf-info-label" data-key="pf_fname">Full Name</label>
+                <div class="pf-info-value">John Doe</div>
+              </div>
+              <div class="pf-info-item">
+                <label class="pf-info-label" data-key="pf_email">Email Address</label>
+                <div class="pf-info-value">john.doe@example.com</div>
+              </div>
+              <div class="pf-info-item">
+                <label class="pf-info-label" data-key="pf_phone">Phone Number</label>
+                <div class="pf-info-value">+60 11-1234 5678</div>
+              </div>
+              <div class="pf-info-item">
+                <label class="pf-info-label" data-key="pf_dob">Date of Birth</label>
+                <div class="pf-info-value">15/05/1990</div>
+              </div>
+              <div class="pf-info-item full-span">
+                <label class="pf-info-label" data-key="pf_address">Billing Address</label>
+                <div class="pf-info-value">123 Jalan Melaka Raya, Melaka, 75000</div>
               </div>
             </div>
-            <div class="pf-field"><label for="pf-license" data-key="pf_license">Driving License Number</label><input id="pf-license" type="text" value="DL-9876543210" /></div>
-            <div class="pf-field"><label for="pf-license-exp" data-key="pf_license_exp">License Expiry Date</label><input id="pf-license-exp" type="date" value="2028-12-31" /></div>
-            <div class="pf-actions">
-              <button type="button" class="pf-btn outline" data-key="pf_cancel" onclick="profileToast('No changes applied.')">Cancel</button>
-              <button type="submit" class="pf-btn primary" data-key="pf_save">Save Changes</button>
-            </div>
-          </form>
-        </div>
+            <!-- Editable Form (hidden by default) -->
+            <form class="pf-form" id="pf-edit-form" style="display:none" onsubmit="event.preventDefault(); toggleProfileEdit(false); profileToast('Changes saved successfully.');">
+              <div class="pf-field"><label for="pf-fname" data-key="pf_fname">First Name</label><input id="pf-fname" type="text" value="John" /></div>
+              <div class="pf-field"><label for="pf-lname" data-key="pf_lname">Last Name</label><input id="pf-lname" type="text" value="Doe" /></div>
+              <div class="pf-field full">
+                <label for="pf-email" data-key="pf_email">Email Address</label>
+                <div class="pf-input-verified">
+                  <input id="pf-email" type="email" value="john.doe@example.com" />
+                  <span class="material-icons-round">verified</span>
+                </div>
+              </div>
+              <div class="pf-field"><label for="pf-phone" data-key="pf_phone">Phone Number</label><input id="pf-phone" type="tel" value="+60 11-1234 5678" /></div>
+              <div class="pf-field"><label for="pf-dob" data-key="pf_dob">Date of Birth</label><input id="pf-dob" type="text" value="15/05/1990" /></div>
+              <div class="pf-field full">
+                <label for="pf-address" data-key="pf_address">Residential Address</label>
+                <input id="pf-address" type="text" value="123 Jalan Melaka Raya" />
+                <div class="pf-address-grid">
+                  <input id="pf-city" type="text" placeholder="City" value="Melaka" aria-label="City" />
+                  <input id="pf-postal" type="text" placeholder="Postal Code" value="75000" aria-label="Postal Code" />
+                </div>
+              </div>
+              <div class="pf-field"><label for="pf-license" data-key="pf_license">Driving License Number</label><input id="pf-license" type="text" value="DL-9876543210" /></div>
+              <div class="pf-field"><label for="pf-license-exp" data-key="pf_license_exp">License Expiry Date</label><input id="pf-license-exp" type="text" value="31/12/2028" /></div>
+              <div class="pf-actions">
+                <button type="button" class="pf-btn outline" data-key="pf_cancel" onclick="toggleProfileEdit(false)">Cancel</button>
+                <button type="submit" class="pf-btn primary" data-key="pf_save">Save Changes</button>
+              </div>
+            </form>
+          </section>
 
-        <!-- Payment Methods -->
-        <div class="pf-card reveal-onload" id="payment-methods">
-          <div class="payment-methods-head">
-            <h2 class="pf-section-title compact" data-key="pf_payment_methods">Payment Methods</h2>
-            <button class="add-payment-btn" type="button" onclick="profileToast('Demo payment card added.')"><span class="material-icons-round">add_circle</span> <span data-key="pf_add_new">Add New</span></button>
-          </div>
-          <div class="payment-card">
-            <div class="payment-card-left">
-              <div class="payment-card-brand visa">VISA</div>
+          <!-- Driving License -->
+          <section class="pf-card reveal-onload" id="driving-license">
+            <div class="pf-section-head">
+              <h3 class="pf-section-title">Driving License</h3>
+              <span class="pf-badge-verified"><span class="material-icons-round">check_circle</span> Verified</span>
+            </div>
+            <div class="pf-license-layout">
+              <div class="pf-license-placeholder">
+                <span class="material-icons-round">id_card</span>
+                <span>Front View</span>
+              </div>
+              <div class="pf-info-grid compact">
+                <div class="pf-info-item">
+                  <label class="pf-info-label">License Number</label>
+                  <div class="pf-info-value">DL-9876543210</div>
+                </div>
+                <div class="pf-info-item">
+                  <label class="pf-info-label">Expiry Date</label>
+                  <div class="pf-info-value">31/12/2028</div>
+                </div>
+                <div class="pf-info-item full-span">
+                  <label class="pf-info-label">Issuing State/Country</label>
+                  <div class="pf-info-value">Melaka, Malaysia</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Payment Methods -->
+          <section class="pf-card reveal-onload" id="payment-methods">
+            <div class="pf-section-head">
+              <h3 class="pf-section-title compact" data-key="pf_payment_methods">Payment Methods</h3>
+              <button class="pf-add-btn" type="button" onclick="profileToast('Demo payment card added.')"><span class="material-icons-round">add_circle</span> <span data-key="pf_add_new">Add New</span></button>
+            </div>
+            <div class="pf-payment-list">
+              <div class="pf-payment-card">
+                <div class="pf-payment-left">
+                  <div class="pf-card-brand visa">VISA</div>
+                  <div>
+                    <div class="pf-card-name">Visa ending in 4242</div>
+                    <div class="pf-card-exp">Expires 12/26</div>
+                  </div>
+                </div>
+                <div class="pf-payment-right">
+                  <span class="pf-primary-badge">Primary</span>
+                  <button class="pf-del-btn" type="button" onclick="profileToast('Primary card kept for demo checkout.')"><span class="material-icons-round">delete</span></button>
+                </div>
+              </div>
+              <div class="pf-payment-card">
+                <div class="pf-payment-left">
+                  <div class="pf-card-brand mc">MC</div>
+                  <div>
+                    <div class="pf-card-name">Mastercard ending in 8888</div>
+                    <div class="pf-card-exp">Expires 08/25</div>
+                  </div>
+                </div>
+                <div class="pf-payment-right">
+                  <button class="pf-set-primary" type="button" data-key="pf_set_primary" onclick="profileToast('Mastercard set as demo primary.')">Set Primary</button>
+                  <button class="pf-del-btn" type="button" onclick="this.closest('.pf-payment-card').remove(); profileToast('Payment card removed.')"><span class="material-icons-round">delete</span></button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Preferences -->
+          <section class="pf-card reveal-onload" id="app-preferences">
+            <h3 class="pf-section-title" data-key="pf_app_prefs">App Preferences</h3>
+            <div class="pref-grid">
               <div>
-                <div class="payment-card-name">Visa ending in 4242</div>
-                <div class="payment-card-exp">Expires 12/26</div>
+                <div class="pref-item spaced">
+                  <div class="pref-item-info">
+                    <div class="pref-label" data-key="pf_language">Language</div>
+                    <div class="pref-desc" data-key="pf_lang_desc">Choose your display language</div>
+                  </div>
+                  <select id="pf-language" class="pf-language-select" aria-label="Language">
+                    <option selected>English</option>
+                    <option>Malay</option>
+                  </select>
+                </div>
+                <div class="pref-item">
+                  <div class="pref-item-info">
+                    <div class="pref-label" data-key="pf_theme">Theme</div>
+                    <div class="pref-desc" data-key="pf_theme_desc">Toggle dark/light mode</div>
+                  </div>
+                  <div class="pref-toggle">
+                    <button class="active" type="button"><span class="material-icons-round">light_mode</span></button>
+                    <button type="button"><span class="material-icons-round">dark_mode</span></button>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="payment-card-right">
-              <span class="payment-primary">Primary</span>
-              <button class="payment-del-btn" type="button" onclick="profileToast('Primary card kept for demo checkout.')"><span class="material-icons-round">delete</span></button>
-            </div>
-          </div>
-          <div class="payment-card">
-            <div class="payment-card-left">
-              <div class="payment-card-brand mc">MC</div>
               <div>
-                <div class="payment-card-name">Mastercard ending in 8888</div>
-                <div class="payment-card-exp">Expires 08/25</div>
+                <div id="notification-settings" class="notification-panel">
+                  <div class="pref-label notification-title" data-key="pf_notifications">Notifications</div>
+                  <div class="notification-list">
+                    <label class="pref-checkbox"><input type="checkbox" checked /><span data-key="pf_notif_booking">Booking updates & alerts</span></label>
+                    <label class="pref-checkbox"><input type="checkbox" checked /><span data-key="pf_notif_promo">Promotions & discounts</span></label>
+                  </div>
+                </div>
+                <div class="pf-field">
+                  <label data-key="pf_pref_car">Preferred Car Type</label>
+                  <select id="pf-car-type" aria-label="Preferred Car Type">
+                    <option>Any</option>
+                    <option selected>Luxury Sedan</option>
+                    <option>Electric EV</option>
+                    <option>Compact SUV</option>
+                  </select>
+                </div>
               </div>
             </div>
-            <div class="payment-card-right">
-              <button class="payment-set-btn" type="button" data-key="pf_set_primary" onclick="profileToast('Mastercard set as demo primary.')">Set Primary</button>
-              <button class="payment-del-btn" type="button" onclick="this.closest('.payment-card').remove(); profileToast('Payment card removed.')"><span class="material-icons-round">delete</span></button>
-            </div>
-          </div>
-        </div>
+          </section>
 
-        <!-- Preferences -->
-        <div class="pf-card reveal-onload" id="app-preferences">
-          <h2 class="pf-section-title" data-key="pf_app_prefs">App Preferences</h2>
-          <div class="pref-grid">
-            <div>
-              <div class="pref-item spaced">
-                <div class="pref-item-info">
-                  <div class="pref-label" data-key="pf_language">Language</div>
-                  <div class="pref-desc" data-key="pf_lang_desc">Choose your display language</div>
-                </div>
-                <select id="pf-language" class="pf-language-select" aria-label="Language">
-                  <option selected>English</option>
-                  <option>Malay</option>
-                </select>
+          <!-- Danger Zone -->
+          <section class="danger-zone reveal-onload" id="security-settings">
+            <h3 data-key="pf_danger">Danger Zone</h3>
+            <div class="danger-zone-content">
+              <div class="danger-zone-info">
+                <div class="dz-title" data-key="pf_data_title">Download or Delete Data</div>
+                <div class="dz-desc" data-key="pf_data_desc">Manage your data privacy and account status.</div>
               </div>
-              <div class="pref-item">
-                <div class="pref-item-info">
-                  <div class="pref-label" data-key="pf_theme">Theme</div>
-                  <div class="pref-desc" data-key="pf_theme_desc">Toggle dark/light mode</div>
-                </div>
-                <div class="pref-toggle">
-                  <button class="active" type="button"><span class="material-icons-round">light_mode</span></button>
-                  <button type="button"><span class="material-icons-round">dark_mode</span></button>
-                </div>
+              <div class="danger-zone-actions">
+                <button class="dz-btn download" type="button" data-key="pf_download" onclick="profileToast('Demo data export prepared.')">Download My Data</button>
+                <button class="dz-btn delete" type="button" data-key="pf_delete" onclick="profileToast('Account deletion is disabled in demo mode.')">Delete Account</button>
               </div>
             </div>
-            <div>
-              <div id="notification-settings" class="notification-panel">
-                <div class="pref-label notification-title" data-key="pf_notifications">Notifications</div>
-                <div class="notification-list">
-                  <label class="pref-checkbox"><input type="checkbox" checked /><span data-key="pf_notif_booking">Booking updates & alerts</span></label>
-                  <label class="pref-checkbox"><input type="checkbox" checked /><span data-key="pf_notif_promo">Promotions & discounts</span></label>
-                </div>
-              </div>
-              <div class="pf-field">
-                <label data-key="pf_pref_car">Preferred Car Type</label>
-                <select id="pf-car-type" aria-label="Preferred Car Type">
-                  <option>Any</option>
-                  <option selected>Luxury Sedan</option>
-                  <option>Electric EV</option>
-                  <option>Compact SUV</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
+          </section>
 
-        <!-- Danger Zone -->
-        <div class="danger-zone reveal-onload" id="security-settings">
-          <h3 data-key="pf_danger">Danger Zone</h3>
-          <div class="danger-zone-content">
-            <div class="danger-zone-info">
-              <div class="dz-title" data-key="pf_data_title">Download or Delete Data</div>
-              <div class="dz-desc" data-key="pf_data_desc">Manage your data privacy and account status.</div>
-            </div>
-            <div class="danger-zone-actions">
-              <button class="dz-btn download" type="button" data-key="pf_download" onclick="profileToast('Demo data export prepared.')">Download My Data</button>
-              <button class="dz-btn delete" type="button" data-key="pf_delete" onclick="profileToast('Account deletion is disabled in demo mode.')">Delete Account</button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div><!-- /.profile-page -->
+        </div><!-- /.pf-content-area -->
+      </div><!-- /.pf-layout -->
+    </div><!-- /.main-content-area -->
   </main>
 
   <div id="footer-placeholder"></div>
@@ -219,24 +284,35 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js"></script>
   <script>
-    // Sidebar nav active toggle
-    document.querySelectorAll('.pf-nav a').forEach(link => {
+    // Inner nav active toggle
+    document.querySelectorAll('.pf-inner-link').forEach(function(link) {
       link.addEventListener('click', function() {
-        document.querySelectorAll('.pf-nav a').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.pf-inner-link').forEach(function(l) { l.classList.remove('active'); });
         this.classList.add('active');
       });
     });
-    // Theme toggle
-    document.querySelectorAll('.pref-toggle button').forEach(btn => {
+
+    // Edit toggle for personal info
+    function toggleProfileEdit(show) {
+      document.getElementById('pf-info-display').style.display = show ? 'none' : '';
+      document.getElementById('pf-edit-form').style.display = show ? '' : 'none';
+      document.getElementById('pf-edit-toggle').style.display = show ? 'none' : '';
+    }
+    document.getElementById('pf-edit-toggle').addEventListener('click', function() {
+      toggleProfileEdit(true);
+    });
+
+    // Theme toggle in preferences
+    document.querySelectorAll('.pref-toggle button').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        this.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        this.parentElement.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
         this.classList.add('active');
-        profileToast('Preference updated in demo mode.');
+        profileToast('Preference updated.');
       });
     });
 
     function profileToast(message) {
-      let toast = document.getElementById('profile-toast');
+      var toast = document.getElementById('profile-toast');
       if (!toast) {
         toast = document.createElement('div');
         toast.id = 'profile-toast';
@@ -246,7 +322,7 @@
       toast.textContent = message;
       toast.classList.add('show');
       window.clearTimeout(window.profileToastTimer);
-      window.profileToastTimer = window.setTimeout(() => toast.classList.remove('show'), 1800);
+      window.profileToastTimer = window.setTimeout(function() { toast.classList.remove('show'); }, 1800);
     }
   </script>
 
