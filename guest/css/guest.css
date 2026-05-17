@@ -287,15 +287,49 @@
   .pricing-grid { grid-template-columns: repeat(2, 1fr); }
   .about-story { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .feature-grid { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr 1fr; }
   .contact-layout { grid-template-columns: 1fr; }
   .terms-layout { grid-template-columns: 1fr; }
   .terms-toc { position: static; }
+  .page-hero { padding: 40px 20px 28px; }
+  .about-section { padding: 0 20px 40px; }
+  .contact-layout { padding: 0 20px 40px; }
+  .faq-page-section { padding: 0 20px 40px; }
+  .terms-layout { padding: 0 20px 40px; }
+  .ai-price-section { padding: 0 20px 40px; }
 }
+
+@media (max-width: 768px) {
+  .feature-grid { grid-template-columns: 1fr; }
+  .contact-form { padding: 24px; }
+  .terms-content { padding: 24px; }
+  .pricing-grid { padding: 0 20px 40px; }
+}
+
 @media (max-width: 600px) {
   .pricing-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .page-hero { padding: 32px 16px 20px; }
   .page-hero h1 { font-size: 26px; }
+  .page-hero p { font-size: 14px; }
+  .section-title { font-size: 19px; }
   .error-code { font-size: 80px; }
+  .error-wrapper h2 { font-size: 20px; }
+  .error-wrapper p { font-size: 14px; }
+  .about-section { padding: 0 16px 32px; }
+  .stat-card { padding: 16px; }
+  .stat-value { font-size: 26px; }
+  .price-card { padding: 20px; }
+  .card-price .amount { font-size: 26px; }
+  .contact-form { padding: 20px; }
+  .ci-card { padding: 16px; }
+  .faq-acc-q { padding: 14px 16px; min-height: 48px; }
+  .form-submit { min-height: 48px; }
+  .card-btn { min-height: 48px; }
+  .form-group input, .form-group select, .form-group textarea {
+    padding: 12px 14px;
+    font-size: 16px; /* Prevents iOS zoom */
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════

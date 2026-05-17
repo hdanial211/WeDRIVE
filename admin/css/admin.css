@@ -976,7 +976,20 @@ tr:hover td { background: var(--slate-50); }
 @media (max-width: 900px) {
   .cal-toolbar-inner { flex-direction: column; align-items: flex-start; }
   .cal-legend-filters { margin-top: 8px; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-2 { grid-template-columns: 1fr; }
+  .insights-grid { grid-template-columns: 1fr; }
+  .fleet-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .car-quick-stats { grid-template-columns: 1fr 1fr; }
+  .content { padding: 20px; }
+
+  /* Make tables horizontally scrollable */
+  .card { overflow-x: auto; }
+  table { min-width: 600px; }
 }
+
 @media (max-width: 768px) {
   .adm-cal-cell { min-height: 70px; padding: 6px; }
   .adm-cal-day-num { font-size: 12px; }
@@ -985,4 +998,40 @@ tr:hover td { background: var(--slate-50); }
   .cal-filter-chip { padding: 4px 10px; font-size: 11px; }
   .cal-nav-group { gap: 4px; }
   .cal-selector-group { margin-left: 0; }
+
+  .actions-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .action-btn { padding: 12px 8px; }
+  .action-btn span { font-size: 11px; }
+}
+
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr; gap: 12px; }
+  .stat-card { padding: 16px; }
+  .stat-info .value { font-size: 26px; }
+
+  .content { padding: 14px; }
+
+  .fleet-grid { grid-template-columns: 1fr; }
+  .car-quick-stats { grid-template-columns: 1fr; }
+
+  .actions-grid { grid-template-columns: repeat(2, 1fr); }
+  .action-btn { padding: 14px 8px; min-height: 44px; }
+
+  .card { padding: 14px; border-radius: 12px; }
+  .card-header h3 { font-size: 15px; }
+
+  .ai-card { padding: 16px; border-radius: 12px; }
+  .ai-card h3 { font-size: 14px; }
+  .ai-card p { font-size: 12px; }
+
+  .topbar { padding: 12px 14px 12px 56px; }
+  .topbar h1 { font-size: 16px; }
+  .topbar p { font-size: 11px; }
+
+  .modal-container { margin: 10px; max-width: calc(100vw - 20px); }
+  .modal-header { padding: 14px 16px; }
+  .modal-body { padding: 14px 16px; }
+
+  .adm-cal-cell { min-height: 56px; padding: 4px; }
+  .adm-cal-header div { font-size: 9px; padding: 8px 0; }
 }
