@@ -3055,6 +3055,208 @@ button.qa-card {
   color: var(--primary, #0058be);
 }
 
+.driver-mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.driver-mode-chip {
+  min-height: 44px;
+  border: 1px solid var(--outline-variant, #c2c6d6);
+  border-radius: 999px;
+  background: var(--surface-container-lowest, #fff);
+  color: var(--text-primary, #191c1e);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 10px 16px;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.driver-mode-chip:hover,
+.driver-mode-chip.active {
+  border-color: var(--primary, #0058be);
+  background: rgba(0, 88, 190, 0.08);
+  color: var(--primary, #0058be);
+}
+
+.driver-mode-chip:active {
+  transform: scale(0.98);
+}
+
+.driver-mode-chip .material-icons-round {
+  font-size: 18px;
+}
+
+.driver-mode-caption {
+  color: var(--text-secondary, #545f73);
+  font-size: 13px;
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+
+.driver-panel {
+  display: none;
+}
+
+.driver-panel.visible {
+  display: block;
+  animation: stitchFadeUp 0.35s ease both;
+}
+
+.driver-profile-card,
+.driver-ocr-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--outline-variant, #c2c6d6);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0, 88, 190, 0.05), rgba(255, 255, 255, 0.9));
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+
+.driver-profile-label {
+  color: var(--primary, #0058be);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.driver-profile-card h3 {
+  margin: 0 0 6px;
+  color: var(--text-primary, #191c1e);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.driver-profile-card p,
+.driver-ocr-banner p {
+  margin: 0;
+  color: var(--text-secondary, #545f73);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.driver-profile-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: #e8f7ef;
+  color: #0f8a4b;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 8px 12px;
+}
+
+.driver-profile-badge .material-icons-round,
+.driver-ocr-banner .material-icons-round {
+  font-size: 18px;
+}
+
+.driver-ocr-banner strong {
+  display: block;
+  color: var(--text-primary, #191c1e);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.driver-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.driver-upload-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  min-height: 154px;
+  border: 1px dashed var(--outline, #727785);
+  border-radius: 16px;
+  background: var(--surface-container-low, #f2f4f6);
+  color: var(--text-primary, #191c1e);
+  cursor: pointer;
+  padding: 18px;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.driver-upload-card:hover {
+  border-color: var(--primary, #0058be);
+  background: rgba(0, 88, 190, 0.05);
+  transform: translateY(-2px);
+}
+
+.driver-upload-card input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.driver-upload-card .material-icons-round {
+  font-size: 26px;
+  color: var(--primary, #0058be);
+}
+
+.driver-upload-card strong {
+  font-size: 15px;
+}
+
+.driver-upload-card small {
+  color: var(--text-secondary, #545f73);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.driver-ocr-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: var(--surface-container-low, #f2f4f6);
+  color: var(--text-secondary, #545f73);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+}
+
+.driver-ocr-progress .material-icons-round {
+  font-size: 18px;
+}
+
+.driver-ocr-progress.is-scanning {
+  background: rgba(0, 88, 190, 0.1);
+  color: var(--primary, #0058be);
+}
+
+.driver-ocr-progress.is-ready {
+  background: #e8f7ef;
+  color: #0f8a4b;
+}
+
+.driver-panel .fg input[readonly] {
+  color: var(--text-secondary, #545f73);
+  background: linear-gradient(135deg, rgba(236, 238, 240, 0.9), rgba(247, 249, 251, 0.95));
+  cursor: default;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3464,6 +3666,15 @@ button.qa-card {
     justify-content: flex-start;
     min-width: 0;
     white-space: normal;
+  }
+
+  .driver-upload-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .driver-profile-card,
+  .driver-ocr-banner {
+    flex-direction: column;
   }
 
   .form-row,

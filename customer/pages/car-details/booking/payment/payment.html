@@ -51,30 +51,103 @@
         <section class="checkout-form-section" aria-label="Payment form">
           <div class="form-card reveal-on-scroll motion-sheen">
             <h2><span class="material-icons-round">person</span> Driver information</h2>
-            <div class="form-row">
-              <div class="fg">
-                <label for="d-name">Full name</label>
-                <input id="d-name" value="Ahmad bin Ali" autocomplete="name" />
+            <div class="driver-mode-switch" role="tablist" aria-label="Driver source">
+              <button type="button" class="driver-mode-chip active" id="driver-mode-existing" role="tab" aria-selected="true" aria-controls="driver-panel-existing" tabindex="0" onclick="selectDriverMode('existing')">
+                <span class="material-icons-round">verified_user</span>
+                Use existing profile
+              </button>
+              <button type="button" class="driver-mode-chip" id="driver-mode-new" role="tab" aria-selected="false" aria-controls="driver-panel-new" tabindex="-1" onclick="selectDriverMode('new')">
+                <span class="material-icons-round">badge</span>
+                Add new driver
+              </button>
+            </div>
+            <p class="driver-mode-caption" id="driver-mode-caption">Use your verified WeDRIVE account details for the quickest checkout.</p>
+
+            <div class="driver-panel visible" id="driver-panel-existing" role="tabpanel" aria-labelledby="driver-mode-existing">
+              <div class="driver-profile-card">
+                <div>
+                  <div class="driver-profile-label">Verified account profile</div>
+                  <h3 id="existing-driver-name">Alex Johnson</h3>
+                  <p id="existing-driver-meta">IC verified during signup and ready for instant approval.</p>
+                </div>
+                <span class="driver-profile-badge"><span class="material-icons-round">task_alt</span> Ready</span>
               </div>
-              <div class="fg">
-                <label for="d-ic">IC / Passport</label>
-                <input id="d-ic" value="900101-14-5678" />
+              <div class="form-row">
+                <div class="fg">
+                  <label for="existing-driver-ic">IC / Passport</label>
+                  <input id="existing-driver-ic" value="900101-14-5678" readonly />
+                </div>
+                <div class="fg">
+                  <label for="existing-driver-license">Driving license number</label>
+                  <input id="existing-driver-license" value="DLR-9876543210" readonly />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="fg">
+                  <label for="existing-driver-email">Email</label>
+                  <input id="existing-driver-email" type="email" value="alex.johnson@example.com" readonly />
+                </div>
+                <div class="fg">
+                  <label for="existing-driver-phone">Phone</label>
+                  <input id="existing-driver-phone" type="tel" value="+60 11-1234 5678" readonly />
+                </div>
               </div>
             </div>
-            <div class="form-row">
-              <div class="fg">
-                <label for="d-email">Email</label>
-                <input id="d-email" type="email" value="ahmad@email.com" autocomplete="email" />
+
+            <div class="driver-panel" id="driver-panel-new" role="tabpanel" aria-labelledby="driver-mode-new">
+              <div class="driver-ocr-banner">
+                <span class="material-icons-round">camera_alt</span>
+                <div>
+                  <strong>New driver verification</strong>
+                  <p>Upload front and back IC images. WeDRIVE will read the card details automatically, and you only need to fill in the phone number.</p>
+                </div>
               </div>
-              <div class="fg">
-                <label for="d-phone">Phone</label>
-                <input id="d-phone" type="tel" value="+60 12-345 6789" autocomplete="tel" />
+
+              <div class="driver-upload-grid">
+                <label class="driver-upload-card" for="new-driver-ic-front">
+                  <input id="new-driver-ic-front" type="file" accept="image/*" onchange="handleDriverUpload('front', this.files)" />
+                  <span class="material-icons-round">photo_camera_front</span>
+                  <strong>Front IC image</strong>
+                  <small id="front-upload-status">No image selected</small>
+                </label>
+                <label class="driver-upload-card" for="new-driver-ic-back">
+                  <input id="new-driver-ic-back" type="file" accept="image/*" onchange="handleDriverUpload('back', this.files)" />
+                  <span class="material-icons-round">flip_camera_android</span>
+                  <strong>Back IC image</strong>
+                  <small id="back-upload-status">No image selected</small>
+                </label>
               </div>
-            </div>
-            <div class="form-row full">
-              <div class="fg">
-                <label for="d-license">Driving license number</label>
-                <input id="d-license" value="D12345678" />
+
+              <div class="driver-ocr-progress" id="driver-ocr-progress">
+                <span class="material-icons-round">hourglass_top</span>
+                <span id="driver-ocr-text">Waiting for both IC images before auto-reading the card.</span>
+              </div>
+
+              <div class="form-row">
+                <div class="fg">
+                  <label for="new-driver-name">Full name</label>
+                  <input id="new-driver-name" placeholder="Filled automatically after OCR" readonly />
+                </div>
+                <div class="fg">
+                  <label for="new-driver-ic">IC / Passport</label>
+                  <input id="new-driver-ic" placeholder="Filled automatically after OCR" readonly />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="fg">
+                  <label for="new-driver-email">Email</label>
+                  <input id="new-driver-email" type="email" placeholder="Filled automatically after OCR" readonly />
+                </div>
+                <div class="fg">
+                  <label for="new-driver-phone">Phone</label>
+                  <input id="new-driver-phone" type="tel" placeholder="+60 12-345 6789" autocomplete="tel" />
+                </div>
+              </div>
+              <div class="form-row full">
+                <div class="fg">
+                  <label for="new-driver-license">Driving license number</label>
+                  <input id="new-driver-license" placeholder="Filled automatically after OCR" readonly />
+                </div>
               </div>
             </div>
           </div>
@@ -229,6 +302,112 @@
   <script src="../../../../../shared/js/animate.js"></script>
   <script src="../../../../../shared/js/main.js"></script>
   <script>
+    var activeDriverMode = 'existing';
+    var savedDriverProfile = {
+      fullName: 'Alex Johnson',
+      identity: '900101-14-5678',
+      email: 'alex.johnson@example.com',
+      phone: '+60 11-1234 5678',
+      license: 'DLR-9876543210'
+    };
+    var demoOcrProfiles = [
+      {
+        fullName: 'Nur Aisyah Binti Rahman',
+        identity: '950214-04-8892',
+        email: 'aisyah.rahman@example.com',
+        license: 'B2D-4482197',
+        phone: ''
+      },
+      {
+        fullName: 'Muhammad Firdaus Bin Salleh',
+        identity: '910821-10-5634',
+        email: 'firdaus.salleh@example.com',
+        license: 'D-77842156',
+        phone: ''
+      }
+    ];
+    var driverUploads = {
+      front: null,
+      back: null
+    };
+    var driverOcrReady = false;
+
+    function selectDriverMode(mode) {
+      activeDriverMode = mode;
+      document.querySelectorAll('.driver-mode-chip').forEach(function (button) {
+        var isSelected = button.id === 'driver-mode-' + mode;
+        button.classList.toggle('active', isSelected);
+        button.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        button.tabIndex = isSelected ? 0 : -1;
+      });
+      document.getElementById('driver-panel-existing').classList.toggle('visible', mode === 'existing');
+      document.getElementById('driver-panel-new').classList.toggle('visible', mode === 'new');
+      document.getElementById('driver-mode-caption').textContent = mode === 'existing'
+        ? 'Use your verified WeDRIVE account details for the quickest checkout.'
+        : 'Upload both IC images for OCR verification. Only the phone number remains editable.';
+      if (mode === 'existing') {
+        document.getElementById('cc-name').value = savedDriverProfile.fullName.toUpperCase();
+      } else if (driverOcrReady) {
+        document.getElementById('cc-name').value = document.getElementById('new-driver-name').value.toUpperCase();
+      }
+    }
+
+    function handleDriverUpload(side, files) {
+      var file = files && files[0] ? files[0] : null;
+      driverUploads[side] = file;
+      var statusEl = document.getElementById(side + '-upload-status');
+      if (statusEl) {
+        statusEl.textContent = file ? file.name : 'No image selected';
+      }
+      var input = document.getElementById('new-driver-' + side);
+      if (input && !file) {
+        input.value = '';
+      }
+      if (driverUploads.front && driverUploads.back) {
+        runDriverOcr();
+      } else {
+        driverOcrReady = false;
+        var progress = document.getElementById('driver-ocr-progress');
+        var text = document.getElementById('driver-ocr-text');
+        if (progress) {
+          progress.classList.remove('is-ready', 'is-scanning');
+        }
+        if (text) {
+          text.textContent = 'Waiting for both IC images before auto-reading the card.';
+        }
+      }
+    }
+
+    function runDriverOcr() {
+      driverOcrReady = false;
+      var progress = document.getElementById('driver-ocr-progress');
+      var text = document.getElementById('driver-ocr-text');
+      if (progress) {
+        progress.classList.add('is-scanning');
+        progress.classList.remove('is-ready');
+      }
+      if (text) {
+        text.textContent = 'Reading IC images and matching the new driver profile...';
+      }
+
+      window.setTimeout(function () {
+        var source = demoOcrProfiles[(driverUploads.front.name.length + driverUploads.back.name.length) % demoOcrProfiles.length];
+        document.getElementById('new-driver-name').value = source.fullName;
+        document.getElementById('new-driver-ic').value = source.identity;
+        document.getElementById('new-driver-email').value = source.email;
+        document.getElementById('new-driver-license').value = source.license;
+        document.getElementById('cc-name').value = source.fullName.toUpperCase();
+        driverOcrReady = true;
+        if (progress) {
+          progress.classList.remove('is-scanning');
+          progress.classList.add('is-ready');
+        }
+        if (text) {
+          text.textContent = 'IC verified. Driver details were filled automatically. Only phone number is still required.';
+        }
+      }, 900);
+    }
+
     function selectPayMethod(method) {
       document.querySelectorAll('.pay-method[data-method]').forEach(function (button) {
         var isSelected = button.dataset.method === method;
@@ -257,6 +436,13 @@
     }
 
     function completePayment() {
+      if (activeDriverMode === 'new') {
+        var phone = document.getElementById('new-driver-phone');
+        if (!driverUploads.front || !driverUploads.back || !driverOcrReady || !phone.value.trim()) {
+          alert('Please upload both IC images, wait for auto-reading to finish, and fill in the new driver phone number.');
+          return;
+        }
+      }
       var button = document.getElementById('btn-pay');
       button.disabled = true;
       button.classList.add('is-processing');
@@ -280,6 +466,16 @@
         var value = this.value.replace(/\D/g, '').substring(0, 4);
         this.value = value.length >= 2 ? value.substring(0, 2) + '/' + value.substring(2) : value;
       });
+    }
+
+    if (document.getElementById('existing-driver-name')) {
+      document.getElementById('existing-driver-name').textContent = savedDriverProfile.fullName;
+      document.getElementById('existing-driver-meta').textContent = savedDriverProfile.identity + ' • ' + savedDriverProfile.email;
+      document.getElementById('existing-driver-ic').value = savedDriverProfile.identity;
+      document.getElementById('existing-driver-license').value = savedDriverProfile.license;
+      document.getElementById('existing-driver-email').value = savedDriverProfile.email;
+      document.getElementById('existing-driver-phone').value = savedDriverProfile.phone;
+      document.getElementById('cc-name').value = savedDriverProfile.fullName.toUpperCase();
     }
   </script>
 </body>
