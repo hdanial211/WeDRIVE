@@ -110,9 +110,8 @@ AI CAR RENTAL SYSTEM/
 |   +-- css/
 |   |   +-- customer.css                # Gaya utama Customer (semua gaya digabung)
 |   +-- js/
-|       +-- customer.js                  # Logik Customer (WeDriveAPI)
-|       +-- car-details.js              # Logik Gallery & Data Kereta
-|       +-- sidebar-loader.js            # Pemuat Sidebar Customer
+|       +-- customer.js                  # Logik Customer + Car Details (digabung)
+|       +-- sidebar-loader.js            # Pemuat Sidebar + Navbar Customer (seragam)
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul

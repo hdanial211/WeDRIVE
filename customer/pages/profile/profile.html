@@ -23,11 +23,7 @@
         <h1 class="utility-title" data-key="profile_title">My Profile</h1>
         <p class="utility-subtitle" data-key="profile_subtitle">Manage your account settings</p>
       </div>
-      <div class="utility-actions">
-        <button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Switch language"><span class="lang-text">EN</span></button>
-        <button class="icon-btn theme-toggle" id="theme-toggle-desktop" aria-label="Toggle theme"><span class="material-icons-round">light_mode</span></button>
-        <a href="profile.html" class="icon-btn settings-btn active" aria-label="Settings" title="Settings"><span class="material-icons-round">settings</span></a>
-      </div>
+      <div class="utility-actions"></div>
     </header>
 
     <div class="main-content-area">
@@ -241,7 +237,7 @@
                 </div>
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Theme</div><div class="pf-pref-desc">Choose light or dark mode</div></div>
-                  <select class="pf-select" onchange="profileToast('Theme updated.')"><option selected>Light Mode</option><option>Dark Mode</option></select>
+                  <select class="pf-select" onchange="profileToast('Theme updated.')"><option selected>Light Mode</option><option>Dark Mode</option><option>System Default</option></select>
                 </div>
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Measurement Units</div><div class="pf-pref-desc">Distance & speed units</div></div>
@@ -336,7 +332,7 @@
         var section = this.getAttribute('data-section');
         document.querySelectorAll('.pf-panel').forEach(function(p) { p.classList.remove('active'); });
         var target = document.getElementById('panel-' + section);
-        if (target) { target.classList.add('active'); target.scrollIntoView({behavior:'smooth',block:'start'}); }
+        if (target) { target.classList.add('active'); }
       });
     });
 

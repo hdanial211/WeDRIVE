@@ -41,7 +41,6 @@
   var NAV_ITEMS = [
     { icon: 'dashboard',      key: 'nav_dashboard', label: 'Dashboard',    page: 'dashboard',   href: '{base}customer/pages/dashboard/customer.html' },
     { icon: 'calendar_month', key: 'nav_bookings',  label: 'My Bookings',  page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' },
-    { icon: 'person',         key: 'nav_profile',   label: 'Profile',      page: 'profile',     href: '{base}customer/pages/profile/profile.html' },
     { icon: 'psychology',     key: 'nav_ai',        label: 'AI Insights',  page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
   ];
 
@@ -149,12 +148,29 @@
     overlay.addEventListener('click', closeSidebar);
   }
 
+  // Inject unified utility-actions (lang toggle + theme toggle) into the navbar
+  function renderUtilityActions() {
+    var target = document.querySelector('.utility-actions');
+    if (!target) return;
+    target.innerHTML = [
+      '<button class="icon-btn lang-toggle" id="lang-toggle" aria-label="Switch language">',
+      '  <span class="lang-text">EN</span>',
+      '</button>',
+      '<button class="icon-btn theme-toggle" id="theme-toggle-desktop" aria-label="Toggle theme">',
+      '  <span class="material-icons-round">light_mode</span>',
+      '</button>'
+    ].join('\n');
+  }
+
   function init() {
     var sidebarPh = document.getElementById('customer-sidebar-placeholder');
     var mobilePh = document.getElementById('mobile-menu-placeholder');
 
     if (sidebarPh) renderSidebar(sidebarPh);
     if (mobilePh) renderMobileBar(mobilePh);
+
+    // Inject unified navbar actions
+    renderUtilityActions();
 
     // Small delay to let DOM render
     setTimeout(initSidebarToggle, 50);

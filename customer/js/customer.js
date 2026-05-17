@@ -735,3 +735,129 @@
     init();
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════
+   CAR DETAILS PAGE - Interactive Logic
+   (Merged from car-details.js)
+   ═══════════════════════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  // Only run on car-details page
+  if (!window.location.pathname.includes('/car-details/')) return;
+
+  /* -- GALLERY INTERACTION ---------------------------------------- */
+  var thumbs = document.querySelectorAll('.gallery-thumbs .thumb');
+  var heroImg = document.getElementById('hero-img');
+  var dots = document.querySelectorAll('.gal-dot');
+
+  thumbs.forEach(function(t, i) {
+    t.addEventListener('click', function() {
+      thumbs.forEach(function(x) { x.classList.remove('active'); });
+      t.classList.add('active');
+      dots.forEach(function(d) { d.classList.remove('active'); });
+      if (dots[i]) dots[i].classList.add('active');
+      if (t.tagName === 'IMG' && heroImg) {
+        heroImg.style.opacity = '0';
+        setTimeout(function() {
+          heroImg.src = t.src;
+          heroImg.style.opacity = '1';
+        }, 250);
+      }
+    });
+  });
+
+  dots.forEach(function(d, i) {
+    d.addEventListener('click', function() {
+      if (thumbs[i]) thumbs[i].click();
+    });
+  });
+
+  /* -- SPEC COUNTER ANIMATION ------------------------------------- */
+  var counters = document.querySelectorAll('[data-count]');
+  var countObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      var target = parseInt(el.dataset.count);
+      if (el.dataset.counted) return;
+      el.dataset.counted = '1';
+      var current = 0;
+      var step = Math.ceil(target / 40);
+      var interval = setInterval(function() {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(interval);
+          el.classList.add('counted');
+        }
+        el.textContent = current;
+      }, 30);
+      countObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(function(c) { countObserver.observe(c); });
+
+  /* -- SPEC CARD MOUSE GLOW --------------------------------------- */
+  document.querySelectorAll('.spec-card').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--mouse-y', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+
+  /* -- STICKY CTA VISIBILITY ------------------------------------- */
+  var bookBtn = document.getElementById('btn-book');
+  var stickyCta = document.getElementById('sticky-cta');
+  if (bookBtn && stickyCta) {
+    var stickyObs = new IntersectionObserver(function(entries) {
+      stickyCta.style.transform = entries[0].isIntersecting ? 'translateY(100%)' : 'translateY(0)';
+      stickyCta.style.transition = 'transform .3s ease';
+    });
+    stickyObs.observe(bookBtn);
+  }
+
+  /* -- LOAD CAR DATA FROM data.json ------------------------------- */
+  function loadCarData() {
+    var params = new URLSearchParams(window.location.search);
+    var carId = params.get('id');
+    if (!carId || !window.WeDriveAPI) return;
+
+    window.WeDriveAPI.getCars().then(function(cars) {
+      var car = cars.find(function(c) { return c.id === carId; });
+      if (!car) return;
+
+      var title = document.getElementById('car-title');
+      var subtitle = document.getElementById('car-subtitle');
+      var price = document.getElementById('car-price');
+      var year = document.getElementById('car-year');
+      var bcName = document.getElementById('bc-car-name');
+
+      if (title) title.textContent = car.name || 'Car';
+      if (subtitle) subtitle.textContent = (car.category || '') + ' -- ' + (car.year || '') + ' Edition';
+      if (price) price.textContent = 'RM ' + (car.pricePerDay || 0);
+      if (year) year.textContent = (car.year || '') + ' Model';
+      if (bcName) bcName.textContent = car.name || 'Car';
+      document.title = (car.name || 'Car') + ' | WeDRIVE';
+
+      var sp = document.querySelector('.sticky-price strong');
+      if (sp) sp.textContent = 'RM ' + (car.pricePerDay || 0);
+
+      if (car.image && heroImg) heroImg.src = car.image;
+
+      var btn = document.getElementById('btn-book');
+      if (btn) btn.onclick = function() { window.location = 'booking/booking.html?id=' + carId; };
+      var stickyBtn = document.querySelector('.sticky-cta button');
+      if (stickyBtn) stickyBtn.onclick = function() { window.location = 'booking/booking.html?id=' + carId; };
+    });
+  }
+
+  if (window.WeDriveAPI) {
+    loadCarData();
+  } else {
+    window.addEventListener('load', function() { setTimeout(loadCarData, 200); });
+  }
+
+})();
