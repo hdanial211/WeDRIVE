@@ -1955,6 +1955,42 @@ body.night-mode .melaka-guide {
   color: #cbd5e1 !important;
 }
 
+/* ── Range highlighting (pickup → return) ── */
+.flatpickr-day.range-start,
+.flatpickr-day.range-end {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3) !important;
+}
+
+.flatpickr-day.range-start {
+  border-radius: 8px 0 0 8px !important;
+}
+
+.flatpickr-day.range-end {
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.flatpickr-day.range-start.range-end {
+  border-radius: 8px !important;
+}
+
+.flatpickr-day.in-range {
+  background: rgba(59, 130, 246, 0.12) !important;
+  border-color: transparent !important;
+  color: #1e40af !important;
+  font-weight: 500 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.flatpickr-day.in-range:hover {
+  background: rgba(59, 130, 246, 0.25) !important;
+  color: #1e40af !important;
+}
+
 .flatpickr-innerContainer {
   margin-top: 4px;
   overflow: visible !important;
