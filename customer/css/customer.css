@@ -5436,11 +5436,12 @@ body.night-mode .pf-otp-badge.verified { background: rgba(34,197,94,0.18); color
 .ca-surface-btn::before {
   content: '';
   position: absolute;
-  inset: -1px auto -1px -22%;
-  width: 36%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), rgba(255,255,255,0.7), rgba(255,255,255,0.12), transparent);
-  transform: translateX(-180%) skewX(-20deg);
-  opacity: 0;
+  inset: 0 auto 0 0;
+  width: 100%;
+  background: linear-gradient(90deg, var(--ca-signal-start, rgba(59,130,246,0.88)), var(--ca-signal-end, rgba(96,165,250,0.96)));
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 1;
   pointer-events: none;
   z-index: 0;
 }
@@ -5448,33 +5449,28 @@ body.night-mode .pf-otp-badge.verified { background: rgba(34,197,94,0.18); color
 .ca-surface-btn > * { position: relative; z-index: 1; }
 .ca-action-btn.is-signaling::before,
 .ca-surface-btn.is-signaling::before {
-  opacity: 1;
-  animation: caSignalSweep 1s cubic-bezier(.22,.61,.36,1);
+  animation: caSignalFill 1s cubic-bezier(.22,.61,.36,1);
 }
-.ca-action-btn.signal-primary::after,
-.ca-surface-btn.signal-primary::after,
-.ca-action-btn.signal-success::after,
-.ca-surface-btn.signal-success::after,
-.ca-action-btn.signal-warning::after,
-.ca-surface-btn.signal-warning::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
+.ca-action-btn.signal-primary,
+.ca-surface-btn.signal-primary {
+  --ca-signal-start: rgba(37,99,235,0.96);
+  --ca-signal-end: rgba(96,165,250,0.98);
+  color: #fff;
+  border-color: rgba(37,99,235,0.98);
 }
-.ca-action-btn.signal-primary::after,
-.ca-surface-btn.signal-primary::after {
-  background: linear-gradient(90deg, rgba(59,130,246,0), rgba(59,130,246,0.14), rgba(59,130,246,0));
+.ca-action-btn.signal-success,
+.ca-surface-btn.signal-success {
+  --ca-signal-start: rgba(5,150,105,0.94);
+  --ca-signal-end: rgba(52,211,153,0.96);
+  color: #fff;
+  border-color: rgba(5,150,105,0.88);
 }
-.ca-action-btn.signal-success::after,
-.ca-surface-btn.signal-success::after {
-  background: linear-gradient(90deg, rgba(16,185,129,0), rgba(16,185,129,0.14), rgba(16,185,129,0));
-}
-.ca-action-btn.signal-warning::after,
-.ca-surface-btn.signal-warning::after {
-  background: linear-gradient(90deg, rgba(245,158,11,0), rgba(245,158,11,0.16), rgba(245,158,11,0));
+.ca-action-btn.signal-warning,
+.ca-surface-btn.signal-warning {
+  --ca-signal-start: rgba(217,119,6,0.94);
+  --ca-signal-end: rgba(251,191,36,0.95);
+  color: #fff;
+  border-color: rgba(217,119,6,0.86);
 }
 .ca-action-btn.is-signaling,
 .ca-surface-btn.is-signaling {
@@ -5488,10 +5484,9 @@ body.night-mode .pf-otp-badge.verified { background: rgba(34,197,94,0.18); color
 .ca-surface-btn.signal-warning.is-signaling {
   box-shadow: 0 18px 34px rgba(245,158,11,0.2);
 }
-@keyframes caSignalSweep {
-  0% { transform: translateX(-190%) skewX(-20deg); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateX(420%) skewX(-20deg); opacity: 0; }
+@keyframes caSignalFill {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
 }
 .ca-helper-list { display: flex; flex-direction: column; gap: 12px; }
 .ca-helper-card {
@@ -5562,7 +5557,7 @@ body.night-mode .ca-surface-btn-quiet:hover {
 }
 body.night-mode .ca-action-btn::before,
 body.night-mode .ca-surface-btn::before {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), rgba(255,255,255,0.46), rgba(255,255,255,0.08), transparent);
+  background: linear-gradient(90deg, var(--ca-signal-start, rgba(59,130,246,0.92)), var(--ca-signal-end, rgba(96,165,250,0.98)));
 }
 body.night-mode .ca-stat-card {
   background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
