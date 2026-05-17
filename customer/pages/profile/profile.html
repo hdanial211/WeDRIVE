@@ -233,27 +233,27 @@
         <div class="pf-card reveal-onload">
           <h2 class="pf-section-title" data-key="pf_personal_info">Personal Information</h2>
           <form class="pf-form" onsubmit="event.preventDefault(); alert('Changes saved!');">
-            <div class="pf-field"><label data-key="pf_fname">First Name</label><input type="text" value="John" /></div>
-            <div class="pf-field"><label data-key="pf_lname">Last Name</label><input type="text" value="Doe" /></div>
+            <div class="pf-field"><label for="pf-fname" data-key="pf_fname">First Name</label><input id="pf-fname" type="text" value="John" /></div>
+            <div class="pf-field"><label for="pf-lname" data-key="pf_lname">Last Name</label><input id="pf-lname" type="text" value="Doe" /></div>
             <div class="pf-field full">
               <label data-key="pf_email">Email Address</label>
               <div class="pf-input-verified">
-                <input type="email" value="john.doe@example.com" />
+                <input id="pf-email" type="email" value="john.doe@example.com" />
                 <span class="material-icons-round">verified</span>
               </div>
             </div>
-            <div class="pf-field"><label data-key="pf_phone">Phone Number</label><input type="tel" value="+60 11-1234 5678" /></div>
-            <div class="pf-field"><label data-key="pf_dob">Date of Birth</label><input type="date" value="1990-05-15" /></div>
+            <div class="pf-field"><label for="pf-phone" data-key="pf_phone">Phone Number</label><input id="pf-phone" type="tel" value="+60 11-1234 5678" /></div>
+            <div class="pf-field"><label for="pf-dob" data-key="pf_dob">Date of Birth</label><input id="pf-dob" type="date" value="1990-05-15" /></div>
             <div class="pf-field full">
-              <label data-key="pf_address">Residential Address</label>
-              <input type="text" value="123 Jalan Melaka Raya" />
+              <label for="pf-address" data-key="pf_address">Residential Address</label>
+              <input id="pf-address" type="text" value="123 Jalan Melaka Raya" />
               <div class="pf-address-grid">
-                <input type="text" placeholder="City" value="Melaka" />
-                <input type="text" placeholder="Postal Code" value="75000" />
+                <input id="pf-city" type="text" placeholder="City" value="Melaka" aria-label="City" />
+                <input id="pf-postal" type="text" placeholder="Postal Code" value="75000" aria-label="Postal Code" />
               </div>
             </div>
-            <div class="pf-field"><label data-key="pf_license">Driving License Number</label><input type="text" value="DL-9876543210" /></div>
-            <div class="pf-field"><label data-key="pf_license_exp">License Expiry Date</label><input type="date" value="2028-12-31" /></div>
+            <div class="pf-field"><label for="pf-license" data-key="pf_license">Driving License Number</label><input id="pf-license" type="text" value="DL-9876543210" /></div>
+            <div class="pf-field"><label for="pf-license-exp" data-key="pf_license_exp">License Expiry Date</label><input id="pf-license-exp" type="date" value="2028-12-31" /></div>
             <div class="pf-actions">
               <button type="button" class="pf-btn outline" data-key="pf_cancel">Cancel</button>
               <button type="submit" class="pf-btn primary" data-key="pf_save">Save Changes</button>
@@ -305,7 +305,7 @@
                   <div class="pref-label" data-key="pf_language">Language</div>
                   <div class="pref-desc" data-key="pf_lang_desc">Choose your display language</div>
                 </div>
-                <select style="padding:8px 14px;border:1px solid var(--slate-200);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;background:var(--slate-50);color:var(--navy);outline:none;">
+                <select id="pf-language" aria-label="Language" style="padding:8px 14px;border:1px solid var(--slate-200);border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;background:var(--slate-50);color:var(--navy);outline:none;">
                   <option selected>English</option>
                   <option>Malay</option>
                 </select>
@@ -331,7 +331,7 @@
               </div>
               <div class="pf-field">
                 <label data-key="pf_pref_car">Preferred Car Type</label>
-                <select>
+                <select id="pf-car-type" aria-label="Preferred Car Type">
                   <option>Any</option>
                   <option selected>Luxury Sedan</option>
                   <option>Electric EV</option>

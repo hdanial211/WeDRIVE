@@ -48,7 +48,7 @@
     .api-key-wrap input { padding-right: 44px; }
     .api-key-wrap .toggle-eye {
       position: absolute; right: 12px; cursor: pointer;
-      color: var(--text-muted); font-size: 20px; user-select: none;
+      color: var(--text-muted); font-size: 20px; -webkit-user-select: none; user-select: none;
     }
 
     /* ── Buttons ─────────────────────────────── */
@@ -276,9 +276,9 @@
               <span class="material-icons-round">info</span>
               <div>
                 <strong>Primary:</strong> Get free Gemini key from
-                <a href="https://aistudio.google.com/apikey" target="_blank" style="color: var(--primary-color); font-weight: 600;">Google AI Studio</a> (15 req/min).<br>
+                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color: var(--primary-color); font-weight: 600;">Google AI Studio</a> (15 req/min).<br>
                 <strong>Backup:</strong> Get free Grok key from
-                <a href="https://console.x.ai/" target="_blank" style="color: var(--primary-color); font-weight: 600;">xAI Console</a> (auto-fallback if Gemini fails).
+                <a href="https://console.x.ai/" target="_blank" rel="noopener" style="color: var(--primary-color); font-weight: 600;">xAI Console</a> (auto-fallback if Gemini fails).
               </div>
             </div>
 
