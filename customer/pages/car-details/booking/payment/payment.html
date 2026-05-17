@@ -302,14 +302,16 @@
   <script src="../../../../../shared/js/animate.js"></script>
   <script src="../../../../../shared/js/main.js"></script>
   <script>
+    var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
     var activeDriverMode = 'existing';
-    var savedDriverProfile = {
+    var defaultDriverProfile = {
       fullName: 'Alex Johnson',
       identity: '900101-14-5678',
       email: 'alex.johnson@example.com',
       phone: '+60 11-1234 5678',
       license: 'DLR-9876543210'
     };
+    var savedDriverProfile = loadStoredDriverProfile();
     var demoOcrProfiles = [
       {
         fullName: 'Nur Aisyah Binti Rahman',
@@ -331,6 +333,24 @@
       back: null
     };
     var driverOcrReady = false;
+
+    function loadStoredDriverProfile() {
+      try {
+        var raw = localStorage.getItem(PROFILE_STORAGE_KEY);
+        if (!raw) return defaultDriverProfile;
+        var stored = JSON.parse(raw);
+        return {
+          fullName: ((stored.firstName || '') + ' ' + (stored.lastName || '')).trim() || defaultDriverProfile.fullName,
+          identity: stored.identity || defaultDriverProfile.identity,
+          email: stored.email || defaultDriverProfile.email,
+          phone: stored.phone || defaultDriverProfile.phone,
+          license: stored.license || defaultDriverProfile.license
+        };
+      } catch (error) {
+        console.error('Unable to load stored driver profile:', error);
+        return defaultDriverProfile;
+      }
+    }
 
     function selectDriverMode(mode) {
       activeDriverMode = mode;

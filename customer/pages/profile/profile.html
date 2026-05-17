@@ -32,7 +32,7 @@
         <aside class="pf-inner-nav">
           <div class="pf-user-card">
             <img class="pf-user-avatar" src="../../../shared/logo/wedrive-icon.png" alt="Alex Johnson" />
-            <div class="pf-user-name">Alex Johnson</div>
+            <div class="pf-user-name" id="pf-user-name">Alex Johnson</div>
             <div class="pf-user-tier">Premium Member</div>
           </div>
           <nav class="pf-inner-nav-sticky">
@@ -63,9 +63,9 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">badge</span> Basic Details</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>First Name</label><input type="text" value="Alex" aria-label="First Name" title="First Name" /></div>
-                <div class="pf-field"><label>Last Name</label><input type="text" value="Johnson" aria-label="Last Name" title="Last Name" /></div>
-                <div class="pf-field"><label>Date of Birth</label><input type="text" value="15/10/1985" aria-label="Date of Birth" title="Date of Birth" /></div>
+                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value="Alex" aria-label="First Name" title="First Name" /></div>
+                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value="Johnson" aria-label="Last Name" title="Last Name" /></div>
+                <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value="15/10/1985" aria-label="Date of Birth" title="Date of Birth" /></div>
               </div>
             </section>
 
@@ -73,14 +73,14 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">contacts</span> Contact Information</h3>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span class="material-icons-round">verified</span> Verified</span></label><input type="email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address" /></div>
-                <div class="pf-field full"><label>Phone Number</label><input type="tel" value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" /></div>
+                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span class="material-icons-round">verified</span> Verified</span></label><input type="email" id="pf-email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address" /></div>
+                <div class="pf-field full"><label>Phone Number</label><input type="tel" id="pf-phone" value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" /></div>
               </div>
               <h4 class="pf-sub-title">Residential Address</h4>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Street Address</label><input type="text" value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address" /></div>
-                <div class="pf-field"><label>City</label><input type="text" value="Melaka" aria-label="City" title="City" /></div>
-                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" value="75000" aria-label="Zip or Postal Code" title="Zip or Postal Code" /></div>
+                <div class="pf-field full"><label>Street Address</label><input type="text" id="pf-street" value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address" /></div>
+                <div class="pf-field"><label>City</label><input type="text" id="pf-city" value="Melaka" aria-label="City" title="City" /></div>
+                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" id="pf-zip" value="75000" aria-label="Zip or Postal Code" title="Zip or Postal Code" /></div>
               </div>
             </section>
 
@@ -88,14 +88,14 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">id_card</span> Driving License</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>License Number</label><input type="text" value="DLR-9876543210" aria-label="License Number" title="License Number" /></div>
-                <div class="pf-field"><label>Expiry Date</label><input type="text" value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" /></div>
+                <div class="pf-field"><label>License Number</label><input type="text" id="pf-license" value="DLR-9876543210" aria-label="License Number" title="License Number" /></div>
+                <div class="pf-field"><label>Expiry Date</label><input type="text" id="pf-license-expiry" value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" /></div>
               </div>
             </section>
 
             <div class="pf-actions-bar">
-              <button class="pf-btn outline" onclick="profileToast('No changes applied.')">Cancel</button>
-              <button class="pf-btn primary" onclick="profileToast('Changes saved successfully.')"><span class="material-icons-round">save</span> Save Changes</button>
+              <button class="pf-btn outline" onclick="resetProfileDetails()">Cancel</button>
+              <button class="pf-btn primary" onclick="saveProfileDetails()"><span class="material-icons-round">save</span> Save Changes</button>
             </div>
           </div>
 
@@ -323,6 +323,92 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js"></script>
   <script>
+    var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
+    var defaultProfileState = {
+      firstName: 'Alex',
+      lastName: 'Johnson',
+      dob: '15/10/1985',
+      email: 'alex.johnson@example.com',
+      phone: '+60 11-1234 5678',
+      street: '123 Jalan Melaka Raya, Suite 400',
+      city: 'Melaka',
+      zip: '75000',
+      license: 'DLR-9876543210',
+      licenseExpiry: '15/10/2028',
+      identity: '900101-14-5678'
+    };
+
+    function getProfileFieldMap() {
+      return {
+        firstName: document.getElementById('pf-first-name'),
+        lastName: document.getElementById('pf-last-name'),
+        dob: document.getElementById('pf-dob'),
+        email: document.getElementById('pf-email'),
+        phone: document.getElementById('pf-phone'),
+        street: document.getElementById('pf-street'),
+        city: document.getElementById('pf-city'),
+        zip: document.getElementById('pf-zip'),
+        license: document.getElementById('pf-license'),
+        licenseExpiry: document.getElementById('pf-license-expiry')
+      };
+    }
+
+    function readStoredProfile() {
+      try {
+        var raw = localStorage.getItem(PROFILE_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        console.error('Unable to parse stored profile:', error);
+        return null;
+      }
+    }
+
+    function mergeProfileState(stored) {
+      return Object.assign({}, defaultProfileState, stored || {});
+    }
+
+    function applyProfileState(state) {
+      var fields = getProfileFieldMap();
+      Object.keys(fields).forEach(function (key) {
+        if (fields[key]) {
+          fields[key].value = state[key] || '';
+        }
+      });
+      var nameEl = document.getElementById('pf-user-name');
+      if (nameEl) {
+        nameEl.textContent = (state.firstName + ' ' + state.lastName).trim();
+      }
+    }
+
+    function collectProfileState() {
+      var state = Object.assign({}, defaultProfileState);
+      var fields = getProfileFieldMap();
+      Object.keys(fields).forEach(function (key) {
+        if (fields[key]) {
+          state[key] = fields[key].value.trim();
+        }
+      });
+      var stored = readStoredProfile();
+      if (stored && stored.identity) {
+        state.identity = stored.identity;
+      }
+      return state;
+    }
+
+    function saveProfileDetails() {
+      var state = collectProfileState();
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(state));
+      applyProfileState(state);
+      profileToast('Profile details saved for checkout.');
+    }
+
+    function resetProfileDetails() {
+      applyProfileState(mergeProfileState(readStoredProfile()));
+      profileToast('Profile details restored.');
+    }
+
+    applyProfileState(mergeProfileState(readStoredProfile()));
+
     // Panel switching
     document.querySelectorAll('.pf-inner-link').forEach(function(link) {
       link.addEventListener('click', function(e) {

@@ -149,6 +149,20 @@
       try {
         // Since we don't have a real API for signup yet, simulate a short delay
         await new Promise(resolve => setTimeout(resolve, 1500));
+
+        localStorage.setItem('wedrive_customer_profile', JSON.stringify({
+          firstName: fname,
+          lastName: lname,
+          dob: '15/10/1985',
+          email: email,
+          phone: '+60 11-1234 5678',
+          street: '123 Jalan Melaka Raya, Suite 400',
+          city: 'Melaka',
+          zip: '75000',
+          license: 'DLR-9876543210',
+          licenseExpiry: '15/10/2028',
+          identity: '900101-14-5678'
+        }));
         
         // Simulating successful account creation
         alert(`Account created successfully for ${fname} ${lname}! Please sign in.`);
