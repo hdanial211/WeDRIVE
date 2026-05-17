@@ -19,6 +19,7 @@
   height: 64px;
   background: var(--navbar-bg, #FFFFFF);
   border-bottom: 1px solid var(--border-color, #E2E8F0);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: background 0.35s ease, border-color 0.35s ease;

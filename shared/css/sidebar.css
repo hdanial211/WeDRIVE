@@ -94,6 +94,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -184,6 +185,7 @@
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.6);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(4px);
   z-index: 99;
   opacity: 0;

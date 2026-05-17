@@ -356,7 +356,7 @@ tr:hover td { background: var(--slate-50); }
 /* ── Modal Overlay ── */
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   z-index: 10000; display: flex; align-items: center; justify-content: center;
   animation: fadeIn 0.2s ease;
 }
@@ -568,6 +568,7 @@ tr:hover td { background: var(--slate-50); }
 .cal-stat-modal-overlay {
   position: fixed; inset: 0;
   background: rgba(15, 23, 42, 0.5);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(6px);
   z-index: 9999;
   display: flex; align-items: center; justify-content: center;
@@ -662,6 +663,7 @@ tr:hover td { background: var(--slate-50); }
   background: white; cursor: pointer;
   font-size: 12px; font-weight: 600; color: var(--slate-600);
   transition: all 0.25s ease;
+  -webkit-user-select: none;
   user-select: none;
 }
 .cal-filter-chip input[type="checkbox"] {
@@ -802,6 +804,7 @@ tr:hover td { background: var(--slate-50); }
 .cal-day-modal-overlay {
   position: fixed; inset: 0;
   background: rgba(15, 23, 42, 0.55);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 9998;
@@ -838,6 +841,7 @@ tr:hover td { background: var(--slate-50); }
   width: 52px; height: 52px;
   border-radius: 14px;
   background: rgba(255,255,255,0.2);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(10px);
   border: 1.5px solid rgba(255,255,255,0.3);
   display: flex; align-items: center; justify-content: center;
