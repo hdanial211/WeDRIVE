@@ -11,7 +11,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=5.1.0" />
+  <link rel="stylesheet" href="../../css/customer.css?v=5.2.5" />
 </head>
 <body data-particles="6" data-cursor-glow>
   <div id="customer-sidebar-placeholder"></div>
@@ -56,16 +56,33 @@
           <div class="pf-panel active" id="panel-personal">
             <div class="pf-panel-header">
               <h2 class="pf-panel-title">Personal Information</h2>
-              <p class="pf-panel-desc">Manage your basic profile details and contact information.</p>
+              <p class="pf-panel-desc">Your identity data is protected. Changes require document re-verification before they are applied.</p>
             </div>
+
+            <section class="pf-card pf-verified-shell">
+              <div class="pf-verified-banner">
+                <div class="pf-verified-banner-icon">
+                  <span class="material-icons-round">verified_user</span>
+                </div>
+                <div class="pf-verified-banner-copy">
+                  <strong>Verified account details are locked</strong>
+                  <p>To update your legal identity, email, address, or driving license, upload a new IC and license set below. Direct edits are disabled to prevent misuse.</p>
+                </div>
+                <div class="pf-verified-banner-status" id="pf-verification-status">
+                  <span class="material-icons-round">shield</span>
+                  Verified
+                </div>
+              </div>
+            </section>
 
             <!-- Basic Details -->
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">badge</span> Basic Details</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value="Alex" aria-label="First Name" title="First Name" /></div>
-                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value="Johnson" aria-label="Last Name" title="Last Name" /></div>
-                <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value="15/10/1985" aria-label="Date of Birth" title="Date of Birth" /></div>
+                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value="Alex" aria-label="First Name" title="First Name" readonly /></div>
+                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value="Johnson" aria-label="Last Name" title="Last Name" readonly /></div>
+                <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value="15/10/1985" aria-label="Date of Birth" title="Date of Birth" readonly /></div>
+                <div class="pf-field full"><label>IC / Passport</label><input type="text" id="pf-identity" value="900101-14-5678" aria-label="IC or Passport" title="IC or Passport" readonly /></div>
               </div>
             </section>
 
@@ -73,14 +90,14 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">contacts</span> Contact Information</h3>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span class="material-icons-round">verified</span> Verified</span></label><input type="email" id="pf-email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address" /></div>
-                <div class="pf-field full"><label>Phone Number</label><input type="tel" id="pf-phone" value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" /></div>
+                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span class="material-icons-round">verified</span> Verified</span></label><input type="email" id="pf-email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address" readonly /></div>
+                <div class="pf-field full"><label>Phone Number</label><input type="tel" id="pf-phone" value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" readonly /></div>
               </div>
               <h4 class="pf-sub-title">Residential Address</h4>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Street Address</label><input type="text" id="pf-street" value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address" /></div>
-                <div class="pf-field"><label>City</label><input type="text" id="pf-city" value="Melaka" aria-label="City" title="City" /></div>
-                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" id="pf-zip" value="75000" aria-label="Zip or Postal Code" title="Zip or Postal Code" /></div>
+                <div class="pf-field full"><label>Street Address</label><input type="text" id="pf-street" value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address" readonly /></div>
+                <div class="pf-field"><label>City</label><input type="text" id="pf-city" value="Melaka" aria-label="City" title="City" readonly /></div>
+                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" id="pf-zip" value="75000" aria-label="Zip or Postal Code" title="Zip or Postal Code" readonly /></div>
               </div>
             </section>
 
@@ -88,14 +105,58 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">id_card</span> Driving License</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>License Number</label><input type="text" id="pf-license" value="DLR-9876543210" aria-label="License Number" title="License Number" /></div>
-                <div class="pf-field"><label>Expiry Date</label><input type="text" id="pf-license-expiry" value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" /></div>
+                <div class="pf-field"><label>License Number</label><input type="text" id="pf-license" value="DLR-9876543210" aria-label="License Number" title="License Number" readonly /></div>
+                <div class="pf-field"><label>Expiry Date</label><input type="text" id="pf-license-expiry" value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" readonly /></div>
+              </div>
+            </section>
+
+            <section class="pf-card">
+              <div class="pf-section-head-flex">
+                <h3 class="pf-section-title"><span class="material-icons-round">document_scanner</span> Update Verified Identity</h3>
+                <button class="pf-text-btn" type="button" onclick="simulateVerifiedProfile()">Use sample verified scan</button>
+              </div>
+              <p class="pf-card-desc">Upload a new IC front, IC back, and driving license image. WeDRIVE will verify the document set and update the locked profile automatically after review.</p>
+
+              <div class="pf-doc-grid">
+                <label class="pf-doc-card" for="pf-upload-ic-front">
+                  <input type="file" id="pf-upload-ic-front" accept="image/*" aria-label="Upload IC front image" title="Upload IC front image" onchange="handleProfileDocumentUpload('icFront', this.files)" />
+                  <span class="material-icons-round">credit_card</span>
+                  <strong>IC Front</strong>
+                  <span class="pf-doc-meta" id="pf-upload-ic-front-meta">Upload front image</span>
+                </label>
+                <label class="pf-doc-card" for="pf-upload-ic-back">
+                  <input type="file" id="pf-upload-ic-back" accept="image/*" aria-label="Upload IC back image" title="Upload IC back image" onchange="handleProfileDocumentUpload('icBack', this.files)" />
+                  <span class="material-icons-round">badge</span>
+                  <strong>IC Back</strong>
+                  <span class="pf-doc-meta" id="pf-upload-ic-back-meta">Upload back image</span>
+                </label>
+                <label class="pf-doc-card" for="pf-upload-license">
+                  <input type="file" id="pf-upload-license" accept="image/*" aria-label="Upload driving license image" title="Upload driving license image" onchange="handleProfileDocumentUpload('license', this.files)" />
+                  <span class="material-icons-round">id_card</span>
+                  <strong>Driving License</strong>
+                  <span class="pf-doc-meta" id="pf-upload-license-meta">Upload license image</span>
+                </label>
+              </div>
+
+              <div class="pf-form-grid pf-reverify-grid">
+                <div class="pf-field full">
+                  <label>Verification Contact Number</label>
+                  <input type="tel" id="pf-reverify-phone" value="+60 11-1234 5678" aria-label="Verification Contact Number" title="Verification Contact Number" placeholder="+60 12-345 6789" />
+                </div>
+              </div>
+
+              <div class="pf-doc-progress">
+                <div class="pf-doc-progress-copy">
+                  <strong id="pf-doc-progress-title">Awaiting documents</strong>
+                  <p id="pf-doc-progress-text">Upload all required images to start re-verification.</p>
+                </div>
+                <div class="pf-doc-progress-pill" id="pf-doc-progress-pill">Locked</div>
               </div>
             </section>
 
             <div class="pf-actions-bar">
               <button class="pf-btn outline" onclick="resetProfileDetails()">Cancel</button>
-              <button class="pf-btn primary" onclick="saveProfileDetails()"><span class="material-icons-round">save</span> Save Changes</button>
+              <button class="pf-btn primary" onclick="submitProfileVerification()"><span class="material-icons-round">verified</span> Submit for Verification</button>
             </div>
           </div>
 
@@ -335,7 +396,13 @@
       zip: '75000',
       license: 'DLR-9876543210',
       licenseExpiry: '15/10/2028',
-      identity: '900101-14-5678'
+      identity: '900101-14-5678',
+      verificationStatus: 'Verified'
+    };
+    var profileDocUploads = {
+      icFront: null,
+      icBack: null,
+      license: null
     };
 
     function getProfileFieldMap() {
@@ -343,6 +410,7 @@
         firstName: document.getElementById('pf-first-name'),
         lastName: document.getElementById('pf-last-name'),
         dob: document.getElementById('pf-dob'),
+        identity: document.getElementById('pf-identity'),
         email: document.getElementById('pf-email'),
         phone: document.getElementById('pf-phone'),
         street: document.getElementById('pf-street'),
@@ -378,36 +446,159 @@
       if (nameEl) {
         nameEl.textContent = (state.firstName + ' ' + state.lastName).trim();
       }
-    }
-
-    function collectProfileState() {
-      var state = Object.assign({}, defaultProfileState);
-      var fields = getProfileFieldMap();
-      Object.keys(fields).forEach(function (key) {
-        if (fields[key]) {
-          state[key] = fields[key].value.trim();
-        }
-      });
-      var stored = readStoredProfile();
-      if (stored && stored.identity) {
-        state.identity = stored.identity;
+      var verificationStatus = document.getElementById('pf-verification-status');
+      if (verificationStatus) {
+        verificationStatus.innerHTML = '<span class="material-icons-round">shield</span>' + (state.verificationStatus || 'Verified');
       }
-      return state;
+      var reverifyPhone = document.getElementById('pf-reverify-phone');
+      if (reverifyPhone) {
+        reverifyPhone.value = state.phone || '';
+      }
     }
 
-    function saveProfileDetails() {
-      var state = collectProfileState();
+    function getProfileVerificationDraft() {
+      return {
+        firstName: 'Nur',
+        lastName: 'Aisyah',
+        dob: '12/08/1994',
+        identity: '940812-04-6218',
+        email: 'nur.aisyah@example.com',
+        phone: (document.getElementById('pf-reverify-phone') || {}).value || defaultProfileState.phone,
+        street: '88 Jalan Kota Laksamana, Melaka',
+        city: 'Melaka',
+        zip: '75200',
+        license: 'MDB-12004598',
+        licenseExpiry: '22/11/2029',
+        verificationStatus: 'Verified'
+      };
+    }
+
+    function updateDocumentMeta(type, label) {
+      var metaMap = {
+        icFront: document.getElementById('pf-upload-ic-front-meta'),
+        icBack: document.getElementById('pf-upload-ic-back-meta'),
+        license: document.getElementById('pf-upload-license-meta')
+      };
+      if (metaMap[type]) {
+        metaMap[type].textContent = label;
+      }
+    }
+
+    function getDefaultDocumentMeta(type) {
+      if (type === 'icFront') return 'Upload front image';
+      if (type === 'icBack') return 'Upload back image';
+      return 'Upload license image';
+    }
+
+    function updateVerificationProgress() {
+      var completedCount = Object.keys(profileDocUploads).filter(function (key) {
+        return !!profileDocUploads[key];
+      }).length;
+      var title = document.getElementById('pf-doc-progress-title');
+      var text = document.getElementById('pf-doc-progress-text');
+      var pill = document.getElementById('pf-doc-progress-pill');
+      if (!title || !text || !pill) {
+        return;
+      }
+      if (completedCount === 0) {
+        title.textContent = 'Awaiting documents';
+        text.textContent = 'Upload all required images to start re-verification.';
+        pill.textContent = 'Locked';
+      } else if (completedCount < 3) {
+        title.textContent = 'Documents in progress';
+        text.textContent = completedCount + ' of 3 required uploads received.';
+        pill.textContent = completedCount + '/3';
+      } else {
+        title.textContent = 'Ready for verification';
+        text.textContent = 'All required documents uploaded. Submit to refresh verified identity data.';
+        pill.textContent = 'Ready';
+      }
+    }
+
+    function handleProfileDocumentUpload(type, files) {
+      if (!files || !files.length) {
+        profileDocUploads[type] = null;
+        updateDocumentMeta(type, getDefaultDocumentMeta(type));
+        updateVerificationProgress();
+        return;
+      }
+      profileDocUploads[type] = files[0].name;
+      updateDocumentMeta(type, files[0].name);
+      updateVerificationProgress();
+    }
+
+    function persistProfileState(state) {
       localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(state));
       applyProfileState(state);
-      profileToast('Profile details saved for checkout.');
+    }
+
+    function submitProfileVerification() {
+      var missing = Object.keys(profileDocUploads).filter(function (key) {
+        return !profileDocUploads[key];
+      });
+      var contactNumber = (document.getElementById('pf-reverify-phone') || {}).value || '';
+      if (!contactNumber.trim()) {
+        profileToast('Please enter a verification contact number.');
+        return;
+      }
+      if (missing.length) {
+        profileToast('Upload IC front, IC back, and driving license first.');
+        return;
+      }
+      var progressTitle = document.getElementById('pf-doc-progress-title');
+      var progressText = document.getElementById('pf-doc-progress-text');
+      var progressPill = document.getElementById('pf-doc-progress-pill');
+      if (progressTitle && progressText && progressPill) {
+        progressTitle.textContent = 'Verification complete';
+        progressText.textContent = 'Your new legal profile has been refreshed from the verified document set.';
+        progressPill.textContent = 'Verified';
+      }
+      persistProfileState(getProfileVerificationDraft());
+      profileToast('Verified profile updated from uploaded documents.');
+    }
+
+    function simulateVerifiedProfile() {
+      var sampleFiles = {
+        icFront: 'ic-front-scan.jpg',
+        icBack: 'ic-back-scan.jpg',
+        license: 'license-scan.jpg'
+      };
+      Object.keys(sampleFiles).forEach(function (key) {
+        profileDocUploads[key] = sampleFiles[key];
+        updateDocumentMeta(key, sampleFiles[key]);
+      });
+      updateVerificationProgress();
+      persistProfileState(getProfileVerificationDraft());
+      var progressTitle = document.getElementById('pf-doc-progress-title');
+      var progressText = document.getElementById('pf-doc-progress-text');
+      var progressPill = document.getElementById('pf-doc-progress-pill');
+      if (progressTitle && progressText && progressPill) {
+        progressTitle.textContent = 'Sample verification applied';
+        progressText.textContent = 'Demo verified data has been loaded into your locked profile.';
+        progressPill.textContent = 'Verified';
+      }
+      profileToast('Sample verified profile loaded.');
     }
 
     function resetProfileDetails() {
+      profileDocUploads = { icFront: null, icBack: null, license: null };
+      updateDocumentMeta('icFront', getDefaultDocumentMeta('icFront'));
+      updateDocumentMeta('icBack', getDefaultDocumentMeta('icBack'));
+      updateDocumentMeta('license', getDefaultDocumentMeta('license'));
+      var uploadInputs = ['pf-upload-ic-front', 'pf-upload-ic-back', 'pf-upload-license'];
+      uploadInputs.forEach(function (id) {
+        var input = document.getElementById(id);
+        if (input) {
+          input.value = '';
+        }
+      });
       applyProfileState(mergeProfileState(readStoredProfile()));
+      updateVerificationProgress();
       profileToast('Profile details restored.');
     }
 
     applyProfileState(mergeProfileState(readStoredProfile()));
+    updateVerificationProgress();
 
     // Panel switching
     document.querySelectorAll('.pf-inner-link').forEach(function(link) {
