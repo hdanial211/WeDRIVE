@@ -31,17 +31,17 @@
         <!-- Profile User Card + Inner Nav -->
         <aside class="pf-inner-nav">
           <div class="pf-user-card">
-            <img class="pf-user-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0xg8MWnLYY1jSoFo7nr1L4xT0YV0GGa73F_b-SoPhGeORWm_gdTD3-RVRw3jGA0NbhLM4XV-vec9qwXrndkEQrNGn6TKXMZnH-rl-XvvHM7gMf_3GGf8VDoOHmOLZKO1IknfpOOcPmmsGmlquJlY4HcRLSkCcP4eAHPPb_QDQvAn-2LUsMe3YXWAYfBHEvegR8lY-Tmu1mOsOBOWUFrIC9XorPLkbLK_p43aMAy9M4vo-moNK91KmbZcFzqar436qY6Yb9rvsjzs" alt="Alex Johnson" />
+            <img class="pf-user-avatar" src="../../../shared/logo/wedrive-icon.png" alt="Alex Johnson" />
             <div class="pf-user-name">Alex Johnson</div>
             <div class="pf-user-tier">Premium Member</div>
           </div>
           <nav class="pf-inner-nav-sticky">
             <ul class="pf-inner-nav-list">
-              <li><a href="#" class="pf-inner-link active" data-section="personal"><span class="material-icons-round">person</span> <span data-key="pf_nav_personal">Personal Info</span></a></li>
-              <li><a href="#" class="pf-inner-link" data-section="security"><span class="material-icons-round">security</span> <span data-key="pf_nav_security">Security</span></a></li>
-              <li><a href="#" class="pf-inner-link" data-section="payment"><span class="material-icons-round">credit_card</span> <span data-key="pf_nav_payment">Payment Methods</span></a></li>
-              <li><a href="#" class="pf-inner-link" data-section="preferences"><span class="material-icons-round">tune</span> <span data-key="pf_nav_prefs">Preferences</span></a></li>
-              <li><a href="#" class="pf-inner-link" data-section="notifications"><span class="material-icons-round">notifications</span> <span data-key="pf_nav_notif">Notifications</span></a></li>
+              <li><a href="#panel-personal" class="pf-inner-link active" data-section="personal"><span class="material-icons-round">person</span> <span data-key="pf_nav_personal">Personal Info</span></a></li>
+              <li><a href="#panel-security" class="pf-inner-link" data-section="security"><span class="material-icons-round">security</span> <span data-key="pf_nav_security">Security</span></a></li>
+              <li><a href="#panel-payment" class="pf-inner-link" data-section="payment"><span class="material-icons-round">credit_card</span> <span data-key="pf_nav_payment">Payment Methods</span></a></li>
+              <li><a href="#panel-preferences" class="pf-inner-link" data-section="preferences"><span class="material-icons-round">tune</span> <span data-key="pf_nav_prefs">Preferences</span></a></li>
+              <li><a href="#panel-notifications" class="pf-inner-link" data-section="notifications"><span class="material-icons-round">notifications</span> <span data-key="pf_nav_notif">Notifications</span></a></li>
             </ul>
           </nav>
           <div class="pf-upgrade-card">
@@ -241,7 +241,7 @@
                 </div>
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Measurement Units</div><div class="pf-pref-desc">Distance & speed units</div></div>
-                  <div class="pf-segment-control"><button class="active">Kilometers</button><button>Miles</button></div>
+                  <div class="pf-segment-control"><button class="active" type="button" onclick="selectUnit(this)">Kilometers</button><button type="button" onclick="selectUnit(this)">Miles</button></div>
                 </div>
                 <div class="pf-pref-item">
                   <div><div class="pf-pref-label">Currency</div><div class="pf-pref-desc">Display prices in</div></div>
@@ -287,7 +287,7 @@
                 <h3 class="pf-section-title"><span class="material-icons-round">newspaper</span> Newsletter</h3>
                 <p class="pf-card-desc">Subscribe to our newsletter to discover tips & updates delivered to your mailbox.</p>
                 <div class="pf-toggle-row"><div><div class="pf-toggle-label">Subscribe</div></div><label class="pf-switch"><input type="checkbox" checked /><span class="pf-slider"></span></label></div>
-                <div class="pf-help-box"><strong>Need Help?</strong><p>If you are not receiving emails, please check your spam folder or spam address/domain is whitelisted.</p><a href="#" class="pf-text-btn primary">Contact Support</a></div>
+                <div class="pf-help-box"><strong>Need Help?</strong><p>If you are not receiving emails, please check your spam folder or spam address/domain is whitelisted.</p><a href="../support/support.html" class="pf-text-btn primary">Contact Support</a></div>
               </section>
             </div>
 
@@ -340,6 +340,12 @@
       document.querySelectorAll('.pf-cat-card').forEach(function(c) { c.classList.remove('active'); });
       el.classList.add('active');
       profileToast('Preferred car updated.');
+    }
+
+    function selectUnit(el) {
+      document.querySelectorAll('.pf-segment-control button').forEach(function(btn) { btn.classList.remove('active'); });
+      el.classList.add('active');
+      profileToast('Measurement unit updated.');
     }
 
     function profileToast(message) {

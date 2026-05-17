@@ -69,9 +69,13 @@
     return window.location.pathname.includes('/pages/') ? '../../../' : '';
   }
 
+  function fallbackImagePath() {
+    return rootPrefix() + 'shared/images/cars/toyota-vios-2023.png';
+  }
+
   function imagePath(car) {
     var file = car && car.images && car.images.length ? car.images[0] : '';
-    return file ? rootPrefix() + 'shared/images/cars/' + file : '';
+    return rootPrefix() + 'shared/images/cars/' + (file || 'toyota-vios-2023.png');
   }
 
   function escapeHtml(value) {
@@ -256,6 +260,10 @@
       if (img) {
         img.src = imagePath(car);
         img.alt = car.name;
+        img.onerror = function () {
+          this.onerror = null;
+          this.src = fallbackImagePath();
+        };
       }
 
       setText('guest-spotlight-type', car.label || car.type || '');
@@ -323,6 +331,7 @@
       var reviews = escapeHtml(car.reviews || '0');
       var status = statusKey(car);
       var img = imagePath(car);
+      var fallbackImg = fallbackImagePath();
       var buttonText = window.__GUEST_MODE__ ? t('signInToBook') : t('bookNow');
       var metaItems = [];
 
@@ -337,7 +346,7 @@
       return [
         '<div class="car-card" onclick="bookCar(' + Number(car.id) + ')">',
         '  <div class="car-img">',
-        img ? '    <img src="' + img + '" alt="' + safeName + '" />' : '    <span class="material-icons-round no-img">directions_car</span>',
+        '    <img src="' + img + '" alt="' + safeName + '" onerror="this.onerror=null;this.src=\'' + fallbackImg + '\'" />',
         '    <div class="car-badges">',
         '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
         '      <span class="rating-pill">' + rating + '</span>',
@@ -385,6 +394,10 @@
     if (img) {
       img.src = imagePath(car);
       img.alt = car.name;
+      img.onerror = function () {
+        this.onerror = null;
+        this.src = fallbackImagePath();
+      };
     }
     if (carLine) {
       carLine.textContent = car.name + ' - RM ' + car.price + t('day') + ' - ' + statusText(car);
@@ -440,7 +453,14 @@
 
     // Populate car info
     var img = document.getElementById('popup-car-img');
-    if (img) { img.src = imagePath(car); img.alt = car.name; }
+    if (img) {
+      img.src = imagePath(car);
+      img.alt = car.name;
+      img.onerror = function () {
+        this.onerror = null;
+        this.src = fallbackImagePath();
+      };
+    }
     var nameEl = document.getElementById('popup-car-name');
     if (nameEl) nameEl.textContent = car.name;
     var typeEl = document.getElementById('popup-car-type');

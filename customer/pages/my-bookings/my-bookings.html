@@ -59,7 +59,7 @@
       <!-- Active Rental Highlight -->
       <div class="active-rental">
         <div class="active-rental-img">
-          <img src="../../../shared/images/cars/tesla-model3-side.jpg" alt="Tesla Model 3" onerror="this.src='https://placehold.co/340x240/e2e8f0/94a3b8?text=Car+Photo'" />
+          <img src="../../../shared/images/cars/tesla-model3-side.jpg" alt="Tesla Model 3" onerror="this.onerror=null;this.src='../../../shared/images/cars/toyota-vios-2023.png'" />
           <span class="active-badge">ACTIVE</span>
         </div>
         <div class="active-rental-body">
@@ -84,20 +84,20 @@
             </div>
           </div>
           <div class="active-actions">
-            <button class="active-action-btn primary"><span class="material-icons-round">calendar_month</span> <span data-key="mybk_extend">Extend Rental</span></button>
-            <button class="active-action-btn outline"><span class="material-icons-round">report</span> <span data-key="mybk_report">Report Issue</span></button>
-            <button class="active-action-btn outline"><span class="material-icons-round">directions</span> <span data-key="mybk_directions">Get Directions</span></button>
+            <button class="active-action-btn primary" type="button" onclick="handleBookingAction('extend')"><span class="material-icons-round">calendar_month</span> <span data-key="mybk_extend">Extend Rental</span></button>
+            <button class="active-action-btn outline" type="button" onclick="handleBookingAction('report')"><span class="material-icons-round">report</span> <span data-key="mybk_report">Report Issue</span></button>
+            <button class="active-action-btn outline" type="button" onclick="handleBookingAction('directions')"><span class="material-icons-round">directions</span> <span data-key="mybk_directions">Get Directions</span></button>
           </div>
         </div>
       </div>
 
       <!-- Filter Tabs -->
       <div class="mybk-tabs">
-        <button class="mybk-tab active" data-key="mybk_all">All Bookings</button>
-        <button class="mybk-tab" data-key="mybk_tab_active">Active</button>
-        <button class="mybk-tab" data-key="mybk_tab_upcoming">Upcoming</button>
-        <button class="mybk-tab" data-key="mybk_tab_completed">Completed</button>
-        <button class="mybk-tab" data-key="mybk_tab_cancelled">Cancelled</button>
+        <button class="mybk-tab active" type="button" data-key="mybk_all">All Bookings</button>
+        <button class="mybk-tab" type="button" data-key="mybk_tab_active">Active</button>
+        <button class="mybk-tab" type="button" data-key="mybk_tab_upcoming">Upcoming</button>
+        <button class="mybk-tab" type="button" data-key="mybk_tab_completed">Completed</button>
+        <button class="mybk-tab" type="button" data-key="mybk_tab_cancelled">Cancelled</button>
       </div>
 
       <!-- Booking Cards -->
@@ -105,7 +105,7 @@
         <!-- Upcoming -->
         <div class="mybk-card">
           <div class="mybk-card-img">
-            <img src="../../../shared/images/cars/bmw-3series-2024.png" alt="BMW 3 Series" onerror="this.src='https://placehold.co/120x80/e2e8f0/94a3b8?text=BMW'" />
+            <img src="../../../shared/images/cars/bmw-3series-2024.png" alt="BMW 3 Series" onerror="this.onerror=null;this.src='../../../shared/images/cars/toyota-vios-2023.png'" />
           </div>
           <div class="mybk-card-body">
             <div>
@@ -123,9 +123,9 @@
             <div>
               <div class="mybk-card-price">RM 1,200.00</div>
               <div class="mybk-card-actions">
-                <button class="view-btn">View Details</button>
+                <button class="view-btn" type="button" onclick="handleBookingAction('view-upcoming')">View Details</button>
                 <span class="divider">|</span>
-                <button class="cancel-btn">Cancel</button>
+                <button class="cancel-btn" type="button" onclick="handleBookingAction('cancel')">Cancel</button>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@
         <!-- Completed -->
         <div class="mybk-card faded">
           <div class="mybk-card-img grayscale">
-            <img src="../../../shared/images/cars/toyota-camry.jpg" alt="Toyota Camry" onerror="this.src='https://placehold.co/120x80/e2e8f0/94a3b8?text=Camry'" />
+            <img src="../../../shared/images/cars/toyota-camry.jpg" alt="Toyota Camry" onerror="this.onerror=null;this.src='../../../shared/images/cars/toyota-vios-2023.png'" />
           </div>
           <div class="mybk-card-body">
             <div>
@@ -152,9 +152,9 @@
             <div>
               <div class="mybk-card-price">RM 800.00</div>
               <div class="mybk-card-actions">
-                <button class="view-btn">Receipt</button>
+                <button class="view-btn" type="button" onclick="location.href='receipt/receipt.html'">Receipt</button>
                 <span class="divider">|</span>
-                <button class="rebook-btn">Rebook</button>
+                <button class="rebook-btn" type="button" onclick="location.href='../dashboard/customer.html'">Rebook</button>
               </div>
             </div>
           </div>
@@ -163,7 +163,7 @@
         <!-- Cancelled -->
         <div class="mybk-card faded">
           <div class="mybk-card-img grayscale">
-            <img src="../../../shared/images/cars/mercedes-c-class.jpg" alt="Mercedes C-Class" onerror="this.src='https://placehold.co/120x80/e2e8f0/94a3b8?text=Mercedes'" />
+            <img src="../../../shared/images/cars/mercedes-c-class.jpg" alt="Mercedes C-Class" onerror="this.onerror=null;this.src='../../../shared/images/cars/toyota-vios-2023.png'" />
           </div>
           <div class="mybk-card-body">
             <div>
@@ -181,7 +181,7 @@
             <div>
               <div class="mybk-card-price" style="color:var(--slate-400)">RM 0.00</div>
               <div class="mybk-card-actions">
-                <button class="rebook-btn">Rebook</button>
+                <button class="rebook-btn" type="button" onclick="location.href='../dashboard/customer.html'">Rebook</button>
               </div>
             </div>
           </div>
@@ -190,11 +190,11 @@
 
       <!-- Pagination -->
       <div class="mybk-pagination">
-        <button class="mybk-page-btn" disabled><span class="material-icons-round" style="font-size:18px;">chevron_left</span></button>
-        <button class="mybk-page-btn active">1</button>
-        <button class="mybk-page-btn">2</button>
-        <button class="mybk-page-btn">3</button>
-        <button class="mybk-page-btn"><span class="material-icons-round" style="font-size:18px;">chevron_right</span></button>
+        <button class="mybk-page-btn" type="button" disabled><span class="material-icons-round" style="font-size:18px;">chevron_left</span></button>
+        <button class="mybk-page-btn active" type="button" onclick="setBookingPage(this)">1</button>
+        <button class="mybk-page-btn" type="button" onclick="setBookingPage(this)">2</button>
+        <button class="mybk-page-btn" type="button" onclick="setBookingPage(this)">3</button>
+        <button class="mybk-page-btn" type="button" onclick="setBookingPage(this)"><span class="material-icons-round" style="font-size:18px;">chevron_right</span></button>
       </div>
     </div>
   </main>
@@ -217,6 +217,35 @@
         this.classList.add('active');
       });
     });
+
+    function handleBookingAction(action) {
+      if (action === 'extend' || action === 'view-upcoming') {
+        location.href = '../car-details/booking/booking.html';
+        return;
+      }
+      if (action === 'report') {
+        location.href = '../support/support.html';
+        return;
+      }
+      if (action === 'directions') {
+        location.href = '../../../shared/pages/footer/contact/contact.html';
+        return;
+      }
+      if (action === 'cancel') {
+        alert('Booking cancellation request submitted for review.');
+      }
+    }
+
+    function setBookingPage(button) {
+      document.querySelectorAll('.mybk-page-btn').forEach(function(btn) { btn.classList.remove('active'); });
+      if (button.textContent.trim()) {
+        button.classList.add('active');
+        alert('Showing booking page ' + button.textContent.trim() + '.');
+      } else {
+        document.querySelector('.mybk-page-btn:nth-of-type(3)').classList.add('active');
+        alert('Showing next booking page.');
+      }
+    }
   </script>
 </body>
 </html>
