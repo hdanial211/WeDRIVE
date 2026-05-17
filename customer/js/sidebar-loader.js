@@ -57,6 +57,7 @@
     if (path.includes('/profile/')) return 'profile';
     if (path.includes('/ai-insights/')) return 'ai-insights';
     if (path.includes('/support/')) return 'support';
+    if (path.includes('/car-access/')) return 'my-bookings';
     if (path.includes('/car-details/')) return 'car-details';
     return 'dashboard';
   }

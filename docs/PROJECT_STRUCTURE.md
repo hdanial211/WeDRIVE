@@ -89,6 +89,8 @@ AI CAR RENTAL SYSTEM/
 |   +-- pages/                           # FLOW: Dashboard > Car Details > Booking > Payment > Confirmed
 |   |   +-- dashboard/
 |   |   |   +-- customer.html            # Customer Dashboard (Pilih Kereta)
+|   |   +-- car-access/
+|   |   |   +-- car-access.html          # Kawalan kereta aktif / Digital Key selepas pick-up
 |   |   +-- car-details/
 |   |   |   +-- car-details.html         # Detail Kereta (Premium Gallery)
 |   |   |   +-- booking/

@@ -191,6 +191,11 @@
         button.addEventListener('click', function (event) {
           event.preventDefault();
           event.stopPropagation();
+          var buttonTarget = button.getAttribute('data-href');
+          if (buttonTarget) {
+            window.location.href = buttonTarget;
+            return;
+          }
           goToActiveBooking();
         });
       });

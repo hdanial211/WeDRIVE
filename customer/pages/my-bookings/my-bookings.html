@@ -84,9 +84,9 @@
             </div>
           </div>
           <div class="active-actions">
-            <button class="active-action-btn primary" type="button" onclick="handleBookingAction('extend')"><span class="material-icons-round">calendar_month</span> <span data-key="mybk_extend">Extend Rental</span></button>
+            <button class="active-action-btn primary" type="button" onclick="handleBookingAction('access')"><span class="material-icons-round">key</span> <span>Access Car</span></button>
+            <button class="active-action-btn outline" type="button" onclick="handleBookingAction('extend')"><span class="material-icons-round">calendar_month</span> <span data-key="mybk_extend">Extend Rental</span></button>
             <button class="active-action-btn outline" type="button" onclick="handleBookingAction('report')"><span class="material-icons-round">report</span> <span data-key="mybk_report">Report Issue</span></button>
-            <button class="active-action-btn outline" type="button" onclick="handleBookingAction('directions')"><span class="material-icons-round">directions</span> <span data-key="mybk_directions">Get Directions</span></button>
           </div>
         </div>
       </div>
@@ -203,7 +203,7 @@
 
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
-  <script src="../../js/sidebar-loader.js?v=5.4.1"></script>
+  <script src="../../js/sidebar-loader.js?v=5.5.0"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
@@ -219,6 +219,10 @@
     });
 
     function handleBookingAction(action) {
+      if (action === 'access') {
+        location.href = '../car-access/car-access.html';
+        return;
+      }
       if (action === 'extend' || action === 'view-upcoming') {
         location.href = '../car-details/booking/booking.html';
         return;
