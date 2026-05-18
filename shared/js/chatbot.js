@@ -126,8 +126,8 @@ window.addChatMsg = function(text, isUser = false, showCar = false) {
       <div class="mini-car-card">
         <div class="mini-car-icon"><span class="material-icons-round">directions_car</span></div>
         <div class="mini-car-info">
-          <div class="c-name">Top Pick: Honda CR-V 2024</div>
-          <div class="c-price">RM 200/day · SUV · Hybrid</div>
+          <div class="c-name">Top Pick: 2023 Mercedes-Benz GLA250 AMG Line 2.0</div>
+          <div class="c-price">RM 320/day · SUV · Petrol</div>
         </div>
         <button class="mini-book-btn" onclick="document.getElementById('cars-grid') ? document.getElementById('cars-grid').scrollIntoView({behavior:'smooth'}) : window.location.href='customer/pages/customer.html'">View</button>
       </div>` : ''}

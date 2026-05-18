@@ -70,12 +70,12 @@
   }
 
   function fallbackImagePath() {
-    return rootPrefix() + 'shared/images/cars/toyota-vios-2023.png';
+    return rootPrefix() + 'shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg';
   }
 
   function imagePath(car) {
     var file = car && car.images && car.images.length ? car.images[0] : '';
-    return rootPrefix() + 'shared/images/cars/' + (file || 'toyota-vios-2023.png');
+    return rootPrefix() + 'shared/model/' + (file || 'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg');
   }
 
   function escapeHtml(value) {

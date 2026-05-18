@@ -11,7 +11,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=5.5.6" />
+  <link rel="stylesheet" href="../../css/customer.css?v=5.7.0" />
 </head>
 <body data-particles="8" data-cursor-glow>
   <div id="customer-sidebar-placeholder"></div>
@@ -30,7 +30,7 @@
       <section class="car-access-shell">
         <div class="ca-hero-card reveal-onload">
           <div class="ca-hero-media" id="ca-hero-media">
-            <img src="../../../shared/images/cars/polestar-2.jpg" alt="Polestar 2 active rental" id="ca-hero-image" />
+            <img src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg" alt="BMW 320i M Sport active rental" id="ca-hero-image" />
             <div class="ca-live-chip">
               <span class="material-icons-round">sensors</span>
               Connected
@@ -49,8 +49,8 @@
 
             <div class="ca-title-row">
               <div>
-                <h2>Polestar 2</h2>
-                <p>Long Range Dual Motor</p>
+                <h2>BMW 320i M Sport</h2>
+                <p>2.0 Turbo Executive Sedan</p>
               </div>
               <div class="ca-lock-state" id="ca-lock-state">
                 <span class="material-icons-round">lock</span>
@@ -61,22 +61,22 @@
             <div class="ca-status-grid">
               <div class="ca-stat-card">
                 <span class="material-icons-round">battery_charging_full</span>
-                <strong id="ca-battery-level">82%</strong>
-                <small>Battery</small>
+                <strong id="ca-battery-level">78%</strong>
+                <small>Fuel Level</small>
               </div>
               <div class="ca-stat-card">
                 <span class="material-icons-round">route</span>
-                <strong>400 km</strong>
+                <strong>540 km</strong>
                 <small>Estimated Range</small>
               </div>
               <div class="ca-stat-card">
                 <span class="material-icons-round">thermostat</span>
-                <strong id="ca-cabin-temp">22 C</strong>
+                <strong id="ca-cabin-temp">21 C</strong>
                 <small>Cabin Temp</small>
               </div>
               <div class="ca-stat-card">
                 <span class="material-icons-round">place</span>
-                <strong>Melaka Sentral</strong>
+                <strong>Melaka Sentral Bay A3</strong>
                 <small>Current Location</small>
               </div>
             </div>
@@ -109,7 +109,7 @@
                 <h3>Digital Key</h3>
                 <p>Present this secure access code at the vehicle or use quick unlock.</p>
               </div>
-              <span class="ca-panel-chip" id="ca-key-chip">OTP Synced</span>
+              <span class="ca-panel-chip" id="ca-key-chip">Secure Sync</span>
             </div>
 
             <div class="ca-key-card">
@@ -188,10 +188,10 @@
               </button>
 
               <button class="ca-helper-card" type="button" onclick="openChargingRoute()">
-                <span class="material-icons-round">ev_station</span>
+                <span class="material-icons-round">local_gas_station</span>
                 <div>
-                  <strong>Nearest Charging Station</strong>
-                  <small>Open a suggested charging stop nearby</small>
+                  <strong>Nearest Fuel Stop</strong>
+                  <small>Open a suggested petrol station nearby</small>
                 </div>
               </button>
 
@@ -248,12 +248,12 @@
   <div id="chatbot-placeholder"></div>
   <div class="profile-toast" id="car-access-toast"></div>
 
-  <script src="../../js/sidebar-loader.js?v=5.5.7"></script>
+  <script src="../../js/sidebar-loader.js?v=5.7.0"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=5.4.1"></script>
+  <script src="../../../shared/js/main.js?v=5.7.0"></script>
   <script>
     (function () {
       var STORAGE_KEY = 'wedrive_car_access_state';
@@ -266,8 +266,8 @@
         battery: 82
       };
       var heroImages = {
-        closed: '../../../shared/images/cars/polestar-2.jpg',
-        trunkOpen: '../../../shared/images/cars/polestar-2-trunk-open.jpg'
+        closed: '../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg',
+        trunkOpen: '../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg'
       };
 
       function loadState() {
@@ -344,7 +344,7 @@
         if (range) range.value = String(state.temp);
         if (heroImage) {
           heroImage.src = state.trunkOpen ? heroImages.trunkOpen : heroImages.closed;
-          heroImage.alt = state.trunkOpen ? 'Polestar 2 with trunk open' : 'Polestar 2 active rental';
+          heroImage.alt = state.trunkOpen ? 'BMW 320i M Sport with trunk open' : 'BMW 320i M Sport active rental';
         }
         if (heroMedia) {
           heroMedia.classList.toggle('is-trunk-open', state.trunkOpen);
@@ -365,23 +365,23 @@
         state.locked = !state.locked;
         saveState();
         render();
-        toast(state.locked ? 'Vehicle locked securely.' : 'Vehicle unlocked. You may enter now.');
+        toast(state.locked ? 'Vehicle locked securely.' : 'BMW unlocked. You may enter now.');
       };
 
       window.flashLights = function () {
         animateControl('ca-flash-btn', 'signal-warning');
-        state.battery = Math.max(60, state.battery - 1);
+        state.battery = Math.max(58, state.battery - 1);
         saveState();
         render();
-        toast('Headlights flashed. Your car should be easy to spot now.');
+        toast('BMW lights flashed. Your sedan should be easy to spot now.');
       };
 
       window.honkHorn = function () {
         animateControl('ca-honk-btn', 'signal-warning');
-        state.battery = Math.max(60, state.battery - 1);
+        state.battery = Math.max(58, state.battery - 1);
         saveState();
         render();
-        toast('Horn triggered once for quick vehicle locating.');
+        toast('BMW horn triggered once for quick vehicle locating.');
       };
 
       window.toggleTrunk = function () {
@@ -410,7 +410,7 @@
         state.climateOn = !state.climateOn;
         saveState();
         render();
-        toast(state.climateOn ? 'Climate control started at ' + state.temp + ' C.' : 'Climate control stopped.');
+        toast(state.climateOn ? 'BMW climate control started at ' + state.temp + ' C.' : 'Climate control stopped.');
       };
 
       window.refreshSecureCode = function () {
@@ -434,7 +434,7 @@
       };
 
       window.openChargingRoute = function () {
-        window.open('https://www.google.com/maps/search/?api=1&query=EV+charging+station+Melaka', '_blank');
+        window.open('https://www.google.com/maps/search/?api=1&query=petrol+station+Melaka', '_blank');
       };
 
       loadState();

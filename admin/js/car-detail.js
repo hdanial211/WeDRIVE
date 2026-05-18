@@ -6,7 +6,7 @@
 
 let carData = null;
 let allBookings = [];
-const IMG_BASE = '../../../../shared/images/cars/';
+const IMG_BASE = '../../../../shared/model/';
 const MAX_IMAGES = 10;
 let currentMainIndex = 0;
 let calYear, calMonth; // Calendar state

@@ -32,11 +32,11 @@ Company Info:
 - Operating hours: 8AM - 10PM daily
 
 Car Types Available:
-- Sedan (Toyota Vios) - RM 120/day
-- SUV (Honda CR-V) - RM 200/day
-- Hatchback (Perodua Myvi, Honda Jazz) - RM 80-90/day
-- Van (Toyota Hiace, 12 seater) - RM 350/day
-- Luxury (BMW 3 Series) - RM 450/day
+- Sedan (BMW 320i M Sport) - RM 450/day
+- SUV (Mercedes-Benz GLA250) - RM 320/day
+- Hatchback (Perodua AXIA / Volkswagen Golf GTI) - RM 95-190/day
+- MPV (Toyota Alphard, 7 seater) - RM 380/day
+- Coupe/Truck (Mercedes CLS350 / Ford Ranger Raptor) - RM 360-420/day
 
 Booking Policy:
 - Minimum 1 day rental

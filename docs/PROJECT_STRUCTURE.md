@@ -221,7 +221,7 @@ AI CAR RENTAL SYSTEM/
     |   +-- ms.json             # Bahasa Melayu
     +-- logo/                   # Gambar Logo
     +-- images/
-    |   +-- cars/               # Gambar kereta (Toyota Vios, BMW, dll)
+    |   +-- cars/               # Gambar kereta legacy (tidak lagi digunakan untuk paparan model utama)
     |   +-- melaka/             # Gambar destinasi Melaka (local, dikompres)
     |   +-- icons/              # Ikon SVG (Google, dll)
     +-- js/

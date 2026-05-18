@@ -1,101 +1,21 @@
 {
   "stats": {
-    "total_vehicles": 6,
+    "total_vehicles": 8,
     "active_rentals": 3,
-    "revenue_today": 1240,
-    "new_customers": 4,
-    "revenue_change": "+12.5%",
-    "rentals_change": "+2",
-    "vehicles_change": "0",
-    "customers_change": "+4"
+    "revenue_today": 1680,
+    "new_customers": 5,
+    "revenue_change": "+14.2%",
+    "rentals_change": "+3",
+    "vehicles_change": "+2",
+    "customers_change": "+5"
   },
   "fleet": [
     {
       "id": 1,
-      "name": "Toyota Vios 2023",
-      "plate": "WXY 1234",
+      "name": "2023 BMW 320i M Sport 2.0",
+      "plate": "WDR 3388",
       "type": "sedan",
       "label": "Sedan",
-      "status": "Available",
-      "rate": "RM 120/day",
-      "price": 120,
-      "fuel": "Petrol",
-      "transmission": "Auto",
-      "trans": "Auto",
-      "seats": 5,
-      "year": 2023,
-      "color": "Pearl White",
-      "rating": 4.7,
-      "reviews": 42,
-      "ai": "High demand today",
-      "images": ["toyota-vios-2023.png"]
-    },
-    {
-      "id": 2,
-      "name": "Honda CR-V 2024",
-      "plate": "ABC 5678",
-      "type": "suv",
-      "label": "SUV",
-      "status": "Rented",
-      "rate": "RM 200/day",
-      "price": 200,
-      "fuel": "Hybrid",
-      "transmission": "Auto",
-      "trans": "Auto",
-      "seats": 7,
-      "year": 2024,
-      "color": "Sonic Grey",
-      "rating": 4.9,
-      "reviews": 67,
-      "ai": "Best for weekend",
-      "images": ["honda-crv-2024.png"]
-    },
-    {
-      "id": 3,
-      "name": "Perodua Myvi 2023",
-      "plate": "PQR 9012",
-      "type": "hatchback",
-      "label": "Hatchback",
-      "status": "Available",
-      "rate": "RM 80/day",
-      "price": 80,
-      "fuel": "Petrol",
-      "transmission": "Auto",
-      "trans": "Auto",
-      "seats": 5,
-      "year": 2023,
-      "color": "Electric Blue",
-      "rating": 4.5,
-      "reviews": 89,
-      "ai": "Budget pick",
-      "images": ["perodua-myvi-2023.png"]
-    },
-    {
-      "id": 4,
-      "name": "Toyota Hiace 2022",
-      "plate": "GHI 3456",
-      "type": "van",
-      "label": "Van",
-      "status": "Available",
-      "rate": "RM 350/day",
-      "price": 350,
-      "fuel": "Diesel",
-      "transmission": "Manual",
-      "trans": "Manual",
-      "seats": 12,
-      "year": 2022,
-      "color": "Silver",
-      "rating": 4.3,
-      "reviews": 21,
-      "ai": "Group travel",
-      "images": ["toyota-hiace-2022.png"]
-    },
-    {
-      "id": 5,
-      "name": "BMW 3 Series 2024",
-      "plate": "JKL 7890",
-      "type": "luxury",
-      "label": "Luxury",
       "status": "Rented",
       "rate": "RM 450/day",
       "price": 450,
@@ -103,32 +23,192 @@
       "transmission": "Auto",
       "trans": "Auto",
       "seats": 5,
-      "year": 2024,
+      "year": 2023,
       "color": "Alpine White",
-      "rating": 5.0,
-      "reviews": 15,
-      "ai": "Premium choice",
-      "images": ["bmw-3series-2024.png"]
+      "rating": 4.9,
+      "reviews": 128,
+      "ai": "Executive favourite",
+      "images": [
+        "Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-040.jpg",
+        "Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-090.jpg",
+        "Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg",
+        "Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg"
+      ]
     },
     {
-      "id": 6,
-      "name": "Honda Jazz 2023",
-      "plate": "MNO 1122",
-      "type": "hatchback",
-      "label": "Hatchback",
+      "id": 2,
+      "name": "2023 Mercedes-Benz GLA250 AMG Line 2.0",
+      "plate": "MDN 2508",
+      "type": "suv",
+      "label": "SUV",
       "status": "Available",
-      "rate": "RM 90/day",
-      "price": 90,
+      "rate": "RM 320/day",
+      "price": 320,
       "fuel": "Petrol",
       "transmission": "Auto",
       "trans": "Auto",
       "seats": 5,
       "year": 2023,
-      "color": "Lunar Silver",
+      "color": "Polar White",
+      "rating": 4.8,
+      "reviews": 74,
+      "ai": "Best for family comfort",
+      "images": [
+        "SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-025.jpg",
+        "SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-070.jpg",
+        "SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-120.jpg",
+        "SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-175.jpg"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "2022 Volkswagen Golf GTI 2.0",
+      "plate": "VWG 2022",
+      "type": "hatchback",
+      "label": "Hatchback",
+      "status": "Available",
+      "rate": "RM 190/day",
+      "price": 190,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "trans": "Auto",
+      "seats": 5,
+      "year": 2022,
+      "color": "Kings Red",
+      "rating": 4.7,
+      "reviews": 63,
+      "ai": "Sporty city drive",
+      "images": [
+        "Hatchback/2022 Volkswagen Golf GTI 2.0/exterior/full-res/frame-030.jpg",
+        "Hatchback/2022 Volkswagen Golf GTI 2.0/exterior/full-res/frame-085.jpg",
+        "Hatchback/2022 Volkswagen Golf GTI 2.0/exterior/full-res/frame-128.jpg",
+        "Hatchback/2022 Volkswagen Golf GTI 2.0/exterior/full-res/frame-180.jpg"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "2019 Toyota Alphard G S C Package 2.5",
+      "plate": "ALP 2589",
+      "type": "mpv",
+      "label": "MPV",
+      "status": "Available",
+      "rate": "RM 380/day",
+      "price": 380,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "trans": "Auto",
+      "seats": 7,
+      "year": 2019,
+      "color": "Pearl White",
+      "rating": 4.9,
+      "reviews": 52,
+      "ai": "Premium group travel",
+      "images": [
+        "MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-030.jpg",
+        "MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-090.jpg",
+        "MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-135.jpg",
+        "MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-180.jpg"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "2018 Mercedes-Benz CLS350 AMG Line 2.0",
+      "plate": "CLS 3508",
+      "type": "coupe",
+      "label": "Coupe",
+      "status": "Rented",
+      "rate": "RM 420/day",
+      "price": 420,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "trans": "Auto",
+      "seats": 4,
+      "year": 2018,
+      "color": "Obsidian Black",
+      "rating": 4.8,
+      "reviews": 31,
+      "ai": "Formal arrival pick",
+      "images": [
+        "Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-025.jpg",
+        "Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-080.jpg",
+        "Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-122.jpg",
+        "Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-178.jpg"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "2022 Ford Ranger Raptor High Rider Dual Cab 2.0",
+      "plate": "RPT 2022",
+      "type": "truck",
+      "label": "Truck",
+      "status": "Available",
+      "rate": "RM 360/day",
+      "price": 360,
+      "fuel": "Diesel",
+      "transmission": "Auto",
+      "trans": "Auto",
+      "seats": 5,
+      "year": 2022,
+      "color": "Conquer Grey",
+      "rating": 4.7,
+      "reviews": 29,
+      "ai": "Adventure and cargo ready",
+      "images": [
+        "Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-020.jpg",
+        "Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-075.jpg",
+        "Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-125.jpg",
+        "Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-180.jpg"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "2017 Perodua AXIA G 1.0",
+      "plate": "AXG 1701",
+      "type": "hatchback",
+      "label": "Hatchback",
+      "status": "Available",
+      "rate": "RM 95/day",
+      "price": 95,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "trans": "Auto",
+      "seats": 5,
+      "year": 2017,
+      "color": "Glittering Silver",
+      "rating": 4.5,
+      "reviews": 91,
+      "ai": "Budget city runabout",
+      "images": [
+        "Hatchback/2017 Perodua AXIA G 1.0/exterior/full-res/frame-022.jpg",
+        "Hatchback/2017 Perodua AXIA G 1.0/exterior/full-res/frame-070.jpg",
+        "Hatchback/2017 Perodua AXIA G 1.0/exterior/full-res/frame-123.jpg",
+        "Hatchback/2017 Perodua AXIA G 1.0/exterior/full-res/frame-176.jpg"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "2025 Perodua AXIA AV 1.0",
+      "plate": "AXA 2505",
+      "type": "hatchback",
+      "label": "Hatchback",
+      "status": "Available",
+      "rate": "RM 110/day",
+      "price": 110,
+      "fuel": "Petrol",
+      "transmission": "Auto",
+      "trans": "Auto",
+      "seats": 5,
+      "year": 2025,
+      "color": "Coral Blue",
       "rating": 4.6,
-      "reviews": 38,
-      "ai": "City favourite",
-      "images": ["honda-jazz-2023.png"]
+      "reviews": 40,
+      "ai": "Newest compact choice",
+      "images": [
+        "Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-018.jpg",
+        "Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-066.jpg",
+        "Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-118.jpg",
+        "Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-174.jpg"
+      ]
     }
   ],
   "bookings": [
@@ -137,13 +217,13 @@
       "customer": "Ahmad Hakim",
       "email": "ahmad@gmail.com",
       "phone": "011-10852955",
-      "car": "Honda CR-V 2024",
-      "plate": "ABC 5678",
+      "car": "2023 BMW 320i M Sport 2.0",
+      "plate": "WDR 3388",
       "pickup": "2026-05-10",
       "return": "2026-05-13",
       "pickup_loc": "Melaka Sentral",
       "days": 3,
-      "total": 600,
+      "total": 1350,
       "status": "Confirmed",
       "payment": "Paid",
       "created_at": "2026-05-08 14:20"
@@ -153,13 +233,13 @@
       "customer": "Siti Nurul",
       "email": "siti@gmail.com",
       "phone": "012-3456789",
-      "car": "Perodua Myvi 2023",
-      "plate": "PQR 9012",
+      "car": "2025 Perodua AXIA AV 1.0",
+      "plate": "AXA 2505",
       "pickup": "2026-05-12",
       "return": "2026-05-14",
       "pickup_loc": "KLIA2",
       "days": 2,
-      "total": 160,
+      "total": 220,
       "status": "Pending",
       "payment": "Unpaid",
       "created_at": "2026-05-09 09:45"
@@ -169,13 +249,13 @@
       "customer": "Razif Ismail",
       "email": "razif@yahoo.com",
       "phone": "013-9876543",
-      "car": "BMW 3 Series 2024",
-      "plate": "JKL 7890",
+      "car": "2018 Mercedes-Benz CLS350 AMG Line 2.0",
+      "plate": "CLS 3508",
       "pickup": "2026-05-08",
       "return": "2026-05-11",
       "pickup_loc": "Dataran Pahlawan",
       "days": 3,
-      "total": 1350,
+      "total": 1260,
       "status": "Completed",
       "payment": "Paid",
       "created_at": "2026-05-06 16:30"
@@ -185,13 +265,13 @@
       "customer": "Nurul Aina",
       "email": "aina@gmail.com",
       "phone": "014-5551234",
-      "car": "Toyota Vios 2023",
-      "plate": "WXY 1234",
+      "car": "2017 Perodua AXIA G 1.0",
+      "plate": "AXG 1701",
       "pickup": "2026-05-15",
       "return": "2026-05-18",
       "pickup_loc": "Ayer Keroh",
       "days": 3,
-      "total": 360,
+      "total": 285,
       "status": "Pending",
       "payment": "Unpaid",
       "created_at": "2026-05-09 11:00"
@@ -201,13 +281,13 @@
       "customer": "Hafiz Rahman",
       "email": "hafiz@outlook.com",
       "phone": "016-7890123",
-      "car": "Honda Jazz 2023",
-      "plate": "MNO 1122",
+      "car": "2022 Volkswagen Golf GTI 2.0",
+      "plate": "VWG 2022",
       "pickup": "2026-05-20",
       "return": "2026-05-22",
       "pickup_loc": "Melaka Sentral",
       "days": 2,
-      "total": 180,
+      "total": 380,
       "status": "Confirmed",
       "payment": "Paid",
       "created_at": "2026-05-09 15:10"
@@ -217,13 +297,13 @@
       "customer": "Ahmad Hakim",
       "email": "ahmad@gmail.com",
       "phone": "011-10852955",
-      "car": "Honda CR-V 2024",
-      "plate": "ABC 5678",
+      "car": "2023 Mercedes-Benz GLA250 AMG Line 2.0",
+      "plate": "MDN 2508",
       "pickup": "2026-05-18",
       "return": "2026-05-21",
       "pickup_loc": "Dataran Pahlawan",
       "days": 3,
-      "total": 600,
+      "total": 960,
       "status": "Confirmed",
       "payment": "Paid",
       "created_at": "2026-05-10 10:00"
@@ -233,13 +313,13 @@
       "customer": "Farah Zainal",
       "email": "farah@gmail.com",
       "phone": "019-2345678",
-      "car": "Toyota Vios 2023",
-      "plate": "WXY 1234",
+      "car": "2019 Toyota Alphard G S C Package 2.5",
+      "plate": "ALP 2589",
       "pickup": "2026-05-22",
       "return": "2026-05-25",
       "pickup_loc": "Jonker Street",
       "days": 3,
-      "total": 360,
+      "total": 1140,
       "status": "Pending",
       "payment": "Unpaid",
       "created_at": "2026-05-11 08:30"
@@ -249,13 +329,13 @@
       "customer": "Razif Ismail",
       "email": "razif@yahoo.com",
       "phone": "013-9876543",
-      "car": "BMW 3 Series 2024",
-      "plate": "JKL 7890",
+      "car": "2022 Ford Ranger Raptor High Rider Dual Cab 2.0",
+      "plate": "RPT 2022",
       "pickup": "2026-05-14",
       "return": "2026-05-17",
       "pickup_loc": "Melaka Sentral",
       "days": 3,
-      "total": 1350,
+      "total": 1080,
       "status": "Confirmed",
       "payment": "Paid",
       "created_at": "2026-05-09 14:00"
@@ -265,13 +345,13 @@
       "customer": "Siti Nurul",
       "email": "siti@gmail.com",
       "phone": "012-3456789",
-      "car": "Toyota Hiace 2022",
-      "plate": "GHI 3456",
+      "car": "2019 Toyota Alphard G S C Package 2.5",
+      "plate": "ALP 2589",
       "pickup": "2026-05-25",
       "return": "2026-05-28",
       "pickup_loc": "KLIA2",
       "days": 3,
-      "total": 1050,
+      "total": 1140,
       "status": "Pending",
       "payment": "Unpaid",
       "created_at": "2026-05-12 09:00"
@@ -281,13 +361,13 @@
       "customer": "Nurul Aina",
       "email": "aina@gmail.com",
       "phone": "014-5551234",
-      "car": "Perodua Myvi 2023",
-      "plate": "PQR 9012",
+      "car": "2025 Perodua AXIA AV 1.0",
+      "plate": "AXA 2505",
       "pickup": "2026-05-19",
       "return": "2026-05-21",
       "pickup_loc": "Ayer Keroh",
       "days": 2,
-      "total": 160,
+      "total": 220,
       "status": "Confirmed",
       "payment": "Paid",
       "created_at": "2026-05-10 16:30"
@@ -375,26 +455,59 @@
   ],
   "reports": {
     "monthly_revenue": [
-      { "month": "Jan", "revenue": 8500 },
-      { "month": "Feb", "revenue": 9200 },
-      { "month": "Mar", "revenue": 11800 },
-      { "month": "Apr", "revenue": 14500 },
-      { "month": "May", "revenue": 6200 }
+      {
+        "month": "Jan",
+        "revenue": 8500
+      },
+      {
+        "month": "Feb",
+        "revenue": 9200
+      },
+      {
+        "month": "Mar",
+        "revenue": 11800
+      },
+      {
+        "month": "Apr",
+        "revenue": 14500
+      },
+      {
+        "month": "May",
+        "revenue": 7800
+      }
     ],
     "car_utilization": [
-      { "car": "Honda CR-V", "utilization": 85 },
-      { "car": "BMW 3 Series", "utilization": 78 },
-      { "car": "Toyota Vios", "utilization": 65 },
-      { "car": "Honda Jazz", "utilization": 52 },
-      { "car": "Perodua Myvi", "utilization": 48 },
-      { "car": "Toyota Hiace", "utilization": 30 }
+      {
+        "car": "Mercedes-Benz GLA250",
+        "utilization": 84
+      },
+      {
+        "car": "BMW 320i M Sport",
+        "utilization": 80
+      },
+      {
+        "car": "Toyota Alphard",
+        "utilization": 72
+      },
+      {
+        "car": "Volkswagen Golf GTI",
+        "utilization": 61
+      },
+      {
+        "car": "Perodua AXIA AV",
+        "utilization": 58
+      },
+      {
+        "car": "Ford Ranger Raptor",
+        "utilization": 44
+      }
     ],
     "summary": {
-      "total_revenue": 50200,
-      "total_bookings": 42,
-      "avg_rental_days": 2.8,
-      "customer_satisfaction": 4.6,
-      "popular_car": "Honda CR-V 2024",
+      "total_revenue": 54800,
+      "total_bookings": 48,
+      "avg_rental_days": 2.9,
+      "customer_satisfaction": 4.7,
+      "popular_car": "2023 Mercedes-Benz GLA250 AMG Line 2.0",
       "busiest_month": "April"
     }
   },
@@ -410,7 +523,13 @@
     "late_fee_per_hour": 25,
     "deposit_percentage": 20,
     "operating_hours": "08:00 - 22:00",
-    "pickup_locations": ["Melaka Sentral", "KLIA2", "Dataran Pahlawan", "Ayer Keroh", "Jonker Street"]
+    "pickup_locations": [
+      "Melaka Sentral",
+      "KLIA2",
+      "Dataran Pahlawan",
+      "Ayer Keroh",
+      "Jonker Street"
+    ]
   },
   "admins": [
     {
@@ -434,7 +553,10 @@
     },
     "theme": {
       "default": "day",
-      "available": ["day", "night"]
+      "available": [
+        "day",
+        "night"
+      ]
     },
     "booking": {
       "min_days": 1,
@@ -447,25 +569,78 @@
       "deposit_percent": 20
     },
     "payment_methods": [
-      { "id": "fpx",    "label": "Online Banking (FPX)",     "icon": "account_balance" },
-      { "id": "card",   "label": "Credit / Debit Card",      "icon": "credit_card" },
-      { "id": "ewallet","label": "eWallet (TnG / GrabPay)",  "icon": "phone_android" },
-      { "id": "cash",   "label": "Cash at Counter",          "icon": "payments" }
+      {
+        "id": "fpx",
+        "label": "Online Banking (FPX)",
+        "icon": "account_balance"
+      },
+      {
+        "id": "card",
+        "label": "Credit / Debit Card",
+        "icon": "credit_card"
+      },
+      {
+        "id": "ewallet",
+        "label": "eWallet (TnG / GrabPay)",
+        "icon": "phone_android"
+      },
+      {
+        "id": "cash",
+        "label": "Cash at Counter",
+        "icon": "payments"
+      }
     ],
     "car_types": [
-      { "value": "all",      "label": "All Cars" },
-      { "value": "sedan",    "label": "Sedan" },
-      { "value": "suv",      "label": "SUV" },
-      { "value": "hatchback","label": "Hatchback" },
-      { "value": "van",      "label": "Van" },
-      { "value": "luxury",   "label": "Luxury" }
+      {
+        "value": "all",
+        "label": "All Cars"
+      },
+      {
+        "value": "sedan",
+        "label": "Sedan"
+      },
+      {
+        "value": "suv",
+        "label": "SUV"
+      },
+      {
+        "value": "hatchback",
+        "label": "Hatchback"
+      },
+      {
+        "value": "mpv",
+        "label": "MPV"
+      },
+      {
+        "value": "coupe",
+        "label": "Coupe"
+      },
+      {
+        "value": "truck",
+        "label": "Truck"
+      }
     ],
     "status_labels": {
-      "Available":   { "class": "available",   "icon": "check_circle" },
-      "Rented":      { "class": "rented",      "icon": "directions_car" },
-      "Pending":     { "class": "pending",     "icon": "schedule" },
-      "Confirmed":   { "class": "confirmed",   "icon": "verified" },
-      "Completed":   { "class": "completed",   "icon": "task_alt" }
+      "Available": {
+        "class": "available",
+        "icon": "check_circle"
+      },
+      "Rented": {
+        "class": "rented",
+        "icon": "directions_car"
+      },
+      "Pending": {
+        "class": "pending",
+        "icon": "schedule"
+      },
+      "Confirmed": {
+        "class": "confirmed",
+        "icon": "verified"
+      },
+      "Completed": {
+        "class": "completed",
+        "icon": "task_alt"
+      }
     }
   },
   "marketing": {
@@ -519,45 +694,14 @@
         "code": "HOLIDAY15",
         "description": "School holiday special",
         "type": "percent",
-        "value": 10,
-        "min_days": 2,
-        "usage_limit": 200,
+        "value": 15,
+        "min_days": 4,
+        "usage_limit": 80,
         "usage_count": 0,
         "active": false,
         "expiry": "2026-06-15"
       }
     ],
-    "seasonal_pricing": [
-      {
-        "id": "SP-001",
-        "name": "Hari Raya",
-        "start_date": "2026-03-28",
-        "end_date": "2026-04-10",
-        "adjustment_type": "percent",
-        "adjustment_value": 30,
-        "direction": "increase",
-        "active": true
-      },
-      {
-        "id": "SP-002",
-        "name": "School Holiday",
-        "start_date": "2026-05-30",
-        "end_date": "2026-06-15",
-        "adjustment_type": "percent",
-        "adjustment_value": 20,
-        "direction": "increase",
-        "active": false
-      },
-      {
-        "id": "SP-003",
-        "name": "Weekday Special",
-        "start_date": "2026-05-11",
-        "end_date": "2026-05-15",
-        "adjustment_type": "percent",
-        "adjustment_value": 10,
-        "direction": "decrease",
-        "active": true
-      }
-    ]
+    "seasonal_pricing": []
   }
 }
