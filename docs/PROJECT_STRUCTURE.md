@@ -143,16 +143,16 @@ AI CAR RENTAL SYSTEM/
     |   |   |   +-- source.json     # Metadata viewer, CDN, dan status panorama Golf GTI
     |   |   +-- 2017 Perodua AXIA G 1.0/
     |   |   |   +-- exterior/
-    |   |   |   |   +-- full-res/   # Representative exterior photo set Axia G
-    |   |   |   |   +-- low-res/    # Versi ringan photo set Axia G untuk web
+    |   |   |   |   +-- full-res/   # 200 frame Axia G exterior 360 dalam resolusi asal
+    |   |   |   |   +-- low-res/    # 200 frame Axia G exterior 360 untuk viewer web ringan
     |   |   |   +-- interior/
     |   |   |   |   +-- full-res/   # Placeholder interior untuk integrasi seterusnya
     |   |   |   |   +-- low-res/    # Placeholder interior ringan
     |   |   |   +-- source.json     # Metadata sumber image Axia G
     |   |   +-- 2025 Perodua AXIA AV 1.0/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # Representative exterior photo set Axia AV
-    |   |       |   +-- low-res/    # Versi ringan photo set Axia AV untuk web
+    |   |       |   +-- full-res/   # 200 frame Axia AV exterior 360 dalam resolusi asal
+    |   |       |   +-- low-res/    # 200 frame Axia AV exterior 360 untuk viewer web ringan
     |   |       +-- interior/
     |   |       |   +-- full-res/   # Placeholder interior untuk integrasi seterusnya
     |   |       |   +-- low-res/    # Placeholder interior ringan
@@ -196,8 +196,8 @@ AI CAR RENTAL SYSTEM/
     |   +-- Truck/
     |   |   +-- 2022 Ford Ranger Raptor High Rider Dual Cab 2.0/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # Representative exterior photo set Ranger Raptor
-    |   |       |   +-- low-res/    # Versi ringan photo set Ranger Raptor untuk web
+    |   |       |   +-- full-res/   # 200 frame Ranger Raptor exterior 360 dalam resolusi asal
+    |   |       |   +-- low-res/    # 200 frame Ranger Raptor exterior 360 untuk viewer web ringan
     |   |       +-- interior/
     |   |       |   +-- full-res/   # Placeholder interior untuk integrasi seterusnya
     |   |       |   +-- low-res/    # Placeholder interior ringan
