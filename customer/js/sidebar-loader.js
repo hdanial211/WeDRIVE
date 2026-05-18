@@ -82,7 +82,7 @@
     placeholder.innerHTML = [
       '<aside class="customer-sidebar" id="customer-sidebar" aria-label="Customer sidebar">',
       '  <div class="sidebar-header">',
-      '    <a href="' + base + 'index.html" class="sidebar-brand">',
+      '    <a href="' + base + 'customer/pages/dashboard/customer.html" class="sidebar-brand">',
       '      <img src="' + base + 'shared/logo/wedrive-icon.png" alt="" aria-hidden="true" class="sidebar-logo"/>',
       '      <div class="sidebar-brand-group">',
       '        <span class="sidebar-brand-text">WeDRIVE</span>',
@@ -113,7 +113,7 @@
       '  <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">',
       '    <span class="material-icons-round">menu</span>',
       '  </button>',
-      '  <a href="' + base + 'index.html" class="mobile-brand">',
+      '  <a href="' + base + 'customer/pages/dashboard/customer.html" class="mobile-brand">',
       '    <img src="' + base + 'shared/logo/wedrive-icon.png" alt="" aria-hidden="true" class="mobile-logo"/>',
       '    <span>WeDRIVE</span>',
       '  </a>',
