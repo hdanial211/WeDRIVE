@@ -11,19 +11,16 @@
     "frame_end": 199,
     "frame_count": 200,
     "frame_pad": 3,
-    "full_res_pattern": "exterior/full-res/frame-{padded}.jpg",
-    "low_res_pattern": "exterior/low-res/frame-{padded}.jpg"
+    "full_res_pattern": "exterior/full-res/frame-{padded}.jpg"
   },
   "interior": {
     "viewer_supported": true,
     "download_status": "viewer panorama is protected behind tour loader; frame export not publicly exposed via direct CDN paths in current fetch flow",
-    "full_res_pattern": null,
-    "low_res_pattern": null
+    "full_res_pattern": null
   },
   "placeholders": {
     "still": {
-      "full_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/placeholder/placeholder.jpg",
-      "low_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/placeholder/placeholder-low-res.jpg"
+      "full_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/placeholder/placeholder.jpg"
     }
   },
   "thumb": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/thumb-sm.jpg"

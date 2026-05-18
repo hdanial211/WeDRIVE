@@ -135,72 +135,56 @@ AI CAR RENTAL SYSTEM/
     |   +-- Hatchback/
     |   |   +-- 2022 Volkswagen Golf GTI 2.0/
     |   |   |   +-- exterior/
-    |   |   |   |   +-- full-res/   # 200 frame Golf GTI exterior 360 dalam resolusi asal
-    |   |   |   |   +-- low-res/    # 200 frame Golf GTI exterior 360 untuk viewer web ringan
+    |   |   |   |   +-- full-res/   # 200 frame Golf GTI exterior 360 dalam resolusi asal sahaja
     |   |   |   +-- interior/
     |   |   |   |   +-- full-res/   # Placeholder panorama dalaman jika export dibuka kemudian
-    |   |   |   |   +-- low-res/    # Placeholder panorama ringan untuk integrasi masa depan
     |   |   |   +-- source.json     # Metadata viewer, CDN, dan status panorama Golf GTI
     |   |   +-- 2017 Perodua AXIA G 1.0/
     |   |   |   +-- exterior/
-    |   |   |   |   +-- full-res/   # 200 frame Axia G exterior 360 dalam resolusi asal
-    |   |   |   |   +-- low-res/    # 200 frame Axia G exterior 360 untuk viewer web ringan
+    |   |   |   |   +-- full-res/   # 200 frame Axia G exterior 360 dalam resolusi asal sahaja
     |   |   |   +-- interior/
     |   |   |   |   +-- full-res/   # Placeholder interior untuk integrasi seterusnya
-    |   |   |   |   +-- low-res/    # Placeholder interior ringan
     |   |   |   +-- source.json     # Metadata sumber image Axia G
     |   |   +-- 2025 Perodua AXIA AV 1.0/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # 200 frame Axia AV exterior 360 dalam resolusi asal
-    |   |       |   +-- low-res/    # 200 frame Axia AV exterior 360 untuk viewer web ringan
+    |   |       |   +-- full-res/   # 200 frame Axia AV exterior 360 dalam resolusi asal sahaja
     |   |       +-- interior/
     |   |       |   +-- full-res/   # Placeholder interior untuk integrasi seterusnya
-    |   |       |   +-- low-res/    # Placeholder interior ringan
     |   |       +-- source.json     # Metadata sumber image Axia AV
     |   +-- Sedan/
     |   |   +-- 2023 BMW 320i M Sport 2.0/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # 200 frame BMW exterior 360 dalam resolusi asal
-    |   |       |   +-- low-res/    # 200 frame BMW exterior 360 untuk viewer web ringan
+    |   |       |   +-- full-res/   # 200 frame BMW exterior 360 dalam resolusi asal sahaja
     |   |       +-- interior/
     |   |       |   +-- full-res/   # 6 muka panorama dalaman kereta resolusi asal
-    |   |       |   +-- low-res/    # 6 muka panorama dalaman kereta untuk preview ringan
     |   |       +-- source.json     # Metadata sumber, pattern frame, dan orientasi BMW
     |   +-- SUV/
     |   |   +-- 2023 Mercedes-Benz GLA250 AMG Line 2.0/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # 200 frame Mercedes exterior 360 dalam resolusi asal
-    |   |       |   +-- low-res/    # 200 frame Mercedes exterior 360 untuk viewer web ringan
+    |   |       |   +-- full-res/   # 200 frame Mercedes exterior 360 dalam resolusi asal sahaja
     |   |       +-- interior/
     |   |       |   +-- full-res/   # Placeholder panorama dalaman jika export dibuka kemudian
-    |   |       |   +-- low-res/    # Placeholder panorama ringan untuk integrasi masa depan
     |   |       +-- source.json     # Metadata sumber viewer, CDN, dan status panorama Mercedes
     |   +-- MPV/
     |   |   +-- 2019 Toyota Alphard G S C Package 2.5/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # 200 frame Alphard exterior 360 dalam resolusi asal
-    |   |       |   +-- low-res/    # 200 frame Alphard exterior 360 untuk viewer web ringan
+    |   |       |   +-- full-res/   # 200 frame Alphard exterior 360 dalam resolusi asal sahaja
     |   |       +-- interior/
     |   |       |   +-- full-res/   # Placeholder panorama dalaman jika export dibuka kemudian
-    |   |       |   +-- low-res/    # Placeholder panorama ringan untuk integrasi masa depan
     |   |       +-- source.json     # Metadata sumber viewer, CDN, dan status panorama Alphard
     |   +-- Coupe/
     |   |   +-- 2018 Mercedes-Benz CLS350 AMG Line 2.0/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # 200 frame Mercedes CLS exterior 360 dalam resolusi asal
-    |   |       |   +-- low-res/    # 200 frame Mercedes CLS exterior 360 untuk viewer web ringan
+    |   |       |   +-- full-res/   # 200 frame Mercedes CLS exterior 360 dalam resolusi asal sahaja
     |   |       +-- interior/
     |   |       |   +-- full-res/   # Placeholder panorama dalaman jika export dibuka kemudian
-    |   |       |   +-- low-res/    # Placeholder panorama ringan untuk integrasi masa depan
     |   |       +-- source.json     # Metadata viewer, CDN, dan status panorama Mercedes CLS
     |   +-- Truck/
     |   |   +-- 2022 Ford Ranger Raptor High Rider Dual Cab 2.0/
     |   |       +-- exterior/
-    |   |       |   +-- full-res/   # 200 frame Ranger Raptor exterior 360 dalam resolusi asal
-    |   |       |   +-- low-res/    # 200 frame Ranger Raptor exterior 360 untuk viewer web ringan
+    |   |       |   +-- full-res/   # 200 frame Ranger Raptor exterior 360 dalam resolusi asal sahaja
     |   |       +-- interior/
     |   |       |   +-- full-res/   # Placeholder interior untuk integrasi seterusnya
-    |   |       |   +-- low-res/    # Placeholder interior ringan
     |   |       +-- source.json     # Metadata sumber image Ranger Raptor
     |   +-- Wagon/             # Kategori model wagon
     |   +-- Convertible/       # Kategori model convertible

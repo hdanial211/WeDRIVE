@@ -9,7 +9,6 @@
     "frame_count": 200,
     "frame_pad": 3,
     "full_res_pattern": "exterior/full-res/frame-{padded}.jpg",
-    "low_res_pattern": "exterior/low-res/frame-{padded}.jpg",
     "orientation_frames": {
       "rear": 24,
       "left": 75,
@@ -27,9 +26,15 @@
   },
   "interior": {
     "type": "cube-map-panorama",
-    "faces": ["f", "r", "b", "l", "u", "d"],
+    "faces": [
+      "f",
+      "r",
+      "b",
+      "l",
+      "u",
+      "d"
+    ],
     "full_res_pattern": "interior/full-res/pano_{face}.jpg",
-    "low_res_pattern": "interior/low-res/pano_{face}.jpg",
     "full_res_size": {
       "width": 1712,
       "height": 1712
