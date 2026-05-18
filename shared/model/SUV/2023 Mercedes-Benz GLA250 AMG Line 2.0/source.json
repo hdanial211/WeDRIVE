@@ -1,0 +1,33 @@
+{
+  "model": "2023 Mercedes-Benz GLA250 AMG Line 2.0",
+  "category": "SUV",
+  "source_viewer_exterior": "https://cdn.impel.io/spincar-static/20190909/?_=0e67224d769cec#!customer=Carsome!vin=plb24774662003668!disableautospin#!n=true!hideExpandBtn!region=eu",
+  "source_viewer_interior": "https://cdn.impel.io/spincar-static/20190909/?_=0e67224d769cec#!customer=Carsome!vin=plb24774662003668!disableautospin#!n=true!hideExpandBtn!region=eu",
+  "api_endpoint": "https://api-eu.impel.io/spin/Carsome/plb24774662003668?v=20160212",
+  "cdn_prefix": "https://cdn.impel.io/swipetospin-viewers/Carsome/plb24774662003668/20260208024506.2SXGBQSR/",
+  "exterior": {
+    "frame_start": 0,
+    "frame_end": 199,
+    "frame_count": 200,
+    "frame_pad": 3,
+    "full_res_pattern": "exterior/full-res/frame-{padded}.jpg",
+    "low_res_pattern": "exterior/low-res/frame-{padded}.jpg"
+  },
+  "interior": {
+    "viewer_supported": true,
+    "download_status": "viewer panorama is protected behind tour loader; frame export not publicly exposed via direct CDN paths in current fetch flow",
+    "full_res_pattern": null,
+    "low_res_pattern": null
+  },
+  "placeholders": {
+    "fallback": {
+      "full_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/plb24774662003668/20260208024506.2SXGBQSR/ec/0-0.jpg",
+      "low_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/plb24774662003668/20260208024506.2SXGBQSR/low-res/ec/0-0.jpg"
+    },
+    "still": {
+      "full_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/plb24774662003668/20260208024506.2SXGBQSR/placeholder/placeholder.jpg",
+      "low_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/plb24774662003668/20260208024506.2SXGBQSR/placeholder/placeholder-low-res.jpg"
+    }
+  },
+  "thumb": "https://cdn.impel.io/swipetospin-viewers/Carsome/plb24774662003668/20260208024506.2SXGBQSR/thumb-sm.jpg"
+}

@@ -132,14 +132,38 @@ AI CAR RENTAL SYSTEM/
     |   +-- navbar.html          # Navbar yang diguna semua page
     |   +-- footer.html         # Footer yang diguna semua page
     +-- model/
-    |   +-- 2023 BMW 320i M Sport 2.0/
-    |       +-- exterior/
-    |       |   +-- full-res/   # 200 frame BMW exterior 360 dalam resolusi asal
-    |       |   +-- low-res/    # 200 frame BMW exterior 360 untuk viewer web ringan
-    |       +-- interior/
-    |       |   +-- full-res/   # 6 muka panorama dalaman kereta resolusi asal
-    |       |   +-- low-res/    # 6 muka panorama dalaman kereta untuk preview ringan
-    |       +-- source.json     # Metadata sumber, pattern frame, dan orientasi BMW
+    |   +-- Hatchback/          # Kategori model hatchback
+    |   +-- Sedan/
+    |   |   +-- 2023 BMW 320i M Sport 2.0/
+    |   |       +-- exterior/
+    |   |       |   +-- full-res/   # 200 frame BMW exterior 360 dalam resolusi asal
+    |   |       |   +-- low-res/    # 200 frame BMW exterior 360 untuk viewer web ringan
+    |   |       +-- interior/
+    |   |       |   +-- full-res/   # 6 muka panorama dalaman kereta resolusi asal
+    |   |       |   +-- low-res/    # 6 muka panorama dalaman kereta untuk preview ringan
+    |   |       +-- source.json     # Metadata sumber, pattern frame, dan orientasi BMW
+    |   +-- SUV/
+    |   |   +-- 2023 Mercedes-Benz GLA250 AMG Line 2.0/
+    |   |       +-- exterior/
+    |   |       |   +-- full-res/   # 200 frame Mercedes exterior 360 dalam resolusi asal
+    |   |       |   +-- low-res/    # 200 frame Mercedes exterior 360 untuk viewer web ringan
+    |   |       +-- interior/
+    |   |       |   +-- full-res/   # Placeholder panorama dalaman jika export dibuka kemudian
+    |   |       |   +-- low-res/    # Placeholder panorama ringan untuk integrasi masa depan
+    |   |       +-- source.json     # Metadata sumber viewer, CDN, dan status panorama Mercedes
+    |   +-- MPV/
+    |   |   +-- 2019 Toyota Alphard G S C Package 2.5/
+    |   |       +-- exterior/
+    |   |       |   +-- full-res/   # 200 frame Alphard exterior 360 dalam resolusi asal
+    |   |       |   +-- low-res/    # 200 frame Alphard exterior 360 untuk viewer web ringan
+    |   |       +-- interior/
+    |   |       |   +-- full-res/   # Placeholder panorama dalaman jika export dibuka kemudian
+    |   |       |   +-- low-res/    # Placeholder panorama ringan untuk integrasi masa depan
+    |   |       +-- source.json     # Metadata sumber viewer, CDN, dan status panorama Alphard
+    |   +-- Coupe/             # Kategori model coupe
+    |   +-- Truck/             # Kategori model pickup / truck
+    |   +-- Wagon/             # Kategori model wagon
+    |   +-- Convertible/       # Kategori model convertible
     +-- css/
     |   +-- theme_day.css       # Tema Siang
     |   +-- theme_night.css     # Tema Malam
