@@ -1,0 +1,19 @@
+{
+  "model": "2022 Ford Ranger Raptor High Rider Dual Cab 2.0",
+  "category": "Truck",
+  "asset_type": "representative-photo",
+  "source_page": "https://commons.wikimedia.org/wiki/File:2022_Ford_Ranger_Raptor.jpg",
+  "source_image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/2022%20Ford%20Ranger%20Raptor.jpg",
+  "notes": "Representative exterior image sourced from Wikimedia Commons because direct Carsome 360 viewer endpoint was not publicly exposed.",
+  "exterior": {
+    "full_res_pattern": "exterior/full-res/photo-001.jpg",
+    "low_res_pattern": "exterior/low-res/photo-001.jpg",
+    "frame_count": 1
+  },
+  "interior": {
+    "viewer_supported": false,
+    "download_status": "no public 360 interior source attached during this fetch pass",
+    "full_res_pattern": null,
+    "low_res_pattern": null
+  }
+}

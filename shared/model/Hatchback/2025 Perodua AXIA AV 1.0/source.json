@@ -1,0 +1,19 @@
+{
+  "model": "2025 Perodua AXIA AV 1.0",
+  "category": "Hatchback",
+  "asset_type": "representative-photo",
+  "source_page": "https://www.carsome.my/buy-car/perodua/axia/2025-perodua-axia-av-1.0/c7wy600",
+  "source_image": "https://b2c-cdn.carsome.my/cdn-cgi/image/format%3Dauto%2Cquality%3D50%2Cwidth%3D1296/B2C/7c15a075-d9f5-471d-a401-1e5b41f46626.jpg",
+  "notes": "Representative exterior image sourced from the public Carsome CDN listing image.",
+  "exterior": {
+    "full_res_pattern": "exterior/full-res/photo-001.jpg",
+    "low_res_pattern": "exterior/low-res/photo-001.jpg",
+    "frame_count": 1
+  },
+  "interior": {
+    "viewer_supported": false,
+    "download_status": "no public 360 interior source attached during this fetch pass",
+    "full_res_pattern": null,
+    "low_res_pattern": null
+  }
+}
