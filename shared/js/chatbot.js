@@ -191,7 +191,7 @@ window.sendChat = async function() {
         'X-Title': 'WeDRIVE Chatbot'
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-exp:free',
+        model: 'google/gemini-2.5-flash-preview:free',
         messages: [
           { role: 'system', content: fullSystem },
           ...window._chatHistory
