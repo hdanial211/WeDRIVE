@@ -830,7 +830,8 @@ body.night-mode .explore-section-head .section-eyebrow {
 }
 
 .hiw-btn,
-.hiw-model-btn {
+.hiw-model-btn,
+.hiw-view-btn {
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -866,7 +867,8 @@ body.night-mode .explore-section-head .section-eyebrow {
 }
 
 .hiw-btn:hover,
-.hiw-model-btn:hover {
+.hiw-model-btn:hover,
+.hiw-view-btn:hover {
   transform: translateY(-3px);
   border-color: rgba(199, 163, 90, 0.62);
   box-shadow: 0 20px 44px rgba(15, 23, 42, 0.12);
@@ -930,15 +932,50 @@ body.night-mode .explore-section-head .section-eyebrow {
 
 .hiw-hero-stage {
   position: relative;
-  min-height: min(76svh, 720px);
+  min-height: min(80svh, 760px);
   display: grid;
   align-content: center;
-  border-radius: 38px;
-  padding: clamp(18px, 3vw, 34px);
-  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  padding: clamp(8px, 2vw, 22px) 0;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  isolation: isolate;
 }
 
-.hiw-hero-stage::before,
+.hiw-hero-stage::before {
+  content: '';
+  position: absolute;
+  inset: 8% -7% 12%;
+  z-index: -2;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 28% 46%, rgba(37, 99, 235, 0.2), transparent 34%),
+    radial-gradient(circle at 74% 30%, rgba(199, 163, 90, 0.22), transparent 32%),
+    linear-gradient(135deg, rgba(239, 246, 255, 0.6), rgba(255, 255, 255, 0));
+  filter: blur(22px);
+  transform: none;
+  transition: none;
+  pointer-events: none;
+}
+
+.hiw-hero-stage::after {
+  content: '';
+  position: absolute;
+  left: 9%;
+  right: 8%;
+  bottom: 10%;
+  z-index: -1;
+  height: 38px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.16);
+  filter: blur(24px);
+  pointer-events: none;
+}
+
 .hiw-interactive-card::before,
 .hiw-proof-card::before,
 .hiw-final-panel::before,
@@ -953,7 +990,6 @@ body.night-mode .explore-section-head .section-eyebrow {
   pointer-events: none;
 }
 
-.hiw-hero-stage:hover::before,
 .hiw-interactive-card:hover::before,
 .hiw-proof-card:hover::before,
 .hiw-final-panel:hover::before,
@@ -1003,44 +1039,13 @@ body.night-mode .explore-section-head .section-eyebrow {
   filter: drop-shadow(0 34px 34px rgba(15, 23, 42, 0.14));
 }
 
-.hiw-stage-note {
-  position: absolute;
-  left: 26px;
-  right: 26px;
-  bottom: 24px;
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  gap: 14px;
-  align-items: start;
-  padding: 16px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-}
-
-.hiw-stage-note .material-icons-round {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 15px;
-  color: var(--hiw-blue);
-  background: rgba(37, 99, 235, 0.1);
-}
-
-.hiw-stage-note strong {
-  display: block;
-  color: var(--hiw-ink);
-  margin-bottom: 4px;
-}
-
-.hiw-stage-note p {
-  margin: 0;
-  color: var(--hiw-muted);
-  font-size: 13px;
-  line-height: 1.5;
+.hiw-hero-stage img {
+  width: min(118%, 920px);
+  max-width: none;
+  min-height: clamp(360px, 54vw, 640px);
+  margin: 12px 0 0 -7%;
+  object-fit: contain;
+  filter: drop-shadow(0 48px 44px rgba(15, 23, 42, 0.18));
 }
 
 .hiw-trust-strip {
@@ -1054,7 +1059,6 @@ body.night-mode .explore-section-head .section-eyebrow {
 .hiw-marquee {
   display: flex;
   width: max-content;
-  gap: 34px;
   padding: 18px 0;
   color: var(--hiw-muted);
   font-size: 13px;
@@ -1063,11 +1067,21 @@ body.night-mode .explore-section-head .section-eyebrow {
   animation: hiwMarquee 28s linear infinite;
 }
 
-.hiw-marquee span {
-  position: relative;
+.hiw-marquee-group {
+  min-width: 100vw;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-around;
+  gap: 34px;
+  padding-inline: 22px;
 }
 
-.hiw-marquee span::after {
+.hiw-marquee-group span {
+  position: relative;
+  white-space: nowrap;
+}
+
+.hiw-marquee-group span::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -1252,9 +1266,30 @@ body.night-mode .explore-section-head .section-eyebrow {
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.hiw-interactive-card.is-interior img {
+  height: min(52vw, 520px);
+  min-height: 380px;
+  object-fit: cover;
+  border-radius: 26px;
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.13);
+}
+
 .hiw-interactive-card img.is-switching {
   opacity: 0.16;
   transform: scale(0.98);
+}
+
+.hiw-view-status {
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.09);
+  color: var(--hiw-blue);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .hiw-frame-shadow {
@@ -1294,7 +1329,14 @@ body.night-mode .explore-section-head .section-eyebrow {
   margin-top: 6px;
 }
 
-.hiw-model-btn {
+.hiw-view-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.hiw-model-btn,
+.hiw-view-btn {
   min-height: 48px;
   border: 1px solid rgba(148, 163, 184, 0.34);
   border-radius: 16px;
@@ -1307,11 +1349,29 @@ body.night-mode .explore-section-head .section-eyebrow {
   cursor: pointer;
 }
 
-.hiw-model-btn.is-active {
+.hiw-view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.hiw-view-btn .material-icons-round {
+  color: var(--hiw-blue);
+  font-size: 20px;
+}
+
+.hiw-model-btn.is-active,
+.hiw-view-btn.is-active {
   color: #ffffff;
   border-color: rgba(37, 99, 235, 0.44);
   background: linear-gradient(135deg, #0058be 0%, #3b82f6 100%);
   box-shadow: 0 16px 34px rgba(37, 99, 235, 0.2);
+}
+
+.hiw-view-btn.is-active .material-icons-round {
+  color: #ffffff;
 }
 
 .hiw-proof-grid {
@@ -1475,9 +1535,10 @@ body.night-mode .hiw-heading span:last-child {
 body.night-mode .hiw-kicker,
 body.night-mode .hiw-btn-ghost,
 body.night-mode .hiw-stat,
-body.night-mode .hiw-stage-note,
+body.night-mode .hiw-view-status,
 body.night-mode .hiw-model-panel,
 body.night-mode .hiw-model-btn:not(.is-active),
+body.night-mode .hiw-view-btn:not(.is-active),
 body.night-mode .hiw-step-visual,
 body.night-mode .hiw-final-panel {
   background: rgba(15, 23, 42, 0.72);
@@ -1514,7 +1575,7 @@ body.night-mode .hiw-trust-strip {
 
 @keyframes hiwMarquee {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-25%); }
 }
 
 @keyframes hiwShimmerText {
@@ -1581,12 +1642,9 @@ body.night-mode .hiw-trust-strip {
     min-height: 520px;
   }
 
-  .hiw-stage-note {
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    margin-top: 14px;
+  .hiw-hero-stage img {
+    width: 108%;
+    margin-left: -4%;
   }
 }
 
@@ -1649,6 +1707,10 @@ body.night-mode .hiw-trust-strip {
     min-height: 220px;
   }
 
+  .hiw-interactive-card.is-interior img {
+    min-height: 270px;
+  }
+
   .hiw-stage-topline,
   .hiw-frame-toolbar {
     align-items: flex-start;
@@ -1657,6 +1719,10 @@ body.night-mode .hiw-trust-strip {
 
   .hiw-section {
     padding-block: 70px;
+  }
+
+  .hiw-view-switch {
+    grid-template-columns: 1fr;
   }
 
   .hiw-proof-card,
