@@ -1,20 +1,19 @@
 /**
- * WeDRIVE - AI Chatbot Settings (Google Gemini + Grok Backup)
+ * WeDRIVE - AI Chatbot Settings (OpenRouter.ai)
  * admin/js/chatbot-admin.js
  *
- * Primary: Google Gemini API (gemini-2.0-flash) — free tier
- * Backup:  Grok AI (xAI) — auto-fallback if Gemini fails
+ * Provider: OpenRouter.ai — unified API gateway (supports GPT-4o, Claude, Gemini, etc.)
+ * Model:    google/gemini-2.0-flash-exp:free (default, free tier)
  * Settings stored in localStorage for demo/FYP purposes.
  */
 
 const STORAGE_KEY = 'wedrive_chatbot_settings';
-const GEMINI_MODEL = 'gemini-2.0-flash';
-const GROK_MODEL = 'grok-3-mini-fast';
+const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const OPENROUTER_MODEL = 'google/gemini-2.0-flash-exp:free';
 
 // ─── Default Settings ───────────────────────────────────────────────────────
 const DEFAULT_SETTINGS = {
   apiKey: '',
-  grokKey: '',
   systemPrompt: `You are WeDRIVE Bot, a friendly and helpful AI assistant for WeDRIVE car rental service based in Melaka, Malaysia.
 
 Your role:
@@ -74,7 +73,6 @@ window.saveSettings = function() {
 
   const settings = {
     apiKey: document.getElementById('api-key').value.trim(),
-    grokKey: document.getElementById('grok-key').value.trim(),
     systemPrompt: document.getElementById('system-prompt').value.trim(),
     promoContext: document.getElementById('promo-context').value.trim(),
     greeting: document.getElementById('greeting-msg').value.trim()
@@ -91,11 +89,9 @@ window.saveSettings = function() {
 };
 // ─── Test Single Key (inline button) ────────────────────────────────────────
 window.testSingleKey = async function(provider) {
-  const isGemini = provider === 'gemini';
-  const inputId = isGemini ? 'api-key' : 'grok-key';
-  const key = document.getElementById(inputId).value.trim();
-  const statusEl = document.getElementById(`status-${provider}`);
-  const btn = document.getElementById(`btn-test-${provider}`);
+  const key = document.getElementById('api-key').value.trim();
+  const statusEl = document.getElementById('status-openrouter');
+  const btn = document.getElementById('btn-test-openrouter');
 
   if (!key) {
     statusEl.className = 'key-status fail';
@@ -110,30 +106,28 @@ window.testSingleKey = async function(provider) {
   statusEl.innerHTML = '';
 
   try {
-    let ok = false;
-    if (isGemini) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${key}`;
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: 'Say "OK".' }] }] })
-      });
-      ok = res.ok;
-    } else {
-      const res = await fetch('https://api.x.ai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-        body: JSON.stringify({ model: GROK_MODEL, messages: [{ role: 'user', content: 'Say "OK".' }], max_tokens: 10 })
-      });
-      ok = res.ok;
-    }
+    const res = await fetch(OPENROUTER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`,
+        'HTTP-Referer': window.location.origin,
+        'X-Title': 'WeDRIVE Chatbot'
+      },
+      body: JSON.stringify({
+        model: OPENROUTER_MODEL,
+        messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
+        max_tokens: 10
+      })
+    });
 
-    if (ok) {
+    if (res.ok) {
       statusEl.className = 'key-status ok';
-      statusEl.innerHTML = `<span class="material-icons-round">check_circle</span> ${isGemini ? 'Gemini' : 'Grok'} connected successfully`;
+      statusEl.innerHTML = '<span class="material-icons-round">check_circle</span> OpenRouter connected successfully';
     } else {
+      const err = await res.json().catch(() => ({}));
       statusEl.className = 'key-status fail';
-      statusEl.innerHTML = `<span class="material-icons-round">error</span> Invalid key — check and try again`;
+      statusEl.innerHTML = `<span class="material-icons-round">error</span> ${err?.error?.message || 'Invalid key — check and try again'}`;
     }
   } catch (e) {
     statusEl.className = 'key-status fail';
@@ -142,21 +136,15 @@ window.testSingleKey = async function(provider) {
 
   btn.innerHTML = original;
   btn.disabled = false;
-
-  // Update header badge
-  updateStatusBadge({
-    apiKey: document.getElementById('api-key').value.trim(),
-    grokKey: document.getElementById('grok-key').value.trim()
-  });
+  updateStatusBadge({ apiKey: document.getElementById('api-key').value.trim() });
 };
 
-// ─── Test Connection ────────────────────────────────────────────────────────
+// ─── Test Connection (full test via main button) ─────────────────────────────
 window.testConnection = async function() {
-  const geminiKey = document.getElementById('api-key').value.trim();
-  const grokKey = document.getElementById('grok-key').value.trim();
+  const key = document.getElementById('api-key').value.trim();
 
-  if (!geminiKey && !grokKey) {
-    showToast('Please enter at least one API key', true);
+  if (!key) {
+    showToast('Please enter your OpenRouter API key', true);
     return;
   }
 
@@ -165,86 +153,42 @@ window.testConnection = async function() {
   btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">autorenew</span> Testing...';
   btn.disabled = true;
 
-  const results = [];
+  try {
+    const res = await fetch(OPENROUTER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`,
+        'HTTP-Referer': window.location.origin,
+        'X-Title': 'WeDRIVE Chatbot'
+      },
+      body: JSON.stringify({
+        model: OPENROUTER_MODEL,
+        messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
+        max_tokens: 10
+      })
+    });
 
-  // Test Gemini
-  if (geminiKey) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${geminiKey}`;
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: 'Say "OK" in one word.' }] }]
-        })
-      });
-      results.push({ provider: 'Gemini', ok: res.ok });
-    } catch {
-      results.push({ provider: 'Gemini', ok: false });
+    if (res.ok) {
+      updateStatusBadge({ apiKey: key }, true);
+      showToast('OpenRouter connected successfully!', false);
+    } else {
+      const err = await res.json().catch(() => ({}));
+      updateStatusBadge({}, false);
+      showToast(err?.error?.message || 'Connection failed — check your API key', true);
     }
-  }
-
-  // Test Grok
-  if (grokKey) {
-    try {
-      const res = await fetch('https://api.x.ai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${grokKey}`
-        },
-        body: JSON.stringify({
-          model: GROK_MODEL,
-          messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
-          max_tokens: 10
-        })
-      });
-      results.push({ provider: 'Grok', ok: res.ok });
-    } catch {
-      results.push({ provider: 'Grok', ok: false });
-    }
-  }
-
-  const connected = results.filter(r => r.ok);
-  const failed = results.filter(r => !r.ok);
-
-  if (connected.length > 0) {
-    const names = connected.map(r => r.provider).join(' + ');
-    const failMsg = failed.length > 0 ? ` (${failed[0].provider} failed)` : '';
-    updateStatusBadge({ apiKey: geminiKey, grokKey }, true);
-    showToast(`✅ ${names} connected!${failMsg}`, false);
-  } else {
+  } catch (e) {
     updateStatusBadge({}, false);
-    showToast('❌ All connections failed — check your API keys', true);
+    showToast('Connection failed: ' + e.message, true);
   }
 
   btn.innerHTML = original;
   btn.disabled = false;
 };
 
-// ─── Gemini API Call ────────────────────────────────────────────────────────
-async function callGemini(apiKey, systemText, history) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      systemInstruction: { parts: [{ text: systemText }] },
-      contents: history
-    })
-  });
-
-  if (!res.ok) throw new Error(`Gemini ${res.status}`);
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from Gemini.';
-}
-
-// ─── Grok API Call ──────────────────────────────────────────────────────────
-async function callGrok(grokKey, systemText, history) {
-  // Convert Gemini history format to OpenAI format
-  const messages = [
-    { role: 'system', content: systemText }
-  ];
+// ─── OpenRouter API Call ─────────────────────────────────────────────────────
+async function callOpenRouter(apiKey, systemText, history) {
+  const messages = [{ role: 'system', content: systemText }];
   for (const msg of history) {
     messages.push({
       role: msg.role === 'model' ? 'assistant' : 'user',
@@ -252,88 +196,70 @@ async function callGrok(grokKey, systemText, history) {
     });
   }
 
-  const res = await fetch('https://api.x.ai/v1/chat/completions', {
+  const res = await fetch(OPENROUTER_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${grokKey}`
+      'Authorization': `Bearer ${apiKey}`,
+      'HTTP-Referer': window.location.origin,
+      'X-Title': 'WeDRIVE Chatbot'
     },
     body: JSON.stringify({
-      model: GROK_MODEL,
+      model: OPENROUTER_MODEL,
       messages,
       max_tokens: 512
     })
   });
 
-  if (!res.ok) throw new Error(`Grok ${res.status}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `OpenRouter ${res.status}`);
+  }
   const data = await res.json();
-  return data.choices?.[0]?.message?.content || 'No response from Grok.';
+  return data.choices?.[0]?.message?.content || 'No response from OpenRouter.';
 }
 
-// ─── Send Test Message (with fallback) ──────────────────────────────────────
+// ─── Send Test Message ───────────────────────────────────────────────────────
 window.sendTestMsg = async function() {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   if (!text) return;
 
-  const geminiKey = document.getElementById('api-key').value.trim();
-  const grokKey = document.getElementById('grok-key').value.trim();
+  const apiKey = document.getElementById('api-key').value.trim();
 
-  if (!geminiKey && !grokKey) {
-    showToast('Set at least one API key to test', true);
+  if (!apiKey) {
+    showToast('Set your OpenRouter API key first', true);
     return;
   }
 
-  // Add user message
   appendMsg(text, 'user');
   input.value = '';
 
-  // Disable send
   const sendBtn = document.getElementById('send-btn');
   sendBtn.disabled = true;
 
-  // Add typing indicator
   const typingEl = appendTyping();
 
-  // Build system instruction
   const systemPrompt = document.getElementById('system-prompt').value.trim();
   const promoContext = document.getElementById('promo-context').value.trim();
   const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '');
 
-  // Add to history (Gemini format)
   chatHistory.push({ role: 'user', parts: [{ text }] });
 
   let reply = '';
-  let usedProvider = '';
-
-  // Try Gemini first, then Grok
-  if (geminiKey) {
-    try {
-      reply = await callGemini(geminiKey, fullSystem, chatHistory);
-      usedProvider = 'Gemini';
-    } catch (e) {
-      console.warn('Gemini failed, trying Grok...', e.message);
-    }
-  }
-
-  // Fallback to Grok
-  if (!reply && grokKey) {
-    try {
-      reply = await callGrok(grokKey, fullSystem, chatHistory);
-      usedProvider = 'Grok';
-    } catch (e) {
-      console.error('Grok also failed:', e.message);
-    }
+  try {
+    reply = await callOpenRouter(apiKey, fullSystem, chatHistory);
+  } catch (e) {
+    console.error('OpenRouter failed:', e.message);
   }
 
   typingEl.remove();
 
   if (reply) {
     chatHistory.push({ role: 'model', parts: [{ text: reply }] });
-    const providerTag = usedProvider === 'Grok' ? ' <span style="font-size:10px;opacity:0.6;margin-left:4px;">via Grok</span>' : '';
-    appendMsg(reply + providerTag, 'bot');
+    appendMsg(reply, 'bot');
   } else {
-    appendMsg('⚠️ Both APIs failed. Please check your API keys.', 'bot');
+    appendMsg('Connection failed. Please check your API key and try again.', 'bot');
   }
 
   sendBtn.disabled = false;
@@ -376,15 +302,11 @@ function appendTyping() {
 
 function updateStatusBadge(settings, forceConnected) {
   const badge = document.getElementById('api-status');
-  const hasGemini = settings?.apiKey?.length > 10;
-  const hasGrok = settings?.grokKey?.length > 10;
+  const hasKey = settings?.apiKey?.length > 10;
 
-  if (forceConnected || hasGemini || hasGrok) {
-    const providers = [];
-    if (hasGemini) providers.push('Gemini');
-    if (hasGrok) providers.push('Grok');
+  if (forceConnected || hasKey) {
     badge.className = 'api-status connected';
-    badge.innerHTML = `<span class="dot-indicator"></span> ${providers.join(' + ') || 'Connected'}`;
+    badge.innerHTML = '<span class="dot-indicator"></span> OpenRouter Connected';
   } else {
     badge.className = 'api-status disconnected';
     badge.innerHTML = '<span class="dot-indicator"></span> Not Connected';
@@ -406,7 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const settings = loadSettings();
 
   document.getElementById('api-key').value = settings.apiKey;
-  document.getElementById('grok-key').value = settings.grokKey || '';
   document.getElementById('system-prompt').value = settings.systemPrompt;
   document.getElementById('promo-context').value = settings.promoContext;
   document.getElementById('greeting-msg').value = settings.greeting;

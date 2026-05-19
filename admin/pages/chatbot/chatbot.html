@@ -262,7 +262,7 @@
                 AI Chatbot Configuration
               </h3>
               <p class="chatbot-subtitle">
-                Powered by Google Gemini + Grok AI (auto-fallback)
+                Powered by OpenRouter.ai (Gemini 2.0 Flash)
               </p>
             </div>
             <span id="api-status" class="api-status disconnected">
@@ -271,51 +271,34 @@
           </div>
 
           <div class="settings-form chatbot-settings-form">
-            <!-- API Key -->
+            <!-- Info Box -->
             <div class="info-box">
               <span class="material-icons-round">info</span>
               <div>
-                <strong>Primary:</strong> Get free Gemini key from
-                <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" class="chatbot-link">Google AI Studio</a> (15 req/min).<br>
-                <strong>Backup:</strong> Get free Grok key from
-                <a href="https://console.x.ai/" target="_blank" rel="noopener" class="chatbot-link">xAI Console</a> (auto-fallback if Gemini fails).
+                <strong>OpenRouter.ai</strong> is a unified AI gateway that supports multiple models (Gemini, GPT-4o, Claude, etc.).<br>
+                Get your free API key from
+                <a href="https://openrouter.ai/keys" target="_blank" rel="noopener" class="chatbot-link">openrouter.ai/keys</a>.
+                Free tier available with generous limits.
               </div>
             </div>
 
-            <div class="section-divider">API Keys</div>
+            <div class="section-divider">API Key</div>
 
             <div class="form-group">
               <label>
                 <span class="material-icons-round">vpn_key</span>
-                Gemini API Key <span class="chatbot-key-note">(Primary)</span>
+                OpenRouter API Key
               </label>
               <div class="api-row">
                 <div class="api-key-wrap">
-                  <input type="password" id="api-key" placeholder="AIzaSy..." autocomplete="off" />
+                  <input type="password" id="api-key" placeholder="sk-or-v1-..." autocomplete="off" />
                   <span class="material-icons-round toggle-eye" onclick="toggleKey('api-key', this)">visibility_off</span>
                 </div>
-                <button class="btn-test-inline" id="btn-test-gemini" onclick="testSingleKey('gemini')">
+                <button class="btn-test-inline" id="btn-test-openrouter" onclick="testSingleKey('openrouter')">
                   <span class="material-icons-round">bolt</span> Test
                 </button>
               </div>
-              <div class="key-status" id="status-gemini"></div>
-            </div>
-
-            <div class="form-group">
-              <label>
-                <span class="material-icons-round">vpn_key</span>
-                Grok API Key <span class="chatbot-key-note">(Backup)</span>
-              </label>
-              <div class="api-row">
-                <div class="api-key-wrap">
-                  <input type="password" id="grok-key" placeholder="xai-..." autocomplete="off" />
-                  <span class="material-icons-round toggle-eye" onclick="toggleKey('grok-key', this)">visibility_off</span>
-                </div>
-                <button class="btn-test-inline" id="btn-test-grok" onclick="testSingleKey('grok')">
-                  <span class="material-icons-round">bolt</span> Test
-                </button>
-              </div>
-              <div class="key-status" id="status-grok"></div>
+              <div class="key-status" id="status-openrouter"></div>
             </div>
 
             <div class="section-divider">System Instructions</div>

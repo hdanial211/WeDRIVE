@@ -150,14 +150,6 @@ window.showTypingIndicator = function() {
 
 window.removeTyping = function() { const t = document.getElementById('chat-typing'); if (t) t.remove(); };
 
-window.getReply = function(msg) {
-  const m = msg.toLowerCase();
-  if (m.includes('available') || m.includes('car') && m.includes('today')) return 'available';
-  if (m.includes('recommend') || m.includes('suggest') || m.includes('best')) return 'recommend';
-  if (m.includes('book') || m.includes('how')) return 'book';
-  if (m.includes('pay') || m.includes('payment')) return 'payment';
-  return 'default';
-};
 
 window.sendChat = async function() {
   const input = document.getElementById('chat-input');
@@ -166,22 +158,61 @@ window.sendChat = async function() {
   window.addChatMsg(msg, true);
   input.value = ''; input.style.height = 'auto';
   window.showTypingIndicator();
-  
-  // Ensure we have API data
-  if (!window.chatbotData) {
-      try { window.chatbotData = await window.WeDriveAPI.getChatbotSettings(); } 
-      catch (e) { window.chatbotData = { replies: { default: "I'm having trouble connecting. Please try again later." } }; }
+
+  // Load settings from localStorage (set by admin chatbot page)
+  let settings = {};
+  try {
+    const saved = localStorage.getItem('wedrive_chatbot_settings');
+    settings = saved ? JSON.parse(saved) : {};
+  } catch (e) { settings = {}; }
+
+  const apiKey = settings.apiKey || '';
+  const systemPrompt = settings.systemPrompt || "You are WeDRIVE Bot, a helpful AI assistant for WeDRIVE car rental in Melaka, Malaysia. Be friendly, concise, and helpful.";
+  const promoContext = settings.promoContext || '';
+  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '');
+
+  if (!apiKey) {
+    window.removeTyping();
+    window.addChatMsg("I'm currently offline. Please ask the admin to configure the API key.", false);
+    return;
   }
 
-  setTimeout(() => {
+  // Build conversation history
+  if (!window._chatHistory) window._chatHistory = [];
+  window._chatHistory.push({ role: 'user', content: msg });
+
+  try {
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': window.location.origin,
+        'X-Title': 'WeDRIVE Chatbot'
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.0-flash-exp:free',
+        messages: [
+          { role: 'system', content: fullSystem },
+          ...window._chatHistory
+        ],
+        max_tokens: 512
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Please try again.";
+    window._chatHistory.push({ role: 'assistant', content: reply });
     window.removeTyping();
-    const key = window.getReply(msg);
-    const replyText = window.chatbotData.replies[key] || window.chatbotData.replies['default'];
-    // Hardcode UI element display logic (e.g. show car card for recommend/available)
-    const showCar = (key === 'available' || key === 'recommend');
-    window.addChatMsg(replyText, false, showCar);
-  }, 1000);
+    window.addChatMsg(reply
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>'), false);
+  } catch (e) {
+    window.removeTyping();
+    window.addChatMsg("Connection error. Please check your internet connection.", false);
+  }
 };
 
 window.quickSend = function(text) { document.getElementById('chat-input').value = text; window.sendChat(); };
 window.chatKey = function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); window.sendChat(); } };
+
