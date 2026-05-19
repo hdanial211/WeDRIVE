@@ -37,11 +37,12 @@
 
 .flatpickr-months .flatpickr-prev-month,
 .flatpickr-months .flatpickr-next-month {
-  top: 7px !important;
+  top: 10px !important;
   height: 32px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  padding: 0 !important;
 }
 
 .flatpickr-months .flatpickr-prev-month:hover svg,
@@ -89,13 +90,14 @@
   margin: 0 !important;
   line-height: 32px !important;
   text-align: center !important;
+  text-align-last: center !important;
   box-sizing: border-box !important;
 }
 
 .flatpickr-current-month .flatpickr-monthDropdown-months,
 .flatpickr-current-month .custom-year-select {
   width: 100% !important;
-  padding: 0 12px !important;
+  padding: 0 !important;
 }
 
 .flatpickr-monthDropdown-months:hover,
