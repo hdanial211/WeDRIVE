@@ -111,8 +111,8 @@
     rPicker = window.flatpickr(returnInput, Object.assign({}, commonConfig, {
       onOpen: function(selectedDates, dateStr, instance) {
         if (!pPicker || !pPicker.selectedDates || pPicker.selectedDates.length === 0) {
-          instance.close();
           setTimeout(function() {
+            instance.close();
             if (pPicker) pPicker.open();
           }, 10);
         }
