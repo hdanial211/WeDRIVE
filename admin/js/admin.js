@@ -8,7 +8,7 @@
 window.WeDriveAPI.getAdminData()
   .then(data => {
     populateStats(data.stats);
-    populateFleet(data.fleet);
+    populateCar(data.car);
   })
   .catch(err => {
     console.error('Admin data load error:', err);
@@ -18,8 +18,8 @@ window.WeDriveAPI.getAdminData()
 function populateStats(stats) {
   const map = {
     'stat-vehicles': stats.total_vehicles,
-    'stat-rentals':  stats.active_rentals,
-    'stat-revenue':  'RM ' + stats.revenue_today.toLocaleString(),
+    'stat-rentals': stats.active_rentals,
+    'stat-revenue': 'RM ' + stats.revenue_today.toLocaleString(),
     'stat-customers': stats.new_customers
   };
   Object.entries(map).forEach(([id, val]) => {
@@ -28,11 +28,11 @@ function populateStats(stats) {
   });
 }
 
-// ─── FLEET TABLE ──────────────────────────────────────────────────────────────
-function populateFleet(fleet) {
-  const tbody = document.getElementById('fleet-tbody');
+// ─── CAR TABLE ──────────────────────────────────────────────────────────────
+function populateCar(car) {
+  const tbody = document.getElementById('car-tbody');
   if (!tbody) return;
-  tbody.innerHTML = fleet.map(v => `
+  tbody.innerHTML = car.map(v => `
     <tr>
       <td><strong>${v.name}</strong></td>
       <td>${v.plate}</td>

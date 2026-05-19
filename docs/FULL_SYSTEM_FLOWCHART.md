@@ -49,7 +49,7 @@ flowchart TD
     DB_SWITCH -->|false sekarang| DUMMY["shared/dummy/data.json"]
     DB_SWITCH -->|true masa depan| BACKEND["API backend sebenar<br/>http://localhost:3000/api"]
 
-    DUMMY --> DATA_SECTIONS["Data sections:<br/>stats, fleet, bookings,<br/>customers, reports,<br/>settings, marketing, admins, config"]
+    DUMMY --> DATA_SECTIONS["Data sections:<br/>stats, car, bookings,<br/>customers, reports,<br/>settings, marketing, admins, config"]
     BACKEND --> ENDPOINTS["Endpoints masa depan:<br/>/cars, /bookings,<br/>/customers, /auth/login,<br/>/admin/dashboard"]
 
     DATA_SECTIONS --> RENDER["Render UI pada page"]
@@ -61,7 +61,7 @@ flowchart TD
 | Section | Fungsi |
 |---|---|
 | `stats` | Nombor ringkas untuk dashboard admin |
-| `fleet` | Senarai kereta, status, harga, spesifikasi, gambar |
+| `car` | Senarai kereta, status, harga, spesifikasi, gambar |
 | `bookings` | Senarai tempahan customer |
 | `customers` | Senarai pelanggan |
 | `reports` | Revenue bulanan, utilization kereta, summary report |
@@ -118,7 +118,7 @@ flowchart TD
     LOAD_NAV --> LOAD_PROMO["Load promo banner<br/>promo-banner.js"]
     LOAD_PROMO --> LOAD_CHATBOT["Inject chatbot component<br/>chatbot.js"]
     LOAD_CHATBOT --> LOAD_CARS["customer/js/customer.js<br/>WeDriveAPI.getCars()"]
-    LOAD_CARS --> DATA_JSON["Ambil fleet dari data.json"]
+    LOAD_CARS --> DATA_JSON["Ambil car dari data.json"]
     DATA_JSON --> RENDER_CARS["Render car cards"]
 
     RENDER_CARS --> FILTER["Guest boleh filter:<br/>All, Sedan, SUV,<br/>Hatchback, Van, Luxury"]
@@ -138,8 +138,8 @@ flowchart TD
     CUSTOMER_PAGE --> LOAD_CHATBOT["Load WeDRIVE AI chatbot"]
     CUSTOMER_PAGE --> LOAD_CARS["customer/js/customer.js<br/>WeDriveAPI.getCars()"]
 
-    LOAD_CARS --> FLEET_DATA["data.json -> fleet[]"]
-    FLEET_DATA --> CAR_GRID["Render cars-grid"]
+    LOAD_CARS --> CAR_DATA["data.json -> car[]"]
+    CAR_DATA --> CAR_GRID["Render cars-grid"]
 
     CAR_GRID --> FILTER_TYPE["Filter ikut type:<br/>sedan, suv, hatchback, van, luxury"]
     CAR_GRID --> VIEW_CARD["Lihat nama, type, fuel,<br/>seats, transmission, status, price"]
@@ -159,7 +159,7 @@ flowchart TD
 
     LOAD_ADMIN_DATA --> DATA_JSON["shared/dummy/data.json"]
     DATA_JSON --> STATS["Populate stats:<br/>total vehicles,<br/>active rentals,<br/>revenue today,<br/>new customers"]
-    DATA_JSON --> FLEET_TABLE["Populate current car status table"]
+    DATA_JSON --> CAR_TABLE["Populate current car status table"]
 
     ADMIN_START --> QUICK_ACTIONS["Quick actions"]
     QUICK_ACTIONS --> CARS["Cars Management"]
@@ -172,17 +172,17 @@ flowchart TD
     QUICK_ACTIONS --> SETTINGS["Settings"]
 ```
 
-## 7. Admin Cars/Fleet Flow
+## 7. Admin Cars/Car Flow
 
 ```mermaid
 flowchart TD
     CARS_PAGE["admin/pages/cars.html"] --> CARS_JS["admin/js/cars.js"]
     CARS_JS --> LOAD_DATA["WeDriveAPI.getAdminData()"]
-    LOAD_DATA --> FLEET["data.json -> fleet[]"]
+    LOAD_DATA --> CAR["data.json -> car[]"]
 
-    FLEET --> STATS["Kira stats:<br/>total, available, rented"]
-    FLEET --> CARD_VIEW["Render fleet card grid"]
-    FLEET --> TABLE_VIEW["Render table list dalam modal"]
+    CAR --> STATS["Kira stats:<br/>total, available, rented"]
+    CAR --> CARD_VIEW["Render car card grid"]
+    CAR --> TABLE_VIEW["Render table list dalam modal"]
 
     CARD_VIEW --> FILTER["Filter status:<br/>All, Available, Rented"]
     TABLE_VIEW --> SEARCH["Search by car name atau plate"]
@@ -203,7 +203,7 @@ flowchart TD
     VALID_ID -->|Tidak| BACK_CARS["Redirect cars.html"]
     VALID_ID -->|Ya| LOAD_DATA["WeDriveAPI.getAdminData()"]
 
-    LOAD_DATA --> FIND_CAR["Cari car dalam fleet[]"]
+    LOAD_DATA --> FIND_CAR["Cari car dalam car[]"]
     FIND_CAR --> FOUND{"Car jumpa?"}
     FOUND -->|Tidak| BACK_CARS
     FOUND -->|Ya| RENDER_DETAIL["Render nama, plate, type,<br/>status, seats, transmission,<br/>fuel, rate"]
@@ -318,11 +318,11 @@ flowchart TD
     CAL_JS --> GET_MARKETING["WeDriveAPI.getMarketing()"]
 
     GET_DATA --> BOOKINGS["Load bookings[]"]
-    GET_DATA --> FLEET["Load fleet[]"]
+    GET_DATA --> CAR["Load car[]"]
     GET_MARKETING --> MARKETING["Load banners, promo codes,<br/>seasonal pricing"]
 
     BOOKINGS --> RENDER_CAL["Render monthly calendar"]
-    FLEET --> RENDER_CAL
+    CAR --> RENDER_CAL
     MARKETING --> RENDER_CAL
 
     RENDER_CAL --> DAY_CELL["Setiap hari tunjuk indicator:<br/>booking dot, event dot,<br/>seasonal badge, cars rented"]
@@ -472,10 +472,10 @@ flowchart TD
 | Login | Demo login. Email ada `admin` jadi admin, selain itu customer |
 | Signup | Demo sahaja. Tidak create user dalam database |
 | Auth guard | Ada code, tapi `AUTH_GUARD_ACTIVE = false` |
-| Customer browse cars | Berfungsi baca `fleet[]` dari dummy JSON |
+| Customer browse cars | Berfungsi baca `car[]` dari dummy JSON |
 | Customer booking | Demo alert sahaja, belum create booking |
 | Guest browse cars | Berfungsi, tetapi booking perlu redirect login |
-| Admin dashboard | Berfungsi baca stats dan fleet |
+| Admin dashboard | Berfungsi baca stats dan car |
 | Admin cars | Berfungsi untuk view, filter, search |
 | Add car | Demo alert sahaja |
 | Edit car detail | Update paparan semasa sahaja, tidak persist ke JSON |
@@ -500,8 +500,8 @@ flowchart TD
 | `customer/pages/customer.html` | Customer dashboard |
 | `customer/js/customer.js` | Render cars, filter cars, demo booking |
 | `admin/pages/admin.html` | Admin dashboard |
-| `admin/js/admin.js` | Populate admin stats dan fleet table |
-| `admin/pages/cars.html` | Cars/fleet management page |
+| `admin/js/admin.js` | Populate admin stats dan car table |
+| `admin/pages/cars.html` | Cars/car management page |
 | `admin/js/cars.js` | Cars stats, cards, list modal, filter, search |
 | `admin/pages/car-detail.html` | Detail satu kereta |
 | `admin/js/car-detail.js` | Render detail, images, booking history, booking calendar |

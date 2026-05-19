@@ -51,7 +51,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- dashboard/
 |   |   |   +-- admin.html                 # Admin Dashboard
 |   |   +-- car/
-|   |   |   +-- cars.html                  # Pengurusan Fleet (Kereta)
+|   |   |   +-- cars.html                  # Pengurusan Car (Kereta)
 |   |   |   +-- car-detail/
 |   |   |       +-- car-detail.html        # Detail & Urus Kereta Individu
 |   |   +-- booking/
@@ -75,7 +75,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
 |       +-- admin.js            # Logik Dashboard
-|       +-- cars.js             # Logik Fleet Management
+|       +-- cars.js             # Logik Car Management
 |       +-- car-detail.js      # Logik Detail Kereta
 |       +-- bookings.js         # Logik Tempahan
 |       +-- customers.js        # Logik Pelanggan

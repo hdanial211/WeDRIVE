@@ -21,9 +21,9 @@ if (!carId) {
 
 window.WeDriveAPI.getAdminData()
   .then(data => {
-    const fleet = data.fleet || [];
+    const car = data.car || [];
     allBookings = data.bookings || [];
-    carData = fleet.find(c => c.id === carId);
+    carData = car.find(c => c.id === carId);
 
     if (!carData) {
       window.location.href = 'cars.html';
@@ -53,7 +53,7 @@ function renderCarDetails(car) {
   const statusEl = document.getElementById('cd-status');
   const statusMap = {
     'Available': { cls: 'available', icon: 'check_circle' },
-    'Rented':    { cls: 'rented',    icon: 'car_rental'   }
+    'Rented': { cls: 'rented', icon: 'car_rental' }
   };
   const sm = statusMap[car.status] || statusMap['Available'];
   statusEl.className = `status-badge ${sm.cls}`;
@@ -81,7 +81,7 @@ function renderCarImages(car) {
     mainImg.style.display = 'block';
     fallback.style.display = 'none';
 
-    mainImg.onerror = function() {
+    mainImg.onerror = function () {
       mainImg.style.display = 'none';
       fallback.style.display = 'flex';
     };
@@ -92,7 +92,7 @@ function renderCarImages(car) {
         const src = img.startsWith('data:') ? img : IMG_BASE + img;
         return `
         <div class="car-thumb ${idx === 0 ? 'active' : ''}" onclick="switchImage(${idx})">
-          <img src="${src}" alt="${car.name} ${idx+1}" onerror="this.parentElement.style.display='none';" />
+          <img src="${src}" alt="${car.name} ${idx + 1}" onerror="this.parentElement.style.display='none';" />
         </div>`;
       }).join('');
       thumbContainer.style.display = 'flex';
@@ -185,7 +185,7 @@ function renderEditImagesGrid() {
     const src = img.startsWith('data:') ? img : IMG_BASE + img;
     return `
     <div class="edit-img-item">
-      <img src="${src}" alt="Photo ${idx+1}" />
+      <img src="${src}" alt="Photo ${idx + 1}" />
       <button type="button" class="edit-img-remove" onclick="removeImage(${idx})" title="Remove photo">
         <span class="material-icons-round" style="font-size:16px;">close</span>
       </button>
@@ -219,7 +219,7 @@ function handleImageUpload(event) {
     if (!file.type.startsWith('image/')) continue;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       if (!carData.images) carData.images = [];
       carData.images.push(e.target.result);
       processed++;
@@ -301,8 +301,8 @@ function viewInsurance() {
 }
 
 function deleteCar() {
-  if (confirm(`Are you sure you want to remove ${carData.name} (${carData.plate}) from the fleet?\n\nThis action cannot be undone.`)) {
-    showToast('Vehicle removed from fleet (demo mode)', 'success');
+  if (confirm(`Are you sure you want to remove ${carData.name} (${carData.plate}) from the car?\n\nThis action cannot be undone.`)) {
+    showToast('Vehicle removed from car (demo mode)', 'success');
     setTimeout(() => { window.location.href = 'cars.html'; }, 1500);
   }
 }
@@ -360,7 +360,7 @@ function clearCalendarSelection() {
 
 function renderCalendar() {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                       'July', 'August', 'September', 'October', 'November', 'December'];
+    'July', 'August', 'September', 'October', 'November', 'December'];
 
   document.getElementById('cal-month-label').textContent = `${monthNames[calMonth]} ${calYear}`;
 

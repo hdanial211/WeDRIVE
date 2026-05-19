@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>WeDRIVE - Tesla Model 3 Selection</title>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Tailwind Configuration -->
-<script id="tailwind-config">
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WeDRIVE - Tesla Model 3 Selection</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Configuration -->
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -104,206 +110,253 @@
             }
         }
     </script>
-<style>
-        .ambient-shadow { box-shadow: 0px 4px 12px rgba(30, 41, 59, 0.05); }
-        .glass-effect { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    <style>
+        .ambient-shadow {
+            box-shadow: 0px 4px 12px rgba(30, 41, 59, 0.05);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
     </style>
 </head>
-<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
-<!-- TopNavBar -->
-<header class="sticky w-full top-0 z-50 bg-surface-container-lowest shadow-sm">
-<div class="flex justify-between items-center w-full px-lg py-md max-w-7xl mx-auto">
-<!-- Brand Logo -->
-<div class="text-h2 font-h2 font-bold text-primary flex items-center gap-sm">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+
+<body
+    class="bg-background text-on-surface min-h-screen flex flex-col font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+    <!-- TopNavBar -->
+    <header class="sticky w-full top-0 z-50 bg-surface-container-lowest shadow-sm">
+        <div class="flex justify-between items-center w-full px-lg py-md max-w-7xl mx-auto">
+            <!-- Brand Logo -->
+            <div class="text-h2 font-h2 font-bold text-primary flex items-center gap-sm">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
                 WeDRIVE
             </div>
-<!-- Navigation Links (Desktop) -->
-<nav class="hidden md:flex items-center gap-lg">
-<a class="font-label-sm text-label-sm text-primary border-b-2 border-primary pb-1 hover:text-primary transition-colors duration-200" href="#">Dashboard</a>
-<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200" href="#">My Bookings</a>
-<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200" href="#">Profile</a>
-<a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200" href="#">AI Insights</a>
-</nav>
-<!-- Actions -->
-<div class="flex items-center gap-sm">
-<!-- Search -->
-<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-secondary hover:text-primary scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined">search</span>
-</button>
-<!-- Trailing Icons -->
-<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-secondary hover:text-primary scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined">language</span>
-</button>
-<button class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-secondary hover:text-primary scale-95 active:scale-90 transition-transform">
-<span class="material-symbols-outlined">dark_mode</span>
-</button>
-<!-- Mobile Menu Toggle -->
-<button class="md:hidden p-sm rounded-full hover:bg-surface-container-high text-secondary">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</div>
-</header>
-<!-- Main Content -->
-<main class="flex-grow w-full max-w-7xl mx-auto px-lg py-xl flex flex-col gap-xl">
-<!-- Breadcrumb & Context -->
-<div class="flex items-center gap-xs text-secondary font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-[16px]">location_on</span>
-<span>Explore Melaka</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span>Cars</span>
-<span class="material-symbols-outlined text-[16px]">chevron_right</span>
-<span class="text-primary">Tesla Model 3</span>
-</div>
-<!-- Hero Section (Asymmetric) -->
-<section class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-xl items-start">
-<!-- Left: Hero Image -->
-<div class="relative w-full rounded-xl overflow-hidden ambient-shadow bg-surface-container-low aspect-[16/10]">
-<img alt="Tesla Model 3" class="w-full h-full object-cover object-center" data-alt="A sleek, modern white Tesla Model 3 parked gracefully on a sunlit street corner in the historic city of Melaka, Malaysia. The setting features beautiful colonial red-brick architecture in the softly blurred background, creating a striking contrast between cutting-edge electric vehicle technology and rich cultural heritage. The image is bathed in warm, golden-hour natural lighting, highlighting the aerodynamic curves of the car. The overall visual style is premium, clean, and highly sophisticated, reflecting a top-tier modern car rental experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAspvaMwIwunkHDIiNMskN-jdrnJsB8m57g168t9WY-EMvsib-rk4PbBpKes7jpy7_jzLhpaU44K8gdgNGzmJa1gx-Z2TjMA0yYGVaJu-xPl5MbRWJ6Ye11vJvTaVp015JRl5qYzYPPzCPgErckBjGPbPPjNavxwr0uUBD1jkqh0TWzcjYGyzqzk1hPsGIkJwx1CFZPlkSfkuXyYqyHicNmg0Y6y6sYjn3fhFjiAvU6sLBK_dd5AWWubVlq7AMhwBHUyVFpoL1HMQA"/>
-<!-- AI Chip -->
-<div class="absolute top-md right-md bg-surface-container-lowest/90 backdrop-blur-md rounded-full px-md py-xs flex items-center gap-sm shadow-sm border border-outline-variant/30">
-<span class="material-symbols-outlined text-primary text-[16px]">smart_toy</span>
-<span class="font-label-sm text-label-sm text-on-surface">AI Fleet Status: Optimal</span>
-</div>
-</div>
-<!-- Right: Details & Booking -->
-<div class="flex flex-col gap-lg bg-surface-container-lowest p-lg rounded-xl ambient-shadow">
-<div class="flex flex-col gap-xs">
-<div class="flex justify-between items-start">
-<h1 class="font-h1 text-h1 text-on-surface">Tesla Model 3</h1>
-<span class="bg-tertiary-container/10 text-primary font-label-sm text-label-sm px-sm py-xs rounded">2024 Model</span>
-</div>
-<p class="font-body-lg text-body-lg text-secondary">Long Range Dual Motor All-Wheel Drive.</p>
-</div>
-<div class="flex items-baseline gap-sm border-b border-surface-container pb-md">
-<span class="font-h1 text-h1 text-primary">RM 450</span>
-<span class="font-body-md text-body-md text-secondary">/ day</span>
-</div>
-<div class="flex flex-col gap-sm">
-<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-sm">
-<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+            <!-- Navigation Links (Desktop) -->
+            <nav class="hidden md:flex items-center gap-lg">
+                <a class="font-label-sm text-label-sm text-primary border-b-2 border-primary pb-1 hover:text-primary transition-colors duration-200"
+                    href="#">Dashboard</a>
+                <a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200"
+                    href="#">My Bookings</a>
+                <a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200"
+                    href="#">Profile</a>
+                <a class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors duration-200"
+                    href="#">AI Insights</a>
+            </nav>
+            <!-- Actions -->
+            <div class="flex items-center gap-sm">
+                <!-- Search -->
+                <button
+                    class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-secondary hover:text-primary scale-95 active:scale-90 transition-transform">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                <!-- Trailing Icons -->
+                <button
+                    class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-secondary hover:text-primary scale-95 active:scale-90 transition-transform">
+                    <span class="material-symbols-outlined">language</span>
+                </button>
+                <button
+                    class="p-sm rounded-full hover:bg-surface-container-high transition-colors text-secondary hover:text-primary scale-95 active:scale-90 transition-transform">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <!-- Mobile Menu Toggle -->
+                <button class="md:hidden p-sm rounded-full hover:bg-surface-container-high text-secondary">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-lg py-xl flex flex-col gap-xl">
+        <!-- Breadcrumb & Context -->
+        <div class="flex items-center gap-xs text-secondary font-label-sm text-label-sm">
+            <span class="material-symbols-outlined text-[16px]">location_on</span>
+            <span>Explore Melaka</span>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            <span>Cars</span>
+            <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+            <span class="text-primary">Tesla Model 3</span>
+        </div>
+        <!-- Hero Section (Asymmetric) -->
+        <section class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-xl items-start">
+            <!-- Left: Hero Image -->
+            <div
+                class="relative w-full rounded-xl overflow-hidden ambient-shadow bg-surface-container-low aspect-[16/10]">
+                <img alt="Tesla Model 3" class="w-full h-full object-cover object-center"
+                    data-alt="A sleek, modern white Tesla Model 3 parked gracefully on a sunlit street corner in the historic city of Melaka, Malaysia. The setting features beautiful colonial red-brick architecture in the softly blurred background, creating a striking contrast between cutting-edge electric vehicle technology and rich cultural heritage. The image is bathed in warm, golden-hour natural lighting, highlighting the aerodynamic curves of the car. The overall visual style is premium, clean, and highly sophisticated, reflecting a top-tier modern car rental experience."
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAspvaMwIwunkHDIiNMskN-jdrnJsB8m57g168t9WY-EMvsib-rk4PbBpKes7jpy7_jzLhpaU44K8gdgNGzmJa1gx-Z2TjMA0yYGVaJu-xPl5MbRWJ6Ye11vJvTaVp015JRl5qYzYPPzCPgErckBjGPbPPjNavxwr0uUBD1jkqh0TWzcjYGyzqzk1hPsGIkJwx1CFZPlkSfkuXyYqyHicNmg0Y6y6sYjn3fhFjiAvU6sLBK_dd5AWWubVlq7AMhwBHUyVFpoL1HMQA" />
+                <!-- AI Chip -->
+                <div
+                    class="absolute top-md right-md bg-surface-container-lowest/90 backdrop-blur-md rounded-full px-md py-xs flex items-center gap-sm shadow-sm border border-outline-variant/30">
+                    <span class="material-symbols-outlined text-primary text-[16px]">smart_toy</span>
+                    <span class="font-label-sm text-label-sm text-on-surface">AI Car Status: Optimal</span>
+                </div>
+            </div>
+            <!-- Right: Details & Booking -->
+            <div class="flex flex-col gap-lg bg-surface-container-lowest p-lg rounded-xl ambient-shadow">
+                <div class="flex flex-col gap-xs">
+                    <div class="flex justify-between items-start">
+                        <h1 class="font-h1 text-h1 text-on-surface">Tesla Model 3</h1>
+                        <span
+                            class="bg-tertiary-container/10 text-primary font-label-sm text-label-sm px-sm py-xs rounded">2024
+                            Model</span>
+                    </div>
+                    <p class="font-body-lg text-body-lg text-secondary">Long Range Dual Motor All-Wheel Drive.</p>
+                </div>
+                <div class="flex items-baseline gap-sm border-b border-surface-container pb-md">
+                    <span class="font-h1 text-h1 text-primary">RM 450</span>
+                    <span class="font-body-md text-body-md text-secondary">/ day</span>
+                </div>
+                <div class="flex flex-col gap-sm">
+                    <p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-sm">
+                        <span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
                         Available instantly at Melaka Sentral Station.
                     </p>
-<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-sm">
-<span class="material-symbols-outlined text-tertiary text-[18px]">bolt</span>
+                    <p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-sm">
+                        <span class="material-symbols-outlined text-tertiary text-[18px]">bolt</span>
                         Delivered with 90%+ battery charge.
                     </p>
-</div>
-<button class="w-full bg-primary text-on-primary hover:bg-primary-fixed-dim hover:text-on-primary-fixed transition-colors duration-200 rounded-lg py-md px-lg flex justify-center items-center gap-sm font-label-sm text-label-sm mt-md shadow-sm">
+                </div>
+                <button
+                    class="w-full bg-primary text-on-primary hover:bg-primary-fixed-dim hover:text-on-primary-fixed transition-colors duration-200 rounded-lg py-md px-lg flex justify-center items-center gap-sm font-label-sm text-label-sm mt-md shadow-sm">
                     Book Now for Melaka Trip
                     <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</div>
-</section>
-<!-- Bento Grid: Specifications -->
-<section class="flex flex-col gap-md">
-<h2 class="font-h2 text-h2 text-on-surface">Performance Specifications</h2>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
-<!-- Spec Card 1 -->
-<div class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
-<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">route</span>
-</div>
-<div class="font-h3 text-h3 text-on-surface">333 mi</div>
-<div class="font-label-sm text-label-sm text-secondary uppercase">Est. Range</div>
-</div>
-<!-- Spec Card 2 -->
-<div class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
-<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">speed</span>
-</div>
-<div class="font-h3 text-h3 text-on-surface">145 mph</div>
-<div class="font-label-sm text-label-sm text-secondary uppercase">Top Speed</div>
-</div>
-<!-- Spec Card 3 -->
-<div class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
-<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">timer</span>
-</div>
-<div class="font-h3 text-h3 text-on-surface">4.2 sec</div>
-<div class="font-label-sm text-label-sm text-secondary uppercase">0-60 mph</div>
-</div>
-<!-- Spec Card 4 -->
-<div class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
-<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">airline_seat_recline_normal</span>
-</div>
-<div class="font-h3 text-h3 text-on-surface">5 Adults</div>
-<div class="font-label-sm text-label-sm text-secondary uppercase">Seating</div>
-</div>
-</div>
-</section>
-<!-- AI Features (Asymmetric / Bento hybrid) -->
-<section class="flex flex-col gap-md mt-lg">
-<h2 class="font-h2 text-h2 text-on-surface flex items-center gap-sm">
-<span class="material-symbols-outlined text-primary">memory</span>
+                </button>
+            </div>
+        </section>
+        <!-- Bento Grid: Specifications -->
+        <section class="flex flex-col gap-md">
+            <h2 class="font-h2 text-h2 text-on-surface">Performance Specifications</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+                <!-- Spec Card 1 -->
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
+                    <div
+                        class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">route</span>
+                    </div>
+                    <div class="font-h3 text-h3 text-on-surface">333 mi</div>
+                    <div class="font-label-sm text-label-sm text-secondary uppercase">Est. Range</div>
+                </div>
+                <!-- Spec Card 2 -->
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
+                    <div
+                        class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">speed</span>
+                    </div>
+                    <div class="font-h3 text-h3 text-on-surface">145 mph</div>
+                    <div class="font-label-sm text-label-sm text-secondary uppercase">Top Speed</div>
+                </div>
+                <!-- Spec Card 3 -->
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
+                    <div
+                        class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">timer</span>
+                    </div>
+                    <div class="font-h3 text-h3 text-on-surface">4.2 sec</div>
+                    <div class="font-label-sm text-label-sm text-secondary uppercase">0-60 mph</div>
+                </div>
+                <!-- Spec Card 4 -->
+                <div
+                    class="bg-surface-container-lowest p-md rounded-xl ambient-shadow flex flex-col gap-sm items-center text-center border border-surface-container">
+                    <div
+                        class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+                        <span class="material-symbols-outlined">airline_seat_recline_normal</span>
+                    </div>
+                    <div class="font-h3 text-h3 text-on-surface">5 Adults</div>
+                    <div class="font-label-sm text-label-sm text-secondary uppercase">Seating</div>
+                </div>
+            </div>
+        </section>
+        <!-- AI Features (Asymmetric / Bento hybrid) -->
+        <section class="flex flex-col gap-md mt-lg">
+            <h2 class="font-h2 text-h2 text-on-surface flex items-center gap-sm">
+                <span class="material-symbols-outlined text-primary">memory</span>
                 AI-Optimized Driving Experience
             </h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
-<div class="col-span-1 md:col-span-2 bg-surface-container-lowest p-lg rounded-xl ambient-shadow flex flex-col justify-center border-l-4 border-primary">
-<h3 class="font-h3 text-h3 text-on-surface mb-xs">Predictive Range Analytics</h3>
-<p class="font-body-md text-body-md text-secondary">
-                        Our integrated WeDRIVE AI continuously monitors traffic conditions around Melaka, local topography, and your driving habits to provide real-time, highly accurate range estimations, eliminating range anxiety during your coastal drives.
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+                <div
+                    class="col-span-1 md:col-span-2 bg-surface-container-lowest p-lg rounded-xl ambient-shadow flex flex-col justify-center border-l-4 border-primary">
+                    <h3 class="font-h3 text-h3 text-on-surface mb-xs">Predictive Range Analytics</h3>
+                    <p class="font-body-md text-body-md text-secondary">
+                        Our integrated WeDRIVE AI continuously monitors traffic conditions around Melaka, local
+                        topography, and your driving habits to provide real-time, highly accurate range estimations,
+                        eliminating range anxiety during your coastal drives.
                     </p>
-</div>
-<div class="bg-surface-container p-lg rounded-xl flex flex-col justify-center">
-<span class="material-symbols-outlined text-primary mb-sm text-[32px]">ac_unit</span>
-<h3 class="font-h3 text-h3 text-on-surface mb-xs">Smart Climate Control</h3>
-<p class="font-body-md text-body-md text-secondary">
-                        Pre-conditions the cabin temperature automatically based on predictive boarding algorithms and external weather data.
+                </div>
+                <div class="bg-surface-container p-lg rounded-xl flex flex-col justify-center">
+                    <span class="material-symbols-outlined text-primary mb-sm text-[32px]">ac_unit</span>
+                    <h3 class="font-h3 text-h3 text-on-surface mb-xs">Smart Climate Control</h3>
+                    <p class="font-body-md text-body-md text-secondary">
+                        Pre-conditions the cabin temperature automatically based on predictive boarding algorithms and
+                        external weather data.
                     </p>
-</div>
-</div>
-</section>
-<!-- Rental Policy -->
-<section class="flex flex-col gap-md mt-lg mb-xl">
-<h2 class="font-h2 text-h2 text-on-surface">Rental Policy</h2>
-<div class="bg-surface-container-lowest rounded-xl ambient-shadow border border-surface-container overflow-hidden">
-<div class="p-lg flex flex-col gap-md">
-<div class="flex items-start gap-md">
-<span class="material-symbols-outlined text-secondary mt-1">credit_card</span>
-<div>
-<h4 class="font-h3 text-h3 text-on-surface">Security Deposit</h4>
-<p class="font-body-md text-body-md text-secondary">A refundable security deposit of RM 1,500 will be held on your credit card prior to handover.</p>
-</div>
-</div>
-<div class="w-full h-px bg-surface-container"></div>
-<div class="flex items-start gap-md">
-<span class="material-symbols-outlined text-secondary mt-1">ev_station</span>
-<div>
-<h4 class="font-h3 text-h3 text-on-surface">Charging Policy</h4>
-<p class="font-body-md text-body-md text-secondary">Please return the vehicle with at least 20% charge. Supercharging fees incurred during the rental period will be billed automatically to your account.</p>
-</div>
-</div>
-<div class="w-full h-px bg-surface-container"></div>
-<div class="flex items-start gap-md">
-<span class="material-symbols-outlined text-secondary mt-1">no_crash</span>
-<div>
-<h4 class="font-h3 text-h3 text-on-surface">Insurance Coverage</h4>
-<p class="font-body-md text-body-md text-secondary">Comprehensive AI-backed insurance is included. In the event of an incident, the maximum out-of-pocket excess is RM 2,000.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="w-full bg-surface-container">
-<div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-7xl mx-auto gap-md">
-<!-- Brand Logo -->
-<div class="text-h3 font-h3 font-bold text-primary flex items-center gap-sm">
-<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+                </div>
+            </div>
+        </section>
+        <!-- Rental Policy -->
+        <section class="flex flex-col gap-md mt-lg mb-xl">
+            <h2 class="font-h2 text-h2 text-on-surface">Rental Policy</h2>
+            <div
+                class="bg-surface-container-lowest rounded-xl ambient-shadow border border-surface-container overflow-hidden">
+                <div class="p-lg flex flex-col gap-md">
+                    <div class="flex items-start gap-md">
+                        <span class="material-symbols-outlined text-secondary mt-1">credit_card</span>
+                        <div>
+                            <h4 class="font-h3 text-h3 text-on-surface">Security Deposit</h4>
+                            <p class="font-body-md text-body-md text-secondary">A refundable security deposit of RM
+                                1,500 will be held on your credit card prior to handover.</p>
+                        </div>
+                    </div>
+                    <div class="w-full h-px bg-surface-container"></div>
+                    <div class="flex items-start gap-md">
+                        <span class="material-symbols-outlined text-secondary mt-1">ev_station</span>
+                        <div>
+                            <h4 class="font-h3 text-h3 text-on-surface">Charging Policy</h4>
+                            <p class="font-body-md text-body-md text-secondary">Please return the vehicle with at least
+                                20% charge. Supercharging fees incurred during the rental period will be billed
+                                automatically to your account.</p>
+                        </div>
+                    </div>
+                    <div class="w-full h-px bg-surface-container"></div>
+                    <div class="flex items-start gap-md">
+                        <span class="material-symbols-outlined text-secondary mt-1">no_crash</span>
+                        <div>
+                            <h4 class="font-h3 text-h3 text-on-surface">Insurance Coverage</h4>
+                            <p class="font-body-md text-body-md text-secondary">Comprehensive AI-backed insurance is
+                                included. In the event of an incident, the maximum out-of-pocket excess is RM 2,000.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="w-full bg-surface-container">
+        <div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-7xl mx-auto gap-md">
+            <!-- Brand Logo -->
+            <div class="text-h3 font-h3 font-bold text-primary flex items-center gap-sm">
+                <span class="material-symbols-outlined text-[20px]"
+                    style="font-variation-settings: 'FILL' 1;">directions_car</span>
                 WeDRIVE
             </div>
-<!-- Copyright -->
-<p class="font-body-md text-body-md text-on-surface">© 2024 WeDRIVE AI-Assisted Rentals. All rights reserved.</p>
-<!-- Links -->
-<nav class="flex gap-md">
-<a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200" href="#">About Us</a>
-<a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200" href="#">Terms</a>
-<a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200" href="#">Privacy</a>
-</nav>
-</div>
-</footer>
-</body></html>
+            <!-- Copyright -->
+            <p class="font-body-md text-body-md text-on-surface">© 2024 WeDRIVE AI-Assisted Rentals. All rights
+                reserved.</p>
+            <!-- Links -->
+            <nav class="flex gap-md">
+                <a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200"
+                    href="#">About Us</a>
+                <a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200"
+                    href="#">Terms</a>
+                <a class="font-label-sm text-label-sm text-secondary hover:underline hover:text-primary transition-all duration-200"
+                    href="#">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+
+</html>

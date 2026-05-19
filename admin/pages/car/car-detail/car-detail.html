@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vehicle Details | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../../shared/css/animation.css" />
@@ -14,8 +15,9 @@
   <link rel="stylesheet" href="../../../css/admin.css" />
   <script src="../../../../shared/js/auth-guard.js" data-role="admin"></script>
 </head>
+
 <body data-particles="6" data-cursor-glow>
-  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="fleet"></div>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car"></div>
 
   <main class="main">
     <div id="navbar-placeholder" data-module="admin"></div>
@@ -36,8 +38,11 @@
           <!-- Car Image Gallery -->
           <div class="car-hero-image" id="cd-image">
             <!-- Main Image -->
-            <img id="cd-main-img" src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg" alt="Car Preview" style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:none;" />
-            <span id="cd-img-fallback" class="material-icons-round" style="font-size:80px;color:var(--primary);opacity:0.5;">directions_car</span>
+            <img id="cd-main-img"
+              src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg"
+              alt="Car Preview" style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:none;" />
+            <span id="cd-img-fallback" class="material-icons-round"
+              style="font-size:80px;color:var(--primary);opacity:0.5;">directions_car</span>
           </div>
           <!-- Thumbnail Strip -->
           <div id="cd-thumbnails" class="car-thumbnails"></div>
@@ -94,15 +99,18 @@
       <!-- BOOKING CALENDAR -->
       <div class="card reveal-on-scroll" style="margin-top:24px;">
         <div class="card-header">
-          <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">calendar_month</span> Booking Calendar</h3>
+          <h3><span class="material-icons-round"
+              style="font-size:20px;vertical-align:middle;margin-right:6px;">calendar_month</span> Booking Calendar</h3>
           <div style="display:flex;align-items:center;gap:8px;">
-            <button class="btn-outline-sm" onclick="clearCalendarSelection()" id="cal-clear-btn" style="display:none;color:#DC2626;border-color:#DC2626;">
+            <button class="btn-outline-sm" onclick="clearCalendarSelection()" id="cal-clear-btn"
+              style="display:none;color:#DC2626;border-color:#DC2626;">
               <span class="material-icons-round" style="font-size:14px">close</span> Clear
             </button>
             <button class="btn-outline-sm" onclick="calendarPrev()" id="cal-prev-btn">
               <span class="material-icons-round" style="font-size:16px">chevron_left</span>
             </button>
-            <span id="cal-month-label" style="font-size:14px;font-weight:700;color:var(--navy);min-width:140px;text-align:center;">--</span>
+            <span id="cal-month-label"
+              style="font-size:14px;font-weight:700;color:var(--navy);min-width:140px;text-align:center;">--</span>
             <button class="btn-outline-sm" onclick="calendarNext()" id="cal-next-btn">
               <span class="material-icons-round" style="font-size:16px">chevron_right</span>
             </button>
@@ -115,7 +123,13 @@
           </p>
           <!-- Day headers -->
           <div class="cal-grid cal-header">
-            <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
           </div>
           <!-- Calendar days -->
           <div class="cal-grid" id="cal-days-grid"></div>
@@ -134,7 +148,8 @@
       <!-- EDIT FORM -->
       <div class="card reveal-on-scroll" id="edit-section" style="display:none; margin-top:24px;">
         <div class="card-header">
-          <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">edit_note</span> Edit Vehicle Details</h3>
+          <h3><span class="material-icons-round"
+              style="font-size:20px;vertical-align:middle;margin-right:6px;">edit_note</span> Edit Vehicle Details</h3>
           <button class="btn-outline-sm" onclick="cancelEdit()">Cancel</button>
         </div>
         <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
@@ -190,17 +205,21 @@
           </div>
           <!-- Image Management -->
           <div style="grid-column:1/-1;margin-top:8px;">
-            <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.5px;margin-bottom:10px;display:block;">
+            <label
+              style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.5px;margin-bottom:10px;display:block;">
               Vehicle Photos (max 10)
             </label>
             <div id="edit-images-grid" class="edit-images-grid"></div>
             <div style="margin-top:10px;">
-              <label for="edit-image-upload" class="btn-outline-sm" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+              <label for="edit-image-upload" class="btn-outline-sm"
+                style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
                 <span class="material-icons-round" style="font-size:16px;">add_photo_alternate</span>
                 Add Photo
               </label>
-              <input type="file" id="edit-image-upload" accept="image/*" multiple style="display:none;" onchange="handleImageUpload(event)" />
-              <span style="font-size:11px;color:var(--slate-400);margin-left:8px;" id="img-count-label">0/10 photos</span>
+              <input type="file" id="edit-image-upload" accept="image/*" multiple style="display:none;"
+                onchange="handleImageUpload(event)" />
+              <span style="font-size:11px;color:var(--slate-400);margin-left:8px;" id="img-count-label">0/10
+                photos</span>
             </div>
           </div>
 
@@ -216,7 +235,8 @@
       <!-- BOOKING HISTORY -->
       <div class="card reveal-on-scroll" style="margin-top:24px;">
         <div class="card-header">
-          <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">history</span> Booking History</h3>
+          <h3><span class="material-icons-round"
+              style="font-size:20px;vertical-align:middle;margin-right:6px;">history</span> Booking History</h3>
         </div>
         <div style="overflow-x:auto;">
           <table>
@@ -239,14 +259,16 @@
       <!-- QUICK ACTIONS -->
       <div class="stats-grid reveal-on-scroll" style="grid-template-columns:repeat(2,1fr);margin-top:24px;">
         <div class="card" style="padding:24px;text-align:center;cursor:pointer;" onclick="viewInsurance()">
-          <span class="material-icons-round" style="font-size:36px;color:#3B82F6;margin-bottom:8px;display:block;">verified_user</span>
+          <span class="material-icons-round"
+            style="font-size:36px;color:#3B82F6;margin-bottom:8px;display:block;">verified_user</span>
           <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:0 0 4px;">Insurance Info</h4>
           <p style="font-size:12px;color:var(--slate-400);margin:0;">View coverage details</p>
         </div>
         <div class="card" style="padding:24px;text-align:center;cursor:pointer;" onclick="deleteCar()">
-          <span class="material-icons-round" style="font-size:36px;color:#EF4444;margin-bottom:8px;display:block;">delete_forever</span>
+          <span class="material-icons-round"
+            style="font-size:36px;color:#EF4444;margin-bottom:8px;display:block;">delete_forever</span>
           <h4 style="font-size:14px;font-weight:700;color:var(--navy);margin:0 0 4px;">Remove Vehicle</h4>
-          <p style="font-size:12px;color:var(--slate-400);margin:0;">Decommission from fleet</p>
+          <p style="font-size:12px;color:var(--slate-400);margin:0;">Decommission from car</p>
         </div>
       </div>
 
@@ -263,4 +285,5 @@
   <script src="../../../../shared/js/animate.js"></script>
   <script src="../../../js/car-detail.js"></script>
 </body>
+
 </html>

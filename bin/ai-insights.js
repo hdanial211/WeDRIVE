@@ -24,7 +24,7 @@ function renderInsights(insights) {
       demand: 'trending_up',
       maintenance: 'build',
       pricing: 'attach_money',
-      fleet: 'directions_car',
+      car: 'directions_car',
       customer: 'person'
     };
     const colorMap = {

@@ -1,27 +1,27 @@
 /**
- * WeDRIVE - Fleet / Cars Module JS
+ * WeDRIVE - Car / Cars Module JS
  * admin/js/cars.js
  * Focus: Rental only (no maintenance/service/mileage)
  */
 
-let allFleet = [];
+let allCar = [];
 let currentFilter = 'all';
 let currentSearch = '';
 
 window.WeDriveAPI.getAdminData()
   .then(data => {
-    allFleet = data.fleet || [];
-    populateFleetStats(allFleet);
-    renderFleetCards(allFleet);
-    renderFleetTable(allFleet);
+    allCar = data.car || [];
+    populateCarStats(allCar);
+    renderCarCards(allCar);
+    renderCarTable(allCar);
   })
-  .catch(err => console.error('Fleet data load error:', err));
+  .catch(err => console.error('Car data load error:', err));
 
 /* ── Stats ── */
-function populateFleetStats(fleet) {
-  const total = fleet.length;
-  const available = fleet.filter(c => c.status === 'Available').length;
-  const rented = fleet.filter(c => c.status === 'Rented').length;
+function populateCarStats(car) {
+  const total = car.length;
+  const available = car.filter(c => c.status === 'Available').length;
+  const rented = car.filter(c => c.status === 'Rented').length;
 
   document.getElementById('fl-total').textContent = total;
   document.getElementById('fl-available').textContent = available;
@@ -29,14 +29,14 @@ function populateFleetStats(fleet) {
 }
 
 /* ── Card Grid ── */
-function renderFleetCards(fleet) {
-  const grid = document.getElementById('fleet-grid');
+function renderCarCards(car) {
+  const grid = document.getElementById('car-grid');
   if (!grid) return;
-  if (fleet.length === 0) {
+  if (car.length === 0) {
     grid.innerHTML = '<div class="card" style="padding:40px;text-align:center;color:#94A3B8;grid-column:1/-1">No vehicles found</div>';
     return;
   }
-  grid.innerHTML = fleet.map(car => {
+  grid.innerHTML = car.map(car => {
     const statusColors = {
       'Available': { bg: '#D1FAE5', text: '#059669', icon: 'check_circle' },
       'Rented': { bg: '#DBEAFE', text: '#2563EB', icon: 'car_rental' }
@@ -48,9 +48,9 @@ function renderFleetCards(fleet) {
       <!-- Car Image -->
       <div style="width:100%;height:160px;background:linear-gradient(135deg,var(--slate-50),var(--slate-100));border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden;">
         ${car.images && car.images.length > 0
-          ? `<img src="../../../shared/model/${car.images[0]}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`
-          : `<span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;">directions_car</span>`
-        }
+        ? `<img src="../../../shared/model/${car.images[0]}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`
+        : `<span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;">directions_car</span>`
+      }
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
@@ -85,14 +85,14 @@ function renderFleetCards(fleet) {
 }
 
 /* ── Table ── */
-function renderFleetTable(fleet) {
-  const tbody = document.getElementById('fleet-tbody');
+function renderCarTable(car) {
+  const tbody = document.getElementById('car-tbody');
   if (!tbody) return;
-  if (fleet.length === 0) {
+  if (car.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94A3B8;padding:40px">No vehicles found</td></tr>';
     return;
   }
-  tbody.innerHTML = fleet.map(car => {
+  tbody.innerHTML = car.map(car => {
     const statusClass = car.status === 'Available' ? 'available' : 'rented';
     return `
     <tr>
@@ -114,7 +114,7 @@ function renderFleetTable(fleet) {
 }
 
 /* ── Filter ── */
-function filterFleet(status, btn) {
+function filterCar(status, btn) {
   currentFilter = status;
   document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
@@ -122,14 +122,14 @@ function filterFleet(status, btn) {
 }
 
 /* ── Search ── */
-function searchFleet(query) {
+function searchCar(query) {
   currentSearch = query.toLowerCase();
   applyFilters();
 }
 
 /* ── Combined filter + search ── */
 function applyFilters() {
-  let filtered = allFleet;
+  let filtered = allCar;
   if (currentFilter !== 'all') {
     filtered = filtered.filter(c => c.status === currentFilter);
   }
@@ -139,8 +139,8 @@ function applyFilters() {
       c.plate.toLowerCase().includes(currentSearch)
     );
   }
-  renderFleetCards(filtered);
-  renderFleetTable(filtered);
+  renderCarCards(filtered);
+  renderCarTable(filtered);
 }
 
 /* ── Actions ── */
@@ -166,13 +166,13 @@ function closeCarListModal() {
 }
 
 // Close modal on backdrop click
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
   if (e.target.classList.contains('modal-overlay')) {
     closeCarListModal();
   }
 });
 
 // Close modal on Escape key
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closeCarListModal();
 });

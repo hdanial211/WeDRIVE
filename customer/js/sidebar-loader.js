@@ -25,7 +25,7 @@
     // Count segments after 'customer/pages/'
     var match = path.match(/\/customer\/pages\/(.*)/);
     if (match) {
-      var segments = match[1].split('/').filter(function(s) { return s.length > 0; });
+      var segments = match[1].split('/').filter(function (s) { return s.length > 0; });
       // segments.length - 1 is folder depth from customer/pages/
       // We need to go: ../../ from customer/pages/X/ to get to root customer/
       // And ../../../ to get to project root
@@ -39,16 +39,16 @@
 
   // Sidebar nav items configuration
   var NAV_ITEMS = [
-    { icon: 'dashboard',      key: 'nav_dashboard', label: 'Dashboard',    page: 'dashboard',   href: '{base}customer/pages/dashboard/customer.html' },
-    { icon: 'calendar_month', key: 'nav_bookings',  label: 'My Bookings',  page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' },
-    { icon: 'key',            key: 'nav_my_car',    label: 'My Car',       page: 'car-access',  href: '{base}customer/pages/car-access/car-access.html' },
-    { icon: 'psychology',     key: 'nav_ai',        label: 'AI Insights',  page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
+    { icon: 'dashboard', key: 'nav_dashboard', label: 'Dashboard', page: 'dashboard', href: '{base}customer/pages/dashboard/customer.html' },
+    { icon: 'calendar_month', key: 'nav_bookings', label: 'My Bookings', page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' },
+    { icon: 'key', key: 'nav_my_car', label: 'My Car', page: 'car-access', href: '{base}customer/pages/car-access/car-access.html' },
+    { icon: 'psychology', key: 'nav_ai', label: 'AI Insights', page: 'ai-insights', href: '{base}customer/pages/ai-insights/ai-insights.html' }
   ];
 
   var FOOTER_ITEMS = [
-    { icon: 'settings', key: 'nav_settings', label: 'Settings', page: 'profile',  href: '{base}customer/pages/profile/profile.html' },
-    { icon: 'help',     key: 'nav_support',  label: 'Support',  page: 'support',  href: '{base}customer/pages/support/support.html' },
-    { icon: 'logout',   key: 'nav_logout',   label: 'Logout',   page: 'logout',   href: '{base}account/login.html', isLogout: true }
+    { icon: 'settings', key: 'nav_settings', label: 'Settings', page: 'profile', href: '{base}customer/pages/profile/profile.html' },
+    { icon: 'help', key: 'nav_support', label: 'Support', page: 'support', href: '{base}customer/pages/support/support.html' },
+    { icon: 'logout', key: 'nav_logout', label: 'Logout', page: 'logout', href: '{base}account/login.html', isLogout: true }
   ];
 
   function detectActivePage() {
@@ -64,14 +64,14 @@
   }
 
   function buildNavItems(items, base, activePage) {
-    return items.map(function(item) {
+    return items.map(function (item) {
       var href = item.href.replace(/{base}/g, base);
       var isActive = (activePage === item.page) ? ' active' : '';
       var logoutClass = item.isLogout ? ' sidebar-logout' : '';
       return '<a href="' + href + '" class="sidebar-nav-item' + isActive + logoutClass + '" data-page="' + item.page + '">' +
         '<span class="material-icons-round">' + item.icon + '</span>' +
         '<span data-key="' + item.key + '">' + item.label + '</span>' +
-      '</a>';
+        '</a>';
     }).join('\n');
   }
 
@@ -86,7 +86,7 @@
       '      <img src="' + base + 'shared/logo/wedrive-icon.png" alt="" aria-hidden="true" class="sidebar-logo"/>',
       '      <div class="sidebar-brand-group">',
       '        <span class="sidebar-brand-text">WeDRIVE</span>',
-      '        <span class="sidebar-brand-sub">Fleet Management</span>',
+      '        <span class="sidebar-brand-sub">Car Management</span>',
       '      </div>',
       '    </a>',
       '  </div>',
@@ -144,7 +144,7 @@
       document.body.style.overflow = '';
     }
 
-    toggle.addEventListener('click', function() {
+    toggle.addEventListener('click', function () {
       sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
     });
     overlay.addEventListener('click', closeSidebar);

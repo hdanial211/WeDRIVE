@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -63,7 +64,7 @@
       background: #111827;
       color: #e5e7eb;
       overflow-y: auto;
-      border-right: 1px solid rgba(255,255,255,0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .brand {
@@ -71,7 +72,7 @@
       align-items: center;
       gap: 12px;
       padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       margin-bottom: 18px;
     }
 
@@ -124,9 +125,9 @@
     }
 
     .nav-link:hover {
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.08);
       color: #ffffff;
-      border-color: rgba(255,255,255,0.08);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .nav-no {
@@ -209,10 +210,25 @@
       background: #ffffff;
     }
 
-    .summary-card.blue { background: var(--soft-blue); border-color: #bfdbfe; }
-    .summary-card.green { background: var(--soft-green); border-color: #a7f3d0; }
-    .summary-card.amber { background: var(--soft-amber); border-color: #fde68a; }
-    .summary-card.violet { background: var(--soft-violet); border-color: #ddd6fe; }
+    .summary-card.blue {
+      background: var(--soft-blue);
+      border-color: #bfdbfe;
+    }
+
+    .summary-card.green {
+      background: var(--soft-green);
+      border-color: #a7f3d0;
+    }
+
+    .summary-card.amber {
+      background: var(--soft-amber);
+      border-color: #fde68a;
+    }
+
+    .summary-card.violet {
+      background: var(--soft-violet);
+      border-color: #ddd6fe;
+    }
 
     .summary-value {
       font-size: 24px;
@@ -354,10 +370,25 @@
       white-space: nowrap;
     }
 
-    .status.ok { background: var(--soft-green); color: var(--green); }
-    .status.demo { background: var(--soft-amber); color: var(--amber); }
-    .status.off { background: var(--soft-red); color: var(--red); }
-    .status.local { background: var(--soft-violet); color: var(--violet); }
+    .status.ok {
+      background: var(--soft-green);
+      color: var(--green);
+    }
+
+    .status.demo {
+      background: var(--soft-amber);
+      color: var(--amber);
+    }
+
+    .status.off {
+      background: var(--soft-red);
+      color: var(--red);
+    }
+
+    .status.local {
+      background: var(--soft-violet);
+      color: var(--violet);
+    }
 
     .file-map {
       columns: 2;
@@ -440,6 +471,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="layout">
     <aside class="sidebar">
@@ -481,7 +513,8 @@
         <span class="eyebrow">AI CAR RENTAL SYSTEM - FULL FLOWCHART</span>
         <h1>WeDRIVE System Flow</h1>
         <p>
-          Halaman ini menerangkan bagaimana sistem WeDRIVE berfungsi dari login, guest, customer, admin, data dummy, localStorage, sampai flow database sebenar pada masa depan.
+          Halaman ini menerangkan bagaimana sistem WeDRIVE berfungsi dari login, guest, customer, admin, data dummy,
+          localStorage, sampai flow database sebenar pada masa depan.
         </p>
         <div class="summary-grid">
           <div class="summary-card blue">
@@ -490,7 +523,7 @@
           </div>
           <div class="summary-card green">
             <div class="summary-value">6 Cars</div>
-            <div class="summary-label">Fleet dummy dalam data.json</div>
+            <div class="summary-label">Car dummy dalam data.json</div>
           </div>
           <div class="summary-card amber">
             <div class="summary-value">Demo</div>
@@ -507,7 +540,8 @@
         <div class="section-head">
           <div>
             <h2>1. Overall System Flow</h2>
-            <p class="section-desc">Flow besar dari user buka sistem sampai masuk sebagai guest, customer atau admin.</p>
+            <p class="section-desc">Flow besar dari user buka sistem sampai masuk sebagai guest, customer atau admin.
+            </p>
           </div>
           <span class="tag">Entry point: index.html</span>
         </div>
@@ -545,9 +579,12 @@ flowchart TD
           </pre>
         </div>
         <div class="note-grid">
-          <div class="note"><strong>Login demo</strong><span>Email yang ada perkataan admin akan jadi role admin.</span></div>
-          <div class="note"><strong>Data dummy</strong><span>Semua data utama datang dari shared/dummy/data.json.</span></div>
-          <div class="note"><strong>Backend belum ada</strong><span>Booking, signup dan edit kereta belum disimpan ke database sebenar.</span></div>
+          <div class="note"><strong>Login demo</strong><span>Email yang ada perkataan admin akan jadi role admin.</span>
+          </div>
+          <div class="note"><strong>Data dummy</strong><span>Semua data utama datang dari shared/dummy/data.json.</span>
+          </div>
+          <div class="note"><strong>Backend belum ada</strong><span>Booking, signup dan edit kereta belum disimpan ke
+              database sebenar.</span></div>
         </div>
       </section>
 
@@ -569,7 +606,7 @@ flowchart TD
     SWITCH -->|false sekarang| JSON["shared/dummy/data.json"]
     SWITCH -->|true nanti| BACKEND["Backend API"]
 
-    JSON --> SECTIONS["stats, fleet, bookings, customers, reports, settings, marketing"]
+    JSON --> SECTIONS["stats, car, bookings, customers, reports, settings, marketing"]
     BACKEND --> ENDPOINTS["/cars, /bookings, /customers, /auth/login, /admin/dashboard"]
 
     SECTIONS --> RENDER["Render UI"]
@@ -584,13 +621,34 @@ flowchart TD
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>stats</code></td><td>Nombor ringkas dashboard admin.</td></tr>
-            <tr><td><code>fleet</code></td><td>Senarai kereta, status, harga, spesifikasi dan gambar.</td></tr>
-            <tr><td><code>bookings</code></td><td>Senarai tempahan customer.</td></tr>
-            <tr><td><code>customers</code></td><td>Senarai pelanggan.</td></tr>
-            <tr><td><code>reports</code></td><td>Revenue bulanan, utilization kereta dan summary report.</td></tr>
-            <tr><td><code>settings</code></td><td>Maklumat syarikat, cukai, deposit, lokasi pickup.</td></tr>
-            <tr><td><code>marketing</code></td><td>Banner, promo code dan seasonal pricing.</td></tr>
+            <tr>
+              <td><code>stats</code></td>
+              <td>Nombor ringkas dashboard admin.</td>
+            </tr>
+            <tr>
+              <td><code>car</code></td>
+              <td>Senarai kereta, status, harga, spesifikasi dan gambar.</td>
+            </tr>
+            <tr>
+              <td><code>bookings</code></td>
+              <td>Senarai tempahan customer.</td>
+            </tr>
+            <tr>
+              <td><code>customers</code></td>
+              <td>Senarai pelanggan.</td>
+            </tr>
+            <tr>
+              <td><code>reports</code></td>
+              <td>Revenue bulanan, utilization kereta dan summary report.</td>
+            </tr>
+            <tr>
+              <td><code>settings</code></td>
+              <td>Maklumat syarikat, cukai, deposit, lokasi pickup.</td>
+            </tr>
+            <tr>
+              <td><code>marketing</code></td>
+              <td>Banner, promo code dan seasonal pricing.</td>
+            </tr>
           </tbody>
         </table>
       </section>
@@ -599,7 +657,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>3. Login and Auth Flow</h2>
-            <p class="section-desc">Login sekarang masih simulasi. Auth guard pula ada, tetapi dimatikan untuk development.</p>
+            <p class="section-desc">Login sekarang masih simulasi. Auth guard pula ada, tetapi dimatikan untuk
+              development.</p>
           </div>
           <span class="tag">localStorage: wedrive_session</span>
         </div>
@@ -643,7 +702,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>4. Guest and Customer Flow</h2>
-            <p class="section-desc">Guest dan customer guna logic car browsing yang sama, tetapi guest tidak boleh booking.</p>
+            <p class="section-desc">Guest dan customer guna logic car browsing yang sama, tetapi guest tidak boleh
+              booking.</p>
           </div>
           <span class="tag">customer/js/customer.js</span>
         </div>
@@ -652,8 +712,8 @@ flowchart TD
 flowchart LR
     GUEST["Guest page"] --> LOAD_CARS["WeDriveAPI.getCars()"]
     CUSTOMER["Customer page"] --> LOAD_CARS
-    LOAD_CARS --> FLEET["data.json fleet[]"]
-    FLEET --> GRID["Render car cards"]
+    LOAD_CARS --> CAR["data.json car[]"]
+    CAR --> GRID["Render car cards"]
 
     GRID --> FILTER["Filter by type"]
     GRID --> BOOK["Click Book Now"]
@@ -664,9 +724,12 @@ flowchart LR
           </pre>
         </div>
         <div class="note-grid">
-          <div class="note"><strong>Guest</strong><span>Boleh browse dan filter, tetapi booking akan balik ke login.</span></div>
-          <div class="note"><strong>Customer</strong><span>Boleh browse dan tekan Book Now, tetapi masih alert demo.</span></div>
-          <div class="note"><strong>Search box</strong><span>Ada pada UI, tetapi booking search penuh belum dibuat.</span></div>
+          <div class="note"><strong>Guest</strong><span>Boleh browse dan filter, tetapi booking akan balik ke
+              login.</span></div>
+          <div class="note"><strong>Customer</strong><span>Boleh browse dan tekan Book Now, tetapi masih alert
+              demo.</span></div>
+          <div class="note"><strong>Search box</strong><span>Ada pada UI, tetapi booking search penuh belum
+              dibuat.</span></div>
         </div>
       </section>
 
@@ -674,7 +737,8 @@ flowchart LR
         <div class="section-head">
           <div>
             <h2>5. Admin Dashboard Flow</h2>
-            <p class="section-desc">Dashboard admin load sidebar, navbar, stats dan current car status dari dummy data.</p>
+            <p class="section-desc">Dashboard admin load sidebar, navbar, stats dan current car status dari dummy data.
+            </p>
           </div>
           <span class="tag">admin/js/admin.js</span>
         </div>
@@ -688,7 +752,7 @@ flowchart TD
     JS --> API["WeDriveAPI.getAdminData()"]
     API --> JSON["data.json"]
     JSON --> STATS["Populate dashboard stats"]
-    JSON --> FLEET_TABLE["Populate current car status"]
+    JSON --> CAR_TABLE["Populate current car status"]
 
     ADMIN --> QUICK["Quick Actions"]
     QUICK --> CARS["Cars"]
@@ -707,7 +771,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>6. Cars, Car Detail and Booking Calendar</h2>
-            <p class="section-desc">Admin boleh lihat fleet, filter/search kereta, masuk detail kereta, lihat history dan pilih range booking demo.</p>
+            <p class="section-desc">Admin boleh lihat car, filter/search kereta, masuk detail kereta, lihat history
+              dan pilih range booking demo.</p>
           </div>
           <span class="tag">admin/js/cars.js and car-detail.js</span>
         </div>
@@ -716,11 +781,11 @@ flowchart TD
 flowchart TD
     CARS_PAGE["cars.html"] --> CARS_JS["cars.js"]
     CARS_JS --> DATA["WeDriveAPI.getAdminData()"]
-    DATA --> FLEET["fleet[]"]
+    DATA --> CAR["car[]"]
 
-    FLEET --> STATS["Total, Available, Rented"]
-    FLEET --> CARDS["Render car cards"]
-    FLEET --> LIST["Render list modal"]
+    CAR --> STATS["Total, Available, Rented"]
+    CAR --> CARDS["Render car cards"]
+    CAR --> LIST["Render list modal"]
 
     CARDS --> FILTER["Filter All, Available, Rented"]
     LIST --> SEARCH["Search name or plate"]
@@ -780,7 +845,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>8. Reports Flow</h2>
-            <p class="section-desc">Reports page guna data dummy untuk carta revenue dan utilization tanpa library chart external.</p>
+            <p class="section-desc">Reports page guna data dummy untuk carta revenue dan utilization tanpa library chart
+              external.</p>
           </div>
           <span class="tag">admin/js/reports.js</span>
         </div>
@@ -839,7 +905,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>10. Calendar Overview Flow</h2>
-            <p class="section-desc">Calendar overview gabungkan booking, marketing banner, promo code dan seasonal pricing.</p>
+            <p class="section-desc">Calendar overview gabungkan booking, marketing banner, promo code dan seasonal
+              pricing.</p>
           </div>
           <span class="tag">admin/js/calendar.js</span>
         </div>
@@ -851,11 +918,11 @@ flowchart TD
     JS --> MKT["WeDriveAPI.getMarketing()"]
 
     DATA --> BOOKINGS["bookings[]"]
-    DATA --> FLEET["fleet[]"]
+    DATA --> CAR["car[]"]
     MKT --> EVENTS["banners, promo codes, seasonal pricing"]
 
     BOOKINGS --> RENDER["Render monthly calendar"]
-    FLEET --> RENDER
+    CAR --> RENDER
     EVENTS --> RENDER
 
     RENDER --> DOTS["Show booking, event and seasonal indicators"]
@@ -872,7 +939,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>11. Settings Flow</h2>
-            <p class="section-desc">Settings load company data daripada JSON dan boleh collect value bila save, tetapi belum persist ke backend.</p>
+            <p class="section-desc">Settings load company data daripada JSON dan boleh collect value bila save, tetapi
+              belum persist ke backend.</p>
           </div>
           <span class="tag">admin/js/settings.js</span>
         </div>
@@ -896,7 +964,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>12. Chatbot Flow</h2>
-            <p class="section-desc">Ada chatbot customer/guest yang rule-based, dan admin chatbot settings untuk Gemini/Grok API key.</p>
+            <p class="section-desc">Ada chatbot customer/guest yang rule-based, dan admin chatbot settings untuk
+              Gemini/Grok API key.</p>
           </div>
           <span class="tag">chatbot.js and chatbot-admin.js</span>
         </div>
@@ -939,7 +1008,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>13. Shared Components Flow</h2>
-            <p class="section-desc">Fail shared handle theme, language, footer, navbar, sidebar, animation, chatbot dan promo banner.</p>
+            <p class="section-desc">Fail shared handle theme, language, footer, navbar, sidebar, animation, chatbot dan
+              promo banner.</p>
           </div>
           <span class="tag">shared folder</span>
         </div>
@@ -971,7 +1041,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>14. Future Database Integration</h2>
-            <p class="section-desc">Untuk jadikan sistem dynamic sebenar, backend perlu connect melalui shared/js/api.js.</p>
+            <p class="section-desc">Untuk jadikan sistem dynamic sebenar, backend perlu connect melalui
+              shared/js/api.js.</p>
           </div>
           <span class="tag">Change USE_REAL_DB to true</span>
         </div>
@@ -1009,7 +1080,8 @@ flowchart TD
         <div class="section-head">
           <div>
             <h2>15. Current Function Status</h2>
-            <p class="section-desc">Status sebenar fungsi sistem sekarang: mana yang berfungsi, mana yang masih demo.</p>
+            <p class="section-desc">Status sebenar fungsi sistem sekarang: mana yang berfungsi, mana yang masih demo.
+            </p>
           </div>
           <span class="tag">Prototype checklist</span>
         </div>
@@ -1022,25 +1094,101 @@ flowchart TD
             </tr>
           </thead>
           <tbody>
-            <tr><td>Login</td><td><span class="status demo">Demo</span></td><td>Email mengandungi <code>admin</code> jadi admin, selain itu customer.</td></tr>
-            <tr><td>Signup</td><td><span class="status demo">Demo</span></td><td>Tidak create user dalam database.</td></tr>
-            <tr><td>Auth guard</td><td><span class="status off">Off</span></td><td><code>AUTH_GUARD_ACTIVE = false</code>.</td></tr>
-            <tr><td>Customer browse cars</td><td><span class="status ok">OK</span></td><td>Baca <code>fleet[]</code> dari dummy JSON.</td></tr>
-            <tr><td>Customer booking</td><td><span class="status demo">Demo</span></td><td>Alert sahaja, belum create booking baru.</td></tr>
-            <tr><td>Guest browse cars</td><td><span class="status ok">OK</span></td><td>Browse dan filter boleh, booking perlu login.</td></tr>
-            <tr><td>Admin dashboard</td><td><span class="status ok">OK</span></td><td>Render stats dan fleet table.</td></tr>
-            <tr><td>Admin cars</td><td><span class="status ok">OK</span></td><td>View, filter, search dan manage detail.</td></tr>
-            <tr><td>Add car</td><td><span class="status demo">Demo</span></td><td>Alert sahaja.</td></tr>
-            <tr><td>Edit car detail</td><td><span class="status demo">Demo</span></td><td>Update UI semasa, tidak persist ke JSON.</td></tr>
-            <tr><td>Booking calendar</td><td><span class="status demo">Demo</span></td><td>Boleh pilih range dan kira total, belum save booking.</td></tr>
-            <tr><td>Bookings page</td><td><span class="status ok">OK</span></td><td>View, filter dan search booking dummy.</td></tr>
-            <tr><td>Customers page</td><td><span class="status ok">OK</span></td><td>View dan search customer dummy.</td></tr>
-            <tr><td>Reports</td><td><span class="status ok">OK</span></td><td>Render chart daripada dummy report.</td></tr>
-            <tr><td>Settings</td><td><span class="status demo">Demo</span></td><td>Populate form dan alert save.</td></tr>
-            <tr><td>Marketing</td><td><span class="status local">Local</span></td><td>Save ke <code>localStorage</code>.</td></tr>
-            <tr><td>Promo banner</td><td><span class="status ok">OK</span></td><td>Baca active banner dari JSON/localStorage.</td></tr>
-            <tr><td>Customer chatbot</td><td><span class="status demo">Demo</span></td><td>Rule-based keyword reply.</td></tr>
-            <tr><td>Admin chatbot settings</td><td><span class="status local">Local</span></td><td>API key dan prompt disimpan localStorage.</td></tr>
+            <tr>
+              <td>Login</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Email mengandungi <code>admin</code> jadi admin, selain itu customer.</td>
+            </tr>
+            <tr>
+              <td>Signup</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Tidak create user dalam database.</td>
+            </tr>
+            <tr>
+              <td>Auth guard</td>
+              <td><span class="status off">Off</span></td>
+              <td><code>AUTH_GUARD_ACTIVE = false</code>.</td>
+            </tr>
+            <tr>
+              <td>Customer browse cars</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Baca <code>car[]</code> dari dummy JSON.</td>
+            </tr>
+            <tr>
+              <td>Customer booking</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Alert sahaja, belum create booking baru.</td>
+            </tr>
+            <tr>
+              <td>Guest browse cars</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Browse dan filter boleh, booking perlu login.</td>
+            </tr>
+            <tr>
+              <td>Admin dashboard</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Render stats dan car table.</td>
+            </tr>
+            <tr>
+              <td>Admin cars</td>
+              <td><span class="status ok">OK</span></td>
+              <td>View, filter, search dan manage detail.</td>
+            </tr>
+            <tr>
+              <td>Add car</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Alert sahaja.</td>
+            </tr>
+            <tr>
+              <td>Edit car detail</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Update UI semasa, tidak persist ke JSON.</td>
+            </tr>
+            <tr>
+              <td>Booking calendar</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Boleh pilih range dan kira total, belum save booking.</td>
+            </tr>
+            <tr>
+              <td>Bookings page</td>
+              <td><span class="status ok">OK</span></td>
+              <td>View, filter dan search booking dummy.</td>
+            </tr>
+            <tr>
+              <td>Customers page</td>
+              <td><span class="status ok">OK</span></td>
+              <td>View dan search customer dummy.</td>
+            </tr>
+            <tr>
+              <td>Reports</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Render chart daripada dummy report.</td>
+            </tr>
+            <tr>
+              <td>Settings</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Populate form dan alert save.</td>
+            </tr>
+            <tr>
+              <td>Marketing</td>
+              <td><span class="status local">Local</span></td>
+              <td>Save ke <code>localStorage</code>.</td>
+            </tr>
+            <tr>
+              <td>Promo banner</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Baca active banner dari JSON/localStorage.</td>
+            </tr>
+            <tr>
+              <td>Customer chatbot</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Rule-based keyword reply.</td>
+            </tr>
+            <tr>
+              <td>Admin chatbot settings</td>
+              <td><span class="status local">Local</span></td>
+              <td>API key dan prompt disimpan localStorage.</td>
+            </tr>
           </tbody>
         </table>
       </section>
@@ -1060,9 +1208,9 @@ flowchart TD
           <li><code>customer/pages/customer.html</code> - customer dashboard.</li>
           <li><code>customer/js/customer.js</code> - render cars, filter dan booking demo.</li>
           <li><code>admin/pages/admin.html</code> - admin dashboard.</li>
-          <li><code>admin/js/admin.js</code> - populate admin stats dan fleet table.</li>
+          <li><code>admin/js/admin.js</code> - populate admin stats dan car table.</li>
           <li><code>admin/pages/cars.html</code> - cars management.</li>
-          <li><code>admin/js/cars.js</code> - fleet cards, filter, search dan list modal.</li>
+          <li><code>admin/js/cars.js</code> - car cards, filter, search dan list modal.</li>
           <li><code>admin/pages/car-detail.html</code> - detail satu kereta.</li>
           <li><code>admin/js/car-detail.js</code> - detail, images, history dan booking calendar.</li>
           <li><code>admin/pages/bookings.html</code> - booking management.</li>
@@ -1122,4 +1270,5 @@ flowchart TD
     });
   </script>
 </body>
+
 </html>

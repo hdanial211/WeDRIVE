@@ -1,405 +1,516 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>WeDRIVE - Book Car</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WeDRIVE - Book Car</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                            "surface-tint": "#005ac2",
-                            "surface-dim": "#d8dadc",
-                            "primary-fixed-dim": "#adc6ff",
-                            "background": "#f7f9fb",
-                            "tertiary": "#4d5d73",
-                            "on-surface": "#191c1e",
-                            "on-secondary-container": "#586377",
-                            "secondary-fixed-dim": "#bcc7de",
-                            "on-surface-variant": "#424754",
-                            "on-tertiary-fixed-variant": "#38485d",
-                            "on-error-container": "#93000a",
-                            "error-container": "#ffdad6",
-                            "primary-fixed": "#d8e2ff",
-                            "surface-container-highest": "#e0e3e5",
-                            "surface-container-low": "#f2f4f6",
-                            "surface-container": "#eceef0",
-                            "on-secondary-fixed": "#111c2d",
-                            "on-primary-fixed-variant": "#004395",
-                            "secondary": "#545f73",
-                            "inverse-primary": "#adc6ff",
-                            "on-secondary-fixed-variant": "#3c475a",
-                            "on-secondary": "#ffffff",
-                            "on-primary-fixed": "#001a42",
-                            "on-primary": "#ffffff",
-                            "on-tertiary-fixed": "#0b1c30",
-                            "surface-variant": "#e0e3e5",
-                            "on-tertiary-container": "#fdfcff",
-                            "secondary-fixed": "#d8e3fb",
-                            "primary-container": "#2170e4",
-                            "surface-bright": "#f7f9fb",
-                            "on-error": "#ffffff",
-                            "tertiary-fixed-dim": "#b7c8e1",
-                            "surface": "#f7f9fb",
-                            "primary": "#0058be",
-                            "error": "#ba1a1a",
-                            "surface-container-high": "#e6e8ea",
-                            "on-primary-container": "#fefcff",
-                            "tertiary-container": "#66768d",
-                            "outline-variant": "#c2c6d6",
-                            "surface-container-lowest": "#ffffff",
-                            "tertiary-fixed": "#d3e4fe",
-                            "on-tertiary": "#ffffff",
-                            "on-background": "#191c1e",
-                            "outline": "#727785",
-                            "inverse-on-surface": "#eff1f3",
-                            "secondary-container": "#d5e0f8",
-                            "inverse-surface": "#2d3133"
+                        "surface-tint": "#005ac2",
+                        "surface-dim": "#d8dadc",
+                        "primary-fixed-dim": "#adc6ff",
+                        "background": "#f7f9fb",
+                        "tertiary": "#4d5d73",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#586377",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-surface-variant": "#424754",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed": "#111c2d",
+                        "on-primary-fixed-variant": "#004395",
+                        "secondary": "#545f73",
+                        "inverse-primary": "#adc6ff",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001a42",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary-container": "#fdfcff",
+                        "secondary-fixed": "#d8e3fb",
+                        "primary-container": "#2170e4",
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "surface": "#f7f9fb",
+                        "primary": "#0058be",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-container": "#fefcff",
+                        "tertiary-container": "#66768d",
+                        "outline-variant": "#c2c6d6",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#191c1e",
+                        "outline": "#727785",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-container": "#d5e0f8",
+                        "inverse-surface": "#2d3133"
                     },
                     "borderRadius": {
-                            "DEFAULT": "0.25rem",
-                            "lg": "0.5rem",
-                            "xl": "0.75rem",
-                            "full": "9999px"
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
                     },
                     "spacing": {
-                            "gutter": "16px",
-                            "container-padding": "24px",
-                            "md": "16px",
-                            "xl": "32px",
-                            "sm": "8px",
-                            "xs": "4px",
-                            "unit": "4px",
-                            "lg": "24px"
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "lg": "24px"
                     },
                     "fontFamily": {
-                            "label-sm": ["Inter"],
-                            "h3": ["Inter"],
-                            "h2": ["Inter"],
-                            "h1": ["Inter"],
-                            "body-md": ["Inter"],
-                            "body-lg": ["Inter"]
+                        "label-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
                     },
                     "fontSize": {
-                            "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                            "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
-                            "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                            "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                            "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
-                            "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }]
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }]
                     }
                 }
             }
         }
     </script>
-<style>
-        body { font-family: 'Inter', sans-serif; }
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
         /* Base elevation level 0 */
-        body { background-color: #F8FAFC; }
+        body {
+            background-color: #F8FAFC;
+        }
+
         /* Ambient shadow for level 1 (cards) */
-        .elevation-1 { box-shadow: 0px 4px 12px rgba(30, 41, 59, 0.05); }
+        .elevation-1 {
+            box-shadow: 0px 4px 12px rgba(30, 41, 59, 0.05);
+        }
+
         /* Floating shadow for level 2 */
-        .elevation-2 { box-shadow: 0px 8px 24px rgba(30, 41, 59, 0.1); }
+        .elevation-2 {
+            box-shadow: 0px 8px 24px rgba(30, 41, 59, 0.1);
+        }
     </style>
 </head>
+
 <body class="bg-surface text-on-surface flex min-h-screen">
-<!-- SideNavBar (Shared Component) -->
-<nav aria-label="Sidebar" class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface shadow-sm z-50 py-6">
-<div class="px-gutter mb-8">
-<h1 class="font-h2 text-h2 font-bold text-primary">WeDRIVE</h1>
-<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Fleet Management</p>
-</div>
-<div class="px-gutter mb-6">
-<button class="w-full py-3 px-4 bg-primary text-on-primary rounded-lg font-h3 text-h3 flex justify-center items-center gap-2 hover:bg-surface-tint transition-colors duration-200 shadow-sm">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+    <!-- SideNavBar (Shared Component) -->
+    <nav aria-label="Sidebar"
+        class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface shadow-sm z-50 py-6">
+        <div class="px-gutter mb-8">
+            <h1 class="font-h2 text-h2 font-bold text-primary">WeDRIVE</h1>
+            <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Car Management</p>
+        </div>
+        <div class="px-gutter mb-6">
+            <button
+                class="w-full py-3 px-4 bg-primary text-on-primary rounded-lg font-h3 text-h3 flex justify-center items-center gap-2 hover:bg-surface-tint transition-colors duration-200 shadow-sm">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
                 New Booking
             </button>
-</div>
-<ul class="flex-1 px-2 space-y-1">
-<li>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-body-md text-body-md font-semibold">Dashboard</span>
-</a>
-</li>
-<li>
-<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold border-r-4 border-primary bg-surface-container-low transition-colors duration-200 rounded-lg" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
-<span class="font-body-md text-body-md">My Bookings</span>
-</a>
-</li>
-<li>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="font-body-md text-body-md font-semibold">Profile</span>
-</a>
-</li>
-<li>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg" href="#">
-<span class="material-symbols-outlined">psychology</span>
-<span class="font-body-md text-body-md font-semibold">AI Insights</span>
-</a>
-</li>
-</ul>
-<div class="px-2 mt-auto border-t border-surface-variant pt-4">
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-body-md text-body-md font-semibold">Settings</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg" href="#">
-<span class="material-symbols-outlined">logout</span>
-<span class="font-body-md text-body-md font-semibold">Logout</span>
-</a>
-</div>
-</nav>
-<!-- Main Content Canvas -->
-<main class="flex-1 flex flex-col md:ml-64 min-w-0">
-<!-- TopNavBar (Shared Component) -->
-<header class="flex justify-between items-center w-full px-container-padding py-3 bg-surface/80 backdrop-blur-md shadow-sm sticky top-0 z-40">
-<div class="flex items-center gap-4">
-<button class="md:hidden p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<div class="hidden md:flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant focus-within:border-primary transition-colors">
-<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
-<input class="bg-transparent border-none outline-none font-body-md text-body-md text-on-surface placeholder-on-surface-variant w-64 focus:ring-0" placeholder="Search cars, bookings..." type="text"/>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<button aria-label="Language" class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all">
-<span class="material-symbols-outlined">language</span>
-</button>
-<button aria-label="Toggle Theme" class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all">
-<span class="material-symbols-outlined">dark_mode</span>
-</button>
-<div class="ml-4 h-10 w-10 rounded-full bg-primary-container overflow-hidden cursor-pointer shadow-sm border border-outline-variant">
-<img alt="User Profile Avatar" class="h-full w-full object-cover" data-alt="A professional headshot of a business executive in a modern, well-lit environment. The lighting is soft and corporate, matching the clean SaaS interface style. The person looks approachable and confident, representing a typical user of a fleet management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAZxQCsDwdErGf-TXPwN2_6pYBF-vS7wma8Puo9zm9w16cmg4qHoctdFASl03uIsx-9kZnQk2jayyjuSYGw6pVe3LSqTsWVykfsT3CQdniOhWTeNCj4pF2NnTBi36nFWwBtMrPKAsNOrGi8cZt2i_b0L2pzFhZLsLb1qbvPZ40KXsCObYUe3EUyVOIDV3p5aoPLIDXE1aGreX16ZC-VqIaIf7jhar8R1ijk0JQZjtaG0htu-hoQLaJKRzGu3_y5jiA3vqCdFnUKKQ"/>
-</div>
-</div>
-</header>
-<!-- Page Content -->
-<div class="p-container-padding max-w-7xl mx-auto w-full space-y-6">
-<!-- Header Section -->
-<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
-<div>
-<h2 class="font-h1 text-h1 text-on-surface tracking-tight">Finalize Booking</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Review your details and confirm to secure your car.</p>
-</div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<!-- Left Column: Details & Add-ons -->
-<div class="lg:col-span-2 space-y-6">
-<!-- Car Summary Card (Bento Style) -->
-<div class="bg-surface-container-lowest rounded-xl elevation-1 overflow-hidden border border-surface-variant">
-<div class="flex flex-col sm:flex-row">
-<div class="sm:w-1/3 h-48 sm:h-auto relative bg-surface-container-low">
-<img alt="Tesla Model 3" class="w-full h-full object-cover" data-alt="A sleek white Tesla Model 3 parked in a modern, minimalist urban setting. The lighting is bright and clean, reflecting off the car's aerodynamic curves. The background is slightly blurred to emphasize the vehicle, fitting a premium corporate car rental aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC72grEYrpk2F4BwhN8L5KmUXLazEf0hFdYGsAXvY_AMm5SHDMWUwVqAoa4CLvINirbKFk8U39HZjx67a6bBivG1cZM5uorgTqmiTIE6GlcbhgVsA6Bk7-bAzIC4rUu5m0v88Mz2PPRhYl4cPGtEIws90pLa08olupCz6mKs-qr2Wsjr8Wr3EjfHAJwvXQTlIJqHTIqo9SbiMJioUJgzKLNwlwoMxERIzI-9r-pM2y63xdNcqw_EZAQr8IgoJliXuaqSmMnNmDYYgM"/>
-<div class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded border border-outline-variant flex items-center gap-1 shadow-sm">
-<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="font-label-sm text-label-sm font-bold text-on-surface">4.9</span>
-</div>
-</div>
-<div class="p-6 flex-1 flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-2">
-<h3 class="font-h2 text-h2 text-on-surface">Tesla Model 3</h3>
-<span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm">Electric</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant mb-4">Standard Range Plus • Automatic • 5 Seats</p>
-</div>
-<div class="grid grid-cols-3 gap-4 border-t border-surface-variant pt-4">
-<div class="flex flex-col items-center p-2 bg-surface rounded-lg">
-<span class="material-symbols-outlined text-tertiary mb-1">speed</span>
-<span class="font-label-sm text-label-sm text-on-surface text-center">430 km<br/>Range</span>
-</div>
-<div class="flex flex-col items-center p-2 bg-surface rounded-lg">
-<span class="material-symbols-outlined text-tertiary mb-1">bolt</span>
-<span class="font-label-sm text-label-sm text-on-surface text-center">Fast<br/>Charge</span>
-</div>
-<div class="flex flex-col items-center p-2 bg-surface rounded-lg">
-<span class="material-symbols-outlined text-tertiary mb-1">work</span>
-<span class="font-label-sm text-label-sm text-on-surface text-center">2 Bags<br/>Capacity</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Rental Details Form -->
-<div class="bg-surface-container-lowest rounded-xl elevation-1 p-6 border border-surface-variant">
-<h4 class="font-h3 text-h3 text-on-surface mb-6 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">calendar_today</span>
+        </div>
+        <ul class="flex-1 px-2 space-y-1">
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg"
+                    href="#">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="font-body-md text-body-md font-semibold">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 text-primary font-bold border-r-4 border-primary bg-surface-container-low transition-colors duration-200 rounded-lg"
+                    href="#">
+                    <span class="material-symbols-outlined"
+                        style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+                    <span class="font-body-md text-body-md">My Bookings</span>
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg"
+                    href="#">
+                    <span class="material-symbols-outlined">person</span>
+                    <span class="font-body-md text-body-md font-semibold">Profile</span>
+                </a>
+            </li>
+            <li>
+                <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg"
+                    href="#">
+                    <span class="material-symbols-outlined">psychology</span>
+                    <span class="font-body-md text-body-md font-semibold">AI Insights</span>
+                </a>
+            </li>
+        </ul>
+        <div class="px-2 mt-auto border-t border-surface-variant pt-4">
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg"
+                href="#">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-body-md text-body-md font-semibold">Settings</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors duration-200 rounded-lg"
+                href="#">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-body-md text-body-md font-semibold">Logout</span>
+            </a>
+        </div>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main class="flex-1 flex flex-col md:ml-64 min-w-0">
+        <!-- TopNavBar (Shared Component) -->
+        <header
+            class="flex justify-between items-center w-full px-container-padding py-3 bg-surface/80 backdrop-blur-md shadow-sm sticky top-0 z-40">
+            <div class="flex items-center gap-4">
+                <button
+                    class="md:hidden p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div
+                    class="hidden md:flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant focus-within:border-primary transition-colors">
+                    <span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+                    <input
+                        class="bg-transparent border-none outline-none font-body-md text-body-md text-on-surface placeholder-on-surface-variant w-64 focus:ring-0"
+                        placeholder="Search cars, bookings..." type="text" />
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button aria-label="Language"
+                    class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all">
+                    <span class="material-symbols-outlined">language</span>
+                </button>
+                <button aria-label="Toggle Theme"
+                    class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-all">
+                    <span class="material-symbols-outlined">dark_mode</span>
+                </button>
+                <div
+                    class="ml-4 h-10 w-10 rounded-full bg-primary-container overflow-hidden cursor-pointer shadow-sm border border-outline-variant">
+                    <img alt="User Profile Avatar" class="h-full w-full object-cover"
+                        data-alt="A professional headshot of a business executive in a modern, well-lit environment. The lighting is soft and corporate, matching the clean SaaS interface style. The person looks approachable and confident, representing a typical user of a car management system."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAZxQCsDwdErGf-TXPwN2_6pYBF-vS7wma8Puo9zm9w16cmg4qHoctdFASl03uIsx-9kZnQk2jayyjuSYGw6pVe3LSqTsWVykfsT3CQdniOhWTeNCj4pF2NnTBi36nFWwBtMrPKAsNOrGi8cZt2i_b0L2pzFhZLsLb1qbvPZ40KXsCObYUe3EUyVOIDV3p5aoPLIDXE1aGreX16ZC-VqIaIf7jhar8R1ijk0JQZjtaG0htu-hoQLaJKRzGu3_y5jiA3vqCdFnUKKQ" />
+                </div>
+            </div>
+        </header>
+        <!-- Page Content -->
+        <div class="p-container-padding max-w-7xl mx-auto w-full space-y-6">
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+                <div>
+                    <h2 class="font-h1 text-h1 text-on-surface tracking-tight">Finalize Booking</h2>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Review your details and confirm to
+                        secure your car.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Details & Add-ons -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Car Summary Card (Bento Style) -->
+                    <div
+                        class="bg-surface-container-lowest rounded-xl elevation-1 overflow-hidden border border-surface-variant">
+                        <div class="flex flex-col sm:flex-row">
+                            <div class="sm:w-1/3 h-48 sm:h-auto relative bg-surface-container-low">
+                                <img alt="Tesla Model 3" class="w-full h-full object-cover"
+                                    data-alt="A sleek white Tesla Model 3 parked in a modern, minimalist urban setting. The lighting is bright and clean, reflecting off the car's aerodynamic curves. The background is slightly blurred to emphasize the vehicle, fitting a premium corporate car rental aesthetic."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC72grEYrpk2F4BwhN8L5KmUXLazEf0hFdYGsAXvY_AMm5SHDMWUwVqAoa4CLvINirbKFk8U39HZjx67a6bBivG1cZM5uorgTqmiTIE6GlcbhgVsA6Bk7-bAzIC4rUu5m0v88Mz2PPRhYl4cPGtEIws90pLa08olupCz6mKs-qr2Wsjr8Wr3EjfHAJwvXQTlIJqHTIqo9SbiMJioUJgzKLNwlwoMxERIzI-9r-pM2y63xdNcqw_EZAQr8IgoJliXuaqSmMnNmDYYgM" />
+                                <div
+                                    class="absolute top-3 left-3 bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded border border-outline-variant flex items-center gap-1 shadow-sm">
+                                    <span class="material-symbols-outlined text-primary text-[16px]"
+                                        style="font-variation-settings: 'FILL' 1;">star</span>
+                                    <span class="font-label-sm text-label-sm font-bold text-on-surface">4.9</span>
+                                </div>
+                            </div>
+                            <div class="p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="font-h2 text-h2 text-on-surface">Tesla Model 3</h3>
+                                        <span
+                                            class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full font-label-sm text-label-sm">Electric</span>
+                                    </div>
+                                    <p class="font-body-md text-body-md text-on-surface-variant mb-4">Standard Range
+                                        Plus • Automatic • 5 Seats</p>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 border-t border-surface-variant pt-4">
+                                    <div class="flex flex-col items-center p-2 bg-surface rounded-lg">
+                                        <span class="material-symbols-outlined text-tertiary mb-1">speed</span>
+                                        <span class="font-label-sm text-label-sm text-on-surface text-center">430
+                                            km<br />Range</span>
+                                    </div>
+                                    <div class="flex flex-col items-center p-2 bg-surface rounded-lg">
+                                        <span class="material-symbols-outlined text-tertiary mb-1">bolt</span>
+                                        <span
+                                            class="font-label-sm text-label-sm text-on-surface text-center">Fast<br />Charge</span>
+                                    </div>
+                                    <div class="flex flex-col items-center p-2 bg-surface rounded-lg">
+                                        <span class="material-symbols-outlined text-tertiary mb-1">work</span>
+                                        <span class="font-label-sm text-label-sm text-on-surface text-center">2
+                                            Bags<br />Capacity</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Rental Details Form -->
+                    <div class="bg-surface-container-lowest rounded-xl elevation-1 p-6 border border-surface-variant">
+                        <h4 class="font-h3 text-h3 text-on-surface mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">calendar_today</span>
                             Rental Schedule
                         </h4>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<!-- Pick-up -->
-<div class="space-y-4">
-<div>
-<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Pick-up Location</label>
-<div class="relative">
-<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary appearance-none transition-colors">
-<option>Kuala Lumpur International Airport (KLIA)</option>
-<option>KL Sentral Station</option>
-<option>WeDRIVE HQ, Bangsar</option>
-</select>
-<span class="material-symbols-outlined absolute right-3 top-3.5 text-on-surface-variant pointer-events-none">expand_more</span>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div>
-<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Date</label>
-<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="date" value="2023-11-15"/>
-</div>
-<div>
-<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Time</label>
-<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="time" value="09:00"/>
-</div>
-</div>
-</div>
-<!-- Return -->
-<div class="space-y-4">
-<div>
-<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Return Location</label>
-<div class="relative">
-<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary appearance-none transition-colors">
-<option>Kuala Lumpur International Airport (KLIA)</option>
-<option>KL Sentral Station</option>
-<option>WeDRIVE HQ, Bangsar</option>
-</select>
-<span class="material-symbols-outlined absolute right-3 top-3.5 text-on-surface-variant pointer-events-none">expand_more</span>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div>
-<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Date</label>
-<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="date" value="2023-11-18"/>
-</div>
-<div>
-<label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Time</label>
-<input class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors" type="time" value="18:00"/>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Enhancements (Checkboxes) -->
-<div class="bg-surface-container-lowest rounded-xl elevation-1 p-6 border border-surface-variant">
-<h4 class="font-h3 text-h3 text-on-surface mb-6 flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">add_circle</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Pick-up -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label
+                                        class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Pick-up
+                                        Location</label>
+                                    <div class="relative">
+                                        <select
+                                            class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary appearance-none transition-colors">
+                                            <option>Kuala Lumpur International Airport (KLIA)</option>
+                                            <option>KL Sentral Station</option>
+                                            <option>WeDRIVE HQ, Bangsar</option>
+                                        </select>
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-3.5 text-on-surface-variant pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label
+                                            class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Date</label>
+                                        <input
+                                            class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                            type="date" value="2023-11-15" />
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Time</label>
+                                        <input
+                                            class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                            type="time" value="09:00" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Return -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Return
+                                        Location</label>
+                                    <div class="relative">
+                                        <select
+                                            class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary appearance-none transition-colors">
+                                            <option>Kuala Lumpur International Airport (KLIA)</option>
+                                            <option>KL Sentral Station</option>
+                                            <option>WeDRIVE HQ, Bangsar</option>
+                                        </select>
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-3.5 text-on-surface-variant pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label
+                                            class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Date</label>
+                                        <input
+                                            class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                            type="date" value="2023-11-18" />
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Time</label>
+                                        <input
+                                            class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+                                            type="time" value="18:00" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Enhancements (Checkboxes) -->
+                    <div class="bg-surface-container-lowest rounded-xl elevation-1 p-6 border border-surface-variant">
+                        <h4 class="font-h3 text-h3 text-on-surface mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">add_circle</span>
                             Enhance Your Journey
                         </h4>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<!-- Option 1 -->
-<label class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
-<div class="flex items-center h-5">
-<input class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2" type="checkbox"/>
-</div>
-<div class="ml-3 flex-1">
-<div class="flex justify-between">
-<span class="font-body-md text-body-md font-semibold text-on-surface">GPS Navigation</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">+RM15/day</span>
-</div>
-<p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">Real-time traffic updates</p>
-</div>
-</label>
-<!-- Option 2 -->
-<label class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
-<div class="flex items-center h-5">
-<input class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2" type="checkbox"/>
-</div>
-<div class="ml-3 flex-1">
-<div class="flex justify-between">
-<span class="font-body-md text-body-md font-semibold text-on-surface">Child Seat</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">+RM20/day</span>
-</div>
-<p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">Suitable for ages 1-4</p>
-</div>
-</label>
-<!-- Option 3 -->
-<label class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
-<div class="flex items-center h-5">
-<input checked="" class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2" type="checkbox"/>
-</div>
-<div class="ml-3 flex-1">
-<div class="flex justify-between">
-<span class="font-body-md text-body-md font-semibold text-on-surface">Full Insurance</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">+RM35/day</span>
-</div>
-<p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">Zero excess coverage</p>
-</div>
-</label>
-<!-- Option 4 -->
-<label class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
-<div class="flex items-center h-5">
-<input class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2" type="checkbox"/>
-</div>
-<div class="ml-3 flex-1">
-<div class="flex justify-between">
-<span class="font-body-md text-body-md font-semibold text-on-surface">Extra Driver</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">+RM25/day</span>
-</div>
-<p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">Share the driving</p>
-</div>
-</label>
-</div>
-</div>
-</div>
-<!-- Right Column: Summary Sidebar & AI -->
-<div class="space-y-6">
-<!-- AI Recommendation Card (Glassmorphism lite) -->
-<div class="bg-secondary-container/50 backdrop-blur-md rounded-xl p-5 border border-secondary-fixed shadow-sm relative overflow-hidden">
-<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 rounded-full blur-xl"></div>
-<div class="flex items-center gap-2 mb-3 relative z-10">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
-<h4 class="font-label-sm text-label-sm font-bold text-on-surface tracking-wide uppercase">AI Recommendation</h4>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant relative z-10 leading-relaxed">
-                            Excellent choice! The <strong class="text-on-surface">Tesla Model 3</strong> perfectly matches your typical business travel profile. Its range covers your planned routes with 30% buffer, and historical data suggests high availability for fast-charging near your drop-off point.
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Option 1 -->
+                            <label
+                                class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
+                                <div class="flex items-center h-5">
+                                    <input
+                                        class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2"
+                                        type="checkbox" />
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <div class="flex justify-between">
+                                        <span class="font-body-md text-body-md font-semibold text-on-surface">GPS
+                                            Navigation</span>
+                                        <span
+                                            class="font-label-sm text-label-sm text-on-surface-variant">+RM15/day</span>
+                                    </div>
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">
+                                        Real-time traffic updates</p>
+                                </div>
+                            </label>
+                            <!-- Option 2 -->
+                            <label
+                                class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
+                                <div class="flex items-center h-5">
+                                    <input
+                                        class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2"
+                                        type="checkbox" />
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <div class="flex justify-between">
+                                        <span class="font-body-md text-body-md font-semibold text-on-surface">Child
+                                            Seat</span>
+                                        <span
+                                            class="font-label-sm text-label-sm text-on-surface-variant">+RM20/day</span>
+                                    </div>
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">
+                                        Suitable for ages 1-4</p>
+                                </div>
+                            </label>
+                            <!-- Option 3 -->
+                            <label
+                                class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
+                                <div class="flex items-center h-5">
+                                    <input checked=""
+                                        class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2"
+                                        type="checkbox" />
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <div class="flex justify-between">
+                                        <span class="font-body-md text-body-md font-semibold text-on-surface">Full
+                                            Insurance</span>
+                                        <span
+                                            class="font-label-sm text-label-sm text-on-surface-variant">+RM35/day</span>
+                                    </div>
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">Zero
+                                        excess coverage</p>
+                                </div>
+                            </label>
+                            <!-- Option 4 -->
+                            <label
+                                class="flex items-start p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/20">
+                                <div class="flex items-center h-5">
+                                    <input
+                                        class="w-5 h-5 text-primary border-outline-variant rounded focus:ring-primary focus:ring-2"
+                                        type="checkbox" />
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <div class="flex justify-between">
+                                        <span class="font-body-md text-body-md font-semibold text-on-surface">Extra
+                                            Driver</span>
+                                        <span
+                                            class="font-label-sm text-label-sm text-on-surface-variant">+RM25/day</span>
+                                    </div>
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant mt-1 font-normal">
+                                        Share the driving</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Summary Sidebar & AI -->
+                <div class="space-y-6">
+                    <!-- AI Recommendation Card (Glassmorphism lite) -->
+                    <div
+                        class="bg-secondary-container/50 backdrop-blur-md rounded-xl p-5 border border-secondary-fixed shadow-sm relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 rounded-full blur-xl"></div>
+                        <div class="flex items-center gap-2 mb-3 relative z-10">
+                            <span class="material-symbols-outlined text-primary"
+                                style="font-variation-settings: 'FILL' 1;">psychology</span>
+                            <h4 class="font-label-sm text-label-sm font-bold text-on-surface tracking-wide uppercase">AI
+                                Recommendation</h4>
+                        </div>
+                        <p class="font-body-md text-body-md text-on-surface-variant relative z-10 leading-relaxed">
+                            Excellent choice! The <strong class="text-on-surface">Tesla Model 3</strong> perfectly
+                            matches your typical business travel profile. Its range covers your planned routes with 30%
+                            buffer, and historical data suggests high availability for fast-charging near your drop-off
+                            point.
                         </p>
-</div>
-<!-- Payment Summary Sticky Sidebar -->
-<div class="bg-surface-container-lowest rounded-xl elevation-1 border border-surface-variant sticky top-24">
-<div class="p-6">
-<h4 class="font-h3 text-h3 text-on-surface mb-6 border-b border-surface-variant pb-4">Payment Summary</h4>
-<div class="space-y-4 mb-6">
-<div class="flex justify-between items-center">
-<span class="font-body-md text-body-md text-on-surface-variant">Base Rate (3 days x RM150)</span>
-<span class="font-body-md text-body-md font-semibold text-on-surface">RM450.00</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="font-body-md text-body-md text-on-surface-variant">Full Insurance (3 days)</span>
-<span class="font-body-md text-body-md font-semibold text-on-surface">RM105.00</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="font-body-md text-body-md text-on-surface-variant">Service Fee (6.5%)</span>
-<span class="font-body-md text-body-md font-semibold text-on-surface">RM30.00</span>
-</div>
-</div>
-<div class="border-t border-surface-variant pt-4 mb-6">
-<div class="flex justify-between items-end">
-<div>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Total Due</span>
-<span class="font-label-sm text-label-sm text-outline font-normal">Includes taxes &amp; fees</span>
-</div>
-<span class="font-h1 text-h1 text-primary">RM585.00</span>
-</div>
-</div>
-<button class="w-full bg-primary hover:bg-surface-tint text-on-primary font-h3 text-h3 py-4 rounded-xl transition-all duration-200 elevation-1 hover:elevation-2 flex items-center justify-center gap-2">
+                    </div>
+                    <!-- Payment Summary Sticky Sidebar -->
+                    <div
+                        class="bg-surface-container-lowest rounded-xl elevation-1 border border-surface-variant sticky top-24">
+                        <div class="p-6">
+                            <h4 class="font-h3 text-h3 text-on-surface mb-6 border-b border-surface-variant pb-4">
+                                Payment Summary</h4>
+                            <div class="space-y-4 mb-6">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-body-md text-body-md text-on-surface-variant">Base Rate (3 days x
+                                        RM150)</span>
+                                    <span
+                                        class="font-body-md text-body-md font-semibold text-on-surface">RM450.00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-body-md text-body-md text-on-surface-variant">Full Insurance (3
+                                        days)</span>
+                                    <span
+                                        class="font-body-md text-body-md font-semibold text-on-surface">RM105.00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="font-body-md text-body-md text-on-surface-variant">Service Fee
+                                        (6.5%)</span>
+                                    <span class="font-body-md text-body-md font-semibold text-on-surface">RM30.00</span>
+                                </div>
+                            </div>
+                            <div class="border-t border-surface-variant pt-4 mb-6">
+                                <div class="flex justify-between items-end">
+                                    <div>
+                                        <span
+                                            class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Total
+                                            Due</span>
+                                        <span class="font-label-sm text-label-sm text-outline font-normal">Includes
+                                            taxes &amp; fees</span>
+                                    </div>
+                                    <span class="font-h1 text-h1 text-primary">RM585.00</span>
+                                </div>
+                            </div>
+                            <button
+                                class="w-full bg-primary hover:bg-surface-tint text-on-primary font-h3 text-h3 py-4 rounded-xl transition-all duration-200 elevation-1 hover:elevation-2 flex items-center justify-center gap-2">
                                 Confirm Booking
                                 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-</button>
-<p class="font-label-sm text-label-sm text-center text-on-surface-variant mt-4 font-normal">
-                                By confirming, you agree to our <a class="text-primary hover:underline" href="#">Rental Terms</a>.
+                            </button>
+                            <p class="font-label-sm text-label-sm text-center text-on-surface-variant mt-4 font-normal">
+                                By confirming, you agree to our <a class="text-primary hover:underline" href="#">Rental
+                                    Terms</a>.
                             </p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-</body></html>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

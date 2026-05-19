@@ -9,7 +9,7 @@
     "vehicles_change": "+2",
     "customers_change": "+5"
   },
-  "fleet": [
+  "car": [
     {
       "id": 1,
       "name": "2023 BMW 320i M Sport 2.0",

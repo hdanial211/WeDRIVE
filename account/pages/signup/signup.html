@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../css/auth.css" />
   <script src="../../../shared/js/main.js"></script>
 </head>
+
 <body data-particles="10" data-cursor-glow>
   <!-- Left Panel -->
   <div class="left-panel">
@@ -23,8 +25,10 @@
       </div>
     </a>
     <div class="hero-text reveal-onload">
-      <h1><span data-key="hero_line1">Smart Fleet.</span><br/><span data-key="hero_line2">AI-Powered</span><br/><span data-key="hero_line3">Rentals.</span></h1>
-      <p data-key="hero_desc">The most advanced car rental management system — powered by AI and built for the modern fleet operator.</p>
+      <h1><span data-key="hero_line1">Smart Car.</span><br /><span data-key="hero_line2">AI-Powered</span><br /><span
+          data-key="hero_line3">Rentals.</span></h1>
+      <p data-key="hero_desc">The most advanced car rental management system — powered by AI and built for the modern
+        car operator.</p>
     </div>
     <div class="features reveal-onload">
       <div class="feature-item">
@@ -37,7 +41,7 @@
       </div>
       <div class="feature-item">
         <div class="feature-icon"><span class="material-icons-round">analytics</span></div>
-        <div class="feature-text" data-key="feature_stats">Real-time fleet analytics &amp; reporting</div>
+        <div class="feature-text" data-key="feature_stats">Real-time car analytics &amp; reporting</div>
       </div>
     </div>
   </div>
@@ -50,20 +54,20 @@
 
       <form onsubmit="handleSignup(event)">
         <div class="form-row">
-            <div class="form-group">
-                <label for="fname" data-key="signup_fname">First Name</label>
-                <div class="input-wrap">
-                    <span class="material-icons-round">person</span>
-                    <input type="text" id="fname" placeholder="John" required />
-                </div>
+          <div class="form-group">
+            <label for="fname" data-key="signup_fname">First Name</label>
+            <div class="input-wrap">
+              <span class="material-icons-round">person</span>
+              <input type="text" id="fname" placeholder="John" required />
             </div>
-            <div class="form-group">
-                <label for="lname" data-key="signup_lname">Last Name</label>
-                <div class="input-wrap">
-                    <span class="material-icons-round">person_outline</span>
-                    <input type="text" id="lname" placeholder="Doe" required />
-                </div>
+          </div>
+          <div class="form-group">
+            <label for="lname" data-key="signup_lname">Last Name</label>
+            <div class="input-wrap">
+              <span class="material-icons-round">person_outline</span>
+              <input type="text" id="lname" placeholder="Doe" required />
             </div>
+          </div>
         </div>
         <div class="form-group">
           <label for="email" data-key="signup_email">Email Address</label>
@@ -76,17 +80,19 @@
           <label for="password" data-key="signup_password">Password</label>
           <div class="input-wrap">
             <span class="material-icons-round">lock</span>
-            <input type="password" id="password" data-key-ph="signup_password_ph" placeholder="Create a password" required minlength="6" />
+            <input type="password" id="password" data-key-ph="signup_password_ph" placeholder="Create a password"
+              required minlength="6" />
           </div>
         </div>
         <div class="form-group">
           <label for="confirm-password" data-key="signup_cpassword">Confirm Password</label>
           <div class="input-wrap">
             <span class="material-icons-round">lock_outline</span>
-            <input type="password" id="confirm-password" data-key-ph="signup_cpassword_ph" placeholder="Confirm your password" required minlength="6" />
+            <input type="password" id="confirm-password" data-key-ph="signup_cpassword_ph"
+              placeholder="Confirm your password" required minlength="6" />
           </div>
         </div>
-        
+
         <button type="submit" class="btn-primary" id="signup-btn" style="margin-top: 10px;">
           <span class="material-icons-round" style="font-size:18px">person_add</span>
           <span data-key="signup_btn">Create Account</span>
@@ -105,7 +111,8 @@
       </button>
 
       <div class="signup-link">
-        <span data-key="signup_have_account">Already have an account?</span> <a href="../login/login.html" data-key="signup_login_link">Sign in</a>
+        <span data-key="signup_have_account">Already have an account?</span> <a href="../login/login.html"
+          data-key="signup_login_link">Sign in</a>
       </div>
 
       <!-- Continue as Guest -->
@@ -136,12 +143,12 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
-      
+
       if (password !== confirmPassword) {
-          alert('Passwords do not match!');
-          return;
+        alert('Passwords do not match!');
+        return;
       }
-      
+
       const btn = document.getElementById('signup-btn');
       btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Creating...';
       btn.disabled = true;
@@ -163,11 +170,11 @@
           licenseExpiry: '15/10/2028',
           identity: '900101-14-5678'
         }));
-        
+
         // Simulating successful account creation
         alert(`Account created successfully for ${fname} ${lname}! Please sign in.`);
         window.location.href = '../login/login.html';
-        
+
       } catch (err) {
         console.error('Signup error:', err);
         alert('An error occurred during sign up.');
@@ -187,4 +194,5 @@
   <div id="chatbot-placeholder"></div>
   <script src="../../../shared/js/chatbot.js"></script>
 </body>
+
 </html>

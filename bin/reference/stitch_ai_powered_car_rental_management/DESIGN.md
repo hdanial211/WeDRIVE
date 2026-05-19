@@ -1,5 +1,5 @@
 ---
-name: AI Fleet Management
+name: AI Car Management
 colors:
   surface: '#f7f9fb'
   surface-dim: '#d8dadc'
@@ -106,12 +106,12 @@ spacing:
 ## Brand & Style
 The design system is engineered to project an aura of absolute reliability and forward-thinking intelligence. It targets logistics managers and rental operators who require a high-density, high-clarity interface that reduces cognitive load through predictive AI features. 
 
-The aesthetic is **Corporate / Modern**, emphasizing a "software-as-a-service" (SaaS) sophistication. It prioritizes balanced proportions, generous but purposeful white space, and a refined interface that feels both institutional and cutting-edge. The emotional response is one of controlled efficiency—users should feel that the system is always one step ahead, translating complex fleet data into actionable insights through a clean, systematic visual language.
+The aesthetic is **Corporate / Modern**, emphasizing a "software-as-a-service" (SaaS) sophistication. It prioritizes balanced proportions, generous but purposeful white space, and a refined interface that feels both institutional and cutting-edge. The emotional response is one of controlled efficiency—users should feel that the system is always one step ahead, translating complex car data into actionable insights through a clean, systematic visual language.
 
 ## Colors
 The palette is anchored by **Deep Navy (#1E293B)** for structural elements like sidebars and headers, providing a sense of stability and institutional trust. **Professional Blue (#3B82F6)** serves as the primary action color, used for CTA buttons, active states, and AI-assisted highlights to draw the eye to critical tasks.
 
-The background utilizes a series of **Slate Grays**, starting with a base of #F8FAFC, to create a soft, non-fatiguing workspace for long-term usage. Text is rendered in high-contrast navy for maximum legibility, while functional colors (Success Green and Warning Orange) are used sparingly to denote vehicle status and urgent fleet alerts.
+The background utilizes a series of **Slate Grays**, starting with a base of #F8FAFC, to create a soft, non-fatiguing workspace for long-term usage. Text is rendered in high-contrast navy for maximum legibility, while functional colors (Success Green and Warning Orange) are used sparingly to denote vehicle status and urgent car alerts.
 
 ## Typography
 This design system utilizes **Inter** for its entire typographic scale. Chosen for its exceptional legibility on digital screens and its neutral, utilitarian character, Inter reinforces the "tech-forward" brand pillar. 

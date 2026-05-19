@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../../shared/css/sidebar.css" />
   <link rel="stylesheet" href="../../css/admin.css" />
-  
+
   <!-- AUTH GUARD: Must run before page renders -->
   <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
 </head>
+
 <body data-particles="6" data-cursor-glow>
   <!-- SIDEBAR - loaded from shared/components/sidebar-admin.html -->
-  <div id="sidebar-placeholder"
-       data-component="sidebar-admin"
-       data-page="admin">
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="admin">
   </div>
 
 
@@ -36,7 +36,8 @@
           <div class="stat-info">
             <div class="label" data-key="admin_stat_vehicles">Total Vehicles</div>
             <div class="value" id="stat-vehicles">--</div>
-            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +12 this month</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +12
+              this month</div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
         </div>
@@ -44,7 +45,8 @@
           <div class="stat-info">
             <div class="label" data-key="admin_stat_rentals">Active Rentals</div>
             <div class="value" id="stat-rentals">--</div>
-            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +8 today</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +8
+              today</div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">pending_actions</span></div>
         </div>
@@ -52,7 +54,8 @@
           <div class="stat-info">
             <div class="label" data-key="admin_stat_revenue">Revenue (Today)</div>
             <div class="value" id="stat-revenue" style="font-size:24px">--</div>
-            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +18% vs last month</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +18% vs
+              last month</div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">payments</span></div>
         </div>
@@ -60,7 +63,8 @@
           <div class="stat-info">
             <div class="label" data-key="admin_stat_customers">New Customers</div>
             <div class="value" id="stat-customers">--</div>
-            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +3% this week</div>
+            <div class="change up"><span class="material-icons-round" style="font-size:14px">arrow_upward</span> +3%
+              this week</div>
           </div>
           <div class="stat-icon purple"><span class="material-icons-round">analytics</span></div>
         </div>
@@ -70,10 +74,12 @@
       <div class="grid-2">
         <div class="ai-card reveal-on-scroll">
           <div class="ai-card-header">
-            <div class="ai-badge"><span class="material-icons-round" style="font-size:14px">psychology</span> <span data-key="admin_ai_badge">AI Forecast</span></div>
+            <div class="ai-badge"><span class="material-icons-round" style="font-size:14px">psychology</span> <span
+                data-key="admin_ai_badge">AI Forecast</span></div>
           </div>
           <h3 data-key="admin_ai_title">Demand Surge Expected</h3>
-          <p style="margin-top:8px" data-key="admin_ai_desc">Expected high demand for SUVs and Vans this upcoming weekend due to local events in Melaka. Consider repositioning 8 units from low-demand zones.</p>
+          <p style="margin-top:8px" data-key="admin_ai_desc">Expected high demand for SUVs and Vans this upcoming
+            weekend due to local events in Melaka. Consider repositioning 8 units from low-demand zones.</p>
           <div class="ai-tags">
             <span class="ai-tag">SUVs</span>
             <span class="ai-tag">Vans</span>
@@ -87,24 +93,37 @@
             <h3 data-key="admin_quick_title">Quick Actions</h3>
           </div>
           <div class="actions-grid">
-            <div class="action-btn" onclick="window.location='cars.html'"><span class="material-icons-round">add_circle</span><span data-key="admin_q_add">Add Car</span></div>
-            <div class="action-btn" onclick="window.location='bookings.html'"><span class="material-icons-round">receipt_long</span><span data-key="admin_q_booking">New Booking</span></div>
-            <div class="action-btn" onclick="window.location='cars.html'"><span class="material-icons-round">directions_car</span><span data-key="admin_q_fleet">View Cars</span></div>
-            <div class="action-btn" onclick="window.location='reports.html'"><span class="material-icons-round">file_download</span><span data-key="admin_q_export">Export Report</span></div>
-            <div class="action-btn" onclick="window.location='chatbot.html'"><span class="material-icons-round">smart_toy</span><span data-key="admin_q_chatbot">AI Chatbot</span></div>
-            <div class="action-btn" onclick="window.location='customers.html'"><span class="material-icons-round">people</span><span data-key="admin_q_customers">Customers</span></div>
-            <div class="action-btn" onclick="window.location='marketing.html'"><span class="material-icons-round">campaign</span><span data-key="admin_q_marketing">Marketing</span></div>
-            <div class="action-btn" onclick="window.location='calendar.html'"><span class="material-icons-round">calendar_month</span><span data-key="admin_q_calendar">Calendar</span></div>
-            <div class="action-btn" onclick="window.location='settings.html'"><span class="material-icons-round">settings</span><span data-key="admin_q_settings">Settings</span></div>
+            <div class="action-btn" onclick="window.location='cars.html'"><span
+                class="material-icons-round">add_circle</span><span data-key="admin_q_add">Add Car</span></div>
+            <div class="action-btn" onclick="window.location='bookings.html'"><span
+                class="material-icons-round">receipt_long</span><span data-key="admin_q_booking">New Booking</span>
+            </div>
+            <div class="action-btn" onclick="window.location='cars.html'"><span
+                class="material-icons-round">directions_car</span><span data-key="admin_q_car">View Cars</span></div>
+            <div class="action-btn" onclick="window.location='reports.html'"><span
+                class="material-icons-round">file_download</span><span data-key="admin_q_export">Export Report</span>
+            </div>
+            <div class="action-btn" onclick="window.location='chatbot.html'"><span
+                class="material-icons-round">smart_toy</span><span data-key="admin_q_chatbot">AI Chatbot</span></div>
+            <div class="action-btn" onclick="window.location='customers.html'"><span
+                class="material-icons-round">people</span><span data-key="admin_q_customers">Customers</span></div>
+            <div class="action-btn" onclick="window.location='marketing.html'"><span
+                class="material-icons-round">campaign</span><span data-key="admin_q_marketing">Marketing</span></div>
+            <div class="action-btn" onclick="window.location='calendar.html'"><span
+                class="material-icons-round">calendar_month</span><span data-key="admin_q_calendar">Calendar</span>
+            </div>
+            <div class="action-btn" onclick="window.location='settings.html'"><span
+                class="material-icons-round">settings</span><span data-key="admin_q_settings">Settings</span></div>
           </div>
         </div>
       </div>
 
-      <!-- FLEET TABLE -->
+      <!-- CAR TABLE -->
       <div class="card reveal-on-scroll">
         <div class="card-header">
-          <h3 data-key="admin_fleet_title">Current Car Status</h3>
-          <button class="btn-primary-sm" onclick="window.location='cars.html'" data-key="admin_view_all">View All</button>
+          <h3 data-key="admin_car_title">Current Car Status</h3>
+          <button class="btn-primary-sm" onclick="window.location='cars.html'" data-key="admin_view_all">View
+            All</button>
         </div>
         <table>
           <thead>
@@ -119,7 +138,7 @@
               <th data-key="admin_th_action">Action</th>
             </tr>
           </thead>
-          <tbody id="fleet-tbody">
+          <tbody id="car-tbody">
             <!-- Populated by admin.js from shared/dummy/data.json -->
           </tbody>
         </table>
@@ -136,4 +155,5 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../js/admin.js"></script>
 </body>
+
 </html>

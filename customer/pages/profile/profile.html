@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profile | WeDRIVE</title>
   <meta name="description" content="Manage your WeDRIVE account - personal info, payment methods, and preferences." />
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../css/customer.css?v=5.5.6" />
 </head>
+
 <body data-particles="6" data-cursor-glow>
   <div id="customer-sidebar-placeholder"></div>
   <div id="mobile-menu-placeholder"></div>
@@ -37,15 +39,25 @@
           </div>
           <nav class="pf-inner-nav-sticky">
             <ul class="pf-inner-nav-list">
-              <li><a href="#panel-personal" class="pf-inner-link active" data-section="personal"><span class="material-icons-round">person</span> <span data-key="pf_nav_personal">Personal Info</span></a></li>
-              <li><a href="#panel-security" class="pf-inner-link" data-section="security"><span class="material-icons-round">security</span> <span data-key="pf_nav_security">Security</span></a></li>
-              <li><a href="#panel-payment" class="pf-inner-link" data-section="payment"><span class="material-icons-round">credit_card</span> <span data-key="pf_nav_payment">Payment Methods</span></a></li>
-              <li><a href="#panel-preferences" class="pf-inner-link" data-section="preferences"><span class="material-icons-round">tune</span> <span data-key="pf_nav_prefs">Preferences</span></a></li>
-              <li><a href="#panel-notifications" class="pf-inner-link" data-section="notifications"><span class="material-icons-round">notifications</span> <span data-key="pf_nav_notif">Notifications</span></a></li>
+              <li><a href="#panel-personal" class="pf-inner-link active" data-section="personal"><span
+                    class="material-icons-round">person</span> <span data-key="pf_nav_personal">Personal Info</span></a>
+              </li>
+              <li><a href="#panel-security" class="pf-inner-link" data-section="security"><span
+                    class="material-icons-round">security</span> <span data-key="pf_nav_security">Security</span></a>
+              </li>
+              <li><a href="#panel-payment" class="pf-inner-link" data-section="payment"><span
+                    class="material-icons-round">credit_card</span> <span data-key="pf_nav_payment">Payment
+                    Methods</span></a></li>
+              <li><a href="#panel-preferences" class="pf-inner-link" data-section="preferences"><span
+                    class="material-icons-round">tune</span> <span data-key="pf_nav_prefs">Preferences</span></a></li>
+              <li><a href="#panel-notifications" class="pf-inner-link" data-section="notifications"><span
+                    class="material-icons-round">notifications</span> <span
+                    data-key="pf_nav_notif">Notifications</span></a></li>
             </ul>
           </nav>
           <div class="pf-upgrade-card">
-            <button class="pf-upgrade-btn" onclick="profileToast('Upgrade feature coming soon.')"><span class="material-icons-round">rocket_launch</span> Upgrade to Pro</button>
+            <button class="pf-upgrade-btn" onclick="profileToast('Upgrade feature coming soon.')"><span
+                class="material-icons-round">rocket_launch</span> Upgrade to Pro</button>
           </div>
         </aside>
 
@@ -56,7 +68,8 @@
           <div class="pf-panel active" id="panel-personal">
             <div class="pf-panel-header">
               <h2 class="pf-panel-title">Personal Information</h2>
-              <p class="pf-panel-desc">Your identity data is protected. Changes require document re-verification before they are applied.</p>
+              <p class="pf-panel-desc">Your identity data is protected. Changes require document re-verification before
+                they are applied.</p>
             </div>
 
             <section class="pf-card pf-verified-shell">
@@ -66,7 +79,8 @@
                 </div>
                 <div class="pf-verified-banner-copy">
                   <strong>Verified account details are locked</strong>
-                  <p>To update your legal identity, email, address, or driving license, upload a new IC and license set below. Direct edits are disabled to prevent misuse.</p>
+                  <p>To update your legal identity, email, address, or driving license, upload a new IC and license set
+                    below. Direct edits are disabled to prevent misuse.</p>
                 </div>
                 <div class="pf-verified-banner-status" id="pf-verification-status">
                   <span class="material-icons-round">shield</span>
@@ -79,10 +93,14 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">badge</span> Basic Details</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value="Alex" aria-label="First Name" title="First Name" readonly /></div>
-                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value="Johnson" aria-label="Last Name" title="Last Name" readonly /></div>
-                <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value="15/10/1985" aria-label="Date of Birth" title="Date of Birth" readonly /></div>
-                <div class="pf-field full"><label>IC / Passport</label><input type="text" id="pf-identity" value="900101-14-5678" aria-label="IC or Passport" title="IC or Passport" readonly /></div>
+                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value="Alex"
+                    aria-label="First Name" title="First Name" readonly /></div>
+                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value="Johnson"
+                    aria-label="Last Name" title="Last Name" readonly /></div>
+                <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value="15/10/1985"
+                    aria-label="Date of Birth" title="Date of Birth" readonly /></div>
+                <div class="pf-field full"><label>IC / Passport</label><input type="text" id="pf-identity"
+                    value="900101-14-5678" aria-label="IC or Passport" title="IC or Passport" readonly /></div>
               </div>
             </section>
 
@@ -90,14 +108,22 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">contacts</span> Contact Information</h3>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span class="material-icons-round">verified</span> Verified</span></label><input type="email" id="pf-email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address" readonly /></div>
-                <div class="pf-field full"><label>Phone Number</label><input type="tel" id="pf-phone" value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" readonly /></div>
+                <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span
+                        class="material-icons-round">verified</span> Verified</span></label><input type="email"
+                    id="pf-email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address"
+                    readonly /></div>
+                <div class="pf-field full"><label>Phone Number</label><input type="tel" id="pf-phone"
+                    value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" readonly /></div>
               </div>
               <h4 class="pf-sub-title">Residential Address</h4>
               <div class="pf-form-grid">
-                <div class="pf-field full"><label>Street Address</label><input type="text" id="pf-street" value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address" readonly /></div>
-                <div class="pf-field"><label>City</label><input type="text" id="pf-city" value="Melaka" aria-label="City" title="City" readonly /></div>
-                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" id="pf-zip" value="75000" aria-label="Zip or Postal Code" title="Zip or Postal Code" readonly /></div>
+                <div class="pf-field full"><label>Street Address</label><input type="text" id="pf-street"
+                    value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address"
+                    readonly /></div>
+                <div class="pf-field"><label>City</label><input type="text" id="pf-city" value="Melaka"
+                    aria-label="City" title="City" readonly /></div>
+                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" id="pf-zip" value="75000"
+                    aria-label="Zip or Postal Code" title="Zip or Postal Code" readonly /></div>
               </div>
             </section>
 
@@ -105,33 +131,42 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">id_card</span> Driving License</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>License Number</label><input type="text" id="pf-license" value="DLR-9876543210" aria-label="License Number" title="License Number" readonly /></div>
-                <div class="pf-field"><label>Expiry Date</label><input type="text" id="pf-license-expiry" value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" readonly /></div>
+                <div class="pf-field"><label>License Number</label><input type="text" id="pf-license"
+                    value="DLR-9876543210" aria-label="License Number" title="License Number" readonly /></div>
+                <div class="pf-field"><label>Expiry Date</label><input type="text" id="pf-license-expiry"
+                    value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" readonly /></div>
               </div>
             </section>
 
             <section class="pf-card">
               <div class="pf-section-head-flex">
-                <h3 class="pf-section-title"><span class="material-icons-round">document_scanner</span> Update Verified Identity</h3>
-                <button class="pf-text-btn" type="button" onclick="simulateVerifiedProfile()">Use sample verified scan</button>
+                <h3 class="pf-section-title"><span class="material-icons-round">document_scanner</span> Update Verified
+                  Identity</h3>
+                <button class="pf-text-btn" type="button" onclick="simulateVerifiedProfile()">Use sample verified
+                  scan</button>
               </div>
-              <p class="pf-card-desc">Upload a new IC front, IC back, and driving license image. WeDRIVE will verify the document set and update the locked profile automatically after review.</p>
+              <p class="pf-card-desc">Upload a new IC front, IC back, and driving license image. WeDRIVE will verify the
+                document set and update the locked profile automatically after review.</p>
 
               <div class="pf-doc-grid">
                 <label class="pf-doc-card" for="pf-upload-ic-front">
-                  <input type="file" id="pf-upload-ic-front" accept="image/*" aria-label="Upload IC front image" title="Upload IC front image" onchange="handleProfileDocumentUpload('icFront', this.files)" />
+                  <input type="file" id="pf-upload-ic-front" accept="image/*" aria-label="Upload IC front image"
+                    title="Upload IC front image" onchange="handleProfileDocumentUpload('icFront', this.files)" />
                   <span class="material-icons-round">credit_card</span>
                   <strong>IC Front</strong>
                   <span class="pf-doc-meta" id="pf-upload-ic-front-meta">Upload front image</span>
                 </label>
                 <label class="pf-doc-card" for="pf-upload-ic-back">
-                  <input type="file" id="pf-upload-ic-back" accept="image/*" aria-label="Upload IC back image" title="Upload IC back image" onchange="handleProfileDocumentUpload('icBack', this.files)" />
+                  <input type="file" id="pf-upload-ic-back" accept="image/*" aria-label="Upload IC back image"
+                    title="Upload IC back image" onchange="handleProfileDocumentUpload('icBack', this.files)" />
                   <span class="material-icons-round">badge</span>
                   <strong>IC Back</strong>
                   <span class="pf-doc-meta" id="pf-upload-ic-back-meta">Upload back image</span>
                 </label>
                 <label class="pf-doc-card" for="pf-upload-license">
-                  <input type="file" id="pf-upload-license" accept="image/*" aria-label="Upload driving license image" title="Upload driving license image" onchange="handleProfileDocumentUpload('license', this.files)" />
+                  <input type="file" id="pf-upload-license" accept="image/*" aria-label="Upload driving license image"
+                    title="Upload driving license image"
+                    onchange="handleProfileDocumentUpload('license', this.files)" />
                   <span class="material-icons-round">id_card</span>
                   <strong>Driving License</strong>
                   <span class="pf-doc-meta" id="pf-upload-license-meta">Upload license image</span>
@@ -149,16 +184,21 @@
                 <div class="pf-otp-stack">
                   <div class="pf-field full">
                     <label>Verification Contact Number</label>
-                    <input type="tel" id="pf-reverify-phone" value="+60 11-1234 5678" aria-label="Verification Contact Number" title="Verification Contact Number" placeholder="+60 12-345 6789" />
+                    <input type="tel" id="pf-reverify-phone" value="+60 11-1234 5678"
+                      aria-label="Verification Contact Number" title="Verification Contact Number"
+                      placeholder="+60 12-345 6789" />
                   </div>
                 </div>
                 <div class="pf-otp-row">
-                  <button class="pf-btn outline" type="button" onclick="sendEmailOtp('profile')"><span class="material-icons-round">mail</span> Send 6-Digit OTP</button>
+                  <button class="pf-btn outline" type="button" onclick="sendEmailOtp('profile')"><span
+                      class="material-icons-round">mail</span> Send 6-Digit OTP</button>
                   <div class="pf-otp-field">
                     <label for="pf-profile-otp">Verification Code</label>
-                    <input type="text" id="pf-profile-otp" inputmode="numeric" maxlength="6" aria-label="Profile verification OTP" title="Profile verification OTP" placeholder="123456" />
+                    <input type="text" id="pf-profile-otp" inputmode="numeric" maxlength="6"
+                      aria-label="Profile verification OTP" title="Profile verification OTP" placeholder="123456" />
                   </div>
-                  <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('profile')"><span class="material-icons-round">verified</span> Verify OTP</button>
+                  <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('profile')"><span
+                      class="material-icons-round">verified</span> Verify OTP</button>
                 </div>
                 <p class="pf-otp-note" id="pf-profile-otp-note">OTP not sent yet.</p>
               </div>
@@ -174,7 +214,8 @@
 
             <div class="pf-actions-bar">
               <button class="pf-btn outline" onclick="resetProfileDetails()">Cancel</button>
-              <button class="pf-btn primary" onclick="submitProfileVerification()"><span class="material-icons-round">verified</span> Submit for Verification</button>
+              <button class="pf-btn primary" onclick="submitProfileVerification()"><span
+                  class="material-icons-round">verified</span> Submit for Verification</button>
             </div>
           </div>
 
@@ -190,11 +231,17 @@
               <section class="pf-card pf-bento-wide">
                 <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Change Password</h3>
                 <div class="pf-form-grid">
-                  <div class="pf-field full"><label>Current Password</label><input type="password" id="pf-current-password" value="********" aria-label="Current Password" title="Current Password" /></div>
-                  <div class="pf-field"><label>New Password</label><input type="password" id="pf-new-password" value="********" aria-label="New Password" title="New Password" /></div>
-                  <div class="pf-field"><label>Confirm New Password</label><input type="password" id="pf-confirm-password" value="********" aria-label="Confirm New Password" title="Confirm New Password" /></div>
+                  <div class="pf-field full"><label>Current Password</label><input type="password"
+                      id="pf-current-password" value="********" aria-label="Current Password"
+                      title="Current Password" /></div>
+                  <div class="pf-field"><label>New Password</label><input type="password" id="pf-new-password"
+                      value="********" aria-label="New Password" title="New Password" /></div>
+                  <div class="pf-field"><label>Confirm New Password</label><input type="password"
+                      id="pf-confirm-password" value="********" aria-label="Confirm New Password"
+                      title="Confirm New Password" /></div>
                 </div>
-                <p class="pf-hint">Password must be at least 8 characters long and include a number and special character.</p>
+                <p class="pf-hint">Password must be at least 8 characters long and include a number and special
+                  character.</p>
 
                 <div class="pf-otp-card pf-otp-inline">
                   <div class="pf-otp-head">
@@ -205,28 +252,40 @@
                     <div class="pf-otp-badge" id="pf-password-otp-badge">OTP Required</div>
                   </div>
                   <div class="pf-otp-row">
-                    <button class="pf-btn outline" type="button" onclick="sendEmailOtp('password')"><span class="material-icons-round">mail</span> Send OTP</button>
+                    <button class="pf-btn outline" type="button" onclick="sendEmailOtp('password')"><span
+                        class="material-icons-round">mail</span> Send OTP</button>
                     <div class="pf-otp-field">
                       <label for="pf-password-otp">Verification Code</label>
-                      <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6" aria-label="Password change OTP" title="Password change OTP" placeholder="123456" />
+                      <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6"
+                        aria-label="Password change OTP" title="Password change OTP" placeholder="123456" />
                     </div>
-                    <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('password')"><span class="material-icons-round">verified</span> Verify OTP</button>
+                    <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('password')"><span
+                        class="material-icons-round">verified</span> Verify OTP</button>
                   </div>
                   <p class="pf-otp-note" id="pf-password-otp-note">OTP not sent yet.</p>
                 </div>
 
-                <div class="pf-actions-bar compact"><button class="pf-btn primary" type="button" onclick="submitPasswordChange()"><span class="material-icons-round">lock_reset</span> Update Password</button></div>
+                <div class="pf-actions-bar compact"><button class="pf-btn primary" type="button"
+                    onclick="submitPasswordChange()"><span class="material-icons-round">lock_reset</span> Update
+                    Password</button></div>
               </section>
 
               <!-- Two-Factor Auth -->
               <section class="pf-card">
-                <h3 class="pf-section-title"><span class="material-icons-round">phonelink_lock</span> Two-Factor Auth</h3>
-                <p class="pf-card-desc">Add an extra layer of security to your account by requiring a code from your mobile device upon login.</p>
+                <h3 class="pf-section-title"><span class="material-icons-round">phonelink_lock</span> Two-Factor Auth
+                </h3>
+                <p class="pf-card-desc">Add an extra layer of security to your account by requiring a code from your
+                  mobile device upon login.</p>
                 <div class="pf-toggle-row">
-                  <div><div class="pf-toggle-label">Authenticator App</div><div class="pf-toggle-status off">Currently Disabled</div></div>
-                  <label class="pf-switch"><input type="checkbox" aria-label="Enable authenticator app" title="Enable authenticator app" /><span class="pf-slider"></span></label>
+                  <div>
+                    <div class="pf-toggle-label">Authenticator App</div>
+                    <div class="pf-toggle-status off">Currently Disabled</div>
+                  </div>
+                  <label class="pf-switch"><input type="checkbox" aria-label="Enable authenticator app"
+                      title="Enable authenticator app" /><span class="pf-slider"></span></label>
                 </div>
-                <button class="pf-btn outline full-width" onclick="profileToast('2FA setup coming soon.')">Setup 2FA</button>
+                <button class="pf-btn outline full-width" onclick="profileToast('2FA setup coming soon.')">Setup
+                  2FA</button>
               </section>
             </div>
 
@@ -234,23 +293,37 @@
             <section class="pf-card">
               <div class="pf-section-head-flex">
                 <h3 class="pf-section-title"><span class="material-icons-round">devices</span> Active Sessions</h3>
-                <button class="pf-text-btn danger" onclick="profileToast('All other sessions terminated.')">Terminate All</button>
+                <button class="pf-text-btn danger" onclick="profileToast('All other sessions terminated.')">Terminate
+                  All</button>
               </div>
               <p class="pf-card-desc">Devices currently logged into your WeDRIVE account.</p>
               <div class="pf-session-list">
                 <div class="pf-session-item">
                   <span class="material-icons-round pf-session-icon">laptop_mac</span>
-                  <div class="pf-session-info"><div class="pf-session-name">MacBook Pro (macOS) <span class="pf-current-badge">Current</span></div><div class="pf-session-meta">Melaka, Malaysia - Active now</div></div>
+                  <div class="pf-session-info">
+                    <div class="pf-session-name">MacBook Pro (macOS) <span class="pf-current-badge">Current</span></div>
+                    <div class="pf-session-meta">Melaka, Malaysia - Active now</div>
+                  </div>
                 </div>
                 <div class="pf-session-item">
                   <span class="material-icons-round pf-session-icon">phone_iphone</span>
-                  <div class="pf-session-info"><div class="pf-session-name">iPhone 14 Pro (iOS)</div><div class="pf-session-meta">Kuala Lumpur, Malaysia - Last active 2 hours ago</div></div>
-                  <button class="pf-session-remove" onclick="this.closest('.pf-session-item').remove(); profileToast('Session removed.')"><span class="material-icons-round">close</span></button>
+                  <div class="pf-session-info">
+                    <div class="pf-session-name">iPhone 14 Pro (iOS)</div>
+                    <div class="pf-session-meta">Kuala Lumpur, Malaysia - Last active 2 hours ago</div>
+                  </div>
+                  <button class="pf-session-remove"
+                    onclick="this.closest('.pf-session-item').remove(); profileToast('Session removed.')"><span
+                      class="material-icons-round">close</span></button>
                 </div>
                 <div class="pf-session-item">
                   <span class="material-icons-round pf-session-icon">computer</span>
-                  <div class="pf-session-info"><div class="pf-session-name">ThinkPad X1 (Windows)</div><div class="pf-session-meta">Johor Bahru, Malaysia - Last active 3 days ago</div></div>
-                  <button class="pf-session-remove" onclick="this.closest('.pf-session-item').remove(); profileToast('Session removed.')"><span class="material-icons-round">close</span></button>
+                  <div class="pf-session-info">
+                    <div class="pf-session-name">ThinkPad X1 (Windows)</div>
+                    <div class="pf-session-meta">Johor Bahru, Malaysia - Last active 3 days ago</div>
+                  </div>
+                  <button class="pf-session-remove"
+                    onclick="this.closest('.pf-session-item').remove(); profileToast('Session removed.')"><span
+                      class="material-icons-round">close</span></button>
                 </div>
               </div>
             </section>
@@ -260,13 +333,15 @@
           <div class="pf-panel" id="panel-payment">
             <div class="pf-panel-header">
               <h2 class="pf-panel-title">Payment Methods</h2>
-              <p class="pf-panel-desc">Manage your saved credit cards, bank accounts, and establish primary billing defaults.</p>
+              <p class="pf-panel-desc">Manage your saved credit cards, bank accounts, and establish primary billing
+                defaults.</p>
             </div>
 
             <!-- Security Banner -->
             <div class="pf-security-banner">
               <span class="material-icons-round">shield</span>
-              <div><strong>Bank-Grade Security</strong><br/>Your payment data is fully encrypted and tokenized. WeDRIVE does not store full card numbers on our servers.</div>
+              <div><strong>Bank-Grade Security</strong><br />Your payment data is fully encrypted and tokenized. WeDRIVE
+                does not store full card numbers on our servers.</div>
             </div>
 
             <div class="pf-bento-grid">
@@ -274,22 +349,30 @@
               <section class="pf-card pf-bento-wide">
                 <div class="pf-pay-card-head">
                   <span class="pf-primary-pill">Primary Default</span>
-                  <button class="pf-text-btn" onclick="profileToast('Edit card coming soon.')"><span class="material-icons-round">edit</span> Edit</button>
+                  <button class="pf-text-btn" onclick="profileToast('Edit card coming soon.')"><span
+                      class="material-icons-round">edit</span> Edit</button>
                 </div>
                 <div class="pf-pay-card-body">
                   <div class="pf-card-brand-lg visa">VISA</div>
                   <div class="pf-card-number">**** **** **** 4242</div>
                 </div>
                 <div class="pf-pay-card-footer">
-                  <div><div class="pf-pay-label">Cardholder Name</div><div class="pf-pay-value">ALEX JOHNSON</div></div>
-                  <div><div class="pf-pay-label">Expires</div><div class="pf-pay-value">12/25</div></div>
+                  <div>
+                    <div class="pf-pay-label">Cardholder Name</div>
+                    <div class="pf-pay-value">ALEX JOHNSON</div>
+                  </div>
+                  <div>
+                    <div class="pf-pay-label">Expires</div>
+                    <div class="pf-pay-value">12/25</div>
+                  </div>
                 </div>
               </section>
 
               <!-- Smart Billing Insight -->
               <section class="pf-card pf-insight-card">
-                <div class="pf-insight-tag"><span class="material-icons-round">auto_awesome</span> Smart Billing Insight</div>
-                <p class="pf-card-desc">Estimated upcoming fleet charge based on active rentals.</p>
+                <div class="pf-insight-tag"><span class="material-icons-round">auto_awesome</span> Smart Billing Insight
+                </div>
+                <p class="pf-card-desc">Estimated upcoming car charge based on active rentals.</p>
                 <div class="pf-insight-amount">RM 1,240.00</div>
                 <p class="pf-insight-meta">Auto processing on Oct 15th via Primary Visa.</p>
               </section>
@@ -306,7 +389,9 @@
                   </div>
                 </div>
                 <div class="pf-pay-sec-actions">
-                  <button class="pf-text-btn" onclick="this.closest('.pf-card').remove(); profileToast('Card removed.')"><span class="material-icons-round">delete</span> Remove</button>
+                  <button class="pf-text-btn"
+                    onclick="this.closest('.pf-card').remove(); profileToast('Card removed.')"><span
+                      class="material-icons-round">delete</span> Remove</button>
                   <button class="pf-text-btn primary" onclick="profileToast('Set as primary.')">Make Primary</button>
                 </div>
               </div>
@@ -315,7 +400,8 @@
             <!-- Add Payment Method -->
             <button class="pf-add-method-card" onclick="profileToast('Add payment coming soon.')">
               <span class="material-icons-round">add_circle</span>
-              <div><strong>Add Payment Method</strong><br/><span class="pf-add-desc">Credit Card, Debit Card, or Direct Bank Transfer</span></div>
+              <div><strong>Add Payment Method</strong><br /><span class="pf-add-desc">Credit Card, Debit Card, or Direct
+                  Bank Transfer</span></div>
             </button>
           </div>
 
@@ -331,20 +417,45 @@
               <h3 class="pf-section-title">Localization & Display</h3>
               <div class="pf-pref-grid">
                 <div class="pf-pref-item">
-                  <div><div class="pf-pref-label">Language</div><div class="pf-pref-desc">Select your preferred app language</div></div>
-                  <select class="pf-select" aria-label="Language" title="Language" onchange="profileToast('Language updated.')"><option selected>English (EN)</option><option>Malay (BM)</option></select>
+                  <div>
+                    <div class="pf-pref-label">Language</div>
+                    <div class="pf-pref-desc">Select your preferred app language</div>
+                  </div>
+                  <select class="pf-select" aria-label="Language" title="Language"
+                    onchange="profileToast('Language updated.')">
+                    <option selected>English (EN)</option>
+                    <option>Malay (BM)</option>
+                  </select>
                 </div>
                 <div class="pf-pref-item">
-                  <div><div class="pf-pref-label">Theme</div><div class="pf-pref-desc">Choose light or dark mode</div></div>
-                  <select class="pf-select" aria-label="Theme" title="Theme" onchange="profileToast('Theme updated.')"><option selected>Light Mode</option><option>Dark Mode</option><option>System Default</option></select>
+                  <div>
+                    <div class="pf-pref-label">Theme</div>
+                    <div class="pf-pref-desc">Choose light or dark mode</div>
+                  </div>
+                  <select class="pf-select" aria-label="Theme" title="Theme" onchange="profileToast('Theme updated.')">
+                    <option selected>Light Mode</option>
+                    <option>Dark Mode</option>
+                    <option>System Default</option>
+                  </select>
                 </div>
                 <div class="pf-pref-item">
-                  <div><div class="pf-pref-label">Measurement Units</div><div class="pf-pref-desc">Distance & speed units</div></div>
-                  <div class="pf-segment-control"><button class="active" type="button" onclick="selectUnit(this)">Kilometers</button><button type="button" onclick="selectUnit(this)">Miles</button></div>
+                  <div>
+                    <div class="pf-pref-label">Measurement Units</div>
+                    <div class="pf-pref-desc">Distance & speed units</div>
+                  </div>
+                  <div class="pf-segment-control"><button class="active" type="button"
+                      onclick="selectUnit(this)">Kilometers</button><button type="button"
+                      onclick="selectUnit(this)">Miles</button></div>
                 </div>
                 <div class="pf-pref-item">
-                  <div><div class="pf-pref-label">Currency</div><div class="pf-pref-desc">Display prices in</div></div>
-                  <select class="pf-select" aria-label="Currency" title="Currency"><option selected>MYR (RM)</option><option>USD ($)</option></select>
+                  <div>
+                    <div class="pf-pref-label">Currency</div>
+                    <div class="pf-pref-desc">Display prices in</div>
+                  </div>
+                  <select class="pf-select" aria-label="Currency" title="Currency">
+                    <option selected>MYR (RM)</option>
+                    <option>USD ($)</option>
+                  </select>
                 </div>
               </div>
             </section>
@@ -354,10 +465,14 @@
               <h3 class="pf-section-title">Preferred Car Category</h3>
               <p class="pf-card-desc">We'll prioritize showing these types of vehicles in your search results.</p>
               <div class="pf-car-category-grid">
-                <button class="pf-cat-card active" onclick="selectCat(this)"><span class="material-icons-round">directions_car</span><span>Sedan</span></button>
-                <button class="pf-cat-card" onclick="selectCat(this)"><span class="material-icons-round">airport_shuttle</span><span>SUV</span></button>
-                <button class="pf-cat-card" onclick="selectCat(this)"><span class="material-icons-round">electric_car</span><span>EV</span></button>
-                <button class="pf-cat-card" onclick="selectCat(this)"><span class="material-icons-round">local_taxi</span><span>Luxury</span></button>
+                <button class="pf-cat-card active" onclick="selectCat(this)"><span
+                    class="material-icons-round">directions_car</span><span>Sedan</span></button>
+                <button class="pf-cat-card" onclick="selectCat(this)"><span
+                    class="material-icons-round">airport_shuttle</span><span>SUV</span></button>
+                <button class="pf-cat-card" onclick="selectCat(this)"><span
+                    class="material-icons-round">electric_car</span><span>EV</span></button>
+                <button class="pf-cat-card" onclick="selectCat(this)"><span
+                    class="material-icons-round">local_taxi</span><span>Luxury</span></button>
               </div>
             </section>
           </div>
@@ -375,18 +490,48 @@
                 <h3 class="pf-section-title"><span class="material-icons-round">email</span> Email Notifications</h3>
                 <p class="pf-card-desc">Manage email communications to your email address.</p>
                 <div class="pf-notif-list">
-                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Booking Updates</div><div class="pf-toggle-desc">Confirmations, cancellations, and itinerary changes.</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Booking Updates notifications" title="Booking Updates notifications" /><span class="pf-slider"></span></label></div>
-                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Promotions & Offers</div><div class="pf-toggle-desc">Exclusive deals, seasonal discounts, and partner offers.</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Promotions and Offers notifications" title="Promotions and Offers notifications" /><span class="pf-slider"></span></label></div>
-                  <div class="pf-toggle-row"><div><div class="pf-toggle-label">Security Alerts</div><div class="pf-toggle-desc">Login attempts from new devices and password changes.</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Security Alerts notifications" title="Security Alerts notifications" /><span class="pf-slider"></span></label></div>
+                  <div class="pf-toggle-row">
+                    <div>
+                      <div class="pf-toggle-label">Booking Updates</div>
+                      <div class="pf-toggle-desc">Confirmations, cancellations, and itinerary changes.</div>
+                    </div><label class="pf-switch"><input type="checkbox" checked
+                        aria-label="Booking Updates notifications" title="Booking Updates notifications" /><span
+                        class="pf-slider"></span></label>
+                  </div>
+                  <div class="pf-toggle-row">
+                    <div>
+                      <div class="pf-toggle-label">Promotions & Offers</div>
+                      <div class="pf-toggle-desc">Exclusive deals, seasonal discounts, and partner offers.</div>
+                    </div><label class="pf-switch"><input type="checkbox" checked
+                        aria-label="Promotions and Offers notifications"
+                        title="Promotions and Offers notifications" /><span class="pf-slider"></span></label>
+                  </div>
+                  <div class="pf-toggle-row">
+                    <div>
+                      <div class="pf-toggle-label">Security Alerts</div>
+                      <div class="pf-toggle-desc">Login attempts from new devices and password changes.</div>
+                    </div><label class="pf-switch"><input type="checkbox" checked
+                        aria-label="Security Alerts notifications" title="Security Alerts notifications" /><span
+                        class="pf-slider"></span></label>
+                  </div>
                 </div>
               </section>
 
               <!-- Newsletter -->
               <section class="pf-card">
                 <h3 class="pf-section-title"><span class="material-icons-round">newspaper</span> Newsletter</h3>
-                <p class="pf-card-desc">Subscribe to our newsletter to discover tips & updates delivered to your mailbox.</p>
-                <div class="pf-toggle-row"><div><div class="pf-toggle-label">Subscribe</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Subscribe to newsletter" title="Subscribe to newsletter" /><span class="pf-slider"></span></label></div>
-                <div class="pf-help-box"><strong>Need Help?</strong><p>If you are not receiving emails, please check your spam folder or spam address/domain is whitelisted.</p><a href="../support/support.html" class="pf-text-btn primary">Contact Support</a></div>
+                <p class="pf-card-desc">Subscribe to our newsletter to discover tips & updates delivered to your
+                  mailbox.</p>
+                <div class="pf-toggle-row">
+                  <div>
+                    <div class="pf-toggle-label">Subscribe</div>
+                  </div><label class="pf-switch"><input type="checkbox" checked aria-label="Subscribe to newsletter"
+                      title="Subscribe to newsletter" /><span class="pf-slider"></span></label>
+                </div>
+                <div class="pf-help-box"><strong>Need Help?</strong>
+                  <p>If you are not receiving emails, please check your spam folder or spam address/domain is
+                    whitelisted.</p><a href="../support/support.html" class="pf-text-btn primary">Contact Support</a>
+                </div>
               </section>
             </div>
 
@@ -394,19 +539,31 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">sms</span> SMS Notifications</h3>
               <p class="pf-card-desc">SMS Notifications route your messages to your phone as text messages.</p>
-              <div class="pf-toggle-row"><div><div class="pf-toggle-label">Enable SMS</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Enable SMS notifications" title="Enable SMS notifications" /><span class="pf-slider"></span></label></div>
+              <div class="pf-toggle-row">
+                <div>
+                  <div class="pf-toggle-label">Enable SMS</div>
+                </div><label class="pf-switch"><input type="checkbox" checked aria-label="Enable SMS notifications"
+                    title="Enable SMS notifications" /><span class="pf-slider"></span></label>
+              </div>
             </section>
 
             <!-- Push Notifications -->
             <section class="pf-card">
-              <h3 class="pf-section-title"><span class="material-icons-round">notifications_active</span> Push Notifications</h3>
-              <p class="pf-card-desc">App notifications for real-time travel, fleet tracking and quick approvals.</p>
-              <div class="pf-toggle-row"><div><div class="pf-toggle-label">Enable Push</div></div><label class="pf-switch"><input type="checkbox" checked aria-label="Enable push notifications" title="Enable push notifications" /><span class="pf-slider"></span></label></div>
+              <h3 class="pf-section-title"><span class="material-icons-round">notifications_active</span> Push
+                Notifications</h3>
+              <p class="pf-card-desc">App notifications for real-time travel, car tracking and quick approvals.</p>
+              <div class="pf-toggle-row">
+                <div>
+                  <div class="pf-toggle-label">Enable Push</div>
+                </div><label class="pf-switch"><input type="checkbox" checked aria-label="Enable push notifications"
+                    title="Enable push notifications" /><span class="pf-slider"></span></label>
+              </div>
             </section>
 
             <div class="pf-actions-bar">
               <button class="pf-btn outline" onclick="profileToast('No changes applied.')">Cancel</button>
-              <button class="pf-btn primary" onclick="profileToast('Notification settings saved.')"><span class="material-icons-round">save</span> Save Changes</button>
+              <button class="pf-btn primary" onclick="profileToast('Notification settings saved.')"><span
+                  class="material-icons-round">save</span> Save Changes</button>
             </div>
           </div>
 
@@ -763,26 +920,26 @@
     refreshOtpUi('password');
 
     // Panel switching
-    document.querySelectorAll('.pf-inner-link').forEach(function(link) {
-      link.addEventListener('click', function(e) {
+    document.querySelectorAll('.pf-inner-link').forEach(function (link) {
+      link.addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelectorAll('.pf-inner-link').forEach(function(l) { l.classList.remove('active'); });
+        document.querySelectorAll('.pf-inner-link').forEach(function (l) { l.classList.remove('active'); });
         this.classList.add('active');
         var section = this.getAttribute('data-section');
-        document.querySelectorAll('.pf-panel').forEach(function(p) { p.classList.remove('active'); });
+        document.querySelectorAll('.pf-panel').forEach(function (p) { p.classList.remove('active'); });
         var target = document.getElementById('panel-' + section);
         if (target) { target.classList.add('active'); }
       });
     });
 
     function selectCat(el) {
-      document.querySelectorAll('.pf-cat-card').forEach(function(c) { c.classList.remove('active'); });
+      document.querySelectorAll('.pf-cat-card').forEach(function (c) { c.classList.remove('active'); });
       el.classList.add('active');
       profileToast('Preferred car updated.');
     }
 
     function selectUnit(el) {
-      document.querySelectorAll('.pf-segment-control button').forEach(function(btn) { btn.classList.remove('active'); });
+      document.querySelectorAll('.pf-segment-control button').forEach(function (btn) { btn.classList.remove('active'); });
       el.classList.add('active');
       profileToast('Measurement unit updated.');
     }
@@ -792,10 +949,11 @@
       if (!toast) { toast = document.createElement('div'); toast.id = 'profile-toast'; toast.className = 'profile-toast'; document.body.appendChild(toast); }
       toast.textContent = message; toast.classList.add('show');
       clearTimeout(window._ptTimer);
-      window._ptTimer = setTimeout(function() { toast.classList.remove('show'); }, 1800);
+      window._ptTimer = setTimeout(function () { toast.classList.remove('show'); }, 1800);
     }
   </script>
   <div id="chatbot-placeholder"></div>
   <script src="../../../shared/js/chatbot.js"></script>
 </body>
+
 </html>

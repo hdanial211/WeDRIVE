@@ -43,8 +43,8 @@
 (function () {
   'use strict';
 
-  var THEME_KEY  = 'wedrive-theme';
-  var DAY_HREF   = 'theme_day.css';
+  var THEME_KEY = 'wedrive-theme';
+  var DAY_HREF = 'theme_day.css';
   var NIGHT_HREF = 'theme_night.css';
 
   function applyTheme(mode, animate) {
@@ -91,12 +91,12 @@
 
   // Run immediately so if script is in <head>, it prevents FOUC
   initTheme();
-  
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-        // Re-apply to body once it exists
-        var saved = localStorage.getItem(THEME_KEY) || 'day';
-        if (document.body) document.body.classList.toggle('night-mode', saved === 'night');
+    document.addEventListener('DOMContentLoaded', function () {
+      // Re-apply to body once it exists
+      var saved = localStorage.getItem(THEME_KEY) || 'day';
+      if (document.body) document.body.classList.toggle('night-mode', saved === 'night');
     });
   }
 })();
@@ -109,7 +109,7 @@
 (function () {
   'use strict';
 
-  var LANG_KEY     = 'wedrive-lang';
+  var LANG_KEY = 'wedrive-lang';
   var DEFAULT_LANG = 'en';
 
   function resolveProjectBase() {
@@ -262,11 +262,11 @@
       var children = group.querySelectorAll(REVEAL_SELECTORS);
       children.forEach(function (el, i) {
         if (!el.style.transitionDelay && !el.classList.contains('delay-1') &&
-            !el.classList.contains('delay-2') && !el.classList.contains('delay-3') &&
-            !el.classList.contains('delay-4') && !el.classList.contains('delay-5') &&
-            !el.classList.contains('delay-6')) {
+          !el.classList.contains('delay-2') && !el.classList.contains('delay-3') &&
+          !el.classList.contains('delay-4') && !el.classList.contains('delay-5') &&
+          !el.classList.contains('delay-6')) {
           el.style.transitionDelay = (i * 0.1).toFixed(1) + 's';
-          el.style.animationDelay  = (i * 0.1).toFixed(1) + 's';
+          el.style.animationDelay = (i * 0.1).toFixed(1) + 's';
         }
       });
     });
@@ -399,18 +399,18 @@
 
       // Randomise via CSS custom properties (no JS animation)
       el.style.cssText = [
-        'width:'              + size.toFixed(0) + 'px',
-        'height:'             + size.toFixed(0) + 'px',
-        'top:'                + rand(0, 92).toFixed(1) + 'vh',
-        'left:'               + rand(0, 95).toFixed(1) + 'vw',
-        '--dur:'              + rand(9, 22).toFixed(1) + 's',
-        '--max-opacity:'      + rand(0.06, 0.22).toFixed(2),
-        '--tx1:'              + randPx(-60, 60),
-        '--ty1:'              + randPx(-60, 40),
-        '--tx2:'              + randPx(-40, 50),
-        '--ty2:'              + randPx(-30, 60),
-        'animation-delay:'   + rand(0, 8).toFixed(1) + 's',
-        'filter:blur('       + rand(0.5, 3).toFixed(1) + 'px)'
+        'width:' + size.toFixed(0) + 'px',
+        'height:' + size.toFixed(0) + 'px',
+        'top:' + rand(0, 92).toFixed(1) + 'vh',
+        'left:' + rand(0, 95).toFixed(1) + 'vw',
+        '--dur:' + rand(9, 22).toFixed(1) + 's',
+        '--max-opacity:' + rand(0.06, 0.22).toFixed(2),
+        '--tx1:' + randPx(-60, 60),
+        '--ty1:' + randPx(-60, 40),
+        '--tx2:' + randPx(-40, 50),
+        '--ty2:' + randPx(-30, 60),
+        'animation-delay:' + rand(0, 8).toFixed(1) + 's',
+        'filter:blur(' + rand(0.5, 3).toFixed(1) + 'px)'
       ].join(';');
 
       fragment.appendChild(el);
@@ -470,7 +470,7 @@
     body.appendChild(glow);
 
     /* Smooth tracking with lerp */
-    var mouseX = window.innerWidth  / 2;
+    var mouseX = window.innerWidth / 2;
     var mouseY = window.innerHeight / 2;
     var currentX = mouseX;
     var currentY = mouseY;
@@ -539,22 +539,22 @@
 /* =====================================================
    SECTION 4: FOOTER LOADER
    ===================================================== */
-(function() {
+(function () {
   'use strict';
-  
+
   function resolveBasePath() {
-    var parts  = window.location.pathname.split('/').filter(Boolean);
-    var depth  = parts.length > 0 ? parts.length - 1 : 0;
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    var depth = parts.length > 0 ? parts.length - 1 : 0;
     return depth === 0 ? '' : '../'.repeat(depth);
   }
 
   function loadFooter() {
     var placeholder = document.getElementById('footer-placeholder');
     if (!placeholder) return;
-    
+
     var base = resolveBasePath();
     var url = base + 'shared/components/footer.html';
-    
+
     // Inject footer.css if not already present
     if (!document.querySelector('link[href*="footer.css"]')) {
       var cssLink = document.createElement('link');
@@ -562,13 +562,13 @@
       cssLink.href = base + 'shared/css/footer.css';
       document.head.appendChild(cssLink);
     }
-    
+
     fetch(url)
-      .then(function(res) {
+      .then(function (res) {
         if (!res.ok) throw new Error('Cannot load footer: ' + url);
         return res.text();
       })
-      .then(function(html) {
+      .then(function (html) {
         placeholder.innerHTML = html;
         // Fix data-logo src
         var logo = placeholder.querySelector('[data-logo]');
@@ -577,22 +577,22 @@
         var footerRoutes = {
           footer_privacy: base + 'shared/pages/footer/terms/terms.html#privacy',
           footer_terms: base + 'shared/pages/footer/terms/terms.html',
-          footer_fleet: base + 'shared/pages/footer/about/about.html',
+          footer_car: base + 'shared/pages/footer/about/about.html',
           footer_faq: base + 'shared/pages/footer/faq/faq.html',
           footer_contact: base + 'shared/pages/footer/contact/contact.html'
         };
-        Object.keys(footerRoutes).forEach(function(key) {
+        Object.keys(footerRoutes).forEach(function (key) {
           var link = placeholder.querySelector('[data-key="' + key + '"]');
           if (link) link.href = footerRoutes[key];
         });
-        
+
         // Retranslate newly added footer keys
         if (typeof window.setLanguage === 'function') {
           var lang = localStorage.getItem('wedrive-lang') || 'en';
           window.setLanguage(lang);
         }
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.warn('[WeDRIVE Footer]', err.message);
       });
   }
@@ -621,7 +621,7 @@
   function loadSearchPopup() {
     if (document.getElementById('sp-script')) return;
     var script = document.createElement('script');
-    script.id  = 'sp-script';
+    script.id = 'sp-script';
     script.src = resolveBase() + 'shared/js/search-popup.js';
     document.body.appendChild(script);
   }
@@ -663,7 +663,7 @@
     if (typeof window.flatpickr === 'undefined') {
       var fpScript = document.createElement('script');
       fpScript.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
-      fpScript.onload = function() {
+      fpScript.onload = function () {
         var calScript = document.createElement('script');
         calScript.src = resolveBase() + 'shared/js/calendar.js';
         document.body.appendChild(calScript);

@@ -1,299 +1,390 @@
 <!DOCTYPE html>
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>WeDRIVE - Payment Methods</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "primary-fixed-dim": "#adc6ff",
-                      "inverse-on-surface": "#eff1f3",
-                      "outline-variant": "#c2c6d6",
-                      "inverse-primary": "#adc6ff",
-                      "surface-dim": "#d8dadc",
-                      "error-container": "#ffdad6",
-                      "tertiary-container": "#66768d",
-                      "on-tertiary-fixed-variant": "#38485d",
-                      "secondary-fixed-dim": "#bcc7de",
-                      "surface-container-lowest": "#ffffff",
-                      "on-secondary-fixed": "#111c2d",
-                      "surface-container-low": "#f2f4f6",
-                      "surface-container": "#eceef0",
-                      "outline": "#727785",
-                      "surface-variant": "#e0e3e5",
-                      "primary-container": "#2170e4",
-                      "secondary-fixed": "#d8e3fb",
-                      "on-primary-fixed": "#001a42",
-                      "primary-fixed": "#d8e2ff",
-                      "on-primary-fixed-variant": "#004395",
-                      "on-background": "#191c1e",
-                      "on-error-container": "#93000a",
-                      "primary": "#0058be",
-                      "surface-bright": "#f7f9fb",
-                      "surface": "#f7f9fb",
-                      "background": "#f7f9fb",
-                      "tertiary-fixed-dim": "#b7c8e1",
-                      "secondary-container": "#d5e0f8",
-                      "on-primary-container": "#fefcff",
-                      "on-primary": "#ffffff",
-                      "surface-container-high": "#e6e8ea",
-                      "on-tertiary": "#ffffff",
-                      "on-tertiary-container": "#fdfcff",
-                      "on-secondary": "#ffffff",
-                      "secondary": "#545f73",
-                      "on-surface-variant": "#424754",
-                      "on-tertiary-fixed": "#0b1c30",
-                      "on-secondary-container": "#586377",
-                      "error": "#ba1a1a",
-                      "tertiary-fixed": "#d3e4fe",
-                      "surface-tint": "#005ac2",
-                      "surface-container-highest": "#e0e3e5",
-                      "on-surface": "#191c1e",
-                      "on-secondary-fixed-variant": "#3c475a",
-                      "inverse-surface": "#2d3133",
-                      "tertiary": "#4d5d73",
-                      "on-error": "#ffffff"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "gutter": "16px",
-                      "container-padding": "24px",
-                      "xs": "4px",
-                      "sm": "8px",
-                      "md": "16px",
-                      "unit": "4px",
-                      "xl": "32px",
-                      "lg": "24px"
-              },
-              "fontFamily": {
-                      "h1": ["Inter"],
-                      "body-md": ["Inter"],
-                      "h2": ["Inter"],
-                      "label-sm": ["Inter"],
-                      "h3": ["Inter"],
-                      "body-lg": ["Inter"]
-              },
-              "fontSize": {
-                      "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                      "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
-                      "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                      "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                      "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
-                      "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }]
-              }
-            }
-          }
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        /* Soft, multi-layered shadows as per style guidance */
-        .ambient-shadow-sm { box-shadow: 0px 2px 4px rgba(30, 41, 59, 0.02), 0px 4px 12px rgba(30, 41, 59, 0.05); }
-        .ambient-shadow-md { box-shadow: 0px 4px 8px rgba(30, 41, 59, 0.04), 0px 8px 24px rgba(30, 41, 59, 0.08); }
-        
-        /* Glassmorphism utility for AI elements */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-    </style>
+<html class="light" lang="en">
+
+<head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>WeDRIVE - Payment Methods</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+                rel="stylesheet" />
+        <script id="tailwind-config">
+                tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        "colors": {
+                                                "primary-fixed-dim": "#adc6ff",
+                                                "inverse-on-surface": "#eff1f3",
+                                                "outline-variant": "#c2c6d6",
+                                                "inverse-primary": "#adc6ff",
+                                                "surface-dim": "#d8dadc",
+                                                "error-container": "#ffdad6",
+                                                "tertiary-container": "#66768d",
+                                                "on-tertiary-fixed-variant": "#38485d",
+                                                "secondary-fixed-dim": "#bcc7de",
+                                                "surface-container-lowest": "#ffffff",
+                                                "on-secondary-fixed": "#111c2d",
+                                                "surface-container-low": "#f2f4f6",
+                                                "surface-container": "#eceef0",
+                                                "outline": "#727785",
+                                                "surface-variant": "#e0e3e5",
+                                                "primary-container": "#2170e4",
+                                                "secondary-fixed": "#d8e3fb",
+                                                "on-primary-fixed": "#001a42",
+                                                "primary-fixed": "#d8e2ff",
+                                                "on-primary-fixed-variant": "#004395",
+                                                "on-background": "#191c1e",
+                                                "on-error-container": "#93000a",
+                                                "primary": "#0058be",
+                                                "surface-bright": "#f7f9fb",
+                                                "surface": "#f7f9fb",
+                                                "background": "#f7f9fb",
+                                                "tertiary-fixed-dim": "#b7c8e1",
+                                                "secondary-container": "#d5e0f8",
+                                                "on-primary-container": "#fefcff",
+                                                "on-primary": "#ffffff",
+                                                "surface-container-high": "#e6e8ea",
+                                                "on-tertiary": "#ffffff",
+                                                "on-tertiary-container": "#fdfcff",
+                                                "on-secondary": "#ffffff",
+                                                "secondary": "#545f73",
+                                                "on-surface-variant": "#424754",
+                                                "on-tertiary-fixed": "#0b1c30",
+                                                "on-secondary-container": "#586377",
+                                                "error": "#ba1a1a",
+                                                "tertiary-fixed": "#d3e4fe",
+                                                "surface-tint": "#005ac2",
+                                                "surface-container-highest": "#e0e3e5",
+                                                "on-surface": "#191c1e",
+                                                "on-secondary-fixed-variant": "#3c475a",
+                                                "inverse-surface": "#2d3133",
+                                                "tertiary": "#4d5d73",
+                                                "on-error": "#ffffff"
+                                        },
+                                        "borderRadius": {
+                                                "DEFAULT": "0.25rem",
+                                                "lg": "0.5rem",
+                                                "xl": "0.75rem",
+                                                "full": "9999px"
+                                        },
+                                        "spacing": {
+                                                "gutter": "16px",
+                                                "container-padding": "24px",
+                                                "xs": "4px",
+                                                "sm": "8px",
+                                                "md": "16px",
+                                                "unit": "4px",
+                                                "xl": "32px",
+                                                "lg": "24px"
+                                        },
+                                        "fontFamily": {
+                                                "h1": ["Inter"],
+                                                "body-md": ["Inter"],
+                                                "h2": ["Inter"],
+                                                "label-sm": ["Inter"],
+                                                "h3": ["Inter"],
+                                                "body-lg": ["Inter"]
+                                        },
+                                        "fontSize": {
+                                                "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                                                "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }],
+                                                "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                                                "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                                                "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                                                "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }]
+                                        }
+                                }
+                        }
+                }
+        </script>
+        <style>
+                .material-symbols-outlined {
+                        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                }
+
+                /* Soft, multi-layered shadows as per style guidance */
+                .ambient-shadow-sm {
+                        box-shadow: 0px 2px 4px rgba(30, 41, 59, 0.02), 0px 4px 12px rgba(30, 41, 59, 0.05);
+                }
+
+                .ambient-shadow-md {
+                        box-shadow: 0px 4px 8px rgba(30, 41, 59, 0.04), 0px 8px 24px rgba(30, 41, 59, 0.08);
+                }
+
+                /* Glassmorphism utility for AI elements */
+                .glass-panel {
+                        background: rgba(255, 255, 255, 0.7);
+                        backdrop-filter: blur(12px);
+                        -webkit-backdrop-filter: blur(12px);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                }
+        </style>
 </head>
+
 <body class="bg-surface text-on-surface antialiased overflow-x-hidden min-h-screen flex flex-col">
-<!-- TopNavBar -->
-<header class="bg-surface shadow-sm flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50">
-<div class="flex items-center gap-md">
-<span class="font-h2 text-h2 font-bold text-primary tracking-tight">WeDRIVE</span>
-</div>
-<!-- Search Bar (on_left configuration per JSON) -->
-<div class="hidden md:flex items-center flex-1 max-w-md ml-xl relative">
-<span class="material-symbols-outlined absolute left-sm text-outline top-1/2 -translate-y-1/2">search</span>
-<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-xl pr-md text-body-md font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Search fleet data, transactions..." type="text"/>
-</div>
-<div class="flex items-center gap-sm">
-<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 cursor-pointer active:opacity-80 flex items-center justify-center">
-<span class="material-symbols-outlined">translate</span>
-</button>
-<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 cursor-pointer active:opacity-80 flex items-center justify-center">
-<span class="material-symbols-outlined">dark_mode</span>
-</button>
-<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 cursor-pointer active:opacity-80 flex items-center justify-center relative">
-<span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
-</button>
-<div class="ml-sm w-8 h-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer">
-<img alt="Customer profile avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a modern corporate user, well-lit against a clean, light-mode background. The aesthetic is crisp, representing the clean, high-tech vibe of a modern SaaS platform. Soft, neutral tones dominate, conveying reliability and trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwfySuof3Zih5jralnRtvny17Y7G26e4ZEy9nig_RZXDGQwdFuKagBdJdmITHJsCTWOeFfdmNK7j1cYHP7wrxuyw7b0G4tUSikw9DUfp9jmNmNggVL1Uhd4QhaB5mgI3Xtj-2FSH7uJChI4gQ6awk8Rgazih3Ynr6CA6AzGZyp6kVQ-BVODjKdztMzUGoBSuWYwvuBKxTqoHu1uydl_7GQrkRvih0BgMKIrLfYAeSlRRyKuVmmBSOgHWx1S-zHsSGsz8UUIhXeKKI"/>
-</div>
-</div>
-</header>
-<div class="flex flex-1 relative">
-<!-- SideNavBar (Desktop Web Navigation) -->
-<aside class="hidden md:flex flex-col h-[calc(100vh-4rem)] sticky top-16 w-64 p-md border-r border-outline-variant bg-surface-container-low z-40">
-<!-- Header Info -->
-<div class="flex flex-col items-center py-lg mb-md border-b border-outline-variant">
-<div class="w-16 h-16 rounded-full overflow-hidden mb-sm ambient-shadow-sm border-2 border-surface">
-<img alt="User Profile Picture" class="w-full h-full object-cover" data-alt="A professional headshot of a modern corporate user, well-lit against a clean, light-mode background. The aesthetic is crisp, representing the clean, high-tech vibe of a modern SaaS platform. Soft, neutral tones dominate, conveying reliability and trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_uU_Ox8rc9BvykEodCD-sRYrNHgBwvUZCpRhSxt_Te2PzQAXIPYfuj7zWrmleRfmGS-X8xXIS-HGabFrK3PhX9UdKqrDnpa3oeP-dTZXWu6IOqgB4A2uaE793aE0Fag7Q4YGOv2HGr3JPfZyzCr0K6UvCuIpyqH2WXuxmgHPjf8zrw0DoWKGreNPSsptI3Llj7xJqfehuHTEVRdJrMuHxBXsvPz8nUboJpy_1WCH5Y0XhlAGQus57oYslE9JQH8C5JHMZSxk-SBU"/>
-</div>
-<h3 class="font-h3 text-h3 text-on-surface">Alex Johnson</h3>
-<span class="font-label-sm text-label-sm text-primary mt-1">Premium Member</span>
-</div>
-<!-- Nav Links -->
-<nav class="flex-1 flex flex-col gap-xs">
-<a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="font-label-sm text-label-sm">Personal Info</span>
-</a>
-<a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg" href="#">
-<span class="material-symbols-outlined">security</span>
-<span class="font-label-sm text-label-sm">Security</span>
-</a>
-<!-- Active Tab: Payment Methods -->
-<a class="bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center gap-md px-md py-sm cursor-pointer" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
-<span class="font-label-sm text-label-sm tracking-wide">Payment Methods</span>
-</a>
-<a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-label-sm text-label-sm">Preferences</span>
-</a>
-<a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg" href="#">
-<span class="material-symbols-outlined">notifications</span>
-<span class="font-label-sm text-label-sm">Notifications</span>
-</a>
-</nav>
-<!-- CTA -->
-<div class="mt-auto pt-md">
-<button class="w-full bg-surface-container border border-outline-variant text-on-surface font-label-sm text-label-sm py-sm rounded-lg hover:bg-primary hover:text-on-primary transition-colors duration-200 flex items-center justify-center gap-xs">
-<span class="material-symbols-outlined text-[18px]">workspace_premium</span>
-                    Upgrade to Pro
-                </button>
-</div>
-</aside>
-<!-- Main Content Area -->
-<main class="flex-1 p-container-padding max-w-6xl mx-auto w-full">
-<!-- Page Header -->
-<div class="mb-xl">
-<h1 class="font-h1 text-h1 text-on-surface tracking-tight">Payment Methods</h1>
-<p class="font-body-md text-body-md text-on-surface-variant mt-sm max-w-2xl">Manage your saved credit cards, bank accounts, and establish primary billing defaults for your global fleet operations.</p>
-</div>
-<!-- Security & AI Insight Banner -->
-<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md mb-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-md ambient-shadow-sm">
-<div class="flex items-center gap-md">
-<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">lock</span>
-</div>
-<div>
-<h3 class="font-h3 text-h3 text-on-surface">Bank-Grade Security</h3>
-<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Your payment data is fully encrypted and tokenized. WeDRIVE does not store full card numbers on our servers.</p>
-</div>
-</div>
-</div>
-<!-- Bento Grid Layout for Cards -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
-<!-- Primary Card (Spans 2 columns) -->
-<div class="col-span-1 md:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant ambient-shadow-sm p-lg relative overflow-hidden group flex flex-col justify-between min-h-[220px]">
-<!-- Subtle background pattern for premium feel -->
-<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-<div class="flex justify-between items-start relative z-10">
-<div class="flex flex-col gap-xs">
-<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-3 py-1 rounded-full w-fit flex items-center gap-xs shadow-sm">
-<span class="material-symbols-outlined text-[14px]">check_circle</span> Primary Default
-                            </span>
-</div>
-<div class="flex items-center gap-sm">
-<button class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm flex items-center gap-xs px-2 py-1 rounded hover:bg-surface-container-low">
-<span class="material-symbols-outlined text-[18px]">edit</span> Edit
-                            </button>
-</div>
-</div>
-<div class="mt-auto relative z-10 pt-xl">
-<div class="flex items-center gap-md mb-sm">
-<!-- Visa Text Logo styling -->
-<div class="h-8 px-3 bg-surface-container rounded-md flex items-center justify-center text-primary font-h3 font-bold italic tracking-wider border border-outline-variant/50">VISA</div>
-<div class="font-h2 text-h2 text-on-surface tracking-[0.15em] tabular-nums">•••• •••• •••• 4242</div>
-</div>
-<div class="flex justify-between items-end mt-md border-t border-surface-container pt-md">
-<div>
-<div class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Cardholder Name</div>
-<div class="font-body-lg text-body-lg text-on-surface">ALEX JOHNSON</div>
-</div>
-<div class="text-right">
-<div class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Expires</div>
-<div class="font-body-lg text-body-lg text-on-surface">12/25</div>
-</div>
-</div>
-</div>
-</div>
-<!-- AI Predictive Billing Widget -->
-<div class="col-span-1 glass-panel rounded-xl border border-outline-variant ambient-shadow-sm p-lg flex flex-col justify-between min-h-[220px] bg-surface-container-lowest relative overflow-hidden">
-<div class="absolute top-0 left-0 w-2 h-full bg-primary"></div>
-<div class="flex items-center gap-xs text-primary mb-md">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-<span class="font-label-sm text-label-sm font-bold tracking-widest uppercase">Smart Billing Insight</span>
-</div>
-<div class="mt-auto">
-<p class="font-body-md text-body-md text-on-surface-variant mb-sm">Estimated upcoming fleet charge based on active rentals.</p>
-<div class="font-h1 text-h1 text-on-surface">$1,240.00</div>
-<p class="font-label-sm text-label-sm text-primary mt-xs">Auto-processing on Oct 15th via Primary Visa.</p>
-</div>
-</div>
-<!-- Secondary Card (Mastercard) -->
-<div class="col-span-1 bg-surface-container-lowest rounded-xl border border-outline-variant ambient-shadow-sm p-lg flex flex-col justify-between min-h-[200px]">
-<div class="flex justify-between items-start">
-<!-- Generic MC style logo -->
-<div class="h-8 px-3 bg-surface-container rounded-md flex items-center justify-center text-on-surface font-h3 font-bold border border-outline-variant/50">MC</div>
-<button class="text-on-surface-variant hover:text-error transition-colors font-label-sm text-label-sm flex items-center gap-xs px-2 py-1 rounded hover:bg-error-container/50">
-<span class="material-symbols-outlined text-[18px]">delete</span> Remove
+        <!-- TopNavBar -->
+        <header
+                class="bg-surface shadow-sm flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50">
+                <div class="flex items-center gap-md">
+                        <span class="font-h2 text-h2 font-bold text-primary tracking-tight">WeDRIVE</span>
+                </div>
+                <!-- Search Bar (on_left configuration per JSON) -->
+                <div class="hidden md:flex items-center flex-1 max-w-md ml-xl relative">
+                        <span
+                                class="material-symbols-outlined absolute left-sm text-outline top-1/2 -translate-y-1/2">search</span>
+                        <input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-xl pr-md text-body-md font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
+                                placeholder="Search car data, transactions..." type="text" />
+                </div>
+                <div class="flex items-center gap-sm">
+                        <button
+                                class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 cursor-pointer active:opacity-80 flex items-center justify-center">
+                                <span class="material-symbols-outlined">translate</span>
                         </button>
-</div>
-<div class="mt-xl">
-<div class="font-h3 text-h3 text-on-surface tracking-[0.1em] tabular-nums text-opacity-80">•••• •••• •••• 8899</div>
-<div class="flex justify-between items-end mt-md">
-<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Exp 08/26</div>
-<button class="font-label-sm text-label-sm text-primary hover:underline transition-all">Make Primary</button>
-</div>
-</div>
-</div>
-<!-- Add New Payment Method Action Area -->
-<button class="col-span-1 border-2 border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center text-center hover:border-primary hover:bg-surface-container-low transition-all duration-300 min-h-[200px] group cursor-pointer bg-surface">
-<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center mb-md group-hover:bg-primary-container transition-colors duration-300">
-<span class="material-symbols-outlined text-[28px] text-on-surface-variant group-hover:text-primary transition-colors duration-300">add_card</span>
-</div>
-<span class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors duration-300">Add Payment Method</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant mt-sm max-w-[200px]">Credit Card, Debit Card, or Direct Bank Transfer</span>
-</button>
-</div>
-</main>
-</div>
-<!-- Footer -->
-<footer class="w-full py-xl px-container-padding flex flex-col md:flex-row justify-between items-center mt-auto bg-surface-container-lowest border-t border-outline-variant">
-<div class="flex items-center gap-md mb-md md:mb-0">
-<span class="font-h3 text-h3 text-primary">WeDRIVE</span>
-<span class="font-label-sm text-label-sm text-secondary">© 2024 WeDRIVE Global Fleet Solutions. All rights reserved.</span>
-</div>
-<nav class="flex gap-lg items-center">
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Cookie Settings</a>
-<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
-</nav>
-</footer>
-</body></html>
+                        <button
+                                class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 cursor-pointer active:opacity-80 flex items-center justify-center">
+                                <span class="material-symbols-outlined">dark_mode</span>
+                        </button>
+                        <button
+                                class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 cursor-pointer active:opacity-80 flex items-center justify-center relative">
+                                <span class="material-symbols-outlined">notifications</span>
+                                <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+                        </button>
+                        <div
+                                class="ml-sm w-8 h-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer">
+                                <img alt="Customer profile avatar" class="w-full h-full object-cover"
+                                        data-alt="A professional headshot of a modern corporate user, well-lit against a clean, light-mode background. The aesthetic is crisp, representing the clean, high-tech vibe of a modern SaaS platform. Soft, neutral tones dominate, conveying reliability and trust."
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwfySuof3Zih5jralnRtvny17Y7G26e4ZEy9nig_RZXDGQwdFuKagBdJdmITHJsCTWOeFfdmNK7j1cYHP7wrxuyw7b0G4tUSikw9DUfp9jmNmNggVL1Uhd4QhaB5mgI3Xtj-2FSH7uJChI4gQ6awk8Rgazih3Ynr6CA6AzGZyp6kVQ-BVODjKdztMzUGoBSuWYwvuBKxTqoHu1uydl_7GQrkRvih0BgMKIrLfYAeSlRRyKuVmmBSOgHWx1S-zHsSGsz8UUIhXeKKI" />
+                        </div>
+                </div>
+        </header>
+        <div class="flex flex-1 relative">
+                <!-- SideNavBar (Desktop Web Navigation) -->
+                <aside
+                        class="hidden md:flex flex-col h-[calc(100vh-4rem)] sticky top-16 w-64 p-md border-r border-outline-variant bg-surface-container-low z-40">
+                        <!-- Header Info -->
+                        <div class="flex flex-col items-center py-lg mb-md border-b border-outline-variant">
+                                <div
+                                        class="w-16 h-16 rounded-full overflow-hidden mb-sm ambient-shadow-sm border-2 border-surface">
+                                        <img alt="User Profile Picture" class="w-full h-full object-cover"
+                                                data-alt="A professional headshot of a modern corporate user, well-lit against a clean, light-mode background. The aesthetic is crisp, representing the clean, high-tech vibe of a modern SaaS platform. Soft, neutral tones dominate, conveying reliability and trust."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_uU_Ox8rc9BvykEodCD-sRYrNHgBwvUZCpRhSxt_Te2PzQAXIPYfuj7zWrmleRfmGS-X8xXIS-HGabFrK3PhX9UdKqrDnpa3oeP-dTZXWu6IOqgB4A2uaE793aE0Fag7Q4YGOv2HGr3JPfZyzCr0K6UvCuIpyqH2WXuxmgHPjf8zrw0DoWKGreNPSsptI3Llj7xJqfehuHTEVRdJrMuHxBXsvPz8nUboJpy_1WCH5Y0XhlAGQus57oYslE9JQH8C5JHMZSxk-SBU" />
+                                </div>
+                                <h3 class="font-h3 text-h3 text-on-surface">Alex Johnson</h3>
+                                <span class="font-label-sm text-label-sm text-primary mt-1">Premium Member</span>
+                        </div>
+                        <!-- Nav Links -->
+                        <nav class="flex-1 flex flex-col gap-xs">
+                                <a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg"
+                                        href="#">
+                                        <span class="material-symbols-outlined">person</span>
+                                        <span class="font-label-sm text-label-sm">Personal Info</span>
+                                </a>
+                                <a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg"
+                                        href="#">
+                                        <span class="material-symbols-outlined">security</span>
+                                        <span class="font-label-sm text-label-sm">Security</span>
+                                </a>
+                                <!-- Active Tab: Payment Methods -->
+                                <a class="bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center gap-md px-md py-sm cursor-pointer"
+                                        href="#">
+                                        <span class="material-symbols-outlined"
+                                                style="font-variation-settings: 'FILL' 1;">payments</span>
+                                        <span class="font-label-sm text-label-sm tracking-wide">Payment Methods</span>
+                                </a>
+                                <a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg"
+                                        href="#">
+                                        <span class="material-symbols-outlined">settings</span>
+                                        <span class="font-label-sm text-label-sm">Preferences</span>
+                                </a>
+                                <a class="text-on-surface-variant hover:bg-surface-variant hover:bg-surface-container transition-all duration-200 flex items-center gap-md px-md py-sm cursor-pointer rounded-lg"
+                                        href="#">
+                                        <span class="material-symbols-outlined">notifications</span>
+                                        <span class="font-label-sm text-label-sm">Notifications</span>
+                                </a>
+                        </nav>
+                        <!-- CTA -->
+                        <div class="mt-auto pt-md">
+                                <button
+                                        class="w-full bg-surface-container border border-outline-variant text-on-surface font-label-sm text-label-sm py-sm rounded-lg hover:bg-primary hover:text-on-primary transition-colors duration-200 flex items-center justify-center gap-xs">
+                                        <span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+                                        Upgrade to Pro
+                                </button>
+                        </div>
+                </aside>
+                <!-- Main Content Area -->
+                <main class="flex-1 p-container-padding max-w-6xl mx-auto w-full">
+                        <!-- Page Header -->
+                        <div class="mb-xl">
+                                <h1 class="font-h1 text-h1 text-on-surface tracking-tight">Payment Methods</h1>
+                                <p class="font-body-md text-body-md text-on-surface-variant mt-sm max-w-2xl">Manage your
+                                        saved credit cards, bank accounts, and establish primary billing defaults for
+                                        your global car operations.</p>
+                        </div>
+                        <!-- Security & AI Insight Banner -->
+                        <div
+                                class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md mb-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-md ambient-shadow-sm">
+                                <div class="flex items-center gap-md">
+                                        <div
+                                                class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+                                                <span class="material-symbols-outlined">lock</span>
+                                        </div>
+                                        <div>
+                                                <h3 class="font-h3 text-h3 text-on-surface">Bank-Grade Security</h3>
+                                                <p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Your
+                                                        payment data is fully encrypted and tokenized. WeDRIVE does not
+                                                        store full card numbers on our servers.</p>
+                                        </div>
+                                </div>
+                        </div>
+                        <!-- Bento Grid Layout for Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+                                <!-- Primary Card (Spans 2 columns) -->
+                                <div
+                                        class="col-span-1 md:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant ambient-shadow-sm p-lg relative overflow-hidden group flex flex-col justify-between min-h-[220px]">
+                                        <!-- Subtle background pattern for premium feel -->
+                                        <div
+                                                class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none">
+                                        </div>
+                                        <div class="flex justify-between items-start relative z-10">
+                                                <div class="flex flex-col gap-xs">
+                                                        <span
+                                                                class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-3 py-1 rounded-full w-fit flex items-center gap-xs shadow-sm">
+                                                                <span
+                                                                        class="material-symbols-outlined text-[14px]">check_circle</span>
+                                                                Primary Default
+                                                        </span>
+                                                </div>
+                                                <div class="flex items-center gap-sm">
+                                                        <button
+                                                                class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm flex items-center gap-xs px-2 py-1 rounded hover:bg-surface-container-low">
+                                                                <span
+                                                                        class="material-symbols-outlined text-[18px]">edit</span>
+                                                                Edit
+                                                        </button>
+                                                </div>
+                                        </div>
+                                        <div class="mt-auto relative z-10 pt-xl">
+                                                <div class="flex items-center gap-md mb-sm">
+                                                        <!-- Visa Text Logo styling -->
+                                                        <div
+                                                                class="h-8 px-3 bg-surface-container rounded-md flex items-center justify-center text-primary font-h3 font-bold italic tracking-wider border border-outline-variant/50">
+                                                                VISA</div>
+                                                        <div
+                                                                class="font-h2 text-h2 text-on-surface tracking-[0.15em] tabular-nums">
+                                                                •••• •••• •••• 4242</div>
+                                                </div>
+                                                <div
+                                                        class="flex justify-between items-end mt-md border-t border-surface-container pt-md">
+                                                        <div>
+                                                                <div
+                                                                        class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">
+                                                                        Cardholder Name</div>
+                                                                <div class="font-body-lg text-body-lg text-on-surface">
+                                                                        ALEX JOHNSON</div>
+                                                        </div>
+                                                        <div class="text-right">
+                                                                <div
+                                                                        class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">
+                                                                        Expires</div>
+                                                                <div class="font-body-lg text-body-lg text-on-surface">
+                                                                        12/25</div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <!-- AI Predictive Billing Widget -->
+                                <div
+                                        class="col-span-1 glass-panel rounded-xl border border-outline-variant ambient-shadow-sm p-lg flex flex-col justify-between min-h-[220px] bg-surface-container-lowest relative overflow-hidden">
+                                        <div class="absolute top-0 left-0 w-2 h-full bg-primary"></div>
+                                        <div class="flex items-center gap-xs text-primary mb-md">
+                                                <span class="material-symbols-outlined"
+                                                        style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                                <span
+                                                        class="font-label-sm text-label-sm font-bold tracking-widest uppercase">Smart
+                                                        Billing Insight</span>
+                                        </div>
+                                        <div class="mt-auto">
+                                                <p class="font-body-md text-body-md text-on-surface-variant mb-sm">
+                                                        Estimated upcoming car charge based on active rentals.</p>
+                                                <div class="font-h1 text-h1 text-on-surface">$1,240.00</div>
+                                                <p class="font-label-sm text-label-sm text-primary mt-xs">
+                                                        Auto-processing on Oct 15th via Primary Visa.</p>
+                                        </div>
+                                </div>
+                                <!-- Secondary Card (Mastercard) -->
+                                <div
+                                        class="col-span-1 bg-surface-container-lowest rounded-xl border border-outline-variant ambient-shadow-sm p-lg flex flex-col justify-between min-h-[200px]">
+                                        <div class="flex justify-between items-start">
+                                                <!-- Generic MC style logo -->
+                                                <div
+                                                        class="h-8 px-3 bg-surface-container rounded-md flex items-center justify-center text-on-surface font-h3 font-bold border border-outline-variant/50">
+                                                        MC</div>
+                                                <button
+                                                        class="text-on-surface-variant hover:text-error transition-colors font-label-sm text-label-sm flex items-center gap-xs px-2 py-1 rounded hover:bg-error-container/50">
+                                                        <span
+                                                                class="material-symbols-outlined text-[18px]">delete</span>
+                                                        Remove
+                                                </button>
+                                        </div>
+                                        <div class="mt-xl">
+                                                <div
+                                                        class="font-h3 text-h3 text-on-surface tracking-[0.1em] tabular-nums text-opacity-80">
+                                                        •••• •••• •••• 8899</div>
+                                                <div class="flex justify-between items-end mt-md">
+                                                        <div
+                                                                class="font-label-sm text-label-sm text-on-surface-variant uppercase">
+                                                                Exp 08/26</div>
+                                                        <button
+                                                                class="font-label-sm text-label-sm text-primary hover:underline transition-all">Make
+                                                                Primary</button>
+                                                </div>
+                                        </div>
+                                </div>
+                                <!-- Add New Payment Method Action Area -->
+                                <button
+                                        class="col-span-1 border-2 border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center text-center hover:border-primary hover:bg-surface-container-low transition-all duration-300 min-h-[200px] group cursor-pointer bg-surface">
+                                        <div
+                                                class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center mb-md group-hover:bg-primary-container transition-colors duration-300">
+                                                <span
+                                                        class="material-symbols-outlined text-[28px] text-on-surface-variant group-hover:text-primary transition-colors duration-300">add_card</span>
+                                        </div>
+                                        <span
+                                                class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors duration-300">Add
+                                                Payment Method</span>
+                                        <span
+                                                class="font-label-sm text-label-sm text-on-surface-variant mt-sm max-w-[200px]">Credit
+                                                Card, Debit Card, or Direct Bank Transfer</span>
+                                </button>
+                        </div>
+                </main>
+        </div>
+        <!-- Footer -->
+        <footer
+                class="w-full py-xl px-container-padding flex flex-col md:flex-row justify-between items-center mt-auto bg-surface-container-lowest border-t border-outline-variant">
+                <div class="flex items-center gap-md mb-md md:mb-0">
+                        <span class="font-h3 text-h3 text-primary">WeDRIVE</span>
+                        <span class="font-label-sm text-label-sm text-secondary">© 2024 WeDRIVE Global Car Solutions.
+                                All rights reserved.</span>
+                </div>
+                <nav class="flex gap-lg items-center">
+                        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+                                href="#">Terms of Service</a>
+                        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+                                href="#">Privacy Policy</a>
+                        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+                                href="#">Cookie Settings</a>
+                        <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+                                href="#">Support</a>
+                </nav>
+        </footer>
+</body>
+
+</html>

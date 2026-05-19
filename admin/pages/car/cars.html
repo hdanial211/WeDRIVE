@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cars Management | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
@@ -14,8 +15,9 @@
   <link rel="stylesheet" href="../../css/admin.css" />
   <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
 </head>
+
 <body data-particles="6" data-cursor-glow>
-  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="fleet"></div>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car"></div>
 
   <main class="main">
     <div id="navbar-placeholder" data-module="admin"></div>
@@ -50,14 +52,15 @@
       <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
           <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-            <button class="filter-chip active" onclick="filterFleet('all', this)">All</button>
-            <button class="filter-chip" onclick="filterFleet('Available', this)">Available</button>
-            <button class="filter-chip" onclick="filterFleet('Rented', this)">Rented</button>
+            <button class="filter-chip active" onclick="filterCar('all', this)">All</button>
+            <button class="filter-chip" onclick="filterCar('Available', this)">Available</button>
+            <button class="filter-chip" onclick="filterCar('Rented', this)">Rented</button>
           </div>
           <div style="display:flex; gap:10px; align-items:center;">
             <div class="input-wrap-sm" style="max-width:260px;">
               <span class="material-icons-round" style="font-size:18px">search</span>
-              <input type="text" id="fl-search" placeholder="Search car name or plate..." oninput="searchFleet(this.value)" />
+              <input type="text" id="fl-search" placeholder="Search car name or plate..."
+                oninput="searchCar(this.value)" />
             </div>
             <button class="btn-outline-sm" onclick="openCarListModal()" title="View list">
               <span class="material-icons-round" style="font-size:16px">list_alt</span> List View
@@ -71,7 +74,7 @@
       </div>
 
       <!-- CAR CARDS GRID -->
-      <div id="fleet-grid" class="fleet-grid">
+      <div id="car-grid" class="car-grid">
         <!-- Populated by cars.js -->
       </div>
 
@@ -84,7 +87,8 @@
   <div id="cars-list-modal" class="modal-overlay" style="display:none;">
     <div class="modal-container" style="max-width:960px;width:95%;">
       <div class="modal-header">
-        <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">list_alt</span> Cars List</h3>
+        <h3><span class="material-icons-round"
+            style="font-size:20px;vertical-align:middle;margin-right:6px;">list_alt</span> Cars List</h3>
         <button class="modal-close-btn" onclick="closeCarListModal()">
           <span class="material-icons-round">close</span>
         </button>
@@ -104,7 +108,7 @@
               <th data-key="fl_th_action">Action</th>
             </tr>
           </thead>
-          <tbody id="fleet-tbody"></tbody>
+          <tbody id="car-tbody"></tbody>
         </table>
       </div>
     </div>
@@ -118,4 +122,5 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../js/cars.js"></script>
 </body>
+
 </html>

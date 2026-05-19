@@ -8,7 +8,7 @@
 
 'use strict';
 
-let CAL_DATA = { bookings: [], marketing: { banners: [], promo_codes: [], seasonal_pricing: [] }, fleet: [] };
+let CAL_DATA = { bookings: [], marketing: { banners: [], promo_codes: [], seasonal_pricing: [] }, car: [] };
 let CAL_YEAR, CAL_MONTH; // 0-indexed month
 let SELECTED_DATE = null; // Track which date cell is selected
 
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   try {
     const data = await window.WeDriveAPI.getData();
     CAL_DATA.bookings = data.bookings || [];
-    CAL_DATA.fleet = data.fleet || [];
+    CAL_DATA.car = data.car || [];
     CAL_DATA.marketing = await window.WeDriveAPI.getMarketing();
   } catch (e) {
     console.warn('Calendar: failed to load data', e);
@@ -107,12 +107,12 @@ function initDropdowns() {
 function updateMonthDropdownLabels() {
   const monthSelect = document.getElementById('cal-month-select');
   const lang = localStorage.getItem('wedrive-lang') || 'en';
-  
+
   const monthNamesEN = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
   const monthNamesMS = ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun',
     'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember'];
-  
+
   const names = lang === 'ms' ? monthNamesMS : monthNamesEN;
   Array.from(monthSelect.options).forEach((opt, i) => {
     opt.textContent = names[i];
@@ -248,7 +248,7 @@ function renderCalendar() {
   const firstDay = new Date(CAL_YEAR, CAL_MONTH, 1).getDay(); // 0=Sun
   const daysInMonth = new Date(CAL_YEAR, CAL_MONTH + 1, 0).getDate();
   const todayStr = new Date().toISOString().slice(0, 10);
-  const totalCars = CAL_DATA.fleet.length || 6;
+  const totalCars = CAL_DATA.car.length || 6;
 
   let html = '';
 
@@ -325,7 +325,7 @@ function renderCalendar() {
 }
 
 // ── Show Day Detail ───────────────────────────────────────────────────────────
-window.showDayDetail = function(ds) {
+window.showDayDetail = function (ds) {
   // Highlight selected date
   setSelected(ds);
 
@@ -347,7 +347,7 @@ window.showDayDetail = function(ds) {
   const bookings = getBookingsForDate(ds);
   const seasonals = getSeasonalForDate(ds);
   const banners = getBannersForDate(ds);
-  const totalCars = CAL_DATA.fleet.length || 6;
+  const totalCars = CAL_DATA.car.length || 6;
   const carsRented = bookings.length;
   const carsAvailable = Math.max(0, totalCars - carsRented);
 
@@ -457,7 +457,7 @@ function closeStatModal() {
   document.getElementById('cal-stat-modal').style.display = 'none';
 }
 
-window.showStatPopup = function(type) {
+window.showStatPopup = function (type) {
   const modal = document.getElementById('cal-stat-modal');
   const titleEl = document.getElementById('cal-stat-modal-title');
   const bodyEl = document.getElementById('cal-stat-modal-body');
@@ -468,13 +468,13 @@ window.showStatPopup = function(type) {
   const todayStr = new Date().toISOString().slice(0, 10);
 
   const monthNames = lang === 'ms'
-    ? ['Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember']
-    : ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    ? ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember']
+    : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   let title = '';
   let html = '';
 
-  switch(type) {
+  switch (type) {
     case 'bookings': {
       const monthBookings = CAL_DATA.bookings.filter(b => b.pickup <= monthEnd && b.return >= monthStart);
       title = `<span class="material-icons-round" style="color:#3B82F6">event_available</span> ${lang === 'ms' ? 'Tempahan Bulan Ini' : 'Bookings This Month'} (${monthBookings.length})`;
@@ -510,7 +510,7 @@ window.showStatPopup = function(type) {
       if (todayBookings.length > 0) {
         html += '<div class="cal-stat-modal-body-scroll">';
         todayBookings.forEach(b => {
-          const car = CAL_DATA.fleet.find(f => f.name === b.car) || {};
+          const car = CAL_DATA.car.find(f => f.name === b.car) || {};
           html += `<div style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--slate-50);border-radius:12px;margin-bottom:8px;border:1px solid var(--slate-200)">
             <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#3B82F6,#2563EB);display:flex;align-items:center;justify-content:center">
               <span class="material-icons-round" style="color:white;font-size:20px">directions_car</span>
@@ -531,8 +531,8 @@ window.showStatPopup = function(type) {
         html += `<p style="color:var(--slate-400);text-align:center;padding:24px">${lang === 'ms' ? 'Tiada kereta disewa hari ini' : 'No cars rented today'}</p>`;
       }
 
-      // Show available fleet
-      const totalCars = CAL_DATA.fleet.length || 6;
+      // Show available car
+      const totalCars = CAL_DATA.car.length || 6;
       const available = Math.max(0, totalCars - todayBookings.length);
       html += `<div style="margin-top:12px;padding:12px 14px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2);display:flex;align-items:center;gap:8px">
         <span class="material-icons-round" style="color:#10B981;font-size:18px">check_circle</span>
@@ -606,15 +606,15 @@ window.showStatPopup = function(type) {
 
       html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">';
       html += `<div style="text-align:center;padding:14px;background:rgba(16,185,129,0.08);border-radius:10px;border:1px solid rgba(16,185,129,0.2)">
-        <div style="font-size:20px;font-weight:800;color:#10B981">RM ${confirmed.reduce((s,b)=>s+(b.total||0),0).toLocaleString()}</div>
+        <div style="font-size:20px;font-weight:800;color:#10B981">RM ${confirmed.reduce((s, b) => s + (b.total || 0), 0).toLocaleString()}</div>
         <div style="font-size:11px;font-weight:600;color:var(--slate-600);margin-top:4px">Confirmed (${confirmed.length})</div>
       </div>`;
       html += `<div style="text-align:center;padding:14px;background:rgba(245,158,11,0.08);border-radius:10px;border:1px solid rgba(245,158,11,0.2)">
-        <div style="font-size:20px;font-weight:800;color:#F59E0B">RM ${pending.reduce((s,b)=>s+(b.total||0),0).toLocaleString()}</div>
+        <div style="font-size:20px;font-weight:800;color:#F59E0B">RM ${pending.reduce((s, b) => s + (b.total || 0), 0).toLocaleString()}</div>
         <div style="font-size:11px;font-weight:600;color:var(--slate-600);margin-top:4px">Pending (${pending.length})</div>
       </div>`;
       html += `<div style="text-align:center;padding:14px;background:rgba(59,130,246,0.08);border-radius:10px;border:1px solid rgba(59,130,246,0.2)">
-        <div style="font-size:20px;font-weight:800;color:#3B82F6">RM ${completed.reduce((s,b)=>s+(b.total||0),0).toLocaleString()}</div>
+        <div style="font-size:20px;font-weight:800;color:#3B82F6">RM ${completed.reduce((s, b) => s + (b.total || 0), 0).toLocaleString()}</div>
         <div style="font-size:11px;font-weight:600;color:var(--slate-600);margin-top:4px">Completed (${completed.length})</div>
       </div>`;
       html += '</div>';
