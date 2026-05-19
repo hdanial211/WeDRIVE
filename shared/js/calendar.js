@@ -109,28 +109,35 @@
     };
 
     rPicker = window.flatpickr(returnInput, Object.assign({}, commonConfig, {
-      onOpen: function(selectedDates, dateStr, instance) {
-        if (!pPicker || !pPicker.selectedDates || pPicker.selectedDates.length === 0) {
-          setTimeout(function() {
-            instance.close();
-            if (pPicker) pPicker.open();
-          }, 10);
-        }
-      },
+      clickOpens: false,
       onChange: function() {
         if (typeof onChangeCallback === 'function') onChangeCallback(pPicker, rPicker);
         redrawRange(pPicker, rPicker);
       }
     }));
 
+    function updateReturnState() {
+      if (!pPicker || !pPicker.selectedDates.length) {
+        rPicker.set('clickOpens', false);
+        returnInput.style.pointerEvents = 'none';
+        returnInput.parentElement.style.opacity = '0.5';
+        returnInput.parentElement.style.transition = 'opacity 0.3s ease';
+      } else {
+        rPicker.set('clickOpens', true);
+        returnInput.style.pointerEvents = 'auto';
+        returnInput.parentElement.style.opacity = '1';
+      }
+    }
+
     pPicker = window.flatpickr(pickupInput, Object.assign({}, commonConfig, {
       onChange: function(selectedDates, dateStr) {
         rPicker.set('minDate', dateStr || "today");
+        updateReturnState();
         if (rPicker.selectedDates[0] && selectedDates[0] && rPicker.selectedDates[0] < selectedDates[0]) {
           rPicker.clear();
         }
         setTimeout(function() {
-          if (!rPicker.selectedDates[0]) {
+          if (!rPicker.selectedDates[0] && selectedDates.length > 0) {
             rPicker.open();
           }
         }, 150);
@@ -138,6 +145,8 @@
         redrawRange(pPicker, rPicker);
       }
     }));
+
+    updateReturnState();
 
     return { pickup: pPicker, return: rPicker };
   }
