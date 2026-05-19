@@ -117,15 +117,22 @@
     }));
 
     function updateReturnState() {
+      var wrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field');
       if (!pPicker || !pPicker.selectedDates.length) {
         rPicker.set('clickOpens', false);
-        returnInput.style.pointerEvents = 'none';
-        returnInput.parentElement.style.opacity = '0.5';
-        returnInput.parentElement.style.transition = 'opacity 0.3s ease';
+        returnInput.disabled = true;
+        if (wrapper) {
+          wrapper.style.opacity = '0.5';
+          wrapper.style.pointerEvents = 'none';
+          wrapper.style.transition = 'opacity 0.3s ease';
+        }
       } else {
         rPicker.set('clickOpens', true);
-        returnInput.style.pointerEvents = 'auto';
-        returnInput.parentElement.style.opacity = '1';
+        returnInput.disabled = false;
+        if (wrapper) {
+          wrapper.style.opacity = '1';
+          wrapper.style.pointerEvents = 'auto';
+        }
       }
     }
 
