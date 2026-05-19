@@ -913,3 +913,4 @@
   } else {
     window.addEventListener('load', function() { setTimeout(loadCarData, 200); });
   }
+})();
