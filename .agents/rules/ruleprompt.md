@@ -140,3 +140,19 @@ Kedua-dua feature ini WAJIB berfungsi di semua page.
 - Grid dan layout WAJIB responsive (contoh: 4 columns > 2 columns > 1 column).
 - Font size, padding, dan spacing WAJIB sesuai untuk skrin kecil.
 - Touch target minimum 44x44px untuk butang dan link pada mobile.
+
+## 14. UI/UX, Branding & Backend References
+
+Untuk memastikan kualiti projek WeDRIVE sentiasa premium dan "padu", jadikan laman web berikut sebagai rujukan standard:
+
+### UI/UX & Branding Standard (Premium & Modern)
+- **Airbnb (airbnb.com):** Rujukan utama untuk *booking flow* yang lancar, carian tarikh (calendar), peta interaktif, dan *clean UI*.
+- **Stripe (stripe.com):** Rujukan untuk *glassmorphism*, animasi *micro-interactions* yang sangat lancar, borang pembayaran (payment form) yang kemas, dan tipografi yang jelas.
+- **Apple (apple.com):** Rujukan untuk *scrollytelling*, paparan produk 3D/premium, ruang putih (*whitespace*), dan tipografi berkelas tinggi.
+- **Linear (linear.app):** Rujukan untuk *dark mode* yang sempurna, *glowing borders*, dan *keyboard-first navigation* untuk Admin Dashboard.
+- **Vercel (vercel.com):** Rujukan untuk kelajuan antaramuka (speed), *minimalist dashboard*, dan komponen yang responsif.
+
+### Backend & System Architecture Standard
+- API mestilah pantas dan konsisten seperti standard RESTful (atau GraphQL) moden.
+- Pengurusan *state* dan *loading skeletons* mesti meniru gaya UX platform di atas supaya *user* tidak rasa sistem perlahan.
+- Seni bina sistem haruslah *modular* (boleh dikembangkan) dan menyokong *lazy loading* untuk prestasi optimum (seperti modul kalendar Flatpickr WeDRIVE).
