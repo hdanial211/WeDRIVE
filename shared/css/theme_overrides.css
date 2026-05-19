@@ -21,7 +21,7 @@ body {
 .topbar p { color: var(--text-muted) !important; }
 .nav-link { color: var(--text-secondary) !important; }
 .nav-link:hover { background: var(--bg-surface-2) !important; color: var(--text-primary) !important; }
-.nav-link.active { color: var(--primary) !important; font-weight: 600 !important; background: transparent !important; }
+.nav-link.active { color: var(--primary) !important; background: var(--primary-light) !important; }
 .brand-text .drive { color: var(--text-primary) !important; }
 
 /* SIDEBAR */
