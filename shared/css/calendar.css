@@ -45,6 +45,14 @@
   padding: 0 !important;
 }
 
+.flatpickr-months .flatpickr-prev-month {
+  left: 12px !important;
+}
+
+.flatpickr-months .flatpickr-next-month {
+  right: 12px !important;
+}
+
 .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-months .flatpickr-next-month:hover svg {
   fill: #2563eb !important;
