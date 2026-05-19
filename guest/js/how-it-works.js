@@ -4,7 +4,8 @@
   var FRAME_COUNT = 200;
   var basePath = '../../../shared/model/';
   var lastExteriorFrame = 0;
-  var interiorFaces = ['f', 'r', 'b', 'l', 'u', 'd'];
+  // Cubemap face order: back, down, front, left, right, up.
+  var interiorFaces = ['b', 'd', 'f', 'l', 'r', 'u'];
   var interiorCopy = {
     en: {
       exterior: 'Exterior 360 view',

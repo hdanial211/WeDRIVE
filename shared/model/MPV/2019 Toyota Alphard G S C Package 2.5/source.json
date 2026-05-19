@@ -18,20 +18,20 @@
     "format": "cubemap",
     "full_res_pattern": "interior/full-res/pano_{face}.jpg",
     "faces": {
+      "back": "interior/full-res/pano_b.jpg",
+      "down": "interior/full-res/pano_d.jpg",
       "front": "interior/full-res/pano_f.jpg",
       "left": "interior/full-res/pano_l.jpg",
-      "back": "interior/full-res/pano_b.jpg",
-      "up": "interior/full-res/pano_u.jpg",
-      "down": "interior/full-res/pano_d.jpg",
-      "right": "interior/full-res/pano_r.jpg"
+      "right": "interior/full-res/pano_r.jpg",
+      "up": "interior/full-res/pano_u.jpg"
     },
     "source_faces": {
+      "back": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_b.jpg",
+      "down": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_d.jpg",
       "front": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_f.jpg",
       "left": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_l.jpg",
-      "back": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_b.jpg",
-      "up": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_u.jpg",
-      "down": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_d.jpg",
-      "right": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_r.jpg"
+      "right": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_r.jpg",
+      "up": "https://cdn.impel.io/swipetospin-viewers/Carsome/agh30-0244124/20260317070149.NABU2XPD/pano/pano_u.jpg"
     }
   },
   "placeholders": {
