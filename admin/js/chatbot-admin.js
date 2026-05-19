@@ -26,7 +26,7 @@ Your role:
 Company Info:
 - Company: WeDRIVE Sdn Bhd
 - Location: Lot 123, Jalan Hang Tuah, 75300 Melaka
-- Phone: 011-10852955
+- Phone: 010-271 9558
 - Email: admin@wedrive.my
 - Operating hours: 8AM - 10PM daily
 
@@ -65,7 +65,7 @@ function loadSettings() {
 }
 
 // ─── Save Settings ──────────────────────────────────────────────────────────
-window.saveSettings = function() {
+window.saveSettings = function () {
   const btn = document.querySelector('.btn-save');
   const original = btn.innerHTML;
   btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">autorenew</span> Saving...';
@@ -88,7 +88,7 @@ window.saveSettings = function() {
   }, 600);
 };
 // ─── Test Single Key (inline button) ────────────────────────────────────────
-window.testSingleKey = async function(provider) {
+window.testSingleKey = async function (provider) {
   const key = document.getElementById('api-key').value.trim();
   const statusEl = document.getElementById('status-openrouter');
   const btn = document.getElementById('btn-test-openrouter');
@@ -140,7 +140,7 @@ window.testSingleKey = async function(provider) {
 };
 
 // ─── Test Connection (full test via main button) ─────────────────────────────
-window.testConnection = async function() {
+window.testConnection = async function () {
   const key = document.getElementById('api-key').value.trim();
 
   if (!key) {
@@ -220,7 +220,7 @@ async function callOpenRouter(apiKey, systemText, history) {
 }
 
 // ─── Send Test Message ───────────────────────────────────────────────────────
-window.sendTestMsg = async function() {
+window.sendTestMsg = async function () {
   const input = document.getElementById('chat-input');
   const text = input.value.trim();
   if (!text) return;
@@ -266,7 +266,7 @@ window.sendTestMsg = async function() {
 };
 
 // ─── Toggle API Key Visibility ──────────────────────────────────────────────
-window.toggleKey = function(inputId, iconEl) {
+window.toggleKey = function (inputId, iconEl) {
   const input = document.getElementById(inputId);
   if (input.type === 'password') {
     input.type = 'text';

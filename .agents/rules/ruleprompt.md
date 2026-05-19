@@ -156,7 +156,3 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium dan "padu", jadikan lam
 - API mestilah pantas dan konsisten seperti standard RESTful (atau GraphQL) moden.
 - Pengurusan *state* dan *loading skeletons* mesti meniru gaya UX platform di atas supaya *user* tidak rasa sistem perlahan.
 - Seni bina sistem haruslah *modular* (boleh dikembangkan) dan menyokong *lazy loading* untuk prestasi optimum (seperti modul kalendar Flatpickr WeDRIVE).
-
-## 15. Car Model Images
-- WAJIB gunakan `frame-140.jpg` sebagai gambar utama (thumbnail / page depan) untuk semua model kereta di dalam database (`shared/dummy/data.json`) dan mana-mana paparan UI yang memaparkan sekeping gambar kereta sahaja.
-- Pastikan sudut pandangan kereta konsisten di seluruh platform (Explore, Dashboard, Booking).
