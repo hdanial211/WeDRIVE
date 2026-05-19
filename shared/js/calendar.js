@@ -109,6 +109,14 @@
     };
 
     rPicker = window.flatpickr(returnInput, Object.assign({}, commonConfig, {
+      onOpen: function(selectedDates, dateStr, instance) {
+        if (!pPicker || !pPicker.selectedDates || pPicker.selectedDates.length === 0) {
+          instance.close();
+          setTimeout(function() {
+            if (pPicker) pPicker.open();
+          }, 10);
+        }
+      },
       onChange: function() {
         if (typeof onChangeCallback === 'function') onChangeCallback(pPicker, rPicker);
         redrawRange(pPicker, rPicker);
