@@ -520,109 +520,24 @@
 
     // Auto-open pickup calendar after a brief delay
     setTimeout(function() {
-      if (popupPickupPicker) popupPickupPicker.open();
+      if (popupPickupPicker && popupPickupPicker.pickup) popupPickupPicker.pickup.open();
     }, 350);
   }
 
-  /* ── Date range highlight helper ────────────────────────────── */
-  function highlightRange(dayElem, pickupPicker, returnPicker) {
-    dayElem.classList.remove('range-start', 'in-range', 'range-end');
-    var pickup = pickupPicker && pickupPicker.selectedDates[0];
-    var ret = returnPicker && returnPicker.selectedDates[0];
-    if (!pickup || !ret) return;
-
-    var d = dayElem.dateObj;
-    if (!d) return;
-
-    // Normalise to midnight for comparison
-    var pDay = new Date(pickup.getFullYear(), pickup.getMonth(), pickup.getDate()).getTime();
-    var rDay = new Date(ret.getFullYear(), ret.getMonth(), ret.getDate()).getTime();
-    var cDay = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-
-    if (cDay === pDay) dayElem.classList.add('range-start');
-    if (cDay === rDay) dayElem.classList.add('range-end');
-    if (cDay > pDay && cDay < rDay) dayElem.classList.add('in-range');
-  }
-
-  function redrawRange(pickupPicker, returnPicker) {
-    [pickupPicker, returnPicker].forEach(function(fp) {
-      if (!fp) return;
-      var days = fp.calendarContainer
-        ? fp.calendarContainer.querySelectorAll('.flatpickr-day')
-        : [];
-      days.forEach(function(el) { highlightRange(el, pickupPicker, returnPicker); });
-    });
-  }
-
   function initPopupDatePickers(car) {
+    if (popupPickupPicker) { popupPickupPicker.pickup.destroy(); popupPickupPicker.return.destroy(); popupPickupPicker = null; }
+    
     var pickupInput = document.getElementById('popup-pickup-date');
     var returnInput = document.getElementById('popup-return-date');
-    if (!pickupInput || !returnInput || !window.flatpickr) return;
+    if (pickupInput) pickupInput.value = '';
+    if (returnInput) returnInput.value = '';
 
-    // Destroy old instances
-    if (popupPickupPicker) { popupPickupPicker.destroy(); popupPickupPicker = null; }
-    if (popupReturnPicker) { popupReturnPicker.destroy(); popupReturnPicker = null; }
-
-    pickupInput.value = '';
-    returnInput.value = '';
-
-    var commonConfig = {
-      minDate: 'today',
-      dateFormat: 'd/m/Y',
-      disableMobile: 'true',
-
-      onReady: function(selectedDates, dateStr, instance) {
-        var yearInput = instance.currentYearElement;
-        var wrapper = yearInput.parentNode;
-        var select = document.createElement('select');
-        select.className = 'flatpickr-monthDropdown-months custom-year-select';
-        var currentYear = new Date().getFullYear();
-        for (var i = currentYear; i <= currentYear + 3; i++) {
-          var opt = document.createElement('option');
-          opt.value = i; opt.text = i;
-          select.appendChild(opt);
-        }
-        select.value = instance.currentYear;
-        select.addEventListener('change', function(e) { instance.changeYear(Number(e.target.value)); });
-        yearInput.style.display = 'none';
-        var arrows = wrapper.querySelectorAll('.arrowUp, .arrowDown');
-        arrows.forEach(function(a) { a.style.display = 'none'; });
-        wrapper.appendChild(select);
-        instance.customYearSelect = select;
-      },
-      onYearChange: function(selectedDates, dateStr, instance) {
-        if (instance.customYearSelect) instance.customYearSelect.value = instance.currentYear;
-      },
-      onDayCreate: function(dObj, dStr, fp, dayElem) {
-        highlightRange(dayElem, popupPickupPicker, popupReturnPicker);
-      },
-      onMonthChange: function() {
-        setTimeout(function() { redrawRange(popupPickupPicker, popupReturnPicker); }, 10);
-      }
-    };
-
-    popupReturnPicker = flatpickr(returnInput, Object.assign({}, commonConfig, {
-      onChange: function() {
+    if (window.WeDriveCalendar) {
+      popupPickupPicker = window.WeDriveCalendar.initPairedPickers('popup-pickup-date', 'popup-return-date', function() {
         updateBookingSummary(car);
-        redrawRange(popupPickupPicker, popupReturnPicker);
-      }
-    }));
-
-    popupPickupPicker = flatpickr(pickupInput, Object.assign({}, commonConfig, {
-      onChange: function(selectedDates, dateStr) {
-        popupReturnPicker.set('minDate', dateStr || 'today');
-        if (popupReturnPicker.selectedDates[0] && selectedDates[0] && popupReturnPicker.selectedDates[0] < selectedDates[0]) {
-          popupReturnPicker.clear();
-        }
-        setTimeout(function() {
-          if (!popupReturnPicker.selectedDates[0]) {
-            popupReturnPicker.open();
-          }
-        }, 150);
-        updateBookingSummary(car);
-        redrawRange(popupPickupPicker, popupReturnPicker);
-      }
-    }));
+      });
+      if (popupPickupPicker) popupReturnPicker = popupPickupPicker.return;
+    }
   }
 
   function updateBookingSummary(car) {
@@ -632,8 +547,8 @@
     var procBtn = document.getElementById('popup-proceed-btn');
     if (!durEl || !popupPickupPicker || !popupReturnPicker) return;
 
-    var pickup = popupPickupPicker.selectedDates[0];
-    var ret = popupReturnPicker.selectedDates[0];
+    var pickup = popupPickupPicker && popupPickupPicker.pickup ? popupPickupPicker.pickup.selectedDates[0] : null;
+    var ret = popupPickupPicker && popupPickupPicker.return ? popupPickupPicker.return.selectedDates[0] : null;
 
     if (pickup && ret) {
       var diff = Math.ceil((ret - pickup) / (1000 * 60 * 60 * 24));
@@ -655,8 +570,8 @@
     popup.classList.remove('active');
     popup.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    if (popupPickupPicker) popupPickupPicker.close();
-    if (popupReturnPicker) popupReturnPicker.close();
+    if (popupPickupPicker && popupPickupPicker.pickup) popupPickupPicker.pickup.close();
+    if (popupPickupPicker && popupPickupPicker.return) popupPickupPicker.return.close();
   };
 
   window.proceedToBooking = function() {
@@ -699,76 +614,8 @@
   }
 
   function initDatePickers() {
-    var pickupInput = document.getElementById('pickup-date');
-    var returnInput = document.getElementById('return-date');
-    var mainPickupPicker = null;
-    var mainReturnPicker = null;
-
-    if (pickupInput && returnInput && window.flatpickr) {
-      var commonConfig = {
-        minDate: "today",
-        dateFormat: "d/m/Y",
-        disableMobile: "true",
-        onReady: function(selectedDates, dateStr, instance) {
-          var yearInput = instance.currentYearElement;
-          var wrapper = yearInput.parentNode;
-          
-          var select = document.createElement('select');
-          select.className = 'flatpickr-monthDropdown-months custom-year-select';
-          
-          var currentYear = new Date().getFullYear();
-          for (var i = currentYear; i <= currentYear + 10; i++) {
-              var opt = document.createElement('option');
-              opt.value = i;
-              opt.text = i;
-              select.appendChild(opt);
-          }
-          select.value = instance.currentYear;
-          
-          select.addEventListener('change', function(e) {
-              instance.changeYear(Number(e.target.value));
-          });
-          
-          yearInput.style.display = 'none';
-          var arrows = wrapper.querySelectorAll('.arrowUp, .arrowDown');
-          arrows.forEach(function(a) { a.style.display = 'none'; });
-          
-          wrapper.appendChild(select);
-          instance.customYearSelect = select;
-        },
-        onYearChange: function(selectedDates, dateStr, instance) {
-          if (instance.customYearSelect) {
-            instance.customYearSelect.value = instance.currentYear;
-          }
-        },
-        onDayCreate: function(dObj, dStr, fp, dayElem) {
-          highlightRange(dayElem, mainPickupPicker, mainReturnPicker);
-        },
-        onMonthChange: function() {
-          setTimeout(function() { redrawRange(mainPickupPicker, mainReturnPicker); }, 10);
-        }
-      };
-
-      mainReturnPicker = flatpickr(returnInput, Object.assign({}, commonConfig, {
-        onChange: function() {
-          redrawRange(mainPickupPicker, mainReturnPicker);
-        }
-      }));
-
-      mainPickupPicker = flatpickr(pickupInput, Object.assign({}, commonConfig, {
-        onChange: function(selectedDates, dateStr) {
-          mainReturnPicker.set('minDate', dateStr || "today");
-          if (mainReturnPicker.selectedDates[0] && selectedDates[0] && mainReturnPicker.selectedDates[0] < selectedDates[0]) {
-            mainReturnPicker.clear();
-          }
-          setTimeout(function() {
-            if (!mainReturnPicker.selectedDates[0]) {
-              mainReturnPicker.open();
-            }
-          }, 100);
-          redrawRange(mainPickupPicker, mainReturnPicker);
-        }
-      }));
+    if (window.WeDriveCalendar && !window.WeDriveCalendar.mainPickers) {
+      window.WeDriveCalendar.mainPickers = window.WeDriveCalendar.initPairedPickers('pickup-date', 'return-date');
     }
   }
 

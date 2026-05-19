@@ -633,3 +633,52 @@
   }
 })();
 
+
+/* =====================================================
+   SECTION 7: CALENDAR LOADER
+   Loads Flatpickr & shared calendar logic if date fields exist.
+   ===================================================== */
+(function () {
+  'use strict';
+
+  function resolveBase() {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
+    return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+  }
+
+  function loadCalendar() {
+    var pickers = document.querySelectorAll('#pickup-date, #return-date, #popup-pickup-date, #popup-return-date, .date-picker');
+    if (!pickers.length) return;
+
+    // Load Flatpickr CSS if not present
+    if (!document.querySelector('link[href*="flatpickr.min.css"]')) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css';
+      document.head.appendChild(link);
+    }
+
+    // Load Flatpickr JS & our Shared Calendar JS
+    if (typeof window.flatpickr === 'undefined') {
+      var fpScript = document.createElement('script');
+      fpScript.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
+      fpScript.onload = function() {
+        var calScript = document.createElement('script');
+        calScript.src = resolveBase() + 'shared/js/calendar.js';
+        document.body.appendChild(calScript);
+      };
+      document.body.appendChild(fpScript);
+    } else {
+      var calScript = document.createElement('script');
+      calScript.src = resolveBase() + 'shared/js/calendar.js';
+      document.body.appendChild(calScript);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadCalendar);
+  } else {
+    loadCalendar();
+  }
+})();
