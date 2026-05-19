@@ -71,7 +71,7 @@
           </div>
           <div class="hiw-stat">
             <strong data-key="how_new_stat3_value">Ready</strong>
-            <span data-key="how_new_stat3_label">Verified documents saved in app</span>
+            <span data-key="how_new_stat3_label">Profile verified in app</span>
           </div>
         </div>
       </div>
@@ -186,8 +186,8 @@
             <div>
               <span class="material-icons-round">key</span>
               <h3 data-key="how_new_step4_title">Inspect, collect, drive</h3>
-              <p data-key="how_new_step4_copy">Your verified profile and documents are already in the app. Arrive,
-                inspect the car, collect the key, and drive confidently.</p>
+              <p data-key="how_new_step4_copy">Your verified profile is already saved in the app. Arrive, inspect the
+                car, collect the key, and drive confidently.</p>
             </div>
             <div class="hiw-step-visual hiw-key-panel">
               <strong>482 116</strong>
@@ -213,9 +213,22 @@
             <strong data-hiw-model-label>BMW 320i M Sport</strong>
           </div>
           <div class="hiw-view-status" data-hiw-view-status data-key="how_new_view_status_exterior">Exterior 360 view</div>
-          <img id="hiwInteractiveFrame"
-            src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-000.jpg"
-            alt="Interactive 360 vehicle viewer" draggable="false" />
+          <div class="hiw-interactive-stage">
+            <img id="hiwInteractiveFrame"
+              src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-000.jpg"
+              alt="Interactive 360 vehicle viewer" draggable="false" />
+            <div class="hiw-interior-scene" id="hiwInteriorScene" aria-hidden="true">
+              <div class="hiw-interior-cube" id="hiwInteriorCube">
+                <img class="hiw-interior-face" data-hiw-interior-face="f" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="b" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="l" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="r" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="u" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="d" alt="" draggable="false" />
+              </div>
+              <div class="hiw-interior-glow" aria-hidden="true"></div>
+            </div>
+          </div>
           <div class="hiw-frame-shadow" aria-hidden="true"></div>
         </div>
 
@@ -223,7 +236,7 @@
           <span class="hiw-kicker" data-key="how_new_interactive_kicker">Interactive 360</span>
           <h3 data-key="how_new_interactive_title">Inspect the real model before booking.</h3>
           <p data-key="how_new_interactive_copy">Scroll the hero to rotate the car automatically, then use this panel
-            for manual drag control and fast model switching.</p>
+            for manual drag control, smooth interior panorama viewing, and fast model switching.</p>
           <div class="hiw-view-switch" role="group" aria-label="Vehicle preview mode">
             <button class="hiw-view-btn is-active" type="button" data-hiw-view="exterior" data-hiw-ripple
               data-hiw-cursor-target>

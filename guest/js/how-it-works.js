@@ -9,14 +9,22 @@
   var interiorCopy = {
     en: {
       exterior: 'Exterior 360 view',
-      realInterior: 'Real interior preview',
-      referenceInterior: 'Reference cabin preview while the exact interior is being added'
+      realInterior: 'Real interior panorama',
+      referenceInterior: 'Reference cabin panorama while the exact interior is being added'
     },
     ms: {
       exterior: 'Paparan luaran 360',
-      realInterior: 'Preview dalaman sebenar',
-      referenceInterior: 'Preview kabin rujukan sementara interior sebenar ditambah'
+      realInterior: 'Panorama dalaman sebenar',
+      referenceInterior: 'Panorama kabin rujukan sementara interior sebenar ditambah'
     }
+  };
+  var interiorFaceMeta = {
+    b: { label: 'Back seat' },
+    d: { label: 'Floor view' },
+    f: { label: 'Front cabin' },
+    l: { label: 'Left side' },
+    r: { label: 'Right side' },
+    u: { label: 'Roofline' }
   };
   var models = {
     bmw: {
@@ -40,10 +48,11 @@
       alt: 'Toyota Alphard exterior'
     },
     axia: {
-      label: 'Perodua AXIA AV',
-      folder: basePath + 'Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/',
-      hasRealInterior: false,
-      alt: 'Perodua AXIA AV exterior'
+      label: 'Perodua AXIA G 1.0',
+      folder: basePath + 'Hatchback/2017 Perodua AXIA G 1.0/exterior/full-res/',
+      interiorFolder: basePath + 'Hatchback/2017 Perodua AXIA G 1.0/interior/full-res/',
+      hasRealInterior: true,
+      alt: 'Perodua AXIA G 1.0 exterior'
     }
   };
 
@@ -67,23 +76,13 @@
     img.alt = model.alt;
   }
 
-  function interiorSrc(model, faceIndex) {
-    var safeIndex = ((faceIndex % interiorFaces.length) + interiorFaces.length) % interiorFaces.length;
-    return model.interiorFolder + 'pano_' + interiorFaces[safeIndex] + '.jpg';
+  function interiorSrc(model, faceKey) {
+    if (!model || !model.interiorFolder || !faceKey) return '';
+    return model.interiorFolder + 'pano_' + faceKey + '.jpg';
   }
 
-  function placeholderInteriorSrc(model, faceIndex) {
-    var safeIndex = ((faceIndex % interiorFaces.length) + interiorFaces.length) % interiorFaces.length;
-    var faceLabelMap = {
-      f: 'Front cabin',
-      r: 'Rear cabin',
-      b: 'Back seat',
-      l: 'Left side',
-      u: 'Roofline',
-      d: 'Floor view'
-    };
-    var faceKey = interiorFaces[safeIndex];
-    var faceLabel = faceLabelMap[faceKey] || 'Reference cabin';
+  function placeholderInteriorSrc(model, faceKey) {
+    var faceLabel = (interiorFaceMeta[faceKey] && interiorFaceMeta[faceKey].label) || 'Reference cabin';
     var safeModelLabel = (model.label || 'Reference cabin').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     var safeFaceLabel = faceLabel.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     var svg = [
@@ -142,10 +141,18 @@
     return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
   }
 
-  function setInteriorFrame(img, model, faceIndex) {
-    if (!img || !model) return;
-    img.src = model.hasRealInterior ? interiorSrc(model, faceIndex) : placeholderInteriorSrc(model, faceIndex);
-    img.alt = model.hasRealInterior ? model.label + ' interior preview' : model.label + ' reference interior placeholder';
+  function setInteriorFaceSources(faceNodes, model) {
+    if (!faceNodes || !model) return;
+    interiorFaces.forEach(function (faceKey) {
+      var node = faceNodes[faceKey];
+      if (!node) return;
+      var src = model.hasRealInterior ? interiorSrc(model, faceKey) : placeholderInteriorSrc(model, faceKey);
+      var faceLabel = (interiorFaceMeta[faceKey] && interiorFaceMeta[faceKey].label) || 'Reference cabin';
+      node.src = src;
+      node.alt = model.hasRealInterior
+        ? model.label + ' interior ' + faceLabel
+        : model.label + ' reference interior ' + faceLabel;
+    });
   }
 
   function preloadModel(model, step) {
@@ -160,7 +167,7 @@
     if (!model || !model.interiorFolder || !model.hasRealInterior) return;
     interiorFaces.forEach(function (face) {
       var preloader = new Image();
-      preloader.src = model.interiorFolder + 'pano_' + face + '.jpg';
+      preloader.src = interiorSrc(model, face);
     });
   }
 
@@ -284,20 +291,39 @@
   function initInteractiveViewer() {
     var shell = document.querySelector('[data-hiw-interactive]');
     var img = document.getElementById('hiwInteractiveFrame');
+    var interiorScene = document.getElementById('hiwInteriorScene');
+    var interiorCube = document.getElementById('hiwInteriorCube');
+    var interiorFaceNodes = {};
     var label = document.querySelector('[data-hiw-model-label]');
     var buttons = document.querySelectorAll('[data-hiw-model]');
     var viewButtons = document.querySelectorAll('[data-hiw-view]');
     var status = document.querySelector('[data-hiw-view-status]');
     if (!shell || !img) return;
 
+    if (interiorScene) {
+      interiorScene.querySelectorAll('[data-hiw-interior-face]').forEach(function (node) {
+        interiorFaceNodes[node.getAttribute('data-hiw-interior-face')] = node;
+      });
+    }
+
     var currentModelKey = 'bmw';
     var currentFrame = 0;
     var viewMode = 'exterior';
-    var interiorFaceIndex = 0;
     var dragging = false;
     var lastX = 0;
+    var lastY = 0;
     var animating = false;
     var syncTicking = false;
+    var interiorYaw = 24;
+    var interiorPitch = -8;
+    var targetYaw = interiorYaw;
+    var targetPitch = interiorPitch;
+    var interiorZoom = 0.98;
+    var targetZoom = 0.98;
+    var interiorYawVelocity = 0;
+    var interiorPitchVelocity = 0;
+    var interiorRaf = 0;
+    var lastInteriorMoveAt = 0;
 
     preloadModel(models.bmw, 18);
     preloadInterior(models.bmw);
@@ -322,6 +348,87 @@
       status.textContent = model.hasRealInterior ? t('realInterior') : t('referenceInterior');
     }
 
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function updateInteriorCubeSize() {
+      if (!interiorScene || !interiorCube || viewMode !== 'interior') return;
+      var rect = interiorScene.getBoundingClientRect();
+      var width = rect.width || shell.clientWidth || 0;
+      var height = rect.height || shell.clientHeight || 0;
+      var size = Math.max(260, Math.min(width * 0.72, height * 0.84, 760));
+      interiorCube.style.setProperty('--hiw-cube-size', size + 'px');
+      interiorCube.style.width = size + 'px';
+      interiorCube.style.height = size + 'px';
+    }
+
+    function renderInteriorCube() {
+      if (!interiorCube) return;
+      interiorCube.style.transform = 'rotateX(' + interiorPitch.toFixed(2) + 'deg) rotateY(' + interiorYaw.toFixed(2) + 'deg) scale(' + interiorZoom.toFixed(3) + ')';
+    }
+
+    function stopInteriorAnimation() {
+      if (interiorRaf) {
+        window.cancelAnimationFrame(interiorRaf);
+        interiorRaf = 0;
+      }
+    }
+
+    function tickInterior() {
+      if (viewMode !== 'interior') {
+        interiorRaf = 0;
+        return;
+      }
+
+      var now = window.performance && performance.now ? performance.now() : Date.now();
+      var yawDiff = targetYaw - interiorYaw;
+      var pitchDiff = targetPitch - interiorPitch;
+      var zoomDiff = targetZoom - interiorZoom;
+
+      if (!dragging) {
+        if (Math.abs(interiorYawVelocity) > 0.002 || Math.abs(interiorPitchVelocity) > 0.002) {
+          targetYaw += interiorYawVelocity;
+          targetPitch = clamp(targetPitch + interiorPitchVelocity, -34, 24);
+          interiorYawVelocity *= 0.92;
+          interiorPitchVelocity *= 0.92;
+          lastInteriorMoveAt = now;
+        } else if (now - lastInteriorMoveAt > 900) {
+          targetYaw += 0.045;
+        }
+      }
+
+      interiorYaw += yawDiff * 0.12;
+      interiorPitch += pitchDiff * 0.12;
+      interiorZoom += zoomDiff * 0.14;
+      renderInteriorCube();
+
+      if (Math.abs(yawDiff) > 0.03 || Math.abs(pitchDiff) > 0.03 || Math.abs(zoomDiff) > 0.01 || viewMode === 'interior') {
+        interiorRaf = window.requestAnimationFrame(tickInterior);
+        return;
+      }
+
+      interiorYaw = targetYaw;
+      interiorPitch = targetPitch;
+      interiorZoom = targetZoom;
+      renderInteriorCube();
+      interiorRaf = 0;
+    }
+
+    function queueInteriorAnimation() {
+      if (viewMode !== 'interior') return;
+      if (interiorRaf) return;
+      interiorRaf = window.requestAnimationFrame(tickInterior);
+    }
+
+    function refreshInteriorScene(model) {
+      if (!interiorScene || !interiorCube || !model) return;
+      setInteriorFaceSources(interiorFaceNodes, model);
+      updateInteriorCubeSize();
+      renderInteriorCube();
+      queueInteriorAnimation();
+    }
+
     function setActiveModelButton() {
       buttons.forEach(function (button) {
         button.classList.toggle('is-active', button.getAttribute('data-hiw-model') === currentModelKey);
@@ -343,10 +450,11 @@
       shell.classList.toggle('is-reference-interior', viewMode === 'interior' && !model.hasRealInterior);
 
       if (viewMode === 'interior') {
-        setInteriorFrame(img, model, interiorFaceIndex);
+        refreshInteriorScene(model);
         return;
       }
 
+      stopInteriorAnimation();
       currentFrame = normalizeFrame(currentFrame);
       lastExteriorFrame = currentFrame;
       setFrame(img, model, currentFrame);
@@ -371,6 +479,8 @@
       if (animating) return;
       dragging = true;
       lastX = event.clientX || (event.touches && event.touches[0].clientX) || 0;
+      lastY = event.clientY || (event.touches && event.touches[0].clientY) || 0;
+      lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
       if (viewMode === 'exterior') currentFrame = normalizeFrame(lastExteriorFrame);
       shell.classList.add('is-dragging');
       event.preventDefault();
@@ -379,14 +489,20 @@
     function pointerMove(event) {
       if (!dragging || animating) return;
       var clientX = event.clientX || (event.touches && event.touches[0].clientX) || lastX;
+      var clientY = event.clientY || (event.touches && event.touches[0].clientY) || lastY;
       var delta = clientX - lastX;
-      if (Math.abs(delta) < 2) return;
+      var deltaY = clientY - lastY;
+      if (Math.abs(delta) < 1 && Math.abs(deltaY) < 1) return;
 
       if (viewMode === 'interior') {
-        if (Math.abs(delta) < 36) return;
-        interiorFaceIndex += delta > 0 ? 1 : -1;
-        setInteriorFrame(img, models[currentModelKey], interiorFaceIndex);
+        targetYaw += delta * 0.32;
+        targetPitch = clamp(targetPitch - deltaY * 0.14, -34, 24);
+        interiorYawVelocity = delta * 0.018;
+        interiorPitchVelocity = -deltaY * 0.01;
+        lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
+        queueInteriorAnimation();
         lastX = clientX;
+        lastY = clientY;
         return;
       }
 
@@ -394,6 +510,7 @@
       lastExteriorFrame = currentFrame;
       setFrame(img, models[currentModelKey], currentFrame);
       lastX = clientX;
+      lastY = clientY;
     }
 
     function pointerUp() {
@@ -403,8 +520,16 @@
 
     shell.addEventListener('mousedown', pointerDown);
     shell.addEventListener('touchstart', pointerDown, { passive: false });
+    shell.addEventListener('wheel', function (event) {
+      if (viewMode !== 'interior') return;
+      event.preventDefault();
+      var delta = event.deltaY || 0;
+      targetZoom = clamp(targetZoom - delta * 0.00045, 0.86, 1.08);
+      lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
+      queueInteriorAnimation();
+    }, { passive: false });
     window.addEventListener('mousemove', pointerMove, { passive: true });
-    window.addEventListener('touchmove', pointerMove, { passive: true });
+    window.addEventListener('touchmove', pointerMove, { passive: false });
     window.addEventListener('mouseup', pointerUp);
     window.addEventListener('touchend', pointerUp);
     window.addEventListener('scroll', syncExteriorFrameFromHero, { passive: true });
@@ -421,15 +546,17 @@
       var duration = 720;
 
       if (viewMode === 'interior') {
-        img.classList.add('is-switching');
+        currentModelKey = nextKey;
+        updateLabel(models[currentModelKey]);
+        updateStatus(models[currentModelKey]);
+        refreshInteriorScene(models[currentModelKey]);
+        targetYaw = interiorYaw;
+        targetPitch = interiorPitch;
+        targetZoom = interiorZoom;
+        setActiveModelButton();
         window.setTimeout(function () {
-          currentModelKey = nextKey;
-          currentFrame = targetFrame;
-          renderCurrentView();
-          setActiveModelButton();
-          img.classList.remove('is-switching');
           animating = false;
-        }, 180);
+        }, 140);
         return;
       }
 
@@ -470,15 +597,25 @@
       });
     });
 
-    viewButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        var nextView = button.getAttribute('data-hiw-view');
-        if (!nextView || nextView === viewMode || animating) return;
-        viewMode = nextView;
-        if (viewMode === 'exterior') currentFrame = normalizeFrame(lastExteriorFrame);
-        setActiveViewButton();
-        renderCurrentView();
+      viewButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var nextView = button.getAttribute('data-hiw-view');
+          if (!nextView || nextView === viewMode || animating) return;
+          viewMode = nextView;
+          if (viewMode === 'exterior') currentFrame = normalizeFrame(lastExteriorFrame);
+          setActiveViewButton();
+          renderCurrentView();
+          if (viewMode === 'interior') {
+            lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
+            queueInteriorAnimation();
+          } else {
+            stopInteriorAnimation();
+          }
+        });
       });
+
+    window.addEventListener('resize', function () {
+      if (viewMode === 'interior') updateInteriorCubeSize();
     });
 
     document.addEventListener('wedrive:language-applied', function () {
