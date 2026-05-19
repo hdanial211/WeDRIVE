@@ -138,6 +138,7 @@
   font-weight: 600;
   color: var(--text-primary, #1E293B);
   cursor: pointer;
+  white-space: nowrap;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 .btn-outline:hover {
@@ -155,6 +156,7 @@
   font-weight: 600;
   color: #FFFFFF;
   cursor: pointer;
+  white-space: nowrap;
   transition: background 0.2s, transform 0.15s;
 }
 .btn-primary:hover { background: var(--primary-dark, #1D4ED8); }
@@ -202,6 +204,7 @@
   font-weight: 600;
   color: var(--text-secondary, #475569);
   cursor: pointer;
+  white-space: nowrap;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 .btn-logout:hover {
