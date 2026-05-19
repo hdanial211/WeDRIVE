@@ -269,6 +269,7 @@
 
     /* .search-field-compact input  (dashboard) */
     document.querySelectorAll('.search-field-compact input').forEach(function (inp) {
+      if (inp.id === 'pickup-date' || inp.id === 'return-date') return; // Skip date pickers
       inp.addEventListener('focus', function () { openPopup(inp.value || ''); inp.blur(); });
     });
 
