@@ -1255,23 +1255,50 @@ body.night-mode .explore-section-head .section-eyebrow {
   border-radius: 34px;
   overflow: hidden;
   cursor: grab;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(37, 99, 235, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 26%, rgba(199, 163, 90, 0.12), transparent 30%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(243, 248, 255, 0.82));
 }
 
 .hiw-interactive-card.is-dragging {
   cursor: grabbing;
 }
 
+.hiw-interactive-card::after {
+  content: '';
+  position: absolute;
+  inset: 88px 24px 74px;
+  border-radius: 44px;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 255, 255, 0.86), transparent 46%),
+    radial-gradient(circle at 34% 64%, rgba(37, 99, 235, 0.08), transparent 42%),
+    radial-gradient(circle at 74% 60%, rgba(199, 163, 90, 0.1), transparent 36%);
+  filter: blur(26px);
+  opacity: 0.88;
+  pointer-events: none;
+}
+
 .hiw-interactive-card img {
   min-height: 360px;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  position: relative;
+  z-index: 2;
+  border-radius: 30px;
+  box-shadow:
+    0 28px 90px rgba(15, 23, 42, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.76) inset;
+  overflow: hidden;
 }
 
 .hiw-interactive-card.is-interior img {
   height: min(52vw, 520px);
   min-height: 380px;
   object-fit: cover;
-  border-radius: 26px;
-  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.13);
+  border-radius: 30px;
+  box-shadow:
+    0 28px 90px rgba(15, 23, 42, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.76) inset;
 }
 
 .hiw-interactive-card img.is-switching {
@@ -1290,6 +1317,8 @@ body.night-mode .explore-section-head .section-eyebrow {
   font-weight: 900;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  position: relative;
+  z-index: 2;
 }
 
 .hiw-frame-shadow {
@@ -1299,8 +1328,9 @@ body.night-mode .explore-section-head .section-eyebrow {
   bottom: 76px;
   height: 24px;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.12);
-  filter: blur(18px);
+  background: radial-gradient(circle, rgba(15, 23, 42, 0.16), rgba(15, 23, 42, 0));
+  filter: blur(20px);
+  z-index: 1;
   pointer-events: none;
 }
 
