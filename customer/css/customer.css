@@ -3962,6 +3962,7 @@ body.night-mode .sticky-cta {
 body.night-mode .gallery-badge,
 body.night-mode .ai-price-tag,
 body.night-mode .model-badge {
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 body.night-mode .gallery-badge {
