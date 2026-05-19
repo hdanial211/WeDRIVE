@@ -9,7 +9,7 @@
 
 const STORAGE_KEY = 'wedrive_chatbot_settings';
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const OPENROUTER_MODEL = 'google/gemini-2.5-flash-preview:free';
+const OPENROUTER_MODEL = 'google/gemini-2.5-flash';
 
 // ─── Default Settings ───────────────────────────────────────────────────────
 const DEFAULT_SETTINGS = {
@@ -207,7 +207,7 @@ async function callOpenRouter(apiKey, systemText, history) {
     body: JSON.stringify({
       model: OPENROUTER_MODEL,
       messages,
-      max_tokens: 512
+      max_tokens: 2000
     })
   });
 
