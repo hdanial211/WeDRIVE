@@ -44,6 +44,7 @@ AI CAR RENTAL SYSTEM/
 |   +-- css/
 |   |   +-- guest.css                # Gaya utama Guest (semua gaya digabung termasuk Explore Melaka)
 |   +-- js/
+|   |   +-- how-it-works.js          # Animasi 360, scrollytelling, ripple & interaksi halaman How It Works
 |       +-- promo-banner.js          # Logik banner promosi
 |
 +-- admin/                      # Modul Admin
