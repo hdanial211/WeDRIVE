@@ -603,3 +603,33 @@
     loadFooter();
   }
 })();
+
+/* =====================================================
+   SECTION 6: SEARCH POPUP LOADER
+   Loads shared/js/search-popup.js on every page.
+   Any page that has main.js gets the search popup.
+   ===================================================== */
+(function () {
+  'use strict';
+
+  function resolveBase() {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
+    return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+  }
+
+  function loadSearchPopup() {
+    if (document.getElementById('sp-script')) return;
+    var script = document.createElement('script');
+    script.id  = 'sp-script';
+    script.src = resolveBase() + 'shared/js/search-popup.js';
+    document.body.appendChild(script);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadSearchPopup);
+  } else {
+    loadSearchPopup();
+  }
+})();
+
