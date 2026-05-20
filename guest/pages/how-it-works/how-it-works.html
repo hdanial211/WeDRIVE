@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css?v=2.15.0" />
   <link rel="stylesheet" href="../../css/guest.css" />
+  <link rel="stylesheet" href="../../../shared/css/vehicle-viewer.css" />
 </head>
 
 <body class="how-premium-page" data-particles="6" data-cursor-glow>
@@ -71,7 +72,7 @@
           </div>
           <div class="hiw-stat">
             <strong data-key="how_new_stat3_value">Ready</strong>
-            <span data-key="how_new_stat3_label">Profile verified in app</span>
+            <span data-key="how_new_stat3_label">Verified documents saved in app</span>
           </div>
         </div>
       </div>
@@ -186,8 +187,8 @@
             <div>
               <span class="material-icons-round">key</span>
               <h3 data-key="how_new_step4_title">Inspect, collect, drive</h3>
-              <p data-key="how_new_step4_copy">Your verified profile is already saved in the app. Arrive, inspect the
-                car, collect the key, and drive confidently.</p>
+              <p data-key="how_new_step4_copy">Your IC and licence details were verified during account registration.
+                Arrive, inspect the car, collect the key, and drive confidently.</p>
             </div>
             <div class="hiw-step-visual hiw-key-panel">
               <strong>482 116</strong>
@@ -207,26 +208,26 @@
       </div>
 
       <div class="hiw-interactive-grid">
-        <div class="hiw-interactive-card hiw-reveal" data-hiw-interactive data-hiw-cursor-target>
+        <div class="hiw-interactive-card hiw-reveal" data-hiw-interactive data-vehicle-viewer data-vehicle-default-model="bmw" data-vehicle-default-view="exterior" data-hiw-cursor-target>
           <div class="hiw-frame-toolbar">
             <span><span class="material-icons-round">swipe</span><span data-key="how_new_interactive_drag">Drag to rotate</span></span>
-            <strong data-hiw-model-label>BMW 320i M Sport</strong>
+            <strong data-hiw-model-label data-vehicle-label>BMW 320i M Sport</strong>
           </div>
-          <div class="hiw-view-status" data-hiw-view-status data-key="how_new_view_status_exterior">Exterior 360 view</div>
+          <div class="hiw-view-status" data-hiw-view-status data-vehicle-status data-key="how_new_view_status_exterior">Exterior 360 view</div>
           <div class="hiw-interactive-stage">
-            <img id="hiwInteractiveFrame"
+            <img id="hiwInteractiveFrame" data-vehicle-exterior-frame
               src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-000.jpg"
               alt="Interactive 360 vehicle viewer" draggable="false" />
-            <div class="hiw-interior-scene" id="hiwInteriorScene" aria-hidden="true">
-              <div class="hiw-interior-cube" id="hiwInteriorCube">
-                <img class="hiw-interior-face" data-hiw-interior-face="f" alt="" draggable="false" />
-                <img class="hiw-interior-face" data-hiw-interior-face="b" alt="" draggable="false" />
-                <img class="hiw-interior-face" data-hiw-interior-face="l" alt="" draggable="false" />
-                <img class="hiw-interior-face" data-hiw-interior-face="r" alt="" draggable="false" />
-                <img class="hiw-interior-face" data-hiw-interior-face="u" alt="" draggable="false" />
-                <img class="hiw-interior-face" data-hiw-interior-face="d" alt="" draggable="false" />
+            <div class="hiw-interior-scene" id="hiwInteriorScene" data-vehicle-interior-scene aria-hidden="true">
+              <div class="hiw-interior-cube" id="hiwInteriorCube" data-vehicle-interior-cube>
+                <img class="hiw-interior-face" data-hiw-interior-face="f" data-vehicle-interior-face="f" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="b" data-vehicle-interior-face="b" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="l" data-vehicle-interior-face="l" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="r" data-vehicle-interior-face="r" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="u" data-vehicle-interior-face="u" alt="" draggable="false" />
+                <img class="hiw-interior-face" data-hiw-interior-face="d" data-vehicle-interior-face="d" alt="" draggable="false" />
               </div>
-              <div class="hiw-interior-glow" aria-hidden="true"></div>
+              <div class="hiw-interior-glow" data-vehicle-interior-glow aria-hidden="true"></div>
             </div>
           </div>
           <div class="hiw-frame-shadow" aria-hidden="true"></div>
@@ -238,24 +239,24 @@
           <p data-key="how_new_interactive_copy">Scroll the hero to rotate the car automatically, then use this panel
             for manual drag control, smooth interior panorama viewing, and fast model switching.</p>
           <div class="hiw-view-switch" role="group" aria-label="Vehicle preview mode">
-            <button class="hiw-view-btn is-active" type="button" data-hiw-view="exterior" data-hiw-ripple
+            <button class="hiw-view-btn is-active" type="button" data-hiw-view="exterior" data-vehicle-view="exterior" data-hiw-ripple
               data-hiw-cursor-target>
               <span class="material-icons-round">360</span>
               <span data-key="how_new_view_exterior">Exterior</span>
             </button>
-            <button class="hiw-view-btn" type="button" data-hiw-view="interior" data-hiw-ripple data-hiw-cursor-target>
+            <button class="hiw-view-btn" type="button" data-hiw-view="interior" data-vehicle-view="interior" data-hiw-ripple data-hiw-cursor-target>
               <span class="material-icons-round">airline_seat_recline_extra</span>
               <span data-key="how_new_view_inside">See inside</span>
             </button>
           </div>
           <div class="hiw-model-buttons" role="group" aria-label="Choose vehicle model">
-            <button class="hiw-model-btn is-active" type="button" data-hiw-model="bmw" data-hiw-ripple
+            <button class="hiw-model-btn is-active" type="button" data-hiw-model="bmw" data-vehicle-model="bmw" data-hiw-ripple
               data-hiw-cursor-target>BMW Sedan</button>
-            <button class="hiw-model-btn" type="button" data-hiw-model="gla" data-hiw-ripple
+            <button class="hiw-model-btn" type="button" data-hiw-model="gla" data-vehicle-model="gla" data-hiw-ripple
               data-hiw-cursor-target>Mercedes SUV</button>
-            <button class="hiw-model-btn" type="button" data-hiw-model="alphard" data-hiw-ripple
+            <button class="hiw-model-btn" type="button" data-hiw-model="alphard" data-vehicle-model="alphard" data-hiw-ripple
               data-hiw-cursor-target>Alphard MPV</button>
-            <button class="hiw-model-btn" type="button" data-hiw-model="axia" data-hiw-ripple
+            <button class="hiw-model-btn" type="button" data-hiw-model="axia" data-vehicle-model="axia" data-hiw-ripple
               data-hiw-cursor-target>Axia Hatchback</button>
           </div>
         </div>
@@ -325,6 +326,7 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js?v=2.15.0"></script>
   <script src="../../../shared/js/main.js"></script>
+  <script src="../../../shared/js/vehicle-viewer.js"></script>
   <script src="../../js/how-it-works.js"></script>
 </body>
 

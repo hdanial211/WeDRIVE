@@ -133,6 +133,7 @@ AI CAR RENTAL SYSTEM/
     |   +-- navbar.html          # Navbar yang diguna semua page
     |   +-- footer.html         # Footer yang diguna semua page
     +-- model/
+    |   +-- registry.json       # Manifest global untuk semua model 360 dalam shared/model
     |   +-- Hatchback/
     |   |   +-- 2022 Volkswagen Golf GTI 2.0/
     |   |   |   +-- exterior/
@@ -199,6 +200,7 @@ AI CAR RENTAL SYSTEM/
     |   +-- navbar.css          # Gaya Global Navbar
     |   +-- chatbot.css         # Gaya Komponen WeDRIVE AI Chatbot
     |   +-- animation.css       # Gaya animasi (reveal, particles, dll)
+    |   +-- vehicle-viewer.css  # Gaya global viewer 360 exterior + interior cubemap
     +-- dummy/
     |   +-- data.json            # Data Mockup Tunggal (Single Source of Truth)
     +-- lang/
@@ -219,6 +221,8 @@ AI CAR RENTAL SYSTEM/
         +-- promo-banner.js     # Promo Banner Display (guest & customer pages)
         +-- anime.min.js        # Library animasi (Anime.js v3)
         +-- animate.js          # Modul animasi WeDRIVE (page open + scroll reveal)
+        +-- three.min.js        # Renderer Three.js local untuk interior cubemap 3D
+        +-- vehicle-viewer.js   # Modul shared 360 exterior + interior viewer reusable
 ```
 
 ---

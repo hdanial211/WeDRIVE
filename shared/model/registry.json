@@ -1,0 +1,42 @@
+{
+  "bmw": {
+    "label": "BMW 320i M Sport",
+    "category": "Sedan",
+    "sourceJson": "Sedan/2023 BMW 320i M Sport 2.0/source.json"
+  },
+  "gla": {
+    "label": "Mercedes-Benz GLA250 AMG Line",
+    "category": "SUV",
+    "sourceJson": "SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/source.json"
+  },
+  "alphard": {
+    "label": "Toyota Alphard G S C Package",
+    "category": "MPV",
+    "sourceJson": "MPV/2019 Toyota Alphard G S C Package 2.5/source.json"
+  },
+  "axia": {
+    "label": "Perodua AXIA G 1.0",
+    "category": "Hatchback",
+    "sourceJson": "Hatchback/2017 Perodua AXIA G 1.0/source.json"
+  },
+  "golf": {
+    "label": "Volkswagen Golf GTI",
+    "category": "Hatchback",
+    "sourceJson": "Hatchback/2022 Volkswagen Golf GTI 2.0/source.json"
+  },
+  "axiaAv": {
+    "label": "Perodua AXIA AV 1.0",
+    "category": "Hatchback",
+    "sourceJson": "Hatchback/2025 Perodua AXIA AV 1.0/source.json"
+  },
+  "ranger": {
+    "label": "Ford Ranger Raptor",
+    "category": "Truck",
+    "sourceJson": "Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/source.json"
+  },
+  "cls350": {
+    "label": "Mercedes-Benz CLS350 AMG Line",
+    "category": "Coupe",
+    "sourceJson": "Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/source.json"
+  }
+}
