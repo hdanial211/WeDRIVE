@@ -193,6 +193,24 @@ window.WeDriveAPI = {
                     customers_change: "+" + (newCustomersThisMonth || customers.length)
                 };
 
+                // Auto-sync cars.status based on active bookings
+                var rentedCarIds = new Set();
+                bookings.forEach(function(b) {
+                    if ((b.status === 'Active' || b.status === 'Confirmed') && b.start_date <= today && b.end_date >= today) {
+                        rentedCarIds.add(b.car_id);
+                    }
+                });
+                cars.forEach(function(car) {
+                    var shouldBeRented = rentedCarIds.has(car.id);
+                    if (shouldBeRented && car.status !== 'Rented') {
+                        sb.from('cars').update({ status: 'Rented' }).eq('id', car.id).then(function(){});
+                        car.status = 'Rented';
+                    } else if (!shouldBeRented && car.status === 'Rented') {
+                        sb.from('cars').update({ status: 'Available' }).eq('id', car.id).then(function(){});
+                        car.status = 'Available';
+                    }
+                });
+
                 return {
                     stats: stats,
                     car: cars,
