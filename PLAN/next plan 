@@ -323,4 +323,46 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Buang semua variasi lain (DCT, CVT, AMT, AT, dll)
 - Update data sedia ada dalam database
 
+**Status:** SIAP (v7.0.0)
+
+---
+
+## NOTA 9 - Table Sorting (Ascending / Descending)
+
+**Masalah:** Semua table dalam admin panel (Bookings, Cars, Customers) belum boleh sort. User kena scroll cari manual.
+
+**Apa yang perlu dibuat:**
+- Klik pada header column (contoh: Booking ID, Customer, Pick-up, Total) untuk sort ascending/descending
+- Arrow indicator pada header yang active (up/down)
+- Toggle antara ascending dan descending setiap kali klik
+- Apply pada semua admin tables:
+  - `admin/pages/booking/bookings.html` (Booking ID, Customer, Pick-up, Return, Total, Status)
+  - `admin/pages/car/cars.html` (Vehicle, Plate, Type, Rate, Status)
+  - `admin/pages/customer/customers.html` (Name, Email, Joined, Status)
+  - `admin/pages/dashboard/admin.html` (Dashboard car table)
+
+**Rujukan UI:**
+- Linear.app style table sorting (klik header, subtle arrow indicator)
+
+**Status:** BELUM
+
+---
+
+## NOTA 10 - Booking Date Range Filter
+
+**Masalah:** Bila booking dah terlalu banyak, susah nak cari. Perlu filter ikut tarikh/bulan/tahun.
+
+**Apa yang perlu dibuat:**
+- Quick filter buttons: "This Month", "This Year", "All Time"
+- Date range picker (calendar) untuk pilih custom range (dari tarikh X sampai tarikh Y)
+- Filter berdasarkan pickup date booking
+- Apply pada:
+  - `admin/pages/booking/bookings.html` (Booking Records table)
+  - Stats auto-update ikut filtered results
+- Boleh combine dengan status filter (contoh: "Confirmed" + "May 2026")
+
+**Rujukan UI:**
+- Airbnb date picker style (2-calendar side by side)
+- Stripe dashboard date range filter
+
 **Status:** BELUM

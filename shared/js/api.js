@@ -200,16 +200,26 @@ window.WeDriveAPI = {
                         rentedCarIds.add(b.car_id);
                     }
                 });
+                var syncFixes = [];
                 cars.forEach(function(car) {
                     var shouldBeRented = rentedCarIds.has(car.id);
                     if (shouldBeRented && car.status !== 'Rented') {
-                        sb.from('cars').update({ status: 'Rented' }).eq('id', car.id).then(function(){});
+                        sb.from('cars').update({ status: 'Rented' }).eq('id', car.id).then(function(r){
+                            if(r.error) console.error('[AutoSync] Failed to set Rented for car', car.id, r.error);
+                        });
+                        syncFixes.push(car.name + ': ' + car.status + ' -> Rented');
                         car.status = 'Rented';
                     } else if (!shouldBeRented && car.status === 'Rented') {
-                        sb.from('cars').update({ status: 'Available' }).eq('id', car.id).then(function(){});
+                        sb.from('cars').update({ status: 'Available' }).eq('id', car.id).then(function(r){
+                            if(r.error) console.error('[AutoSync] Failed to set Available for car', car.id, r.error);
+                        });
+                        syncFixes.push(car.name + ': Rented -> Available');
                         car.status = 'Available';
                     }
                 });
+                if (syncFixes.length > 0) {
+                    console.log('[AutoSync] Fixed ' + syncFixes.length + ' car status(es):', syncFixes);
+                }
 
                 return {
                     stats: stats,

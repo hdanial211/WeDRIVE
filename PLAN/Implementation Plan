@@ -192,8 +192,14 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 **Page:** `admin/pages/customer/customers.html`
 
-- [ ] Paparkan semua customers dari database
-- [ ] Customer verification management
+**Version:** `7.2.0`
+
+- [x] Paparkan semua customers dari Supabase
+- [x] Enriched with booking stats (total bookings, total spent)
+- [x] Customer status toggle (Active/Suspended) sync ke Supabase
+- [x] View customer details with booking history
+- [x] Search by name, email, phone
+- [x] Auto-sync car status improved with error logging
 
 ---
 
