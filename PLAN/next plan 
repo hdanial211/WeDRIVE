@@ -185,3 +185,85 @@ shared/model/
 - Simpan URL dalam database (table cars, column images JSONB)
 
 **Status:** BELUM (buat masa Fasa 9)
+
+---
+
+## NOTA 5 - Calendar Block Tarikh Yang Dah Dibooking
+
+**Masalah:** Bila customer buka calendar untuk pilih tarikh, semua tarikh boleh dipilih walaupun kereta tu dah ada booking pada tarikh tersebut. Contoh: Mercedes GLA250 (car_id=2) dah ada booking 1-4 Jun 2026, tapi customer lain masih boleh pilih tarikh tu.
+
+**Penyelesaian:**
+- Calendar (Flatpickr) kena query database untuk dapatkan semua tarikh booking yang ACTIVE/PENDING untuk kereta tersebut
+- Tarikh yang dah dibooking akan di-DISABLE (grayed out, tak boleh klik)
+- Customer hanya boleh pilih tarikh yang masih kosong
+
+**Flow:**
+```
+Customer klik kereta (e.g. Mercedes GLA250, car_id=2)
+       |
+       v
+System query Supabase:
+  SELECT start_date, end_date FROM bookings
+  WHERE car_id = 2
+  AND status IN ('Active', 'Pending', 'Completed')
+  AND end_date >= CURRENT_DATE
+       |
+       v
+Flatpickr calendar disable semua tarikh yang dah dibooking
+       |
+       v
+Customer hanya boleh pilih tarikh kosong
+```
+
+**Contoh visual:**
+```
+     May 2026
+Su Mo Tu We Th Fr Sa
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 19 [20] 21 22 23    <-- hari ini
+24 25 26 27 28 29 30
+31
+
+[XX] = tarikh yang dah dibooking (disabled/grayed out)
+[20] = hari ini
+```
+
+**Apa yang perlu dibuat:**
+- Tambah function `WeDriveAPI.getBookedDatesForCar(carId)` dalam api.js
+- Query bookings table: `WHERE car_id = X AND status IN ('Active','Pending') AND end_date >= today`
+- Pass array of disabled date ranges ke Flatpickr `disable` option
+- Tarikh yang disabled kena ada styling khas (strikethrough, warna kelabu)
+
+**Status:** BELUM (buat masa Fasa 5 - Booking Flow)
+
+---
+
+## NOTA 6 - Gambar Kereta Pada Card Dashboard Semua Sama
+
+**Masalah:** Pada Customer Dashboard, semua card kereta tunjuk gambar yang sama/serupa. Sepatutnya setiap kereta tunjuk gambar yang betul mengikut model masing-masing.
+
+**Punca:**
+- Database `cars.images` dah ada path yang betul untuk setiap kereta (frame-140.jpg)
+- Tapi semua frame-140 nampak serupa sebab sudut kamera sama
+- Sepatutnya guna `placeholder.jpg` (gambar hero kereta) untuk card thumbnail, bukan frame dari 360-view
+
+**Penyelesaian:**
+- Tukar `imagePath()` dalam `customer/js/customer.js` supaya guna `placeholder.jpg` sebagai thumbnail card
+- Update column `images` dalam database supaya simpan path ke `placeholder.jpg` atau `thumb-sm.jpg`
+- Atau tambah column `thumbnail` khas dalam table `cars` untuk gambar card
+
+**Mapping gambar yang betul:**
+```
+ID 1: shared/model/Sedan/2023 BMW 320i M Sport 2.0/placeholder.jpg
+ID 2: shared/model/SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/placeholder.jpg
+ID 3: shared/model/Sedan/2024 Toyota Camry 2.5V/placeholder.jpg
+ID 4: shared/model/Hatchback/2022 Perodua Myvi 1.5 H/placeholder.jpg
+ID 5: shared/model/Sedan/2023 Honda City 1.5 V/placeholder.jpg
+ID 6: shared/model/SUV/2024 Proton X50 1.5 TGDI Flagship/placeholder.jpg
+ID 7: shared/model/SUV/2024 Perodua Ativa 1.0T H/placeholder.jpg
+ID 8: shared/model/Sedan/2023 Toyota Vios 1.5 G/placeholder.jpg
+```
+
+**Status:** BELUM
