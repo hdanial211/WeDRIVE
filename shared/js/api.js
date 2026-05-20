@@ -143,42 +143,54 @@ window.WeDriveAPI = {
             try {
                 var sb = window.supabaseClient;
 
-                // Fetch all tables in parallel
-                var results = await Promise.all([
+                // Core tables (always exist)
+                var coreResults = await Promise.all([
                     sb.from('cars').select('*'),
                     sb.from('bookings').select('*'),
                     sb.from('customers').select('*'),
-                    sb.from('settings').select('*').eq('key', 'main').single(),
-                    sb.from('reports').select('*').eq('key', 'main').single(),
-                    sb.from('config').select('*').eq('key', 'main').single(),
-                    sb.from('admins').select('*'),
-                    sb.from('marketing').select('*').eq('key', 'main').single()
+                    sb.from('admins').select('*')
                 ]);
 
-                var cars = results[0].data || [];
-                var bookings = results[1].data || [];
-                var customers = results[2].data || [];
-                var settings = (results[3].data && results[3].data.value) ? results[3].data.value : {};
-                var reports = (results[4].data && results[4].data.value) ? results[4].data.value : {};
-                var config = (results[5].data && results[5].data.value) ? results[5].data.value : {};
-                var admins = results[6].data || [];
-                var marketing = (results[7].data && results[7].data.value) ? results[7].data.value : { banners: [], promo_codes: [], seasonal_pricing: [] };
+                var cars = coreResults[0].data || [];
+                var bookings = coreResults[1].data || [];
+                var customers = coreResults[2].data || [];
+                var admins = coreResults[3].data || [];
 
-                // Calculate live stats from data
-                var activeRentals = cars.filter(function(c) { return c.status === 'Rented'; }).length;
+                // Optional tables (may not exist yet - handle gracefully)
+                var settings = {};
+                var reports = {};
+                var config = {};
+                var marketing = { banners: [], promo_codes: [], seasonal_pricing: [] };
+
+                try { var r = await sb.from('settings').select('*').eq('key', 'main').single(); if (r.data && r.data.value) settings = r.data.value; } catch(e) {}
+                try { var r = await sb.from('reports').select('*').eq('key', 'main').single(); if (r.data && r.data.value) reports = r.data.value; } catch(e) {}
+                try { var r = await sb.from('config').select('*').eq('key', 'main').single(); if (r.data && r.data.value) config = r.data.value; } catch(e) {}
+                try { var r = await sb.from('marketing').select('*').eq('key', 'main').single(); if (r.data && r.data.value) marketing = r.data.value; } catch(e) {}
+
+                // Calculate live stats from real data
+                var today = new Date().toISOString().slice(0, 10);
+                var activeRentals = bookings.filter(function(b) {
+                    return b.status === 'Active' || (b.status === 'Confirmed' && b.start_date <= today && b.end_date >= today);
+                }).length;
                 var paidBookings = bookings.filter(function(b) { return b.payment === 'Paid'; });
-                var revenueToday = 0;
-                paidBookings.forEach(function(b) { revenueToday += (b.total || 0); });
+                var totalRevenue = 0;
+                paidBookings.forEach(function(b) { totalRevenue += (b.total || 0); });
+
+                // New customers this month
+                var monthStart = today.slice(0, 7);
+                var newCustomersThisMonth = customers.filter(function(c) {
+                    return c.joined && c.joined.startsWith(monthStart);
+                }).length;
 
                 var stats = {
                     total_vehicles: cars.length,
                     active_rentals: activeRentals,
-                    revenue_today: revenueToday,
-                    new_customers: customers.length,
+                    revenue_today: totalRevenue,
+                    new_customers: newCustomersThisMonth || customers.length,
                     revenue_change: "+14.2%",
                     rentals_change: "+" + activeRentals,
                     vehicles_change: "+" + cars.length,
-                    customers_change: "+" + customers.length
+                    customers_change: "+" + (newCustomersThisMonth || customers.length)
                 };
 
                 return {

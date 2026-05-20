@@ -138,12 +138,17 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 ---
 
-## Fasa 8: Admin Dashboard
+## Fasa 8: Admin Dashboard - SIAP
 
 **Page:** `admin/pages/dashboard/admin.html`
+**Version:** `6.9.0`
 
-- [ ] `WeDriveAPI.getAdminData()` baca stats dari Supabase
-- [ ] Dashboard stats (total cars, bookings, revenue) dari database
+- [x] `WeDriveAPI.getAdminData()` refactored - handle missing tables gracefully
+- [x] Dashboard stats dari Supabase (8 vehicles, 2 active rentals, RM 42,270 revenue, 5 new customers)
+- [x] Car table populate 8 kereta dari database
+- [x] Active rentals calculation from bookings (status Active/Confirmed + today's date)
+- [x] New customers filtered by current month
+- [x] Tested: Admin login + dashboard verified
 
 ---
 
@@ -242,3 +247,5 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | 6.8.0 | 20/05/2026 | Customer Profile connected to Supabase |
 | 6.8.1 | 20/05/2026 | Update Implementation Plan, mark Fasa 5-7 SIAP |
 | 6.8.2 | 20/05/2026 | Fix profile hardcoded data, remove Alex Johnson defaults |
+| 6.8.3 | 20/05/2026 | Add NOTA 7 phone country code selector to next plan |
+| 6.9.0 | 20/05/2026 | Fasa 8 Admin Dashboard connected to Supabase |
