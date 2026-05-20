@@ -65,32 +65,39 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 ---
 
-## Fasa 3: Guest Landing Page - SIAP
+## Fasa 3: Guest Landing Page + Supabase SDK untuk SEMUA pages - SIAP
 
-**Page:** `index.html`
-**Version:** `6.3.0`
+**Version:** `6.3.0` - `6.5.0`
 
 - [x] Create `cars` table (8 kereta Malaysia)
 - [x] Create `marketing` table
 - [x] Create `config` table
-- [x] Add Supabase SDK to `index.html`
+- [x] Add Supabase SDK to `index.html` (`6.3.0`)
+- [x] Add Supabase SDK to car-details, booking, payment, confirmed (`6.4.0`)
+- [x] Add Supabase SDK to ALL remaining 18 pages (`6.5.0`)
 
-**Table:** `cars` (id, name, plate, type, label, status, rate, price, fuel, transmission, seats, year, color, rating, reviews, ai, images)
+**Table:** `cars` (id, name, plate, type, label, status, rate, price, fuel, transmission, trans, seats, year, color, rating, reviews, ai, images JSONB)
+
+**Supabase SDK Status: SEMUA 26 pages sudah ada SDK**
+- Customer: 10 pages
+- Admin: 10 pages
+- Guest: 3 pages
+- Account: 2 pages (login + signup)
+- Root: index.html
 
 ---
 
-## Fasa 4: Customer Dashboard - SETERUSNYA
+## Fasa 4: Customer Dashboard - SIAP
 
 **Page:** `customer/pages/dashboard/customer.html`
-**API:** `WeDriveAPI.getCars()`
 
-### Apa yang berubah:
-- Senarai kereta dibaca dari Supabase
-- Supabase SDK sudah ditambah (`6.2.2`)
+- [x] Supabase SDK ditambah (`6.2.2`)
+- [x] `getCars()` baca dari Supabase (`USE_REAL_DB: true`)
+- [x] 8 kereta dipaparkan dari database
 
 ---
 
-## Fasa 5: Car Details + Booking Flow
+## Fasa 5: Car Details + Booking Flow - SETERUSNYA
 
 **Pages:**
 - `customer/pages/car-details/car-details.html`
@@ -98,29 +105,39 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 - `customer/pages/car-details/booking/payment/payment.html`
 - `customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html`
 
-**API baru:** `WeDriveAPI.createBooking()`
-**Table baru:** `bookings`
+**Apa yang perlu dibuat:**
+- [ ] Create `bookings` table di Supabase
+- [ ] Implement `WeDriveAPI.createBooking()` baca/tulis ke Supabase
+- [ ] Car-details page render data dari database (bukan hardcoded BMW)
+- [ ] Booking flow simpan booking ke database
+- [ ] Payment page baca customer profile dari database
 
 ---
 
 ## Fasa 6: My Bookings
 
 **Page:** `customer/pages/my-bookings/my-bookings.html`
-**API baru:** `WeDriveAPI.getCustomerBookings(userId)`
+
+- [ ] `WeDriveAPI.getCustomerBookings(userId)` baca dari Supabase
+- [ ] Paparkan senarai booking pelanggan
 
 ---
 
 ## Fasa 7: Customer Profile
 
 **Page:** `customer/pages/profile/profile.html`
-**API baru:** `WeDriveAPI.updateProfile()`
+
+- [ ] `WeDriveAPI.updateProfile()` tulis ke Supabase
+- [ ] Baca profile data dari `customers` table
 
 ---
 
 ## Fasa 8: Admin Dashboard
 
 **Page:** `admin/pages/dashboard/admin.html`
-**API:** `WeDriveAPI.getAdminData()`
+
+- [ ] `WeDriveAPI.getAdminData()` baca stats dari Supabase
+- [ ] Dashboard stats (total cars, bookings, revenue) dari database
 
 ---
 
@@ -130,7 +147,11 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 - `admin/pages/car/cars.html`
 - `admin/pages/car/car-detail/car-detail.html`
 
-**API baru:** `addCar()`, `updateCar()`, `deleteCar()`
+- [ ] CRUD kereta (add, edit, delete) dari admin dashboard
+- [ ] Setup Supabase Storage bucket untuk gambar kereta
+- [ ] Upload gambar kereta (drag & drop) ke Supabase Storage
+- [ ] Auto-detect folder format (exterior/interior)
+- [ ] Migrate gambar sedia ada dari `shared/model/` ke Supabase Storage
 
 ---
 
@@ -138,37 +159,48 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 **Page:** `admin/pages/booking/bookings.html`
 
+- [ ] Paparkan semua bookings dari database
+- [ ] Update booking status (Approve/Reject/Complete)
+
 ---
 
 ## Fasa 11: Admin Customers
 
 **Page:** `admin/pages/customer/customers.html`
 
+- [ ] Paparkan semua customers dari database
+- [ ] Customer verification management
+
 ---
 
 ## Fasa 12: Admin Reports, Calendar, Marketing, Settings, Chatbot
 
 **Pages:** reports, calendar, marketing, settings, chatbot
-**Table baru:** `reports`
+
+- [ ] Create `settings` table
+- [ ] Create `reports` table
+- [ ] Semua admin pages baca/tulis ke Supabase
 
 ---
 
 ## Fasa 13: Remaining Customer Pages
 
-- support, car-access, ai-insights
+- [ ] support, car-access, ai-insights baca dari Supabase
 
 ---
 
-## Fasa 14: Guest Pages & Shared Components
+## Fasa 14: Guest Pages
 
-- pricing, explore-melaka, how-it-works, footer pages
+- [ ] pricing, explore-melaka, how-it-works baca dari Supabase
 
 ---
 
 ## Fasa 15: Forgot Password
 
 **Page:** `account/pages/forgot-password/forgot-password.html`
-- Supabase Auth `resetPasswordForEmail()`
+
+- [ ] Supabase Auth `resetPasswordForEmail()`
+- [ ] Add Supabase SDK ke page
 
 ---
 
@@ -181,9 +213,9 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | cars | 8 | AKTIF |
 | marketing | 0 | AKTIF (kosong, guna dummy) |
 | config | 0 | AKTIF (kosong, guna dummy) |
-| bookings | - | BELUM CIPTA |
-| reports | - | BELUM CIPTA |
-| settings | - | BELUM CIPTA |
+| bookings | - | BELUM CIPTA (Fasa 5) |
+| settings | - | BELUM CIPTA (Fasa 12) |
+| reports | - | BELUM CIPTA (Fasa 12) |
 
 ---
 
@@ -197,3 +229,5 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | 6.2.2 | 20/05/2026 | Fix logout redirect loop, Supabase SDK in dashboard |
 | 6.2.3 | 20/05/2026 | Fix signup column mismatch, enable auto-confirm |
 | 6.3.0 | 20/05/2026 | Guest Landing Page, cars table with 8 cars |
+| 6.4.0 | 20/05/2026 | Add Supabase SDK to customer booking flow pages |
+| 6.5.0 | 20/05/2026 | Add Supabase SDK to ALL remaining 18 pages |

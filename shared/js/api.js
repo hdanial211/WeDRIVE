@@ -567,7 +567,7 @@ window.WeDriveAPI = {
         } else {
             try {
                 var sb = window.supabaseClient;
-                var result = await sb.from('cars').update({ status: newStatus }).eq('car_id', carId);
+                var result = await sb.from('cars').update({ status: newStatus }).eq('id', carId);
                 if (result.error) throw result.error;
                 return { success: true };
             } catch (err) {

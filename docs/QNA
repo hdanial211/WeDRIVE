@@ -1,0 +1,219 @@
+# WeDRIVE - Soalan & Jawapan (Q&A)
+
+Dokumen ini untuk rujukan pantas apabila ditanya soalan tentang sistem WeDRIVE.
+
+---
+
+## BAHAGIAN 1: KESELAMATAN & DATA
+
+### S: Password user disimpan dekat mana?
+**J:** Password disimpan oleh Supabase Auth dalam table internal `auth.users`. Password TIDAK disimpan sebagai teks biasa (plaintext). Ia di-hash menggunakan **bcrypt** - algoritma penyulitan standard industri yang sama digunakan oleh Google, Facebook, dan syarikat teknologi besar. Walaupun database digodam, penggodam tidak boleh mendapatkan password asal kerana hanya hash yang disimpan.
+
+### S: Boleh ke admin tengok password user?
+**J:** Tidak boleh. Password asal tidak wujud di mana-mana dalam sistem. Admin hanya boleh:
+- Lihat senarai pengguna (nama, email)
+- Reset password pengguna (hantar email reset)
+- Disable/delete akaun pengguna
+
+### S: Data user selamat ke?
+**J:** Ya. Sistem menggunakan beberapa lapisan keselamatan:
+1. **Supabase Auth** - menguruskan pengesahan pengguna
+2. **Row Level Security (RLS)** - mengawal siapa boleh baca/tulis data dalam setiap table
+3. **JWT Token** - setiap request disahkan dengan token yang tamat tempoh
+4. **HTTPS** - semua komunikasi antara browser dan server dienkripsi
+5. **bcrypt hashing** - password di-hash, bukan disimpan sebagai teks biasa
+
+### S: Database guna apa?
+**J:** PostgreSQL melalui Supabase. PostgreSQL adalah database relasional paling popular di dunia, digunakan oleh Instagram, Spotify, Netflix, dan banyak lagi. Supabase menyediakan PostgreSQL secara cloud di rantau Singapore untuk kelajuan optimum.
+
+### S: Data disimpan dekat mana secara fizikal?
+**J:** Data disimpan di server Supabase di rantau **Singapore (ap-southeast-1)**. Ini bermakna data dekat dengan Malaysia untuk kelajuan akses yang pantas (latency rendah).
+
+---
+
+## BAHAGIAN 2: AUTENTIKASI & AKAUN
+
+### S: Macam mana user login?
+**J:** Dua cara:
+1. **Email & Password** - user masukkan email dan password, Supabase sahkan credentials
+2. **Google Sign-In** - user klik butang Google, login guna akaun Google mereka (OAuth 2.0)
+
+### S: Apa jadi kalau user lupa password?
+**J:** User boleh klik "Forgot Password" di halaman login. Supabase akan hantar email dengan link reset password. User klik link dan masukkan password baru.
+
+### S: Macam mana sistem tahu user tu admin atau customer?
+**J:** Selepas login, sistem check table `admins`. Kalau email user ada dalam table tu, dia diarahkan ke Admin Dashboard. Kalau tiada, dia diarahkan ke Customer Dashboard.
+
+### S: Boleh ke satu orang ada dua akaun?
+**J:** Tidak digalakkan. Setiap email hanya boleh mendaftar sekali. Kalau cuba daftar semula dengan email yang sama, sistem akan tolak.
+
+### S: Google Sign-In selamat ke?
+**J:** Ya. Google Sign-In menggunakan protokol **OAuth 2.0** - standard keselamatan yang sama digunakan oleh hampir semua aplikasi web moden. WeDRIVE tidak pernah menerima atau menyimpan password Google pengguna. Google hanya menghantar token pengesahan yang mengesahkan identiti pengguna.
+
+---
+
+## BAHAGIAN 3: TEKNOLOGI & ARKITEKTUR
+
+### S: Sistem ni guna teknologi apa?
+**J:**
+
+| Komponen | Teknologi | Keterangan |
+|----------|-----------|-------------|
+| Frontend | HTML, CSS, JavaScript | Antaramuka pengguna |
+| Database | PostgreSQL (Supabase) | Simpan semua data |
+| Auth | Supabase Auth | Login, signup, session |
+| Storage | Supabase Storage | Simpan gambar kereta |
+| Hosting | Vercel | Deploy website |
+| Domain | wedrive.website | Alamat web |
+| Design | Custom CSS, Glassmorphism | Reka bentuk premium |
+
+### S: Kenapa pilih Supabase dan bukan Firebase?
+**J:** Supabase dipilih kerana:
+1. **PostgreSQL** - database relasional yang lebih berkuasa dan fleksibel
+2. **SQL queries** - boleh buat query kompleks dengan mudah
+3. **Row Level Security** - keselamatan data yang lebih baik
+4. **Open source** - tidak terkunci kepada satu vendor
+5. **Free tier yang murah hati** - 500MB database, 1GB storage, unlimited API requests
+
+### S: Kenapa bukan pakai backend seperti Node.js/Express?
+**J:** Supabase sudah menyediakan backend-as-a-service (BaaS). Ia sudah ada:
+- REST API automatik untuk setiap table
+- Authentication system
+- File storage
+- Real-time subscriptions
+
+Ini menjimatkan masa dan kos tanpa perlu setup server sendiri.
+
+### S: Website boleh handle berapa ramai pengguna serentak?
+**J:** Dengan Supabase Free Plan:
+- Unlimited API requests
+- 500MB database storage
+- 1GB file storage
+- Boleh handle ratusan pengguna serentak tanpa masalah
+
+### S: Apa itu Glassmorphism?
+**J:** Glassmorphism adalah teknik reka bentuk UI moden yang menggunakan kesan kaca frosted (kabur separuh telus) dengan border halus dan bayangan. Ia memberikan rupa yang premium dan moden, sama seperti yang digunakan oleh Apple (macOS, iOS) dan banyak aplikasi web moden.
+
+---
+
+## BAHAGIAN 4: KERETA & TEMPAHAN
+
+### S: Data kereta datang dari mana?
+**J:** Data kereta (nama, harga, spesifikasi) disimpan dalam table `cars` di Supabase PostgreSQL. Gambar kereta 360 darjah (200 frame per kereta) disimpan dan dipaparkan untuk setiap model.
+
+### S: Admin boleh tambah kereta baru?
+**J:** Ya. Admin boleh tambah, edit, dan delete kereta dari Admin Dashboard. Aliran kerja:
+1. Masuk Admin Dashboard > Cars > Add New Car
+2. Isi maklumat kereta (nama, harga, spesifikasi)
+3. Upload gambar kereta
+4. Klik Save - kereta terus muncul di website
+
+### S: Macam mana gambar kereta 360 darjah berfungsi?
+**J:** Setiap kereta mempunyai 200 gambar (frame-000.jpg sampai frame-199.jpg) yang diambil dari sudut yang berbeza mengelilingi kereta. Apabila pengguna seret/swipe, sistem menukar gambar mengikut sudut untuk memberikan kesan putaran 360 darjah. Interior pula menggunakan gambar panorama cubemap (6 muka: depan, belakang, kiri, kanan, atas, bawah).
+
+### S: Proses tempahan macam mana?
+**J:**
+1. Pelanggan pilih kereta
+2. Pilih tarikh (pickup & return)
+3. Pilih add-ons (GPS, child seat, insurance)
+4. Masukkan maklumat pembayaran
+5. Tempahan disahkan, pelanggan terima QR code
+
+### S: Pembayaran betul ke atau demo?
+**J:** Pada tahap ini, pembayaran adalah **demo mode** - sistem menerima apa sahaja maklumat pembayaran yang dimasukkan. Untuk production, boleh integrate dengan payment gateway Malaysia seperti **Stripe**, **Billplz**, atau **Revenue Monster** untuk pemprosesan pembayaran sebenar.
+
+---
+
+## BAHAGIAN 5: REKA BENTUK & UI/UX
+
+### S: Reka bentuk rujuk dari mana?
+**J:** Reka bentuk WeDRIVE dirujuk dari beberapa platform premium:
+- **Airbnb** - booking flow yang lancar
+- **Stripe** - glassmorphism dan micro-animations
+- **Apple** - whitespace dan tipografi berkelas
+- **Linear** - dark mode sempurna
+- **Vercel** - dashboard minimalist dan responsif
+
+### S: Boleh tukar bahasa?
+**J:** Ya. WeDRIVE menyokong dua bahasa:
+- English (default)
+- Bahasa Melayu
+
+Pengguna boleh toggle bahasa dari mana-mana halaman.
+
+### S: Ada dark mode?
+**J:** Ya. WeDRIVE menyokong:
+- **Day Mode** (tema cerah)
+- **Night Mode** (tema gelap)
+
+Pengguna boleh toggle tema dari mana-mana halaman. Pilihan tema disimpan dalam browser supaya kekal walaupun halaman dimuat semula.
+
+### S: Boleh guna di telefon?
+**J:** Ya. Semua halaman WeDRIVE adalah **fully responsive** - berfungsi pada desktop, tablet, dan telefon bimbit. Sidebar auto-collapse menjadi hamburger menu pada skrin kecil.
+
+---
+
+## BAHAGIAN 6: AI FEATURES
+
+### S: AI dalam WeDRIVE tu apa?
+**J:** WeDRIVE menggunakan AI untuk:
+1. **AI Car Recommendations** - cadangan kereta berdasarkan keperluan pelanggan
+2. **AI Dynamic Pricing** - harga dinamik berdasarkan permintaan dan musim
+3. **AI Route Planning** - cadangan laluan optimum di Melaka
+4. **AI Chatbot** - bantuan pelanggan 24/7
+5. **AI Insights** - analisis data untuk admin
+
+### S: Chatbot tu guna AI apa?
+**J:** Chatbot WeDRIVE boleh diintegrasikan dengan model AI seperti Google Gemini atau OpenAI GPT untuk memberikan jawapan yang lebih pintar dan kontekstual tentang perkhidmatan kereta sewa.
+
+---
+
+## BAHAGIAN 7: DEPLOYMENT & DOMAIN
+
+### S: Website live dekat mana?
+**J:** https://wedrive.website - deployed di Vercel dengan auto-deployment dari GitHub.
+
+### S: Macam mana auto-deploy berfungsi?
+**J:** Setiap kali code di-push ke GitHub (branch main), Vercel automatik detect perubahan dan deploy versi terbaru dalam masa beberapa saat. Tiada perlu deploy secara manual.
+
+### S: Berapa kos keseluruhan?
+**J:**
+
+| Servis | Kos |
+|--------|-----|
+| Supabase (database, auth, storage) | PERCUMA (Free Plan) |
+| Vercel (hosting) | PERCUMA (Hobby Plan) |
+| Domain (wedrive.website) | Bergantung pada registrar |
+| Google Cloud (OAuth) | PERCUMA |
+| **Jumlah** | **~RM 0 selain domain** |
+
+---
+
+## BAHAGIAN 8: PERBANDINGAN
+
+### S: Apa bezanya WeDRIVE dengan sistem kereta sewa biasa?
+**J:**
+
+| Aspek | Sistem Biasa | WeDRIVE |
+|-------|-------------|---------|
+| Tempahan | Telefon / WhatsApp | Online, 24/7 |
+| Gambar kereta | 2-3 gambar statik | 360 darjah (200 frame) + panorama interior |
+| Pembayaran | Tunai / transfer bank | Online (Card, FPX, E-wallet) |
+| Reka bentuk | Basic | Premium (Glassmorphism, animations) |
+| AI | Tiada | Chatbot, recommendations, dynamic pricing |
+| Bahasa | Satu bahasa | English + Bahasa Melayu |
+| Tema | Satu tema | Day Mode + Night Mode |
+| Mobile | Mungkin tidak responsive | Fully responsive |
+
+---
+
+## BAHAGIAN 9: FUTURE PLANS
+
+### S: Apa plan masa depan untuk WeDRIVE?
+**J:**
+1. **Email Verification** - pengesahan email sebelum login
+2. **Complete Profile Flow** - user baharu wajib lengkapkan profil (IC, Lesen, Telefon)
+3. **Supabase Storage** - gambar kereta disimpan di cloud
+4. **Real Payment Integration** - Stripe/Billplz untuk pembayaran sebenar
+5. **Push Notifications** - notifikasi tempahan
+6. **Mobile App** - aplikasi mudah alih (React Native/Flutter)
