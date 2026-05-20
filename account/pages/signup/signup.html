@@ -101,13 +101,9 @@
 
       <div class="divider" data-key="login_or">or continue with</div>
 
-      <button class="btn-social" onclick="alert('Google signup coming soon!')">
+      <button class="btn-social" id="google-signup-btn" onclick="handleGoogleSignup()">
         <img src="../../../shared/images/icons/google-color.svg" alt="Google" />
         <span data-key="signup_google">Sign up with Google</span>
-      </button>
-      <button class="btn-social" onclick="alert('Apple signup coming soon!')">
-        <img src="../../../shared/logo/apple-logo.svg" alt="Apple" class="apple-logo" />
-        <span data-key="signup_apple">Sign up with Apple</span>
       </button>
 
       <div class="signup-link">
@@ -138,43 +134,41 @@
   <script>
     async function handleSignup(e) {
       e.preventDefault();
-      const fname = document.getElementById('fname').value;
-      const lname = document.getElementById('lname').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm-password').value;
+      var fname = document.getElementById('fname').value;
+      var lname = document.getElementById('lname').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirm-password').value;
 
       if (password !== confirmPassword) {
         alert('Passwords do not match!');
         return;
       }
 
-      const btn = document.getElementById('signup-btn');
+      var btn = document.getElementById('signup-btn');
       btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Creating...';
       btn.disabled = true;
 
       try {
-        // Since we don't have a real API for signup yet, simulate a short delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        var fullName = fname + ' ' + lname;
+        var response = await window.WeDriveAPI.signupUser(fullName, email, password, '');
 
-        localStorage.setItem('wedrive_customer_profile', JSON.stringify({
-          firstName: fname,
-          lastName: lname,
-          dob: '15/10/1985',
-          email: email,
-          phone: '+60 11-1234 5678',
-          street: '123 Jalan Melaka Raya, Suite 400',
-          city: 'Melaka',
-          zip: '75000',
-          license: 'DLR-9876543210',
-          licenseExpiry: '15/10/2028',
-          identity: '900101-14-5678'
-        }));
+        if (response.success) {
+          // Save session
+          localStorage.setItem('wedrive_session', JSON.stringify({
+            email: email,
+            name: fullName,
+            role: 'customer',
+            timestamp: new Date().getTime()
+          }));
 
-        // Simulating successful account creation
-        alert(`Account created successfully for ${fname} ${lname}! Please sign in.`);
-        window.location.href = '../login/login.html';
-
+          alert('Account created successfully for ' + fullName + '! Redirecting...');
+          window.location.href = '../../../customer/pages/dashboard/customer.html';
+        } else {
+          alert(response.error || 'Signup failed. Please try again.');
+          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">person_add</span><span data-key="signup_btn">Create Account</span>';
+          btn.disabled = false;
+        }
       } catch (err) {
         console.error('Signup error:', err);
         alert('An error occurred during sign up.');
@@ -182,11 +176,48 @@
         btn.disabled = false;
       }
     }
-    const style = document.createElement('style');
+
+    function handleGoogleSignup() {
+      var btn = document.getElementById('google-signup-btn');
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      window.WeDriveAPI.loginWithGoogle();
+    }
+
+    var style = document.createElement('style');
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
   </script>
+
+  <!-- Supabase SDK (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
+
+  <!-- Check Google Redirect Result on page load -->
+  <script>
+    (async function checkGoogleRedirect() {
+      try {
+        var result = await window.WeDriveAPI.handleGoogleRedirectResult();
+        if (result && result.success) {
+          localStorage.setItem('wedrive_session', JSON.stringify({
+            email: result.user.email,
+            role: result.role,
+            timestamp: new Date().getTime()
+          }));
+
+          if (result.role === 'admin') {
+            window.location.href = '../../../admin/pages/dashboard/admin.html';
+          } else {
+            window.location.href = '../../../customer/pages/dashboard/customer.html';
+          }
+        }
+      } catch (err) {
+        console.error('Redirect check error:', err);
+      }
+    })();
+  </script>
+
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
 

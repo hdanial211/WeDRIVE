@@ -1,0 +1,54 @@
+# WeDRIVE - Next Plan (Nota & Catatan)
+
+Fail ini digunakan untuk mencatat nota, plan, dan catatan penting
+yang perlu dilaksanakan pada masa akan datang.
+
+---
+
+## NOTA PENTING - Aliran Pengguna Baharu
+
+**Masalah:** Bila user sign in guna Google, mereka terus masuk dashboard
+tanpa lengkapkan maklumat penting.
+
+**Penyelesaian yang perlu dibuat:**
+- Walaupun guna Google Sign-In, user baharu WAJIB daftar/lengkapkan profil dulu
+- Maklumat WAJIB yang perlu diisi:
+  - Nombor IC
+  - Nombor Lesen Memandu
+  - Nombor Telefon
+  - Maklumat peribadi lain yang berkaitan
+- User perlu VERIFIED sebelum boleh buat tempahan kereta
+- Selepas semua maklumat lengkap dan verified, baru redirect ke customer dashboard
+
+**Flow yang betul:**
+```
+Login/Signup (Google atau Email)
+       |
+       v
+Complete Profile Page (IC, Lesen, Telefon)
+       |
+       v
+Verification (Admin verify / Auto verify)
+       |
+       v
+Customer Dashboard (boleh buat tempahan)
+```
+
+---
+
+## STATUS SEMASA
+
+| Item | Status |
+|------|--------|
+| Login Page (Email/Password) | SIAP |
+| Login Page (Google Sign-In) | SIAP |
+| Signup Page | BELUM |
+| Complete Profile Page | BELUM |
+| Admin Dashboard (Supabase) | BELUM |
+| Customer Dashboard (Supabase) | BELUM |
+
+---
+
+## CATATAN LAIN
+
+(Tambah catatan baru di bawah sini)
