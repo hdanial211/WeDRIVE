@@ -12,7 +12,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=5.5.6" />
+  <link rel="stylesheet" href="../../css/customer.css?v=6.7.0" />
 </head>
 
 <body data-particles="6" data-cursor-glow>
@@ -573,13 +573,13 @@
   </main>
 
   <div id="footer-placeholder"></div>
-  <script src="../../js/sidebar-loader.js?v=5.5.7"></script>
+  <script src="../../js/sidebar-loader.js?v=6.7.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=5.4.1"></script>
+  <script src="../../../shared/js/main.js?v=6.7.0"></script>
   <script>
     var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
     var defaultProfileState = {
@@ -916,6 +916,61 @@
       profileToast('Profile details restored.');
     }
 
+    // Load profile from Supabase if logged in
+    async function loadProfileFromSupabase() {
+      try {
+        var sb = window.supabaseClient;
+        if (!sb) return;
+        var userResult = await sb.auth.getUser();
+        var user = userResult && userResult.data && userResult.data.user;
+        if (!user) {
+          applyProfileState(mergeProfileState(readStoredProfile()));
+          return;
+        }
+        var profile = await WeDriveAPI.getCustomerProfile(user.id);
+        if (profile) {
+          // Map Supabase customer data to profile fields
+          var nameParts = (profile.name || '').split(' ');
+          var firstName = nameParts[0] || '';
+          var lastName = nameParts.slice(1).join(' ') || '';
+          var supabaseState = {
+            firstName: firstName,
+            lastName: lastName,
+            dob: profile.dob || defaultProfileState.dob,
+            email: profile.email || user.email || '',
+            phone: profile.phone || '',
+            street: profile.street || defaultProfileState.street,
+            city: profile.city || defaultProfileState.city,
+            zip: profile.zip || defaultProfileState.zip,
+            license: profile.license || '',
+            licenseExpiry: profile.license_expiry || defaultProfileState.licenseExpiry,
+            identity: profile.ic || '',
+            verificationStatus: (profile.ic && profile.license) ? 'Verified' : 'Pending'
+          };
+          applyProfileState(supabaseState);
+          // Update verification banner
+          var verStatus = document.getElementById('pf-verification-status');
+          if (verStatus) {
+            if (supabaseState.identity && supabaseState.license) {
+              verStatus.innerHTML = '<span class="material-icons-round">shield</span> Verified';
+            } else {
+              verStatus.innerHTML = '<span class="material-icons-round">warning</span> Incomplete';
+              verStatus.style.color = 'var(--warning, #f59e0b)';
+            }
+          }
+        } else {
+          applyProfileState(mergeProfileState(readStoredProfile()));
+        }
+      } catch (err) {
+        console.error('[Profile] Load error:', err);
+        applyProfileState(mergeProfileState(readStoredProfile()));
+      }
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(loadProfileFromSupabase, 500);
+    });
     applyProfileState(mergeProfileState(readStoredProfile()));
     updateVerificationProgress();
     refreshOtpUi('profile');

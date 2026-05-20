@@ -624,6 +624,51 @@ window.WeDriveAPI = {
                 return [];
             }
         }
+    },
+
+    /**
+     * Get customer profile by auth_uid.
+     * Used in: profile.html
+     */
+    getCustomerProfile: async function (authUid) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            return null;
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var result = await sb.from('customers')
+                    .select('*')
+                    .eq('auth_uid', authUid)
+                    .single();
+                if (result.error) throw result.error;
+                return result.data || null;
+            } catch (err) {
+                console.error('[WeDriveAPI] getCustomerProfile error:', err);
+                return null;
+            }
+        }
+    },
+
+    /**
+     * Update customer profile.
+     * Used in: profile.html
+     */
+    updateCustomerProfile: async function (authUid, profileData) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            return { success: true };
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var result = await sb.from('customers')
+                    .update(profileData)
+                    .eq('auth_uid', authUid);
+                if (result.error) throw result.error;
+                return { success: true };
+            } catch (err) {
+                console.error('[WeDriveAPI] updateCustomerProfile error:', err);
+                return { success: false, error: err.message };
+            }
+        }
     }
 
     // You can add more functions here later:
