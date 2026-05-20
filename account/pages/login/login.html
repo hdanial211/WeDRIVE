@@ -172,6 +172,11 @@
   <!-- Check Google Redirect Result on page load -->
   <script>
     (async function checkGoogleRedirect() {
+      // Only check redirect if URL has OAuth hash (from Google redirect)
+      var hash = window.location.hash;
+      if (!hash || !hash.includes('access_token')) {
+        return; // Normal page load, not from OAuth redirect
+      }
       try {
         var result = await window.WeDriveAPI.handleGoogleRedirectResult();
         if (result && result.success) {
@@ -190,7 +195,6 @@
         } else if (result && result.error) {
           alert('Google login failed: ' + result.error);
         }
-        // If noRedirect = true, user just opened the page normally (no action needed)
       } catch (err) {
         console.error('Redirect check error:', err);
       }

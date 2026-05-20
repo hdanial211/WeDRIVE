@@ -197,6 +197,10 @@
   <!-- Check Google Redirect Result on page load -->
   <script>
     (async function checkGoogleRedirect() {
+      var hash = window.location.hash;
+      if (!hash || !hash.includes('access_token')) {
+        return;
+      }
       try {
         var result = await window.WeDriveAPI.handleGoogleRedirectResult();
         if (result && result.success) {
