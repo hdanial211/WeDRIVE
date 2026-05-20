@@ -2,3 +2,4 @@
 __MACOSX/
 *.zip
 node_modules/
+bin/

@@ -3,13 +3,13 @@
  * shared/js/api.js
  * 
  * Use this file to manage all database connections, fetches, and endpoints.
- * It is centralized so that when you connect to a real database (like Firebase),
+ * It is centralized so that when you connect to a real database (Supabase),
  * you only have to update the logic here, and all pages will automatically sync.
  *
- * REQUIRES: firebase-config.js to be loaded BEFORE this file.
+ * REQUIRES: supabase-config.js to be loaded BEFORE this file.
  */
 
-/* global firebase */
+/* global supabase */
 
 window.AppConfig = {
     // -------------------------------------------------------------------------
@@ -83,7 +83,7 @@ window._WEDRIVE_FALLBACK_DATA = { "stats": { "total_vehicles": 8, "active_rental
  * 3. GLOBAL DATABASE SERVICE (WeDriveAPI)
  * -----------------------------------------------------------------------------
  * All pages should call these functions instead of using fetch() directly.
- * When USE_REAL_DB is true, data is read from/written to Firebase Firestore.
+ * When USE_REAL_DB is true, data is read from/written to Supabase PostgreSQL.
  * When USE_REAL_DB is false, data is read from the local dummy JSON files.
  */
 window.WeDriveAPI = {
@@ -98,16 +98,12 @@ window.WeDriveAPI = {
             return data.car || [];
         } else {
             try {
-                var db = window.firebaseDB;
-                var snapshot = await db.collection('cars').get();
-                var cars = [];
-                snapshot.forEach(function(doc) {
-                    cars.push(doc.data());
-                });
-                return cars;
+                var sb = window.supabaseClient;
+                var result = await sb.from('cars').select('*');
+                if (result.error) throw result.error;
+                return result.data || [];
             } catch (err) {
-                console.error('[WeDriveAPI] Firestore getCars error:', err);
-                // Fallback to dummy if Firestore fails
+                console.error('[WeDriveAPI] Supabase getCars error:', err);
                 var data = await _loadDummyData();
                 return data.car || [];
             }
@@ -124,15 +120,12 @@ window.WeDriveAPI = {
             return data.bookings || [];
         } else {
             try {
-                var db = window.firebaseDB;
-                var snapshot = await db.collection('bookings').get();
-                var bookings = [];
-                snapshot.forEach(function(doc) {
-                    bookings.push(doc.data());
-                });
-                return bookings;
+                var sb = window.supabaseClient;
+                var result = await sb.from('bookings').select('*');
+                if (result.error) throw result.error;
+                return result.data || [];
             } catch (err) {
-                console.error('[WeDriveAPI] Firestore getBookings error:', err);
+                console.error('[WeDriveAPI] Supabase getBookings error:', err);
                 var data = await _loadDummyData();
                 return data.bookings || [];
             }
@@ -148,41 +141,28 @@ window.WeDriveAPI = {
             return await _loadDummyData();
         } else {
             try {
-                var db = window.firebaseDB;
+                var sb = window.supabaseClient;
 
-                // Fetch all collections in parallel
-                var carsSnap = db.collection('cars').get();
-                var bookingsSnap = db.collection('bookings').get();
-                var customersSnap = db.collection('customers').get();
-                var settingsSnap = db.collection('settings').doc('main').get();
-                var reportsSnap = db.collection('reports').doc('main').get();
-                var configSnap = db.collection('config').doc('main').get();
-                var adminsSnap = db.collection('admins').get();
-                var marketingSnap = db.collection('marketing').doc('main').get();
-
+                // Fetch all tables in parallel
                 var results = await Promise.all([
-                    carsSnap, bookingsSnap, customersSnap,
-                    settingsSnap, reportsSnap, configSnap,
-                    adminsSnap, marketingSnap
+                    sb.from('cars').select('*'),
+                    sb.from('bookings').select('*'),
+                    sb.from('customers').select('*'),
+                    sb.from('settings').select('*').eq('key', 'main').single(),
+                    sb.from('reports').select('*').eq('key', 'main').single(),
+                    sb.from('config').select('*').eq('key', 'main').single(),
+                    sb.from('admins').select('*'),
+                    sb.from('marketing').select('*').eq('key', 'main').single()
                 ]);
 
-                var cars = [];
-                results[0].forEach(function(doc) { cars.push(doc.data()); });
-
-                var bookings = [];
-                results[1].forEach(function(doc) { bookings.push(doc.data()); });
-
-                var customers = [];
-                results[2].forEach(function(doc) { customers.push(doc.data()); });
-
-                var settings = results[3].exists ? results[3].data() : {};
-                var reports = results[4].exists ? results[4].data() : {};
-                var config = results[5].exists ? results[5].data() : {};
-
-                var admins = [];
-                results[6].forEach(function(doc) { admins.push(doc.data()); });
-
-                var marketing = results[7].exists ? results[7].data() : { banners: [], promo_codes: [], seasonal_pricing: [] };
+                var cars = results[0].data || [];
+                var bookings = results[1].data || [];
+                var customers = results[2].data || [];
+                var settings = (results[3].data && results[3].data.value) ? results[3].data.value : {};
+                var reports = (results[4].data && results[4].data.value) ? results[4].data.value : {};
+                var config = (results[5].data && results[5].data.value) ? results[5].data.value : {};
+                var admins = results[6].data || [];
+                var marketing = (results[7].data && results[7].data.value) ? results[7].data.value : { banners: [], promo_codes: [], seasonal_pricing: [] };
 
                 // Calculate live stats from data
                 var activeRentals = cars.filter(function(c) { return c.status === 'Rented'; }).length;
@@ -213,7 +193,7 @@ window.WeDriveAPI = {
                     marketing: marketing
                 };
             } catch (err) {
-                console.error('[WeDriveAPI] Firestore getAdminData error:', err);
+                console.error('[WeDriveAPI] Supabase getAdminData error:', err);
                 return await _loadDummyData();
             }
         }
@@ -237,24 +217,23 @@ window.WeDriveAPI = {
             });
         } else {
             try {
-                var auth = window.firebaseAuth;
-                var userCredential = await auth.signInWithEmailAndPassword(email, password);
-                var user = userCredential.user;
+                var sb = window.supabaseClient;
+                var result = await sb.auth.signInWithPassword({ email: email, password: password });
 
-                // Check if user is admin by looking in admins collection
-                var db = window.firebaseDB;
-                var adminDoc = await db.collection('admins').where('email', '==', email).get();
-                var role = adminDoc.empty ? 'customer' : 'admin';
+                if (result.error) {
+                    return { success: false, error: result.error.message };
+                }
+
+                var user = result.data.user;
+
+                // Check if user is admin
+                var adminResult = await sb.from('admins').select('*').eq('email', email).maybeSingle();
+                var role = (adminResult.data) ? 'admin' : 'customer';
 
                 return { success: true, role: role, user: user };
             } catch (err) {
-                console.error('[WeDriveAPI] Firebase login error:', err);
-                var msg = 'Login failed.';
-                if (err.code === 'auth/user-not-found') msg = 'No account found with this email.';
-                if (err.code === 'auth/wrong-password') msg = 'Incorrect password.';
-                if (err.code === 'auth/invalid-email') msg = 'Invalid email format.';
-                if (err.code === 'auth/invalid-credential') msg = 'Invalid email or password.';
-                return { success: false, error: msg };
+                console.error('[WeDriveAPI] Supabase login error:', err);
+                return { success: false, error: 'Login failed. Please try again.' };
             }
         }
     },
@@ -272,17 +251,22 @@ window.WeDriveAPI = {
             });
         } else {
             try {
-                var auth = window.firebaseAuth;
-                var userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                var user = userCredential.user;
+                var sb = window.supabaseClient;
+                var result = await sb.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: { data: { full_name: name, phone: phone || '' } }
+                });
 
-                // Update display name
-                await user.updateProfile({ displayName: name });
+                if (result.error) {
+                    return { success: false, error: result.error.message };
+                }
 
-                // Create customer document in Firestore
-                var db = window.firebaseDB;
-                await db.collection('customers').doc(user.uid).set({
-                    id: user.uid,
+                var user = result.data.user;
+
+                // Create customer record in customers table
+                await sb.from('customers').insert({
+                    customer_id: user.id,
                     name: name,
                     email: email,
                     phone: phone || '',
@@ -292,66 +276,77 @@ window.WeDriveAPI = {
                     total_spent: 0,
                     status: 'Active',
                     joined: new Date().toISOString().split('T')[0],
-                    last_booking: '-'
+                    last_booking: '-',
+                    auth_uid: user.id
                 });
 
                 return { success: true, role: 'customer', user: user };
             } catch (err) {
-                console.error('[WeDriveAPI] Firebase signup error:', err);
-                var msg = 'Signup failed.';
-                if (err.code === 'auth/email-already-in-use') msg = 'This email is already registered.';
-                if (err.code === 'auth/weak-password') msg = 'Password must be at least 6 characters.';
-                if (err.code === 'auth/invalid-email') msg = 'Invalid email format.';
-                return { success: false, error: msg };
+                console.error('[WeDriveAPI] Supabase signup error:', err);
+                return { success: false, error: 'Signup failed. Please try again.' };
             }
         }
     },
 
     /**
-     * Sign in with Google - Start redirect flow
+     * Sign in with Google
      * Used in: login.html
-     * This uses signInWithRedirect (more reliable than signInWithPopup on local dev)
+     * Supabase handles OAuth popup/redirect automatically
      */
-    loginWithGoogle: function () {
-        var auth = window.firebaseAuth;
-        var provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithRedirect(provider);
+    loginWithGoogle: async function () {
+        try {
+            var sb = window.supabaseClient;
+            var result = await sb.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin + '/account/pages/login/login.html'
+                }
+            });
+            if (result.error) {
+                return { success: false, error: result.error.message };
+            }
+            // Supabase will redirect to Google, then back to redirectTo URL
+            return { success: true };
+        } catch (err) {
+            console.error('[WeDriveAPI] Google login error:', err);
+            return { success: false, error: 'Google login failed.' };
+        }
     },
 
     /**
-     * Handle Google Sign-In redirect result
+     * Handle OAuth callback (Google Sign-In redirect result)
      * Called on login page load to check if user just returned from Google
      */
     handleGoogleRedirectResult: async function () {
         try {
-            var auth = window.firebaseAuth;
-            var result = await auth.getRedirectResult();
+            var sb = window.supabaseClient;
+            var sessionResult = await sb.auth.getSession();
 
-            if (result && result.user) {
-                var user = result.user;
+            if (sessionResult.data.session) {
+                var user = sessionResult.data.session.user;
 
-                // Check if customer doc exists, create if not
-                var db = window.firebaseDB;
-                var customerDoc = await db.collection('customers').doc(user.uid).get();
-                if (!customerDoc.exists) {
-                    await db.collection('customers').doc(user.uid).set({
-                        id: user.uid,
-                        name: user.displayName || '',
+                // Check if customer record exists, create if not
+                var custResult = await sb.from('customers').select('*').eq('auth_uid', user.id).maybeSingle();
+                if (!custResult.data) {
+                    await sb.from('customers').insert({
+                        customer_id: user.id,
+                        name: user.user_metadata.full_name || user.email.split('@')[0],
                         email: user.email,
-                        phone: user.phoneNumber || '',
+                        phone: '',
                         ic: '',
                         license: '',
                         total_bookings: 0,
                         total_spent: 0,
                         status: 'Active',
                         joined: new Date().toISOString().split('T')[0],
-                        last_booking: '-'
+                        last_booking: '-',
+                        auth_uid: user.id
                     });
                 }
 
                 // Check if admin
-                var adminDoc = await db.collection('admins').where('email', '==', user.email).get();
-                var role = adminDoc.empty ? 'customer' : 'admin';
+                var adminResult = await sb.from('admins').select('*').eq('email', user.email).maybeSingle();
+                var role = adminResult.data ? 'admin' : 'customer';
 
                 return { success: true, role: role, user: user };
             }
@@ -369,7 +364,8 @@ window.WeDriveAPI = {
      */
     logoutUser: async function () {
         try {
-            await window.firebaseAuth.signOut();
+            var sb = window.supabaseClient;
+            await sb.auth.signOut();
             localStorage.removeItem('wedrive_session');
             return { success: true };
         } catch (err) {
@@ -381,8 +377,10 @@ window.WeDriveAPI = {
     /**
      * Get current logged-in user
      */
-    getCurrentUser: function () {
-        return window.firebaseAuth ? window.firebaseAuth.currentUser : null;
+    getCurrentUser: async function () {
+        if (!window.supabaseClient) return null;
+        var result = await window.supabaseClient.auth.getUser();
+        return result.data.user || null;
     },
 
     /**
@@ -410,16 +408,13 @@ window.WeDriveAPI = {
             };
         } else {
             try {
-                // Try localStorage first (admin edits are saved here)
                 var localSettings = localStorage.getItem('wedrive_chatbot_settings');
                 if (localSettings) {
                     return JSON.parse(localSettings);
                 }
-                // Then try Firestore
-                var db = window.firebaseDB;
-                var doc = await db.collection('config').doc('chatbot').get();
-                if (doc.exists) return doc.data();
-                // Fallback to default
+                var sb = window.supabaseClient;
+                var result = await sb.from('config').select('value').eq('key', 'chatbot').maybeSingle();
+                if (result.data && result.data.value) return result.data.value;
                 return {
                     greeting: "Hi! I'm your <strong>WeDRIVE AI Assistant</strong>.<br/>I can help you find the perfect car, assist with booking, or answer any questions. How can I help?",
                     replies: {
@@ -448,8 +443,8 @@ window.WeDriveAPI = {
         } else {
             try {
                 localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(newSettings));
-                var db = window.firebaseDB;
-                await db.collection('config').doc('chatbot').set(newSettings);
+                var sb = window.supabaseClient;
+                await sb.from('config').upsert({ key: 'chatbot', value: newSettings });
                 return { success: true };
             } catch (err) {
                 console.error('[WeDriveAPI] updateChatbotSettings error:', err);
@@ -494,15 +489,14 @@ window.WeDriveAPI = {
             return data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
         } else {
             try {
-                // Try localStorage first
                 var storedStr = localStorage.getItem('wedrive_marketing');
                 if (storedStr) {
                     var stored = JSON.parse(storedStr);
                     if (stored && (stored.banners || stored.promo_codes)) return stored;
                 }
-                var db = window.firebaseDB;
-                var doc = await db.collection('marketing').doc('main').get();
-                if (doc.exists) return doc.data();
+                var sb = window.supabaseClient;
+                var result = await sb.from('marketing').select('value').eq('key', 'main').maybeSingle();
+                if (result.data && result.data.value) return result.data.value;
                 return { banners: [], promo_codes: [], seasonal_pricing: [] };
             } catch (err) {
                 console.error('[WeDriveAPI] getMarketing error:', err);
@@ -519,8 +513,8 @@ window.WeDriveAPI = {
         localStorage.setItem('wedrive_marketing', JSON.stringify(marketingObj));
         if (window.AppConfig.USE_REAL_DB) {
             try {
-                var db = window.firebaseDB;
-                await db.collection('marketing').doc('main').set(marketingObj);
+                var sb = window.supabaseClient;
+                await sb.from('marketing').upsert({ key: 'main', value: marketingObj });
             } catch (err) {
                 console.error('[WeDriveAPI] saveMarketing error:', err);
             }
@@ -538,13 +532,10 @@ window.WeDriveAPI = {
             return data.customers || [];
         } else {
             try {
-                var db = window.firebaseDB;
-                var snapshot = await db.collection('customers').get();
-                var customers = [];
-                snapshot.forEach(function(doc) {
-                    customers.push(doc.data());
-                });
-                return customers;
+                var sb = window.supabaseClient;
+                var result = await sb.from('customers').select('*');
+                if (result.error) throw result.error;
+                return result.data || [];
             } catch (err) {
                 console.error('[WeDriveAPI] getCustomers error:', err);
                 return [];
@@ -561,9 +552,10 @@ window.WeDriveAPI = {
             return { success: true, id: 'BK-DEMO-' + Date.now() };
         } else {
             try {
-                var db = window.firebaseDB;
-                var docRef = await db.collection('bookings').add(bookingData);
-                return { success: true, id: docRef.id };
+                var sb = window.supabaseClient;
+                var result = await sb.from('bookings').insert(bookingData).select().single();
+                if (result.error) throw result.error;
+                return { success: true, id: result.data.booking_id || result.data.id };
             } catch (err) {
                 console.error('[WeDriveAPI] createBooking error:', err);
                 return { success: false, error: err.message };
@@ -580,11 +572,9 @@ window.WeDriveAPI = {
             return { success: true };
         } else {
             try {
-                var db = window.firebaseDB;
-                var snapshot = await db.collection('cars').where('id', '==', carId).get();
-                if (!snapshot.empty) {
-                    await snapshot.docs[0].ref.update({ status: newStatus });
-                }
+                var sb = window.supabaseClient;
+                var result = await sb.from('cars').update({ status: newStatus }).eq('car_id', carId);
+                if (result.error) throw result.error;
                 return { success: true };
             } catch (err) {
                 console.error('[WeDriveAPI] updateCarStatus error:', err);

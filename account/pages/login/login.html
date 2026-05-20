@@ -164,11 +164,9 @@
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
   </script>
-  <!-- Firebase SDK (CDN - compat version for static HTML) -->
-  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore-compat.js"></script>
-  <script src="../../../shared/js/firebase-config.js"></script>
+  <!-- Supabase SDK (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
 
   <!-- Check Google Redirect Result on page load -->
