@@ -145,7 +145,7 @@ function applyFilters() {
 
 /* ── Actions ── */
 function manageCar(id) {
-  window.location.href = `car-detail.html?id=${id}`;
+  window.location.href = `car-detail/car-detail.html?id=${id}`;
 }
 
 function addNewCar() {

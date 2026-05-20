@@ -41,7 +41,7 @@ function populateCar(car) {
       <td>${v.rate}</td>
       <td>${v.seats || 5} Seater</td>
       <td>${v.transmission}</td>
-      <td><button class="btn-primary-sm" onclick="window.location='car-detail.html?id=${v.id}'">Manage</button></td>
+      <td><button class="btn-primary-sm" onclick="window.location='../car/car-detail/car-detail.html?id=${v.id}'">Manage</button></td>
     </tr>
   `).join('');
 }
