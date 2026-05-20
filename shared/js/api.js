@@ -272,18 +272,15 @@ window.WeDriveAPI = {
                     phone: phone || '',
                     ic: '',
                     license: '',
-                    total_bookings: 0,
-                    total_spent: 0,
                     status: 'Active',
                     joined: new Date().toISOString().split('T')[0],
-                    last_booking: '-',
                     auth_uid: user.id
                 });
 
                 return { success: true, role: 'customer', user: user };
             } catch (err) {
                 console.error('[WeDriveAPI] Supabase signup error:', err);
-                return { success: false, error: 'Signup failed. Please try again.' };
+                return { success: false, error: err.message || 'Signup failed. Please try again.' };
             }
         }
     },
@@ -335,11 +332,8 @@ window.WeDriveAPI = {
                         phone: '',
                         ic: '',
                         license: '',
-                        total_bookings: 0,
-                        total_spent: 0,
                         status: 'Active',
                         joined: new Date().toISOString().split('T')[0],
-                        last_booking: '-',
                         auth_uid: user.id
                     });
                 }
