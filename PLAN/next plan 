@@ -267,3 +267,40 @@ ID 8: shared/model/Sedan/2023 Toyota Vios 1.5 G/placeholder.jpg
 ```
 
 **Status:** BELUM
+
+---
+
+## NOTA 7 - Phone Number: Country Code Selector + Auto-Format
+
+**Masalah:** Nombor telefon dalam profile/signup hanya input biasa tanpa pilihan kod negara dan tanpa formatting automatik. Nombor keluar mentah (contoh: `0102719558`) tanpa formatting.
+
+**Kenapa penting:**
+- Customer luar negara (pelancong) perlu pilih country code mereka (contoh: +65 Singapore, +62 Indonesia, +66 Thailand)
+- Formatting dengan "-" memudahkan bacaan dan nampak lebih profesional
+
+**Contoh format yang betul:**
+```
+Malaysia:   +60  | 010-271 9558
+Singapore:  +65  | 9123-4567
+Indonesia:  +62  | 0812-345-6789
+Thailand:   +66  | 081-234-5678
+```
+
+**Apa yang perlu dibuat:**
+- Tambah dropdown country code selector di sebelah kiri input phone (flag + code)
+- Default: Malaysia (+60) dengan bendera Malaysia
+- Senarai negara: MY, SG, ID, TH, BN, PH, JP, KR, AU, UK, US (ASEAN + popular)
+- Auto-format input semasa taip: tambah "-" dan ruang automatik mengikut format negara
+- Simpan format penuh ke database: `+60 010-271 9558`
+- Apply ke semua tempat input phone: Profile, Signup, Booking Contact
+
+**Pages yang perlu update:**
+- `customer/pages/profile/profile.html` (Verification Contact Number + Phone Number)
+- `account/pages/signup/signup.html` (Phone field)
+- `customer/pages/car-details/booking/booking.html` (Contact phone)
+
+**Rujukan UI:**
+- Stripe-style country selector (dropdown dengan bendera kecil)
+- Auto-format on keyup (mask input)
+
+**Status:** BELUM
