@@ -1,0 +1,331 @@
+# WeDRIVE - Quick Reference (Reduce AI Thinking)
+
+Fail ini untuk rujukan pantas supaya AI tidak perlu fikir berulang kali.
+Baca fail ini DULU sebelum buat apa-apa kerja.
+
+---
+
+## SUPABASE CREDENTIALS
+
+- **Project ID:** nigyovaqffwyinovivls
+- **Region:** Singapore (ap-southeast-1)
+- **URL:** https://nigyovaqffwyinovivls.supabase.co
+- **Anon Key:** [SEE supabase-config.js]
+- **Service Role Key:** [REDACTED - simpan secara lokal sahaja]
+- **MCP Token:** [REDACTED - simpan secara lokal sahaja]
+
+---
+
+## LOGIN CREDENTIALS
+
+- **Admin:** admin@wedrive.my / admin123 (Auth UID: d8bad016-972a-481a-9c8f-ace1511bba12)
+
+---
+
+## GOOGLE OAUTH
+
+- **Client ID:** [REDACTED - simpan secara lokal sahaja]
+- **Client Secret:** [REDACTED - simpan secara lokal sahaja]
+- **Redirect URI:** https://nigyovaqffwyinovivls.supabase.co/auth/v1/callback
+- **Google Cloud Project:** wedrive-ce1a4 (Project Number: 24595163697)
+
+---
+
+## DATABASE TABLES (CURRENT)
+
+### admins
+Columns: id, email, name, role
+Data: 1 record (admin@wedrive.my)
+
+### customers
+Columns: id, customer_id, name, email, phone, ic, license, status, joined, auth_uid
+Data: signup akan tambah
+
+### cars
+Columns: id, name, plate, type, label, status, rate, price, fuel, transmission, trans, seats, year, color, rating, reviews, ai, images (JSONB)
+Data: 8 kereta Malaysia
+
+### marketing
+Columns: id, key (TEXT UNIQUE), value (JSONB)
+Data: kosong
+
+### config
+Columns: id, key (TEXT UNIQUE), value (JSONB)
+Data: kosong
+
+---
+
+## CURL TEMPLATES
+
+### Query Database
+```bash
+curl -s -X POST "https://api.supabase.com/v1/projects/nigyovaqffwyinovivls/database/query" \
+  -H "Authorization: Bearer $MCP_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "SQL_HERE"}'
+```
+
+### REST API Read
+```bash
+curl -s "https://nigyovaqffwyinovivls.supabase.co/rest/v1/TABLE?select=*" \
+  -H "apikey: $SERVICE_ROLE_KEY"
+```
+
+### REST API Insert
+```bash
+curl -s -X POST "https://nigyovaqffwyinovivls.supabase.co/rest/v1/TABLE" \
+  -H "apikey: $SERVICE_ROLE_KEY" \
+  -H "Authorization: Bearer $SERVICE_ROLE_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Prefer: return=minimal" \
+  -d '[{JSON_DATA}]'
+```
+
+### Update Auth Config
+```bash
+curl -s -X PATCH "https://api.supabase.com/v1/projects/nigyovaqffwyinovivls/config/auth" \
+  -H "Authorization: Bearer $MCP_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"key": "value"}'
+```
+
+### Create Auth User
+```bash
+curl -s -X POST "https://nigyovaqffwyinovivls.supabase.co/auth/v1/admin/users" \
+  -H "apikey: SERVICE_ROLE_KEY" \
+  -H "Authorization: Bearer SERVICE_ROLE_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"email":"...","password":"...","email_confirm":true}'
+```
+
+---
+
+## PAGES YANG SUDAH ADA SUPABASE SDK
+
+- account/pages/login/login.html
+- account/pages/signup/signup.html
+- customer/pages/dashboard/customer.html
+- index.html
+
+## PAGES YANG BELUM ADA SUPABASE SDK
+
+- customer/pages/my-bookings/my-bookings.html
+- customer/pages/car-details/car-details.html
+- customer/pages/profile/profile.html
+- customer/pages/support/support.html
+- customer/pages/car-access/car-access.html
+- customer/pages/ai-insights/ai-insights.html
+- admin/pages/dashboard/admin.html
+- admin/pages/car/cars.html
+- admin/pages/booking/bookings.html
+- admin/pages/customer/customers.html
+- admin/pages/report/reports.html
+- admin/pages/calendar/calendar.html
+- admin/pages/marketing/marketing.html
+- admin/pages/setting/settings.html
+- admin/pages/chatbot/chatbot.html
+- guest/pages/pricing/pricing.html
+- guest/pages/explore-melaka/explore-melaka.html
+- guest/pages/how-it-works/how-it-works.html
+- account/pages/forgot-password/forgot-password.html
+
+---
+
+## STEP-BY-STEP: MIGRATE ANY PAGE
+
+1. Check apa tables diperlukan oleh page tu
+2. Create table di Supabase kalau belum ada
+3. Insert data dari data.json kalau perlu
+4. Tambah Supabase SDK dalam HTML page (3 script tags sebelum api.js)
+5. Push ke GitHub dengan version yang betul
+6. Test page berfungsi
+
+### Supabase SDK Script Tags (tambah SEBELUM api.js)
+```html
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="PATH/shared/js/supabase-config.js"></script>
+<script src="PATH/shared/js/api.js"></script>
+```
+
+PATH varies by depth:
+- index.html: shared/js/...
+- account/pages/login/: ../../../shared/js/...
+- customer/pages/dashboard/: ../../../shared/js/...
+- admin/pages/dashboard/: ../../../shared/js/...
+- customer/pages/car-details/booking/payment/: ../../../../../shared/js/...
+
+---
+
+## DATA.JSON STRUCTURE
+
+```
+data.json = {
+  stats: { total_vehicles, active_rentals, revenue_today, new_customers, etc },
+  car: [ 8 items: id, name, plate, type, label, status, rate, price, fuel, transmission, trans, seats, year, color, rating, reviews, ai, images[] ],
+  bookings: [ 10 items: id, car, plate, customer, email, phone, ic, start, end, days, daily, total, status, payment, type, pickup, dropoff ],
+  customers: [ 6 items: id, name, email, phone, ic, license, total_bookings, total_spent, status, joined, last_booking ],
+  settings: { company_name, phone, email, address, currency, tax_rate, min_age, max_rental_days, cancellation_hours, working_hours },
+  reports: { monthly_revenue[], top_cars[], customer_growth[], average_booking },
+  config: { theme_default, notifications, default_pickup, default_dropoff, payment_methods[], terms_url, privacy_url },
+  admins: [ 1 item: email, name, role ],
+  marketing: { banners[], promo_codes[], seasonal_pricing[] }
+}
+```
+
+---
+
+## API.JS FUNCTION MAP
+
+| Function | Table | Use |
+|----------|-------|-----|
+| getCars() | cars | Read all cars |
+| getBookings() | bookings | Read all bookings |
+| getAdminData() | ALL | Admin dashboard stats |
+| loginUser(email, pw) | admins | Auth + role check |
+| signupUser(name, email, pw, phone) | customers | Auth + create record |
+| loginWithGoogle() | - | OAuth redirect |
+| handleGoogleRedirectResult() | customers, admins | Handle callback |
+| logoutUser() | - | Sign out |
+| getCurrentUser() | - | Get auth user |
+| getChatbotSettings() | config | Read chatbot |
+| updateChatbotSettings(obj) | config | Write chatbot |
+| getData() | ALL | Alias getAdminData |
+| getMarketing() | marketing | Read marketing |
+| saveMarketing(obj) | marketing | Write marketing |
+| getCustomers() | customers | Read all customers |
+| createBooking(data) | bookings | Insert booking |
+| updateCarStatus(carId, status) | cars | Update car status |
+
+---
+
+## SUPABASE JS CLIENT PATTERNS
+
+```javascript
+// Select all
+var result = await sb.from('table').select('*');
+
+// Select with filter
+var result = await sb.from('table').select('*').eq('col', val).maybeSingle();
+
+// Insert
+await sb.from('table').insert({col1: val1});
+
+// Insert and return
+var result = await sb.from('table').insert(data).select().single();
+
+// Update
+await sb.from('table').update({col: newVal}).eq('id', id);
+
+// Upsert
+await sb.from('table').upsert({key: 'main', value: obj});
+
+// Delete
+await sb.from('table').delete().eq('id', id);
+
+// Auth login
+sb.auth.signInWithPassword({email, password})
+
+// Auth signup
+sb.auth.signUp({email, password, options: {data: {full_name: name}}})
+
+// Google OAuth
+sb.auth.signInWithOAuth({provider: 'google', options: {redirectTo: url}})
+
+// Get session / user / logout
+sb.auth.getSession()
+sb.auth.getUser()
+sb.auth.signOut()
+```
+
+---
+
+## COMMON BUGS & FIXES
+
+### Logout redirect loop
+Login page auto-redirect balik ke dashboard.
+Fix: Only check hash #access_token
+```javascript
+var hash = window.location.hash;
+if (!hash || !hash.includes('access_token')) return;
+```
+
+### Column mismatch on insert
+Fix: Check columns dulu: SELECT column_name FROM information_schema.columns WHERE table_name = 'x';
+
+### Supabase SDK not loaded
+Fix: Tambah 2 script sebelum api.js
+
+### Google provider not enabled
+Fix: Use lowercase keys: external_google_enabled, external_google_client_id, external_google_secret
+
+### Email verification blocking
+Fix: Set mailer_autoconfirm: true
+
+---
+
+## TABLES TO CREATE LATER (COPY-PASTE READY)
+
+### bookings (Fasa 5)
+```sql
+CREATE TABLE bookings (id SERIAL PRIMARY KEY, booking_id TEXT UNIQUE, car TEXT, plate TEXT, customer TEXT, email TEXT, phone TEXT, ic TEXT, start_date DATE, end_date DATE, days INTEGER, daily NUMERIC, total NUMERIC, status TEXT DEFAULT 'Pending', payment TEXT DEFAULT 'Unpaid', type TEXT, pickup TEXT, dropoff TEXT, created_at TIMESTAMPTZ DEFAULT NOW());
+ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "allow_all_bookings" ON bookings FOR ALL USING (true) WITH CHECK (true);
+```
+
+### settings (Fasa 12)
+```sql
+CREATE TABLE settings (id SERIAL PRIMARY KEY, key TEXT UNIQUE, value JSONB);
+ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "allow_all_settings" ON settings FOR ALL USING (true) WITH CHECK (true);
+```
+
+### reports (Fasa 12)
+```sql
+CREATE TABLE reports (id SERIAL PRIMARY KEY, key TEXT UNIQUE, value JSONB);
+ALTER TABLE reports ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "allow_all_reports" ON reports FOR ALL USING (true) WITH CHECK (true);
+```
+
+---
+
+## CSS RULES
+
+| Modul | CSS File |
+|-------|----------|
+| Admin | admin/css/admin.css |
+| Customer | customer/css/customer.css |
+| Guest | guest/css/guest.css |
+| Account | account/css/auth.css |
+
+## NAVIGATION RULES
+
+| Modul | Jenis | Loader |
+|-------|-------|--------|
+| Admin | Sidebar | shared/js/sidebar-loader.js |
+| Customer | Sidebar | customer/js/sidebar-loader.js |
+| Guest | Top Navbar | shared/js/navbar-loader.js |
+| Account | Tiada | - |
+
+## GIT COMMIT FORMAT
+
+- Format: `X.X.X Description` (TANPA huruf `v`)
+- Major: Modul baru / redesign
+- Minor: Feature baru / improvement
+- Patch: Bug fix / tweak
+- WAJIB ada tag: `git tag X.X.X`
+- Latest version: `6.3.0`
+
+## USER DOMAIN & DEPLOY
+
+- Domain: https://wedrive.website
+- Deploy: Vercel (auto-deploy dari GitHub push)
+- Local: http://127.0.0.1:5500
+- GitHub: https://github.com/hdanial211/WeDRIVE
+
+## THEME & LANGUAGE
+
+- Day: shared/css/theme_day.css
+- Night: shared/css/theme_night.css
+- Overrides: shared/css/theme_overrides.css
+- Language: shared/js/main.js (data-key attributes)
+- Toggle: toggleTheme(), toggleLanguage()

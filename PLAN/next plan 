@@ -1,0 +1,187 @@
+# WeDRIVE - Next Plan (Nota & Catatan)
+
+Fail ini digunakan untuk mencatat nota, plan, dan catatan penting
+yang perlu dilaksanakan pada masa akan datang.
+
+---
+
+## NOTA 1 - Aliran Pengguna Baharu
+
+**Masalah:** Bila user sign in guna Google, mereka terus masuk dashboard
+tanpa lengkapkan maklumat penting.
+
+**Penyelesaian yang perlu dibuat:**
+- Walaupun guna Google Sign-In, user baharu WAJIB daftar/lengkapkan profil dulu
+- Maklumat WAJIB yang perlu diisi:
+  - Nombor IC
+  - Nombor Lesen Memandu
+  - Nombor Telefon
+  - Maklumat peribadi lain yang berkaitan
+- User perlu VERIFIED sebelum boleh buat tempahan kereta
+- Selepas semua maklumat lengkap dan verified, baru redirect ke customer dashboard
+
+**Flow yang betul:**
+```
+Login/Signup (Google atau Email)
+       |
+       v
+Complete Profile Page (IC, Lesen, Telefon)
+       |
+       v
+Verification (Admin verify / Auto verify)
+       |
+       v
+Customer Dashboard (boleh buat tempahan)
+```
+
+---
+
+## NOTA 2 - Email Verification (Pengesahan Email)
+
+**Rujukan:** Macam sistem ChatGPT / OpenAI - hantar kod 6 digit ke email user.
+
+**Apa yang perlu dibuat:**
+- Bila user daftar guna email (bukan Google), Supabase hantar email pengesahan
+- User perlu buka email (Yahoo, Gmail, dll) dan klik link / masukkan kod
+- Selepas email disahkan, baru boleh login
+- Skrg auto-confirm ON untuk development, nanti tukar OFF bila siap
+
+**Flow Email Verification:**
+```
+User signup (email + password)
+       |
+       v
+"Check your inbox" page
+(Enter the code we just sent to hdanial211@yahoo.com)
+       |
+       v
+User buka email > klik verify / masuk kod
+       |
+       v
+Email verified > boleh login
+```
+
+**Setting Supabase yang perlu ditukar nanti:**
+- `mailer_autoconfirm`: false (skrg true untuk dev)
+- Setup SMTP (custom email sender - supaya email dari WeDRIVE bukan dari Supabase)
+- Custom email template (branding WeDRIVE)
+
+---
+
+## STATUS SEMASA
+
+| Item | Status |
+|------|--------|
+| Login Page (Email/Password) | SIAP |
+| Login Page (Google Sign-In) | SIAP |
+| Signup Page (Supabase Auth) | SIAP |
+| Email Verification | NANTI (auto-confirm ON untuk dev) |
+| Complete Profile Page | BELUM |
+| Admin Dashboard (Supabase) | BELUM |
+| Customer Dashboard (Supabase) | BELUM |
+
+---
+
+## CATATAN LAIN
+
+---
+
+## NOTA 3 - Gambar Kereta (Supabase Storage)
+
+**Masalah:** Gambar kereta skrg disimpan dalam folder `shared/model/` secara lokal.
+Selepas deploy ke Vercel, admin TIDAK BOLEH usik folder ini dari luar.
+
+**Keputusan:** Guna **Supabase Storage** (cloud) untuk simpan gambar kereta.
+
+**Kenapa BUKAN simpan lokal:**
+- Selepas deploy, xde siapa boleh usik folder/file
+- Nak tambah kereta baru = kena push ke GitHub = kena coding
+- Bukan cara yang betul untuk production
+
+**Flow yang betul (selepas siap):**
+```
+Admin Dashboard > Cars > Add New Car
+  > Isi nama, harga, spec
+  > Upload gambar kereta (drag & drop dari browser)
+  > Gambar auto upload ke Supabase Storage (cloud)
+  > URL gambar auto simpan dalam database (table cars)
+  > Klik Save
+  > Kereta baru terus muncul di website
+```
+
+**Apa yang perlu dibuat:**
+- Setup Supabase Storage bucket untuk gambar kereta
+- Migrate gambar sedia ada dari `shared/model/` ke Supabase Storage
+- Admin Cars page (Fasa 9) ada upload gambar UI
+- Semua 100% dari browser, ZERO coding selepas deploy
+
+**Status:** BELUM (buat masa Fasa 9)
+
+---
+
+## NOTA 4 - Format Folder Gambar Kereta (Auto-Detect)
+
+**Konsep:** Admin bagi gambar dalam bentuk folder / ZIP. System auto-detect gambar exterior dan interior.
+
+**Format folder yang admin perlu sediakan:**
+```
+NamaKereta/
+  exterior/
+    full-res/
+      frame-000.jpg    (200 gambar 360-degree view)
+      frame-001.jpg
+      frame-002.jpg
+      ...
+      frame-199.jpg
+  interior/
+    full-res/
+      pano_b.jpg       (back)
+      pano_d.jpg       (down)
+      pano_f.jpg       (front)
+      pano_l.jpg       (left)
+      pano_r.jpg       (right)
+      pano_u.jpg       (up, kalau ada)
+  placeholder.jpg      (gambar utama / thumbnail besar)
+  placeholder-low-res.jpg  (thumbnail kecil / blur)
+  thumb-sm.jpg         (thumbnail kecil)
+  source.json          (metadata kereta - optional)
+```
+
+**Contoh sedia ada:**
+```
+shared/model/
+  Sedan/
+    2023 BMW 320i M Sport 2.0/   (exterior: 200 frames, interior: 6 pano)
+    2024 Toyota Camry 2.5V/
+    2023 Honda City 1.5 V/
+    2023 Toyota Vios 1.5 G/
+  SUV/
+    2023 Mercedes-Benz GLA250 AMG Line 2.0/
+    2024 Proton X50 1.5 TGDI Flagship/
+    2024 Perodua Ativa 1.0T H/
+  Hatchback/
+    2022 Perodua Myvi 1.5 H/
+  MPV/
+    2019 Toyota Alphard G S C Package 2.5/
+```
+
+**Cara admin tambah kereta baru (selepas Fasa 9 siap):**
+```
+1. Admin masuk Admin Dashboard > Cars > Add New Car
+2. Upload folder / ZIP gambar kereta (ikut format di atas)
+3. System auto-detect:
+   - exterior/full-res/ > gambar 360 view
+   - interior/full-res/ > gambar panorama interior
+   - placeholder.jpg > gambar utama
+4. Isi maklumat kereta (nama, harga, spec)
+5. Klik Save
+6. Siap - kereta terus muncul di website
+```
+
+**Yang system kena buat (auto-detect):**
+- Scan folder exterior > ambil frame-140.jpg sebagai gambar utama (atau frame pertama)
+- Scan folder interior > ambil semua pano_*.jpg untuk 360 interior view
+- Upload semua ke Supabase Storage
+- Simpan URL dalam database (table cars, column images JSONB)
+
+**Status:** BELUM (buat masa Fasa 9)

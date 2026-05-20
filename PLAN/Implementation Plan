@@ -1,0 +1,199 @@
+# Migrasi WeDRIVE: Demo Mode ke Supabase (Real Database)
+
+Tukar keseluruhan sistem WeDRIVE daripada data dummy (`data.json`) kepada Supabase (PostgreSQL + Auth). Kerja dilakukan **satu page pada satu masa** - siap, test, baru pergi page seterusnya.
+
+**Kos: RM 0 (PERCUMA).** Semua servis Supabase yang digunakan adalah dalam Free Plan.
+
+**Pendekatan "Progressive Migration":** Setiap page ditukar satu per satu. Table database hanya dicipta bila sampai page berkenaan.
+
+**NOTA PENTING - User Baharu (Google/Email):**
+Walaupun sign in guna Google, user baharu WAJIB lengkapkan profil (IC, Lesen, Telefon) dan VERIFIED sebelum boleh buat tempahan.
+Flow: Login/Signup > Complete Profile > Verify > Dashboard
+
+---
+
+## Supabase Project Info
+
+- **Project:** WeDRIVE
+- **Region:** Singapore (ap-southeast-1)
+- **Project ID:** nigyovaqffwyinovivls
+- **URL:** https://nigyovaqffwyinovivls.supabase.co
+
+---
+
+## Fasa 0: Supabase Setup & Foundation - SIAP
+
+- [x] Setup Supabase project (WeDRIVE, Singapore)
+- [x] Create `shared/js/supabase-config.js`
+- [x] Rewrite `shared/js/api.js` (Firebase > Supabase)
+- [x] Enable Google OAuth provider
+- [x] Set site URL & redirect URIs
+- [x] Create admin user di Supabase Auth
+- [x] Push ke GitHub (`6.1.0`)
+
+---
+
+## Fasa 1: Login Page - SIAP
+
+**Page:** `account/pages/login/login.html`
+**Version:** `6.1.0` - `6.2.2`
+
+- [x] Email/password login (`signInWithPassword`)
+- [x] Google Sign-In (`signInWithOAuth`)
+- [x] Role check (admin/customer) dari table `admins`
+- [x] Redirect ke dashboard mengikut role
+- [x] Fix logout redirect loop (`6.2.2`)
+
+**Login Credentials:**
+- Admin: `admin@wedrive.my` / `admin123`
+
+---
+
+## Fasa 2: Signup Page - SIAP
+
+**Page:** `account/pages/signup/signup.html`
+**Version:** `6.2.0` - `6.2.3`
+
+- [x] Supabase Auth signup (`signUp`)
+- [x] Create customer record in `customers` table
+- [x] Google signup via OAuth
+- [x] Remove Apple button (not supported)
+- [x] Fix column mismatch (`6.2.3`)
+- [x] Enable auto-confirm for development
+
+**Table:** `customers` (id, customer_id, name, email, phone, ic, license, status, joined, auth_uid)
+
+---
+
+## Fasa 3: Guest Landing Page - SIAP
+
+**Page:** `index.html`
+**Version:** `6.3.0`
+
+- [x] Create `cars` table (8 kereta Malaysia)
+- [x] Create `marketing` table
+- [x] Create `config` table
+- [x] Add Supabase SDK to `index.html`
+
+**Table:** `cars` (id, name, plate, type, label, status, rate, price, fuel, transmission, seats, year, color, rating, reviews, ai, images)
+
+---
+
+## Fasa 4: Customer Dashboard - SETERUSNYA
+
+**Page:** `customer/pages/dashboard/customer.html`
+**API:** `WeDriveAPI.getCars()`
+
+### Apa yang berubah:
+- Senarai kereta dibaca dari Supabase
+- Supabase SDK sudah ditambah (`6.2.2`)
+
+---
+
+## Fasa 5: Car Details + Booking Flow
+
+**Pages:**
+- `customer/pages/car-details/car-details.html`
+- `customer/pages/car-details/booking/booking.html`
+- `customer/pages/car-details/booking/payment/payment.html`
+- `customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html`
+
+**API baru:** `WeDriveAPI.createBooking()`
+**Table baru:** `bookings`
+
+---
+
+## Fasa 6: My Bookings
+
+**Page:** `customer/pages/my-bookings/my-bookings.html`
+**API baru:** `WeDriveAPI.getCustomerBookings(userId)`
+
+---
+
+## Fasa 7: Customer Profile
+
+**Page:** `customer/pages/profile/profile.html`
+**API baru:** `WeDriveAPI.updateProfile()`
+
+---
+
+## Fasa 8: Admin Dashboard
+
+**Page:** `admin/pages/dashboard/admin.html`
+**API:** `WeDriveAPI.getAdminData()`
+
+---
+
+## Fasa 9: Admin Cars Management
+
+**Pages:**
+- `admin/pages/car/cars.html`
+- `admin/pages/car/car-detail/car-detail.html`
+
+**API baru:** `addCar()`, `updateCar()`, `deleteCar()`
+
+---
+
+## Fasa 10: Admin Bookings
+
+**Page:** `admin/pages/booking/bookings.html`
+
+---
+
+## Fasa 11: Admin Customers
+
+**Page:** `admin/pages/customer/customers.html`
+
+---
+
+## Fasa 12: Admin Reports, Calendar, Marketing, Settings, Chatbot
+
+**Pages:** reports, calendar, marketing, settings, chatbot
+**Table baru:** `reports`
+
+---
+
+## Fasa 13: Remaining Customer Pages
+
+- support, car-access, ai-insights
+
+---
+
+## Fasa 14: Guest Pages & Shared Components
+
+- pricing, explore-melaka, how-it-works, footer pages
+
+---
+
+## Fasa 15: Forgot Password
+
+**Page:** `account/pages/forgot-password/forgot-password.html`
+- Supabase Auth `resetPasswordForEmail()`
+
+---
+
+## Database Status
+
+| Table | Rekod | Status |
+|-------|-------|--------|
+| admins | 1 | AKTIF |
+| customers | 0 | AKTIF (signup akan tambah) |
+| cars | 8 | AKTIF |
+| marketing | 0 | AKTIF (kosong, guna dummy) |
+| config | 0 | AKTIF (kosong, guna dummy) |
+| bookings | - | BELUM CIPTA |
+| reports | - | BELUM CIPTA |
+| settings | - | BELUM CIPTA |
+
+---
+
+## Git Version History
+
+| Version | Tarikh | Perubahan |
+|---------|--------|-----------|
+| 6.1.0 | 20/05/2026 | Migrate Firebase to Supabase, email/password auth |
+| 6.2.0 | 20/05/2026 | Signup page Supabase Auth, customers table |
+| 6.2.1 | 20/05/2026 | Fix logout handler clear Supabase session |
+| 6.2.2 | 20/05/2026 | Fix logout redirect loop, Supabase SDK in dashboard |
+| 6.2.3 | 20/05/2026 | Fix signup column mismatch, enable auto-confirm |
+| 6.3.0 | 20/05/2026 | Guest Landing Page, cars table with 8 cars |
