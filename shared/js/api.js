@@ -575,6 +575,55 @@ window.WeDriveAPI = {
                 return { success: false };
             }
         }
+    },
+
+    /**
+     * Get bookings for a specific customer (by auth_uid).
+     * Used in: my-bookings.html
+     */
+    getCustomerBookings: async function (authUid) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            var data = await _loadDummyData();
+            return data.bookings || [];
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var result = await sb.from('bookings')
+                    .select('*')
+                    .eq('auth_uid', authUid)
+                    .order('start_date', { ascending: false });
+                if (result.error) throw result.error;
+                return result.data || [];
+            } catch (err) {
+                console.error('[WeDriveAPI] getCustomerBookings error:', err);
+                return [];
+            }
+        }
+    },
+
+    /**
+     * Get booked date ranges for a specific car.
+     * Used in: booking calendar (NOTA 5 - block booked dates)
+     */
+    getBookedDatesForCar: async function (carId) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            return [];
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var today = new Date().toISOString().split('T')[0];
+                var result = await sb.from('bookings')
+                    .select('start_date,end_date')
+                    .eq('car_id', carId)
+                    .in('status', ['Active', 'Pending', 'Completed'])
+                    .gte('end_date', today);
+                if (result.error) throw result.error;
+                return result.data || [];
+            } catch (err) {
+                console.error('[WeDriveAPI] getBookedDatesForCar error:', err);
+                return [];
+            }
+        }
     }
 
     // You can add more functions here later:
