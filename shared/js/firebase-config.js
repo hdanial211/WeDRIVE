@@ -13,7 +13,7 @@
 // Firebase configuration for wedrive-ce1a4
 var firebaseConfig = {
   apiKey: "AIzaSyCcmsgxoqowOsV57EOYmhnLa_z2tN_ZeiI",
-  authDomain: "wedrive.website",
+  authDomain: "wedrive-ce1a4.firebaseapp.com",
   projectId: "wedrive-ce1a4",
   storageBucket: "wedrive-ce1a4.firebasestorage.app",
   messagingSenderId: "24595163697",
