@@ -13,6 +13,16 @@ AI CAR RENTAL SYSTEM/
 |
 +-- index.html                  # Landing Page / Browse Cars (Entry Point)
 |
++-- firebase.json               # Firebase CLI config (WAJIB di root)
++-- .firebaserc                 # Firebase project linkage (WAJIB di root)
+|
++-- firebase/                   # Firebase Configuration & Scripts
+|   +-- firestore.rules         # Firestore Security Rules
+|   +-- firestore.indexes.json  # Firestore Index Definitions
+|   +-- migrate-data.js         # Skrip migrasi data.json ke Firestore (run sekali)
+|   +-- node_modules/           # Firebase Admin SDK dependencies (gitignored)
+|   +-- package.json            # NPM dependencies untuk migration script
+|
 +-- docs/                       # Dokumentasi Projek
 |   +-- PROJECT_STRUCTURE.md     # Struktur fail & panduan integrasi
 |   +-- FULL_SYSTEM_FLOWCHART.md # Carta alir sistem penuh
@@ -216,7 +226,8 @@ AI CAR RENTAL SYSTEM/
         +-- auth-guard.js       # Pelindung halaman (Auth Guard)
         +-- sidebar-loader.js   # Pemuat Sidebar Admin
         +-- navbar-loader.js    # Pemuat Navbar Global
-        +-- api.js              # API & CONFIGURATION (Pusat Database)
+        +-- api.js              # API & CONFIGURATION (Pusat Database - Firebase/Dummy)
+        +-- firebase-config.js  # Firebase SDK Initializer (Auth + Firestore)
         +-- chatbot.js          # Modul Utama WeDRIVE AI Chatbot
         +-- promo-banner.js     # Promo Banner Display (guest & customer pages)
         +-- anime.min.js        # Library animasi (Anime.js v3)

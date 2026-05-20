@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/__/auth/(.*)",
+      "destination": "https://wedrive-ce1a4.firebaseapp.com/__/auth/$1"
+    }
+  ]
+}

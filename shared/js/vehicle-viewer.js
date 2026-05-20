@@ -332,17 +332,38 @@
   }
 
   function makeButtonList(root, selector) {
+    var isModelSelector = selector.indexOf('model') !== -1;
     return safeAll(root, selector).filter(function (button) {
-      return button && button.getAttribute(selector.indexOf('data-vehicle-model') !== -1 ? 'data-vehicle-model' : 'data-vehicle-view');
+      if (!button) return false;
+      return isModelSelector
+        ? !!(button.getAttribute('data-vehicle-model') || button.getAttribute('data-hiw-model'))
+        : !!(button.getAttribute('data-vehicle-view') || button.getAttribute('data-hiw-view'));
     });
+  }
+
+  function findControlsScope(root, opts) {
+    var selector = root.getAttribute('data-vehicle-controls') || (opts && opts.controlsSelector);
+    var scoped;
+
+    if (selector) {
+      scoped = document.querySelector(selector);
+      if (scoped) return scoped;
+    }
+
+    scoped = root.closest('[data-vehicle-viewer-shell]');
+    if (scoped) return scoped;
+
+    return root;
   }
 
   function init(root, options) {
     if (!root || instanceMap.has(root)) return instanceMap.get(root) || null;
 
     var opts = options || {};
+    var controlsScope = findControlsScope(root, opts);
     var state = {
       root: root,
+      controlsScope: controlsScope,
       options: opts,
       modelKey: root.getAttribute('data-vehicle-default-model') || opts.defaultModel || 'bmw',
       viewMode: root.getAttribute('data-vehicle-default-view') || opts.defaultView || 'exterior',
@@ -369,8 +390,8 @@
       webglInteriorFailed: false,
       label: safeGet(root, '[data-vehicle-label], [data-hiw-model-label]'),
       status: safeGet(root, '[data-vehicle-status], [data-hiw-view-status]'),
-      modelButtons: safeAll(root, '[data-vehicle-model], [data-hiw-model]'),
-      viewButtons: safeAll(root, '[data-vehicle-view], [data-hiw-view]'),
+      modelButtons: makeButtonList(controlsScope, '[data-vehicle-model], [data-hiw-model]'),
+      viewButtons: makeButtonList(controlsScope, '[data-vehicle-view], [data-hiw-view]'),
       interiorYaw: 24,
       interiorPitch: -8,
       targetYaw: 24,

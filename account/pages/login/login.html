@@ -83,13 +83,9 @@
 
       <div class="divider" data-key="login_or">or continue with</div>
 
-      <button class="btn-social" onclick="alert('Google login coming soon!')">
+      <button class="btn-social" id="google-login-btn" onclick="handleGoogleLogin()">
         <img src="../../../shared/images/icons/google-color.svg" alt="Google" />
         <span data-key="login_google">Continue with Google</span>
-      </button>
-      <button class="btn-social" onclick="alert('Apple login coming soon!')">
-        <img src="../../../shared/logo/apple-logo.svg" alt="Apple" class="apple-logo" />
-        <span data-key="login_apple">Continue with Apple</span>
       </button>
 
       <div class="signup-link">
@@ -120,14 +116,14 @@
   <script>
     async function handleLogin(e) {
       e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const btn = document.getElementById('login-btn');
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var btn = document.getElementById('login-btn');
       btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Signing in...';
       btn.disabled = true;
 
       try {
-        const response = await window.WeDriveAPI.loginUser(email, password);
+        var response = await window.WeDriveAPI.loginUser(email, password);
 
         if (response.success) {
           // Save session to local storage for Auth Guard
@@ -143,7 +139,7 @@
             window.location.href = '../../../customer/pages/dashboard/customer.html';
           }
         } else {
-          alert('Login failed. Please check your credentials.');
+          alert(response.error || 'Login failed. Please check your credentials.');
           btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
           btn.disabled = false;
         }
@@ -154,11 +150,55 @@
         btn.disabled = false;
       }
     }
-    const style = document.createElement('style');
+
+    function handleGoogleLogin() {
+      // Redirect flow - page will redirect to Google, then back here
+      var btn = document.getElementById('google-login-btn');
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      btn.innerHTML = '<img src="../../../shared/images/icons/google-color.svg" alt="Google" /> Redirecting to Google...';
+      window.WeDriveAPI.loginWithGoogle();
+    }
+
+    var style = document.createElement('style');
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
   </script>
+  <!-- Firebase SDK (CDN - compat version for static HTML) -->
+  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore-compat.js"></script>
+  <script src="../../../shared/js/firebase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
+
+  <!-- Check Google Redirect Result on page load -->
+  <script>
+    (async function checkGoogleRedirect() {
+      try {
+        var result = await window.WeDriveAPI.handleGoogleRedirectResult();
+        if (result && result.success) {
+          // Google login succeeded after redirect
+          localStorage.setItem('wedrive_session', JSON.stringify({
+            email: result.user.email,
+            role: result.role,
+            timestamp: new Date().getTime()
+          }));
+
+          if (result.role === 'admin') {
+            window.location.href = '../../../admin/pages/dashboard/admin.html';
+          } else {
+            window.location.href = '../../../customer/pages/dashboard/customer.html';
+          }
+        } else if (result && result.error) {
+          alert('Google login failed: ' + result.error);
+        }
+        // If noRedirect = true, user just opened the page normally (no action needed)
+      } catch (err) {
+        console.error('Redirect check error:', err);
+      }
+    })();
+  </script>
+
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
 
