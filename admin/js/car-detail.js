@@ -16,7 +16,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const carId = parseInt(urlParams.get('id'));
 
 if (!carId) {
-  window.location.href = 'cars.html';
+  window.location.href = '../cars.html';
 }
 
 window.WeDriveAPI.getAdminData()
@@ -26,7 +26,7 @@ window.WeDriveAPI.getAdminData()
     carData = car.find(c => c.id === carId);
 
     if (!carData) {
-      window.location.href = 'cars.html';
+      window.location.href = '../cars.html';
       return;
     }
 
