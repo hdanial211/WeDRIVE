@@ -48,7 +48,7 @@
   var FOOTER_ITEMS = [
     { icon: 'settings', key: 'nav_settings', label: 'Settings', page: 'profile', href: '{base}customer/pages/profile/profile.html' },
     { icon: 'help', key: 'nav_support', label: 'Support', page: 'support', href: '{base}customer/pages/support/support.html' },
-    { icon: 'logout', key: 'nav_logout', label: 'Logout', page: 'logout', href: '{base}account/login.html', isLogout: true }
+    { icon: 'logout', key: 'nav_logout', label: 'Logout', page: 'logout', href: '{base}account/pages/login/login.html', isLogout: true }
   ];
 
   function detectActivePage() {
@@ -175,7 +175,28 @@
     renderUtilityActions();
 
     // Small delay to let DOM render
-    setTimeout(initSidebarToggle, 50);
+    setTimeout(function() {
+      initSidebarToggle();
+      // Attach logout handler
+      var logoutLinks = document.querySelectorAll('.sidebar-logout');
+      logoutLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var href = link.getAttribute('href');
+          // Clear all session data
+          localStorage.removeItem('wedrive_session');
+          localStorage.removeItem('wedrive_customer_profile');
+          // Call Supabase signOut if available
+          if (window.WeDriveAPI && window.WeDriveAPI.logoutUser) {
+            window.WeDriveAPI.logoutUser().then(function() {
+              window.location.href = href;
+            });
+          } else {
+            window.location.href = href;
+          }
+        });
+      });
+    }, 50);
   }
 
   if (document.readyState === 'loading') {
