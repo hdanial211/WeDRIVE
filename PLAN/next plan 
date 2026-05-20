@@ -304,3 +304,23 @@ Thailand:   +66  | 081-234-5678
 - Auto-format on keyup (mask input)
 
 **Status:** BELUM
+
+---
+
+## NOTA 8 - Transmission Hanya Auto / Manual
+
+**Masalah:** Sesetengah kereta dalam database ada transmission yang terlalu spesifik seperti "Auto (DCT)" dan "Auto (CVT)". Untuk customer, ini mengelirukan - mereka hanya perlu tahu sama ada kereta itu Auto atau Manual.
+
+**Data semasa yang perlu diperbaiki:**
+```
+ID 6: Proton X50    → "Auto (DCT)" → tukar ke "Auto"
+ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
+```
+
+**Apa yang perlu dibuat:**
+- Standardkan column `transmission` dalam table `cars` kepada hanya 2 nilai: `Auto` atau `Manual`
+- Update admin car management form supaya hanya bagi pilih dropdown: Auto / Manual
+- Buang semua variasi lain (DCT, CVT, AMT, AT, dll)
+- Update data sedia ada dalam database
+
+**Status:** BELUM
