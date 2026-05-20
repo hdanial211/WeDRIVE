@@ -818,6 +818,9 @@
 
     function pointerDown(event) {
       if (state.isAnimating) return;
+      if (event && event.target && event.target.closest && event.target.closest('button, a, input, select, textarea, [role="button"], [data-vehicle-model], [data-vehicle-view], [data-hiw-model], [data-hiw-view], .hiw-btn, .hiw-model-btn, .hiw-view-btn')) {
+        return;
+      }
       state.isDragging = true;
       state.dragStartX = event.clientX || (event.touches && event.touches[0].clientX) || 0;
       state.dragStartY = event.clientY || (event.touches && event.touches[0].clientY) || 0;
