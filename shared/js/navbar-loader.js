@@ -57,7 +57,7 @@
           <div class="user-av" id="user-av">CU</div>
           <span class="user-name" id="user-name-nav" data-key="nav_customer">Customer</span>
         </a>
-        <button class="btn-logout" onclick="window.location='{base}customer/pages/dashboard/customer.html'">
+        <button class="btn-logout" onclick="(function(){ var sb=window.supabaseClient; if(sb){sb.auth.signOut().then(function(){localStorage.clear();window.location='{base}account/pages/login/login.html';})}else{localStorage.clear();window.location='{base}account/pages/login/login.html';} })()">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
         </button>
@@ -76,7 +76,7 @@
           <div class="user-av" id="user-av">AD</div>
           <span class="user-name" id="user-name-nav">Admin</span>
         </div>
-        <button class="btn-logout" onclick="window.location='{base}admin/pages/dashboard/admin.html'">
+        <button class="btn-logout" onclick="(function(){ var sb=window.supabaseClient; if(sb){sb.auth.signOut().then(function(){localStorage.clear();window.location='{base}account/pages/login/login.html';})}else{localStorage.clear();window.location='{base}account/pages/login/login.html';} })()">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
         </button>

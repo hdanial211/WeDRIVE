@@ -51,6 +51,25 @@
         el.href = '#';
       }
     });
+
+    // Attach logout handler
+    var logoutBtn = container.querySelector('.nav-item.logout');
+    if (logoutBtn) {
+      logoutBtn.href = '#';
+      logoutBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var sb = window.supabaseClient;
+        if (sb) {
+          sb.auth.signOut().then(function () {
+            localStorage.clear();
+            window.location.href = base + 'account/pages/login/login.html';
+          });
+        } else {
+          localStorage.clear();
+          window.location.href = base + 'account/pages/login/login.html';
+        }
+      });
+    }
   }
 
   function setActiveItem(container, currentPage) {
