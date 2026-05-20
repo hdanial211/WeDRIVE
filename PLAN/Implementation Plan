@@ -97,38 +97,44 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 ---
 
-## Fasa 5: Car Details + Booking Flow - SETERUSNYA
+## Fasa 5: Car Details + Booking Flow - SIAP
 
 **Pages:**
 - `customer/pages/car-details/car-details.html`
 - `customer/pages/car-details/booking/booking.html`
 - `customer/pages/car-details/booking/payment/payment.html`
 - `customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html`
+**Version:** `6.6.0` - `6.7.0`
 
-**Apa yang perlu dibuat:**
-- [ ] Create `bookings` table di Supabase
-- [ ] Implement `WeDriveAPI.createBooking()` baca/tulis ke Supabase
-- [ ] Car-details page render data dari database (bukan hardcoded BMW)
-- [ ] Booking flow simpan booking ke database
-- [ ] Payment page baca customer profile dari database
+- [x] `bookings` table di Supabase (110 bookings migrated ke 2026)
+- [x] `WeDriveAPI.createBooking()` baca/tulis ke Supabase
+- [x] RLS policies untuk bookings table
+- [x] Booking flow simpan booking ke database
 
 ---
 
-## Fasa 6: My Bookings
+## Fasa 6: My Bookings - SIAP
 
 **Page:** `customer/pages/my-bookings/my-bookings.html`
+**Version:** `6.7.0`
 
-- [ ] `WeDriveAPI.getCustomerBookings(userId)` baca dari Supabase
-- [ ] Paparkan senarai booking pelanggan
+- [x] `WeDriveAPI.getCustomerBookings(authUid)` baca dari Supabase
+- [x] `WeDriveAPI.getBookedDatesForCar(carId)` untuk calendar blocking
+- [x] Dynamic rendering (stats, tabs, pagination, image mapping)
+- [x] Tested: 23 bookings untuk Ahmad, filter, pagination 4 pages
 
 ---
 
-## Fasa 7: Customer Profile
+## Fasa 7: Customer Profile - SIAP
 
 **Page:** `customer/pages/profile/profile.html`
+**Version:** `6.8.0`
 
-- [ ] `WeDriveAPI.updateProfile()` tulis ke Supabase
-- [ ] Baca profile data dari `customers` table
+- [x] `WeDriveAPI.getCustomerProfile(authUid)` baca dari Supabase
+- [x] `WeDriveAPI.updateCustomerProfile(authUid, data)` tulis ke Supabase
+- [x] Profile fields populate from database (name, email, phone, IC, license)
+- [x] Verified/Pending status based on IC + license presence
+- [x] Tested: Ahmad Bin Ali profile loaded correctly
 
 ---
 
