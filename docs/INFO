@@ -1,0 +1,122 @@
+# WeDRIVE - Maklumat Akaun & Sistem
+
+Dokumen ini mengandungi semua maklumat akaun dan akses untuk sistem WeDRIVE.
+
+---
+
+## ADMIN ACCOUNT
+
+| Email | Password | Role |
+|-------|----------|------|
+| admin@wedrive.my | admin123 | Admin |
+
+---
+
+## CUSTOMER ACCOUNTS
+
+| Nama | Email | Password | IC | Phone | Lesen |
+|------|-------|----------|----|-------|-------|
+| Ahmad Bin Ali | ahmad@wedrive.my | customer123 | 900101-14-5678 | 012-3456789 | DLR-1234567890 |
+| Siti Nurhaliza | siti@wedrive.my | customer123 | 920215-10-1234 | 013-9876543 | DLR-2345678901 |
+| Muhammad Faiz | faiz@wedrive.my | customer123 | 950830-06-7890 | 011-22334455 | DLR-3456789012 |
+| Nurul Aisyah | nurul@wedrive.my | customer123 | 980412-04-2345 | 014-5566778 | DLR-4567890123 |
+| Lee Wei Ming | weiming@wedrive.my | customer123 | 880625-08-4567 | 016-7788990 | DLR-5678901234 |
+
+---
+
+## BOOKING DATA (50 Tempahan)
+
+### Status Overview
+
+| Status | Jumlah | Keterangan |
+|--------|--------|------------|
+| Completed | 33 | Tempahan selesai |
+| Pending | 8 | Menunggu bayaran |
+| Active | 7 | Sedang berlangsung |
+| Cancelled | 2 | Dibatalkan (Refunded) |
+| **Total** | **50** | |
+
+### Bookings Per Customer
+
+| Customer | Jumlah Booking |
+|----------|---------------|
+| Ahmad Bin Ali | 11 |
+| Siti Nurhaliza | 11 |
+| Muhammad Faiz | 10 |
+| Nurul Aisyah | 9 |
+| Lee Wei Ming | 9 |
+
+### Booking Period
+
+- **Pertama:** 5 Jan 2025 (BK-2025-011)
+- **Terakhir:** 23 Jun 2025 (BK-2025-050)
+- **ID Format:** BK-2025-001 hingga BK-2025-050
+
+### Semua 8 kereta digunakan dalam bookings
+
+---
+
+## KERETA (8 Model)
+
+| ID | Nama | Plate | Jenis | Harga/Hari | Status |
+|----|------|-------|-------|------------|--------|
+| 1 | 2023 BMW 320i M Sport 2.0 | WDR 3388 | Sedan | RM 450 | Rented |
+| 2 | 2023 Mercedes-Benz GLA250 AMG Line 2.0 | MDN 2508 | SUV | RM 320 | Available |
+| 3 | 2024 Toyota Camry 2.5V | WDR 1239 | Sedan | RM 280 | Available |
+| 4 | 2022 Perodua Myvi 1.5 H | ABC 5678 | Hatchback | RM 120 | Available |
+| 5 | 2023 Honda City 1.5 V | DEF 9012 | Sedan | RM 180 | Rented |
+| 6 | 2024 Proton X50 1.5 TGDI Flagship | GHI 3456 | SUV | RM 200 | Available |
+| 7 | 2024 Perodua Ativa 1.0T H | JKL 7890 | SUV | RM 150 | Rented |
+| 8 | 2023 Toyota Vios 1.5 G | MNO 1234 | Sedan | RM 160 | Available |
+
+---
+
+## AKSES SISTEM
+
+| Item | URL |
+|------|-----|
+| Website (Live) | https://wedrive.website |
+| Website (Local) | http://127.0.0.1:5500 |
+| Supabase Dashboard | https://supabase.com/dashboard/project/nigyovaqffwyinovivls |
+| GitHub Repository | https://github.com/hdanial211/WeDRIVE |
+
+---
+
+## HALAMAN UTAMA
+
+| Halaman | URL (Local) |
+|---------|-------------|
+| Landing Page | /index.html |
+| Login | /account/pages/login/login.html |
+| Signup | /account/pages/signup/signup.html |
+| Customer Dashboard | /customer/pages/dashboard/customer.html |
+| Admin Dashboard | /admin/pages/dashboard/admin.html |
+
+---
+
+## DATABASE TABLES
+
+| Table | Rekod | Keterangan |
+|-------|-------|------------|
+| admins | 1 | Akaun admin |
+| customers | 5 | Akaun pelanggan |
+| cars | 8 | Senarai kereta |
+| bookings | 50 | Tempahan kereta |
+| marketing | 0 | Data pemasaran |
+| config | 0 | Konfigurasi sistem |
+
+---
+
+## GIT VERSION (TERKINI)
+
+| Version | Tarikh | Perubahan |
+|---------|--------|-----------|
+| 6.1.0 | 20/05/2026 | Migrate Firebase to Supabase |
+| 6.2.0 | 20/05/2026 | Signup page Supabase Auth |
+| 6.2.1 | 20/05/2026 | Fix logout handler |
+| 6.2.2 | 20/05/2026 | Fix logout redirect loop |
+| 6.2.3 | 20/05/2026 | Fix signup column mismatch |
+| 6.3.0 | 20/05/2026 | Guest Landing Page, cars table |
+| 6.4.0 | 20/05/2026 | Supabase SDK customer booking flow |
+| 6.5.0 | 20/05/2026 | Supabase SDK ALL remaining pages |
+| 6.6.0 | 20/05/2026 | Bookings table, 5 demo customers |
