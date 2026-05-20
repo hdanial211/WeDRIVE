@@ -62,9 +62,11 @@
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button class="filter-chip active" onclick="filterBookings('all', this)" data-key="filter_all">All</button>
+            <button class="filter-chip" onclick="filterBookings('Active', this)">Active</button>
             <button class="filter-chip" onclick="filterBookings('Confirmed', this)" data-key="bk_f_confirmed">Confirmed</button>
             <button class="filter-chip" onclick="filterBookings('Pending', this)" data-key="bk_f_pending">Pending</button>
             <button class="filter-chip" onclick="filterBookings('Completed', this)" data-key="bk_f_completed">Completed</button>
+            <button class="filter-chip" onclick="filterBookings('Cancelled', this)">Cancelled</button>
           </div>
           <div style="display:flex; gap:8px;">
             <div class="input-wrap-sm">

@@ -173,12 +173,18 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 ---
 
-## Fasa 10: Admin Bookings
+## Fasa 10: Admin Bookings - SIAP
 
 **Page:** `admin/pages/booking/bookings.html`
 
-- [ ] Paparkan semua bookings dari database
-- [ ] Update booking status (Approve/Reject/Complete)
+**Version:** `7.1.0`
+
+- [x] Paparkan semua bookings dari Supabase (enriched with car name)
+- [x] Stats: Total/Confirmed/Pending/Revenue
+- [x] Filter chips: All, Active, Confirmed, Pending, Completed, Cancelled
+- [x] Search by booking ID, customer name, car name
+- [x] Update booking status modal (Pending/Confirmed/Active/Completed/Cancelled)
+- [x] Status update sync ke Supabase
 
 ---
 
