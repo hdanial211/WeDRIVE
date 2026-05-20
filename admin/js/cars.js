@@ -149,7 +149,105 @@ function manageCar(id) {
 }
 
 function addNewCar() {
-  alert('Add New Car - Feature will be available when backend is ready.');
+  // Create modal if not exists
+  let modal = document.getElementById('add-car-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'add-car-modal';
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+    <div class="modal-container" style="max-width:600px;width:95%;">
+      <div class="modal-header">
+        <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">add_circle</span> Add New Car</h3>
+        <button class="modal-close-btn" onclick="closeAddCarModal()">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="add-car-form" class="form-grid" onsubmit="submitNewCar(event)">
+          <div class="form-group"><label>Vehicle Name</label><input type="text" id="new-name" required placeholder="e.g. 2024 Honda Civic 1.5 V" /></div>
+          <div class="form-group"><label>Plate Number</label><input type="text" id="new-plate" required placeholder="e.g. ABC 1234" /></div>
+          <div class="form-group"><label>Vehicle Type</label>
+            <select id="new-type"><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Hatchback">Hatchback</option><option value="MPV">MPV</option><option value="Coupe">Coupe</option><option value="Truck">Truck</option></select>
+          </div>
+          <div class="form-group"><label>Fuel Type</label>
+            <select id="new-fuel"><option value="Petrol">Petrol</option><option value="Diesel">Diesel</option><option value="Hybrid">Hybrid</option><option value="Electric">Electric</option></select>
+          </div>
+          <div class="form-group"><label>Transmission</label>
+            <select id="new-trans"><option value="Auto">Auto</option><option value="Manual">Manual</option></select>
+          </div>
+          <div class="form-group"><label>Seats</label>
+            <select id="new-seats"><option value="2">2</option><option value="4">4</option><option value="5" selected>5</option><option value="7">7</option><option value="8">8</option></select>
+          </div>
+          <div class="form-group"><label>Daily Rate (RM)</label><input type="number" id="new-rate" required placeholder="e.g. 200" min="1" /></div>
+          <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;margin-top:8px;">
+            <button type="button" class="btn-outline-sm" onclick="closeAddCarModal()">Cancel</button>
+            <button type="submit" class="btn-primary-sm" style="padding:10px 24px;" id="add-car-submit-btn">
+              <span class="material-icons-round" style="font-size:14px">add</span> Add Vehicle
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>`;
+    document.body.appendChild(modal);
+  }
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAddCarModal() {
+  const modal = document.getElementById('add-car-modal');
+  if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+}
+
+async function submitNewCar(e) {
+  e.preventDefault();
+  const btn = document.getElementById('add-car-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-icons-round" style="font-size:14px">hourglass_empty</span> Saving...';
+
+  const newCar = {
+    name: document.getElementById('new-name').value.trim(),
+    plate: document.getElementById('new-plate').value.trim().toUpperCase(),
+    type: document.getElementById('new-type').value,
+    label: document.getElementById('new-type').value,
+    fuel: document.getElementById('new-fuel').value,
+    transmission: document.getElementById('new-trans').value,
+    trans: document.getElementById('new-trans').value,
+    seats: parseInt(document.getElementById('new-seats').value),
+    rate: 'RM ' + document.getElementById('new-rate').value + '/day',
+    status: 'Available',
+    images: []
+  };
+
+  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+    try {
+      const result = await window.supabaseClient.from('cars').insert([newCar]).select();
+      if (result.error) throw result.error;
+      allCar.push(result.data[0]);
+      populateCarStats(allCar);
+      renderCarCards(allCar);
+      renderCarTable(allCar);
+      closeAddCarModal();
+      document.getElementById('add-car-form').reset();
+      alert('New vehicle added to database!');
+    } catch (err) {
+      console.error('[WeDRIVE] Add car error:', err);
+      alert('Error adding vehicle: ' + err.message);
+    }
+  } else {
+    newCar.id = Date.now();
+    allCar.push(newCar);
+    populateCarStats(allCar);
+    renderCarCards(allCar);
+    renderCarTable(allCar);
+    closeAddCarModal();
+    document.getElementById('add-car-form').reset();
+    alert('New vehicle added (demo mode)');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<span class="material-icons-round" style="font-size:14px">add</span> Add Vehicle';
 }
 
 /* ── Cars List Modal ── */

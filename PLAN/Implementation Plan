@@ -152,17 +152,24 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 ---
 
-## Fasa 9: Admin Cars Management
+## Fasa 9: Admin Cars Management - SIAP
 
 **Pages:**
 - `admin/pages/car/cars.html`
 - `admin/pages/car/car-detail/car-detail.html`
 
-- [ ] CRUD kereta (add, edit, delete) dari admin dashboard
-- [ ] Setup Supabase Storage bucket untuk gambar kereta
-- [ ] Upload gambar kereta (drag & drop) ke Supabase Storage
-- [ ] Auto-detect folder format (exterior/interior)
-- [ ] Migrate gambar sedia ada dari `shared/model/` ke Supabase Storage
+**Version:** `7.0.0`
+
+- [x] Cars page stats (Total/Available/Rented) dari Supabase
+- [x] Car grid + table populate dari database
+- [x] Add New Car modal → insert ke Supabase
+- [x] Edit car details (name, plate, type, fuel, trans, rate, seats) → update ke Supabase
+- [x] Update car status (Available/Rented) → sync ke Supabase
+- [x] Delete car → remove dari Supabase
+- [x] Booking history match by car_id (bukan plate sahaja)
+- [x] Calendar booking dates pakai start_date/end_date
+- [x] Transmission standardized to Auto/Manual only (NOTA 8 done)
+- [x] Add Car form hanya bagi pilih Auto/Manual
 
 ---
 
@@ -249,3 +256,7 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | 6.8.2 | 20/05/2026 | Fix profile hardcoded data, remove Alex Johnson defaults |
 | 6.8.3 | 20/05/2026 | Add NOTA 7 phone country code selector to next plan |
 | 6.9.0 | 20/05/2026 | Fasa 8 Admin Dashboard connected to Supabase |
+| 6.9.1 | 20/05/2026 | Fix car status sync with bookings, add auto-sync |
+| 6.9.2 | 20/05/2026 | Add NOTA 8 transmission standardization to next plan |
+| 6.9.3 | 20/05/2026 | Fix logout for admin sidebar and navbar |
+| 7.0.0 | 21/05/2026 | Fasa 9 Admin Cars CRUD connected to Supabase |

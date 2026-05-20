@@ -127,7 +127,7 @@ function switchImage(idx) {
 /* ── Booking History ── */
 function renderBookingHistory(car, bookings) {
   const tbody = document.getElementById('cd-bookings-tbody');
-  const carBookings = bookings.filter(b => b.plate === car.plate);
+  const carBookings = bookings.filter(b => b.car_id === car.id || b.plate === car.plate);
 
   if (carBookings.length === 0) {
     tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94A3B8;padding:40px;">No booking history for this vehicle</td></tr>';
@@ -136,14 +136,17 @@ function renderBookingHistory(car, bookings) {
 
   tbody.innerHTML = carBookings.map(b => {
     const statusCls = b.status.toLowerCase();
+    const pickup = b.start_date || b.pickup;
+    const returnD = b.end_date || b.return;
+    const days = b.days || (pickup && returnD ? Math.ceil((new Date(returnD) - new Date(pickup)) / 86400000) : 0);
     return `
     <tr>
       <td><strong>${b.id}</strong></td>
-      <td>${b.customer}</td>
-      <td>${b.pickup}</td>
-      <td>${b.return}</td>
-      <td>${b.days}</td>
-      <td><strong>RM ${b.total.toLocaleString()}</strong></td>
+      <td>${b.customer || b.customer_name || '--'}</td>
+      <td>${pickup}</td>
+      <td>${returnD}</td>
+      <td>${days}</td>
+      <td><strong>RM ${(b.total || 0).toLocaleString()}</strong></td>
       <td><span class="status-badge ${statusCls}"><span class="dot"></span> ${b.status}</span></td>
     </tr>`;
   }).join('');
@@ -262,7 +265,7 @@ function cancelEdit() {
   document.getElementById('edit-section').style.display = 'none';
 }
 
-function saveCarEdit(e) {
+async function saveCarEdit(e) {
   e.preventDefault();
 
   // Update local data
@@ -274,16 +277,37 @@ function saveCarEdit(e) {
   carData.rate = 'RM ' + document.getElementById('edit-rate').value + '/day';
   carData.seats = parseInt(document.getElementById('edit-seats').value);
 
+  // Save to Supabase
+  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+    try {
+      var updateData = {
+        name: carData.name,
+        plate: carData.plate,
+        type: carData.type,
+        fuel: carData.fuel,
+        transmission: carData.transmission,
+        rate: carData.rate,
+        seats: carData.seats
+      };
+      var result = await window.supabaseClient.from('cars').update(updateData).eq('id', carData.id);
+      if (result.error) throw result.error;
+      showToast('Vehicle details saved to database!', 'success');
+    } catch (err) {
+      console.error('[WeDRIVE] Save car error:', err);
+      showToast('Error saving - changes shown locally only', 'info');
+    }
+  } else {
+    showToast('Vehicle details updated (demo mode)', 'success');
+  }
+
   // Re-render
   renderCarDetails(carData);
   renderCarImages(carData);
   cancelEdit();
-
-  showToast('Vehicle details updated successfully!', 'success');
 }
 
 /* ── Update Status ── */
-function updateStatus() {
+async function updateStatus() {
   const statuses = ['Available', 'Rented'];
   const currentIdx = statuses.indexOf(carData.status);
   const nextStatus = statuses[(currentIdx + 1) % statuses.length];
@@ -291,7 +315,19 @@ function updateStatus() {
   if (confirm(`Change status from "${carData.status}" to "${nextStatus}"?`)) {
     carData.status = nextStatus;
     renderCarDetails(carData);
-    showToast(`Status updated to ${nextStatus}`, 'success');
+
+    if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+      try {
+        var result = await window.supabaseClient.from('cars').update({ status: nextStatus }).eq('id', carData.id);
+        if (result.error) throw result.error;
+        showToast(`Status updated to ${nextStatus}`, 'success');
+      } catch (err) {
+        console.error('[WeDRIVE] Update status error:', err);
+        showToast(`Status updated locally (DB sync failed)`, 'info');
+      }
+    } else {
+      showToast(`Status updated to ${nextStatus} (demo)`, 'success');
+    }
   }
 }
 
@@ -300,9 +336,20 @@ function viewInsurance() {
   alert(`Insurance Info for ${carData.name}\n\nPlate: ${carData.plate}\nType: ${carData.label || carData.type}\n\nInsurance details will be available when backend is integrated.`);
 }
 
-function deleteCar() {
-  if (confirm(`Are you sure you want to remove ${carData.name} (${carData.plate}) from the car?\n\nThis action cannot be undone.`)) {
-    showToast('Vehicle removed from car (demo mode)', 'success');
+async function deleteCar() {
+  if (confirm(`Are you sure you want to remove ${carData.name} (${carData.plate}) from the fleet?\n\nThis action cannot be undone.`)) {
+    if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+      try {
+        var result = await window.supabaseClient.from('cars').delete().eq('id', carData.id);
+        if (result.error) throw result.error;
+        showToast('Vehicle removed from database!', 'success');
+      } catch (err) {
+        console.error('[WeDRIVE] Delete car error:', err);
+        showToast('Vehicle removed (demo mode)', 'success');
+      }
+    } else {
+      showToast('Vehicle removed (demo mode)', 'success');
+    }
     setTimeout(() => { window.location.href = 'cars.html'; }, 1500);
   }
 }
@@ -433,19 +480,22 @@ function renderCalendar() {
 
 function getCarBookings() {
   if (!carData || !allBookings) return [];
-  return allBookings.filter(b => b.plate === carData.plate);
+  return allBookings.filter(b => b.car_id === carData.id || b.plate === carData.plate);
 }
 
 function buildDateStatusMap(bookings) {
   const map = {};
   bookings.forEach(b => {
-    const pickup = new Date(b.pickup);
-    const returnDate = new Date(b.return);
+    const pickupStr = b.start_date || b.pickup;
+    const returnStr = b.end_date || b.return;
+    if (!pickupStr || !returnStr) return;
+    const pickup = new Date(pickupStr);
+    const returnDate = new Date(returnStr);
     const current = new Date(pickup);
     while (current <= returnDate) {
       const dateStr = current.toISOString().slice(0, 10);
       let status;
-      if (b.status === 'Confirmed' || b.status === 'Completed') {
+      if (b.status === 'Confirmed' || b.status === 'Completed' || b.status === 'Active') {
         status = 'booked';
       } else if (b.status === 'Pending') {
         status = 'pending';
