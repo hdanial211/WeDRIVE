@@ -5,7 +5,7 @@ yang perlu dilaksanakan pada masa akan datang.
 
 ---
 
-## NOTA PENTING - Aliran Pengguna Baharu
+## NOTA 1 - Aliran Pengguna Baharu
 
 **Masalah:** Bila user sign in guna Google, mereka terus masuk dashboard
 tanpa lengkapkan maklumat penting.
@@ -36,13 +36,46 @@ Customer Dashboard (boleh buat tempahan)
 
 ---
 
+## NOTA 2 - Email Verification (Pengesahan Email)
+
+**Rujukan:** Macam sistem ChatGPT / OpenAI - hantar kod 6 digit ke email user.
+
+**Apa yang perlu dibuat:**
+- Bila user daftar guna email (bukan Google), Supabase hantar email pengesahan
+- User perlu buka email (Yahoo, Gmail, dll) dan klik link / masukkan kod
+- Selepas email disahkan, baru boleh login
+- Skrg auto-confirm ON untuk development, nanti tukar OFF bila siap
+
+**Flow Email Verification:**
+```
+User signup (email + password)
+       |
+       v
+"Check your inbox" page
+(Enter the code we just sent to hdanial211@yahoo.com)
+       |
+       v
+User buka email > klik verify / masuk kod
+       |
+       v
+Email verified > boleh login
+```
+
+**Setting Supabase yang perlu ditukar nanti:**
+- `mailer_autoconfirm`: false (skrg true untuk dev)
+- Setup SMTP (custom email sender - supaya email dari WeDRIVE bukan dari Supabase)
+- Custom email template (branding WeDRIVE)
+
+---
+
 ## STATUS SEMASA
 
 | Item | Status |
 |------|--------|
 | Login Page (Email/Password) | SIAP |
 | Login Page (Google Sign-In) | SIAP |
-| Signup Page | BELUM |
+| Signup Page (Supabase Auth) | SIAP |
+| Email Verification | NANTI (auto-confirm ON untuk dev) |
 | Complete Profile Page | BELUM |
 | Admin Dashboard (Supabase) | BELUM |
 | Customer Dashboard (Supabase) | BELUM |
