@@ -33,8 +33,8 @@
         <!-- Profile User Card + Inner Nav -->
         <aside class="pf-inner-nav">
           <div class="pf-user-card">
-            <img class="pf-user-avatar" src="../../../shared/logo/wedrive-icon.png" alt="Alex Johnson" />
-            <div class="pf-user-name" id="pf-user-name">Alex Johnson</div>
+            <img class="pf-user-avatar" src="../../../shared/logo/wedrive-icon.png" alt="User Avatar" />
+            <div class="pf-user-name" id="pf-user-name">Loading...</div>
             <div class="pf-user-tier">Premium Member</div>
           </div>
           <nav class="pf-inner-nav-sticky">
@@ -93,14 +93,14 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">badge</span> Basic Details</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value="Alex"
+                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value=""
                     aria-label="First Name" title="First Name" readonly /></div>
-                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value="Johnson"
+                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value=""
                     aria-label="Last Name" title="Last Name" readonly /></div>
-                <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value="15/10/1985"
+                <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value=""
                     aria-label="Date of Birth" title="Date of Birth" readonly /></div>
                 <div class="pf-field full"><label>IC / Passport</label><input type="text" id="pf-identity"
-                    value="900101-14-5678" aria-label="IC or Passport" title="IC or Passport" readonly /></div>
+                    value="" aria-label="IC or Passport" title="IC or Passport" readonly /></div>
               </div>
             </section>
 
@@ -110,19 +110,19 @@
               <div class="pf-form-grid">
                 <div class="pf-field full"><label>Email Address <span class="pf-verified-tag"><span
                         class="material-icons-round">verified</span> Verified</span></label><input type="email"
-                    id="pf-email" value="alex.johnson@example.com" aria-label="Email Address" title="Email Address"
+                    id="pf-email" value="" aria-label="Email Address" title="Email Address"
                     readonly /></div>
                 <div class="pf-field full"><label>Phone Number</label><input type="tel" id="pf-phone"
-                    value="+60 11-1234 5678" aria-label="Phone Number" title="Phone Number" readonly /></div>
+                    value="" aria-label="Phone Number" title="Phone Number" readonly /></div>
               </div>
               <h4 class="pf-sub-title">Residential Address</h4>
               <div class="pf-form-grid">
                 <div class="pf-field full"><label>Street Address</label><input type="text" id="pf-street"
-                    value="123 Jalan Melaka Raya, Suite 400" aria-label="Street Address" title="Street Address"
+                    value="" aria-label="Street Address" title="Street Address"
                     readonly /></div>
-                <div class="pf-field"><label>City</label><input type="text" id="pf-city" value="Melaka"
+                <div class="pf-field"><label>City</label><input type="text" id="pf-city" value=""
                     aria-label="City" title="City" readonly /></div>
-                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" id="pf-zip" value="75000"
+                <div class="pf-field"><label>Zip / Postal Code</label><input type="text" id="pf-zip" value=""
                     aria-label="Zip or Postal Code" title="Zip or Postal Code" readonly /></div>
               </div>
             </section>
@@ -132,9 +132,9 @@
               <h3 class="pf-section-title"><span class="material-icons-round">id_card</span> Driving License</h3>
               <div class="pf-form-grid">
                 <div class="pf-field"><label>License Number</label><input type="text" id="pf-license"
-                    value="DLR-9876543210" aria-label="License Number" title="License Number" readonly /></div>
+                    value="" aria-label="License Number" title="License Number" readonly /></div>
                 <div class="pf-field"><label>Expiry Date</label><input type="text" id="pf-license-expiry"
-                    value="15/10/2028" aria-label="Expiry Date" title="Expiry Date" readonly /></div>
+                    value="" aria-label="Expiry Date" title="Expiry Date" readonly /></div>
               </div>
             </section>
 
@@ -184,7 +184,7 @@
                 <div class="pf-otp-stack">
                   <div class="pf-field full">
                     <label>Verification Contact Number</label>
-                    <input type="tel" id="pf-reverify-phone" value="+60 11-1234 5678"
+                    <input type="tel" id="pf-reverify-phone" value=""
                       aria-label="Verification Contact Number" title="Verification Contact Number"
                       placeholder="+60 12-345 6789" />
                   </div>
@@ -359,7 +359,7 @@
                 <div class="pf-pay-card-footer">
                   <div>
                     <div class="pf-pay-label">Cardholder Name</div>
-                    <div class="pf-pay-value">ALEX JOHNSON</div>
+                    <div class="pf-pay-value" id="pf-pay-cardholder">-</div>
                   </div>
                   <div>
                     <div class="pf-pay-label">Expires</div>
@@ -583,18 +583,18 @@
   <script>
     var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
     var defaultProfileState = {
-      firstName: 'Alex',
-      lastName: 'Johnson',
-      dob: '15/10/1985',
-      email: 'alex.johnson@example.com',
-      phone: '+60 11-1234 5678',
-      street: '123 Jalan Melaka Raya, Suite 400',
-      city: 'Melaka',
-      zip: '75000',
-      license: 'DLR-9876543210',
-      licenseExpiry: '15/10/2028',
-      identity: '900101-14-5678',
-      verificationStatus: 'Verified'
+      firstName: '',
+      lastName: '',
+      dob: '',
+      email: '',
+      phone: '',
+      street: '',
+      city: '',
+      zip: '',
+      license: '',
+      licenseExpiry: '',
+      identity: '',
+      verificationStatus: 'Pending'
     };
     var profileDocUploads = {
       icFront: null,
@@ -662,18 +662,20 @@
     }
 
     function getProfileVerificationDraft() {
+      // Use current form values (from Supabase) as base for verification draft
+      var current = mergeProfileState(readStoredProfile());
       return {
-        firstName: 'Nur',
-        lastName: 'Aisyah',
-        dob: '12/08/1994',
-        identity: '940812-04-6218',
-        email: 'nur.aisyah@example.com',
-        phone: (document.getElementById('pf-reverify-phone') || {}).value || defaultProfileState.phone,
-        street: '88 Jalan Kota Laksamana, Melaka',
-        city: 'Melaka',
-        zip: '75200',
-        license: 'MDB-12004598',
-        licenseExpiry: '22/11/2029',
+        firstName: current.firstName || (document.getElementById('pf-first-name') || {}).value || '',
+        lastName: current.lastName || (document.getElementById('pf-last-name') || {}).value || '',
+        dob: current.dob || (document.getElementById('pf-dob') || {}).value || '',
+        identity: current.identity || (document.getElementById('pf-identity') || {}).value || '',
+        email: current.email || (document.getElementById('pf-email') || {}).value || '',
+        phone: (document.getElementById('pf-reverify-phone') || {}).value || current.phone || '',
+        street: current.street || (document.getElementById('pf-street') || {}).value || '',
+        city: current.city || (document.getElementById('pf-city') || {}).value || '',
+        zip: current.zip || (document.getElementById('pf-zip') || {}).value || '',
+        license: current.license || (document.getElementById('pf-license') || {}).value || '',
+        licenseExpiry: current.licenseExpiry || (document.getElementById('pf-license-expiry') || {}).value || '',
         verificationStatus: 'Verified'
       };
     }
@@ -948,6 +950,11 @@
             verificationStatus: (profile.ic && profile.license) ? 'Verified' : 'Pending'
           };
           applyProfileState(supabaseState);
+          // Persist to localStorage so OTP and other functions use correct data
+          persistProfileState(supabaseState);
+          // Update payment cardholder name
+          var cardHolder = document.getElementById('pf-pay-cardholder');
+          if (cardHolder) cardHolder.textContent = (firstName + ' ' + lastName).trim().toUpperCase() || '-';
           // Update verification banner
           var verStatus = document.getElementById('pf-verification-status');
           if (verStatus) {

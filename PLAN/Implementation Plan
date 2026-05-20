@@ -215,11 +215,11 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | Table | Rekod | Status |
 |-------|-------|--------|
 | admins | 1 | AKTIF |
-| customers | 0 | AKTIF (signup akan tambah) |
+| customers | 7+ | AKTIF (signup + demo accounts) |
 | cars | 8 | AKTIF |
+| bookings | 110 | AKTIF (migrated ke 2026, RLS enabled) |
 | marketing | 0 | AKTIF (kosong, guna dummy) |
 | config | 0 | AKTIF (kosong, guna dummy) |
-| bookings | - | BELUM CIPTA (Fasa 5) |
 | settings | - | BELUM CIPTA (Fasa 12) |
 | reports | - | BELUM CIPTA (Fasa 12) |
 
@@ -237,3 +237,8 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | 6.3.0 | 20/05/2026 | Guest Landing Page, cars table with 8 cars |
 | 6.4.0 | 20/05/2026 | Add Supabase SDK to customer booking flow pages |
 | 6.5.0 | 20/05/2026 | Add Supabase SDK to ALL remaining 18 pages |
+| 6.6.0 | 20/05/2026 | Booking flow connected to Supabase, createBooking API |
+| 6.7.0 | 20/05/2026 | My Bookings dynamic from Supabase, getCustomerBookings API |
+| 6.8.0 | 20/05/2026 | Customer Profile connected to Supabase |
+| 6.8.1 | 20/05/2026 | Update Implementation Plan, mark Fasa 5-7 SIAP |
+| 6.8.2 | 20/05/2026 | Fix profile hardcoded data, remove Alex Johnson defaults |
