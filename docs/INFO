@@ -24,33 +24,35 @@ Dokumen ini mengandungi semua maklumat akaun dan akses untuk sistem WeDRIVE.
 
 ---
 
-## BOOKING DATA (50 Tempahan)
+## BOOKING DATA (110 Tempahan)
 
 ### Status Overview
 
 | Status | Jumlah | Keterangan |
 |--------|--------|------------|
-| Completed | 33 | Tempahan selesai |
-| Pending | 8 | Menunggu bayaran |
-| Active | 7 | Sedang berlangsung |
+| Completed | 69 | Tempahan selesai |
+| Pending | 37 | Menunggu bayaran |
+| Active | 2 | Sedang berlangsung |
 | Cancelled | 2 | Dibatalkan (Refunded) |
-| **Total** | **50** | |
+| **Total** | **110** | |
 
 ### Bookings Per Customer
 
 | Customer | Jumlah Booking |
 |----------|---------------|
-| Ahmad Bin Ali | 11 |
-| Siti Nurhaliza | 11 |
-| Muhammad Faiz | 10 |
-| Nurul Aisyah | 9 |
-| Lee Wei Ming | 9 |
+| Ahmad Bin Ali | 23 |
+| Siti Nurhaliza | 23 |
+| Muhammad Faiz | 22 |
+| Nurul Aisyah | 21 |
+| Lee Wei Ming | 21 |
 
 ### Booking Period
 
-- **Pertama:** 5 Jan 2025 (BK-2025-011)
-- **Terakhir:** 23 Jun 2025 (BK-2025-050)
-- **ID Format:** BK-2025-001 hingga BK-2025-050
+- **Terawal:** 2 Jan 2026 (BK-2026-051)
+- **Terakhir:** 1 Oct 2026 (BK-2026-110)
+- **Sebelum 20 May 2026:** 71 bookings (mostly Completed)
+- **Selepas 20 May 2026:** 39 bookings (mostly Pending)
+- **ID Format:** BK-2026-001 hingga BK-2026-110
 
 ### Semua 8 kereta digunakan dalam bookings
 
@@ -101,7 +103,7 @@ Dokumen ini mengandungi semua maklumat akaun dan akses untuk sistem WeDRIVE.
 | admins | 1 | Akaun admin |
 | customers | 5 | Akaun pelanggan |
 | cars | 8 | Senarai kereta |
-| bookings | 50 | Tempahan kereta |
+| bookings | 110 | Tempahan kereta |
 | marketing | 0 | Data pemasaran |
 | config | 0 | Konfigurasi sistem |
 
