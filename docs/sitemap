@@ -1,0 +1,347 @@
+================================================================================
+                         WeDRIVE - SYSTEM SITEMAP
+                    AI-Powered Car Rental System (Melaka)
+================================================================================
+
+  Jumlah Pages: 30 pages (tidak termasuk docs/stitch-reference)
+  Modules: 5 (Guest, Account, Customer, Admin, Shared)
+  Database: Supabase (PostgreSQL)
+  Auth: Supabase Auth (Email/Password)
+
+================================================================================
+
+
+  WeDRIVE System
+  |
+  |
+  |-- [GUEST MODULE] -- Public pages, no login required (Top Navbar)
+  |   |
+  |   |-- index.html ..................... Landing Page (Homepage)
+  |   |                                   - Hero section, featured cars
+  |   |                                   - Search bar, call-to-action
+  |   |
+  |   |-- guest/pages/
+  |   |   |-- pricing/pricing.html ...... Pricing Page
+  |   |   |                               - All cars with daily rates
+  |   |   |                               - Filter by type/price
+  |   |   |
+  |   |   |-- explore-melaka/ ........... Explore Melaka Page
+  |   |   |   explore-melaka.html        - Tourist spots & attractions
+  |   |   |                               - Map integration
+  |   |   |
+  |   |   |-- how-it-works/ ............ How It Works Page
+  |   |       how-it-works.html          - Step-by-step rental guide
+  |   |                                   - FAQ section
+  |   |
+  |   |-- [Navigation: Top Navbar]
+  |       Loaded by: shared/js/navbar-loader.js
+  |
+  |
+  |-- [ACCOUNT MODULE] -- Authentication pages (Standalone, no nav)
+  |   |
+  |   |-- account/pages/
+  |   |   |-- login/login.html .......... Login Page
+  |   |   |                               - Email/Password login
+  |   |   |                               - Google Sign-In (OAuth)
+  |   |   |                               - Role-based redirect (Admin/Customer)
+  |   |   |
+  |   |   |-- signup/signup.html ........ Sign Up Page
+  |   |                                   - Full name, email, password
+  |   |                                   - IC, phone, license
+  |   |                                   - Supabase Auth + customers table
+  |   |
+  |   |-- [CSS: account/css/auth.css]
+  |   |-- [Auth Guard: DISABLED during development]
+  |
+  |
+  |-- [CUSTOMER MODULE] -- Logged-in customer pages (Sidebar navigation)
+  |   |
+  |   |-- customer/pages/
+  |   |   |
+  |   |   |-- dashboard/ ............... Customer Dashboard
+  |   |   |   customer.html              - Welcome message, quick stats
+  |   |   |                               - Recent bookings overview
+  |   |   |                               - Quick action buttons
+  |   |   |
+  |   |   |-- car-details/ ............. Car Details Page
+  |   |   |   car-details.html           - Full car specifications
+  |   |   |                               - Image gallery
+  |   |   |                               - "Book Now" button
+  |   |   |   |
+  |   |   |   |-- booking/ ............. Booking Form
+  |   |   |   |   booking.html           - Date picker (pickup/return)
+  |   |   |   |                           - Location selection
+  |   |   |   |                           - Price calculation
+  |   |   |   |   |
+  |   |   |   |   |-- payment/ ......... Payment Page
+  |   |   |   |       payment.html       - Payment method selection
+  |   |   |   |                           - Order summary
+  |   |   |   |       |
+  |   |   |   |       |-- booking-confirmed/
+  |   |   |   |           booking-        Booking Confirmation
+  |   |   |   |           confirmed.html  - Booking receipt
+  |   |   |   |                           - Booking ID & details
+  |   |   |   |                           - Download/print receipt
+  |   |   |
+  |   |   |-- my-bookings/ ............. My Bookings Page
+  |   |   |   my-bookings.html           - All bookings list
+  |   |   |                               - Filter: Active/Completed/Cancelled
+  |   |   |                               - View receipt
+  |   |   |   |
+  |   |   |   |-- receipt/ ............. Booking Receipt
+  |   |   |       receipt.html           - Detailed booking receipt
+  |   |   |                               - Print-friendly layout
+  |   |   |
+  |   |   |-- profile/ ................. User Profile Page
+  |   |   |   profile.html               - Personal info (name, IC, phone)
+  |   |   |                               - Edit profile
+  |   |   |                               - Supabase connected
+  |   |   |
+  |   |   |-- support/ ................. Support Page
+  |   |   |   support.html               - FAQ accordion
+  |   |   |                               - Contact form
+  |   |   |                               - Live chat (chatbot)
+  |   |   |
+  |   |   |-- car-access/ .............. Car Access Page
+  |   |   |   car-access.html            - Digital car key
+  |   |   |                               - Car status monitoring
+  |   |   |
+  |   |   |-- ai-insights/ ............. AI Insights Page
+  |   |       ai-insights.html           - AI-powered recommendations
+  |   |                                   - Driving analytics
+  |   |
+  |   |-- [Navigation: Customer Sidebar]
+  |   |   Generated by: customer/js/sidebar-loader.js
+  |   |
+  |   |-- [CSS: customer/css/customer.css]
+  |
+  |
+  |-- [ADMIN MODULE] -- Admin panel pages (Sidebar navigation)
+  |   |
+  |   |-- admin/pages/
+  |   |   |
+  |   |   |-- [MAIN]
+  |   |   |   |
+  |   |   |   |-- dashboard/ ........... Admin Dashboard
+  |   |   |   |   admin.html             - Stats cards (vehicles, rentals, revenue)
+  |   |   |   |                           - Quick management links
+  |   |   |   |                           - Supabase connected
+  |   |   |   |
+  |   |   |   |-- car/ ................. Cars Management
+  |   |   |   |   cars.html              - All cars grid view
+  |   |   |   |                           - Add/Edit/Delete car (CRUD)
+  |   |   |   |                           - Status badges (Available/Rented/Maintenance)
+  |   |   |   |   |
+  |   |   |   |   |-- car-detail/ ....... Car Detail / Edit
+  |   |   |   |       car-detail.html    - Full car editing form
+  |   |   |   |                           - Image upload
+  |   |   |   |                           - Specifications editing
+  |   |   |   |
+  |   |   |   |-- booking/ ............. Bookings Management
+  |   |   |   |   bookings.html          - All bookings table
+  |   |   |   |                           - Filter: All/Active/Confirmed/Pending/Completed/Cancelled
+  |   |   |   |                           - Search by car/customer
+  |   |   |   |                           - Stats cards
+  |   |   |   |                           - Supabase connected
+  |   |   |   |
+  |   |   |   |-- report/ .............. Reports Page
+  |   |   |   |   reports.html           - Revenue chart (monthly)
+  |   |   |   |                           - Car utilization chart
+  |   |   |   |                           - Summary cards
+  |   |   |   |                           - Real data from bookings
+  |   |   |   |
+  |   |   |   |-- calendar/ ............ Calendar Overview
+  |   |   |       calendar.html          - Monthly calendar grid
+  |   |   |                               - Booking indicators per day
+  |   |   |                               - Day detail panel
+  |   |   |                               - Stats: bookings/rented/events/revenue
+  |   |   |
+  |   |   |-- [INTELLIGENCE]
+  |   |   |   |
+  |   |   |   |-- chatbot/ ............. AI Chatbot Settings
+  |   |   |   |   chatbot.html           - OpenRouter API key config
+  |   |   |   |                           - System prompt editor
+  |   |   |   |                           - Test chat interface
+  |   |   |   |                           - Promo context editor
+  |   |   |   |
+  |   |   |   |-- customer/ ............ Customers Management
+  |   |   |       customers.html         - All customers table
+  |   |   |                               - Stats (Total/Active/Inactive/Spent)
+  |   |   |                               - Status toggle (Active/Suspended)
+  |   |   |                               - Search by name/email/phone
+  |   |   |                               - Supabase connected
+  |   |   |
+  |   |   |-- [MARKETING]
+  |   |   |   |
+  |   |   |   |-- marketing/ ........... Marketing Manager
+  |   |   |       marketing.html         - Banners management (CRUD)
+  |   |   |                               - Promo codes management (CRUD)
+  |   |   |                               - Seasonal pricing management
+  |   |   |                               - Supabase connected
+  |   |   |
+  |   |   |-- [SYSTEM]
+  |   |       |
+  |   |       |-- setting/ ............. System Settings
+  |   |           settings.html          - Company info
+  |   |                                   - Rental policies
+  |   |                                   - Pickup locations
+  |   |                                   - Supabase upsert
+  |   |
+  |   |-- [Navigation: Admin Sidebar]
+  |   |   Component: admin/components/sidebar/sidebar-admin.html
+  |   |   Loaded by: shared/js/sidebar-loader.js
+  |   |
+  |   |-- [CSS: admin/css/admin.css]
+  |
+  |
+  |-- [SHARED MODULE] -- Common pages & components
+  |   |
+  |   |-- shared/pages/
+  |   |   |-- error/404.html ............ 404 Not Found Page
+  |   |   |-- footer/
+  |   |       |-- about/about.html ...... About Us Page
+  |   |       |-- contact/contact.html .. Contact Us Page
+  |   |       |-- faq/faq.html .......... FAQ Page
+  |   |       |-- terms/terms.html ...... Terms & Conditions Page
+  |   |
+  |   |-- [Components]
+  |   |   |-- shared/components/navbar/ .. Top Navbar (Guest)
+  |   |   |-- shared/components/footer/ .. Footer
+  |   |   |-- shared/components/chatbot/ . Chatbot Widget
+  |   |
+  |   |-- [CSS: shared/css/]
+  |       |-- theme_day.css .............. Day Mode Theme
+  |       |-- theme_night.css ............ Night Mode Theme
+  |       |-- theme_overrides.css ........ Theme Override Variables
+  |       |-- animation.css .............. Animations & Transitions
+  |       |-- sidebar.css ................ Sidebar Styles
+
+
+================================================================================
+                           USER FLOW DIAGRAM
+================================================================================
+
+
+  [GUEST]                    [LOGIN]                 [CUSTOMER]
+  -------                    -------                 ----------
+
+  Landing Page -----> Login Page -----> Customer Dashboard
+       |                  |                    |
+       |                  |              +-----+-----+-----+-----+-----+
+       |                  |              |     |     |     |     |     |
+       v                  v              v     v     v     v     v     v
+  Pricing            Sign Up          Browse  My    Pro-  Sup-  Car   AI
+  Explore            Page             Cars   Book-  file  port  Acc-  In-
+  How It Works                         |     ings               ess  sights
+                                       v
+                                  Car Details
+                                       |
+                                       v
+                                    Booking
+                                       |
+                                       v
+                                    Payment
+                                       |
+                                       v
+                                  Confirmed!
+
+
+  [ADMIN FLOW]
+
+  Login Page -----> Admin Dashboard
+                         |
+        +--------+-------+-------+--------+--------+
+        |        |       |       |        |        |
+        v        v       v       v        v        v
+      Cars    Book-   Custo-  Reports  Calen-   Chat-
+      Mgmt    ings    mers    Page     dar      bot
+        |      Mgmt    Mgmt                    Config
+        v
+     Car Detail
+     (Add/Edit)
+        
+        +--------+--------+
+        |                  |
+        v                  v
+    Marketing           Settings
+    (Banners,           (Company,
+     Promos,            Policies,
+     Seasonal)          Locations)
+
+
+================================================================================
+                         DATABASE SCHEMA (Supabase)
+================================================================================
+
+
+  +----------------+     +----------------+     +----------------+
+  |    admins       |     |   customers    |     |     cars       |
+  +----------------+     +----------------+     +----------------+
+  | id (PK)        |     | id (PK)        |     | id (PK)        |
+  | auth_uid       |     | auth_uid       |     | name           |
+  | email          |     | email          |     | plate          |
+  | role           |     | full_name      |     | type           |
+  +----------------+     | phone          |     | price_per_day  |
+                          | ic             |     | seats          |
+                          | license_no     |     | transmission   |
+                          | status         |     | fuel           |
+                          | joined         |     | status         |
+                          +----------------+     | image          |
+                                 |               +----------------+
+                                 |                      |
+                                 v                      v
+                          +----------------------------+
+                          |        bookings             |
+                          +----------------------------+
+                          | id (PK)                     |
+                          | auth_uid (FK -> customers)  |
+                          | car_id (FK -> cars)         |
+                          | car (name)                  |
+                          | customer_name               |
+                          | email                       |
+                          | start_date                  |
+                          | end_date                    |
+                          | pickup_location             |
+                          | dropoff_location            |
+                          | days                        |
+                          | total                       |
+                          | payment (Paid/Unpaid)       |
+                          | status (Active/Confirmed/   |
+                          |   Pending/Completed/        |
+                          |   Cancelled)                |
+                          +----------------------------+
+
+  +----------------+     +----------------+
+  |   marketing    |     |   settings     |
+  +----------------+     +----------------+
+  | key (PK)       |     | key (PK)       |
+  | value (JSONB)  |     | value (JSONB)  |
+  +----------------+     +----------------+
+
+
+================================================================================
+                         TECHNOLOGY STACK
+================================================================================
+
+  Frontend:     HTML5, CSS3 (Vanilla), JavaScript (ES6)
+  Backend:      Supabase (BaaS - Backend as a Service)
+  Database:     PostgreSQL (via Supabase)
+  Auth:         Supabase Auth (Email/Password + Google OAuth)
+  AI Chatbot:   OpenRouter.ai (Gemini 2.5 Flash)
+  Hosting:      Firebase Hosting (Static)
+  Fonts:        Google Fonts (Inter)
+  Icons:        Material Icons Round
+  Animation:    anime.js + Custom CSS
+
+================================================================================
+                     MULTILINGUAL & THEME SUPPORT
+================================================================================
+
+  Languages:    English (EN) | Bahasa Melayu (MS)
+  Themes:       Day Mode | Night Mode (toggle)
+  Storage:      localStorage (wedrive-lang, wedrive-theme)
+
+================================================================================
+  Last Updated: 21 May 2026
+  Version: 7.3.0
+================================================================================
