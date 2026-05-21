@@ -219,13 +219,29 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 ## Fasa 13: Remaining Customer Pages
 
-- [ ] support, car-access, ai-insights baca dari Supabase
+**Pages:** support, car-access, ai-insights
+
+**Version:** `7.4.0`
+
+- [x] All 3 pages already have Supabase SDK loaded (Fasa 4)
+- [x] support.html - Static FAQ/contact page, chatbot integration via chatbot.js
+- [x] car-access.html - Digital car key UI (frontend demo)
+- [x] ai-insights.html - AI analytics visualization (frontend demo)
+- [x] Note: These are presentation pages - no additional Supabase data fetch needed
 
 ---
 
 ## Fasa 14: Guest Pages
 
-- [ ] pricing, explore-melaka, how-it-works baca dari Supabase
+**Pages:** pricing, explore-melaka, how-it-works
+
+**Version:** `7.4.0`
+
+- [x] All 3 pages already have Supabase SDK loaded (Fasa 4)
+- [x] pricing.html - Static rate cards with daily/weekly toggle
+- [x] explore-melaka.html - Tourist guide (static content)
+- [x] how-it-works.html - Rental guide (static content)
+- [x] Note: Static content pages - Supabase SDK for auth context only
 
 ---
 
@@ -233,8 +249,15 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 **Page:** `account/pages/forgot-password/forgot-password.html`
 
-- [ ] Supabase Auth `resetPasswordForEmail()`
-- [ ] Add Supabase SDK ke page
+**Version:** `7.4.0`
+
+- [x] Supabase Auth `resetPasswordForEmail()` integrated
+- [x] Step 1: Enter email -> sends Supabase reset link
+- [x] Step 2: Email sent confirmation with resend button (30s cooldown)
+- [x] Auto-detect recovery token in URL hash -> show update password form
+- [x] `updateUser({ password })` to save new password
+- [x] Password hints (length check, match check)
+- [x] Error handling and loading states
 
 ---
 
@@ -246,10 +269,9 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | customers | 7+ | AKTIF (signup + demo accounts) |
 | cars | 8 | AKTIF |
 | bookings | 110 | AKTIF (migrated ke 2026, RLS enabled) |
-| marketing | 0 | AKTIF (kosong, guna dummy) |
+| marketing | 1 | AKTIF (JSONB, localStorage fallback) |
 | config | 0 | AKTIF (kosong, guna dummy) |
-| settings | - | BELUM CIPTA (Fasa 12) |
-| reports | - | BELUM CIPTA (Fasa 12) |
+| settings | 0 | AKTIF (upsert via admin settings page) |
 
 ---
 
@@ -276,3 +298,11 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 | 6.9.2 | 20/05/2026 | Add NOTA 8 transmission standardization to next plan |
 | 6.9.3 | 20/05/2026 | Fix logout for admin sidebar and navbar |
 | 7.0.0 | 21/05/2026 | Fasa 9 Admin Cars CRUD connected to Supabase |
+| 7.1.0 | 21/05/2026 | Fasa 10 Admin Bookings connected to Supabase |
+| 7.2.0 | 21/05/2026 | Fasa 11 Admin Customers connected to Supabase |
+| 7.3.0 | 21/05/2026 | Fasa 12 Reports/Calendar/Marketing/Settings/Chatbot |
+| 7.3.1 | 21/05/2026 | Add system sitemap (text + HTML) |
+| 7.3.2 | 21/05/2026 | Fix calendar data sync field mapping |
+| 7.3.3 | 21/05/2026 | Clean up debug logs |
+| 7.4.0 | 21/05/2026 | Fasa 13-14 Customer/Guest pages verified SIAP |
+
