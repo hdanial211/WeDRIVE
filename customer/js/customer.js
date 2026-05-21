@@ -524,7 +524,7 @@
     }, 350);
   }
 
-  function initPopupDatePickers(car) {
+  async function initPopupDatePickers(car) {
     if (popupPickupPicker) { popupPickupPicker.pickup.destroy(); popupPickupPicker.return.destroy(); popupPickupPicker = null; }
     
     var pickupInput = document.getElementById('popup-pickup-date');
@@ -532,10 +532,25 @@
     if (pickupInput) pickupInput.value = '';
     if (returnInput) returnInput.value = '';
 
+    var disabledDates = [];
+    if (window.WeDriveAPI && window.WeDriveAPI.getBookedDatesForCar) {
+      try {
+        var booked = await window.WeDriveAPI.getBookedDatesForCar(car.id);
+        disabledDates = booked.map(function(b) {
+          return {
+            from: b.start_date || b.pickup,
+            to: b.end_date || b.return
+          };
+        });
+      } catch (err) {
+        console.error('[PopupDatePicker] Error fetching booked dates:', err);
+      }
+    }
+
     if (window.WeDriveCalendar) {
       popupPickupPicker = window.WeDriveCalendar.initPairedPickers('popup-pickup-date', 'popup-return-date', function() {
         updateBookingSummary(car);
-      });
+      }, disabledDates);
       if (popupPickupPicker) popupReturnPicker = popupPickupPicker.return;
     }
   }

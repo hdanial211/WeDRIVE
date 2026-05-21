@@ -197,3 +197,19 @@
     min-width: var(--fp-body-width) !important;
   }
 }
+
+/* ── Blocked / Booked Dates ── */
+.flatpickr-day.booked-date {
+  background-color: var(--error-container, rgba(186, 26, 26, 0.08)) !important;
+  color: var(--error, #ba1a1a) !important;
+  border-color: transparent !important;
+  text-decoration: line-through !important;
+  cursor: not-allowed !important;
+  opacity: 0.8 !important;
+  font-weight: 500 !important;
+}
+
+.flatpickr-day.booked-date:hover {
+  background-color: var(--error-container, rgba(186, 26, 26, 0.25)) !important;
+  color: var(--error, #ba1a1a) !important;
+}

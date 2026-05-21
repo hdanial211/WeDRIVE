@@ -56,7 +56,7 @@
   }
 
   /* ── Initialize a Pair of Pickers ── */
-  function initPairedPickers(pickupId, returnId, onChangeCallback) {
+  function initPairedPickers(pickupId, returnId, onChangeCallback, disabledDates) {
     var pickupInput = document.getElementById(pickupId);
     var returnInput = document.getElementById(returnId);
     if (!pickupInput || !returnInput || !window.flatpickr) return null;
@@ -68,6 +68,7 @@
       minDate: "today",
       dateFormat: "d/m/Y",
       disableMobile: "true",
+      disable: disabledDates || [],
       onReady: function(selectedDates, dateStr, instance) {
         var yearInput = instance.currentYearElement;
         var wrapper = yearInput.parentNode;
@@ -102,6 +103,22 @@
       },
       onDayCreate: function(dObj, dStr, fp, dayElem) {
         highlightRange(dayElem, pPicker, rPicker);
+        if (dayElem.dateObj && disabledDates && disabledDates.length > 0) {
+          var dateToCheck = new Date(dayElem.dateObj.getFullYear(), dayElem.dateObj.getMonth(), dayElem.dateObj.getDate()).getTime();
+          var isBooked = disabledDates.some(function(range) {
+            if (range.from && range.to) {
+              var f = new Date(range.from);
+              var t = new Date(range.to);
+              var fTime = new Date(f.getFullYear(), f.getMonth(), f.getDate()).getTime();
+              var tTime = new Date(t.getFullYear(), t.getMonth(), t.getDate()).getTime();
+              return dateToCheck >= fTime && dateToCheck <= tTime;
+            }
+            return false;
+          });
+          if (isBooked) {
+            dayElem.classList.add('booked-date');
+          }
+        }
       },
       onMonthChange: function() {
         setTimeout(function() { redrawRange(pPicker, rPicker); }, 10);

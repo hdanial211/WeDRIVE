@@ -658,7 +658,28 @@ window.WeDriveAPI = {
      */
     getBookedDatesForCar: async function (carId) {
         if (!window.AppConfig.USE_REAL_DB) {
-            return [];
+            var data = await _loadDummyData();
+            var bookings = data.bookings || [];
+            var cars = data.car || [];
+            var car = cars.find(function(c) { return c.id === carId; });
+            if (!car) return [];
+            
+            var todayStr = new Date().toISOString().split('T')[0];
+            var bookedRanges = [];
+            
+            for (var i = 0; i < bookings.length; i++) {
+                var b = bookings[i];
+                var matchCar = (b.car_id === carId) || (b.plate === car.plate) || (b.car === car.name);
+                var matchStatus = ['Active', 'Pending', 'Completed', 'Confirmed'].includes(b.status);
+                var endDt = b.end_date || b.return;
+                if (matchCar && matchStatus && endDt && endDt >= todayStr) {
+                    bookedRanges.push({
+                        start_date: b.start_date || b.pickup,
+                        end_date: endDt
+                    });
+                }
+            }
+            return bookedRanges;
         } else {
             try {
                 var sb = window.supabaseClient;
@@ -666,7 +687,7 @@ window.WeDriveAPI = {
                 var result = await sb.from('bookings')
                     .select('start_date,end_date')
                     .eq('car_id', carId)
-                    .in('status', ['Active', 'Pending', 'Completed'])
+                    .in('status', ['Active', 'Pending', 'Completed', 'Confirmed'])
                     .gte('end_date', today);
                 if (result.error) throw result.error;
                 return result.data || [];
