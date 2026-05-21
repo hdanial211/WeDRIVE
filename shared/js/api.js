@@ -784,6 +784,58 @@ window.WeDriveAPI = {
                 return { success: false, error: err.message };
             }
         }
+    },
+
+    /**
+     * Check if IC or License is already in use by another account.
+     * Returns { success: true, unique: true } if available, 
+     * or { success: true, unique: false, error: '...' } if taken.
+     */
+    checkICAndLicenseUnique: async function(authUid, ic, license) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            // For dummy mode, check localStorage
+            var data = await _loadDummyData();
+            if (data && data.customers) {
+                for (var i = 0; i < data.customers.length; i++) {
+                    var c = data.customers[i];
+                    // dummy data uses 'id' instead of 'auth_uid' for matching, but we simulate it
+                    if (c.id !== authUid && c.auth_uid !== authUid) {
+                        if (ic && c.ic === ic) return { success: true, unique: false, error: 'IC / Passport is already registered to another account.' };
+                        if (license && c.license === license) return { success: true, unique: false, error: 'Driving License is already registered to another account.' };
+                    }
+                }
+            }
+            return { success: true, unique: true };
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var orQuery = [];
+                if (ic) orQuery.push('ic.eq.' + ic);
+                if (license) orQuery.push('license.eq.' + license);
+                
+                if (orQuery.length === 0) return { success: true, unique: true };
+
+                var result = await sb.from('customers')
+                    .select('auth_uid, ic, license')
+                    .or(orQuery.join(','));
+                
+                if (result.error) throw result.error;
+                
+                if (result.data && result.data.length > 0) {
+                    for (var j = 0; j < result.data.length; j++) {
+                        var existing = result.data[j];
+                        if (existing.auth_uid !== authUid) {
+                            if (ic && existing.ic === ic) return { success: true, unique: false, error: 'IC / Passport is already registered to another account.' };
+                            if (license && existing.license === license) return { success: true, unique: false, error: 'Driving License is already registered to another account.' };
+                        }
+                    }
+                }
+                return { success: true, unique: true };
+            } catch (err) {
+                console.error('[WeDriveAPI] checkICAndLicenseUnique error:', err);
+                return { success: false, error: err.message };
+            }
+        }
     }
 
     // You can add more functions here later:

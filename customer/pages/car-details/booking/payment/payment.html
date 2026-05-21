@@ -640,6 +640,18 @@
         var driverIc = activeDriverMode === 'existing' ? savedDriverProfile.identity : document.getElementById('new-driver-ic').value;
         var driverLicense = activeDriverMode === 'existing' ? savedDriverProfile.license : document.getElementById('new-driver-license').value;
 
+        if (window.WeDriveAPI.checkICAndLicenseUnique) {
+          var currentAuthUid = user ? user.id : null;
+          var uniqueCheck = await window.WeDriveAPI.checkICAndLicenseUnique(currentAuthUid, driverIc, driverLicense);
+          if (uniqueCheck && !uniqueCheck.unique) {
+            alert(uniqueCheck.error);
+            button.disabled = false;
+            button.classList.remove('is-processing');
+            button.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + pendingBooking.total.toFixed(2);
+            return;
+          }
+        }
+
         var bookingRef = 'BK-2026-' + Math.floor(1000 + Math.random() * 9000);
 
         var bookingData = {
