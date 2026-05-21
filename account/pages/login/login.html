@@ -133,11 +133,7 @@
             timestamp: new Date().getTime()
           }));
 
-          if (response.role === 'admin') {
-            window.location.href = '../../../admin/pages/dashboard/admin.html';
-          } else {
-            window.location.href = '../../../customer/pages/dashboard/customer.html';
-          }
+          window.location.href = '../welcome/welcome.html';
         } else {
           alert(response.error || 'Login failed. Please check your credentials.');
           btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
@@ -187,11 +183,7 @@
             timestamp: new Date().getTime()
           }));
 
-          if (result.role === 'admin') {
-            window.location.href = '../../../admin/pages/dashboard/admin.html';
-          } else {
-            window.location.href = '../../../customer/pages/dashboard/customer.html';
-          }
+          window.location.href = '../welcome/welcome.html';
         } else if (result && result.error) {
           alert('Google login failed: ' + result.error);
         }

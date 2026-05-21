@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>WeDRIVE - Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e6e8ea",
+                        "on-error-container": "#93000a",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed-dim": "#b7c8e1",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e0e3e5",
+                        "outline-variant": "#c2c6d6",
+                        "on-secondary-fixed": "#111c2d",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "on-primary-container": "#fefcff",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "inverse-primary": "#adc6ff",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary-container": "#2170e4",
+                        "tertiary-fixed": "#d3e4fe",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#d8e3fb",
+                        "surface-tint": "#005ac2",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-secondary-container": "#586377",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "outline": "#727785",
+                        "secondary": "#545f73",
+                        "tertiary-container": "#66768d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "tertiary": "#4d5d73",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-tertiary-container": "#fdfcff",
+                        "on-primary-fixed": "#001a42",
+                        "surface": "#f7f9fb",
+                        "primary": "#0058be",
+                        "surface-bright": "#f7f9fb",
+                        "on-surface-variant": "#424754"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "container-padding": "24px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "h1": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .fade-in-up {
+            animation: fadeInUp 1.2s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fade-in-delayed {
+            animation: fadeIn 1s ease-out 1s forwards;
+            opacity: 0;
+        }
+
+        .bounce-subtle {
+            animation: bounceSubtle 2s infinite ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceSubtle {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(8px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen w-full flex flex-col justify-center items-center overflow-hidden font-body-lg text-body-lg" style="opacity: 0; transition: opacity 0.5s ease-out;">
+<!-- Splash Content -->
+<main class="flex flex-col items-center justify-center text-center px-container-padding w-full max-w-7xl mx-auto z-10 relative">
+<!-- Greeting -->
+<h1 id="welcome-name" class="font-h1 text-h1 text-primary fade-in-up mb-xl tracking-tight uppercase">
+            WELCOME BACK, USER
+        </h1>
+<!-- Subtitle/Hint -->
+<div class="fade-in-delayed flex flex-col items-center gap-md">
+<p class="font-body-md text-body-md text-secondary">Preparing your dashboard...</p>
+<span class="material-symbols-outlined text-primary bounce-subtle" data-icon="keyboard_arrow_down" style="font-size: 32px;">
+                keyboard_arrow_down
+            </span>
+</div>
+</main>
+<!-- Subtle Background Elements (Optional, for depth) -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
+<div class="w-[800px] h-[800px] bg-primary-fixed-dim rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style="animation-duration: 8s;"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        var sessionRaw = localStorage.getItem('wedrive_session');
+        var name = 'USER';
+        var redirectUrl = '../../../customer/pages/dashboard/customer.html';
+        
+        if (sessionRaw) {
+            try {
+                var session = JSON.parse(sessionRaw);
+                if (session.name) {
+                    name = session.name.split(' ')[0].toUpperCase();
+                } else if (session.email) {
+                    name = session.email.split('@')[0].toUpperCase();
+                }
+                
+                if (session.role === 'admin') {
+                    redirectUrl = '../../../admin/pages/dashboard/admin.html';
+                }
+            } catch (e) {
+                console.error("Session parse error", e);
+            }
+        }
+        
+        document.getElementById('welcome-name').textContent = 'WELCOME BACK, ' + name;
+
+        // Fade in
+        setTimeout(() => {
+            document.body.style.opacity = "1";
+        }, 50);
+
+        // Automatic transition to the dashboard
+        setTimeout(() => {
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 500); // Wait for fade out
+        }, 3000);
+    });
+</script>
+
+</body></html>

@@ -163,7 +163,7 @@
           }));
 
           alert('Account created successfully for ' + fullName + '! Redirecting...');
-          window.location.href = '../../../customer/pages/dashboard/customer.html';
+          window.location.href = '../welcome/welcome.html';
         } else {
           alert(response.error || 'Signup failed. Please try again.');
           btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">person_add</span><span data-key="signup_btn">Create Account</span>';
@@ -210,11 +210,7 @@
             timestamp: new Date().getTime()
           }));
 
-          if (result.role === 'admin') {
-            window.location.href = '../../../admin/pages/dashboard/admin.html';
-          } else {
-            window.location.href = '../../../customer/pages/dashboard/customer.html';
-          }
+          window.location.href = '../welcome/welcome.html';
         }
       } catch (err) {
         console.error('Redirect check error:', err);
