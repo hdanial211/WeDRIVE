@@ -42,10 +42,20 @@ function getDummyPath(filename) {
     return prefix + filename;
 }
 
-// Dummy data fallback removed as per user request
+// Dummy data connection removed.
+// If the system tries to load dummy data (e.g. Supabase connection fails or offline), redirect to 404.html
 async function _loadDummyData() {
-    console.error("[WeDriveAPI] Fallback to dummy data is permanently disabled.");
-    return null;
+    console.error("[WeDriveAPI] Database connection failed or offline. Redirecting to error page.");
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+        var src = scripts[i].getAttribute('src');
+        if (src && src.indexOf('shared/js/api.js') !== -1) {
+            window.location.href = src.replace('shared/js/api.js', 'shared/pages/error/404.html');
+            return {};
+        }
+    }
+    window.location.href = '/shared/pages/error/404.html';
+    return {};
 }
 
 
