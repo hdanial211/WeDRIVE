@@ -185,6 +185,16 @@
     let daysCount = 1;
     let basePrice = 120;
 
+    function formatDateForInput(dateStr) {
+      if (!dateStr) return '';
+      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+        const parts = dateStr.split('/');
+        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+      }
+      return dateStr;
+    }
+
     async function initBookingPage() {
       try {
         const cars = await window.WeDriveAPI.getCars();
@@ -227,8 +237,8 @@
         }
       }
 
-      document.getElementById('bk-pickup-date').value = pickupDateStr;
-      document.getElementById('bk-return-date').value = returnDateStr;
+      document.getElementById('bk-pickup-date').value = formatDateForInput(pickupDateStr);
+      document.getElementById('bk-return-date').value = formatDateForInput(returnDateStr);
       
       const locSelect = document.getElementById('bk-pickup-location');
       if (locSelect) {

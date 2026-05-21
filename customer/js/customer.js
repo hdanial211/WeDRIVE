@@ -537,11 +537,18 @@
       try {
         var booked = await window.WeDriveAPI.getBookedDatesForCar(car.id);
         disabledDates = booked.map(function(b) {
-          return {
-            from: b.start_date || b.pickup,
-            to: b.end_date || b.return
-          };
-        });
+          var sStr = b.start_date || b.pickup;
+          var eStr = b.end_date || b.return;
+          if (sStr && eStr) {
+            var sParts = sStr.split('-');
+            var eParts = eStr.split('-');
+            return {
+              from: new Date(Number(sParts[0]), Number(sParts[1]) - 1, Number(sParts[2])),
+              to: new Date(Number(eParts[0]), Number(eParts[1]) - 1, Number(eParts[2]))
+            };
+          }
+          return null;
+        }).filter(Boolean);
       } catch (err) {
         console.error('[PopupDatePicker] Error fetching booked dates:', err);
       }

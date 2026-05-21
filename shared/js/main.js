@@ -659,19 +659,22 @@
       document.head.appendChild(link);
     }
 
+    // Helper to get version parameter from current script or fallback to Date.now() for cache-busting
+    var version = '?v=7.6.2&t=' + Date.now();
+
     // Load Flatpickr JS & our Shared Calendar JS
     if (typeof window.flatpickr === 'undefined') {
       var fpScript = document.createElement('script');
       fpScript.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
       fpScript.onload = function () {
         var calScript = document.createElement('script');
-        calScript.src = resolveBase() + 'shared/js/calendar.js';
+        calScript.src = resolveBase() + 'shared/js/calendar.js' + version;
         document.body.appendChild(calScript);
       };
       document.body.appendChild(fpScript);
     } else {
       var calScript = document.createElement('script');
-      calScript.src = resolveBase() + 'shared/js/calendar.js';
+      calScript.src = resolveBase() + 'shared/js/calendar.js' + version;
       document.body.appendChild(calScript);
     }
   }
