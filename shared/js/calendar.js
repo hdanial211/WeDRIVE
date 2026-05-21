@@ -156,10 +156,45 @@
     pPicker = window.flatpickr(pickupInput, Object.assign({}, commonConfig, {
       onChange: function(selectedDates, dateStr) {
         rPicker.set('minDate', dateStr || "today");
+        
+        // Prevent jumping over booked dates by finding the next disabled date
+        if (selectedDates[0] && disabledDates && disabledDates.length > 0) {
+          var pickupTime = selectedDates[0].getTime();
+          var nextDisabledDate = null;
+          var nextDisabledTime = Infinity;
+          
+          disabledDates.forEach(function(range) {
+            if (range.from) {
+              var f = new Date(range.from);
+              var fTime = new Date(f.getFullYear(), f.getMonth(), f.getDate()).getTime();
+              // If this disabled date is strictly AFTER the pickup date
+              if (fTime > pickupTime && fTime < nextDisabledTime) {
+                nextDisabledTime = fTime;
+                nextDisabledDate = new Date(fTime);
+              }
+            }
+          });
+          
+          if (nextDisabledDate) {
+            // Subtract one day so maxDate is the day before the next booking starts
+            var maxReturnDate = new Date(nextDisabledDate.getTime() - 24 * 60 * 60 * 1000);
+            rPicker.set('maxDate', maxReturnDate);
+          } else {
+            rPicker.set('maxDate', null); // No future bookings
+          }
+        } else {
+          rPicker.set('maxDate', null);
+        }
+
         updateReturnState();
         if (rPicker.selectedDates[0] && selectedDates[0] && rPicker.selectedDates[0] < selectedDates[0]) {
           rPicker.clear();
         }
+        // Also clear if current return date is greater than the newly calculated maxDate
+        if (rPicker.selectedDates[0] && rPicker.config.maxDate && rPicker.selectedDates[0] > rPicker.config.maxDate) {
+          rPicker.clear();
+        }
+
         setTimeout(function() {
           if (!rPicker.selectedDates[0] && selectedDates.length > 0) {
             rPicker.open();
