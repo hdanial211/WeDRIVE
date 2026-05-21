@@ -28,11 +28,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   try {
     const data = await window.WeDriveAPI.getAdminData();
-    console.log('[Calendar] Raw data loaded:', {
-      bookingsCount: (data.bookings || []).length,
-      carsCount: (data.car || []).length,
-      sampleBooking: (data.bookings || [])[0]
-    });
     // Map Supabase booking fields to calendar format
     // Supabase uses: start_date, end_date, customer_name
     // Calendar expects: pickup, return, customer, car
@@ -47,7 +42,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     });
     CAL_DATA.car = data.car || [];
     CAL_DATA.marketing = data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
-    console.log('[Calendar] Mapped bookings:', CAL_DATA.bookings.length, 'Sample:', CAL_DATA.bookings[0]);
   } catch (e) {
     console.warn('Calendar: failed to load data', e);
   }
@@ -237,20 +231,8 @@ function updateStats() {
   const monthEnd = dateStr(CAL_YEAR, CAL_MONTH, new Date(CAL_YEAR, CAL_MONTH + 1, 0).getDate());
   const todayStr = new Date().toISOString().slice(0, 10);
 
-  console.log('[Calendar Stats] Total bookings in CAL_DATA:', CAL_DATA.bookings.length);
-  console.log('[Calendar Stats] Month range:', monthStart, 'to', monthEnd);
-  if (CAL_DATA.bookings.length > 0) {
-    console.log('[Calendar Stats] Sample booking fields:', {
-      pickup: CAL_DATA.bookings[0].pickup,
-      return: CAL_DATA.bookings[0].return,
-      start_date: CAL_DATA.bookings[0].start_date,
-      end_date: CAL_DATA.bookings[0].end_date
-    });
-  }
-
   // Bookings this month (any overlap)
   const monthBookings = CAL_DATA.bookings.filter(b => b.pickup <= monthEnd && b.return >= monthStart);
-  console.log('[Calendar Stats] Month bookings found:', monthBookings.length);
   document.getElementById('cal-stat-bookings').textContent = monthBookings.length;
 
   // Cars rented today
