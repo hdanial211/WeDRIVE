@@ -656,7 +656,7 @@
           days: pendingBooking.days,
           daily: pendingBooking.pricePerDay,
           total: pendingBooking.total,
-          status: 'Pending',
+          status: activeDriverMode === 'existing' ? 'Confirmed' : 'Pending',
           payment: 'Paid',
           type: 'Standard',
           pickup: pendingBooking.pickupLocation,
