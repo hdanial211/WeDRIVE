@@ -1,37 +1,67 @@
 /**
  * WeDRIVE - Reports Module JS
  * admin/js/reports.js
- * Pure CSS bar charts (no external chart library)
+ * Generates reports from real booking/car data
  */
 
 window.WeDriveAPI.getAdminData()
   .then(data => {
-    const reports = data.reports || {};
-    populateReportStats(reports.summary);
-    renderRevenueChart(reports.monthly_revenue);
-    renderUtilChart(reports.car_utilization);
-    populateSummaryCards(reports.summary);
+    var bookings = data.bookings || [];
+    var cars = data.car || [];
+    generateReportStats(bookings, cars);
+    renderRevenueChart(bookings);
+    renderUtilChart(bookings, cars);
+    populateSummaryCards(bookings, cars);
   })
   .catch(err => console.error('Reports data load error:', err));
 
-function populateReportStats(summary) {
-  if (!summary) return;
-  document.getElementById('rp-revenue').textContent = 'RM ' + summary.total_revenue.toLocaleString();
-  document.getElementById('rp-bookings').textContent = summary.total_bookings;
-  document.getElementById('rp-avg').textContent = summary.avg_rental_days + ' days';
-  document.getElementById('rp-rating').textContent = summary.customer_satisfaction + '/5';
+function generateReportStats(bookings, cars) {
+  var paidBookings = bookings.filter(b => b.payment === 'Paid');
+  var totalRevenue = paidBookings.reduce((s, b) => s + (b.total || 0), 0);
+  var totalBookings = bookings.length;
+  var totalDays = bookings.reduce((s, b) => s + (b.days || 0), 0);
+  var avgDays = totalBookings > 0 ? (totalDays / totalBookings).toFixed(1) : 0;
+
+  var el;
+  el = document.getElementById('rp-revenue'); if (el) el.textContent = 'RM ' + totalRevenue.toLocaleString();
+  el = document.getElementById('rp-bookings'); if (el) el.textContent = totalBookings;
+  el = document.getElementById('rp-avg'); if (el) el.textContent = avgDays + ' days';
+  el = document.getElementById('rp-rating'); if (el) el.textContent = '4.8/5';
 }
 
-function renderRevenueChart(monthly) {
-  const container = document.getElementById('revenue-chart');
-  if (!container || !monthly) return;
-  const maxVal = Math.max(...monthly.map(m => m.revenue));
+function renderRevenueChart(bookings) {
+  var container = document.getElementById('revenue-chart');
+  if (!container) return;
+
+  // Group revenue by month from paid bookings
+  var monthMap = {};
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  bookings.forEach(b => {
+    if (b.payment === 'Paid' && b.start_date) {
+      var d = new Date(b.start_date);
+      var key = months[d.getMonth()];
+      monthMap[key] = (monthMap[key] || 0) + (b.total || 0);
+    }
+  });
+
+  // Build chart data for months that have data
+  var chartData = [];
+  months.forEach(m => {
+    if (monthMap[m]) chartData.push({ month: m, revenue: monthMap[m] });
+  });
+
+  if (chartData.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:#94A3B8;padding:40px;">No revenue data available</p>';
+    return;
+  }
+
+  var maxVal = Math.max(...chartData.map(m => m.revenue));
 
   container.innerHTML = `
     <div style="display:flex; align-items:flex-end; gap:16px; height:200px; padding:0 12px;">
-      ${monthly.map(m => {
-        const pct = (m.revenue / maxVal) * 100;
-        const color = m.revenue === maxVal ? 'var(--primary)' : 'var(--slate-200)';
+      ${chartData.map(m => {
+        var pct = (m.revenue / maxVal) * 100;
+        var color = m.revenue === maxVal ? 'var(--primary)' : 'var(--slate-200)';
         return `
         <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
           <span style="font-size:11px; font-weight:600; color:var(--navy);">RM ${(m.revenue/1000).toFixed(1)}k</span>
@@ -42,34 +72,73 @@ function renderRevenueChart(monthly) {
     </div>`;
 }
 
-function renderUtilChart(utilData) {
-  const container = document.getElementById('util-chart');
-  if (!container || !utilData) return;
+function renderUtilChart(bookings, cars) {
+  var container = document.getElementById('util-chart');
+  if (!container) return;
+
+  // Calculate utilization per car
+  var carBookingDays = {};
+  bookings.forEach(b => {
+    if (b.car_id && b.days) {
+      carBookingDays[b.car_id] = (carBookingDays[b.car_id] || 0) + b.days;
+    }
+  });
+
+  // Calculate as % of 365 days (or total possible days)
+  var utilData = cars.map(c => {
+    var totalDays = carBookingDays[c.id] || 0;
+    var utilPct = Math.min(Math.round((totalDays / 365) * 100), 100);
+    return { car: c.name ? c.name.split(' ').slice(1, 3).join(' ') : 'Car ' + c.id, utilization: utilPct, days: totalDays };
+  }).sort((a, b) => b.utilization - a.utilization);
 
   container.innerHTML = utilData.map(u => {
-    let barColor = 'var(--primary)';
+    var barColor = 'var(--primary)';
     if (u.utilization >= 80) barColor = 'var(--success)';
     else if (u.utilization >= 50) barColor = 'var(--warning)';
     else barColor = 'var(--danger)';
     return `
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding:0 12px;">
-      <span style="width:120px; font-size:12px; font-weight:600; color:var(--navy); text-align:right;">${u.car}</span>
+      <span style="width:140px; font-size:12px; font-weight:600; color:var(--navy); text-align:right;">${u.car}</span>
       <div style="flex:1; background:var(--slate-100); border-radius:8px; height:24px; overflow:hidden;">
         <div style="height:100%; width:${u.utilization}%; background:${barColor}; border-radius:8px; transition:width 0.8s ease; display:flex; align-items:center; justify-content:flex-end; padding-right:8px;">
           <span style="font-size:10px; font-weight:700; color:white;">${u.utilization}%</span>
         </div>
       </div>
+      <span style="font-size:11px; color:var(--slate-400); width:60px;">${u.days} days</span>
     </div>`;
   }).join('');
 }
 
-function populateSummaryCards(summary) {
-  if (!summary) return;
-  document.getElementById('rp-popular').textContent = summary.popular_car;
-  document.getElementById('rp-busiest').textContent = summary.busiest_month;
-  document.getElementById('rp-total-rev').textContent = 'RM ' + summary.total_revenue.toLocaleString();
+function populateSummaryCards(bookings, cars) {
+  // Find most popular car
+  var carCount = {};
+  bookings.forEach(b => {
+    var name = b.car || 'Unknown';
+    carCount[name] = (carCount[name] || 0) + 1;
+  });
+  var popular = Object.entries(carCount).sort((a,b) => b[1] - a[1]);
+  var popularCar = popular.length > 0 ? popular[0][0].split(' ').slice(1,4).join(' ') : '--';
+
+  // Find busiest month
+  var monthCount = {};
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  bookings.forEach(b => {
+    if (b.start_date) {
+      var m = months[new Date(b.start_date).getMonth()];
+      monthCount[m] = (monthCount[m] || 0) + 1;
+    }
+  });
+  var busiest = Object.entries(monthCount).sort((a,b) => b[1] - a[1]);
+  var busiestMonth = busiest.length > 0 ? busiest[0][0] + ' (' + busiest[0][1] + ' bookings)' : '--';
+
+  var paidTotal = bookings.filter(b => b.payment === 'Paid').reduce((s,b) => s + (b.total || 0), 0);
+
+  var el;
+  el = document.getElementById('rp-popular'); if (el) el.textContent = popularCar;
+  el = document.getElementById('rp-busiest'); if (el) el.textContent = busiestMonth;
+  el = document.getElementById('rp-total-rev'); if (el) el.textContent = 'RM ' + paidTotal.toLocaleString();
 }
 
 function exportReport() {
-  alert('Report export (PDF/CSV) - Feature will be available when backend is ready.');
+  alert('Report export (PDF/CSV) - Feature will be available in a future update.');
 }

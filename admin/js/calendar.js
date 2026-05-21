@@ -27,10 +27,18 @@ window.addEventListener('DOMContentLoaded', async () => {
   CAL_MONTH = now.getMonth();
 
   try {
-    const data = await window.WeDriveAPI.getData();
-    CAL_DATA.bookings = data.bookings || [];
+    const data = await window.WeDriveAPI.getAdminData();
+    // Map Supabase booking fields to calendar format
+    CAL_DATA.bookings = (data.bookings || []).map(b => ({
+      ...b,
+      pickup: b.pickup || b.start_date || '',
+      return: b.return || b.end_date || '',
+      customer: b.customer || b.customer_name || '',
+      car: b.car || b.car_name || '',
+      total: b.total || 0
+    }));
     CAL_DATA.car = data.car || [];
-    CAL_DATA.marketing = await window.WeDriveAPI.getMarketing();
+    CAL_DATA.marketing = data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
   } catch (e) {
     console.warn('Calendar: failed to load data', e);
   }

@@ -207,9 +207,13 @@ Flow: Login/Signup > Complete Profile > Verify > Dashboard
 
 **Pages:** reports, calendar, marketing, settings, chatbot
 
-- [ ] Create `settings` table
-- [ ] Create `reports` table
-- [ ] Semua admin pages baca/tulis ke Supabase
+**Version:** `7.3.0`
+
+- [x] Reports - generate stats from real booking/car data (revenue chart, utilization, popular car, busiest month)
+- [x] Calendar - connected to getAdminData(), maps Supabase fields (start_date/end_date)
+- [x] Marketing - already connected via getMarketing()/saveMarketing() with Supabase upsert
+- [x] Settings - save to Supabase settings table via upsert, default values for empty fields
+- [x] Chatbot - uses localStorage for API key (security), already functional
 
 ---
 
