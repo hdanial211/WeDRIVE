@@ -410,3 +410,41 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Shopify order management actions
 
 **Status:** BELUM
+
+---
+
+## NOTA 13 - Admin New Booking (+ New Booking Button)
+
+**Masalah:** Button "+ New Booking" dalam admin bookings page belum berfungsi. Admin perlu boleh create booking baru untuk walk-in customer atau phone booking.
+
+**Apa yang perlu dibuat:**
+- Modal form untuk create booking baru
+- Field: Customer (dropdown dari senarai customers), Car (dropdown kereta Available sahaja), Pick-up Date, Return Date, Pick-up Location, Drop-off Location
+- Auto-calculate: Days, Daily Rate, Total
+- Auto-generate Booking ID (format: BK-YYYY-XXX)
+- Validate tarikh (tak boleh overlap dengan booking sedia ada untuk kereta sama)
+- Save ke Supabase `bookings` table
+- Auto-refresh table selepas save
+- Auto-update car status ke "Rented" jika booking bermula hari ni
+
+**Rujukan UI:**
+- Airbnb host booking creation form
+- Stripe new payment/invoice modal
+
+**Status:** BELUM
+
+---
+
+## NOTA 14 - Stats Update Ikut Filter / Search Results
+
+**Masalah:** Bila search/filter booking (contoh: cari "bmw"), table tunjuk hanya booking BMW tapi stats card atas masih tunjuk total semua (110 bookings, RM 69,660). Stats sepatutnya reflect hasil carian sahaja.
+
+**Apa yang perlu dibuat:**
+- Bila user search atau filter, stats card (Total, Confirmed, Pending, Revenue) auto-update ikut filtered results
+- Contoh: search "bmw" -> stats tunjuk total BMW bookings sahaja, revenue BMW sahaja
+- Apply pada:
+  - `admin/pages/booking/bookings.html` (Booking stats)
+  - `admin/pages/customer/customers.html` (Customer stats)
+- Optional: tunjuk label kecil "(filtered)" bila stats bukan full data
+
+**Status:** BELUM
