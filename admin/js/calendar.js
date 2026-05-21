@@ -29,14 +29,26 @@ window.addEventListener('DOMContentLoaded', async () => {
   try {
     const data = await window.WeDriveAPI.getAdminData();
     // Map Supabase booking fields to calendar format
+    function safeIso(dStr) {
+      if (!dStr) return '';
+      try {
+        const d = new Date(dStr);
+        if (!isNaN(d.getTime())) {
+          return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+        }
+      } catch (e) {}
+      return String(dStr).slice(0, 10);
+    }
+    
     CAL_DATA.bookings = (data.bookings || []).map(b => ({
       ...b,
-      pickup: b.pickup || b.start_date || '',
-      return: b.return || b.end_date || '',
+      pickup: safeIso(b.pickup || b.start_date),
+      return: safeIso(b.return || b.end_date),
       customer: b.customer || b.customer_name || '',
       car: b.car || b.car_name || '',
       total: b.total || 0
-    }));
+    })).filter(b => b.status !== 'Cancelled');
+    
     CAL_DATA.car = data.car || [];
     CAL_DATA.marketing = data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
   } catch (e) {
