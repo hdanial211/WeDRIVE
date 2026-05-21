@@ -193,6 +193,17 @@ window.WeDriveAPI = {
                     customers_change: "+" + (newCustomersThisMonth || customers.length)
                 };
 
+                // Auto-complete expired bookings (end_date < today)
+                bookings.forEach(function(b) {
+                    if ((b.status === 'Active' || b.status === 'Confirmed') && b.end_date && b.end_date < today) {
+                        sb.from('bookings').update({ status: 'Completed' }).eq('id', b.id).then(function(r){
+                            if(r.error) console.error('[AutoSync] Failed to complete booking', b.id, r.error);
+                        });
+                        console.log('[AutoSync] Booking #' + b.id + ': ' + b.status + ' -> Completed (expired ' + b.end_date + ')');
+                        b.status = 'Completed';
+                    }
+                });
+
                 // Auto-sync cars.status based on active bookings
                 var rentedCarIds = new Set();
                 bookings.forEach(function(b) {

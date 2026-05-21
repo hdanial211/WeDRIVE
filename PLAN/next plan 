@@ -366,3 +366,28 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Stripe dashboard date range filter
 
 **Status:** BELUM
+
+---
+
+## NOTA 11 - Cantikkan View Detail Popups (Ganti alert() dengan Styled Modal)
+
+**Masalah:** Semua "View" button dalam admin pages guna browser `alert()` yang nampak buruk dan tidak profesional. Perlu tukar kepada styled modal yang premium.
+
+**Pages yang terlibat:**
+- `admin/js/bookings.js` - `viewBooking()` guna alert()
+- `admin/js/customers.js` - `viewCustomer()` guna alert()
+
+**Apa yang perlu dibuat:**
+- Buat reusable styled modal component untuk view details
+- Layout: Card-based with icon labels (Customer, Car, Date, Payment, Status)
+- Status badge dengan warna (Active=green, Pending=amber, Cancelled=red)
+- Timeline/progress bar untuk booking lifecycle
+- Customer photo placeholder / avatar initials
+- Booking receipt-style layout (seperti e-receipt)
+
+**Rujukan UI:**
+- Stripe payment detail modal (clean, organized, receipt-style)
+- Airbnb booking confirmation card
+- Linear.app detail slide-over panel
+
+**Status:** BELUM
