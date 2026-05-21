@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sitemap | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../shared/logo/wedrive-icon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0B1120;
+      --bg2: #111827;
+      --card: #1A2332;
+      --card-border: rgba(255,255,255,0.06);
+      --text: #E2E8F0;
+      --text2: #94A3B8;
+      --text3: #64748B;
+      --blue: #3B82F6;
+      --blue-glow: rgba(59,130,246,0.15);
+      --green: #10B981;
+      --green-glow: rgba(16,185,129,0.15);
+      --amber: #F59E0B;
+      --amber-glow: rgba(245,158,11,0.15);
+      --purple: #8B5CF6;
+      --purple-glow: rgba(139,92,246,0.15);
+      --rose: #F43F5E;
+      --rose-glow: rgba(244,63,94,0.15);
+      --cyan: #06B6D4;
+      --cyan-glow: rgba(6,182,212,0.15);
+      --radius: 16px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      min-height:100vh;
+    }
+
+    /* Header */
+    .header {
+      text-align:center;
+      padding:60px 24px 40px;
+      position:relative;
+      overflow:hidden;
+    }
+    .header::before {
+      content:'';
+      position:absolute;
+      top:-50%;
+      left:50%;
+      transform:translateX(-50%);
+      width:800px;
+      height:800px;
+      background:radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .header-badge {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:var(--blue-glow);
+      border:1px solid rgba(59,130,246,0.2);
+      padding:6px 16px;
+      border-radius:100px;
+      font-size:12px;
+      font-weight:600;
+      color:var(--blue);
+      margin-bottom:20px;
+    }
+    .header h1 {
+      font-size:42px;
+      font-weight:900;
+      letter-spacing:-1.5px;
+      margin-bottom:8px;
+      background:linear-gradient(135deg, #fff 0%, #94A3B8 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .header p {
+      font-size:16px;
+      color:var(--text2);
+      max-width:500px;
+      margin:0 auto;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display:flex;
+      justify-content:center;
+      gap:32px;
+      padding:24px;
+      flex-wrap:wrap;
+    }
+    .stat-item {
+      text-align:center;
+    }
+    .stat-item .num {
+      font-size:32px;
+      font-weight:800;
+      color:var(--blue);
+    }
+    .stat-item .lbl {
+      font-size:12px;
+      font-weight:600;
+      color:var(--text3);
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+
+    /* Container */
+    .container {
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 24px 60px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom:48px;
+    }
+    .section-title {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:20px;
+      font-weight:800;
+      color:var(--text);
+      margin-bottom:20px;
+      letter-spacing:-0.5px;
+    }
+    .section-title .icon {
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .section-title .icon span { font-size:20px; color:#fff; }
+
+    /* Module grid */
+    .module-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));
+      gap:20px;
+    }
+
+    /* Module card */
+    .module-card {
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius);
+      overflow:hidden;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .module-card:hover {
+      transform:translateY(-2px);
+      box-shadow:0 12px 40px rgba(0,0,0,0.3);
+    }
+    .module-card-header {
+      padding:20px 24px 16px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .module-icon {
+      width:44px;
+      height:44px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .module-icon span { font-size:22px; color:#fff; }
+    .module-card-header h3 {
+      font-size:16px;
+      font-weight:700;
+      color:var(--text);
+    }
+    .module-card-header .desc {
+      font-size:12px;
+      color:var(--text3);
+      margin-top:2px;
+    }
+    .module-card-header .badge {
+      margin-left:auto;
+      padding:4px 10px;
+      border-radius:100px;
+      font-size:11px;
+      font-weight:700;
+      flex-shrink:0;
+    }
+
+    /* Page list */
+    .page-list {
+      padding:0 24px 20px;
+    }
+    .page-item {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:10px 14px;
+      border-radius:10px;
+      margin-bottom:4px;
+      transition:background 0.15s;
+      cursor:default;
+    }
+    .page-item:hover {
+      background:rgba(255,255,255,0.04);
+    }
+    .page-item .pi-icon {
+      width:30px;
+      height:30px;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .page-item .pi-icon span { font-size:16px; }
+    .page-item .pi-info {
+      flex:1;
+      min-width:0;
+    }
+    .page-item .pi-name {
+      font-size:13px;
+      font-weight:600;
+      color:var(--text);
+    }
+    .page-item .pi-path {
+      font-size:11px;
+      color:var(--text3);
+      font-family:monospace;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .page-item .pi-tag {
+      padding:3px 8px;
+      border-radius:6px;
+      font-size:10px;
+      font-weight:700;
+      flex-shrink:0;
+    }
+
+    /* Subpage indent */
+    .page-item.sub {
+      margin-left:28px;
+      padding:8px 12px;
+    }
+    .page-item.sub .pi-icon { width:26px; height:26px; }
+    .page-item.sub .pi-icon span { font-size:14px; }
+    .page-item.sub .pi-name { font-size:12px; }
+
+    /* Color helpers */
+    .bg-blue { background:linear-gradient(135deg, #2563EB, #3B82F6); }
+    .bg-green { background:linear-gradient(135deg, #059669, #10B981); }
+    .bg-amber { background:linear-gradient(135deg, #D97706, #F59E0B); }
+    .bg-purple { background:linear-gradient(135deg, #7C3AED, #8B5CF6); }
+    .bg-rose { background:linear-gradient(135deg, #E11D48, #F43F5E); }
+    .bg-cyan { background:linear-gradient(135deg, #0891B2, #06B6D4); }
+    .bg-slate { background:rgba(100,116,139,0.2); }
+
+    .glow-blue { background:var(--blue-glow); color:var(--blue); }
+    .glow-green { background:var(--green-glow); color:var(--green); }
+    .glow-amber { background:var(--amber-glow); color:var(--amber); }
+    .glow-purple { background:var(--purple-glow); color:var(--purple); }
+    .glow-rose { background:var(--rose-glow); color:var(--rose); }
+    .glow-cyan { background:var(--cyan-glow); color:var(--cyan); }
+
+    .text-blue { color:var(--blue); }
+    .text-green { color:var(--green); }
+    .text-amber { color:var(--amber); }
+    .text-purple { color:var(--purple); }
+
+    /* Flow */
+    .flow-grid {
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:20px;
+    }
+    .flow-card {
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius);
+      padding:24px;
+    }
+    .flow-card h4 {
+      font-size:14px;
+      font-weight:700;
+      margin-bottom:16px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .flow-step {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 0;
+      font-size:13px;
+      color:var(--text2);
+    }
+    .flow-step .step-num {
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      font-weight:800;
+      flex-shrink:0;
+    }
+    .flow-arrow {
+      text-align:center;
+      padding:4px 0;
+      color:var(--text3);
+      font-size:16px;
+    }
+
+    /* DB Schema */
+    .db-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:16px;
+    }
+    .db-table {
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius);
+      overflow:hidden;
+    }
+    .db-table-header {
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      border-bottom:1px solid var(--card-border);
+    }
+    .db-table-header .tbl-icon {
+      width:32px;
+      height:32px;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .db-table-header .tbl-icon span { font-size:16px; color:#fff; }
+    .db-table-header h4 {
+      font-size:14px;
+      font-weight:700;
+    }
+    .db-table-header .cnt {
+      margin-left:auto;
+      font-size:11px;
+      font-weight:700;
+      padding:3px 8px;
+      border-radius:6px;
+    }
+    .db-fields {
+      padding:12px 18px;
+    }
+    .db-field {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:5px 0;
+      font-size:12px;
+      color:var(--text2);
+    }
+    .db-field .f-name {
+      font-weight:600;
+      color:var(--text);
+      min-width:110px;
+    }
+    .db-field .f-type {
+      font-family:monospace;
+      font-size:11px;
+      color:var(--text3);
+    }
+    .db-field .f-pk {
+      padding:2px 6px;
+      border-radius:4px;
+      font-size:9px;
+      font-weight:800;
+      background:var(--amber-glow);
+      color:var(--amber);
+    }
+    .db-field .f-fk {
+      padding:2px 6px;
+      border-radius:4px;
+      font-size:9px;
+      font-weight:800;
+      background:var(--purple-glow);
+      color:var(--purple);
+    }
+
+    /* Tech stack */
+    .tech-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+      gap:12px;
+    }
+    .tech-item {
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:12px;
+      padding:18px 16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      transition:transform 0.15s;
+    }
+    .tech-item:hover { transform:translateY(-2px); }
+    .tech-item .t-icon {
+      width:38px;
+      height:38px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-shrink:0;
+    }
+    .tech-item .t-icon span { font-size:18px; color:#fff; }
+    .tech-item .t-name { font-size:13px; font-weight:700; }
+    .tech-item .t-desc { font-size:11px; color:var(--text3); margin-top:1px; }
+
+    /* Divider */
+    .divider {
+      height:1px;
+      background:linear-gradient(90deg, transparent, var(--card-border), transparent);
+      margin:40px 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align:center;
+      padding:40px 24px;
+      color:var(--text3);
+      font-size:12px;
+      border-top:1px solid var(--card-border);
+    }
+
+    /* Responsive */
+    @media (max-width:768px) {
+      .header h1 { font-size:28px; }
+      .stats-bar { gap:20px; }
+      .stat-item .num { font-size:24px; }
+      .module-grid { grid-template-columns:1fr; }
+      .flow-grid { grid-template-columns:1fr; }
+      .db-grid { grid-template-columns:1fr; }
+      .tech-grid { grid-template-columns:repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">
+      <span class="material-icons-round" style="font-size:14px">account_tree</span>
+      System Architecture
+    </div>
+    <h1>WeDRIVE Sitemap</h1>
+    <p>AI-Powered Car Rental System - Complete system architecture and page structure</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item"><div class="num">30</div><div class="lbl">Total Pages</div></div>
+    <div class="stat-item"><div class="num">5</div><div class="lbl">Modules</div></div>
+    <div class="stat-item"><div class="num">6</div><div class="lbl">DB Tables</div></div>
+    <div class="stat-item"><div class="num">2</div><div class="lbl">Languages</div></div>
+    <div class="stat-item"><div class="num">2</div><div class="lbl">Themes</div></div>
+  </div>
+
+  <div class="container">
+
+    <!-- ========== MODULES ========== -->
+    <div class="section">
+      <div class="section-title">
+        <div class="icon bg-blue"><span class="material-icons-round">layers</span></div>
+        System Modules & Pages
+      </div>
+
+      <div class="module-grid">
+
+        <!-- GUEST MODULE -->
+        <div class="module-card">
+          <div class="module-card-header">
+            <div class="module-icon bg-cyan"><span class="material-icons-round">public</span></div>
+            <div>
+              <h3>Guest Module</h3>
+              <div class="desc">Public pages - No login required</div>
+            </div>
+            <div class="badge glow-cyan">4 pages</div>
+          </div>
+          <div class="page-list">
+            <div class="page-item">
+              <div class="pi-icon glow-cyan"><span class="material-icons-round text-blue">home</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Landing Page</div>
+                <div class="pi-path">index.html</div>
+              </div>
+              <div class="pi-tag glow-green">Homepage</div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-cyan"><span class="material-icons-round text-blue">sell</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Pricing</div>
+                <div class="pi-path">guest/pages/pricing/pricing.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-cyan"><span class="material-icons-round text-blue">explore</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Explore Melaka</div>
+                <div class="pi-path">guest/pages/explore-melaka/explore-melaka.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-cyan"><span class="material-icons-round text-blue">help_outline</span></div>
+              <div class="pi-info">
+                <div class="pi-name">How It Works</div>
+                <div class="pi-path">guest/pages/how-it-works/how-it-works.html</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACCOUNT MODULE -->
+        <div class="module-card">
+          <div class="module-card-header">
+            <div class="module-icon bg-rose"><span class="material-icons-round">lock</span></div>
+            <div>
+              <h3>Account Module</h3>
+              <div class="desc">Authentication - Standalone pages</div>
+            </div>
+            <div class="badge glow-rose">2 pages</div>
+          </div>
+          <div class="page-list">
+            <div class="page-item">
+              <div class="pi-icon glow-rose"><span class="material-icons-round" style="color:var(--rose)">login</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Login</div>
+                <div class="pi-path">account/pages/login/login.html</div>
+              </div>
+              <div class="pi-tag glow-amber">Supabase Auth</div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-rose"><span class="material-icons-round" style="color:var(--rose)">person_add</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Sign Up</div>
+                <div class="pi-path">account/pages/signup/signup.html</div>
+              </div>
+              <div class="pi-tag glow-amber">Supabase Auth</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CUSTOMER MODULE -->
+        <div class="module-card">
+          <div class="module-card-header">
+            <div class="module-icon bg-green"><span class="material-icons-round">person</span></div>
+            <div>
+              <h3>Customer Module</h3>
+              <div class="desc">Logged-in customer - Sidebar nav</div>
+            </div>
+            <div class="badge glow-green">10 pages</div>
+          </div>
+          <div class="page-list">
+            <div class="page-item">
+              <div class="pi-icon glow-green"><span class="material-icons-round" style="color:var(--green)">dashboard</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Customer Dashboard</div>
+                <div class="pi-path">customer/pages/dashboard/customer.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-green"><span class="material-icons-round" style="color:var(--green)">directions_car</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Car Details</div>
+                <div class="pi-path">customer/pages/car-details/car-details.html</div>
+              </div>
+            </div>
+            <div class="page-item sub">
+              <div class="pi-icon glow-blue"><span class="material-icons-round text-blue">event</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Booking Form</div>
+                <div class="pi-path">.../booking/booking.html</div>
+              </div>
+            </div>
+            <div class="page-item sub">
+              <div class="pi-icon glow-blue"><span class="material-icons-round text-blue">payment</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Payment</div>
+                <div class="pi-path">.../payment/payment.html</div>
+              </div>
+            </div>
+            <div class="page-item sub">
+              <div class="pi-icon glow-blue"><span class="material-icons-round text-blue">check_circle</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Booking Confirmed</div>
+                <div class="pi-path">.../booking-confirmed.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-green"><span class="material-icons-round" style="color:var(--green)">list_alt</span></div>
+              <div class="pi-info">
+                <div class="pi-name">My Bookings</div>
+                <div class="pi-path">customer/pages/my-bookings/my-bookings.html</div>
+              </div>
+            </div>
+            <div class="page-item sub">
+              <div class="pi-icon glow-blue"><span class="material-icons-round text-blue">receipt</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Receipt</div>
+                <div class="pi-path">.../receipt/receipt.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-green"><span class="material-icons-round" style="color:var(--green)">account_circle</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Profile</div>
+                <div class="pi-path">customer/pages/profile/profile.html</div>
+              </div>
+              <div class="pi-tag glow-green">Supabase</div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-green"><span class="material-icons-round" style="color:var(--green)">support_agent</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Support</div>
+                <div class="pi-path">customer/pages/support/support.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-green"><span class="material-icons-round" style="color:var(--green)">key</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Car Access</div>
+                <div class="pi-path">customer/pages/car-access/car-access.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-green"><span class="material-icons-round" style="color:var(--green)">auto_awesome</span></div>
+              <div class="pi-info">
+                <div class="pi-name">AI Insights</div>
+                <div class="pi-path">customer/pages/ai-insights/ai-insights.html</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADMIN MODULE -->
+        <div class="module-card">
+          <div class="module-card-header">
+            <div class="module-icon bg-purple"><span class="material-icons-round">admin_panel_settings</span></div>
+            <div>
+              <h3>Admin Module</h3>
+              <div class="desc">Admin panel - Sidebar nav</div>
+            </div>
+            <div class="badge glow-purple">10 pages</div>
+          </div>
+          <div class="page-list">
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">dashboard</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Admin Dashboard</div>
+                <div class="pi-path">admin/pages/dashboard/admin.html</div>
+              </div>
+              <div class="pi-tag glow-green">Supabase</div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">directions_car</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Cars Management</div>
+                <div class="pi-path">admin/pages/car/cars.html</div>
+              </div>
+              <div class="pi-tag glow-green">CRUD</div>
+            </div>
+            <div class="page-item sub">
+              <div class="pi-icon glow-blue"><span class="material-icons-round text-blue">edit</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Car Detail / Edit</div>
+                <div class="pi-path">.../car-detail/car-detail.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">event_note</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Bookings Management</div>
+                <div class="pi-path">admin/pages/booking/bookings.html</div>
+              </div>
+              <div class="pi-tag glow-green">Supabase</div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">assessment</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Reports</div>
+                <div class="pi-path">admin/pages/report/reports.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">calendar_month</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Calendar</div>
+                <div class="pi-path">admin/pages/calendar/calendar.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">smart_toy</span></div>
+              <div class="pi-info">
+                <div class="pi-name">AI Chatbot Settings</div>
+                <div class="pi-path">admin/pages/chatbot/chatbot.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">people</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Customers Management</div>
+                <div class="pi-path">admin/pages/customer/customers.html</div>
+              </div>
+              <div class="pi-tag glow-green">Supabase</div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">campaign</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Marketing</div>
+                <div class="pi-path">admin/pages/marketing/marketing.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-purple"><span class="material-icons-round" style="color:var(--purple)">settings</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Settings</div>
+                <div class="pi-path">admin/pages/setting/settings.html</div>
+              </div>
+              <div class="pi-tag glow-green">Supabase</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHARED MODULE -->
+        <div class="module-card">
+          <div class="module-card-header">
+            <div class="module-icon bg-amber"><span class="material-icons-round">widgets</span></div>
+            <div>
+              <h3>Shared Module</h3>
+              <div class="desc">Common pages & components</div>
+            </div>
+            <div class="badge glow-amber">5 pages</div>
+          </div>
+          <div class="page-list">
+            <div class="page-item">
+              <div class="pi-icon glow-amber"><span class="material-icons-round" style="color:var(--amber)">error_outline</span></div>
+              <div class="pi-info">
+                <div class="pi-name">404 Not Found</div>
+                <div class="pi-path">shared/pages/error/404.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-amber"><span class="material-icons-round" style="color:var(--amber)">info</span></div>
+              <div class="pi-info">
+                <div class="pi-name">About Us</div>
+                <div class="pi-path">shared/pages/footer/about/about.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-amber"><span class="material-icons-round" style="color:var(--amber)">mail</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Contact Us</div>
+                <div class="pi-path">shared/pages/footer/contact/contact.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-amber"><span class="material-icons-round" style="color:var(--amber)">quiz</span></div>
+              <div class="pi-info">
+                <div class="pi-name">FAQ</div>
+                <div class="pi-path">shared/pages/footer/faq/faq.html</div>
+              </div>
+            </div>
+            <div class="page-item">
+              <div class="pi-icon glow-amber"><span class="material-icons-round" style="color:var(--amber)">gavel</span></div>
+              <div class="pi-info">
+                <div class="pi-name">Terms & Conditions</div>
+                <div class="pi-path">shared/pages/footer/terms/terms.html</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ========== USER FLOW ========== -->
+    <div class="section">
+      <div class="section-title">
+        <div class="icon bg-green"><span class="material-icons-round">route</span></div>
+        User Flow
+      </div>
+
+      <div class="flow-grid">
+        <div class="flow-card">
+          <h4><span class="material-icons-round" style="color:var(--cyan);font-size:20px">public</span> Guest Flow</h4>
+          <div class="flow-step"><div class="step-num bg-cyan" style="color:#fff">1</div> Landing Page</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-cyan" style="color:#fff">2</div> Browse Pricing / Explore</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-cyan" style="color:#fff">3</div> Sign Up / Login</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-green" style="color:#fff">4</div> Customer Dashboard</div>
+        </div>
+
+        <div class="flow-card">
+          <h4><span class="material-icons-round" style="color:var(--green);font-size:20px">person</span> Customer Flow</h4>
+          <div class="flow-step"><div class="step-num bg-green" style="color:#fff">1</div> Browse Cars</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-green" style="color:#fff">2</div> Select Car (Car Details)</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-green" style="color:#fff">3</div> Fill Booking Form</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-green" style="color:#fff">4</div> Payment</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-green" style="color:#fff">5</div> Booking Confirmed</div>
+        </div>
+
+        <div class="flow-card">
+          <h4><span class="material-icons-round" style="color:var(--purple);font-size:20px">admin_panel_settings</span> Admin Flow</h4>
+          <div class="flow-step"><div class="step-num bg-purple" style="color:#fff">1</div> Login (Role: Admin)</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-purple" style="color:#fff">2</div> Admin Dashboard</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-purple" style="color:#fff">3</div> Manage Cars / Bookings</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-purple" style="color:#fff">4</div> View Reports / Calendar</div>
+          <div class="flow-arrow">|</div>
+          <div class="flow-step"><div class="step-num bg-purple" style="color:#fff">5</div> Configure Marketing / Settings</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ========== DATABASE ========== -->
+    <div class="section">
+      <div class="section-title">
+        <div class="icon bg-amber"><span class="material-icons-round">storage</span></div>
+        Database Schema (Supabase / PostgreSQL)
+      </div>
+
+      <div class="db-grid">
+        <div class="db-table">
+          <div class="db-table-header">
+            <div class="tbl-icon bg-purple"><span class="material-icons-round">shield</span></div>
+            <h4>admins</h4>
+            <div class="cnt glow-purple">1 record</div>
+          </div>
+          <div class="db-fields">
+            <div class="db-field"><span class="f-name">id</span><span class="f-pk">PK</span><span class="f-type">int8</span></div>
+            <div class="db-field"><span class="f-name">auth_uid</span><span class="f-type">uuid</span></div>
+            <div class="db-field"><span class="f-name">email</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">role</span><span class="f-type">text</span></div>
+          </div>
+        </div>
+
+        <div class="db-table">
+          <div class="db-table-header">
+            <div class="tbl-icon bg-green"><span class="material-icons-round">people</span></div>
+            <h4>customers</h4>
+            <div class="cnt glow-green">7+ records</div>
+          </div>
+          <div class="db-fields">
+            <div class="db-field"><span class="f-name">id</span><span class="f-pk">PK</span><span class="f-type">int8</span></div>
+            <div class="db-field"><span class="f-name">auth_uid</span><span class="f-type">uuid</span></div>
+            <div class="db-field"><span class="f-name">email</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">full_name</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">phone</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">ic</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">license_no</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">status</span><span class="f-type">text</span></div>
+          </div>
+        </div>
+
+        <div class="db-table">
+          <div class="db-table-header">
+            <div class="tbl-icon bg-blue"><span class="material-icons-round">directions_car</span></div>
+            <h4>cars</h4>
+            <div class="cnt glow-blue">8 records</div>
+          </div>
+          <div class="db-fields">
+            <div class="db-field"><span class="f-name">id</span><span class="f-pk">PK</span><span class="f-type">int8</span></div>
+            <div class="db-field"><span class="f-name">name</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">plate</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">type</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">price_per_day</span><span class="f-type">numeric</span></div>
+            <div class="db-field"><span class="f-name">seats</span><span class="f-type">int</span></div>
+            <div class="db-field"><span class="f-name">transmission</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">fuel</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">status</span><span class="f-type">text</span></div>
+          </div>
+        </div>
+
+        <div class="db-table">
+          <div class="db-table-header">
+            <div class="tbl-icon bg-amber"><span class="material-icons-round">event_note</span></div>
+            <h4>bookings</h4>
+            <div class="cnt glow-amber">110 records</div>
+          </div>
+          <div class="db-fields">
+            <div class="db-field"><span class="f-name">id</span><span class="f-pk">PK</span><span class="f-type">int8</span></div>
+            <div class="db-field"><span class="f-name">auth_uid</span><span class="f-fk">FK</span><span class="f-type">uuid</span></div>
+            <div class="db-field"><span class="f-name">car_id</span><span class="f-fk">FK</span><span class="f-type">int8</span></div>
+            <div class="db-field"><span class="f-name">car</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">customer_name</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">start_date</span><span class="f-type">date</span></div>
+            <div class="db-field"><span class="f-name">end_date</span><span class="f-type">date</span></div>
+            <div class="db-field"><span class="f-name">days</span><span class="f-type">int</span></div>
+            <div class="db-field"><span class="f-name">total</span><span class="f-type">numeric</span></div>
+            <div class="db-field"><span class="f-name">payment</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">status</span><span class="f-type">text</span></div>
+          </div>
+        </div>
+
+        <div class="db-table">
+          <div class="db-table-header">
+            <div class="tbl-icon bg-rose"><span class="material-icons-round">campaign</span></div>
+            <h4>marketing</h4>
+            <div class="cnt glow-rose">JSONB</div>
+          </div>
+          <div class="db-fields">
+            <div class="db-field"><span class="f-name">key</span><span class="f-pk">PK</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">value</span><span class="f-type">jsonb</span></div>
+            <div class="db-field" style="padding-top:8px;border-top:1px solid rgba(255,255,255,0.05)"><span class="f-name" style="color:var(--text3);font-size:11px">Contains: banners, promo_codes, seasonal_pricing</span></div>
+          </div>
+        </div>
+
+        <div class="db-table">
+          <div class="db-table-header">
+            <div class="tbl-icon bg-cyan"><span class="material-icons-round">settings</span></div>
+            <h4>settings</h4>
+            <div class="cnt glow-cyan">JSONB</div>
+          </div>
+          <div class="db-fields">
+            <div class="db-field"><span class="f-name">key</span><span class="f-pk">PK</span><span class="f-type">text</span></div>
+            <div class="db-field"><span class="f-name">value</span><span class="f-type">jsonb</span></div>
+            <div class="db-field" style="padding-top:8px;border-top:1px solid rgba(255,255,255,0.05)"><span class="f-name" style="color:var(--text3);font-size:11px">Contains: company_name, email, phone, policies</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ========== TECH STACK ========== -->
+    <div class="section">
+      <div class="section-title">
+        <div class="icon bg-rose"><span class="material-icons-round">code</span></div>
+        Technology Stack
+      </div>
+
+      <div class="tech-grid">
+        <div class="tech-item">
+          <div class="t-icon bg-amber"><span class="material-icons-round">html</span></div>
+          <div><div class="t-name">HTML5 + CSS3</div><div class="t-desc">Vanilla, no framework</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-amber"><span class="material-icons-round">javascript</span></div>
+          <div><div class="t-name">JavaScript ES6</div><div class="t-desc">Vanilla JS</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-green"><span class="material-icons-round">storage</span></div>
+          <div><div class="t-name">Supabase</div><div class="t-desc">Backend as a Service</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-blue"><span class="material-icons-round">database</span></div>
+          <div><div class="t-name">PostgreSQL</div><div class="t-desc">Via Supabase</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-rose"><span class="material-icons-round">lock</span></div>
+          <div><div class="t-name">Supabase Auth</div><div class="t-desc">Email + Google OAuth</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-purple"><span class="material-icons-round">smart_toy</span></div>
+          <div><div class="t-name">OpenRouter AI</div><div class="t-desc">Gemini 2.5 Flash</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-amber"><span class="material-icons-round">cloud</span></div>
+          <div><div class="t-name">Firebase Hosting</div><div class="t-desc">Static hosting</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-cyan"><span class="material-icons-round">text_fields</span></div>
+          <div><div class="t-name">Google Fonts</div><div class="t-desc">Inter typeface</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-blue"><span class="material-icons-round">emoji_symbols</span></div>
+          <div><div class="t-name">Material Icons</div><div class="t-desc">Round variant</div></div>
+        </div>
+        <div class="tech-item">
+          <div class="t-icon bg-rose"><span class="material-icons-round">animation</span></div>
+          <div><div class="t-name">anime.js</div><div class="t-desc">Animations</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>WeDRIVE - AI-Powered Car Rental System | Melaka, Malaysia</p>
+    <p style="margin-top:4px">Last Updated: 21 May 2026 | Version 7.3.1</p>
+  </div>
+
+</body>
+</html>

@@ -28,29 +28,26 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   try {
     const data = await window.WeDriveAPI.getAdminData();
+    console.log('[Calendar] Raw data loaded:', {
+      bookingsCount: (data.bookings || []).length,
+      carsCount: (data.car || []).length,
+      sampleBooking: (data.bookings || [])[0]
+    });
     // Map Supabase booking fields to calendar format
-    function safeIso(dStr) {
-      if (!dStr) return '';
-      try {
-        const d = new Date(dStr);
-        if (!isNaN(d.getTime())) {
-          return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-        }
-      } catch (e) {}
-      return String(dStr).slice(0, 10);
-    }
-    
-    CAL_DATA.bookings = (data.bookings || []).map(b => ({
-      ...b,
-      pickup: safeIso(b.pickup || b.start_date),
-      return: safeIso(b.return || b.end_date),
-      customer: b.customer || b.customer_name || '',
-      car: b.car || b.car_name || '',
-      total: b.total || 0
-    })).filter(b => b.status !== 'Cancelled');
-    
+    // Supabase uses: start_date, end_date, customer_name
+    // Calendar expects: pickup, return, customer, car
+    CAL_DATA.bookings = (data.bookings || []).map(b => {
+      var mapped = { ...b };
+      mapped.pickup = b.start_date || b.pickup || '';
+      mapped.return = b.end_date || b.return || '';
+      mapped.customer = b.customer_name || b.customer || '';
+      mapped.car = b.car || b.car_name || '';
+      mapped.total = b.total || 0;
+      return mapped;
+    });
     CAL_DATA.car = data.car || [];
     CAL_DATA.marketing = data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
+    console.log('[Calendar] Mapped bookings:', CAL_DATA.bookings.length, 'Sample:', CAL_DATA.bookings[0]);
   } catch (e) {
     console.warn('Calendar: failed to load data', e);
   }
@@ -240,8 +237,20 @@ function updateStats() {
   const monthEnd = dateStr(CAL_YEAR, CAL_MONTH, new Date(CAL_YEAR, CAL_MONTH + 1, 0).getDate());
   const todayStr = new Date().toISOString().slice(0, 10);
 
+  console.log('[Calendar Stats] Total bookings in CAL_DATA:', CAL_DATA.bookings.length);
+  console.log('[Calendar Stats] Month range:', monthStart, 'to', monthEnd);
+  if (CAL_DATA.bookings.length > 0) {
+    console.log('[Calendar Stats] Sample booking fields:', {
+      pickup: CAL_DATA.bookings[0].pickup,
+      return: CAL_DATA.bookings[0].return,
+      start_date: CAL_DATA.bookings[0].start_date,
+      end_date: CAL_DATA.bookings[0].end_date
+    });
+  }
+
   // Bookings this month (any overlap)
   const monthBookings = CAL_DATA.bookings.filter(b => b.pickup <= monthEnd && b.return >= monthStart);
+  console.log('[Calendar Stats] Month bookings found:', monthBookings.length);
   document.getElementById('cal-stat-bookings').textContent = monthBookings.length;
 
   // Cars rented today
