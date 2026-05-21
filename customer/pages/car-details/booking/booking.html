@@ -175,21 +175,164 @@
   <script src="../../../../shared/js/animate.js"></script>
   <script src="../../../../shared/js/main.js?v=5.7.0"></script>
   <script>
-    // Simple addon toggle logic
+    const urlParams = new URLSearchParams(window.location.search);
+    const carId = parseInt(urlParams.get('car')) || 4; 
+    const pickupDateStr = urlParams.get('pickup') || '2026-05-22';
+    const returnDateStr = urlParams.get('return') || '2026-05-23';
+    const pickupLoc = urlParams.get('location') || 'Melaka Sentral';
+
+    let currentCar = null;
+    let daysCount = 1;
+    let basePrice = 120;
+
+    async function initBookingPage() {
+      try {
+        const cars = await window.WeDriveAPI.getCars();
+        currentCar = cars.find(c => c.id === carId || c.car_id === carId);
+        if (!currentCar && cars.length > 0) {
+          currentCar = cars[0];
+        }
+      } catch (e) {
+        console.error('Error fetching cars:', e);
+      }
+
+      if (currentCar) {
+        basePrice = currentCar.price || currentCar.price_per_day || 120;
+        document.getElementById('booking-car-name').textContent = currentCar.name;
+        document.querySelector('.booking-sidebar .sidebar-badge').textContent = currentCar.status || 'Available';
+        
+        const typeLabel = currentCar.label || currentCar.type || 'Hatchback';
+        const carYear = currentCar.year || 2022;
+        const carColor = currentCar.color || '';
+        document.querySelector('.car-summary-tag').textContent = `${typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1)} -- ${carYear} ${carColor}`;
+        
+        document.querySelector('.car-rating').innerHTML = `<span class="material-icons-round">star</span> ${currentCar.rating || '4.8'}`;
+        document.getElementById('booking-price-display').innerHTML = `RM${basePrice}<span class="car-price-unit">/day</span>`;
+        
+        let imgUrl = '../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg';
+        if (currentCar.images && currentCar.images.length > 0) {
+          imgUrl = '../../../../shared/model/' + currentCar.images[Math.min(currentCar.images.length - 1, 3)];
+        } else if (currentCar.image) {
+          imgUrl = '../../../../shared/model/' + currentCar.image;
+        }
+        document.querySelector('.car-summary-img img').src = imgUrl;
+        document.querySelector('.sidebar-car-visual img').src = imgUrl;
+
+        const specsChips = document.querySelectorAll('.specs-grid .spec-chip');
+        if (specsChips.length >= 4) {
+          specsChips[0].innerHTML = `<span class="material-icons-round">airline_seat_recline_extra</span><span>${currentCar.seats || 5} Seats</span>`;
+          specsChips[1].innerHTML = `<span class="material-icons-round">settings</span><span>${currentCar.transmission || currentCar.trans || 'Auto'}</span>`;
+          specsChips[2].innerHTML = `<span class="material-icons-round">ev_station</span><span>${currentCar.fuel || 'Petrol'}</span>`;
+          specsChips[3].innerHTML = `<span class="material-icons-round">calendar_today</span><span>${currentCar.year || 2022} Model</span>`;
+        }
+      }
+
+      document.getElementById('bk-pickup-date').value = pickupDateStr;
+      document.getElementById('bk-return-date').value = returnDateStr;
+      
+      const locSelect = document.getElementById('bk-pickup-location');
+      if (locSelect) {
+        let found = false;
+        for (let i = 0; i < locSelect.options.length; i++) {
+          if (locSelect.options[i].text.toLowerCase().includes(pickupLoc.toLowerCase())) {
+            locSelect.selectedIndex = i;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          const opt = document.createElement('option');
+          opt.text = pickupLoc;
+          opt.selected = true;
+          locSelect.add(opt);
+        }
+      }
+
+      calculateBookingSummary();
+
+      document.getElementById('bk-pickup-date').addEventListener('change', calculateBookingSummary);
+      document.getElementById('bk-return-date').addEventListener('change', calculateBookingSummary);
+      document.getElementById('bk-pickup-location').addEventListener('change', calculateBookingSummary);
+    }
+
+    function calculateBookingSummary() {
+      const pickupVal = document.getElementById('bk-pickup-date').value;
+      const returnVal = document.getElementById('bk-return-date').value;
+      const pickup = new Date(pickupVal);
+      const returnD = new Date(returnVal);
+      
+      let diffTime = Math.abs(returnD - pickup);
+      daysCount = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+      
+      const baseCost = basePrice * daysCount;
+      
+      let addonCost = 0;
+      let addonLabels = [];
+      
+      const gpsChecked = document.querySelector('#addon-gps input').checked;
+      const childChecked = document.querySelector('#addon-child input').checked;
+      const insuranceChecked = document.querySelector('#addon-insurance input').checked;
+      const driverChecked = document.querySelector('#addon-driver input').checked;
+      
+      if (gpsChecked) { addonCost += 15 * daysCount; addonLabels.push('GPS'); }
+      if (childChecked) { addonCost += 20 * daysCount; addonLabels.push('Child Seat'); }
+      if (insuranceChecked) { addonCost += 35 * daysCount; addonLabels.push('Full Insurance'); }
+      if (driverChecked) { addonCost += 25 * daysCount; addonLabels.push('Extra Driver'); }
+      
+      const serviceFee = 15;
+      const totalCost = baseCost + addonCost + serviceFee;
+      
+      document.getElementById('base-label').textContent = `Base Rate (${daysCount} day${daysCount > 1 ? 's' : ''})`;
+      document.getElementById('base-value').textContent = `RM${baseCost.toFixed(2)}`;
+      
+      document.getElementById('addon-label').textContent = `Add-ons (${addonLabels.join(', ') || 'None'})`;
+      document.getElementById('addon-value').textContent = `RM${addonCost.toFixed(2)}`;
+      
+      document.getElementById('total-price').textContent = `RM${totalCost.toFixed(2)}`;
+
+      const bookingSession = {
+        carId: carId,
+        carName: currentCar ? currentCar.name : '2022 Perodua Myvi 1.5 H',
+        carPlate: currentCar ? currentCar.plate : 'WDR 3388',
+        pickupDate: pickupVal,
+        returnDate: returnVal,
+        pickupLocation: document.getElementById('bk-pickup-location').value,
+        days: daysCount,
+        pricePerDay: basePrice,
+        baseTotal: baseCost,
+        addonTotal: addonCost,
+        serviceFee: serviceFee,
+        total: totalCost,
+        addons: {
+          gps: gpsChecked,
+          child: childChecked,
+          insurance: insuranceChecked,
+          driver: driverChecked
+        }
+      };
+      sessionStorage.setItem('pending_booking', JSON.stringify(bookingSession));
+    }
+
     function updateAddons() {
       document.querySelectorAll('.addon-item').forEach(item => {
         const cb = item.querySelector('input[type="checkbox"]');
         item.classList.toggle('checked', cb.checked);
       });
+      calculateBookingSummary();
     }
+
     function confirmBooking() {
       const btn = document.getElementById('btn-confirm-booking');
       btn.innerHTML = '<span class="material-icons-round spin-icon">refresh</span> Processing...';
       btn.disabled = true;
       setTimeout(() => {
         window.location.href = 'payment/payment.html';
-      }, 1500);
+      }, 1000);
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initBookingPage, 200);
+    });
   </script>
 
   <!-- CHATBOT -->

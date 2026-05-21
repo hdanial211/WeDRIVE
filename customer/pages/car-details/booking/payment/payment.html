@@ -306,14 +306,40 @@
   <script>
     var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
     var activeDriverMode = 'existing';
-    var defaultDriverProfile = {
-      fullName: 'Alex Johnson',
+    
+    var pendingBooking = null;
+    try {
+      pendingBooking = JSON.parse(sessionStorage.getItem('pending_booking'));
+    } catch(e) {
+      console.error('Error loading pending booking:', e);
+    }
+    
+    if (!pendingBooking) {
+      pendingBooking = {
+        carId: 4,
+        carName: '2022 Perodua Myvi 1.5 H',
+        carPlate: 'WDR 3388',
+        pickupDate: '2026-05-22',
+        returnDate: '2026-05-23',
+        pickupLocation: 'Melaka Sentral',
+        days: 1,
+        pricePerDay: 120,
+        baseTotal: 120,
+        addonTotal: 35,
+        serviceFee: 15,
+        total: 170,
+        addons: { gps: false, child: false, insurance: true, driver: false }
+      };
+    }
+    
+    var savedDriverProfile = {
+      fullName: 'Ahmad Bin Ali',
       identity: '900101-14-5678',
-      email: 'alex.johnson@example.com',
-      phone: '+60 11-1234 5678',
-      license: 'DLR-9876543210'
+      email: 'ahmad@wedrive.my',
+      phone: '012-3456789',
+      license: 'DLR-1234567890'
     };
-    var savedDriverProfile = loadStoredDriverProfile();
+
     var demoOcrProfiles = [
       {
         fullName: 'Nur Aisyah Binti Rahman',
@@ -336,22 +362,151 @@
     };
     var driverOcrReady = false;
 
-    function loadStoredDriverProfile() {
+    async function loadActiveCustomerProfile() {
       try {
-        var raw = localStorage.getItem(PROFILE_STORAGE_KEY);
-        if (!raw) return defaultDriverProfile;
-        var stored = JSON.parse(raw);
-        return {
-          fullName: ((stored.firstName || '') + ' ' + (stored.lastName || '')).trim() || defaultDriverProfile.fullName,
-          identity: stored.identity || defaultDriverProfile.identity,
-          email: stored.email || defaultDriverProfile.email,
-          phone: stored.phone || defaultDriverProfile.phone,
-          license: stored.license || defaultDriverProfile.license
-        };
-      } catch (error) {
-        console.error('Unable to load stored driver profile:', error);
-        return defaultDriverProfile;
+        var sb = window.supabaseClient;
+        if (sb) {
+          var userResult = await sb.auth.getUser();
+          var user = userResult && userResult.data && userResult.data.user;
+          if (user) {
+            var profile = await window.WeDriveAPI.getCustomerProfile(user.id);
+            if (profile) {
+              savedDriverProfile.fullName = profile.name || user.user_metadata.full_name || savedDriverProfile.fullName;
+              savedDriverProfile.email = profile.email || user.email || savedDriverProfile.email;
+              savedDriverProfile.phone = profile.phone || savedDriverProfile.phone;
+              savedDriverProfile.identity = profile.ic || savedDriverProfile.identity;
+              savedDriverProfile.license = profile.license || savedDriverProfile.license;
+            } else {
+              savedDriverProfile.fullName = user.user_metadata.full_name || savedDriverProfile.fullName;
+              savedDriverProfile.email = user.email || savedDriverProfile.email;
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Error loading active customer profile:', err);
       }
+      
+      if (document.getElementById('existing-driver-name')) {
+        document.getElementById('existing-driver-name').textContent = savedDriverProfile.fullName;
+        document.getElementById('existing-driver-meta').textContent = savedDriverProfile.identity + ' • ' + savedDriverProfile.email;
+        document.getElementById('existing-driver-ic').value = savedDriverProfile.identity;
+        document.getElementById('existing-driver-license').value = savedDriverProfile.license;
+        document.getElementById('existing-driver-email').value = savedDriverProfile.email;
+        document.getElementById('existing-driver-phone').value = savedDriverProfile.phone;
+        document.getElementById('cc-name').value = savedDriverProfile.fullName.toUpperCase();
+      }
+    }
+
+    function initPaymentPage() {
+      var sidebar = document.querySelector('.order-summary');
+      if (sidebar) {
+        var carImg = sidebar.querySelector('.summary-car-img');
+        if (carImg) {
+          var carMapping = {
+            '2023 BMW 320i M Sport 2.0': 'Sedan/2023 BMW 320i M Sport 2.0',
+            '2023 Mercedes-Benz GLA250 AMG Line 2.0': 'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0',
+            '2024 Toyota Camry 2.5V': 'Sedan/2024 Toyota Camry 2.5V',
+            '2022 Perodua Myvi 1.5 H': 'Hatchback/2022 Perodua Myvi 1.5 H',
+            '2023 Honda City 1.5 V': 'Sedan/2023 Honda City 1.5 V',
+            '2024 Proton X50 1.5 TGDI Flagship': 'SUV/2024 Proton X50 1.5 TGDI Flagship',
+            '2024 Perodua Ativa 1.0T H': 'SUV/2024 Perodua Ativa 1.0T H',
+            '2023 Toyota Vios 1.5 G': 'Sedan/2023 Toyota Vios 1.5 G'
+          };
+          var path = carMapping[pendingBooking.carName];
+          var imgUrl = '../../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg';
+          if (path) {
+            imgUrl = '../../../../../shared/model/' + path + '/exterior/full-res/frame-140.jpg';
+          }
+          carImg.src = imgUrl;
+        }
+
+        var carTitle = sidebar.querySelector('.summary-car-info h3');
+        if (carTitle) carTitle.textContent = pendingBooking.carName;
+
+        var carMeta1 = sidebar.querySelector('.summary-car-info p:nth-of-type(1)');
+        if (carMeta1) {
+          carMeta1.textContent = 'Vehicle Rating: 4.8';
+        }
+
+        var carMeta2 = sidebar.querySelector('.summary-car-info p:nth-of-type(2)');
+        if (carMeta2) {
+          carMeta2.textContent = formatDate(pendingBooking.pickupDate) + ' - ' + formatDate(pendingBooking.returnDate) + ' (' + pendingBooking.days + ' day' + (pendingBooking.days > 1 ? 's' : '') + ')';
+        }
+
+        updatePaymentDetails();
+      }
+
+      loadActiveCustomerProfile();
+      
+      document.getElementById('addon-insurance').checked = pendingBooking.addons.insurance;
+      document.getElementById('addon-gps').checked = pendingBooking.addons.gps;
+      document.getElementById('addon-child').checked = pendingBooking.addons.child;
+      
+      document.getElementById('addon-insurance').addEventListener('change', recalcFromCheckboxes);
+      document.getElementById('addon-gps').addEventListener('change', recalcFromCheckboxes);
+      document.getElementById('addon-child').addEventListener('change', recalcFromCheckboxes);
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '--';
+      var d = new Date(dateStr);
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return months[d.getMonth()] + ' ' + d.getDate();
+    }
+
+    function updatePaymentDetails() {
+      var baseTotal = pendingBooking.baseTotal;
+      var addonTotal = pendingBooking.addonTotal;
+      var serviceFee = pendingBooking.serviceFee;
+      var total = pendingBooking.total;
+
+      var sidebar = document.querySelector('.order-summary');
+      if (!sidebar) return;
+
+      var rows = sidebar.querySelectorAll('.summary-row');
+      rows[0].querySelector('span').textContent = 'Base rate (' + pendingBooking.days + ' day' + (pendingBooking.days > 1 ? 's' : '') + ')';
+      rows[0].querySelector('.amount').textContent = 'RM ' + baseTotal.toFixed(2);
+      
+      rows[1].querySelector('span').textContent = 'Add-ons';
+      rows[1].querySelector('.amount').textContent = 'RM ' + addonTotal.toFixed(2);
+
+      rows[2].querySelector('.amount').textContent = 'RM ' + serviceFee.toFixed(2);
+
+      var discountAmount = 0.00;
+      rows[3].querySelector('.amount').textContent = '- RM ' + discountAmount.toFixed(2);
+
+      var deposit = baseTotal * 0.20; 
+      rows[4].querySelector('.amount').textContent = 'RM ' + deposit.toFixed(2);
+
+      sidebar.querySelector('.total .amount').textContent = 'RM ' + total.toFixed(2);
+
+      var btnPay = document.getElementById('btn-pay');
+      if (btnPay) {
+        btnPay.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + total.toFixed(2);
+      }
+    }
+
+    function recalcFromCheckboxes() {
+      var days = pendingBooking.days;
+      var baseCost = pendingBooking.baseTotal;
+      
+      var addonCost = 0;
+      var gpsChecked = document.getElementById('addon-gps').checked;
+      var childChecked = document.getElementById('addon-child').checked;
+      var insuranceChecked = document.getElementById('addon-insurance').checked;
+      
+      if (gpsChecked) addonCost += 15 * days;
+      if (childChecked) addonCost += 20 * days;
+      if (insuranceChecked) addonCost += 35 * days;
+      
+      pendingBooking.addonTotal = addonCost;
+      pendingBooking.addons.gps = gpsChecked;
+      pendingBooking.addons.child = childChecked;
+      pendingBooking.addons.insurance = insuranceChecked;
+      pendingBooking.total = baseCost + addonCost + pendingBooking.serviceFee;
+      
+      sessionStorage.setItem('pending_booking', JSON.stringify(pendingBooking));
+      updatePaymentDetails();
     }
 
     function selectDriverMode(mode) {
@@ -457,7 +612,7 @@
       button.classList.add('is-applied');
     }
 
-    function completePayment() {
+    async function completePayment() {
       if (activeDriverMode === 'new') {
         var phone = document.getElementById('new-driver-phone');
         if (!driverUploads.front || !driverUploads.back || !driverOcrReady || !phone.value.trim()) {
@@ -465,13 +620,79 @@
           return;
         }
       }
+      
       var button = document.getElementById('btn-pay');
       button.disabled = true;
       button.classList.add('is-processing');
       button.innerHTML = '<span class="material-icons-round spin-icon">refresh</span> Approving demo payment...';
-      window.setTimeout(function () {
-        window.location.href = 'booking-confirmed/booking-confirmed.html';
-      }, 900);
+
+      try {
+        var sb = window.supabaseClient;
+        var user = null;
+        if (sb) {
+          var userResult = await sb.auth.getUser();
+          user = userResult && userResult.data && userResult.data.user;
+        }
+
+        var driverName = activeDriverMode === 'existing' ? savedDriverProfile.fullName : document.getElementById('new-driver-name').value;
+        var driverEmail = activeDriverMode === 'existing' ? savedDriverProfile.email : document.getElementById('new-driver-email').value;
+        var driverPhone = activeDriverMode === 'existing' ? savedDriverProfile.phone : document.getElementById('new-driver-phone').value;
+        var driverIc = activeDriverMode === 'existing' ? savedDriverProfile.identity : document.getElementById('new-driver-ic').value;
+        var driverLicense = activeDriverMode === 'existing' ? savedDriverProfile.license : document.getElementById('new-driver-license').value;
+
+        var bookingRef = 'BK-2026-' + Math.floor(1000 + Math.random() * 9000);
+
+        var bookingData = {
+          booking_id: bookingRef,
+          car_id: pendingBooking.carId,
+          car: pendingBooking.carName,
+          plate: pendingBooking.carPlate || 'ABC 5678',
+          customer: driverName,
+          email: driverEmail,
+          phone: driverPhone,
+          ic: driverIc,
+          start_date: pendingBooking.pickupDate,
+          end_date: pendingBooking.returnDate,
+          days: pendingBooking.days,
+          daily: pendingBooking.pricePerDay,
+          total: pendingBooking.total,
+          status: 'Pending',
+          payment: 'Paid',
+          type: 'Standard',
+          pickup: pendingBooking.pickupLocation,
+          dropoff: pendingBooking.pickupLocation,
+          auth_uid: user ? user.id : null
+        };
+
+        var apiResult = await window.WeDriveAPI.createBooking(bookingData);
+        if (apiResult.success) {
+          sessionStorage.setItem('confirmed_booking_id', bookingRef);
+          sessionStorage.setItem('confirmed_booking', JSON.stringify(bookingData));
+          
+          if (sb && user) {
+            await window.WeDriveAPI.updateCustomerProfile(user.id, {
+              ic: driverIc,
+              license: driverLicense,
+              phone: driverPhone
+            });
+          }
+
+          window.setTimeout(function () {
+            window.location.href = 'booking-confirmed/booking-confirmed.html';
+          }, 900);
+        } else {
+          alert('Failed to save booking to database: ' + (apiResult.error || 'Unknown error'));
+          button.disabled = false;
+          button.classList.remove('is-processing');
+          button.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + pendingBooking.total.toFixed(2);
+        }
+      } catch (err) {
+        console.error('Error during booking payment processing:', err);
+        alert('An unexpected error occurred during booking creation. Please try again.');
+        button.disabled = false;
+        button.classList.remove('is-processing');
+        button.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + pendingBooking.total.toFixed(2);
+      }
     }
 
     var ccNum = document.getElementById('cc-num');
@@ -490,15 +711,9 @@
       });
     }
 
-    if (document.getElementById('existing-driver-name')) {
-      document.getElementById('existing-driver-name').textContent = savedDriverProfile.fullName;
-      document.getElementById('existing-driver-meta').textContent = savedDriverProfile.identity + ' • ' + savedDriverProfile.email;
-      document.getElementById('existing-driver-ic').value = savedDriverProfile.identity;
-      document.getElementById('existing-driver-license').value = savedDriverProfile.license;
-      document.getElementById('existing-driver-email').value = savedDriverProfile.email;
-      document.getElementById('existing-driver-phone').value = savedDriverProfile.phone;
-      document.getElementById('cc-name').value = savedDriverProfile.fullName.toUpperCase();
-    }
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initPaymentPage, 200);
+    });
   </script>
 </body>
 </html>
