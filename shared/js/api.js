@@ -89,6 +89,45 @@ window._WEDRIVE_FALLBACK_DATA = { "stats": { "total_vehicles": 8, "active_rental
 window.WeDriveAPI = {
 
     /**
+     * Internal helper to clean up/delete bookings that are 'Unpaid' and created > 10 minutes ago.
+     */
+    _autoCleanupUnpaidBookings: async function () {
+        if (!window.AppConfig.USE_REAL_DB) {
+            // For dummy/localStorage/fallback mode
+            const dummyTimeLimit = Date.now() - 10 * 60 * 1000;
+            const data = await _loadDummyData();
+            if (data && data.bookings) {
+                const initialLength = data.bookings.length;
+                data.bookings = data.bookings.filter(function (b) {
+                    if (b.payment === 'Unpaid' && b.created_at) {
+                        const createdTime = new Date(b.created_at.replace(' ', 'T')).getTime();
+                        if (!isNaN(createdTime) && createdTime < dummyTimeLimit) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+                if (data.bookings.length !== initialLength) {
+                    console.log('[AutoCleanup] Expired ' + (initialLength - data.bookings.length) + ' unpaid booking(s) from dummy data.');
+                }
+            }
+        } else {
+            // For real Supabase database mode
+            try {
+                var sb = window.supabaseClient;
+                if (!sb) return;
+                var tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+                var result = await sb.from('bookings')
+                    .delete()
+                    .eq('payment', 'Unpaid')
+                    .lt('created_at', tenMinutesAgo);
+                if (result.error) throw result.error;
+            } catch (err) {
+                console.error('[WeDriveAPI] Supabase auto-cleanup error:', err);
+            }
+        }
+    },
+    /**
      * Get the list of all available cars.
      * Used in: index.html (Landing), customer.html (Dashboard), admin.html (Car)
      */
@@ -115,6 +154,7 @@ window.WeDriveAPI = {
      * Used in: admin.html (Dashboard)
      */
     getBookings: async function () {
+        await window.WeDriveAPI._autoCleanupUnpaidBookings();
         if (!window.AppConfig.USE_REAL_DB) {
             const data = await _loadDummyData();
             return data.bookings || [];
@@ -137,6 +177,7 @@ window.WeDriveAPI = {
      * Used in: admin.html
      */
     getAdminData: async function () {
+        await window.WeDriveAPI._autoCleanupUnpaidBookings();
         if (!window.AppConfig.USE_REAL_DB) {
             return await _loadDummyData();
         } else {
@@ -633,6 +674,7 @@ window.WeDriveAPI = {
      * Used in: my-bookings.html
      */
     getCustomerBookings: async function (authUid) {
+        await window.WeDriveAPI._autoCleanupUnpaidBookings();
         if (!window.AppConfig.USE_REAL_DB) {
             var data = await _loadDummyData();
             return data.bookings || [];
@@ -657,6 +699,7 @@ window.WeDriveAPI = {
      * Used in: booking calendar (NOTA 5 - block booked dates)
      */
     getBookedDatesForCar: async function (carId) {
+        await window.WeDriveAPI._autoCleanupUnpaidBookings();
         if (!window.AppConfig.USE_REAL_DB) {
             var data = await _loadDummyData();
             var bookings = data.bookings || [];
