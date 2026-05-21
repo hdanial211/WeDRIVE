@@ -166,6 +166,9 @@
       renderHeroStats();
       renderSpotlight(spotlightIndex, false);
       renderCars(lastRenderedCars.length ? lastRenderedCars : allCars);
+      if (typeof updateActiveBookingSection === 'function') {
+        updateActiveBookingSection();
+      }
     });
 
     if (activeBookingCard) {
@@ -612,6 +615,117 @@
     window.location.href = '../car-details/booking/booking.html?' + params.join('&');
   };
 
+  function updateActiveBookingSection() {
+    var activeSec = document.getElementById('active-booking-section');
+    if (!activeSec) return;
+
+    if (window.__GUEST_MODE__) {
+      activeSec.style.display = 'none';
+      return;
+    }
+
+    if (!window.WeDriveAPI || !window.WeDriveAPI.getCurrentUser) {
+      activeSec.style.display = 'none';
+      return;
+    }
+
+    window.WeDriveAPI.getCurrentUser().then(function (user) {
+      if (!user) {
+        activeSec.style.display = 'none';
+        return;
+      }
+
+      window.WeDriveAPI.getCustomerBookings(user.id).then(function (bookings) {
+        // Filter for active bookings: status not in Completed, Cancelled, Rejected
+        var activeBookings = (bookings || []).filter(function (b) {
+          return b.status !== 'Completed' && b.status !== 'Cancelled' && b.status !== 'Rejected';
+        });
+
+        if (!activeBookings.length) {
+          activeSec.style.display = 'none';
+          return;
+        }
+
+        // Show the latest active booking
+        var booking = activeBookings[0];
+        activeSec.style.display = ''; // Reset display to default
+
+        // Find the car details to get the correct image and category
+        var car = allCars.find(function(c) { return String(c.id) === String(booking.car_id); });
+        
+        // Update elements dynamically
+        var imgEl = document.getElementById('active-car-img');
+        if (imgEl) {
+          imgEl.src = car ? imagePath(car) : fallbackImagePath();
+        }
+
+        var tagEl = activeSec.querySelector('.booking-tag');
+        if (tagEl) {
+          tagEl.textContent = (car ? (car.label || car.type) : 'CAR').toUpperCase();
+        }
+
+        var idEl = activeSec.querySelector('.booking-id');
+        if (idEl) {
+          idEl.textContent = 'Booking #' + (booking.booking_id || booking.id);
+        }
+
+        var nameEl = activeSec.querySelector('.booking-car-name');
+        if (nameEl) {
+          nameEl.textContent = car ? car.name : booking.car;
+        }
+
+        var subEl = activeSec.querySelector('.booking-car-sub');
+        if (subEl) {
+          subEl.textContent = car ? (car.ai || 'Executive Comfort') : 'AI Selected Class';
+        }
+
+        // Return Date Formatting
+        var returnValEl = activeSec.querySelector('.booking-specs-grid div:first-child .spec-value');
+        if (returnValEl && booking.end_date) {
+          var dateParts = booking.end_date.split('-');
+          if (dateParts.length === 3) {
+            var months = lang() === 'ms' 
+              ? ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogos', 'Sep', 'Okt', 'Nov', 'Dis']
+              : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var dateObj = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
+            var formattedDate = dateObj.getDate() + ' ' + months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
+            returnValEl.textContent = formattedDate;
+          } else {
+            returnValEl.textContent = booking.end_date;
+          }
+        }
+
+        // Range / Specs
+        var rangeValEl = activeSec.querySelector('.booking-specs-grid div:last-child .spec-value');
+        if (rangeValEl) {
+          var range = car && String(car.fuel).toLowerCase() === 'electric' ? '450 km' : '540 km';
+          rangeValEl.innerHTML = '<span class="material-icons-round">route</span> ' + range;
+        }
+
+        // Status chip
+        var statusChipEl = activeSec.querySelector('.booking-status-chip');
+        if (statusChipEl) {
+          var status = booking.status || 'Confirmed';
+          var isPremium = status === 'Confirmed' || status === 'Active';
+          statusChipEl.className = 'booking-status-chip ' + status.toLowerCase();
+          
+          var chipText = isPremium 
+            ? (lang() === 'ms' ? 'Sedia Premium' : 'Premium Ready')
+            : (lang() === 'ms' ? 'Menunggu Kelulusan' : 'Pending Approval');
+            
+          statusChipEl.innerHTML = '<span class="material-icons-round">' + (isPremium ? 'workspace_premium' : 'schedule') + '</span>' +
+            '<span>' + chipText + '</span>';
+        }
+      }).catch(function (err) {
+        console.error('[Customer Dashboard] Error loading bookings:', err);
+        activeSec.style.display = 'none';
+      });
+    }).catch(function (err) {
+      console.error('[Customer Dashboard] Error getting user:', err);
+      activeSec.style.display = 'none';
+    });
+  }
+
   function loadCars() {
     var grid = document.getElementById('cars-grid');
     if (!window.WeDriveAPI || !window.WeDriveAPI.getCars) {
@@ -627,6 +741,7 @@
         renderSpotlight(0, false);
         startSpotlightCarousel();
         applyFilters(false);
+        updateActiveBookingSection();
       })
       .catch(function () {
         if (grid) {

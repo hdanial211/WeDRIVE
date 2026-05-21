@@ -45,93 +45,43 @@
     <div class="ai-stats-row reveal-on-scroll">
       <div class="ai-stat-card">
         <span class="material-icons-round">savings</span>
-        <div class="ai-stat-value">RM 342</div>
+        <div class="ai-stat-value" id="ai-savings">RM 0</div>
         <div class="ai-stat-label">Total Savings</div>
-        <div class="ai-stat-change positive">+18% vs market avg</div>
+        <div class="ai-stat-change" id="ai-savings-desc">-</div>
       </div>
       <div class="ai-stat-card">
         <span class="material-icons-round">eco</span>
-        <div class="ai-stat-value">87<small>/100</small></div>
+        <div class="ai-stat-value" id="ai-eco">—</div>
         <div class="ai-stat-label">Eco Score</div>
-        <div class="ai-stat-change positive">Top 15% of renters</div>
+        <div class="ai-stat-change" id="ai-eco-desc">-</div>
       </div>
       <div class="ai-stat-card">
         <span class="material-icons-round">route</span>
-        <div class="ai-stat-value">1,240<small>km</small></div>
+        <div class="ai-stat-value" id="ai-distance">0<small>km</small></div>
         <div class="ai-stat-label">Total Distance</div>
-        <div class="ai-stat-change">Across 5 trips</div>
+        <div class="ai-stat-change" id="ai-distance-desc">-</div>
       </div>
       <div class="ai-stat-card">
         <span class="material-icons-round">star</span>
-        <div class="ai-stat-value">4.9</div>
+        <div class="ai-stat-value" id="ai-rating">5.0</div>
         <div class="ai-stat-label">Your Rating</div>
-        <div class="ai-stat-change positive">Excellent renter</div>
+        <div class="ai-stat-change positive" id="ai-rating-desc">-</div>
       </div>
     </div>
 
     <!-- AI RECOMMENDATIONS -->
     <section class="ai-reco-section">
       <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">lightbulb</span> AI Recommendations</h2>
-      <div class="ai-reco-grid">
-        <div class="ai-reco-card reveal-on-scroll">
-          <div class="reco-icon"><span class="material-icons-round">bolt</span></div>
-          <div class="reco-content">
-            <h3>Try SUV Comfort Next Time</h3>
-            <p>Based on your 42km average daily drive, a 2023 Mercedes-Benz GLA250 AMG Line would give you the best comfort-to-space balance for your average weekly drive.</p>
-          </div>
-          <button class="reco-action" type="button" onclick="window.location='../car-details/car-details.html'">View Car <span class="material-icons-round">arrow_forward</span></button>
-        </div>
-        <div class="ai-reco-card reveal-on-scroll">
-          <div class="reco-icon reco-green"><span class="material-icons-round">calendar_month</span></div>
-          <div class="reco-content">
-            <h3>Best Time to Book</h3>
-            <p>Our AI predicts prices will drop 22% next Tuesday. Set a price alert to get notified.</p>
-          </div>
-          <button class="reco-action" type="button" onclick="setPriceAlert(this)">Set Alert <span class="material-icons-round">notifications</span></button>
-        </div>
-        <div class="ai-reco-card reveal-on-scroll">
-          <div class="reco-icon reco-purple"><span class="material-icons-round">loyalty</span></div>
-          <div class="reco-content">
-            <h3>Unlock Premium Status</h3>
-            <p>Just 2 more bookings to reach Gold tier! Gold members get priority pick-up and 10% off all rentals.</p>
-          </div>
-          <button class="reco-action" type="button" onclick="window.location='../support/support.html'">Learn More <span class="material-icons-round">arrow_forward</span></button>
-        </div>
+      <div class="ai-reco-grid" id="reco-list-container">
+        <!-- Will be populated dynamically by customer/js/ai-insights.js -->
       </div>
     </section>
 
     <!-- TRIP HISTORY -->
     <section class="trip-section">
       <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">history</span> Recent Trip Analysis</h2>
-      <div class="trip-list">
-        <div class="trip-card reveal-on-scroll">
-          <div class="trip-car">
-            <span class="material-icons-round">directions_car</span>
-            <div>
-              <strong>Perodua AXIA AV</strong>
-              <small>Nov 10-12, 2024</small>
-            </div>
-          </div>
-          <div class="trip-stats">
-            <div class="trip-stat"><span>Distance</span><strong>186 km</strong></div>
-            <div class="trip-stat"><span>Cost</span><strong>RM 440</strong></div>
-            <div class="trip-stat"><span>Eco Score</span><strong class="eco-good">92</strong></div>
-          </div>
-        </div>
-        <div class="trip-card reveal-on-scroll">
-          <div class="trip-car">
-            <span class="material-icons-round">directions_car</span>
-            <div>
-              <strong>Volkswagen Golf GTI</strong>
-              <small>Oct 28-30, 2024</small>
-            </div>
-          </div>
-          <div class="trip-stats">
-            <div class="trip-stat"><span>Distance</span><strong>312 km</strong></div>
-            <div class="trip-stat"><span>Cost</span><strong>RM 660</strong></div>
-            <div class="trip-stat"><span>Eco Score</span><strong class="eco-ok">78</strong></div>
-          </div>
-        </div>
+      <div class="trip-list" id="trip-list-container">
+        <!-- Will be populated dynamically by customer/js/ai-insights.js -->
       </div>
     </section>
   </div>
@@ -149,12 +99,6 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js?v=5.7.0"></script>
-  <script>
-    function setPriceAlert(button) {
-      button.classList.add('is-applied');
-      button.innerHTML = 'Alert Set <span class="material-icons-round">notifications_active</span>';
-      button.disabled = true;
-    }
-  </script>
+  <script src="../../js/ai-insights.js?v=5.7.0"></script>
 </body>
 </html>

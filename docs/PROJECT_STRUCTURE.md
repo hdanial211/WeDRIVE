@@ -120,6 +120,7 @@ AI CAR RENTAL SYSTEM/
 |   +-- js/
 |       +-- customer.js                  # Logik Customer + Car Details (digabung)
 |       +-- sidebar-loader.js            # Pemuat Sidebar + Navbar Customer (seragam)
+|       +-- ai-insights.js               # Logik Papan Pemuka AI Insights
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul
