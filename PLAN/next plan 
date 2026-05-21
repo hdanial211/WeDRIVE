@@ -391,3 +391,22 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Linear.app detail slide-over panel
 
 **Status:** BELUM
+
+---
+
+## NOTA 12 - Admin Manual Booking Status Change
+
+**Masalah:** Admin perlu boleh tukar status booking secara manual (contoh: bila customer minta cancel, atau nak override auto-sync). Sekarang hanya auto-sync yang handle status.
+
+**Apa yang perlu dibuat:**
+- Button action dalam view detail modal (bukan table row) untuk tukar status
+- Dropdown pilih status: Pending, Confirmed, Active, Completed, Cancelled
+- Confirm dialog sebelum tukar
+- Log siapa yang tukar dan bila (audit trail)
+- Sync ke Supabase dan auto-refresh table
+
+**Rujukan UI:**
+- Stripe order status dropdown (dalam detail panel)
+- Shopify order management actions
+
+**Status:** BELUM

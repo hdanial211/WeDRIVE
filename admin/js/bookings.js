@@ -60,12 +60,9 @@ function renderBookings(bookings) {
       <td><strong>RM ${b._total.toLocaleString()}</strong></td>
       <td><span class="status-badge ${paymentClass}"><span class="dot"></span> ${b.payment}</span></td>
       <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${b.status}</span></td>
-      <td style="white-space:nowrap;">
+      <td>
         <button class="btn-primary-sm" onclick="viewBooking(${b.id})" style="font-size:12px;padding:6px 10px">
           <span class="material-icons-round" style="font-size:14px">visibility</span>
-        </button>
-        <button class="btn-outline-sm" onclick="openStatusModal(${b.id})" style="font-size:12px;padding:6px 10px">
-          <span class="material-icons-round" style="font-size:14px">sync</span>
         </button>
       </td>
     </tr>`;
