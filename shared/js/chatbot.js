@@ -169,7 +169,31 @@ window.sendChat = async function() {
   const apiKey = settings.apiKey || '';
   const systemPrompt = settings.systemPrompt || "You are WeDRIVE Bot, a helpful AI assistant for WeDRIVE car rental in Melaka, Malaysia. Be friendly, concise, and helpful.";
   const promoContext = settings.promoContext || '';
-  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '');
+
+  // Fetch LIVE data from Supabase to give the AI real-time awareness
+  let liveData = "";
+  try {
+    if (window.supabaseClient) {
+      const { data, error } = await window.supabaseClient
+        .from('cars')
+        .select('brand, model, price')
+        .eq('status', 'Available');
+        
+      if (data && data.length > 0) {
+        liveData = "\\n\\n[LIVE SYSTEM DATA: Currently Available Cars in WeDRIVE]\\n";
+        data.forEach(c => {
+          liveData += `- ${c.brand} ${c.model} : RM${c.price}/day\\n`;
+        });
+        liveData += "Use this exact data when recommending cars. Do not make up cars that are not in this list.";
+      } else {
+        liveData = "\\n\\n[LIVE SYSTEM DATA: Currently NO cars are available. All cars are fully booked.]";
+      }
+    }
+  } catch(e) {
+    console.warn("Failed to fetch live cars for chatbot", e);
+  }
+
+  const fullSystem = systemPrompt + (promoContext ? '\\n\\n' + promoContext : '') + liveData;
 
   if (!apiKey) {
     window.removeTyping();
