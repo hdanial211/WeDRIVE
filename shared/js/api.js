@@ -863,7 +863,9 @@ window.WeDriveAPI = {
             };
             if (data.name) updateData.name = data.name;
             if (data.ic_document_url) updateData.ic_document_url = data.ic_document_url;
+            if (data.ic_back_document_url) updateData.ic_back_document_url = data.ic_back_document_url;
             if (data.license_document_url) updateData.license_document_url = data.license_document_url;
+            if (data.license_back_document_url) updateData.license_back_document_url = data.license_back_document_url;
             var result = await sb.from('customers').update(updateData).eq('auth_uid', authUid);
             if (result.error) throw result.error;
             return { success: true };
@@ -896,13 +898,10 @@ window.WeDriveAPI = {
         }
     },
 
-    /**
-     * Get customer documents (IC and License URLs) for admin review.
-     */
     getCustomerDocuments: async function (customerId) {
         try {
             var sb = window.supabaseClient;
-            var result = await sb.from('customers').select('ic_document_url, license_document_url, verification_status, rejection_reason').eq('id', customerId).maybeSingle();
+            var result = await sb.from('customers').select('ic_document_url, ic_back_document_url, license_document_url, license_back_document_url, verification_status, rejection_reason').eq('id', customerId).maybeSingle();
             if (result.error) throw result.error;
             return result.data || {};
         } catch (err) {

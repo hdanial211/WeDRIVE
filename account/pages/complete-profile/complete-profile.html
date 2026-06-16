@@ -159,38 +159,76 @@
             <div class="divider-line"></div>
 
             <h3 class="section-title">Document Uploads</h3>
-            <p class="section-desc">Please upload a clear picture of your IC and Driving License. Files must be under 5MB (JPG, PNG, or PDF).</p>
+            <p class="section-desc">Please upload clear pictures of the front and back of your IC and Driving License. Files must be under 5MB (JPG, PNG, or PDF).</p>
 
-            <div class="form-row-grid uploads-grid">
-              <!-- Upload IC -->
+            <!-- IC Uploads -->
+            <div class="form-row-grid uploads-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+              <!-- Upload IC (Front) -->
               <div class="form-group">
-                <label>Upload IC Document <span class="required-asterisk">*</span></label>
+                <label>Upload IC Front <span class="required-asterisk">*</span></label>
                 <div class="upload-zone" id="ic-upload-zone">
                   <input type="file" id="ic-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'ic')" />
                   <div class="upload-zone-content">
                     <span class="material-icons-round" id="ic-upload-icon">cloud_upload</span>
-                    <p class="upload-title" id="ic-upload-text">Click or drag & drop IC here</p>
+                    <p class="upload-title" id="ic-upload-text">Click or drag & drop IC Front</p>
                     <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
                     <div class="file-name" id="ic-file-name"></div>
                     <div class="preview-container">
-                      <img class="upload-preview" id="ic-preview" alt="IC Preview" />
+                      <img class="upload-preview" id="ic-preview" alt="IC Front Preview" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Upload License -->
+              <!-- Upload IC (Back) -->
               <div class="form-group">
-                <label>Upload Driving License <span class="required-asterisk">*</span></label>
+                <label>Upload IC Back <span class="required-asterisk">*</span></label>
+                <div class="upload-zone" id="ic-back-upload-zone">
+                  <input type="file" id="ic-back-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'ic-back')" />
+                  <div class="upload-zone-content">
+                    <span class="material-icons-round" id="ic-back-upload-icon">cloud_upload</span>
+                    <p class="upload-title" id="ic-back-upload-text">Click or drag & drop IC Back</p>
+                    <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
+                    <div class="file-name" id="ic-back-file-name"></div>
+                    <div class="preview-container">
+                      <img class="upload-preview" id="ic-back-preview" alt="IC Back Preview" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- License Uploads -->
+            <div class="form-row-grid uploads-grid" style="grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+              <!-- Upload Driving License (Front) -->
+              <div class="form-group">
+                <label>Upload Driving License Front <span class="required-asterisk">*</span></label>
                 <div class="upload-zone" id="license-upload-zone">
                   <input type="file" id="license-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'license')" />
                   <div class="upload-zone-content">
                     <span class="material-icons-round" id="license-upload-icon">cloud_upload</span>
-                    <p class="upload-title" id="license-upload-text">Click or drag & drop License here</p>
+                    <p class="upload-title" id="license-upload-text">Click or drag & drop License Front</p>
                     <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
                     <div class="file-name" id="license-file-name"></div>
                     <div class="preview-container">
-                      <img class="upload-preview" id="license-preview" alt="License Preview" />
+                      <img class="upload-preview" id="license-preview" alt="License Front Preview" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upload Driving License (Back) -->
+              <div class="form-group">
+                <label>Upload Driving License Back <span class="required-asterisk">*</span></label>
+                <div class="upload-zone" id="license-back-upload-zone">
+                  <input type="file" id="license-back-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'license-back')" />
+                  <div class="upload-zone-content">
+                    <span class="material-icons-round" id="license-back-upload-icon">cloud_upload</span>
+                    <p class="upload-title" id="license-back-upload-text">Click or drag & drop License Back</p>
+                    <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
+                    <div class="file-name" id="license-back-file-name"></div>
+                    <div class="preview-container">
+                      <img class="upload-preview" id="license-back-preview" alt="License Back Preview" />
                     </div>
                   </div>
                 </div>
@@ -217,7 +255,9 @@
 
   <script>
     var icFile = null;
+    var icBackFile = null;
     var licenseFile = null;
+    var licenseBackFile = null;
 
     // Check if user came here due to rejection
     (async function checkRejection() {
@@ -293,7 +333,9 @@
       textEl.textContent = 'File selected';
 
       if (type === 'ic') icFile = file;
-      else licenseFile = file;
+      else if (type === 'ic-back') icBackFile = file;
+      else if (type === 'license') licenseFile = file;
+      else if (type === 'license-back') licenseBackFile = file;
 
       // Show preview for images
       if (file.type.startsWith('image/')) {
@@ -309,7 +351,7 @@
     }
 
     // Drag & drop support via the inputs directly
-    ['ic-file', 'license-file'].forEach(function (inputId) {
+    ['ic-file', 'ic-back-file', 'license-file', 'license-back-file'].forEach(function (inputId) {
       var input = document.getElementById(inputId);
       var zone = input.closest('.upload-zone');
       
@@ -353,11 +395,19 @@
         return;
       }
       if (!icFile) {
-        alert('Please upload your IC document.');
+        alert('Please upload your IC Front document.');
+        return;
+      }
+      if (!icBackFile) {
+        alert('Please upload your IC Back document.');
         return;
       }
       if (!licenseFile) {
-        alert('Please upload your Driving License document.');
+        alert('Please upload your Driving License Front document.');
+        return;
+      }
+      if (!licenseBackFile) {
+        alert('Please upload your Driving License Back document.');
         return;
       }
 
@@ -383,15 +433,25 @@
           return;
         }
 
-        // Upload IC document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading IC...';
-        var icUpload = await window.WeDriveAPI.uploadDocument(uid, icFile, 'ic');
-        if (!icUpload.success) throw new Error('IC upload failed: ' + icUpload.error);
+        // Upload IC Front document
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading IC Front...';
+        var icUpload = await window.WeDriveAPI.uploadDocument(uid, icFile, 'ic_front');
+        if (!icUpload.success) throw new Error('IC Front upload failed: ' + icUpload.error);
 
-        // Upload License document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading License...';
-        var licenseUpload = await window.WeDriveAPI.uploadDocument(uid, licenseFile, 'license');
-        if (!licenseUpload.success) throw new Error('License upload failed: ' + licenseUpload.error);
+        // Upload IC Back document
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading IC Back...';
+        var icBackUpload = await window.WeDriveAPI.uploadDocument(uid, icBackFile, 'ic_back');
+        if (!icBackUpload.success) throw new Error('IC Back upload failed: ' + icBackUpload.error);
+
+        // Upload License Front document
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading License Front...';
+        var licenseUpload = await window.WeDriveAPI.uploadDocument(uid, licenseFile, 'license_front');
+        if (!licenseUpload.success) throw new Error('License Front upload failed: ' + licenseUpload.error);
+
+        // Upload License Back document
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading License Back...';
+        var licenseBackUpload = await window.WeDriveAPI.uploadDocument(uid, licenseBackFile, 'license_back');
+        if (!licenseBackUpload.success) throw new Error('License Back upload failed: ' + licenseBackUpload.error);
 
         // Update profile
         btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Saving...';
@@ -401,7 +461,9 @@
           license: license,
           phone: phone,
           ic_document_url: icUpload.url,
-          license_document_url: licenseUpload.url
+          ic_back_document_url: icBackUpload.url,
+          license_document_url: licenseUpload.url,
+          license_back_document_url: licenseBackUpload.url
         });
 
         if (!updateResult.success) throw new Error(updateResult.error);

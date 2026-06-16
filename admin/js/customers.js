@@ -108,17 +108,29 @@ async function viewCustomer(id) {
     : '<div style="color:#94A3B8;font-size:13px;padding:12px 0">No bookings yet</div>';
 
   // Document preview HTML
-  var icDocHtml = docs.ic_document_url
-    ? `<a href="${docs.ic_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:180px;">
-        <img src="${docs.ic_document_url}" alt="IC Document" style="width:100%;max-height:180px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8\\'>PDF / Cannot preview</div>'" />
+  var icFrontDocHtml = docs.ic_document_url
+    ? `<a href="${docs.ic_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
+        <img src="${docs.ic_document_url}" alt="IC Front" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
       </a>`
-    : '<div style="color:#94A3B8;font-size:12px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
+    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
 
-  var licDocHtml = docs.license_document_url
-    ? `<a href="${docs.license_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:180px;">
-        <img src="${docs.license_document_url}" alt="License Document" style="width:100%;max-height:180px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8\\'>PDF / Cannot preview</div>'" />
+  var icBackDocHtml = docs.ic_back_document_url
+    ? `<a href="${docs.ic_back_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
+        <img src="${docs.ic_back_document_url}" alt="IC Back" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
       </a>`
-    : '<div style="color:#94A3B8;font-size:12px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
+    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
+
+  var licFrontDocHtml = docs.license_document_url
+    ? `<a href="${docs.license_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
+        <img src="${docs.license_document_url}" alt="License Front" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
+      </a>`
+    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
+
+  var licBackDocHtml = docs.license_back_document_url
+    ? `<a href="${docs.license_back_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
+        <img src="${docs.license_back_document_url}" alt="License Back" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
+      </a>`
+    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
 
   // Verification action buttons (only if Pending)
   var verActions = '';
@@ -196,14 +208,22 @@ async function viewCustomer(id) {
       <!-- Documents Section -->
       <div style="margin-bottom:20px;">
         <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:10px">Uploaded Documents</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;row-gap:16px;">
           <div>
-            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">IC Document</div>
-            ${icDocHtml}
+            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">IC (Front)</div>
+            ${icFrontDocHtml}
           </div>
           <div>
-            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">Driving License</div>
-            ${licDocHtml}
+            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">IC (Back)</div>
+            ${icBackDocHtml}
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">Driving License (Front)</div>
+            ${licFrontDocHtml}
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">Driving License (Back)</div>
+            ${licBackDocHtml}
           </div>
         </div>
       </div>
