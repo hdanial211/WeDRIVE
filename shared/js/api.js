@@ -850,9 +850,6 @@ window.WeDriveAPI = {
         }
     },
 
-    /**
-     * Update customer profile with IC, License, Phone and set status to Pending.
-     */
     updateCustomerProfile: async function (authUid, data) {
         try {
             var sb = window.supabaseClient;
@@ -864,6 +861,7 @@ window.WeDriveAPI = {
                 verification_status: 'Pending',
                 rejection_reason: null
             };
+            if (data.name) updateData.name = data.name;
             if (data.ic_document_url) updateData.ic_document_url = data.ic_document_url;
             if (data.license_document_url) updateData.license_document_url = data.license_document_url;
             var result = await sb.from('customers').update(updateData).eq('auth_uid', authUid);

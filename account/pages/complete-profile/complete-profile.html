@@ -109,15 +109,15 @@
 
           <form class="profile-form" id="profile-form" onsubmit="handleProfileSubmit(event)">
             
-            <!-- Basic Info (Pre-filled, read-only, linked to Google) -->
+            <!-- Basic Info (Pre-filled from Google, but editable) -->
             <div class="form-row-grid">
               <div class="form-group">
-                <label>Full Name</label>
-                <div class="input-wrap readonly">
+                <label for="user-name-display">Full Name <span class="required-asterisk">*</span></label>
+                <div class="input-wrap">
                   <span class="material-icons-round">person</span>
-                  <input type="text" id="user-name-display" readonly value="Loading..." />
+                  <input type="text" id="user-name-display" placeholder="Enter full name matching IC" required />
                 </div>
-                <div class="field-hint linked" style="margin-top: 6px;"><span class="material-icons-round">lock</span> Linked to Google Account</div>
+                <div class="field-hint" style="margin-top: 6px;">Must match the name on your IC</div>
               </div>
               
               <div class="form-group">
@@ -339,11 +339,16 @@
 
     async function handleProfileSubmit(e) {
       e.preventDefault();
+      var name = document.getElementById('user-name-display').value.trim();
       var ic = document.getElementById('ic-number').value.trim();
       var license = document.getElementById('license-number').value.trim();
       var phone = document.getElementById('phone-number').value.trim();
       var btn = document.getElementById('submit-btn');
 
+      if (!name) {
+        alert('Please enter your Full Name.');
+        return;
+      }
       // Validate IC (12 digits)
       if (!/^\d{12}$/.test(ic)) {
         alert('IC Number must be exactly 12 digits.');
@@ -401,6 +406,7 @@
         // Update profile
         btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Saving...';
         var updateResult = await window.WeDriveAPI.updateCustomerProfile(uid, {
+          name: name,
           ic: ic,
           license: license,
           phone: phone,
@@ -409,6 +415,18 @@
         });
 
         if (!updateResult.success) throw new Error(updateResult.error);
+
+        // Update local session storage if available
+        var sessionRaw = localStorage.getItem('wedrive_session');
+        if (sessionRaw) {
+          try {
+            var localSession = JSON.parse(sessionRaw);
+            localSession.name = name;
+            localStorage.setItem('wedrive_session', JSON.stringify(localSession));
+          } catch (e) {
+            console.error('Local storage update error:', e);
+          }
+        }
 
         // Redirect to verification pending page
         window.location.href = '../verification-pending/verification-pending.html';
