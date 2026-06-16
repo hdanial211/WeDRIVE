@@ -156,11 +156,15 @@
 <div class="w-[800px] h-[800px] bg-primary-fixed-dim rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style="animation-duration: 8s;"></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../../shared/js/supabase-config.js"></script>
+<script src="../../../shared/js/api.js"></script>
+
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
         var sessionRaw = localStorage.getItem('wedrive_session');
         var name = 'USER';
-        var redirectUrl = '../../../customer/pages/dashboard/customer.html';
+        var role = 'customer';
         
         if (sessionRaw) {
             try {
@@ -170,10 +174,7 @@
                 } else if (session.email) {
                     name = session.email.split('@')[0].toUpperCase();
                 }
-                
-                if (session.role === 'admin') {
-                    redirectUrl = '../../../admin/pages/dashboard/admin.html';
-                }
+                role = session.role || 'customer';
             } catch (e) {
                 console.error("Session parse error", e);
             }
@@ -186,12 +187,53 @@
             document.body.style.opacity = "1";
         }, 50);
 
-        // Automatic transition to the dashboard
+        // Determine redirect URL based on role and profile status
+        var redirectUrl = '../../../customer/pages/dashboard/customer.html';
+
+        if (role === 'admin') {
+            // Admin skips verification -- go straight to admin dashboard
+            redirectUrl = '../../../admin/pages/dashboard/admin.html';
+        } else {
+            // Customer: check profile completeness and verification status
+            try {
+                var sb = window.supabaseClient;
+                if (sb) {
+                    var authSession = await sb.auth.getSession();
+                    if (authSession.data.session) {
+                        var uid = authSession.data.session.user.id;
+                        var profileCheck = await window.WeDriveAPI.checkProfileComplete(uid);
+
+                        if (!profileCheck.complete) {
+                            // Profile incomplete -- go to complete profile
+                            redirectUrl = '../complete-profile/complete-profile.html';
+                        } else if (profileCheck.status === 'Pending') {
+                            // Documents submitted, waiting for admin review
+                            redirectUrl = '../verification-pending/verification-pending.html';
+                        } else if (profileCheck.status === 'Rejected') {
+                            // Admin rejected -- go back to complete profile (will show rejection banner)
+                            redirectUrl = '../complete-profile/complete-profile.html';
+                        } else if (profileCheck.status === 'Verified') {
+                            // All good -- go to customer dashboard
+                            redirectUrl = '../../../customer/pages/dashboard/customer.html';
+                        } else {
+                            // No verification status yet (null) -- go to complete profile
+                            redirectUrl = '../complete-profile/complete-profile.html';
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('Profile check error:', err);
+                // On error, still redirect to dashboard as fallback
+                redirectUrl = '../../../customer/pages/dashboard/customer.html';
+            }
+        }
+
+        // Automatic transition after 3 seconds
         setTimeout(() => {
             document.body.style.opacity = "0";
             setTimeout(() => {
                 window.location.href = redirectUrl;
-            }, 500); // Wait for fade out
+            }, 500);
         }, 3000);
     });
 </script>

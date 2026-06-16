@@ -817,6 +817,121 @@ window.WeDriveAPI = {
                 return { success: false, error: err.message };
             }
         }
+    },
+
+    // =====================================================================
+    // PROFILE VERIFICATION SYSTEM
+    // =====================================================================
+
+    /**
+     * Check if a customer's profile is complete and their verification status.
+     * Returns: { complete: bool, status: 'Pending'|'Verified'|'Rejected'|null, reason: string|null }
+     */
+    checkProfileComplete: async function (authUid) {
+        try {
+            var sb = window.supabaseClient;
+            if (!sb || !authUid) return { complete: false, status: null };
+            var result = await sb.from('customers').select('ic, license, phone, verification_status, rejection_reason').eq('auth_uid', authUid).maybeSingle();
+            if (result.error) throw result.error;
+            if (!result.data) return { complete: false, status: null };
+            var d = result.data;
+            var hasIC = d.ic && d.ic.trim().length > 0;
+            var hasLicense = d.license && d.license.trim().length > 0;
+            var hasPhone = d.phone && d.phone.trim().length > 0;
+            var complete = hasIC && hasLicense && hasPhone;
+            return {
+                complete: complete,
+                status: d.verification_status || null,
+                reason: d.rejection_reason || null
+            };
+        } catch (err) {
+            console.error('[WeDriveAPI] checkProfileComplete error:', err);
+            return { complete: false, status: null };
+        }
+    },
+
+    /**
+     * Update customer profile with IC, License, Phone and set status to Pending.
+     */
+    updateCustomerProfile: async function (authUid, data) {
+        try {
+            var sb = window.supabaseClient;
+            if (!sb) return { success: false, error: 'Database not connected' };
+            var updateData = {
+                ic: data.ic || '',
+                license: data.license || '',
+                phone: data.phone || '',
+                verification_status: 'Pending',
+                rejection_reason: null
+            };
+            if (data.ic_document_url) updateData.ic_document_url = data.ic_document_url;
+            if (data.license_document_url) updateData.license_document_url = data.license_document_url;
+            var result = await sb.from('customers').update(updateData).eq('auth_uid', authUid);
+            if (result.error) throw result.error;
+            return { success: true };
+        } catch (err) {
+            console.error('[WeDriveAPI] updateCustomerProfile error:', err);
+            return { success: false, error: err.message };
+        }
+    },
+
+    /**
+     * Upload a document (IC or License) to Supabase Storage.
+     * Returns the public URL of the uploaded file.
+     */
+    uploadDocument: async function (authUid, file, docType) {
+        try {
+            var sb = window.supabaseClient;
+            if (!sb) return { success: false, error: 'Database not connected' };
+            var ext = file.name.split('.').pop().toLowerCase();
+            var filePath = authUid + '/' + docType + '_' + Date.now() + '.' + ext;
+            var result = await sb.storage.from('documents').upload(filePath, file, {
+                cacheControl: '3600',
+                upsert: true
+            });
+            if (result.error) throw result.error;
+            var urlResult = sb.storage.from('documents').getPublicUrl(filePath);
+            return { success: true, url: urlResult.data.publicUrl };
+        } catch (err) {
+            console.error('[WeDriveAPI] uploadDocument error:', err);
+            return { success: false, error: err.message };
+        }
+    },
+
+    /**
+     * Get customer documents (IC and License URLs) for admin review.
+     */
+    getCustomerDocuments: async function (customerId) {
+        try {
+            var sb = window.supabaseClient;
+            var result = await sb.from('customers').select('ic_document_url, license_document_url, verification_status, rejection_reason').eq('id', customerId).maybeSingle();
+            if (result.error) throw result.error;
+            return result.data || {};
+        } catch (err) {
+            console.error('[WeDriveAPI] getCustomerDocuments error:', err);
+            return {};
+        }
+    },
+
+    /**
+     * Admin: Verify or Reject a customer's profile.
+     */
+    verifyCustomer: async function (customerId, status, reason) {
+        try {
+            var sb = window.supabaseClient;
+            var updateData = { verification_status: status };
+            if (status === 'Rejected' && reason) {
+                updateData.rejection_reason = reason;
+            } else {
+                updateData.rejection_reason = null;
+            }
+            var result = await sb.from('customers').update(updateData).eq('id', customerId);
+            if (result.error) throw result.error;
+            return { success: true };
+        } catch (err) {
+            console.error('[WeDriveAPI] verifyCustomer error:', err);
+            return { success: false, error: err.message };
+        }
     }
 
     // You can add more functions here later:

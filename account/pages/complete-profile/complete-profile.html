@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complete Profile | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
+  <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
+  <link rel="stylesheet" href="../../../shared/css/animation.css" />
+  <link rel="stylesheet" href="../../css/auth.css" />
+  <script src="../../../shared/js/main.js"></script>
+  <style>
+    .profile-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% -18%, rgba(0, 88, 190, 0.12), transparent 38%),
+        radial-gradient(circle at 82% 18%, rgba(183, 200, 225, 0.24), transparent 28%),
+        var(--background, var(--bg-body, #f7f9fb));
+      color: var(--text-primary, #191c1e);
+      overflow-x: hidden;
+    }
+    .profile-wrapper {
+      min-height: calc(100vh - 90px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px 56px;
+    }
+    .profile-card {
+      width: min(100%, 520px);
+      background: var(--surface-container-lowest, #fff);
+      border: 1px solid rgba(194, 198, 214, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 22px 60px rgba(30, 41, 59, 0.1);
+      padding: 36px 30px;
+      position: relative;
+    }
+    .profile-card h1 {
+      color: var(--text-primary, #191c1e);
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .profile-card .sub {
+      color: var(--text-secondary, #545f73);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .profile-icon {
+      width: 56px; height: 56px;
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--primary-fixed, #d8e2ff);
+      color: var(--primary, #0058be);
+      margin-bottom: 18px;
+    }
+    .profile-icon .material-icons-round { font-size: 30px; }
+    .profile-form { display: grid; gap: 18px; }
+    .profile-form label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--primary, #0058be);
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .profile-form input[type="text"] {
+      width: 100%;
+      padding: 13px 14px 13px 44px;
+      border: 1.5px solid var(--border-color, #E2E8F0);
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--text-primary, #1E293B);
+      background: var(--input-bg, #F8FAFC);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .profile-form input[type="text"]:focus {
+      border-color: var(--primary, #3B82F6);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    }
+    .upload-zone {
+      border: 2px dashed var(--border-color, #CBD5E1);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--primary, #3B82F6);
+      background: rgba(59,130,246,0.04);
+    }
+    .upload-zone.has-file {
+      border-color: #059669;
+      background: rgba(5,150,105,0.04);
+    }
+    .upload-zone .material-icons-round {
+      font-size: 32px;
+      color: var(--text-muted, #94A3B8);
+      margin-bottom: 8px;
+    }
+    .upload-zone.has-file .material-icons-round { color: #059669; }
+    .upload-zone p {
+      font-size: 13px;
+      color: var(--text-secondary, #64748B);
+      margin: 0;
+    }
+    .upload-zone .file-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #059669;
+      margin-top: 6px;
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-preview {
+      max-width: 100%;
+      max-height: 120px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+    }
+    .upload-zone.has-file .upload-preview { display: block; }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary, #0058be);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0, 88, 190, 0.24);
+    }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .rejection-banner {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .rejection-banner .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #DC2626;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rejection-banner .reason {
+      font-size: 13px;
+      color: #7F1D1D;
+      line-height: 1.5;
+    }
+    .field-hint {
+      font-size: 11px;
+      color: var(--text-muted, #94A3B8);
+      margin-top: 4px;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .spin-icon { animation: spin 1s linear infinite; }
+    @media (max-width: 600px) {
+      .profile-card { padding: 24px 18px; border-radius: 16px; }
+      .profile-card h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body class="profile-page">
+
+  <!-- HEADER -->
+  <header class="reset-shell-header">
+    <a href="../../../index.html" class="reset-brand">
+      <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE" />
+      <span>WeDRIVE</span>
+    </a>
+    <div class="reset-tools">
+      <button class="theme-toggle" onclick="window.toggleTheme && window.toggleTheme()" aria-label="Toggle theme">
+        <span class="material-icons-round" style="font-size:20px">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CARD -->
+  <div class="profile-wrapper">
+    <div class="profile-card">
+      <div class="profile-icon">
+        <span class="material-icons-round">person_add</span>
+      </div>
+      <h1>Complete Your Profile</h1>
+      <p class="sub">Please provide your identity documents to start booking cars. Your information will be reviewed by our team.</p>
+
+      <!-- Rejection Banner (shown if admin rejected) -->
+      <div class="rejection-banner" id="rejection-banner">
+        <div class="title">
+          <span class="material-icons-round" style="font-size:18px">error</span>
+          Documents Not Approved
+        </div>
+        <div class="reason" id="rejection-reason">Your previously submitted documents could not be verified. Please re-upload clear and valid documents.</div>
+      </div>
+
+      <form class="profile-form" id="profile-form" onsubmit="handleProfileSubmit(event)">
+        <!-- IC Number -->
+        <div>
+          <label for="ic-number">IC Number (MyKad)</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">badge</span>
+            <input type="text" id="ic-number" placeholder="e.g. 990101145588" maxlength="12" required />
+          </div>
+          <div class="field-hint">12 digits without dashes</div>
+        </div>
+
+        <!-- License Number -->
+        <div>
+          <label for="license-number">Driving License Number</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">card_membership</span>
+            <input type="text" id="license-number" placeholder="e.g. D12345678" required />
+          </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+          <label for="phone-number">Phone Number</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">phone</span>
+            <input type="text" id="phone-number" placeholder="e.g. 010-271 9558" required />
+          </div>
+        </div>
+
+        <!-- Upload IC -->
+        <div>
+          <label>Upload IC Document (Photo / PDF)</label>
+          <div class="upload-zone" id="ic-upload-zone" onclick="document.getElementById('ic-file').click()">
+            <span class="material-icons-round" id="ic-upload-icon">cloud_upload</span>
+            <p id="ic-upload-text">Click or drag & drop your IC here</p>
+            <div class="file-name" id="ic-file-name"></div>
+            <img class="upload-preview" id="ic-preview" alt="IC Preview" />
+            <input type="file" id="ic-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'ic')" />
+          </div>
+          <div class="field-hint">JPG, PNG or PDF. Max 5MB.</div>
+        </div>
+
+        <!-- Upload License -->
+        <div>
+          <label>Upload Driving License (Photo / PDF)</label>
+          <div class="upload-zone" id="license-upload-zone" onclick="document.getElementById('license-file').click()">
+            <span class="material-icons-round" id="license-upload-icon">cloud_upload</span>
+            <p id="license-upload-text">Click or drag & drop your License here</p>
+            <div class="file-name" id="license-file-name"></div>
+            <img class="upload-preview" id="license-preview" alt="License Preview" />
+            <input type="file" id="license-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'license')" />
+          </div>
+          <div class="field-hint">JPG, PNG or PDF. Max 5MB.</div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span class="material-icons-round" style="font-size:18px">verified</span>
+          Submit for Verification
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+
+  <script>
+    var icFile = null;
+    var licenseFile = null;
+
+    // Check if user came here due to rejection
+    (async function checkRejection() {
+      try {
+        var sb = window.supabaseClient;
+        if (!sb) return;
+        var session = await sb.auth.getSession();
+        if (!session.data.session) return;
+        var uid = session.data.session.user.id;
+        var profileCheck = await window.WeDriveAPI.checkProfileComplete(uid);
+        if (profileCheck.status === 'Rejected' && profileCheck.reason) {
+          document.getElementById('rejection-banner').style.display = 'block';
+          document.getElementById('rejection-reason').textContent = profileCheck.reason;
+        }
+      } catch (e) {
+        console.error('Rejection check error:', e);
+      }
+    })();
+
+    function handleFileSelect(input, type) {
+      var file = input.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB.');
+        input.value = '';
+        return;
+      }
+      var zone = document.getElementById(type + '-upload-zone');
+      var nameEl = document.getElementById(type + '-file-name');
+      var preview = document.getElementById(type + '-preview');
+      var icon = document.getElementById(type + '-upload-icon');
+      var textEl = document.getElementById(type + '-upload-text');
+
+      zone.classList.add('has-file');
+      nameEl.textContent = file.name;
+      icon.textContent = 'check_circle';
+      textEl.textContent = 'File selected';
+
+      if (type === 'ic') icFile = file;
+      else licenseFile = file;
+
+      // Show preview for images
+      if (file.type.startsWith('image/')) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+
+    // Drag & drop support
+    ['ic-upload-zone', 'license-upload-zone'].forEach(function (id) {
+      var zone = document.getElementById(id);
+      zone.addEventListener('dragover', function (e) { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', function () { zone.classList.remove('dragover'); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        var type = id.replace('-upload-zone', '');
+        var fileInput = document.getElementById(type + '-file');
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect(fileInput, type);
+      });
+    });
+
+    async function handleProfileSubmit(e) {
+      e.preventDefault();
+      var ic = document.getElementById('ic-number').value.trim();
+      var license = document.getElementById('license-number').value.trim();
+      var phone = document.getElementById('phone-number').value.trim();
+      var btn = document.getElementById('submit-btn');
+
+      // Validate IC (12 digits)
+      if (!/^\d{12}$/.test(ic)) {
+        alert('IC Number must be exactly 12 digits.');
+        return;
+      }
+      if (!license) {
+        alert('Please enter your Driving License number.');
+        return;
+      }
+      if (!phone) {
+        alert('Please enter your phone number.');
+        return;
+      }
+      if (!icFile) {
+        alert('Please upload your IC document.');
+        return;
+      }
+      if (!licenseFile) {
+        alert('Please upload your Driving License document.');
+        return;
+      }
+
+      btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading...';
+      btn.disabled = true;
+
+      try {
+        var sb = window.supabaseClient;
+        var session = await sb.auth.getSession();
+        if (!session.data.session) {
+          alert('Session expired. Please login again.');
+          window.location.href = '../login/login.html';
+          return;
+        }
+        var uid = session.data.session.user.id;
+
+        // Check IC and License uniqueness
+        var uniqueCheck = await window.WeDriveAPI.checkICAndLicenseUnique(ic, license, uid);
+        if (!uniqueCheck.unique) {
+          alert(uniqueCheck.error || 'IC or License already registered.');
+          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified</span> Submit for Verification';
+          btn.disabled = false;
+          return;
+        }
+
+        // Upload IC document
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading IC...';
+        var icUpload = await window.WeDriveAPI.uploadDocument(uid, icFile, 'ic');
+        if (!icUpload.success) throw new Error('IC upload failed: ' + icUpload.error);
+
+        // Upload License document
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading License...';
+        var licenseUpload = await window.WeDriveAPI.uploadDocument(uid, licenseFile, 'license');
+        if (!licenseUpload.success) throw new Error('License upload failed: ' + licenseUpload.error);
+
+        // Update profile
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Saving...';
+        var updateResult = await window.WeDriveAPI.updateCustomerProfile(uid, {
+          ic: ic,
+          license: license,
+          phone: phone,
+          ic_document_url: icUpload.url,
+          license_document_url: licenseUpload.url
+        });
+
+        if (!updateResult.success) throw new Error(updateResult.error);
+
+        // Redirect to verification pending page
+        window.location.href = '../verification-pending/verification-pending.html';
+
+      } catch (err) {
+        console.error('Profile submit error:', err);
+        alert('Error: ' + (err.message || 'Something went wrong. Please try again.'));
+        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified</span> Submit for Verification';
+        btn.disabled = false;
+      }
+    }
+  </script>
+
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+</body>
+</html>

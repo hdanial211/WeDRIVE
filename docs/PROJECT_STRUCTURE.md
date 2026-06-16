@@ -33,7 +33,13 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- signup/
 |   |   |   +-- signup.html          # Halaman Daftar Akaun Baru
 |   |   +-- forgot-password/
-|   |       +-- forgot-password.html # Halaman Reset Kata Laluan
+|   |   |   +-- forgot-password.html # Halaman Reset Kata Laluan
+|   |   +-- welcome/
+|   |   |   +-- welcome.html         # Splash screen selepas login (route ke profile/dashboard)
+|   |   +-- complete-profile/
+|   |   |   +-- complete-profile.html # Lengkapkan profil (IC, Lesen, Telefon + upload dokumen)
+|   |   +-- verification-pending/
+|   |       +-- verification-pending.html # Tunggu admin sahkan dokumen (auto-poll status)
 |   +-- css/
 |   |   +-- auth.css             # Gaya halaman auth (Login/Signup)
 |   +-- js/
@@ -225,6 +231,7 @@ AI CAR RENTAL SYSTEM/
         +-- api.js              # API & CONFIGURATION (Pusat Database - Firebase/Dummy)
         +-- supabase-config.js  # Supabase Client Initializer (Auth + DB)
         +-- chatbot.js          # Modul Utama WeDRIVE AI Chatbot
+        +-- email-service.js    # EmailJS SMTP notification service (verification emails)
         +-- promo-banner.js     # Promo Banner Display (guest & customer pages)
         +-- anime.min.js        # Library animasi (Anime.js v3)
         +-- animate.js          # Modul animasi WeDRIVE (page open + scroll reveal)

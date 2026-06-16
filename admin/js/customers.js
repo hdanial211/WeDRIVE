@@ -83,28 +83,205 @@ function searchCustomers(query) {
   renderCustomers(filtered);
 }
 
-function viewCustomer(id) {
+async function viewCustomer(id) {
   var c = allCustomers.find(x => x.id === id);
   if (!c) return;
   var custBookings = allBookingsData.filter(b =>
     b.auth_uid === c.auth_uid || b.email === c.email
   );
-  var bookingList = custBookings.length > 0
-    ? custBookings.map(b => '  #' + b.id + ' ' + (b.car || b._car_name || '') + ' (' + b.status + ')').join('\n')
-    : '  No bookings';
 
-  alert(
-    'Customer: ' + c._name + '\n' +
-    'Email: ' + c._email + '\n' +
-    'Phone: ' + c._phone + '\n' +
-    'IC: ' + (c.ic || '--') + '\n' +
-    'License: ' + c._license + '\n' +
-    'Total Bookings: ' + c._total_bookings + '\n' +
-    'Total Spent: RM ' + (c._total_spent || 0).toLocaleString() + '\n' +
-    'Status: ' + c._status + '\n' +
-    'Joined: ' + formatDate(c._joined) + '\n\n' +
-    'Booking History:\n' + bookingList
-  );
+  // Fetch document URLs from database
+  var docs = {};
+  try {
+    docs = await window.WeDriveAPI.getCustomerDocuments(id);
+  } catch (e) { console.warn('Failed to load documents', e); }
+
+  var verStatus = docs.verification_status || c.verification_status || '--';
+  var verBadgeClass = verStatus === 'Verified' ? 'available' : verStatus === 'Rejected' ? 'maintenance' : verStatus === 'Pending' ? 'pending-badge' : '';
+
+  // Build booking history rows
+  var bookingRows = custBookings.length > 0
+    ? custBookings.slice(0, 8).map(b => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-color,#E2E8F0);font-size:12px;">
+        <span>#${b.id} ${b.car || ''}</span>
+        <span class="status-badge ${(b.status||'').toLowerCase()}" style="font-size:10px;padding:2px 8px">${b.status}</span>
+      </div>`).join('')
+    : '<div style="color:#94A3B8;font-size:13px;padding:12px 0">No bookings yet</div>';
+
+  // Document preview HTML
+  var icDocHtml = docs.ic_document_url
+    ? `<a href="${docs.ic_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:180px;">
+        <img src="${docs.ic_document_url}" alt="IC Document" style="width:100%;max-height:180px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8\\'>PDF / Cannot preview</div>'" />
+      </a>`
+    : '<div style="color:#94A3B8;font-size:12px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
+
+  var licDocHtml = docs.license_document_url
+    ? `<a href="${docs.license_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:180px;">
+        <img src="${docs.license_document_url}" alt="License Document" style="width:100%;max-height:180px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8\\'>PDF / Cannot preview</div>'" />
+      </a>`
+    : '<div style="color:#94A3B8;font-size:12px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
+
+  // Verification action buttons (only if Pending)
+  var verActions = '';
+  if (verStatus === 'Pending') {
+    verActions = `
+      <div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border-color,#E2E8F0);">
+        <button class="btn-primary-sm" onclick="approveCustomer(${id})" style="flex:1;padding:10px;background:#059669;display:flex;align-items:center;justify-content:center;gap:6px;">
+          <span class="material-icons-round" style="font-size:16px">verified</span> Approve
+        </button>
+        <button class="btn-outline-sm" onclick="openRejectModal(${id})" style="flex:1;padding:10px;color:#DC2626;border-color:#FCA5A5;display:flex;align-items:center;justify-content:center;gap:6px;">
+          <span class="material-icons-round" style="font-size:16px">cancel</span> Reject
+        </button>
+      </div>`;
+  }
+
+  // Build initials avatar
+  var initials = c._name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+
+  // Create modal
+  var modal = document.getElementById('customer-detail-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'customer-detail-modal';
+    modal.className = 'modal-overlay';
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+  <div class="modal-container" style="max-width:560px;width:94%;max-height:90vh;overflow-y:auto;">
+    <div class="modal-header">
+      <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">person</span> Customer Details</h3>
+      <button class="modal-close-btn" onclick="closeCustomerModal()"><span class="material-icons-round">close</span></button>
+    </div>
+    <div style="padding:24px;">
+      <!-- Profile Header -->
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#1D4ED8);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0;">${initials}</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--navy,#1E293B)">${c._name}</div>
+          <div style="font-size:13px;color:var(--slate-400,#94A3B8)">${c._email}</div>
+        </div>
+        <div style="margin-left:auto">
+          <span class="status-badge ${verBadgeClass}" style="font-size:11px"><span class="dot"></span> ${verStatus}</span>
+        </div>
+      </div>
+
+      <!-- Info Grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Phone</div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c._phone}</div>
+        </div>
+        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">IC</div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c.ic || '--'}</div>
+        </div>
+        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">License</div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c._license}</div>
+        </div>
+        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Joined</div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${formatDate(c._joined)}</div>
+        </div>
+        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Total Bookings</div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c._total_bookings}</div>
+        </div>
+        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Total Spent</div>
+          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">RM ${(c._total_spent || 0).toLocaleString()}</div>
+        </div>
+      </div>
+
+      <!-- Documents Section -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:10px">Uploaded Documents</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">IC Document</div>
+            ${icDocHtml}
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">Driving License</div>
+            ${licDocHtml}
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking History -->
+      <div style="margin-bottom:8px;">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:8px">Booking History</div>
+        <div style="max-height:140px;overflow-y:auto;">${bookingRows}</div>
+      </div>
+
+      ${verActions}
+    </div>
+  </div>`;
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCustomerModal() {
+  var modal = document.getElementById('customer-detail-modal');
+  if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+}
+
+async function approveCustomer(id) {
+  var c = allCustomers.find(x => x.id === id);
+  if (!c) return;
+  if (!confirm('Approve ' + c._name + '? This will allow them to book cars.')) return;
+
+  try {
+    var result = await window.WeDriveAPI.verifyCustomer(id, 'Verified');
+    if (!result.success) throw new Error(result.error);
+    c.verification_status = 'Verified';
+
+    // Send email notification
+    if (window.WeDriveEmail) {
+      window.WeDriveEmail.sendVerificationEmail(c._email, c._name, 'approved');
+    }
+
+    closeCustomerModal();
+    showToast(c._name + ' has been verified', 'success');
+  } catch (err) {
+    console.error('Approve error:', err);
+    showToast('Error approving customer', 'info');
+  }
+}
+
+function openRejectModal(id) {
+  var c = allCustomers.find(x => x.id === id);
+  if (!c) return;
+
+  var reason = prompt('Enter rejection reason for ' + c._name + ':');
+  if (reason === null) return; // cancelled
+  if (!reason.trim()) {
+    alert('Please provide a reason for rejection.');
+    return;
+  }
+  rejectCustomer(id, reason.trim());
+}
+
+async function rejectCustomer(id, reason) {
+  var c = allCustomers.find(x => x.id === id);
+  if (!c) return;
+
+  try {
+    var result = await window.WeDriveAPI.verifyCustomer(id, 'Rejected', reason);
+    if (!result.success) throw new Error(result.error);
+    c.verification_status = 'Rejected';
+
+    // Send email notification
+    if (window.WeDriveEmail) {
+      window.WeDriveEmail.sendVerificationEmail(c._email, c._name, 'rejected', reason);
+    }
+
+    closeCustomerModal();
+    showToast(c._name + ' has been rejected', 'info');
+  } catch (err) {
+    console.error('Reject error:', err);
+    showToast('Error rejecting customer', 'info');
+  }
 }
 
 async function toggleCustomerStatus(id) {
