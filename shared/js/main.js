@@ -113,6 +113,17 @@
   var DEFAULT_LANG = 'en';
 
   function resolveProjectBase() {
+    var pathname = decodeURIComponent(window.location.pathname);
+    var marker = '/AI CAR RENTAL SYSTEM/';
+    var idx = pathname.indexOf(marker);
+    if (idx !== -1) {
+      var baseSub = pathname.substring(idx + marker.length);
+      var parts = baseSub.split('/').filter(Boolean);
+      if (parts.length > 0 && parts[parts.length - 1].includes('.')) {
+        return '../'.repeat(parts.length - 1);
+      }
+      return '../'.repeat(parts.length);
+    }
     var parts = window.location.pathname.split('/').filter(Boolean);
     if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
     return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);

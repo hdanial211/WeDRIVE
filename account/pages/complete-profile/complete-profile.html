@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Complete Profile | WeDRIVE</title>
+  <title data-key="profile_page_title">Complete Profile | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
@@ -27,6 +27,9 @@
       <span>WeDRIVE</span>
     </a>
     <div class="reset-tools">
+      <button class="lang-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">
+        <span class="lang-text">EN</span>
+      </button>
       <button class="theme-toggle" onclick="window.toggleTheme && window.toggleTheme()" aria-label="Toggle theme">
         <span class="material-icons-round" style="font-size:20px">dark_mode</span>
       </button>
@@ -41,15 +44,15 @@
       <aside class="profile-sidebar">
         <!-- Setup Progress Card -->
         <div class="card progress-card">
-          <h2 class="card-title">Setup Progress</h2>
+          <h2 class="card-title" data-key="profile_setup_progress">Setup Progress</h2>
           <div class="stepper">
             <div class="step done">
               <div class="step-icon">
                 <span class="material-icons-round">check</span>
               </div>
               <div class="step-details">
-                <div class="step-title">Account Created</div>
-                <div class="step-desc">Signed in successfully</div>
+                <div class="step-title" data-key="profile_step_created">Account Created</div>
+                <div class="step-desc" data-key="profile_step_created_desc">Signed in successfully</div>
               </div>
             </div>
             
@@ -58,8 +61,8 @@
                 <span class="material-icons-round">edit</span>
               </div>
               <div class="step-details">
-                <div class="step-title">Identity Verification</div>
-                <div class="step-desc">Complete profile & documents</div>
+                <div class="step-title" data-key="profile_step_verify">Identity Verification</div>
+                <div class="step-desc" data-key="profile_step_verify_desc">Complete profile & documents</div>
               </div>
             </div>
           </div>
@@ -69,12 +72,12 @@
         <div class="card status-info-card">
           <div class="status-header">
             <span class="material-icons-round text-warning">shield</span>
-            <h3>Verification Standard</h3>
+            <h3 data-key="profile_standard_title">Verification Standard</h3>
           </div>
-          <p>WeDRIVE requires document verification for safety and security. Review is typically completed in 24 hours.</p>
+          <p data-key="profile_standard_desc">WeDRIVE requires document verification for safety and security. Review is typically completed in 24 hours.</p>
           <div class="info-tag">
             <span class="material-icons-round">info</span>
-            <span>All uploads are encrypted.</span>
+            <span data-key="profile_standard_tag">All uploads are encrypted.</span>
           </div>
         </div>
       </aside>
@@ -85,16 +88,16 @@
         <div class="rejection-banner" id="rejection-banner" style="display: none;">
           <div class="banner-title">
             <span class="material-icons-round">error</span>
-            Documents Not Approved
+            <span data-key="profile_rejection_title">Documents Not Approved</span>
           </div>
-          <div class="banner-reason" id="rejection-reason">Your previously submitted documents could not be verified. Please re-upload clear and valid documents.</div>
+          <div class="banner-reason" id="rejection-reason" data-key="profile_rejection_reason">Your previously submitted documents could not be verified. Please re-upload clear and valid documents.</div>
         </div>
 
         <!-- Form Card -->
         <div class="card form-card">
           <div class="card-header-group">
-            <h1>Complete Your Profile</h1>
-            <p class="sub">Provide your official identification details and upload the required documents to verify your account.</p>
+            <h1 data-key="profile_title">Complete Your Profile</h1>
+            <p class="sub" data-key="profile_subtitle">Provide your official identification details and upload the required documents to verify your account.</p>
           </div>
 
           <form class="profile-form" id="profile-form" onsubmit="handleProfileSubmit(event)">
@@ -102,16 +105,16 @@
             <!-- Basic Info (Pre-filled from Google, but editable) -->
             <div class="form-row-grid">
               <div class="form-group">
-                <label for="user-name-display">Full Name <span class="required-asterisk">*</span></label>
+                <label for="user-name-display"><span data-key="profile_fullname">Full Name</span> <span class="required-asterisk">*</span></label>
                 <div class="input-wrap">
                   <span class="material-icons-round">person</span>
-                  <input type="text" id="user-name-display" placeholder="Enter full name matching IC" required />
+                  <input type="text" id="user-name-display" data-key-ph="profile_fullname_ph" placeholder="Enter full name matching IC" required />
                 </div>
-                <div class="field-hint" style="margin-top: 6px;">Must match the name on your IC</div>
+                <div class="field-hint" style="margin-top: 6px;" data-key="profile_fullname_hint">Must match the name on your IC</div>
               </div>
               
               <div class="form-group">
-                <label>Email Address</label>
+                <label data-key="profile_email">Email Address</label>
                 <div class="input-wrap readonly">
                   <span class="material-icons-round">mail</span>
                   <input type="text" id="user-email-display" readonly value="Loading..." />
@@ -121,25 +124,25 @@
 
             <div class="divider-line"></div>
 
-            <h3 class="section-title">Official Identification</h3>
+            <h3 class="section-title" data-key="profile_ic">Official Identification</h3>
             
             <div class="form-row-grid">
               <!-- IC Number -->
               <div class="form-group">
-                <label for="ic-number">IC Number (MyKad) <span class="required-asterisk">*</span></label>
+                <label for="ic-number"><span data-key="profile_ic">IC Number (MyKad)</span> <span class="required-asterisk">*</span></label>
                 <div class="input-wrap">
                   <span class="material-icons-round">badge</span>
                   <input type="text" id="ic-number" placeholder="e.g. 012345-67-8901" maxlength="14" required />
                 </div>
-                <div class="field-hint" style="margin-top: 6px;">Isi nombor IC</div>
+                <div class="field-hint" style="margin-top: 6px;" data-key="profile_ic_hint">Enter IC number</div>
               </div>
 
               <!-- License Number -->
               <div class="form-group">
-                <label for="license-number">Driving License Number <span class="required-asterisk">*</span></label>
+                <label for="license-number"><span data-key="profile_license">Driving License Number</span> <span class="required-asterisk">*</span></label>
                 <div class="input-wrap">
                   <span class="material-icons-round">card_membership</span>
-                  <input type="text" id="license-number" placeholder="e.g. D12345678" required />
+                  <input type="text" id="license-number" data-key-ph="profile_license_ph" placeholder="e.g. D12345678" required />
                 </div>
               </div>
             </div>
@@ -147,7 +150,7 @@
             <div class="form-row-grid">
               <!-- Phone Number -->
               <div class="form-group">
-                <label for="phone-number">Phone Number <span class="required-asterisk">*</span></label>
+                <label for="phone-number"><span data-key="profile_phone">Phone Number</span> <span class="required-asterisk">*</span></label>
                 <div class="input-wrap prefix-wrap">
                   <span class="material-icons-round">phone</span>
                   <select id="phone-country-code" class="phone-prefix-select">
@@ -164,20 +167,20 @@
 
             <div class="divider-line"></div>
 
-            <h3 class="section-title">Document Uploads</h3>
-            <p class="section-desc">Please upload clear pictures of the front and back of your IC and Driving License. Files must be under 5MB (JPG, PNG, or PDF).</p>
+            <h3 class="section-title" data-key="profile_uploads_title">Document Uploads</h3>
+            <p class="section-desc" data-key="profile_uploads_desc">Please upload clear pictures of the front and back of your IC and Driving License. Files must be under 5MB (JPG, PNG, or PDF).</p>
 
             <!-- IC Uploads -->
             <div class="form-row-grid uploads-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
               <!-- Upload IC (Front) -->
               <div class="form-group">
-                <label>Upload IC Front <span class="required-asterisk">*</span></label>
+                <label><span data-key="profile_upload_ic_front">Upload IC Front</span> <span class="required-asterisk">*</span></label>
                 <div class="upload-zone" id="ic-upload-zone">
                   <input type="file" id="ic-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'ic')" />
                   <div class="upload-zone-content">
                     <span class="material-icons-round" id="ic-upload-icon">cloud_upload</span>
-                    <p class="upload-title" id="ic-upload-text">Click or drag & drop IC Front</p>
-                    <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
+                    <p class="upload-title" id="ic-upload-text" data-key="profile_upload_ic_front_ph">Click or drag & drop IC Front</p>
+                    <p class="upload-subtitle" data-key="profile_upload_supports">Supports JPG, PNG, PDF</p>
                     <div class="file-name" id="ic-file-name"></div>
                     <div class="preview-container">
                       <img class="upload-preview" id="ic-preview" alt="IC Front Preview" />
@@ -188,13 +191,13 @@
 
               <!-- Upload IC (Back) -->
               <div class="form-group">
-                <label>Upload IC Back <span class="required-asterisk">*</span></label>
+                <label><span data-key="profile_upload_ic_back">Upload IC Back</span> <span class="required-asterisk">*</span></label>
                 <div class="upload-zone" id="ic-back-upload-zone">
                   <input type="file" id="ic-back-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'ic-back')" />
                   <div class="upload-zone-content">
                     <span class="material-icons-round" id="ic-back-upload-icon">cloud_upload</span>
-                    <p class="upload-title" id="ic-back-upload-text">Click or drag & drop IC Back</p>
-                    <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
+                    <p class="upload-title" id="ic-back-upload-text" data-key="profile_upload_ic_back_ph">Click or drag & drop IC Back</p>
+                    <p class="upload-subtitle" data-key="profile_upload_supports">Supports JPG, PNG, PDF</p>
                     <div class="file-name" id="ic-back-file-name"></div>
                     <div class="preview-container">
                       <img class="upload-preview" id="ic-back-preview" alt="IC Back Preview" />
@@ -208,13 +211,13 @@
             <div class="form-row-grid uploads-grid" style="grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
               <!-- Upload Driving License (Front) -->
               <div class="form-group">
-                <label>Upload Driving License Front <span class="required-asterisk">*</span></label>
+                <label><span data-key="profile_upload_license_front">Upload Driving License Front</span> <span class="required-asterisk">*</span></label>
                 <div class="upload-zone" id="license-upload-zone">
                   <input type="file" id="license-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'license')" />
                   <div class="upload-zone-content">
                     <span class="material-icons-round" id="license-upload-icon">cloud_upload</span>
-                    <p class="upload-title" id="license-upload-text">Click or drag & drop License Front</p>
-                    <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
+                    <p class="upload-title" id="license-upload-text" data-key="profile_upload_license_front_ph">Click or drag & drop License Front</p>
+                    <p class="upload-subtitle" data-key="profile_upload_supports">Supports JPG, PNG, PDF</p>
                     <div class="file-name" id="license-file-name"></div>
                     <div class="preview-container">
                       <img class="upload-preview" id="license-preview" alt="License Front Preview" />
@@ -225,13 +228,13 @@
 
               <!-- Upload Driving License (Back) -->
               <div class="form-group">
-                <label>Upload Driving License Back <span class="required-asterisk">*</span></label>
+                <label><span data-key="profile_upload_license_back">Upload Driving License Back</span> <span class="required-asterisk">*</span></label>
                 <div class="upload-zone" id="license-back-upload-zone">
                   <input type="file" id="license-back-file" accept="image/*,.pdf" onchange="handleFileSelect(this, 'license-back')" />
                   <div class="upload-zone-content">
                     <span class="material-icons-round" id="license-back-upload-icon">cloud_upload</span>
-                    <p class="upload-title" id="license-back-upload-text">Click or drag & drop License Back</p>
-                    <p class="upload-subtitle">Supports JPG, PNG, PDF</p>
+                    <p class="upload-title" id="license-back-upload-text" data-key="profile_upload_license_back_ph">Click or drag & drop License Back</p>
+                    <p class="upload-subtitle" data-key="profile_upload_supports">Supports JPG, PNG, PDF</p>
                     <div class="file-name" id="license-back-file-name"></div>
                     <div class="preview-container">
                       <img class="upload-preview" id="license-back-preview" alt="License Back Preview" />
@@ -244,7 +247,7 @@
             <div class="form-actions">
               <button type="submit" class="btn-submit" id="submit-btn">
                 <span class="material-icons-round" style="font-size:18px">verified_user</span>
-                Submit for Verification
+                <span data-key="profile_submit_btn">Submit for Verification</span>
               </button>
             </div>
           </form>
@@ -522,49 +525,94 @@
       var phone = countryCode + ' ' + localPhone;
       var btn = document.getElementById('submit-btn');
 
+      var lang = localStorage.getItem('wedrive-lang') || 'en';
+      var msgs = {
+        en: {
+          name: 'Please enter your Full Name.',
+          ic: 'IC Number must be exactly 12 digits.',
+          license: 'Please enter your Driving License number.',
+          phone: 'Please enter your phone number.',
+          icFront: 'Please upload your IC Front document.',
+          icBack: 'Please upload your IC Back document.',
+          licenseFront: 'Please upload your Driving License Front document.',
+          licenseBack: 'Please upload your Driving License Back document.',
+          sessionExpired: 'Session expired. Please login again.',
+          alreadyRegistered: 'IC or License already registered.',
+          submitBtnText: 'Submit for Verification',
+          uploading: 'Uploading...',
+          uploadingIcFront: 'Uploading IC Front...',
+          uploadingIcBack: 'Uploading IC Back...',
+          uploadingLicFront: 'Uploading License Front...',
+          uploadingLicBack: 'Uploading License Back...',
+          saving: 'Saving...',
+          errorPrefix: 'Error: '
+        },
+        ms: {
+          name: 'Sila masukkan Nama Penuh anda.',
+          ic: 'Nombor IC mestilah tepat 12 digit.',
+          license: 'Sila masukkan nombor Lesen Memandu anda.',
+          phone: 'Sila masukkan nombor telefon anda.',
+          icFront: 'Sila muat naik dokumen Depan IC anda.',
+          icBack: 'Sila muat naik dokumen Belakang IC anda.',
+          licenseFront: 'Sila muat naik dokumen Depan Lesen Memandu anda.',
+          licenseBack: 'Sila muat naik dokumen Belakang Lesen Memandu anda.',
+          sessionExpired: 'Sesi tamat. Sila log masuk semula.',
+          alreadyRegistered: 'IC atau Lesen memandu sudah didaftarkan.',
+          submitBtnText: 'Hantar untuk Pengesahan',
+          uploading: 'Memuat naik...',
+          uploadingIcFront: 'Memuat naik Depan IC...',
+          uploadingIcBack: 'Memuat naik Belakang IC...',
+          uploadingLicFront: 'Memuat naik Depan Lesen...',
+          uploadingLicBack: 'Memuat naik Belakang Lesen...',
+          saving: 'Menyimpan...',
+          errorPrefix: 'Ralat: '
+        }
+      };
+      var m = msgs[lang] || msgs.en;
+
       if (!name) {
-        alert('Please enter your Full Name.');
+        alert(m.name);
         return;
       }
       // Validate IC (12 digits excluding dashes)
       var icDigits = ic.replace(/\D/g, '');
       if (icDigits.length !== 12) {
-        alert('IC Number must be exactly 12 digits.');
+        alert(m.ic);
         return;
       }
       if (!license) {
-        alert('Please enter your Driving License number.');
+        alert(m.license);
         return;
       }
       if (!localPhone) {
-        alert('Please enter your phone number.');
+        alert(m.phone);
         return;
       }
       if (!icFile) {
-        alert('Please upload your IC Front document.');
+        alert(m.icFront);
         return;
       }
       if (!icBackFile) {
-        alert('Please upload your IC Back document.');
+        alert(m.icBack);
         return;
       }
       if (!licenseFile) {
-        alert('Please upload your Driving License Front document.');
+        alert(m.licenseFront);
         return;
       }
       if (!licenseBackFile) {
-        alert('Please upload your Driving License Back document.');
+        alert(m.licenseBack);
         return;
       }
 
-      btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading...';
+      btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploading;
       btn.disabled = true;
 
       try {
         var sb = window.supabaseClient;
         var session = await sb.auth.getSession();
         if (!session.data.session) {
-          alert('Session expired. Please login again.');
+          alert(m.sessionExpired);
           window.location.href = '../login/login.html';
           return;
         }
@@ -573,34 +621,34 @@
         // Check IC and License uniqueness
         var uniqueCheck = await window.WeDriveAPI.checkICAndLicenseUnique(ic, license, uid);
         if (!uniqueCheck.unique) {
-          alert(uniqueCheck.error || 'IC or License already registered.');
-          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified_user</span> Submit for Verification';
+          alert(uniqueCheck.error || m.alreadyRegistered);
+          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified_user</span> ' + m.submitBtnText;
           btn.disabled = false;
           return;
         }
 
         // Upload IC Front document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading IC Front...';
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingIcFront;
         var icUpload = await window.WeDriveAPI.uploadDocument(uid, icFile, 'ic_front');
         if (!icUpload.success) throw new Error('IC Front upload failed: ' + icUpload.error);
 
         // Upload IC Back document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading IC Back...';
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingIcBack;
         var icBackUpload = await window.WeDriveAPI.uploadDocument(uid, icBackFile, 'ic_back');
         if (!icBackUpload.success) throw new Error('IC Back upload failed: ' + icBackUpload.error);
 
         // Upload License Front document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading License Front...';
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingLicFront;
         var licenseUpload = await window.WeDriveAPI.uploadDocument(uid, licenseFile, 'license_front');
         if (!licenseUpload.success) throw new Error('License Front upload failed: ' + licenseUpload.error);
 
         // Upload License Back document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Uploading License Back...';
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingLicBack;
         var licenseBackUpload = await window.WeDriveAPI.uploadDocument(uid, licenseBackFile, 'license_back');
         if (!licenseBackUpload.success) throw new Error('License Back upload failed: ' + licenseBackUpload.error);
 
         // Update profile
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> Saving...';
+        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.saving;
         var updateResult = await window.WeDriveAPI.updateCustomerProfile(uid, {
           name: name,
           ic: ic,
@@ -631,8 +679,8 @@
 
       } catch (err) {
         console.error('Profile submit error:', err);
-        alert('Error: ' + (err.message || 'Something went wrong. Please try again.'));
-        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified_user</span> Submit for Verification';
+        alert(m.errorPrefix + (err.message || 'Something went wrong. Please try again.'));
+        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified_user</span> ' + m.submitBtnText;
         btn.disabled = false;
       }
     }

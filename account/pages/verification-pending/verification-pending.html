@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verification Pending | WeDRIVE</title>
+  <title data-key="pending_page_title">Verification Pending | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
@@ -186,6 +186,9 @@
       <span>WeDRIVE</span>
     </a>
     <div class="reset-tools">
+      <button class="lang-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">
+        <span class="lang-text">EN</span>
+      </button>
       <button class="theme-toggle" onclick="window.toggleTheme && window.toggleTheme()" aria-label="Toggle theme">
         <span class="material-icons-round" style="font-size:20px">dark_mode</span>
       </button>
@@ -201,17 +204,17 @@
         <div class="pending-anim">
           <span class="material-icons-round">hourglass_top</span>
         </div>
-        <h1>Verification In Progress</h1>
-        <p class="sub">Your identity documents have been submitted successfully. Our team is reviewing them now. This usually takes less than 24 hours.</p>
+        <h1 data-key="pending_in_progress_title">Verification In Progress</h1>
+        <p class="sub" data-key="pending_in_progress_desc">Your identity documents have been submitted successfully. Our team is reviewing them now. This usually takes less than 24 hours.</p>
         <div class="progress-steps">
           <div class="step done"></div>
           <div class="step active"></div>
         </div>
         <div class="status-indicator pending">
           <div class="dot"></div>
-          Pending Review
+          <span data-key="pending_status_lbl">Pending Review</span>
         </div>
-        <div class="check-counter" id="check-counter">Checking status...</div>
+        <div class="check-counter" id="check-counter" data-key="pending_checking_status">Checking status...</div>
       </div>
 
       <!-- STATE: VERIFIED -->
@@ -219,20 +222,20 @@
         <div class="verified-anim">
           <span class="material-icons-round">check_circle</span>
         </div>
-        <h1>Account Verified!</h1>
-        <p class="sub">Your identity documents have been verified successfully. You can now start booking cars on WeDRIVE.</p>
+        <h1 data-key="pending_verified_title">Account Verified!</h1>
+        <p class="sub" data-key="pending_verified_desc">Your identity documents have been verified successfully. You can now start booking cars on WeDRIVE.</p>
         <div class="progress-steps">
           <div class="step done"></div>
           <div class="step done"></div>
         </div>
         <div class="status-indicator verified">
           <div class="dot"></div>
-          Verified
+          <span data-key="pending_verified_lbl">Verified</span>
         </div>
         <br />
         <a href="../../../customer/pages/dashboard/customer.html" class="action-btn primary">
           <span class="material-icons-round" style="font-size:18px">dashboard</span>
-          Go to Dashboard
+          <span data-key="pending_dashboard_btn">Go to Dashboard</span>
         </a>
       </div>
 
@@ -241,20 +244,20 @@
         <div class="rejected-anim">
           <span class="material-icons-round">cancel</span>
         </div>
-        <h1>Documents Not Approved</h1>
-        <p class="sub" id="rejected-reason">Your documents could not be verified. Please re-upload clear and valid documents.</p>
+        <h1 data-key="pending_rejected_title">Documents Not Approved</h1>
+        <p class="sub" id="rejected-reason" data-key="pending_rejected_desc">Your documents could not be verified. Please re-upload clear and valid documents.</p>
         <div class="progress-steps">
           <div class="step done"></div>
           <div class="step" style="background:#DC2626"></div>
         </div>
         <div class="status-indicator rejected">
           <div class="dot"></div>
-          Rejected
+          <span data-key="pending_rejected_lbl">Rejected</span>
         </div>
         <br />
         <a href="../complete-profile/complete-profile.html" class="action-btn danger">
           <span class="material-icons-round" style="font-size:18px">refresh</span>
-          Re-upload Documents
+          <span data-key="pending_reupload_btn">Re-upload Documents</span>
         </a>
       </div>
 
@@ -284,7 +287,10 @@
 
         checkCount++;
         var counterEl = document.getElementById('check-counter');
-        counterEl.textContent = 'Last checked: just now (check #' + checkCount + ')';
+        var lang = localStorage.getItem('wedrive-lang') || 'en';
+        counterEl.textContent = lang === 'ms' 
+          ? 'Semakan terakhir: sebentar tadi (semakan #' + checkCount + ')' 
+          : 'Last checked: just now (check #' + checkCount + ')';
 
         if (result.status === 'Verified') {
           clearInterval(pollInterval);
