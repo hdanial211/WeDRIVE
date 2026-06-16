@@ -131,7 +131,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.json';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js';
   }
 
   function applyTranslation(data, animate) {
@@ -193,18 +193,41 @@
   }
 
   function loadLanguage(lang, animate) {
-    fetch(resolveLangPath(lang))
-      .then(function (res) {
-        if (!res.ok) throw new Error('Language file not found: ' + lang);
-        return res.json();
-      })
-      .then(function (data) {
+    var globalVarName = 'wedrive_lang_' + lang;
+    if (window[globalVarName]) {
+      localStorage.setItem(LANG_KEY, lang);
+      applyTranslation(window[globalVarName], animate);
+      return;
+    }
+
+    // Script injection
+    var scriptId = 'lang-script-' + lang;
+    var existingScript = document.getElementById(scriptId);
+    if (existingScript) {
+      existingScript.onload = function () {
+        if (window[globalVarName]) {
+          localStorage.setItem(LANG_KEY, lang);
+          applyTranslation(window[globalVarName], animate);
+        }
+      };
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.id = scriptId;
+    script.src = resolveLangPath(lang);
+    script.onload = function () {
+      if (window[globalVarName]) {
         localStorage.setItem(LANG_KEY, lang);
-        applyTranslation(data, animate);
-      })
-      .catch(function (err) {
-        console.warn('[WeDRIVE]', err.message);
-      });
+        applyTranslation(window[globalVarName], animate);
+      } else {
+        console.warn('[WeDRIVE] Global language object not found: ' + globalVarName);
+      }
+    };
+    script.onerror = function () {
+      console.warn('[WeDRIVE] Failed to load language script: ' + script.src);
+    };
+    document.head.appendChild(script);
   }
 
   window.toggleLanguage = function () {

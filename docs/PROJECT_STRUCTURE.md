@@ -216,8 +216,10 @@ AI CAR RENTAL SYSTEM/
     +-- dummy/
     |   +-- data.json            # Data Mockup Tunggal (Single Source of Truth)
     +-- lang/
-    |   +-- en.json             # Bahasa Inggeris
-    |   +-- ms.json             # Bahasa Melayu
+    |   +-- en.json             # Bahasa Inggeris (JSON Source)
+    |   +-- ms.json             # Bahasa Melayu (JSON Source)
+    |   +-- en.js               # Bahasa Inggeris (JS Global Object - Local Protocol)
+    |   +-- ms.js               # Bahasa Melayu (JS Global Object - Local Protocol)
     +-- logo/                   # Gambar Logo
     +-- images/
     |   +-- cars/               # Gambar kereta legacy (tidak lagi digunakan untuk paparan model utama)
