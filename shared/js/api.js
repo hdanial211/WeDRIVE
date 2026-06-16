@@ -842,7 +842,10 @@ window.WeDriveAPI = {
             return {
                 complete: complete,
                 status: d.verification_status || null,
-                reason: d.rejection_reason || null
+                reason: d.rejection_reason || null,
+                ic: d.ic || null,
+                license: d.license || null,
+                phone: d.phone || null
             };
         } catch (err) {
             console.error('[WeDriveAPI] checkProfileComplete error:', err);

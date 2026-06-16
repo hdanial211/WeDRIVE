@@ -150,8 +150,14 @@
                 <label for="phone-number">Phone Number <span class="required-asterisk">*</span></label>
                 <div class="input-wrap prefix-wrap">
                   <span class="material-icons-round">phone</span>
-                  <span class="phone-prefix">+60</span>
-                  <input type="text" id="phone-number" placeholder="12 345 6789" required />
+                  <select id="phone-country-code" class="phone-prefix-select">
+                    <option value="+60">MY +60</option>
+                    <option value="+65">SG +65</option>
+                    <option value="+62">ID +62</option>
+                    <option value="+66">TH +66</option>
+                    <option value="+673">BN +673</option>
+                  </select>
+                  <input type="text" id="phone-number" placeholder="010-271 9558" required />
                 </div>
               </div>
             </div>
@@ -259,7 +265,7 @@
     var licenseFile = null;
     var licenseBackFile = null;
 
-    // Check if user came here due to rejection
+    // Check if user came here due to rejection and populate previous data
     (async function checkRejection() {
       try {
         var sb = window.supabaseClient;
@@ -268,14 +274,162 @@
         if (!session.data.session) return;
         var uid = session.data.session.user.id;
         var profileCheck = await window.WeDriveAPI.checkProfileComplete(uid);
+        
         if (profileCheck.status === 'Rejected' && profileCheck.reason) {
           document.getElementById('rejection-banner').style.display = 'block';
           document.getElementById('rejection-reason').textContent = profileCheck.reason;
+        }
+        
+        // Populate existing values if available (useful for rejection resubmission)
+        if (profileCheck.ic) {
+          document.getElementById('ic-number').value = profileCheck.ic;
+          document.getElementById('ic-number').dispatchEvent(new Event('input'));
+        }
+        if (profileCheck.license) {
+          document.getElementById('license-number').value = profileCheck.license;
+        }
+        if (profileCheck.phone) {
+          var phoneStr = profileCheck.phone.trim();
+          var phoneParts = phoneStr.split(' ');
+          if (phoneParts.length >= 2) {
+            var countryCode = phoneParts[0];
+            var localNumber = phoneParts.slice(1).join(' ');
+            var countrySelect = document.getElementById('phone-country-code');
+            if (countrySelect && Array.from(countrySelect.options).some(opt => opt.value === countryCode)) {
+              countrySelect.value = countryCode;
+            }
+            document.getElementById('phone-number').value = localNumber;
+          } else {
+            document.getElementById('phone-number').value = phoneStr;
+          }
+          document.getElementById('phone-number').dispatchEvent(new Event('input'));
         }
       } catch (e) {
         console.error('Rejection check error:', e);
       }
     })();
+
+    // Input Auto Formatting Event Listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // IC Formatting (YYMMDD-PB-###)
+      var icInput = document.getElementById('ic-number');
+      if (icInput) {
+        icInput.addEventListener('input', function (e) {
+          var cursor = e.target.selectionStart;
+          var originalLength = e.target.value.length;
+          var val = e.target.value.replace(/\D/g, '');
+          if (val.length > 12) val = val.substring(0, 12);
+          
+          var formatted = '';
+          if (val.length <= 6) {
+            formatted = val;
+          } else if (val.length <= 8) {
+            formatted = val.substring(0, 6) + '-' + val.substring(6);
+          } else {
+            formatted = val.substring(0, 6) + '-' + val.substring(6, 8) + '-' + val.substring(8);
+          }
+          
+          e.target.value = formatted;
+          var diff = formatted.length - originalLength;
+          e.target.setSelectionRange(cursor + diff, cursor + diff);
+        });
+      }
+
+      // Phone Formatting
+      var phoneInput = document.getElementById('phone-number');
+      var countrySelect = document.getElementById('phone-country-code');
+      
+      function formatPhoneNumber() {
+        if (!phoneInput || !countrySelect) return;
+        var cursor = phoneInput.selectionStart;
+        var originalLength = phoneInput.value.length;
+        var val = phoneInput.value.replace(/\D/g, '');
+        var formatted = val;
+        var countryCode = countrySelect.value;
+        
+        if (countryCode === '+60') {
+          // Malaysia formatting: 010-271 9558 or 011-2710 9558
+          if (val.startsWith('0')) {
+            if (val.startsWith('011')) {
+              if (val.length <= 3) {
+                formatted = val;
+              } else if (val.length <= 7) {
+                formatted = val.substring(0, 3) + '-' + val.substring(3);
+              } else {
+                formatted = val.substring(0, 3) + '-' + val.substring(3, 7) + ' ' + val.substring(7, 11);
+              }
+            } else {
+              if (val.length <= 3) {
+                formatted = val;
+              } else if (val.length <= 6) {
+                formatted = val.substring(0, 3) + '-' + val.substring(3);
+              } else {
+                formatted = val.substring(0, 3) + '-' + val.substring(3, 6) + ' ' + val.substring(6, 10);
+              }
+            }
+          } else {
+            if (val.startsWith('11')) {
+              if (val.length <= 2) {
+                formatted = val;
+              } else if (val.length <= 6) {
+                formatted = val.substring(0, 2) + '-' + val.substring(2);
+              } else {
+                formatted = val.substring(0, 2) + '-' + val.substring(2, 6) + ' ' + val.substring(6, 10);
+              }
+            } else {
+              if (val.length <= 2) {
+                formatted = val;
+              } else if (val.length <= 5) {
+                formatted = val.substring(0, 2) + '-' + val.substring(2);
+              } else {
+                formatted = val.substring(0, 2) + '-' + val.substring(2, 5) + ' ' + val.substring(5, 9);
+              }
+            }
+          }
+        } else if (countryCode === '+65') {
+          // Singapore: 9123 4567
+          if (val.length > 8) val = val.substring(0, 8);
+          if (val.length <= 4) {
+            formatted = val;
+          } else {
+            formatted = val.substring(0, 4) + ' ' + val.substring(4);
+          }
+        } else {
+          // Others: generic digit filtering
+          if (val.length > 15) val = val.substring(0, 15);
+          formatted = val;
+        }
+        
+        phoneInput.value = formatted;
+        var diff = formatted.length - originalLength;
+        phoneInput.setSelectionRange(cursor + diff, cursor + diff);
+      }
+      
+      function updatePhonePlaceholder() {
+        if (!phoneInput || !countrySelect) return;
+        var countryCode = countrySelect.value;
+        if (countryCode === '+60') {
+          phoneInput.placeholder = '010-271 9558';
+        } else if (countryCode === '+65') {
+          phoneInput.placeholder = '9123 4567';
+        } else if (countryCode === '+62') {
+          phoneInput.placeholder = '812-3456-7890';
+        } else if (countryCode === '+66') {
+          phoneInput.placeholder = '81-234-5678';
+        } else if (countryCode === '+673') {
+          phoneInput.placeholder = '812-3456';
+        }
+      }
+      
+      if (phoneInput && countrySelect) {
+        phoneInput.addEventListener('input', formatPhoneNumber);
+        countrySelect.addEventListener('change', function () {
+          updatePhonePlaceholder();
+          formatPhoneNumber();
+        });
+        updatePhonePlaceholder();
+      }
+    });
 
     // Fetch and display user name & email
     (async function populateUserInfo() {
@@ -374,15 +528,18 @@
       var name = document.getElementById('user-name-display').value.trim();
       var ic = document.getElementById('ic-number').value.trim();
       var license = document.getElementById('license-number').value.trim();
-      var phone = document.getElementById('phone-number').value.trim();
+      var countryCode = document.getElementById('phone-country-code').value;
+      var localPhone = document.getElementById('phone-number').value.trim();
+      var phone = countryCode + ' ' + localPhone;
       var btn = document.getElementById('submit-btn');
 
       if (!name) {
         alert('Please enter your Full Name.');
         return;
       }
-      // Validate IC (12 digits)
-      if (!/^\d{12}$/.test(ic)) {
+      // Validate IC (12 digits excluding dashes)
+      var icDigits = ic.replace(/\D/g, '');
+      if (icDigits.length !== 12) {
         alert('IC Number must be exactly 12 digits.');
         return;
       }
@@ -390,7 +547,7 @@
         alert('Please enter your Driving License number.');
         return;
       }
-      if (!phone) {
+      if (!localPhone) {
         alert('Please enter your phone number.');
         return;
       }

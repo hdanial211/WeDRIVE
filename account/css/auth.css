@@ -816,16 +816,25 @@ body.profile-page {
   align-items: center;
 }
 
-.input-wrap.prefix-wrap .phone-prefix {
+.input-wrap.prefix-wrap .phone-prefix-select {
   position: absolute;
-  left: 44px;
+  left: 42px;
   font-size: 14px;
   font-weight: 700;
   color: var(--text-primary, #191c1e);
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 82px;
+  height: calc(100% - 4px);
+  padding: 0 4px;
+  z-index: 5;
+  font-family: 'Inter', sans-serif;
 }
 
 .input-wrap.prefix-wrap input {
-  padding-left: 78px;
+  padding-left: 130px;
 }
 
 /* Rejection banner */
