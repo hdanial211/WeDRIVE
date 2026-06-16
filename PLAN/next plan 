@@ -280,7 +280,7 @@ ID 8: shared/model/Sedan/2023 Toyota Vios 1.5 G/placeholder.jpg
 
 **Contoh format yang betul:**
 ```
-Malaysia:   +60  | 010-271 9558
+Malaysia:   +60  | 012-345 6789
 Singapore:  +65  | 9123-4567
 Indonesia:  +62  | 0812-345-6789
 Thailand:   +66  | 081-234-5678

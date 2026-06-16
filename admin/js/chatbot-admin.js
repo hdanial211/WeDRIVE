@@ -26,7 +26,7 @@ Your role:
 Company Info:
 - Company: WeDRIVE Sdn Bhd
 - Location: Lot 123, Jalan Hang Tuah, 75300 Melaka
-- Phone: 010-271 9558
+- Phone: 012-345 6789
 - Email: admin@wedrive.my
 - Operating hours: 8AM - 10PM daily
 

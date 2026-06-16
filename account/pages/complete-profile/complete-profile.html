@@ -151,13 +151,13 @@
                 <div class="input-wrap prefix-wrap">
                   <span class="material-icons-round">phone</span>
                   <select id="phone-country-code" class="phone-prefix-select">
-                    <option value="+60">MY +60</option>
-                    <option value="+65">SG +65</option>
-                    <option value="+62">ID +62</option>
-                    <option value="+66">TH +66</option>
-                    <option value="+673">BN +673</option>
+                    <option value="+60">🇲🇾 MY +60</option>
+                    <option value="+65">🇸🇬 SG +65</option>
+                    <option value="+62">🇮🇩 ID +62</option>
+                    <option value="+66">🇹🇭 TH +66</option>
+                    <option value="+673">🇧🇳 BN +673</option>
                   </select>
-                  <input type="text" id="phone-number" placeholder="010-271 9558" required />
+                  <input type="text" id="phone-number" placeholder="012-345 6789" required />
                 </div>
               </div>
             </div>
@@ -348,7 +348,7 @@
         var countryCode = countrySelect.value;
         
         if (countryCode === '+60') {
-          // Malaysia formatting: 010-271 9558 or 011-2710 9558
+          // Malaysia formatting: 012-345 6789 or 011-2710 9558
           if (val.startsWith('0')) {
             if (val.startsWith('011')) {
               if (val.length <= 3) {
@@ -409,7 +409,7 @@
         if (!phoneInput || !countrySelect) return;
         var countryCode = countrySelect.value;
         if (countryCode === '+60') {
-          phoneInput.placeholder = '010-271 9558';
+          phoneInput.placeholder = '012-345 6789';
         } else if (countryCode === '+65') {
           phoneInput.placeholder = '9123 4567';
         } else if (countryCode === '+62') {
