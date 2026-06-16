@@ -24,10 +24,25 @@ window.WeDriveAPI.getAdminData()
       c._status = c.status || 'Active';
       return c;
     });
+    sortCustomers(allCustomers);
     populateCustomerStats(allCustomers);
     renderCustomers(allCustomers);
   })
   .catch(err => console.error('Customers data load error:', err));
+
+function sortCustomers(customers) {
+  customers.sort(function(a, b) {
+    var aPending = (a.verification_status === 'Pending') ? 1 : 0;
+    var bPending = (b.verification_status === 'Pending') ? 1 : 0;
+    if (bPending !== aPending) {
+      return bPending - aPending; // Pending first
+    }
+    // Secondary sort: joined date descending
+    var dateA = new Date(a._joined).getTime() || 0;
+    var dateB = new Date(b._joined).getTime() || 0;
+    return dateB - dateA;
+  });
+}
 
 function populateCustomerStats(customers) {
   var total = customers.length;
@@ -49,8 +64,21 @@ function renderCustomers(customers) {
     return;
   }
   tbody.innerHTML = customers.map(c => {
-    var statusClass = c._status === 'Active' ? 'available' : 'maintenance';
     var joinedFmt = formatDate(c._joined);
+    
+    // Display verification status badge if not Verified or has a Pending review status
+    var statusHtml = '';
+    if (c.verification_status === 'Pending') {
+      statusHtml = `<span class="status-badge pending"><span class="dot"></span> Pending</span>`;
+    } else if (c.verification_status === 'Verified') {
+      statusHtml = `<span class="status-badge available"><span class="dot"></span> Verified</span>`;
+    } else if (c.verification_status === 'Rejected') {
+      statusHtml = `<span class="status-badge cancelled"><span class="dot"></span> Rejected</span>`;
+    } else {
+      var statusClass = c._status === 'Active' ? 'available' : 'maintenance';
+      statusHtml = `<span class="status-badge ${statusClass}"><span class="dot"></span> ${c._status}</span>`;
+    }
+
     return `
     <tr>
       <td><strong>${c._name}</strong></td>
@@ -59,7 +87,7 @@ function renderCustomers(customers) {
       <td>${c._license}</td>
       <td style="text-align:center">${c._total_bookings}</td>
       <td><strong>RM ${(c._total_spent || 0).toLocaleString()}</strong></td>
-      <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${c._status}</span></td>
+      <td>${statusHtml}</td>
       <td>${joinedFmt}</td>
       <td style="white-space:nowrap;">
         <button class="btn-primary-sm" onclick="viewCustomer(${c.id})" style="font-size:12px;padding:6px 10px">
@@ -261,6 +289,9 @@ async function approveCustomer(id) {
       window.WeDriveEmail.sendVerificationEmail(c._email, c._name, 'approved');
     }
 
+    sortCustomers(allCustomers);
+    populateCustomerStats(allCustomers);
+    renderCustomers(allCustomers);
     closeCustomerModal();
     showToast(c._name + ' has been verified', 'success');
   } catch (err) {
@@ -296,6 +327,9 @@ async function rejectCustomer(id, reason) {
       window.WeDriveEmail.sendVerificationEmail(c._email, c._name, 'rejected', reason);
     }
 
+    sortCustomers(allCustomers);
+    populateCustomerStats(allCustomers);
+    renderCustomers(allCustomers);
     closeCustomerModal();
     showToast(c._name + ' has been rejected', 'info');
   } catch (err) {
