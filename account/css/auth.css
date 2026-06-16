@@ -826,7 +826,7 @@ body.profile-page {
   border: none;
   outline: none;
   cursor: pointer;
-  width: 92px;
+  width: 120px;
   height: calc(100% - 4px);
   padding: 0 4px;
   z-index: 5;
@@ -834,7 +834,7 @@ body.profile-page {
 }
 
 .input-wrap.prefix-wrap input {
-  padding-left: 140px;
+  padding-left: 170px;
 }
 
 /* Rejection banner */
