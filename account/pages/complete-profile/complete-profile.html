@@ -129,9 +129,9 @@
                 <label for="ic-number">IC Number (MyKad) <span class="required-asterisk">*</span></label>
                 <div class="input-wrap">
                   <span class="material-icons-round">badge</span>
-                  <input type="text" id="ic-number" placeholder="e.g. 990101145588" maxlength="12" required />
+                  <input type="text" id="ic-number" placeholder="e.g. 012345-67-8901" maxlength="14" required />
                 </div>
-                <div class="field-hint" style="margin-top: 6px;">12 digits without dashes</div>
+                <div class="field-hint" style="margin-top: 6px;">Isi nombor IC</div>
               </div>
 
               <!-- License Number -->
@@ -157,7 +157,7 @@
                     <option value="+66">🇹🇭 TH +66</option>
                     <option value="+673">🇧🇳 BN +673</option>
                   </select>
-                  <input type="text" id="phone-number" placeholder="012-345 6789" required />
+                  <input type="text" id="phone-number" placeholder="12-345 6789" required />
                 </div>
               </div>
             </div>
@@ -344,46 +344,35 @@
         var cursor = phoneInput.selectionStart;
         var originalLength = phoneInput.value.length;
         var val = phoneInput.value.replace(/\D/g, '');
-        var formatted = val;
         var countryCode = countrySelect.value;
         
+        // Strip leading zero if present
+        if (val.startsWith('0')) {
+          val = val.substring(1);
+          if (cursor > 0) cursor--;
+        }
+        
+        var formatted = val;
+        
         if (countryCode === '+60') {
-          // Malaysia formatting: 012-345 6789 or 011-2710 9558
-          if (val.startsWith('0')) {
-            if (val.startsWith('011')) {
-              if (val.length <= 3) {
-                formatted = val;
-              } else if (val.length <= 7) {
-                formatted = val.substring(0, 3) + '-' + val.substring(3);
-              } else {
-                formatted = val.substring(0, 3) + '-' + val.substring(3, 7) + ' ' + val.substring(7, 11);
-              }
+          // Malaysia formatting: 12-345 6789 or 11-2710 9558 (no leading 0)
+          if (val.startsWith('11')) {
+            if (val.length > 10) val = val.substring(0, 10);
+            if (val.length <= 2) {
+              formatted = val;
+            } else if (val.length <= 6) {
+              formatted = val.substring(0, 2) + '-' + val.substring(2);
             } else {
-              if (val.length <= 3) {
-                formatted = val;
-              } else if (val.length <= 6) {
-                formatted = val.substring(0, 3) + '-' + val.substring(3);
-              } else {
-                formatted = val.substring(0, 3) + '-' + val.substring(3, 6) + ' ' + val.substring(6, 10);
-              }
+              formatted = val.substring(0, 2) + '-' + val.substring(2, 6) + ' ' + val.substring(6, 10);
             }
           } else {
-            if (val.startsWith('11')) {
-              if (val.length <= 2) {
-                formatted = val;
-              } else if (val.length <= 6) {
-                formatted = val.substring(0, 2) + '-' + val.substring(2);
-              } else {
-                formatted = val.substring(0, 2) + '-' + val.substring(2, 6) + ' ' + val.substring(6, 10);
-              }
+            if (val.length > 9) val = val.substring(0, 9);
+            if (val.length <= 2) {
+              formatted = val;
+            } else if (val.length <= 5) {
+              formatted = val.substring(0, 2) + '-' + val.substring(2);
             } else {
-              if (val.length <= 2) {
-                formatted = val;
-              } else if (val.length <= 5) {
-                formatted = val.substring(0, 2) + '-' + val.substring(2);
-              } else {
-                formatted = val.substring(0, 2) + '-' + val.substring(2, 5) + ' ' + val.substring(5, 9);
-              }
+              formatted = val.substring(0, 2) + '-' + val.substring(2, 5) + ' ' + val.substring(5, 9);
             }
           }
         } else if (countryCode === '+65') {
@@ -409,7 +398,7 @@
         if (!phoneInput || !countrySelect) return;
         var countryCode = countrySelect.value;
         if (countryCode === '+60') {
-          phoneInput.placeholder = '012-345 6789';
+          phoneInput.placeholder = '12-345 6789';
         } else if (countryCode === '+65') {
           phoneInput.placeholder = '9123 4567';
         } else if (countryCode === '+62') {
