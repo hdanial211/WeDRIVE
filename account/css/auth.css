@@ -225,6 +225,8 @@ body.night-mode .apple-logo {
    RESET PASSWORD - Stitch-inspired standalone account flow
    ═══════════════════════════════════════════════════════════════ */
 .reset-page {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background:
     radial-gradient(circle at 50% -18%, rgba(0, 88, 190, 0.12), transparent 38%),
@@ -239,6 +241,7 @@ body.night-mode .apple-logo {
   align-items: center;
   justify-content: space-between;
   max-width: 1180px;
+  width: 100%;
   margin: 0 auto;
   padding: 20px 24px;
 }
