@@ -20,25 +20,12 @@ const DEFAULT_SETTINGS = {
 
 Your role:
 - Help customers find and book rental cars
-- Answer questions about pricing, availability, and policies
+- Answer questions about pricing, availability, location, and policies
 - Be professional but friendly, use simple language
 - Reply in the same language the customer uses (Malay or English)
 - Keep responses concise (2-3 sentences max unless more detail is needed)
-- ALWAYS use the [LIVE SYSTEM DATA] section below for accurate car info, pricing, and stats
-- NEVER make up cars or prices that are not in the live data
-
-Company Info:
-- Company: WeDRIVE Sdn Bhd
-- Location: Lot 123, Jalan Hang Tuah, 75300 Melaka
-- Phone: 012-345 6789
-- Email: admin@wedrive.my
-- Operating hours: 8AM - 10PM daily
-
-Booking Policy:
-- Minimum 1 day rental
-- Valid Malaysian driving license required
-- Deposit: RM 500 (refundable)
-- Free delivery within Melaka city`,
+- ALWAYS use the [LIVE SYSTEM DATA] section below for accurate company settings, location, policies, and available cars
+- NEVER make up cars, locations, prices, or policies that are not in the live data`,
 
   promoContext: `Current Promotions:
 - Weekend Special: 10% off for Fri-Sun bookings
@@ -61,8 +48,51 @@ async function fetchLiveData() {
   let lines = [];
   lines.push('\n\n[LIVE SYSTEM DATA — Auto-synced from WeDRIVE Database]');
 
+  // Add current date & time
+  const now = new Date();
+  const dateStr = now.toISOString().split('T')[0];
+  const timeStr = now.toTimeString().split(' ')[0];
+  lines.push('\n[CURRENT TIME & DATE]');
+  lines.push('- Today\'s Date: ' + dateStr);
+  lines.push('- Current Time: ' + timeStr);
+
   try {
-    // 1. Cars
+    // 1. Company Settings from 'settings' table
+    const settingsResult = await window.supabaseClient
+      .from('settings')
+      .select('value')
+      .eq('key', 'main')
+      .maybeSingle();
+
+    if (settingsResult.data && settingsResult.data.value) {
+      const s = settingsResult.data.value;
+      lines.push('\nCompany & System Settings:');
+      lines.push('- Company Name: ' + (s.company_name || 'WeDRIVE Sdn Bhd'));
+      lines.push('- Address/Location: ' + (s.company_address || 'Lot 123, Jalan Hang Tuah, 75300 Melaka'));
+      lines.push('- Phone Contact: ' + (s.company_phone || '012-345 6789'));
+      lines.push('- Email Contact: ' + (s.company_email || 'admin@wedrive.my'));
+      lines.push('- Operating Hours: ' + (s.operating_hours || '8:00 AM - 10:00 PM daily'));
+      lines.push('- Currency: ' + (s.currency || 'MYR'));
+      lines.push('- Tax Rate: ' + (s.tax_rate !== undefined ? s.tax_rate : '6') + '%');
+      lines.push('- Security Deposit: ' + (s.deposit_percentage !== undefined ? s.deposit_percentage : '20') + '% of rental or standard deposit');
+      lines.push('- Rental Duration Limits: Min ' + (s.min_rental_days || '1') + ' day(s), Max ' + (s.max_rental_days || '30') + ' day(s)');
+      lines.push('- Late Return Fee: RM' + (s.late_fee_per_hour || '25') + '/hour');
+      if (s.pickup_locations && s.pickup_locations.length > 0) {
+        lines.push('- Pickup & Drop-off Locations: ' + s.pickup_locations.join(', '));
+      }
+    } else {
+      // Fallback details if settings table is empty/unconfigured
+      lines.push('\nCompany & System Settings (Default):');
+      lines.push('- Company Name: WeDRIVE Sdn Bhd');
+      lines.push('- Address/Location: Lot 123, Jalan Hang Tuah, 75300 Melaka');
+      lines.push('- Phone Contact: 012-345 6789');
+      lines.push('- Email Contact: admin@wedrive.my');
+      lines.push('- Operating Hours: 8AM - 10PM daily');
+      lines.push('- Security Deposit: RM 500 (refundable)');
+      lines.push('- Pickup & Drop-off Locations: Melaka Sentral, KLIA2, Dataran Pahlawan, Ayer Keroh, Jonker Street');
+    }
+
+    // 2. Cars
     const carsResult = await window.supabaseClient.from('cars').select('name, type, price, status, fuel, seats, year');
     if (carsResult.data && carsResult.data.length > 0) {
       const available = carsResult.data.filter(c => c.status === 'Available');
@@ -74,7 +104,7 @@ async function fetchLiveData() {
       lines.push('- Currently rented: ' + rented.length);
 
       if (available.length > 0) {
-        lines.push('\nAvailable Cars:');
+        lines.push('\nAvailable Cars (Available for Booking):');
         available.forEach(c => {
           lines.push('- ' + c.name + ' (' + c.type + ') : RM' + c.price + '/day | ' + c.fuel + ' | ' + c.seats + ' seats | ' + c.year);
         });
@@ -94,24 +124,23 @@ async function fetchLiveData() {
       lines.push('\nPrice Range: RM' + Math.min(...prices) + ' - RM' + Math.max(...prices) + '/day');
     }
 
-    // 2. Customers count
+    // 3. Customers count
     const custResult = await window.supabaseClient.from('customers').select('id', { count: 'exact', head: true });
     if (custResult.count !== null) {
       lines.push('\nRegistered Customers: ' + custResult.count);
     }
 
-    // 3. Active bookings
-    const today = new Date().toISOString().split('T')[0];
+    // 4. Active bookings
     const bookResult = await window.supabaseClient.from('bookings')
       .select('id', { count: 'exact', head: true })
       .in('status', ['Active', 'Confirmed'])
-      .gte('end_date', today);
+      .gte('end_date', dateStr);
     if (bookResult.count !== null) {
       lines.push('Active Rentals: ' + bookResult.count);
     }
 
     lines.push('\n[END LIVE DATA]');
-    lines.push('Use this exact data when answering. Do not make up cars or prices not in this list.');
+    lines.push('Use this exact data when answering. Do not make up cars, prices, locations, or policies not in this list.');
 
   } catch (e) {
     console.error('[ChatbotAdmin] Failed to fetch live data:', e);
@@ -420,6 +449,19 @@ function showToast(message, isError) {
 // ─── Init ───────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   const settings = loadSettings();
+
+  // Migration: If systemPrompt contains old hardcoded Company Info, update it to the new dynamic default
+  if (settings.systemPrompt && settings.systemPrompt.includes('Company Info:') && settings.systemPrompt.includes('Jalan Hang Tuah')) {
+    settings.systemPrompt = DEFAULT_SETTINGS.systemPrompt;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    if (window.supabaseClient) {
+      try {
+        await window.supabaseClient.from('config').upsert({ key: 'chatbot', value: settings });
+      } catch (e) {
+        console.warn('Failed to sync migrated chatbot settings to Supabase:', e);
+      }
+    }
+  }
 
   document.getElementById('api-key').value = settings.apiKey;
   document.getElementById('system-prompt').value = settings.systemPrompt;
