@@ -300,7 +300,7 @@ window.toggleChat = async function() {
 };
 
 // ─── Add Chat Message ───────────────────────────────────────────────────────
-window.addChatMsg = function(text, isUser = false, showCar = false) {
+window.addChatMsg = function(text, isUser = false, showCar = null) {
   const msgs = document.getElementById('chat-messages');
   const t = new Date().toLocaleTimeString('en-MY', { hour:'2-digit', minute:'2-digit' });
 
@@ -312,23 +312,40 @@ window.addChatMsg = function(text, isUser = false, showCar = false) {
 
   const div = document.createElement('div');
   div.className = `chat-msg ${isUser ? 'user' : 'bot'}`;
+  
+  let carHtml = '';
+  if (showCar && typeof showCar === 'object') {
+    carHtml = `
+      <div class="mini-car-card" style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--bg-card, rgba(255,255,255,0.05)); border: 1px solid var(--border-color, rgba(255,255,255,0.1)); border-radius: 12px; gap: 12px; max-width: 320px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); backdrop-filter: blur(10px);">
+        <div class="mini-car-icon" style="color: var(--primary-color, #3b82f6); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: rgba(59, 130, 246, 0.1);"><span class="material-icons-round">directions_car</span></div>
+        <div class="mini-car-info" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="c-name" style="font-weight: 600; font-size: 13px; color: var(--text-color, #fff); line-height: 1.3;">${showCar.name}</div>
+          <div class="c-price" style="font-size: 11px; color: var(--text-muted, #aaa); margin-top: 2px;">RM ${showCar.price}/day · ${(showCar.type || '').toUpperCase()}</div>
+        </div>
+        <button class="mini-book-btn" onclick="triggerChatBook(${showCar.id})" style="background: var(--primary-color, #3b82f6); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">Book</button>
+      </div>
+    `;
+  }
+
   div.innerHTML = `
     <div class="chat-avatar">${isUser ? userAvatar : '<span class="material-icons-round chat-avatar-icon">smart_toy</span>'}</div>
     <div>
       <div class="chat-bubble">${text}</div>
-      ${showCar ? `
-      <div class="mini-car-card">
-        <div class="mini-car-icon"><span class="material-icons-round">directions_car</span></div>
-        <div class="mini-car-info">
-          <div class="c-name">Top Pick: 2023 Mercedes-Benz GLA250 AMG Line 2.0</div>
-          <div class="c-price">RM 320/day · SUV · Petrol</div>
-        </div>
-        <button class="mini-book-btn" onclick="document.getElementById('cars-grid') ? document.getElementById('cars-grid').scrollIntoView({behavior:'smooth'}) : window.location.href='customer/pages/customer.html'">View</button>
-      </div>` : ''}
+      ${carHtml}
       <div class="chat-time">${t}</div>
     </div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
+};
+
+window.triggerChatBook = function(carId) {
+  if (typeof window.bookCar === 'function') {
+    window.bookCar(carId);
+  } else {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    var base = parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+    window.location.href = base + 'customer/pages/dashboard/customer.html?book=' + carId;
+  }
 };
 
 window.showTypingIndicator = function() {
@@ -475,12 +492,40 @@ window.sendChat = async function() {
     });
 
     const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Please try again.";
+    let reply = data.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Please try again.";
+    
+    let recommendedCar = null;
+    const carCardRegex = /\[CAR_CARD:\s*(\d+)\]/i;
+    const match = reply.match(carCardRegex);
+    if (match) {
+      const carId = Number(match[1]);
+      reply = reply.replace(carCardRegex, '').trim();
+      
+      if (window.supabaseClient) {
+        try {
+          const { data: carData } = await window.supabaseClient
+            .from('cars')
+            .select('id, name, price, type')
+            .eq('id', carId)
+            .maybeSingle();
+          if (carData) {
+            recommendedCar = carData;
+          }
+        } catch (e) {
+          console.warn("Failed to fetch recommended car details:", e);
+        }
+      }
+      
+      if (!recommendedCar) {
+        recommendedCar = { id: carId, name: "Available Rental Vehicle", price: "320", type: "Premium" };
+      }
+    }
+
     window._chatHistory.push({ role: 'assistant', content: reply });
     window.removeTyping();
     window.addChatMsg(reply
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>'), false);
+      .replace(/\n/g, '<br>'), false, recommendedCar);
   } catch (e) {
     window.removeTyping();
     window.addChatMsg("Connection error. Please check your internet connection.", false);

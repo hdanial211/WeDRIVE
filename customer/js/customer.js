@@ -742,6 +742,15 @@
         startSpotlightCarousel();
         applyFilters(false);
         updateActiveBookingSection();
+
+        // Auto-trigger booking popup if "book" parameter is in the URL
+        var params = new URLSearchParams(window.location.search);
+        var bookId = params.get('book');
+        if (bookId) {
+          setTimeout(function() {
+            window.bookCar(bookId);
+          }, 800);
+        }
       })
       .catch(function () {
         if (grid) {
