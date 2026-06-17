@@ -71,6 +71,12 @@
                 </div>
                 <div class="key-status" id="status-openrouter"></div>
               </div>
+
+              <div style="margin-top: 12px; display: flex; gap: 8px;">
+                <button class="btn-save" onclick="saveSettings()" style="padding: 10px 16px; font-size: 13px; border-radius: 8px; flex: 1;">
+                  <span class="material-icons-round" style="font-size: 18px;">save</span> Save API Key
+                </button>
+              </div>
             </div>
           </div>
 
@@ -107,6 +113,12 @@
                 <div class="hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Dynamic company offers, campaigns, or policies to append.</div>
                 <textarea id="promo-context" rows="4" class="form-input" placeholder="Current promo: 10% off for weekend bookings..."></textarea>
               </div>
+
+              <div style="margin-top: 12px; display: flex;">
+                <button class="btn-save" onclick="saveSettings()" style="padding: 10px 16px; font-size: 13px; border-radius: 8px; width: 100%;">
+                  <span class="material-icons-round" style="font-size: 18px;">save</span> Save AI Persona & Promos
+                </button>
+              </div>
             </div>
           </div>
 
@@ -139,16 +151,6 @@
                 <pre id="live-data-preview" style="display: none;"></pre>
               </div>
             </div>
-          </div>
-
-          <!-- Actions Footer -->
-          <div class="chatbot-actions" style="margin-top: 10px;">
-            <button class="btn-save" onclick="saveSettings()" style="height: 48px; border-radius: 12px;">
-              <span class="material-icons-round">save</span> Save Changes
-            </button>
-            <button class="btn-test" onclick="testConnection()" style="height: 48px; border-radius: 12px;">
-              <span class="material-icons-round">bolt</span> Test Connection
-            </button>
           </div>
 
         </div>
