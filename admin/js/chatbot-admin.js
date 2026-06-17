@@ -485,3 +485,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     preview.style.display = 'block';
   }
 });
+
+// Quick play message helper for suggestion chips in test play area
+window.quickPlayMsg = function (text) {
+  const input = document.getElementById('chat-input');
+  if (input) {
+    input.value = text;
+    window.sendTestMsg();
+  }
+};
