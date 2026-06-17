@@ -56,7 +56,38 @@ function populateCustomerStats(customers) {
   document.getElementById('cu-spent').textContent = 'RM ' + spent.toLocaleString();
 }
 
+function renderPendingCustomers(customers) {
+  var tbody = document.getElementById('pending-customers-tbody');
+  var card = document.getElementById('pending-verifications-card');
+  if (!tbody || !card) return;
+
+  var pendings = customers.filter(c => c.verification_status === 'Pending');
+  if (pendings.length === 0) {
+    card.style.display = 'none';
+    return;
+  }
+
+  card.style.display = 'block';
+  tbody.innerHTML = pendings.map(c => {
+    var joinedFmt = formatDate(c._joined);
+    return `
+    <tr>
+      <td><strong>${c._name}</strong></td>
+      <td>${c._email}</td>
+      <td>${c._phone}</td>
+      <td>${c._license}</td>
+      <td>${joinedFmt}</td>
+      <td style="white-space:nowrap;">
+        <button class="btn-primary-sm" onclick="viewCustomer(${c.id})" style="font-size:12px;padding:6px 10px;background:#D97706;border:none;color:#fff;">
+          <span class="material-icons-round" style="font-size:14px">visibility</span> Review
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
 function renderCustomers(customers) {
+  renderPendingCustomers(customers);
   var tbody = document.getElementById('customers-tbody');
   if (!tbody) return;
   if (customers.length === 0) {

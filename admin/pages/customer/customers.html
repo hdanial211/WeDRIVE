@@ -63,6 +63,31 @@
         </div>
       </div>
 
+      <!-- PENDING VERIFICATIONS CARD -->
+      <div class="card reveal-on-scroll" id="pending-verifications-card" style="margin-bottom:20px; display:none; border:1px solid #FCD34D;">
+        <div class="card-header" style="border-bottom:1px solid var(--slate-100); padding-bottom:12px; margin-bottom:14px;">
+          <h3 style="color:#D97706; display:flex; align-items:center; gap:8px;">
+            <span class="material-icons-round">pending_actions</span>
+            <span>Pending Verifications</span>
+          </h3>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>License</th>
+                <th>Joined</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="pending-customers-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- TABLE -->
       <div class="card reveal-on-scroll">
         <div class="card-header">
