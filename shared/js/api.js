@@ -477,13 +477,16 @@ window.WeDriveAPI = {
             };
         } else {
             try {
+                var sb = window.supabaseClient;
+                var result = await sb.from('config').select('value').eq('key', 'chatbot').maybeSingle();
+                if (result.data && result.data.value) {
+                    localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(result.data.value));
+                    return result.data.value;
+                }
                 var localSettings = localStorage.getItem('wedrive_chatbot_settings');
                 if (localSettings) {
                     return JSON.parse(localSettings);
                 }
-                var sb = window.supabaseClient;
-                var result = await sb.from('config').select('value').eq('key', 'chatbot').maybeSingle();
-                if (result.data && result.data.value) return result.data.value;
                 return {
                     greeting: "Hi! I'm your <strong>WeDRIVE AI Assistant</strong>.<br/>I can help you find the perfect car, assist with booking, or answer any questions. How can I help?",
                     replies: {

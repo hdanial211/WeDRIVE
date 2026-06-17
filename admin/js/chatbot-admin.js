@@ -162,11 +162,13 @@ function loadSettings() {
 }
 
 // ─── Save Settings ──────────────────────────────────────────────────────────
-window.saveSettings = function () {
-  const btn = document.querySelector('.btn-save');
-  const original = btn.innerHTML;
-  btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">autorenew</span> Saving...';
-  btn.disabled = true;
+window.saveSettings = async function () {
+  const buttons = document.querySelectorAll('.btn-save');
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    btn.dataset.originalHtml = btn.innerHTML;
+    btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">autorenew</span> Saving...';
+  });
 
   const settings = {
     apiKey: document.getElementById('api-key').value.trim(),
@@ -177,11 +179,33 @@ window.saveSettings = function () {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
   updateStatusBadge(settings);
-  showToast('Settings saved successfully!', false);
+
+  let dbSuccess = true;
+  if (window.WeDriveAPI && typeof window.WeDriveAPI.updateChatbotSettings === 'function') {
+    try {
+      const res = await window.WeDriveAPI.updateChatbotSettings(settings);
+      if (!res || !res.success) dbSuccess = false;
+    } catch (e) {
+      console.error('[ChatbotAdmin] Database save failed:', e);
+      dbSuccess = false;
+    }
+  } else {
+    dbSuccess = false;
+  }
+
+  if (dbSuccess) {
+    showToast('Settings saved successfully to database!', false);
+  } else {
+    showToast('Saved locally, but failed to sync to database.', true);
+  }
 
   setTimeout(() => {
-    btn.innerHTML = original;
-    btn.disabled = false;
+    buttons.forEach(btn => {
+      if (btn.dataset.originalHtml) {
+        btn.innerHTML = btn.dataset.originalHtml;
+      }
+      btn.disabled = false;
+    });
   }, 600);
 };
 
@@ -448,25 +472,37 @@ function showToast(message, isError) {
 
 // ─── Init ───────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  const settings = loadSettings();
+  let settings = loadSettings();
+
+  if (window.WeDriveAPI && typeof window.WeDriveAPI.getChatbotSettings === 'function') {
+    try {
+      const dbSettings = await window.WeDriveAPI.getChatbotSettings();
+      if (dbSettings && (dbSettings.apiKey || dbSettings.systemPrompt)) {
+        settings = { ...settings, ...dbSettings };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+      }
+    } catch (e) {
+      console.warn('[ChatbotAdmin] Failed to load settings from Supabase:', e);
+    }
+  }
 
   // Migration: If systemPrompt contains old hardcoded Company Info, update it to the new dynamic default
   if (settings.systemPrompt && settings.systemPrompt.includes('Company Info:') && settings.systemPrompt.includes('Jalan Hang Tuah')) {
     settings.systemPrompt = DEFAULT_SETTINGS.systemPrompt;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    if (window.supabaseClient) {
+    if (window.WeDriveAPI && typeof window.WeDriveAPI.updateChatbotSettings === 'function') {
       try {
-        await window.supabaseClient.from('config').upsert({ key: 'chatbot', value: settings });
+        await window.WeDriveAPI.updateChatbotSettings(settings);
       } catch (e) {
         console.warn('Failed to sync migrated chatbot settings to Supabase:', e);
       }
     }
   }
 
-  document.getElementById('api-key').value = settings.apiKey;
-  document.getElementById('system-prompt').value = settings.systemPrompt;
-  document.getElementById('promo-context').value = settings.promoContext;
-  document.getElementById('greeting-msg').value = settings.greeting;
+  document.getElementById('api-key').value = settings.apiKey || '';
+  document.getElementById('system-prompt').value = settings.systemPrompt || '';
+  document.getElementById('promo-context').value = settings.promoContext || '';
+  document.getElementById('greeting-msg').value = settings.greeting || '';
 
   updateStatusBadge(settings);
 

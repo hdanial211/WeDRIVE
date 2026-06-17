@@ -351,12 +351,16 @@ window.sendChat = async function() {
   input.value = ''; input.style.height = 'auto';
   window.showTypingIndicator();
 
-  // Load settings from localStorage (set by admin chatbot page)
-  let settings = {};
-  try {
-    const saved = localStorage.getItem('wedrive_chatbot_settings');
-    settings = saved ? JSON.parse(saved) : {};
-  } catch (e) { settings = {}; }
+  // Load settings (use window.chatbotData from Supabase if available, fallback to localStorage)
+  let settings = window.chatbotData || {};
+  if (!settings.apiKey) {
+    try {
+      const saved = localStorage.getItem('wedrive_chatbot_settings');
+      if (saved) {
+        settings = { ...settings, ...JSON.parse(saved) };
+      }
+    } catch (e) {}
+  }
 
   const apiKey = settings.apiKey || '';
   const systemPrompt = settings.systemPrompt || "You are WeDRIVE Bot, a helpful AI assistant for WeDRIVE car rental in Melaka, Malaysia. Be friendly, concise, and helpful.";
