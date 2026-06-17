@@ -104,7 +104,10 @@ async function fetchChatUserData() {
   window._chatUserLoaded = true;
 
   try {
-    if (!window.supabaseClient) return null;
+    // If on an account auth page, do not load personal data to prevent confusing greetings
+    if (window.location.pathname.includes('/account/')) {
+      return null;
+    }
 
     // Get current auth session
     var sessionResult = await window.supabaseClient.auth.getSession();
