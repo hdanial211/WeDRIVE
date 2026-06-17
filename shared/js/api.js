@@ -347,7 +347,8 @@ window.WeDriveAPI = {
                     license: '',
                     status: 'Active',
                     joined: new Date().toISOString().split('T')[0],
-                    auth_uid: user.id
+                    auth_uid: user.id,
+                    auth_provider: 'email'
                 });
 
                 return { success: true, role: 'customer', user: user };
@@ -407,7 +408,8 @@ window.WeDriveAPI = {
                         license: '',
                         status: 'Active',
                         joined: new Date().toISOString().split('T')[0],
-                        auth_uid: user.id
+                        auth_uid: user.id,
+                        auth_provider: 'google'
                     });
                 }
 
