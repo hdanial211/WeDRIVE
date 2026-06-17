@@ -176,24 +176,24 @@ window.sendChat = async function() {
     if (window.supabaseClient) {
       const { data, error } = await window.supabaseClient
         .from('cars')
-        .select('brand, model, price')
+        .select('name, type, price, fuel, seats')
         .eq('status', 'Available');
         
       if (data && data.length > 0) {
-        liveData = "\\n\\n[LIVE SYSTEM DATA: Currently Available Cars in WeDRIVE]\\n";
+        liveData = "\n\n[LIVE SYSTEM DATA: Currently Available Cars in WeDRIVE]\n";
         data.forEach(c => {
-          liveData += `- ${c.brand} ${c.model} : RM${c.price}/day\\n`;
+          liveData += `- ${c.name} (${c.type}) : RM${c.price}/day | ${c.fuel} | ${c.seats} seats\n`;
         });
         liveData += "Use this exact data when recommending cars. Do not make up cars that are not in this list.";
       } else {
-        liveData = "\\n\\n[LIVE SYSTEM DATA: Currently NO cars are available. All cars are fully booked.]";
+        liveData = "\n\n[LIVE SYSTEM DATA: Currently NO cars are available. All cars are fully booked.]";
       }
     }
   } catch(e) {
     console.warn("Failed to fetch live cars for chatbot", e);
   }
 
-  const fullSystem = systemPrompt + (promoContext ? '\\n\\n' + promoContext : '') + liveData;
+  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '') + liveData;
 
   if (!apiKey) {
     window.removeTyping();

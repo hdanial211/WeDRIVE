@@ -3,15 +3,17 @@
  * admin/js/chatbot-admin.js
  *
  * Provider: OpenRouter.ai — unified API gateway (supports GPT-4o, Claude, Gemini, etc.)
- * Model:    google/gemini-2.0-flash-exp:free (default, free tier)
+ * Model:    google/gemini-2.5-flash
  * Settings stored in localStorage for demo/FYP purposes.
+ *
+ * System prompt now auto-injects LIVE data from Supabase (cars, stats, etc.)
  */
 
 const STORAGE_KEY = 'wedrive_chatbot_settings';
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const OPENROUTER_MODEL = 'google/gemini-2.5-flash';
 
-// ─── Default Settings ───────────────────────────────────────────────────────
+// ─── Default Settings (base prompt only — live data injected at runtime) ─────
 const DEFAULT_SETTINGS = {
   apiKey: '',
   systemPrompt: `You are WeDRIVE Bot, a friendly and helpful AI assistant for WeDRIVE car rental service based in Melaka, Malaysia.
@@ -22,6 +24,8 @@ Your role:
 - Be professional but friendly, use simple language
 - Reply in the same language the customer uses (Malay or English)
 - Keep responses concise (2-3 sentences max unless more detail is needed)
+- ALWAYS use the [LIVE SYSTEM DATA] section below for accurate car info, pricing, and stats
+- NEVER make up cars or prices that are not in the live data
 
 Company Info:
 - Company: WeDRIVE Sdn Bhd
@@ -29,13 +33,6 @@ Company Info:
 - Phone: 012-345 6789
 - Email: admin@wedrive.my
 - Operating hours: 8AM - 10PM daily
-
-Car Types Available:
-- Sedan (BMW 320i M Sport) - RM 450/day
-- SUV (Mercedes-Benz GLA250) - RM 320/day
-- Hatchback (Perodua AXIA / Volkswagen Golf GTI) - RM 95-190/day
-- MPV (Toyota Alphard, 7 seater) - RM 380/day
-- Coupe/Truck (Mercedes CLS350 / Ford Ranger Raptor) - RM 360-420/day
 
 Booking Policy:
 - Minimum 1 day rental
@@ -53,6 +50,77 @@ Booking Policy:
 
 // ─── Conversation History (for test chat) ───────────────────────────────────
 let chatHistory = [];
+
+// ─── Cached live data string ────────────────────────────────────────────────
+let cachedLiveData = '';
+
+// ─── Fetch Live Data from Supabase ──────────────────────────────────────────
+async function fetchLiveData() {
+  if (!window.supabaseClient) return '';
+
+  let lines = [];
+  lines.push('\n\n[LIVE SYSTEM DATA — Auto-synced from WeDRIVE Database]');
+
+  try {
+    // 1. Cars
+    const carsResult = await window.supabaseClient.from('cars').select('name, type, price, status, fuel, seats, year');
+    if (carsResult.data && carsResult.data.length > 0) {
+      const available = carsResult.data.filter(c => c.status === 'Available');
+      const rented = carsResult.data.filter(c => c.status === 'Rented');
+
+      lines.push('\nFleet Overview:');
+      lines.push('- Total vehicles: ' + carsResult.data.length);
+      lines.push('- Available now: ' + available.length);
+      lines.push('- Currently rented: ' + rented.length);
+
+      if (available.length > 0) {
+        lines.push('\nAvailable Cars:');
+        available.forEach(c => {
+          lines.push('- ' + c.name + ' (' + c.type + ') : RM' + c.price + '/day | ' + c.fuel + ' | ' + c.seats + ' seats | ' + c.year);
+        });
+      } else {
+        lines.push('\nNo cars available right now. All are fully booked.');
+      }
+
+      if (rented.length > 0) {
+        lines.push('\nCurrently Rented (NOT available):');
+        rented.forEach(c => {
+          lines.push('- ' + c.name + ' (Rented)');
+        });
+      }
+
+      // Price range
+      const prices = carsResult.data.map(c => Number(c.price));
+      lines.push('\nPrice Range: RM' + Math.min(...prices) + ' - RM' + Math.max(...prices) + '/day');
+    }
+
+    // 2. Customers count
+    const custResult = await window.supabaseClient.from('customers').select('id', { count: 'exact', head: true });
+    if (custResult.count !== null) {
+      lines.push('\nRegistered Customers: ' + custResult.count);
+    }
+
+    // 3. Active bookings
+    const today = new Date().toISOString().split('T')[0];
+    const bookResult = await window.supabaseClient.from('bookings')
+      .select('id', { count: 'exact', head: true })
+      .in('status', ['Active', 'Confirmed'])
+      .gte('end_date', today);
+    if (bookResult.count !== null) {
+      lines.push('Active Rentals: ' + bookResult.count);
+    }
+
+    lines.push('\n[END LIVE DATA]');
+    lines.push('Use this exact data when answering. Do not make up cars or prices not in this list.');
+
+  } catch (e) {
+    console.error('[ChatbotAdmin] Failed to fetch live data:', e);
+    lines.push('\n[Live data unavailable — database connection error]');
+  }
+
+  cachedLiveData = lines.join('\n');
+  return cachedLiveData;
+}
 
 // ─── Load Settings ──────────────────────────────────────────────────────────
 function loadSettings() {
@@ -87,6 +155,26 @@ window.saveSettings = function () {
     btn.disabled = false;
   }, 600);
 };
+
+// ─── Refresh Live Data (button handler) ─────────────────────────────────────
+window.refreshLiveData = async function () {
+  const btn = document.getElementById('btn-refresh-data');
+  const preview = document.getElementById('live-data-preview');
+  const original = btn.innerHTML;
+  btn.innerHTML = '<span class="material-icons-round" style="font-size:16px;animation:spin 1s linear infinite">autorenew</span> Fetching...';
+  btn.disabled = true;
+
+  const data = await fetchLiveData();
+
+  preview.textContent = data || '[No data available]';
+  preview.style.display = 'block';
+
+  btn.innerHTML = original;
+  btn.disabled = false;
+
+  showToast('Live data refreshed from database!', false);
+};
+
 // ─── Test Single Key (inline button) ────────────────────────────────────────
 window.testSingleKey = async function (provider) {
   const key = document.getElementById('api-key').value.trim();
@@ -242,7 +330,13 @@ window.sendTestMsg = async function () {
 
   const systemPrompt = document.getElementById('system-prompt').value.trim();
   const promoContext = document.getElementById('promo-context').value.trim();
-  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '');
+
+  // Fetch live data for the test chat too
+  if (!cachedLiveData) {
+    await fetchLiveData();
+  }
+
+  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '') + cachedLiveData;
 
   chatHistory.push({ role: 'user', parts: [{ text }] });
 
@@ -324,7 +418,7 @@ function showToast(message, isError) {
 }
 
 // ─── Init ───────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const settings = loadSettings();
 
   document.getElementById('api-key').value = settings.apiKey;
@@ -337,5 +431,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Show greeting in test chat
   if (settings.greeting) {
     appendMsg(settings.greeting, 'bot');
+  }
+
+  // Auto-fetch live data on page load
+  await fetchLiveData();
+
+  // Show live data preview if the element exists
+  const preview = document.getElementById('live-data-preview');
+  if (preview && cachedLiveData) {
+    preview.textContent = cachedLiveData;
+    preview.style.display = 'block';
   }
 });

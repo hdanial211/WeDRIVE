@@ -236,6 +236,7 @@
       content: ''; flex: 1; height: 1px;
       background: var(--border-color);
     }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   </style>
 </head>
 <body data-particles="6" data-cursor-glow>
@@ -321,6 +322,29 @@
               </label>
               <div class="hint">Any promos, policies, or extra info the AI should know about. This is appended to the system prompt.</div>
               <textarea id="promo-context" rows="4" placeholder="Current promo: 10% off for weekend bookings..."></textarea>
+            </div>
+
+            <div class="section-divider">Live Database Context</div>
+
+            <!-- Live Data Info -->
+            <div class="info-box" style="background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.15)">
+              <span class="material-icons-round" style="color:#10B981">database</span>
+              <div>
+                <strong>Auto-synced from Supabase</strong> — The chatbot automatically fetches live car inventory, pricing, customer count, and active rentals from your database. This data is injected into the AI context so it always responds with accurate, up-to-date information.<br>
+                No need to manually update car info in the system prompt.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>
+                <span class="material-icons-round">sync</span>
+                Live Data Preview
+                <button class="btn-test-inline" id="btn-refresh-data" onclick="refreshLiveData()" style="margin-left:auto;font-size:12px;padding:6px 12px">
+                  <span class="material-icons-round" style="font-size:14px">refresh</span> Refresh
+                </button>
+              </label>
+              <div class="hint">This is the real-time data that will be injected into the AI's context. Click Refresh to update.</div>
+              <pre id="live-data-preview" style="display:none;max-height:240px;overflow-y:auto;padding:14px;border-radius:10px;border:1px solid var(--border-color);background:var(--bg-body);color:var(--text-color);font-family:'Inter',monospace;font-size:12px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:0"></pre>
             </div>
 
             <!-- Greeting -->
