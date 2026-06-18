@@ -496,7 +496,7 @@ window.wedrive_lang_ms = {
   "pending_rejected_lbl": "Ditolak",
   "pending_reupload_btn": "Muat Naik Semula Dokumen",
   "cd_delete_modal_title": "Padam Kenderaan",
-  "cd_delete_modal_desc": "Adakah anda pasti mahu memadamkan kenderaan ini? Tindakan ini tidak boleh diundur.",
+  "cd_delete_modal_desc": "Adakah anda pasti mahu memadamkan {name} ({plate})? Tindakan ini tidak boleh diundur.",
   "cd_delete_modal_pwd": "Kata Laluan Admin",
   "cd_delete_modal_pwd_ph": "Masukkan kata laluan untuk mengesahkan",
   "cd_delete_modal_cancel": "Batal",

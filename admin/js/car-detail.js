@@ -66,6 +66,9 @@ function renderCarDetails(car) {
 
   // Rate
   document.getElementById('cd-rate').textContent = car.rate;
+
+  // Initialize delete modal description text
+  updateDeleteModalDescription();
 }
 
 /* ── Render Car Images (Main + Thumbnails) ── */
@@ -348,6 +351,25 @@ function viewInsurance() {
   alert(`Insurance Info for ${carData.name}\n\nPlate: ${carData.plate}\nType: ${carData.label || carData.type}\n\nInsurance details will be available when backend is integrated.`);
 }
 
+function updateDeleteModalDescription() {
+  const descEl = document.getElementById('delete-car-desc');
+  if (descEl && carData) {
+    const lang = localStorage.getItem('wedrive-lang') || 'en';
+    const langObj = window['wedrive_lang_' + lang];
+    let template = (langObj && langObj.cd_delete_modal_desc) 
+      || (lang === 'ms' 
+          ? "Adakah anda pasti mahu memadamkan {name} ({plate})? Tindakan ini tidak boleh diundur." 
+          : "Are you sure you want to remove {name} ({plate})? This action cannot be undone.");
+          
+    descEl.textContent = template
+      .replace('{name}', carData.name)
+      .replace('{plate}', carData.plate);
+  }
+}
+
+// Listen for language toggles to keep the delete modal description synced
+document.addEventListener('wedrive:language-applied', updateDeleteModalDescription);
+
 function deleteCar() {
   const modal = document.getElementById('delete-car-modal');
   const pwdInput = document.getElementById('delete-admin-password');
@@ -358,6 +380,8 @@ function deleteCar() {
     errorDiv.textContent = '';
     errorDiv.style.display = 'none';
   }
+  
+  updateDeleteModalDescription();
   
   if (modal) {
     modal.style.display = 'flex';
