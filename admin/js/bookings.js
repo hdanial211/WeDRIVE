@@ -432,7 +432,7 @@ function openNewBookingModal() {
     + '<input type="date" id="nb-pickup" value="' + today + '" min="' + today + '" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;box-sizing:border-box;" onchange="recalcNewBooking()" /></div>'
     + '<div><label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;display:block;margin-bottom:6px">Return Date</label>'
     + '<input type="date" id="nb-return" value="' + tomorrow + '" min="' + tomorrow + '" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;box-sizing:border-box;" onchange="recalcNewBooking()" /></div>'
-    + '<input type="hidden" id="nb-location" value="Melaka, Malaysia" /></div>'
+    + '<input type="hidden" id="nb-location" value="Lot 123, Jalan Hang Tuah, 75300 Melaka" /></div>'
     + '<div style="background:var(--bg-surface-2,#F1F5F9);border-radius:12px;padding:14px;margin-bottom:16px;">'
     + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:10px">Booking Summary</div>'
     + '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="color:var(--slate-500)">Duration</span><span id="nb-days" style="font-weight:600">-- days</span></div>'

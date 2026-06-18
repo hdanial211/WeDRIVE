@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="../../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../../shared/css/animation.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="stylesheet" href="../../../css/customer.css?v=5.7.0" />
 </head>
 <body data-particles="10" data-cursor-glow>
@@ -61,13 +63,25 @@
               <input type="text" id="bk-return-date" placeholder="Select return date" readonly />
             </div>
           </div>
-          <div class="bk-form-grid full bk-location-grid" style="display:none;">
-            <div class="bk-field">
-              <label for="bk-pickup-location" data-key="bk_pickup_loc">Pick-up Location</label>
-              <select id="bk-pickup-location" aria-label="Pick-up Location">
-                <option value="Melaka, Malaysia" selected>Melaka, Malaysia</option>
-              </select>
+          <!-- Hidden Select for compatibility with scripts -->
+          <select id="bk-pickup-location" aria-label="Pick-up Location" style="display:none;">
+            <option value="Lot 123, Jalan Hang Tuah, 75300 Melaka" selected>Lot 123, Jalan Hang Tuah, 75300 Melaka</option>
+          </select>
+
+          <!-- Pickup Location details and Map -->
+          <div style="margin-top:20px; border-top:1px solid var(--slate-100,#F1F5F9); padding-top:20px;">
+            <label style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--primary,#3B82F6); letter-spacing:0.5px; display:block; margin-bottom:10px;">
+              Pick-up Location
+            </label>
+            <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; background:var(--bg-surface-2,#F1F5F9); padding:14px 18px; border-radius:12px;">
+              <span class="material-icons-round" style="color:var(--primary,#3B82F6); font-size:24px; margin-top:2px;">location_on</span>
+              <div>
+                <strong style="color:var(--navy,#1E293B); font-size:14px; display:block; margin-bottom:4px;">WeDRIVE HQ Melaka</strong>
+                <span style="color:var(--slate-600); font-size:13px; line-height:1.5;">Lot 123, Jalan Hang Tuah, 75300 Melaka</span>
+              </div>
             </div>
+            <!-- Interactive Map Container -->
+            <div id="pickup-map" style="width:100%; height:200px; border-radius:12px; border:1px solid var(--slate-200,#E2E8F0); overflow:hidden; z-index:1;"></div>
           </div>
         </section>
 
@@ -180,7 +194,7 @@
     const carId = parseInt(urlParams.get('car')) || 4; 
     const pickupDateStr = urlParams.get('pickup') || '2026-05-22';
     const returnDateStr = urlParams.get('return') || '2026-05-23';
-    const pickupLoc = 'Melaka, Malaysia';
+    const pickupLoc = 'Lot 123, Jalan Hang Tuah, 75300 Melaka';
 
     let currentCar = null;
     let daysCount = 1;
@@ -414,8 +428,55 @@
       }, 1000);
     }
 
+    function initPickupMap() {
+      const mapContainer = document.getElementById('pickup-map');
+      if (!mapContainer || typeof L === 'undefined') return;
+      
+      const lat = 2.2023;
+      const lng = 102.2464;
+      
+      const map = L.map('pickup-map', {
+        center: [lat, lng],
+        zoom: 15,
+        zoomControl: false,
+        attributionControl: false
+      });
+
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+      // Choose tile layer based on active theme
+      const isNight = document.documentElement.classList.contains('night-mode');
+      const tilesUrl = isNight 
+        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+        : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+
+      const tiles = L.tileLayer(tilesUrl, {
+        maxZoom: 19
+      }).addTo(map);
+
+      // Add a marker
+      const marker = L.marker([lat, lng]).addTo(map);
+      marker.bindPopup("<b>WeDRIVE HQ</b><br>Lot 123, Jalan Hang Tuah, Melaka").openPopup();
+
+      // Listen for theme toggle events to dynamically swap tiles
+      document.addEventListener('click', function(e) {
+        setTimeout(function() {
+          const isNightNow = document.documentElement.classList.contains('night-mode');
+          const nextTilesUrl = isNightNow 
+            ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+            : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+          if (tiles._url !== nextTilesUrl) {
+            tiles.setUrl(nextTilesUrl);
+          }
+        }, 100);
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(initBookingPage, 200);
+      setTimeout(() => {
+        initBookingPage();
+        initPickupMap();
+      }, 200);
     });
   </script>
 
