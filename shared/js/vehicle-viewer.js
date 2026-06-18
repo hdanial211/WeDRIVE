@@ -219,7 +219,7 @@
     var title = isMalay() ? 'PANDANGAN RUJUKAN' : 'REFERENCE INTERIOR';
     var caption = isMalay() ? 'Panorama kabin rujukan' : 'Reference cabin panorama';
     var svg = [
-      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="',
+      '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-label="',
       safeLabel,
       ' reference interior">',
       '<defs>',
@@ -241,9 +241,10 @@
       '<stop offset="100%" stop-color="#334155"/>',
       '</linearGradient>',
       '</defs>',
-      '<rect width="1600" height="900" fill="url(#bg)"/>',
-      '<ellipse cx="800" cy="540" rx="560" ry="260" fill="rgba(15,23,42,0.10)"/>',
-      '<ellipse cx="800" cy="440" rx="420" ry="240" fill="url(#glow)"/>',
+      '<rect width="1000" height="1000" fill="url(#bg)"/>',
+      '<ellipse cx="500" cy="590" rx="560" ry="260" fill="rgba(15,23,42,0.10)"/>',
+      '<ellipse cx="500" cy="490" rx="420" ry="240" fill="url(#glow)"/>',
+      '<g transform="translate(-300, 50)">',
       '<path d="M314 606c60-84 140-136 222-136h528c83 0 164 52 224 136l-48 36c-50-67-118-104-176-104H540c-58 0-126 37-176 104z" fill="url(#dash)"/>',
       '<path d="M392 590c31-97 118-171 222-171h372c104 0 191 74 222 171l-44 18c-23-71-86-126-158-126H594c-72 0-135 55-158 126z" fill="#e8eef9" opacity=".58"/>',
       '<path d="M255 612c-28-88-6-182 61-243 42-38 103-58 168-58h632c65 0 126 20 168 58 67 61 89 155 61 243l-56-18c20-63 6-130-38-170-28-26-69-40-115-40H464c-46 0-87 14-115 40-44 40-58 107-38 170z" fill="rgba(15,23,42,0.08)"/>',
@@ -258,22 +259,23 @@
       '<rect x="552" y="380" width="495" height="116" rx="58" fill="rgba(15,23,42,0.14)"/>',
       '<rect x="590" y="406" width="420" height="64" rx="32" fill="rgba(255,255,255,0.22)"/>',
       '</g>',
-      '<rect x="76" y="70" width="314" height="72" rx="24" fill="#ffffff" opacity=".92"/>',
-      '<text x="108" y="116" fill="#2563eb" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" letter-spacing=".12em">',
+      '</g>',
+      '<rect x="60" y="60" width="314" height="72" rx="24" fill="#ffffff" opacity=".92"/>',
+      '<text x="92" y="106" fill="#2563eb" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800" letter-spacing=".12em">',
       title,
       '</text>',
-      '<rect x="104" y="726" width="320" height="112" rx="28" fill="rgba(255,255,255,0.7)"/>',
-      '<text x="136" y="772" fill="#0f172a" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800">',
+      '<rect x="60" y="800" width="360" height="130" rx="28" fill="rgba(255,255,255,0.85)"/>',
+      '<text x="90" y="852" fill="#0f172a" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800">',
       safeLabel,
       '</text>',
-      '<text x="136" y="814" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">',
+      '<text x="90" y="894" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">',
       caption,
       '</text>',
-      '<rect x="1210" y="70" width="314" height="72" rx="24" fill="#ffffff" opacity=".92"/>',
-      '<text x="1240" y="116" fill="#2563eb" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">',
+      '<rect x="626" y="60" width="314" height="72" rx="24" fill="#ffffff" opacity=".92"/>',
+      '<text x="656" y="106" fill="#2563eb" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">',
       safeFace,
       '</text>',
-      '<text x="1218" y="878" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing=".16em">',
+      '<text x="930" y="930" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing=".16em" text-anchor="end">',
       safeView.toUpperCase(),
       '</text>',
       '</svg>'
@@ -305,8 +307,8 @@
       var facePath = '';
       if (hasRealPattern) {
         facePath = buildPatternUrl(interior.full_res_pattern, manifest.__sourceBase, { face: faceKey });
-      } else if (manifest.placeholders && manifest.placeholders.still && manifest.placeholders.still.full_res) {
-        facePath = buildPatternUrl(manifest.placeholders.still.full_res, manifest.__sourceBase, { face: faceKey });
+      } else if (sourceFaces[faceKey]) {
+        facePath = buildPatternUrl(sourceFaces[faceKey], manifest.__sourceBase, { face: faceKey });
       } else {
         facePath = buildPlaceholderInteriorSvg(label, faceKey, faceLabelMap[faceKey] || 'Reference cabin');
       }
