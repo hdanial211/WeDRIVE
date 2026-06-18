@@ -127,7 +127,7 @@
       heroFrame.src = frameSrc(frame);
       heroFrame.style.transform = 'translateY(' + lift + 'px) scale(' + scale.toFixed(3) + ')';
 
-      if (viewerApi && viewerApi.setExteriorFrame) {
+      if (progress < 1 && viewerApi && viewerApi.setExteriorFrame) {
         viewerApi.setExteriorFrame(frame, false);
       }
     }
