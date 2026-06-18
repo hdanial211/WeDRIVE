@@ -151,42 +151,116 @@ function manageCar(id) {
   window.location.href = `car-detail/car-detail.html?id=${id}`;
 }
 
+function showToast(msg, type = 'success') {
+  const existing = document.querySelector('.toast-notify');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'toast-notify';
+  const icon = type === 'success' ? 'check_circle' : 'error';
+  const bg = type === 'success' ? '#10B981' : '#EF4444';
+  
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: ${bg};
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 99999;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    animation: slideUp 0.3s ease;
+  `;
+  toast.innerHTML = `<span class="material-icons-round" style="font-size: 18px;">${icon}</span> <span>${msg}</span>`;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    toast.style.transition = 'all 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
 function addNewCar() {
   // Create modal if not exists
   let modal = document.getElementById('add-car-modal');
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'add-car-modal';
-    modal.className = 'modal-overlay';
+    modal.className = 'modal-overlay add-car-modal-overlay';
     modal.innerHTML = `
-    <div class="modal-container" style="max-width:600px;width:95%;">
-      <div class="modal-header">
-        <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">add_circle</span> Add New Car</h3>
-        <button class="modal-close-btn" onclick="closeAddCarModal()">
+    <div class="add-car-modal-card" style="max-width:600px;width:95%;" role="dialog" aria-modal="true" aria-labelledby="add-car-modal-title">
+      <div class="add-car-modal-header">
+        <h3>
+          <span class="material-icons-round">add_circle</span>
+          <span id="add-car-modal-title" data-key="admin_add_car_title">Add New Vehicle</span>
+        </h3>
+        <button class="add-car-modal-close-btn" onclick="closeAddCarModal()">
           <span class="material-icons-round">close</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form id="add-car-form" class="form-grid" onsubmit="submitNewCar(event)">
-          <div class="form-group"><label>Vehicle Name</label><input type="text" id="new-name" required placeholder="e.g. 2024 Honda Civic 1.5 V" /></div>
-          <div class="form-group"><label>Plate Number</label><input type="text" id="new-plate" required placeholder="e.g. ABC 1234" /></div>
-          <div class="form-group"><label>Vehicle Type</label>
-            <select id="new-type"><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Hatchback">Hatchback</option><option value="MPV">MPV</option><option value="Coupe">Coupe</option><option value="Truck">Truck</option></select>
+      <div class="add-car-modal-body">
+        <form id="add-car-form" class="add-car-form-grid" onsubmit="submitNewCar(event)">
+          <div class="add-car-form-group">
+            <label for="new-name" data-key="admin_add_car_name">Vehicle Name</label>
+            <input type="text" id="new-name" data-key-ph="admin_add_car_name_ph" required placeholder="e.g. 2024 Honda Civic 1.5 V" />
           </div>
-          <div class="form-group"><label>Fuel Type</label>
-            <select id="new-fuel"><option value="Petrol">Petrol</option><option value="Diesel">Diesel</option><option value="Hybrid">Hybrid</option><option value="Electric">Electric</option></select>
+          <div class="add-car-form-group">
+            <label for="new-plate" data-key="admin_add_car_plate">Plate Number</label>
+            <input type="text" id="new-plate" data-key-ph="admin_add_car_plate_ph" required placeholder="e.g. ABC 1234" />
           </div>
-          <div class="form-group"><label>Transmission</label>
-            <select id="new-trans"><option value="Auto">Auto</option><option value="Manual">Manual</option></select>
+          <div class="add-car-form-group">
+            <label for="new-type" data-key="admin_add_car_type">Vehicle Type</label>
+            <select id="new-type">
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="MPV">MPV</option>
+              <option value="Coupe">Coupe</option>
+              <option value="Truck">Truck</option>
+            </select>
           </div>
-          <div class="form-group"><label>Seats</label>
-            <select id="new-seats"><option value="2">2</option><option value="4">4</option><option value="5" selected>5</option><option value="7">7</option><option value="8">8</option></select>
+          <div class="add-car-form-group">
+            <label for="new-fuel" data-key="admin_add_car_fuel">Fuel Type</label>
+            <select id="new-fuel">
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Electric">Electric</option>
+            </select>
           </div>
-          <div class="form-group"><label>Daily Rate (RM)</label><input type="number" id="new-rate" required placeholder="e.g. 200" min="1" /></div>
-          <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;margin-top:8px;">
-            <button type="button" class="btn-outline-sm" onclick="closeAddCarModal()">Cancel</button>
-            <button type="submit" class="btn-primary-sm" style="padding:10px 24px;" id="add-car-submit-btn">
-              <span class="material-icons-round" style="font-size:14px">add</span> Add Vehicle
+          <div class="add-car-form-group">
+            <label for="new-trans" data-key="admin_add_car_trans">Transmission</label>
+            <select id="new-trans">
+              <option value="Auto">Auto</option>
+              <option value="Manual">Manual</option>
+            </select>
+          </div>
+          <div class="add-car-form-group">
+            <label for="new-seats" data-key="admin_add_car_seats">Seats</label>
+            <select id="new-seats">
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="5" selected>5</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <div class="add-car-form-group" style="grid-column: 1 / -1;">
+            <label for="new-rate" data-key="admin_add_car_rate">Daily Rate (RM)</label>
+            <input type="number" id="new-rate" data-key-ph="admin_add_car_rate_ph" required placeholder="e.g. 200" min="1" />
+          </div>
+          <div class="add-car-modal-actions">
+            <button type="button" class="add-car-btn-cancel" onclick="closeAddCarModal()" data-key="admin_add_car_cancel">Cancel</button>
+            <button type="submit" class="add-car-btn-confirm" id="add-car-submit-btn">
+              <span class="material-icons-round" style="font-size:14px">add</span>
+              <span data-key="admin_add_car_submit">Add Vehicle</span>
             </button>
           </div>
         </form>
@@ -194,6 +268,13 @@ function addNewCar() {
     </div>`;
     document.body.appendChild(modal);
   }
+  
+  // Re-run language translation engine so the appended modal elements get translated!
+  if (window.setLanguage) {
+    const activeLang = localStorage.getItem('wedrive-lang') || 'en';
+    window.setLanguage(activeLang);
+  }
+
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
@@ -207,7 +288,15 @@ async function submitNewCar(e) {
   e.preventDefault();
   const btn = document.getElementById('add-car-submit-btn');
   btn.disabled = true;
-  btn.innerHTML = '<span class="material-icons-round" style="font-size:14px">hourglass_empty</span> Saving...';
+
+  const lang = localStorage.getItem('wedrive-lang') || 'en';
+  const isMalay = lang === 'ms';
+  const savingText = isMalay ? 'Menyimpan...' : 'Saving...';
+  const successDbText = isMalay ? 'Kenderaan baharu ditambah ke pangkalan data!' : 'New vehicle added to database!';
+  const successDemoText = isMalay ? 'Kenderaan baharu ditambah (mod demo)' : 'New vehicle added (demo mode)';
+  const errorText = isMalay ? 'Ralat menambah kenderaan: ' : 'Error adding vehicle: ';
+
+  btn.innerHTML = `<span class="material-icons-round" style="font-size:14px;animation:spin 1s linear infinite">refresh</span> ${savingText}`;
 
   const newCar = {
     name: document.getElementById('new-name').value.trim(),
@@ -233,10 +322,10 @@ async function submitNewCar(e) {
       renderCarTable(allCar);
       closeAddCarModal();
       document.getElementById('add-car-form').reset();
-      alert('New vehicle added to database!');
+      showToast(successDbText, 'success');
     } catch (err) {
       console.error('[WeDRIVE] Add car error:', err);
-      alert('Error adding vehicle: ' + err.message);
+      showToast(errorText + err.message, 'error');
     }
   } else {
     newCar.id = Date.now();
@@ -246,11 +335,11 @@ async function submitNewCar(e) {
     renderCarTable(allCar);
     closeAddCarModal();
     document.getElementById('add-car-form').reset();
-    alert('New vehicle added (demo mode)');
+    showToast(successDemoText, 'success');
   }
 
   btn.disabled = false;
-  btn.innerHTML = '<span class="material-icons-round" style="font-size:14px">add</span> Add Vehicle';
+  btn.innerHTML = `<span class="material-icons-round" style="font-size:14px">add</span> ${isMalay ? 'Tambah Kenderaan' : 'Add Vehicle'}`;
 }
 
 /* ── Cars List Modal ── */

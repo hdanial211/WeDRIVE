@@ -110,7 +110,7 @@ async function fetchLiveData() {
       const available = carsResult.data.filter(c => c.status === 'Available');
       const rented = carsResult.data.filter(c => c.status === 'Rented');
 
-      lines.push('\nFleet Overview:');
+      lines.push('\nCar Overview:');
       lines.push('- Total vehicles: ' + carsResult.data.length);
       lines.push('- Available now: ' + available.length);
       lines.push('- Currently rented: ' + rented.length);
@@ -416,14 +416,14 @@ window.sendTestMsg = async function () {
 
   if (reply) {
     chatHistory.push({ role: 'model', parts: [{ text: reply }] });
-    
+
     let recommendedCar = null;
     const carCardRegex = /\[CAR_CARD:\s*(\d+)\]/i;
     const match = reply.match(carCardRegex);
     if (match) {
       const carId = Number(match[1]);
       reply = reply.replace(carCardRegex, '').trim();
-      
+
       if (window.supabaseClient) {
         try {
           const { data: carData } = await window.supabaseClient
@@ -438,12 +438,12 @@ window.sendTestMsg = async function () {
           console.warn("Failed to fetch recommended car details for play chat:", e);
         }
       }
-      
+
       if (!recommendedCar) {
         recommendedCar = { id: carId, name: "Available Rental Vehicle", price: "320", type: "Premium" };
       }
     }
-    
+
     appendMsg(reply, 'bot', recommendedCar);
   } else {
     appendMsg('Connection failed. Please check your API key and try again.', 'bot');
@@ -469,7 +469,7 @@ function appendMsg(text, who, showCar = null) {
   const container = document.getElementById('chat-messages');
   const div = document.createElement('div');
   div.className = `msg ${who}`;
-  
+
   let carHtml = '';
   if (showCar && typeof showCar === 'object') {
     carHtml = `
@@ -490,7 +490,7 @@ function appendMsg(text, who, showCar = null) {
   return div;
 }
 
-window.triggerPlayBook = function(carId) {
+window.triggerPlayBook = function (carId) {
   showToast(`Booking flow simulation triggered for car ID #${carId}!`, false);
 };
 

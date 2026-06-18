@@ -500,5 +500,19 @@
   "cd_delete_modal_pwd": "Admin Password",
   "cd_delete_modal_pwd_ph": "Enter password to confirm",
   "cd_delete_modal_cancel": "Cancel",
-  "cd_delete_modal_confirm": "Confirm Delete"
+  "cd_delete_modal_confirm": "Confirm Delete",
+  "admin_add_car_title": "Add New Vehicle",
+  "admin_add_car_name": "Vehicle Name",
+  "admin_add_car_name_ph": "e.g. 2024 Honda Civic 1.5 V",
+  "admin_add_car_plate": "Plate Number",
+  "admin_add_car_plate_ph": "e.g. ABC 1234",
+  "admin_add_car_type": "Vehicle Type",
+  "admin_add_car_fuel": "Fuel Type",
+  "admin_add_car_trans": "Transmission",
+  "admin_add_car_seats": "Seats",
+  "admin_add_car_rate": "Daily Rate (RM)",
+  "admin_add_car_rate_ph": "e.g. 200",
+  "admin_add_car_cancel": "Cancel",
+  "admin_add_car_submit": "Add Vehicle",
+  "admin_add_car_saving": "Saving..."
 }

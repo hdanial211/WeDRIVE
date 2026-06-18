@@ -500,6 +500,20 @@ window.wedrive_lang_ms = {
   "cd_delete_modal_pwd": "Kata Laluan Admin",
   "cd_delete_modal_pwd_ph": "Masukkan kata laluan untuk mengesahkan",
   "cd_delete_modal_cancel": "Batal",
-  "cd_delete_modal_confirm": "Sahkan Padam"
+  "cd_delete_modal_confirm": "Sahkan Padam",
+  "admin_add_car_title": "Tambah Kenderaan Baharu",
+  "admin_add_car_name": "Nama Kenderaan",
+  "admin_add_car_name_ph": "cth. 2024 Honda Civic 1.5 V",
+  "admin_add_car_plate": "Nombor Plat",
+  "admin_add_car_plate_ph": "cth. ABC 1234",
+  "admin_add_car_type": "Jenis Kenderaan",
+  "admin_add_car_fuel": "Jenis Bahan Api",
+  "admin_add_car_trans": "Transmisi",
+  "admin_add_car_seats": "Tempat Duduk",
+  "admin_add_car_rate": "Kadar Harian (RM)",
+  "admin_add_car_rate_ph": "cth. 200",
+  "admin_add_car_cancel": "Batal",
+  "admin_add_car_submit": "Tambah Kenderaan",
+  "admin_add_car_saving": "Menyimpan..."
 }
 ;
