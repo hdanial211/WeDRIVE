@@ -348,21 +348,47 @@ function viewInsurance() {
   alert(`Insurance Info for ${carData.name}\n\nPlate: ${carData.plate}\nType: ${carData.label || carData.type}\n\nInsurance details will be available when backend is integrated.`);
 }
 
-async function deleteCar() {
+function deleteCar() {
+  const modal = document.getElementById('delete-car-modal');
+  const pwdInput = document.getElementById('delete-admin-password');
+  const errorDiv = document.getElementById('delete-modal-error');
+  
+  if (pwdInput) pwdInput.value = '';
+  if (errorDiv) {
+    errorDiv.textContent = '';
+    errorDiv.style.display = 'none';
+  }
+  
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+window.deleteCar = deleteCar;
+
+function closeDeleteCarModal() {
+  const modal = document.getElementById('delete-car-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+window.closeDeleteCarModal = closeDeleteCarModal;
+
+async function submitDeleteCar() {
+  const pwdInput = document.getElementById('delete-admin-password');
+  const errorDiv = document.getElementById('delete-modal-error');
+  const confirmBtn = document.getElementById('confirm-delete-btn');
+  
+  if (!pwdInput) return;
+  const password = pwdInput.value.trim();
+  
   const lang = localStorage.getItem('wedrive-lang') || 'en';
   const isMalay = lang === 'ms';
 
-  const confirmMsg1 = isMalay 
-    ? `Adakah anda pasti mahu memadamkan ${carData.name} (${carData.plate}) daripada armada?\n\nTindakan ini tidak boleh diundur.`
-    : `Are you sure you want to remove ${carData.name} (${carData.plate}) from the fleet?\n\nThis action cannot be undone.`;
-
-  const promptMsg = isMalay
-    ? `Sila masukkan kata laluan Admin anda untuk mengesahkan pemadaman:`
-    : `Please enter your Admin password to confirm deletion:`;
-
   const errorMsg = isMalay
-    ? 'Kata laluan salah atau tidak sah. Pemadaman dibatalkan.'
-    : 'Incorrect or invalid password. Deletion cancelled.';
+    ? 'Kata laluan salah atau tidak sah. Sila cuba lagi.'
+    : 'Incorrect or invalid password. Please try again.';
 
   const successToast = isMalay
     ? 'Kenderaan telah dikeluarkan dari pangkalan data!'
@@ -372,20 +398,20 @@ async function deleteCar() {
     ? 'Kenderaan telah dikeluarkan (mod demo)'
     : 'Vehicle removed (demo mode)';
 
-  const verifyingMsg = isMalay ? 'Mengesahkan kata laluan...' : 'Verifying password...';
-
-  const firstConfirm = confirm(confirmMsg1);
-  if (!firstConfirm) return;
-
-  const passwordInput = prompt(promptMsg);
-  if (passwordInput === null) return; // User cancelled
-  if (!passwordInput.trim()) {
-    alert(errorMsg);
+  if (!password) {
+    if (errorDiv) {
+      errorDiv.textContent = isMalay ? 'Sila masukkan kata laluan.' : 'Please enter password.';
+      errorDiv.style.display = 'block';
+    }
     return;
   }
 
-  // Show a loading toast or visual feedback since network request takes a moment
-  showToast(verifyingMsg, 'info');
+  // Show loading state on button
+  if (confirmBtn) {
+    confirmBtn.disabled = true;
+    confirmBtn.dataset.originalHtml = confirmBtn.innerHTML;
+    confirmBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px;animation:spin 1s linear infinite">refresh</span> ${isMalay ? 'Mengesahkan...' : 'Verifying...'}`;
+  }
 
   let verified = false;
 
@@ -409,12 +435,19 @@ async function deleteCar() {
     }
 
     if (!adminEmail) {
-      alert(isMalay ? 'Sesi Admin tidak dijumpai. Sila log masuk semula.' : 'Admin session not found. Please log in again.');
+      if (errorDiv) {
+        errorDiv.textContent = isMalay ? 'Sesi Admin tidak dijumpai.' : 'Admin session not found.';
+        errorDiv.style.display = 'block';
+      }
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = confirmBtn.dataset.originalHtml;
+      }
       return;
     }
 
     try {
-      const loginResult = await window.WeDriveAPI.loginUser(adminEmail, passwordInput);
+      const loginResult = await window.WeDriveAPI.loginUser(adminEmail, password);
       if (loginResult && loginResult.success && loginResult.role === 'admin') {
         verified = true;
       }
@@ -427,10 +460,20 @@ async function deleteCar() {
   }
 
   if (!verified) {
-    alert(errorMsg);
+    if (errorDiv) {
+      errorDiv.textContent = errorMsg;
+      errorDiv.style.display = 'block';
+    }
+    if (confirmBtn) {
+      confirmBtn.disabled = false;
+      confirmBtn.innerHTML = confirmBtn.dataset.originalHtml;
+    }
     return;
   }
 
+  // If verified, proceed with deletion
+  closeDeleteCarModal();
+  
   if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
     try {
       var result = await window.supabaseClient.from('cars').delete().eq('id', carData.id);
@@ -445,6 +488,25 @@ async function deleteCar() {
   }
   setTimeout(() => { window.location.href = 'cars.html'; }, 1500);
 }
+window.submitDeleteCar = submitDeleteCar;
+
+// Close modals on backdrop click
+document.addEventListener('click', function (e) {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+});
+
+// Close modals on Escape key
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+      modal.style.display = 'none';
+    });
+    document.body.style.overflow = '';
+  }
+});
 
 /* ── Toast Notification ── */
 function showToast(msg, type) {

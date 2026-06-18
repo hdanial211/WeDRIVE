@@ -302,6 +302,43 @@
     </div>
   </div>
 
+  <!-- DELETE CAR MODAL -->
+  <div class="modal-overlay" id="delete-car-modal" style="display:none">
+    <div class="modal-container" style="width:100%;max-width:480px">
+      <div class="modal-header" style="border-bottom:1px solid var(--slate-100,#F1F5F9);padding-bottom:14px;">
+        <h3 style="display:flex;align-items:center;gap:8px;color:#EF4444;">
+          <span class="material-icons-round" style="font-size:22px;">delete_forever</span>
+          <span data-key="cd_delete_modal_title">Remove Vehicle</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeDeleteCarModal()">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding:24px;">
+        <p id="delete-car-desc" style="font-size:14px;line-height:1.6;color:var(--slate-600);margin:0 0 20px;" data-key="cd_delete_modal_desc">
+          Are you sure you want to remove this vehicle from the fleet? This action cannot be undone.
+        </p>
+        
+        <div class="form-group" style="margin-bottom:24px;">
+          <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--slate-400);letter-spacing:0.5px;margin-bottom:8px;display:block;" data-key="cd_delete_modal_pwd">Admin Password</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">lock</span>
+            <input type="password" id="delete-admin-password" placeholder="Enter password to confirm" style="width:100%;" />
+          </div>
+          <div id="delete-modal-error" style="color:#EF4444;font-size:12px;margin-top:6px;display:none;font-weight:600;"></div>
+        </div>
+
+        <div style="display:flex;gap:12px;justify-content:flex-end;">
+          <button class="btn-outline-sm" onclick="closeDeleteCarModal()" style="padding:10px 20px;" data-key="cd_delete_modal_cancel">Cancel</button>
+          <button class="btn-primary-sm" id="confirm-delete-btn" onclick="submitDeleteCar()" style="padding:10px 20px;background:#EF4444;border-color:#EF4444;">
+            <span class="material-icons-round" style="font-size:16px;">delete_forever</span>
+            <span data-key="cd_delete_modal_confirm">Confirm Delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="../../../../shared/js/navbar-loader.js"></script>
   <script src="../../../../shared/js/sidebar-loader.js"></script>
   <script src="../../../../shared/js/main.js"></script>

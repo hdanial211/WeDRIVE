@@ -494,6 +494,11 @@ window.wedrive_lang_en = {
   "pending_rejected_title": "Documents Not Approved",
   "pending_rejected_desc": "Your documents could not be verified. Please re-upload clear and valid documents.",
   "pending_rejected_lbl": "Rejected",
-  "pending_reupload_btn": "Re-upload Documents"
+  "pending_reupload_btn": "Re-upload Documents",
+  "cd_delete_modal_title": "Remove Vehicle",
+  "cd_delete_modal_desc": "Are you sure you want to remove this vehicle from the fleet? This action cannot be undone.",
+  "cd_delete_modal_pwd": "Admin Password",
+  "cd_delete_modal_cancel": "Cancel",
+  "cd_delete_modal_confirm": "Confirm Delete"
 }
 ;
