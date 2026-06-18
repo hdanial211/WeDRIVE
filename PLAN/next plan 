@@ -34,6 +34,8 @@ Verification (Admin verify / Auto verify)
 Customer Dashboard (boleh buat tempahan)
 ```
 
+**Status:** SIAP (v8.0.2 - Welcome splash redirects incomplete profiles to complete-profile, which uploads documents and awaits admin review)
+
 ---
 
 ## NOTA 2 - Email Verification (Pengesahan Email)
@@ -76,9 +78,9 @@ Email verified > boleh login
 | Login Page (Google Sign-In) | SIAP |
 | Signup Page (Supabase Auth) | SIAP |
 | Email Verification | NANTI (auto-confirm ON untuk dev) |
-| Complete Profile Page | BELUM |
-| Admin Dashboard (Supabase) | BELUM |
-| Customer Dashboard (Supabase) | BELUM |
+| Complete Profile Page | SIAP |
+| Admin Dashboard (Supabase) | SIAP |
+| Customer Dashboard (Supabase) | SIAP |
 
 ---
 
@@ -447,4 +449,4 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
   - `admin/pages/customer/customers.html` (Customer stats)
 - Optional: tunjuk label kecil "(filtered)" bila stats bukan full data
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.1 - Stats cards update automatically based on table searches and filters)
