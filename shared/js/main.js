@@ -47,15 +47,23 @@
   var DAY_HREF = 'theme_day.css';
   var NIGHT_HREF = 'theme_night.css';
 
+  function getEffectiveTheme(mode) {
+    if (mode === 'system') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
+    }
+    return mode;
+  }
+
   function applyTheme(mode, animate) {
+    var effectiveMode = getEffectiveTheme(mode);
     var link = document.getElementById('theme-link');
     if (link) {
       var base = link.getAttribute('href').replace(/theme_(day|night)\.css$/, '');
-      link.href = base + (mode === 'night' ? NIGHT_HREF : DAY_HREF);
+      link.href = base + (effectiveMode === 'night' ? NIGHT_HREF : DAY_HREF);
     }
     /* Sync root class — allows CSS to target night-specific styles immediately */
-    document.documentElement.classList.toggle('night-mode', mode === 'night');
-    if (document.body) document.body.classList.toggle('night-mode', mode === 'night');
+    document.documentElement.classList.toggle('night-mode', effectiveMode === 'night');
+    if (document.body) document.body.classList.toggle('night-mode', effectiveMode === 'night');
     localStorage.setItem(THEME_KEY, mode);
     updateThemeBtns(mode, animate);
   }
@@ -72,31 +80,66 @@
         setTimeout(function () { btn.classList.remove('pop'); }, 320);
       }
 
-      // Show current mode: night -> moon icon | day -> sun icon
-      icon.textContent = mode === 'night' ? 'dark_mode' : 'light_mode';
-      btn.setAttribute('aria-label', mode === 'night' ? 'Switch to Day Mode' : 'Switch to Night Mode');
+      // Show current mode icon: system (device theme), day (sun), night (moon)
+      if (mode === 'system') {
+        icon.textContent = 'settings_brightness';
+        btn.setAttribute('aria-label', 'Theme: System (Switch to Day Mode)');
+      } else if (mode === 'day') {
+        icon.textContent = 'light_mode';
+        btn.setAttribute('aria-label', 'Theme: Day (Switch to Night Mode)');
+      } else {
+        icon.textContent = 'dark_mode';
+        btn.setAttribute('aria-label', 'Theme: Night (Switch to System Mode)');
+      }
       btn.dataset.mode = mode;
     });
   }
 
   window.toggleTheme = function () {
-    var current = localStorage.getItem(THEME_KEY) || 'day';
-    applyTheme(current === 'night' ? 'day' : 'night', true);
+    var current = localStorage.getItem(THEME_KEY) || 'system';
+    var next = 'system';
+    if (current === 'system') {
+      next = 'day';
+    } else if (current === 'day') {
+      next = 'night';
+    } else if (current === 'night') {
+      next = 'system';
+    }
+    applyTheme(next, true);
   };
 
   function initTheme() {
-    var saved = localStorage.getItem(THEME_KEY) || 'day';
+    var saved = localStorage.getItem(THEME_KEY) || 'system';
     applyTheme(saved, false);
   }
 
   // Run immediately so if script is in <head>, it prevents FOUC
   initTheme();
 
+  // Listen for device theme preference changes in real-time if set to system
+  var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  try {
+    mediaQuery.addEventListener('change', function () {
+      var saved = localStorage.getItem(THEME_KEY) || 'system';
+      if (saved === 'system') {
+        applyTheme('system', false);
+      }
+    });
+  } catch (e) {
+    mediaQuery.addListener(function () {
+      var saved = localStorage.getItem(THEME_KEY) || 'system';
+      if (saved === 'system') {
+        applyTheme('system', false);
+      }
+    });
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
       // Re-apply to body once it exists
-      var saved = localStorage.getItem(THEME_KEY) || 'day';
-      if (document.body) document.body.classList.toggle('night-mode', saved === 'night');
+      var saved = localStorage.getItem(THEME_KEY) || 'system';
+      var effectiveMode = getEffectiveTheme(saved);
+      if (document.body) document.body.classList.toggle('night-mode', effectiveMode === 'night');
     });
   }
 })();
@@ -515,8 +558,8 @@
 
     function getColor() {
       /* Blue/violet glow — adapts slightly for night mode */
-      var saved = localStorage.getItem('wedrive-theme') || 'day';
-      return saved === 'night'
+      var isNight = document.documentElement.classList.contains('night-mode');
+      return isNight
         ? 'rgba(96,165,250,0.10)'    // blue tint night
         : 'rgba(59,130,246,0.12)';   // blue tint day
     }
