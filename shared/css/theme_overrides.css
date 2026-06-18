@@ -6,6 +6,8 @@
 
 /* Base layer — background & text */
 body {
+  margin: 0 !important;
+  padding: 0 !important;
   background: var(--bg-body) !important;
   color: var(--text-primary) !important;
   transition: background 0.3s ease, color 0.3s ease;
