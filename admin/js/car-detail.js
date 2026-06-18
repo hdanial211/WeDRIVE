@@ -349,21 +349,53 @@ function viewInsurance() {
 }
 
 async function deleteCar() {
-  if (confirm(`Are you sure you want to remove ${carData.name} (${carData.plate}) from the fleet?\n\nThis action cannot be undone.`)) {
-    if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
-      try {
-        var result = await window.supabaseClient.from('cars').delete().eq('id', carData.id);
-        if (result.error) throw result.error;
-        showToast('Vehicle removed from database!', 'success');
-      } catch (err) {
-        console.error('[WeDRIVE] Delete car error:', err);
-        showToast('Vehicle removed (demo mode)', 'success');
-      }
-    } else {
-      showToast('Vehicle removed (demo mode)', 'success');
-    }
-    setTimeout(() => { window.location.href = 'cars.html'; }, 1500);
+  const lang = localStorage.getItem('wedrive-lang') || 'en';
+  const isMalay = lang === 'ms';
+
+  const confirmMsg1 = isMalay 
+    ? `Adakah anda pasti mahu memadamkan ${carData.name} (${carData.plate}) daripada armada?\n\nTindakan ini tidak boleh diundur.`
+    : `Are you sure you want to remove ${carData.name} (${carData.plate}) from the fleet?\n\nThis action cannot be undone.`;
+
+  const promptMsg = isMalay
+    ? `Untuk mengesahkan pemadaman, sila taip nombor plat kenderaan "${carData.plate}" di bawah:`
+    : `To confirm deletion, please type the plate number of the vehicle "${carData.plate}":`;
+
+  const errorMsg = isMalay
+    ? 'Nombor plat tidak betul. Pemadaman dibatalkan.'
+    : 'Incorrect plate number. Deletion cancelled.';
+
+  const successToast = isMalay
+    ? 'Kenderaan telah dikeluarkan dari pangkalan data!'
+    : 'Vehicle removed from database!';
+
+  const demoToast = isMalay
+    ? 'Kenderaan telah dikeluarkan (mod demo)'
+    : 'Vehicle removed (demo mode)';
+
+  const firstConfirm = confirm(confirmMsg1);
+  if (!firstConfirm) return;
+
+  const userInput = prompt(promptMsg);
+  if (userInput === null) return; // User cancelled
+
+  if (userInput.trim().toUpperCase() !== carData.plate.toUpperCase()) {
+    alert(errorMsg);
+    return;
   }
+
+  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+    try {
+      var result = await window.supabaseClient.from('cars').delete().eq('id', carData.id);
+      if (result.error) throw result.error;
+      showToast(successToast, 'success');
+    } catch (err) {
+      console.error('[WeDRIVE] Delete car error:', err);
+      showToast(demoToast, 'success');
+    }
+  } else {
+    showToast(demoToast, 'success');
+  }
+  setTimeout(() => { window.location.href = 'cars.html'; }, 1500);
 }
 
 /* ── Toast Notification ── */
