@@ -6,6 +6,7 @@
 
 body {
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
 /* ── PAGE HERO ────────────────────────────────────────────── */
@@ -539,14 +540,13 @@ body {
 /* Explore Showcase */
 .explore-showcase { position: relative; z-index: 3; margin-top: -34px; padding: 22px 0 100px; }
 .explore-shell { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
-.explore-section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; padding-top: 60px; margin-bottom: 30px; }
+.explore-section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; padding-top: 16px; margin-bottom: 30px; }
 .explore-section-head > div { max-width: 760px; }
 .explore-section-head .section-eyebrow {
   color: #3B82F6; background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%);
   border: 1px solid rgba(148,163,184,0.22); box-shadow: 0 12px 28px rgba(15,23,42,0.06); padding: 10px 18px;
-  margin-bottom: 24px;
 }
-.explore-section-head h2 { color: var(--text-primary, #0F172A); font-size: clamp(34px, 4vw, 52px); line-height: 1.02; margin: 0; letter-spacing: 0; }
+.explore-section-head h2 { color: var(--text-primary, #0F172A); font-size: clamp(34px, 4vw, 52px); line-height: 1.02; margin: 14px 0 0; letter-spacing: 0; }
 .explore-section-head p { color: var(--text-secondary, #475569); font-size: 17px; line-height: 1.75; margin: 14px 0 0; }
 
 /* Destination Grid */
