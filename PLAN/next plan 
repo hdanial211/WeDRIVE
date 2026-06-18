@@ -266,7 +266,7 @@ ID 7: shared/model/SUV/2024 Perodua Ativa 1.0T H/placeholder.jpg
 ID 8: shared/model/Sedan/2023 Toyota Vios 1.5 G/placeholder.jpg
 ```
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.0 - thumbnail field in data.json, imagePath() uses placeholder.jpg)
 
 ---
 
@@ -303,7 +303,7 @@ Thailand:   +66  | 081-234-5678
 - Stripe-style country selector (dropdown dengan bendera kecil)
 - Auto-format on keyup (mask input)
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.0 - country code dropdown + auto-format added to profile.html)
 
 ---
 
@@ -344,7 +344,7 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 **Rujukan UI:**
 - Linear.app style table sorting (klik header, subtle arrow indicator)
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.0 - sortable headers for Bookings + Customers tables)
 
 ---
 
@@ -365,7 +365,7 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Airbnb date picker style (2-calendar side by side)
 - Stripe dashboard date range filter
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.0 - All Time / This Month / This Year / Custom Range filter added)
 
 ---
 
@@ -390,7 +390,7 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Airbnb booking confirmation card
 - Linear.app detail slide-over panel
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.0 - receipt-style modal for viewBooking())
 
 ---
 
@@ -409,7 +409,7 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Stripe order status dropdown (dalam detail panel)
 - Shopify order management actions
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.0 - Update Status button in booking detail modal)
 
 ---
 
@@ -431,7 +431,7 @@ ID 7: Perodua Ativa → "Auto (CVT)" → tukar ke "Auto"
 - Airbnb host booking creation form
 - Stripe new payment/invoice modal
 
-**Status:** BELUM
+**Status:** SIAP (v8.0.0 - openNewBookingModal() with customer/car/dates form)
 
 ---
 
