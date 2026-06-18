@@ -236,7 +236,7 @@ Su Mo Tu We Th Fr Sa
 - Pass array of disabled date ranges ke Flatpickr `disable` option
 - Tarikh yang disabled kena ada styling khas (strikethrough, warna kelabu)
 
-**Status:** BELUM (buat masa Fasa 5 - Booking Flow)
+**Status:** SIAP (v8.0.2 - Flatpickr blocking for booked dates in customer booking.html)
 
 ---
 

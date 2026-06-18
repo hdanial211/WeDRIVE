@@ -53,11 +53,11 @@
           <div class="bk-form-grid">
             <div class="bk-field">
               <label for="bk-pickup-date" data-key="bk_pickup_date">Pick-up Date</label>
-              <input type="date" id="bk-pickup-date" value="2026-05-20" />
+              <input type="text" id="bk-pickup-date" placeholder="Select pick-up date" readonly />
             </div>
             <div class="bk-field">
               <label for="bk-return-date" data-key="bk_return_date">Return Date</label>
-              <input type="date" id="bk-return-date" value="2026-05-22" />
+              <input type="text" id="bk-return-date" placeholder="Select return date" readonly />
             </div>
           </div>
           <div class="bk-form-grid full bk-location-grid">
@@ -171,6 +171,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../../shared/js/supabase-config.js"></script>
   <script src="../../../../shared/js/api.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="../../../../shared/js/calendar.js"></script>
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
   <script src="../../../../shared/js/main.js?v=5.7.0"></script>
@@ -184,6 +186,7 @@
     let currentCar = null;
     let daysCount = 1;
     let basePrice = 120;
+    let bookingPickers = null;
 
     function formatDateForInput(dateStr) {
       if (!dateStr) return '';
@@ -237,8 +240,46 @@
         }
       }
 
-      document.getElementById('bk-pickup-date').value = formatDateForInput(pickupDateStr);
-      document.getElementById('bk-return-date').value = formatDateForInput(returnDateStr);
+      // Fetch booked date ranges for calendar blocking (NOTA 5)
+      let disabledDates = [];
+      if (window.WeDriveAPI && window.WeDriveAPI.getBookedDatesForCar) {
+        try {
+          const booked = await window.WeDriveAPI.getBookedDatesForCar(carId);
+          disabledDates = booked.map(function(b) {
+            var sStr = b.start_date || b.pickup;
+            var eStr = b.end_date || b.return;
+            if (sStr && eStr) {
+              var sParts = sStr.split('-');
+              var eParts = eStr.split('-');
+              return {
+                from: new Date(Number(sParts[0]), Number(sParts[1]) - 1, Number(sParts[2])),
+                to: new Date(Number(eParts[0]), Number(eParts[1]) - 1, Number(eParts[2]))
+              };
+            }
+            return null;
+          }).filter(Boolean);
+        } catch (err) {
+          console.error('[Booking] Error fetching booked dates:', err);
+        }
+      }
+
+      // Initialize flatpickr on bk-pickup-date and bk-return-date
+      if (window.WeDriveCalendar) {
+        bookingPickers = window.WeDriveCalendar.initPairedPickers('bk-pickup-date', 'bk-return-date', calculateBookingSummary, disabledDates);
+        
+        if (pickupDateStr) {
+          bookingPickers.pickup.setDate(formatDateForInput(pickupDateStr), true);
+        }
+        if (returnDateStr) {
+          bookingPickers.return.setDate(formatDateForInput(returnDateStr), true);
+        }
+      } else {
+        document.getElementById('bk-pickup-date').value = formatDateForInput(pickupDateStr);
+        document.getElementById('bk-return-date').value = formatDateForInput(returnDateStr);
+        calculateBookingSummary();
+        document.getElementById('bk-pickup-date').addEventListener('change', calculateBookingSummary);
+        document.getElementById('bk-return-date').addEventListener('change', calculateBookingSummary);
+      }
       
       const locSelect = document.getElementById('bk-pickup-location');
       if (locSelect) {
@@ -258,19 +299,53 @@
         }
       }
 
-      calculateBookingSummary();
-
-      document.getElementById('bk-pickup-date').addEventListener('change', calculateBookingSummary);
-      document.getElementById('bk-return-date').addEventListener('change', calculateBookingSummary);
       document.getElementById('bk-pickup-location').addEventListener('change', calculateBookingSummary);
     }
 
     function calculateBookingSummary() {
-      const pickupVal = document.getElementById('bk-pickup-date').value;
-      const returnVal = document.getElementById('bk-return-date').value;
-      const pickup = new Date(pickupVal);
-      const returnD = new Date(returnVal);
+      let pickupVal = '';
+      let returnVal = '';
+      let pickup = null;
+      let returnD = null;
+
+      if (bookingPickers && bookingPickers.pickup && bookingPickers.return) {
+        pickup = bookingPickers.pickup.selectedDates[0];
+        returnD = bookingPickers.return.selectedDates[0];
+        if (pickup) {
+          pickupVal = pickup.getFullYear() + '-' + String(pickup.getMonth() + 1).padStart(2, '0') + '-' + String(pickup.getDate()).padStart(2, '0');
+        }
+        if (returnD) {
+          returnVal = returnD.getFullYear() + '-' + String(returnD.getMonth() + 1).padStart(2, '0') + '-' + String(returnD.getDate()).padStart(2, '0');
+        }
+      } else {
+        pickupVal = document.getElementById('bk-pickup-date').value;
+        returnVal = document.getElementById('bk-return-date').value;
+        pickup = new Date(pickupVal);
+        returnD = new Date(returnVal);
+      }
       
+      const confirmBtn = document.getElementById('btn-confirm-booking');
+
+      if (!pickup || !returnD || isNaN(pickup.getTime()) || isNaN(returnD.getTime())) {
+        if (confirmBtn) {
+          confirmBtn.disabled = true;
+          confirmBtn.style.opacity = '0.5';
+          confirmBtn.style.cursor = 'not-allowed';
+        }
+        document.getElementById('base-label').textContent = 'Base Rate';
+        document.getElementById('base-value').textContent = 'RM0.00';
+        document.getElementById('addon-label').textContent = 'Add-ons';
+        document.getElementById('addon-value').textContent = 'RM0.00';
+        document.getElementById('total-price').textContent = 'RM0.00';
+        return;
+      }
+
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.style.opacity = '1';
+        confirmBtn.style.cursor = 'pointer';
+      }
+
       let diffTime = Math.abs(returnD - pickup);
       daysCount = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
       

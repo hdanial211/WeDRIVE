@@ -460,7 +460,41 @@ window.sendChat = async function() {
   var userData = await fetchChatUserData();
   var personalContext = buildPersonalContext(userData);
 
-  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '') + liveData + personalContext;
+  var pathnameParts = window.location.pathname.split('/').filter(Boolean);
+  var linkBase = pathnameParts.length <= 1 ? '' : '../'.repeat(pathnameParts.length - 1);
+
+  const bookingRulesInstruction = `
+[STRICT BOOKING RULES & STEPS]
+You must guide users on how to book according to their authentication and verification status:
+
+1. GUEST (Not logged in):
+- If the user is a guest (indicated by the absence of a logged-in user profile under PERSONAL CUSTOMER DATA), they MUST register/signup and log in before they can book.
+- Provide them this exact markdown link to signup: [Daftar Akaun / Signup](${linkBase}account/pages/signup/signup.html) (or if they already have an account: [Log Masuk / Login](${linkBase}account/pages/login/login.html)).
+- Tell them the booking flow: Sign Up -> Complete Profile & Verify Documents -> Choose Car & Book.
+
+2. LOGGED-IN CUSTOMER (Under PERSONAL CUSTOMER DATA):
+Depending on their "Account Verification" and "Profile status":
+- CASE A: Incomplete Profile (Missing IC, license, or "Account Verification" is not submitted/incomplete):
+  - They MUST complete their profile and upload document images (IC Front, IC Back, Driving License Front, Driving License Back) first.
+  - Explain the steps clearly: Go to Complete Profile page, fill in IC, License, Phone, and upload clear photos of documents.
+  - Provide this exact markdown link: [Lengkapkan Profil / Complete Profile](${linkBase}account/pages/complete-profile/complete-profile.html).
+- CASE B: Verification is 'Pending':
+  - Inform them that their documents are currently being reviewed by the admin (usually within 24 hours).
+  - They cannot book until the admin approves. Advise them to wait or contact support.
+- CASE C: Verification is 'Rejected':
+  - Inform them that their documents were rejected (mention the rejection reason if available under PERSONAL CUSTOMER DATA).
+  - Advise them to re-upload clear, valid documents by clicking this link: [Re-submit Documents / Complete Profile](${linkBase}account/pages/complete-profile/complete-profile.html).
+- CASE D: Verification is 'Verified':
+  - They are fully verified and ready to book!
+  - Recommend cars from the "Available Cars" list above.
+  - To recommend a car, you MUST output the tag "[CAR_CARD: <carId>]" at the end of your message so the system can render an interactive booking card for that car (e.g. "[CAR_CARD: 2]" for Mercedes-Benz).
+  - Tell them they can click "Book" on the card, choose their dates in the calendar, and proceed to checkout.
+
+Always write the response in the language the user is chatting in (English or Malay).
+Always use the exact markdown links built above. Do not use absolute domains.
+`;
+
+  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '') + liveData + personalContext + '\n\n' + bookingRulesInstruction;
 
   if (!apiKey) {
     window.removeTyping();
