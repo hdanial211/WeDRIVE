@@ -61,13 +61,11 @@
               <input type="text" id="bk-return-date" placeholder="Select return date" readonly />
             </div>
           </div>
-          <div class="bk-form-grid full bk-location-grid">
+          <div class="bk-form-grid full bk-location-grid" style="display:none;">
             <div class="bk-field">
               <label for="bk-pickup-location" data-key="bk_pickup_loc">Pick-up Location</label>
               <select id="bk-pickup-location" aria-label="Pick-up Location">
-                <option>Melaka Sentral Bus Terminal</option>
-                <option>Melaka International Airport</option>
-                <option>Ayer Keroh Toll Plaza</option>
+                <option value="Melaka, Malaysia" selected>Melaka, Malaysia</option>
               </select>
             </div>
           </div>
@@ -182,7 +180,7 @@
     const carId = parseInt(urlParams.get('car')) || 4; 
     const pickupDateStr = urlParams.get('pickup') || '2026-05-22';
     const returnDateStr = urlParams.get('return') || '2026-05-23';
-    const pickupLoc = urlParams.get('location') || 'Melaka Sentral';
+    const pickupLoc = 'Melaka, Malaysia';
 
     let currentCar = null;
     let daysCount = 1;

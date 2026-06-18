@@ -614,7 +614,7 @@
       'price=' + encodeURIComponent(selectedBookingCar.price),
       'pickup=' + encodeURIComponent(pickup ? pickup.value : ''),
       'return=' + encodeURIComponent(ret ? ret.value : ''),
-      'location=' + encodeURIComponent(loc ? loc.value : '')
+      'location=' + encodeURIComponent(loc && loc.value ? loc.value : 'Melaka, Malaysia')
     ];
     window.location.href = '../car-details/booking/booking.html?' + params.join('&');
   };
