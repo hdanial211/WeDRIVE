@@ -30,6 +30,12 @@ window.WeDriveAPI.getAdminData()
       return b;
     });
     populateBookingStats(allBookings);
+    var searchParam = new URLSearchParams(window.location.search).get('search');
+    if (searchParam) {
+      currentSearch = searchParam.toLowerCase();
+      var searchInput = document.getElementById('bk-search');
+      if (searchInput) searchInput.value = searchParam;
+    }
     applyFilters();
     if (new URLSearchParams(window.location.search).get('action') === 'add') {
       openNewBookingModal();
@@ -122,7 +128,8 @@ function applyFilters() {
     filtered = filtered.filter(b =>
       String(b.id).includes(currentSearch) ||
       b._customer.toLowerCase().includes(currentSearch) ||
-      b._car_name.toLowerCase().includes(currentSearch)
+      b._car_name.toLowerCase().includes(currentSearch) ||
+      (b._car_plate && b._car_plate.toLowerCase().includes(currentSearch))
     );
   }
 
@@ -441,6 +448,15 @@ function openNewBookingModal() {
 
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+
+  // Pre-select vehicle if carId parameter is provided in URL
+  var queryCarId = new URLSearchParams(window.location.search).get('carId');
+  if (queryCarId) {
+    var carSelect = document.getElementById('nb-car');
+    if (carSelect) {
+      carSelect.value = queryCarId;
+    }
+  }
   recalcNewBooking();
 }
 

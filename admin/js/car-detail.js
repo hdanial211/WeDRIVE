@@ -306,29 +306,41 @@ async function saveCarEdit(e) {
   cancelEdit();
 }
 
+function closeStatusRedirectModal() {
+  const modal = document.getElementById('status-redirect-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
 /* ── Update Status ── */
 async function updateStatus() {
-  const statuses = ['Available', 'Rented'];
-  const currentIdx = statuses.indexOf(carData.status);
-  const nextStatus = statuses[(currentIdx + 1) % statuses.length];
+  const modal = document.getElementById('status-redirect-modal');
+  const desc = document.getElementById('status-modal-desc');
+  const actionBtn = document.getElementById('status-modal-action-btn');
+  if (!modal || !desc || !actionBtn) return;
 
-  if (confirm(`Change status from "${carData.status}" to "${nextStatus}"?`)) {
-    carData.status = nextStatus;
-    renderCarDetails(carData);
-
-    if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
-      try {
-        var result = await window.supabaseClient.from('cars').update({ status: nextStatus }).eq('id', carData.id);
-        if (result.error) throw result.error;
-        showToast(`Status updated to ${nextStatus}`, 'success');
-      } catch (err) {
-        console.error('[WeDRIVE] Update status error:', err);
-        showToast(`Status updated locally (DB sync failed)`, 'info');
-      }
-    } else {
-      showToast(`Status updated to ${nextStatus} (demo)`, 'success');
-    }
+  const isAvailable = carData.status === 'Available';
+  
+  if (isAvailable) {
+    desc.innerHTML = `This vehicle (<strong>${carData.name} - ${carData.plate}</strong>) is currently <strong>Available</strong>. Vehicle status is automatically managed by booking records and cannot be updated manually.<br/><br/>To set this vehicle as Rented, please register a new booking in the system.`;
+    actionBtn.innerHTML = '<span class="material-icons-round" style="font-size:16px;">add_circle</span> Create Booking';
+    actionBtn.onclick = function() {
+      closeStatusRedirectModal();
+      window.location.href = '../../booking/bookings.html?action=add&carId=' + carData.id;
+    };
+  } else {
+    desc.innerHTML = `This vehicle (<strong>${carData.name} - ${carData.plate}</strong>) is currently <strong>Rented</strong>. Vehicle status is automatically managed by booking records and cannot be updated manually.<br/><br/>To complete this rental or update the vehicle's status to Available, please manage its active booking in the system.`;
+    actionBtn.innerHTML = '<span class="material-icons-round" style="font-size:16px;">book</span> Manage Booking';
+    actionBtn.onclick = function() {
+      closeStatusRedirectModal();
+      window.location.href = '../../booking/bookings.html?search=' + encodeURIComponent(carData.plate);
+    };
   }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 }
 
 /* ── Quick Actions ── */

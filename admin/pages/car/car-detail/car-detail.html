@@ -278,6 +278,30 @@
     <div id="footer-placeholder" style="margin-top: 40px; border-radius: 16px; overflow: hidden;"></div>
   </main>
 
+  <!-- SYSTEM STATUS MODAL -->
+  <div class="modal-overlay" id="status-redirect-modal" style="display:none">
+    <div class="modal-container" style="width:100%;max-width:480px">
+      <div class="modal-header" style="border-bottom:1px solid var(--slate-100,#F1F5F9);padding-bottom:14px;">
+        <h3 style="display:flex;align-items:center;gap:8px;color:var(--navy,#1E293B);">
+          <span class="material-icons-round" style="font-size:22px;color:#D97706;">warning</span>
+          <span>System Managed Status</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeStatusRedirectModal()">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding:24px;">
+        <p id="status-modal-desc" style="font-size:14px;line-height:1.6;color:var(--slate-600);margin:0 0 24px;">
+          Vehicle status is automatically managed by booking records and cannot be updated manually.
+        </p>
+        <div style="display:flex;gap:12px;justify-content:flex-end;">
+          <button class="btn-outline-sm" onclick="closeStatusRedirectModal()" style="padding:10px 20px;">Cancel</button>
+          <button class="btn-primary-sm" id="status-modal-action-btn" style="padding:10px 20px;"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="../../../../shared/js/navbar-loader.js"></script>
   <script src="../../../../shared/js/sidebar-loader.js"></script>
   <script src="../../../../shared/js/main.js"></script>
