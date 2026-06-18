@@ -69,6 +69,9 @@
   }
 
   function updateThemeBtns(mode, animate) {
+    var lang = localStorage.getItem('wedrive-lang') || 'en';
+    var isMalay = lang === 'ms';
+
     document.querySelectorAll('.theme-toggle').forEach(function (btn) {
       var icon = btn.querySelector('.material-icons-round');
       if (!icon) return;
@@ -83,17 +86,25 @@
       // Show current mode icon: system (device theme), day (sun), night (moon)
       if (mode === 'system') {
         icon.textContent = 'settings_brightness';
-        btn.setAttribute('aria-label', 'Theme: System (Switch to Day Mode)');
+        btn.setAttribute('aria-label', isMalay 
+          ? 'Tema: Sistem (Tukar ke Mod Siang)' 
+          : 'Theme: System (Switch to Day Mode)');
       } else if (mode === 'day') {
         icon.textContent = 'light_mode';
-        btn.setAttribute('aria-label', 'Theme: Day (Switch to Night Mode)');
+        btn.setAttribute('aria-label', isMalay 
+          ? 'Tema: Siang (Tukar ke Mod Malam)' 
+          : 'Theme: Day (Switch to Night Mode)');
       } else {
         icon.textContent = 'dark_mode';
-        btn.setAttribute('aria-label', 'Theme: Night (Switch to System Mode)');
+        btn.setAttribute('aria-label', isMalay 
+          ? 'Tema: Malam (Tukar ke Mod Sistem)' 
+          : 'Theme: Night (Switch to System Mode)');
       }
       btn.dataset.mode = mode;
     });
   }
+
+  window.updateThemeBtns = updateThemeBtns;
 
   window.toggleTheme = function () {
     var current = localStorage.getItem(THEME_KEY) || 'system';
@@ -206,6 +217,11 @@
     });
 
     updateLangBtn(animate);
+
+    if (typeof window.updateThemeBtns === 'function') {
+      var currentTheme = localStorage.getItem('wedrive-theme') || 'system';
+      window.updateThemeBtns(currentTheme, false);
+    }
 
     if (data['page_title']) document.title = data['page_title'];
 
