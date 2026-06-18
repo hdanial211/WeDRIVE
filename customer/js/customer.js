@@ -70,12 +70,16 @@
   }
 
   function fallbackImagePath() {
-    return rootPrefix() + 'shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg';
+    return rootPrefix() + 'shared/model/Sedan/2023 BMW 320i M Sport 2.0/placeholder.jpg';
   }
 
   function imagePath(car) {
+    // Guna thumbnail (placeholder.jpg) untuk card view supaya setiap kereta tunjuk gambar yang betul
+    if (car && car.thumbnail) {
+      return rootPrefix() + 'shared/model/' + car.thumbnail;
+    }
     var file = car && car.images && car.images.length ? car.images[0] : '';
-    return rootPrefix() + 'shared/model/' + (file || 'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg');
+    return rootPrefix() + 'shared/model/' + (file || 'Sedan/2023 BMW 320i M Sport 2.0/placeholder.jpg');
   }
 
   function escapeHtml(value) {

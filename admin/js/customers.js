@@ -5,6 +5,9 @@
 
 let allCustomers = [];
 let allBookingsData = [];
+let custSortCol = 'joined';
+let custSortDir = 'desc';
+let custSearch = '';
 
 window.WeDriveAPI.getAdminData()
   .then(data => {
@@ -24,9 +27,7 @@ window.WeDriveAPI.getAdminData()
       c._status = c.status || 'Active';
       return c;
     });
-    sortCustomers(allCustomers);
-    populateCustomerStats(allCustomers);
-    renderCustomers(allCustomers);
+    applyCustomerFilters();
   })
   .catch(err => console.error('Customers data load error:', err));
 
@@ -133,14 +134,63 @@ function renderCustomers(customers) {
 }
 
 function searchCustomers(query) {
-  var q = query.toLowerCase();
-  var filtered = allCustomers.filter(c =>
-    c._name.toLowerCase().includes(q) ||
-    c._email.toLowerCase().includes(q) ||
-    c._phone.includes(q)
-  );
-  renderCustomers(filtered);
+  custSearch = query.toLowerCase();
+  applyCustomerFilters();
 }
+
+function sortByCustomer(col) {
+  if (custSortCol === col) {
+    custSortDir = custSortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    custSortCol = col;
+    custSortDir = 'asc';
+  }
+  applyCustomerFilters();
+}
+
+function updateCustomerSortHeaders() {
+  var cols = ['name', 'email', 'bookings', 'spent', 'joined'];
+  cols.forEach(function(col) {
+    var el = document.getElementById('cu-th-' + col);
+    if (!el) return;
+    el.classList.remove('sort-asc', 'sort-desc');
+    if (custSortCol === col) {
+      el.classList.add(custSortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+    }
+  });
+}
+
+function applyCustomerFilters() {
+  var filtered = allCustomers;
+
+  if (custSearch) {
+    filtered = filtered.filter(c =>
+      c._name.toLowerCase().includes(custSearch) ||
+      c._email.toLowerCase().includes(custSearch) ||
+      c._phone.includes(custSearch)
+    );
+  }
+
+  // Sort
+  filtered = filtered.slice().sort((a, b) => {
+    var va, vb;
+    if (custSortCol === 'name') { va = a._name.toLowerCase(); vb = b._name.toLowerCase(); }
+    else if (custSortCol === 'email') { va = a._email.toLowerCase(); vb = b._email.toLowerCase(); }
+    else if (custSortCol === 'bookings') { va = a._total_bookings; vb = b._total_bookings; }
+    else if (custSortCol === 'spent') { va = a._total_spent; vb = b._total_spent; }
+    else if (custSortCol === 'joined') { va = new Date(a._joined); vb = new Date(b._joined); }
+    else { va = new Date(a._joined); vb = new Date(b._joined); }
+    if (va < vb) return custSortDir === 'asc' ? -1 : 1;
+    if (va > vb) return custSortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  // Update stats with filtered results (NOTA 14)
+  populateCustomerStats(filtered);
+  renderCustomers(filtered);
+  updateCustomerSortHeaders();
+}
+
 
 async function viewCustomer(id) {
   var c = allCustomers.find(x => x.id === id);

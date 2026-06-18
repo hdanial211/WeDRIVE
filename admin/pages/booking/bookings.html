@@ -12,6 +12,18 @@
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../../shared/css/sidebar.css" />
   <link rel="stylesheet" href="../../css/admin.css" />
+  <style>
+    th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+    th.sortable:hover { color: var(--primary, #3B82F6); }
+    th.sort-asc::after { content: ' \2191'; color: var(--primary, #3B82F6); font-size: 11px; }
+    th.sort-desc::after { content: ' \2193'; color: var(--primary, #3B82F6); font-size: 11px; }
+    th.sort-asc, th.sort-desc { color: var(--primary, #3B82F6); }
+    .date-chip { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--slate-200, #E2E8F0); background: transparent; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--slate-500, #64748B); }
+    .date-chip:hover, .date-chip.active { background: var(--primary, #3B82F6); color: #fff; border-color: var(--primary, #3B82F6); }
+    .custom-date-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+    .custom-date-row input[type="date"] { padding: 6px 10px; border: 1.5px solid var(--slate-200, #E2E8F0); border-radius: 8px; font-size: 12px; background: var(--card-bg, #fff); color: var(--navy, #1E293B); }
+    .custom-date-row .apply-btn { padding: 7px 16px; border-radius: 8px; border: none; background: var(--primary, #3B82F6); color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; }
+  </style>
 
   <!-- AUTH GUARD -->
   <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
@@ -75,13 +87,29 @@
             </div>
           </div>
         </div>
+        <!-- Date Range Filter (NOTA 10) -->
+        <div style="margin-top:14px;border-top:1px solid var(--slate-100,#F1F5F9);padding-top:12px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--slate-400,#94A3B8);letter-spacing:0.5px;margin-bottom:8px;">Date Range (Pick-up Date)</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <button class="date-chip active" id="date-chip-all" onclick="filterByDate('all', this)">All Time</button>
+            <button class="date-chip" id="date-chip-month" onclick="filterByDate('month', this)">This Month</button>
+            <button class="date-chip" id="date-chip-year" onclick="filterByDate('year', this)">This Year</button>
+            <button class="date-chip" id="date-chip-custom" onclick="showCustomDateRow(this)">Custom Range</button>
+          </div>
+          <div class="custom-date-row" id="custom-date-row" style="display:none;">
+            <input type="date" id="bk-date-from" />
+            <span style="font-size:12px;color:var(--slate-400,#94A3B8)">to</span>
+            <input type="date" id="bk-date-to" />
+            <button class="apply-btn" onclick="applyCustomDate()">Apply</button>
+          </div>
+        </div>
       </div>
 
       <!-- BOOKINGS TABLE -->
       <div class="card reveal-on-scroll">
         <div class="card-header">
           <h3 data-key="bk_table_title">Booking Records</h3>
-          <button class="btn-primary-sm" onclick="alert('Add booking form coming soon')">
+          <button class="btn-primary-sm" onclick="openNewBookingModal()">
             <span class="material-icons-round" style="font-size:16px">add</span>
             <span data-key="bk_add">New Booking</span>
           </button>
@@ -90,12 +118,12 @@
           <table>
             <thead>
               <tr>
-                <th data-key="bk_th_id">Booking ID</th>
-                <th data-key="bk_th_customer">Customer</th>
-                <th data-key="bk_th_car">Vehicle</th>
-                <th data-key="bk_th_pickup">Pick-up</th>
-                <th data-key="bk_th_return">Return</th>
-                <th data-key="bk_th_total">Total (RM)</th>
+                <th class="sortable" id="bk-th-id" onclick="sortBy('id')" data-key="bk_th_id">Booking ID</th>
+                <th class="sortable" id="bk-th-customer" onclick="sortBy('customer')" data-key="bk_th_customer">Customer</th>
+                <th class="sortable" id="bk-th-car" onclick="sortBy('car')" data-key="bk_th_car">Vehicle</th>
+                <th class="sortable" id="bk-th-pickup" onclick="sortBy('pickup')" data-key="bk_th_pickup">Pick-up</th>
+                <th class="sortable" id="bk-th-return" onclick="sortBy('return')" data-key="bk_th_return">Return</th>
+                <th class="sortable" id="bk-th-total" onclick="sortBy('total')" data-key="bk_th_total">Total (RM)</th>
                 <th data-key="bk_th_payment">Payment</th>
                 <th data-key="bk_th_status">Status</th>
                 <th data-key="bk_th_action">Action</th>
@@ -121,5 +149,20 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../js/bookings.js"></script>
+  <script>
+    function showCustomDateRow(btn) {
+      var row = document.getElementById('custom-date-row');
+      var isShown = row && row.style.display !== 'none';
+      document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
+      if (!isShown) {
+        if (btn) btn.classList.add('active');
+        if (row) row.style.display = 'flex';
+      } else {
+        document.getElementById('date-chip-all').classList.add('active');
+        if (row) row.style.display = 'none';
+        filterByDate('all', null);
+      }
+    }
+  </script>
 </body>
 </html>

@@ -12,6 +12,13 @@
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../../shared/css/sidebar.css" />
   <link rel="stylesheet" href="../../css/admin.css" />
+  <style>
+    th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+    th.sortable:hover { color: var(--primary, #3B82F6); }
+    th.sort-asc::after { content: ' \2191'; color: var(--primary, #3B82F6); font-size: 11px; }
+    th.sort-desc::after { content: ' \2193'; color: var(--primary, #3B82F6); font-size: 11px; }
+    th.sort-asc, th.sort-desc { color: var(--primary, #3B82F6); }
+  </style>
   <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
 </head>
 <body data-particles="6" data-cursor-glow>
@@ -97,14 +104,14 @@
           <table>
             <thead>
               <tr>
-                <th data-key="cu_th_name">Name</th>
-                <th data-key="cu_th_email">Email</th>
+                <th class="sortable" id="cu-th-name" onclick="sortByCustomer('name')" data-key="cu_th_name">Name</th>
+                <th class="sortable" id="cu-th-email" onclick="sortByCustomer('email')" data-key="cu_th_email">Email</th>
                 <th data-key="cu_th_phone">Phone</th>
                 <th data-key="cu_th_license">License</th>
-                <th data-key="cu_th_bookings">Bookings</th>
-                <th data-key="cu_th_spent">Total Spent</th>
+                <th class="sortable" id="cu-th-bookings" onclick="sortByCustomer('bookings')" data-key="cu_th_bookings">Bookings</th>
+                <th class="sortable" id="cu-th-spent" onclick="sortByCustomer('spent')" data-key="cu_th_spent">Total Spent</th>
                 <th data-key="cu_th_status">Status</th>
-                <th data-key="cu_th_joined">Joined</th>
+                <th class="sortable" id="cu-th-joined" onclick="sortByCustomer('joined')" data-key="cu_th_joined">Joined</th>
                 <th data-key="cu_th_action">Action</th>
               </tr>
             </thead>

@@ -112,8 +112,19 @@
                         class="material-icons-round">verified</span> Verified</span></label><input type="email"
                     id="pf-email" value="" aria-label="Email Address" title="Email Address"
                     readonly /></div>
-                <div class="pf-field full"><label>Phone Number</label><input type="tel" id="pf-phone"
-                    value="" aria-label="Phone Number" title="Phone Number" readonly /></div>
+                <div class="pf-field full">
+                  <label>Phone Number</label>
+                  <div class="phone-input-wrapper" id="pf-phone-wrapper">
+                    <button type="button" class="phone-cc-btn" id="pf-phone-cc-btn" onclick="togglePhoneCCDropdown('pf-phone-cc')" disabled>
+                      <span class="phone-flag" id="pf-phone-flag">MY</span>
+                      <span class="phone-cc-code" id="pf-phone-cc-val">+60</span>
+                      <span class="material-icons-round" style="font-size:14px;opacity:0.5">expand_more</span>
+                    </button>
+                    <input type="tel" id="pf-phone" value="" aria-label="Phone Number" title="Phone Number"
+                      placeholder="12-345 6789" readonly oninput="formatPhoneInput(this)" />
+                    <div class="phone-cc-dropdown" id="pf-phone-cc" style="display:none;"></div>
+                  </div>
+                </div>
               </div>
               <h4 class="pf-sub-title">Residential Address</h4>
               <div class="pf-form-grid">
@@ -184,9 +195,17 @@
                 <div class="pf-otp-stack">
                   <div class="pf-field full">
                     <label>Verification Contact Number</label>
-                    <input type="tel" id="pf-reverify-phone" value=""
-                      aria-label="Verification Contact Number" title="Verification Contact Number"
-                      placeholder="+60 12-345 6789" />
+                    <div class="phone-input-wrapper" id="pf-reverify-phone-wrapper">
+                      <button type="button" class="phone-cc-btn" id="pf-reverify-cc-btn" onclick="togglePhoneCCDropdown('pf-reverify-cc')">
+                        <span class="phone-flag" id="pf-reverify-flag">MY</span>
+                        <span class="phone-cc-code" id="pf-reverify-cc-val">+60</span>
+                        <span class="material-icons-round" style="font-size:14px;opacity:0.5">expand_more</span>
+                      </button>
+                      <input type="tel" id="pf-reverify-phone" value=""
+                        aria-label="Verification Contact Number" title="Verification Contact Number"
+                        placeholder="12-345 6789" oninput="formatPhoneInput(this)" />
+                      <div class="phone-cc-dropdown" id="pf-reverify-cc" style="display:none;"></div>
+                    </div>
                   </div>
                 </div>
                 <div class="pf-otp-row">
@@ -1018,6 +1037,68 @@
   </script>
   <div id="chatbot-placeholder"></div>
   <script src="../../../shared/js/chatbot.js"></script>
+
+  <!-- Phone Country Code Selector JS (NOTA 7) -->
+  <script>
+    var PHONE_COUNTRIES = [
+      { code: 'MY', dial: '+60', name: 'Malaysia' },
+      { code: 'SG', dial: '+65', name: 'Singapore' },
+      { code: 'ID', dial: '+62', name: 'Indonesia' },
+      { code: 'TH', dial: '+66', name: 'Thailand' },
+      { code: 'BN', dial: '+673', name: 'Brunei' },
+      { code: 'PH', dial: '+63', name: 'Philippines' },
+      { code: 'JP', dial: '+81', name: 'Japan' },
+      { code: 'KR', dial: '+82', name: 'South Korea' },
+      { code: 'AU', dial: '+61', name: 'Australia' },
+      { code: 'GB', dial: '+44', name: 'United Kingdom' },
+      { code: 'US', dial: '+1', name: 'United States' }
+    ];
+    var phoneCCMap = {
+      'pf-phone-cc': { flag: 'pf-phone-flag', code: 'pf-phone-cc-val' },
+      'pf-reverify-cc': { flag: 'pf-reverify-flag', code: 'pf-reverify-cc-val' }
+    };
+    function buildPhoneCCDropdown(dropdownId) {
+      var dd = document.getElementById(dropdownId);
+      if (!dd) return;
+      var m = phoneCCMap[dropdownId] || {};
+      var currentCode = document.getElementById(m.code) ? document.getElementById(m.code).textContent : '+60';
+      dd.innerHTML = '';
+      PHONE_COUNTRIES.forEach(function(c) {
+        var opt = document.createElement('div');
+        opt.className = 'phone-cc-option' + (c.dial === currentCode ? ' active' : '');
+        opt.innerHTML = '<span class="cc-label">' + c.code + ' - ' + c.name + '</span><span class="cc-code">' + c.dial + '</span>';
+        opt.addEventListener('click', function() { selectPhoneCC(c, dropdownId); });
+        dd.appendChild(opt);
+      });
+    }
+    function togglePhoneCCDropdown(dropdownId) {
+      var dd = document.getElementById(dropdownId);
+      if (!dd) return;
+      var isOpen = dd.style.display !== 'none';
+      document.querySelectorAll('.phone-cc-dropdown').forEach(function(d) { d.style.display = 'none'; });
+      if (!isOpen) { buildPhoneCCDropdown(dropdownId); dd.style.display = 'block'; }
+    }
+    function selectPhoneCC(country, dropdownId) {
+      var m = phoneCCMap[dropdownId] || {};
+      var flagEl = document.getElementById(m.flag);
+      var codeEl = document.getElementById(m.code);
+      if (flagEl) flagEl.textContent = country.code;
+      if (codeEl) codeEl.textContent = country.dial;
+      var dd = document.getElementById(dropdownId);
+      if (dd) dd.style.display = 'none';
+    }
+    function formatPhoneInput(input) {
+      var val = input.value.replace(/[^\d]/g, '');
+      if (val.length <= 2) input.value = val;
+      else if (val.length <= 5) input.value = val.slice(0, 2) + '-' + val.slice(2);
+      else input.value = val.slice(0, 2) + '-' + val.slice(2, 5) + ' ' + val.slice(5, 9);
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.phone-input-wrapper')) {
+        document.querySelectorAll('.phone-cc-dropdown').forEach(function(d) { d.style.display = 'none'; });
+      }
+    });
+  </script>
 </body>
 
 </html>

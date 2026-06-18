@@ -5426,3 +5426,83 @@ body.night-mode .ca-preset-btn.active { background: var(--primary); border-color
   .ca-panel-actions-split { grid-template-columns: 1fr; }
   .ca-summary-item strong { text-align: left; }
 }
+
+/* ========================================================
+   PHONE NUMBER INPUT - Country Code Selector (NOTA 7)
+   ======================================================== */
+.phone-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--slate-200, #E2E8F0);
+  border-radius: 10px;
+  overflow: visible;
+  background: var(--input-bg, #fff);
+  transition: border-color 0.2s;
+}
+.phone-input-wrapper:focus-within {
+  border-color: var(--primary, #3B82F6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+}
+.phone-cc-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 12px;
+  height: 100%;
+  min-height: 44px;
+  background: var(--slate-50, #F8FAFC);
+  border: none;
+  border-right: 1.5px solid var(--slate-200, #E2E8F0);
+  border-radius: 8px 0 0 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy, #1E293B);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.phone-cc-btn:hover:not(:disabled) { background: var(--slate-100, #F1F5F9); }
+.phone-cc-btn:disabled { cursor: default; opacity: 0.85; }
+.phone-flag { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: var(--primary, #3B82F6); }
+.phone-cc-code { font-size: 13px; font-weight: 600; color: var(--slate-600, #475569); }
+.phone-input-wrapper input[type="tel"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--navy, #1E293B);
+  border-radius: 0 8px 8px 0;
+  min-width: 0;
+}
+.phone-input-wrapper input[type="tel"]::placeholder { color: var(--slate-300, #CBD5E1); }
+.phone-cc-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 220px;
+  background: var(--card-bg, #fff);
+  border: 1.5px solid var(--slate-200, #E2E8F0);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  z-index: 200;
+  padding: 6px 0;
+  overflow: hidden;
+}
+.phone-cc-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+  color: var(--navy, #1E293B);
+}
+.phone-cc-option:hover, .phone-cc-option.active { background: var(--primary, #3B82F6); color: #fff; }
+.phone-cc-option .cc-label { flex: 1; font-weight: 500; }
+.phone-cc-option .cc-code { font-size: 12px; font-weight: 700; opacity: 0.7; }
