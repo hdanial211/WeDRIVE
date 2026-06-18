@@ -151,7 +151,6 @@
 #hiwInteractiveFrame.is-switching {
   opacity: 0.16;
   transform: scale(0.985);
-  filter: blur(8px);
 }
 
 .hiw-frame-shadow,
