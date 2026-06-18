@@ -142,26 +142,45 @@
   will-change: transform, opacity, filter;
   border: 1px solid rgba(148, 163, 184, 0.20);
   box-shadow:
-    0 24px 60px rgba(15, 23, 42, 0.14),
-    0 0 35px rgba(37, 99, 235, 0.22),
-    0 0 70px rgba(99, 102, 241, 0.12),
-    0 0 0 1.5px rgba(255, 255, 255, 0.4) inset;
+    0 20px 48px rgba(15, 23, 42, 0.16),
+    0 0 0 1px rgba(255, 255, 255, 0.3) inset;
   background:
     radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 56%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(15, 23, 42, 0.12));
 }
 
-/* Night Mode: Vibrant glowing ambient lighting outside the frame */
+/* Night Mode: Clean elevation shadow */
 body.night-mode #hiwInteractiveFrame,
 body.night-mode [data-vehicle-exterior-frame],
 body.night-mode .vehicle-viewer-exterior {
-  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.65),
-    0 0 50px rgba(37, 99, 235, 0.65),
-    0 0 100px rgba(99, 102, 241, 0.45),
-    0 0 160px rgba(37, 99, 235, 0.25),
-    0 0 0 1.5px rgba(255, 255, 255, 0.12) inset;
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+/* Dynamic Ambilight Backdrop Glow (Matches image content edge colors) */
+.vehicle-viewer-ambilight {
+  position: absolute;
+  top: 4%;
+  left: 4%;
+  width: 92%;
+  height: 92%;
+  object-fit: cover;
+  border-radius: 34px;
+  filter: blur(44px) brightness(1.18) saturate(1.45);
+  opacity: 0.76;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+  transform: scale(0.98);
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+}
+
+body.night-mode .vehicle-viewer-ambilight {
+  opacity: 0.94;
+  filter: blur(52px) brightness(1.35) saturate(1.75);
+  transform: scale(0.99);
 }
 
 /* Night Mode: Stage backdrop glow behind image */

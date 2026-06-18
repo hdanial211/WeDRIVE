@@ -413,6 +413,19 @@
       modelRoot: root.getAttribute('data-vehicle-model-root') || opts.modelRoot || DEFAULT_MODEL_ROOT
     };
 
+    // Create Ambilight backdrop image element dynamically if not present
+    if (state.exteriorImage && !root.querySelector('.vehicle-viewer-ambilight')) {
+      var ambilight = document.createElement('img');
+      ambilight.className = 'vehicle-viewer-ambilight';
+      ambilight.src = state.exteriorImage.getAttribute('src') || '';
+      ambilight.setAttribute('aria-hidden', 'true');
+      ambilight.setAttribute('draggable', 'false');
+      state.exteriorImage.parentNode.insertBefore(ambilight, state.exteriorImage);
+      state.ambilightImage = ambilight;
+    } else {
+      state.ambilightImage = root.querySelector('.vehicle-viewer-ambilight') || null;
+    }
+
     function syncRootState() {
       root.classList.toggle('is-interior', state.viewMode === 'interior');
       root.classList.toggle('is-reference-interior', state.viewMode === 'interior' && state.manifest && !(state.manifest.interior && state.manifest.interior.full_res_pattern));
@@ -467,6 +480,9 @@
       state.lastExteriorFrame = safeFrame;
       state.exteriorImage.src = frameUrlForState(safeFrame);
       state.exteriorImage.alt = (state.manifest.__displayLabel || state.manifest.model || state.modelKey) + ' exterior 360 view';
+      if (state.ambilightImage) {
+        state.ambilightImage.src = state.exteriorImage.src;
+      }
     }
 
     function applyInteriorFaces() {
@@ -792,6 +808,9 @@
           if (state.exteriorImage) {
             state.exteriorImage.src = resolveExteriorFrameUrl(previousManifest, frame);
             state.exteriorImage.alt = (previousManifest.__displayLabel || previousManifest.model || nextKey) + ' exterior 360 view';
+            if (state.ambilightImage) {
+              state.ambilightImage.src = state.exteriorImage.src;
+            }
           }
 
           if (progress < 1) {
