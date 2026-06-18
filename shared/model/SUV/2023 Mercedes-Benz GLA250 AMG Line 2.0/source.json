@@ -14,8 +14,8 @@
   },
   "interior": {
     "viewer_supported": true,
-    "download_status": "viewer panorama is protected behind tour loader; frame export not publicly exposed via direct CDN paths in current fetch flow",
-    "full_res_pattern": null
+    "download_status": "downloaded",
+    "full_res_pattern": "interior/full-res/pano_{face}.jpg"
   },
   "placeholders": {
     "fallback": {
