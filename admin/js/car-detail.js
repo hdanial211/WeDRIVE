@@ -458,16 +458,36 @@ async function submitDeleteCar() {
       } catch (e) {}
     }
 
-    if (!adminEmail) {
-      if (errorDiv) {
-        errorDiv.textContent = isMalay ? 'Sesi Admin tidak dijumpai.' : 'Admin session not found.';
-        errorDiv.style.display = 'block';
+    // Verify if the email is an admin email in the admins table
+    let isAdmin = false;
+    if (adminEmail) {
+      try {
+        const checkAdmin = await window.supabaseClient
+          .from('admins')
+          .select('email')
+          .eq('email', adminEmail)
+          .maybeSingle();
+        if (checkAdmin.data) {
+          isAdmin = true;
+        }
+      } catch (e) {}
+    }
+
+    // If it's not an admin email (e.g. they logged in as a customer), fetch the first admin's email to verify the password against
+    if (!isAdmin) {
+      try {
+        const firstAdmin = await window.supabaseClient
+          .from('admins')
+          .select('email')
+          .limit(1);
+        if (firstAdmin.data && firstAdmin.data.length > 0) {
+          adminEmail = firstAdmin.data[0].email;
+        } else {
+          adminEmail = 'admin@wedrive.my';
+        }
+      } catch (e) {
+        adminEmail = 'admin@wedrive.my';
       }
-      if (confirmBtn) {
-        confirmBtn.disabled = false;
-        confirmBtn.innerHTML = confirmBtn.dataset.originalHtml;
-      }
-      return;
     }
 
     try {
