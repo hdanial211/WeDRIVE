@@ -473,8 +473,8 @@ body {
   background: linear-gradient(180deg, rgba(2,6,23,0) 0%, rgba(2,6,23,0.6) 100%);
 }
 .explore-hero-shell {
-  position: relative; z-index: 2; width: 100%; max-width: 1240px;
-  margin: 0 auto; padding: 128px 20px 96px;
+  position: relative; z-index: 2; width: 100%; max-width: 100%;
+  margin: 0 auto; padding: 128px 4% 96px;
   display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(320px, 380px);
   gap: 28px; align-items: end;
 }
@@ -539,7 +539,7 @@ body {
 
 /* Explore Showcase */
 .explore-showcase { position: relative; z-index: 3; margin-top: -34px; padding: 22px 0 100px; }
-.explore-shell { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+.explore-shell { max-width: 100%; margin: 0 auto; padding: 0 4%; }
 .explore-section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; padding-top: 16px; margin-bottom: 30px; }
 .explore-section-head > div { max-width: 760px; }
 .explore-section-head .section-eyebrow {
