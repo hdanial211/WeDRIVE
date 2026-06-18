@@ -357,12 +357,12 @@ async function deleteCar() {
     : `Are you sure you want to remove ${carData.name} (${carData.plate}) from the fleet?\n\nThis action cannot be undone.`;
 
   const promptMsg = isMalay
-    ? `Untuk mengesahkan pemadaman, sila taip nombor plat kenderaan "${carData.plate}" di bawah:`
-    : `To confirm deletion, please type the plate number of the vehicle "${carData.plate}":`;
+    ? `Sila masukkan kata laluan Admin anda untuk mengesahkan pemadaman:`
+    : `Please enter your Admin password to confirm deletion:`;
 
   const errorMsg = isMalay
-    ? 'Nombor plat tidak betul. Pemadaman dibatalkan.'
-    : 'Incorrect plate number. Deletion cancelled.';
+    ? 'Kata laluan salah atau tidak sah. Pemadaman dibatalkan.'
+    : 'Incorrect or invalid password. Deletion cancelled.';
 
   const successToast = isMalay
     ? 'Kenderaan telah dikeluarkan dari pangkalan data!'
@@ -372,13 +372,61 @@ async function deleteCar() {
     ? 'Kenderaan telah dikeluarkan (mod demo)'
     : 'Vehicle removed (demo mode)';
 
+  const verifyingMsg = isMalay ? 'Mengesahkan kata laluan...' : 'Verifying password...';
+
   const firstConfirm = confirm(confirmMsg1);
   if (!firstConfirm) return;
 
-  const userInput = prompt(promptMsg);
-  if (userInput === null) return; // User cancelled
+  const passwordInput = prompt(promptMsg);
+  if (passwordInput === null) return; // User cancelled
+  if (!passwordInput.trim()) {
+    alert(errorMsg);
+    return;
+  }
 
-  if (userInput.trim().toUpperCase() !== carData.plate.toUpperCase()) {
+  // Show a loading toast or visual feedback since network request takes a moment
+  showToast(verifyingMsg, 'info');
+
+  let verified = false;
+
+  // Retrieve admin email
+  let adminEmail = '';
+  try {
+    const session = JSON.parse(localStorage.getItem('wedrive_session'));
+    if (session && session.email) {
+      adminEmail = session.email;
+    }
+  } catch(e) {}
+
+  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+    if (!adminEmail) {
+      try {
+        const userResult = await window.supabaseClient.auth.getUser();
+        if (userResult.data && userResult.data.user) {
+          adminEmail = userResult.data.user.email;
+        }
+      } catch (e) {}
+    }
+
+    if (!adminEmail) {
+      alert(isMalay ? 'Sesi Admin tidak dijumpai. Sila log masuk semula.' : 'Admin session not found. Please log in again.');
+      return;
+    }
+
+    try {
+      const loginResult = await window.WeDriveAPI.loginUser(adminEmail, passwordInput);
+      if (loginResult && loginResult.success && loginResult.role === 'admin') {
+        verified = true;
+      }
+    } catch (err) {
+      console.error('[WeDRIVE] Re-auth verification error:', err);
+    }
+  } else {
+    // Demo mode: accept any password
+    verified = true;
+  }
+
+  if (!verified) {
     alert(errorMsg);
     return;
   }
