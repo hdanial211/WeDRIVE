@@ -31,6 +31,9 @@ window.WeDriveAPI.getAdminData()
     });
     populateBookingStats(allBookings);
     applyFilters();
+    if (new URLSearchParams(window.location.search).get('action') === 'add') {
+      openNewBookingModal();
+    }
   })
   .catch(err => console.error('Bookings data load error:', err));
 

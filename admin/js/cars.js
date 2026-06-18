@@ -14,6 +14,9 @@ window.WeDriveAPI.getAdminData()
     populateCarStats(allCar);
     renderCarCards(allCar);
     renderCarTable(allCar);
+    if (new URLSearchParams(window.location.search).get('action') === 'add') {
+      addNewCar();
+    }
   })
   .catch(err => console.error('Car data load error:', err));
 
