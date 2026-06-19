@@ -208,8 +208,6 @@ AI CAR RENTAL SYSTEM/
     |   +-- chatbot.css         # Gaya Komponen WeDRIVE AI Chatbot
     |   +-- animation.css       # Gaya animasi (reveal, particles, dll)
     |   +-- vehicle-viewer.css  # Gaya global viewer 360 exterior + interior cubemap
-    +-- dummy/
-    |   +-- data.json            # Data Mockup Tunggal (Single Source of Truth)
     +-- lang/
     |   +-- en.json             # Bahasa Inggeris (JSON Source)
     |   +-- ms.json             # Bahasa Melayu (JSON Source)
@@ -225,7 +223,7 @@ AI CAR RENTAL SYSTEM/
         +-- auth-guard.js       # Pelindung halaman (Auth Guard)
         +-- sidebar-loader.js   # Pemuat Sidebar Admin
         +-- navbar-loader.js    # Pemuat Navbar Global
-        +-- api.js              # API & CONFIGURATION (Pusat Database - Firebase/Dummy)
+        +-- api.js              # API & CONFIGURATION (Pusat Database - Supabase PostgreSQL)
         +-- supabase-config.js  # Supabase Client Initializer (Auth + DB)
         +-- chatbot.js          # Modul Utama WeDRIVE AI Chatbot
         +-- email-service.js    # EmailJS SMTP notification service (verification emails)
@@ -240,34 +238,7 @@ AI CAR RENTAL SYSTEM/
 
 ## Pusat Pangkalan Data (The api.js File)
 
-Saya telah mencipta satu fail baharu: shared/js/api.js.
-Fail ini adalah Pusat Sambungan API. Semua halaman HTML kini disambungkan ke fail ini.
-
-Kenapa api.js sangat membantu?
-1. Satu Tempat Untuk Semua: Anda tidak perlu lagi buka customer.js, admin.js, atau login.js untuk ubah fetch(url). Semua data diambil melalui fail api.js.
-2. Mudah Tukar ke Database Sebenar: Jika anda nak mula gunakan Supabase, Firebase, atau MySQL, anda hanya perlu tukar 1 baris kod sahaja.
-
-Cara Menggunakan Database Sebenar:
-Buka shared/js/api.js. Anda akan nampak blok kod ini:
-
-```javascript
-window.AppConfig = {
-    // Tukar dari `false` ke `true` apabila database anda sudah sedia!
-    USE_REAL_DB: false, 
-    
-    // Letakkan URL API Database sebenar anda di sini
-    API_BASE_URL: "http://localhost:3000/api",
-    
-    endpoints: {
-        cars: "/cars",
-        bookings: "/bookings",
-        customers: "/customers",
-        login: "/auth/login"
-    }
-};
-```
-
-Apabila anda set USE_REAL_DB: true, keseluruhan sistem WeDRIVE (Admin, Customer, Landing page) akan berhenti membaca fail JSON (dummy) dan terus mula mengambil data daripada pelayan (server) pangkalan data anda!
+Sistem WeDRIVE kini beroperasi secara penuh menggunakan pangkalan data **Supabase PostgreSQL** (`USE_REAL_DB: true` secara lalai). Semua data kereta, tempahan, pelanggan, dan tetapan chatbot disimpan secara dinamik pada database tersebut.
 
 ---
 
