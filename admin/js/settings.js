@@ -36,7 +36,7 @@ function populateSettings(s) {
     locList.innerHTML = locations.map(loc => `
       <div style="display:flex;align-items:center;gap:8px;background:var(--slate-50);padding:10px 16px;border-radius:10px;border:1px solid var(--slate-200);">
         <span class="material-icons-round" style="font-size:18px;color:var(--primary)">location_on</span>
-        <span style="font-size:13px;font-weight:600;color:var(--navy);">${loc}</span>
+        <span style="font-size:13px;font-weight:600;color:var(--text-primary);">${loc}</span>
       </div>
     `).join('');
   }

@@ -247,5 +247,23 @@ tr:hover td { background: var(--table-row-hover) !important; }
   animation: iconPop 0.28s cubic-bezier(.4,0,.2,1);
 }
 
+/* Specific overrides to prevent module CSS files (admin.css, customer.css) from resetting theme variables in Night Mode */
+:root.night-mode {
+  --primary: #adc6ff;
+  --primary-dark: #6a9bff;
+  --navy: #e3e5e8;
+  --sidebar-bg: #0a0d11;
+  --sidebar-hover: #191c21;
+  --slate-50: #111418;
+  --slate-100: #23282f;
+  --slate-200: #32373e;
+  --slate-400: #8B949E;
+  --slate-600: #8B949E;
+  --white: #e3e5e8;
+  --success: #3FB950;
+  --warning: #D29922;
+  --danger: #ffb4ab;
+}
+
 
 
