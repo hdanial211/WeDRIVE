@@ -32,7 +32,7 @@ function populateSettings(s) {
   // Pickup locations
   var locList = document.getElementById('locations-list');
   if (locList) {
-    var locations = s.pickup_locations || ['Melaka Sentral', 'Melaka Airport', 'Ayer Keroh Toll'];
+    var locations = s.pickup_locations || ['Melaka Sentral'];
     locList.innerHTML = locations.map(loc => `
       <div style="display:flex;align-items:center;gap:8px;background:var(--slate-50);padding:10px 16px;border-radius:10px;border:1px solid var(--slate-200);">
         <span class="material-icons-round" style="font-size:18px;color:var(--primary)">location_on</span>

@@ -431,7 +431,7 @@ window.sendChat = async function() {
 - Email Contact: admin@wedrive.my
 - Operating Hours: 8AM - 10PM daily
 - Security Deposit: RM 500 (refundable)
-- Pickup & Drop-off Locations: Melaka Sentral, KLIA2, Dataran Pahlawan, Ayer Keroh, Jonker Street
+- Pickup & Drop-off Locations: Melaka Sentral (Company HQ Office is at Lot 123, Jalan Hang Tuah, 75300 Melaka)
 `;
       }
 
