@@ -85,7 +85,6 @@
             </div>
           </div>
           <div class="active-actions">
-            <button class="active-action-btn primary" type="button" onclick="handleBookingAction('access')"><span class="material-icons-round">key</span> <span>Access Car</span></button>
             <button class="active-action-btn outline" type="button" onclick="handleBookingAction('extend')"><span class="material-icons-round">calendar_month</span> <span data-key="mybk_extend">Extend Rental</span></button>
             <button class="active-action-btn outline" type="button" onclick="handleBookingAction('report')"><span class="material-icons-round">report</span> <span data-key="mybk_report">Report Issue</span></button>
           </div>
@@ -259,7 +258,7 @@
         html += '      <div class="mybk-card-price' + (b.status === 'Cancelled' ? ' is-muted' : '') + '">' + (b.status === 'Cancelled' ? 'RM 0.00' : fmtRM(b.total)) + '</div>';
         html += '      <div class="mybk-card-actions">';
         if (b.status === 'Active') {
-          html += '<button class="view-btn" type="button" onclick="handleBookingAction(\'access\')">Access Car</button>';
+          html += '<button class="view-btn" type="button" onclick="handleBookingAction(\'extend\')">Extend Rental</button>';
         } else if (b.status === 'Pending') {
           html += '<button class="view-btn" type="button" onclick="handleBookingAction(\'view-upcoming\')">View Details</button>';
           html += '<span class="divider">|</span>';
@@ -307,7 +306,6 @@
     });
 
     function handleBookingAction(action) {
-      if (action === 'access') { location.href = '../car-access/car-access.html'; return; }
       if (action === 'extend' || action === 'view-upcoming') { location.href = '../car-details/booking/booking.html'; return; }
       if (action === 'report') { location.href = '../support/support.html'; return; }
       if (action === 'directions') { location.href = '../../../shared/pages/footer/contact/contact.html'; return; }

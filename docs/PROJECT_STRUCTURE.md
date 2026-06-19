@@ -101,8 +101,6 @@ AI CAR RENTAL SYSTEM/
 |   +-- pages/                           # FLOW: Dashboard > Car Details > Booking > Payment > Confirmed
 |   |   +-- dashboard/
 |   |   |   +-- customer.html            # Customer Dashboard (Pilih Kereta)
-|   |   +-- car-access/
-|   |   |   +-- car-access.html          # Kawalan kereta aktif / Digital Key selepas pick-up
 |   |   +-- car-details/
 |   |   |   +-- car-details.html         # Detail Kereta (Premium Gallery)
 |   |   |   +-- booking/
@@ -117,8 +115,6 @@ AI CAR RENTAL SYSTEM/
 |   |   |       +-- receipt.html         # Resit / Invois Tempahan
 |   |   +-- profile/
 |   |   |   +-- profile.html            # Pengurusan Profil Customer
-|   |   +-- ai-insights/
-|   |   |   +-- ai-insights.html        # Dashboard AI Insights
 |   |   +-- support/
 |   |   |   +-- support.html            # Pusat Bantuan & Sokongan
 |   +-- css/
@@ -126,7 +122,6 @@ AI CAR RENTAL SYSTEM/
 |   +-- js/
 |       +-- customer.js                  # Logik Customer + Car Details (digabung)
 |       +-- sidebar-loader.js            # Pemuat Sidebar + Navbar Customer (seragam)
-|       +-- ai-insights.js               # Logik Papan Pemuka AI Insights
 |
 +-- shared/                     # FAIL PERKONGSIAN GLOBAL (PENTING)
     +-- pages/                  # Halaman dikongsi semua modul

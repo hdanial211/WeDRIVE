@@ -174,39 +174,6 @@
         updateActiveBookingSection();
       }
     });
-
-    if (activeBookingCard) {
-      var goToActiveBooking = function () {
-        var target = activeBookingCard.getAttribute('data-href');
-        if (target) {
-          window.location.href = target;
-        }
-      };
-
-      activeBookingCard.addEventListener('click', function () {
-        goToActiveBooking();
-      });
-
-      activeBookingCard.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          goToActiveBooking();
-        }
-      });
-
-      activeBookingCard.querySelectorAll('button').forEach(function (button) {
-        button.addEventListener('click', function (event) {
-          event.preventDefault();
-          event.stopPropagation();
-          var buttonTarget = button.getAttribute('data-href');
-          if (buttonTarget) {
-            window.location.href = buttonTarget;
-            return;
-          }
-          goToActiveBooking();
-        });
-      });
-    }
   }
 
   function syncFilterChips() {

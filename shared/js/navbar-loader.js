@@ -49,8 +49,7 @@
     customer: {
       links: [
         { key: 'nav_browse',   href: '{base}customer/pages/dashboard/customer.html',           label: 'Browse Cars',   id: 'nl-browse'   },
-        { key: 'nav_bookings', href: '{base}customer/pages/my-bookings/my-bookings.html',      label: 'My Bookings',   id: 'nl-bookings' },
-        { key: 'nav_ai',       href: '{base}customer/pages/ai-insights/ai-insights.html',       label: 'AI Insights',   id: 'nl-ai' }
+        { key: 'nav_bookings', href: '{base}customer/pages/my-bookings/my-bookings.html',      label: 'My Bookings',   id: 'nl-bookings' }
       ],
       actions: `
         <a href="{base}customer/pages/profile/profile.html" class="user-pill" id="user-pill" style="text-decoration:none;cursor:pointer;" title="My Profile">
