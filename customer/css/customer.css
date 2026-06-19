@@ -1741,10 +1741,16 @@ body.night-mode .melaka-guide {
 @media (max-width: 900px) {
   .guest-section-heading {
     display: block;
+    text-align: center;
+  }
+
+  .guest-section-heading p {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .car-tools {
-    justify-content: flex-start;
+    justify-content: center;
     margin-top: 18px;
   }
 
@@ -1789,12 +1795,15 @@ body.night-mode .melaka-guide {
   }
 
   .guest-page .login-banner-inner {
-    justify-content: flex-start;
+    justify-content: center;
+    text-align: center;
     flex-wrap: wrap;
+    gap: 8px;
   }
 
   .guest-page .guest-hero {
     padding: 44px 18px 34px;
+    text-align: center;
   }
 
   .guest-page .guest-hero-shell,
@@ -1806,13 +1815,25 @@ body.night-mode .melaka-guide {
   .guest-page .guest-hero-showcase,
   .guest-page .guest-search {
     width: 100%;
-    max-width: 354px;
+    max-width: 100%;
   }
 
   .guest-page .guest-hero-shell,
   .guest-page .guest-search {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .guest-page .guest-hero-shell {
+    text-align: center;
+  }
+
+  .guest-page .guest-search {
+    text-align: left;
+  }
+
+  .guest-page .guest-search .search-title {
+    justify-content: center;
   }
 
   .guest-page .guest-hero h1 {
@@ -1823,6 +1844,12 @@ body.night-mode .melaka-guide {
 
   .guest-page .guest-hero p {
     font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .guest-page .guest-metrics div {
+    text-align: center;
   }
 
   .guest-section-heading h2 {
@@ -1864,6 +1891,7 @@ body.night-mode .melaka-guide {
   .results-count {
     width: 100%;
     margin-left: 0;
+    text-align: center;
   }
 
   .car-footer {
