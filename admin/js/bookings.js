@@ -37,6 +37,7 @@ window.WeDriveAPI.getAdminData()
       if (searchInput) searchInput.value = searchParam;
     }
     applyFilters();
+    renderTodayPickups();
     if (new URLSearchParams(window.location.search).get('action') === 'add') {
       openNewBookingModal();
     }
@@ -363,6 +364,7 @@ async function confirmStatusUpdate(id) {
       b.status = newStatus;
       populateBookingStats(allBookings);
       applyFilters();
+      renderTodayPickups();
       closeStatusModal();
       showToast('Booking #' + id + ' updated to ' + newStatus, 'success');
     } catch (err) {
@@ -373,6 +375,7 @@ async function confirmStatusUpdate(id) {
     b.status = newStatus;
     populateBookingStats(allBookings);
     applyFilters();
+    renderTodayPickups();
     closeStatusModal();
     showToast('Status updated (demo)', 'success');
   }
@@ -526,6 +529,110 @@ async function submitNewBooking() {
     allBookings.unshift({ id: demoId, _customer: custName, _car_name: carName, _car_plate: carPlate, _pickup: pickup.value, _return: returnD.value, _days: days, _total: total, payment: 'Unpaid', status: 'Pending' });
   }
   applyFilters();
+  renderTodayPickups();
   closeNewBookingModal();
   showToast('Booking created successfully.', 'success');
 }
+
+/* -- Today's Pickups & Handovers Logic -- */
+function renderTodayPickups() {
+  var tbody = document.getElementById('today-pickups-tbody');
+  var badge = document.getElementById('today-count-badge');
+  var dateDisplay = document.getElementById('today-date-display');
+  if (!tbody) return;
+
+  var localToday = new Date();
+  var offset = localToday.getTimezoneOffset();
+  localToday = new Date(localToday.getTime() - (offset * 60 * 1000));
+  var todayStr = localToday.toISOString().slice(0, 10);
+
+  if (dateDisplay) {
+    dateDisplay.textContent = localToday.toLocaleDateString('en-MY', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  var todayBookings = allBookings.filter(b => {
+    var isToday = b._pickup === todayStr;
+    var isActiveOrUpcoming = b.status === 'Confirmed' || b.status === 'Pending' || b.status === 'Active';
+    return isToday && isActiveOrUpcoming;
+  });
+
+  todayBookings.sort((a, b) => {
+    if (a.status === 'Active' && b.status !== 'Active') return 1;
+    if (a.status !== 'Active' && b.status === 'Active') return -1;
+    return b.id - a.id;
+  });
+
+  var pendingHandovers = todayBookings.filter(b => b.status === 'Confirmed' || b.status === 'Pending').length;
+  if (badge) {
+    badge.textContent = pendingHandovers + ' pending';
+    badge.className = 'status-badge ' + (pendingHandovers > 0 ? 'pending' : 'completed');
+  }
+
+  if (todayBookings.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94A3B8;padding:24px">No handovers scheduled for today.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = todayBookings.map(b => {
+    var statusClass = b.status.toLowerCase();
+    var paymentClass = b.payment === 'Paid' ? 'available' : 'maintenance';
+    
+    var actionHtml = '';
+    if (b.status === 'Confirmed' || b.status === 'Pending') {
+      actionHtml = `
+        <button class="btn-primary-sm" onclick="quickHandover('${b.id}')" style="font-size:12px;padding:6px 12px;background:#059669;border-color:#059669;display:flex;align-items:center;gap:4px;margin:0 auto;">
+          <span class="material-icons-round" style="font-size:14px">vpn_key</span> Handover
+        </button>
+      `;
+    } else {
+      actionHtml = `
+        <span style="color:#059669;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:4px;">
+          <span class="material-icons-round" style="font-size:16px">check_circle</span> Active / Driving
+        </span>
+      `;
+    }
+
+    return `
+    <tr style="border-bottom: 1px solid var(--slate-100,#F1F5F9);">
+      <td><strong>#${b.id}</strong></td>
+      <td>${b._customer}</td>
+      <td>${b._car_name}<br><small style="color:#94A3B8">${b._car_plate}</small></td>
+      <td><span class="material-icons-round" style="font-size:14px;vertical-align:middle;color:var(--primary);">place</span> ${b.pickup_loc || b.pickup_location || 'Melaka Sentral'}</td>
+      <td><strong>RM ${b._total.toLocaleString()}</strong></td>
+      <td><span class="status-badge ${paymentClass}"><span class="dot"></span> ${b.payment}</span></td>
+      <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${b.status}</span></td>
+      <td style="text-align:center;">
+        ${actionHtml}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+window.quickHandover = async function(id) {
+  var b = allBookings.find(x => String(x.id) === String(id));
+  if (!b) return;
+
+  if (!confirm("Confirm car handover for Booking #" + id + "? Status will be updated to Active.")) return;
+
+  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+    try {
+      var result = await window.supabaseClient.from('bookings').update({ status: 'Active' }).eq('id', id);
+      if (result.error) throw result.error;
+      b.status = 'Active';
+      populateBookingStats(allBookings);
+      applyFilters();
+      renderTodayPickups();
+      showToast('Booking #' + id + ' set to Active', 'success');
+    } catch (err) {
+      console.error('[WeDRIVE] Handover error:', err);
+      showToast('Error updating status', 'info');
+    }
+  } else {
+    b.status = 'Active';
+    populateBookingStats(allBookings);
+    applyFilters();
+    renderTodayPickups();
+    showToast('Status updated to Active (demo)', 'success');
+  }
+};
+
