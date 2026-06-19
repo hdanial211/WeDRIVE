@@ -26,47 +26,48 @@
           <span>WeDRIVE</span>
         </div>
         <div class="receipt-id">
-          <strong>WD-9842-AX</strong>
-          <small>Nov 15, 2024</small>
+          <strong id="receipt-booking-id">WD-9842-AX</strong>
+          <small id="receipt-booking-date">Nov 15, 2024</small>
         </div>
       </div>
       <div class="receipt-body">
         <div class="receipt-section">
           <h4>Customer Information</h4>
-          <div class="receipt-row"><span>Name</span><span class="value">Ahmad bin Ali</span></div>
-          <div class="receipt-row"><span>Email</span><span class="value">ahmad@email.com</span></div>
-          <div class="receipt-row"><span>Phone</span><span class="value">+60 12-345 6789</span></div>
-          <div class="receipt-row"><span>License No.</span><span class="value">D12345678</span></div>
+          <div class="receipt-row"><span>Name</span><span class="value" id="receipt-cust-name">Ahmad bin Ali</span></div>
+          <div class="receipt-row"><span>Email</span><span class="value" id="receipt-cust-email">ahmad@email.com</span></div>
+          <div class="receipt-row"><span>Phone</span><span class="value" id="receipt-cust-phone">+60 12-345 6789</span></div>
+          <div class="receipt-row"><span>License No.</span><span class="value" id="receipt-cust-license">D12345678</span></div>
         </div>
         <div class="receipt-divider"></div>
         <div class="receipt-section">
           <h4>Vehicle Details</h4>
-          <div class="receipt-row"><span>Vehicle</span><span class="value">BMW 320i M Sport (2023)</span></div>
-          <div class="receipt-row"><span>Category</span><span class="value">Premium Sedan - M Sport</span></div>
-          <div class="receipt-row"><span>Plate No.</span><span class="value">WDR 3388</span></div>
+          <div class="receipt-row"><span>Vehicle</span><span class="value" id="receipt-car-name">BMW 320i M Sport (2023)</span></div>
+          <div class="receipt-row"><span>Category</span><span class="value" id="receipt-car-category">Premium Sedan - M Sport</span></div>
+          <div class="receipt-row"><span>Plate No.</span><span class="value" id="receipt-car-plate">WDR 3388</span></div>
         </div>
         <div class="receipt-divider"></div>
         <div class="receipt-section">
           <h4>Rental Period</h4>
-          <div class="receipt-row"><span>Pick-up</span><span class="value">Nov 15, 2024 - 10:00 AM</span></div>
-          <div class="receipt-row"><span>Return</span><span class="value">Nov 18, 2024 - 10:00 AM</span></div>
-          <div class="receipt-row"><span>Duration</span><span class="value">3 Days</span></div>
-          <div class="receipt-row"><span>Location</span><span class="value">Melaka Central Hub</span></div>
+          <div class="receipt-row"><span>Pick-up</span><span class="value" id="receipt-pickup-time">Nov 15, 2024 - 10:00 AM</span></div>
+          <div class="receipt-row"><span>Return</span><span class="value" id="receipt-return-time">Nov 18, 2024 - 10:00 AM</span></div>
+          <div class="receipt-row"><span>Duration</span><span class="value" id="receipt-duration">3 Days</span></div>
+          <div class="receipt-row"><span>Location</span><span class="value" id="receipt-location">Melaka Central Hub</span></div>
         </div>
         <div class="receipt-divider"></div>
         <div class="receipt-section">
           <h4>Payment Breakdown</h4>
-          <div class="receipt-row"><span>Base Rate (RM 450 x 3 days)</span><span class="value">RM 1,350.00</span></div>
-          <div class="receipt-row"><span>Service Fee</span><span class="value">RM 50.00</span></div>
-          <div class="receipt-row"><span>Insurance (Basic)</span><span class="value">RM 0.00</span></div>
-          <div class="receipt-row discount"><span>AI Dynamic Discount</span><span class="value">- RM 120.00</span></div>
-          <div class="receipt-row"><span>Security Deposit (refundable)</span><span class="value">RM 500.00</span></div>
-          <div class="receipt-total"><span>Total Paid</span><span class="total-amount">RM 1,780.00</span></div>
-          <div class="receipt-paid"><span class="material-icons-round">check_circle</span> Payment Successful - Visa ending 1111</div>
+          <div class="receipt-row" id="receipt-base-row"><span>Base Rate</span><span class="value" id="receipt-base-amount">RM 1,350.00</span></div>
+          <div class="receipt-row" id="receipt-service-row"><span>Service Fee</span><span class="value" id="receipt-service-amount">RM 50.00</span></div>
+          <div class="receipt-row" id="receipt-insurance-row"><span>Insurance (Basic)</span><span class="value" id="receipt-insurance-amount">RM 0.00</span></div>
+          <div class="receipt-row discount" id="receipt-discount-row"><span>AI Dynamic Discount</span><span class="value" id="receipt-discount-amount">- RM 120.00</span></div>
+          <div class="receipt-row" id="receipt-tax-row" style="display: none;"><span>Tax (0%)</span><span class="value" id="receipt-tax-amount">RM 0.00</span></div>
+          <div class="receipt-row" id="receipt-deposit-row"><span>Security Deposit (refundable)</span><span class="value" id="receipt-deposit-amount">RM 500.00</span></div>
+          <div class="receipt-total"><span>Total Paid</span><span class="total-amount" id="receipt-total-amount">RM 1,780.00</span></div>
+          <div class="receipt-paid" id="receipt-payment-status"><span class="material-icons-round">check_circle</span> Payment Successful - Visa ending 1111</div>
         </div>
       </div>
       <div class="receipt-footer">
-        <p>Thank you for choosing WeDRIVE. For support, contact support@wedrive.my or call +60 6-123 4567</p>
+        <p id="receipt-footer-text">Thank you for choosing WeDRIVE. For support, contact <span data-company-email>support@wedrive.my</span> or call <span data-company-phone>+60 6-123 4567</span></p>
         <div class="receipt-actions">
           <button class="receipt-btn outline" type="button" onclick="window.print()"><span class="material-icons-round">print</span> Print</button>
           <button class="receipt-btn outline" type="button" onclick="downloadReceiptDemo(this)"><span class="material-icons-round">download</span> Download PDF</button>
@@ -88,6 +89,203 @@
       button.innerHTML = '<span class="material-icons-round">download_done</span> PDF Ready';
       window.setTimeout(function () { window.print(); }, 300);
     }
+
+    async function initReceipt() {
+      var booking = null;
+      try {
+        booking = JSON.parse(sessionStorage.getItem('receipt_booking'));
+      } catch (e) {
+        console.error('Error loading receipt booking:', e);
+      }
+
+      var settings = {
+        currency: 'MYR',
+        tax_rate: 0,
+        deposit_percentage: 20
+      };
+
+      if (window.WeDriveGetSettings) {
+        try {
+          settings = await window.WeDriveGetSettings();
+        } catch (e) {}
+      }
+
+      var currency = settings.currency || 'MYR';
+
+      if (!booking) {
+        // Try fallback to last confirmed booking
+        try {
+          var confirmed = sessionStorage.getItem('confirmed_booking');
+          if (confirmed) {
+            booking = JSON.parse(confirmed);
+          }
+        } catch(e) {}
+      }
+
+      if (!booking) {
+        // Fetch last booking from DB
+        try {
+          var sb = window.supabaseClient;
+          if (sb) {
+            var userResult = await sb.auth.getUser();
+            var user = userResult && userResult.data && userResult.data.user;
+            if (user) {
+              var bookings = await window.WeDriveAPI.getCustomerBookings(user.id);
+              if (bookings && bookings.length > 0) {
+                // Find first completed or confirmed booking
+                booking = bookings.find(function(b) { return b.status === 'Completed'; }) || bookings[0];
+              }
+            }
+          }
+        } catch (err) {
+          console.error('Error fetching fallback booking for receipt:', err);
+        }
+      }
+
+      if (!booking) {
+        // Default demo fallback values if everything else fails
+        booking = {
+          booking_id: 'WD-9842-AX',
+          car: 'BMW 320i M Sport',
+          plate: 'WDR 3388',
+          customer: 'Ahmad bin Ali',
+          email: 'ahmad@email.com',
+          phone: '+60 12-345 6789',
+          start_date: '2026-05-22',
+          end_date: '2026-05-25',
+          days: 3,
+          daily: 450,
+          total: 1350 + 50 - 120,
+          pickup: 'Melaka Central Hub',
+          created_at: new Date().toISOString()
+        };
+      }
+
+      function fmtDate(d) {
+        if (!d) return '--';
+        var dt = new Date(d);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear();
+      }
+
+      function fmtCurrency(val) {
+        return currency + ' ' + Number(val || 0).toFixed(2);
+      }
+
+      // Populate elements
+      document.getElementById('receipt-booking-id').textContent = booking.booking_id || booking.id || 'WD-XXXX-XX';
+      document.getElementById('receipt-booking-date').textContent = fmtDate(booking.created_at || booking.start_date);
+      
+      document.getElementById('receipt-cust-name').textContent = booking.customer || 'Guest User';
+      document.getElementById('receipt-cust-email').textContent = booking.email || '--';
+      document.getElementById('receipt-cust-phone').textContent = booking.phone || '--';
+      
+      // Try to load customer profile to get license
+      if (window.supabaseClient && booking.auth_uid) {
+        try {
+          var profile = await window.WeDriveAPI.getCustomerProfile(booking.auth_uid);
+          if (profile && profile.license) {
+            document.getElementById('receipt-cust-license').textContent = profile.license;
+          } else if (booking.ic) {
+            document.getElementById('receipt-cust-license').textContent = 'Verified (IC: ' + booking.ic + ')';
+          }
+        } catch(e) {}
+      } else if (booking.ic) {
+        document.getElementById('receipt-cust-license').textContent = 'Verified (IC: ' + booking.ic + ')';
+      }
+
+      document.getElementById('receipt-car-name').textContent = booking.car || 'Standard Car';
+      document.getElementById('receipt-car-plate').textContent = booking.plate || '--';
+      
+      // Determine category
+      var category = 'Premium vehicle';
+      if (booking.car) {
+        var lower = booking.car.toLowerCase();
+        if (lower.includes('myvi') || lower.includes('city') || lower.includes('vios')) category = 'Sedan / Hatchback';
+        else if (lower.includes('gla') || lower.includes('x50') || lower.includes('ativa')) category = 'SUV / Crossover';
+        else if (lower.includes('camry') || lower.includes('bmw')) category = 'Premium Sedan';
+      }
+      document.getElementById('receipt-car-category').textContent = category;
+
+      document.getElementById('receipt-pickup-time').textContent = fmtDate(booking.start_date) + ' - 10:00 AM';
+      document.getElementById('receipt-return-time').textContent = fmtDate(booking.end_date) + ' - 10:00 AM';
+      document.getElementById('receipt-duration').textContent = (booking.days || 1) + ' Day' + ((booking.days || 1) > 1 ? 's' : '');
+      document.getElementById('receipt-location').textContent = booking.pickup || 'Melaka Sentral';
+
+      // Financial calculations
+      var days = booking.days || 1;
+      var dailyRate = Number(booking.daily) || 120;
+      var baseCost = dailyRate * days;
+      var serviceFee = 15; 
+      
+      // Addon details
+      var addonCost = 0;
+      var addonLabel = 'None';
+      // If we can infer addons from booking total
+      var diff = Number(booking.total) - baseCost - serviceFee;
+      
+      // Check tax first
+      var taxRate = Number(settings.tax_rate) || 0;
+      // total = (baseCost + addonCost) * (1 + taxRate/100) + serviceFee
+      // total - serviceFee = (baseCost + addonCost) * (1 + taxRate/100)
+      // baseCost + addonCost = (total - serviceFee) / (1 + taxRate/100)
+      var subtotal = (Number(booking.total) - serviceFee) / (1 + (taxRate / 100));
+      addonCost = Math.max(0, subtotal - baseCost);
+      var taxCost = (baseCost + addonCost) * (taxRate / 100);
+
+      // Deposit
+      var depositRate = Number(settings.deposit_percentage) || 20;
+      var depositCost = (baseCost + addonCost) * (depositRate / 100);
+
+      // Update Breakdown labels and amounts
+      document.getElementById('receipt-base-row').querySelector('span').textContent = 'Base Rate (' + fmtCurrency(dailyRate) + ' x ' + days + ' days)';
+      document.getElementById('receipt-base-amount').textContent = fmtCurrency(baseCost);
+      document.getElementById('receipt-service-amount').textContent = fmtCurrency(serviceFee);
+
+      // Addons
+      var insAmount = 0;
+      if (addonCost > 0) {
+        insAmount = addonCost;
+        document.getElementById('receipt-insurance-row').querySelector('span').textContent = 'Add-ons & Insurance';
+        document.getElementById('receipt-insurance-amount').textContent = fmtCurrency(insAmount);
+        document.getElementById('receipt-insurance-row').style.display = 'flex';
+      } else {
+        document.getElementById('receipt-insurance-row').style.display = 'none';
+      }
+
+      // Discount
+      document.getElementById('receipt-discount-row').style.display = 'none'; // No active dynamic discounts saved in booking total
+
+      // Tax row
+      var taxRow = document.getElementById('receipt-tax-row');
+      if (taxRow) {
+        if (taxRate > 0) {
+          taxRow.style.display = 'flex';
+          taxRow.querySelector('span').textContent = 'Tax (' + taxRate + '%)';
+          taxRow.querySelector('#receipt-tax-amount').textContent = fmtCurrency(taxCost);
+        } else {
+          taxRow.style.display = 'none';
+        }
+      }
+
+      // Deposit row
+      var depRow = document.getElementById('receipt-deposit-row');
+      if (depRow) {
+        depRow.querySelector('span').textContent = 'Security Deposit (' + depositRate + '%, refundable)';
+        depRow.querySelector('#receipt-deposit-amount').textContent = fmtCurrency(depositCost);
+      }
+
+      // Total
+      document.getElementById('receipt-total-amount').textContent = fmtCurrency(booking.total);
+
+      // Payment status info
+      var cardInfo = booking.payment === 'Paid' ? 'Payment Successful - Demo Gateway Approved' : 'Payment Method: ' + (booking.payment || 'Demo Card');
+      document.getElementById('receipt-payment-status').innerHTML = '<span class="material-icons-round">check_circle</span> ' + cardInfo;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initReceipt, 100);
+    });
   </script>
 </body>
 </html>

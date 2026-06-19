@@ -6,6 +6,9 @@
 window.WeDriveAPI.getAdminData()
   .then(data => {
     var settings = data.settings || {};
+    if (data.settings) {
+      localStorage.setItem('wedrive_global_settings', JSON.stringify(data.settings));
+    }
     populateSettings(settings);
   })
   .catch(err => console.error('Settings data load error:', err));
@@ -62,12 +65,14 @@ async function saveSettings() {
       var sb = window.supabaseClient;
       var result = await sb.from('settings').upsert({ key: 'main', value: settings }, { onConflict: 'key' });
       if (result.error) throw result.error;
+      localStorage.setItem('wedrive_global_settings', JSON.stringify(settings));
       showToast('Settings saved to database', 'success');
     } catch (err) {
       console.error('[WeDRIVE] Save settings error:', err);
       showToast('Settings saved locally (DB sync pending)', 'info');
     }
   } else {
+    localStorage.setItem('wedrive_global_settings', JSON.stringify(settings));
     showToast('Settings saved (demo mode)', 'success');
   }
 }

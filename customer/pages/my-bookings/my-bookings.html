@@ -146,9 +146,11 @@
       return months[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear();
     }
 
+    var currentCurrency = 'RM';
+
     // Format currency
     function fmtRM(n) {
-      return 'RM ' + Number(n || 0).toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2});
+      return currentCurrency + ' ' + Number(n || 0).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
     }
 
     // Get image path for car
@@ -264,7 +266,7 @@
           html += '<span class="divider">|</span>';
           html += '<button class="cancel-btn" type="button" onclick="handleBookingAction(\'cancel\')">Cancel</button>';
         } else if (b.status === 'Completed') {
-          html += '<button class="view-btn" type="button" onclick="location.href=\'receipt/receipt.html\'">Receipt</button>';
+          html += '<button class="view-btn" type="button" onclick="sessionStorage.setItem(\'receipt_booking\', JSON.stringify(allBookings.find(function(item){return item.booking_id===\'' + b.booking_id + '\';}))); location.href=\'receipt/receipt.html\'">Receipt</button>';
           html += '<span class="divider">|</span>';
           html += '<button class="rebook-btn" type="button" onclick="location.href=\'../dashboard/customer.html\'">Rebook</button>';
         } else {
@@ -315,6 +317,17 @@
     // Load bookings from Supabase
     async function loadMyBookings() {
       try {
+        if (window.WeDriveGetSettings) {
+          try {
+            var settings = await window.WeDriveGetSettings();
+            if (settings && settings.currency) {
+              currentCurrency = settings.currency;
+            }
+          } catch (e) {
+            console.error('[MyBookings] Error loading settings:', e);
+          }
+        }
+
         var sb = window.supabaseClient;
         if (!sb) { console.warn('[MyBookings] Supabase not ready'); return; }
         var userResult = await sb.auth.getUser();

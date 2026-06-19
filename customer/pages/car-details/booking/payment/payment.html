@@ -233,7 +233,7 @@
                   <strong>Premium Cover</strong>
                   <small>Zero excess liability for body, glass, and tyre damage.</small>
                 </span>
-                <b>RM 135</b>
+                <b id="addon-insurance-price">RM 135.00</b>
               </label>
               <label class="checkout-addon">
                 <input type="checkbox" id="addon-gps" checked />
@@ -241,7 +241,7 @@
                   <strong>GPS Navigation</strong>
                   <small>Melaka routes, parking suggestions, and premium arrival guidance preloaded.</small>
                 </span>
-                <b>Free</b>
+                <b id="addon-gps-price">Free</b>
               </label>
               <label class="checkout-addon">
                 <input type="checkbox" id="addon-child" />
@@ -249,7 +249,7 @@
                   <strong>Child Seat</strong>
                   <small>Sanitized and installed before pick-up.</small>
                 </span>
-                <b>RM 45</b>
+                <b id="addon-child-price">RM 45.00</b>
               </label>
             </div>
           </div>
@@ -269,10 +269,10 @@
             </div>
           </div>
 
-          <div class="summary-row"><span>Base rate (3 days)</span><span class="amount">RM 1,350.00</span></div>
-          <div class="summary-row"><span>Premium cover</span><span class="amount">RM 135.00</span></div>
-          <div class="summary-row"><span>Service fee</span><span class="amount">RM 50.00</span></div>
-          <div class="summary-row discount"><span>AI dynamic discount</span><span class="amount">- RM 120.00</span></div>
+          <div class="summary-row" id="checkout-base-row"><span>Base rate</span><span class="amount">RM 0.00</span></div>
+          <div class="summary-row" id="checkout-addon-row"><span>Premium cover</span><span class="amount">RM 0.00</span></div>
+          <div class="summary-row" id="checkout-service-row"><span>Service fee</span><span class="amount">RM 0.00</span></div>
+          <div class="summary-row discount" id="checkout-discount-row"><span>AI dynamic discount</span><span class="amount">- RM 0.00</span></div>
           <div class="ai-savings"><span class="material-icons-round">auto_awesome</span> AI found an off-peak Melaka window and reduced the rate.</div>
 
           <div class="promo-row">
@@ -280,12 +280,13 @@
             <button type="button" class="promo-btn" onclick="applyPromo(this)">Apply</button>
           </div>
 
-          <div class="summary-row"><span>Refundable deposit</span><span class="amount">RM 500.00</span></div>
-          <div class="summary-row total"><span>Total due</span><span class="amount">RM 1,915.00</span></div>
+          <div class="summary-row" id="checkout-tax-row" style="display: none;"><span>Tax (0%)</span><span class="amount">RM 0.00</span></div>
+          <div class="summary-row" id="checkout-deposit-row"><span>Refundable deposit</span><span class="amount">RM 0.00</span></div>
+          <div class="summary-row total" id="checkout-total-row"><span>Total due</span><span class="amount">RM 0.00</span></div>
 
           <button type="button" class="btn-pay" id="btn-pay" onclick="completePayment()">
             <span class="material-icons-round">lock</span>
-            Pay RM 1,915.00
+            Pay RM 0.00
           </button>
           <div class="pay-secure"><span class="material-icons-round">verified_user</span> Demo checkout will approve any filled payment method</div>
         </aside>
@@ -434,6 +435,7 @@
           carMeta2.textContent = formatDate(pendingBooking.pickupDate) + ' - ' + formatDate(pendingBooking.returnDate) + ' (' + pendingBooking.days + ' day' + (pendingBooking.days > 1 ? 's' : '') + ')';
         }
 
+        updateAddonLabels();
         updatePaymentDetails();
       }
 
@@ -455,35 +457,79 @@
       return months[d.getMonth()] + ' ' + d.getDate();
     }
 
-    function updatePaymentDetails() {
-      var baseTotal = pendingBooking.baseTotal;
-      var addonTotal = pendingBooking.addonTotal;
-      var serviceFee = pendingBooking.serviceFee;
-      var total = pendingBooking.total;
-
-      var sidebar = document.querySelector('.order-summary');
-      if (!sidebar) return;
-
-      var rows = sidebar.querySelectorAll('.summary-row');
-      rows[0].querySelector('span').textContent = 'Base rate (' + pendingBooking.days + ' day' + (pendingBooking.days > 1 ? 's' : '') + ')';
-      rows[0].querySelector('.amount').textContent = 'RM ' + baseTotal.toFixed(2);
+    function updateAddonLabels() {
+      var days = pendingBooking.days || 1;
+      var currency = pendingBooking.currency || 'MYR';
       
-      rows[1].querySelector('span').textContent = 'Add-ons';
-      rows[1].querySelector('.amount').textContent = 'RM ' + addonTotal.toFixed(2);
+      var insEl = document.getElementById('addon-insurance-price');
+      if (insEl) {
+        insEl.textContent = currency + ' ' + (35 * days).toFixed(2);
+      }
+      var gpsEl = document.getElementById('addon-gps-price');
+      if (gpsEl) {
+        gpsEl.textContent = currency + ' ' + (15 * days).toFixed(2);
+      }
+      var childEl = document.getElementById('addon-child-price');
+      if (childEl) {
+        childEl.textContent = currency + ' ' + (20 * days).toFixed(2);
+      }
+    }
 
-      rows[2].querySelector('.amount').textContent = 'RM ' + serviceFee.toFixed(2);
+    function updatePaymentDetails() {
+      var baseTotal = pendingBooking.baseTotal || 0;
+      var addonTotal = pendingBooking.addonTotal || 0;
+      var serviceFee = pendingBooking.serviceFee || 15;
+      var taxTotal = pendingBooking.taxTotal || 0;
+      var taxRate = typeof pendingBooking.taxRate !== 'undefined' ? Number(pendingBooking.taxRate) : 0;
+      var depositTotal = pendingBooking.depositTotal || (baseTotal * 0.20);
+      var total = pendingBooking.total || (baseTotal + addonTotal + serviceFee);
+      var currency = pendingBooking.currency || 'MYR';
 
-      var discountAmount = 0.00;
-      rows[3].querySelector('.amount').textContent = '- RM ' + discountAmount.toFixed(2);
+      var baseRow = document.getElementById('checkout-base-row');
+      if (baseRow) {
+        baseRow.querySelector('span').textContent = 'Base rate (' + pendingBooking.days + ' day' + (pendingBooking.days > 1 ? 's' : '') + ')';
+        baseRow.querySelector('.amount').textContent = currency + ' ' + baseTotal.toFixed(2);
+      }
+      
+      var addonRow = document.getElementById('checkout-addon-row');
+      if (addonRow) {
+        addonRow.querySelector('.amount').textContent = currency + ' ' + addonTotal.toFixed(2);
+      }
 
-      var deposit = baseTotal * 0.20; 
-      rows[4].querySelector('.amount').textContent = 'RM ' + deposit.toFixed(2);
+      var serviceRow = document.getElementById('checkout-service-row');
+      if (serviceRow) {
+        serviceRow.querySelector('.amount').textContent = currency + ' ' + serviceFee.toFixed(2);
+      }
 
-      sidebar.querySelector('.total .amount').textContent = 'RM ' + total.toFixed(2);
+      var discountRow = document.getElementById('checkout-discount-row');
+      if (discountRow) {
+        discountRow.querySelector('.amount').textContent = '- ' + currency + ' 0.00';
+      }
+
+      var taxRow = document.getElementById('checkout-tax-row');
+      if (taxRow) {
+        if (taxRate > 0) {
+          taxRow.style.display = 'flex';
+          taxRow.querySelector('span').textContent = 'Tax (' + taxRate + '%)';
+          taxRow.querySelector('.amount').textContent = currency + ' ' + taxTotal.toFixed(2);
+        } else {
+          taxRow.style.display = 'none';
+        }
+      }
+
+      var depositRow = document.getElementById('checkout-deposit-row');
+      if (depositRow) {
+        depositRow.querySelector('.amount').textContent = currency + ' ' + depositTotal.toFixed(2);
+      }
+
+      var totalRow = document.getElementById('checkout-total-row');
+      if (totalRow) {
+        totalRow.querySelector('.amount').textContent = currency + ' ' + total.toFixed(2);
+      }
 
       var btnPay = document.getElementById('btn-pay');
       if (btnPay) {
-        btnPay.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + total.toFixed(2);
+        btnPay.innerHTML = '<span class="material-icons-round">lock</span> Pay ' + currency + ' ' + total.toFixed(2);
       }
     }
 
@@ -500,11 +546,20 @@
       if (childChecked) addonCost += 20 * days;
       if (insuranceChecked) addonCost += 35 * days;
       
+      var serviceFee = pendingBooking.serviceFee || 15;
+      var taxRate = typeof pendingBooking.taxRate !== 'undefined' ? Number(pendingBooking.taxRate) : 0;
+      var taxCost = (baseCost + addonCost) * (taxRate / 100);
+      var totalCost = baseCost + addonCost + serviceFee + taxCost;
+      var depositRate = typeof pendingBooking.depositRate !== 'undefined' ? Number(pendingBooking.depositRate) : 20;
+      var depositAmount = (baseCost + addonCost) * (depositRate / 100);
+
       pendingBooking.addonTotal = addonCost;
       pendingBooking.addons.gps = gpsChecked;
       pendingBooking.addons.child = childChecked;
       pendingBooking.addons.insurance = insuranceChecked;
-      pendingBooking.total = baseCost + addonCost + pendingBooking.serviceFee;
+      pendingBooking.taxTotal = taxCost;
+      pendingBooking.depositTotal = depositAmount;
+      pendingBooking.total = totalCost;
       
       sessionStorage.setItem('pending_booking', JSON.stringify(pendingBooking));
       updatePaymentDetails();
@@ -648,7 +703,7 @@
             alert(uniqueCheck.error);
             button.disabled = false;
             button.classList.remove('is-processing');
-            button.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + pendingBooking.total.toFixed(2);
+            button.innerHTML = '<span class="material-icons-round">lock</span> Pay ' + (pendingBooking.currency || 'MYR') + ' ' + pendingBooking.total.toFixed(2);
             return;
           }
         }
@@ -697,14 +752,14 @@
           alert('Failed to save booking to database: ' + (apiResult.error || 'Unknown error'));
           button.disabled = false;
           button.classList.remove('is-processing');
-          button.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + pendingBooking.total.toFixed(2);
+          button.innerHTML = '<span class="material-icons-round">lock</span> Pay ' + (pendingBooking.currency || 'MYR') + ' ' + pendingBooking.total.toFixed(2);
         }
       } catch (err) {
         console.error('Error during booking payment processing:', err);
         alert('An unexpected error occurred during booking creation. Please try again.');
         button.disabled = false;
         button.classList.remove('is-processing');
-        button.innerHTML = '<span class="material-icons-round">lock</span> Pay RM ' + pendingBooking.total.toFixed(2);
+        button.innerHTML = '<span class="material-icons-round">lock</span> Pay ' + (pendingBooking.currency || 'MYR') + ' ' + pendingBooking.total.toFixed(2);
       }
     }
 

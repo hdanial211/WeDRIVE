@@ -778,3 +778,101 @@
     loadCalendar();
   }
 })();
+
+/* =====================================================
+   SECTION 8: GLOBAL SETTINGS SYNC
+   ===================================================== */
+(function () {
+  'use strict';
+
+  var SETTINGS_KEY = 'wedrive_global_settings';
+  var defaultSettings = {
+    company_name: 'WeDRIVE Car Rental',
+    company_email: 'info@wedrive.my',
+    company_phone: '06-2345678',
+    company_address: 'Lot 123, Jalan Melaka, 75000 Melaka',
+    currency: 'MYR',
+    tax_rate: 0,
+    min_rental_days: 1,
+    max_rental_days: 30,
+    late_fee_per_hour: 25,
+    deposit_percentage: 20,
+    operating_hours: '8:00 AM - 8:00 PM'
+  };
+
+  window.WeDriveGetSettings = async function () {
+    try {
+      var cached = localStorage.getItem(SETTINGS_KEY);
+      if (cached) {
+        var parsed = JSON.parse(cached);
+        if (parsed && parsed.company_name) {
+          if (window.supabaseClient && window.AppConfig && window.AppConfig.USE_REAL_DB) {
+            window.supabaseClient.from('settings').select('value').eq('key', 'main').maybeSingle().then(function (r) {
+              if (r.data && r.data.value) {
+                localStorage.setItem(SETTINGS_KEY, JSON.stringify(r.data.value));
+              }
+            }).catch(function () {});
+          }
+          return parsed;
+        }
+      }
+    } catch (e) {}
+
+    if (window.supabaseClient && window.AppConfig && window.AppConfig.USE_REAL_DB) {
+      try {
+        var r = await window.supabaseClient.from('settings').select('value').eq('key', 'main').maybeSingle();
+        if (r.data && r.data.value) {
+          localStorage.setItem(SETTINGS_KEY, JSON.stringify(r.data.value));
+          return r.data.value;
+        }
+      } catch (e) {}
+    }
+
+    return defaultSettings;
+  };
+
+  async function syncCompanyDetails() {
+    try {
+      var settings = await window.WeDriveGetSettings();
+      if (!settings) return;
+
+      document.querySelectorAll('[data-company-name]').forEach(function (el) {
+        el.textContent = settings.company_name;
+      });
+      document.querySelectorAll('[data-company-email]').forEach(function (el) {
+        el.textContent = settings.company_email;
+        if (el.tagName === 'A') {
+          el.href = 'mailto:' + settings.company_email + '?subject=WeDRIVE%20Support%20Request';
+        }
+      });
+      document.querySelectorAll('[data-company-phone]').forEach(function (el) {
+        el.textContent = settings.company_phone;
+        if (el.tagName === 'A') {
+          el.href = 'tel:' + settings.company_phone.replace(/\s+/g, '');
+        }
+      });
+      document.querySelectorAll('[data-company-address]').forEach(function (el) {
+        el.textContent = settings.company_address;
+      });
+      document.querySelectorAll('[data-company-hours]').forEach(function (el) {
+        el.textContent = settings.operating_hours;
+      });
+      document.querySelectorAll('[data-company-whatsapp]').forEach(function (el) {
+        if (el.tagName === 'A') {
+          var cleanPhone = settings.company_phone.replace(/\D/g, '');
+          if (cleanPhone.length < 5) cleanPhone = '601112345678';
+          if (!cleanPhone.startsWith('6')) cleanPhone = '6' + cleanPhone;
+          el.href = 'https://wa.me/' + cleanPhone + '?text=Hi%20WeDRIVE%2C%20I%20need%20help%20with%20my%20booking';
+        }
+      });
+    } catch (err) {
+      console.warn('[WeDrive Settings Sync]', err);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncCompanyDetails);
+  } else {
+    syncCompanyDetails();
+  }
+})();

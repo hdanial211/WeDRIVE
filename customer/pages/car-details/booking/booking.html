@@ -77,7 +77,7 @@
               <span class="material-icons-round" style="color:var(--primary,#3B82F6); font-size:24px; margin-top:2px;">location_on</span>
               <div>
                 <strong style="color:var(--navy,#1E293B); font-size:14px; display:block; margin-bottom:4px;">Pick-up Location: Melaka Sentral</strong>
-                <span style="color:var(--slate-600); font-size:13px; line-height:1.5;">HQ Office: Lot 123, Jalan Hang Tuah, 75300 Melaka</span>
+                <span id="booking-hq-address" style="color:var(--slate-600); font-size:13px; line-height:1.5;">HQ Office: Lot 123, Jalan Hang Tuah, 75300 Melaka</span>
               </div>
             </div>
             <!-- Interactive Map Container -->
@@ -128,11 +128,13 @@
           <h3 class="bk-section-title" data-key="bk_payment_summary">Payment Summary</h3>
           <div class="payment-row"><span class="label" id="base-label">Base Rate (2 days)</span><span class="value" id="base-value">RM500.00</span></div>
           <div class="payment-row"><span class="label" id="addon-label">Add-ons (Full Insurance)</span><span class="value" id="addon-value">RM70.00</span></div>
+          <div class="payment-row" id="tax-row" style="display:none;"><span class="label" id="tax-label">Tax</span><span class="value" id="tax-value">RM0.00</span></div>
           <div class="payment-row"><span class="label" data-key="bk_service_fee">Service Fee (AI-Optimized)</span><span class="value">RM15.00</span></div>
           <div class="payment-total">
             <span class="label" data-key="bk_total">Total Price</span>
             <span class="value" id="total-price">RM585.00</span>
           </div>
+          <div id="duration-warning" style="color:var(--danger,#EF4444); font-size:12px; font-weight:600; margin-bottom:12px; display:none; text-align:center;"></div>
           <button class="btn-confirm" id="btn-confirm-booking" type="button" onclick="confirmBooking()">
             <span data-key="bk_confirm">Confirm Booking</span>
             <span class="material-icons-round">arrow_forward</span>
@@ -200,6 +202,14 @@
     let daysCount = 1;
     let basePrice = 120;
     let bookingPickers = null;
+    let currentSettings = {
+      currency: 'MYR',
+      tax_rate: 0,
+      min_rental_days: 1,
+      max_rental_days: 30,
+      deposit_percentage: 20,
+      company_address: 'Lot 123, Jalan Hang Tuah, 75300 Melaka'
+    };
 
     function formatDateForInput(dateStr) {
       if (!dateStr) return '';
@@ -212,6 +222,18 @@
     }
 
     async function initBookingPage() {
+      if (window.WeDriveGetSettings) {
+        try {
+          currentSettings = await window.WeDriveGetSettings();
+          const hqEl = document.getElementById('booking-hq-address');
+          if (hqEl && currentSettings.company_address) {
+            hqEl.textContent = 'HQ Office: ' + currentSettings.company_address;
+          }
+        } catch (e) {
+          console.error('[Booking] Error loading settings:', e);
+        }
+      }
+
       try {
         const cars = await window.WeDriveAPI.getCars();
         currentCar = cars.find(c => c.id === carId || c.car_id === carId);
@@ -233,7 +255,8 @@
         document.querySelector('.car-summary-tag').textContent = `${typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1)} -- ${carYear} ${carColor}`;
         
         document.querySelector('.car-rating').innerHTML = `<span class="material-icons-round">star</span> ${currentCar.rating || '4.8'}`;
-        document.getElementById('booking-price-display').innerHTML = `RM${basePrice}<span class="car-price-unit">/day</span>`;
+        const currency = currentSettings.currency || 'MYR';
+        document.getElementById('booking-price-display').innerHTML = `${currency}${basePrice}<span class="car-price-unit">/day</span>`;
         
         let imgUrl = '../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg';
         if (currentCar.images && currentCar.images.length > 0) {
@@ -338,6 +361,7 @@
       }
       
       const confirmBtn = document.getElementById('btn-confirm-booking');
+      const currency = currentSettings.currency || 'MYR';
 
       if (!pickup || !returnD || isNaN(pickup.getTime()) || isNaN(returnD.getTime())) {
         if (confirmBtn) {
@@ -346,10 +370,48 @@
           confirmBtn.style.cursor = 'not-allowed';
         }
         document.getElementById('base-label').textContent = 'Base Rate';
-        document.getElementById('base-value').textContent = 'RM0.00';
+        document.getElementById('base-value').textContent = `${currency} 0.00`;
         document.getElementById('addon-label').textContent = 'Add-ons';
-        document.getElementById('addon-value').textContent = 'RM0.00';
-        document.getElementById('total-price').textContent = 'RM0.00';
+        document.getElementById('addon-value').textContent = `${currency} 0.00`;
+        const taxRow = document.getElementById('tax-row');
+        if (taxRow) taxRow.style.display = 'none';
+        document.getElementById('total-price').textContent = `${currency} 0.00`;
+        return;
+      }
+
+      let diffTime = Math.abs(returnD - pickup);
+      daysCount = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+
+      // ── MIN / MAX RENTAL DAYS VALIDATION ──
+      const minDays = Number(currentSettings.min_rental_days) || 1;
+      const maxDays = Number(currentSettings.max_rental_days) || 30;
+      const warningEl = document.getElementById('duration-warning');
+      let isValid = true;
+      if (daysCount < minDays) {
+        isValid = false;
+        if (warningEl) {
+          warningEl.textContent = `Minimum rental duration is ${minDays} day${minDays > 1 ? 's' : ''}`;
+          warningEl.style.display = 'block';
+        }
+      } else if (daysCount > maxDays) {
+        isValid = false;
+        if (warningEl) {
+          warningEl.textContent = `Maximum rental duration is ${maxDays} day${maxDays > 1 ? 's' : ''}`;
+          warningEl.style.display = 'block';
+        }
+      } else {
+        if (warningEl) warningEl.style.display = 'none';
+      }
+
+      if (!isValid) {
+        if (confirmBtn) {
+          confirmBtn.disabled = true;
+          confirmBtn.style.opacity = '0.5';
+          confirmBtn.style.cursor = 'not-allowed';
+        }
+        document.getElementById('base-label').textContent = `Base Rate (${daysCount} day${daysCount > 1 ? 's' : ''})`;
+        document.getElementById('base-value').textContent = `${currency} ${(basePrice * daysCount).toFixed(2)}`;
+        document.getElementById('total-price').textContent = '--';
         return;
       }
 
@@ -358,9 +420,6 @@
         confirmBtn.style.opacity = '1';
         confirmBtn.style.cursor = 'pointer';
       }
-
-      let diffTime = Math.abs(returnD - pickup);
-      daysCount = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
       
       const baseCost = basePrice * daysCount;
       
@@ -377,16 +436,31 @@
       if (insuranceChecked) { addonCost += 35 * daysCount; addonLabels.push('Full Insurance'); }
       if (driverChecked) { addonCost += 25 * daysCount; addonLabels.push('Extra Driver'); }
       
+      const taxRate = Number(currentSettings.tax_rate) || 0;
+      const taxCost = (baseCost + addonCost) * (taxRate / 100);
       const serviceFee = 15;
-      const totalCost = baseCost + addonCost + serviceFee;
+      const totalCost = baseCost + addonCost + serviceFee + taxCost;
+      const depositRate = Number(currentSettings.deposit_percentage) || 20;
+      const depositAmount = (baseCost + addonCost) * (depositRate / 100);
       
       document.getElementById('base-label').textContent = `Base Rate (${daysCount} day${daysCount > 1 ? 's' : ''})`;
-      document.getElementById('base-value').textContent = `RM${baseCost.toFixed(2)}`;
+      document.getElementById('base-value').textContent = `${currency} ${baseCost.toFixed(2)}`;
       
       document.getElementById('addon-label').textContent = `Add-ons (${addonLabels.join(', ') || 'None'})`;
-      document.getElementById('addon-value').textContent = `RM${addonCost.toFixed(2)}`;
+      document.getElementById('addon-value').textContent = `${currency} ${addonCost.toFixed(2)}`;
+
+      const taxRow = document.getElementById('tax-row');
+      if (taxRow) {
+        if (taxRate > 0) {
+          taxRow.style.display = 'flex';
+          document.getElementById('tax-label').textContent = `Tax (${taxRate}%)`;
+          document.getElementById('tax-value').textContent = `${currency} ${taxCost.toFixed(2)}`;
+        } else {
+          taxRow.style.display = 'none';
+        }
+      }
       
-      document.getElementById('total-price').textContent = `RM${totalCost.toFixed(2)}`;
+      document.getElementById('total-price').textContent = `${currency} ${totalCost.toFixed(2)}`;
 
       const bookingSession = {
         carId: carId,
@@ -400,6 +474,11 @@
         baseTotal: baseCost,
         addonTotal: addonCost,
         serviceFee: serviceFee,
+        taxTotal: taxCost,
+        taxRate: taxRate,
+        depositTotal: depositAmount,
+        depositRate: depositRate,
+        currency: currency,
         total: totalCost,
         addons: {
           gps: gpsChecked,
@@ -456,7 +535,8 @@
 
       // Add a marker
       const marker = L.marker([lat, lng]).addTo(map);
-      marker.bindPopup("<b>WeDRIVE HQ Office</b><br>Lot 123, Jalan Hang Tuah, Melaka<br><small>(Car pick-up is at Melaka Sentral)</small>").openPopup();
+      const hqAddr = currentSettings && currentSettings.company_address ? currentSettings.company_address : 'Lot 123, Jalan Hang Tuah, Melaka';
+      marker.bindPopup("<b>WeDRIVE HQ Office</b><br>" + hqAddr + "<br><small>(Car pick-up is at Melaka Sentral)</small>").openPopup();
 
       // Listen for theme toggle events to dynamically swap tiles
       document.addEventListener('click', function(e) {

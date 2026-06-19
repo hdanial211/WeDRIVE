@@ -581,7 +581,7 @@
       'price=' + encodeURIComponent(selectedBookingCar.price),
       'pickup=' + encodeURIComponent(pickup ? pickup.value : ''),
       'return=' + encodeURIComponent(ret ? ret.value : ''),
-      'location=' + encodeURIComponent(loc && loc.value ? loc.value : 'Lot 123, Jalan Hang Tuah, 75300 Melaka')
+      'location=' + encodeURIComponent(loc && loc.value ? loc.value : 'Melaka Sentral')
     ];
     window.location.href = '../car-details/booking/booking.html?' + params.join('&');
   };
