@@ -315,8 +315,8 @@
         '  <span class="material-icons-round" style="font-size: 48px; color: var(--text-muted, #94a3b8); margin-bottom: 12px;">analytics</span>',
         '  <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;" data-key="ai_empty_title">' + t('ai_empty_title') + '</h3>',
         '  <p style="font-size: 13px; color: var(--text-muted); max-width: 450px; margin: 0 auto 16px; line-height: 1.5;" data-key="ai_empty_desc">' + t('ai_empty_desc') + '</p>',
-        '  <button class="reco-action" style="margin: 0 auto; display: flex; font-size: 13px;" onclick="window.location=\'../dashboard/customer.html\'">',
-        '    <span class="material-icons-round">directions_car</span> <span data-key="ai_empty_btn">' + t('ai_empty_btn') + '</span>',
+        '  <button class="reco-action" style="margin: 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px;" onclick="window.location=\'../dashboard/customer.html\'">',
+        '    <span class="material-icons-round" style="font-size: 16px; line-height: 1; display: inline-flex; align-items: center;">directions_car</span><span data-key="ai_empty_btn">' + t('ai_empty_btn') + '</span>',
         '  </button>',
         '</div>'
       ].join('');
