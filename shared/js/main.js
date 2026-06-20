@@ -119,6 +119,11 @@
     applyTheme(next, true);
   };
 
+  window.setTheme = function (theme) {
+    applyTheme(theme, false);
+  };
+
+
   function initTheme() {
     var saved = localStorage.getItem(THEME_KEY) || 'system';
     applyTheme(saved, false);

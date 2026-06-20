@@ -313,8 +313,7 @@
             <section class="pf-card">
               <div class="pf-section-head-flex">
                 <h3 class="pf-section-title"><span class="material-icons-round">devices</span> Active Sessions</h3>
-                <button class="pf-text-btn danger" onclick="profileToast('All other sessions terminated.')">Terminate
-                  All</button>
+                <button class="pf-text-btn danger" onclick="terminateAllOtherSessions()">Terminate All</button>
               </div>
               <p class="pf-card-desc">Devices currently logged into your WeDRIVE account.</p>
               <div class="pf-session-list">
@@ -442,7 +441,7 @@
                     <div class="pf-pref-desc">Select your preferred app language</div>
                   </div>
                   <select class="pf-select" aria-label="Language" title="Language"
-                    onchange="profileToast('Language updated.')">
+                    onchange="changeLanguagePref(this.value)">
                     <option selected>English (EN)</option>
                     <option>Malay (BM)</option>
                   </select>
@@ -452,7 +451,7 @@
                     <div class="pf-pref-label">Theme</div>
                     <div class="pf-pref-desc">Choose light or dark mode</div>
                   </div>
-                  <select class="pf-select" aria-label="Theme" title="Theme" onchange="profileToast('Theme updated.')">
+                  <select class="pf-select" aria-label="Theme" title="Theme" onchange="changeThemePref(this.value)">
                     <option selected>Light Mode</option>
                     <option>Dark Mode</option>
                     <option>System Default</option>
@@ -472,7 +471,7 @@
                     <div class="pf-pref-label">Currency</div>
                     <div class="pf-pref-desc">Display prices in</div>
                   </div>
-                  <select class="pf-select" aria-label="Currency" title="Currency">
+                  <select class="pf-select" aria-label="Currency" title="Currency" onchange="changeCurrencyPref(this.value)">
                     <option selected>MYR (RM)</option>
                     <option>USD ($)</option>
                   </select>
@@ -581,8 +580,8 @@
             </section>
 
             <div class="pf-actions-bar">
-              <button class="pf-btn outline" onclick="profileToast('No changes applied.')">Cancel</button>
-              <button class="pf-btn primary" onclick="profileToast('Notification settings saved.')"><span
+              <button class="pf-btn outline" onclick="loadProfileFromSupabase(); profileToast('No changes applied.')">Cancel</button>
+              <button class="pf-btn primary" onclick="saveNotificationChanges()"><span
                   class="material-icons-round">save</span> Save Changes</button>
             </div>
           </div>
@@ -669,12 +668,51 @@
       });
       var nameEl = document.getElementById('pf-user-name');
       if (nameEl) {
-        nameEl.textContent = (state.firstName + ' ' + state.lastName).trim();
+        nameEl.textContent = (state.firstName + ' ' + state.lastName).trim() || 'User';
       }
-      var verificationStatus = document.getElementById('pf-verification-status');
-      if (verificationStatus) {
-        verificationStatus.innerHTML = '<span class="material-icons-round">shield</span>' + (state.verificationStatus || 'Verified');
+
+      var banner = document.querySelector('.pf-verified-banner');
+      var statusEl = document.getElementById('pf-verification-status');
+      var bannerCopy = document.querySelector('.pf-verified-banner-copy');
+      
+      if (statusEl && banner) {
+        if (state.verificationStatus === 'Verified') {
+          banner.className = 'pf-verified-banner verified';
+          statusEl.innerHTML = '<span class="material-icons-round">verified_user</span> Verified';
+          statusEl.style.background = 'rgba(34,197,94,0.14)';
+          statusEl.style.color = '#10B981';
+          if (bannerCopy) {
+            bannerCopy.innerHTML = '<strong>Verified account details are locked</strong><p>To update your legal identity, email, address, or driving license, upload a new IC and license set below. Direct edits are disabled to prevent misuse.</p>';
+          }
+        } else if (state.verificationStatus === 'Pending') {
+          banner.className = 'pf-verified-banner pending';
+          statusEl.innerHTML = '<span class="material-icons-round">history</span> Pending Review';
+          statusEl.style.background = 'rgba(245,158,11,0.14)';
+          statusEl.style.color = '#F59E0B';
+          if (bannerCopy) {
+            bannerCopy.innerHTML = '<strong>Verification is in progress</strong><p>WeDRIVE administrators are currently reviewing your documents. You will be notified once verification is complete.</p>';
+          }
+        } else if (state.verificationStatus === 'Rejected') {
+          banner.className = 'pf-verified-banner rejected';
+          statusEl.innerHTML = '<span class="material-icons-round">error</span> Rejected';
+          statusEl.style.background = 'rgba(239,68,68,0.14)';
+          statusEl.style.color = '#EF4444';
+          var reason = state.rejectionReason || 'Documents were blurry or invalid.';
+          if (bannerCopy) {
+            bannerCopy.innerHTML = '<strong>Verification rejected</strong><p>Reason: <span style="color:#EF4444;font-weight:600">' + reason + '</span>. Please re-upload clear copies of your documents below.</p>';
+          }
+        } else {
+          // Unverified / Incomplete
+          banner.className = 'pf-verified-banner incomplete';
+          statusEl.innerHTML = '<span class="material-icons-round">warning</span> Incomplete';
+          statusEl.style.background = 'rgba(245,158,11,0.14)';
+          statusEl.style.color = '#F59E0B';
+          if (bannerCopy) {
+            bannerCopy.innerHTML = '<strong>Account verification required</strong><p>Please upload your IC front, IC back, and driving license to verify your identity and enable bookings.</p>';
+          }
+        }
       }
+
       var reverifyPhone = document.getElementById('pf-reverify-phone');
       if (reverifyPhone) {
         reverifyPhone.value = state.phone || '';
@@ -682,7 +720,6 @@
     }
 
     function getProfileVerificationDraft() {
-      // Use current form values (from Supabase) as base for verification draft
       var current = mergeProfileState(readStoredProfile());
       return {
         firstName: current.firstName || (document.getElementById('pf-first-name') || {}).value || '',
@@ -696,7 +733,7 @@
         zip: current.zip || (document.getElementById('pf-zip') || {}).value || '',
         license: current.license || (document.getElementById('pf-license') || {}).value || '',
         licenseExpiry: current.licenseExpiry || (document.getElementById('pf-license-expiry') || {}).value || '',
-        verificationStatus: 'Verified'
+        verificationStatus: 'Pending'
       };
     }
 
@@ -799,18 +836,30 @@
       if (!title || !text || !pill) {
         return;
       }
-      if (completedCount === 0) {
-        title.textContent = 'Awaiting documents';
-        text.textContent = 'Upload all required images to start re-verification.';
-        pill.textContent = 'Locked';
-      } else if (completedCount < 3) {
-        title.textContent = 'Documents in progress';
-        text.textContent = completedCount + ' of 3 required uploads received.';
-        pill.textContent = completedCount + '/3';
+      
+      var stored = mergeProfileState(readStoredProfile());
+      if (stored.verificationStatus === 'Pending') {
+        title.textContent = 'Verification pending';
+        text.textContent = 'WeDRIVE is currently reviewing your uploaded document set.';
+        pill.textContent = 'Pending';
+      } else if (stored.verificationStatus === 'Verified') {
+        title.textContent = 'Verification complete';
+        text.textContent = 'Your profile is fully verified and active.';
+        pill.textContent = 'Verified';
       } else {
-        title.textContent = 'Ready for verification';
-        text.textContent = 'All required documents uploaded. Submit to refresh verified identity data.';
-        pill.textContent = 'Ready';
+        if (completedCount === 0) {
+          title.textContent = 'Awaiting documents';
+          text.textContent = 'Upload all required images to start re-verification.';
+          pill.textContent = 'Locked';
+        } else if (completedCount < 3) {
+          title.textContent = 'Documents in progress';
+          text.textContent = completedCount + ' of 3 required uploads received.';
+          pill.textContent = completedCount + '/3';
+        } else {
+          title.textContent = 'Ready for verification';
+          text.textContent = 'All required documents uploaded. Submit to refresh verified identity data.';
+          pill.textContent = 'Ready';
+        }
       }
     }
 
@@ -821,7 +870,7 @@
         updateVerificationProgress();
         return;
       }
-      profileDocUploads[type] = files[0].name;
+      profileDocUploads[type] = files[0];
       updateDocumentMeta(type, files[0].name);
       updateVerificationProgress();
     }
@@ -831,7 +880,7 @@
       applyProfileState(state);
     }
 
-    function submitProfileVerification() {
+    async function submitProfileVerification() {
       var missing = Object.keys(profileDocUploads).filter(function (key) {
         return !profileDocUploads[key];
       });
@@ -848,46 +897,136 @@
         profileToast('Verify the 6-digit email OTP before submitting identity changes.');
         return;
       }
-      var progressTitle = document.getElementById('pf-doc-progress-title');
-      var progressText = document.getElementById('pf-doc-progress-text');
-      var progressPill = document.getElementById('pf-doc-progress-pill');
-      if (progressTitle && progressText && progressPill) {
-        progressTitle.textContent = 'Verification complete';
-        progressText.textContent = 'Your new legal profile has been refreshed from the verified document set.';
-        progressPill.textContent = 'Verified';
+
+      var submitBtn = document.querySelector('button[onclick="submitProfileVerification()"]');
+      var originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="material-icons-round spinner">sync</span> Uploading...';
+
+      try {
+        var sb = window.supabaseClient;
+        if (!sb) throw new Error('Database connection failed.');
+        var userResult = await sb.auth.getUser();
+        var user = userResult && userResult.data && userResult.data.user;
+        if (!user) throw new Error('User not logged in.');
+
+        var icFrontUrl = null;
+        var icBackUrl = null;
+        var licenseUrl = null;
+
+        if (profileDocUploads.icFront instanceof File) {
+          var res = await WeDriveAPI.uploadDocument(user.id, profileDocUploads.icFront, 'ic_front');
+          if (!res.success) throw new Error('Failed to upload IC Front: ' + res.error);
+          icFrontUrl = res.url;
+        }
+        if (profileDocUploads.icBack instanceof File) {
+          var res = await WeDriveAPI.uploadDocument(user.id, profileDocUploads.icBack, 'ic_back');
+          if (!res.success) throw new Error('Failed to upload IC Back: ' + res.error);
+          icBackUrl = res.url;
+        }
+        if (profileDocUploads.license instanceof File) {
+          var res = await WeDriveAPI.uploadDocument(user.id, profileDocUploads.license, 'license');
+          if (!res.success) throw new Error('Failed to upload License: ' + res.error);
+          licenseUrl = res.url;
+        }
+
+        var updateData = {
+          phone: contactNumber,
+          verification_status: 'Pending',
+          rejection_reason: null
+        };
+        if (icFrontUrl) updateData.ic_document_url = icFrontUrl;
+        if (icBackUrl) updateData.ic_back_document_url = icBackUrl;
+        if (licenseUrl) updateData.license_document_url = licenseUrl;
+
+        var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, updateData);
+        if (!dbResult.success) throw new Error(dbResult.error);
+
+        var progressTitle = document.getElementById('pf-doc-progress-title');
+        var progressText = document.getElementById('pf-doc-progress-text');
+        var progressPill = document.getElementById('pf-doc-progress-pill');
+        if (progressTitle && progressText && progressPill) {
+          progressTitle.textContent = 'Verification pending';
+          progressText.textContent = 'Documents uploaded successfully. WeDRIVE is reviewing your application.';
+          progressPill.textContent = 'Pending';
+        }
+
+        await loadProfileFromSupabase();
+
+        otpState.profile = { sent: false, verified: false };
+        refreshOtpUi('profile');
+        profileToast('Documents submitted for verification.');
+      } catch (err) {
+        console.error(err);
+        profileToast('Error: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
       }
-      persistProfileState(getProfileVerificationDraft());
-      otpState.profile = { sent: false, verified: false };
-      refreshOtpUi('profile');
-      profileToast('Verified profile updated from uploaded documents.');
     }
 
-    function simulateVerifiedProfile() {
-      var sampleFiles = {
-        icFront: 'ic-front-scan.jpg',
-        icBack: 'ic-back-scan.jpg',
-        license: 'license-scan.jpg'
-      };
-      Object.keys(sampleFiles).forEach(function (key) {
-        profileDocUploads[key] = sampleFiles[key];
-        updateDocumentMeta(key, sampleFiles[key]);
-      });
-      updateVerificationProgress();
-      otpState.profile = { sent: true, verified: true };
-      refreshOtpUi('profile');
-      persistProfileState(getProfileVerificationDraft());
-      var progressTitle = document.getElementById('pf-doc-progress-title');
-      var progressText = document.getElementById('pf-doc-progress-text');
-      var progressPill = document.getElementById('pf-doc-progress-pill');
-      if (progressTitle && progressText && progressPill) {
-        progressTitle.textContent = 'Sample verification applied';
-        progressText.textContent = 'Demo verified data has been loaded into your locked profile.';
-        progressPill.textContent = 'Verified';
+    async function simulateVerifiedProfile() {
+      var simulateBtn = document.querySelector('button[onclick="simulateVerifiedProfile()"]');
+      var originalHtml = simulateBtn.innerHTML;
+      simulateBtn.disabled = true;
+      simulateBtn.textContent = 'Simulating...';
+
+      try {
+        var sb = window.supabaseClient;
+        if (!sb) throw new Error('Database connection failed.');
+        var userResult = await sb.auth.getUser();
+        var user = userResult && userResult.data && userResult.data.user;
+        if (!user) throw new Error('User not logged in.');
+
+        var contactNumber = (document.getElementById('pf-reverify-phone') || {}).value || '';
+        if (!contactNumber.trim()) {
+          contactNumber = '012-345 6789';
+        }
+
+        var updateData = {
+          name: 'Siti Aminah',
+          ic: '980101-04-5432',
+          phone: contactNumber,
+          dob: '1998-01-01',
+          street: '456, Jalan Hang Tuah',
+          city: 'Melaka',
+          zip: '75200',
+          license: 'DLR-99887766',
+          license_expiry: '2029-12-31',
+          verification_status: 'Verified',
+          rejection_reason: null,
+          ic_document_url: 'https://nigyovaqffwyinovivls.supabase.co/storage/v1/object/public/documents/sample/ic-front.jpg',
+          ic_back_document_url: 'https://nigyovaqffwyinovivls.supabase.co/storage/v1/object/public/documents/sample/ic-back.jpg',
+          license_document_url: 'https://nigyovaqffwyinovivls.supabase.co/storage/v1/object/public/documents/sample/license.jpg'
+        };
+
+        var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, updateData);
+        if (!dbResult.success) throw new Error(dbResult.error);
+
+        var progressTitle = document.getElementById('pf-doc-progress-title');
+        var progressText = document.getElementById('pf-doc-progress-text');
+        var progressPill = document.getElementById('pf-doc-progress-pill');
+        if (progressTitle && progressText && progressPill) {
+          progressTitle.textContent = 'Sample verification applied';
+          progressText.textContent = 'Demo verified data has been loaded into your locked profile.';
+          progressPill.textContent = 'Verified';
+        }
+
+        await loadProfileFromSupabase();
+
+        otpState.profile = { sent: true, verified: true };
+        refreshOtpUi('profile');
+        profileToast('Sample verified profile loaded.');
+      } catch (err) {
+        console.error(err);
+        profileToast('Error: ' + err.message);
+      } finally {
+        simulateBtn.disabled = false;
+        simulateBtn.innerHTML = originalHtml;
       }
-      profileToast('Sample verified profile loaded.');
     }
 
-    function submitPasswordChange() {
+    async function submitPasswordChange() {
       var currentPassword = document.getElementById('pf-current-password');
       var newPassword = document.getElementById('pf-new-password');
       var confirmPassword = document.getElementById('pf-confirm-password');
@@ -907,16 +1046,35 @@
         profileToast('New password and confirmation do not match.');
         return;
       }
-      currentPassword.value = '********';
-      newPassword.value = '********';
-      confirmPassword.value = '********';
-      otpState.password = { sent: false, verified: false };
-      refreshOtpUi('password');
-      var passwordOtp = document.getElementById('pf-password-otp');
-      if (passwordOtp) {
-        passwordOtp.value = '';
+
+      var submitBtn = document.querySelector('button[onclick="submitPasswordChange()"]');
+      var originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="material-icons-round spinner">sync</span> Updating...';
+
+      try {
+        var sb = window.supabaseClient;
+        if (!sb) throw new Error('Database connection failed.');
+        var result = await sb.auth.updateUser({ password: newPassword.value.trim() });
+        if (result.error) throw result.error;
+
+        currentPassword.value = '********';
+        newPassword.value = '********';
+        confirmPassword.value = '********';
+        otpState.password = { sent: false, verified: false };
+        refreshOtpUi('password');
+        var passwordOtp = document.getElementById('pf-password-otp');
+        if (passwordOtp) {
+          passwordOtp.value = '';
+        }
+        profileToast('Password updated successfully.');
+      } catch (err) {
+        console.error(err);
+        profileToast('Password update failed: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
       }
-      profileToast('Password updated after OTP verification.');
     }
 
     function resetProfileDetails() {
@@ -938,6 +1096,348 @@
       profileToast('Profile details restored.');
     }
 
+    function detectCurrentDevice() {
+      var ua = navigator.userAgent;
+      var os = "Unknown OS";
+      var icon = "computer";
+      var deviceType = "Device";
+
+      if (/Macintosh|Mac OS X/.test(ua)) {
+        os = "macOS";
+        deviceType = "MacBook";
+        icon = "laptop_mac";
+      } else if (/Windows/.test(ua)) {
+        os = "Windows";
+        deviceType = "PC";
+        icon = "computer";
+      } else if (/Android/.test(ua)) {
+        os = "Android";
+        deviceType = "Android Device";
+        icon = "phone_android";
+      } else if (/iPhone|iPad|iPod/.test(ua)) {
+        os = "iOS";
+        deviceType = ua.indexOf("iPad") > -1 ? "iPad" : "iPhone";
+        icon = ua.indexOf("iPad") > -1 ? "tablet_mac" : "phone_iphone";
+      } else if (/Linux/.test(ua)) {
+        os = "Linux";
+        deviceType = "Linux PC";
+        icon = "computer";
+      }
+
+      var browser = "Browser";
+      if (/Chrome/.test(ua) && !/Chromium|Edg|OPR/.test(ua)) {
+        browser = "Chrome";
+      } else if (/Safari/.test(ua) && !/Chrome|Chromium/.test(ua)) {
+        browser = "Safari";
+      } else if (/Firefox/.test(ua)) {
+        browser = "Firefox";
+      } else if (/Edg/.test(ua)) {
+        browser = "Edge";
+      } else if (/OPR|Opera/.test(ua)) {
+        browser = "Opera";
+      }
+
+      return {
+        icon: icon,
+        name: browser + ' on ' + deviceType + ' (' + os + ')'
+      };
+    }
+
+    async function loadActiveSessions() {
+      var current = detectCurrentDevice();
+      var cachedLocation = localStorage.getItem('wedrive_current_location');
+      var locationText = cachedLocation || 'Kuala Lumpur, Malaysia';
+      
+      if (!cachedLocation) {
+        try {
+          var controller = new AbortController();
+          var timeoutId = setTimeout(function() { controller.abort(); }, 2000);
+          var response = await fetch('https://ipapi.co/json/', { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (response.ok) {
+            var data = await response.json();
+            if (data.city && data.country_name) {
+              locationText = data.city + ', ' + data.country_name;
+              localStorage.setItem('wedrive_current_location', locationText);
+            }
+          }
+        } catch (e) {
+          console.warn('[Profile] Failed to fetch IP location:', e);
+        }
+      }
+
+      var sessionsRaw = localStorage.getItem('wedrive_active_sessions');
+      var sessions = [];
+      if (sessionsRaw) {
+        sessions = JSON.parse(sessionsRaw);
+      } else {
+        sessions = [
+          { id: 'session_iphone', icon: 'phone_iphone', name: 'iPhone 14 Pro (iOS)', meta: 'Kuala Lumpur, Malaysia - Last active 2 hours ago' },
+          { id: 'session_thinkpad', icon: 'computer', name: 'ThinkPad X1 (Windows)', meta: 'Johor Bahru, Malaysia - Last active 3 days ago' }
+        ];
+        localStorage.setItem('wedrive_active_sessions', JSON.stringify(sessions));
+      }
+
+      var listEl = document.querySelector('.pf-session-list');
+      if (!listEl) return;
+
+      var html = '';
+      html += '<div class="pf-session-item">' +
+              '  <span class="material-icons-round pf-session-icon">' + current.icon + '</span>' +
+              '  <div class="pf-session-info">' +
+              '    <div class="pf-session-name">' + current.name + ' <span class="pf-current-badge">Current</span></div>' +
+              '    <div class="pf-session-meta">' + locationText + ' - Active now</div>' +
+              '  </div>' +
+              '</div>';
+
+      sessions.forEach(function (s) {
+        html += '<div class="pf-session-item" data-session-id="' + s.id + '">' +
+                '  <span class="material-icons-round pf-session-icon">' + s.icon + '</span>' +
+                '  <div class="pf-session-info">' +
+                '    <div class="pf-session-name">' + s.name + '</div>' +
+                '    <div class="pf-session-meta">' + s.meta + '</div>' +
+                '  </div>' +
+                '  <button class="pf-session-remove" onclick="terminateSession(\'' + s.id + '\')">' +
+                '    <span class="material-icons-round">close</span>' +
+                '  </button>' +
+                '</div>';
+      });
+
+      listEl.innerHTML = html;
+    }
+
+    function terminateSession(id) {
+      var sessionsRaw = localStorage.getItem('wedrive_active_sessions');
+      if (sessionsRaw) {
+        var sessions = JSON.parse(sessionsRaw);
+        sessions = sessions.filter(function (s) { return s.id !== id; });
+        localStorage.setItem('wedrive_active_sessions', JSON.stringify(sessions));
+      }
+      loadActiveSessions();
+      profileToast('Session terminated.');
+    }
+
+    function terminateAllOtherSessions() {
+      localStorage.setItem('wedrive_active_sessions', JSON.stringify([]));
+      loadActiveSessions();
+      profileToast('All other sessions terminated.');
+    }
+
+    function getLocalPreferences() {
+      try {
+        var lang = localStorage.getItem('wedrive-lang') || 'en';
+        var theme = localStorage.getItem('wedrive-theme') || 'system';
+        var units = localStorage.getItem('wedrive_measurement_units') || 'kilometers';
+        var currency = localStorage.getItem('wedrive_currency') || 'MYR';
+        var prefCategory = localStorage.getItem('wedrive_pref_category') || 'Sedan';
+        var notificationsRaw = localStorage.getItem('wedrive_notifications_prefs');
+        var notifications = notificationsRaw ? JSON.parse(notificationsRaw) : {
+          bookingUpdates: true,
+          promoOffers: true,
+          securityAlerts: true,
+          newsletter: true,
+          sms: true,
+          push: true
+        };
+        return {
+          language: lang,
+          theme: theme,
+          units: units,
+          currency: currency,
+          prefCategory: prefCategory,
+          notifications: notifications
+        };
+      } catch (e) {
+        console.error(e);
+        return {
+          language: 'en',
+          theme: 'system',
+          units: 'kilometers',
+          currency: 'MYR',
+          prefCategory: 'Sedan',
+          notifications: { bookingUpdates: true, promoOffers: true, securityAlerts: true, newsletter: true, sms: true, push: true }
+        };
+      }
+    }
+
+    function applyPreferencesToUi(prefs) {
+      if (!prefs) return;
+      
+      var langSelect = document.querySelector('select[aria-label="Language"]');
+      if (langSelect) {
+        langSelect.value = prefs.language === 'ms' ? 'Malay (BM)' : 'English (EN)';
+      }
+      if (typeof window.setLanguage === 'function') {
+        window.setLanguage(prefs.language);
+      }
+
+      var themeSelect = document.querySelector('select[aria-label="Theme"]');
+      if (themeSelect) {
+        if (prefs.theme === 'day') themeSelect.value = 'Light Mode';
+        else if (prefs.theme === 'night') themeSelect.value = 'Dark Mode';
+        else themeSelect.value = 'System Default';
+      }
+      if (typeof window.setTheme === 'function') {
+        window.setTheme(prefs.theme);
+      }
+
+      var unitButtons = document.querySelectorAll('.pf-segment-control button');
+      unitButtons.forEach(function (btn) {
+        if (btn.textContent.toLowerCase() === prefs.units.toLowerCase()) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      var currencySelect = document.querySelector('select[aria-label="Currency"]');
+      if (currencySelect) {
+        if (prefs.currency === 'USD') currencySelect.value = 'USD ($)';
+        else currencySelect.value = 'MYR (RM)';
+      }
+
+      var catCards = document.querySelectorAll('.pf-cat-card');
+      catCards.forEach(function (card) {
+        var cardText = card.querySelector('span:last-child').textContent;
+        if (cardText.toLowerCase() === prefs.prefCategory.toLowerCase()) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+
+      var notif = prefs.notifications || {};
+      var checkMap = {
+        'Booking Updates': notif.bookingUpdates !== false,
+        'Promotions and Offers': notif.promoOffers !== false,
+        'Security Alerts': notif.securityAlerts !== false,
+        'Subscribe': notif.newsletter !== false,
+        'Enable SMS': notif.sms !== false,
+        'Enable Push': notif.push !== false
+      };
+      
+      document.querySelectorAll('.pf-switch input[type="checkbox"]').forEach(function (chk) {
+        var label = chk.getAttribute('aria-label') || chk.getAttribute('title') || '';
+        Object.keys(checkMap).forEach(function (k) {
+          if (label.indexOf(k) > -1) {
+            chk.checked = checkMap[k];
+          }
+        });
+      });
+    }
+
+    async function savePrefs(silent) {
+      try {
+        var sb = window.supabaseClient;
+        if (!sb) return;
+        var userResult = await sb.auth.getUser();
+        var user = userResult && userResult.data && userResult.data.user;
+        
+        var langSelect = document.querySelector('select[aria-label="Language"]');
+        var language = (langSelect && langSelect.value === 'Malay (BM)') ? 'ms' : 'en';
+
+        var themeSelect = document.querySelector('select[aria-label="Theme"]');
+        var theme = 'system';
+        if (themeSelect) {
+          if (themeSelect.value === 'Light Mode') theme = 'day';
+          else if (themeSelect.value === 'Dark Mode') theme = 'night';
+        }
+
+        var activeUnitBtn = document.querySelector('.pf-segment-control button.active');
+        var units = activeUnitBtn ? activeUnitBtn.textContent.toLowerCase() : 'kilometers';
+
+        var currencySelect = document.querySelector('select[aria-label="Currency"]');
+        var currency = (currencySelect && currencySelect.value.indexOf('USD') > -1) ? 'USD' : 'MYR';
+
+        var activeCatBtn = document.querySelector('.pf-cat-card.active span:last-child');
+        var prefCategory = activeCatBtn ? activeCatBtn.textContent : 'Sedan';
+
+        var getCheckState = function (keyword) {
+          var chk = Array.from(document.querySelectorAll('.pf-switch input[type="checkbox"]')).find(function (c) {
+            var label = c.getAttribute('aria-label') || c.getAttribute('title') || '';
+            return label.indexOf(keyword) > -1;
+          });
+          return chk ? chk.checked : true;
+        };
+
+        var notifications = {
+          bookingUpdates: getCheckState('Booking Updates'),
+          promoOffers: getCheckState('Promotions and Offers'),
+          securityAlerts: getCheckState('Security Alerts'),
+          newsletter: getCheckState('Subscribe'),
+          sms: getCheckState('Enable SMS'),
+          push: getCheckState('Enable Push')
+        };
+
+        var prefs = {
+          language: language,
+          theme: theme,
+          units: units,
+          currency: currency,
+          prefCategory: prefCategory,
+          notifications: notifications
+        };
+
+        localStorage.setItem('wedrive-lang', language);
+        localStorage.setItem('wedrive-theme', theme);
+        localStorage.setItem('wedrive_measurement_units', units);
+        localStorage.setItem('wedrive_currency', currency);
+        localStorage.setItem('wedrive_pref_category', prefCategory);
+        localStorage.setItem('wedrive_notifications_prefs', JSON.stringify(notifications));
+
+        if (typeof window.setLanguage === 'function') {
+          window.setLanguage(language);
+        }
+        if (typeof window.setTheme === 'function') {
+          window.setTheme(theme);
+        }
+
+        if (user) {
+          var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, { preferences: prefs });
+          if (!dbResult.success) console.warn('[Profile] Failed to save preferences to DB:', dbResult.error);
+        }
+
+        if (!silent) {
+          profileToast('Preferences saved successfully.');
+        }
+      } catch (err) {
+        console.error('[Profile] Save preferences error:', err);
+      }
+    }
+
+    function changeLanguagePref(val) {
+      savePrefs(true);
+      profileToast('Language updated.');
+    }
+
+    function changeThemePref(val) {
+      savePrefs(true);
+      profileToast('Theme updated.');
+    }
+
+    function changeCurrencyPref(val) {
+      savePrefs(true);
+      profileToast('Currency updated.');
+    }
+
+    function selectCat(el) {
+      document.querySelectorAll('.pf-cat-card').forEach(function (c) { c.classList.remove('active'); });
+      el.classList.add('active');
+      savePrefs(true);
+      profileToast('Preferred car updated.');
+    }
+
+    function selectUnit(el) {
+      document.querySelectorAll('.pf-segment-control button').forEach(function (btn) { btn.classList.remove('active'); });
+      el.classList.add('active');
+      savePrefs(true);
+      profileToast('Measurement unit updated.');
+    }
+
+    function saveNotificationChanges() {
+      savePrefs(false);
+    }
+
     // Load profile from Supabase if logged in
     async function loadProfileFromSupabase() {
       try {
@@ -946,12 +1446,13 @@
         var userResult = await sb.auth.getUser();
         var user = userResult && userResult.data && userResult.data.user;
         if (!user) {
-          applyProfileState(mergeProfileState(readStoredProfile()));
+          var localState = mergeProfileState(readStoredProfile());
+          applyProfileState(localState);
+          applyPreferencesToUi(getLocalPreferences());
           return;
         }
         var profile = await WeDriveAPI.getCustomerProfile(user.id);
         if (profile) {
-          // Map Supabase customer data to profile fields
           var nameParts = (profile.name || '').split(' ');
           var firstName = nameParts[0] || '';
           var lastName = nameParts.slice(1).join(' ') || '';
@@ -967,38 +1468,47 @@
             license: profile.license || '',
             licenseExpiry: profile.license_expiry || defaultProfileState.licenseExpiry,
             identity: profile.ic || '',
-            verificationStatus: (profile.ic && profile.license) ? 'Verified' : 'Pending'
+            verificationStatus: profile.verification_status || ((profile.ic && profile.license) ? 'Verified' : 'Pending'),
+            rejectionReason: profile.rejection_reason || ''
           };
           applyProfileState(supabaseState);
-          // Persist to localStorage so OTP and other functions use correct data
           persistProfileState(supabaseState);
-          // Update payment cardholder name
+          
+          if (profile.preferences) {
+            applyPreferencesToUi(profile.preferences);
+          } else {
+            applyPreferencesToUi(getLocalPreferences());
+          }
+
           var cardHolder = document.getElementById('pf-pay-cardholder');
           if (cardHolder) cardHolder.textContent = (firstName + ' ' + lastName).trim().toUpperCase() || '-';
-          // Update verification banner
-          var verStatus = document.getElementById('pf-verification-status');
-          if (verStatus) {
-            if (supabaseState.identity && supabaseState.license) {
-              verStatus.innerHTML = '<span class="material-icons-round">shield</span> Verified';
-            } else {
-              verStatus.innerHTML = '<span class="material-icons-round">warning</span> Incomplete';
-              verStatus.style.color = 'var(--warning, #f59e0b)';
-            }
-          }
         } else {
           applyProfileState(mergeProfileState(readStoredProfile()));
+          applyPreferencesToUi(getLocalPreferences());
         }
       } catch (err) {
         console.error('[Profile] Load error:', err);
         applyProfileState(mergeProfileState(readStoredProfile()));
+        applyPreferencesToUi(getLocalPreferences());
       }
     }
 
     // Init
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(loadProfileFromSupabase, 500);
-    });
+    function initProfilePage() {
+      setTimeout(function() {
+        loadProfileFromSupabase();
+        loadActiveSessions();
+      }, 500);
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initProfilePage);
+    } else {
+      initProfilePage();
+    }
+
     applyProfileState(mergeProfileState(readStoredProfile()));
+    applyPreferencesToUi(getLocalPreferences());
     updateVerificationProgress();
     refreshOtpUi('profile');
     refreshOtpUi('password');
@@ -1015,18 +1525,6 @@
         if (target) { target.classList.add('active'); }
       });
     });
-
-    function selectCat(el) {
-      document.querySelectorAll('.pf-cat-card').forEach(function (c) { c.classList.remove('active'); });
-      el.classList.add('active');
-      profileToast('Preferred car updated.');
-    }
-
-    function selectUnit(el) {
-      document.querySelectorAll('.pf-segment-control button').forEach(function (btn) { btn.classList.remove('active'); });
-      el.classList.add('active');
-      profileToast('Measurement unit updated.');
-    }
 
     function profileToast(message) {
       var toast = document.getElementById('profile-toast');
