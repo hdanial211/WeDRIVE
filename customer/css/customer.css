@@ -5563,12 +5563,12 @@ body.night-mode .pf-dialog-overlay {
 
 .pf-dialog {
   border: none;
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 0;
-  width: min(540px, 92%);
+  width: min(480px, 95%);
   background: var(--bg-surface, #ffffff);
   color: var(--text-primary, #1e293b);
-  box-shadow: 0 20px 50px rgba(2, 6, 23, 0.4);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(148, 163, 184, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -5625,21 +5625,194 @@ body.night-mode .pf-dialog-close:hover {
   color: #fff;
 }
 .pf-dialog-body {
-  padding: 24px;
+  padding: 28px 24px;
   overflow-y: auto;
   max-height: calc(85vh - 120px);
 }
-.pf-dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 16px 24px;
-  background: var(--slate-50, #F8FAFC);
-  border-top: 1.5px solid var(--border-color, #E2E8F0);
+
+/* Wizard step transition rules */
+.pf-pwd-step {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }
-body.night-mode .pf-dialog-footer {
-  background: rgba(0, 0, 0, 0.15);
-  border-top-color: rgba(148, 163, 184, 0.1);
+.pf-pwd-step.active {
+  display: flex;
+  animation: pf-fade-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pf-fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Step-specific sub-components */
+.pf-pwd-step-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1.5px solid rgba(59, 130, 246, 0.15);
+  margin-bottom: 20px;
+}
+body.night-mode .pf-pwd-step-icon-container {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+.pf-pwd-step-icon-container.success {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.15);
+}
+body.night-mode .pf-pwd-step-icon-container.success {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+.pf-pwd-step-icon {
+  font-size: 32px;
+  color: var(--primary, #3B82F6);
+}
+.pf-pwd-step-icon-container.success .pf-pwd-step-icon {
+  color: var(--success, #10B981);
+}
+.pf-pwd-step-heading {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--navy, #1E293B);
+}
+body.night-mode .pf-pwd-step-heading {
+  color: #F8FAFC;
+}
+.pf-pwd-step-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--slate-600, #475569);
+  max-width: 380px;
+  margin-bottom: 24px;
+}
+body.night-mode .pf-pwd-step-desc {
+  color: var(--slate-400, #94A3B8);
+}
+.pf-pwd-step-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+.pf-pwd-step-actions .pf-btn {
+  height: 44px;
+  border-radius: 10px;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+}
+
+/* OTP Verification code inputs styling */
+.pf-pwd-code-input-container {
+  width: 100%;
+  max-width: 240px;
+  margin: 8px auto 16px;
+}
+#pf-password-otp {
+  font-family: monospace !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: 12px !important;
+  text-align: center !important;
+  text-indent: 12px; /* Center-align correction */
+  height: 52px;
+  border-radius: 12px;
+  border: 2px solid var(--slate-200, #E2E8F0);
+  background: transparent;
+  width: 100%;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+#pf-password-otp:focus {
+  border-color: var(--primary, #3B82F6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  outline: none;
+}
+body.night-mode #pf-password-otp {
+  border-color: rgba(148, 163, 184, 0.2);
+}
+body.night-mode #pf-password-otp:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+.pf-pwd-otp-note {
+  font-size: 13px;
+  color: var(--slate-600, #475569);
+  margin-bottom: 24px;
+}
+body.night-mode .pf-pwd-otp-note {
+  color: var(--slate-400, #94A3B8);
+}
+.pf-pwd-resend-container {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--slate-600, #475569);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+body.night-mode .pf-pwd-resend-container {
+  color: var(--slate-400, #94A3B8);
+}
+.pf-pwd-resend-container .pf-text-link {
+  background: none;
+  border: none;
+  color: var(--primary, #3B82F6);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 13px;
+  transition: opacity 0.15s;
+}
+.pf-pwd-resend-container .pf-text-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+body.night-mode .pf-pwd-resend-container .pf-text-link {
+  color: #60a5fa;
+}
+
+/* Change Password Form Sub-components */
+.pf-pwd-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  text-align: left;
+}
+.pf-pwd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pf-pwd-field label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--navy, #1E293B);
+  opacity: 0.8;
+}
+body.night-mode .pf-pwd-field label {
+  color: #F8FAFC;
 }
 .password-input-wrapper {
   position: relative;
@@ -5675,4 +5848,42 @@ body.night-mode .password-toggle-btn {
 }
 body.night-mode .password-toggle-btn:hover {
   color: #60a5fa;
+}
+
+/* Requirements Check List */
+.pf-pwd-reqs {
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--slate-50, #F8FAFC);
+  border-radius: 12px;
+  text-align: left;
+  border: 1px solid var(--slate-200, rgba(226, 232, 240, 0.5));
+  margin-bottom: 24px;
+}
+body.night-mode .pf-pwd-reqs {
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(148, 163, 184, 0.08);
+}
+.pf-pwd-req-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--slate-600, #475569);
+  transition: color 0.2s;
+}
+body.night-mode .pf-pwd-req-item {
+  color: var(--slate-400, #94A3B8);
+}
+.pf-pwd-req-item .req-icon {
+  font-size: 16px;
+  color: var(--slate-400, #94A3B8);
+  transition: color 0.2s, transform 0.2s;
+}
+body.night-mode .pf-pwd-req-item .req-icon {
+  color: var(--slate-600, #475569);
 }

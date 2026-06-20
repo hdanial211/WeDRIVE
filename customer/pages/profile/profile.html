@@ -559,24 +559,101 @@
     }
 
     function refreshOtpUi(flow) {
-      var els = getOtpElements(flow);
+      if (flow !== 'password') {
+        var els = getOtpElements(flow);
+        var state = otpState[flow];
+        if (!els.badge || !els.note) {
+          return;
+        }
+        if (state.verified) {
+          els.badge.textContent = 'Verified';
+          els.badge.classList.add('verified');
+          els.note.textContent = 'Verified.';
+          return;
+        }
+        els.badge.classList.remove('verified');
+        if (state.sent) {
+          els.badge.textContent = 'Pending OTP';
+          els.note.textContent = 'Enter code. Demo: ' + otpConfig[flow];
+        } else {
+          els.badge.textContent = 'OTP Required';
+          els.note.textContent = 'OTP not sent yet.';
+        }
+        return;
+      }
+
       var state = otpState[flow];
-      if (!els.badge || !els.note) {
-        return;
-      }
+      var stepRequest = document.getElementById('pf-pwd-step-request');
+      var stepVerify = document.getElementById('pf-pwd-step-verify');
+      var stepChange = document.getElementById('pf-pwd-step-change');
+      
+      if (!stepRequest || !stepVerify || !stepChange) return;
+
+      stepRequest.classList.remove('active');
+      stepVerify.classList.remove('active');
+      stepChange.classList.remove('active');
+
       if (state.verified) {
-        els.badge.textContent = 'Verified';
-        els.badge.classList.add('verified');
-        els.note.textContent = 'OTP verified. You can continue with this sensitive action.';
-        return;
-      }
-      els.badge.classList.remove('verified');
-      if (state.sent) {
-        els.badge.textContent = 'Pending OTP';
-        els.note.textContent = 'Check your verified email and enter the 6-digit code. Demo OTP: ' + otpConfig[flow] + '.';
+        stepChange.classList.add('active');
+        checkPasswordRequirements();
+      } else if (state.sent) {
+        stepVerify.classList.add('active');
+        var verifySubtitle = document.getElementById('pf-pwd-verify-subtitle');
+        if (verifySubtitle) {
+          var stored = mergeProfileState(readStoredProfile());
+          verifySubtitle.textContent = 'We\'ve sent a 6-digit code to ' + maskEmail(stored.email) + '. Enter it below to verify.';
+        }
       } else {
-        els.badge.textContent = 'OTP Required';
-        els.note.textContent = 'OTP not sent yet.';
+        stepRequest.classList.add('active');
+      }
+    }
+
+    function goBackToOtpRequest() {
+      otpState.password.sent = false;
+      otpState.password.verified = false;
+      var otpInput = document.getElementById('pf-password-otp');
+      if (otpInput) otpInput.value = '';
+      refreshOtpUi('password');
+    }
+
+    function checkPasswordRequirements() {
+      var newPassword = document.getElementById('pf-new-password');
+      var confirmPassword = document.getElementById('pf-confirm-password');
+      var submitBtn = document.getElementById('pf-pwd-submit-btn');
+      if (!newPassword || !confirmPassword || !submitBtn) return;
+
+      var pwd = newPassword.value;
+      var cpwd = confirmPassword.value;
+
+      var reqLength = document.getElementById('req-length');
+      var isLengthValid = pwd.length >= 8;
+      updateReqUi(reqLength, isLengthValid);
+
+      var reqChars = document.getElementById('req-chars');
+      var hasNumberOrSpecial = /[0-9!@#$%^&*(),.?":{}|<>]/.test(pwd);
+      var isCharsValid = hasNumberOrSpecial;
+      updateReqUi(reqChars, isCharsValid);
+
+      var reqMatch = document.getElementById('req-match');
+      var isMatchValid = pwd === cpwd && cpwd.length > 0;
+      updateReqUi(reqMatch, isMatchValid);
+
+      submitBtn.disabled = !(isLengthValid && isCharsValid && isMatchValid);
+    }
+
+    function updateReqUi(el, isValid) {
+      if (!el) return;
+      var icon = el.querySelector('.req-icon');
+      if (!icon) return;
+
+      if (isValid) {
+        el.style.color = 'var(--success, #10B981)';
+        icon.textContent = 'check_circle';
+        icon.style.color = 'var(--success, #10B981)';
+      } else {
+        el.style.color = '';
+        icon.textContent = 'radio_button_unchecked';
+        icon.style.color = '';
       }
     }
 
@@ -631,7 +708,7 @@
         return;
       }
 
-      var submitBtn = document.querySelector('button[onclick="submitPasswordChange()"]');
+      var submitBtn = document.getElementById('pf-pwd-submit-btn');
       var originalBtnHtml = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span class="material-icons-round spinner">sync</span> Updating...';
@@ -1243,62 +1320,122 @@
   <div id="change-password-dialog" class="pf-dialog-overlay" style="display:none" onclick="if(event.target === this) closePasswordDialog()">
     <div class="pf-dialog">
       <div class="pf-dialog-header">
-        <h3 class="pf-dialog-title"><span class="material-icons-round">lock</span> Change Password</h3>
+        <h3 class="pf-dialog-title">
+          <span class="material-icons-round" style="color: var(--primary, #3B82F6);">vpn_key</span>
+          <span>Change Password</span>
+        </h3>
         <button type="button" class="pf-dialog-close" onclick="closePasswordDialog()" aria-label="Close dialog">
           <span class="material-icons-round">close</span>
         </button>
       </div>
       <div class="pf-dialog-body">
-        <div class="pf-form-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
-          <div class="pf-field">
-            <label>New Password</label>
-            <div class="password-input-wrapper">
-              <input type="password" id="pf-new-password" placeholder="••••••••" aria-label="New Password" title="New Password" />
-              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-new-password')">
-                <span class="material-icons-round">visibility_off</span>
-              </button>
-            </div>
+        
+        <!-- STEP 1: Send OTP -->
+        <div id="pf-pwd-step-request" class="pf-pwd-step active">
+          <div class="pf-pwd-step-icon-container">
+            <span class="material-icons-round pf-pwd-step-icon">mail_lock</span>
           </div>
-          <div class="pf-field">
-            <label>Confirm New Password</label>
-            <div class="password-input-wrapper">
-              <input type="password" id="pf-confirm-password" placeholder="••••••••" aria-label="Confirm New Password" title="Confirm New Password" />
-              <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-confirm-password')">
-                <span class="material-icons-round">visibility_off</span>
-              </button>
-            </div>
+          <h4 class="pf-pwd-step-heading">Verify Your Identity</h4>
+          <p class="pf-pwd-step-desc">
+            To keep your WeDRIVE account secure, we need to verify your email. A 6-digit verification code will be sent to your registered email address.
+          </p>
+          <div class="pf-pwd-step-actions">
+            <button class="pf-btn outline" type="button" onclick="closePasswordDialog()">Cancel</button>
+            <button class="pf-btn primary" type="button" onclick="sendEmailOtp('password')">
+              <span class="material-icons-round">send</span> Send Code
+            </button>
           </div>
         </div>
-        <p class="pf-hint">Password must be at least 8 characters long and include a number and special character.</p>
 
-        <div class="pf-otp-card pf-otp-inline" style="margin-top: 20px;">
-          <div class="pf-otp-head">
-            <div>
-              <strong>Password change OTP</strong>
-              <p>An OTP is sent to your verified email before password changes are accepted.</p>
-            </div>
-            <div class="pf-otp-badge" id="pf-password-otp-badge">OTP Required</div>
+        <!-- STEP 2: Input & Verify OTP -->
+        <div id="pf-pwd-step-verify" class="pf-pwd-step">
+          <div class="pf-pwd-step-icon-container">
+            <span class="material-icons-round pf-pwd-step-icon">sms</span>
           </div>
-          <div class="pf-otp-row">
-            <button class="pf-btn outline" type="button" onclick="sendEmailOtp('password')">
-              <span class="material-icons-round">mail</span> Send OTP
+          <h4 class="pf-pwd-step-heading">Enter Verification Code</h4>
+          <p class="pf-pwd-step-desc" id="pf-pwd-verify-subtitle">
+            We've sent a 6-digit code to your email. Enter it below to verify.
+          </p>
+          
+          <div class="pf-pwd-code-input-container">
+            <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6" aria-label="Verification Code" title="Verification Code" placeholder="000000" autocomplete="off" />
+          </div>
+          
+          <p class="pf-pwd-otp-note" id="pf-password-otp-note">
+            Demo OTP: 628403.
+          </p>
+          
+          <div class="pf-pwd-step-actions">
+            <button class="pf-btn outline" type="button" onclick="goBackToOtpRequest()">
+              <span class="material-icons-round">arrow_back</span> Back
             </button>
-            <div class="pf-otp-field">
-              <label for="pf-password-otp">Verification Code</label>
-              <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6" aria-label="Password change OTP" title="Password change OTP" placeholder="123456" />
-            </div>
             <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('password')">
-              <span class="material-icons-round">verified</span> Verify OTP
+              <span class="material-icons-round">verified</span> Verify
             </button>
           </div>
-          <p class="pf-otp-note" id="pf-password-otp-note">OTP not sent yet.</p>
+          
+          <div class="pf-pwd-resend-container">
+            <span>Didn't receive the code?</span>
+            <button class="pf-text-link" type="button" onclick="sendEmailOtp('password')">Resend Code</button>
+          </div>
         </div>
-      </div>
-      <div class="pf-dialog-footer">
-        <button class="pf-btn outline" type="button" onclick="closePasswordDialog()">Cancel</button>
-        <button class="pf-btn primary" type="button" onclick="submitPasswordChange()">
-          <span class="material-icons-round">lock_reset</span> Update Password
-        </button>
+
+        <!-- STEP 3: Change Password Form -->
+        <div id="pf-pwd-step-change" class="pf-pwd-step">
+          <div class="pf-pwd-step-icon-container success">
+            <span class="material-icons-round pf-pwd-step-icon">check_circle</span>
+          </div>
+          <h4 class="pf-pwd-step-heading">Set New Password</h4>
+          <p class="pf-pwd-step-desc">
+            Your identity has been verified. Choose a strong, new password below.
+          </p>
+          
+          <div class="pf-pwd-form-fields">
+            <div class="pf-pwd-field">
+              <label for="pf-new-password">New Password</label>
+              <div class="password-input-wrapper">
+                <input type="password" id="pf-new-password" placeholder="••••••••" aria-label="New Password" title="New Password" oninput="checkPasswordRequirements()" />
+                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-new-password')" aria-label="Toggle password visibility">
+                  <span class="material-icons-round">visibility_off</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="pf-pwd-field">
+              <label for="pf-confirm-password">Confirm New Password</label>
+              <div class="password-input-wrapper">
+                <input type="password" id="pf-confirm-password" placeholder="••••••••" aria-label="Confirm New Password" title="Confirm New Password" oninput="checkPasswordRequirements()" />
+                <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-confirm-password')" aria-label="Toggle password visibility">
+                  <span class="material-icons-round">visibility_off</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password Requirements checklist (Stripe / Vercel style) -->
+          <div class="pf-pwd-reqs">
+            <div class="pf-pwd-req-item" id="req-length">
+              <span class="material-icons-round req-icon">radio_button_unchecked</span>
+              <span>At least 8 characters long</span>
+            </div>
+            <div class="pf-pwd-req-item" id="req-chars">
+              <span class="material-icons-round req-icon">radio_button_unchecked</span>
+              <span>Contains a number or special character</span>
+            </div>
+            <div class="pf-pwd-req-item" id="req-match">
+              <span class="material-icons-round req-icon">radio_button_unchecked</span>
+              <span>Passwords match</span>
+            </div>
+          </div>
+
+          <div class="pf-pwd-step-actions">
+            <button class="pf-btn outline" type="button" onclick="closePasswordDialog()">Cancel</button>
+            <button class="pf-btn primary" type="button" onclick="submitPasswordChange()" id="pf-pwd-submit-btn" disabled>
+              <span class="material-icons-round">lock_reset</span> Update Password
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
