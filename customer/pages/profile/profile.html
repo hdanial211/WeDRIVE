@@ -142,44 +142,12 @@
               <!-- Change Password -->
               <section class="pf-card pf-bento-wide">
                 <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Change Password</h3>
-                <div class="pf-form-grid">
-                  <div class="pf-field full"><label>Current Password</label><input type="password"
-                      id="pf-current-password" value="********" aria-label="Current Password"
-                      title="Current Password" /></div>
-                  <div class="pf-field"><label>New Password</label><input type="password" id="pf-new-password"
-                      value="********" aria-label="New Password" title="New Password" /></div>
-                  <div class="pf-field"><label>Confirm New Password</label><input type="password"
-                      id="pf-confirm-password" value="********" aria-label="Confirm New Password"
-                      title="Confirm New Password" /></div>
+                <p class="pf-card-desc">It is recommended to update your password periodically to keep your WeDRIVE account secure.</p>
+                <div class="pf-actions-bar compact" style="margin-top:0">
+                  <button class="pf-btn primary" type="button" onclick="openPasswordDialog()">
+                    <span class="material-icons-round">vpn_key</span> Change Password
+                  </button>
                 </div>
-                <p class="pf-hint">Password must be at least 8 characters long and include a number and special
-                  character.</p>
-
-                <div class="pf-otp-card pf-otp-inline">
-                  <div class="pf-otp-head">
-                    <div>
-                      <strong>Password change OTP</strong>
-                      <p>An OTP is sent to your verified email before password changes are accepted.</p>
-                    </div>
-                    <div class="pf-otp-badge" id="pf-password-otp-badge">OTP Required</div>
-                  </div>
-                  <div class="pf-otp-row">
-                    <button class="pf-btn outline" type="button" onclick="sendEmailOtp('password')"><span
-                        class="material-icons-round">mail</span> Send OTP</button>
-                    <div class="pf-otp-field">
-                      <label for="pf-password-otp">Verification Code</label>
-                      <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6"
-                        aria-label="Password change OTP" title="Password change OTP" placeholder="123456" />
-                    </div>
-                    <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('password')"><span
-                        class="material-icons-round">verified</span> Verify OTP</button>
-                  </div>
-                  <p class="pf-otp-note" id="pf-password-otp-note">OTP not sent yet.</p>
-                </div>
-
-                <div class="pf-actions-bar compact"><button class="pf-btn primary" type="button"
-                    onclick="submitPasswordChange()"><span class="material-icons-round">lock_reset</span> Update
-                    Password</button></div>
               </section>
 
               <!-- Two-Factor Auth -->
@@ -632,10 +600,9 @@
     }
 
     async function submitPasswordChange() {
-      var currentPassword = document.getElementById('pf-current-password');
       var newPassword = document.getElementById('pf-new-password');
       var confirmPassword = document.getElementById('pf-confirm-password');
-      if (!currentPassword || !newPassword || !confirmPassword) {
+      if (!newPassword || !confirmPassword) {
         profileToast('Password form is unavailable.');
         return;
       }
@@ -663,9 +630,8 @@
         var result = await sb.auth.updateUser({ password: newPassword.value.trim() });
         if (result.error) throw result.error;
 
-        currentPassword.value = '********';
-        newPassword.value = '********';
-        confirmPassword.value = '********';
+        newPassword.value = '';
+        confirmPassword.value = '';
         otpState.password = { sent: false, verified: false };
         refreshOtpUi('password');
         var passwordOtp = document.getElementById('pf-password-otp');
@@ -673,12 +639,54 @@
           passwordOtp.value = '';
         }
         profileToast('Password updated successfully.');
+        closePasswordDialog();
       } catch (err) {
         console.error(err);
         profileToast('Password update failed: ' + err.message);
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnHtml;
+      }
+    }
+
+    function openPasswordDialog() {
+      var newPassword = document.getElementById('pf-new-password');
+      var confirmPassword = document.getElementById('pf-confirm-password');
+      var passwordOtp = document.getElementById('pf-password-otp');
+      if (newPassword) newPassword.value = '';
+      if (confirmPassword) confirmPassword.value = '';
+      if (passwordOtp) passwordOtp.value = '';
+      
+      otpState.password = { sent: false, verified: false };
+      refreshOtpUi('password');
+      
+      var dialog = document.getElementById('change-password-dialog');
+      if (dialog) {
+        dialog.showModal();
+      }
+    }
+
+    function closePasswordDialog() {
+      var dialog = document.getElementById('change-password-dialog');
+      if (dialog) {
+        dialog.close();
+      }
+    }
+
+    function togglePasswordVisibility(inputId) {
+      var input = document.getElementById(inputId);
+      if (!input) return;
+      var btn = input.nextElementSibling;
+      if (!btn) return;
+      var icon = btn.querySelector('.material-icons-round');
+      if (!icon) return;
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility_off';
       }
     }
 
@@ -1198,6 +1206,68 @@
       }
     });
   </script>
+
+  <!-- Change Password Dialog Modal -->
+  <dialog id="change-password-dialog" class="pf-dialog">
+    <div class="pf-dialog-header">
+      <h3 class="pf-dialog-title"><span class="material-icons-round">lock</span> Change Password</h3>
+      <button type="button" class="pf-dialog-close" onclick="closePasswordDialog()" aria-label="Close dialog">
+        <span class="material-icons-round">close</span>
+      </button>
+    </div>
+    <div class="pf-dialog-body">
+      <div class="pf-form-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+        <div class="pf-field">
+          <label>New Password</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="pf-new-password" placeholder="••••••••" aria-label="New Password" title="New Password" />
+            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-new-password')">
+              <span class="material-icons-round">visibility_off</span>
+            </button>
+          </div>
+        </div>
+        <div class="pf-field">
+          <label>Confirm New Password</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="pf-confirm-password" placeholder="••••••••" aria-label="Confirm New Password" title="Confirm New Password" />
+            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-confirm-password')">
+              <span class="material-icons-round">visibility_off</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="pf-hint">Password must be at least 8 characters long and include a number and special character.</p>
+
+      <div class="pf-otp-card pf-otp-inline" style="margin-top: 20px;">
+        <div class="pf-otp-head">
+          <div>
+            <strong>Password change OTP</strong>
+            <p>An OTP is sent to your verified email before password changes are accepted.</p>
+          </div>
+          <div class="pf-otp-badge" id="pf-password-otp-badge">OTP Required</div>
+        </div>
+        <div class="pf-otp-row">
+          <button class="pf-btn outline" type="button" onclick="sendEmailOtp('password')">
+            <span class="material-icons-round">mail</span> Send OTP
+          </button>
+          <div class="pf-otp-field">
+            <label for="pf-password-otp">Verification Code</label>
+            <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6" aria-label="Password change OTP" title="Password change OTP" placeholder="123456" />
+          </div>
+          <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('password')">
+            <span class="material-icons-round">verified</span> Verify OTP
+          </button>
+        </div>
+        <p class="pf-otp-note" id="pf-password-otp-note">OTP not sent yet.</p>
+      </div>
+    </div>
+    <div class="pf-dialog-footer">
+      <button class="pf-btn outline" type="button" onclick="closePasswordDialog()">Cancel</button>
+      <button class="pf-btn primary" type="button" onclick="submitPasswordChange()">
+        <span class="material-icons-round">lock_reset</span> Update Password
+      </button>
+    </div>
+  </dialog>
 </body>
 
 </html>
