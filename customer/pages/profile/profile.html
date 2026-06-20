@@ -69,26 +69,8 @@
           <div class="pf-panel active" id="panel-personal">
             <div class="pf-panel-header">
               <h2 class="pf-panel-title">Personal Information</h2>
-              <p class="pf-panel-desc">Your identity data is protected. Changes require document re-verification before
-                they are applied.</p>
+              <p class="pf-panel-desc">Your identity data is protected. Direct edits are disabled to prevent misuse.</p>
             </div>
-
-            <section class="pf-card pf-verified-shell">
-              <div class="pf-verified-banner">
-                <div class="pf-verified-banner-icon">
-                  <span class="material-icons-round">verified_user</span>
-                </div>
-                <div class="pf-verified-banner-copy">
-                  <strong>Verified account details are locked</strong>
-                  <p>To update your legal identity, email, address, or driving license, upload a new IC and license set
-                    below. Direct edits are disabled to prevent misuse.</p>
-                </div>
-                <div class="pf-verified-banner-status" id="pf-verification-status">
-                  <span class="material-icons-round">shield</span>
-                  Verified
-                </div>
-              </div>
-            </section>
 
             <!-- Basic Details -->
             <section class="pf-card">
@@ -143,100 +125,10 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">id_card</span> Driving License</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>License Number</label><input type="text" id="pf-license"
+                <div class="pf-field full"><label>License Number</label><input type="text" id="pf-license"
                     value="" aria-label="License Number" title="License Number" readonly /></div>
-                <div class="pf-field"><label>Expiry Date</label><input type="text" id="pf-license-expiry"
-                    value="" aria-label="Expiry Date" title="Expiry Date" readonly /></div>
               </div>
             </section>
-
-            <section class="pf-card">
-              <div class="pf-section-head-flex">
-                <h3 class="pf-section-title"><span class="material-icons-round">document_scanner</span> Update Verified
-                  Identity</h3>
-                <button class="pf-text-btn" type="button" onclick="simulateVerifiedProfile()">Use sample verified
-                  scan</button>
-              </div>
-              <p class="pf-card-desc">Upload a new IC front, IC back, and driving license image. WeDRIVE will verify the
-                document set and update the locked profile automatically after review.</p>
-
-              <div class="pf-doc-grid">
-                <label class="pf-doc-card" for="pf-upload-ic-front">
-                  <input type="file" id="pf-upload-ic-front" accept="image/*" aria-label="Upload IC front image"
-                    title="Upload IC front image" onchange="handleProfileDocumentUpload('icFront', this.files)" />
-                  <span class="material-icons-round">credit_card</span>
-                  <strong>IC Front</strong>
-                  <span class="pf-doc-meta" id="pf-upload-ic-front-meta">Upload front image</span>
-                </label>
-                <label class="pf-doc-card" for="pf-upload-ic-back">
-                  <input type="file" id="pf-upload-ic-back" accept="image/*" aria-label="Upload IC back image"
-                    title="Upload IC back image" onchange="handleProfileDocumentUpload('icBack', this.files)" />
-                  <span class="material-icons-round">badge</span>
-                  <strong>IC Back</strong>
-                  <span class="pf-doc-meta" id="pf-upload-ic-back-meta">Upload back image</span>
-                </label>
-                <label class="pf-doc-card" for="pf-upload-license">
-                  <input type="file" id="pf-upload-license" accept="image/*" aria-label="Upload driving license image"
-                    title="Upload driving license image"
-                    onchange="handleProfileDocumentUpload('license', this.files)" />
-                  <span class="material-icons-round">id_card</span>
-                  <strong>Driving License</strong>
-                  <span class="pf-doc-meta" id="pf-upload-license-meta">Upload license image</span>
-                </label>
-              </div>
-
-              <div class="pf-otp-card">
-                <div class="pf-otp-head">
-                  <div>
-                    <strong>Email OTP Verification</strong>
-                    <p>We send a 6-digit OTP to your verified email before any identity update can be submitted.</p>
-                  </div>
-                  <div class="pf-otp-badge" id="pf-profile-otp-badge">OTP Required</div>
-                </div>
-                <div class="pf-otp-stack">
-                  <div class="pf-field full">
-                    <label>Verification Contact Number</label>
-                    <div class="phone-input-wrapper" id="pf-reverify-phone-wrapper">
-                      <button type="button" class="phone-cc-btn" id="pf-reverify-cc-btn" onclick="togglePhoneCCDropdown('pf-reverify-cc')">
-                        <span class="phone-flag" id="pf-reverify-flag">MY</span>
-                        <span class="phone-cc-code" id="pf-reverify-cc-val">+60</span>
-                        <span class="material-icons-round" style="font-size:14px;opacity:0.5">expand_more</span>
-                      </button>
-                      <input type="tel" id="pf-reverify-phone" value=""
-                        aria-label="Verification Contact Number" title="Verification Contact Number"
-                        placeholder="12-345 6789" oninput="formatPhoneInput(this)" />
-                      <div class="phone-cc-dropdown" id="pf-reverify-cc" style="display:none;"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="pf-otp-row">
-                  <button class="pf-btn outline" type="button" onclick="sendEmailOtp('profile')"><span
-                      class="material-icons-round">mail</span> Send 6-Digit OTP</button>
-                  <div class="pf-otp-field">
-                    <label for="pf-profile-otp">Verification Code</label>
-                    <input type="text" id="pf-profile-otp" inputmode="numeric" maxlength="6"
-                      aria-label="Profile verification OTP" title="Profile verification OTP" placeholder="123456" />
-                  </div>
-                  <button class="pf-btn primary" type="button" onclick="verifyEmailOtp('profile')"><span
-                      class="material-icons-round">verified</span> Verify OTP</button>
-                </div>
-                <p class="pf-otp-note" id="pf-profile-otp-note">OTP not sent yet.</p>
-              </div>
-
-              <div class="pf-doc-progress">
-                <div class="pf-doc-progress-copy">
-                  <strong id="pf-doc-progress-title">Awaiting documents</strong>
-                  <p id="pf-doc-progress-text">Upload all required images to start re-verification.</p>
-                </div>
-                <div class="pf-doc-progress-pill" id="pf-doc-progress-pill">Locked</div>
-              </div>
-            </section>
-
-            <div class="pf-actions-bar">
-              <button class="pf-btn outline" onclick="resetProfileDetails()">Cancel</button>
-              <button class="pf-btn primary" onclick="submitProfileVerification()"><span
-                  class="material-icons-round">verified</span> Submit for Verification</button>
-            </div>
           </div>
 
           <!-- ======= 2. SECURITY ======= -->
@@ -611,21 +503,12 @@
       city: '',
       zip: '',
       license: '',
-      licenseExpiry: '',
-      identity: '',
-      verificationStatus: 'Pending'
-    };
-    var profileDocUploads = {
-      icFront: null,
-      icBack: null,
-      license: null
+      identity: ''
     };
     var otpConfig = {
-      profile: '314159',
       password: '628403'
     };
     var otpState = {
-      profile: { sent: false, verified: false },
       password: { sent: false, verified: false }
     };
 
@@ -640,8 +523,7 @@
         street: document.getElementById('pf-street'),
         city: document.getElementById('pf-city'),
         zip: document.getElementById('pf-zip'),
-        license: document.getElementById('pf-license'),
-        licenseExpiry: document.getElementById('pf-license-expiry')
+        license: document.getElementById('pf-license')
       };
     }
 
@@ -670,82 +552,11 @@
       if (nameEl) {
         nameEl.textContent = (state.firstName + ' ' + state.lastName).trim() || 'User';
       }
-
-      var banner = document.querySelector('.pf-verified-banner');
-      var statusEl = document.getElementById('pf-verification-status');
-      var bannerCopy = document.querySelector('.pf-verified-banner-copy');
-      
-      if (statusEl && banner) {
-        if (state.verificationStatus === 'Verified') {
-          banner.className = 'pf-verified-banner verified';
-          statusEl.innerHTML = '<span class="material-icons-round">verified_user</span> Verified';
-          statusEl.style.background = 'rgba(34,197,94,0.14)';
-          statusEl.style.color = '#10B981';
-          if (bannerCopy) {
-            bannerCopy.innerHTML = '<strong>Verified account details are locked</strong><p>To update your legal identity, email, address, or driving license, upload a new IC and license set below. Direct edits are disabled to prevent misuse.</p>';
-          }
-        } else if (state.verificationStatus === 'Pending') {
-          banner.className = 'pf-verified-banner pending';
-          statusEl.innerHTML = '<span class="material-icons-round">history</span> Pending Review';
-          statusEl.style.background = 'rgba(245,158,11,0.14)';
-          statusEl.style.color = '#F59E0B';
-          if (bannerCopy) {
-            bannerCopy.innerHTML = '<strong>Verification is in progress</strong><p>WeDRIVE administrators are currently reviewing your documents. You will be notified once verification is complete.</p>';
-          }
-        } else if (state.verificationStatus === 'Rejected') {
-          banner.className = 'pf-verified-banner rejected';
-          statusEl.innerHTML = '<span class="material-icons-round">error</span> Rejected';
-          statusEl.style.background = 'rgba(239,68,68,0.14)';
-          statusEl.style.color = '#EF4444';
-          var reason = state.rejectionReason || 'Documents were blurry or invalid.';
-          if (bannerCopy) {
-            bannerCopy.innerHTML = '<strong>Verification rejected</strong><p>Reason: <span style="color:#EF4444;font-weight:600">' + reason + '</span>. Please re-upload clear copies of your documents below.</p>';
-          }
-        } else {
-          // Unverified / Incomplete
-          banner.className = 'pf-verified-banner incomplete';
-          statusEl.innerHTML = '<span class="material-icons-round">warning</span> Incomplete';
-          statusEl.style.background = 'rgba(245,158,11,0.14)';
-          statusEl.style.color = '#F59E0B';
-          if (bannerCopy) {
-            bannerCopy.innerHTML = '<strong>Account verification required</strong><p>Please upload your IC front, IC back, and driving license to verify your identity and enable bookings.</p>';
-          }
-        }
-      }
-
-      var reverifyPhone = document.getElementById('pf-reverify-phone');
-      if (reverifyPhone) {
-        reverifyPhone.value = state.phone || '';
-      }
     }
 
-    function getProfileVerificationDraft() {
-      var current = mergeProfileState(readStoredProfile());
-      return {
-        firstName: current.firstName || (document.getElementById('pf-first-name') || {}).value || '',
-        lastName: current.lastName || (document.getElementById('pf-last-name') || {}).value || '',
-        dob: current.dob || (document.getElementById('pf-dob') || {}).value || '',
-        identity: current.identity || (document.getElementById('pf-identity') || {}).value || '',
-        email: current.email || (document.getElementById('pf-email') || {}).value || '',
-        phone: (document.getElementById('pf-reverify-phone') || {}).value || current.phone || '',
-        street: current.street || (document.getElementById('pf-street') || {}).value || '',
-        city: current.city || (document.getElementById('pf-city') || {}).value || '',
-        zip: current.zip || (document.getElementById('pf-zip') || {}).value || '',
-        license: current.license || (document.getElementById('pf-license') || {}).value || '',
-        licenseExpiry: current.licenseExpiry || (document.getElementById('pf-license-expiry') || {}).value || '',
-        verificationStatus: 'Pending'
-      };
-    }
-
-    function updateDocumentMeta(type, label) {
-      var metaMap = {
-        icFront: document.getElementById('pf-upload-ic-front-meta'),
-        icBack: document.getElementById('pf-upload-ic-back-meta'),
-        license: document.getElementById('pf-upload-license-meta')
-      };
-      if (metaMap[type]) {
-        metaMap[type].textContent = label;
-      }
+    function persistProfileState(state) {
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(state));
+      applyProfileState(state);
     }
 
     function getOtpElements(flow) {
@@ -818,212 +629,6 @@
       refreshOtpUi(flow);
       profileToast('OTP verified successfully.');
       return true;
-    }
-
-    function getDefaultDocumentMeta(type) {
-      if (type === 'icFront') return 'Upload front image';
-      if (type === 'icBack') return 'Upload back image';
-      return 'Upload license image';
-    }
-
-    function updateVerificationProgress() {
-      var completedCount = Object.keys(profileDocUploads).filter(function (key) {
-        return !!profileDocUploads[key];
-      }).length;
-      var title = document.getElementById('pf-doc-progress-title');
-      var text = document.getElementById('pf-doc-progress-text');
-      var pill = document.getElementById('pf-doc-progress-pill');
-      if (!title || !text || !pill) {
-        return;
-      }
-      
-      var stored = mergeProfileState(readStoredProfile());
-      if (stored.verificationStatus === 'Pending') {
-        title.textContent = 'Verification pending';
-        text.textContent = 'WeDRIVE is currently reviewing your uploaded document set.';
-        pill.textContent = 'Pending';
-      } else if (stored.verificationStatus === 'Verified') {
-        title.textContent = 'Verification complete';
-        text.textContent = 'Your profile is fully verified and active.';
-        pill.textContent = 'Verified';
-      } else {
-        if (completedCount === 0) {
-          title.textContent = 'Awaiting documents';
-          text.textContent = 'Upload all required images to start re-verification.';
-          pill.textContent = 'Locked';
-        } else if (completedCount < 3) {
-          title.textContent = 'Documents in progress';
-          text.textContent = completedCount + ' of 3 required uploads received.';
-          pill.textContent = completedCount + '/3';
-        } else {
-          title.textContent = 'Ready for verification';
-          text.textContent = 'All required documents uploaded. Submit to refresh verified identity data.';
-          pill.textContent = 'Ready';
-        }
-      }
-    }
-
-    function handleProfileDocumentUpload(type, files) {
-      if (!files || !files.length) {
-        profileDocUploads[type] = null;
-        updateDocumentMeta(type, getDefaultDocumentMeta(type));
-        updateVerificationProgress();
-        return;
-      }
-      profileDocUploads[type] = files[0];
-      updateDocumentMeta(type, files[0].name);
-      updateVerificationProgress();
-    }
-
-    function persistProfileState(state) {
-      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(state));
-      applyProfileState(state);
-    }
-
-    async function submitProfileVerification() {
-      var missing = Object.keys(profileDocUploads).filter(function (key) {
-        return !profileDocUploads[key];
-      });
-      var contactNumber = (document.getElementById('pf-reverify-phone') || {}).value || '';
-      if (!contactNumber.trim()) {
-        profileToast('Please enter a verification contact number.');
-        return;
-      }
-      if (missing.length) {
-        profileToast('Upload IC front, IC back, and driving license first.');
-        return;
-      }
-      if (!otpState.profile.verified) {
-        profileToast('Verify the 6-digit email OTP before submitting identity changes.');
-        return;
-      }
-
-      var submitBtn = document.querySelector('button[onclick="submitProfileVerification()"]');
-      var originalBtnHtml = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="material-icons-round spinner">sync</span> Uploading...';
-
-      try {
-        var sb = window.supabaseClient;
-        if (!sb) throw new Error('Database connection failed.');
-        var userResult = await sb.auth.getUser();
-        var user = userResult && userResult.data && userResult.data.user;
-        if (!user) throw new Error('User not logged in.');
-
-        var icFrontUrl = null;
-        var icBackUrl = null;
-        var licenseUrl = null;
-
-        if (profileDocUploads.icFront instanceof File) {
-          var res = await WeDriveAPI.uploadDocument(user.id, profileDocUploads.icFront, 'ic_front');
-          if (!res.success) throw new Error('Failed to upload IC Front: ' + res.error);
-          icFrontUrl = res.url;
-        }
-        if (profileDocUploads.icBack instanceof File) {
-          var res = await WeDriveAPI.uploadDocument(user.id, profileDocUploads.icBack, 'ic_back');
-          if (!res.success) throw new Error('Failed to upload IC Back: ' + res.error);
-          icBackUrl = res.url;
-        }
-        if (profileDocUploads.license instanceof File) {
-          var res = await WeDriveAPI.uploadDocument(user.id, profileDocUploads.license, 'license');
-          if (!res.success) throw new Error('Failed to upload License: ' + res.error);
-          licenseUrl = res.url;
-        }
-
-        var updateData = {
-          phone: contactNumber,
-          verification_status: 'Pending',
-          rejection_reason: null
-        };
-        if (icFrontUrl) updateData.ic_document_url = icFrontUrl;
-        if (icBackUrl) updateData.ic_back_document_url = icBackUrl;
-        if (licenseUrl) updateData.license_document_url = licenseUrl;
-
-        var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, updateData);
-        if (!dbResult.success) throw new Error(dbResult.error);
-
-        var progressTitle = document.getElementById('pf-doc-progress-title');
-        var progressText = document.getElementById('pf-doc-progress-text');
-        var progressPill = document.getElementById('pf-doc-progress-pill');
-        if (progressTitle && progressText && progressPill) {
-          progressTitle.textContent = 'Verification pending';
-          progressText.textContent = 'Documents uploaded successfully. WeDRIVE is reviewing your application.';
-          progressPill.textContent = 'Pending';
-        }
-
-        await loadProfileFromSupabase();
-
-        otpState.profile = { sent: false, verified: false };
-        refreshOtpUi('profile');
-        profileToast('Documents submitted for verification.');
-      } catch (err) {
-        console.error(err);
-        profileToast('Error: ' + err.message);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnHtml;
-      }
-    }
-
-    async function simulateVerifiedProfile() {
-      var simulateBtn = document.querySelector('button[onclick="simulateVerifiedProfile()"]');
-      var originalHtml = simulateBtn.innerHTML;
-      simulateBtn.disabled = true;
-      simulateBtn.textContent = 'Simulating...';
-
-      try {
-        var sb = window.supabaseClient;
-        if (!sb) throw new Error('Database connection failed.');
-        var userResult = await sb.auth.getUser();
-        var user = userResult && userResult.data && userResult.data.user;
-        if (!user) throw new Error('User not logged in.');
-
-        var contactNumber = (document.getElementById('pf-reverify-phone') || {}).value || '';
-        if (!contactNumber.trim()) {
-          contactNumber = '012-345 6789';
-        }
-
-        var updateData = {
-          name: 'Siti Aminah',
-          ic: '980101-04-5432',
-          phone: contactNumber,
-          dob: '1998-01-01',
-          street: '456, Jalan Hang Tuah',
-          city: 'Melaka',
-          zip: '75200',
-          license: 'DLR-99887766',
-          license_expiry: '2029-12-31',
-          verification_status: 'Verified',
-          rejection_reason: null,
-          ic_document_url: 'https://nigyovaqffwyinovivls.supabase.co/storage/v1/object/public/documents/sample/ic-front.jpg',
-          ic_back_document_url: 'https://nigyovaqffwyinovivls.supabase.co/storage/v1/object/public/documents/sample/ic-back.jpg',
-          license_document_url: 'https://nigyovaqffwyinovivls.supabase.co/storage/v1/object/public/documents/sample/license.jpg'
-        };
-
-        var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, updateData);
-        if (!dbResult.success) throw new Error(dbResult.error);
-
-        var progressTitle = document.getElementById('pf-doc-progress-title');
-        var progressText = document.getElementById('pf-doc-progress-text');
-        var progressPill = document.getElementById('pf-doc-progress-pill');
-        if (progressTitle && progressText && progressPill) {
-          progressTitle.textContent = 'Sample verification applied';
-          progressText.textContent = 'Demo verified data has been loaded into your locked profile.';
-          progressPill.textContent = 'Verified';
-        }
-
-        await loadProfileFromSupabase();
-
-        otpState.profile = { sent: true, verified: true };
-        refreshOtpUi('profile');
-        profileToast('Sample verified profile loaded.');
-      } catch (err) {
-        console.error(err);
-        profileToast('Error: ' + err.message);
-      } finally {
-        simulateBtn.disabled = false;
-        simulateBtn.innerHTML = originalHtml;
-      }
     }
 
     async function submitPasswordChange() {
@@ -1466,10 +1071,7 @@
             city: profile.city || defaultProfileState.city,
             zip: profile.zip || defaultProfileState.zip,
             license: profile.license || '',
-            licenseExpiry: profile.license_expiry || defaultProfileState.licenseExpiry,
-            identity: profile.ic || '',
-            verificationStatus: profile.verification_status || ((profile.ic && profile.license) ? 'Verified' : 'Pending'),
-            rejectionReason: profile.rejection_reason || ''
+            identity: profile.ic || ''
           };
           applyProfileState(supabaseState);
           persistProfileState(supabaseState);
@@ -1509,8 +1111,6 @@
 
     applyProfileState(mergeProfileState(readStoredProfile()));
     applyPreferencesToUi(getLocalPreferences());
-    updateVerificationProgress();
-    refreshOtpUi('profile');
     refreshOtpUi('password');
 
     // Panel switching
