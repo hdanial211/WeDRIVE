@@ -659,6 +659,62 @@ body.motion-cursor-has-label .wedrive-cursor-label {
   body.motion-cursor-ready [data-vehicle-stage] {
     cursor: none !important;
   }
+
+  /* Restore native browser cursor for dialog/modal top-layer elements */
+  body.motion-cursor-ready dialog,
+  body.motion-cursor-ready .pf-dialog,
+  body.motion-cursor-ready dialog *,
+  body.motion-cursor-ready .pf-dialog * {
+    cursor: auto !important;
+  }
+  body.motion-cursor-ready dialog a,
+  body.motion-cursor-ready dialog button,
+  body.motion-cursor-ready dialog [role="button"],
+  body.motion-cursor-ready dialog label,
+  body.motion-cursor-ready dialog input,
+  body.motion-cursor-ready dialog select,
+  body.motion-cursor-ready dialog textarea,
+  body.motion-cursor-ready .pf-dialog a,
+  body.motion-cursor-ready .pf-dialog button,
+  body.motion-cursor-ready .pf-dialog [role="button"],
+  body.motion-cursor-ready .pf-dialog label,
+  body.motion-cursor-ready .pf-dialog input,
+  body.motion-cursor-ready .pf-dialog select,
+  body.motion-cursor-ready .pf-dialog textarea,
+  body.motion-cursor-ready .pf-dialog .password-toggle-btn {
+    cursor: revert !important;
+  }
+  /* Explicit interactive cursor states within dialogs */
+  body.motion-cursor-ready dialog button,
+  body.motion-cursor-ready dialog a,
+  body.motion-cursor-ready dialog label,
+  body.motion-cursor-ready dialog .password-toggle-btn,
+  body.motion-cursor-ready .pf-dialog button,
+  body.motion-cursor-ready .pf-dialog a,
+  body.motion-cursor-ready .pf-dialog label,
+  body.motion-cursor-ready .pf-dialog .password-toggle-btn {
+    cursor: pointer !important;
+  }
+  body.motion-cursor-ready dialog input[type="text"],
+  body.motion-cursor-ready dialog input[type="password"],
+  body.motion-cursor-ready dialog input[type="email"],
+  body.motion-cursor-ready dialog input[type="tel"],
+  body.motion-cursor-ready dialog textarea,
+  body.motion-cursor-ready .pf-dialog input[type="text"],
+  body.motion-cursor-ready .pf-dialog input[type="password"],
+  body.motion-cursor-ready .pf-dialog input[type="email"],
+  body.motion-cursor-ready .pf-dialog input[type="tel"],
+  body.motion-cursor-ready .pf-dialog textarea {
+    cursor: text !important;
+  }
+}
+
+/* Hide custom cursor elements when a native dialog is open */
+body:has(dialog[open]) .wedrive-cursor-dot,
+body:has(dialog[open]) .wedrive-cursor-ring,
+body:has(dialog[open]) .wedrive-cursor-label {
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 .motion-ripple-host {
