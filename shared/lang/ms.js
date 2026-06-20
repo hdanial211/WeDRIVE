@@ -514,6 +514,8 @@ window.wedrive_lang_ms = {
   "admin_add_car_rate_ph": "cth. 200",
   "admin_add_car_cancel": "Batal",
   "admin_add_car_submit": "Tambah Kenderaan",
-  "admin_add_car_saving": "Menyimpan..."
+  "admin_add_car_saving": "Menyimpan...",
+  "oauth_google_title": "Dilindungi dengan Log Masuk Google",
+  "oauth_google_desc": "Akaun ini didaftarkan melalui Log Masuk Google. Pengurusan kelayakan, konfigurasi keselamatan, dan kemas kini kata laluan diuruskan secara langsung melalui tetapan Akaun Google anda."
 }
 ;

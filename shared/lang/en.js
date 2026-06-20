@@ -514,6 +514,8 @@ window.wedrive_lang_en = {
   "admin_add_car_rate_ph": "e.g. 200",
   "admin_add_car_cancel": "Cancel",
   "admin_add_car_submit": "Add Vehicle",
-  "admin_add_car_saving": "Saving..."
+  "admin_add_car_saving": "Saving...",
+  "oauth_google_title": "Secured with Google Sign-In",
+  "oauth_google_desc": "This account is authenticated via Google Sign-In. Credential management, security configurations, and password updates are handled directly through your Google Account settings."
 }
 ;
