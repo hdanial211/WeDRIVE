@@ -194,9 +194,23 @@ window.WeDriveAPI = {
                 var activeRentals = bookings.filter(function(b) {
                     return b.status === 'Active' || (b.status === 'Confirmed' && b.start_date <= today && b.end_date >= today);
                 }).length;
-                var paidBookings = bookings.filter(function(b) { return b.payment === 'Paid'; });
-                var totalRevenue = 0;
-                paidBookings.forEach(function(b) { totalRevenue += (b.total || 0); });
+                
+                var revenueToday = 0;
+                bookings.forEach(function(b) {
+                    var isPaid = ['Paid', 'Deposit Paid', 'Refund Processed', 'Refunded'].includes(b.payment);
+                    if (isPaid && b.created_at && b.created_at.startsWith(today)) {
+                        var amt = 0;
+                        if (b.payment_type === 'deposit') {
+                            amt = (b.deposit_amount || 0);
+                        } else {
+                            amt = (b.total || 0);
+                        }
+                        if ((b.refund_status === 'Refunded' || b.payment === 'Refund Processed') && b.refund_amount) {
+                            amt -= b.refund_amount;
+                        }
+                        revenueToday += amt;
+                    }
+                });
 
                 // New customers this month
                 var monthStart = today.slice(0, 7);
@@ -207,7 +221,7 @@ window.WeDriveAPI = {
                 var stats = {
                     total_vehicles: cars.length,
                     active_rentals: activeRentals,
-                    revenue_today: totalRevenue,
+                    revenue_today: revenueToday,
                     new_customers: newCustomersThisMonth || customers.length,
                     revenue_change: "+14.2%",
                     rentals_change: "+" + activeRentals,
