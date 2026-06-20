@@ -194,6 +194,18 @@ function getBookingsForDate(ds) {
   });
 }
 
+function getInspectionsForDate(ds) {
+  return CAL_DATA.bookings.filter(b => {
+    if (!['Active', 'Confirmed', 'Completed', 'Pending'].includes(b.status) || !b.return) return false;
+    var returnDate = new Date(b.return + 'T00:00:00');
+    returnDate.setDate(returnDate.getDate() + 1);
+    var inspectionStr = returnDate.getFullYear() + '-' + 
+                        String(returnDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                        String(returnDate.getDate()).padStart(2, '0');
+    return ds === inspectionStr;
+  });
+}
+
 function getSeasonalForDate(ds) {
   return (CAL_DATA.marketing.seasonal_pricing || []).filter(s => {
     return s.active && ds >= s.start_date && ds <= s.end_date;
@@ -268,10 +280,10 @@ function renderCalendar() {
     html += '<div class="adm-cal-cell empty"></div>';
   }
 
-  // Day cells
   for (let d = 1; d <= daysInMonth; d++) {
     const ds = dateStr(CAL_YEAR, CAL_MONTH, d);
     const bookings = getBookingsForDate(ds);
+    const inspections = getInspectionsForDate(ds);
     const seasonals = getSeasonalForDate(ds);
     const banners = getBannersForDate(ds);
     const isPast = ds < todayStr;
@@ -289,6 +301,9 @@ function renderCalendar() {
     let indicators = '';
     if (bookings.length > 0) {
       indicators += `<span class="adm-cal-dot booking ${CAL_FILTERS.booking ? '' : 'hidden'}"></span>`;
+    }
+    if (inspections.length > 0) {
+      indicators += `<span class="adm-cal-dot inspection" style="background:#eab308"></span>`;
     }
     if (banners.length > 0 || seasonals.length > 0) {
       indicators += `<span class="adm-cal-dot event ${CAL_FILTERS.event ? '' : 'hidden'}"></span>`;
@@ -312,6 +327,9 @@ function renderCalendar() {
         carInfo = `<div class="adm-cal-cars rented ${CAL_FILTERS.booking ? '' : 'hidden'}">${carsRented} <span class="material-icons-round" style="font-size:11px">directions_car</span></div>`;
       } else {
         carInfo = `<div class="adm-cal-cars available ${CAL_FILTERS.available ? '' : 'hidden'}">${carsAvailable} <span class="material-icons-round" style="font-size:11px">check_circle</span></div>`;
+      }
+      if (inspections.length > 0) {
+        carInfo += `<div class="adm-cal-cars inspection" style="background:rgba(234,179,8,0.12);color:#d97706;border:1px solid rgba(234,179,8,0.2);margin-top:2px;">${inspections.length} <span class="material-icons-round" style="font-size:11px">build</span></div>`;
       }
     }
 
@@ -356,6 +374,7 @@ window.showDayDetail = function (ds) {
   subtitleEl.textContent = date.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
 
   const bookings = getBookingsForDate(ds);
+  const inspections = getInspectionsForDate(ds);
   const seasonals = getSeasonalForDate(ds);
   const banners = getBannersForDate(ds);
   const totalCars = CAL_DATA.car.length || 6;
@@ -374,6 +393,12 @@ window.showDayDetail = function (ds) {
     <span class="material-icons-round" style="font-size:15px">directions_car</span>
     ${carsRented} ${lang === 'ms' ? 'Disewa' : 'Rented'}
   </div>`;
+  if (inspections.length > 0) {
+    html += `<div class="cal-day-chip inspection-chip" style="background:rgba(234,179,8,0.12);color:#d97706;border:1px solid rgba(234,179,8,0.2)">
+      <span class="material-icons-round" style="font-size:15px">build</span>
+      ${inspections.length} ${lang === 'ms' ? 'Pemeriksaan' : 'Inspections'}
+    </div>`;
+  }
   if (seasonals.length > 0) {
     const s = seasonals[0];
     const sign = s.direction === 'increase' ? '+' : '-';
@@ -407,11 +432,31 @@ window.showDayDetail = function (ds) {
         </div>
       </div>`;
     });
-  } else {
+  } else if (inspections.length === 0) {
     html += `<div style="text-align:center;padding:24px 16px;color:var(--slate-400)">
       <span class="material-icons-round" style="font-size:36px;opacity:0.4;display:block;margin-bottom:8px">event_busy</span>
-      <div style="font-size:13px">${lang === 'ms' ? 'Tiada tempahan pada hari ini' : 'No bookings on this day'}</div>
+      <div style="font-size:13px">${lang === 'ms' ? 'Tiada aktiviti pada hari ini' : 'No activities on this day'}</div>
     </div>`;
+  }
+
+  // Inspections as cards
+  if (inspections.length > 0) {
+    html += `<div class="cal-day-section-title" style="margin-top:20px">
+      <span class="material-icons-round" style="font-size:18px;color:#EAB308">build</span>
+      ${lang === 'ms' ? 'Buffer Pemeriksaan / Inspection' : 'Inspection Buffers'} (${inspections.length})
+    </div>`;
+    inspections.forEach(b => {
+      html += `<div class="cal-booking-card" style="border-left:3px solid #EAB308;background:var(--bg-surface-2,#F1F5F9)">
+        <div class="cal-booking-card-icon" style="background:#EAB308;display:flex;align-items:center;justify-content:center;border-radius:8px;width:32px;height:32px;flex-shrink:0;">
+          <span class="material-icons-round" style="color:white;font-size:18px">build</span>
+        </div>
+        <div style="flex:1;min-width:0;margin-left:10px">
+          <div style="font-weight:700;font-size:13px;color:var(--navy)">${b.car}</div>
+          <div style="font-size:12px;color:var(--slate-500);margin-top:2px">${lang === 'ms' ? 'Hari pemeriksaan selepas tempahan #' : 'Inspection block after booking #'}${b.id}</div>
+          <div style="font-size:11px;color:var(--slate-400);margin-top:2px">${lang === 'ms' ? 'Pelanggan' : 'Customer'}: ${b.customer}</div>
+        </div>
+      </div>`;
+    });
   }
 
   // Active banners

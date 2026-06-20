@@ -282,7 +282,18 @@
 
           <div class="summary-row" id="checkout-tax-row" style="display: none;"><span>Tax (0%)</span><span class="amount">RM 0.00</span></div>
           <div class="summary-row" id="checkout-deposit-row"><span>Refundable deposit</span><span class="amount">RM 0.00</span></div>
-          <div class="summary-row total" id="checkout-total-row"><span>Total due</span><span class="amount">RM 0.00</span></div>
+
+          <!-- Payment Type Selector -->
+          <div id="checkout-payment-type" style="margin:12px 0;background:var(--bg-surface-2,#F1F5F9);border-radius:12px;padding:4px;display:flex;gap:4px;">
+            <button type="button" id="ptype-full" onclick="selectPaymentType('full')" style="flex:1;padding:9px 6px;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:#3B82F6;color:#fff;">
+              <span class="material-icons-round" style="font-size:14px;vertical-align:middle">payments</span> Full Payment
+            </button>
+            <button type="button" id="ptype-deposit" onclick="selectPaymentType('deposit')" style="flex:1;padding:9px 6px;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--slate-500,#64748B);">
+              <span class="material-icons-round" style="font-size:14px;vertical-align:middle">savings</span> Deposit Only
+            </button>
+          </div>
+          <div id="checkout-balance-row" style="display:none;" class="summary-row"><span style="color:#D97706">Balance on pickup</span><span class="amount" style="color:#D97706">RM 0.00</span></div>
+          <div class="summary-row total" id="checkout-total-row"><span>Total due today</span><span class="amount">RM 0.00</span></div>
 
           <button type="button" class="btn-pay" id="btn-pay" onclick="completePayment()">
             <span class="material-icons-round">lock</span>
@@ -301,6 +312,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../../../shared/js/supabase-config.js"></script>
   <script src="../../../../../shared/js/api.js"></script>
+  <script src="../../../../../shared/js/email-service.js"></script>
   <script src="../../../../../shared/js/chatbot.js"></script>
   <script src="../../../../../shared/js/anime.min.js"></script>
   <script src="../../../../../shared/js/animate.js"></script>
@@ -475,14 +487,33 @@
       }
     }
 
+    var activePaymentType = 'full';
+
+    function selectPaymentType(type) {
+      activePaymentType = type;
+      var btnFull = document.getElementById('ptype-full');
+      var btnDep = document.getElementById('ptype-deposit');
+      if (btnFull && btnDep) {
+        if (type === 'full') {
+          btnFull.style.background = '#3B82F6'; btnFull.style.color = '#fff';
+          btnDep.style.background = 'transparent'; btnDep.style.color = 'var(--slate-500,#64748B)';
+        } else {
+          btnDep.style.background = '#D97706'; btnDep.style.color = '#fff';
+          btnFull.style.background = 'transparent'; btnFull.style.color = 'var(--slate-500,#64748B)';
+        }
+      }
+      updatePaymentDetails();
+    }
+
     function updatePaymentDetails() {
       var baseTotal = pendingBooking.baseTotal || 0;
       var addonTotal = pendingBooking.addonTotal || 0;
       var serviceFee = pendingBooking.serviceFee || 15;
       var taxTotal = pendingBooking.taxTotal || 0;
       var taxRate = typeof pendingBooking.taxRate !== 'undefined' ? Number(pendingBooking.taxRate) : 0;
-      var depositTotal = pendingBooking.depositTotal || (baseTotal * 0.20);
-      var total = pendingBooking.total || (baseTotal + addonTotal + serviceFee);
+      var depositRate = typeof pendingBooking.depositRate !== 'undefined' ? Number(pendingBooking.depositRate) : 30;
+      var depositTotal = pendingBooking.depositTotal || ((baseTotal + addonTotal + serviceFee + taxTotal) * (depositRate / 100));
+      var fullTotal = pendingBooking.total || (baseTotal + addonTotal + serviceFee + taxTotal);
       var currency = pendingBooking.currency || 'MYR';
 
       var baseRow = document.getElementById('checkout-base-row');
@@ -522,14 +553,32 @@
         depositRow.querySelector('.amount').textContent = currency + ' ' + depositTotal.toFixed(2);
       }
 
+      // Balance row (only visible when paying deposit)
+      var balanceRow = document.getElementById('checkout-balance-row');
+      var amountDue = activePaymentType === 'deposit' ? depositTotal : fullTotal;
+      var balanceAmount = fullTotal - depositTotal;
+      if (balanceRow) {
+        if (activePaymentType === 'deposit') {
+          balanceRow.style.display = 'flex';
+          balanceRow.querySelector('.amount').textContent = currency + ' ' + balanceAmount.toFixed(2);
+        } else {
+          balanceRow.style.display = 'none';
+        }
+      }
+
       var totalRow = document.getElementById('checkout-total-row');
       if (totalRow) {
-        totalRow.querySelector('.amount').textContent = currency + ' ' + total.toFixed(2);
+        totalRow.querySelector('.amount').textContent = currency + ' ' + amountDue.toFixed(2);
       }
+
+      // Store computed values on pendingBooking for use in completePayment
+      pendingBooking._fullTotal = fullTotal;
+      pendingBooking._depositAmount = depositTotal;
+      pendingBooking._balanceAmount = balanceAmount;
 
       var btnPay = document.getElementById('btn-pay');
       if (btnPay) {
-        btnPay.innerHTML = '<span class="material-icons-round">lock</span> Pay ' + currency + ' ' + total.toFixed(2);
+        btnPay.innerHTML = '<span class="material-icons-round">lock</span> Pay ' + currency + ' ' + amountDue.toFixed(2);
       }
     }
 
@@ -710,6 +759,11 @@
 
         var bookingRef = 'BK-2026-' + Math.floor(1000 + Math.random() * 9000);
 
+        var isDepositOnly = activePaymentType === 'deposit';
+        var depositAmt = pendingBooking._depositAmount || 0;
+        var fullTotalAmt = pendingBooking._fullTotal || pendingBooking.total || 0;
+        var balanceAmt = pendingBooking._balanceAmount || 0;
+
         var bookingData = {
           booking_id: bookingRef,
           car_id: pendingBooking.carId,
@@ -723,13 +777,17 @@
           end_date: pendingBooking.returnDate,
           days: pendingBooking.days,
           daily: pendingBooking.pricePerDay,
-          total: pendingBooking.total,
+          total: fullTotalAmt,
           status: activeDriverMode === 'existing' ? 'Confirmed' : 'Pending',
-          payment: 'Paid',
+          payment: isDepositOnly ? 'Deposit Paid' : 'Paid',
           type: 'Standard',
           pickup: pendingBooking.pickupLocation,
           dropoff: pendingBooking.pickupLocation,
-          auth_uid: user ? user.id : null
+          auth_uid: user ? user.id : null,
+          payment_type: isDepositOnly ? 'deposit' : 'full',
+          deposit_amount: isDepositOnly ? depositAmt : 0,
+          balance_amount: isDepositOnly ? balanceAmt : 0,
+          refund_status: null
         };
 
         var apiResult = await window.WeDriveAPI.createBooking(bookingData);
@@ -743,6 +801,11 @@
               license: driverLicense,
               phone: driverPhone
             });
+          }
+
+          // Send booking confirmation email (silent - does not block redirect)
+          if (window.WeDriveEmail) {
+            window.WeDriveEmail.sendBookingConfirmation(bookingData).catch(function() {});
           }
 
           window.setTimeout(function () {

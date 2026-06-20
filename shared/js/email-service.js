@@ -9,6 +9,30 @@
 (function () {
   'use strict';
 
+  async function _callEdge(payload) {
+    try {
+      var supabaseUrl = window.SUPABASE_URL;
+      if (!supabaseUrl) { console.warn('[WeDRIVE Email] Supabase URL not available'); return { success: false }; }
+      var session = null;
+      if (window.supabaseClient) {
+        var authResult = await window.supabaseClient.auth.getSession();
+        session = authResult && authResult.data && authResult.data.session;
+      }
+      var headers = { 'Content-Type': 'application/json' };
+      if (session && session.access_token) { headers['Authorization'] = 'Bearer ' + session.access_token; }
+      var response = await fetch(supabaseUrl + '/functions/v1/send-email', {
+        method: 'POST', headers: headers, body: JSON.stringify(payload)
+      });
+      var data = await response.json();
+      if (data.success) { console.log('[WeDRIVE Email] Sent "' + payload.status + '" to', payload.to_email); return { success: true }; }
+      console.error('[WeDRIVE Email] Error:', data.error);
+      return { success: false, error: data.error };
+    } catch (err) {
+      console.error('[WeDRIVE Email] Failed:', err);
+      return { success: false, error: err.message };
+    }
+  }
+
   // ── Public API ──
   window.WeDriveEmail = {
 
@@ -20,55 +44,58 @@
      * @param {string} reason - rejection reason (optional)
      */
     sendVerificationEmail: async function (customerEmail, customerName, status, reason) {
-      try {
-        var supabaseUrl = window.SUPABASE_URL;
-        if (!supabaseUrl) {
-          console.warn('[WeDRIVE Email] Supabase URL not available');
-          return { success: false, error: 'Supabase not configured' };
-        }
+      return _callEdge({
+        to_email: customerEmail,
+        customer_name: customerName || 'Customer',
+        status: status,
+        rejection_reason: reason || ''
+      });
+    },
 
-        // Get auth token for Edge Function authorization
-        var session = null;
-        if (window.supabaseClient) {
-          var authResult = await window.supabaseClient.auth.getSession();
-          session = authResult.data.session;
-        }
+    /**
+     * Send booking confirmation receipt (with payment type info).
+     * @param {object} bookingData - the full booking object saved to DB
+     */
+    sendBookingConfirmation: async function (bookingData) {
+      if (!bookingData || !bookingData.email) return { success: false };
+      return _callEdge({
+        to_email: bookingData.email,
+        customer_name: bookingData.customer,
+        status: 'booking_confirmed',
+        booking: bookingData
+      });
+    },
 
-        var headers = {
-          'Content-Type': 'application/json',
-          'apikey': window.supabaseClient ? window.supabaseClient.supabaseKey : ''
-        };
+    /**
+     * Send reminder email (1 day before pickup).
+     * @param {string} toEmail
+     * @param {string} customerName
+     * @param {object} bookingData
+     */
+    sendBookingReminder: async function (toEmail, customerName, bookingData) {
+      if (!toEmail) return { success: false };
+      return _callEdge({
+        to_email: toEmail,
+        customer_name: customerName,
+        status: 'booking_reminder',
+        booking: bookingData
+      });
+    },
 
-        // Add auth token if available
-        if (session && session.access_token) {
-          headers['Authorization'] = 'Bearer ' + session.access_token;
-        }
-
-        var response = await fetch(supabaseUrl + '/functions/v1/send-email', {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({
-            to_email: customerEmail,
-            customer_name: customerName || 'Customer',
-            status: status,
-            rejection_reason: reason || ''
-          })
-        });
-
-        var data = await response.json();
-
-        if (data.success) {
-          console.log('[WeDRIVE Email] Sent ' + status + ' email to ' + customerEmail);
-          return { success: true };
-        } else {
-          console.error('[WeDRIVE Email] Error:', data.error);
-          return { success: false, error: data.error };
-        }
-
-      } catch (err) {
-        console.error('[WeDRIVE Email] Failed to send email:', err);
-        return { success: false, error: err.message || 'Email send failed' };
-      }
+    /**
+     * Send refund processed notification.
+     * @param {string} toEmail
+     * @param {string} customerName
+     * @param {object} bookingData - must include refund_amount, payment_type
+     */
+    sendRefundNotification: async function (toEmail, customerName, bookingData) {
+      if (!toEmail) return { success: false };
+      return _callEdge({
+        to_email: toEmail,
+        customer_name: customerName,
+        status: 'refund_processed',
+        booking: bookingData
+      });
     }
 
   };

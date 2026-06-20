@@ -209,6 +209,46 @@ function viewBooking(id) {
   var sc = statusColors[b.status] || { bg: '#64748B', text: '#fff' };
   var payColor = b.payment === 'Paid' ? '#059669' : '#D97706';
 
+  var payTypeLabel = b.payment_type === 'deposit' ? 'Deposit Paid' : (b.payment || 'Paid');
+  var payTypeColor = b.payment_type === 'deposit' ? '#D97706' : (b.payment === 'Paid' ? '#059669' : '#D97706');
+  var balanceAmt = b.balance_amount || 0;
+  var depositAmt = b.deposit_amount || 0;
+  var fullTotal = b._total || 0;
+
+  var paymentInfoHtml = '';
+  if (b.payment_type === 'deposit') {
+    paymentInfoHtml = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+        <div style="padding:12px;background:var(--bg-surface-2,#F1F5F9);border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#D97706;letter-spacing:0.5px;margin-bottom:4px">Deposit Paid</div>
+          <div style="font-size:14px;font-weight:800;color:var(--navy,#1E293B)">RM ${depositAmt.toLocaleString(undefined, {minimumFractionDigits:2})}</div>
+        </div>
+        <div style="padding:12px;background:#FEF3C7;border-radius:10px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#D97706;letter-spacing:0.5px;margin-bottom:4px">Balance on Pickup</div>
+          <div style="font-size:14px;font-weight:800;color:#D97706">RM ${balanceAmt.toLocaleString(undefined, {minimumFractionDigits:2})}</div>
+        </div>
+      </div>`;
+  }
+
+  var refundSectionHtml = '';
+  if (b.status === 'Cancelled') {
+    var refundRate = b.payment_type === 'deposit' ? 0.5 : 0.85;
+    var paidAmount = b.payment_type === 'deposit' ? depositAmt : fullTotal;
+    var refundAmt = b.refund_amount || (paidAmount * refundRate);
+    var refundLabel = b.payment_type === 'deposit' ? '50% of deposit paid' : '85% of full payment';
+    var alreadyRefunded = b.refund_status === 'Refunded';
+    refundSectionHtml = `
+      <div style="background:${alreadyRefunded ? '#F0FDF4' : '#FEF2F2'};border:1px solid ${alreadyRefunded ? '#BBF7D0' : '#FECACA'};border-radius:12px;padding:16px;margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${alreadyRefunded ? '#059669' : '#DC2626'};margin-bottom:10px">Refund Information</div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span style="color:#64748B">Refund Policy</span><span style="font-weight:600">${refundLabel}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:15px;"><span style="font-weight:700">Refund Amount</span><span style="font-weight:800;color:${alreadyRefunded ? '#059669' : '#DC2626'}">RM ${refundAmt.toLocaleString(undefined, {minimumFractionDigits:2})}</span></div>
+        ${alreadyRefunded
+          ? '<div style="margin-top:10px;display:flex;align-items:center;gap:6px;color:#059669;font-weight:700;font-size:13px"><span class="material-icons-round" style="font-size:18px">check_circle</span> Refund Processed</div>'
+          : `<button onclick="processRefund(${b.id}, ${refundAmt.toFixed(2)})" style="margin-top:12px;width:100%;padding:10px;background:#DC2626;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><span class="material-icons-round" style="font-size:16px">account_balance_wallet</span> Process Refund (RM ${refundAmt.toFixed(2)})</button>`
+        }
+      </div>`;
+  }
+
   var modal = document.getElementById('booking-detail-modal');
   if (!modal) {
     modal = document.createElement('div');
@@ -241,7 +281,7 @@ function viewBooking(id) {
         </div>
         <div style="text-align:right;display:flex;flex-direction:column;gap:6px;">
           <span style="background:${sc.bg};color:${sc.text};padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700">${b.status}</span>
-          <span style="background:${payColor};color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600">${b.payment}</span>
+          <span style="background:${payTypeColor};color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600">${payTypeLabel}</span>
         </div>
       </div>
 
@@ -250,7 +290,7 @@ function viewBooking(id) {
         <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#1D4ED8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;flex-shrink:0">${initials}</div>
         <div>
           <div style="font-size:14px;font-weight:700;color:var(--navy,#1E293B)">${b._customer}</div>
-          <div style="font-size:12px;color:var(--slate-400,#94A3B8)">Customer</div>
+          <div style="font-size:12px;color:var(--slate-400,#94A3B8)">Customer${b.email ? ' &bull; ' + b.email : ''}</div>
         </div>
       </div>
 
@@ -281,12 +321,19 @@ function viewBooking(id) {
         </div>
       </div>
 
+      ${paymentInfoHtml}
+      ${refundSectionHtml}
+
       <!-- Actions -->
-      <div style="display:flex;gap:10px;padding-top:4px;">
-        <button class="btn-outline-sm" onclick="closeBookingDetailModal()" style="flex:1;padding:10px;justify-content:center;">
+      <div style="display:flex;gap:8px;padding-top:4px;flex-wrap:wrap;">
+        <button class="btn-outline-sm" onclick="closeBookingDetailModal()" style="flex:1;padding:10px;justify-content:center;min-width:100px;">
           <span class="material-icons-round" style="font-size:14px">close</span> Close
         </button>
-        <button class="btn-primary-sm" onclick="closeBookingDetailModal();openStatusModal(${b.id})" style="flex:1;padding:10px;justify-content:center;">
+        ${(b.status === 'Confirmed' || b.status === 'Active') && b.email ? `
+        <button class="btn-outline-sm" onclick="sendReminderEmail('${b.id}')" style="flex:1;padding:10px;justify-content:center;min-width:100px;border-color:#6366F1;color:#6366F1;" id="reminder-btn-${b.id}">
+          <span class="material-icons-round" style="font-size:14px">notifications</span> Send Reminder
+        </button>` : ''}
+        <button class="btn-primary-sm" onclick="closeBookingDetailModal();openStatusModal(${b.id})" style="flex:1;padding:10px;justify-content:center;min-width:100px;">
           <span class="material-icons-round" style="font-size:14px">sync</span> Update Status
         </button>
       </div>
@@ -357,11 +404,20 @@ async function confirmStatusUpdate(id) {
   var b = allBookings.find(x => x.id === id);
   if (!b) return;
 
+  var updatePayload = { status: newStatus };
+
+  // Auto-calculate refund amount when setting to Cancelled
+  if (newStatus === 'Cancelled' && !b.refund_amount) {
+    var refundRate = b.payment_type === 'deposit' ? 0.5 : 0.85;
+    var paidAmount = b.payment_type === 'deposit' ? (b.deposit_amount || 0) : (b._total || 0);
+    updatePayload.refund_amount = parseFloat((paidAmount * refundRate).toFixed(2));
+  }
+
   if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
     try {
-      var result = await window.supabaseClient.from('bookings').update({ status: newStatus }).eq('id', id);
+      var result = await window.supabaseClient.from('bookings').update(updatePayload).eq('id', id);
       if (result.error) throw result.error;
-      b.status = newStatus;
+      Object.assign(b, updatePayload);
       populateBookingStats(allBookings);
       applyFilters();
       renderTodayPickups();
@@ -372,7 +428,7 @@ async function confirmStatusUpdate(id) {
       showToast('Error updating status', 'info');
     }
   } else {
-    b.status = newStatus;
+    Object.assign(b, updatePayload);
     populateBookingStats(allBookings);
     applyFilters();
     renderTodayPickups();
@@ -385,6 +441,35 @@ function formatDate(dateStr) {
   if (!dateStr) return '--';
   var d = new Date(dateStr);
   return d.toLocaleDateString('en-MY', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+async function processRefund(id, refundAmt) {
+  if (!confirm('Confirm processing refund of RM ' + refundAmt.toFixed(2) + ' for Booking #' + id + '?')) return;
+  var b = allBookings.find(x => x.id === id);
+  if (!b) return;
+
+  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+    try {
+      var result = await window.supabaseClient.from('bookings').update({ refund_amount: refundAmt, refund_status: 'Refunded' }).eq('id', id);
+      if (result.error) throw result.error;
+      b.refund_amount = refundAmt;
+      b.refund_status = 'Refunded';
+      closeBookingDetailModal();
+      showToast('Refund of RM ' + refundAmt.toFixed(2) + ' processed for Booking #' + id, 'success');
+      // Send email notification
+      if (window.WeDriveEmail && b.email) {
+        window.WeDriveEmail.sendRefundNotification(b.email, b._customer, Object.assign({}, b, { refund_amount: refundAmt })).catch(function() {});
+      }
+    } catch (err) {
+      console.error('[WeDRIVE] processRefund error:', err);
+      showToast('Error processing refund', 'info');
+    }
+  } else {
+    b.refund_amount = refundAmt;
+    b.refund_status = 'Refunded';
+    closeBookingDetailModal();
+    showToast('Refund processed (demo): RM ' + refundAmt.toFixed(2), 'success');
+  }
 }
 
 function showToast(msg, type) {
@@ -636,3 +721,34 @@ window.quickHandover = async function(id) {
   }
 };
 
+// ── Send Reminder Email ────────────────────────────────────────────────────────
+window.sendReminderEmail = async function (id) {
+  var b = allBookings.find(x => String(x.id) === String(id));
+  if (!b || !b.email) { showToast('No email on record for this booking.', 'info'); return; }
+
+  var btn = document.getElementById('reminder-btn-' + id);
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-icons-round" style="font-size:14px">hourglass_top</span> Sending...'; }
+
+  if (window.WeDriveEmail) {
+    var bookingPayload = {
+      booking_id: b.booking_id || b.id,
+      car: b._car_name,
+      start_date: b._pickup,
+      end_date: b._return,
+      days: b._days,
+      pickup: b.pickup_loc || b.pickup_location || 'Melaka Sentral',
+      payment_type: b.payment_type,
+      balance_amount: b.balance_amount || 0
+    };
+    var result = await window.WeDriveEmail.sendBookingReminder(b.email, b._customer, bookingPayload);
+    if (result && result.success) {
+      showToast('Reminder sent to ' + b.email, 'success');
+    } else {
+      showToast('Failed to send reminder.', 'info');
+    }
+  } else {
+    showToast('Email service not available.', 'info');
+  }
+
+  if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-icons-round" style="font-size:14px">notifications</span> Send Reminder'; }
+};

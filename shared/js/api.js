@@ -680,12 +680,18 @@ window.WeDriveAPI = {
         }
     },
 
-    /**
-     * Get booked date ranges for a specific car.
-     * Used in: booking calendar (NOTA 5 - block booked dates)
-     */
     getBookedDatesForCar: async function (carId) {
         await window.WeDriveAPI._autoCleanupUnpaidBookings();
+        
+        function addOneDay(dateStr) {
+            var d = new Date(dateStr + 'T00:00:00');
+            d.setDate(d.getDate() + 1);
+            var y = d.getFullYear();
+            var m = String(d.getMonth() + 1).padStart(2, '0');
+            var day = String(d.getDate()).padStart(2, '0');
+            return y + '-' + m + '-' + day;
+        }
+
         if (!window.AppConfig.USE_REAL_DB) {
             var data = await _loadDummyData();
             var bookings = data.bookings || [];
@@ -704,7 +710,7 @@ window.WeDriveAPI = {
                 if (matchCar && matchStatus && endDt && endDt >= todayStr) {
                     bookedRanges.push({
                         start_date: b.start_date || b.pickup,
-                        end_date: endDt
+                        end_date: addOneDay(endDt) // Block 1 day after return for inspection
                     });
                 }
             }
@@ -719,7 +725,14 @@ window.WeDriveAPI = {
                     .in('status', ['Active', 'Pending', 'Completed', 'Confirmed'])
                     .gte('end_date', today);
                 if (result.error) throw result.error;
-                return result.data || [];
+                
+                var mapped = (result.data || []).map(function(r) {
+                    return {
+                        start_date: r.start_date,
+                        end_date: addOneDay(r.end_date) // Block 1 day after return for inspection
+                    };
+                });
+                return mapped;
             } catch (err) {
                 console.error('[WeDriveAPI] getBookedDatesForCar error:', err);
                 return [];

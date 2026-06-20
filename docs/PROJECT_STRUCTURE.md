@@ -17,6 +17,9 @@ AI CAR RENTAL SYSTEM/
 |
 +-- supabase/                   # Supabase Configuration & Scripts
 |   +-- migrate-data.js         # Skrip migrasi data.json ke Supabase PostgreSQL (run sekali)
+|   +-- functions/
+|       +-- send-email/
+|           +-- index.ts        # Edge Function: email notification (booking confirm, reminder, refund, doc verification)
 |
 +-- docs/                       # Dokumentasi Projek
 |   +-- PROJECT_STRUCTURE.md     # Struktur fail & panduan integrasi
@@ -89,12 +92,13 @@ AI CAR RENTAL SYSTEM/
 |       +-- admin.js            # Logik Dashboard
 |       +-- cars.js             # Logik Car Management
 |       +-- car-detail.js      # Logik Detail Kereta
-|       +-- bookings.js         # Logik Tempahan
+|       +-- bookings.js         # Logik Tempahan (refund 85%/50%, reminder email)
 |       +-- customers.js        # Logik Pelanggan
 |       +-- reports.js          # Logik Laporan
 |       +-- settings.js         # Logik Tetapan
 |       +-- chatbot-admin.js    # Logik AI Chatbot (Gemini + Grok API)
 |       +-- marketing.js        # Logik Marketing (Banners, Promos, Seasonal)
+|       +-- marketing-ai.js     # AI Marketing Content Generator (Gemini API key stored in Supabase)
 |       +-- calendar.js         # Logik Calendar Overview
 |
 +-- customer/                   # Modul Customer / Pengguna
@@ -226,7 +230,7 @@ AI CAR RENTAL SYSTEM/
         +-- api.js              # API & CONFIGURATION (Pusat Database - Supabase PostgreSQL)
         +-- supabase-config.js  # Supabase Client Initializer (Auth + DB)
         +-- chatbot.js          # Modul Utama WeDRIVE AI Chatbot
-        +-- email-service.js    # EmailJS SMTP notification service (verification emails)
+        +-- email-service.js    # Email notification service (booking confirm, reminder, refund, doc verification via Supabase Edge Function + Resend)
         +-- promo-banner.js     # Promo Banner Display (guest & customer pages)
         +-- anime.min.js        # Library animasi (Anime.js v3)
         +-- animate.js          # Modul animasi WeDRIVE (page open + scroll reveal)

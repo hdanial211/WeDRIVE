@@ -197,6 +197,9 @@
         <button class="filter-chip" id="tab-seasonal" onclick="switchTab('seasonal')">
           <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">event</span><span data-key="mkt_btn_seasonal">Seasonal Pricing</span>
         </button>
+        <button class="filter-chip" id="tab-ai" onclick="switchTab('ai')" style="background:linear-gradient(135deg,#6366F1,#4F46E5);color:#fff;border-color:transparent;">
+          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">auto_awesome</span>AI Suggestions
+        </button>
       </div>
 
       <!-- BANNERS TAB -->
@@ -222,6 +225,85 @@
           <span class="material-icons-round">add</span> <span data-key="mkt_add_seasonal">Add Seasonal Rate</span>
         </button>
       </div>
+
+      <!-- AI SUGGESTIONS TAB -->
+      <div class="mkt-section reveal-up" id="section-ai">
+
+        <!-- API Key Configuration -->
+        <div class="card" style="margin-bottom:20px;padding:24px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--slate-100);">
+            <span class="material-icons-round" style="color:#6366F1;font-size:24px">key</span>
+            <div><h3 style="margin:0;font-size:16px;font-weight:700">AI API Configuration</h3>
+              <p style="margin:0;font-size:12px;color:var(--slate-400)">Key disimpan dalam Supabase - tidak perlu edit kod</p></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;">
+            <div class="form-group" style="margin:0">
+              <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.5px;display:block;margin-bottom:6px">Gemini API Key (Free Tier)</label>
+              <div style="position:relative;">
+                <input type="password" id="ai-api-key" placeholder="Masukkan Gemini API Key..." style="width:100%;padding:10px 44px 10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;font-family:monospace;box-sizing:border-box;background:var(--card-bg);color:var(--navy);" />
+                <button onclick="toggleApiKeyVisibility()" type="button" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--slate-400);display:flex;" id="ai-key-toggle-btn">
+                  <span class="material-icons-round" style="font-size:18px" id="ai-key-eye-icon">visibility</span>
+                </button>
+              </div>
+              <p style="margin:6px 0 0;font-size:11px;color:var(--slate-400)">Dapatkan free key di <a href="https://aistudio.google.com" target="_blank" style="color:var(--primary)">aistudio.google.com</a> &bull; Gemini 1.5 Flash percuma</p>
+            </div>
+            <button class="btn-primary-sm" onclick="saveAiApiKey()" style="padding:10px 20px;white-space:nowrap;">
+              <span class="material-icons-round" style="font-size:16px">save</span> Save Key
+            </button>
+          </div>
+          <div id="ai-key-status" style="margin-top:10px;font-size:12px;display:none;"></div>
+        </div>
+
+        <!-- AI Suggestion Generator -->
+        <div class="card" style="padding:24px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--slate-100);">
+            <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#6366F1,#4F46E5);display:flex;align-items:center;justify-content:center;">
+              <span class="material-icons-round" style="color:#fff;font-size:22px">auto_awesome</span>
+            </div>
+            <div><h3 style="margin:0;font-size:16px;font-weight:700">AI Marketing Content Generator</h3>
+              <p style="margin:0;font-size:12px;color:var(--slate-400)">Jana idea promosi berdasarkan tarikh & event semasa</p></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+            <div class="form-group" style="margin:0">
+              <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.5px;display:block;margin-bottom:6px">Target Month / Event</label>
+              <input type="text" id="ai-prompt-context" placeholder="e.g., Hari Raya Jun 2026, School holidays..." style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;box-sizing:border-box;background:var(--card-bg);color:var(--navy);" />
+            </div>
+            <div class="form-group" style="margin:0">
+              <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.5px;display:block;margin-bottom:6px">Type of Content</label>
+              <select id="ai-content-type" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;background:var(--card-bg);color:var(--navy);">
+                <option value="banner">Promo Banner Ideas</option>
+                <option value="promo">Promo Code Suggestions</option>
+                <option value="email">Email Campaign Copy</option>
+                <option value="social">Social Media Captions</option>
+                <option value="pricing">Seasonal Pricing Strategy</option>
+              </select>
+            </div>
+          </div>
+
+          <button onclick="generateAiSuggestions()" id="ai-generate-btn" style="width:100%;padding:14px;background:linear-gradient(135deg,#6366F1,#4F46E5);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.2s;">
+            <span class="material-icons-round" style="font-size:18px">auto_awesome</span>
+            Generate AI Marketing Content
+          </button>
+
+          <!-- Output -->
+          <div id="ai-output-wrapper" style="display:none;margin-top:20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#6366F1;">
+                <span class="material-icons-round" style="font-size:16px">auto_awesome</span>
+                AI Generated Content
+              </div>
+              <button onclick="copyAiOutput()" style="padding:6px 12px;background:var(--bg-surface-2,#F1F5F9);border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--navy);display:flex;align-items:center;gap:4px;">
+                <span class="material-icons-round" style="font-size:14px">content_copy</span> Copy
+              </button>
+            </div>
+            <div id="ai-output" style="background:var(--bg-surface-2,#F1F5F9);border:1px solid var(--slate-200);border-radius:12px;padding:20px;font-size:14px;line-height:1.8;color:var(--navy);white-space:pre-wrap;min-height:120px;"></div>
+          </div>
+
+          <div id="ai-error" style="display:none;margin-top:16px;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:12px 16px;color:#991B1B;font-size:13px;"></div>
+        </div>
+
+      </div><!-- /section-ai -->
 
     </div><!-- /content -->
   </main>
@@ -415,5 +497,6 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../js/marketing.js"></script>
+  <script src="../../js/marketing-ai.js"></script>
 </body>
 </html>

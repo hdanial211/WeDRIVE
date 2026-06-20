@@ -200,16 +200,16 @@
 
 /* ── Blocked / Booked Dates ── */
 .flatpickr-day.booked-date {
-  background-color: var(--error-container, rgba(186, 26, 26, 0.08)) !important;
-  color: var(--error, #ba1a1a) !important;
-  border-color: transparent !important;
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  color: #EF4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
   text-decoration: line-through !important;
   cursor: not-allowed !important;
-  opacity: 0.8 !important;
-  font-weight: 500 !important;
+  opacity: 0.95 !important;
+  font-weight: 600 !important;
 }
 
 .flatpickr-day.booked-date:hover {
-  background-color: var(--error-container, rgba(186, 26, 26, 0.25)) !important;
-  color: var(--error, #ba1a1a) !important;
+  background-color: #EF4444 !important;
+  color: #ffffff !important;
 }
