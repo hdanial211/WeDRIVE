@@ -516,6 +516,10 @@ window.wedrive_lang_ms = {
   "admin_add_car_submit": "Tambah Kenderaan",
   "admin_add_car_saving": "Menyimpan...",
   "oauth_google_title": "Dilindungi dengan Log Masuk Google",
-  "oauth_google_desc": "Akaun ini didaftarkan melalui Log Masuk Google. Pengurusan kelayakan, konfigurasi keselamatan, dan kemas kini kata laluan diuruskan secara langsung melalui tetapan Akaun Google anda."
+  "oauth_google_desc": "Akaun ini didaftarkan melalui Log Masuk Google. Pengurusan kelayakan, konfigurasi keselamatan, dan kemas kini kata laluan diuruskan secara langsung melalui tetapan Akaun Google anda.",
+  "tfa_status_enabled": "Aktif",
+  "tfa_status_disabled": "Tidak Aktif",
+  "tfa_btn_setup": "Sediakan 2FA",
+  "tfa_btn_disable": "Nyahaktifkan 2FA"
 }
 ;

@@ -516,6 +516,10 @@ window.wedrive_lang_en = {
   "admin_add_car_submit": "Add Vehicle",
   "admin_add_car_saving": "Saving...",
   "oauth_google_title": "Secured with Google Sign-In",
-  "oauth_google_desc": "This account is authenticated via Google Sign-In. Credential management, security configurations, and password updates are handled directly through your Google Account settings."
+  "oauth_google_desc": "This account is authenticated via Google Sign-In. Credential management, security configurations, and password updates are handled directly through your Google Account settings.",
+  "tfa_status_enabled": "Currently Enabled",
+  "tfa_status_disabled": "Currently Disabled",
+  "tfa_btn_setup": "Setup 2FA",
+  "tfa_btn_disable": "Disable 2FA"
 }
 ;
