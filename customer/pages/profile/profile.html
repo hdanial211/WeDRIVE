@@ -140,13 +140,25 @@
 
             <div class="pf-bento-grid">
               <!-- Change Password -->
-              <section class="pf-card pf-bento-wide">
+              <section class="pf-card pf-bento-wide" id="pf-change-password-card">
                 <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Change Password</h3>
                 <p class="pf-card-desc">It is recommended to update your password periodically to keep your WeDRIVE account secure.</p>
                 <div class="pf-actions-bar compact" style="margin-top:0">
                   <button class="pf-btn primary" type="button" onclick="openPasswordDialog()">
                     <span class="material-icons-round">vpn_key</span> Change Password
                   </button>
+                </div>
+              </section>
+
+              <!-- Google OAuth Card -->
+              <section class="pf-card pf-bento-wide" id="pf-oauth-security-card" style="display:none;">
+                <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Account Security</h3>
+                <div class="pf-security-banner" style="margin-bottom: 0; background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.15);">
+                  <span class="material-icons-round" style="color: var(--primary, #3B82F6);">google</span>
+                  <div>
+                    <strong>Secured with Google Sign-In</strong>
+                    <p style="margin-top: 4px; font-size: 13px; color: var(--text-secondary, #475569); line-height: 1.5;">You logged in using Google. Since WeDRIVE does not store a password for Google accounts, password management is handled directly by Google.</p>
+                  </div>
                 </div>
               </section>
 
@@ -1064,6 +1076,20 @@
           applyPreferencesToUi(getLocalPreferences());
           return;
         }
+
+        // Toggle Password Change UI if logged in via OAuth (e.g. Google)
+        var provider = user.app_metadata && user.app_metadata.provider;
+        var isOAuth = provider && provider !== 'email';
+        var passwordCard = document.getElementById('pf-change-password-card');
+        var oauthCard = document.getElementById('pf-oauth-security-card');
+        if (isOAuth) {
+          if (passwordCard) passwordCard.style.display = 'none';
+          if (oauthCard) oauthCard.style.display = 'block';
+        } else {
+          if (passwordCard) passwordCard.style.display = 'block';
+          if (oauthCard) oauthCard.style.display = 'none';
+        }
+
         var profile = await WeDriveAPI.getCustomerProfile(user.id);
         if (profile) {
           var nameParts = (profile.name || '').split(' ');
