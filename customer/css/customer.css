@@ -4409,10 +4409,15 @@ body.night-mode .booking-main .spec-chip {
 }
 
 .confirmed-main .confirmed-content {
-  display: grid;
+  display: flex;
+  justify-content: center;
   gap: 24px;
-  grid-template-columns: 7fr 5fr;
   padding: 28px 32px;
+}
+
+.confirmed-main .confirmed-summary-container {
+  width: 100%;
+  max-width: 520px;
 }
 
 .confirmed-main .summary-label {
