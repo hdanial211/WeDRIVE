@@ -54,20 +54,11 @@
       <p data-key="signup_subtitle">Join WeDRIVE to experience smart car rentals</p>
 
       <form onsubmit="handleSignup(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fname" data-key="signup_fname">First Name</label>
-            <div class="input-wrap">
-              <span class="material-icons-round">person</span>
-              <input type="text" id="fname" placeholder="John" required />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="lname" data-key="signup_lname">Last Name</label>
-            <div class="input-wrap">
-              <span class="material-icons-round">person_outline</span>
-              <input type="text" id="lname" placeholder="Doe" required />
-            </div>
+        <div class="form-group">
+          <label for="username" data-key="signup_username">Username</label>
+          <div class="input-wrap">
+            <span class="material-icons-round">person</span>
+            <input type="text" id="username" data-key-ph="signup_username_ph" placeholder="Choose a username" required />
           </div>
         </div>
         <div class="form-group">
@@ -135,8 +126,7 @@
   <script>
     async function handleSignup(e) {
       e.preventDefault();
-      var fname = document.getElementById('fname').value;
-      var lname = document.getElementById('lname').value;
+      var username = document.getElementById('username').value;
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
       var confirmPassword = document.getElementById('confirm-password').value;
@@ -151,19 +141,19 @@
       btn.disabled = true;
 
       try {
-        var fullName = fname + ' ' + lname;
-        var response = await window.WeDriveAPI.signupUser(fullName, email, password, '');
+        var response = await window.WeDriveAPI.signupUser(username, email, password, '');
 
         if (response.success) {
           // Save session
           localStorage.setItem('wedrive_session', JSON.stringify({
             email: email,
-            name: fullName,
+            username: username,
+            name: username,
             role: 'customer',
             timestamp: new Date().getTime()
           }));
 
-          alert('Account created successfully for ' + fullName + '! Redirecting...');
+          alert('Account created successfully for ' + username + '! Redirecting...');
           window.location.href = '../welcome/welcome.html';
         } else {
           alert(response.error || 'Signup failed. Please try again.');
@@ -208,6 +198,7 @@
           localStorage.setItem('wedrive_session', JSON.stringify({
             email: result.user.email,
             role: result.role,
+            username: result.username || result.user.email.split('@')[0],
             timestamp: new Date().getTime()
           }));
 

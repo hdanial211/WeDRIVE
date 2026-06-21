@@ -669,6 +669,9 @@
           try {
             var localSession = JSON.parse(sessionRaw);
             localSession.name = name;
+            if (!localSession.username) {
+              localSession.username = name.split(' ')[0];
+            }
             localStorage.setItem('wedrive_session', JSON.stringify(localSession));
           } catch (e) {
             console.error('Local storage update error:', e);

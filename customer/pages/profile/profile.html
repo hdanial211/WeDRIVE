@@ -76,10 +76,10 @@
             <section class="pf-card">
               <h3 class="pf-section-title"><span class="material-icons-round">badge</span> Basic Details</h3>
               <div class="pf-form-grid">
-                <div class="pf-field"><label>First Name</label><input type="text" id="pf-first-name" value=""
-                    aria-label="First Name" title="First Name" readonly /></div>
-                <div class="pf-field"><label>Last Name</label><input type="text" id="pf-last-name" value=""
-                    aria-label="Last Name" title="Last Name" readonly /></div>
+                <div class="pf-field"><label>Username</label><input type="text" id="pf-username" value=""
+                    aria-label="Username" title="Username" readonly /></div>
+                <div class="pf-field"><label>Full Name</label><input type="text" id="pf-full-name" value=""
+                    aria-label="Full Name" title="Full Name" readonly /></div>
                 <div class="pf-field"><label>Date of Birth</label><input type="text" id="pf-dob" value=""
                     aria-label="Date of Birth" title="Date of Birth" readonly /></div>
                 <div class="pf-field full"><label>IC / Passport</label><input type="text" id="pf-identity"
@@ -476,8 +476,8 @@
   <script>
     var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
     var defaultProfileState = {
-      firstName: '',
-      lastName: '',
+      username: '',
+      fullName: '',
       dob: '',
       email: '',
       phone: '',
@@ -496,8 +496,8 @@
 
     function getProfileFieldMap() {
       return {
-        firstName: document.getElementById('pf-first-name'),
-        lastName: document.getElementById('pf-last-name'),
+        username: document.getElementById('pf-username'),
+        fullName: document.getElementById('pf-full-name'),
         dob: document.getElementById('pf-dob'),
         identity: document.getElementById('pf-identity'),
         email: document.getElementById('pf-email'),
@@ -532,7 +532,7 @@
       });
       var nameEl = document.getElementById('pf-user-name');
       if (nameEl) {
-        nameEl.textContent = (state.firstName + ' ' + state.lastName).trim() || 'User';
+        nameEl.textContent = state.username || state.fullName || 'User';
       }
     }
 
@@ -1187,12 +1187,13 @@
 
         var profile = await WeDriveAPI.getCustomerProfile(user.id);
         if (profile) {
-          var nameParts = (profile.name || '').split(' ');
-          var firstName = nameParts[0] || '';
-          var lastName = nameParts.slice(1).join(' ') || '';
+          var usernameVal = profile.username || profile.name || '';
+          if (usernameVal.includes(' ') && !profile.username) {
+            usernameVal = usernameVal.split(' ')[0];
+          }
           var supabaseState = {
-            firstName: firstName,
-            lastName: lastName,
+            username: usernameVal,
+            fullName: profile.name || '',
             dob: profile.dob || defaultProfileState.dob,
             email: profile.email || user.email || '',
             phone: profile.phone || '',
@@ -1208,7 +1209,7 @@
           if (profile.preferences) {
             applyPreferencesToUi(profile.preferences);
             if (profile.preferences.twoFactorSecret) {
-              tfaState.secret = profile.preferences.twoFactorSecret;
+              otpConfig.twoFactorSecret = profile.preferences.twoFactorSecret;
             }
             if (profile.preferences.twoFactorRecoveryCodes) {
               tfaState.recoveryCodes = profile.preferences.twoFactorRecoveryCodes;
@@ -1218,7 +1219,7 @@
           }
 
           var cardHolder = document.getElementById('pf-pay-cardholder');
-          if (cardHolder) cardHolder.textContent = (firstName + ' ' + lastName).trim().toUpperCase() || '-';
+          if (cardHolder) cardHolder.textContent = (profile.name || '').toUpperCase() || '-';
         } else {
           applyProfileState(mergeProfileState(readStoredProfile()));
           applyPreferencesToUi(getLocalPreferences());

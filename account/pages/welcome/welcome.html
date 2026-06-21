@@ -169,7 +169,9 @@
         if (sessionRaw) {
             try {
                 var session = JSON.parse(sessionRaw);
-                if (session.name) {
+                if (session.username) {
+                    name = session.username.toUpperCase();
+                } else if (session.name) {
                     name = session.name.split(' ')[0].toUpperCase();
                 } else if (session.email) {
                     name = session.email.split('@')[0].toUpperCase();

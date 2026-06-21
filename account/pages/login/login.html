@@ -271,7 +271,9 @@
             tempSessionData = {
               email: email,
               role: response.role,
-              user: response.user
+              user: response.user,
+              username: profile ? (profile.username || profile.name) : '',
+              name: profile ? profile.name : ''
             };
             openTfaChallengeModal();
           } else {
@@ -279,6 +281,8 @@
             localStorage.setItem('wedrive_session', JSON.stringify({
               email: email,
               role: response.role,
+              username: profile ? (profile.username || profile.name) : '',
+              name: profile ? profile.name : '',
               timestamp: new Date().getTime()
             }));
 
@@ -433,6 +437,8 @@
       localStorage.setItem('wedrive_session', JSON.stringify({
         email: tempSessionData.email,
         role: tempSessionData.role,
+        username: tempSessionData.username || '',
+        name: tempSessionData.name || '',
         timestamp: new Date().getTime()
       }));
 
@@ -479,13 +485,17 @@
             tempSessionData = {
               email: result.user.email,
               role: result.role,
-              user: result.user
+              user: result.user,
+              username: result.username || (profile ? (profile.username || profile.name) : ''),
+              name: profile ? profile.name : ''
             };
             openTfaChallengeModal();
           } else {
             localStorage.setItem('wedrive_session', JSON.stringify({
               email: result.user.email,
               role: result.role,
+              username: result.username || (profile ? (profile.username || profile.name) : ''),
+              name: profile ? profile.name : '',
               timestamp: new Date().getTime()
             }));
 

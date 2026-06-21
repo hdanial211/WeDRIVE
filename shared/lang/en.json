@@ -28,6 +28,8 @@
   "login_guest": "Continue as Guest",
   "signup_welcome": "Create an account",
   "signup_subtitle": "Join WeDRIVE to experience smart car rentals",
+  "signup_username": "Username",
+  "signup_username_ph": "Choose a username (nickname)",
   "signup_fname": "First Name",
   "signup_lname": "Last Name",
   "signup_email": "Email Address",

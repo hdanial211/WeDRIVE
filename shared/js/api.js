@@ -329,7 +329,7 @@ window.WeDriveAPI = {
      * Sign up a new user
      * Used in: signup.html
      */
-    signupUser: async function (name, email, password, phone) {
+    signupUser: async function (username, email, password, phone) {
         if (!window.AppConfig.USE_REAL_DB) {
             return new Promise(function(resolve) {
                 setTimeout(function() {
@@ -342,7 +342,13 @@ window.WeDriveAPI = {
                 var result = await sb.auth.signUp({
                     email: email,
                     password: password,
-                    options: { data: { full_name: name, phone: phone || '' } }
+                    options: { 
+                        data: { 
+                            full_name: username,
+                            username: username,
+                            phone: phone || '' 
+                        } 
+                    }
                 });
 
                 if (result.error) {
@@ -354,7 +360,8 @@ window.WeDriveAPI = {
                 // Create customer record in customers table
                 await sb.from('customers').insert({
                     customer_id: user.id,
-                    name: name,
+                    name: username,
+                    username: username,
                     email: email,
                     phone: phone || '',
                     ic: '',
@@ -412,10 +419,21 @@ window.WeDriveAPI = {
 
                 // Check if customer record exists, create if not
                 var custResult = await sb.from('customers').select('*').eq('auth_uid', user.id).maybeSingle();
+                var usernameVal = '';
+                
                 if (!custResult.data) {
+                    var meta = user.user_metadata || {};
+                    var fullName = meta.full_name || user.email.split('@')[0];
+                    // Extract first name/given name as username from Google OAuth metadata
+                    usernameVal = meta.given_name || meta.name || user.email.split('@')[0];
+                    if (usernameVal.includes(' ')) {
+                        usernameVal = usernameVal.split(' ')[0];
+                    }
+                    
                     await sb.from('customers').insert({
                         customer_id: user.id,
-                        name: user.user_metadata.full_name || user.email.split('@')[0],
+                        name: fullName,
+                        username: usernameVal,
                         email: user.email,
                         phone: '',
                         ic: '',
@@ -425,13 +443,18 @@ window.WeDriveAPI = {
                         auth_uid: user.id,
                         auth_provider: 'google'
                     });
+                } else {
+                    usernameVal = custResult.data.username || custResult.data.name || user.email.split('@')[0];
+                    if (usernameVal.includes(' ')) {
+                        usernameVal = usernameVal.split(' ')[0];
+                    }
                 }
 
                 // Check if admin
                 var adminResult = await sb.from('admins').select('*').eq('email', user.email).maybeSingle();
                 var role = adminResult.data ? 'admin' : 'customer';
 
-                return { success: true, role: role, user: user };
+                return { success: true, role: role, user: user, username: usernameVal };
             }
 
             return { success: false, noRedirect: true };
@@ -781,15 +804,42 @@ window.WeDriveAPI = {
      * Update customer profile.
      * Used in: profile.html
      */
-    updateCustomerProfile: async function (authUid, profileData) {
+    updateCustomerProfile: async function (authUid, data) {
         if (!window.AppConfig.USE_REAL_DB) {
             return { success: true };
         } else {
             try {
                 var sb = window.supabaseClient;
-                var result = await sb.from('customers')
-                    .update(profileData)
-                    .eq('auth_uid', authUid);
+                if (!sb) return { success: false, error: 'Database not connected' };
+                
+                var updateData = {};
+                
+                // Fields we can update
+                if (data.hasOwnProperty('ic')) updateData.ic = data.ic;
+                if (data.hasOwnProperty('license')) updateData.license = data.license;
+                if (data.hasOwnProperty('phone')) updateData.phone = data.phone;
+                if (data.hasOwnProperty('verification_status')) updateData.verification_status = data.verification_status;
+                if (data.hasOwnProperty('rejection_reason')) updateData.rejection_reason = data.rejection_reason;
+                if (data.hasOwnProperty('name')) updateData.name = data.name;
+                if (data.hasOwnProperty('username')) updateData.username = data.username;
+                if (data.hasOwnProperty('ic_document_url')) updateData.ic_document_url = data.ic_document_url;
+                if (data.hasOwnProperty('ic_back_document_url')) updateData.ic_back_document_url = data.ic_back_document_url;
+                if (data.hasOwnProperty('license_document_url')) updateData.license_document_url = data.license_document_url;
+                if (data.hasOwnProperty('license_back_document_url')) updateData.license_back_document_url = data.license_back_document_url;
+                if (data.hasOwnProperty('preferences')) updateData.preferences = data.preferences;
+                if (data.hasOwnProperty('dob')) updateData.dob = data.dob;
+                if (data.hasOwnProperty('street')) updateData.street = data.street;
+                if (data.hasOwnProperty('city')) updateData.city = data.city;
+                if (data.hasOwnProperty('zip')) updateData.zip = data.zip;
+                if (data.hasOwnProperty('license_expiry')) updateData.license_expiry = data.license_expiry;
+
+                // For completing profile, if these are provided, set verification to pending
+                if ((data.hasOwnProperty('ic') || data.hasOwnProperty('license') || data.hasOwnProperty('ic_document_url') || data.hasOwnProperty('license_document_url')) && !data.hasOwnProperty('verification_status')) {
+                    updateData.verification_status = 'Pending';
+                    updateData.rejection_reason = null;
+                }
+
+                var result = await sb.from('customers').update(updateData).eq('auth_uid', authUid);
                 if (result.error) throw result.error;
                 return { success: true };
             } catch (err) {
@@ -885,30 +935,6 @@ window.WeDriveAPI = {
         }
     },
 
-    updateCustomerProfile: async function (authUid, data) {
-        try {
-            var sb = window.supabaseClient;
-            if (!sb) return { success: false, error: 'Database not connected' };
-            var updateData = {
-                ic: data.ic || '',
-                license: data.license || '',
-                phone: data.phone || '',
-                verification_status: 'Pending',
-                rejection_reason: null
-            };
-            if (data.name) updateData.name = data.name;
-            if (data.ic_document_url) updateData.ic_document_url = data.ic_document_url;
-            if (data.ic_back_document_url) updateData.ic_back_document_url = data.ic_back_document_url;
-            if (data.license_document_url) updateData.license_document_url = data.license_document_url;
-            if (data.license_back_document_url) updateData.license_back_document_url = data.license_back_document_url;
-            var result = await sb.from('customers').update(updateData).eq('auth_uid', authUid);
-            if (result.error) throw result.error;
-            return { success: true };
-        } catch (err) {
-            console.error('[WeDriveAPI] updateCustomerProfile error:', err);
-            return { success: false, error: err.message };
-        }
-    },
 
     /**
      * Upload a document (IC or License) to Supabase Storage.
