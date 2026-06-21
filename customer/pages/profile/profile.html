@@ -235,64 +235,14 @@
                 does not store full card numbers on our servers.</div>
             </div>
 
-            <div class="pf-bento-grid">
-              <!-- Primary Card -->
-              <section class="pf-card pf-bento-wide">
-                <div class="pf-pay-card-head">
-                  <span class="pf-primary-pill">Primary Default</span>
-                  <button class="pf-text-btn" onclick="profileToast('Edit card coming soon.')"><span
-                      class="material-icons-round">edit</span> Edit</button>
-                </div>
-                <div class="pf-pay-card-body">
-                  <div class="pf-card-brand-lg visa">VISA</div>
-                  <div class="pf-card-number">**** **** **** 4242</div>
-                </div>
-                <div class="pf-pay-card-footer">
-                  <div>
-                    <div class="pf-pay-label">Cardholder Name</div>
-                    <div class="pf-pay-value" id="pf-pay-cardholder">-</div>
-                  </div>
-                  <div>
-                    <div class="pf-pay-label">Expires</div>
-                    <div class="pf-pay-value">12/25</div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Smart Billing Insight -->
-              <section class="pf-card pf-insight-card">
-                <div class="pf-insight-tag"><span class="material-icons-round">auto_awesome</span> Smart Billing Insight
-                </div>
-                <p class="pf-card-desc">Estimated upcoming car charge based on active rentals.</p>
-                <div class="pf-insight-amount">RM 1,240.00</div>
-                <p class="pf-insight-meta">Auto processing on Oct 15th via Primary Visa.</p>
-              </section>
+            <div id="pf-cards-list-container">
+              <!-- Dynamically populated from DB -->
             </div>
 
-            <!-- Secondary Card -->
-            <section class="pf-card">
-              <div class="pf-pay-secondary">
-                <div class="pf-pay-sec-left">
-                  <div class="pf-card-brand-sm mc">MC</div>
-                  <div class="pf-pay-sec-info">
-                    <div class="pf-card-number-sm">**** **** **** 8899</div>
-                    <div class="pf-pay-meta">Exp 08/26</div>
-                  </div>
-                </div>
-                <div class="pf-pay-sec-actions">
-                  <button class="pf-text-btn"
-                    onclick="this.closest('.pf-card').remove(); profileToast('Card removed.')"><span
-                      class="material-icons-round">delete</span> Remove</button>
-                  <button class="pf-text-btn primary" onclick="profileToast('Set as primary.')">Make Primary</button>
-                </div>
-              </div>
-            </section>
-
             <!-- Add Payment Method -->
-            <button class="pf-add-method-card" onclick="profileToast('Add payment coming soon.')">
+            <button class="pf-add-method-card" onclick="openAddPaymentDialog()">
               <span class="material-icons-round">add_circle</span>
-              <div><strong>Add Payment Method</strong><br /><span class="pf-add-desc">Credit Card, Debit Card, or Direct
-                  Bank Transfer</span></div>
+              <div><strong>Add Payment Method</strong><br /><span class="pf-add-desc">Credit Card, Debit Card, or Direct Bank Transfer</span></div>
             </button>
           </div>
 
@@ -1167,6 +1117,7 @@
           var localState = mergeProfileState(readStoredProfile());
           applyProfileState(localState);
           applyPreferencesToUi(getLocalPreferences());
+          renderPaymentMethods([]);
           return;
         }
 
@@ -1185,7 +1136,7 @@
         }
         if (tfaCard) tfaCard.style.display = 'block';
 
-        var profile = await WeDriveAPI.getCustomerProfile(user.id);
+         var profile = await WeDriveAPI.getCustomerProfile(user.id);
         if (profile) {
           var usernameVal = profile.username || profile.name || '';
           if (usernameVal.includes(' ') && !profile.username) {
@@ -1218,16 +1169,17 @@
             applyPreferencesToUi(getLocalPreferences());
           }
 
-          var cardHolder = document.getElementById('pf-pay-cardholder');
-          if (cardHolder) cardHolder.textContent = (profile.name || '').toUpperCase() || '-';
+          renderPaymentMethods(profile.payment_methods || []);
         } else {
           applyProfileState(mergeProfileState(readStoredProfile()));
           applyPreferencesToUi(getLocalPreferences());
+          renderPaymentMethods([]);
         }
       } catch (err) {
         console.error('[Profile] Load error:', err);
         applyProfileState(mergeProfileState(readStoredProfile()));
         applyPreferencesToUi(getLocalPreferences());
+        renderPaymentMethods([]);
       }
     }
 
@@ -1598,6 +1550,271 @@
         console.error('[Profile] Save 2FA preference error:', err);
       }
     }
+
+    // =========================================================================
+    // PAYMENT METHODS SYSTEM (DATABASE BACKED)
+    // =========================================================================
+
+    function openAddPaymentDialog() {
+      var fullNameInput = document.getElementById('pf-full-name');
+      var nameVal = fullNameInput ? fullNameInput.value : '';
+      var newNameInput = document.getElementById('new-card-name');
+      if (newNameInput) newNameInput.value = nameVal;
+      
+      var dialog = document.getElementById('add-payment-dialog');
+      if (dialog) {
+        dialog.style.display = 'flex';
+        setTimeout(function() {
+          dialog.classList.add('active');
+        }, 10);
+      }
+    }
+
+    function closeAddPaymentDialog() {
+      var dialog = document.getElementById('add-payment-dialog');
+      if (dialog) {
+        dialog.classList.remove('active');
+        setTimeout(function() {
+          dialog.style.display = 'none';
+        }, 300);
+      }
+      var form = document.getElementById('add-card-form');
+      if (form) form.reset();
+    }
+
+    function formatCardNumberInput(input) {
+      var v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      var matches = v.match(/\d{4,16}/g);
+      var match = matches && matches[0] || '';
+      var parts = [];
+
+      for (var i = 0, len = match.length; i < len; i += 4) {
+        parts.push(match.substring(i, i + 4));
+      }
+
+      if (parts.length > 0) {
+        input.value = parts.join(' ');
+      } else {
+        input.value = v;
+      }
+    }
+
+    function formatExpiryInput(input) {
+      var v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      if (v.length >= 2) {
+        input.value = v.substring(0, 2) + '/' + v.substring(2, 4);
+      } else {
+        input.value = v;
+      }
+    }
+
+    function formatCvcInput(input) {
+      input.value = input.value.replace(/[^0-9]/g, '');
+    }
+
+    function renderPaymentMethods(cards) {
+      var container = document.getElementById('pf-cards-list-container');
+      if (!container) return;
+
+      cards = cards || [];
+      
+      var primaryCard = cards.find(function(c) { return c.is_primary === true; }) || cards[0];
+      var secondaryCards = cards.filter(function(c) { return c !== primaryCard; });
+
+      var html = '';
+
+      html += '<div class="pf-bento-grid" style="margin-bottom: 24px;">';
+
+      if (primaryCard) {
+        var brandClass = (primaryCard.brand || '').toLowerCase() === 'visa' ? 'visa' : 'mc';
+        var brandLabel = (primaryCard.brand || '').toUpperCase() === 'VISA' ? 'VISA' : 'MC';
+        
+        html += '  <section class="pf-card pf-bento-wide">';
+        html += '    <div class="pf-pay-card-head">';
+        html += '      <span class="pf-primary-pill">Primary Default</span>';
+        html += '      <button class="pf-text-btn" style="color: var(--danger, #ef4444); display: flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer;" onclick="deleteCard(\'' + primaryCard.id + '\')"><span class="material-icons-round" style="font-size: 16px;">delete</span> Remove</button>';
+        html += '    </div>';
+        html += '    <div class="pf-pay-card-body">';
+        html += '      <div class="pf-card-brand-lg ' + brandClass + '">' + brandLabel + '</div>';
+        html += '      <div class="pf-card-number">' + primaryCard.number + '</div>';
+        html += '    </div>';
+        html += '    <div class="pf-pay-card-footer">';
+        html += '      <div>';
+        html += '        <div class="pf-pay-label">Cardholder Name</div>';
+        html += '        <div class="pf-pay-value">' + (primaryCard.cardholder || '-').toUpperCase() + '</div>';
+        html += '      </div>';
+        html += '      <div>';
+        html += '        <div class="pf-pay-label">Expires</div>';
+        html += '        <div class="pf-pay-value">' + primaryCard.expiry + '</div>';
+        html += '      </div>';
+        html += '    </div>';
+        html += '  </section>';
+      } else {
+        html += '  <section class="pf-card pf-bento-wide" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 200px; border: 2px dashed var(--border-color, #cbd5e1); background: transparent;">';
+        html += '    <span class="material-icons-round" style="font-size: 40px; color: var(--text-secondary); margin-bottom: 8px;">credit_card</span>';
+        html += '    <div style="font-weight: 600; color: var(--text-primary);">No Saved Cards</div>';
+        html += '    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Add a primary card for automatic billing.</div>';
+        html += '  </section>';
+      }
+
+      html += '  <section class="pf-card pf-insight-card">';
+      html += '    <div class="pf-insight-tag"><span class="material-icons-round">auto_awesome</span> Smart Billing Insight</div>';
+      html += '    <p class="pf-card-desc">Estimated upcoming car charge based on active rentals.</p>';
+      if (primaryCard) {
+        html += '    <div class="pf-insight-amount">RM 1,240.00</div>';
+        html += '    <p class="pf-insight-meta">Auto processing on Oct 15th via Primary ' + (primaryCard.brand || 'Card') + '.</p>';
+      } else {
+        html += '    <div class="pf-insight-amount">RM 0.00</div>';
+        html += '    <p class="pf-insight-meta">No active automatic billing.</p>';
+      }
+      html += '  </section>';
+      html += '</div>';
+
+      if (secondaryCards.length > 0) {
+        secondaryCards.forEach(function(c) {
+          var brandClass = (c.brand || '').toLowerCase() === 'visa' ? 'visa' : 'mc';
+          var brandLabel = (c.brand || '').toUpperCase() === 'VISA' ? 'VISA' : 'MC';
+
+          html += '<section class="pf-card" style="margin-bottom: 16px;">';
+          html += '  <div class="pf-pay-secondary" style="display: flex; justify-content: space-between; align-items: center;">';
+          html += '    <div class="pf-pay-sec-left" style="display: flex; align-items: center; gap: 16px;">';
+          html += '      <div class="pf-card-brand-sm ' + brandClass + '">' + brandLabel + '</div>';
+          html += '      <div class="pf-pay-sec-info">';
+          html += '        <div class="pf-card-number-sm" style="font-weight: 600;">' + c.number + '</div>';
+          html += '        <div class="pf-pay-meta" style="font-size: 12px; color: var(--text-secondary);">Exp ' + c.expiry + ' | ' + (c.cardholder || '').toUpperCase() + '</div>';
+          html += '      </div>';
+          html += '    </div>';
+          html += '    <div class="pf-pay-sec-actions" style="display: flex; gap: 12px;">';
+          html += '      <button class="pf-text-btn" style="color: var(--danger, #ef4444); display: flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer;" onclick="deleteCard(\'' + c.id + '\')"><span class="material-icons-round" style="font-size: 16px;">delete</span> Remove</button>';
+          html += '      <button class="pf-text-btn primary" style="color: var(--primary, #3b82f6); display: flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; font-weight: 500;" onclick="makeCardPrimary(\'' + c.id + '\')">Make Primary</button>';
+          html += '    </div>';
+          html += '  </div>';
+          html += '</section>';
+        });
+      }
+
+      container.innerHTML = html;
+    }
+
+    async function deleteCard(cardId) {
+      if (!confirm('Are you sure you want to remove this card?')) return;
+      try {
+        var sb = window.supabaseClient;
+        var authSession = await sb.auth.getSession();
+        if (!authSession.data.session) return;
+        var uid = authSession.data.session.user.id;
+
+        var profile = await window.WeDriveAPI.getCustomerProfile(uid);
+        if (!profile) return;
+        
+        var cards = profile.payment_methods || [];
+        var updatedCards = cards.filter(function(c) { return c.id !== cardId; });
+        
+        if (cards.find(function(c) { return c.id === cardId && c.is_primary; }) && updatedCards.length > 0) {
+          updatedCards[0].is_primary = true;
+        }
+
+        var res = await window.WeDriveAPI.updateCustomerProfile(uid, { payment_methods: updatedCards });
+        if (res.success) {
+          profileToast('Card removed successfully.');
+          renderPaymentMethods(updatedCards);
+        } else {
+          alert('Failed to remove card: ' + res.error);
+        }
+      } catch (err) {
+        console.error('Delete card error:', err);
+      }
+    }
+
+    async function makeCardPrimary(cardId) {
+      try {
+        var sb = window.supabaseClient;
+        var authSession = await sb.auth.getSession();
+        if (!authSession.data.session) return;
+        var uid = authSession.data.session.user.id;
+
+        var profile = await window.WeDriveAPI.getCustomerProfile(uid);
+        if (!profile) return;
+
+        var cards = profile.payment_methods || [];
+        var updatedCards = cards.map(function(c) {
+          c.is_primary = (c.id === cardId);
+          return c;
+        });
+
+        var res = await window.WeDriveAPI.updateCustomerProfile(uid, { payment_methods: updatedCards });
+        if (res.success) {
+          profileToast('Primary card updated.');
+          renderPaymentMethods(updatedCards);
+        } else {
+          alert('Failed to set primary card: ' + res.error);
+        }
+      } catch (err) {
+        console.error('Make primary error:', err);
+      }
+    }
+
+    async function handleAddCard(e) {
+      e.preventDefault();
+      try {
+        var nameVal = document.getElementById('new-card-name').value.trim();
+        var numVal = document.getElementById('new-card-number').value.trim();
+        var expVal = document.getElementById('new-card-expiry').value.trim();
+        var cvcVal = document.getElementById('new-card-cvc').value.trim();
+        var isPrimary = document.getElementById('new-card-primary').checked;
+
+        if (numVal.replace(/\s+/g, '').length < 15) {
+          alert('Invalid card number.');
+          return;
+        }
+        if (!/^\d{2}\/\d{2}$/.test(expVal)) {
+          alert('Expiry must be in MM/YY format.');
+          return;
+        }
+
+        var sb = window.supabaseClient;
+        var authSession = await sb.auth.getSession();
+        if (!authSession.data.session) return;
+        var uid = authSession.data.session.user.id;
+
+        var profile = await window.WeDriveAPI.getCustomerProfile(uid);
+        if (!profile) return;
+
+        var cards = profile.payment_methods || [];
+        
+        var brand = 'visa';
+        if (numVal.startsWith('5')) {
+          brand = 'mastercard';
+        }
+
+        var maskedNum = '**** **** **** ' + numVal.slice(-4);
+        var newCard = {
+          id: 'pm_' + Date.now(),
+          brand: brand,
+          number: maskedNum,
+          cardholder: nameVal,
+          expiry: expVal,
+          is_primary: isPrimary || cards.length === 0
+        };
+
+        var updatedCards = cards.map(function(c) {
+          if (newCard.is_primary) c.is_primary = false;
+          return c;
+        });
+        updatedCards.push(newCard);
+
+        var res = await window.WeDriveAPI.updateCustomerProfile(uid, { payment_methods: updatedCards });
+        if (res.success) {
+          profileToast('Card added successfully.');
+          renderPaymentMethods(updatedCards);
+          closeAddPaymentDialog();
+        } else {
+          alert('Failed to add card: ' + res.error);
+        }
+      } catch (err) {
+        console.error('Add card error:', err);
+      }
+    }
   </script>
   <div id="chatbot-placeholder"></div>
   <script src="../../../shared/js/chatbot.js"></script>
@@ -1663,6 +1880,63 @@
       }
     });
   </script>
+
+  <!-- Add Payment Method Dialog Modal Overlay -->
+  <div id="add-payment-dialog" class="pf-dialog-overlay" style="display:none" onclick="if(event.target === this) closeAddPaymentDialog()">
+    <div class="pf-dialog">
+      <div class="pf-dialog-header">
+        <h3 class="pf-dialog-title">
+          <span class="material-icons-round" style="color: var(--primary, #3B82F6);">credit_card</span>
+          <span>Add Payment Method</span>
+        </h3>
+        <button type="button" class="pf-dialog-close" onclick="closeAddPaymentDialog()" aria-label="Close dialog">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="pf-dialog-body">
+        <form id="add-card-form" onsubmit="handleAddCard(event)" style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="pf-field">
+            <label for="new-card-name">Cardholder Name</label>
+            <input type="text" id="new-card-name" placeholder="Name on card" required />
+          </div>
+          
+          <div class="pf-field">
+            <label for="new-card-number">Card Number</label>
+            <input type="text" id="new-card-number" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNumberInput(this)" required />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="pf-field">
+              <label for="new-card-expiry">Expiry Date</label>
+              <input type="text" id="new-card-expiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiryInput(this)" required />
+            </div>
+            <div class="pf-field">
+              <label for="new-card-cvc">CVC</label>
+              <input type="password" id="new-card-cvc" placeholder="•••" maxlength="4" oninput="formatCvcInput(this)" required />
+            </div>
+          </div>
+
+          <div class="pf-field" style="display: flex; align-items: center; justify-content: space-between; flex-direction: row; gap: 10px; margin-top: 8px;">
+            <div>
+              <span style="font-weight: 600; font-size: 14px;">Set as Primary Default</span>
+              <p style="font-size: 12px; color: var(--text-secondary); margin: 4px 0 0 0;">Use this card for future bookings and charges.</p>
+            </div>
+            <label class="pf-switch">
+              <input type="checkbox" id="new-card-primary" />
+              <span class="pf-slider"></span>
+            </label>
+          </div>
+
+          <div class="pf-pwd-step-actions" style="margin-top: 16px;">
+            <button class="pf-btn outline" type="button" onclick="closeAddPaymentDialog()">Cancel</button>
+            <button class="pf-btn primary" type="submit">
+              <span class="material-icons-round">save</span> Save Card
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Change Password Dialog Modal Overlay -->
   <div id="change-password-dialog" class="pf-dialog-overlay" style="display:none" onclick="if(event.target === this) closePasswordDialog()">

@@ -832,6 +832,7 @@ window.WeDriveAPI = {
                 if (data.hasOwnProperty('city')) updateData.city = data.city;
                 if (data.hasOwnProperty('zip')) updateData.zip = data.zip;
                 if (data.hasOwnProperty('license_expiry')) updateData.license_expiry = data.license_expiry;
+                if (data.hasOwnProperty('payment_methods')) updateData.payment_methods = data.payment_methods;
 
                 // For completing profile, if these are provided, set verification to pending
                 if ((data.hasOwnProperty('ic') || data.hasOwnProperty('license') || data.hasOwnProperty('ic_document_url') || data.hasOwnProperty('license_document_url')) && !data.hasOwnProperty('verification_status')) {
