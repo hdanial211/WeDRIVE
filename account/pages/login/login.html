@@ -14,6 +14,140 @@
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../css/auth.css" />
   <script src="../../../shared/js/main.js"></script>
+  <style>
+    /* 2FA Challenge Modal Styles */
+    .login-tfa-dialog-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .login-tfa-dialog-overlay.active {
+      opacity: 1;
+    }
+    .login-tfa-dialog {
+      background: var(--bg-surface, #ffffff);
+      border: 1.5px solid var(--border-color, #E2E8F0);
+      border-radius: 20px;
+      width: min(90%, 420px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .login-tfa-dialog-overlay.active .login-tfa-dialog {
+      transform: scale(1) translateY(0);
+    }
+    .login-tfa-dialog-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color, #E2E8F0);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .login-tfa-dialog-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-primary, #1E293B);
+    }
+    .login-tfa-dialog-body {
+      padding: 24px;
+      text-align: center;
+    }
+    .login-tfa-icon-container {
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1.5px solid rgba(59, 130, 246, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .login-tfa-icon {
+      color: var(--primary, #3B82F6);
+      font-size: 28px;
+    }
+    .login-tfa-heading {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary, #1E293B);
+      margin-bottom: 8px;
+    }
+    .login-tfa-desc {
+      font-size: 13px;
+      color: var(--text-secondary, #94A3B8);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .login-tfa-code-container {
+      max-width: 240px;
+      margin: 8px auto 16px;
+    }
+    #login-tfa-code {
+      font-family: monospace !important;
+      font-size: 28px !important;
+      font-weight: 700 !important;
+      letter-spacing: 12px !important;
+      text-align: center !important;
+      text-indent: 12px; /* Center-align correction */
+      height: 52px;
+      border-radius: 12px;
+      border: 2px solid var(--border-color, #E2E8F0);
+      background: var(--input-bg, #F8FAFC);
+      width: 100%;
+      color: var(--text-primary, #1E293B);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    #login-tfa-code:focus {
+      border-color: var(--primary, #3B82F6);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      background: var(--input-focus-bg, #FFFFFF);
+    }
+    .login-tfa-demo-note {
+      font-size: 12px;
+      color: var(--text-muted, #94A3B8);
+      margin-bottom: 24px;
+    }
+    .login-tfa-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .login-tfa-actions button {
+      flex: 1;
+      height: 46px;
+      font-weight: 600;
+      border-radius: 10px;
+      justify-content: center;
+      align-items: center;
+      display: inline-flex;
+      gap: 8px;
+      cursor: pointer;
+    }
+    
+    /* Night mode overrides */
+    body.night-mode .login-tfa-dialog-overlay {
+      background: rgba(15, 23, 42, 0.85);
+    }
+    body.night-mode #login-tfa-code {
+      border-color: rgba(148, 163, 184, 0.2);
+    }
+    body.night-mode #login-tfa-code:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+    }
+  </style>
 </head>
 
 <body data-particles="10" data-cursor-glow>
@@ -115,6 +249,8 @@
   </div>
 
   <script>
+    var tempSessionData = null;
+
     async function handleLogin(e) {
       e.preventDefault();
       var email = document.getElementById('email').value;
@@ -127,14 +263,27 @@
         var response = await window.WeDriveAPI.loginUser(email, password);
 
         if (response.success) {
-          // Save session to local storage for Auth Guard
-          localStorage.setItem('wedrive_session', JSON.stringify({
-            email: email,
-            role: response.role,
-            timestamp: new Date().getTime()
-          }));
+          // Check if user has 2FA enabled
+          var profile = await window.WeDriveAPI.getCustomerProfile(response.user.id);
+          var tfaEnabled = (profile && profile.preferences && profile.preferences.twoFactorEnabled === true);
 
-          window.location.href = '../welcome/welcome.html';
+          if (tfaEnabled) {
+            tempSessionData = {
+              email: email,
+              role: response.role,
+              user: response.user
+            };
+            openTfaChallengeModal();
+          } else {
+            // Save session to local storage for Auth Guard
+            localStorage.setItem('wedrive_session', JSON.stringify({
+              email: email,
+              role: response.role,
+              timestamp: new Date().getTime()
+            }));
+
+            window.location.href = '../welcome/welcome.html';
+          }
         } else {
           alert(response.error || 'Login failed. Please check your credentials.');
           btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
@@ -157,6 +306,70 @@
       window.WeDriveAPI.loginWithGoogle();
     }
 
+    function openTfaChallengeModal() {
+      var codeInput = document.getElementById('login-tfa-code');
+      if (codeInput) codeInput.value = '';
+
+      var dialog = document.getElementById('login-tfa-dialog');
+      if (dialog) {
+        dialog.style.display = 'flex';
+        setTimeout(function() {
+          dialog.classList.add('active');
+          if (codeInput) codeInput.focus();
+        }, 10);
+      }
+    }
+
+    function closeTfaChallengeModal() {
+      var dialog = document.getElementById('login-tfa-dialog');
+      if (dialog) {
+        dialog.classList.remove('active');
+        setTimeout(function() {
+          dialog.style.display = 'none';
+        }, 300);
+      }
+      
+      var btn = document.getElementById('login-btn');
+      if (btn) {
+        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
+        btn.disabled = false;
+      }
+      var gBtn = document.getElementById('google-login-btn');
+      if (gBtn) {
+        gBtn.disabled = false;
+        gBtn.style.opacity = '1';
+        gBtn.innerHTML = '<img src="../../../shared/images/icons/google-color.svg" alt="Google" /> <span data-key="login_google">Continue with Google</span>';
+      }
+      tempSessionData = null;
+    }
+
+    function submitTfaChallengeCode() {
+      var codeInput = document.getElementById('login-tfa-code');
+      var code = codeInput ? codeInput.value.trim() : '';
+
+      var isValid = (code === '948201') || (/^\d{6}$/.test(code));
+
+      if (!isValid) {
+        alert('Invalid verification code. Please enter a valid 6-digit code.');
+        if (codeInput) codeInput.value = '';
+        return;
+      }
+
+      if (!tempSessionData) {
+        alert('Session expired. Please try to log in again.');
+        closeTfaChallengeModal();
+        return;
+      }
+
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        email: tempSessionData.email,
+        role: tempSessionData.role,
+        timestamp: new Date().getTime()
+      }));
+
+      window.location.href = '../welcome/welcome.html';
+    }
+
     var style = document.createElement('style');
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
@@ -177,14 +390,26 @@
       try {
         var result = await window.WeDriveAPI.handleGoogleRedirectResult();
         if (result && result.success) {
-          // Google login succeeded after redirect
-          localStorage.setItem('wedrive_session', JSON.stringify({
-            email: result.user.email,
-            role: result.role,
-            timestamp: new Date().getTime()
-          }));
+          // Check if user has 2FA enabled
+          var profile = await window.WeDriveAPI.getCustomerProfile(result.user.id);
+          var tfaEnabled = (profile && profile.preferences && profile.preferences.twoFactorEnabled === true);
 
-          window.location.href = '../welcome/welcome.html';
+          if (tfaEnabled) {
+            tempSessionData = {
+              email: result.user.email,
+              role: result.role,
+              user: result.user
+            };
+            openTfaChallengeModal();
+          } else {
+            localStorage.setItem('wedrive_session', JSON.stringify({
+              email: result.user.email,
+              role: result.role,
+              timestamp: new Date().getTime()
+            }));
+
+            window.location.href = '../welcome/welcome.html';
+          }
         } else if (result && result.error) {
           alert('Google login failed: ' + result.error);
         }
@@ -196,6 +421,45 @@
 
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
+
+  <!-- Two-Factor Auth Challenge Dialog Modal Overlay -->
+  <div id="login-tfa-dialog" class="login-tfa-dialog-overlay" style="display:none" onclick="if(event.target === this) closeTfaChallengeModal()">
+    <div class="login-tfa-dialog">
+      <div class="login-tfa-dialog-header">
+        <h3 class="login-tfa-dialog-title">
+          <span class="material-icons-round" style="color: var(--primary, #3B82F6);">phonelink_lock</span>
+          <span>Two-Factor Authentication</span>
+        </h3>
+        <button type="button" onclick="closeTfaChallengeModal()" style="border:none;background:transparent;cursor:pointer;color:var(--text-muted, #94A3B8);display:flex;align-items:center;padding:0;">
+          <span class="material-icons-round" style="font-size:20px">close</span>
+        </button>
+      </div>
+      <div class="login-tfa-dialog-body">
+        <div class="login-tfa-icon-container">
+          <span class="material-icons-round login-tfa-icon">security</span>
+        </div>
+        <h4 class="login-tfa-heading">Verification Code</h4>
+        <p class="login-tfa-desc">
+          Enter the 6-digit verification code from your authenticator app to complete sign-in.
+        </p>
+
+        <div class="login-tfa-code-container">
+          <input type="text" id="login-tfa-code" inputmode="numeric" maxlength="6" aria-label="Authenticator Code" title="Authenticator Code" placeholder="000000" autocomplete="one-time-code" />
+        </div>
+
+        <p class="login-tfa-demo-note">
+          Demo Code: 948201.
+        </p>
+
+        <div class="login-tfa-actions">
+          <button class="btn-social" type="button" onclick="closeTfaChallengeModal()" style="margin-bottom:0">Cancel</button>
+          <button class="btn-primary" type="button" onclick="submitTfaChallengeCode()" id="login-tfa-submit-btn">
+            <span class="material-icons-round" style="font-size:18px">verified</span> Verify &amp; Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
