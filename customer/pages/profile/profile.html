@@ -163,7 +163,7 @@
               </section>
 
               <!-- Two-Factor Auth -->
-              <section class="pf-card">
+              <section class="pf-card" id="pf-tfa-card">
                 <h3 class="pf-section-title"><span class="material-icons-round">phonelink_lock</span> Two-Factor Auth
                 </h3>
                 <p class="pf-card-desc">Add an extra layer of security to your account by requiring a code from your
@@ -1174,12 +1174,15 @@
         var isOAuth = provider && provider !== 'email';
         var passwordCard = document.getElementById('pf-change-password-card');
         var oauthCard = document.getElementById('pf-oauth-security-card');
+        var tfaCard = document.getElementById('pf-tfa-card');
         if (isOAuth) {
           if (passwordCard) passwordCard.style.display = 'none';
           if (oauthCard) oauthCard.style.display = 'block';
+          if (tfaCard) tfaCard.style.display = 'none';
         } else {
           if (passwordCard) passwordCard.style.display = 'block';
           if (oauthCard) oauthCard.style.display = 'none';
+          if (tfaCard) tfaCard.style.display = 'block';
         }
 
         var profile = await WeDriveAPI.getCustomerProfile(user.id);
