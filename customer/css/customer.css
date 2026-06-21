@@ -5726,7 +5726,8 @@ body.night-mode .pf-pwd-step-desc {
   max-width: 240px;
   margin: 8px auto 16px;
 }
-#pf-password-otp {
+#pf-password-otp,
+#pf-tfa-otp {
   font-family: monospace !important;
   font-size: 28px !important;
   font-weight: 700 !important;
@@ -5741,15 +5742,18 @@ body.night-mode .pf-pwd-step-desc {
   color: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-#pf-password-otp:focus {
+#pf-password-otp:focus,
+#pf-tfa-otp:focus {
   border-color: var(--primary, #3B82F6);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
   outline: none;
 }
-body.night-mode #pf-password-otp {
+body.night-mode #pf-password-otp,
+body.night-mode #pf-tfa-otp {
   border-color: rgba(148, 163, 184, 0.2);
 }
-body.night-mode #pf-password-otp:focus {
+body.night-mode #pf-password-otp:focus,
+body.night-mode #pf-tfa-otp:focus {
   border-color: #60a5fa;
   box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }

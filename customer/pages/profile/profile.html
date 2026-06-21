@@ -1687,7 +1687,7 @@
           </p>
           
           <div class="pf-pwd-code-input-container">
-            <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6" aria-label="Verification Code" title="Verification Code" placeholder="000000" autocomplete="off" />
+            <input type="text" id="pf-password-otp" inputmode="numeric" maxlength="6" aria-label="Verification Code" title="Verification Code" placeholder="000000" autocomplete="one-time-code" />
           </div>
           
           <p class="pf-pwd-otp-note" id="pf-password-otp-note">
@@ -1723,7 +1723,7 @@
             <div class="pf-pwd-field">
               <label for="pf-new-password">New Password</label>
               <div class="password-input-wrapper">
-                <input type="password" id="pf-new-password" placeholder="••••••••" aria-label="New Password" title="New Password" oninput="checkPasswordRequirements()" />
+                <input type="password" id="pf-new-password" placeholder="••••••••" aria-label="New Password" title="New Password" oninput="checkPasswordRequirements()" autocomplete="new-password" />
                 <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-new-password')" aria-label="Toggle password visibility">
                   <span class="material-icons-round">visibility_off</span>
                 </button>
@@ -1733,7 +1733,7 @@
             <div class="pf-pwd-field">
               <label for="pf-confirm-password">Confirm New Password</label>
               <div class="password-input-wrapper">
-                <input type="password" id="pf-confirm-password" placeholder="••••••••" aria-label="Confirm New Password" title="Confirm New Password" oninput="checkPasswordRequirements()" />
+                <input type="password" id="pf-confirm-password" placeholder="••••••••" aria-label="Confirm New Password" title="Confirm New Password" oninput="checkPasswordRequirements()" autocomplete="new-password" />
                 <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('pf-confirm-password')" aria-label="Toggle password visibility">
                   <span class="material-icons-round">visibility_off</span>
                 </button>
@@ -1821,7 +1821,7 @@
           </p>
 
           <div class="pf-pwd-code-input-container">
-            <input type="text" id="pf-tfa-otp" inputmode="numeric" maxlength="6" aria-label="Authenticator Code" title="Authenticator Code" placeholder="000000" autocomplete="off" />
+            <input type="text" id="pf-tfa-otp" inputmode="numeric" maxlength="6" aria-label="Authenticator Code" title="Authenticator Code" placeholder="000000" autocomplete="one-time-code" />
           </div>
 
           <p class="pf-pwd-otp-note">
