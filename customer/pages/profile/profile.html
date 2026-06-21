@@ -472,6 +472,7 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js?v=6.7.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/otpauth@9/dist/otpauth.umd.min.js"></script>
   <script>
     var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
     var defaultProfileState = {
@@ -1206,6 +1207,12 @@
           
           if (profile.preferences) {
             applyPreferencesToUi(profile.preferences);
+            if (profile.preferences.twoFactorSecret) {
+              tfaState.secret = profile.preferences.twoFactorSecret;
+            }
+            if (profile.preferences.twoFactorRecoveryCodes) {
+              tfaState.recoveryCodes = profile.preferences.twoFactorRecoveryCodes;
+            }
           } else {
             applyPreferencesToUi(getLocalPreferences());
           }
@@ -1575,6 +1582,13 @@
           var profile = await WeDriveAPI.getCustomerProfile(user.id);
           var currentPrefs = (profile && profile.preferences) || getLocalPreferences();
           currentPrefs.twoFactorEnabled = enabled;
+          if (enabled) {
+            currentPrefs.twoFactorSecret = tfaState.secret;
+            currentPrefs.twoFactorRecoveryCodes = tfaState.recoveryCodes;
+          } else {
+            delete currentPrefs.twoFactorSecret;
+            delete currentPrefs.twoFactorRecoveryCodes;
+          }
           
           var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, { preferences: currentPrefs });
           if (!dbResult.success) console.warn('[Profile] Failed to save 2FA to DB:', dbResult.error);
