@@ -29,6 +29,19 @@ AI CAR RENTAL SYSTEM/
 |       +-- html/                # Kod HTML skrin Stitch (11 skrin + mobile)
 |       +-- screenshots/         # Tangkapan skrin reka bentuk Stitch
 |
++-- PLAN/                       # Perancangan Migrasi & Pembangunan
+|   +-- Implementation Plan     # Log perancangan migrasi pangkalan data
+|   +-- next plan               # Nota perancangan feature akan datang
+|   +-- reduce AI Thinking      # Dokumen rujukan pantas kredential & skema DB
+|
++-- REPORT/                     # Laporan Projek Sarjana Muda (PSM 1)
+|   +-- 3-FYP-Writing-Guide-2025_v1.docx # Panduan Penulisan PSM FTMK UTeM
+|   +-- 00_Title_and_Abstract.md # Halaman Judul, Pengakuan, Penghargaan & Abstrak
+|   +-- 01_Chapter1_Introduction.md # Bab 1: Pengenalan & Latar Belakang
+|   +-- 02_Chapter2_Literature_Review.md # Bab 2: Kajian Literatur & Metodologi
+|   +-- 03_Chapter3_Analysis.md # Bab 3: Analisis Keperluan Pangkalan Data
+|   +-- 04_References_and_Appendices.md # Rujukan & Lampiran Laporan
+|
 +-- account/                    # Modul Akaun (Login, Signup, Forgot Password)
 |   +-- pages/
 |   |   +-- login/
