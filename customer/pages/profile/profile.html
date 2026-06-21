@@ -1178,12 +1178,11 @@
         if (isOAuth) {
           if (passwordCard) passwordCard.style.display = 'none';
           if (oauthCard) oauthCard.style.display = 'block';
-          if (tfaCard) tfaCard.style.display = 'none';
         } else {
           if (passwordCard) passwordCard.style.display = 'block';
           if (oauthCard) oauthCard.style.display = 'none';
-          if (tfaCard) tfaCard.style.display = 'block';
         }
+        if (tfaCard) tfaCard.style.display = 'block';
 
         var profile = await WeDriveAPI.getCustomerProfile(user.id);
         if (profile) {
