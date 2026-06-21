@@ -115,6 +115,17 @@
               </div>
               
               <div class="form-group">
+                <label for="username"><span data-key="profile_username">Username</span> <span class="required-asterisk">*</span></label>
+                <div class="input-wrap">
+                  <span class="material-icons-round">person_outline</span>
+                  <input type="text" id="username" data-key-ph="profile_username_ph" placeholder="Choose a username" required />
+                </div>
+                <div class="field-hint" style="margin-top: 6px;" data-key="profile_username_hint">Choose a unique username / nickname</div>
+              </div>
+            </div>
+
+            <div class="form-row-grid" style="margin-top: 15px;">
+              <div class="form-group">
                 <label data-key="profile_email">Email Address</label>
                 <div class="input-wrap readonly">
                   <span class="material-icons-round">mail</span>
@@ -424,10 +435,11 @@
       }
     });
 
-    // Fetch and display user name & email
+    // Fetch and display user name, username & email
     (async function populateUserInfo() {
       try {
         var name = 'USER';
+        var username = '';
         var email = '';
         
         // Try local storage session first
@@ -435,6 +447,7 @@
         if (sessionRaw) {
           var session = JSON.parse(sessionRaw);
           if (session.name) name = session.name;
+          if (session.username) username = session.username;
           if (session.email) email = session.email;
         }
         
@@ -444,16 +457,36 @@
           var authSession = await sb.auth.getSession();
           if (authSession.data.session) {
             var user = authSession.data.session.user;
-            if (user.user_metadata && user.user_metadata.full_name) {
-              name = user.user_metadata.full_name;
+            if (user.user_metadata) {
+              if (user.user_metadata.full_name && name === 'USER') {
+                name = user.user_metadata.full_name;
+              }
+              if (user.user_metadata.username && !username) {
+                username = user.user_metadata.username;
+              }
             }
             if (user.email) {
               email = user.email;
             }
+            // Fetch username from customers table
+            try {
+              var profile = await window.WeDriveAPI.getCustomerProfile(user.id);
+              if (profile) {
+                if (profile.name) name = profile.name;
+                if (profile.username) username = profile.username;
+              }
+            } catch (err) {
+              console.error('Error fetching profile:', err);
+            }
           }
         }
         
+        if (!username && email) {
+          username = email.split('@')[0];
+        }
+        
         document.getElementById('user-name-display').value = name;
+        document.getElementById('username').value = username;
         document.getElementById('user-email-display').value = email;
       } catch (e) {
         console.error('User info population error:', e);
@@ -519,6 +552,7 @@
     async function handleProfileSubmit(e) {
       e.preventDefault();
       var name = document.getElementById('user-name-display').value.trim();
+      var username = document.getElementById('username').value.trim();
       var ic = document.getElementById('ic-number').value.trim();
       var license = document.getElementById('license-number').value.trim();
       var countryCode = document.getElementById('phone-country-code').value;
@@ -530,6 +564,7 @@
       var msgs = {
         en: {
           name: 'Please enter your Full Name.',
+          username: 'Please enter your Username.',
           ic: 'IC Number must be exactly 12 digits.',
           license: 'Please enter your Driving License number.',
           phone: 'Please enter your phone number.',
@@ -550,6 +585,7 @@
         },
         ms: {
           name: 'Sila masukkan Nama Penuh anda.',
+          username: 'Sila masukkan Nama Pengguna anda.',
           ic: 'Nombor IC mestilah tepat 12 digit.',
           license: 'Sila masukkan nombor Lesen Memandu anda.',
           phone: 'Sila masukkan nombor telefon anda.',
@@ -573,6 +609,10 @@
 
       if (!name) {
         alert(m.name);
+        return;
+      }
+      if (!username) {
+        alert(m.username);
         return;
       }
       // Validate IC (12 digits excluding dashes)
@@ -652,6 +692,7 @@
         btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.saving;
         var updateResult = await window.WeDriveAPI.updateCustomerProfile(uid, {
           name: name,
+          username: username,
           ic: ic,
           license: license,
           phone: phone,
@@ -669,9 +710,7 @@
           try {
             var localSession = JSON.parse(sessionRaw);
             localSession.name = name;
-            if (!localSession.username) {
-              localSession.username = name.split(' ')[0];
-            }
+            localSession.username = username;
             localStorage.setItem('wedrive_session', JSON.stringify(localSession));
           } catch (e) {
             console.error('Local storage update error:', e);

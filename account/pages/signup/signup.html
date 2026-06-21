@@ -55,13 +55,6 @@
 
       <form onsubmit="handleSignup(event)">
         <div class="form-group">
-          <label for="username" data-key="signup_username">Username</label>
-          <div class="input-wrap">
-            <span class="material-icons-round">person</span>
-            <input type="text" id="username" data-key-ph="signup_username_ph" placeholder="Choose a username" required />
-          </div>
-        </div>
-        <div class="form-group">
           <label for="email" data-key="signup_email">Email Address</label>
           <div class="input-wrap">
             <span class="material-icons-round">mail</span>
@@ -126,7 +119,6 @@
   <script>
     async function handleSignup(e) {
       e.preventDefault();
-      var username = document.getElementById('username').value;
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
       var confirmPassword = document.getElementById('confirm-password').value;
@@ -141,19 +133,20 @@
       btn.disabled = true;
 
       try {
-        var response = await window.WeDriveAPI.signupUser(username, email, password, '');
+        var fallbackUsername = email.split('@')[0];
+        var response = await window.WeDriveAPI.signupUser(fallbackUsername, email, password, '');
 
         if (response.success) {
           // Save session
           localStorage.setItem('wedrive_session', JSON.stringify({
             email: email,
-            username: username,
-            name: username,
+            username: fallbackUsername,
+            name: fallbackUsername,
             role: 'customer',
             timestamp: new Date().getTime()
           }));
 
-          alert('Account created successfully for ' + username + '! Redirecting...');
+          alert('Account created successfully! Redirecting...');
           window.location.href = '../welcome/welcome.html';
         } else {
           alert(response.error || 'Signup failed. Please try again.');
