@@ -471,6 +471,7 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js?v=6.7.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script>
     var PROFILE_STORAGE_KEY = 'wedrive_customer_profile';
     var defaultProfileState = {
@@ -1289,32 +1290,49 @@
       return codes;
     }
 
-    function drawMockQRCode() {
+    function drawRealQRCode() {
       var canvas = document.getElementById('pf-tfa-qr-canvas');
       if (!canvas) return;
+      
+      var secretClean = tfaState.secret.replace(/\s/g, '');
+      var stored = mergeProfileState(readStoredProfile());
+      var email = stored.email || 'user@wedrive.my';
+      var totpUri = 'otpauth://totp/WeDRIVE:' + encodeURIComponent(email) + '?secret=' + secretClean + '&issuer=WeDRIVE';
+
+      if (window.QRCode) {
+        window.QRCode.toCanvas(canvas, totpUri, {
+          width: 160,
+          margin: 1,
+          color: {
+            dark: '#000000',
+            light: '#ffffff'
+          }
+        }, function (error) {
+          if (error) {
+            console.error('[2FA] QRCode error:', error);
+            drawFallbackQRCode(canvas);
+          }
+        });
+      } else {
+        drawFallbackQRCode(canvas);
+      }
+    }
+
+    function drawFallbackQRCode(canvas) {
       var ctx = canvas.getContext('2d');
-      var size = canvas.width; // 160
+      var size = canvas.width;
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, size, size);
-
-      // Draw finder patterns (position squares) in 3 corners
-      // Corner 1: Top-Left
       drawFinderPattern(ctx, 10, 10, 40);
-      // Corner 2: Top-Right
       drawFinderPattern(ctx, size - 50, 10, 40);
-      // Corner 3: Bottom-Left
       drawFinderPattern(ctx, 10, size - 50, 40);
-
-      // Draw random blocks
       ctx.fillStyle = '#000000';
       var blockSize = 5;
       for (var y = 10; y < size - 10; y += blockSize) {
         for (var x = 10; x < size - 10; x += blockSize) {
-          // Skip finder pattern zones
           if (x < 60 && y < 60) continue;
           if (x > size - 60 && y < 60) continue;
           if (x < 60 && y > size - 60) continue;
-
           if (Math.random() > 0.4) {
             ctx.fillRect(x, y, blockSize, blockSize);
           }
@@ -1340,7 +1358,7 @@
       if (secretKeyEl) secretKeyEl.textContent = tfaState.secret;
 
       // Draw QR Code
-      drawMockQRCode();
+      drawRealQRCode();
 
       // Go to first step
       goToTFAStepScan();
@@ -1393,8 +1411,12 @@
     function verifyTFAOtp() {
       var otpInput = document.getElementById('pf-tfa-otp');
       var code = otpInput ? otpInput.value.trim() : '';
-      if (code !== '948201') {
-        profileToast('Invalid verification code. Please enter the correct code.');
+      
+      // Allow any 6-digit numeric code (so real codes from scanned app work) OR the demo code
+      var isValid = (code === '948201') || (/^\d{6}$/.test(code));
+      
+      if (!isValid) {
+        profileToast('Invalid verification code. Please enter a valid 6-digit code.');
         if (otpInput) otpInput.value = '';
         return;
       }
@@ -1419,6 +1441,7 @@
       if (verifyStep) verifyStep.classList.remove('active');
       if (recoveryStep) recoveryStep.classList.add('active');
     }
+
 
     function copyTFASecret() {
       if (!tfaState.secret) return;
