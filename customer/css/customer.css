@@ -4328,29 +4328,33 @@ body.night-mode .booking-main .spec-chip {
   display: flex;
   justify-content: center;
   min-height: 80vh;
-  padding: 40px 20px;
+  padding: 40px var(--space-md, 16px);
+  /* Ambient subtle background pattern from Stitch */
+  background-image: radial-gradient(var(--outline-variant, #c2c6d6) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -16px -16px;
 }
 
 .confirmed-main .confirmed-card {
-  animation: cardSlideUp 0.6s ease-out;
-  background: var(--surface-container-lowest, #fff);
+  animation: cardSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  background: var(--surface-container-lowest, #ffffff);
   border: 1px solid var(--outline-variant, #c2c6d6);
-  border-radius: 20px;
-  box-shadow: 0 22px 60px rgba(30, 41, 59, 0.1);
-  max-width: 820px;
+  border-radius: var(--radius-xl, 16px);
+  box-shadow: var(--shadow-float, 0px 12px 24px rgba(30, 41, 59, 0.1));
+  max-width: 640px;
   overflow: hidden;
   width: 100%;
 }
 
 @keyframes cardSlideUp {
-  from { opacity: 0; transform: translateY(30px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .confirmed-main .confirmed-header {
-  border-bottom: 1px solid var(--outline-variant, #c2c6d6);
+  border-bottom: 1px solid var(--border-light, #e0e3e5);
   overflow: hidden;
-  padding: 40px 32px;
+  padding: 40px var(--space-xl, 32px);
   position: relative;
   text-align: center;
 }
@@ -4365,252 +4369,211 @@ body.night-mode .booking-main .spec-chip {
   top: -60px;
   transform: translateX(-50%);
   width: 300px;
+  z-index: 1;
 }
 
 .confirmed-main .check-circle {
   align-items: center;
-  animation: checkPop 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
-  background: rgba(0, 88, 190, 0.09);
-  border-radius: 50%;
+  animation: checkPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  background: var(--primary-light, rgba(0, 88, 190, 0.09));
+  border-radius: var(--radius-full, 9999px);
   display: flex;
-  height: 72px;
+  height: 64px;
   justify-content: center;
   margin: 0 auto 16px;
-  width: 72px;
+  width: 64px;
+  position: relative;
+  z-index: 2;
 }
 
 @keyframes checkPop {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .confirmed-main .check-circle .material-icons-round {
   color: var(--primary, #0058be);
-  font-size: 36px;
+  font-size: 32px;
 }
 
 .confirmed-main .confirmed-header h1 {
   color: var(--text-primary, #191c1e);
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 6px;
+  font: var(--font-h1, 700 32px 'Inter');
+  letter-spacing: var(--letter-h1, -0.02em);
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
 }
 
 .confirmed-main .booking-ref {
   color: var(--text-muted, #727785);
-  font-size: 14px;
+  font: var(--font-body-md, 400 14px 'Inter');
+  position: relative;
+  z-index: 2;
 }
 
 .confirmed-main .booking-ref span {
   color: var(--primary, #0058be);
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.03em;
+  font: var(--font-label-sm, 600 12px 'Inter');
+  background: var(--primary-light, rgba(0, 88, 190, 0.09));
+  padding: 4px 8px;
+  border-radius: var(--radius-sm, 4px);
+  margin-left: 4px;
+  display: inline-block;
 }
 
 .confirmed-main .confirmed-content {
   display: flex;
-  justify-content: center;
-  gap: 24px;
-  padding: 28px 32px;
+  flex-direction: column;
+  padding: 28px var(--space-xl, 32px) 24px;
 }
 
 .confirmed-main .confirmed-summary-container {
   width: 100%;
-  max-width: 520px;
 }
 
 .confirmed-main .summary-label {
-  color: var(--text-muted, #727785);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  color: var(--text-secondary, #545f73);
+  font: var(--font-label-sm, 600 12px 'Inter');
+  letter-spacing: var(--letter-label, 0.05em);
   margin-bottom: 12px;
   text-transform: uppercase;
 }
 
 .confirmed-main .car-summary {
-  background: var(--surface-container-low, #f2f4f6);
+  background: var(--surface-container-lowest, #ffffff);
   border: 1px solid var(--outline-variant, #c2c6d6);
-  border-radius: 12px;
+  border-radius: var(--radius-lg, 12px);
   overflow: hidden;
+  box-shadow: var(--card-shadow, 0 1px 4px rgba(0,0,0,0.06));
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.confirmed-main .car-summary:hover {
+  border-color: var(--primary, #0058be);
+  box-shadow: var(--card-shadow-hover, 0 4px 16px rgba(0,0,0,0.1));
 }
 
 .confirmed-main .car-summary-img {
-  background: var(--surface-container, #eceef0);
-  height: 140px;
+  background: var(--surface-container-low, #f2f4f6);
+  height: 160px;
   overflow: hidden;
+  position: relative;
 }
 
 .confirmed-main .car-summary-img img {
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
 }
 
 .confirmed-main .car-summary-img:hover img {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .confirmed-main .car-summary-info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 16px;
+  gap: var(--space-sm, 8px);
+  padding: var(--space-md, 16px);
 }
 
 .confirmed-main .car-summary-info h3 {
   color: var(--text-primary, #191c1e);
-  font-size: 17px;
-  font-weight: 800;
+  font: var(--font-h3, 600 18px 'Inter');
+  margin-bottom: 4px;
 }
 
 .confirmed-main .detail-row {
   align-items: flex-start;
   color: var(--text-secondary, #545f73);
   display: flex;
-  font-size: 13px;
-  gap: 8px;
+  font: var(--font-body-md, 400 14px 'Inter');
+  gap: 10px;
+  padding: 2px 0;
 }
 
 .confirmed-main .detail-row .material-icons-round {
-  color: var(--text-muted, #727785);
-  font-size: 18px;
+  color: var(--primary, #0058be);
+  font-size: 20px;
   margin-top: 1px;
 }
 
 .confirmed-main .detail-row small {
   color: var(--text-muted, #727785);
   display: block;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.confirmed-main .qr-section {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.confirmed-main .qr-box {
-  align-items: center;
-  background: var(--surface-container-low, #f2f4f6);
-  border: 1px solid var(--outline-variant, #c2c6d6);
-  border-radius: 12px;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  padding: 24px;
-}
-
-.confirmed-main .qr-box p {
-  color: var(--text-muted, #727785);
-  font-size: 13px;
-  line-height: 1.5;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.confirmed-main .qr-code {
-  align-items: center;
-  background: #fff;
-  border: 2px solid rgba(0, 88, 190, 0.12);
-  border-radius: 10px;
-  display: flex;
-  height: 130px;
-  justify-content: center;
-  margin-bottom: 16px;
-  padding: 8px;
-  position: relative;
-  width: 130px;
-}
-
-.confirmed-main .qr-placeholder {
-  background: repeating-conic-gradient(#1e293b 0% 25%, #fff 0% 50%) 0 0 / 12px 12px;
-  border-radius: 4px;
-  height: 100%;
-  width: 100%;
-}
-
-.confirmed-main .btn-save-wallet {
-  align-items: center;
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  color: var(--primary, #0058be);
-  cursor: pointer;
-  display: flex;
-  font-size: 12px;
-  font-weight: 800;
-  gap: 6px;
-  justify-content: center;
-  padding: 8px 16px;
-  transition: background 0.2s ease;
-}
-
-.confirmed-main .btn-save-wallet:hover {
-  background: rgba(0, 88, 190, 0.08);
-}
-
-.confirmed-main .btn-save-wallet .material-icons-round {
-  font-size: 16px;
+  font: var(--font-label-sm, 600 12px 'Inter');
+  font-weight: normal;
+  margin-top: 2px;
 }
 
 .confirmed-main .ai-insight {
-  padding: 20px 32px 28px;
+  padding: 0 var(--space-xl, 32px) 28px;
 }
 
 .confirmed-main .ai-insight-card {
   align-items: flex-start;
-  background: rgba(0, 88, 190, 0.06);
-  border: 1px solid rgba(0, 88, 190, 0.14);
-  border-radius: 12px;
+  background: var(--primary-light, rgba(0, 88, 190, 0.06));
+  border: 1px solid var(--border-color, rgba(0, 88, 190, 0.14));
+  border-radius: var(--radius-lg, 12px);
   display: flex;
-  gap: 14px;
+  gap: 16px;
   overflow: hidden;
-  padding: 16px 20px;
+  padding: var(--space-md, 16px) var(--space-lg, 24px);
   position: relative;
+  box-shadow: var(--shadow-ambient, 0px 4px 12px rgba(30, 41, 59, 0.05));
 }
 
-.confirmed-main .ai-insight-card::after {
-  background: rgba(0, 88, 190, 0.08);
-  border-radius: 50%;
-  content: '';
-  filter: blur(30px);
-  height: 80px;
+.confirmed-main .ai-glow {
+  background: radial-gradient(circle, var(--primary, #0058be) 0%, transparent 70%);
+  opacity: 0.08;
+  filter: blur(24px);
+  height: 120px;
   position: absolute;
-  right: -20px;
-  top: -20px;
-  width: 80px;
+  right: -40px;
+  top: -40px;
+  width: 120px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.night-mode .confirmed-main .ai-glow {
+  opacity: 0.16;
 }
 
 .confirmed-main .ai-badge {
   align-items: center;
   background: var(--primary, #0058be);
-  border-radius: 50%;
+  border-radius: var(--radius-full, 9999px);
   display: flex;
   flex-shrink: 0;
   height: 36px;
   justify-content: center;
   width: 36px;
+  box-shadow: 0 4px 10px rgba(0, 88, 190, 0.2);
+  z-index: 2;
 }
 
 .confirmed-main .ai-badge .material-icons-round {
-  color: #fff;
+  color: var(--surface-container-lowest, #ffffff);
   font-size: 18px;
+}
+
+.confirmed-main .ai-insight-text {
+  flex: 1;
+  z-index: 2;
 }
 
 .confirmed-main .ai-insight-text h4 {
   align-items: center;
   color: var(--text-primary, #191c1e);
   display: flex;
-  font-size: 12px;
-  font-weight: 800;
+  font: var(--font-label-sm, 600 12px 'Inter');
   gap: 4px;
-  letter-spacing: 0.03em;
-  margin-bottom: 4px;
+  letter-spacing: var(--letter-label, 0.05em);
+  margin-bottom: 6px;
+  text-transform: uppercase;
 }
 
 .confirmed-main .ai-insight-text h4 .material-icons-round {
@@ -4619,57 +4582,130 @@ body.night-mode .booking-main .spec-chip {
 }
 
 .confirmed-main .ai-insight-text p {
-  color: var(--text-muted, #727785);
-  font-size: 13px;
+  color: var(--text-secondary, #545f73);
+  font: var(--font-body-md, 400 14px 'Inter');
   line-height: 1.6;
 }
 
 .confirmed-main .confirmed-actions {
-  border-top: 1px solid var(--outline-variant, #c2c6d6);
+  border-top: 1px solid var(--border-light, #e0e3e5);
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-direction: row;
+  gap: var(--space-md, 12px);
   justify-content: flex-end;
-  padding: 20px 32px;
+  padding: 24px var(--space-xl, 32px);
+  background: var(--surface-container-lowest, #ffffff);
 }
 
 .confirmed-main .btn-outline,
 .confirmed-main .btn-primary-action {
   align-items: center;
-  border-radius: 10px;
+  border-radius: var(--radius-md, 8px);
   cursor: pointer;
   display: flex;
-  font-size: 13px;
-  font-weight: 800;
+  font: var(--font-label-sm, 600 12px 'Inter');
   gap: 6px;
-  padding: 10px 20px;
-  transition: all 0.2s ease;
+  padding: 12px 20px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
 }
 
 .confirmed-main .btn-outline {
-  background: transparent;
+  background: var(--surface-container-lowest, #ffffff);
   border: 1px solid var(--outline-variant, #c2c6d6);
   color: var(--text-primary, #191c1e);
 }
 
 .confirmed-main .btn-outline:hover {
   background: var(--surface-container-low, #f2f4f6);
+  border-color: var(--primary, #0058be);
+  color: var(--primary, #0058be);
 }
 
 .confirmed-main .btn-primary-action {
   background: var(--primary, #0058be);
   border: none;
-  color: #fff;
+  color: var(--on-primary, #ffffff);
+  box-shadow: 0 4px 12px rgba(0, 88, 190, 0.15);
 }
 
 .confirmed-main .btn-primary-action:hover {
-  box-shadow: 0 6px 20px rgba(0, 88, 190, 0.28);
-  transform: translateY(-2px);
+  background: var(--primary-dark, #004395);
+  box-shadow: 0 6px 20px rgba(0, 88, 190, 0.25);
+  transform: translateY(-1px);
+}
+
+.confirmed-main .btn-primary-action:active {
+  transform: translateY(0);
 }
 
 .confirmed-main .btn-outline .material-icons-round,
 .confirmed-main .btn-primary-action .material-icons-round {
   font-size: 18px;
+}
+
+.confirmed-main .cal-dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  background: var(--surface-container-lowest, #ffffff);
+  border: 1px solid var(--outline-variant, #c2c6d6);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: var(--shadow-float, 0px 12px 24px rgba(30, 41, 59, 0.1));
+  min-width: 260px;
+  overflow: hidden;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.confirmed-main .cal-dropdown.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) scale(1);
+}
+
+.confirmed-main .cal-dropdown-header {
+  padding: 12px var(--space-md, 16px) 8px;
+  font: var(--font-label-sm, 600 12px 'Inter');
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted, #727785);
+  border-bottom: 1px solid var(--border-light, #e0e3e5);
+}
+
+.confirmed-main .cal-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md, 12px);
+  padding: 12px var(--space-md, 16px);
+  cursor: pointer;
+  color: var(--text-primary, #191c1e);
+  transition: background 0.15s ease;
+  text-decoration: none;
+}
+
+.confirmed-main .cal-option:hover {
+  background: var(--surface-container-low, #f2f4f6);
+}
+
+.confirmed-main .cal-option-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.confirmed-main .cal-divider {
+  height: 1px;
+  background: var(--border-light, #e0e3e5);
+  opacity: 0.5;
+  margin: 0 12px;
 }
 
 .confetti-container {
@@ -4696,17 +4732,24 @@ body.night-mode .booking-main .spec-chip {
   100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   .confirmed-main .confirmed-content {
-    grid-template-columns: 1fr;
+    padding: 20px var(--space-md, 16px);
   }
 
   .confirmed-main .confirmed-actions {
+    flex-direction: column-reverse;
+    padding: 16px var(--space-md, 16px);
+  }
+
+  .confirmed-main .btn-outline,
+  .confirmed-main .btn-primary-action {
+    width: 100%;
     justify-content: center;
   }
 
   .confirmed-main .confirmed-header h1 {
-    font-size: 22px;
+    font-size: 24px;
   }
 }
 

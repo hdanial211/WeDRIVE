@@ -91,11 +91,12 @@
       <!-- Pickup Reminder -->
       <div class="ai-insight">
         <div class="ai-insight-card">
+          <div class="ai-glow"></div>
           <div class="ai-badge">
-            <span class="material-icons-round">info</span>
+            <span class="material-icons-round">key</span>
           </div>
           <div class="ai-insight-text">
-            <h4><span class="material-icons-round">key</span> Key Pickup Reminder</h4>
+            <h4><span class="material-icons-round">auto_awesome</span> Key Pickup Reminder</h4>
             <p>Arrive at the pickup location with your IC and driving licence. Show your booking confirmation code at the counter to collect your physical car key. Inspect the car before driving off.</p>
           </div>
         </div>
@@ -106,7 +107,7 @@
         <div class="cal-picker-wrapper">
           <button class="btn-outline" type="button" id="cal-trigger-btn" onclick="toggleCalPicker(event)">
             <span class="material-icons-round">calendar_add_on</span> Add to Calendar
-            <span class="material-icons-round" style="font-size:16px;margin-left:4px" id="cal-chevron">expand_less</span>
+            <span class="material-icons-round" style="font-size:16px;margin-left:4px" id="cal-chevron">expand_more</span>
           </button>
           <div class="cal-dropdown" id="cal-dropdown">
             <div class="cal-dropdown-header">Choose your calendar app</div>
@@ -193,13 +194,13 @@
       var dd = document.getElementById('cal-dropdown');
       var ch = document.getElementById('cal-chevron');
       var open = dd.classList.toggle('open');
-      if (ch) ch.textContent = open ? 'expand_more' : 'expand_less';
+      if (ch) ch.textContent = open ? 'expand_less' : 'expand_more';
     }
     document.addEventListener('click', function() {
       var dd = document.getElementById('cal-dropdown');
       if (dd) dd.classList.remove('open');
       var ch = document.getElementById('cal-chevron');
-      if (ch) ch.textContent = 'expand_less';
+      if (ch) ch.textContent = 'expand_more';
     });
 
     function padZ(n) { return String(n).padStart(2, '0'); }
