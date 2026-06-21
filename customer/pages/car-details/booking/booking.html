@@ -202,6 +202,7 @@
     let daysCount = 1;
     let basePrice = 120;
     let bookingPickers = null;
+    let carImage = '';
     let currentSettings = {
       currency: 'MYR',
       tax_rate: 0,
@@ -264,6 +265,7 @@
         } else if (currentCar.image) {
           imgUrl = '../../../../shared/model/' + currentCar.image;
         }
+        carImage = imgUrl;
         document.querySelector('.car-summary-img img').src = imgUrl;
         document.querySelector('.sidebar-car-visual img').src = imgUrl;
 
@@ -336,7 +338,25 @@
       }
 
       document.getElementById('bk-pickup-location').addEventListener('change', calculateBookingSummary);
+      
+      const activeLang = localStorage.getItem('wedrive-lang') || 'en';
+      updateAiRecommendation(activeLang);
     }
+
+    function updateAiRecommendation(lang) {
+      const aiMsgEl = document.querySelector('[data-key="bk_ai_msg"]');
+      if (!aiMsgEl || !currentCar) return;
+      const carName = currentCar.name || 'this vehicle';
+      if (lang === 'ms') {
+        aiMsgEl.innerHTML = `Berdasarkan tarikh perjalanan anda, <strong>${carName}</strong> ini mempunyai permintaan tinggi untuk perjalanan perniagaan. Kami meramalkan 91% penggunaan hujung minggu ini. <strong>Tempah sekarang untuk mengunci kadar ini.</strong>`;
+      } else {
+        aiMsgEl.innerHTML = `Based on your travel dates, this <strong>${carName}</strong> is in high demand for business travel. We predict 91% occupancy this weekend. <strong>Book now to lock in this rate.</strong>`;
+      }
+    }
+
+    document.addEventListener('wedrive:language-applied', function(e) {
+      updateAiRecommendation(e.detail.lang);
+    });
 
     function calculateBookingSummary() {
       let pickupVal = '';
@@ -465,6 +485,7 @@
       const bookingSession = {
         carId: carId,
         carName: currentCar ? currentCar.name : '2022 Perodua Myvi 1.5 H',
+        carImage: carImage,
         carPlate: currentCar ? currentCar.plate : 'WDR 3388',
         pickupDate: pickupVal,
         returnDate: returnVal,

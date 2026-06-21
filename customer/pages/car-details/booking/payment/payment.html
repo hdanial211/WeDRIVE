@@ -416,20 +416,32 @@
       if (sidebar) {
         var carImg = sidebar.querySelector('.summary-car-img');
         if (carImg) {
-          var carMapping = {
-            '2023 BMW 320i M Sport 2.0': 'Sedan/2023 BMW 320i M Sport 2.0',
-            '2023 Mercedes-Benz GLA250 AMG Line 2.0': 'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0',
-            '2024 Toyota Camry 2.5V': 'Sedan/2024 Toyota Camry 2.5V',
-            '2022 Perodua Myvi 1.5 H': 'Hatchback/2022 Perodua Myvi 1.5 H',
-            '2023 Honda City 1.5 V': 'Sedan/2023 Honda City 1.5 V',
-            '2024 Proton X50 1.5 TGDI Flagship': 'SUV/2024 Proton X50 1.5 TGDI Flagship',
-            '2024 Perodua Ativa 1.0T H': 'SUV/2024 Perodua Ativa 1.0T H',
-            '2023 Toyota Vios 1.5 G': 'Sedan/2023 Toyota Vios 1.5 G'
-          };
-          var path = carMapping[pendingBooking.carName];
-          var imgUrl = '../../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg';
-          if (path) {
-            imgUrl = '../../../../../shared/model/' + path + '/exterior/full-res/frame-140.jpg';
+          var imgUrl = pendingBooking.carImage;
+          if (imgUrl) {
+            if (imgUrl.startsWith('../../../../shared/')) {
+              imgUrl = '../' + imgUrl;
+            }
+          } else {
+            var carMapping = {
+              '2023 BMW 320i M Sport 2.0': 'Sedan/2023 BMW 320i M Sport 2.0',
+              '2023 Mercedes-Benz GLA250 AMG Line 2.0': 'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0',
+              '2019 Toyota Alphard G S C Package 2.5': 'MPV/2019 Toyota Alphard G S C Package 2.5',
+              '2017 Perodua AXIA G 1.0': 'Hatchback/2017 Perodua AXIA G 1.0',
+              '2025 Perodua AXIA AV 1.0': 'Hatchback/2025 Perodua AXIA AV 1.0',
+              '2022 Volkswagen Golf GTI 2.0': 'Hatchback/2022 Volkswagen Golf GTI 2.0',
+              '2022 Ford Ranger Raptor High Rider Dual Cab 2.0': 'Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0',
+              '2018 Mercedes-Benz CLS350 AMG Line 2.0': 'Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0',
+              '2022 Perodua Myvi 1.5 H': 'Hatchback/2022 Perodua Myvi 1.5 H',
+              '2023 Honda City 1.5 V': 'Sedan/2023 Honda City 1.5 V',
+              '2024 Proton X50 1.5 TGDI Flagship': 'SUV/2024 Proton X50 1.5 TGDI Flagship',
+              '2024 Perodua Ativa 1.0T H': 'SUV/2024 Perodua Ativa 1.0T H',
+              '2023 Toyota Vios 1.5 G': 'Sedan/2023 Toyota Vios 1.5 G'
+            };
+            var path = carMapping[pendingBooking.carName];
+            imgUrl = '../../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg';
+            if (path) {
+              imgUrl = '../../../../../shared/model/' + path + '/exterior/full-res/frame-140.jpg';
+            }
           }
           carImg.src = imgUrl;
         }
@@ -792,6 +804,9 @@
 
         var apiResult = await window.WeDriveAPI.createBooking(bookingData);
         if (apiResult.success) {
+          // Attach car_image after DB insertion for UI mapping
+          bookingData.car_image = pendingBooking.carImage || '';
+          
           sessionStorage.setItem('confirmed_booking_id', bookingRef);
           sessionStorage.setItem('confirmed_booking', JSON.stringify(bookingData));
           
