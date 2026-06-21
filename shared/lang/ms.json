@@ -522,5 +522,10 @@
   "tfa_status_enabled": "Aktif",
   "tfa_status_disabled": "Tidak Aktif",
   "tfa_btn_setup": "Sediakan 2FA",
-  "tfa_btn_disable": "Nyahaktifkan 2FA"
+  "tfa_btn_disable": "Nyahaktifkan 2FA",
+  "unsaved_title": "Perubahan Belum Disimpan",
+  "unsaved_desc": "Anda mempunyai perubahan yang belum disimpan dalam tetapan anda. Adakah anda mahu menyimpannya atau mengabaikannya sebelum keluar?",
+  "unsaved_btn_discard": "Abaikan",
+  "unsaved_btn_cancel": "Kekal di sini",
+  "unsaved_btn_save": "Simpan Tetapan"
 }

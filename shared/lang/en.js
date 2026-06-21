@@ -522,6 +522,12 @@ window.wedrive_lang_en = {
   "tfa_status_enabled": "Currently Enabled",
   "tfa_status_disabled": "Currently Disabled",
   "tfa_btn_setup": "Setup 2FA",
-  "tfa_btn_disable": "Disable 2FA"
+  "tfa_btn_disable": "Disable 2FA",
+  "unsaved_title": "Unsaved Changes",
+  "unsaved_desc": "You have unsaved changes in your settings. Would you like to save or discard your changes before leaving?",
+  "unsaved_btn_discard": "Discard",
+  "unsaved_btn_cancel": "Stay here",
+  "unsaved_btn_save": "Save Settings"
 }
 ;
+

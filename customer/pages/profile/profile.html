@@ -13,7 +13,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=8.3.27" />
+  <link rel="stylesheet" href="../../css/customer.css?v=8.3.28" />
 </head>
 
 <body data-particles="6" data-cursor-glow>
@@ -293,7 +293,10 @@
                     <option selected>MYR (RM)</option>
                     <option>USD ($)</option>
                   </select>
-                </div>
+              </div>
+              <div class="pf-actions-bar" id="pf-pref-actions-bar" style="margin-top: 24px; display: none;">
+                <button class="pf-btn outline" type="button" onclick="cancelPreferenceChanges()">Cancel</button>
+                <button class="pf-btn primary" type="button" onclick="savePreferenceChanges()"><span class="material-icons-round">save</span> Save Settings</button>
               </div>
             </section>
           </div>
@@ -394,13 +397,13 @@
   </main>
 
   <div id="footer-placeholder"></div>
-  <script src="../../js/sidebar-loader.js?v=8.3.27"></script>
+  <script src="../../js/sidebar-loader.js?v=8.3.28"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=8.3.27"></script>
+  <script src="../../../shared/js/main.js?v=8.3.28"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/otpauth@9/dist/otpauth.umd.min.js"></script>
   <script>
@@ -900,8 +903,11 @@
       }
     }
 
+    var savedPrefs = null;
+
     function applyPreferencesToUi(prefs) {
       if (!prefs) return;
+      savedPrefs = Object.assign({}, prefs);
       
       var langSelect = document.querySelector('select[aria-label="Language"]');
       if (langSelect) {
@@ -958,6 +964,84 @@
       var tfaEnabled = prefs.twoFactorEnabled === true;
       localStorage.setItem('wedrive_2fa_enabled', tfaEnabled ? 'true' : 'false');
       syncTFAUiState(tfaEnabled);
+      updatePrefButtonsState();
+    }
+
+    // Wrap main.js functions to sync UI select elements when changed via top bar
+    var originalSetTheme = window.setTheme;
+    window.setTheme = function (theme) {
+      if (typeof originalSetTheme === 'function') {
+        originalSetTheme(theme);
+      }
+      var themeSelect = document.querySelector('select[aria-label="Theme"]');
+      if (themeSelect) {
+        if (theme === 'day') themeSelect.value = 'Light Mode';
+        else if (theme === 'night') themeSelect.value = 'Dark Mode';
+        else themeSelect.value = 'System Default';
+      }
+      if (savedPrefs) {
+        savedPrefs.theme = theme;
+      }
+      updatePrefButtonsState();
+    };
+
+    document.addEventListener('wedrive:language-applied', function (e) {
+      var lang = e.detail.lang;
+      var langSelect = document.querySelector('select[aria-label="Language"]');
+      if (langSelect) {
+        langSelect.value = (lang === 'ms') ? 'Malay (BM)' : 'English (EN)';
+      }
+      if (savedPrefs) {
+        savedPrefs.language = lang;
+      }
+      updatePrefButtonsState();
+    });
+
+    function hasUnsavedPreferences() {
+      if (!savedPrefs) return false;
+      
+      var langSelect = document.querySelector('select[aria-label="Language"]');
+      var language = (langSelect && langSelect.value === 'Malay (BM)') ? 'ms' : 'en';
+
+      var themeSelect = document.querySelector('select[aria-label="Theme"]');
+      var theme = 'system';
+      if (themeSelect) {
+        if (themeSelect.value === 'Light Mode') theme = 'day';
+        else if (themeSelect.value === 'Dark Mode') theme = 'night';
+      }
+
+      var activeUnitBtn = document.querySelector('.pf-segment-control button.active');
+      var units = activeUnitBtn ? activeUnitBtn.textContent.toLowerCase() : 'kilometers';
+
+      var currencySelect = document.querySelector('select[aria-label="Currency"]');
+      var currency = (currencySelect && currencySelect.value.indexOf('USD') > -1) ? 'USD' : 'MYR';
+
+      return (
+        language !== savedPrefs.language ||
+        theme !== savedPrefs.theme ||
+        units !== savedPrefs.units ||
+        currency !== savedPrefs.currency
+      );
+    }
+
+    function updatePrefButtonsState() {
+      var bar = document.getElementById('pf-pref-actions-bar');
+      if (bar) {
+        bar.style.display = hasUnsavedPreferences() ? 'flex' : 'none';
+      }
+    }
+
+    function cancelPreferenceChanges() {
+      if (savedPrefs) {
+        applyPreferencesToUi(savedPrefs);
+      }
+      updatePrefButtonsState();
+      profileToast(localStorage.getItem('wedrive-lang') === 'ms' ? 'Perubahan dibatalkan.' : 'Changes cancelled.');
+    }
+
+    async function savePreferenceChanges() {
+      await savePrefs(false);
+      updatePrefButtonsState();
     }
 
     async function savePrefs(silent) {
@@ -1017,6 +1101,8 @@
           window.setTheme(theme);
         }
 
+        savedPrefs = Object.assign({}, prefs);
+
         var sb = window.supabaseClient;
         if (sb) {
           try {
@@ -1061,25 +1147,21 @@
     }
 
     function changeLanguagePref(val) {
-      savePrefs(true);
-      profileToast(getLocalizedToast('lang'));
+      updatePrefButtonsState();
     }
 
     function changeThemePref(val) {
-      savePrefs(true);
-      profileToast(getLocalizedToast('theme'));
+      updatePrefButtonsState();
     }
 
     function changeCurrencyPref(val) {
-      savePrefs(true);
-      profileToast(getLocalizedToast('currency'));
+      updatePrefButtonsState();
     }
 
     function selectUnit(el) {
       document.querySelectorAll('.pf-segment-control button').forEach(function (btn) { btn.classList.remove('active'); });
       el.classList.add('active');
-      savePrefs(true);
-      profileToast(getLocalizedToast('unit'));
+      updatePrefButtonsState();
     }
 
     function saveNotificationChanges() {
@@ -1185,6 +1267,15 @@
     document.querySelectorAll('.pf-inner-link').forEach(function (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
+        
+        if (hasUnsavedPreferences()) {
+          window.pendingNavigationType = 'inner-nav';
+          window.pendingNavigationSection = this.getAttribute('data-section');
+          window.pendingNavigationLink = this;
+          openUnsavedChangesDialog();
+          return;
+        }
+        
         document.querySelectorAll('.pf-inner-link').forEach(function (l) { l.classList.remove('active'); });
         this.classList.add('active');
         var section = this.getAttribute('data-section');
@@ -1192,6 +1283,113 @@
         var target = document.getElementById('panel-' + section);
         if (target) { target.classList.add('active'); }
       });
+    });
+
+    function openUnsavedChangesDialog() {
+      var dialog = document.getElementById('unsaved-changes-dialog');
+      if (dialog) {
+        dialog.style.display = 'flex';
+        setTimeout(function() {
+          dialog.classList.add('active');
+        }, 10);
+      }
+    }
+
+    function closeUnsavedChangesDialog() {
+      var dialog = document.getElementById('unsaved-changes-dialog');
+      if (dialog) {
+        dialog.classList.remove('active');
+        setTimeout(function() {
+          dialog.style.display = 'none';
+        }, 300);
+      }
+    }
+
+    async function handleUnsavedChangesDialog(action) {
+      closeUnsavedChangesDialog();
+      if (action === 'save') {
+        await savePrefs(false);
+        updatePrefButtonsState();
+        proceedWithPendingNavigation();
+      } else if (action === 'discard') {
+        cancelPreferenceChanges();
+        proceedWithPendingNavigation();
+      } else {
+        // Cancel - stay on page, reset pending
+        window.pendingNavigationType = null;
+        window.pendingNavigationUrl = null;
+        window.pendingNavigationSection = null;
+        window.pendingNavigationLink = null;
+      }
+    }
+
+    function proceedWithPendingNavigation() {
+      if (window.pendingNavigationType === 'inner-nav') {
+        var link = window.pendingNavigationLink;
+        var section = window.pendingNavigationSection;
+        if (link && section) {
+          document.querySelectorAll('.pf-inner-link').forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+          document.querySelectorAll('.pf-panel').forEach(function (p) { p.classList.remove('active'); });
+          var target = document.getElementById('panel-' + section);
+          if (target) { target.classList.add('active'); }
+        }
+      } else if (window.pendingNavigationType === 'link') {
+        var url = window.pendingNavigationUrl;
+        if (url) {
+          window.location.href = url;
+        }
+      }
+      window.pendingNavigationType = null;
+      window.pendingNavigationUrl = null;
+      window.pendingNavigationSection = null;
+      window.pendingNavigationLink = null;
+    }
+
+    // Intercept clicks on links that navigate away
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a');
+      var sidebarBookBtn = e.target.closest('.sidebar-book-btn');
+      if (!link && !sidebarBookBtn) return;
+      
+      if (hasUnsavedPreferences()) {
+        if (sidebarBookBtn) {
+          var href = '../../../customer/pages/dashboard/customer.html';
+          var onclickAttr = sidebarBookBtn.getAttribute('onclick');
+          if (onclickAttr) {
+            var match = onclickAttr.match(/window\.location\s*=\s*['"]([^'"]+)['"]/);
+            if (match && match[1]) {
+              href = match[1];
+            }
+          }
+          e.preventDefault();
+          e.stopPropagation();
+          window.pendingNavigationType = 'link';
+          window.pendingNavigationUrl = href;
+          openUnsavedChangesDialog();
+          return;
+        }
+
+        if (link) {
+          var href = link.getAttribute('href');
+          // If it's a normal link that navigates away (has href, and doesn't start with '#')
+          if (href && !href.startsWith('#') && !link.classList.contains('phone-cc-btn') && !link.classList.contains('sidebar-logout') && !link.classList.contains('pf-inner-link')) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.pendingNavigationType = 'link';
+            window.pendingNavigationUrl = href;
+            openUnsavedChangesDialog();
+          }
+        }
+      }
+    }, true);
+
+    // Prompt before unload
+    window.addEventListener('beforeunload', function (e) {
+      if (hasUnsavedPreferences()) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
     });
 
     function profileToast(message) {
@@ -2169,6 +2367,23 @@
           <button class="pf-btn primary danger" type="button" onclick="confirmDisable2FA()">
             <span class="material-icons-round">no_encryption</span> Yes, Disable
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unsaved Changes Dialog Modal Overlay -->
+  <div id="unsaved-changes-dialog" class="pf-dialog-overlay" style="display:none">
+    <div class="pf-dialog">
+      <div class="pf-dialog-header">
+        <h3 class="pf-dialog-title" data-key="unsaved_title">Unsaved Changes</h3>
+      </div>
+      <div class="pf-dialog-body" style="padding-top: 10px;">
+        <p data-key="unsaved_desc" style="font-size: 14px; line-height: 1.5; color: var(--on-surface-variant); margin-bottom: 24px;">You have unsaved changes in your settings. Would you like to save or discard your changes before leaving?</p>
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button class="pf-btn outline" onclick="handleUnsavedChangesDialog('discard')" data-key="unsaved_btn_discard" style="border-color: var(--danger, #ef4444); color: var(--danger, #ef4444);">Discard</button>
+          <button class="pf-btn outline" onclick="handleUnsavedChangesDialog('cancel')" data-key="unsaved_btn_cancel">Stay here</button>
+          <button class="pf-btn primary" onclick="handleUnsavedChangesDialog('save')" data-key="unsaved_btn_save">Save Settings</button>
         </div>
       </div>
     </div>
