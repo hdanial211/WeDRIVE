@@ -1410,7 +1410,7 @@
       if (recoveryStep) recoveryStep.classList.remove('active');
     }
 
-    function verifyTFAOtp() {
+    async function verifyTFAOtp() {
       var otpInput = document.getElementById('pf-tfa-otp');
       var code = otpInput ? otpInput.value.trim() : '';
       
@@ -1422,6 +1422,11 @@
         if (otpInput) otpInput.value = '';
         return;
       }
+
+      // Commit 2FA state immediately upon successful verification
+      localStorage.setItem('wedrive_2fa_enabled', 'true');
+      await saveTFAPrefs(true);
+      syncTFAUiState(true);
 
       // Populate recovery codes in step 3
       var codesEl = document.getElementById('pf-tfa-recovery-codes');
@@ -1468,12 +1473,9 @@
         });
     }
 
-    async function finishTFASetup() {
-      localStorage.setItem('wedrive_2fa_enabled', 'true');
-      await saveTFAPrefs(true);
+    function finishTFASetup() {
       closeTFADialog();
       profileToast('Two-Factor Authentication has been successfully enabled!');
-      syncTFAUiState(true);
     }
 
     function openTFADisableDialog() {

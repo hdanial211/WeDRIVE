@@ -373,6 +373,17 @@
     var style = document.createElement('style');
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var codeInput = document.getElementById('login-tfa-code');
+      if (codeInput) {
+        codeInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            submitTfaChallengeCode();
+          }
+        });
+      }
+    });
   </script>
   <!-- Supabase SDK (CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
