@@ -652,7 +652,6 @@ body.motion-cursor-has-label .wedrive-cursor-label {
   body.motion-cursor-ready button,
   body.motion-cursor-ready [role="button"],
   body.motion-cursor-ready input,
-  body.motion-cursor-ready select,
   body.motion-cursor-ready textarea,
   body.motion-cursor-ready label,
   body.motion-cursor-ready [data-cursor],

@@ -5258,11 +5258,7 @@ body.night-mode .confirmed-main .car-plate span {
 .pf-segment-control { display: flex; background: var(--surface-container-low, #f2f4f6); border-radius: 10px; padding: 3px; }
 .pf-segment-control button { background: transparent; border: none; border-radius: 8px; padding: 7px 16px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--on-surface-variant); cursor: pointer; transition: all 0.2s; }
 .pf-segment-control button.active { background: var(--surface-container-lowest, #fff); color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-.pf-car-category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
-.pf-cat-card { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 12px; border: 2px solid var(--outline-variant, #c2c6d6); border-radius: 12px; background: var(--surface-container-lowest, #fff); cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--on-surface-variant); }
-.pf-cat-card .material-icons-round { font-size: 28px; }
-.pf-cat-card:hover { border-color: var(--primary); color: var(--primary); }
-.pf-cat-card.active { border-color: var(--primary); color: var(--primary); background: rgba(0,88,190,0.04); box-shadow: 0 0 0 2px rgba(0,88,190,0.15); }
+
 
 /* Notifications */
 .pf-notif-list { display: flex; flex-direction: column; }
@@ -5280,7 +5276,7 @@ body.night-mode .pf-security-banner { background: rgba(255,255,255,0.04); border
 body.night-mode .pf-segment-control { background: rgba(255,255,255,0.06); }
 body.night-mode .pf-segment-control button.active { background: rgba(255,255,255,0.1); }
 body.night-mode .pf-add-method-card { background: rgba(255,255,255,0.03); border-color: rgba(148,163,184,0.2); }
-body.night-mode .pf-cat-card { background: rgba(255,255,255,0.03); border-color: rgba(148,163,184,0.15); }
+
 body.night-mode .pf-help-box { background: rgba(255,255,255,0.04); }
 body.night-mode .pf-session-icon { background: rgba(255,255,255,0.06); }
 body.night-mode .pf-insight-card { background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06)); }
@@ -5305,12 +5301,12 @@ body.night-mode .pf-otp-badge.verified { background: rgba(34,197,94,0.18); color
   .pf-inner-nav-sticky { position: static; }
   .pf-inner-nav-list { flex-direction: row; overflow-x: auto; gap: 4px; }
   .pf-form-grid { grid-template-columns: 1fr; }
-  .pf-car-category-grid { grid-template-columns: repeat(2, 1fr); }
+
   .pf-pay-secondary { flex-direction: column; align-items: flex-start; gap: 12px; }
   .pf-verified-banner, .pf-doc-progress, .pf-otp-head { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 600px) {
-  .pf-car-category-grid { grid-template-columns: 1fr 1fr; }
+
   .pf-pay-card-footer { flex-direction: column; gap: 12px; }
   .pf-bento-grid { grid-template-columns: 1fr; }
 }

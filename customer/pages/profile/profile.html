@@ -13,7 +13,7 @@
   <link id="theme-link" rel="stylesheet" href="../../../shared/css/theme_day.css" />
   <link rel="stylesheet" href="../../../shared/css/theme_overrides.css" />
   <link rel="stylesheet" href="../../../shared/css/animation.css" />
-  <link rel="stylesheet" href="../../css/customer.css?v=8.3.26" />
+  <link rel="stylesheet" href="../../css/customer.css?v=8.3.27" />
 </head>
 
 <body data-particles="6" data-cursor-glow>
@@ -296,22 +296,6 @@
                 </div>
               </div>
             </section>
-
-            <!-- Preferred Car Category -->
-            <section class="pf-card">
-              <h3 class="pf-section-title">Preferred Car Category</h3>
-              <p class="pf-card-desc">We'll prioritize showing these types of vehicles in your search results.</p>
-              <div class="pf-car-category-grid">
-                <button class="pf-cat-card active" onclick="selectCat(this)"><span
-                    class="material-icons-round">directions_car</span><span>Sedan</span></button>
-                <button class="pf-cat-card" onclick="selectCat(this)"><span
-                    class="material-icons-round">airport_shuttle</span><span>SUV</span></button>
-                <button class="pf-cat-card" onclick="selectCat(this)"><span
-                    class="material-icons-round">electric_car</span><span>EV</span></button>
-                <button class="pf-cat-card" onclick="selectCat(this)"><span
-                    class="material-icons-round">local_taxi</span><span>Luxury</span></button>
-              </div>
-            </section>
           </div>
 
           <!-- ======= 5. NOTIFICATIONS ======= -->
@@ -410,13 +394,13 @@
   </main>
 
   <div id="footer-placeholder"></div>
-  <script src="../../js/sidebar-loader.js?v=8.3.26"></script>
+  <script src="../../js/sidebar-loader.js?v=8.3.27"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=8.3.26"></script>
+  <script src="../../../shared/js/main.js?v=8.3.27"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/otpauth@9/dist/otpauth.umd.min.js"></script>
   <script>
@@ -885,7 +869,6 @@
         var theme = localStorage.getItem('wedrive-theme') || 'system';
         var units = localStorage.getItem('wedrive_measurement_units') || 'kilometers';
         var currency = localStorage.getItem('wedrive_currency') || 'MYR';
-        var prefCategory = localStorage.getItem('wedrive_pref_category') || 'Sedan';
         var notificationsRaw = localStorage.getItem('wedrive_notifications_prefs');
         var notifications = notificationsRaw ? JSON.parse(notificationsRaw) : {
           bookingUpdates: true,
@@ -901,7 +884,6 @@
           theme: theme,
           units: units,
           currency: currency,
-          prefCategory: prefCategory,
           notifications: notifications,
           twoFactorEnabled: twoFactorEnabled
         };
@@ -912,7 +894,6 @@
           theme: 'system',
           units: 'kilometers',
           currency: 'MYR',
-          prefCategory: 'Sedan',
           notifications: { bookingUpdates: true, promoOffers: true, securityAlerts: true, newsletter: true, sms: true, push: true },
           twoFactorEnabled: false
         };
@@ -955,16 +936,6 @@
         else currencySelect.value = 'MYR (RM)';
       }
 
-      var catCards = document.querySelectorAll('.pf-cat-card');
-      catCards.forEach(function (card) {
-        var cardText = card.querySelector('span:last-child').textContent;
-        if (cardText.toLowerCase() === prefs.prefCategory.toLowerCase()) {
-          card.classList.add('active');
-        } else {
-          card.classList.remove('active');
-        }
-      });
-
       var notif = prefs.notifications || {};
       var checkMap = {
         'Booking Updates': notif.bookingUpdates !== false,
@@ -991,11 +962,6 @@
 
     async function savePrefs(silent) {
       try {
-        var sb = window.supabaseClient;
-        if (!sb) return;
-        var userResult = await sb.auth.getUser();
-        var user = userResult && userResult.data && userResult.data.user;
-        
         var langSelect = document.querySelector('select[aria-label="Language"]');
         var language = (langSelect && langSelect.value === 'Malay (BM)') ? 'ms' : 'en';
 
@@ -1011,9 +977,6 @@
 
         var currencySelect = document.querySelector('select[aria-label="Currency"]');
         var currency = (currencySelect && currencySelect.value.indexOf('USD') > -1) ? 'USD' : 'MYR';
-
-        var activeCatBtn = document.querySelector('.pf-cat-card.active span:last-child');
-        var prefCategory = activeCatBtn ? activeCatBtn.textContent : 'Sedan';
 
         var getCheckState = function (keyword) {
           var chk = Array.from(document.querySelectorAll('.pf-switch input[type="checkbox"]')).find(function (c) {
@@ -1037,7 +1000,6 @@
           theme: theme,
           units: units,
           currency: currency,
-          prefCategory: prefCategory,
           notifications: notifications,
           twoFactorEnabled: localStorage.getItem('wedrive_2fa_enabled') === 'true'
         };
@@ -1046,7 +1008,6 @@
         localStorage.setItem('wedrive-theme', theme);
         localStorage.setItem('wedrive_measurement_units', units);
         localStorage.setItem('wedrive_currency', currency);
-        localStorage.setItem('wedrive_pref_category', prefCategory);
         localStorage.setItem('wedrive_notifications_prefs', JSON.stringify(notifications));
 
         if (typeof window.setLanguage === 'function') {
@@ -1056,46 +1017,69 @@
           window.setTheme(theme);
         }
 
-        if (user) {
-          var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, { preferences: prefs });
-          if (!dbResult.success) console.warn('[Profile] Failed to save preferences to DB:', dbResult.error);
+        var sb = window.supabaseClient;
+        if (sb) {
+          try {
+            var userResult = await sb.auth.getUser();
+            var user = userResult && userResult.data && userResult.data.user;
+            if (user) {
+              var dbResult = await WeDriveAPI.updateCustomerProfile(user.id, { preferences: prefs });
+              if (!dbResult.success) console.warn('[Profile] Failed to save preferences to DB:', dbResult.error);
+            }
+          } catch (dbErr) {
+            console.warn('[Profile] Supabase auth check/update failed:', dbErr);
+          }
         }
 
         if (!silent) {
-          profileToast('Preferences saved successfully.');
+          profileToast(getLocalizedToast('prefs'));
         }
       } catch (err) {
         console.error('[Profile] Save preferences error:', err);
       }
     }
 
+    function getLocalizedToast(key) {
+      var lang = localStorage.getItem('wedrive-lang') || 'en';
+      var msgs = {
+        en: {
+          lang: 'Language updated and saved successfully.',
+          theme: 'Theme updated and saved successfully.',
+          currency: 'Currency updated and saved successfully.',
+          unit: 'Measurement unit updated and saved successfully.',
+          prefs: 'Preferences saved successfully.'
+        },
+        ms: {
+          lang: 'Bahasa berjaya dikemas kini dan disimpan.',
+          theme: 'Tema berjaya dikemas kini dan disimpan.',
+          currency: 'Mata wang berjaya dikemas kini dan disimpan.',
+          unit: 'Unit ukuran berjaya dikemas kini dan disimpan.',
+          prefs: 'Tetapan berjaya disimpan.'
+        }
+      };
+      return msgs[lang] ? msgs[lang][key] : msgs['en'][key];
+    }
+
     function changeLanguagePref(val) {
       savePrefs(true);
-      profileToast('Language updated.');
+      profileToast(getLocalizedToast('lang'));
     }
 
     function changeThemePref(val) {
       savePrefs(true);
-      profileToast('Theme updated.');
+      profileToast(getLocalizedToast('theme'));
     }
 
     function changeCurrencyPref(val) {
       savePrefs(true);
-      profileToast('Currency updated.');
-    }
-
-    function selectCat(el) {
-      document.querySelectorAll('.pf-cat-card').forEach(function (c) { c.classList.remove('active'); });
-      el.classList.add('active');
-      savePrefs(true);
-      profileToast('Preferred car updated.');
+      profileToast(getLocalizedToast('currency'));
     }
 
     function selectUnit(el) {
       document.querySelectorAll('.pf-segment-control button').forEach(function (btn) { btn.classList.remove('active'); });
       el.classList.add('active');
       savePrefs(true);
-      profileToast('Measurement unit updated.');
+      profileToast(getLocalizedToast('unit'));
     }
 
     function saveNotificationChanges() {
