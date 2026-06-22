@@ -66,9 +66,11 @@ function renderRevenueChart(bookings) {
         var pct = (m.revenue / maxVal) * 100;
         var color = m.revenue === maxVal ? 'var(--primary)' : 'var(--slate-200)';
         return `
-        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <div style="flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px;">
           <span style="font-size:11px; font-weight:600; color:var(--navy);">RM ${(m.revenue/1000).toFixed(1)}k</span>
-          <div style="width:100%; background:${color}; border-radius:8px 8px 4px 4px; height:${pct}%; min-height:8px; transition:height 0.6s ease;"></div>
+          <div style="flex:1; width:100%; display:flex; align-items:flex-end;">
+            <div style="width:100%; background:${color}; border-radius:8px 8px 4px 4px; height:${pct}%; min-height:8px; transition:height 0.6s ease;"></div>
+          </div>
           <span style="font-size:11px; font-weight:600; color:var(--slate-400);">${m.month}</span>
         </div>`;
       }).join('')}
