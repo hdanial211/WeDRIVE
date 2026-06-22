@@ -218,15 +218,41 @@ window.WeDriveAPI = {
                     return c.joined && c.joined.startsWith(monthStart);
                 }).length;
 
+                // Calculate current month's revenue
+                var thisMonthStr = today.slice(0, 7);
+                var revenueThisMonth = 0;
+                bookings.forEach(function(b) {
+                    var isPaid = ['Paid', 'Deposit Paid', 'Refund Processed', 'Refunded'].includes(b.payment);
+                    if (isPaid && b.created_at && b.created_at.startsWith(thisMonthStr)) {
+                        var amt = 0;
+                        if (b.payment_type === 'deposit') {
+                            amt = (b.deposit_amount || 0);
+                        } else {
+                            amt = (b.total || 0);
+                        }
+                        if ((b.refund_status === 'Refunded' || b.payment === 'Refund Processed') && b.refund_amount) {
+                            amt -= b.refund_amount;
+                        }
+                        revenueThisMonth += amt;
+                    }
+                });
+
+                // Active cars vs total
+                var availableCars = cars.filter(function(c) {
+                    return c.status === 'Available';
+                }).length;
+
                 var stats = {
                     total_vehicles: cars.length,
                     active_rentals: activeRentals,
                     revenue_today: revenueToday,
                     new_customers: newCustomersThisMonth || customers.length,
-                    revenue_change: "+14.2%",
-                    rentals_change: "+" + activeRentals,
-                    vehicles_change: "+" + cars.length,
-                    customers_change: "+" + (newCustomersThisMonth || customers.length)
+                    
+                    // Dynamic fields for sub-labels
+                    available_vehicles: availableCars,
+                    revenue_this_month: revenueThisMonth,
+                    new_customers_this_month: newCustomersThisMonth,
+                    total_customers: customers.length
                 };
 
                 // Auto-complete expired bookings (end_date < today)
