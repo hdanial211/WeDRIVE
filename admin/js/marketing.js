@@ -360,3 +360,12 @@ function showToast(msg) {
   t.style.display = 'flex';
   setTimeout(() => { t.style.display = 'none'; }, 2500);
 }
+
+// ── Expose for marketing-ai.js cross-script access (strict mode) ──────────────
+window.MKT = MKT;
+window._mktSaveToStorage = saveToStorage;
+window._mktRenderBanners = renderBanners;
+window._mktRenderPromos = renderPromos;
+window._mktRenderSeasonal = renderSeasonal;
+window._mktUpdateStats = updateStats;
+window._mktShowToast = showToast;
