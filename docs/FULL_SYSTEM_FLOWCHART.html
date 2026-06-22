@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WeDRIVE Full System Flowchart</title>
-  <link rel="icon" type="image/png" href="../shared/logo/wedrive-icon.png" />
+  <link rel="icon" type="image/png" href="shared/logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <style>
     :root {
-      --bg: #f8fafc;
+      --bg: #f7f9fc;
       --panel: #ffffff;
-      --ink: #0f172a;
+      --ink: #14213d;
       --muted: #64748b;
-      --line: #e2e8f0;
+      --line: #dbe3ef;
       --blue: #2563eb;
       --green: #059669;
       --amber: #b45309;
@@ -25,8 +25,8 @@
       --soft-amber: #fffbeb;
       --soft-violet: #f5f3ff;
       --soft-red: #fef2f2;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
-      --radius: 12px;
+      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+      --radius: 8px;
     }
 
     * {
@@ -60,9 +60,9 @@
       position: sticky;
       top: 0;
       height: 100vh;
-      padding: 24px;
-      background: #0f172a;
-      color: #f1f5f9;
+      padding: 22px;
+      background: #111827;
+      color: #e5e7eb;
       overflow-y: auto;
       border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -73,7 +73,7 @@
       gap: 12px;
       padding-bottom: 20px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .brand img {
@@ -86,14 +86,15 @@
     }
 
     .brand-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
+      letter-spacing: 0;
       color: #ffffff;
     }
 
     .brand-sub {
-      font-size: 11px;
-      color: #94a3b8;
+      font-size: 12px;
+      color: #9ca3af;
       margin-top: 2px;
     }
 
@@ -103,57 +104,57 @@
 
     .nav-title {
       font-size: 11px;
-      color: #64748b;
+      color: #9ca3af;
       text-transform: uppercase;
       font-weight: 800;
       margin: 18px 0 8px;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
 
     .nav-link {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 9px 12px;
+      padding: 9px 10px;
       border-radius: 8px;
-      color: #cbd5e1;
+      color: #d1d5db;
       font-size: 13px;
       font-weight: 600;
       margin-bottom: 4px;
-      transition: all 0.2s;
+      border: 1px solid transparent;
     }
 
     .nav-link:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.08);
       color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .nav-no {
       width: 24px;
       height: 24px;
-      border-radius: 6px;
+      border-radius: 7px;
       background: rgba(37, 99, 235, 0.2);
-      color: #60a5fa;
+      color: #93c5fd;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      font-weight: 700;
       flex: 0 0 auto;
     }
 
     .content {
       min-width: 0;
-      padding: 40px;
+      padding: 34px;
     }
 
     .hero {
       background: #ffffff;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 36px;
+      padding: 32px;
       box-shadow: var(--shadow);
-      margin-bottom: 30px;
+      margin-bottom: 24px;
       position: relative;
       overflow: hidden;
     }
@@ -165,52 +166,48 @@
       top: 0;
       width: 6px;
       height: 100%;
-      background: linear-gradient(#2563eb, #059669, #7c3aed);
+      background: linear-gradient(#2563eb, #059669, #b45309);
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 12px;
-      border-radius: 20px;
+      padding: 6px 10px;
+      border-radius: 8px;
       background: var(--soft-blue);
       color: var(--blue);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
       border: 1px solid #bfdbfe;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
     h1 {
-      font-size: clamp(28px, 4vw, 42px);
-      line-height: 1.1;
-      margin: 16px 0 12px;
-      font-weight: 800;
-      color: #0f172a;
+      font-size: clamp(30px, 5vw, 56px);
+      line-height: 1.04;
+      margin: 18px 0 14px;
+      letter-spacing: 0;
     }
 
     .hero p {
       max-width: 900px;
       margin: 0;
       color: var(--muted);
-      font-size: 15px;
+      font-size: 16px;
     }
 
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 28px;
+      gap: 14px;
+      margin-top: 24px;
     }
 
     .summary-card {
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 16px;
       background: #ffffff;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
     }
 
     .summary-card.blue {
@@ -249,10 +246,10 @@
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 30px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow);
-      scroll-margin-top: 30px;
+      padding: 26px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+      scroll-margin-top: 24px;
     }
 
     .section-head {
@@ -261,15 +258,15 @@
       justify-content: space-between;
       gap: 18px;
       border-bottom: 1px solid var(--line);
-      padding-bottom: 20px;
-      margin-bottom: 24px;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     h2 {
       margin: 0;
-      font-size: 22px;
-      font-weight: 800;
-      color: #0f172a;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: 0;
     }
 
     .section-desc {
@@ -282,12 +279,12 @@
     .tag {
       display: inline-flex;
       align-items: center;
-      border-radius: 20px;
-      padding: 5px 12px;
-      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 5px 9px;
+      background: #f8fafc;
       border: 1px solid var(--line);
       color: var(--muted);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
       white-space: nowrap;
     }
@@ -296,9 +293,9 @@
       border: 1px solid #e2e8f0;
       border-radius: var(--radius);
       background: #fbfdff;
-      padding: 24px;
+      padding: 18px;
       overflow-x: auto;
-      margin: 0 0 20px;
+      margin: 0;
     }
 
     .diagram .mermaid {
@@ -309,29 +306,27 @@
     .note-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+      gap: 14px;
+      margin-top: 16px;
     }
 
     .note {
-      padding: 16px;
+      padding: 14px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: #f8fafc;
+      background: #ffffff;
     }
 
     .note strong {
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       font-size: 13px;
-      color: #0f172a;
     }
 
     .note span {
       display: block;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
+      font-size: 13px;
     }
 
     table {
@@ -341,24 +336,22 @@
       border-radius: var(--radius);
       border: 1px solid var(--line);
       font-size: 13px;
-      margin-top: 10px;
     }
 
     th {
-      background: #f1f5f9;
-      color: #475569;
+      background: #f8fafc;
+      color: #334155;
       text-align: left;
-      padding: 14px 16px;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--line);
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 800;
+      letter-spacing: 0.04em;
     }
 
     td {
-      padding: 14px 16px;
-      border-bottom: 1px solid #f1f5f9;
+      padding: 12px 14px;
+      border-bottom: 1px solid #edf2f7;
       vertical-align: top;
     }
 
@@ -370,10 +363,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 4px 10px;
-      border-radius: 20px;
+      padding: 4px 8px;
+      border-radius: 8px;
       font-weight: 800;
-      font-size: 11px;
+      font-size: 12px;
       white-space: nowrap;
     }
 
@@ -399,7 +392,7 @@
 
     .file-map {
       columns: 2;
-      column-gap: 30px;
+      column-gap: 24px;
       margin: 0;
       padding-left: 20px;
       color: var(--muted);
@@ -408,25 +401,22 @@
 
     .file-map li {
       break-inside: avoid;
-      margin-bottom: 10px;
+      margin-bottom: 9px;
     }
 
     code {
       background: #f1f5f9;
       color: #0f172a;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border-radius: 6px;
       font-size: 12px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
 
     .footer {
       color: var(--muted);
       text-align: center;
       font-size: 13px;
-      padding: 30px 24px;
-      border-top: 1px solid var(--line);
-      margin-top: 40px;
+      padding: 24px;
     }
 
     @media (max-width: 1100px) {
@@ -437,18 +427,16 @@
       .sidebar {
         position: relative;
         height: auto;
-        padding: 20px;
       }
 
       .nav-group {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 6px 12px;
+        gap: 4px 10px;
       }
 
       .nav-title {
         grid-column: 1 / -1;
-        margin: 12px 0 4px;
       }
 
       .summary-grid,
@@ -459,18 +447,16 @@
 
     @media (max-width: 720px) {
       .content {
-        padding: 20px;
+        padding: 18px;
       }
 
       .hero,
       .section {
-        padding: 24px 20px;
+        padding: 20px;
       }
 
       .section-head {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
       }
 
       .summary-grid,
@@ -490,50 +476,62 @@
   <div class="layout">
     <aside class="sidebar">
       <div class="brand">
-        <img src="../shared/logo/wedrive-icon.png" alt="WeDRIVE logo" />
+        <img src="shared/logo/wedrive-icon.png" alt="WeDRIVE logo" />
         <div>
           <div class="brand-title">WeDRIVE Flow</div>
-          <div class="brand-sub">System Guide & Flowchart</div>
+          <div class="brand-sub">Full system guide</div>
         </div>
       </div>
 
       <div class="nav-group">
-        <div class="nav-title">System Flows</div>
-        <a class="nav-link" href="#overview"><span class="nav-no">1</span> Architecture</a>
-        <a class="nav-link" href="#auth-flow"><span class="nav-no">2</span> Authentication</a>
-        <a class="nav-link" href="#booking-flow"><span class="nav-no">3</span> Booking Flow</a>
-        <a class="nav-link" href="#admin-flow"><span class="nav-no">4</span> Admin Panel</a>
-        <a class="nav-link" href="#db-integration"><span class="nav-no">5</span> Database System</a>
+        <div class="nav-title">Main Flow</div>
+        <a class="nav-link" href="#overview"><span class="nav-no">1</span> Overview</a>
+        <a class="nav-link" href="#data-api"><span class="nav-no">2</span> Data and API</a>
+        <a class="nav-link" href="#login"><span class="nav-no">3</span> Login</a>
+        <a class="nav-link" href="#guest-customer"><span class="nav-no">4</span> Guest and Customer</a>
+
+        <div class="nav-title">Admin</div>
+        <a class="nav-link" href="#admin"><span class="nav-no">5</span> Admin Dashboard</a>
+        <a class="nav-link" href="#cars"><span class="nav-no">6</span> Cars and Detail</a>
+        <a class="nav-link" href="#bookings"><span class="nav-no">7</span> Bookings</a>
+        <a class="nav-link" href="#reports"><span class="nav-no">8</span> Reports</a>
+        <a class="nav-link" href="#marketing"><span class="nav-no">9</span> Marketing</a>
+        <a class="nav-link" href="#calendar"><span class="nav-no">10</span> Calendar</a>
+        <a class="nav-link" href="#settings"><span class="nav-no">11</span> Settings</a>
+        <a class="nav-link" href="#chatbot"><span class="nav-no">12</span> Chatbot</a>
 
         <div class="nav-title">Reference</div>
-        <a class="nav-link" href="#status"><span class="nav-no">6</span> Status of Features</a>
-        <a class="nav-link" href="#files"><span class="nav-no">7</span> System File Map</a>
+        <a class="nav-link" href="#shared"><span class="nav-no">13</span> Shared System</a>
+        <a class="nav-link" href="#future-db"><span class="nav-no">14</span> Future Database</a>
+        <a class="nav-link" href="#status"><span class="nav-no">15</span> Function Status</a>
+        <a class="nav-link" href="#files"><span class="nav-no">16</span> File Map</a>
       </div>
     </aside>
 
     <main class="content">
       <header class="hero">
-        <span class="eyebrow">Supabase PostgreSQL Cloud Integration</span>
-        <h1>WeDRIVE System Operational Flowchart</h1>
+        <span class="eyebrow">AI CAR RENTAL SYSTEM - FULL FLOWCHART</span>
+        <h1>WeDRIVE System Flow</h1>
         <p>
-          This dashboard visualizes the operational flowchart and database-driven modules of the WeDRIVE car rental platform, demonstrating how client components synchronize in real-time with Supabase Cloud Services.
+          Halaman ini menerangkan bagaimana sistem WeDRIVE berfungsi dari login, guest, customer, admin, data dummy,
+          localStorage, sampai flow database sebenar pada masa depan.
         </p>
         <div class="summary-grid">
           <div class="summary-card blue">
-            <div class="summary-value">PostgreSQL</div>
-            <div class="summary-label">Supabase Cloud Database</div>
+            <div class="summary-value">Static</div>
+            <div class="summary-label">HTML, CSS dan JavaScript biasa</div>
           </div>
           <div class="summary-card green">
-            <div class="summary-value">8 Vehicles</div>
-            <div class="summary-label">Active inventory sync</div>
-          </div>
-          <div class="summary-card violet">
-            <div class="summary-value">OAuth 2.0</div>
-            <div class="summary-label">Google Auth Integrated</div>
+            <div class="summary-value">6 Cars</div>
+            <div class="summary-label">Car dummy dalam data.json</div>
           </div>
           <div class="summary-card amber">
-            <div class="summary-value">Vercel</div>
-            <div class="summary-label">Live Deployment Ready</div>
+            <div class="summary-value">Demo</div>
+            <div class="summary-label">Booking dan auth belum backend</div>
+          </div>
+          <div class="summary-card violet">
+            <div class="summary-value">Ready</div>
+            <div class="summary-label">api.js disediakan untuk database</div>
           </div>
         </div>
       </header>
@@ -541,211 +539,539 @@
       <section class="section" id="overview">
         <div class="section-head">
           <div>
-            <h2>1. Overall System Architecture</h2>
-            <p class="section-desc">Shows user entry points, redirect routing guards, and the separation between guests, customers, and administrative portals.</p>
+            <h2>1. Overall System Flow</h2>
+            <p class="section-desc">Flow besar dari user buka sistem sampai masuk sebagai guest, customer atau admin.
+            </p>
           </div>
-          <span class="tag">Entry Point: index.html</span>
+          <span class="tag">Entry point: index.html</span>
         </div>
         <div class="diagram">
           <pre class="mermaid">
 flowchart TD
-    START["User opens WeDRIVE Portal"] --> DOMAIN["http://localhost:5500 or https://wedrive.website"]
-    DOMAIN --> CHOOSE_ROLE{"Authenticated?"}
+    START["User buka sistem"] --> LOGIN["index.html - Sign In"]
+    LOGIN --> GUEST_BTN["Continue as Guest"]
+    LOGIN --> SIGNUP_BTN["Sign Up"]
+    LOGIN --> LOGIN_FORM["Isi email dan password"]
 
-    CHOOSE_ROLE -->|No| GUEST_FLOW["Guest Portal (guest/pages/)"]
-    CHOOSE_ROLE -->|Yes| AUTH_CHECK["Read Supabase Session"]
+    GUEST_BTN --> GUEST_PAGE["guest/pages/guest.html"]
+    SIGNUP_BTN --> SIGNUP_PAGE["customer/pages/signup.html"]
+    LOGIN_FORM --> API_LOGIN["WeDriveAPI.loginUser(email, password)"]
 
-    GUEST_FLOW --> BROWSE_GUEST["Browse cars, explore Melaka, view pricing"]
-    BROWSE_GUEST --> BOOK_GUEST["Click Book Now"]
-    BOOK_GUEST --> REDIRECT_AUTH["Redirect to account/pages/login/"]
+    API_LOGIN --> ROLE_CHECK{"Email ada perkataan admin?"}
+    ROLE_CHECK -->|Ya| ADMIN_SESSION["Simpan wedrive_session role admin"]
+    ROLE_CHECK -->|Tidak| CUSTOMER_SESSION["Simpan wedrive_session role customer"]
 
-    AUTH_CHECK --> USER_ROLE{"Admin or Customer?"}
+    ADMIN_SESSION --> ADMIN_DASH["admin/pages/admin.html"]
+    CUSTOMER_SESSION --> CUSTOMER_DASH["customer/pages/customer.html"]
 
-    USER_ROLE -->|Admin| ADMIN_DASH["admin/pages/dashboard/admin.html"]
-    USER_ROLE -->|Customer| PROFILE_VERIFY{"Profile Verified Status?"}
+    GUEST_PAGE --> GUEST_BROWSE["Browse cars tanpa login"]
+    CUSTOMER_DASH --> CUSTOMER_BROWSE["Browse dan filter cars"]
+    ADMIN_DASH --> ADMIN_MODULES["Admin modules"]
 
-    PROFILE_VERIFY -->|Incomplete/Pending| SPLASH["account/pages/welcome/welcome.html"]
-    SPLASH --> COMPLETE_FLOW["Complete Profile Form (IC, License, Phone)"]
-    COMPLETE_FLOW --> UPLOAD_DOCS["Upload documents for verification"]
-    UPLOAD_DOCS --> PENDING_PAGE["account/pages/verification-pending/verification-pending.html"]
-    PENDING_PAGE -->|Awaiting Admin Approval| PENDING_PAGE
-
-    PROFILE_VERIFY -->|Active| CUSTOMER_DASH["customer/pages/dashboard/customer.html"]
-
-    CUSTOMER_DASH --> CUSTOMER_MODULES["Customer modules: Browse fleet, 360 viewer, book car, chat with support, view my bookings"]
+    ADMIN_MODULES --> CARS["Cars"]
+    ADMIN_MODULES --> BOOKINGS["Bookings"]
+    ADMIN_MODULES --> CUSTOMERS["Customers"]
+    ADMIN_MODULES --> REPORTS["Reports"]
+    ADMIN_MODULES --> MARKETING["Marketing"]
+    ADMIN_MODULES --> CALENDAR["Calendar"]
+    ADMIN_MODULES --> SETTINGS["Settings"]
+    ADMIN_MODULES --> AI["AI Chatbot"]
           </pre>
         </div>
         <div class="note-grid">
-          <div class="note">
-            <strong>Google OAuth 2.0</strong>
-            <span>Secure registration flow creating authenticated profiles automatically.</span>
+          <div class="note"><strong>Login demo</strong><span>Email yang ada perkataan admin akan jadi role admin.</span>
           </div>
-          <div class="note">
-            <strong>Compliance Gate</strong>
-            <span>Users must upload license and IC files before submitting a rental reservation.</span>
+          <div class="note"><strong>Data dummy</strong><span>Semua data utama datang dari shared/dummy/data.json.</span>
           </div>
-          <div class="note">
-            <strong>Role Check</strong>
-            <span>PostgreSQL query matches email against active administrative privileges.</span>
-          </div>
+          <div class="note"><strong>Backend belum ada</strong><span>Booking, signup dan edit kereta belum disimpan ke
+              database sebenar.</span></div>
         </div>
       </section>
 
-      <section class="section" id="auth-flow">
+      <section class="section" id="data-api">
         <div class="section-head">
           <div>
-            <h2>2. Authentication & Verification Workflow</h2>
-            <p class="section-desc">Detailed path of customer signups, credential matching, and document uploads in the welcome wizards.</p>
+            <h2>2. Data and API Flow</h2>
+            <p class="section-desc">Semua page tidak fetch data terus. Ia panggil pusat API iaitu shared/js/api.js.</p>
           </div>
-          <span class="tag">Supabase Auth SDK</span>
+          <span class="tag">Current: USE_REAL_DB false</span>
         </div>
         <div class="diagram">
           <pre class="mermaid">
 flowchart TD
-    USER["New or returning user"] --> ENTRY["account/pages/login/login.html"]
-    
-    ENTRY --> EMAIL_SIGNUP["Click Sign Up"]
-    ENTRY --> EMAIL_LOGIN["Enter Email & Password"]
-    ENTRY --> GOOGLE_LOGIN["Click Sign in with Google"]
+    HTML["HTML page"] --> PAGE_JS["Page JS"]
+    PAGE_JS --> API["shared/js/api.js - WeDriveAPI"]
+    API --> SWITCH{"AppConfig.USE_REAL_DB"}
 
-    EMAIL_SIGNUP --> SIGNUP_UI["account/pages/signup/signup.html"]
-    SIGNUP_UI --> CALL_SIGNUP["WeDriveAPI.signupUser()"]
-    CALL_SIGNUP --> SUPABASE_SIGNUP["supabase.auth.signUp()"]
-    SUPABASE_SIGNUP --> CREATE_CUST_RECORD["Create 'customers' record (status='Pending')"]
-    CREATE_CUST_RECORD --> AUTO_CONFIRM["Auto-confirm authentication email (dev mode)"]
-    AUTO_CONFIRM --> REDIRECT_WELCOME["Redirect to welcome.html"]
+    SWITCH -->|false sekarang| JSON["shared/dummy/data.json"]
+    SWITCH -->|true nanti| BACKEND["Backend API"]
 
-    GOOGLE_LOGIN --> SUPABASE_OAUTH["supabase.auth.signInWithOAuth(provider='google')"]
-    SUPABASE_OAUTH --> OAUTH_CALLBACK["Google Callback Redirect"]
-    OAUTH_CALLBACK --> CREATE_OAUTH_CUST["Verify / Insert record in 'customers' table"]
-    CREATE_OAUTH_CUST --> REDIRECT_WELCOME
+    JSON --> SECTIONS["stats, car, bookings, customers, reports, settings, marketing"]
+    BACKEND --> ENDPOINTS["/cars, /bookings, /customers, /auth/login, /admin/dashboard"]
 
-    EMAIL_LOGIN --> CALL_LOGIN["WeDriveAPI.loginUser()"]
-    CALL_LOGIN --> SUPABASE_LOGIN["supabase.auth.signInWithPassword()"]
-    SUPABASE_LOGIN --> LOGIN_CHECK_ADMIN{"Email exists in 'admins' table?"}
-    
-    LOGIN_CHECK_ADMIN -->|Yes| REDIRECT_ADMIN["Redirect to admin dashboard"]
-    LOGIN_CHECK_ADMIN -->|No| REDIRECT_WELCOME
-
-    REDIRECT_WELCOME --> WELCOME_JS["welcome.js checks verification status"]
-    WELCOME_JS --> STATUS_CHECK{"Status in 'customers' table?"}
-
-    STATUS_CHECK -->|Active| GO_CUST_DASH["Redirect to customer/pages/dashboard/customer.html"]
-    STATUS_CHECK -->|Pending / Incomplete| GO_COMPLETE["Redirect to account/pages/complete-profile/complete-profile.html"]
-
-    GO_COMPLETE --> UPLOAD_VERIFICATION["User uploads IC, License, formats Phone with country code"]
-    UPLOAD_VERIFICATION --> SAVE_PROFILE["WeDriveAPI.updateCustomerProfile()"]
-    SAVE_PROFILE --> UPDATE_DB_PENDING["Update status='Pending' in 'customers' table"]
-    UPDATE_DB_PENDING --> GO_PENDING_PAGE["Redirect to verification-pending.html"]
+    SECTIONS --> RENDER["Render UI"]
+    ENDPOINTS --> RENDER
           </pre>
         </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Data Section</th>
+              <th>Kegunaan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>stats</code></td>
+              <td>Nombor ringkas dashboard admin.</td>
+            </tr>
+            <tr>
+              <td><code>car</code></td>
+              <td>Senarai kereta, status, harga, spesifikasi dan gambar.</td>
+            </tr>
+            <tr>
+              <td><code>bookings</code></td>
+              <td>Senarai tempahan customer.</td>
+            </tr>
+            <tr>
+              <td><code>customers</code></td>
+              <td>Senarai pelanggan.</td>
+            </tr>
+            <tr>
+              <td><code>reports</code></td>
+              <td>Revenue bulanan, utilization kereta dan summary report.</td>
+            </tr>
+            <tr>
+              <td><code>settings</code></td>
+              <td>Maklumat syarikat, cukai, deposit, lokasi pickup.</td>
+            </tr>
+            <tr>
+              <td><code>marketing</code></td>
+              <td>Banner, promo code dan seasonal pricing.</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
-      <section class="section" id="booking-flow">
+      <section class="section" id="login">
         <div class="section-head">
           <div>
-            <h2>3. Customer Booking and Calendar Blocking Flow</h2>
-            <p class="section-desc">Illustrates how Flatpickr calendar blocks out booked date ranges, prevents collision states, and processes reservations.</p>
+            <h2>3. Login and Auth Flow</h2>
+            <p class="section-desc">Login sekarang masih simulasi. Auth guard pula ada, tetapi dimatikan untuk
+              development.</p>
           </div>
-          <span class="tag">Flatpickr + RLS Enabled</span>
+          <span class="tag">localStorage: wedrive_session</span>
         </div>
         <div class="diagram">
           <pre class="mermaid">
 flowchart TD
-    CUST_START["Customer opens customer.html"] --> LOAD_FLEET["WeDriveAPI.getCars()"]
-    LOAD_FLEET --> RENDER_GRID["Render vehicle grid with placeholders"]
-    RENDER_GRID --> CHOOSE_CAR["Select vehicle (Click View Details)"]
-    CHOOSE_CAR --> DETAILS["customer/pages/car-details/car-details.html?id=carId"]
-    DETAILS --> VIEWER_360["Render 360-degree exterior & Three.js interior panorama"]
-    DETAILS --> CLICK_BOOK["Click Book Now"]
+    USER["User isi email dan password"] --> HANDLE["handleLogin(event)"]
+    HANDLE --> API["WeDriveAPI.loginUser()"]
+    API --> DUMMY{"USE_REAL_DB false?"}
 
-    CLICK_BOOK --> BOOK_FORM["customer/pages/car-details/booking/booking.html"]
-    BOOK_FORM --> GET_DATES["WeDriveAPI.getBookedDatesForCar(carId)"]
-    GET_DATES --> QUERY_BOOKINGS["Query 'bookings' where status IN ('Active','Pending','Confirmed')"]
-    QUERY_BOOKINGS --> DISABLE_DATES["Disable date ranges in Flatpickr calendar"]
-    
-    BOOK_FORM --> SELECT_DATES["User selects available dates"]
-    SELECT_DATES --> FILL_CONTACT["Enter contact details & format phone number"]
-    FILL_CONTACT --> GO_CHECKOUT["Click Proceed to Payment"]
+    DUMMY -->|Ya| CHECK{"Email contains admin?"}
+    CHECK -->|Ya| ADMIN["Return role admin"]
+    CHECK -->|Tidak| CUSTOMER["Return role customer"]
 
-    GO_CHECKOUT --> CHECKOUT_UI["booking/payment/payment.html"]
-    CHECKOUT_UI --> SUBMIT_PAYMENT["Enter payment details (demo checkout)"]
-    SUBMIT_PAYMENT --> CALL_CREATE_BOOKING["WeDriveAPI.createBooking()"]
-    
-    CALL_CREATE_BOOKING --> DB_INSERT_BOOKING["Insert record in 'bookings' table (status='Pending', payment='Paid')"]
-    DB_INSERT_BOOKING --> DB_UPDATE_CAR["Update status='Rented' in 'cars' table"]
-    DB_UPDATE_CAR --> CONFIRMATION["Redirect to booking-confirmed.html"]
-    CONFIRMATION --> DISPLAY_RECEIPT["Display dynamic booking receipt and QR code"]
+    ADMIN --> SAVE_ADMIN["Save wedrive_session"]
+    CUSTOMER --> SAVE_CUSTOMER["Save wedrive_session"]
+    SAVE_ADMIN --> GO_ADMIN["Redirect admin dashboard"]
+    SAVE_CUSTOMER --> GO_CUSTOMER["Redirect customer dashboard"]
+
+    DUMMY -->|Tidak| REAL["POST /auth/login"]
+    REAL --> REAL_SESSION["Save real session"]
           </pre>
         </div>
-      </section>
-
-      <section class="section" id="admin-flow">
-        <div class="section-head">
-          <div>
-            <h2>4. Admin Dashboard and Management Flow</h2>
-            <p class="section-desc">Administrative actions including fleet CRUD operations, user status toggles, and detail modals.</p>
-          </div>
-          <span class="tag">Admin Module</span>
-        </div>
-        <div class="diagram">
+        <div class="diagram" style="margin-top:16px">
           <pre class="mermaid">
 flowchart TD
-    ADMIN_START["Admin opens admin.html"] --> QUERY_DASH["WeDriveAPI.getAdminData()"]
-    
-    QUERY_DASH --> QUERY_STATS["Compute statistics from 'bookings', 'cars', and 'customers' tables"]
-    QUERY_STATS --> DISPLAY_STATS["Display total revenue, active rentals, fleet, and new customers"]
-    QUERY_DASH --> DISPLAY_CARS["Display active vehicle inventory table"]
-
-    ADMIN_START --> NAV_MODULES["Select Admin Modules"]
-
-    NAV_MODULES --> MODULE_CARS["Cars Management (cars.html)"]
-    MODULE_CARS --> CARS_CRUD["Perform vehicle CRUD operations"]
-    CARS_CRUD --> UPDATE_DB_CARS["Insert/Update/Delete cars in database"]
-
-    NAV_MODULES --> MODULE_BOOKINGS["Bookings Management (bookings.html)"]
-    MODULE_BOOKINGS --> VIEW_DETAIL_MODAL["Click booking -> opens receipt-style modal"]
-    VIEW_DETAIL_MODAL --> FILTER_SEARCH["Search and filter by date range, status, or vehicle"]
-    VIEW_DETAIL_MODAL --> CHANGE_STATUS["Select status dropdown (Pending, Confirmed, Active, Completed, Cancelled)"]
-    CHANGE_STATUS --> UPDATE_DB_BOOKING["Update record in 'bookings' table"]
-
-    NAV_MODULES --> MODULE_CUSTOMERS["Customers Management (customers.html)"]
-    MODULE_CUSTOMERS --> VIEW_DOCUMENTS["Inspect verification files and user details"]
-    MODULE_CUSTOMERS --> TOGGLE_BLOCK["Toggle status (Active / Suspended)"]
-    TOGGLE_BLOCK --> UPDATE_DB_CUSTOMER["Update customer status in database"]
-
-    NAV_MODULES --> MODULE_REPORTS["Analytics & Reports (reports.html)"]
-    MODULE_REPORTS --> GENERATE_CHARTS["Query real database data and render utilization charts"]
-
-    NAV_MODULES --> MODULE_SETTINGS["Settings Config (settings.html)"]
-    MODULE_SETTINGS --> DYNAMIC_SETTINGS["Update rental terms or system variables"]
-    DYNAMIC_SETTINGS --> UPSERT_DB_SETTINGS["Upsert changes to 'settings' table"]
+    PAGE["Protected admin page"] --> GUARD["auth-guard.js"]
+    GUARD --> ACTIVE{"AUTH_GUARD_ACTIVE"}
+    ACTIVE -->|false sekarang| SKIP["Skip guard - page boleh buka terus"]
+    ACTIVE -->|true nanti| SESSION["Check wedrive_session"]
+    SESSION --> EXISTS{"Session wujud?"}
+    EXISTS -->|Tidak| LOGIN["Redirect index.html"]
+    EXISTS -->|Ya| ROLE{"Role match data-role?"}
+    ROLE -->|Ya| ALLOW["Allow access"]
+    ROLE -->|Tidak| LOGIN
           </pre>
         </div>
       </section>
 
-      <section class="section" id="db-integration">
+      <section class="section" id="guest-customer">
         <div class="section-head">
           <div>
-            <h2>5. Unified Database Integration</h2>
-            <p class="section-desc">Illustrates how the frontend decoupled layers run queries through the central api.js file to the Supabase Cloud Service.</p>
+            <h2>4. Guest and Customer Flow</h2>
+            <p class="section-desc">Guest dan customer guna logic car browsing yang sama, tetapi guest tidak boleh
+              booking.</p>
           </div>
-          <span class="tag">Database: Supabase PostgreSQL</span>
+          <span class="tag">customer/js/customer.js</span>
         </div>
         <div class="diagram">
           <pre class="mermaid">
 flowchart LR
-    HTML["HTML Halaman"] --> CLIENT_JS["Halaman JavaScript"]
-    CLIENT_JS --> API_LAYER["shared/js/api.js (WeDriveAPI)"]
-    API_LAYER --> SDK_CLIENT["shared/js/supabase-config.js (supabase)"]
-    SDK_CLIENT --> DB_CLOUD["Supabase PostgreSQL Cloud Database"]
+    GUEST["Guest page"] --> LOAD_CARS["WeDriveAPI.getCars()"]
+    CUSTOMER["Customer page"] --> LOAD_CARS
+    LOAD_CARS --> CAR["data.json car[]"]
+    CAR --> GRID["Render car cards"]
 
-    DB_CLOUD --> T_ADMINS["Table: admins"]
-    DB_CLOUD --> T_CUSTOMERS["Table: customers"]
-    DB_CLOUD --> T_CARS["Table: cars"]
-    DB_CLOUD --> T_BOOKINGS["Table: bookings"]
-    DB_CLOUD --> T_SETTINGS["Table: settings"]
-    DB_CLOUD --> T_MARKETING["Table: marketing"]
+    GRID --> FILTER["Filter by type"]
+    GRID --> BOOK["Click Book Now"]
+    BOOK --> MODE{"Guest mode?"}
+    MODE -->|Ya| LOGIN["Redirect login"]
+    MODE -->|Tidak| ALERT["Booking alert demo"]
+    ALERT --> LIMIT["Belum save booking baru"]
+          </pre>
+        </div>
+        <div class="note-grid">
+          <div class="note"><strong>Guest</strong><span>Boleh browse dan filter, tetapi booking akan balik ke
+              login.</span></div>
+          <div class="note"><strong>Customer</strong><span>Boleh browse dan tekan Book Now, tetapi masih alert
+              demo.</span></div>
+          <div class="note"><strong>Search box</strong><span>Ada pada UI, tetapi booking search penuh belum
+              dibuat.</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="admin">
+        <div class="section-head">
+          <div>
+            <h2>5. Admin Dashboard Flow</h2>
+            <p class="section-desc">Dashboard admin load sidebar, navbar, stats dan current car status dari dummy data.
+            </p>
+          </div>
+          <span class="tag">admin/js/admin.js</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    ADMIN["admin/pages/admin.html"] --> SIDEBAR["sidebar-loader.js"]
+    ADMIN --> NAVBAR["navbar-loader.js"]
+    ADMIN --> JS["admin/js/admin.js"]
+
+    JS --> API["WeDriveAPI.getAdminData()"]
+    API --> JSON["data.json"]
+    JSON --> STATS["Populate dashboard stats"]
+    JSON --> CAR_TABLE["Populate current car status"]
+
+    ADMIN --> QUICK["Quick Actions"]
+    QUICK --> CARS["Cars"]
+    QUICK --> BOOKINGS["Bookings"]
+    QUICK --> REPORTS["Reports"]
+    QUICK --> CUSTOMERS["Customers"]
+    QUICK --> MARKETING["Marketing"]
+    QUICK --> CALENDAR["Calendar"]
+    QUICK --> CHATBOT["AI Chatbot"]
+    QUICK --> SETTINGS["Settings"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="cars">
+        <div class="section-head">
+          <div>
+            <h2>6. Cars, Car Detail and Booking Calendar</h2>
+            <p class="section-desc">Admin boleh lihat car, filter/search kereta, masuk detail kereta, lihat history
+              dan pilih range booking demo.</p>
+          </div>
+          <span class="tag">admin/js/cars.js and car-detail.js</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    CARS_PAGE["cars.html"] --> CARS_JS["cars.js"]
+    CARS_JS --> DATA["WeDriveAPI.getAdminData()"]
+    DATA --> CAR["car[]"]
+
+    CAR --> STATS["Total, Available, Rented"]
+    CAR --> CARDS["Render car cards"]
+    CAR --> LIST["Render list modal"]
+
+    CARDS --> FILTER["Filter All, Available, Rented"]
+    LIST --> SEARCH["Search name or plate"]
+    CARDS --> MANAGE["Manage car"]
+    SEARCH --> MANAGE
+
+    MANAGE --> DETAIL["car-detail.html?id=carId"]
+    DETAIL --> FIND["Find car by id"]
+    FIND --> RENDER["Render details and images"]
+    RENDER --> HISTORY["Render booking history by plate"]
+    RENDER --> CAL["Render booking calendar"]
+
+    CAL --> SELECT["Select pickup and return date"]
+    SELECT --> CONFLICT{"Booked date conflict?"}
+    CONFLICT -->|Ya| TOAST["Show warning"]
+    CONFLICT -->|Tidak| SUMMARY["Show booking summary"]
+    SUMMARY --> CONFIRM["Confirm booking demo"]
+
+    RENDER --> EDIT["Edit details"]
+    EDIT --> UPDATE_UI["Update current UI only"]
+    RENDER --> STATUS["Toggle Available or Rented"]
+    STATUS --> UPDATE_UI
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="bookings">
+        <div class="section-head">
+          <div>
+            <h2>7. Bookings and Customers Flow</h2>
+            <p class="section-desc">Admin boleh view, filter dan search booking/customer daripada dummy data.</p>
+          </div>
+          <span class="tag">bookings.js and customers.js</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    BOOK_PAGE["bookings.html"] --> BOOK_JS["bookings.js"]
+    BOOK_JS --> BOOK_DATA["data.json bookings[]"]
+    BOOK_DATA --> BOOK_STATS["Total, confirmed, pending, revenue"]
+    BOOK_DATA --> BOOK_TABLE["Render bookings table"]
+    BOOK_TABLE --> BOOK_FILTER["Filter by status"]
+    BOOK_TABLE --> BOOK_SEARCH["Search booking id, customer, car"]
+    BOOK_TABLE --> BOOK_VIEW["View detail alert"]
+
+    CUST_PAGE["customers.html"] --> CUST_JS["customers.js"]
+    CUST_JS --> CUST_DATA["data.json customers[]"]
+    CUST_DATA --> CUST_STATS["Total, active, inactive, spent"]
+    CUST_DATA --> CUST_TABLE["Render customers table"]
+    CUST_TABLE --> CUST_SEARCH["Search name, email, phone"]
+    CUST_TABLE --> CUST_VIEW["View customer alert"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="reports">
+        <div class="section-head">
+          <div>
+            <h2>8. Reports Flow</h2>
+            <p class="section-desc">Reports page guna data dummy untuk carta revenue dan utilization tanpa library chart
+              external.</p>
+          </div>
+          <span class="tag">admin/js/reports.js</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    REPORTS["reports.html"] --> JS["reports.js"]
+    JS --> DATA["WeDriveAPI.getAdminData()"]
+    DATA --> REPORTS_DATA["reports object"]
+
+    REPORTS_DATA --> STATS["Total revenue, bookings, avg days, rating"]
+    REPORTS_DATA --> REV["Monthly revenue CSS bar chart"]
+    REPORTS_DATA --> UTIL["Car utilization CSS bar chart"]
+    REPORTS_DATA --> SUMMARY["Popular car, busiest month, total revenue"]
+    SUMMARY --> EXPORT["Export Report"]
+    EXPORT --> DEMO["Alert demo - PDF/CSV not ready"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="marketing">
+        <div class="section-head">
+          <div>
+            <h2>9. Marketing and Promo Flow</h2>
+            <p class="section-desc">Marketing ialah modul yang boleh persist locally sebab ia save ke localStorage.</p>
+          </div>
+          <span class="tag">localStorage: wedrive_marketing</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    MKT["marketing.html"] --> JS["marketing.js"]
+    JS --> API["WeDriveAPI.getMarketing()"]
+    API --> STORAGE{"wedrive_marketing exists?"}
+    STORAGE -->|Ya| USE_LOCAL["Use localStorage data"]
+    STORAGE -->|Tidak| USE_JSON["Use data.json marketing"]
+
+    USE_LOCAL --> RENDER["Render marketing dashboard"]
+    USE_JSON --> RENDER
+
+    RENDER --> BANNER["Banners - add, edit, toggle, delete"]
+    RENDER --> PROMO["Promo codes - add, edit, toggle, delete"]
+    RENDER --> SEASON["Seasonal pricing - add, edit, toggle, delete"]
+
+    BANNER --> SAVE["saveMarketing()"]
+    PROMO --> SAVE
+    SEASON --> SAVE
+    SAVE --> LOCAL["Save to localStorage"]
+    LOCAL --> PROMO_STRIP["promo-banner.js reads active banner"]
+    PROMO_STRIP --> GUEST_CUSTOMER["Show banner on guest/customer pages"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="calendar">
+        <div class="section-head">
+          <div>
+            <h2>10. Calendar Overview Flow</h2>
+            <p class="section-desc">Calendar overview gabungkan booking, marketing banner, promo code dan seasonal
+              pricing.</p>
+          </div>
+          <span class="tag">admin/js/calendar.js</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    CAL["calendar.html"] --> JS["calendar.js"]
+    JS --> DATA["WeDriveAPI.getData()"]
+    JS --> MKT["WeDriveAPI.getMarketing()"]
+
+    DATA --> BOOKINGS["bookings[]"]
+    DATA --> CAR["car[]"]
+    MKT --> EVENTS["banners, promo codes, seasonal pricing"]
+
+    BOOKINGS --> RENDER["Render monthly calendar"]
+    CAR --> RENDER
+    EVENTS --> RENDER
+
+    RENDER --> DOTS["Show booking, event and seasonal indicators"]
+    RENDER --> STATS["Update stat cards"]
+    DOTS --> DAY["Click date"]
+    DAY --> DETAIL["Show day detail panel"]
+    STATS --> MODAL["Click stat opens modal detail"]
+    RENDER --> FILTERS["Filter chips hide/show indicators"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="settings">
+        <div class="section-head">
+          <div>
+            <h2>11. Settings Flow</h2>
+            <p class="section-desc">Settings load company data daripada JSON dan boleh collect value bila save, tetapi
+              belum persist ke backend.</p>
+          </div>
+          <span class="tag">admin/js/settings.js</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    SETTINGS["settings.html"] --> JS["settings.js"]
+    JS --> DATA["WeDriveAPI.getAdminData()"]
+    DATA --> SETTINGS_DATA["settings object"]
+    SETTINGS_DATA --> FORM["Populate settings form"]
+    SETTINGS_DATA --> LOC["Render pickup locations"]
+    FORM --> SAVE["Click Save Settings"]
+    SAVE --> COLLECT["Collect values"]
+    COLLECT --> LOG["console.log settings"]
+    LOG --> ALERT["Alert saved demo"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="chatbot">
+        <div class="section-head">
+          <div>
+            <h2>12. Chatbot Flow</h2>
+            <p class="section-desc">Ada chatbot customer/guest yang rule-based, dan admin chatbot settings untuk
+              Gemini/Grok API key.</p>
+          </div>
+          <span class="tag">chatbot.js and chatbot-admin.js</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    PAGE["Guest or customer page"] --> PLACEHOLDER["chatbot-placeholder"]
+    PLACEHOLDER --> JS["shared/js/chatbot.js"]
+    JS --> UI["Inject chatbot panel and FAB"]
+    UI --> OPEN["User opens chat"]
+    OPEN --> SETTINGS["WeDriveAPI.getChatbotSettings()"]
+    SETTINGS --> LOCAL{"Local chatbot settings?"}
+    LOCAL -->|Ya| ADMIN_SETTINGS["Use admin saved settings"]
+    LOCAL -->|Tidak| DEFAULTS["Use default replies"]
+    ADMIN_SETTINGS --> MSG["User sends message"]
+    DEFAULTS --> MSG
+    MSG --> KEYWORD["Keyword match"]
+    KEYWORD --> REPLY["Bot replies"]
+          </pre>
+        </div>
+        <div class="diagram" style="margin-top:16px">
+          <pre class="mermaid">
+flowchart TD
+    ADMIN_CHAT["admin chatbot page"] --> LOAD["Load wedrive_chatbot_settings"]
+    LOAD --> FORM["API keys, system prompt, promo context, greeting"]
+    FORM --> SAVE["Save to localStorage"]
+    FORM --> TEST["Test chat"]
+    TEST --> GEMINI["Try Gemini first"]
+    GEMINI --> OK{"Gemini success?"}
+    OK -->|Ya| SHOW["Show reply"]
+    OK -->|Tidak| GROK["Fallback to Grok"]
+    GROK --> GROK_OK{"Grok success?"}
+    GROK_OK -->|Ya| SHOW
+    GROK_OK -->|Tidak| FAIL["Show failed message"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="shared">
+        <div class="section-head">
+          <div>
+            <h2>13. Shared Components Flow</h2>
+            <p class="section-desc">Fail shared handle theme, language, footer, navbar, sidebar, animation, chatbot dan
+              promo banner.</p>
+          </div>
+          <span class="tag">shared folder</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    PAGE["Page load"] --> MAIN["main.js"]
+    MAIN --> THEME["Apply day/night theme"]
+    MAIN --> LANG["Load en.json or ms.json"]
+    MAIN --> FOOTER["Fetch footer.html"]
+    MAIN --> REVEAL["Scroll reveal and effects"]
+
+    PAGE --> NAV["navbar-loader.js"]
+    NAV --> NAV_RENDER["Render navbar by module"]
+
+    PAGE --> SIDE["sidebar-loader.js"]
+    SIDE --> SIDE_RENDER["Render admin sidebar and active menu"]
+
+    PAGE --> CHAT["chatbot.js"]
+    CHAT --> CHAT_RENDER["Inject chatbot UI"]
+
+    PAGE --> PROMO["promo-banner.js"]
+    PROMO --> PROMO_RENDER["Show active promo banner"]
+          </pre>
+        </div>
+      </section>
+
+      <section class="section" id="future-db">
+        <div class="section-head">
+          <div>
+            <h2>14. Future Database Integration</h2>
+            <p class="section-desc">Untuk jadikan sistem dynamic sebenar, backend perlu connect melalui
+              shared/js/api.js.</p>
+          </div>
+          <span class="tag">Change USE_REAL_DB to true</span>
+        </div>
+        <div class="diagram">
+          <pre class="mermaid">
+flowchart TD
+    NOW["Current system"] --> API["shared/js/api.js"]
+    API --> FLAG_FALSE["USE_REAL_DB false"]
+    FLAG_FALSE --> JSON["Read data.json"]
+
+    FUTURE["Future system"] --> FLAG_TRUE["USE_REAL_DB true"]
+    FLAG_TRUE --> BASE["Set API_BASE_URL"]
+    BASE --> ENDPOINTS["Create backend endpoints"]
+
+    ENDPOINTS --> LOGIN["POST /auth/login"]
+    ENDPOINTS --> CARS["GET, POST, PUT, DELETE /cars"]
+    ENDPOINTS --> BOOKINGS["GET, POST, PUT /bookings"]
+    ENDPOINTS --> CUSTOMERS["GET, POST, PUT /customers"]
+    ENDPOINTS --> DASH["GET /admin/dashboard"]
+    ENDPOINTS --> MKT["GET, PUT /marketing"]
+    ENDPOINTS --> CHAT["GET, PUT /chatbot/settings"]
+
+    LOGIN --> REAL["Real dynamic system"]
+    CARS --> REAL
+    BOOKINGS --> REAL
+    CUSTOMERS --> REAL
+    DASH --> REAL
+    MKT --> REAL
+    CHAT --> REAL
           </pre>
         </div>
       </section>
@@ -753,79 +1079,115 @@ flowchart LR
       <section class="section" id="status">
         <div class="section-head">
           <div>
-            <h2>6. Current Feature Implementation Status</h2>
-            <p class="section-desc">Detailed checklist mapping our progressive integration to full operational status.</p>
+            <h2>15. Current Function Status</h2>
+            <p class="section-desc">Status sebenar fungsi sistem sekarang: mana yang berfungsi, mana yang masih demo.
+            </p>
           </div>
-          <span class="tag">Active Status Checklist</span>
+          <span class="tag">Prototype checklist</span>
         </div>
         <table>
           <thead>
             <tr>
-              <th>System Module</th>
+              <th>Bahagian</th>
               <th>Status</th>
-              <th>Technical Implementation details</th>
+              <th>Catatan</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>User Authentication</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Supabase Auth integration. Password hashed via bcrypt, supporting email/password & Google OAuth 2.0.</td>
+              <td>Login</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Email mengandungi <code>admin</code> jadi admin, selain itu customer.</td>
             </tr>
             <tr>
-              <td>Compliance Redirect Gate</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Autoredirect in welcome splash. Prevents incomplete or pending profiles from accessing the customer dashboard.</td>
+              <td>Signup</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Tidak create user dalam database.</td>
             </tr>
             <tr>
-              <td>Fleet Inventory showcase</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Loaded from PostgreSQL <code>cars</code> table. Fully responsive columns with custom labels.</td>
+              <td>Auth guard</td>
+              <td><span class="status off">Off</span></td>
+              <td><code>AUTH_GUARD_ACTIVE = false</code>.</td>
             </tr>
             <tr>
-              <td>360 Virtual Inspection</td>
-              <td><span class="status ok">Active</span></td>
-              <td>200-frame sequential exterior view loader and Three.js panoramic interior render engine.</td>
+              <td>Customer browse cars</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Baca <code>car[]</code> dari dummy JSON.</td>
             </tr>
             <tr>
-              <td>Calendar Booking blocking</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Flatpickr queries <code>bookings</code> table in real-time to identify conflict dates and gray them out.</td>
+              <td>Customer booking</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Alert sahaja, belum create booking baru.</td>
             </tr>
             <tr>
-              <td>Booking Checkout</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Processes payments in demo mode. Safely inserts verified records into Supabase <code>bookings</code> table.</td>
+              <td>Guest browse cars</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Browse dan filter boleh, booking perlu login.</td>
             </tr>
             <tr>
-              <td>Admin statistics cards</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Calculated live via aggregate queries: total revenue, active rentals, fleet, and monthly customers.</td>
+              <td>Admin dashboard</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Render stats dan car table.</td>
             </tr>
             <tr>
-              <td>Admin Fleet management</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Complete CRUD operations (Add, Edit details, edit image references, Delete) syncing instantly to PostgreSQL.</td>
+              <td>Admin cars</td>
+              <td><span class="status ok">OK</span></td>
+              <td>View, filter, search dan manage detail.</td>
             </tr>
             <tr>
-              <td>Admin Booking control</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Search and date filters. Detail panel uses premium Stripe-style overlay modal with status dropdown overrides.</td>
+              <td>Add car</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Alert sahaja.</td>
             </tr>
             <tr>
-              <td>Admin Customer manager</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Customer profiles view showing license documents and toggle switch to block/suspend user.</td>
+              <td>Edit car detail</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Update UI semasa, tidak persist ke JSON.</td>
             </tr>
             <tr>
-              <td>System settings config</td>
-              <td><span class="status ok">Active</span></td>
-              <td>Parameters (company contacts, tax rate, cancel policies) saved to settings table via UPSERT queries.</td>
+              <td>Booking calendar</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Boleh pilih range dan kira total, belum save booking.</td>
             </tr>
             <tr>
-              <td>AI Support Chatbot</td>
-              <td><span class="status ok">Active</span></td>
-              <td>LLM-powered chat assistant. Fetches context and credentials securely, fallback to Grok-3 if Gemini is offline.</td>
+              <td>Bookings page</td>
+              <td><span class="status ok">OK</span></td>
+              <td>View, filter dan search booking dummy.</td>
+            </tr>
+            <tr>
+              <td>Customers page</td>
+              <td><span class="status ok">OK</span></td>
+              <td>View dan search customer dummy.</td>
+            </tr>
+            <tr>
+              <td>Reports</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Render chart daripada dummy report.</td>
+            </tr>
+            <tr>
+              <td>Settings</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Populate form dan alert save.</td>
+            </tr>
+            <tr>
+              <td>Marketing</td>
+              <td><span class="status local">Local</span></td>
+              <td>Save ke <code>localStorage</code>.</td>
+            </tr>
+            <tr>
+              <td>Promo banner</td>
+              <td><span class="status ok">OK</span></td>
+              <td>Baca active banner dari JSON/localStorage.</td>
+            </tr>
+            <tr>
+              <td>Customer chatbot</td>
+              <td><span class="status demo">Demo</span></td>
+              <td>Rule-based keyword reply.</td>
+            </tr>
+            <tr>
+              <td>Admin chatbot settings</td>
+              <td><span class="status local">Local</span></td>
+              <td>API key dan prompt disimpan localStorage.</td>
             </tr>
           </tbody>
         </table>
@@ -834,34 +1196,49 @@ flowchart LR
       <section class="section" id="files">
         <div class="section-head">
           <div>
-            <h2>7. Project File Map & Responsibilities</h2>
-            <p class="section-desc">Identifies system files and how data structures are distributed in directories.</p>
+            <h2>16. Important File Map</h2>
+            <p class="section-desc">Senarai fail utama dan tanggungjawab masing-masing.</p>
           </div>
-          <span class="tag">File Map</span>
+          <span class="tag">Project guide</span>
         </div>
         <ul class="file-map">
-          <li><code>index.html</code> - Main landing page and Auth entry point.</li>
-          <li><code>account/pages/login/login.html</code> - User login form.</li>
-          <li><code>account/pages/signup/signup.html</code> - User registration form.</li>
-          <li><code>account/pages/welcome/welcome.html</code> - Splash gateway validating compliance.</li>
-          <li><code>account/pages/complete-profile/complete-profile.html</code> - Profile completion document uploads.</li>
-          <li><code>customer/pages/dashboard/customer.html</code> - Customer main page.</li>
-          <li><code>customer/pages/car-details/car-details.html</code> - Immersive vehicle viewer details.</li>
-          <li><code>customer/pages/car-details/booking/booking.html</code> - Date selectors with Flatpickr.</li>
-          <li><code>customer/pages/car-details/booking/payment/payment.html</code> - RLS secure checkout.</li>
-          <li><code>customer/pages/my-bookings/my-bookings.html</code> - Historical customer receipts.</li>
-          <li><code>admin/pages/dashboard/admin.html</code> - Admin central statistics.</li>
-          <li><code>admin/pages/car/cars.html</code> - Fleet inventory CRUD controls.</li>
-          <li><code>admin/pages/booking/bookings.html</code> - Structured receipt details modal.</li>
-          <li><code>admin/pages/customer/customers.html</code> - User authorization verification.</li>
-          <li><code>shared/js/api.js</code> - Unified database API functions mapping.</li>
-          <li><code>shared/js/supabase-config.js</code> - Core Supabase SDK initializer.</li>
-          <li><code>shared/js/main.js</code> - Theme toggles and localized translations loader.</li>
+          <li><code>index.html</code> - login page dan entry point sistem.</li>
+          <li><code>guest/pages/guest.html</code> - guest browsing page.</li>
+          <li><code>customer/pages/signup.html</code> - signup demo.</li>
+          <li><code>customer/pages/customer.html</code> - customer dashboard.</li>
+          <li><code>customer/js/customer.js</code> - render cars, filter dan booking demo.</li>
+          <li><code>admin/pages/admin.html</code> - admin dashboard.</li>
+          <li><code>admin/js/admin.js</code> - populate admin stats dan car table.</li>
+          <li><code>admin/pages/cars.html</code> - cars management.</li>
+          <li><code>admin/js/cars.js</code> - car cards, filter, search dan list modal.</li>
+          <li><code>admin/pages/car-detail.html</code> - detail satu kereta.</li>
+          <li><code>admin/js/car-detail.js</code> - detail, images, history dan booking calendar.</li>
+          <li><code>admin/pages/bookings.html</code> - booking management.</li>
+          <li><code>admin/js/bookings.js</code> - render, filter dan search bookings.</li>
+          <li><code>admin/pages/customers.html</code> - customer management.</li>
+          <li><code>admin/js/customers.js</code> - render dan search customers.</li>
+          <li><code>admin/pages/reports.html</code> - reports and analytics.</li>
+          <li><code>admin/js/reports.js</code> - revenue dan utilization chart.</li>
+          <li><code>admin/pages/marketing.html</code> - marketing management.</li>
+          <li><code>admin/js/marketing.js</code> - banners, promo codes dan seasonal pricing.</li>
+          <li><code>admin/pages/calendar.html</code> - calendar overview.</li>
+          <li><code>admin/js/calendar.js</code> - monthly calendar indicators dan modal detail.</li>
+          <li><code>admin/pages/settings.html</code> - system settings.</li>
+          <li><code>admin/js/settings.js</code> - populate settings form.</li>
+          <li><code>admin/pages/chatbot.html</code> - AI chatbot admin settings.</li>
+          <li><code>admin/js/chatbot-admin.js</code> - Gemini/Grok test dan test chat.</li>
+          <li><code>shared/js/api.js</code> - pusat data/API semua page.</li>
+          <li><code>shared/dummy/data.json</code> - dummy database utama.</li>
+          <li><code>shared/js/main.js</code> - theme, language, footer dan effects.</li>
+          <li><code>shared/js/navbar-loader.js</code> - navbar guest/customer/admin.</li>
+          <li><code>shared/js/sidebar-loader.js</code> - sidebar admin.</li>
+          <li><code>shared/js/chatbot.js</code> - reusable chatbot component.</li>
+          <li><code>shared/js/promo-banner.js</code> - promo banner display.</li>
         </ul>
       </section>
 
       <div class="footer">
-        WeDRIVE Systems Flowcharts &bull; Prepared for Faculty of Information and Communications Technology (FTMK), Universiti Teknikal Malaysia Melaka.
+        WeDRIVE Full System Flowchart - dibuat untuk memahami flow FYP AI Car Rental System.
       </div>
     </main>
   </div>
@@ -874,21 +1251,21 @@ flowchart LR
       flowchart: {
         htmlLabels: true,
         curve: "basis",
-        nodeSpacing: 45,
-        rankSpacing: 60
+        nodeSpacing: 42,
+        rankSpacing: 58
       },
       themeVariables: {
         fontFamily: "Inter, system-ui, sans-serif",
-        primaryColor: "#f1f5f9",
-        primaryTextColor: "#0f172a",
-        primaryBorderColor: "#cbd5e1",
+        primaryColor: "#eff6ff",
+        primaryTextColor: "#14213d",
+        primaryBorderColor: "#93c5fd",
         lineColor: "#64748b",
         secondaryColor: "#ecfdf5",
         tertiaryColor: "#fffbeb",
         clusterBkg: "#ffffff",
-        clusterBorder: "#e2e8f0",
+        clusterBorder: "#dbe3ef",
         noteBkgColor: "#f8fafc",
-        noteTextColor: "#0f172a"
+        noteTextColor: "#14213d"
       }
     });
   </script>

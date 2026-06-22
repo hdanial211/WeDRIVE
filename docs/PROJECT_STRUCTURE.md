@@ -21,6 +21,22 @@ AI CAR RENTAL SYSTEM/
 |       +-- send-email/
 |           +-- index.ts        # Edge Function: email notification (booking confirm, reminder, refund, doc verification)
 |
++-- REPORT/                     # Laporan FYP (PSM I & PSM II)
+|   +-- chapters/               # Bab-bab laporan dalam Markdown
+|   |   +-- 00_Front_Matter.md  # Borang Pengesahan, Title, Declaration, Dedication, Acknowledgements
+|   |   +-- 01_Abstract.md     # Abstract (EN) & Abstrak (BM)
+|   |   +-- 02_Table_of_Contents.md # TOC, List of Tables/Figures/Abbreviations
+|   |   +-- 03_Chapter1_Introduction.md # Bab 1: Pengenalan
+|   |   +-- 04_Chapter2_Literature_Review.md # Bab 2: Kajian Literatur & Metodologi
+|   |   +-- 05_Chapter3_Analysis.md # Bab 3: Analisis
+|   |   +-- 06_Chapter4_Design.md # Bab 4: Reka Bentuk
+|   |   +-- 07_References.md   # Rujukan (Harvard Style)
+|   +-- WeDRIVE_PSM1_Report.docx # Laporan lengkap dalam format DOCX
+|   +-- 3-FYP-Writing-Guide-2025_v1.docx # Panduan penulisan FYP UTeM
+|   +-- FINAL REPORT FYP -TEMPLATE.docx # Template laporan FYP
+|   +-- PROPOSAL HAKIM (1).pdf # Proposal projek
+|   +-- PSM reference.pdf      # Rujukan contoh PSM
+|
 +-- docs/                       # Dokumentasi Projek
 |   +-- PROJECT_STRUCTURE.md     # Struktur fail & panduan integrasi
 |   +-- FULL_SYSTEM_FLOWCHART.md # Carta alir sistem penuh
@@ -28,19 +44,6 @@ AI CAR RENTAL SYSTEM/
 |   +-- stitch-reference/        # Rujukan reka bentuk Stitch
 |       +-- html/                # Kod HTML skrin Stitch (11 skrin + mobile)
 |       +-- screenshots/         # Tangkapan skrin reka bentuk Stitch
-|
-+-- PLAN/                       # Perancangan Migrasi & Pembangunan
-|   +-- Implementation Plan     # Log perancangan migrasi pangkalan data
-|   +-- next plan               # Nota perancangan feature akan datang
-|   +-- reduce AI Thinking      # Dokumen rujukan pantas kredential & skema DB
-|
-+-- REPORT/                     # Laporan Projek Sarjana Muda (PSM 1)
-|   +-- 3-FYP-Writing-Guide-2025_v1.docx # Panduan Penulisan PSM FTMK UTeM
-|   +-- 00_Title_and_Abstract.md # Halaman Judul, Pengakuan, Penghargaan & Abstrak
-|   +-- 01_Chapter1_Introduction.md # Bab 1: Pengenalan & Latar Belakang
-|   +-- 02_Chapter2_Literature_Review.md # Bab 2: Kajian Literatur & Metodologi
-|   +-- 03_Chapter3_Analysis.md # Bab 3: Analisis Keperluan Pangkalan Data
-|   +-- 04_References_and_Appendices.md # Rujukan & Lampiran Laporan
 |
 +-- account/                    # Modul Akaun (Login, Signup, Forgot Password)
 |   +-- pages/

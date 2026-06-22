@@ -4,14 +4,17 @@
  * Generates reports from real booking/car data
  */
 
+var currentBookings = [];
+var currentCars = [];
+
 window.WeDriveAPI.getAdminData()
   .then(data => {
-    var bookings = data.bookings || [];
-    var cars = data.car || [];
-    generateReportStats(bookings, cars);
-    renderRevenueChart(bookings);
-    renderUtilChart(bookings, cars);
-    populateSummaryCards(bookings, cars);
+    currentBookings = data.bookings || [];
+    currentCars = data.car || [];
+    generateReportStats(currentBookings, currentCars);
+    renderRevenueChart(currentBookings);
+    renderUtilChart(currentBookings, currentCars);
+    populateSummaryCards(currentBookings, currentCars);
   })
   .catch(err => console.error('Reports data load error:', err));
 
@@ -139,6 +142,98 @@ function populateSummaryCards(bookings, cars) {
   el = document.getElementById('rp-total-rev'); if (el) el.textContent = 'RM ' + paidTotal.toLocaleString();
 }
 
-function exportReport() {
-  alert('Report export (PDF/CSV) - Feature will be available in a future update.');
+function toggleExportDropdown(e) {
+  e.stopPropagation();
+  var dropdown = document.getElementById('export-dropdown');
+  if (!dropdown) return;
+  
+  if (dropdown.style.display === 'none') {
+    dropdown.style.display = 'flex';
+  } else {
+    dropdown.style.display = 'none';
+  }
 }
+
+function handleExport(format) {
+  var dropdown = document.getElementById('export-dropdown');
+  if (dropdown) dropdown.style.display = 'none';
+
+  if (format === 'pdf') {
+    window.print();
+  } else if (format === 'csv') {
+    exportToCSV();
+  }
+}
+
+function exportToCSV() {
+  if (!currentBookings || currentBookings.length === 0) {
+    alert('No data available to export.');
+    return;
+  }
+
+  var csvRows = [];
+  
+  // 1. Title & Header
+  csvRows.push("WeDRIVE PERFORMANCE REPORT");
+  csvRows.push("Generated Date," + new Date().toLocaleString());
+  csvRows.push("");
+  
+  // 2. Summary stats
+  var paidBookings = currentBookings.filter(b => b.payment === 'Paid');
+  var totalRevenue = paidBookings.reduce((s, b) => s + (Number(b.total) || 0), 0);
+  var totalBookings = currentBookings.length;
+  var totalDays = currentBookings.reduce((s, b) => s + (Number(b.days) || 0), 0);
+  var avgDays = totalBookings > 0 ? (totalDays / totalBookings).toFixed(1) : 0;
+  
+  csvRows.push("SUMMARY STATS");
+  csvRows.push("Total Revenue (RM)," + totalRevenue);
+  csvRows.push("Total Bookings," + totalBookings);
+  csvRows.push("Average Rental Days," + avgDays);
+  csvRows.push("");
+
+  // 3. Detailed booking list header
+  csvRows.push("DETAILED BOOKINGS");
+  csvRows.push("Booking ID,Car Model,Plate Number,Customer Name,Customer Email,Start Date,End Date,Duration (Days),Daily Rate (RM),Total (RM),Status,Payment Status");
+
+  // 4. Populate bookings
+  currentBookings.forEach(function(b) {
+    var row = [
+      b.booking_id || b.id || '',
+      '"' + (b.car || '').replace(/"/g, '""') + '"',
+      b.plate || '',
+      '"' + (b.customer || '').replace(/"/g, '""') + '"',
+      b.email || b.customer_email || '',
+      b.start_date || '',
+      b.end_date || '',
+      b.days || '',
+      b.daily || '',
+      b.total || '',
+      b.status || '',
+      b.payment || ''
+    ];
+    csvRows.push(row.join(","));
+  });
+
+  // Create Blob and download
+  var csvString = csvRows.join("\n");
+  var blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", "wedrive_report_" + new Date().toISOString().slice(0, 10) + ".csv");
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Close dropdown on click outside
+document.addEventListener('click', function(e) {
+  var dropdown = document.getElementById('export-dropdown');
+  if (dropdown && dropdown.style.display === 'flex') {
+    var btn = document.getElementById('export-btn');
+    if (!dropdown.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  }
+});

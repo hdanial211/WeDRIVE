@@ -3235,3 +3235,115 @@ html[lang="ms"] .delete-modal-desc-ms {
   transform: none !important;
   box-shadow: none !important;
 }
+
+/* Reports Export Dropdown */
+.export-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-color, #E2E8F0);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  padding: 6px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: slideDownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.export-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary, #1E293B);
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.export-dropdown button:hover {
+  background: var(--bg-surface-3, #F1F5F9);
+  color: var(--primary, #3B82F6);
+}
+
+.export-dropdown button .material-icons-round {
+  font-size: 18px;
+  color: var(--text-secondary, #64748B);
+  transition: color 0.15s ease;
+}
+
+.export-dropdown button:hover .material-icons-round {
+  color: var(--primary, #3B82F6);
+}
+
+/* Print Overrides for PDF Export */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .main, .main * {
+    visibility: visible;
+  }
+  .main {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  /* Hide sidebar, navbar, chatbot, and header buttons during print */
+  #sidebar-placeholder, 
+  #navbar-placeholder,
+  .sidebar,
+  .navbar,
+  .card-header button,
+  .card-header .btn-primary-sm,
+  #export-dropdown,
+  #export-btn,
+  #chatbot-placeholder,
+  .chatbot-container,
+  .lang-toggle,
+  .theme-toggle {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  /* Adjust charts and grids for printing */
+  .grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+  }
+  .stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+  }
+  .card, .stat-card {
+    border: 1px solid #CBD5E1 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+}
