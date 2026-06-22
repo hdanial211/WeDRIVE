@@ -96,18 +96,29 @@ function renderUtilChart(bookings, cars) {
     return { car: c.name ? c.name.split(' ').slice(1, 3).join(' ') : 'Car ' + c.id, utilization: utilPct, days: totalDays };
   }).sort((a, b) => b.utilization - a.utilization);
 
+  var maxUtil = Math.max(...utilData.map(u => u.utilization));
+
   container.innerHTML = utilData.map(u => {
     var barColor = 'var(--primary)';
     if (u.utilization >= 80) barColor = 'var(--success)';
     else if (u.utilization >= 50) barColor = 'var(--warning)';
     else barColor = 'var(--danger)';
+
+    // Scale width relative to max utilization so it fills the space (at least 1% for visibility if utilization > 0)
+    var widthPct = maxUtil > 0 ? (u.utilization / maxUtil) * 100 : 0;
+    if (u.utilization > 0 && widthPct < 5) widthPct = 5;
+
+    // Decide if label should be inside or outside the bar
+    var labelInside = widthPct >= 18;
+
     return `
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding:0 12px;">
       <span style="width:140px; font-size:12px; font-weight:600; color:var(--navy); text-align:right;">${u.car}</span>
-      <div style="flex:1; background:var(--slate-100); border-radius:8px; height:24px; overflow:hidden;">
-        <div style="height:100%; width:${u.utilization}%; background:${barColor}; border-radius:8px; transition:width 0.8s ease; display:flex; align-items:center; justify-content:flex-end; padding-right:8px;">
-          <span style="font-size:10px; font-weight:700; color:white;">${u.utilization}%</span>
+      <div style="flex:1; background:var(--slate-100); border-radius:8px; height:24px; overflow:hidden; display:flex; align-items:center;">
+        <div style="height:100%; width:${widthPct}%; background:${barColor}; border-radius:8px; transition:width 0.8s ease; display:flex; align-items:center; justify-content:flex-end; padding-right:${labelInside ? '8px' : '0px'}; min-width:${u.utilization > 0 ? '12px' : '0px'};">
+          ${labelInside ? `<span style="font-size:10px; font-weight:700; color:white;">${u.utilization}%</span>` : ''}
         </div>
+        ${!labelInside ? `<span style="font-size:10px; font-weight:700; color:var(--navy); margin-left:8px;">${u.utilization}%</span>` : ''}
       </div>
       <span style="font-size:11px; color:var(--slate-400); width:60px;">${u.days} days</span>
     </div>`;
