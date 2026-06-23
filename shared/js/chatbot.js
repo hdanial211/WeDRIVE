@@ -328,10 +328,14 @@ window.addChatMsg = function(text, isUser = false, showCar = null) {
     `).join('');
   }
 
+  // Parse markdown links [Text](URL)
+  var processedText = text;
+  processedText = processedText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+
   div.innerHTML = `
     <div class="chat-avatar">${isUser ? userAvatar : '<span class="material-icons-round chat-avatar-icon">smart_toy</span>'}</div>
     <div>
-      <div class="chat-bubble">${text}</div>
+      <div class="chat-bubble">${processedText}</div>
       ${carHtml}
       <div class="chat-time">${t}</div>
     </div>`;

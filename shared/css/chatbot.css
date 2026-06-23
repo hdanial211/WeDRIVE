@@ -95,6 +95,8 @@
   border-left: 3px solid var(--primary, #3B82F6);
 }
 .chat-msg.user .chat-bubble { background: var(--navy, #1E293B); color: white; border-top-right-radius: 3px; }
+.chat-bubble a { color: var(--primary, #3B82F6); text-decoration: underline; font-weight: 600; }
+.chat-msg.user .chat-bubble a { color: #EFF6FF; }
 .chat-time { font-size: 10px; color: var(--slate-400, #94A3B8); margin-top: 3px; }
 .chat-msg.user .chat-time { text-align: right; }
 .typing-indicator { display: flex; gap: 4px; padding: 10px 13px; align-items: center; }

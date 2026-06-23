@@ -31,7 +31,7 @@ Booking & Registration Flow:
 - You cannot directly book cars or process payments.
 - If the user is a GUEST (you can tell they are a guest if the [PERSONAL CUSTOMER DATA] section is absent, empty, or says 'Customer Name: Not set'):
   * They MUST log in or register before booking.
-  * Direct them to the Login page by outputting a clear markdown link: [Sign In](/account/pages/login/login.html) or [Register](/customer/pages/signup/signup.html).
+  * Direct them to the Login page by outputting a clear markdown link: [Sign In](/account/pages/login/login.html) or [Register](/account/pages/signup/signup.html).
 - If the user is a LOGGED-IN CUSTOMER:
   * Guide them to make a booking by selecting dates and making payment.
   * Explain the step-by-step process: (1) Choose dates, (2) Pay the 20% deposit, (3) Wait for admin approval.
@@ -493,7 +493,11 @@ function appendMsg(text, who, showCar = null) {
     `).join('');
   }
 
-  div.innerHTML = `<div>${text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}</div>` + carHtml;
+  // Parse markdown bold and newlines, then parse markdown links
+  var processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  processedText = processedText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+
+  div.innerHTML = `<div>${processedText}</div>` + carHtml;
   container.appendChild(div);
   container.scrollTop = container.scrollHeight;
   return div;
