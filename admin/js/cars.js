@@ -51,7 +51,13 @@ function renderCarCards(car) {
       <!-- Car Image -->
       <div style="width:100%;height:160px;background:linear-gradient(135deg,var(--slate-50),var(--slate-100));border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden;">
         ${car.images && car.images.length > 0
-        ? `<img src="../../../shared/model/${car.images[0]}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`
+        ? (() => {
+            const img0 = car.images[0];
+            const src = (img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:'))
+              ? img0
+              : '../../../shared/model/' + img0;
+            return `<img src="${src}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`;
+          })()
         : `<span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;">directions_car</span>`
       }
       </div>
