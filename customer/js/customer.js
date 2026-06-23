@@ -85,14 +85,19 @@
   }
 
   function imagePath(car) {
-    // Guna thumbnail (placeholder.jpg) untuk card view supaya setiap kereta tunjuk gambar yang betul
+    // Guna thumbnail untuk card view supaya setiap kereta tunjuk gambar yang betul
     if (car && car.thumbnail) {
-      return rootPrefix() + 'shared/model/' + car.thumbnail;
+      var th = car.thumbnail;
+      if (th.startsWith('http://') || th.startsWith('https://') || th.startsWith('data:')) return th;
+      return rootPrefix() + 'shared/model/' + th;
     }
     var file = car && car.images && car.images.length ? car.images[0] : '';
     if (!file) return fallbackImagePath(car);
+    // Handle full URLs (Supabase Storage) and relative paths
+    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('data:')) return file;
     return rootPrefix() + 'shared/model/' + file;
   }
+
 
   /**
    * carPrice(car) — Returns numeric daily rate.

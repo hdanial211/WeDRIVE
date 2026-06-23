@@ -11,6 +11,13 @@ const MAX_IMAGES = 10;
 let currentMainIndex = 0;
 let calYear, calMonth; // Calendar state
 
+/* Resolve any image string to a displayable src */
+function resolveImgSrc(img) {
+  if (!img) return '';
+  if (img.startsWith('data:') || img.startsWith('http://') || img.startsWith('https://')) return img;
+  return IMG_BASE + img;
+}
+
 // Get car ID from URL params
 const urlParams = new URLSearchParams(window.location.search);
 const carId = parseInt(urlParams.get('id'));
@@ -78,7 +85,7 @@ function renderCarImages(car) {
   const thumbContainer = document.getElementById('cd-thumbnails');
 
   if (car.images && car.images.length > 0) {
-    const firstSrc = car.images[0].startsWith('data:') ? car.images[0] : IMG_BASE + car.images[0];
+    const firstSrc = resolveImgSrc(car.images[0]);
     mainImg.src = firstSrc;
     mainImg.alt = car.name;
     mainImg.style.display = 'block';
@@ -92,7 +99,7 @@ function renderCarImages(car) {
     // Thumbnails
     if (car.images.length > 1) {
       thumbContainer.innerHTML = car.images.map((img, idx) => {
-        const src = img.startsWith('data:') ? img : IMG_BASE + img;
+        const src = resolveImgSrc(img);
         return `
         <div class="car-thumb ${idx === 0 ? 'active' : ''}" onclick="switchImage(${idx})">
           <img src="${src}" alt="${car.name} ${idx + 1}" onerror="this.parentElement.style.display='none';" />
@@ -116,7 +123,7 @@ function switchImage(idx) {
 
   const mainImg = document.getElementById('cd-main-img');
   const fallback = document.getElementById('cd-img-fallback');
-  const src = carData.images[idx].startsWith('data:') ? carData.images[idx] : IMG_BASE + carData.images[idx];
+  const src = resolveImgSrc(carData.images[idx]);
   mainImg.src = src;
   mainImg.style.display = 'block';
   fallback.style.display = 'none';
@@ -188,7 +195,7 @@ function renderEditImagesGrid() {
   }
 
   grid.innerHTML = imgs.map((img, idx) => {
-    const src = img.startsWith('data:') ? img : IMG_BASE + img;
+    const src = resolveImgSrc(img);
     return `
     <div class="edit-img-item">
       <img src="${src}" alt="Photo ${idx + 1}" />
@@ -200,8 +207,8 @@ function renderEditImagesGrid() {
   }).join('');
 }
 
-/* ── Handle Image Upload ── */
-function handleImageUpload(event) {
+/* ── Handle Image Upload (Upload to Supabase Storage) ── */
+async function handleImageUpload(event) {
   const files = event.target.files;
   if (!files || files.length === 0) return;
 
@@ -219,27 +226,61 @@ function handleImageUpload(event) {
     showToast(`Only ${remaining} more photo(s) can be added. Taking first ${toProcess}.`, 'info');
   }
 
-  let processed = 0;
+  const useStorage = window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient;
+  const SUPABASE_URL = 'https://nigyovaqffwyinovivls.supabase.co';
+  const BUCKET = 'car-images';
+
+  showToast('Uploading photo(s)...', 'info');
+
+  let uploaded = 0;
   for (let i = 0; i < toProcess; i++) {
     const file = files[i];
     if (!file.type.startsWith('image/')) continue;
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      if (!carData.images) carData.images = [];
-      carData.images.push(e.target.result);
-      processed++;
-      if (processed >= toProcess) {
-        renderEditImagesGrid();
-        renderCarImages(carData);
-        showToast(`${processed} photo(s) added!`, 'success');
+    if (useStorage) {
+      /* Upload to Supabase Storage */
+      try {
+        const ext = file.name.split('.').pop() || 'jpg';
+        const path = `car-${carData.id}/${Date.now()}-${i}.${ext}`;
+        const { error } = await window.supabaseClient.storage.from(BUCKET).upload(path, file, {
+          cacheControl: '3600',
+          upsert: false,
+          contentType: file.type
+        });
+        if (error) throw error;
+        const publicUrl = SUPABASE_URL + '/storage/v1/object/public/' + BUCKET + '/' + path;
+        if (!carData.images) carData.images = [];
+        carData.images.push(publicUrl);
+        uploaded++;
+        if (uploaded >= toProcess) {
+          renderEditImagesGrid();
+          renderCarImages(carData);
+          showToast(`${uploaded} photo(s) uploaded!`, 'success');
+        }
+      } catch (err) {
+        console.error('[WeDRIVE] Image upload error:', err);
+        showToast('Upload failed: ' + err.message, 'error');
       }
-    };
-    reader.readAsDataURL(file);
+    } else {
+      /* Demo mode: use base64 */
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        if (!carData.images) carData.images = [];
+        carData.images.push(e.target.result);
+        uploaded++;
+        if (uploaded >= toProcess) {
+          renderEditImagesGrid();
+          renderCarImages(carData);
+          showToast(`${uploaded} photo(s) added (demo mode).`, 'success');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   event.target.value = '';
 }
+
 
 /* ── Remove Image ── */
 function removeImage(idx) {
@@ -272,32 +313,45 @@ async function saveCarEdit(e) {
   e.preventDefault();
 
   // Update local data
-  carData.name = document.getElementById('edit-name').value;
-  carData.plate = document.getElementById('edit-plate').value;
-  carData.type = document.getElementById('edit-type').value;
-  carData.fuel = document.getElementById('edit-fuel').value;
+  carData.name         = document.getElementById('edit-name').value.trim();
+  carData.plate        = document.getElementById('edit-plate').value.trim().toUpperCase();
+  carData.type         = document.getElementById('edit-type').value;
+  carData.label        = document.getElementById('edit-type').value;
+  carData.fuel         = document.getElementById('edit-fuel').value;
   carData.transmission = document.getElementById('edit-trans').value;
-  carData.rate = 'RM ' + document.getElementById('edit-rate').value + '/day';
-  carData.seats = parseInt(document.getElementById('edit-seats').value);
+  carData.trans        = document.getElementById('edit-trans').value;
+  carData.seats        = parseInt(document.getElementById('edit-seats').value);
+  var rateNum          = parseFloat(document.getElementById('edit-rate').value) || 0;
+  carData.rate         = 'RM ' + rateNum + '/day';
+  carData.price        = rateNum;
 
-  // Save to Supabase
+  // --- Validation ---
+  if (!carData.name) { showToast('Vehicle name cannot be empty.', 'error'); return; }
+  if (!carData.plate) { showToast('Plate number cannot be empty.', 'error'); return; }
+  if (rateNum <= 0) { showToast('Daily rate must be greater than RM 0.', 'error'); return; }
+
+  // Save to Supabase (includes images so photos persist after refresh)
   if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
     try {
       var updateData = {
-        name: carData.name,
-        plate: carData.plate,
-        type: carData.type,
-        fuel: carData.fuel,
+        name:         carData.name,
+        plate:        carData.plate,
+        type:         carData.type,
+        label:        carData.label,
+        fuel:         carData.fuel,
         transmission: carData.transmission,
-        rate: carData.rate,
-        seats: carData.seats
+        trans:        carData.trans,
+        rate:         carData.rate,
+        price:        carData.price,
+        seats:        carData.seats,
+        images:       carData.images || []
       };
       var result = await window.supabaseClient.from('cars').update(updateData).eq('id', carData.id);
       if (result.error) throw result.error;
-      showToast('Vehicle details saved to database!', 'success');
+      showToast('Vehicle details saved!', 'success');
     } catch (err) {
       console.error('[WeDRIVE] Save car error:', err);
-      showToast('Error saving - changes shown locally only', 'info');
+      showToast('Error saving: ' + err.message, 'error');
     }
   } else {
     showToast('Vehicle details updated (demo mode)', 'success');
