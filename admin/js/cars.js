@@ -187,25 +187,77 @@ function showToast(msg, type = 'success') {
   }, 3000);
 }
 
-/* ── Default Images by Type (for new cars with no upload) ── */
-function _getDefaultImages(type) {
-  var typeMap = {
-    'Sedan':    ['Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-140.jpg', 'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-070.jpg'],
-    'SUV':      ['SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-140.jpg', 'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-075.jpg'],
-    'Hatchback':['Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-140.jpg', 'Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-066.jpg'],
-    'MPV':      ['MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-140.jpg', 'MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-070.jpg'],
-    'Coupe':    ['Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-140.jpg', 'Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-075.jpg'],
-    'Truck':    ['Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-140.jpg', 'Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-075.jpg']
-  };
-  var t = type ? type.charAt(0).toUpperCase() + type.slice(1).toLowerCase() : 'Sedan';
-  // Normalise common variations
-  var normalised = {
-    'sedan': 'Sedan', 'suv': 'SUV', 'hatchback': 'Hatchback', 'mpv': 'MPV', 'coupe': 'Coupe', 'truck': 'Truck'
-  }[t.toLowerCase()] || 'Sedan';
-  return typeMap[normalised] || typeMap['Sedan'];
+/* ── New Car Photos State ── */
+var _newCarImages = []; // Holds uploaded images (Supabase URLs or base64)
+
+function _resetNewCarImages() {
+  _newCarImages = [];
+  var grid = document.getElementById('new-img-grid');
+  var label = document.getElementById('new-img-count');
+  if (grid) grid.innerHTML = '<span style="color:var(--slate-400);font-size:12px;">No photos yet. Upload at least 1 photo.</span>';
+  if (label) label.textContent = '0/10 photos';
+}
+
+async function handleNewCarImageUpload(event) {
+  var files = event.target.files;
+  if (!files || !files.length) return;
+  var remaining = 10 - _newCarImages.length;
+  if (remaining <= 0) { showToast('Maximum 10 photos.', 'info'); event.target.value = ''; return; }
+  var toProcess = Math.min(files.length, remaining);
+  var useStorage = window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient;
+  var BUCKET = 'car-images';
+  var SUPABASE_URL = 'https://nigyovaqffwyinovivls.supabase.co';
+  showToast('Uploading photo(s)...', 'info');
+  var uploaded = 0;
+  for (var i = 0; i < toProcess; i++) {
+    var file = files[i];
+    if (!file.type.startsWith('image/')) continue;
+    if (useStorage) {
+      try {
+        var ext = file.name.split('.').pop() || 'jpg';
+        var path = 'new-car/' + Date.now() + '-' + i + '.' + ext;
+        var up = await window.supabaseClient.storage.from(BUCKET).upload(path, file, { cacheControl: '3600', upsert: false, contentType: file.type });
+        if (up.error) throw up.error;
+        _newCarImages.push(SUPABASE_URL + '/storage/v1/object/public/' + BUCKET + '/' + path);
+        uploaded++;
+      } catch(err) { showToast('Upload failed: ' + err.message, 'error'); }
+    } else {
+      await new Promise(function(resolve) {
+        var reader = new FileReader();
+        reader.onload = function(e) { _newCarImages.push(e.target.result); uploaded++; resolve(); };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+  _renderNewCarImagesGrid();
+  showToast(uploaded + ' photo(s) added!', 'success');
+  event.target.value = '';
+}
+
+function _renderNewCarImagesGrid() {
+  var grid = document.getElementById('new-img-grid');
+  var label = document.getElementById('new-img-count');
+  if (!grid) return;
+  if (label) label.textContent = _newCarImages.length + '/10 photos';
+  if (!_newCarImages.length) {
+    grid.innerHTML = '<span style="color:var(--slate-400);font-size:12px;">No photos yet. Upload at least 1 photo.</span>';
+    return;
+  }
+  grid.innerHTML = _newCarImages.map(function(src, idx) {
+    return '<div style="position:relative;width:80px;height:60px;border-radius:8px;overflow:hidden;flex-shrink:0;">'
+      + '<img src="' + src + '" style="width:100%;height:100%;object-fit:cover;" />'
+      + '<button type="button" onclick="_removeNewCarImage(' + idx + ')" style="position:absolute;top:2px;right:2px;background:#EF4444;border:none;color:#fff;border-radius:50%;width:18px;height:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1;">x</button>'
+      + '</div>';
+  }).join('');
+}
+
+function _removeNewCarImage(idx) {
+  _newCarImages.splice(idx, 1);
+  _renderNewCarImagesGrid();
 }
 
 function addNewCar() {
+  _resetNewCarImages();
 
   // Create modal if not exists
   let modal = document.getElementById('add-car-modal');
@@ -275,6 +327,24 @@ function addNewCar() {
             <label for="new-rate" data-key="admin_add_car_rate">Daily Rate (RM)</label>
             <input type="number" id="new-rate" data-key-ph="admin_add_car_rate_ph" required placeholder="e.g. 200" min="1" />
           </div>
+          <!-- Photo Upload (required) -->
+          <div class="add-car-form-group" style="grid-column: 1 / -1;">
+            <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.5px;display:flex;align-items:center;gap:6px;">
+              Vehicle Photos
+              <span style="background:#EF4444;color:#fff;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;">REQUIRED</span>
+            </label>
+            <div id="new-img-grid" style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;min-height:40px;align-items:center;">
+              <span style="color:var(--slate-400);font-size:12px;">No photos yet. Upload at least 1 photo.</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <label for="new-img-upload" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--primary);color:var(--primary);border-radius:8px;font-size:13px;font-weight:600;">
+                <span class="material-icons-round" style="font-size:16px;">add_photo_alternate</span> Add Photo
+              </label>
+              <input type="file" id="new-img-upload" accept="image/*" multiple style="display:none;" onchange="handleNewCarImageUpload(event)" />
+              <span id="new-img-count" style="font-size:11px;color:var(--slate-400);">0/10 photos</span>
+            </div>
+            <span id="new-img-err" style="color:#EF4444;font-size:11px;font-weight:600;margin-top:4px;display:none;">Please upload at least 1 photo before adding the vehicle.</span>
+          </div>
           <div class="add-car-modal-actions">
             <button type="button" class="add-car-btn-cancel" onclick="closeAddCarModal()" data-key="admin_add_car_cancel">Cancel</button>
             <button type="submit" class="add-car-btn-confirm" id="add-car-submit-btn">
@@ -286,6 +356,9 @@ function addNewCar() {
       </div>
     </div>`;
     document.body.appendChild(modal);
+  } else {
+    // Reset photo grid when modal is reused
+    _resetNewCarImages();
   }
   
   // Re-run language translation engine so the appended modal elements get translated!
@@ -299,9 +372,11 @@ function addNewCar() {
 }
 
 function closeAddCarModal() {
+  _resetNewCarImages();
   const modal = document.getElementById('add-car-modal');
   if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
 }
+
 
 
 async function submitNewCar(e) {
@@ -373,6 +448,16 @@ async function submitNewCar(e) {
     hasError = true;
   }
 
+  /* ── Photo validation ── */
+  var imgErrEl = document.getElementById('new-img-err');
+  if (_newCarImages.length === 0) {
+    if (imgErrEl) { imgErrEl.style.display = 'block'; }
+    showToast(isMalay ? 'Sila muat naik sekurang-kurangnya 1 gambar kenderaan.' : 'Please upload at least 1 vehicle photo before adding.', 'error');
+    if (hasError) return;
+    return; // Block save — no photo
+  }
+  if (imgErrEl) imgErrEl.style.display = 'none';
+
   if (hasError) return; // Stop — do NOT submit
 
   /* ── Proceed with submission ── */
@@ -400,7 +485,7 @@ async function submitNewCar(e) {
     status: 'Available',
     rating: 4.5,
     reviews: 0,
-    images: _getDefaultImages(carType)
+    images: _newCarImages.slice() // Use actual uploaded photos only
   };
 
   // Optional fields
