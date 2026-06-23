@@ -226,7 +226,18 @@ async function handleNewCarImageUpload(event) {
         if (up.error) throw up.error;
         _newCarImages.push(SUPABASE_URL + '/storage/v1/object/public/' + BUCKET + '/' + path);
         uploaded++;
-      } catch(err) { showToast('Upload failed: ' + err.message, 'error'); }
+      } catch(err) {
+        console.warn('[WeDRIVE] Supabase storage upload failed, falling back to base64:', err);
+        await new Promise(function(resolve) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            _newCarImages.push(e.target.result);
+            uploaded++;
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
+      }
     } else {
       await new Promise(function(resolve) {
         var reader = new FileReader();

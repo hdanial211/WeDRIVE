@@ -252,30 +252,38 @@ async function handleImageUpload(event) {
         if (!carData.images) carData.images = [];
         carData.images.push(publicUrl);
         uploaded++;
-        if (uploaded >= toProcess) {
-          renderEditImagesGrid();
-          renderCarImages(carData);
-          showToast(`${uploaded} photo(s) uploaded!`, 'success');
-        }
       } catch (err) {
-        console.error('[WeDRIVE] Image upload error:', err);
-        showToast('Upload failed: ' + err.message, 'error');
+        console.warn('[WeDRIVE] Supabase storage upload failed, falling back to base64:', err);
+        await new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            if (!carData.images) carData.images = [];
+            carData.images.push(e.target.result);
+            uploaded++;
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
       }
     } else {
       /* Demo mode: use base64 */
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        if (!carData.images) carData.images = [];
-        carData.images.push(e.target.result);
-        uploaded++;
-        if (uploaded >= toProcess) {
-          renderEditImagesGrid();
-          renderCarImages(carData);
-          showToast(`${uploaded} photo(s) added (demo mode).`, 'success');
-        }
-      };
-      reader.readAsDataURL(file);
+      await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          if (!carData.images) carData.images = [];
+          carData.images.push(e.target.result);
+          uploaded++;
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
     }
+  }
+
+  if (uploaded > 0) {
+    renderEditImagesGrid();
+    renderCarImages(carData);
+    showToast(`${uploaded} photo(s) added!`, 'success');
   }
 
   event.target.value = '';
@@ -333,23 +341,51 @@ function cancelEdit() {
 async function saveCarEdit(e) {
   e.preventDefault();
 
+  const lang = localStorage.getItem('wedrive-lang') || 'en';
+  const isMalay = lang === 'ms';
+
   // Update local data
-  carData.name         = document.getElementById('edit-name').value.trim();
-  carData.plate        = document.getElementById('edit-plate').value.trim().toUpperCase();
-  carData.type         = document.getElementById('edit-type').value;
-  carData.label        = document.getElementById('edit-type').value;
-  carData.fuel         = document.getElementById('edit-fuel').value;
-  carData.transmission = document.getElementById('edit-trans').value;
-  carData.trans        = document.getElementById('edit-trans').value;
-  carData.seats        = parseInt(document.getElementById('edit-seats').value);
+  const updatedName = document.getElementById('edit-name').value.trim();
+  const updatedPlate = document.getElementById('edit-plate').value.trim().toUpperCase();
+  const updatedType = document.getElementById('edit-type').value;
+  const updatedFuel = document.getElementById('edit-fuel').value;
+  const updatedTrans = document.getElementById('edit-trans').value;
+  const updatedSeats = parseInt(document.getElementById('edit-seats').value);
   var rateNum          = parseFloat(document.getElementById('edit-rate').value) || 0;
-  carData.rate         = 'RM ' + rateNum + '/day';
-  carData.price        = rateNum;
 
   // --- Validation ---
-  if (!carData.name) { showToast('Vehicle name cannot be empty.', 'error'); return; }
-  if (!carData.plate) { showToast('Plate number cannot be empty.', 'error'); return; }
-  if (rateNum <= 0) { showToast('Daily rate must be greater than RM 0.', 'error'); return; }
+  if (!updatedName) {
+    showToast(isMalay ? 'Nama kenderaan tidak boleh kosong.' : 'Vehicle name cannot be empty.', 'error');
+    return;
+  }
+  if (!updatedPlate) {
+    showToast(isMalay ? 'Nombor plat tidak boleh kosong.' : 'Plate number cannot be empty.', 'error');
+    return;
+  }
+  if (!/^[A-Z0-9 ]{3,10}$/.test(updatedPlate)) {
+    showToast(isMalay ? 'Format plat tidak sah (contoh: ABC 1234).' : 'Invalid plate format (e.g. ABC 1234).', 'error');
+    return;
+  }
+  if (rateNum <= 0) {
+    showToast(isMalay ? 'Kadar harian mesti lebih daripada RM 0.' : 'Daily rate must be greater than RM 0.', 'error');
+    return;
+  }
+  if (!carData.images || carData.images.length === 0) {
+    showToast(isMalay ? 'Sila muat naik sekurang-kurangnya 1 gambar kenderaan.' : 'Please upload at least 1 vehicle photo before saving.', 'error');
+    return;
+  }
+
+  // Update local data
+  carData.name         = updatedName;
+  carData.plate        = updatedPlate;
+  carData.type         = updatedType;
+  carData.label        = updatedType;
+  carData.fuel         = updatedFuel;
+  carData.transmission = updatedTrans;
+  carData.trans        = updatedTrans;
+  carData.seats        = updatedSeats;
+  carData.rate         = 'RM ' + rateNum + '/day';
+  carData.price        = rateNum;
 
   // Save to Supabase (includes images so photos persist after refresh)
   if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
@@ -369,13 +405,13 @@ async function saveCarEdit(e) {
       };
       var result = await window.supabaseClient.from('cars').update(updateData).eq('id', carData.id);
       if (result.error) throw result.error;
-      showToast('Vehicle details saved!', 'success');
+      showToast(isMalay ? 'Butiran kenderaan disimpan!' : 'Vehicle details saved!', 'success');
     } catch (err) {
       console.error('[WeDRIVE] Save car error:', err);
-      showToast('Error saving: ' + err.message, 'error');
+      showToast((isMalay ? 'Ralat menyimpan: ' : 'Error saving: ') + err.message, 'error');
     }
   } else {
-    showToast('Vehicle details updated (demo mode)', 'success');
+    showToast(isMalay ? 'Butiran kenderaan dikemas kini (mod demo)' : 'Vehicle details updated (demo mode)', 'success');
   }
 
   // Re-render
