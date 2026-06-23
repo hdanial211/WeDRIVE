@@ -302,7 +302,24 @@
     </div>
   </div>
 
-  <!-- DELETE CAR MODAL -->
+  <!-- REMOVE PHOTO CONFIRMATION MODAL -->
+  <div class="modal-overlay" id="remove-photo-modal" style="display:none;" onclick="if(event.target===this)closeRemovePhotoModal()">
+    <div class="modal-container" style="width:100%;max-width:400px;" role="dialog" aria-modal="true">
+      <div style="text-align:center;padding:8px 0 20px;">
+        <span class="material-icons-round" style="font-size:48px;color:#EF4444;display:block;margin-bottom:12px;">delete_outline</span>
+        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin:0 0 8px;">Remove Photo?</h3>
+        <p style="font-size:14px;color:var(--slate-400);margin:0;">This photo will be removed from the vehicle. You can add new photos anytime.</p>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:8px;">
+        <button class="btn-outline-sm" onclick="closeRemovePhotoModal()" style="padding:10px 24px;min-width:100px;">Cancel</button>
+        <button class="btn-primary-sm" id="remove-photo-confirm-btn" onclick="confirmRemovePhoto()" style="padding:10px 24px;min-width:100px;background:#EF4444;border-color:#EF4444;">
+          <span class="material-icons-round" style="font-size:14px;">delete</span> Remove
+        </button>
+      </div>
+    </div>
+  </div>
+
+
   <div class="modal-overlay delete-modal-overlay" id="delete-car-modal" style="display:none">
     <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
       <!-- Header Icon (Red Warning) -->

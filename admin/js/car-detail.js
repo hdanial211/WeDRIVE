@@ -282,17 +282,38 @@ async function handleImageUpload(event) {
 }
 
 
-/* ── Remove Image ── */
+/* ── Remove Image (Custom Modal) ── */
+let _pendingRemoveIdx = -1;
+
 function removeImage(idx) {
   if (!carData.images || idx >= carData.images.length) return;
-  if (confirm('Remove this photo?')) {
-    carData.images.splice(idx, 1);
-    if (currentMainIndex >= carData.images.length) currentMainIndex = 0;
-    renderEditImagesGrid();
-    renderCarImages(carData);
-    showToast('Photo removed.', 'success');
+  _pendingRemoveIdx = idx;
+  const modal = document.getElementById('remove-photo-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
   }
 }
+
+function closeRemovePhotoModal() {
+  _pendingRemoveIdx = -1;
+  const modal = document.getElementById('remove-photo-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+function confirmRemovePhoto() {
+  if (_pendingRemoveIdx < 0 || !carData.images) { closeRemovePhotoModal(); return; }
+  carData.images.splice(_pendingRemoveIdx, 1);
+  if (currentMainIndex >= carData.images.length) currentMainIndex = 0;
+  renderEditImagesGrid();
+  renderCarImages(carData);
+  closeRemovePhotoModal();
+  showToast('Photo removed.', 'success');
+}
+
 
 /* ── Set Main Image ── */
 function setMainImage(idx) {
