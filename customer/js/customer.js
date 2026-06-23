@@ -69,8 +69,19 @@
     return window.location.pathname.includes('/pages/') ? '../../../' : '';
   }
 
-  function fallbackImagePath() {
-    return rootPrefix() + 'shared/model/Sedan/2023 BMW 320i M Sport 2.0/placeholder.jpg';
+  var _fallbackByType = {
+    'sedan':    'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-140.jpg',
+    'suv':      'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-140.jpg',
+    'hatchback':'Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-140.jpg',
+    'mpv':      'MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-140.jpg',
+    'coupe':    'Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-140.jpg',
+    'truck':    'Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-140.jpg'
+  };
+
+  function fallbackImagePath(car) {
+    var typeKey = car && car.type ? String(car.type).toLowerCase() : 'sedan';
+    var rel = _fallbackByType[typeKey] || _fallbackByType['sedan'];
+    return rootPrefix() + 'shared/model/' + rel;
   }
 
   function imagePath(car) {
@@ -79,8 +90,27 @@
       return rootPrefix() + 'shared/model/' + car.thumbnail;
     }
     var file = car && car.images && car.images.length ? car.images[0] : '';
-    return rootPrefix() + 'shared/model/' + (file || 'Sedan/2023 BMW 320i M Sport 2.0/placeholder.jpg');
+    if (!file) return fallbackImagePath(car);
+    return rootPrefix() + 'shared/model/' + file;
   }
+
+  /**
+   * carPrice(car) — Returns numeric daily rate.
+   * Primary:  car.price (numeric column in DB)
+   * Fallback: parse "RM 200/day" from car.rate string
+   */
+  function carPrice(car) {
+    if (car && car.price !== null && car.price !== undefined) {
+      var p = Number(car.price);
+      if (!isNaN(p) && p > 0) return p;
+    }
+    if (car && car.rate) {
+      var match = String(car.rate).match(/[\d.]+/);
+      if (match) return parseFloat(match[0]);
+    }
+    return 0;
+  }
+
 
   function escapeHtml(value) {
     return String(value === undefined || value === null ? '' : value)
@@ -200,8 +230,8 @@
     }
 
     list.sort(function (a, b) {
-      if (currentSort === 'price_asc') return Number(a.price || 0) - Number(b.price || 0);
-      if (currentSort === 'price_desc') return Number(b.price || 0) - Number(a.price || 0);
+      if (currentSort === 'price_asc') return carPrice(a) - carPrice(b);
+      if (currentSort === 'price_desc') return carPrice(b) - carPrice(a);
       if (currentSort === 'rating_desc') return Number(b.rating || 0) - Number(a.rating || 0);
 
       var aAvailable = statusKey(a) === 'available' ? 1 : 0;
@@ -222,8 +252,8 @@
     if (!allCars.length) return;
 
     var minPrice = allCars.reduce(function (min, car) {
-      return Math.min(min, Number(car.price || min));
-    }, Number(allCars[0].price || 0));
+      return Math.min(min, carPrice(car) || min);
+    }, carPrice(allCars[0]) || 0);
 
     var ratingTotal = allCars.reduce(function (sum, car) {
       return sum + Number(car.rating || 0);
@@ -276,7 +306,7 @@
 
       setText('guest-spotlight-type', car.label || car.type || '');
       setText('guest-spotlight-name', car.name || '');
-      setText('guest-spotlight-rate', 'RM ' + car.price + t('day'));
+      setText('guest-spotlight-rate', 'RM ' + carPrice(car) + t('day'));
       setText('guest-spotlight-rating', String(car.rating || ''));
       setText('guest-spotlight-seats', car.seats + ' ' + t('seatsShort'));
       setText('guest-spotlight-fuel', car.fuel || '');
@@ -375,7 +405,7 @@
         '    </div>',
         '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>',
         '    <div class="car-footer">',
-        '      <div class="price">RM ' + Number(car.price || 0) + '<span>' + escapeHtml(t('day')) + '</span></div>',
+        '      <div class="price">RM ' + carPrice(car) + '<span>' + escapeHtml(t('day')) + '</span></div>',
         '      <button class="btn-book' + (window.__GUEST_MODE__ ? ' btn-book-guest' : '') + '" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
         '        <span class="material-icons-round" style="font-size:17px">' + (window.__GUEST_MODE__ ? 'lock' : 'event_available') + '</span>',
         '        ' + escapeHtml(buttonText),
@@ -408,7 +438,7 @@
       };
     }
     if (carLine) {
-      carLine.textContent = car.name + ' - RM ' + car.price + t('day') + ' - ' + statusText(car);
+      carLine.textContent = car.name + ' - RM ' + carPrice(car) + t('day') + ' - ' + statusText(car);
     }
     if (login) login.href = rootPrefix() + 'index.html';
     if (signup) signup.href = rootPrefix() + 'customer/pages/signup/signup.html';
@@ -474,7 +504,7 @@
     var typeEl = document.getElementById('popup-car-type');
     if (typeEl) typeEl.textContent = car.label || car.type || '';
     var priceEl = document.getElementById('popup-car-price');
-    if (priceEl) priceEl.innerHTML = 'RM ' + Number(car.price || 0) + '<span>' + t('day') + '</span>';
+    if (priceEl) priceEl.innerHTML = 'RM ' + carPrice(car) + '<span>' + t('day') + '</span>';
 
     // Reset duration/total
     var durEl = document.getElementById('popup-duration');
@@ -549,7 +579,7 @@
     if (pickup && ret) {
       var diff = Math.ceil((ret - pickup) / (1000 * 60 * 60 * 24));
       if (diff < 1) diff = 1;
-      var total = diff * Number(car.price || 0);
+      var total = diff * carPrice(car);
       durEl.hidden = false;
       if (durText) durText.textContent = diff + (diff === 1 ? ' day' : ' days');
       if (totalEl) totalEl.textContent = 'RM ' + total.toLocaleString();
@@ -578,7 +608,7 @@
     var params = [
       'car=' + encodeURIComponent(selectedBookingCar.id),
       'name=' + encodeURIComponent(selectedBookingCar.name),
-      'price=' + encodeURIComponent(selectedBookingCar.price),
+      'price=' + encodeURIComponent(carPrice(selectedBookingCar)),
       'pickup=' + encodeURIComponent(pickup ? pickup.value : ''),
       'return=' + encodeURIComponent(ret ? ret.value : ''),
       'location=' + encodeURIComponent(loc && loc.value ? loc.value : 'Melaka Sentral')

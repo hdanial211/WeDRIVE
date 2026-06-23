@@ -187,7 +187,26 @@ function showToast(msg, type = 'success') {
   }, 3000);
 }
 
+/* ── Default Images by Type (for new cars with no upload) ── */
+function _getDefaultImages(type) {
+  var typeMap = {
+    'Sedan':    ['Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-140.jpg', 'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-070.jpg'],
+    'SUV':      ['SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-140.jpg', 'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-075.jpg'],
+    'Hatchback':['Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-140.jpg', 'Hatchback/2025 Perodua AXIA AV 1.0/exterior/full-res/frame-066.jpg'],
+    'MPV':      ['MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-140.jpg', 'MPV/2019 Toyota Alphard G S C Package 2.5/exterior/full-res/frame-070.jpg'],
+    'Coupe':    ['Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-140.jpg', 'Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/exterior/full-res/frame-075.jpg'],
+    'Truck':    ['Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-140.jpg', 'Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/exterior/full-res/frame-075.jpg']
+  };
+  var t = type ? type.charAt(0).toUpperCase() + type.slice(1).toLowerCase() : 'Sedan';
+  // Normalise common variations
+  var normalised = {
+    'sedan': 'Sedan', 'suv': 'SUV', 'hatchback': 'Hatchback', 'mpv': 'MPV', 'coupe': 'Coupe', 'truck': 'Truck'
+  }[t.toLowerCase()] || 'Sedan';
+  return typeMap[normalised] || typeMap['Sedan'];
+}
+
 function addNewCar() {
+
   // Create modal if not exists
   let modal = document.getElementById('add-car-modal');
   if (!modal) {
@@ -284,33 +303,109 @@ function closeAddCarModal() {
   if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
 }
 
+
 async function submitNewCar(e) {
   e.preventDefault();
+  const lang = localStorage.getItem('wedrive-lang') || 'en';
+  const isMalay = lang === 'ms';
+
+  /* ── Inline validation helper ── */
+  function setFieldError(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.border = '2px solid #EF4444';
+    let errEl = document.getElementById(id + '-err');
+    if (!errEl) {
+      errEl = document.createElement('span');
+      errEl.id = id + '-err';
+      errEl.style.cssText = 'color:#EF4444;font-size:11px;font-weight:600;margin-top:4px;display:block;';
+      el.parentNode.appendChild(errEl);
+    }
+    errEl.textContent = msg;
+  }
+
+  function clearFieldError(id) {
+    const el = document.getElementById(id);
+    if (el) el.style.border = '';
+    const errEl = document.getElementById(id + '-err');
+    if (errEl) errEl.textContent = '';
+  }
+
+  /* ── Read values ── */
+  const nameVal  = document.getElementById('new-name').value.trim();
+  const plateVal = document.getElementById('new-plate').value.trim().toUpperCase();
+  const rateVal  = parseFloat(document.getElementById('new-rate').value);
+  const yearVal  = parseInt(document.getElementById('new-year') ? document.getElementById('new-year').value : 0);
+  const colorVal = document.getElementById('new-color') ? document.getElementById('new-color').value.trim() : '';
+  const carType  = document.getElementById('new-type').value;
+  const fuel     = document.getElementById('new-fuel').value;
+  const trans    = document.getElementById('new-trans').value;
+  const seats    = parseInt(document.getElementById('new-seats').value);
+
+  /* ── Clear previous errors ── */
+  ['new-name','new-plate','new-rate','new-year','new-color'].forEach(clearFieldError);
+
+  /* ── Run validation ── */
+  let hasError = false;
+  const errRequired = isMalay ? 'Field ini wajib diisi.' : 'This field is required.';
+
+  if (!nameVal) {
+    setFieldError('new-name', errRequired);
+    hasError = true;
+  }
+  if (!plateVal) {
+    setFieldError('new-plate', errRequired);
+    hasError = true;
+  } else if (!/^[A-Z0-9 ]{3,10}$/.test(plateVal)) {
+    setFieldError('new-plate', isMalay ? 'Format plat tidak sah (contoh: ABC 1234).' : 'Invalid plate format (e.g. ABC 1234).');
+    hasError = true;
+  }
+  if (isNaN(rateVal) || rateVal <= 0) {
+    setFieldError('new-rate', isMalay ? 'Kadar harian mesti lebih daripada RM 0.' : 'Daily rate must be greater than RM 0.');
+    hasError = true;
+  }
+  if (document.getElementById('new-year') && (isNaN(yearVal) || yearVal < 2000 || yearVal > new Date().getFullYear() + 1)) {
+    setFieldError('new-year', isMalay ? 'Tahun tidak sah.' : 'Invalid year.');
+    hasError = true;
+  }
+  if (document.getElementById('new-color') && !colorVal) {
+    setFieldError('new-color', errRequired);
+    hasError = true;
+  }
+
+  if (hasError) return; // Stop — do NOT submit
+
+  /* ── Proceed with submission ── */
   const btn = document.getElementById('add-car-submit-btn');
   btn.disabled = true;
 
-  const lang = localStorage.getItem('wedrive-lang') || 'en';
-  const isMalay = lang === 'ms';
-  const savingText = isMalay ? 'Menyimpan...' : 'Saving...';
+  const savingText    = isMalay ? 'Menyimpan...' : 'Saving...';
   const successDbText = isMalay ? 'Kenderaan baharu ditambah ke pangkalan data!' : 'New vehicle added to database!';
   const successDemoText = isMalay ? 'Kenderaan baharu ditambah (mod demo)' : 'New vehicle added (demo mode)';
-  const errorText = isMalay ? 'Ralat menambah kenderaan: ' : 'Error adding vehicle: ';
+  const errorText     = isMalay ? 'Ralat menambah kenderaan: ' : 'Error adding vehicle: ';
 
   btn.innerHTML = `<span class="material-icons-round" style="font-size:14px;animation:spin 1s linear infinite">refresh</span> ${savingText}`;
 
   const newCar = {
-    name: document.getElementById('new-name').value.trim(),
-    plate: document.getElementById('new-plate').value.trim().toUpperCase(),
-    type: document.getElementById('new-type').value,
-    label: document.getElementById('new-type').value,
-    fuel: document.getElementById('new-fuel').value,
-    transmission: document.getElementById('new-trans').value,
-    trans: document.getElementById('new-trans').value,
-    seats: parseInt(document.getElementById('new-seats').value),
-    rate: 'RM ' + document.getElementById('new-rate').value + '/day',
+    name: nameVal,
+    plate: plateVal,
+    type: carType,
+    label: carType,
+    fuel: fuel,
+    transmission: trans,
+    trans: trans,
+    seats: seats,
+    rate: 'RM ' + rateVal + '/day',
+    price: rateVal,
     status: 'Available',
-    images: []
+    rating: 4.5,
+    reviews: 0,
+    images: _getDefaultImages(carType)
   };
+
+  // Optional fields
+  if (yearVal && yearVal >= 2000) newCar.year = yearVal;
+  if (colorVal) newCar.color = colorVal;
 
   if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
     try {
