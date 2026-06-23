@@ -265,5 +265,23 @@ tr:hover td { background: var(--table-row-hover) !important; }
   --danger: #ffb4ab;
 }
 
+/* FORM INPUTS & SELECTS */
+.form-input {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+.form-input:focus {
+  background: var(--input-focus-bg) !important;
+  border-color: var(--primary) !important;
+}
+
+/* COLOR INPUTS */
+.form-color-input {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+}
+
+
 
 
