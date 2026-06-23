@@ -445,8 +445,8 @@
     if (carLine) {
       carLine.textContent = car.name + ' - RM ' + carPrice(car) + t('day') + ' - ' + statusText(car);
     }
-    if (login) login.href = rootPrefix() + 'index.html';
-    if (signup) signup.href = rootPrefix() + 'customer/pages/signup/signup.html';
+    if (login) login.href = rootPrefix() + 'account/pages/login/login.html';
+    if (signup) signup.href = rootPrefix() + 'account/pages/signup/signup.html';
 
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
