@@ -641,7 +641,7 @@ async function submitDeleteCar() {
   } else {
     showToast(demoToast, 'success');
   }
-  setTimeout(() => { window.location.href = 'cars.html'; }, 1500);
+  setTimeout(() => { window.location.href = '../cars.html'; }, 1500);
 }
 window.submitDeleteCar = submitDeleteCar;
 
