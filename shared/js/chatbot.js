@@ -299,6 +299,58 @@ window.toggleChat = async function() {
   if (window.chatOpen) setTimeout(() => document.getElementById('chat-input').focus(), 300);
 };
 
+function parseMarkdown(text) {
+  if (!text) return '';
+  
+  // 1. Bold: **text** -> <strong>text</strong>
+  var html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // 2. Links: [Text](URL) -> <a href="$2">$1</a>
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+
+  // 3. Bullet Lists: lines starting with * or -
+  var lines = html.split('\n');
+  var inList = false;
+  var processedLines = [];
+  
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (line.startsWith('* ') || line.startsWith('- ')) {
+      if (!inList) {
+        processedLines.push('<ul>');
+        inList = true;
+      }
+      processedLines.push('<li>' + line.substring(2) + '</li>');
+    } else {
+      if (inList) {
+        processedLines.push('</ul>');
+        inList = false;
+      }
+      processedLines.push(lines[i]);
+    }
+  }
+  if (inList) {
+    processedLines.push('</ul>');
+  }
+  
+  // Rejoin with <br> for non-list lines
+  var resultHtml = '';
+  for (var j = 0; j < processedLines.length; j++) {
+    var item = processedLines[j];
+    if (item === '<ul>' || item === '</ul>' || item.startsWith('<li>')) {
+      resultHtml += item;
+    } else {
+      if (item === '') {
+        resultHtml += '<br/>';
+      } else {
+        resultHtml += (resultHtml === '' || resultHtml.endsWith('</ul>') ? '' : '<br/>') + item;
+      }
+    }
+  }
+  
+  return resultHtml;
+}
+
 // ─── Add Chat Message ───────────────────────────────────────────────────────
 window.addChatMsg = function(text, isUser = false, showCar = null) {
   const msgs = document.getElementById('chat-messages');
@@ -328,9 +380,8 @@ window.addChatMsg = function(text, isUser = false, showCar = null) {
     `).join('');
   }
 
-  // Parse markdown links [Text](URL)
-  var processedText = text;
-  processedText = processedText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  // Parse markdown bold, links, lists and newlines
+  var processedText = parseMarkdown(text);
 
   div.innerHTML = `
     <div class="chat-avatar">${isUser ? userAvatar : '<span class="material-icons-round chat-avatar-icon">smart_toy</span>'}</div>
@@ -569,9 +620,7 @@ Always use the exact markdown links built above. Do not use absolute domains.
 
     window._chatHistory.push({ role: 'assistant', content: reply });
     window.removeTyping();
-    window.addChatMsg(reply
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>'), false, recommendedCars.length > 0 ? recommendedCars : null);
+    window.addChatMsg(reply, false, recommendedCars.length > 0 ? recommendedCars : null);
   } catch (e) {
     window.removeTyping();
     window.addChatMsg("Connection error. Please check your internet connection.", false);
