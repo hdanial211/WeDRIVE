@@ -1017,8 +1017,54 @@ window.WeDriveAPI = {
             console.error('[WeDriveAPI] verifyCustomer error:', err);
             return { success: false, error: err.message };
         }
-    }
+    },
 
-    // You can add more functions here later:
-    // addCar(), updateCar(), deleteCar(), etc.
+    /**
+     * Check if a username is already taken.
+     * Returns { success: true, available: true } if available,
+     * or { success: true, available: false } if taken.
+     */
+    checkUsernameUnique: async function(username, authUid) {
+        if (!username || username.trim().length < 3) {
+            return { success: true, available: true };
+        }
+        if (!window.AppConfig.USE_REAL_DB) {
+            var data = await _loadDummyData();
+            if (data && data.customers) {
+                var normalized = username.toLowerCase().trim();
+                for (var i = 0; i < data.customers.length; i++) {
+                    var c = data.customers[i];
+                    if (c.auth_uid !== authUid && c.username && c.username.toLowerCase().trim() === normalized) {
+                        return { success: true, available: false };
+                    }
+                }
+            }
+            return { success: true, available: true };
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                if (!sb) return { success: false, error: 'Database not connected' };
+                
+                var normalized = username.toLowerCase().trim();
+                var result = await sb.from('customers')
+                    .select('auth_uid, username')
+                    .ilike('username', normalized);
+                
+                if (result.error) throw result.error;
+                
+                if (result.data && result.data.length > 0) {
+                    for (var j = 0; j < result.data.length; j++) {
+                        if (result.data[j].auth_uid !== authUid) {
+                            return { success: true, available: false };
+                        }
+                    }
+                }
+                return { success: true, available: true };
+            } catch (err) {
+                console.error('[WeDriveAPI] checkUsernameUnique error:', err);
+                return { success: false, error: err.message };
+            }
+        }
+    }
 };
+

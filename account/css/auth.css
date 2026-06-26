@@ -1018,3 +1018,34 @@ body.profile-page {
   box-shadow: none;
 }
 
+/* =====================================================================
+   USERNAME AVAILABILITY CHECKER
+   ===================================================================== */
+.field-hint {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.field-hint.checking {
+  color: var(--warning, #D97706) !important;
+  font-weight: 600;
+}
+
+.field-hint.available {
+  color: #059669 !important; /* Premium emerald green */
+  font-weight: 700;
+}
+
+.field-hint.taken {
+  color: var(--danger, #DC2626) !important; /* Premium danger red */
+  font-weight: 700;
+}
+
+.field-hint .material-icons-round {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+

@@ -120,7 +120,7 @@
                   <span class="material-icons-round">person_outline</span>
                   <input type="text" id="username" data-key-ph="profile_username_ph" placeholder="Choose a username" required />
                 </div>
-                <div class="field-hint" style="margin-top: 6px;" data-key="profile_username_hint">Choose a unique username / nickname</div>
+                <div class="field-hint" id="username-hint" style="margin-top: 6px;" data-key="profile_username_hint">Choose a unique username / nickname</div>
               </div>
             </div>
 
@@ -615,6 +615,16 @@
         alert(m.username);
         return;
       }
+      if (usernameCheckState.status === 'taken') {
+        var takenMsg = (lang === 'ms') ? 'Nama pengguna ini telah diambil. Sila pilih nama lain.' : 'This username is already taken. Please choose another one.';
+        alert(takenMsg);
+        return;
+      }
+      if (usernameCheckState.status === 'checking') {
+        var checkingMsg = (lang === 'ms') ? 'Sila tunggu sehingga semakan nama pengguna selesai.' : 'Please wait for the username check to complete.';
+        alert(checkingMsg);
+        return;
+      }
       // Validate IC (12 digits excluding dashes)
       var icDigits = ic.replace(/\D/g, '');
       if (icDigits.length !== 12) {
@@ -727,6 +737,117 @@
         btn.disabled = false;
       }
     }
+
+    // =====================================================================
+    // USERNAME AVAILABILITY CHECKER LOGIC
+    // =====================================================================
+    var usernameCheckState = { status: 'default', value: '' };
+    var usernameDebounceTimeout = null;
+
+    function updateUsernameHintUI() {
+      var hintEl = document.getElementById('username-hint');
+      if (!hintEl) return;
+      
+      var lang = localStorage.getItem('wedrive-lang') || 'en';
+      var langData = (lang === 'ms') ? window.wedrive_lang_ms : window.wedrive_lang_en;
+      if (!langData) return;
+      
+      // Reset classes
+      hintEl.className = 'field-hint';
+      
+      if (usernameCheckState.status === 'default') {
+        hintEl.innerHTML = langData.profile_username_hint || 'Choose a unique username / nickname';
+      } else if (usernameCheckState.status === 'checking') {
+        hintEl.classList.add('checking');
+        hintEl.innerHTML = '<span class="material-icons-round spin-icon">refresh</span> ' + (langData.profile_username_checking || 'Checking availability...');
+      } else if (usernameCheckState.status === 'available') {
+        hintEl.classList.add('available');
+        hintEl.innerHTML = '<span class="material-icons-round">check_circle</span> ' + (langData.profile_username_available || 'Username is available');
+      } else if (usernameCheckState.status === 'taken') {
+        hintEl.classList.add('taken');
+        hintEl.innerHTML = '<span class="material-icons-round">cancel</span> ' + (langData.profile_username_taken || 'Username is already taken');
+      }
+    }
+
+    // Initialize checking listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      var usernameInput = document.getElementById('username');
+      if (usernameInput) {
+        // Initial state update on page load (if username has a value already)
+        setTimeout(function() {
+          var initialVal = usernameInput.value.trim();
+          if (initialVal.length >= 3) {
+            usernameInput.dispatchEvent(new Event('input'));
+          }
+        }, 800);
+
+        usernameInput.addEventListener('input', function() {
+          var val = usernameInput.value.trim();
+          
+          if (val.length === 0) {
+            usernameCheckState.status = 'default';
+            usernameCheckState.value = '';
+            updateUsernameHintUI();
+            return;
+          }
+          
+          if (val.length < 3) {
+            usernameCheckState.status = 'default';
+            usernameCheckState.value = val;
+            updateUsernameHintUI();
+            return;
+          }
+          
+          if (val === usernameCheckState.value && usernameCheckState.status !== 'default') {
+            return;
+          }
+          
+          usernameCheckState.status = 'checking';
+          usernameCheckState.value = val;
+          updateUsernameHintUI();
+          
+          clearTimeout(usernameDebounceTimeout);
+          usernameDebounceTimeout = setTimeout(async function() {
+            try {
+              var authUid = '';
+              var sb = window.supabaseClient;
+              if (sb) {
+                var authSession = await sb.auth.getSession();
+                if (authSession.data.session) {
+                  authUid = authSession.data.session.user.id;
+                }
+              }
+              
+              if (usernameInput.value.trim() !== val) return;
+              
+              var result = await window.WeDriveAPI.checkUsernameUnique(val, authUid);
+              
+              if (usernameInput.value.trim() !== val) return;
+              
+              if (result.success) {
+                if (result.available) {
+                  usernameCheckState.status = 'available';
+                } else {
+                  usernameCheckState.status = 'taken';
+                }
+              } else {
+                usernameCheckState.status = 'default';
+              }
+              updateUsernameHintUI();
+            } catch (err) {
+              console.error('Username check error:', err);
+              usernameCheckState.status = 'default';
+              updateUsernameHintUI();
+            }
+          }, 300);
+        });
+      }
+    });
+
+    // Handle dynamic language switching
+    document.addEventListener('wedrive:language-applied', function() {
+      updateUsernameHintUI();
+    });
   </script>
 
   <script src="../../../shared/js/anime.min.js"></script>
