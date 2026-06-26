@@ -64,6 +64,8 @@
     /* Sync root class — allows CSS to target night-specific styles immediately */
     document.documentElement.classList.toggle('night-mode', effectiveMode === 'night');
     if (document.body) document.body.classList.toggle('night-mode', effectiveMode === 'night');
+    /* Set data-theme attribute for backward compatibility with [data-theme="dark"] CSS selectors */
+    document.documentElement.setAttribute('data-theme', effectiveMode === 'night' ? 'dark' : 'light');
     localStorage.setItem(THEME_KEY, mode);
     updateThemeBtns(mode, animate);
   }
