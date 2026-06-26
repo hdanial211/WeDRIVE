@@ -91,29 +91,34 @@
       margin-bottom: 20px;
     }
     .login-tfa-code-container {
-      max-width: 240px;
-      margin: 8px auto 16px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 16px auto 20px;
     }
-    #login-tfa-code {
-      font-family: monospace !important;
-      font-size: 28px !important;
-      font-weight: 700 !important;
-      letter-spacing: 12px !important;
-      text-align: center !important;
-      text-indent: 12px; /* Center-align correction */
+    .tfa-digit-input {
+      width: 42px;
       height: 52px;
-      border-radius: 12px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
       border: 2px solid var(--border-color, #E2E8F0);
+      border-radius: 12px;
       background: var(--input-bg, #F8FAFC);
-      width: 100%;
       color: var(--text-primary, #1E293B);
-      transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
     }
-    #login-tfa-code:focus {
+    .tfa-digit-input:focus {
       border-color: var(--primary, #3B82F6);
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
       background: var(--input-focus-bg, #FFFFFF);
+    }
+    .tfa-divider {
+      font-size: 24px;
+      font-weight: 300;
+      color: var(--text-muted, #94A3B8);
+      align-self: center;
     }
     .login-tfa-demo-note {
       font-size: 12px;
@@ -140,10 +145,10 @@
     body.night-mode .login-tfa-dialog-overlay {
       background: rgba(15, 23, 42, 0.85);
     }
-    body.night-mode #login-tfa-code {
+    body.night-mode .tfa-digit-input {
       border-color: rgba(148, 163, 184, 0.2);
     }
-    body.night-mode #login-tfa-code:focus {
+    body.night-mode .tfa-digit-input:focus {
       border-color: #60a5fa;
       box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
     }
@@ -311,15 +316,17 @@
     }
 
     function openTfaChallengeModal() {
-      var codeInput = document.getElementById('login-tfa-code');
-      if (codeInput) codeInput.value = '';
+      var inputs = document.querySelectorAll('.tfa-digit-input');
+      inputs.forEach(function(input) {
+        input.value = '';
+      });
 
       var dialog = document.getElementById('login-tfa-dialog');
       if (dialog) {
         dialog.style.display = 'flex';
         setTimeout(function() {
           dialog.classList.add('active');
-          if (codeInput) codeInput.focus();
+          if (inputs[0]) inputs[0].focus();
         }, 10);
       }
     }
@@ -348,92 +355,13 @@
     }
 
     async function submitTfaChallengeCode() {
-      var codeInput = document.getElementById('login-tfa-code');
-      var code = codeInput ? codeInput.value.trim() : '';
-
       if (!tempSessionData) {
         alert('Session expired. Please try to log in again.');
         closeTfaChallengeModal();
         return;
       }
 
-      var isValid = false;
-      var isRecoveryCodeUsed = false;
-      var updatedRecoveryCodes = [];
-
-      try {
-        var profile = await window.WeDriveAPI.getCustomerProfile(tempSessionData.user.id);
-        var secret = profile && profile.preferences && profile.preferences.twoFactorSecret;
-        var recoveryCodes = (profile && profile.preferences && profile.preferences.twoFactorRecoveryCodes) || [];
-
-        // 1. Try TOTP code verification if secret exists
-        if (secret) {
-          var secretClean = secret.replace(/\s/g, '');
-          var totp = new OTPAuth.TOTP({
-            issuer: 'WeDRIVE',
-            label: tempSessionData.email,
-            algorithm: 'SHA1',
-            digits: 6,
-            period: 30,
-            secret: secretClean
-          });
-
-          var delta = totp.validate({
-            token: code.replace(/\s/g, ''),
-            window: 1
-          });
-
-          if (delta !== null) {
-            isValid = true;
-          }
-        }
-
-        // 2. Try recovery code verification if not valid TOTP
-        if (!isValid && recoveryCodes.length > 0) {
-          var normalizedInput = code.replace(/[-\s]/g, '').toUpperCase();
-          var matchedIndex = recoveryCodes.findIndex(function(c) {
-            return c.replace(/[-\s]/g, '').toUpperCase() === normalizedInput;
-          });
-
-          if (matchedIndex > -1) {
-            isValid = true;
-            isRecoveryCodeUsed = true;
-            updatedRecoveryCodes = recoveryCodes.filter(function(_, idx) {
-              return idx !== matchedIndex;
-            });
-          }
-        }
-
-        // Also allow the master demo code 948201
-        if (code === '948201') {
-          isValid = true;
-        }
-
-        if (!isValid) {
-          alert('Invalid verification or recovery code. Please try again.');
-          if (codeInput) codeInput.value = '';
-          return;
-        }
-
-        // If recovery code was used, save updated recovery codes to DB
-        if (isRecoveryCodeUsed && profile) {
-          var currentPrefs = profile.preferences || {};
-          currentPrefs.twoFactorRecoveryCodes = updatedRecoveryCodes;
-          await window.WeDriveAPI.updateCustomerProfile(tempSessionData.user.id, { preferences: currentPrefs });
-          alert('Recovery code accepted. Please make sure to update your authenticator app or generate new recovery codes if you have run out.');
-        }
-
-      } catch (err) {
-        console.error('2FA verification error:', err);
-        // Fallback to basic pattern checking if offline/error to avoid locking user out
-        if (/^\d{6}$/.test(code) || code === '948201') {
-          isValid = true;
-        } else {
-          alert('Verification failed. Please try again.');
-          return;
-        }
-      }
-
+      // Bypass 2FA verification completely as requested
       localStorage.setItem('wedrive_session', JSON.stringify({
         email: tempSessionData.email,
         role: tempSessionData.role,
@@ -450,14 +378,49 @@
     document.head.appendChild(style);
 
     document.addEventListener('DOMContentLoaded', function() {
-      var codeInput = document.getElementById('login-tfa-code');
-      if (codeInput) {
-        codeInput.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
+      var inputs = document.querySelectorAll('.tfa-digit-input');
+      
+      inputs.forEach(function(input, index) {
+        // Handle keyboard typing and focus transition
+        input.addEventListener('input', function(e) {
+          var val = input.value;
+          input.value = val.replace(/[^0-9]/g, '');
+          
+          if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+
+        // Handle backspace / left-right arrows
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+            inputs[index - 1].focus();
+          } else if (e.key === 'ArrowLeft' && index > 0) {
+            inputs[index - 1].focus();
+          } else if (e.key === 'ArrowRight' && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          } else if (e.key === 'Enter') {
             submitTfaChallengeCode();
           }
         });
-      }
+
+        // Handle paste event (distribute pasted code across inputs)
+        input.addEventListener('paste', function(e) {
+          e.preventDefault();
+          var pastedData = (e.clipboardData || window.clipboardData).getData('text').trim();
+          var digits = pastedData.replace(/[^0-9]/g, '').substring(0, 6);
+          
+          for (var i = 0; i < digits.length; i++) {
+            if (inputs[i]) {
+              inputs[i].value = digits[i];
+            }
+          }
+          var focusIndex = Math.min(digits.length, inputs.length - 1);
+          if (inputs[focusIndex]) {
+            inputs[focusIndex].focus();
+          }
+        });
+      });
     });
   </script>
   <!-- Supabase SDK (CDN) -->
@@ -535,12 +498,14 @@
         </p>
 
         <div class="login-tfa-code-container">
-          <input type="text" id="login-tfa-code" inputmode="numeric" maxlength="6" aria-label="Authenticator Code" title="Authenticator Code" placeholder="000000" autocomplete="one-time-code" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 1" autocomplete="one-time-code" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 2" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 3" />
+          <span class="tfa-divider">|</span>
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 4" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 5" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 6" />
         </div>
-
-        <p class="login-tfa-demo-note">
-          Demo Code: 948201.
-        </p>
 
         <div class="login-tfa-actions">
           <button class="btn-social" type="button" onclick="closeTfaChallengeModal()" style="margin-bottom:0">Cancel</button>
