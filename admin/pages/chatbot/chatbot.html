@@ -123,42 +123,12 @@
             </div>
           </div>
 
-          <!-- CARD 3: Database Auto-Sync -->
-          <div class="card reveal-on-scroll">
-            <div class="card-header chatbot-card-header" style="margin-bottom: 16px;">
-              <h3 class="chatbot-title">
-                <span class="material-icons-round chatbot-title-icon">sync</span>
-                Database Auto-Sync Context
-              </h3>
-              <p class="chatbot-subtitle">System details automatically injected into the AI</p>
-            </div>
-
-            <div class="chatbot-settings-form">
-              <div class="info-box" style="background: rgba(16, 185, 129, 0.03); border-color: rgba(16, 185, 129, 0.1);">
-                <span class="material-icons-round" style="color: #10B981;">database</span>
-                <div>
-                  <strong>Live System Aware</strong> — The assistant auto-fetches live cars, prices, status (Available/Rented), system operating hours, deposit, and locations from Supabase.
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 13px;">
-                  Context Preview
-                  <button class="btn-test-inline" id="btn-refresh-data" onclick="refreshLiveData()" style="font-size: 11px; padding: 6px 12px; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-color);">
-                    <span class="material-icons-round" style="font-size: 14px;">refresh</span> Refresh Data
-                  </button>
-                </label>
-                <div class="hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Real-time JSON/data appended to the system instructions.</div>
-                <pre id="live-data-preview" style="display: none;"></pre>
-              </div>
-            </div>
-          </div>
-
         </div>
 
-        <!-- ─── RIGHT COLUMN: LIVE TEST CHAT (STICKY PLAYGROUND) ──────────────────── -->
-        <div class="chat-column">
-          <div class="card reveal-on-scroll chatbot-card-flat" style="position: sticky; top: 90px;">
+        <!-- ─── RIGHT COLUMN: LIVE TEST CHAT (PLAYGROUND & AUTO-SYNC) ──────────────────── -->
+        <div class="chat-column" style="display: flex; flex-direction: column; gap: 20px;">
+          <!-- Chatbot Playground -->
+          <div class="card reveal-on-scroll chatbot-card-flat">
             <div class="chat-container">
               <div class="chat-header">
                 <div class="bot-avatar">
@@ -193,6 +163,38 @@
               </div>
             </div>
           </div>
+
+          <!-- CARD 3: Database Auto-Sync -->
+          <div class="card reveal-on-scroll">
+            <div class="card-header chatbot-card-header" style="margin-bottom: 16px;">
+              <h3 class="chatbot-title">
+                <span class="material-icons-round chatbot-title-icon">sync</span>
+                Database Auto-Sync Context
+              </h3>
+              <p class="chatbot-subtitle">System details automatically injected into the AI</p>
+            </div>
+
+            <div class="chatbot-settings-form">
+              <div class="info-box" style="background: rgba(16, 185, 129, 0.03); border-color: rgba(16, 185, 129, 0.1);">
+                <span class="material-icons-round" style="color: #10B981;">database</span>
+                <div>
+                  <strong>Live System Aware</strong> — The assistant auto-fetches live cars, prices, status (Available/Rented), system operating hours, deposit, and locations from Supabase.
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 13px;">
+                  Context Preview
+                  <button class="btn-test-inline" id="btn-refresh-data" onclick="refreshLiveData()" style="font-size: 11px; padding: 6px 12px; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-color);">
+                    <span class="material-icons-round" style="font-size: 14px;">refresh</span> Refresh Data
+                  </button>
+                </label>
+                <div class="hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Real-time JSON/data appended to the system instructions.</div>
+                <pre id="live-data-preview" style="display: none;"></pre>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
