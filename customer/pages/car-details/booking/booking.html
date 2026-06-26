@@ -54,13 +54,19 @@
             <span data-key="bk_rental_details">Rental Details</span>
           </h3>
           <div class="bk-form-grid">
-            <div class="bk-field">
+            <div class="popup-date-field">
               <label for="bk-pickup-date" data-key="bk_pickup_date">Pick-up Date</label>
-              <input type="text" id="bk-pickup-date" placeholder="Select pick-up date" readonly />
+              <div class="popup-date-input-wrap">
+                <span class="material-icons-round">calendar_today</span>
+                <input type="text" id="bk-pickup-date" placeholder="Select pick-up date" readonly />
+              </div>
             </div>
-            <div class="bk-field">
+            <div class="popup-date-field">
               <label for="bk-return-date" data-key="bk_return_date">Return Date</label>
-              <input type="text" id="bk-return-date" placeholder="Select return date" readonly />
+              <div class="popup-date-input-wrap">
+                <span class="material-icons-round">event</span>
+                <input type="text" id="bk-return-date" placeholder="Select return date" readonly />
+              </div>
             </div>
           </div>
           <!-- Hidden Select for compatibility with scripts -->

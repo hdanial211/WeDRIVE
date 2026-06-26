@@ -2599,46 +2599,7 @@ body.night .spec-card::before {
   font-size: 20px; color: var(--primary);
 }
 
-.popup-date-fields {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-}
-.popup-date-field label {
-  display: block;
-  font-size: 12px; font-weight: 600;
-  color: var(--text-secondary, #64748b);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.popup-date-input-wrap {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--surface-container, #f8fafc);
-  border: 1.5px solid var(--outline-variant, #e2e8f0);
-  border-radius: 12px;
-  padding: 10px 14px;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-.popup-date-input-wrap:hover,
-.popup-date-input-wrap:focus-within {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-.popup-date-input-wrap .material-icons-round {
-  font-size: 18px; color: var(--primary); flex-shrink: 0;
-}
-.popup-date-input-wrap input,
-.popup-date-input-wrap select {
-  border: none; background: transparent;
-  font: inherit; font-size: 14px; font-weight: 500;
-  color: var(--text-primary, #1e293b);
-  width: 100%; outline: none;
-  cursor: pointer;
-}
-.popup-date-input-wrap select {
-  -webkit-appearance: none;
-  appearance: none;
-}
+
 
 /* Duration/Total */
 .popup-duration {

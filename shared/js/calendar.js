@@ -11,6 +11,17 @@
 
   /* ── Resolve base path relative to current page ── */
   function basePath() {
+    var pathname = decodeURIComponent(window.location.pathname);
+    var marker = '/AI CAR RENTAL SYSTEM/';
+    var idx = pathname.indexOf(marker);
+    if (idx !== -1) {
+      var baseSub = pathname.substring(idx + marker.length);
+      var parts = baseSub.split('/').filter(Boolean);
+      if (parts.length > 0 && parts[parts.length - 1].includes('.')) {
+        return '../'.repeat(parts.length - 1);
+      }
+      return '../'.repeat(parts.length);
+    }
     var parts = window.location.pathname.split('/').filter(Boolean);
     if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
     return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
@@ -60,6 +71,8 @@
     var pickupInput = document.getElementById(pickupId);
     var returnInput = document.getElementById(returnId);
     if (!pickupInput || !returnInput || !window.flatpickr) return null;
+
+    injectCalendarCSS();
 
     var pPicker = null;
     var rPicker = null;
