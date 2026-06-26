@@ -92,33 +92,49 @@
     }
     .login-tfa-code-container {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       justify-content: center;
-      margin: 16px auto 20px;
+      align-items: center;
+      margin: 24px auto 28px;
     }
     .tfa-digit-input {
-      width: 42px;
-      height: 52px;
+      width: 46px;
+      height: 56px;
       text-align: center;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 700;
-      border: 2px solid var(--border-color, #E2E8F0);
+      font-family: 'Inter', monospace;
+      border: 1.5px solid var(--border-color, #E2E8F0);
       border-radius: 12px;
       background: var(--input-bg, #F8FAFC);
       color: var(--text-primary, #1E293B);
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+    .tfa-digit-input:hover {
+      border-color: var(--outline, #94A3B8);
+      transform: translateY(-1px);
     }
     .tfa-digit-input:focus {
       border-color: var(--primary, #3B82F6);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-      background: var(--input-focus-bg, #FFFFFF);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12), 0 4px 12px rgba(59, 130, 246, 0.08);
+      background: #FFFFFF;
+      transform: translateY(-2px) scale(1.04);
     }
-    .tfa-divider {
-      font-size: 24px;
-      font-weight: 300;
-      color: var(--text-muted, #94A3B8);
-      align-self: center;
+    .tfa-digit-input.has-val {
+      border-color: var(--primary, #3B82F6);
+      background: var(--bg-surface-lowest, #FFFFFF);
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+    }
+    .tfa-divider-dash {
+      width: 10px;
+      height: 3.5px;
+      background: var(--text-muted, #94A3B8);
+      border-radius: 99px;
+      opacity: 0.6;
+      margin: 0 4px;
+      flex-shrink: 0;
     }
     .login-tfa-demo-note {
       font-size: 12px;
@@ -146,11 +162,21 @@
       background: rgba(15, 23, 42, 0.85);
     }
     body.night-mode .tfa-digit-input {
-      border-color: rgba(148, 163, 184, 0.2);
+      border-color: rgba(255, 255, 255, 0.08);
+      background: rgba(17, 20, 24, 0.5);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    body.night-mode .tfa-digit-input:hover {
+      border-color: rgba(255, 255, 255, 0.18);
     }
     body.night-mode .tfa-digit-input:focus {
-      border-color: #60a5fa;
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+      border-color: var(--primary-fixed-dim, #60a5fa);
+      box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.18), 0 8px 20px rgba(0, 0, 0, 0.4);
+      background: var(--bg-surface-3, #23282f);
+    }
+    body.night-mode .tfa-digit-input.has-val {
+      border-color: var(--primary-fixed-dim, #60a5fa);
+      background: var(--bg-surface-2, #1a1e24);
     }
   </style>
 </head>
@@ -319,6 +345,7 @@
       var inputs = document.querySelectorAll('.tfa-digit-input');
       inputs.forEach(function(input) {
         input.value = '';
+        input.classList.remove('has-val');
       });
 
       var dialog = document.getElementById('login-tfa-dialog');
@@ -386,6 +413,12 @@
           var val = input.value;
           input.value = val.replace(/[^0-9]/g, '');
           
+          if (input.value.length > 0) {
+            input.classList.add('has-val');
+          } else {
+            input.classList.remove('has-val');
+          }
+          
           if (input.value.length === 1 && index < inputs.length - 1) {
             inputs[index + 1].focus();
           }
@@ -394,6 +427,8 @@
         // Handle backspace / left-right arrows
         input.addEventListener('keydown', function(e) {
           if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+            inputs[index - 1].value = '';
+            inputs[index - 1].classList.remove('has-val');
             inputs[index - 1].focus();
           } else if (e.key === 'ArrowLeft' && index > 0) {
             inputs[index - 1].focus();
@@ -413,6 +448,7 @@
           for (var i = 0; i < digits.length; i++) {
             if (inputs[i]) {
               inputs[i].value = digits[i];
+              inputs[i].classList.add('has-val');
             }
           }
           var focusIndex = Math.min(digits.length, inputs.length - 1);
@@ -501,7 +537,7 @@
           <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 1" autocomplete="one-time-code" />
           <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 2" />
           <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 3" />
-          <span class="tfa-divider">|</span>
+          <span class="tfa-divider-dash"></span>
           <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 4" />
           <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 5" />
           <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 6" />
