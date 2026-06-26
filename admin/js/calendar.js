@@ -54,14 +54,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Navigation buttons
   document.getElementById('cal-prev').addEventListener('click', () => { changeMonth(-1); });
   document.getElementById('cal-next').addEventListener('click', () => { changeMonth(1); });
-  document.getElementById('cal-today').addEventListener('click', () => {
-    const now = new Date();
-    CAL_YEAR = now.getFullYear();
-    CAL_MONTH = now.getMonth();
-    syncDropdowns();
-    renderCalendar();
-    updateStats();
-  });
 
   // Detail close button + click outside
   document.getElementById('cal-detail-close').addEventListener('click', () => {
