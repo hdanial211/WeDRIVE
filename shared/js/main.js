@@ -58,7 +58,7 @@
     var effectiveMode = getEffectiveTheme(mode);
     var link = document.getElementById('theme-link');
     if (link) {
-      var base = link.getAttribute('href').replace(/theme_(day|night)\.css$/, '');
+      var base = link.getAttribute('href').replace(/theme_(day|night)\.css(\?.*)?$/, '');
       link.href = base + (effectiveMode === 'night' ? NIGHT_HREF : DAY_HREF);
     }
     /* Sync root class — allows CSS to target night-specific styles immediately */
