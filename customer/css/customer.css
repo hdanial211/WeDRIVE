@@ -2709,13 +2709,6 @@ body.night .spec-card::before {
   font-size: 20px;
 }
 
-/* Flatpickr calendar - render above popup overlay (z-index:9999) */
-.flatpickr-calendar {
-  z-index: 10001 !important;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.18);
-  border-radius: 12px;
-}
-
 /* Booking Popup Responsive */
 @media (max-width: 600px) {
   .booking-popup-overlay { padding: 12px; align-items: flex-end; }

@@ -12,6 +12,7 @@
   min-width: calc(var(--fp-body-width) + 16px) !important;
   box-sizing: border-box !important;
   overflow: visible !important;
+  z-index: 10001 !important;
 }
 
 .flatpickr-calendar:before,
