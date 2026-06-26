@@ -75,5 +75,91 @@
   <script src="../../../js/anime.min.js"></script>
   <script src="../../../js/animate.js"></script>
   <script src="../../../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tocLinks = document.querySelectorAll('.terms-toc .toc-link');
+      const headings = Array.from(tocLinks).map(link => {
+        const id = link.getAttribute('href').substring(1);
+        return document.getElementById(id);
+      }).filter(Boolean);
+
+      if (tocLinks.length === 0 || headings.length === 0) return;
+
+      let isScrollingFromClick = false;
+
+      // Handle smooth scroll on click with sticky header offset
+      tocLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            isScrollingFromClick = true;
+
+            const headerOffset = 100;
+            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+
+            // Update active state immediately on click
+            tocLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            // Update hash without jumping
+            history.pushState(null, null, `#${targetId}`);
+          }
+        });
+      });
+
+      // Reset scroll flag on user interaction
+      const resetScrollFlag = () => {
+        isScrollingFromClick = false;
+      };
+      window.addEventListener('wheel', resetScrollFlag, { passive: true });
+      window.addEventListener('touchmove', resetScrollFlag, { passive: true });
+      window.addEventListener('keydown', resetScrollFlag, { passive: true });
+      window.addEventListener('mousedown', resetScrollFlag, { passive: true });
+
+      // Update active link on scroll
+      function updateActiveSection() {
+        if (isScrollingFromClick) return;
+
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        const triggerOffset = 120; // Trigger slightly before it hits the top offset
+
+        // Check if we are at the bottom of the page
+        const isAtBottom = (window.innerHeight + window.pageYOffset) >= document.documentElement.scrollHeight - 50;
+
+        let activeIndex = 0;
+
+        if (isAtBottom) {
+          activeIndex = headings.length - 1;
+        } else {
+          for (let i = 0; i < headings.length; i++) {
+            if (scrollPosition + triggerOffset >= headings[i].offsetTop) {
+              activeIndex = i;
+            } else {
+              break;
+            }
+          }
+        }
+
+        tocLinks.forEach((link, idx) => {
+          if (idx === activeIndex) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveSection, { passive: true });
+      updateActiveSection(); // Run initially
+    });
+  </script>
 </body>
 </html>
