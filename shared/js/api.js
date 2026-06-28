@@ -814,7 +814,7 @@ window.WeDriveAPI = {
             try {
                 var sb = window.supabaseClient;
                 var result = await sb.from('customers')
-                    .select('*')
+                    .select('*, date_of_birth, address')
                     .eq('auth_uid', authUid)
                     .single();
                 if (result.error) throw result.error;
