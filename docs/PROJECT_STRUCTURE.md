@@ -41,6 +41,8 @@ AI CAR RENTAL SYSTEM/
 |   +-- PROJECT_STRUCTURE.md     # Struktur fail & panduan integrasi
 |   +-- FULL_SYSTEM_FLOWCHART.md # Carta alir sistem penuh
 |   +-- FULL_SYSTEM_FLOWCHART.html # Carta alir sistem (versi visual)
+|   +-- email-templates/         # Template HTML untuk email Supabase Auth
+|   |   +-- reset-password.html  # Template email Reset Password (branded WeDRIVE)
 |   +-- stitch-reference/        # Rujukan reka bentuk Stitch
 |       +-- html/                # Kod HTML skrin Stitch (11 skrin + mobile)
 |       +-- screenshots/         # Tangkapan skrin reka bentuk Stitch
