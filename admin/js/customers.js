@@ -355,43 +355,134 @@ function closeCustomerModal() {
   if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
 }
 
+// ---- Custom modal helpers (replace native confirm/prompt) ----
+
+function showConfirmModal(opts) {
+  // opts: { title, message, confirmLabel, cancelLabel, confirmClass, onConfirm }
+  var existing = document.getElementById('wedrive-confirm-modal');
+  if (existing) existing.remove();
+
+  var overlay = document.createElement('div');
+  overlay.id = 'wedrive-confirm-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+
+  var confirmClass = opts.confirmClass || 'background:#059669';
+  overlay.innerHTML = `
+    <div style="background:var(--bg-surface,#fff);border-radius:16px;padding:28px 32px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:slideUp 0.2s ease;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <span class="material-icons-round" style="font-size:26px;color:${opts.iconColor || '#059669'}">${opts.icon || 'help_outline'}</span>
+        <h3 style="margin:0;font-size:17px;font-weight:700;color:var(--navy,#1E293B)">${opts.title || 'Confirm'}</h3>
+      </div>
+      <p style="margin:0 0 22px;font-size:14px;color:var(--slate-500,#64748B);line-height:1.6">${opts.message || ''}</p>
+      <div style="display:flex;gap:10px;justify-content:flex-end;">
+        <button id="wdcm-cancel" style="padding:9px 20px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);background:transparent;color:var(--navy,#1E293B);font-size:14px;font-weight:600;cursor:pointer;">${opts.cancelLabel || 'Cancel'}</button>
+        <button id="wdcm-confirm" style="padding:9px 20px;border-radius:10px;border:none;${confirmClass};color:#fff;font-size:14px;font-weight:600;cursor:pointer;">${opts.confirmLabel || 'Confirm'}</button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+
+  overlay.querySelector('#wdcm-cancel').onclick = function() { overlay.remove(); };
+  overlay.querySelector('#wdcm-confirm').onclick = function() {
+    overlay.remove();
+    if (opts.onConfirm) opts.onConfirm();
+  };
+  // Close on backdrop click
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+}
+
+function showPromptModal(opts) {
+  // opts: { title, message, placeholder, confirmLabel, cancelLabel, onConfirm }
+  var existing = document.getElementById('wedrive-prompt-modal');
+  if (existing) existing.remove();
+
+  var overlay = document.createElement('div');
+  overlay.id = 'wedrive-prompt-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+
+  overlay.innerHTML = `
+    <div style="background:var(--bg-surface,#fff);border-radius:16px;padding:28px 32px;max-width:440px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:slideUp 0.2s ease;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <span class="material-icons-round" style="font-size:26px;color:#DC2626">cancel</span>
+        <h3 style="margin:0;font-size:17px;font-weight:700;color:var(--navy,#1E293B)">${opts.title || 'Input Required'}</h3>
+      </div>
+      <p style="margin:0 0 14px;font-size:14px;color:var(--slate-500,#64748B);line-height:1.6">${opts.message || ''}</p>
+      <textarea id="wdpm-input" rows="3" placeholder="${opts.placeholder || ''}" style="width:100%;box-sizing:border-box;padding:10px 14px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);font-size:14px;font-family:inherit;resize:vertical;color:var(--navy,#1E293B);background:var(--bg-surface,#fff);outline:none;"></textarea>
+      <div id="wdpm-error" style="color:#DC2626;font-size:12px;margin-top:6px;display:none;">Please provide a reason.</div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">
+        <button id="wdpm-cancel" style="padding:9px 20px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);background:transparent;color:var(--navy,#1E293B);font-size:14px;font-weight:600;cursor:pointer;">${opts.cancelLabel || 'Cancel'}</button>
+        <button id="wdpm-confirm" style="padding:9px 20px;border-radius:10px;border:none;background:#DC2626;color:#fff;font-size:14px;font-weight:600;cursor:pointer;">${opts.confirmLabel || 'Confirm'}</button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(overlay);
+  setTimeout(function() { overlay.querySelector('#wdpm-input').focus(); }, 100);
+
+  overlay.querySelector('#wdpm-cancel').onclick = function() { overlay.remove(); };
+  overlay.querySelector('#wdpm-confirm').onclick = function() {
+    var val = overlay.querySelector('#wdpm-input').value.trim();
+    if (!val) {
+      overlay.querySelector('#wdpm-error').style.display = 'block';
+      return;
+    }
+    overlay.remove();
+    if (opts.onConfirm) opts.onConfirm(val);
+  };
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
+}
+
+// ---- End custom modal helpers ----
+
 async function approveCustomer(id) {
   var c = allCustomers.find(x => x.id === id);
   if (!c) return;
-  if (!confirm('Approve ' + c._name + '? This will allow them to book cars.')) return;
 
-  try {
-    var result = await window.WeDriveAPI.verifyCustomer(id, 'Verified');
-    if (!result.success) throw new Error(result.error);
-    c.verification_status = 'Verified';
+  showConfirmModal({
+    title: 'Approve Customer',
+    message: 'Approve <strong>' + c._name + '</strong>? This will allow them to book cars.',
+    confirmLabel: 'Approve',
+    cancelLabel: 'Cancel',
+    icon: 'verified',
+    iconColor: '#059669',
+    confirmClass: 'background:#059669',
+    onConfirm: async function() {
+      try {
+        var result = await window.WeDriveAPI.verifyCustomer(id, 'Verified');
+        if (!result.success) throw new Error(result.error);
+        c.verification_status = 'Verified';
 
-    // Send email notification
-    if (window.WeDriveEmail) {
-      window.WeDriveEmail.sendVerificationEmail(c._email, c._name, 'approved');
+        // Send email notification
+        if (window.WeDriveEmail) {
+          window.WeDriveEmail.sendVerificationEmail(c._email, c._name, 'approved');
+        }
+
+        sortCustomers(allCustomers);
+        populateCustomerStats(allCustomers);
+        renderCustomers(allCustomers);
+        closeCustomerModal();
+        showToast(c._name + ' has been verified', 'success');
+      } catch (err) {
+        console.error('Approve error:', err);
+        showToast('Error approving customer', 'info');
+      }
     }
-
-    sortCustomers(allCustomers);
-    populateCustomerStats(allCustomers);
-    renderCustomers(allCustomers);
-    closeCustomerModal();
-    showToast(c._name + ' has been verified', 'success');
-  } catch (err) {
-    console.error('Approve error:', err);
-    showToast('Error approving customer', 'info');
-  }
+  });
 }
 
 function openRejectModal(id) {
   var c = allCustomers.find(x => x.id === id);
   if (!c) return;
 
-  var reason = prompt('Enter rejection reason for ' + c._name + ':');
-  if (reason === null) return; // cancelled
-  if (!reason.trim()) {
-    alert('Please provide a reason for rejection.');
-    return;
-  }
-  rejectCustomer(id, reason.trim());
+  showPromptModal({
+    title: 'Reject Customer',
+    message: 'Please provide a reason for rejecting <strong>' + c._name + '</strong>:',
+    placeholder: 'e.g. Documents are not clear, IC expired...',
+    confirmLabel: 'Reject',
+    cancelLabel: 'Cancel',
+    onConfirm: function(reason) {
+      rejectCustomer(id, reason);
+    }
+  });
 }
 
 async function rejectCustomer(id, reason) {
@@ -423,29 +514,40 @@ async function toggleCustomerStatus(id) {
   var c = allCustomers.find(x => x.id === id);
   if (!c) return;
   var newStatus = c._status === 'Active' ? 'Suspended' : 'Active';
+  var iconColor = newStatus === 'Active' ? '#059669' : '#DC2626';
+  var confirmClass = newStatus === 'Active' ? 'background:#059669' : 'background:#DC2626';
 
-  if (confirm('Change ' + c._name + ' status to "' + newStatus + '"?')) {
-    if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
-      try {
-        var result = await window.supabaseClient.from('customers').update({ status: newStatus }).eq('id', id);
-        if (result.error) throw result.error;
+  showConfirmModal({
+    title: 'Change Status',
+    message: 'Change <strong>' + c._name + '</strong> status to <strong>' + newStatus + '</strong>?',
+    confirmLabel: 'Confirm',
+    cancelLabel: 'Cancel',
+    icon: newStatus === 'Active' ? 'person' : 'person_off',
+    iconColor: iconColor,
+    confirmClass: confirmClass,
+    onConfirm: async function() {
+      if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
+        try {
+          var result = await window.supabaseClient.from('customers').update({ status: newStatus }).eq('id', id);
+          if (result.error) throw result.error;
+          c.status = newStatus;
+          c._status = newStatus;
+          populateCustomerStats(allCustomers);
+          renderCustomers(allCustomers);
+          showToast(c._name + ' set to ' + newStatus, 'success');
+        } catch (err) {
+          console.error('[WeDRIVE] Toggle customer status error:', err);
+          showToast('Error updating status', 'info');
+        }
+      } else {
         c.status = newStatus;
         c._status = newStatus;
         populateCustomerStats(allCustomers);
         renderCustomers(allCustomers);
-        showToast(c._name + ' set to ' + newStatus, 'success');
-      } catch (err) {
-        console.error('[WeDRIVE] Toggle customer status error:', err);
-        showToast('Error updating status', 'info');
+        showToast(c._name + ' set to ' + newStatus + ' (demo)', 'success');
       }
-    } else {
-      c.status = newStatus;
-      c._status = newStatus;
-      populateCustomerStats(allCustomers);
-      renderCustomers(allCustomers);
-      showToast(c._name + ' set to ' + newStatus + ' (demo)', 'success');
     }
-  }
+  });
 }
 
 function formatDate(dateStr) {
