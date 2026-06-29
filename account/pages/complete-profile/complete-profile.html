@@ -698,6 +698,25 @@
         var licenseBackUpload = await window.WeDriveAPI.uploadDocument(uid, licenseBackFile, 'license_back');
         if (!licenseBackUpload.success) throw new Error('License Back upload failed: ' + licenseBackUpload.error);
 
+        // Parse date of birth from IC (YYMMDD-PB-###)
+        var icDigits = ic.replace(/\D/g, '');
+        var dob = null;
+        if (icDigits.length === 12) {
+          var yy = icDigits.substring(0, 2);
+          var mm = icDigits.substring(2, 4);
+          var dd = icDigits.substring(4, 6);
+          var year = parseInt(yy, 10);
+          var month = parseInt(mm, 10);
+          var day = parseInt(dd, 10);
+          
+          if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+            var currentYear = new Date().getFullYear() % 100;
+            var century = (year <= currentYear) ? 2000 : 1900;
+            var fullYear = century + year;
+            dob = fullYear + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+          }
+        }
+
         // Update profile
         btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.saving;
         var updateResult = await window.WeDriveAPI.updateCustomerProfile(uid, {
@@ -706,6 +725,7 @@
           ic: ic,
           license: license,
           phone: phone,
+          date_of_birth: dob,
           ic_document_url: icUpload.url,
           ic_back_document_url: icBackUpload.url,
           license_document_url: licenseUpload.url,
