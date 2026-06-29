@@ -6093,3 +6093,182 @@ body.night-mode .pf-tfa-recovery-code {
   color: #e2e8f0;
 }
 
+/* ==========================================================================
+   CHECKOUT PAGE - NIGHT MODE OVERRIDES
+   ========================================================================== */
+body.night-mode .form-card,
+body.night-mode .order-summary {
+  background: var(--card-bg, #1a1e24);
+  border-color: rgba(148, 163, 184, 0.16);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+}
+
+body.night-mode .checkout-secure-pill,
+body.night-mode .summary-status {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(96, 165, 250, 0.24);
+  color: #93c5fd;
+  box-shadow: none;
+}
+
+body.night-mode .driver-mode-chip,
+body.night-mode .pay-method {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+}
+
+body.night-mode .driver-mode-chip:hover,
+body.night-mode .driver-mode-chip.active,
+body.night-mode .pay-method:hover,
+body.night-mode .pay-method.active {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: #60a5fa;
+  color: #93c5fd;
+}
+
+body.night-mode .driver-profile-card,
+body.night-mode .driver-ocr-banner {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(26, 30, 38, 0.8)) !important;
+  border-color: rgba(148, 163, 184, 0.16);
+}
+
+body.night-mode .driver-profile-card h3,
+body.night-mode .driver-ocr-banner strong {
+  color: #e2e8f0;
+}
+
+body.night-mode .driver-profile-card p,
+body.night-mode .driver-ocr-banner p {
+  color: #94a3b8;
+}
+
+body.night-mode .driver-profile-badge {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+body.night-mode .driver-upload-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(148, 163, 184, 0.18);
+  color: #e2e8f0;
+}
+
+body.night-mode .driver-upload-card:hover {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: #60a5fa;
+}
+
+body.night-mode .driver-upload-card small {
+  color: #94a3b8;
+}
+
+body.night-mode .driver-ocr-progress {
+  background: rgba(255, 255, 255, 0.02);
+  color: #94a3b8;
+}
+
+body.night-mode .driver-ocr-progress.is-scanning {
+  background: rgba(59, 130, 246, 0.12);
+  color: #93c5fd;
+}
+
+body.night-mode .driver-ocr-progress.is-ready {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+body.night-mode .driver-panel .fg input[readonly],
+body.night-mode .checkout-form-section .fg input[readonly] {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(148, 163, 184, 0.1) !important;
+  box-shadow: none !important;
+}
+
+body.night-mode .fg label {
+  color: #94a3b8;
+}
+
+body.night-mode .fg input,
+body.night-mode .fg select,
+body.night-mode .promo-row input {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(148, 163, 184, 0.16);
+  color: #e2e8f0;
+}
+
+body.night-mode .fg input:focus,
+body.night-mode .fg select:focus,
+body.night-mode .promo-row input:focus {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18);
+}
+
+body.night-mode .checkout-addon {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(148, 163, 184, 0.15);
+  color: #e2e8f0;
+}
+
+body.night-mode .checkout-addon small {
+  color: #94a3b8;
+}
+
+body.night-mode .checkout-addon b {
+  color: #93c5fd;
+}
+
+body.night-mode .summary-car-img {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.night-mode .summary-car-info h3 {
+  color: #e2e8f0;
+}
+
+body.night-mode .summary-car-info p {
+  color: #94a3b8;
+}
+
+body.night-mode .summary-row {
+  color: #94a3b8;
+}
+
+body.night-mode .summary-row .amount {
+  color: #e2e8f0;
+}
+
+body.night-mode .summary-row.total {
+  border-color: rgba(148, 163, 184, 0.16);
+  color: #e2e8f0;
+}
+
+body.night-mode .summary-row.total .amount {
+  color: #60a5fa;
+}
+
+body.night-mode .ai-savings {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(96, 165, 250, 0.18);
+  color: #93c5fd;
+}
+
+body.night-mode .pay-secure {
+  color: #6e7681;
+}
+
+body.night-mode #checkout-payment-type {
+  background: #1a1e24 !important;
+}
+
+body.night-mode #checkout-payment-type button {
+  color: #94a3b8 !important;
+}
+
+body.night-mode #checkout-payment-type button[style*="background:#3B82F6"],
+body.night-mode #checkout-payment-type button[style*="background:#D97706"] {
+  color: #fff !important;
+}
+
