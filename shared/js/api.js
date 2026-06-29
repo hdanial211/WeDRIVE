@@ -814,7 +814,7 @@ window.WeDriveAPI = {
             try {
                 var sb = window.supabaseClient;
                 var result = await sb.from('customers')
-                    .select('*, date_of_birth, address')
+                    .select('*')
                     .eq('auth_uid', authUid)
                     .single();
                 if (result.error) throw result.error;
@@ -854,11 +854,9 @@ window.WeDriveAPI = {
                 if (data.hasOwnProperty('license_back_document_url')) updateData.license_back_document_url = data.license_back_document_url;
                 if (data.hasOwnProperty('preferences')) updateData.preferences = data.preferences;
                 if (data.hasOwnProperty('dob')) updateData.dob = data.dob;
-                if (data.hasOwnProperty('date_of_birth')) updateData.date_of_birth = data.date_of_birth;
                 if (data.hasOwnProperty('street')) updateData.street = data.street;
                 if (data.hasOwnProperty('city')) updateData.city = data.city;
                 if (data.hasOwnProperty('zip')) updateData.zip = data.zip;
-                if (data.hasOwnProperty('address')) updateData.address = data.address;
                 if (data.hasOwnProperty('license_expiry')) updateData.license_expiry = data.license_expiry;
                 if (data.hasOwnProperty('payment_methods')) updateData.payment_methods = data.payment_methods;
 
@@ -942,7 +940,7 @@ window.WeDriveAPI = {
         try {
             var sb = window.supabaseClient;
             if (!sb || !authUid) return { complete: false, status: null };
-            var result = await sb.from('customers').select('ic, license, phone, verification_status, rejection_reason, date_of_birth, address').eq('auth_uid', authUid).maybeSingle();
+            var result = await sb.from('customers').select('ic, license, phone, verification_status, rejection_reason').eq('auth_uid', authUid).maybeSingle();
             if (result.error) throw result.error;
             if (!result.data) return { complete: false, status: null };
             var d = result.data;
@@ -956,9 +954,7 @@ window.WeDriveAPI = {
                 reason: d.rejection_reason || null,
                 ic: d.ic || null,
                 license: d.license || null,
-                phone: d.phone || null,
-                date_of_birth: d.date_of_birth || null,
-                address: d.address || null
+                phone: d.phone || null
             };
         } catch (err) {
             console.error('[WeDriveAPI] checkProfileComplete error:', err);

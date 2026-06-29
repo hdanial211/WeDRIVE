@@ -1204,21 +1204,13 @@
           if (usernameVal.includes(' ') && !profile.username) {
             usernameVal = usernameVal.split(' ')[0];
           }
-          // Format date_of_birth (YYYY-MM-DD) -> DD/MM/YYYY for display
-          var rawDob = profile.date_of_birth || profile.dob || '';
-          var dobDisplay = rawDob;
-          if (rawDob && rawDob.includes('-') && rawDob.length === 10) {
-            var dobParts = rawDob.split('-');
-            dobDisplay = dobParts[2] + '/' + dobParts[1] + '/' + dobParts[0];
-          }
-
           var supabaseState = {
             username: usernameVal,
             fullName: profile.name || '',
-            dob: dobDisplay,
+            dob: profile.dob || defaultProfileState.dob,
             email: profile.email || user.email || '',
             phone: profile.phone || '',
-            street: profile.street || (profile.address ? profile.address.split(',')[0].trim() : '') || defaultProfileState.street,
+            street: profile.street || defaultProfileState.street,
             city: profile.city || defaultProfileState.city,
             zip: profile.zip || defaultProfileState.zip,
             license: profile.license || '',

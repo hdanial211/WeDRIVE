@@ -160,93 +160,19 @@
             </div>
 
             <div class="form-row-grid">
-              <!-- Date of Birth -->
-              <div class="form-group">
-                <label for="date-of-birth"><span data-key="profile_dob">Date of Birth</span> <span class="required-asterisk">*</span></label>
-                <div class="input-wrap">
-                  <span class="material-icons-round">cake</span>
-                  <input type="date" id="date-of-birth" required max="" />
-                </div>
-                <div class="field-hint" style="margin-top: 6px;" data-key="profile_dob_hint">Must match the date on your IC</div>
-              </div>
-
               <!-- Phone Number -->
               <div class="form-group">
                 <label for="phone-number"><span data-key="profile_phone">Phone Number</span> <span class="required-asterisk">*</span></label>
                 <div class="input-wrap prefix-wrap">
                   <span class="material-icons-round">phone</span>
                   <select id="phone-country-code" class="phone-prefix-select">
-                    <option value="+60">MY +60</option>
-                    <option value="+65">SG +65</option>
-                    <option value="+62">ID +62</option>
-                    <option value="+66">TH +66</option>
-                    <option value="+673">BN +673</option>
+                    <option value="+60">🇲🇾 MY +60</option>
+                    <option value="+65">🇸🇬 SG +65</option>
+                    <option value="+62">🇮🇩 ID +62</option>
+                    <option value="+66">🇹🇭 TH +66</option>
+                    <option value="+673">🇧🇳 BN +673</option>
                   </select>
                   <input type="text" id="phone-number" placeholder="12-345 6789" required />
-                </div>
-              </div>
-            </div>
-
-            <div class="divider-line"></div>
-
-            <h3 class="section-title" data-key="profile_address_title">Residential Address</h3>
-
-            <div class="form-row-grid">
-              <!-- Street Address -->
-              <div class="form-group" style="grid-column: 1 / -1;">
-                <label for="street-address"><span data-key="profile_street">Street Address</span> <span class="required-asterisk">*</span></label>
-                <div class="input-wrap">
-                  <span class="material-icons-round">home</span>
-                  <input type="text" id="street-address" data-key-ph="profile_street_ph" placeholder="e.g. No. 12, Jalan Harmoni 3" required />
-                </div>
-              </div>
-            </div>
-
-            <div class="form-row-grid" style="margin-top: 15px;">
-              <!-- City -->
-              <div class="form-group">
-                <label for="city"><span data-key="profile_city">City</span> <span class="required-asterisk">*</span></label>
-                <div class="input-wrap">
-                  <span class="material-icons-round">location_city</span>
-                  <input type="text" id="city" data-key-ph="profile_city_ph" placeholder="e.g. Kuala Lumpur" required />
-                </div>
-              </div>
-
-              <!-- Postcode -->
-              <div class="form-group">
-                <label for="postcode"><span data-key="profile_postcode">Postcode</span> <span class="required-asterisk">*</span></label>
-                <div class="input-wrap">
-                  <span class="material-icons-round">markunread_mailbox</span>
-                  <input type="text" id="postcode" placeholder="e.g. 50450" maxlength="5" required />
-                </div>
-              </div>
-            </div>
-
-            <div class="form-row-grid" style="margin-top: 15px;">
-              <!-- State -->
-              <div class="form-group">
-                <label for="state"><span data-key="profile_state">State</span> <span class="required-asterisk">*</span></label>
-                <div class="input-wrap">
-                  <span class="material-icons-round">map</span>
-                  <select id="state" required style="width:100%; background:transparent; border:none; outline:none; color:inherit; font-size:14px; font-family:inherit;">
-                    <option value="" disabled selected data-key="profile_state_ph">Select state</option>
-                    <option value="Johor">Johor</option>
-                    <option value="Kedah">Kedah</option>
-                    <option value="Kelantan">Kelantan</option>
-                    <option value="Melaka">Melaka</option>
-                    <option value="Negeri Sembilan">Negeri Sembilan</option>
-                    <option value="Pahang">Pahang</option>
-                    <option value="Perak">Perak</option>
-                    <option value="Perlis">Perlis</option>
-                    <option value="Pulau Pinang">Pulau Pinang</option>
-                    <option value="Sabah">Sabah</option>
-                    <option value="Sarawak">Sarawak</option>
-                    <option value="Selangor">Selangor</option>
-                    <option value="Terengganu">Terengganu</option>
-                    <option value="W.P. Kuala Lumpur">W.P. Kuala Lumpur</option>
-                    <option value="W.P. Labuan">W.P. Labuan</option>
-                    <option value="W.P. Putrajaya">W.P. Putrajaya</option>
-                  </select>
                 </div>
               </div>
             </div>
@@ -354,16 +280,6 @@
     var licenseFile = null;
     var licenseBackFile = null;
 
-    // Set max date for DOB (must be at least 18 years old)
-    (function setDobMaxDate() {
-      var dobInput = document.getElementById('date-of-birth');
-      if (dobInput) {
-        var today = new Date();
-        today.setFullYear(today.getFullYear() - 17);
-        dobInput.max = today.toISOString().split('T')[0];
-      }
-    })();
-
     // Check if user came here due to rejection and populate previous data
     (async function checkRejection() {
       try {
@@ -402,13 +318,6 @@
             document.getElementById('phone-number').value = phoneStr;
           }
           document.getElementById('phone-number').dispatchEvent(new Event('input'));
-        }
-        if (profileCheck.date_of_birth) {
-          document.getElementById('date-of-birth').value = profileCheck.date_of_birth;
-        }
-        if (profileCheck.address) {
-          // Try to parse address back into components
-          document.getElementById('street-address').value = profileCheck.address;
         }
       } catch (e) {
         console.error('Rejection check error:', e);
@@ -649,12 +558,6 @@
       var countryCode = document.getElementById('phone-country-code').value;
       var localPhone = document.getElementById('phone-number').value.trim();
       var phone = countryCode + ' ' + localPhone;
-      var dob = document.getElementById('date-of-birth').value;
-      var street = document.getElementById('street-address').value.trim();
-      var city = document.getElementById('city').value.trim();
-      var postcode = document.getElementById('postcode').value.trim();
-      var state = document.getElementById('state').value;
-      var address = street + ', ' + postcode + ' ' + city + ', ' + state + ', Malaysia';
       var btn = document.getElementById('submit-btn');
 
       var lang = localStorage.getItem('wedrive-lang') || 'en';
@@ -665,11 +568,6 @@
           ic: 'IC Number must be exactly 12 digits.',
           license: 'Please enter your Driving License number.',
           phone: 'Please enter your phone number.',
-          dob: 'Please enter your Date of Birth.',
-          street: 'Please enter your Street Address.',
-          city: 'Please enter your City.',
-          postcode: 'Please enter your Postcode (5 digits).',
-          state: 'Please select your State.',
           icFront: 'Please upload your IC Front document.',
           icBack: 'Please upload your IC Back document.',
           licenseFront: 'Please upload your Driving License Front document.',
@@ -691,11 +589,6 @@
           ic: 'Nombor IC mestilah tepat 12 digit.',
           license: 'Sila masukkan nombor Lesen Memandu anda.',
           phone: 'Sila masukkan nombor telefon anda.',
-          dob: 'Sila masukkan Tarikh Lahir anda.',
-          street: 'Sila masukkan Alamat Jalan anda.',
-          city: 'Sila masukkan Bandar anda.',
-          postcode: 'Sila masukkan Poskod anda (5 digit).',
-          state: 'Sila pilih Negeri anda.',
           icFront: 'Sila muat naik dokumen Depan IC anda.',
           icBack: 'Sila muat naik dokumen Belakang IC anda.',
           licenseFront: 'Sila muat naik dokumen Depan Lesen Memandu anda.',
@@ -744,26 +637,6 @@
       }
       if (!localPhone) {
         alert(m.phone);
-        return;
-      }
-      if (!dob) {
-        alert(m.dob);
-        return;
-      }
-      if (!street) {
-        alert(m.street);
-        return;
-      }
-      if (!city) {
-        alert(m.city);
-        return;
-      }
-      if (!postcode || postcode.length < 5) {
-        alert(m.postcode);
-        return;
-      }
-      if (!state) {
-        alert(m.state);
         return;
       }
       if (!icFile) {
@@ -833,8 +706,6 @@
           ic: ic,
           license: license,
           phone: phone,
-          date_of_birth: dob,
-          address: address,
           ic_document_url: icUpload.url,
           ic_back_document_url: icBackUpload.url,
           license_document_url: licenseUpload.url,
