@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../../../../../../shared/css/animation.css" />
   <link rel="stylesheet" href="../../../../../css/customer.css?v=8.3.26" />
   <style>
-    .cal-picker-wrapper { position: relative; display: inline-block; }
+    .cal-picker-wrapper { position: relative; display: block; width: 100%; }
     .cal-dropdown {
       position: absolute; bottom: calc(100% + 10px); left: 50%;
       transform: translateX(-50%) scale(0.95);
@@ -109,9 +109,9 @@
             </button>
 
             <div class="cal-picker-wrapper">
-              <button class="btn-outline" type="button" id="cal-trigger-btn" onclick="toggleCalPicker(event)">
-                <span class="material-icons-round">calendar_add_on</span> Add to Calendar
-                <span class="material-icons-round" style="font-size:16px;margin-left:4px" id="cal-chevron">expand_more</span>
+              <button class="btn-outline" type="button" id="cal-trigger-btn" onclick="toggleCalPicker(event)" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; white-space: nowrap; box-sizing: border-box;">
+                <span class="material-icons-round" style="font-size:18px;">calendar_today</span> Add to Calendar
+                <span class="material-icons-round" style="font-size:16px;margin-left:2px;" id="cal-chevron">expand_more</span>
               </button>
               <div class="cal-dropdown" id="cal-dropdown">
                 <div class="cal-dropdown-header">Choose your calendar app</div>
