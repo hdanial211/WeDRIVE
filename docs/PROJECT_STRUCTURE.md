@@ -33,7 +33,8 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- 07_References.md   # Rujukan (Harvard Style)
 |   +-- REPORT FYP.docx         # Laporan lengkap FYP (Original >100MB)
 |   +-- REPORT FYP.pdf          # Laporan lengkap FYP PDF (Original >100MB)
-|   +-- REPORT FYP_compressed.docx # Laporan lengkap FYP terkompres (<100MB, sasaran 98MB-99MB)
+|   +-- REPORT FYP_compressed.docx # Laporan lengkap FYP terkompres (<100MB, saiz ~83MB)
+|   +-- REPORT FYP_compressed.pdf  # Laporan lengkap FYP PDF terkompres (<100MB, saiz ~98MB)
 |   +-- WeDRIVE_PSM1_Report.docx # Laporan PSM 1 lengkap
 |   +-- 3-FYP-Writing-Guide-2025_v1.docx # Panduan penulisan FYP UTeM
 |   +-- FINAL REPORT FYP -TEMPLATE.docx # Template laporan FYP
