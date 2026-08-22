@@ -136,7 +136,7 @@ window.wedrive_lang_ms = {
   "guest_type_all": "Semua jenis",
   "guest_cars_title": "Kereta tersedia untuk setiap rancangan",
   "guest_cars_sub": "Bandingkan keselesaan, kapasiti, harga, dan nota AI sebelum log masuk untuk menempah.",
-  "guest_available_only": "Tersedia sahaja",
+  "guest_available_only": "Tersedia sekarang",
   "guest_sort_label": "Susun",
   "sort_recommended": "Dicadangkan",
   "sort_price_low": "Harga terendah",
