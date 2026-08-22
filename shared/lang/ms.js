@@ -688,5 +688,9 @@ window.wedrive_lang_ms = {
   "terms_sec7_title": "7. Kuki (Cookies)",
   "terms_sec7_p1": "Kami menggunakan kuki penting untuk kefungsian laman web dan kuki analitik untuk memahami corak penggunaan. Anda boleh mengurus tetapan kuki dalam pelayar anda.",
   "terms_sec8_title": "8. Hak Pengguna",
-  "terms_sec8_p1": "Anda berhak untuk mengakses, mengubah suai, atau memadam data peribadi anda pada bila-bila masa. Hubungi kami di legal@wedrive.my untuk sebarang pertanyaan berkaitan data."
+  "terms_sec8_p1": "Anda berhak untuk mengakses, mengubah suai, atau memadam data peribadi anda pada bila-bila masa. Hubungi kami di legal@wedrive.my untuk sebarang pertanyaan berkaitan data.",
+  "guest_btn_pricing": "Bermula dari RM {rate}/hari · Pakej Harga",
+  "guest_banner_pricing": "Bandingkan Kadar Harian & Mingguan · Jimat 15% untuk sewaan mingguan",
+  "footer_pricing": "Pakej & Kadar Harga",
+  "pricing_from_prefix": "Bermula dari "
 };

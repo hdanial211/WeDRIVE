@@ -42,7 +42,7 @@
         <p data-key="pricing_econ_sub">Perfect for city drives</p>
       </div>
       <div class="card-price">
-        <span class="amount" data-daily="120" data-weekly="714">RM 120</span>
+        <span class="amount" id="price-econ-amt" data-daily="95" data-weekly="565">RM 95</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
@@ -63,7 +63,7 @@
         <p data-key="pricing_sedan_sub">Comfort for families</p>
       </div>
       <div class="card-price">
-        <span class="amount" data-daily="220" data-weekly="1309">RM 220</span>
+        <span class="amount" id="price-sedan-amt" data-daily="450" data-weekly="2678">RM 450</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
@@ -84,7 +84,7 @@
         <p data-key="pricing_suv_sub">Space for adventures</p>
       </div>
       <div class="card-price">
-        <span class="amount" data-daily="350" data-weekly="2083">RM 350</span>
+        <span class="amount" id="price-suv-amt" data-daily="320" data-weekly="1904">RM 320</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
@@ -105,7 +105,7 @@
         <p data-key="pricing_lux_sub">Premium experience</p>
       </div>
       <div class="card-price">
-        <span class="amount" data-daily="450" data-weekly="2678">RM 450</span>
+        <span class="amount" id="price-lux-amt" data-daily="380" data-weekly="2261">RM 380</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
@@ -152,13 +152,59 @@
         btn.classList.add('active');
         const p = btn.dataset.period;
         document.querySelectorAll('.amount').forEach(a => {
-          a.textContent = 'RM ' + a.dataset[p];
+          a.textContent = 'RM ' + (a.dataset[p] || '');
         });
         document.querySelectorAll('.period').forEach(s => {
-          s.textContent = p === 'weekly' ? '/ week' : '/ day';
+          const isMs = (localStorage.getItem('wedrive-lang') === 'ms');
+          s.textContent = p === 'weekly' ? (isMs ? '/ minggu' : '/ week') : (isMs ? '/ hari' : '/ day');
         });
       });
     });
+
+    // Dynamic Pricing Loader using Real DB Rates & Math
+    async function loadDynamicPricing() {
+      try {
+        if (!window.WeDriveAPI || typeof window.WeDriveAPI.getCars !== 'function') return;
+        const cars = await window.WeDriveAPI.getCars();
+        if (!cars || !cars.length) return;
+
+        const getRate = c => Number(c.daily_rate || c.rate_per_day || c.price || c.rate || 0);
+
+        const econCars = cars.filter(c => ['hatchback', 'economy'].includes(String(c.type || '').toLowerCase()));
+        const sedanCars = cars.filter(c => String(c.type || '').toLowerCase() === 'sedan');
+        const suvCars = cars.filter(c => String(c.type || '').toLowerCase() === 'suv');
+        const luxCars = cars.filter(c => ['mpv', 'coupe', 'luxury', 'truck'].includes(String(c.type || '').toLowerCase()));
+
+        const econMin = econCars.length ? Math.min(...econCars.map(getRate)) : 95;
+        const sedanMin = sedanCars.length ? Math.min(...sedanCars.map(getRate)) : 450;
+        const suvMin = suvCars.length ? Math.min(...suvCars.map(getRate)) : 320;
+        const luxMin = luxCars.length ? Math.min(...luxCars.map(getRate)) : 380;
+
+        const updateCard = (id, dailyRate) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const weeklyRate = Math.round(dailyRate * 7 * 0.85);
+          el.dataset.daily = dailyRate;
+          el.dataset.weekly = weeklyRate;
+
+          const isWeekly = document.querySelector('.toggle-btn.active')?.dataset.period === 'weekly';
+          el.textContent = 'RM ' + (isWeekly ? weeklyRate : dailyRate);
+        };
+
+        updateCard('price-econ-amt', econMin);
+        updateCard('price-sedan-amt', sedanMin);
+        updateCard('price-suv-amt', suvMin);
+        updateCard('price-lux-amt', luxMin);
+      } catch (err) {
+        console.error('Error calculating dynamic pricing:', err);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadDynamicPricing);
+    } else {
+      loadDynamicPricing();
+    }
   </script>
 </body>
 

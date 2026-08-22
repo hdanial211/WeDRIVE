@@ -688,5 +688,9 @@ window.wedrive_lang_en = {
   "terms_sec7_title": "7. Cookies",
   "terms_sec7_p1": "We use essential cookies for site functionality and analytics cookies to understand usage patterns. You can manage cookie preferences in your browser settings.",
   "terms_sec8_title": "8. User Rights",
-  "terms_sec8_p1": "You have the right to access, modify, or delete your personal data at any time. Contact us at legal@wedrive.my for data-related requests."
+  "terms_sec8_p1": "You have the right to access, modify, or delete your personal data at any time. Contact us at legal@wedrive.my for data-related requests.",
+  "guest_btn_pricing": "From RM {rate}/day · Pricing Plans",
+  "guest_banner_pricing": "Compare Daily & Weekly Rates · Save 15% on weekly rentals",
+  "footer_pricing": "Pricing Plans",
+  "pricing_from_prefix": "From "
 };

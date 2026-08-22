@@ -675,6 +675,7 @@
         if (logo) logo.src = base + 'shared/logo/wedrive-icon.png';
 
         var footerRoutes = {
+          footer_pricing: base + 'guest/pages/pricing/pricing.html',
           footer_privacy: base + 'shared/pages/footer/terms/terms.html#privacy',
           footer_terms: base + 'shared/pages/footer/terms/terms.html',
           footer_car: base + 'shared/pages/footer/about/about.html',
