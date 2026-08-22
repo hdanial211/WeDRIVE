@@ -12,20 +12,23 @@ trigger: always_on
 ## 2. Git Version Control
 
 - Setiap perubahan WAJIB push ke GitHub.
-- Format commit message: `X.X.X Description of changes`
-- JANGAN letak huruf `v` di depan version number.
+- Format commit message: `X.X.X Description of changes` (Wajib bermula dengan nombor versi).
+- JANGAN letak huruf `v` di depan version number (Contoh betul: `3.0.0`, BUKAN `v3.0.0`).
+- **Penomboran Versi FYP 2:**
+  - FYP 2 disambung secara berturutan bermula dari versi **`3.0.0`** (menyambung daripada versi akhir FYP 1 iaitu `2.9.9` / `Last FYP 1`).
+  - Setiap commit, perubahan kod, atau laporan perkembangan WAJIB memulakan tajuk/mesej dengan nombor versi berturutan (contoh: `3.0.0`, `3.0.1`, `3.1.0`, dsb).
 
 ### Struktur Version (Major.Minor.Patch)
 
 | Bahagian | Bila guna                                          | Contoh                                    |
 | -------- | -------------------------------------------------- | ----------------------------------------- |
-| Major    | Modul baru / redesign keseluruhan                  | `3.0.0 Redesign full admin dashboard`     |
-| Minor    | Tambah feature / improvement / perubahan sederhana | `2.8.0 Add Calendar Overview module`      |
-| Patch    | Bug fix / tweak kecil / styling update             | `2.8.1 Fix hover animation, adjust spacing` |
+| Major    | Modul baru / redesign keseluruhan (FYP 2 permulaan) | `3.0.0 Start FYP 2 Architecture & AI`     |
+| Minor    | Tambah feature / improvement / perubahan sederhana | `3.1.0 Add AI Document OCR Verification`  |
+| Patch    | Bug fix / tweak kecil / styling update             | `3.0.1 Fix hover animation, adjust spacing` |
 
 ### Peraturan Version
 
-- Version MESTI berturutan. Contoh: selepas `2.7.1`, seterusnya ialah `2.7.2` (patch), `2.8.0` (minor), atau `3.0.0` (major). JANGAN lompat ke belakang.
+- Version MESTI berturutan. Contoh: selepas `3.0.0`, seterusnya ialah `3.0.1` (patch), `3.1.0` (minor), atau `4.0.0` (major). JANGAN lompat ke belakang.
 - Setiap commit WAJIB ada tag di GitHub yang sepadan dengan version number.
 
 ## 3. Logo
@@ -41,14 +44,14 @@ trigger: always_on
 ## 5. File Management
 
 - File yang tidak digunakan WAJIB dipindahkan ke folder `bin/`.
-- Path: `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/bin`
+- Path: `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM KHAS 6/BITU3983 PROJECT II(FYP 2)/AI CAR RENTAL SYSTEM/bin`
 
 ## 6. Folder Structure
 
 - Susun semua file supaya kemas, tidak berselerak, dan mudah maintain.
 - Gunakan folder berasingan untuk setiap kumpulan fail berkaitan.
 - Setiap kali tambah atau buang file/folder, WAJIB update file ini:
-  `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM 6/BITU3973 PROJECT I(FYP 1)/AI CAR RENTAL SYSTEM/docs/PROJECT_STRUCTURE.md`
+  `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM KHAS 6/BITU3983 PROJECT II(FYP 2)/AI CAR RENTAL SYSTEM/docs/PROJECT_STRUCTURE.md`
 
 ## 7. CSS Architecture (1 Module = 1 CSS)
 
@@ -156,3 +159,10 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium dan "padu", jadikan lam
 - API mestilah pantas dan konsisten seperti standard RESTful (atau GraphQL) moden.
 - Pengurusan *state* dan *loading skeletons* mesti meniru gaya UX platform di atas supaya *user* tidak rasa sistem perlahan.
 - Seni bina sistem haruslah *modular* (boleh dikembangkan) dan menyokong *lazy loading* untuk prestasi optimum (seperti modul kalendar Flatpickr WeDRIVE).
+
+## 15. Graphify & Token Optimization (MANDATORY)
+
+- **Jimat Kuota AI (Token Saver):**
+  - Setiap kali membuka tab / sesi perbualan baharu, **JANGAN baca (*load/read*) setiap fail dan folder secara pukal / manual**.
+  - **WAJIB gunakan MCP Graphify** (`query_graph`, `get_node`, `shortest_path`) atau periksa `graphify-out/graph.json` / `graphify-out/GRAPH_TREE.html` untuk mencari fail, fungsi, dan hubung kait kod secara terus.
+  - Hanya baca fail spesifik yang perlu diubah atau dibaiki sahaja untuk meminimumkan penggunaan kuota dan token perbualan.

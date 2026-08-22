@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeDRIVE — Interactive Knowledge Graph & System Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-hover: rgba(30, 41, 59, 0.85);
+      --border-glow: rgba(56, 189, 248, 0.2);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-purple: #a855f7;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-blue: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Subtle background grid & glow */
+    .ambient-bg {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Glassmorphic Navigation Bar */
+    header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284c7, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(2, 132, 199, 0.4);
+    }
+
+    .brand-logo svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+    }
+
+    .brand-info h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-info .sub-tag {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sub-tag::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    /* Toolbar & Search */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+      width: 260px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 9px 14px 9px 36px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+      width: 320px;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      fill: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .btn.active, .btn-primary {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.8), rgba(99, 102, 241, 0.8));
+      color: #fff;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    /* Filter Chips Bar */
+    .filters-bar {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 28px;
+      background: rgba(10, 15, 26, 0.6);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      gap: 16px;
+    }
+
+    .chip-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .chip-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .chip:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .chip.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+
+    .stats-pill {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .stats-pill span strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Main Viewport Container */
+    #tree-container {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+      cursor: grab;
+    }
+
+    #tree-container:active {
+      cursor: grabbing;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* SVG Nodes & Links Styling */
+    .link {
+      fill: none;
+      stroke-opacity: 0.45;
+      stroke-width: 1.75px;
+      transition: stroke 0.3s ease, stroke-width 0.3s ease, stroke-opacity 0.3s ease;
+    }
+
+    .link.highlighted {
+      stroke-opacity: 1 !important;
+      stroke-width: 2.75px !important;
+      filter: drop-shadow(0 0 6px currentColor);
+    }
+
+    .node {
+      cursor: pointer;
+    }
+
+    .node circle {
+      stroke-width: 2px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .node:hover circle {
+      r: 10px !important;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+
+    .node text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 500;
+      fill: var(--text-primary);
+      paint-order: stroke fill;
+      stroke: #07090e;
+      stroke-width: 3.5px;
+      stroke-linejoin: round;
+      transition: fill 0.2s ease, font-size 0.2s ease;
+    }
+
+    .node:hover text {
+      fill: #38bdf8;
+    }
+
+    .node.search-hit circle {
+      animation: pulse-ring 1.5s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(1); filter: drop-shadow(0 0 4px #f59e0b); }
+      50% { transform: scale(1.3); filter: drop-shadow(0 0 14px #f59e0b); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 4px #f59e0b); }
+    }
+
+    /* Floating Zoom HUD */
+    .zoom-hud {
+      position: absolute;
+      bottom: 24px;
+      left: 28px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 6px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .zoom-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .zoom-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .zoom-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Node Inspector Slide-Over Drawer */
+    .inspector-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 360px;
+      height: 100%;
+      background: rgba(10, 15, 26, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-left: 1px solid var(--border-subtle);
+      box-shadow: -15px 0 40px rgba(0, 0, 0, 0.6);
+      z-index: 20;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inspector-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-header h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .drawer-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .drawer-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .detail-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .detail-label {
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-size: 0.95rem;
+      color: #fff;
+      word-break: break-all;
+    }
+
+    .detail-value.mono {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-cyan);
+    }
+
+    .badge-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .children-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .child-item {
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="brand-info">
+        <h1>WeDRIVE Knowledge Graph</h1>
+        <div class="sub-tag">FYP 2 ARCHITECTURE TREE & CALL GRAPH</div>
+      </div>
+    </div>
+
+    <!-- Search & Controls -->
+    <div class="toolbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search functions, files, modules..." oninput="handleSearch(this.value)">
+      </div>
+
+      <div class="btn-group">
+        <button class="btn" onclick="expandToDepth(1)">
+          Lvl 1
+        </button>
+        <button class="btn" onclick="expandToDepth(3)">
+          Files (Lvl 2)
+        </button>
+        <button class="btn" onclick="expandAllTree()">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Expand All
+        </button>
+        <button class="btn" onclick="collapseAllTree()">
+          <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+          Collapse
+        </button>
+        <button class="btn" onclick="fitView()" title="Recenter tree to fit screen (Shortcut: R / Space)">
+          <svg viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+          Recenter
+        </button>
+        <button class="btn" onclick="resetTreeView()" title="Reset all to initial state">
+          <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.77 20 14.45 20 13c0-4.42-3.58-8-8-8zm-6 8c0-1.01.25-1.97.7-2.8L5.24 8.74C4.46 10.23 4 11.55 4 13c0 4.42 3.58 8 8 8v4l5-5-5-5v4c-3.31 0-6-2.69-6-6z"/></svg>
+          Reset
+        </button>
+      </div>
+
+      <button class="btn btn-primary" onclick="toggleFullscreen()">
+        <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Filter Chips Bar -->
+  <div class="filters-bar">
+    <div class="chip-container" id="chipContainer">
+      <div class="chip active" onclick="filterByModule('All')">
+        <span class="dot" style="background:#fff"></span> All Modules
+      </div>
+      <div class="chip" onclick="filterByModule('admin')">
+        <span class="dot" style="background:#38bdf8"></span> Admin Module
+      </div>
+      <div class="chip" onclick="filterByModule('customer')">
+        <span class="dot" style="background:#4ade80"></span> Customer Module
+      </div>
+      <div class="chip" onclick="filterByModule('account')">
+        <span class="dot" style="background:#f472b6"></span> Account & Auth
+      </div>
+      <div class="chip" onclick="filterByModule('guest')">
+        <span class="dot" style="background:#fbbf24"></span> Guest & Landing
+      </div>
+      <div class="chip" onclick="filterByModule('shared')">
+        <span class="dot" style="background:#a855f7"></span> Shared & 3D Engine
+      </div>
+      <div class="chip" onclick="filterByModule('supabase')">
+        <span class="dot" style="background:#2dd4bf"></span> Supabase Backend
+      </div>
+      <div class="chip" onclick="filterByModule('docs')">
+        <span class="dot" style="background:#818cf8"></span> Docs
+      </div>
+      <div class="chip" onclick="filterByModule('bin')">
+        <span class="dot" style="background:#94a3b8"></span> Bin / Archive
+      </div>
+    </div>
+
+    <div class="stats-pill"><span>Total Items: <strong>1,396</strong></span><span>HTML Pages: <strong>32</strong></span><span>CSS Styles: <strong>16</strong></span><span>JS Scripts: <strong>26</strong></span></div>
+  </div>
+
+  <!-- Main Canvas -->
+  <div id="tree-container">
+    <svg id="tree-svg"></svg>
+
+    <!-- Zoom Controls -->
+    <div class="zoom-hud">
+      <button class="zoom-btn" title="Zoom In (+)" onclick="zoomIn()">
+        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      </button>
+      <button class="zoom-btn" title="Zoom Out (-)" onclick="zoomOut()">
+        <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+      </button>
+      <button class="zoom-btn" title="Recenter View (R / Space)" onclick="fitView()" style="color:var(--accent-cyan)">
+        <svg viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Node Inspector Slide-Over Drawer -->
+  <div class="inspector-drawer" id="inspectorDrawer">
+    <div class="drawer-header">
+      <div style="display:flex;align-items:center;gap:8px">
+        <h3>Node Inspector</h3>
+        <button class="btn" style="padding:4px 8px;font-size:0.75rem;background:rgba(56,189,248,0.15);border-color:rgba(56,189,248,0.3);color:var(--accent-cyan)" onclick="centerOnSelectedNode()" title="Center camera on this node">
+          🎯 Focus
+        </button>
+      </div>
+      <button class="drawer-close" onclick="closeDrawer()">
+        <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <div class="detail-card">
+        <div class="detail-label">Symbol / Node Name</div>
+        <div class="detail-value mono" id="drawerNodeName">-</div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-label">Type & Category</div>
+        <div class="detail-value" id="drawerNodeType">
+          <span class="badge-tag" id="drawerBadge">Function</span>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-label">Module Ancestor</div>
+        <div class="detail-value" id="drawerModule">-</div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-label">Connected Child Symbols (<span id="drawerCount">0</span>)</div>
+        <div class="children-list" id="drawerChildren"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const initialJsonData = {"name":"/","total_count":1396,"children":[{"name":"admin","children":[{"name":"css","children":[{"name":"admin.css","path":"admin/css/admin.css","ext":".css","total_count":20,"children":[{"name":".action-btn","total_count":1,"children":[]},{"name":".actions-grid","total_count":1,"children":[]},{"name":".active","total_count":1,"children":[]},{"name":".add-car-btn-cancel","total_count":1,"children":[]},{"name":".add-car-btn-confirm","total_count":1,"children":[]},{"name":".add-car-form-grid","total_count":1,"children":[]},{"name":".add-car-form-group","total_count":1,"children":[]},{"name":".add-car-modal-actions","total_count":1,"children":[]},{"name":".add-car-modal-body","total_count":1,"children":[]},{"name":".add-car-modal-card","total_count":1,"children":[]},{"name":".add-car-modal-close-btn","total_count":1,"children":[]},{"name":".add-car-modal-header","total_count":1,"children":[]},{"name":".add-car-modal-overlay","total_count":1,"children":[]},{"name":".adm-cal-cars","total_count":1,"children":[]},{"name":".adm-cal-cell","total_count":1,"children":[]},{"name":".adm-cal-day-num","total_count":1,"children":[]},{"name":".adm-cal-dot","total_count":1,"children":[]},{"name":".adm-cal-grid","total_count":1,"children":[]},{"name":".adm-cal-header","total_count":1,"children":[]},{"name":".adm-cal-indicators","total_count":1,"children":[]}]}],"total_count":20},{"name":"js","children":[{"name":"admin.js","path":"admin/js/admin.js","ext":".js","total_count":3,"children":[{"name":"populateCar()","total_count":1,"children":[]},{"name":"populateStats()","total_count":1,"children":[]},{"name":"updateStatsUI()","total_count":1,"children":[]}]},{"name":"bookings.js","path":"admin/js/bookings.js","ext":".js","total_count":23,"children":[{"name":"applyCustomDate()","total_count":1,"children":[]},{"name":"applyFilters()","total_count":1,"children":[]},{"name":"closeBookingDetailModal()","total_count":1,"children":[]},{"name":"closeNewBookingModal()","total_count":1,"children":[]},{"name":"closeStatusModal()","total_count":1,"children":[]},{"name":"confirmStatusUpdate()","total_count":1,"children":[]},{"name":"filterBookings()","total_count":1,"children":[]},{"name":"filterByDate()","total_count":1,"children":[]},{"name":"formatDate()","total_count":1,"children":[]},{"name":"openNewBookingModal()","total_count":1,"children":[]},{"name":"openStatusModal()","total_count":1,"children":[]},{"name":"populateBookingStats()","total_count":1,"children":[]},{"name":"processRefund()","total_count":1,"children":[]},{"name":"recalcNewBooking()","total_count":1,"children":[]},{"name":"renderBookings()","total_count":1,"children":[]},{"name":"renderTodayPickups()","total_count":1,"children":[]},{"name":"searchBookings()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"showToast()","total_count":1,"children":[]},{"name":"sortBy()","total_count":1,"children":[]},{"name":"submitNewBooking()","total_count":1,"children":[]},{"name":"updateSortHeaders()","total_count":1,"children":[]},{"name":"viewBooking()","total_count":1,"children":[]}]},{"name":"calendar.js","path":"admin/js/calendar.js","ext":".js","total_count":17,"children":[{"name":"applyFilters()","total_count":1,"children":[]},{"name":"changeMonth()","total_count":1,"children":[]},{"name":"clearSelected()","total_count":1,"children":[]},{"name":"closeStatModal()","total_count":1,"children":[]},{"name":"dateStr()","total_count":1,"children":[]},{"name":"getBannersForDate()","total_count":1,"children":[]},{"name":"getBookingsForDate()","total_count":1,"children":[]},{"name":"getInspectionsForDate()","total_count":1,"children":[]},{"name":"getPromosForDate()","total_count":1,"children":[]},{"name":"getSeasonalForDate()","total_count":1,"children":[]},{"name":"initDropdowns()","total_count":1,"children":[]},{"name":"initFilters()","total_count":1,"children":[]},{"name":"renderCalendar()","total_count":1,"children":[]},{"name":"setSelected()","total_count":1,"children":[]},{"name":"syncDropdowns()","total_count":1,"children":[]},{"name":"updateMonthDropdownLabels()","total_count":1,"children":[]},{"name":"updateStats()","total_count":1,"children":[]}]},{"name":"car-detail.js","path":"admin/js/car-detail.js","ext":".js","total_count":33,"children":[{"name":"buildDateStatusMap()","total_count":1,"children":[]},{"name":"calendarNext()","total_count":1,"children":[]},{"name":"calendarPrev()","total_count":1,"children":[]},{"name":"cancelEdit()","total_count":1,"children":[]},{"name":"clearCalendarSelection()","total_count":1,"children":[]},{"name":"closeDeleteCarModal()","total_count":1,"children":[]},{"name":"closeRemovePhotoModal()","total_count":1,"children":[]},{"name":"closeStatusRedirectModal()","total_count":1,"children":[]},{"name":"confirmBookingRange()","total_count":1,"children":[]},{"name":"confirmRemovePhoto()","total_count":1,"children":[]},{"name":"deleteCar()","total_count":1,"children":[]},{"name":"editDetails()","total_count":1,"children":[]},{"name":"getCarBookings()","total_count":1,"children":[]},{"name":"handleImageUpload()","total_count":1,"children":[]},{"name":"initCalendar()","total_count":1,"children":[]},{"name":"removeImage()","total_count":1,"children":[]},{"name":"renderBookingHistory()","total_count":1,"children":[]},{"name":"renderCalendar()","total_count":1,"children":[]},{"name":"renderCarDetails()","total_count":1,"children":[]},{"name":"renderCarImages()","total_count":1,"children":[]},{"name":"renderEditImagesGrid()","total_count":1,"children":[]},{"name":"resolveImgSrc()","total_count":1,"children":[]},{"name":"saveCarEdit()","total_count":1,"children":[]},{"name":"selectCalDay()","total_count":1,"children":[]},{"name":"setMainImage()","total_count":1,"children":[]},{"name":"showBookingInfo()","total_count":1,"children":[]},{"name":"showToast()","total_count":1,"children":[]},{"name":"submitDeleteCar()","total_count":1,"children":[]},{"name":"switchImage()","total_count":1,"children":[]},{"name":"updateCalendarInfo()","total_count":1,"children":[]},{"name":"updateDeleteModalDescription()","total_count":1,"children":[]},{"name":"updateStatus()","total_count":1,"children":[]},{"name":"viewInsurance()","total_count":1,"children":[]}]},{"name":"cars.js","path":"admin/js/cars.js","ext":".js","total_count":19,"children":[{"name":"_removeNewCarImage()","total_count":1,"children":[]},{"name":"_renderNewCarImagesGrid()","total_count":1,"children":[]},{"name":"_resetNewCarImages()","total_count":1,"children":[]},{"name":"addNewCar()","total_count":1,"children":[]},{"name":"applyFilters()","total_count":1,"children":[]},{"name":"clearFieldError()","total_count":1,"children":[]},{"name":"closeAddCarModal()","total_count":1,"children":[]},{"name":"closeCarListModal()","total_count":1,"children":[]},{"name":"filterCar()","total_count":1,"children":[]},{"name":"handleNewCarImageUpload()","total_count":1,"children":[]},{"name":"manageCar()","total_count":1,"children":[]},{"name":"openCarListModal()","total_count":1,"children":[]},{"name":"populateCarStats()","total_count":1,"children":[]},{"name":"renderCarCards()","total_count":1,"children":[]},{"name":"renderCarTable()","total_count":1,"children":[]},{"name":"searchCar()","total_count":1,"children":[]},{"name":"setFieldError()","total_count":1,"children":[]},{"name":"showToast()","total_count":1,"children":[]},{"name":"submitNewCar()","total_count":1,"children":[]}]},{"name":"chatbot-admin.js","path":"admin/js/chatbot-admin.js","ext":".js","total_count":7,"children":[{"name":"appendMsg()","total_count":1,"children":[]},{"name":"appendTyping()","total_count":1,"children":[]},{"name":"callOpenRouter()","total_count":1,"children":[]},{"name":"fetchLiveData()","total_count":1,"children":[]},{"name":"loadSettings()","total_count":1,"children":[]},{"name":"showToast()","total_count":1,"children":[]},{"name":"updateStatusBadge()","total_count":1,"children":[]}]},{"name":"customers.js","path":"admin/js/customers.js","ext":".js","total_count":19,"children":[{"name":"applyCustomerFilters()","total_count":1,"children":[]},{"name":"approveCustomer()","total_count":1,"children":[]},{"name":"closeCustomerModal()","total_count":1,"children":[]},{"name":"formatDate()","total_count":1,"children":[]},{"name":"openRejectModal()","total_count":1,"children":[]},{"name":"populateCustomerStats()","total_count":1,"children":[]},{"name":"rejectCustomer()","total_count":1,"children":[]},{"name":"renderCustomers()","total_count":1,"children":[]},{"name":"renderPendingCustomers()","total_count":1,"children":[]},{"name":"searchCustomers()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"showConfirmModal()","total_count":1,"children":[]},{"name":"showPromptModal()","total_count":1,"children":[]},{"name":"showToast()","total_count":1,"children":[]},{"name":"sortByCustomer()","total_count":1,"children":[]},{"name":"sortCustomers()","total_count":1,"children":[]},{"name":"toggleCustomerStatus()","total_count":1,"children":[]},{"name":"updateCustomerSortHeaders()","total_count":1,"children":[]},{"name":"viewCustomer()","total_count":1,"children":[]}]},{"name":"marketing-ai.js","path":"admin/js/marketing-ai.js","ext":".js","total_count":7,"children":[{"name":"getFutureDate()","total_count":1,"children":[]},{"name":"getRandomColor()","total_count":1,"children":[]},{"name":"parseAiOutput()","total_count":1,"children":[]},{"name":"renderAiSuggestions()","total_count":1,"children":[]},{"name":"setAiKeyStatus()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"showAiError()","total_count":1,"children":[]}]},{"name":"marketing.js","path":"admin/js/marketing.js","ext":".js","total_count":8,"children":[{"name":"loadFromStorage()","total_count":1,"children":[]},{"name":"renderAll()","total_count":1,"children":[]},{"name":"renderBanners()","total_count":1,"children":[]},{"name":"renderPromos()","total_count":1,"children":[]},{"name":"renderSeasonal()","total_count":1,"children":[]},{"name":"saveToStorage()","total_count":1,"children":[]},{"name":"showToast()","total_count":1,"children":[]},{"name":"updateStats()","total_count":1,"children":[]}]},{"name":"reports.js","path":"admin/js/reports.js","ext":".js","total_count":7,"children":[{"name":"exportToCSV()","total_count":1,"children":[]},{"name":"generateReportStats()","total_count":1,"children":[]},{"name":"handleExport()","total_count":1,"children":[]},{"name":"populateSummaryCards()","total_count":1,"children":[]},{"name":"renderRevenueChart()","total_count":1,"children":[]},{"name":"renderUtilChart()","total_count":1,"children":[]},{"name":"toggleExportDropdown()","total_count":1,"children":[]}]},{"name":"settings.js","path":"admin/js/settings.js","ext":".js","total_count":4,"children":[{"name":"populateSettings()","total_count":1,"children":[]},{"name":"saveSettings()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"showToast()","total_count":1,"children":[]}]}],"total_count":147},{"name":"components","children":[{"name":"sidebar","children":[{"name":"sidebar-admin.html","path":"admin/components/sidebar/sidebar-admin.html","ext":".html","total_count":1,"children":[]}],"total_count":1}],"total_count":1},{"name":"pages","children":[{"name":"car","children":[{"name":"cars.html","path":"admin/pages/car/cars.html","ext":".html","total_count":8,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#fl-total","total_count":1,"children":[]},{"name":"#fl-available","total_count":1,"children":[]},{"name":"#fl-rented","total_count":1,"children":[]},{"name":"#car-grid","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]},{"name":"#cars-list-modal","total_count":1,"children":[]}]},{"name":"car-detail","children":[{"name":"car-detail.html","path":"admin/pages/car/car-detail/car-detail.html","ext":".html","total_count":15,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#cd-image","total_count":1,"children":[]},{"name":"#cd-thumbnails","total_count":1,"children":[]},{"name":"#cd-seats","total_count":1,"children":[]},{"name":"#cd-trans","total_count":1,"children":[]},{"name":"#cd-fuel","total_count":1,"children":[]},{"name":"#cd-rate","total_count":1,"children":[]},{"name":"#cal-days-grid","total_count":1,"children":[]},{"name":"#cal-day-info","total_count":1,"children":[]},{"name":"#edit-section","total_count":1,"children":[]},{"name":"#edit-images-grid","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]},{"name":"#status-redirect-modal","total_count":1,"children":[]},{"name":"#remove-photo-modal","total_count":1,"children":[]}]}],"total_count":15}],"total_count":23},{"name":"calendar","children":[{"name":"calendar.html","path":"admin/pages/calendar/calendar.html","ext":".html","total_count":15,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#cal-stat-bookings","total_count":1,"children":[]},{"name":"#cal-stat-rented","total_count":1,"children":[]},{"name":"#cal-stat-events","total_count":1,"children":[]},{"name":"#cal-stat-revenue","total_count":1,"children":[]},{"name":"#cal-stat-modal","total_count":1,"children":[]},{"name":"#cal-stat-modal-body","total_count":1,"children":[]},{"name":"#cal-grid","total_count":1,"children":[]},{"name":"#cal-detail-panel","total_count":1,"children":[]},{"name":"#cal-detail-header","total_count":1,"children":[]},{"name":"#cal-detail-day-num","total_count":1,"children":[]},{"name":"#cal-detail-subtitle","total_count":1,"children":[]},{"name":"#cal-detail-body","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":15},{"name":"chatbot","children":[{"name":"chatbot.html","path":"admin/pages/chatbot/chatbot.html","ext":".html","total_count":6,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#status-openrouter","total_count":1,"children":[]},{"name":"#chat-messages","total_count":1,"children":[]},{"name":"#toast","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":6},{"name":"booking","children":[{"name":"bookings.html","path":"admin/pages/booking/bookings.html","ext":".html","total_count":9,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#bk-total","total_count":1,"children":[]},{"name":"#bk-confirmed","total_count":1,"children":[]},{"name":"#bk-pending","total_count":1,"children":[]},{"name":"#bk-revenue","total_count":1,"children":[]},{"name":"#custom-date-row","total_count":1,"children":[]},{"name":"#today-pickups-card","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":9},{"name":"dashboard","children":[{"name":"admin.html","path":"admin/pages/dashboard/admin.html","ext":".html","total_count":11,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#stat-vehicles","total_count":1,"children":[]},{"name":"#stat-vehicles-change","total_count":1,"children":[]},{"name":"#stat-rentals","total_count":1,"children":[]},{"name":"#stat-rentals-change","total_count":1,"children":[]},{"name":"#stat-revenue","total_count":1,"children":[]},{"name":"#stat-revenue-change","total_count":1,"children":[]},{"name":"#stat-customers","total_count":1,"children":[]},{"name":"#stat-customers-change","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":11},{"name":"marketing","children":[{"name":"marketing.html","path":"admin/pages/marketing/marketing.html","ext":".html","total_count":15,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#stat-active-banners","total_count":1,"children":[]},{"name":"#stat-active-codes","total_count":1,"children":[]},{"name":"#stat-total-uses","total_count":1,"children":[]},{"name":"#stat-active-seasons","total_count":1,"children":[]},{"name":"#section-banners","total_count":1,"children":[]},{"name":"#banners-grid","total_count":1,"children":[]},{"name":"#section-promos","total_count":1,"children":[]},{"name":"#promos-grid","total_count":1,"children":[]},{"name":"#section-seasonal","total_count":1,"children":[]},{"name":"#seasonal-grid","total_count":1,"children":[]},{"name":"#section-ai","total_count":1,"children":[]},{"name":"#ai-key-status","total_count":1,"children":[]},{"name":"#ai-output-wrapper","total_count":1,"children":[]}]}],"total_count":15},{"name":"report","children":[{"name":"reports.html","path":"admin/pages/report/reports.html","ext":".html","total_count":13,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#rp-revenue","total_count":1,"children":[]},{"name":"#rp-bookings","total_count":1,"children":[]},{"name":"#rp-avg","total_count":1,"children":[]},{"name":"#rp-rating","total_count":1,"children":[]},{"name":"#revenue-chart","total_count":1,"children":[]},{"name":"#util-chart","total_count":1,"children":[]},{"name":"#export-dropdown","total_count":1,"children":[]},{"name":"#rp-popular","total_count":1,"children":[]},{"name":"#rp-busiest","total_count":1,"children":[]},{"name":"#rp-total-rev","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":13},{"name":"setting","children":[{"name":"settings.html","path":"admin/pages/setting/settings.html","ext":".html","total_count":4,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#locations-list","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":4},{"name":"customer","children":[{"name":"customers.html","path":"admin/pages/customer/customers.html","ext":".html","total_count":8,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#cu-total","total_count":1,"children":[]},{"name":"#cu-active","total_count":1,"children":[]},{"name":"#cu-inactive","total_count":1,"children":[]},{"name":"#cu-spent","total_count":1,"children":[]},{"name":"#pending-verifications-card","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":8}],"total_count":104}],"total_count":272},{"name":"customer","children":[{"name":"css","children":[{"name":"customer.css","path":"customer/css/customer.css","ext":".css","total_count":20,"children":[{"name":".active","total_count":1,"children":[]},{"name":".active-action-btn","total_count":1,"children":[]},{"name":".active-actions","total_count":1,"children":[]},{"name":".active-badge","total_count":1,"children":[]},{"name":".active-booking-card","total_count":1,"children":[]},{"name":".active-rental","total_count":1,"children":[]},{"name":".active-rental-body","total_count":1,"children":[]},{"name":".active-rental-head","total_count":1,"children":[]},{"name":".active-rental-img","total_count":1,"children":[]},{"name":".active-rental-label","total_count":1,"children":[]},{"name":".active-rental-meta","total_count":1,"children":[]},{"name":".active-rental-price","total_count":1,"children":[]},{"name":".active-rental-price-label","total_count":1,"children":[]},{"name":".active-rental-total","total_count":1,"children":[]},{"name":".addon-grid","total_count":1,"children":[]},{"name":".addon-item","total_count":1,"children":[]},{"name":".addon-left","total_count":1,"children":[]},{"name":".addon-price","total_count":1,"children":[]},{"name":".ai-badge","total_count":1,"children":[]},{"name":".ai-card","total_count":1,"children":[]}]}],"total_count":20},{"name":"js","children":[{"name":"customer.js","path":"customer/js/customer.js","ext":".js","total_count":31,"children":[{"name":"applyFilters()","total_count":1,"children":[]},{"name":"bindControls()","total_count":1,"children":[]},{"name":"buildSpotlightCars()","total_count":1,"children":[]},{"name":"carPrice()","total_count":1,"children":[]},{"name":"closeGuestPrompt()","total_count":1,"children":[]},{"name":"escapeHtml()","total_count":1,"children":[]},{"name":"fallbackImagePath()","total_count":1,"children":[]},{"name":"imagePath()","total_count":1,"children":[]},{"name":"init()","total_count":1,"children":[]},{"name":"initDatePickers()","total_count":1,"children":[]},{"name":"initPopupDatePickers()","total_count":1,"children":[]},{"name":"lang()","total_count":1,"children":[]},{"name":"loadCarData()","total_count":1,"children":[]},{"name":"loadCars()","total_count":1,"children":[]},{"name":"openBookingPopup()","total_count":1,"children":[]},{"name":"openGuestBookingPrompt()","total_count":1,"children":[]},{"name":"renderCars()","total_count":1,"children":[]},{"name":"renderHeroStats()","total_count":1,"children":[]},{"name":"renderSpotlight()","total_count":1,"children":[]},{"name":"renderSpotlightDots()","total_count":1,"children":[]},{"name":"rootPrefix()","total_count":1,"children":[]},{"name":"setText()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"shouldRevealPlate()","total_count":1,"children":[]},{"name":"startSpotlightCarousel()","total_count":1,"children":[]},{"name":"statusKey()","total_count":1,"children":[]},{"name":"statusText()","total_count":1,"children":[]},{"name":"syncFilterChips()","total_count":1,"children":[]},{"name":"t()","total_count":1,"children":[]},{"name":"updateActiveBookingSection()","total_count":1,"children":[]},{"name":"updateBookingSummary()","total_count":1,"children":[]}]},{"name":"sidebar-loader.js","path":"customer/js/sidebar-loader.js","ext":".js","total_count":11,"children":[{"name":"buildNavItems()","total_count":1,"children":[]},{"name":"closeSidebar()","total_count":1,"children":[]},{"name":"detectActivePage()","total_count":1,"children":[]},{"name":"init()","total_count":1,"children":[]},{"name":"initSidebarToggle()","total_count":1,"children":[]},{"name":"openSidebar()","total_count":1,"children":[]},{"name":"renderMobileBar()","total_count":1,"children":[]},{"name":"renderSidebar()","total_count":1,"children":[]},{"name":"renderUtilityActions()","total_count":1,"children":[]},{"name":"resolveBase()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]}]}],"total_count":42},{"name":"pages","children":[{"name":"car-details","children":[{"name":"car-details.html","path":"customer/pages/car-details/car-details.html","ext":".html","total_count":9,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#car-hero","total_count":1,"children":[]},{"name":"#gallery-main","total_count":1,"children":[]},{"name":"#gallery-thumbs","total_count":1,"children":[]},{"name":"#sticky-cta","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]},{"name":"booking","children":[{"name":"booking.html","path":"customer/pages/car-details/booking/booking.html","ext":".html","total_count":9,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#car-summary-section","total_count":1,"children":[]},{"name":"#pickup-map","total_count":1,"children":[]},{"name":"#tax-row","total_count":1,"children":[]},{"name":"#duration-warning","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]}]},{"name":"payment","children":[{"name":"payment.html","path":"customer/pages/car-details/booking/payment/payment.html","ext":".html","total_count":15,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#driver-panel-existing","total_count":1,"children":[]},{"name":"#driver-panel-new","total_count":1,"children":[]},{"name":"#driver-ocr-progress","total_count":1,"children":[]},{"name":"#card-fields","total_count":1,"children":[]},{"name":"#fpx-fields","total_count":1,"children":[]},{"name":"#ewallet-fields","total_count":1,"children":[]},{"name":"#checkout-base-row","total_count":1,"children":[]},{"name":"#checkout-addon-row","total_count":1,"children":[]},{"name":"#checkout-service-row","total_count":1,"children":[]},{"name":"#checkout-discount-row","total_count":1,"children":[]},{"name":"#checkout-tax-row","total_count":1,"children":[]},{"name":"#checkout-deposit-row","total_count":1,"children":[]}]},{"name":"booking-confirmed","children":[{"name":"booking-confirmed.html","path":"customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html","ext":".html","total_count":7,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#confetti","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#cal-dropdown","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]}]}],"total_count":7}],"total_count":22}],"total_count":31}],"total_count":40},{"name":"dashboard","children":[{"name":"customer.html","path":"customer/pages/dashboard/customer.html","ext":".html","total_count":11,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#active-booking-section","total_count":1,"children":[]},{"name":"#active-booking-card","total_count":1,"children":[]},{"name":"#reco-grid","total_count":1,"children":[]},{"name":"#cars-grid","total_count":1,"children":[]},{"name":"#booking-popup","total_count":1,"children":[]},{"name":"#popup-duration","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":11},{"name":"profile","children":[{"name":"profile.html","path":"customer/pages/profile/profile.html","ext":".html","total_count":15,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#pf-user-name","total_count":1,"children":[]},{"name":"#panel-personal","total_count":1,"children":[]},{"name":"#pf-phone-wrapper","total_count":1,"children":[]},{"name":"#pf-phone-cc","total_count":1,"children":[]},{"name":"#panel-security","total_count":1,"children":[]},{"name":"#pf-change-password-card","total_count":1,"children":[]},{"name":"#pf-oauth-security-card","total_count":1,"children":[]},{"name":"#pf-tfa-card","total_count":1,"children":[]},{"name":"#pf-tfa-status-text","total_count":1,"children":[]},{"name":"#panel-payment","total_count":1,"children":[]},{"name":"#pf-cards-list-container","total_count":1,"children":[]},{"name":"#panel-preferences","total_count":1,"children":[]}]}],"total_count":15},{"name":"support","children":[{"name":"support.html","path":"customer/pages/support/support.html","ext":".html","total_count":6,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#faq-list","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":6},{"name":"my-bookings","children":[{"name":"my-bookings.html","path":"customer/pages/my-bookings/my-bookings.html","ext":".html","total_count":12,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#stat-total","total_count":1,"children":[]},{"name":"#stat-active","total_count":1,"children":[]},{"name":"#stat-spent","total_count":1,"children":[]},{"name":"#active-rental-section","total_count":1,"children":[]},{"name":"#active-progress-fill","total_count":1,"children":[]},{"name":"#mybk-list","total_count":1,"children":[]},{"name":"#mybk-pagination","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]}]},{"name":"receipt","children":[{"name":"receipt.html","path":"customer/pages/my-bookings/receipt/receipt.html","ext":".html","total_count":12,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#receipt-base-row","total_count":1,"children":[]},{"name":"#receipt-service-row","total_count":1,"children":[]},{"name":"#receipt-insurance-row","total_count":1,"children":[]},{"name":"#receipt-discount-row","total_count":1,"children":[]},{"name":"#receipt-tax-row","total_count":1,"children":[]},{"name":"#receipt-deposit-row","total_count":1,"children":[]},{"name":"#receipt-payment-status","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":12}],"total_count":24}],"total_count":96}],"total_count":158},{"name":"account","children":[{"name":"css","children":[{"name":"auth.css","path":"account/css/auth.css","ext":".css","total_count":20,"children":[{"name":".active","total_count":1,"children":[]},{"name":".apple-logo","total_count":1,"children":[]},{"name":".as-link","total_count":1,"children":[]},{"name":".available","total_count":1,"children":[]},{"name":".back-link","total_count":1,"children":[]},{"name":".banner-reason","total_count":1,"children":[]},{"name":".banner-title","total_count":1,"children":[]},{"name":".brand","total_count":1,"children":[]},{"name":".brand-logo","total_count":1,"children":[]},{"name":".brand-text","total_count":1,"children":[]},{"name":".btn-guest","total_count":1,"children":[]},{"name":".btn-primary","total_count":1,"children":[]},{"name":".btn-social","total_count":1,"children":[]},{"name":".btn-submit","total_count":1,"children":[]},{"name":".card","total_count":1,"children":[]},{"name":".card-title","total_count":1,"children":[]},{"name":".checking","total_count":1,"children":[]},{"name":".divider","total_count":1,"children":[]},{"name":".divider-line","total_count":1,"children":[]},{"name":".dragover","total_count":1,"children":[]}]}],"total_count":20},{"name":"pages","children":[{"name":"signup","children":[{"name":"signup.html","path":"account/pages/signup/signup.html","ext":".html","total_count":1,"children":[{"name":"#chatbot-placeholder","total_count":1,"children":[]}]}],"total_count":1},{"name":"welcome","children":[{"name":"welcome.html","path":"account/pages/welcome/welcome.html","ext":".html","total_count":1,"children":[]}],"total_count":1},{"name":"forgot-password","children":[{"name":"forgot-password.html","path":"account/pages/forgot-password/forgot-password.html","ext":".html","total_count":6,"children":[{"name":"#step-1","total_count":1,"children":[]},{"name":"#reset-error","total_count":1,"children":[]},{"name":"#step-2","total_count":1,"children":[]},{"name":"#step-update","total_count":1,"children":[]},{"name":"#update-error","total_count":1,"children":[]},{"name":"#success-state","total_count":1,"children":[]}]}],"total_count":6},{"name":"complete-profile","children":[{"name":"complete-profile.html","path":"account/pages/complete-profile/complete-profile.html","ext":".html","total_count":11,"children":[{"name":"#rejection-banner","total_count":1,"children":[]},{"name":"#rejection-reason","total_count":1,"children":[]},{"name":"#username-hint","total_count":1,"children":[]},{"name":"#ic-upload-zone","total_count":1,"children":[]},{"name":"#ic-file-name","total_count":1,"children":[]},{"name":"#ic-back-upload-zone","total_count":1,"children":[]},{"name":"#ic-back-file-name","total_count":1,"children":[]},{"name":"#license-upload-zone","total_count":1,"children":[]},{"name":"#license-file-name","total_count":1,"children":[]},{"name":"#license-back-upload-zone","total_count":1,"children":[]},{"name":"#license-back-file-name","total_count":1,"children":[]}]}],"total_count":11},{"name":"login","children":[{"name":"login.html","path":"account/pages/login/login.html","ext":".html","total_count":2,"children":[{"name":"#login-tfa-dialog","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]}]}],"total_count":2},{"name":"verification-pending","children":[{"name":"verification-pending.html","path":"account/pages/verification-pending/verification-pending.html","ext":".html","total_count":5,"children":[{"name":"#pending-card","total_count":1,"children":[]},{"name":"#state-pending","total_count":1,"children":[]},{"name":"#check-counter","total_count":1,"children":[]},{"name":"#state-verified","total_count":1,"children":[]},{"name":"#state-rejected","total_count":1,"children":[]}]}],"total_count":5}],"total_count":26}],"total_count":46},{"name":"guest","children":[{"name":"css","children":[{"name":"guest.css","path":"guest/css/guest.css","ext":".css","total_count":20,"children":[{"name":".about-section","total_count":1,"children":[]},{"name":".about-story","total_count":1,"children":[]},{"name":".about-story-img","total_count":1,"children":[]},{"name":".active","total_count":1,"children":[]},{"name":".ai-insight-banner","total_count":1,"children":[]},{"name":".ai-price-section","total_count":1,"children":[]},{"name":".amount","total_count":1,"children":[]},{"name":".btn-outline","total_count":1,"children":[]},{"name":".btn-primary","total_count":1,"children":[]},{"name":".card-btn","total_count":1,"children":[]},{"name":".card-features","total_count":1,"children":[]},{"name":".card-header","total_count":1,"children":[]},{"name":".card-icon","total_count":1,"children":[]},{"name":".card-price","total_count":1,"children":[]},{"name":".ci-card","total_count":1,"children":[]},{"name":".contact-form","total_count":1,"children":[]},{"name":".contact-form-note","total_count":1,"children":[]},{"name":".contact-form-title","total_count":1,"children":[]},{"name":".contact-hours-card","total_count":1,"children":[]},{"name":".contact-info-cards","total_count":1,"children":[]}]}],"total_count":20},{"name":"js","children":[{"name":"how-it-works.js","path":"guest/js/how-it-works.js","ext":".js","total_count":11,"children":[{"name":"animate()","total_count":1,"children":[]},{"name":"frameSrc()","total_count":1,"children":[]},{"name":"initCursor()","total_count":1,"children":[]},{"name":"initHeroAndViewerSync()","total_count":1,"children":[]},{"name":"initLoader()","total_count":1,"children":[]},{"name":"initProgressAndParallax()","total_count":1,"children":[]},{"name":"initReveal()","total_count":1,"children":[]},{"name":"initRipple()","total_count":1,"children":[]},{"name":"initViewerSharedModule()","total_count":1,"children":[]},{"name":"requestUpdate()","total_count":1,"children":[]},{"name":"update()","total_count":1,"children":[]}]},{"name":"promo-banner.js","path":"guest/js/promo-banner.js","ext":".js","total_count":3,"children":[{"name":"dismiss()","total_count":1,"children":[]},{"name":"getDismissed()","total_count":1,"children":[]},{"name":"loadBanners()","total_count":1,"children":[]}]}],"total_count":14},{"name":"pages","children":[{"name":"explore-melaka","children":[{"name":"explore-melaka.html","path":"guest/pages/explore-melaka/explore-melaka.html","ext":".html","total_count":3,"children":[{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]}]}],"total_count":3},{"name":"how-it-works","children":[{"name":"how-it-works.html","path":"guest/pages/how-it-works/how-it-works.html","ext":".html","total_count":8,"children":[{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#top","total_count":1,"children":[]},{"name":"#journey","total_count":1,"children":[]},{"name":"#interactive","total_count":1,"children":[]},{"name":"#hiwInteriorScene","total_count":1,"children":[]},{"name":"#hiwInteriorCube","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":8},{"name":"pricing","children":[{"name":"pricing.html","path":"guest/pages/pricing/pricing.html","ext":".html","total_count":3,"children":[{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":3}],"total_count":14}],"total_count":48},{"name":"shared","children":[{"name":"css","children":[{"name":"animation.css","path":"shared/css/animation.css","ext":".css","total_count":20,"children":[{"name":".bg-particle","total_count":1,"children":[]},{"name":".bounce-in","total_count":1,"children":[]},{"name":".btn-anim","total_count":1,"children":[]},{"name":".btn-ripple","total_count":1,"children":[]},{"name":".card-hover","total_count":1,"children":[]},{"name":".card-img","total_count":1,"children":[]},{"name":".card-tilt","total_count":1,"children":[]},{"name":".delay-1","total_count":1,"children":[]},{"name":".delay-2","total_count":1,"children":[]},{"name":".delay-3","total_count":1,"children":[]},{"name":".delay-4","total_count":1,"children":[]},{"name":".delay-5","total_count":1,"children":[]},{"name":".delay-6","total_count":1,"children":[]},{"name":".dropdown-anim","total_count":1,"children":[]},{"name":".fade-in","total_count":1,"children":[]},{"name":".fade-in-down","total_count":1,"children":[]},{"name":".fade-in-left","total_count":1,"children":[]},{"name":".fade-in-right","total_count":1,"children":[]},{"name":".fade-in-up","total_count":1,"children":[]},{"name":".float","total_count":1,"children":[]}]},{"name":"auth.css","path":"shared/css/auth.css","ext":".css","total_count":20,"children":[{"name":".apple-logo","total_count":1,"children":[]},{"name":".brand","total_count":1,"children":[]},{"name":".brand-logo","total_count":1,"children":[]},{"name":".brand-text","total_count":1,"children":[]},{"name":".btn-guest","total_count":1,"children":[]},{"name":".btn-primary","total_count":1,"children":[]},{"name":".btn-social","total_count":1,"children":[]},{"name":".divider","total_count":1,"children":[]},{"name":".drive","total_count":1,"children":[]},{"name":".feature-icon","total_count":1,"children":[]},{"name":".feature-item","total_count":1,"children":[]},{"name":".feature-text","total_count":1,"children":[]},{"name":".features","total_count":1,"children":[]},{"name":".forgot","total_count":1,"children":[]},{"name":".form-group","total_count":1,"children":[]},{"name":".form-options","total_count":1,"children":[]},{"name":".form-row","total_count":1,"children":[]},{"name":".guest-link","total_count":1,"children":[]},{"name":".hero-text","total_count":1,"children":[]},{"name":".input-wrap","total_count":1,"children":[]}]},{"name":"calendar.css","path":"shared/css/calendar.css","ext":".css","total_count":19,"children":[{"name":".booked-date","total_count":1,"children":[]},{"name":".custom-year-select","total_count":1,"children":[]},{"name":".dayContainer","total_count":1,"children":[]},{"name":".endRange","total_count":1,"children":[]},{"name":".flatpickr-calendar","total_count":1,"children":[]},{"name":".flatpickr-current-month","total_count":1,"children":[]},{"name":".flatpickr-day","total_count":1,"children":[]},{"name":".flatpickr-disabled","total_count":1,"children":[]},{"name":".flatpickr-innerContainer","total_count":1,"children":[]},{"name":".flatpickr-month","total_count":1,"children":[]},{"name":".flatpickr-next-month","total_count":1,"children":[]},{"name":".flatpickr-prev-month","total_count":1,"children":[]},{"name":".in-range","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".numInputWrapper","total_count":1,"children":[]},{"name":".popup-date-fields","total_count":1,"children":[]},{"name":".popup-date-input-wrap","total_count":1,"children":[]},{"name":".range-end","total_count":1,"children":[]},{"name":".range-start","total_count":1,"children":[]}]},{"name":"chatbot.css","path":"shared/css/chatbot.css","ext":".css","total_count":20,"children":[{"name":".c-name","total_count":1,"children":[]},{"name":".c-price","total_count":1,"children":[]},{"name":".chat-avatar","total_count":1,"children":[]},{"name":".chat-avatar-icon","total_count":1,"children":[]},{"name":".chat-bot-avatar","total_count":1,"children":[]},{"name":".chat-bot-info","total_count":1,"children":[]},{"name":".chat-bot-name","total_count":1,"children":[]},{"name":".chat-bot-status","total_count":1,"children":[]},{"name":".chat-bubble","total_count":1,"children":[]},{"name":".chat-close-btn","total_count":1,"children":[]},{"name":".chat-input","total_count":1,"children":[]},{"name":".chat-input-wrap","total_count":1,"children":[]},{"name":".chat-messages","total_count":1,"children":[]},{"name":".chat-msg","total_count":1,"children":[]},{"name":".chat-panel-header","total_count":1,"children":[]},{"name":".chat-send","total_count":1,"children":[]},{"name":".chat-suggestions","total_count":1,"children":[]},{"name":".chat-time","total_count":1,"children":[]},{"name":".chatbot-fab","total_count":1,"children":[]},{"name":".chatbot-panel","total_count":1,"children":[]}]},{"name":"footer.css","path":"shared/css/footer.css","ext":".css","total_count":6,"children":[{"name":".brand-text","total_count":1,"children":[]},{"name":".footer-bottom","total_count":1,"children":[]},{"name":".footer-brand","total_count":1,"children":[]},{"name":".footer-content","total_count":1,"children":[]},{"name":".footer-links","total_count":1,"children":[]},{"name":".wedrive-footer","total_count":1,"children":[]}]},{"name":"navbar.css","path":"shared/css/navbar.css","ext":".css","total_count":19,"children":[{"name":".active","total_count":1,"children":[]},{"name":".brand-logo","total_count":1,"children":[]},{"name":".brand-text","total_count":1,"children":[]},{"name":".btn-logout","total_count":1,"children":[]},{"name":".btn-outline","total_count":1,"children":[]},{"name":".btn-primary","total_count":1,"children":[]},{"name":".drive","total_count":1,"children":[]},{"name":".lang-toggle","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".nav-actions","total_count":1,"children":[]},{"name":".nav-brand","total_count":1,"children":[]},{"name":".nav-link","total_count":1,"children":[]},{"name":".nav-links","total_count":1,"children":[]},{"name":".navbar","total_count":1,"children":[]},{"name":".theme-toggle","total_count":1,"children":[]},{"name":".user-av","total_count":1,"children":[]},{"name":".user-name","total_count":1,"children":[]},{"name":".user-pill","total_count":1,"children":[]},{"name":".we","total_count":1,"children":[]}]},{"name":"search-popup.css","path":"shared/css/search-popup.css","ext":".css","total_count":20,"children":[{"name":".long","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".open","total_count":1,"children":[]},{"name":".rented","total_count":1,"children":[]},{"name":".short","total_count":1,"children":[]},{"name":".sp-close-btn","total_count":1,"children":[]},{"name":".sp-empty","total_count":1,"children":[]},{"name":".sp-input-row","total_count":1,"children":[]},{"name":".sp-item","total_count":1,"children":[]},{"name":".sp-item-info","total_count":1,"children":[]},{"name":".sp-item-meta","total_count":1,"children":[]},{"name":".sp-item-name","total_count":1,"children":[]},{"name":".sp-item-price","total_count":1,"children":[]},{"name":".sp-item-thumb","total_count":1,"children":[]},{"name":".sp-modal","total_count":1,"children":[]},{"name":".sp-overlay","total_count":1,"children":[]},{"name":".sp-results","total_count":1,"children":[]},{"name":".sp-section-label","total_count":1,"children":[]},{"name":".sp-skel-line","total_count":1,"children":[]},{"name":".sp-skel-lines","total_count":1,"children":[]}]},{"name":"sidebar.css","path":"shared/css/sidebar.css","ext":".css","total_count":20,"children":[{"name":".active","total_count":1,"children":[]},{"name":".avatar","total_count":1,"children":[]},{"name":".brand-logo-sm","total_count":1,"children":[]},{"name":".brand-text","total_count":1,"children":[]},{"name":".customer-main","total_count":1,"children":[]},{"name":".drive","total_count":1,"children":[]},{"name":".logout","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".name","total_count":1,"children":[]},{"name":".nav-item","total_count":1,"children":[]},{"name":".nav-section","total_count":1,"children":[]},{"name":".open","total_count":1,"children":[]},{"name":".role","total_count":1,"children":[]},{"name":".sidebar","total_count":1,"children":[]},{"name":".sidebar-brand","total_count":1,"children":[]},{"name":".sidebar-footer","total_count":1,"children":[]},{"name":".sidebar-nav","total_count":1,"children":[]},{"name":".sidebar-overlay","total_count":1,"children":[]},{"name":".sidebar-toggle","total_count":1,"children":[]},{"name":".sidebar-user","total_count":1,"children":[]}]},{"name":"theme_day.css","path":"shared/css/theme_day.css","ext":".css","total_count":1,"children":[]},{"name":"theme_night.css","path":"shared/css/theme_night.css","ext":".css","total_count":1,"children":[]},{"name":"theme_overrides.css","path":"shared/css/theme_overrides.css","ext":".css","total_count":20,"children":[{"name":".action-btn","total_count":1,"children":[]},{"name":".active","total_count":1,"children":[]},{"name":".ai-card","total_count":1,"children":[]},{"name":".btn-back","total_count":1,"children":[]},{"name":".btn-icon","total_count":1,"children":[]},{"name":".car-card","total_count":1,"children":[]},{"name":".car-footer","total_count":1,"children":[]},{"name":".car-type","total_count":1,"children":[]},{"name":".chat-bubble","total_count":1,"children":[]},{"name":".chat-input","total_count":1,"children":[]},{"name":".chat-input-wrap","total_count":1,"children":[]},{"name":".chat-panel-header","total_count":1,"children":[]},{"name":".chat-suggestions","total_count":1,"children":[]},{"name":".chatbot-panel","total_count":1,"children":[]},{"name":".ci-card","total_count":1,"children":[]},{"name":".contact-hours-card","total_count":1,"children":[]},{"name":".drive","total_count":1,"children":[]},{"name":".filter-chip","total_count":1,"children":[]},{"name":".form-color-input","total_count":1,"children":[]},{"name":".form-input","total_count":1,"children":[]}]},{"name":"vehicle-viewer.css","path":"shared/css/vehicle-viewer.css","ext":".css","total_count":16,"children":[{"name":".is-active","total_count":1,"children":[]},{"name":".is-switching","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".vehicle-viewer-ambilight","total_count":1,"children":[]},{"name":".vehicle-viewer-cube","total_count":1,"children":[]},{"name":".vehicle-viewer-exterior","total_count":1,"children":[]},{"name":".vehicle-viewer-face","total_count":1,"children":[]},{"name":".vehicle-viewer-glow","total_count":1,"children":[]},{"name":".vehicle-viewer-interior","total_count":1,"children":[]},{"name":".vehicle-viewer-models","total_count":1,"children":[]},{"name":".vehicle-viewer-panel","total_count":1,"children":[]},{"name":".vehicle-viewer-shadow","total_count":1,"children":[]},{"name":".vehicle-viewer-stage","total_count":1,"children":[]},{"name":".vehicle-viewer-switch","total_count":1,"children":[]},{"name":".vehicle-viewer-toolbar","total_count":1,"children":[]},{"name":".vehicle-viewer-webgl","total_count":1,"children":[]}]}],"total_count":182},{"name":"js","children":[{"name":"animate.js","path":"shared/js/animate.js","ext":".js","total_count":62,"children":[{"name":"animateCursor()","total_count":1,"children":[]},{"name":"animateReveal()","total_count":1,"children":[]},{"name":"applyColor()","total_count":1,"children":[]},{"name":"buildFrameUrl()","total_count":1,"children":[]},{"name":"clamp()","total_count":1,"children":[]},{"name":"closestDelta()","total_count":1,"children":[]},{"name":"closestElement()","total_count":1,"children":[]},{"name":"drawFrame()","total_count":1,"children":[]},{"name":"drawImageToCanvas()","total_count":1,"children":[]},{"name":"drawScrollyCanvas()","total_count":1,"children":[]},{"name":"endDrag()","total_count":1,"children":[]},{"name":"ensureFullFrame()","total_count":1,"children":[]},{"name":"finishInstant()","total_count":1,"children":[]},{"name":"frameUrl()","total_count":1,"children":[]},{"name":"getDelay()","total_count":1,"children":[]},{"name":"getDuration()","total_count":1,"children":[]},{"name":"getScaleRange()","total_count":1,"children":[]},{"name":"getTranslate()","total_count":1,"children":[]},{"name":"glide()","total_count":1,"children":[]},{"name":"inferState()","total_count":1,"children":[]},{"name":"init()","total_count":1,"children":[]},{"name":"initImageSequences()","total_count":1,"children":[]},{"name":"initKineticTypography()","total_count":1,"children":[]},{"name":"initMagneticHover()","total_count":1,"children":[]},{"name":"initMicroInteractions()","total_count":1,"children":[]},{"name":"initPageTransition()","total_count":1,"children":[]},{"name":"initParallax()","total_count":1,"children":[]},{"name":"initPremiumCursor()","total_count":1,"children":[]},{"name":"initScrollProgress()","total_count":1,"children":[]},{"name":"initScrollReveal()","total_count":1,"children":[]},{"name":"initScrollytelling()","total_count":1,"children":[]},{"name":"initSheenObserver()","total_count":1,"children":[]},{"name":"initSmartNavbar()","total_count":1,"children":[]},{"name":"initTextScramble()","total_count":1,"children":[]},{"name":"initTiltCards()","total_count":1,"children":[]},{"name":"initVehicle3D()","total_count":1,"children":[]},{"name":"initVehicleSequenceViewer()","total_count":1,"children":[]},{"name":"interactiveFromTarget()","total_count":1,"children":[]},{"name":"loadFrame()","total_count":1,"children":[]},{"name":"parseTimeValue()","total_count":1,"children":[]},{"name":"preloadFullResolution()","total_count":1,"children":[]},{"name":"prepareAll()","total_count":1,"children":[]},{"name":"prepareElement()","total_count":1,"children":[]},{"name":"removeStateClasses()","total_count":1,"children":[]},{"name":"render()","total_count":1,"children":[]},{"name":"requestTick()","total_count":1,"children":[]},{"name":"resizeCanvas()","total_count":1,"children":[]},{"name":"run()","total_count":1,"children":[]},{"name":"runNavbarAnimation()","total_count":1,"children":[]},{"name":"runPageOpenAnimation()","total_count":1,"children":[]},{"name":"setAuto()","total_count":1,"children":[]},{"name":"setState()","total_count":1,"children":[]},{"name":"splitKineticElement()","total_count":1,"children":[]},{"name":"step()","total_count":1,"children":[]},{"name":"toNumber()","total_count":1,"children":[]},{"name":"update()","total_count":1,"children":[]},{"name":"updateAll()","total_count":1,"children":[]},{"name":"updateAngleButtons()","total_count":1,"children":[]},{"name":"updateFrame()","total_count":1,"children":[]},{"name":"updateSection()","total_count":1,"children":[]},{"name":"wantsBlur()","total_count":1,"children":[]},{"name":"wrapFrame()","total_count":1,"children":[]}]},{"name":"anime.min.js","path":"shared/js/anime.min.js","ext":".js","total_count":48,"children":[{"name":"$()","total_count":1,"children":[]},{"name":"A()","total_count":1,"children":[]},{"name":"B()","total_count":1,"children":[]},{"name":"C()","total_count":1,"children":[]},{"name":"D()","total_count":1,"children":[]},{"name":"E()","total_count":1,"children":[]},{"name":"F()","total_count":1,"children":[]},{"name":"G()","total_count":1,"children":[]},{"name":"H()","total_count":1,"children":[]},{"name":"I()","total_count":1,"children":[]},{"name":"L()","total_count":1,"children":[]},{"name":"M()","total_count":1,"children":[]},{"name":"N()","total_count":1,"children":[]},{"name":"O()","total_count":1,"children":[]},{"name":"P()","total_count":1,"children":[]},{"name":"R()","total_count":1,"children":[]},{"name":"S()","total_count":1,"children":[]},{"name":"T()","total_count":1,"children":[]},{"name":"V()","total_count":1,"children":[]},{"name":"W()","total_count":1,"children":[]},{"name":"X()","total_count":1,"children":[]},{"name":"Y()","total_count":1,"children":[]},{"name":"Z()","total_count":1,"children":[]},{"name":"_()","total_count":1,"children":[]},{"name":"a()","total_count":1,"children":[]},{"name":"b()","total_count":1,"children":[]},{"name":"c()","total_count":1,"children":[]},{"name":"e()","total_count":1,"children":[]},{"name":"en()","total_count":1,"children":[]},{"name":"f()","total_count":1,"children":[]},{"name":"g()","total_count":1,"children":[]},{"name":"h()","total_count":1,"children":[]},{"name":"j()","total_count":1,"children":[]},{"name":"k()","total_count":1,"children":[]},{"name":"m()","total_count":1,"children":[]},{"name":"nn()","total_count":1,"children":[]},{"name":"o()","total_count":1,"children":[]},{"name":"q()","total_count":1,"children":[]},{"name":"r()","total_count":1,"children":[]},{"name":"rn()","total_count":1,"children":[]},{"name":"s()","total_count":1,"children":[]},{"name":"t()","total_count":1,"children":[]},{"name":"tn()","total_count":1,"children":[]},{"name":"u()","total_count":1,"children":[]},{"name":"w()","total_count":1,"children":[]},{"name":"x()","total_count":1,"children":[]},{"name":"y()","total_count":1,"children":[]},{"name":"z()","total_count":1,"children":[]}]},{"name":"api.js","path":"shared/js/api.js","ext":".js","total_count":4,"children":[{"name":"_loadDummyData()","total_count":1,"children":[]},{"name":"addOneDay()","total_count":1,"children":[]},{"name":"getDummyPath()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]}]},{"name":"auth-guard.js","path":"shared/js/auth-guard.js","ext":".js","total_count":1,"children":[{"name":"getLoginPath()","total_count":1,"children":[]}]},{"name":"calendar.js","path":"shared/js/calendar.js","ext":".js","total_count":8,"children":[{"name":"autoInit()","total_count":1,"children":[]},{"name":"basePath()","total_count":1,"children":[]},{"name":"highlightRange()","total_count":1,"children":[]},{"name":"initPairedPickers()","total_count":1,"children":[]},{"name":"injectCalendarCSS()","total_count":1,"children":[]},{"name":"redrawRange()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"updateReturnState()","total_count":1,"children":[]}]},{"name":"chatbot.js","path":"shared/js/chatbot.js","ext":".js","total_count":5,"children":[{"name":"buildPersonalContext()","total_count":1,"children":[]},{"name":"fetchChatUserData()","total_count":1,"children":[]},{"name":"initChatbot()","total_count":1,"children":[]},{"name":"parseMarkdown()","total_count":1,"children":[]},{"name":"resolveBase()","total_count":1,"children":[]}]},{"name":"email-service.js","path":"shared/js/email-service.js","ext":".js","total_count":1,"children":[{"name":"_callEdge()","total_count":1,"children":[]}]},{"name":"main.js","path":"shared/js/main.js","ext":".js","total_count":32,"children":[{"name":"applyStagger()","total_count":1,"children":[]},{"name":"applyTheme()","total_count":1,"children":[]},{"name":"applyTranslation()","total_count":1,"children":[]},{"name":"check()","total_count":1,"children":[]},{"name":"getColor()","total_count":1,"children":[]},{"name":"getEffectiveTheme()","total_count":1,"children":[]},{"name":"init()","total_count":1,"children":[]},{"name":"initCursorGlow()","total_count":1,"children":[]},{"name":"initLang()","total_count":1,"children":[]},{"name":"initObserver()","total_count":1,"children":[]},{"name":"initScrollFallback()","total_count":1,"children":[]},{"name":"initTheme()","total_count":1,"children":[]},{"name":"lerp()","total_count":1,"children":[]},{"name":"loadCalendar()","total_count":1,"children":[]},{"name":"loadFooter()","total_count":1,"children":[]},{"name":"loadLanguage()","total_count":1,"children":[]},{"name":"loadSearchPopup()","total_count":1,"children":[]},{"name":"rand()","total_count":1,"children":[]},{"name":"randInt()","total_count":1,"children":[]},{"name":"randPx()","total_count":1,"children":[]},{"name":"resolveBase()","total_count":1,"children":[]},{"name":"resolveBasePath()","total_count":1,"children":[]},{"name":"resolveLangPath()","total_count":1,"children":[]},{"name":"resolveProjectBase()","total_count":1,"children":[]},{"name":"revealAboveFold()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"showElement()","total_count":1,"children":[]},{"name":"spawnParticles()","total_count":1,"children":[]},{"name":"syncCompanyDetails()","total_count":1,"children":[]},{"name":"updateGlow()","total_count":1,"children":[]},{"name":"updateLangBtn()","total_count":1,"children":[]},{"name":"updateThemeBtns()","total_count":1,"children":[]}]},{"name":"navbar-loader.js","path":"shared/js/navbar-loader.js","ext":".js","total_count":3,"children":[{"name":"init()","total_count":1,"children":[]},{"name":"renderNavbar()","total_count":1,"children":[]},{"name":"resolveBase()","total_count":1,"children":[]}]},{"name":"promo-banner.js","path":"shared/js/promo-banner.js","ext":".js","total_count":3,"children":[{"name":"dismiss()","total_count":1,"children":[]},{"name":"getDismissed()","total_count":1,"children":[]},{"name":"loadBanners()","total_count":1,"children":[]}]},{"name":"search-popup.js","path":"shared/js/search-popup.js","ext":".js","total_count":15,"children":[{"name":"basePath()","total_count":1,"children":[]},{"name":"buildPopup()","total_count":1,"children":[]},{"name":"closePopup()","total_count":1,"children":[]},{"name":"escHtml()","total_count":1,"children":[]},{"name":"highlight()","total_count":1,"children":[]},{"name":"injectCSS()","total_count":1,"children":[]},{"name":"loadCars()","total_count":1,"children":[]},{"name":"openPopup()","total_count":1,"children":[]},{"name":"renderDefault()","total_count":1,"children":[]},{"name":"renderList()","total_count":1,"children":[]},{"name":"resolveImg()","total_count":1,"children":[]},{"name":"runSearch()","total_count":1,"children":[]},{"name":"setTimeout()","total_count":1,"children":[]},{"name":"showSkeleton()","total_count":1,"children":[]},{"name":"wireTriggers()","total_count":1,"children":[]}]},{"name":"sidebar-loader.js","path":"shared/js/sidebar-loader.js","ext":".js","total_count":7,"children":[{"name":"closeSidebar()","total_count":1,"children":[]},{"name":"loadSidebar()","total_count":1,"children":[]},{"name":"openSidebar()","total_count":1,"children":[]},{"name":"resolveBasePath()","total_count":1,"children":[]},{"name":"resolveLinks()","total_count":1,"children":[]},{"name":"setActiveItem()","total_count":1,"children":[]},{"name":"setupMobileToggle()","total_count":1,"children":[]}]},{"name":"supabase-config.js","path":"shared/js/supabase-config.js","ext":".js","total_count":1,"children":[]},{"name":"three.min.js","path":"shared/js/three.min.js","ext":".js","total_count":234,"children":[{"name":"$()","total_count":1,"children":[]},{"name":"$l()","total_count":1,"children":[]},{"name":"$t()","total_count":1,"children":[]},{"name":"A()","total_count":1,"children":[]},{"name":"Aa()","total_count":1,"children":[]},{"name":"As()","total_count":1,"children":[]},{"name":"B()","total_count":1,"children":[]},{"name":"Br()","total_count":1,"children":[]},{"name":"Bs()","total_count":1,"children":[]},{"name":"Bt()","total_count":1,"children":[]},{"name":"C()","total_count":1,"children":[]},{"name":"Ca()","total_count":1,"children":[]},{"name":"Cc()","total_count":1,"children":[]},{"name":"Cs()","total_count":1,"children":[]},{"name":"D()","total_count":1,"children":[]},{"name":"Da()","total_count":1,"children":[]},{"name":"Ds()","total_count":1,"children":[]},{"name":"E()","total_count":1,"children":[]},{"name":"Ea()","total_count":1,"children":[]},{"name":"Ee()","total_count":1,"children":[]},{"name":"Es()","total_count":1,"children":[]},{"name":"F()","total_count":1,"children":[]},{"name":"Fr()","total_count":1,"children":[]},{"name":"Fs()","total_count":1,"children":[]},{"name":"Ft()","total_count":1,"children":[]},{"name":"G()","total_count":1,"children":[]},{"name":"Gc()","total_count":1,"children":[]},{"name":"Gr()","total_count":1,"children":[]},{"name":"Gs()","total_count":1,"children":[]},{"name":"Gt()","total_count":1,"children":[]},{"name":"H()","total_count":1,"children":[]},{"name":"Hr()","total_count":1,"children":[]},{"name":"Hs()","total_count":1,"children":[]},{"name":"Ht()","total_count":1,"children":[]},{"name":"Is()","total_count":1,"children":[]},{"name":"Ji()","total_count":1,"children":[]},{"name":"Jl()","total_count":1,"children":[]},{"name":"Js()","total_count":1,"children":[]},{"name":"Jt()","total_count":1,"children":[]},{"name":"Kl()","total_count":1,"children":[]},{"name":"Ks()","total_count":1,"children":[]},{"name":"Kt()","total_count":1,"children":[]},{"name":"L()","total_count":1,"children":[]},{"name":"La()","total_count":1,"children":[]},{"name":"Le()","total_count":1,"children":[]},{"name":"Ls()","total_count":1,"children":[]},{"name":"M()","total_count":1,"children":[]},{"name":"Ma()","total_count":1,"children":[]},{"name":"Mr()","total_count":1,"children":[]},{"name":"Ms()","total_count":1,"children":[]},{"name":"Na()","total_count":1,"children":[]},{"name":"Nr()","total_count":1,"children":[]},{"name":"Ns()","total_count":1,"children":[]},{"name":"O()","total_count":1,"children":[]},{"name":"Oa()","total_count":1,"children":[]},{"name":"Or()","total_count":1,"children":[]},{"name":"Os()","total_count":1,"children":[]},{"name":"Ps()","total_count":1,"children":[]},{"name":"Q()","total_count":1,"children":[]},{"name":"Ql()","total_count":1,"children":[]},{"name":"Qs()","total_count":1,"children":[]},{"name":"Qt()","total_count":1,"children":[]},{"name":"Ra()","total_count":1,"children":[]},{"name":"Rs()","total_count":1,"children":[]},{"name":"S()","total_count":1,"children":[]},{"name":"Sa()","total_count":1,"children":[]},{"name":"Sr()","total_count":1,"children":[]},{"name":"Ss()","total_count":1,"children":[]},{"name":"T()","total_count":1,"children":[]},{"name":"Ta()","total_count":1,"children":[]},{"name":"Te()","total_count":1,"children":[]},{"name":"Tr()","total_count":1,"children":[]},{"name":"Ts()","total_count":1,"children":[]},{"name":"Tu()","total_count":1,"children":[]},{"name":"Ua()","total_count":1,"children":[]},{"name":"Us()","total_count":1,"children":[]},{"name":"Uu()","total_count":1,"children":[]},{"name":"V()","total_count":1,"children":[]},{"name":"Vc()","total_count":1,"children":[]},{"name":"Vr()","total_count":1,"children":[]},{"name":"Vs()","total_count":1,"children":[]},{"name":"Vt()","total_count":1,"children":[]},{"name":"W()","total_count":1,"children":[]},{"name":"Wa()","total_count":1,"children":[]},{"name":"Wc()","total_count":1,"children":[]},{"name":"Wl()","total_count":1,"children":[]},{"name":"Wr()","total_count":1,"children":[]},{"name":"Ws()","total_count":1,"children":[]},{"name":"X()","total_count":1,"children":[]},{"name":"Xc()","total_count":1,"children":[]},{"name":"Xl()","total_count":1,"children":[]},{"name":"Xr()","total_count":1,"children":[]},{"name":"Xs()","total_count":1,"children":[]},{"name":"Xt()","total_count":1,"children":[]},{"name":"Y()","total_count":1,"children":[]},{"name":"Yi()","total_count":1,"children":[]},{"name":"Yl()","total_count":1,"children":[]},{"name":"Yr()","total_count":1,"children":[]},{"name":"Yt()","total_count":1,"children":[]},{"name":"Z()","total_count":1,"children":[]},{"name":"Zi()","total_count":1,"children":[]},{"name":"Zl()","total_count":1,"children":[]},{"name":"Zt()","total_count":1,"children":[]},{"name":"_()","total_count":1,"children":[]},{"name":"_l()","total_count":1,"children":[]},{"name":"_s()","total_count":1,"children":[]},{"name":"a()","total_count":1,"children":[]},{"name":"aa()","total_count":1,"children":[]},{"name":"ac()","total_count":1,"children":[]},{"name":"ae()","total_count":1,"children":[]},{"name":"ah()","total_count":1,"children":[]},{"name":"al()","total_count":1,"children":[]},{"name":"as()","total_count":1,"children":[]},{"name":"at()","total_count":1,"children":[]},{"name":"b()","total_count":1,"children":[]},{"name":"ba()","total_count":1,"children":[]},{"name":"br()","total_count":1,"children":[]},{"name":"bs()","total_count":1,"children":[]},{"name":"c()","total_count":1,"children":[]},{"name":"cc()","total_count":1,"children":[]},{"name":"cs()","total_count":1,"children":[]},{"name":"ct()","total_count":1,"children":[]},{"name":"d()","total_count":1,"children":[]},{"name":"da()","total_count":1,"children":[]},{"name":"dc()","total_count":1,"children":[]},{"name":"de()","total_count":1,"children":[]},{"name":"di()","total_count":1,"children":[]},{"name":"dr()","total_count":1,"children":[]},{"name":"ds()","total_count":1,"children":[]},{"name":"e()","total_count":1,"children":[]},{"name":"ea()","total_count":1,"children":[]},{"name":"ec()","total_count":1,"children":[]},{"name":"ee()","total_count":1,"children":[]},{"name":"et()","total_count":1,"children":[]},{"name":"f()","total_count":1,"children":[]},{"name":"fa()","total_count":1,"children":[]},{"name":"fc()","total_count":1,"children":[]},{"name":"fe()","total_count":1,"children":[]},{"name":"fo()","total_count":1,"children":[]},{"name":"fs()","total_count":1,"children":[]},{"name":"fu()","total_count":1,"children":[]},{"name":"g()","total_count":1,"children":[]},{"name":"gc()","total_count":1,"children":[]},{"name":"ge()","total_count":1,"children":[]},{"name":"gs()","total_count":1,"children":[]},{"name":"gu()","total_count":1,"children":[]},{"name":"h()","total_count":1,"children":[]},{"name":"ha()","total_count":1,"children":[]},{"name":"hc()","total_count":1,"children":[]},{"name":"hi()","total_count":1,"children":[]},{"name":"hs()","total_count":1,"children":[]},{"name":"i()","total_count":1,"children":[]},{"name":"ia()","total_count":1,"children":[]},{"name":"ic()","total_count":1,"children":[]},{"name":"ie()","total_count":1,"children":[]},{"name":"it()","total_count":1,"children":[]},{"name":"j()","total_count":1,"children":[]},{"name":"ji()","total_count":1,"children":[]},{"name":"jl()","total_count":1,"children":[]},{"name":"jr()","total_count":1,"children":[]},{"name":"jt()","total_count":1,"children":[]},{"name":"k()","total_count":1,"children":[]},{"name":"ka()","total_count":1,"children":[]},{"name":"kc()","total_count":1,"children":[]},{"name":"kr()","total_count":1,"children":[]},{"name":"ks()","total_count":1,"children":[]},{"name":"kt()","total_count":1,"children":[]},{"name":"l()","total_count":1,"children":[]},{"name":"la()","total_count":1,"children":[]},{"name":"lc()","total_count":1,"children":[]},{"name":"ls()","total_count":1,"children":[]},{"name":"m()","total_count":1,"children":[]},{"name":"ma()","total_count":1,"children":[]},{"name":"me()","total_count":1,"children":[]},{"name":"ms()","total_count":1,"children":[]},{"name":"n()","total_count":1,"children":[]},{"name":"na()","total_count":1,"children":[]},{"name":"nc()","total_count":1,"children":[]},{"name":"ne()","total_count":1,"children":[]},{"name":"nn()","total_count":1,"children":[]},{"name":"nt()","total_count":1,"children":[]},{"name":"o()","total_count":1,"children":[]},{"name":"oc()","total_count":1,"children":[]},{"name":"oe()","total_count":1,"children":[]},{"name":"os()","total_count":1,"children":[]},{"name":"p()","total_count":1,"children":[]},{"name":"pa()","total_count":1,"children":[]},{"name":"pc()","total_count":1,"children":[]},{"name":"pr()","total_count":1,"children":[]},{"name":"ps()","total_count":1,"children":[]},{"name":"q()","total_count":1,"children":[]},{"name":"qh()","total_count":1,"children":[]},{"name":"ql()","total_count":1,"children":[]},{"name":"qr()","total_count":1,"children":[]},{"name":"r()","total_count":1,"children":[]},{"name":"ra()","total_count":1,"children":[]},{"name":"rc()","total_count":1,"children":[]},{"name":"re()","total_count":1,"children":[]},{"name":"rs()","total_count":1,"children":[]},{"name":"rt()","total_count":1,"children":[]},{"name":"s()","total_count":1,"children":[]},{"name":"sa()","total_count":1,"children":[]},{"name":"sc()","total_count":1,"children":[]},{"name":"se()","total_count":1,"children":[]},{"name":"si()","total_count":1,"children":[]},{"name":"ss()","total_count":1,"children":[]},{"name":"st()","total_count":1,"children":[]},{"name":"t()","total_count":1,"children":[]},{"name":"tc()","total_count":1,"children":[]},{"name":"te()","total_count":1,"children":[]},{"name":"tt()","total_count":1,"children":[]},{"name":"u()","total_count":1,"children":[]},{"name":"uc()","total_count":1,"children":[]},{"name":"ui()","total_count":1,"children":[]},{"name":"ul()","total_count":1,"children":[]},{"name":"us()","total_count":1,"children":[]},{"name":"v()","total_count":1,"children":[]},{"name":"ve()","total_count":1,"children":[]},{"name":"vl()","total_count":1,"children":[]},{"name":"vs()","total_count":1,"children":[]},{"name":"w()","total_count":1,"children":[]},{"name":"ws()","total_count":1,"children":[]},{"name":"x()","total_count":1,"children":[]},{"name":"xa()","total_count":1,"children":[]},{"name":"xr()","total_count":1,"children":[]},{"name":"xs()","total_count":1,"children":[]},{"name":"y()","total_count":1,"children":[]},{"name":"ya()","total_count":1,"children":[]},{"name":"yl()","total_count":1,"children":[]},{"name":"yr()","total_count":1,"children":[]},{"name":"ys()","total_count":1,"children":[]},{"name":"z()","total_count":1,"children":[]},{"name":"zr()","total_count":1,"children":[]},{"name":"zs()","total_count":1,"children":[]}]},{"name":"vehicle-viewer.js","path":"shared/js/vehicle-viewer.js","ext":".js","total_count":59,"children":[{"name":"applyInteriorFaces()","total_count":1,"children":[]},{"name":"bind()","total_count":1,"children":[]},{"name":"bootstrap()","total_count":1,"children":[]},{"name":"buildPatternUrl()","total_count":1,"children":[]},{"name":"buildPlaceholderInteriorSvg()","total_count":1,"children":[]},{"name":"currentLang()","total_count":1,"children":[]},{"name":"dispatchLanguageApplied()","total_count":1,"children":[]},{"name":"ensureInteriorRenderer()","total_count":1,"children":[]},{"name":"ensureInteriorTexture()","total_count":1,"children":[]},{"name":"escapeHtml()","total_count":1,"children":[]},{"name":"fetchJson()","total_count":1,"children":[]},{"name":"findControlsScope()","total_count":1,"children":[]},{"name":"finishSwitch()","total_count":1,"children":[]},{"name":"frameUrlForState()","total_count":1,"children":[]},{"name":"get()","total_count":1,"children":[]},{"name":"getAll()","total_count":1,"children":[]},{"name":"getExteriorFrame()","total_count":1,"children":[]},{"name":"getFrameCount()","total_count":1,"children":[]},{"name":"getFramePad()","total_count":1,"children":[]},{"name":"getFrameStart()","total_count":1,"children":[]},{"name":"getInteriorFaceMap()","total_count":1,"children":[]},{"name":"init()","total_count":1,"children":[]},{"name":"initAll()","total_count":1,"children":[]},{"name":"injectScript()","total_count":1,"children":[]},{"name":"isMalay()","total_count":1,"children":[]},{"name":"loadCubeTexture()","total_count":1,"children":[]},{"name":"loadManifest()","total_count":1,"children":[]},{"name":"loadModel()","total_count":1,"children":[]},{"name":"loadRegistry()","total_count":1,"children":[]},{"name":"loadThreeLibrary()","total_count":1,"children":[]},{"name":"makeButtonList()","total_count":1,"children":[]},{"name":"normalizeFrame()","total_count":1,"children":[]},{"name":"pointerDown()","total_count":1,"children":[]},{"name":"pointerMove()","total_count":1,"children":[]},{"name":"pointerUp()","total_count":1,"children":[]},{"name":"queueInteriorAnimation()","total_count":1,"children":[]},{"name":"renderExteriorFrame()","total_count":1,"children":[]},{"name":"renderInteriorCube()","total_count":1,"children":[]},{"name":"renderInteriorScene()","total_count":1,"children":[]},{"name":"renderLabel()","total_count":1,"children":[]},{"name":"resizeInteriorRenderer()","total_count":1,"children":[]},{"name":"resolveExteriorFrameUrl()","total_count":1,"children":[]},{"name":"resolveFrameUrl()","total_count":1,"children":[]},{"name":"resolveInteriorFaceUrl()","total_count":1,"children":[]},{"name":"safeAll()","total_count":1,"children":[]},{"name":"safeGet()","total_count":1,"children":[]},{"name":"scheduleInteriorRefresh()","total_count":1,"children":[]},{"name":"setExteriorFrame()","total_count":1,"children":[]},{"name":"setModel()","total_count":1,"children":[]},{"name":"setTextKey()","total_count":1,"children":[]},{"name":"setView()","total_count":1,"children":[]},{"name":"spin()","total_count":1,"children":[]},{"name":"stopInteriorAnimation()","total_count":1,"children":[]},{"name":"syncRootState()","total_count":1,"children":[]},{"name":"tickInterior()","total_count":1,"children":[]},{"name":"trySource()","total_count":1,"children":[]},{"name":"updateButtons()","total_count":1,"children":[]},{"name":"updateStatus()","total_count":1,"children":[]},{"name":"updateViewUI()","total_count":1,"children":[]}]}],"total_count":483},{"name":"lang","children":[{"name":"en.js","path":"shared/lang/en.js","ext":".js","total_count":1,"children":[]},{"name":"ms.js","path":"shared/lang/ms.js","ext":".js","total_count":1,"children":[]}],"total_count":2},{"name":"components","children":[{"name":"footer.html","path":"shared/components/footer.html","ext":".html","total_count":1,"children":[]},{"name":"navbar.html","path":"shared/components/navbar.html","ext":".html","total_count":4,"children":[{"name":"#wedrive-navbar","total_count":1,"children":[]},{"name":"#navbar-links","total_count":1,"children":[]},{"name":"#navbar-actions","total_count":1,"children":[]},{"name":"#navbar-module-actions","total_count":1,"children":[]}]}],"total_count":5},{"name":"pages","children":[{"name":"footer","children":[{"name":"contact","children":[{"name":"contact.html","path":"shared/pages/footer/contact/contact.html","ext":".html","total_count":3,"children":[{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":3},{"name":"faq","children":[{"name":"faq.html","path":"shared/pages/footer/faq/faq.html","ext":".html","total_count":4,"children":[{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#faq-list","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":4},{"name":"terms","children":[{"name":"terms.html","path":"shared/pages/footer/terms/terms.html","ext":".html","total_count":3,"children":[{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":3},{"name":"about","children":[{"name":"about.html","path":"shared/pages/footer/about/about.html","ext":".html","total_count":3,"children":[{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":3}],"total_count":13},{"name":"error","children":[{"name":"404.html","path":"shared/pages/error/404.html","ext":".html","total_count":1,"children":[]}],"total_count":1}],"total_count":14}],"total_count":686},{"name":"supabase","children":[{"name":"migrate-data.js","path":"supabase/migrate-data.js","ext":".js","total_count":2,"children":[{"name":"migrate()","total_count":1,"children":[]},{"name":"supabaseInsert()","total_count":1,"children":[]}]},{"name":"functions","children":[{"name":"send-email","children":[{"name":"index.ts","path":"supabase/functions/send-email/index.ts","ext":".ts","total_count":2,"children":[{"name":"wedriveBrand()","total_count":1,"children":[]},{"name":"wrapEmail()","total_count":1,"children":[]}]}],"total_count":2}],"total_count":2}],"total_count":4},{"name":"docs","children":[{"name":"FULL_SYSTEM_FLOWCHART.html","path":"docs/FULL_SYSTEM_FLOWCHART.html","ext":".html","total_count":15,"children":[{"name":"#overview","total_count":1,"children":[]},{"name":"#data-api","total_count":1,"children":[]},{"name":"#login","total_count":1,"children":[]},{"name":"#guest-customer","total_count":1,"children":[]},{"name":"#admin","total_count":1,"children":[]},{"name":"#cars","total_count":1,"children":[]},{"name":"#bookings","total_count":1,"children":[]},{"name":"#reports","total_count":1,"children":[]},{"name":"#marketing","total_count":1,"children":[]},{"name":"#calendar","total_count":1,"children":[]},{"name":"#settings","total_count":1,"children":[]},{"name":"#chatbot","total_count":1,"children":[]},{"name":"#shared","total_count":1,"children":[]},{"name":"#future-db","total_count":1,"children":[]},{"name":"#status","total_count":1,"children":[]}]},{"name":"sitemap.html","path":"docs/sitemap.html","ext":".html","total_count":1,"children":[]},{"name":"email-templates","children":[{"name":"reset-password.html","path":"docs/email-templates/reset-password.html","ext":".html","total_count":1,"children":[]}],"total_count":1}],"total_count":17},{"name":"bin","children":[{"name":"ai-insights.css","path":"bin/ai-insights.css","ext":".css","total_count":20,"children":[{"name":".ai-content","total_count":1,"children":[]},{"name":".ai-hero","total_count":1,"children":[]},{"name":".ai-hero-inner","total_count":1,"children":[]},{"name":".ai-reco-card","total_count":1,"children":[]},{"name":".ai-reco-grid","total_count":1,"children":[]},{"name":".ai-reco-section","total_count":1,"children":[]},{"name":".ai-stat-card","total_count":1,"children":[]},{"name":".ai-stat-change","total_count":1,"children":[]},{"name":".ai-stat-label","total_count":1,"children":[]},{"name":".ai-stat-value","total_count":1,"children":[]},{"name":".ai-stats-row","total_count":1,"children":[]},{"name":".eco-good","total_count":1,"children":[]},{"name":".eco-ok","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".positive","total_count":1,"children":[]},{"name":".reco-action","total_count":1,"children":[]},{"name":".reco-content","total_count":1,"children":[]},{"name":".reco-green","total_count":1,"children":[]},{"name":".reco-icon","total_count":1,"children":[]},{"name":".reco-purple","total_count":1,"children":[]}]},{"name":"ai-insights.html","path":"bin/ai-insights.html","ext":".html","total_count":4,"children":[{"name":"#sidebar-placeholder","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#insights-grid","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]},{"name":"ai-insights.js","path":"bin/ai-insights.js","ext":".js","total_count":2,"children":[{"name":"filterInsights()","total_count":1,"children":[]},{"name":"renderInsights()","total_count":1,"children":[]}]},{"name":"car-details.css","path":"bin/car-details.css","ext":".css","total_count":20,"children":[{"name":".active","total_count":1,"children":[]},{"name":".ai-card","total_count":1,"children":[]},{"name":".ai-card-large","total_count":1,"children":[]},{"name":".ai-glow","total_count":1,"children":[]},{"name":".ai-grid","total_count":1,"children":[]},{"name":".ai-icon","total_count":1,"children":[]},{"name":".ai-price-tag","total_count":1,"children":[]},{"name":".availability-list","total_count":1,"children":[]},{"name":".breadcrumb","total_count":1,"children":[]},{"name":".btn-book-now","total_count":1,"children":[]},{"name":".car-hero","total_count":1,"children":[]},{"name":".car-subtitle","total_count":1,"children":[]},{"name":".counted","total_count":1,"children":[]},{"name":".current","total_count":1,"children":[]},{"name":".free-cancel","total_count":1,"children":[]},{"name":".gal-dot","total_count":1,"children":[]},{"name":".gallery-badge","total_count":1,"children":[]},{"name":".gallery-main","total_count":1,"children":[]},{"name":".gallery-nav","total_count":1,"children":[]},{"name":".gallery-thumbs","total_count":1,"children":[]}]},{"name":"car-details.js","path":"bin/car-details.js","ext":".js","total_count":1,"children":[{"name":"loadCarData()","total_count":1,"children":[]}]},{"name":"chatbot.html","path":"bin/chatbot.html","ext":".html","total_count":1,"children":[{"name":"#messages","total_count":1,"children":[]}]},{"name":"customer-pages.css","path":"bin/customer-pages.css","ext":".css","total_count":20,"children":[{"name":".active","total_count":1,"children":[]},{"name":".contact-card","total_count":1,"children":[]},{"name":".contact-grid","total_count":1,"children":[]},{"name":".contact-section","total_count":1,"children":[]},{"name":".faq-a","total_count":1,"children":[]},{"name":".faq-arrow","total_count":1,"children":[]},{"name":".faq-cat","total_count":1,"children":[]},{"name":".faq-categories","total_count":1,"children":[]},{"name":".faq-item","total_count":1,"children":[]},{"name":".faq-q","total_count":1,"children":[]},{"name":".faq-section","total_count":1,"children":[]},{"name":".hero-icon","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".qa-card","total_count":1,"children":[]},{"name":".qa-green","total_count":1,"children":[]},{"name":".qa-grid","total_count":1,"children":[]},{"name":".qa-icon","total_count":1,"children":[]},{"name":".qa-orange","total_count":1,"children":[]},{"name":".qa-purple","total_count":1,"children":[]},{"name":".quick-actions","total_count":1,"children":[]}]},{"name":"database_design_correction.html","path":"bin/database_design_correction.html","ext":".html","total_count":1,"children":[]},{"name":"guest-pages.css","path":"bin/guest-pages.css","ext":".css","total_count":20,"children":[{"name":".about-section","total_count":1,"children":[]},{"name":".about-story","total_count":1,"children":[]},{"name":".about-story-img","total_count":1,"children":[]},{"name":".active","total_count":1,"children":[]},{"name":".ai-insight-banner","total_count":1,"children":[]},{"name":".ai-price-section","total_count":1,"children":[]},{"name":".amount","total_count":1,"children":[]},{"name":".card-btn","total_count":1,"children":[]},{"name":".card-features","total_count":1,"children":[]},{"name":".card-header","total_count":1,"children":[]},{"name":".card-icon","total_count":1,"children":[]},{"name":".card-price","total_count":1,"children":[]},{"name":".ci-card","total_count":1,"children":[]},{"name":".contact-form","total_count":1,"children":[]},{"name":".contact-info-cards","total_count":1,"children":[]},{"name":".contact-layout","total_count":1,"children":[]},{"name":".error-code","total_count":1,"children":[]},{"name":".error-link","total_count":1,"children":[]},{"name":".error-links","total_count":1,"children":[]},{"name":".error-wrapper","total_count":1,"children":[]}]},{"name":"lang.js","path":"bin/lang.js","ext":".js","total_count":5,"children":[{"name":"applyTranslation()","total_count":1,"children":[]},{"name":"init()","total_count":1,"children":[]},{"name":"loadLanguage()","total_count":1,"children":[]},{"name":"resolveLangPath()","total_count":1,"children":[]},{"name":"updateLangBtn()","total_count":1,"children":[]}]},{"name":"login.html","path":"bin/login.html","ext":".html","total_count":1,"children":[]},{"name":"support.css","path":"bin/support.css","ext":".css","total_count":20,"children":[{"name":".active","total_count":1,"children":[]},{"name":".contact-card","total_count":1,"children":[]},{"name":".contact-grid","total_count":1,"children":[]},{"name":".contact-section","total_count":1,"children":[]},{"name":".faq-a","total_count":1,"children":[]},{"name":".faq-arrow","total_count":1,"children":[]},{"name":".faq-cat","total_count":1,"children":[]},{"name":".faq-categories","total_count":1,"children":[]},{"name":".faq-item","total_count":1,"children":[]},{"name":".faq-q","total_count":1,"children":[]},{"name":".faq-section","total_count":1,"children":[]},{"name":".hero-icon","total_count":1,"children":[]},{"name":".material-icons-round","total_count":1,"children":[]},{"name":".qa-card","total_count":1,"children":[]},{"name":".qa-green","total_count":1,"children":[]},{"name":".qa-grid","total_count":1,"children":[]},{"name":".qa-icon","total_count":1,"children":[]},{"name":".qa-orange","total_count":1,"children":[]},{"name":".qa-purple","total_count":1,"children":[]},{"name":".quick-actions","total_count":1,"children":[]}]},{"name":"test-bookings.js","path":"bin/test-bookings.js","ext":".js","total_count":1,"children":[{"name":"test()","total_count":1,"children":[]}]},{"name":"test-calendar-data.js","path":"bin/test-calendar-data.js","ext":".js","total_count":1,"children":[]},{"name":"theme.js","path":"bin/theme.js","ext":".js","total_count":3,"children":[{"name":"applyTheme()","total_count":1,"children":[]},{"name":"init()","total_count":1,"children":[]},{"name":"updateBtns()","total_count":1,"children":[]}]},{"name":"customer","children":[{"name":"js","children":[{"name":"ai-insights.js","path":"bin/customer/js/ai-insights.js","ext":".js","total_count":9,"children":[{"name":"formatDateRange()","total_count":1,"children":[]},{"name":"hashCode()","total_count":1,"children":[]},{"name":"lang()","total_count":1,"children":[]},{"name":"loadData()","total_count":1,"children":[]},{"name":"renderRecentTrips()","total_count":1,"children":[]},{"name":"renderRecommendations()","total_count":1,"children":[]},{"name":"renderStats()","total_count":1,"children":[]},{"name":"setText()","total_count":1,"children":[]},{"name":"t()","total_count":1,"children":[]}]}],"total_count":9},{"name":"pages","children":[{"name":"ai-insights","children":[{"name":"ai-insights.html","path":"bin/customer/pages/ai-insights/ai-insights.html","ext":".html","total_count":15,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#ai-savings","total_count":1,"children":[]},{"name":"#ai-savings-desc","total_count":1,"children":[]},{"name":"#ai-eco","total_count":1,"children":[]},{"name":"#ai-eco-desc","total_count":1,"children":[]},{"name":"#ai-distance","total_count":1,"children":[]},{"name":"#ai-distance-desc","total_count":1,"children":[]},{"name":"#ai-rating","total_count":1,"children":[]},{"name":"#ai-rating-desc","total_count":1,"children":[]},{"name":"#reco-list-container","total_count":1,"children":[]},{"name":"#trip-list-container","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}],"total_count":15},{"name":"car-access","children":[{"name":"car-access.html","path":"bin/customer/pages/car-access/car-access.html","ext":".html","total_count":10,"children":[{"name":"#customer-sidebar-placeholder","total_count":1,"children":[]},{"name":"#mobile-menu-placeholder","total_count":1,"children":[]},{"name":"#customer-main","total_count":1,"children":[]},{"name":"#ca-hero-media","total_count":1,"children":[]},{"name":"#ca-hero-state-pill","total_count":1,"children":[]},{"name":"#ca-lock-state","total_count":1,"children":[]},{"name":"#ca-key-code","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#car-access-toast","total_count":1,"children":[]}]}],"total_count":10}],"total_count":25}],"total_count":34}],"total_count":154},{"name":"index.html","path":"index.html","ext":".html","total_count":11,"children":[{"name":"#promo-banner-strip","total_count":1,"children":[]},{"name":"#navbar-placeholder","total_count":1,"children":[]},{"name":"#guest-spotlight-dots","total_count":1,"children":[]},{"name":"#cars","total_count":1,"children":[]},{"name":"#cars-grid","total_count":1,"children":[]},{"name":"#melaka","total_count":1,"children":[]},{"name":"#how","total_count":1,"children":[]},{"name":"#guest-book-modal","total_count":1,"children":[]},{"name":"#guest-modal-car","total_count":1,"children":[]},{"name":"#chatbot-placeholder","total_count":1,"children":[]},{"name":"#footer-placeholder","total_count":1,"children":[]}]}]};
+
+    // Color Theme per Module
+        const moduleColors = {
+      "Root": { fill: "#6366f1", stroke: "#818cf8", glow: "rgba(99, 102, 241, 0.4)" },
+      "admin": { fill: "#0284c7", stroke: "#38bdf8", glow: "rgba(56, 189, 248, 0.4)" },
+      "customer": { fill: "#059669", stroke: "#34d399", glow: "rgba(52, 211, 153, 0.4)" },
+      "account": { fill: "#db2777", stroke: "#f472b6", glow: "rgba(244, 114, 182, 0.4)" },
+      "shared": { fill: "#7c3aed", stroke: "#a855f7", glow: "rgba(168, 85, 247, 0.4)" },
+      "guest": { fill: "#d97706", stroke: "#fbbf24", glow: "rgba(251, 191, 36, 0.4)" },
+      "supabase": { fill: "#0d9488", stroke: "#2dd4bf", glow: "rgba(45, 212, 191, 0.4)" },
+      "docs": { fill: "#4f46e5", stroke: "#818cf8", glow: "rgba(129, 140, 248, 0.4)" },
+      "bin": { fill: "#475569", stroke: "#94a3b8", glow: "rgba(148, 163, 184, 0.3)" },
+      "default": { fill: "#334155", stroke: "#64748b", glow: "rgba(100, 116, 139, 0.3)" }
+    };
+
+    function transformTreeData(jsonData) {
+      function process(node, parentModule) {
+        let currentModule = parentModule;
+        if (parentModule === "Root" && node.name !== "/") {
+          currentModule = node.name.replace('.html', '').replace('.css', '');
+        }
+
+        const isFunc = node.name.includes("()") || (node.name.startsWith(".") && !node.name.endsWith(".js") && !node.name.endsWith(".css"));
+        const isFile = node.name.endsWith(".js") || node.name.endsWith(".ts") || node.name.endsWith(".html") || node.name.endsWith(".css") || node.name.endsWith(".json");
+        const isHtml = node.name.endsWith(".html") || node.name.startsWith("#");
+        const isCss = node.name.endsWith(".css") || (node.name.startsWith(".") && !node.name.endsWith(".js"));
+
+        const newNode = {
+          name: node.name,
+          total_count: node.total_count || (node.children ? node.children.length : 1),
+          module: currentModule,
+          isFunc: isFunc,
+          isFile: isFile,
+          isHtml: isHtml,
+          isCss: isCss
+        };
+
+        if (node.children && node.children.length > 0) {
+          newNode.children = node.children.map(c => process(c, currentModule));
+        }
+        return newNode;
+      }
+      return process(jsonData, "Root");
+    }
+
+    const treeData = transformTreeData(initialJsonData);
+
+    // Setup SVG & D3 Tree
+    const svg = d3.select("#tree-svg");
+    const container = document.getElementById("tree-container");
+    let width = container.clientWidth;
+    let height = container.clientHeight;
+
+    const g = svg.append("g").attr("class", "main-group");
+    const gLinks = g.append("g").attr("class", "links-layer");
+    const gNodes = g.append("g").attr("class", "nodes-layer");
+
+    // D3 Zoom Setup (Do not interfere with node clicks)
+    const zoom = d3.zoom()
+      .scaleExtent([0.1, 4])
+      .filter(event => {
+        // Drag only on canvas/background, not when clicking on nodes or buttons
+        return !event.target.closest('.node') && !event.button;
+      })
+      .on("zoom", (event) => {
+        g.attr("transform", event.transform);
+      });
+
+    svg.call(zoom).on("dblclick.zoom", null);
+
+    const treemap = d3.tree().nodeSize([36, 320]);
+    let root = d3.hierarchy(treeData, d => d.children);
+    root.x0 = height / 2;
+    root.y0 = 80;
+
+    // Initialize all descendant coordinates to avoid undefined/NaN in transitions
+    root.descendants().forEach(d => {
+      d.x0 = root.x0;
+      d.y0 = root.y0;
+    });
+
+    let nodeCounter = 0;
+    let selectedNode = null;
+
+    // Initially collapse depth > 1 for clean viewing
+    if (root.children) {
+      root.children.forEach(collapseLevel);
+    }
+
+    function collapseLevel(d) {
+      if (d.children) {
+        d._children = d.children;
+        d._children.forEach(collapseLevel);
+        d.children = null;
+      }
+    }
+
+    function expandBranch(d) {
+      if (d._children) {
+        d.children = d._children;
+        d._children = null;
+      }
+      if (d.children) {
+        d.children.forEach(expandBranch);
+      }
+    }
+
+    function expandToDepth(maxDepth) {
+      function traverse(d) {
+        if (d.depth < maxDepth) {
+          if (d._children) {
+            d.children = d._children;
+            d._children = null;
+          }
+          if (d.children) {
+            d.children.forEach(traverse);
+          }
+        } else {
+          collapseLevel(d);
+        }
+      }
+      traverse(root);
+      updateTree(root);
+    }
+
+    updateTree(root);
+    fitView();
+
+    function updateTree(source) {
+      const treeLayout = treemap(root);
+      const nodes = treeLayout.descendants();
+      const links = treeLayout.descendants().slice(1);
+
+      const sourceX = source.x0 !== undefined ? source.x0 : (source.x !== undefined ? source.x : root.x0);
+      const sourceY = source.y0 !== undefined ? source.y0 : (source.y !== undefined ? source.y : root.y0);
+
+      // Depth coordinates
+      nodes.forEach(d => {
+        d.y = d.depth * 280 + 80;
+      });
+
+      // Nodes
+      const node = gNodes.selectAll('g.node')
+        .data(nodes, d => d.id || (d.id = ++nodeCounter));
+
+      const nodeEnter = node.enter().append('g')
+        .attr('class', d => `node ${d.children || d._children ? 'node-branch' : 'node-leaf'}`)
+        .attr('transform', d => `translate(${sourceY},${sourceX})`)
+        .style('cursor', 'pointer')
+        .on('click', (event, d) => {
+          if (event) {
+            event.stopPropagation();
+          }
+          if (d.children) {
+            d._children = d.children;
+            d.children = null;
+          } else if (d._children) {
+            d.children = d._children;
+            d._children = null;
+          }
+          openDrawer(d);
+          updateTree(d);
+        });
+
+      // Hit area for easy clicking
+      nodeEnter.append('rect')
+        .attr('x', d => d.children || d._children ? -220 : -16)
+        .attr('y', -16)
+        .attr('width', 240)
+        .attr('height', 32)
+        .attr('fill', 'transparent');
+
+      nodeEnter.append('circle')
+        .attr('r', 1e-6)
+        .attr('fill', d => getNodeColor(d).fill)
+        .attr('stroke', d => getNodeColor(d).stroke);
+
+      nodeEnter.append('text')
+        .attr('dy', '.35em')
+        .attr('x', d => d.children || d._children ? -16 : 16)
+        .attr('text-anchor', d => d.children || d._children ? 'end' : 'start')
+        .text(d => {
+          let name = d.data.name;
+          if (d._children && d._children.length > 0) {
+            return `${name} [${d._children.length}]`;
+          }
+          return name;
+        })
+        .style('fill-opacity', 1e-6);
+
+      // Transitions
+      const nodeUpdate = nodeEnter.merge(node);
+      const duration = 300;
+
+      nodeUpdate.transition().duration(duration)
+        .attr('transform', d => `translate(${d.y},${d.x})`);
+
+      nodeUpdate.select('circle')
+        .attr('r', d => d._children ? 9 : (d.data.isFunc ? 5.5 : 8))
+        .attr('fill', d => d._children ? getNodeColor(d).stroke : (d.children ? 'none' : getNodeColor(d).fill))
+        .attr('stroke', d => getNodeColor(d).stroke)
+        .attr('stroke-width', d => d._children ? 3 : 2)
+        .style('filter', d => d._children ? `drop-shadow(0 0 10px ${getNodeColor(d).stroke})` : 'none');
+
+      nodeUpdate.select('text')
+        .text(d => {
+          let name = d.data.name;
+          if (d._children && d._children.length > 0) {
+            return `${name} [${d._children.length}]`;
+          }
+          return name;
+        })
+        .style('fill-opacity', 1);
+
+      const nodeExit = node.exit().transition().duration(duration)
+        .attr('transform', d => `translate(${sourceY},${sourceX})`)
+        .remove();
+
+      nodeExit.select('circle').attr('r', 1e-6);
+      nodeExit.select('text').style('fill-opacity', 1e-6);
+
+      // Links
+      const link = gLinks.selectAll('path.link')
+        .data(links, d => d.id);
+
+      const linkEnter = link.enter().insert('path', 'g')
+        .attr('class', 'link')
+        .attr('stroke', d => getNodeColor(d).stroke)
+        .attr('d', d => {
+          const o = { x: sourceX, y: sourceY };
+          return diagonal(o, o);
+        });
+
+      linkEnter.merge(link).transition().duration(duration)
+        .attr('stroke', d => getNodeColor(d).stroke)
+        .attr('d', d => diagonal(d, d.parent));
+
+      link.exit().transition().duration(duration)
+        .attr('d', d => {
+          const o = { x: sourceX, y: sourceY };
+          return diagonal(o, o);
+        })
+        .remove();
+
+      nodes.forEach(d => {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+    }
+
+    function diagonal(s, d) {
+      return `M ${s.y} ${s.x}
+              C ${(s.y + d.y) / 2} ${s.x},
+                ${(s.y + d.y) / 2} ${d.x},
+                ${d.y} ${d.x}`;
+    }
+
+        function getNodeColor(d) {
+      if (d.data.isHtml && d.data.isFile) {
+        return { fill: "#ea580c", stroke: "#fb923c", glow: "rgba(251, 146, 60, 0.4)" };
+      }
+      if (d.data.isCss && d.data.isFile) {
+        return { fill: "#0891b2", stroke: "#22d3ee", glow: "rgba(34, 211, 238, 0.4)" };
+      }
+      if (d.data.name.startsWith("#")) {
+        return { fill: "#059669", stroke: "#34d399", glow: "rgba(52, 211, 153, 0.3)" };
+      }
+      if (d.data.name.startsWith(".") && !d.data.name.endsWith(".js")) {
+        return { fill: "#db2777", stroke: "#f472b6", glow: "rgba(244, 114, 182, 0.3)" };
+      }
+      const mod = d.data.module || "default";
+      return moduleColors[mod] || moduleColors.default;
+    }
+
+    // Interactive Toolbar Actions
+    function expandAllTree() {
+      expandBranch(root);
+      updateTree(root);
+      // Preserves current view position - does NOT force reset
+    }
+
+    function collapseAllTree() {
+      if (root.children) {
+        root.children.forEach(collapseLevel);
+      }
+      updateTree(root);
+      // Preserves current view position - does NOT force reset
+    }
+
+    function resetTreeView() {
+      if (root.children) {
+        root.children.forEach(collapseLevel);
+      }
+      updateTree(root);
+      fitView();
+      closeDrawer();
+    }
+
+    function fitView() {
+      const nodes = root.descendants();
+      if (!nodes || nodes.length === 0) return;
+
+      const minX = d3.min(nodes, d => d.y);
+      const maxX = d3.max(nodes, d => d.y);
+      const minY = d3.min(nodes, d => d.x);
+      const maxY = d3.max(nodes, d => d.x);
+
+      const width = Math.max(100, maxX - minX + 280);
+      const height = Math.max(100, maxY - minY + 60);
+
+      const fullWidth = container.clientWidth || window.innerWidth;
+      const fullHeight = container.clientHeight || window.innerHeight;
+
+      const scale = Math.min(1.0, Math.max(0.35, 0.85 * Math.min((fullWidth - 240) / width, (fullHeight - 100) / height)));
+      const translateX = Math.max(80, 80 - scale * minX);
+      const translateY = fullHeight / 2 - scale * ((minY + maxY) / 2);
+
+      svg.transition().duration(500).call(
+        zoom.transform,
+        d3.zoomIdentity.translate(translateX, translateY).scale(scale)
+      );
+    }
+
+    function zoomIn() {
+      svg.transition().duration(250).call(zoom.scaleBy, 1.3);
+    }
+
+    function zoomOut() {
+      svg.transition().duration(250).call(zoom.scaleBy, 0.7);
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Filter by Module Chip
+    function filterByModule(modName) {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      if (modName === 'All') {
+        resetTreeView();
+        return;
+      }
+
+      collapseAllTree();
+      if (root.children) {
+        root.children.forEach(c => {
+          if (c.data.name.toLowerCase() === modName.toLowerCase()) {
+            expandBranch(c);
+          }
+        });
+      }
+      updateTree(root);
+    }
+
+    // Live Search Feature
+    function handleSearch(query) {
+      const q = query.trim().toLowerCase();
+      d3.selectAll('.node').classed('search-hit', false);
+      d3.selectAll('.link').classed('highlighted', false);
+
+      if (!q) return;
+
+      let matchNode = null;
+      root.descendants().forEach(d => {
+        if (d.data.name.toLowerCase().includes(q)) {
+          // Expand path to root
+          let curr = d;
+          while (curr.parent) {
+            if (curr.parent._children) {
+              curr.parent.children = curr.parent._children;
+              curr.parent._children = null;
+            }
+            curr = curr.parent;
+          }
+          if (!matchNode) matchNode = d;
+        }
+      });
+
+      updateTree(root);
+
+      setTimeout(() => {
+        d3.selectAll('.node').filter(d => d.data.name.toLowerCase().includes(q))
+          .classed('search-hit', true);
+
+        if (matchNode) {
+          openDrawer(matchNode);
+          svg.transition().duration(500).call(
+            zoom.transform,
+            d3.zoomIdentity.translate(width / 2 - matchNode.y, height / 2 - matchNode.x).scale(1.1)
+          );
+        }
+      }, 250);
+    }
+
+    // Drawer Inspector
+    function openDrawer(d) {
+      selectedNode = d;
+      const drawer = document.getElementById("inspectorDrawer");
+      document.getElementById("drawerNodeName").innerText = d.data.name;
+      document.getElementById("drawerModule").innerText = d.data.module || "Root";
+      
+            let type = "Directory / Folder";
+      if (d.data.isHtml && d.data.isFile) type = "HTML Page / View";
+      else if (d.data.isCss && d.data.isFile) type = "CSS Stylesheet";
+      else if (d.data.isFile) type = "JavaScript File";
+      else if (d.data.name.startsWith("#")) type = "HTML Section (#id)";
+      else if (d.data.name.startsWith(".")) type = "CSS Selector (.class)";
+      else if (d.data.isFunc) type = "Function / Method";
+      document.getElementById("drawerBadge").innerText = type;
+
+      const children = d.children || d._children || [];
+      document.getElementById("drawerCount").innerText = children.length;
+
+      const list = document.getElementById("drawerChildren");
+      list.innerHTML = "";
+      if (children.length === 0) {
+        list.innerHTML = `<div style="color:var(--text-muted);font-size:0.8rem">No deeper child symbols</div>`;
+      } else {
+        children.slice(0, 30).forEach(c => {
+          const div = document.createElement("div");
+          div.className = "child-item";
+          div.innerHTML = `<span>${c.data.name}</span><span style="color:var(--text-muted)">${c.data.isFunc ? 'fn' : 'sub'}</span>`;
+          list.appendChild(div);
+        });
+        if (children.length > 30) {
+          const more = document.createElement("div");
+          more.style.cssText = "color:var(--accent-cyan);font-size:0.75rem;padding:4px;text-align:center";
+          more.innerText = `+ ${children.length - 30} more symbols...`;
+          list.appendChild(more);
+        }
+      }
+
+      drawer.classList.add("open");
+    }
+
+    function closeDrawer() {
+      document.getElementById("inspectorDrawer").classList.remove("open");
+    }
+
+    function centerOnSelectedNode() {
+      if (!selectedNode) return;
+      const fullWidth = container.clientWidth || window.innerWidth;
+      const fullHeight = container.clientHeight || window.innerHeight;
+      const scale = 1.05;
+      const translateX = (fullWidth - 360) / 2 - scale * selectedNode.y;
+      const translateY = fullHeight / 2 - scale * selectedNode.x;
+
+      svg.transition().duration(500).call(
+        zoom.transform,
+        d3.zoomIdentity.translate(translateX, translateY).scale(scale)
+      );
+    }
+
+    // Double-click background to Recenter
+    svg.on("dblclick", (event) => {
+      if (!event.target.closest('.node') && !event.target.closest('.btn') && !event.target.closest('.zoom-hud')) {
+        fitView();
+      }
+    });
+
+    // Keyboard Shortcuts (R / Space / C to Recenter, Esc to Close Drawer)
+    window.addEventListener("keydown", (e) => {
+      const activeEl = document.activeElement;
+      if (activeEl && activeEl.tagName === "INPUT") return;
+
+      if (e.key === "r" || e.key === "R" || e.key === "c" || e.key === "C" || e.code === "Space") {
+        if (e.code === "Space") e.preventDefault();
+        fitView();
+      } else if (e.key === "Escape") {
+        closeDrawer();
+      } else if (e.key === "+" || e.key === "=") {
+        zoomIn();
+      } else if (e.key === "-" || e.key === "_") {
+        zoomOut();
+      }
+    });
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        width = container.clientWidth;
+        height = container.clientHeight;
+      }, 200);
+    });
+  </script>
+</body>
+</html>
