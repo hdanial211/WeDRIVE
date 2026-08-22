@@ -214,7 +214,11 @@
   function syncFilterChips() {
     document.querySelectorAll('.filter-chip').forEach(function (button) {
       var target = (button.getAttribute('onclick') || '').match(/filterCars\('([^']+)'/);
-      button.classList.toggle('active', !!target && target[1] === currentFilter);
+      if (!target) return;
+      var chipType = target[1];
+      var isActive = (chipType.toLowerCase() === currentFilter.toLowerCase()) ||
+                     (currentFilter === 'economy' && chipType === 'hatchback');
+      button.classList.toggle('active', isActive);
     });
 
     var typeSelect = document.getElementById('search-car-type');
@@ -227,7 +231,21 @@
     var list = allCars.slice();
 
     if (currentFilter !== 'all') {
-      list = list.filter(function (car) { return car.type === currentFilter; });
+      if (currentFilter === 'luxury') {
+        list = list.filter(function (car) {
+          var t = (car.type || '').toLowerCase();
+          return t === 'mpv' || t === 'coupe' || t === 'luxury' || t === 'truck';
+        });
+      } else if (currentFilter === 'economy' || currentFilter === 'hatchback') {
+        list = list.filter(function (car) {
+          var t = (car.type || '').toLowerCase();
+          return t === 'hatchback' || t === 'economy';
+        });
+      } else {
+        list = list.filter(function (car) {
+          return (car.type || '').toLowerCase() === currentFilter.toLowerCase();
+        });
+      }
     }
 
     if (availableOnly) {
@@ -746,11 +764,26 @@
         buildSpotlightCars();
         renderSpotlight(0, false);
         startSpotlightCarousel();
+
+        // Auto-handle type filter parameter from URL
+        var params = new URLSearchParams(window.location.search);
+        var typeParam = params.get('type');
+        if (typeParam) {
+          currentFilter = typeParam;
+          syncFilterChips();
+        }
+
         applyFilters(false);
         updateActiveBookingSection();
 
+        if (typeParam) {
+          setTimeout(function() {
+            var el = document.getElementById('cars');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        }
+
         // Auto-trigger booking popup if "book" parameter is in the URL
-        var params = new URLSearchParams(window.location.search);
         var bookId = params.get('book');
         if (bookId) {
           setTimeout(function() {

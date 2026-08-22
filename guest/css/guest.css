@@ -221,15 +221,20 @@ body {
 }
 .card-btn.primary:hover { box-shadow: 0 6px 20px rgba(37,99,235,.3); }
 
-.ai-price-section { max-width: 800px; margin: 0 auto; padding: 0 32px 60px; }
+.ai-price-section { 
+  max-width: 860px; 
+  margin: 48px auto 0; 
+  padding: 0 32px 70px; 
+}
 .ai-insight-banner {
   background: rgba(37,99,235,.04); border: 1px solid rgba(37,99,235,.12);
-  border-radius: 14px; padding: 24px;
-  display: flex; gap: 16px; align-items: flex-start;
+  border-radius: 16px; padding: 28px;
+  display: flex; gap: 18px; align-items: flex-start;
+  box-shadow: 0 4px 20px rgba(0,0,0,.03);
 }
-.ai-insight-banner > .material-icons-round { font-size: 28px; color: var(--primary, #2563eb); flex-shrink: 0; }
-.ai-insight-banner h3 { font-size: 15px; font-weight: 700; color: var(--text-primary, #1e293b); margin-bottom: 4px; }
-.ai-insight-banner p { font-size: 13px; color: var(--text-muted, #64748b); line-height: 1.6; }
+.ai-insight-banner > .material-icons-round { font-size: 30px; color: var(--primary, #2563eb); flex-shrink: 0; margin-top: 2px; }
+.ai-insight-banner h3 { font-size: 16px; font-weight: 700; color: var(--text-primary, #1e293b); margin-bottom: 6px; }
+.ai-insight-banner p { font-size: 13.5px; color: var(--text-muted, #64748b); line-height: 1.6; }
 
 /* ── 404 PAGE ─────────────────────────────────────────────── */
 .error-wrapper {
