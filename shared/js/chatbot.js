@@ -420,7 +420,15 @@ window.triggerChatBook = function(carId) {
   } else {
     var parts = window.location.pathname.split('/').filter(Boolean);
     var base = parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
-    window.location.href = base + 'customer/pages/dashboard/customer.html?book=' + carId;
+    var sessionRaw = localStorage.getItem('wedrive_session');
+    var session = null;
+    try { session = sessionRaw ? JSON.parse(sessionRaw) : null; } catch(e) {}
+
+    if (session && session.id && session.role === 'customer') {
+      window.location.href = base + 'customer/pages/dashboard/customer.html?book=' + carId;
+    } else {
+      window.location.href = base + 'account/pages/login/login.html';
+    }
   }
 };
 

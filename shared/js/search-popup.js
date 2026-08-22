@@ -206,14 +206,22 @@
 
     spResults.innerHTML = html;
 
-    /* Click → go to car details */
+    /* Click → go to car details if logged in customer, or index.html#cars if guest */
     spResults.querySelectorAll('.sp-item').forEach(function (el) {
       el.addEventListener('click', function () {
         var id = el.getAttribute('data-car-id');
         closePopup();
         /* Resolve the correct path from any page depth */
         var base = basePath();
-        window.location.href = base + 'customer/pages/car-details/car-details.html?id=' + encodeURIComponent(id);
+        var sessionRaw = localStorage.getItem('wedrive_session');
+        var session = null;
+        try { session = sessionRaw ? JSON.parse(sessionRaw) : null; } catch(e) {}
+
+        if (session && session.id && session.role === 'customer') {
+          window.location.href = base + 'customer/pages/car-details/car-details.html?id=' + encodeURIComponent(id);
+        } else {
+          window.location.href = base + 'index.html#cars';
+        }
       });
     });
   }

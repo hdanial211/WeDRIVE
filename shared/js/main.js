@@ -37,6 +37,43 @@
  */
 
 /* =====================================================
+   SECTION 0: UNIVERSAL GUEST & AUTH ROUTE GUARD
+   Guarantees that unauthenticated guests NEVER access
+   protected customer or admin pages, regardless of navigation loop.
+   ===================================================== */
+(function () {
+  'use strict';
+
+  var path = window.location.pathname;
+  var isCustomerPage = path.indexOf('/customer/pages/') !== -1;
+  var isAdminPage = path.indexOf('/admin/pages/') !== -1;
+
+  if (isCustomerPage || isAdminPage) {
+    var sessionRaw = localStorage.getItem('wedrive_session');
+    var session = null;
+    try { session = sessionRaw ? JSON.parse(sessionRaw) : null; } catch(e) {}
+
+    var parts = path.split('/').filter(Boolean);
+    var base = parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+    var loginUrl = base + 'account/pages/login/login.html';
+
+    // 1. Not logged in at all -> immediately kick to login
+    if (!session || (!session.id && !session.email)) {
+      console.warn('[WeDRIVE Security] Guest access blocked on protected route:', path);
+      window.location.replace(loginUrl);
+      return;
+    }
+
+    // 2. Customer attempting to access Admin page -> kick to login
+    if (isAdminPage && session.role !== 'admin') {
+      console.warn('[WeDRIVE Security] Customer role blocked on admin route:', path);
+      window.location.replace(loginUrl);
+      return;
+    }
+  }
+})();
+
+/* =====================================================
    SECTION 1: THEME TOGGLE
    ===================================================== */
 
@@ -945,7 +982,13 @@
     var isPricing = path.indexOf('pricing.html') !== -1;
     var isMelaka = path.indexOf('explore-melaka.html') !== -1;
     var isAuth = path.indexOf('/account/') !== -1;
-    var isCustomer = path.indexOf('/customer/') !== -1;
+
+    var sessionRaw = localStorage.getItem('wedrive_session');
+    var session = null;
+    try { session = sessionRaw ? JSON.parse(sessionRaw) : null; } catch(e) {}
+    var isLoggedIn = !!(session && session.id);
+    var isCustomer = isLoggedIn && session.role === 'customer';
+    var isAdmin = isLoggedIn && session.role === 'admin';
 
     var base = resolveBase();
 
@@ -953,7 +996,9 @@
     var carsUrl = base + 'index.html#cars';
     var pricingUrl = base + 'guest/pages/pricing/pricing.html';
     var melakaUrl = base + 'guest/pages/explore-melaka/explore-melaka.html';
-    var accountUrl = isCustomer ? (base + 'customer/pages/dashboard/customer.html') : (base + 'account/pages/login/login.html');
+    var accountUrl = isCustomer 
+      ? (base + 'customer/pages/dashboard/customer.html') 
+      : (isAdmin ? (base + 'admin/pages/dashboard/admin.html') : (base + 'account/pages/login/login.html'));
 
     var dock = document.createElement('nav');
     dock.id = 'apple-bottom-dock';
@@ -973,7 +1018,7 @@
       '<a href="' + melakaUrl + '" class="dock-item ' + (isMelaka ? 'active' : '') + '" title="Explore Melaka" aria-label="Explore Melaka">',
       '  <span class="material-icons-round">explore</span>',
       '</a>',
-      '<a href="' + accountUrl + '" class="dock-item ' + (isAuth || isCustomer ? 'active' : '') + '" title="Account" aria-label="Account">',
+      '<a href="' + accountUrl + '" class="dock-item ' + (isAuth || (isLoggedIn && path.indexOf('/customer/') !== -1) ? 'active' : '') + '" title="Account" aria-label="Account">',
       '  <span class="material-icons-round">person</span>',
       '</a>'
     ].join('');
