@@ -884,3 +884,107 @@
     syncCompanyDetails();
   }
 })();
+
+/* =====================================================
+   SECTION 9: APPLE DYNAMIC SCROLL NAVBAR & MOBILE FLOATING DOCK
+   ===================================================== */
+(function () {
+  'use strict';
+
+  var lastScrollY = window.scrollY || 0;
+  var ticking = false;
+
+  function onScroll() {
+    var scrollY = window.scrollY || 0;
+    var delta = scrollY - lastScrollY;
+
+    // Desktop Top Navbar Compact Shrink
+    var navbar = document.querySelector('.navbar, #wedrive-navbar');
+    if (navbar) {
+      if (scrollY > 30) {
+        navbar.classList.add('navbar-compact');
+      } else {
+        navbar.classList.remove('navbar-compact');
+      }
+    }
+
+    // Mobile Bottom Floating Dock Condense (Instagram / Apple Feel)
+    var dock = document.getElementById('apple-bottom-dock');
+    if (dock) {
+      if (scrollY > 60 && delta > 3) {
+        dock.classList.add('dock-condensed');
+      } else if (delta < -3 || scrollY <= 40) {
+        dock.classList.remove('dock-condensed');
+      }
+    }
+
+    lastScrollY = scrollY;
+    ticking = false;
+  }
+
+  function handleScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  function resolveBase() {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
+    return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+  }
+
+  function initAppleDock() {
+    if (document.getElementById('apple-bottom-dock')) return;
+
+    var path = window.location.pathname;
+    var isHome = path.endsWith('index.html') || path === '/' || path.endsWith('/AI%20CAR%20RENTAL%20SYSTEM/') || path.endsWith('/AI CAR RENTAL SYSTEM/');
+    var isPricing = path.indexOf('pricing.html') !== -1;
+    var isMelaka = path.indexOf('explore-melaka.html') !== -1;
+    var isAuth = path.indexOf('/account/') !== -1;
+    var isCustomer = path.indexOf('/customer/') !== -1;
+
+    var base = resolveBase();
+
+    var homeUrl = base + 'index.html';
+    var carsUrl = base + 'index.html#cars';
+    var pricingUrl = base + 'guest/pages/pricing/pricing.html';
+    var melakaUrl = base + 'guest/pages/explore-melaka/explore-melaka.html';
+    var accountUrl = isCustomer ? (base + 'customer/pages/dashboard/customer.html') : (base + 'account/pages/login/login.html');
+
+    var dock = document.createElement('nav');
+    dock.id = 'apple-bottom-dock';
+    dock.className = 'apple-bottom-dock';
+    dock.setAttribute('aria-label', 'Mobile Dock Navigation');
+
+    dock.innerHTML = [
+      '<a href="' + homeUrl + '" class="dock-item ' + (isHome && !window.location.hash.includes('cars') ? 'active' : '') + '" title="Home" aria-label="Home">',
+      '  <span class="material-icons-round">home</span>',
+      '</a>',
+      '<a href="' + carsUrl + '" class="dock-item ' + (window.location.hash.includes('cars') ? 'active' : '') + '" title="Cars" aria-label="Cars">',
+      '  <span class="material-icons-round">directions_car</span>',
+      '</a>',
+      '<a href="' + pricingUrl + '" class="dock-item ' + (isPricing ? 'active' : '') + '" title="Pricing" aria-label="Pricing">',
+      '  <span class="material-icons-round">payments</span>',
+      '</a>',
+      '<a href="' + melakaUrl + '" class="dock-item ' + (isMelaka ? 'active' : '') + '" title="Explore Melaka" aria-label="Explore Melaka">',
+      '  <span class="material-icons-round">explore</span>',
+      '</a>',
+      '<a href="' + accountUrl + '" class="dock-item ' + (isAuth || isCustomer ? 'active' : '') + '" title="Account" aria-label="Account">',
+      '  <span class="material-icons-round">person</span>',
+      '</a>'
+    ].join('');
+
+    document.body.appendChild(dock);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAppleDock);
+  } else {
+    initAppleDock();
+  }
+})();
+
