@@ -1,27 +1,38 @@
 /* =============================================
-   WeDRIVE - Theme-Aware Overrides
-   Applied on top of module CSS to make all
-   components respond to theme variables
+   WeDRIVE - Unified Apple Design System Overrides
+   Applied globally across all pages to enforce
+   Apple Design Language & theme variables
    ============================================= */
 
-/* Base layer — background & text */
+@import url('./apple-design-system.css');
+
+/* Base layer — Apple San Francisco Typography & Smooth Canvas */
 body {
   margin: 0 !important;
   padding: 0 !important;
+  font-family: var(--apple-font, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif) !important;
   background: var(--bg-body) !important;
   color: var(--text-primary) !important;
-  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* NAVBAR / TOPBAR */
+/* NAVBAR / TOPBAR (Apple Frosted Glass) */
 .navbar, .topbar {
   background: var(--navbar-bg, var(--topbar-bg)) !important;
-  border-bottom-color: var(--border-color) !important;
-  transition: background 0.3s ease;
+  border-bottom: 1px solid var(--border-color) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(20px) !important;
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.topbar h1 { color: var(--text-primary) !important; }
+.topbar h1 { color: var(--text-primary) !important; font-family: var(--apple-font) !important; }
 .topbar p { color: var(--text-muted) !important; }
-.nav-link { color: var(--text-secondary) !important; }
+.nav-link { 
+  color: var(--text-secondary) !important; 
+  border-radius: var(--apple-radius-sm, 10px) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 .nav-link:hover { background: var(--bg-surface-2) !important; color: var(--text-primary) !important; }
 .nav-link.active { color: var(--primary) !important; background: var(--primary-light) !important; }
 .brand-text .drive { color: #ffffff !important; }
@@ -30,39 +41,67 @@ body:not(.night-mode) .topbar .brand-text .drive {
   color: var(--text-primary) !important;
 }
 
-/* SIDEBAR */
-.sidebar { background: var(--sidebar-bg) !important; transition: background 0.3s ease; }
-.nav-item { color: var(--sidebar-text) !important; }
+/* SIDEBAR (Apple Dark Glassmorphism) */
+.sidebar { 
+  background: var(--sidebar-bg) !important; 
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+.nav-item { 
+  color: var(--sidebar-text) !important; 
+  border-radius: var(--apple-radius-sm, 10px) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
 .nav-item:hover { color: var(--sidebar-text-active) !important; background: var(--sidebar-hover) !important; }
 .nav-item.active { color: var(--sidebar-text-active) !important; }
 .user-info .name { color: var(--sidebar-text-active) !important; }
 .user-info .role { color: var(--sidebar-text) !important; }
 .nav-section { color: var(--sidebar-text) !important; }
 
-/* BUTTONS */
+/* BUTTONS (Apple Tactile Standard) */
 .btn-icon {
   background: var(--bg-surface) !important;
   border-color: var(--border-color) !important;
+  border-radius: var(--apple-radius-sm, 10px) !important;
+  min-height: 40px !important;
+  min-width: 40px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-.btn-icon:hover { background: var(--bg-surface-2) !important; }
+.btn-icon:hover { background: var(--bg-surface-2) !important; transform: scale(1.05) !important; }
+.btn-icon:active { transform: scale(0.95) !important; }
 .btn-icon .material-icons-round { color: var(--text-secondary) !important; }
 .btn-outline, .btn-back {
   background: var(--bg-surface) !important;
   border-color: var(--border-color) !important;
   color: var(--text-primary) !important;
+  border-radius: var(--apple-radius-md, 14px) !important;
+  min-height: 44px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-.btn-outline:hover, .btn-back:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+.btn-outline:hover, .btn-back:hover { 
+  border-color: var(--primary) !important; 
+  color: var(--primary) !important; 
+  transform: translateY(-2px) !important;
+}
+.btn-outline:active, .btn-back:active { transform: scale(0.96) !important; }
 
-/* CARDS */
+/* CARDS (Apple Bento Squircle) */
 .card, .stat-card {
   background: var(--card-bg) !important;
-  box-shadow: var(--card-shadow) !important;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  border-radius: var(--apple-radius-xl, 24px) !important;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08)) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  backdrop-filter: blur(16px) !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
-.card:hover, .stat-card:hover { box-shadow: var(--card-shadow-hover) !important; }
-.card-header h3 { color: var(--text-primary) !important; }
+.card:hover, .stat-card:hover { 
+  transform: translateY(-5px) scale(1.01) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.14) !important; 
+}
+.card:active, .stat-card:active { transform: scale(0.985) !important; }
+.card-header h3 { color: var(--text-primary) !important; font-family: var(--apple-font) !important; }
 .stat-info .label { color: var(--text-muted) !important; }
-.stat-info .value { color: var(--text-primary) !important; }
+.stat-info .value { color: var(--text-primary) !important; font-family: var(--apple-font) !important; }
 
 /* TABLE */
 td { color: var(--text-primary) !important; border-top-color: var(--table-border) !important; }

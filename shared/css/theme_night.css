@@ -100,22 +100,22 @@
   --theme-btn-color: #e3e5e8;
   --theme-btn-border: #32373e;
 
-  /* ── TYPOGRAPHY SCALE (Stitch) ────────────── */
-  --font-h1: 700 32px/1.2 'Inter', sans-serif;
-  --font-h2: 600 24px/1.3 'Inter', sans-serif;
-  --font-h3: 600 18px/1.4 'Inter', sans-serif;
-  --font-body-lg: 400 16px/1.6 'Inter', sans-serif;
-  --font-body-md: 400 14px/1.5 'Inter', sans-serif;
-  --font-label-sm: 600 12px/1 'Inter', sans-serif;
-  --letter-h1: -0.02em;
-  --letter-h2: -0.01em;
-  --letter-label: 0.05em;
+  /* ── TYPOGRAPHY SCALE (Apple San Francisco) ────────────── */
+  --font-h1: 800 32px/1.15 var(--apple-font, -apple-system, "SF Pro Display", sans-serif);
+  --font-h2: 750 24px/1.25 var(--apple-font, -apple-system, "SF Pro Display", sans-serif);
+  --font-h3: 700 18px/1.35 var(--apple-font, -apple-system, "SF Pro Text", sans-serif);
+  --font-body-lg: 400 16px/1.6 var(--apple-font, -apple-system, "SF Pro Text", sans-serif);
+  --font-body-md: 400 14.5px/1.5 var(--apple-font, -apple-system, "SF Pro Text", sans-serif);
+  --font-label-sm: 650 12px/1 var(--apple-font, -apple-system, "SF Pro Text", sans-serif);
+  --letter-h1: -0.022em;
+  --letter-h2: -0.015em;
+  --letter-label: 0.06em;
 
-  /* ── BORDER RADIUS (Stitch) ──────────────── */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  /* ── BORDER RADIUS (Apple Squircle) ──────────────── */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 
   /* ── SPACING (Stitch) ────────────────────── */
