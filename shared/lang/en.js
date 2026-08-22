@@ -692,5 +692,7 @@ window.wedrive_lang_en = {
   "guest_btn_pricing": "From RM {rate}/day · Pricing Plans",
   "guest_banner_pricing": "Compare Daily & Weekly Rates · Save 15% on weekly rentals",
   "footer_pricing": "Pricing Plans",
-  "pricing_from_prefix": "From "
+  "pricing_from_prefix": "From ",
+  "pricing_starts_from": "Starts from",
+  "pricing_save_label": "Save 15% (RM {amt})"
 };

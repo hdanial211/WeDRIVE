@@ -692,5 +692,7 @@
   "guest_btn_pricing": "Bermula dari RM {rate}/hari · Pakej Harga",
   "guest_banner_pricing": "Bandingkan Kadar Harian & Mingguan · Jimat 15% untuk sewaan mingguan",
   "footer_pricing": "Pakej & Kadar Harga",
-  "pricing_from_prefix": "Bermula dari "
+  "pricing_from_prefix": "Bermula dari ",
+  "pricing_starts_from": "Bermula dari",
+  "pricing_save_label": "Jimat 15% (RM {amt})"
 }

@@ -42,8 +42,10 @@
         <p data-key="pricing_econ_sub">Perfect for city drives</p>
       </div>
       <div class="card-price">
+        <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-econ-amt" data-daily="95" data-weekly="565">RM 95</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
+        <div class="card-savings-pill" id="price-econ-save" style="display:none;"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_econ_feat1">Perodua AXIA G / AXIA AV</span></li>
@@ -63,8 +65,10 @@
         <p data-key="pricing_sedan_sub">Comfort for families</p>
       </div>
       <div class="card-price">
+        <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-sedan-amt" data-daily="450" data-weekly="2678">RM 450</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
+        <div class="card-savings-pill" id="price-sedan-save" style="display:none;"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat1">BMW 320i M Sport</span></li>
@@ -84,8 +88,10 @@
         <p data-key="pricing_suv_sub">Space for adventures</p>
       </div>
       <div class="card-price">
+        <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-suv-amt" data-daily="320" data-weekly="1904">RM 320</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
+        <div class="card-savings-pill" id="price-suv-save" style="display:none;"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat1">Mercedes-Benz GLA250</span></li>
@@ -105,8 +111,10 @@
         <p data-key="pricing_lux_sub">Premium experience</p>
       </div>
       <div class="card-price">
+        <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-lux-amt" data-daily="380" data-weekly="2261">RM 380</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
+        <div class="card-savings-pill" id="price-lux-save" style="display:none;"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat1">Mercedes-Benz CLS350 / Toyota Alphard</span></li>
@@ -145,19 +153,44 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js"></script>
   <script>
+    function updatePricingPeriod(period) {
+      const isWeekly = period === 'weekly';
+      const isMs = (localStorage.getItem('wedrive-lang') === 'ms');
+
+      document.querySelectorAll('.amount').forEach(a => {
+        a.textContent = 'RM ' + (a.dataset[period] || '');
+      });
+
+      document.querySelectorAll('.period').forEach(s => {
+        s.textContent = isWeekly ? (isMs ? '/ minggu' : '/ week') : (isMs ? '/ hari' : '/ day');
+      });
+
+      const cards = ['econ', 'sedan', 'suv', 'lux'];
+      cards.forEach(k => {
+        const amtEl = document.getElementById('price-' + k + '-amt');
+        const saveEl = document.getElementById('price-' + k + '-save');
+        if (!amtEl || !saveEl) return;
+
+        if (isWeekly) {
+          const dailyRate = Number(amtEl.dataset.daily || 0);
+          const fullWeekly = dailyRate * 7;
+          const discountedWeekly = Number(amtEl.dataset.weekly || Math.round(fullWeekly * 0.85));
+          const exactSavings = fullWeekly - discountedWeekly; // Exact 15% discount amount!
+
+          saveEl.style.display = 'inline-flex';
+          saveEl.textContent = isMs ? `Jimat 15% (RM ${exactSavings})` : `Save 15% (RM ${exactSavings})`;
+        } else {
+          saveEl.style.display = 'none';
+        }
+      });
+    }
+
     // Toggle daily/weekly
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const p = btn.dataset.period;
-        document.querySelectorAll('.amount').forEach(a => {
-          a.textContent = 'RM ' + (a.dataset[p] || '');
-        });
-        document.querySelectorAll('.period').forEach(s => {
-          const isMs = (localStorage.getItem('wedrive-lang') === 'ms');
-          s.textContent = p === 'weekly' ? (isMs ? '/ minggu' : '/ week') : (isMs ? '/ hari' : '/ day');
-        });
+        updatePricingPeriod(btn.dataset.period);
       });
     });
 
@@ -183,18 +216,19 @@
         const updateCard = (id, dailyRate) => {
           const el = document.getElementById(id);
           if (!el) return;
-          const weeklyRate = Math.round(dailyRate * 7 * 0.85);
+          // Exact 15% discount formula: full rate * 0.85
+          const weeklyRate = Math.round((dailyRate * 7) * 0.85);
           el.dataset.daily = dailyRate;
           el.dataset.weekly = weeklyRate;
-
-          const isWeekly = document.querySelector('.toggle-btn.active')?.dataset.period === 'weekly';
-          el.textContent = 'RM ' + (isWeekly ? weeklyRate : dailyRate);
         };
 
         updateCard('price-econ-amt', econMin);
         updateCard('price-sedan-amt', sedanMin);
         updateCard('price-suv-amt', suvMin);
         updateCard('price-lux-amt', luxMin);
+
+        const activePeriod = document.querySelector('.toggle-btn.active')?.dataset.period || 'daily';
+        updatePricingPeriod(activePeriod);
       } catch (err) {
         console.error('Error calculating dynamic pricing:', err);
       }
@@ -205,6 +239,11 @@
     } else {
       loadDynamicPricing();
     }
+
+    document.addEventListener('wedrive:language-applied', () => {
+      const activePeriod = document.querySelector('.toggle-btn.active')?.dataset.period || 'daily';
+      updatePricingPeriod(activePeriod);
+    });
   </script>
 </body>
 
