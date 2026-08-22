@@ -3,3 +3,6 @@ __MACOSX/
 *.zip
 node_modules/
 bin/
+REPORT/REPORT FYP.docx
+REPORT/REPORT FYP.pdf
+
