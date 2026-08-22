@@ -4,23 +4,36 @@ Dokumen ini mengandungi semua maklumat akaun dan akses untuk sistem WeDRIVE.
 
 ---
 
-## ADMIN ACCOUNT
-
-| Email | Password | Role |
-|-------|----------|------|
-| admin@wedrive.my | admin123 | Admin |
+> [!IMPORTANT]
+> ### 🔒 MANDATORY TESTING CREDENTIALS (JANGAN UBAH MASA TESTING)
+> Semasa melakukan automated testing, browser subagent testing, atau manual testing:
+> 1. **ADMIN TESTING:** Gunakan `admin@wedrive.my` | Kata Laluan: `admin123`
+> 2. **CUSTOMER TESTING:** Gunakan `ahmad@wedrive.my` | Kata Laluan: `customer123`
+> 3. **PERATURAN PENGUJIAN:**
+>    - **JANGAN ubah email atau kata laluan** akaun-akaun ini.
+>    - **JANGAN daftar akaun baru (*sign up*)** melainkan diminta secara spesifik untuk mengelakkan data bertindan (*duplicate*).
+>    - Pada halaman login, hanya gunakan kredensial ini untuk sign in terus.
 
 ---
 
-## CUSTOMER ACCOUNTS
+## 1. ADMIN ACCOUNT
 
-| Nama | Email | Password | IC | Phone | Lesen |
-|------|-------|----------|----|-------|-------|
-| Ahmad Bin Ali | ahmad@wedrive.my | customer123 | 900101-14-5678 | 012-3456789 | DLR-1234567890 |
-| Siti Nurhaliza | siti@wedrive.my | customer123 | 920215-10-1234 | 013-9876543 | DLR-2345678901 |
-| Muhammad Faiz | faiz@wedrive.my | customer123 | 950830-06-7890 | 011-22334455 | DLR-3456789012 |
-| Nurul Aisyah | nurul@wedrive.my | customer123 | 980412-04-2345 | 014-5566778 | DLR-4567890123 |
-| Lee Wei Ming | weiming@wedrive.my | customer123 | 880625-08-4567 | 016-7788990 | DLR-5678901234 |
+| Email | Password | Role | Status |
+|-------|----------|------|--------|
+| `admin@wedrive.my` | `admin123` | Admin | Active (Default Admin Test Account) |
+
+---
+
+## 2. CUSTOMER ACCOUNTS (DEMO & TESTING)
+
+| Nama | Email | Password | IC | Phone | Lesen | Peranan |
+|------|-------|----------|----|-------|-------|---------|
+| **Ahmad Bin Ali** | `ahmad@wedrive.my` | `customer123` | 900101-14-5678 | 012-3456789 | DLR-1234567890 | **Primary Test Customer** |
+| Siti Nurhaliza | `siti@wedrive.my` | `customer123` | 920215-10-1234 | 013-9876543 | DLR-2345678901 | Demo Customer |
+| Muhammad Faiz | `faiz@wedrive.my` | `customer123` | 950830-06-7890 | 011-22334455 | DLR-3456789012 | Demo Customer |
+| Nurul Aisyah | `nurul@wedrive.my` | `customer123` | 980412-04-2345 | 014-5566778 | DLR-4567890123 | Demo Customer |
+| Lee Wei Ming | `weiming@wedrive.my` | `customer123` | 880625-08-4567 | 016-7788990 | DLR-5678901234 | Demo Customer |
+
 
 ---
 

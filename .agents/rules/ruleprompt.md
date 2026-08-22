@@ -166,3 +166,14 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium dan "padu", jadikan lam
   - Setiap kali membuka tab / sesi perbualan baharu, **JANGAN baca (*load/read*) setiap fail dan folder secara pukal / manual**.
   - **WAJIB gunakan MCP Graphify** (`query_graph`, `get_node`, `shortest_path`) atau periksa `graphify-out/graph.json` / `graphify-out/GRAPH_TREE.html` untuk mencari fail, fungsi, dan hubung kait kod secara terus.
   - Hanya baca fail spesifik yang perlu diubah atau dibaiki sahaja untuk meminimumkan penggunaan kuota dan token perbualan.
+
+## 16. Testing Protocol & Official Credentials (MANDATORY)
+
+- **Kredensial Pengujian Standard (Rujuk `docs/INFO`):**
+  - **Admin:** `admin@wedrive.my` | Kata Laluan: `admin123`
+  - **Customer:** `ahmad@wedrive.my` | Kata Laluan: `customer123`
+- **Peraturan Semasa Browser / Automated Testing:**
+  - **JANGAN ubah** email atau kata laluan akaun-akaun ini.
+  - **JANGAN cipta atau daftar akaun baharu (*sign up*)** semasa testing supaya tidak berlaku data bertindan (*duplicate*).
+  - Pada halaman login, jika kredensial sudah auto-fill, terus klik butang **Sign In** sahaja.
+  - **JANGAN buka tab baharu secara berlebihan**; kekalkan ujian pada tab sedia ada menggunakan kursor dan elemen pada skrin.
