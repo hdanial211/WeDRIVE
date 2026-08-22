@@ -85,8 +85,27 @@
 
     // Show only the first active banner (most relevant)
     const b = active[0];
-    const hasCode = b.message && b.message.match(/[A-Z0-9]{6,}/);
-    const code = hasCode ? b.message.match(/\b[A-Z0-9]{6,}\b/) : null;
+    const isMs = (localStorage.getItem('wedrive-lang') === 'ms');
+    
+    let title = b.title || 'Special Promotion';
+    let message = b.message || '';
+
+    // If banner has localized properties or default demo text
+    if (isMs) {
+      if (b.title_ms) title = b.title_ms;
+      if (b.message_ms) {
+        message = b.message_ms;
+      } else if (message.includes('Rent any SUV for 3 days and get RM50 cashback')) {
+        message = 'Sewa mana-mana SUV selama 3 hari dan nikmati pulangan tunai RM50! Dikuasakan AI untuk perjalanan lancar.';
+      }
+    } else {
+      if (message.includes('Dikuasakan AI untuk perjalanan lancar')) {
+        message = 'Rent any SUV for 3 days and get RM50 cashback! Powered by AI for seamless journeys.';
+      }
+    }
+
+    const hasCode = message && message.match(/[A-Z0-9]{6,}/);
+    const code = hasCode ? message.match(/\b[A-Z0-9]{6,}\b/) : null;
 
     const el = document.createElement('div');
     el.className = 'promo-strip';
@@ -95,8 +114,8 @@
     el.innerHTML = `
       <span class="material-icons-round promo-strip-icon">local_offer</span>
       <div class="promo-strip-text">
-        <div class="promo-strip-title">${b.title}</div>
-        <div class="promo-strip-msg">${b.message}${code ? `<span class="promo-strip-code">${code[0]}</span>` : ''}</div>
+        <div class="promo-strip-title">${title}</div>
+        <div class="promo-strip-msg">${message}${code ? `<span class="promo-strip-code">${code[0]}</span>` : ''}</div>
       </div>
       <button class="promo-strip-dismiss" onclick="window.__dismissBanner('${b.id}', this)" aria-label="Dismiss">
         <span class="material-icons-round" style="font-size:18px">close</span>
@@ -123,4 +142,5 @@
   } else {
     loadBanners();
   }
+  document.addEventListener('wedrive:language-applied', loadBanners);
 })();

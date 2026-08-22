@@ -253,11 +253,24 @@ window.toggleChat = async function() {
 
     window.removeTyping();
 
-    // Personalized greeting
-    var greeting = settings.greeting || 'Hi! I am your WeDRIVE AI Assistant. How can I help?';
+    // Personalized greeting (Multilingual EN / MS)
+    var isMs = (localStorage.getItem('wedrive-lang') === 'ms');
+    var defaultGreeting = isMs 
+      ? 'Hai! Saya Pembantu AI WeDRIVE. Bagaimana saya boleh bantu anda hari ini?' 
+      : 'Hi! I am your WeDRIVE AI Assistant. How can I help you today?';
+    
+    var greeting = defaultGreeting;
+    if (isMs && settings.greeting_ms) {
+      greeting = settings.greeting_ms;
+    } else if (!isMs && settings.greeting) {
+      greeting = settings.greeting;
+    }
+
     if (userData && userData.profile && userData.profile.name) {
       var firstName = userData.profile.name.split(' ')[0];
-      greeting = 'Hi <strong>' + firstName + '</strong>! I\'m your personal WeDRIVE assistant. I can see your account and bookings. How can I help you today?';
+      greeting = isMs
+        ? 'Hai <strong>' + firstName + '</strong>! Saya pembantu peribadi WeDRIVE anda. Saya boleh menyemak akaun dan tempahan anda. Ada apa yang boleh saya bantu hari ini?'
+        : 'Hi <strong>' + firstName + '</strong>! I\'m your personal WeDRIVE assistant. I can see your account and bookings. How can I help you today?';
     }
     window.addChatMsg(greeting, false);
 
@@ -267,7 +280,12 @@ window.toggleChat = async function() {
       if (sugContainer) {
         sugContainer.innerHTML = '';
 
-        var chips = [
+        var chips = isMs ? [
+          { text: 'Tempahan saya', query: 'Tunjukkan tempahan saya' },
+          { text: 'Kereta tersedia', query: 'Kereta apa yang tersedia hari ini?' },
+          { text: 'Cadangan kereta', query: 'Cadangkan kereta untuk saya' },
+          { text: 'Status akaun', query: 'Apakah status akaun saya?' }
+        ] : [
           { text: 'My bookings', query: 'Show me my bookings' },
           { text: 'Available cars', query: 'Cars available today?' },
           { text: 'Recommend', query: 'Recommend me a car' },
@@ -281,7 +299,9 @@ window.toggleChat = async function() {
             return (b.status === 'Active' || b.status === 'Confirmed') && b.start_date <= today && b.end_date >= today;
           });
           if (hasActive) {
-            chips.unshift({ text: 'My active rental', query: 'Tell me about my current active rental' });
+            chips.unshift(isMs 
+              ? { text: 'Sewaan aktif', query: 'Maklumat sewaan aktif saya' }
+              : { text: 'My active rental', query: 'Tell me about my current active rental' });
             chips.pop(); // Remove last to keep max 4
           }
         }

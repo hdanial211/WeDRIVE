@@ -23,14 +23,14 @@
 
   <!-- HERO -->
   <section class="page-hero reveal-onload">
-    <h1>Transparent Pricing</h1>
-    <p>No hidden fees. AI-optimized rates for the best value in Melaka.</p>
+    <h1 data-key="pricing_title">Transparent Pricing</h1>
+    <p data-key="pricing_sub">No hidden fees. AI-optimized rates for the best value in Melaka.</p>
   </section>
 
   <!-- PRICING TOGGLE -->
   <div class="pricing-toggle reveal-on-scroll">
-    <button class="toggle-btn active" data-period="daily">Daily</button>
-    <button class="toggle-btn" data-period="weekly">Weekly <span class="save-badge">Save 15%</span></button>
+    <button class="toggle-btn active" data-period="daily" data-key="pricing_daily">Daily</button>
+    <button class="toggle-btn" data-period="weekly"><span data-key="pricing_weekly">Weekly</span> <span class="save-badge" data-key="pricing_save_15">Save 15%</span></button>
   </div>
 
   <!-- PRICING CARDS -->
@@ -38,86 +38,86 @@
     <div class="price-card reveal-on-scroll">
       <div class="card-header">
         <span class="material-icons-round card-icon">directions_car</span>
-        <h3>Economy</h3>
-        <p>Perfect for city drives</p>
+        <h3 data-key="pricing_econ_title">Economy</h3>
+        <p data-key="pricing_econ_sub">Perfect for city drives</p>
       </div>
       <div class="card-price">
         <span class="amount" data-daily="120" data-weekly="714">RM 120</span>
-        <span class="period">/ day</span>
+        <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
-        <li><span class="material-icons-round">check_circle</span> Perodua AXIA G / AXIA AV</li>
-        <li><span class="material-icons-round">check_circle</span> 5 seats</li>
-        <li><span class="material-icons-round">check_circle</span> Auto transmission</li>
-        <li><span class="material-icons-round">check_circle</span> Basic insurance included</li>
-        <li><span class="material-icons-round">check_circle</span> Free pick-up at Melaka Sentral</li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_econ_feat1">Perodua AXIA G / AXIA AV</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_econ_feat2">5 seats</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_econ_feat3">Auto transmission</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_econ_feat4">Basic insurance included</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_econ_feat5">Free pick-up at Melaka Sentral</span></li>
       </ul>
-      <button class="card-btn" onclick="window.location='../../../index.html'">Browse Economy Cars</button>
+      <button class="card-btn" onclick="window.location='../../../index.html'" data-key="pricing_econ_btn">Browse Economy Cars</button>
     </div>
 
     <div class="price-card popular reveal-on-scroll">
-      <div class="popular-tag">Most Popular</div>
+      <div class="popular-tag" data-key="pricing_popular">Most Popular</div>
       <div class="card-header">
         <span class="material-icons-round card-icon">local_taxi</span>
-        <h3>Sedan</h3>
-        <p>Comfort for families</p>
+        <h3 data-key="pricing_sedan_title">Sedan</h3>
+        <p data-key="pricing_sedan_sub">Comfort for families</p>
       </div>
       <div class="card-price">
         <span class="amount" data-daily="220" data-weekly="1309">RM 220</span>
-        <span class="period">/ day</span>
+        <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
-        <li><span class="material-icons-round">check_circle</span> BMW 320i M Sport</li>
-        <li><span class="material-icons-round">check_circle</span> 5 seats</li>
-        <li><span class="material-icons-round">check_circle</span> Auto transmission</li>
-        <li><span class="material-icons-round">check_circle</span> Full insurance included</li>
-        <li><span class="material-icons-round">check_circle</span> Free GPS navigation</li>
-        <li><span class="material-icons-round">check_circle</span> 24/7 roadside assistance</li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat1">BMW 320i M Sport</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat2">5 seats</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat3">Auto transmission</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat4">Full insurance included</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat5">Free GPS navigation</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat6">24/7 roadside assistance</span></li>
       </ul>
-      <button class="card-btn primary" onclick="window.location='../../../index.html'">Browse Sedans</button>
+      <button class="card-btn primary" onclick="window.location='../../../index.html'" data-key="pricing_sedan_btn">Browse Sedans</button>
     </div>
 
     <div class="price-card reveal-on-scroll">
       <div class="card-header">
         <span class="material-icons-round card-icon">airport_shuttle</span>
-        <h3>SUV</h3>
-        <p>Space for adventures</p>
+        <h3 data-key="pricing_suv_title">SUV</h3>
+        <p data-key="pricing_suv_sub">Space for adventures</p>
       </div>
       <div class="card-price">
         <span class="amount" data-daily="350" data-weekly="2083">RM 350</span>
-        <span class="period">/ day</span>
+        <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
-        <li><span class="material-icons-round">check_circle</span> Mercedes-Benz GLA250</li>
-        <li><span class="material-icons-round">check_circle</span> 7 seats</li>
-        <li><span class="material-icons-round">check_circle</span> Auto transmission</li>
-        <li><span class="material-icons-round">check_circle</span> Full insurance included</li>
-        <li><span class="material-icons-round">check_circle</span> Free GPS + child seat</li>
-        <li><span class="material-icons-round">check_circle</span> Priority roadside assistance</li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat1">Mercedes-Benz GLA250</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat2">7 seats</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat3">Auto transmission</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat4">Full insurance included</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat5">Free GPS + child seat</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat6">Priority roadside assistance</span></li>
       </ul>
-      <button class="card-btn" onclick="window.location='../../../index.html'">Browse SUVs</button>
+      <button class="card-btn" onclick="window.location='../../../index.html'" data-key="pricing_suv_btn">Browse SUVs</button>
     </div>
 
     <div class="price-card luxury reveal-on-scroll">
       <div class="card-header">
         <span class="material-icons-round card-icon">stars</span>
-        <h3>Premium / MPV</h3>
-        <p>Premium experience</p>
+        <h3 data-key="pricing_lux_title">Premium / MPV</h3>
+        <p data-key="pricing_lux_sub">Premium experience</p>
       </div>
       <div class="card-price">
         <span class="amount" data-daily="450" data-weekly="2678">RM 450</span>
-        <span class="period">/ day</span>
+        <span class="period" data-key="pricing_per_day">/ day</span>
       </div>
       <ul class="card-features">
-        <li><span class="material-icons-round">check_circle</span> Mercedes-Benz CLS350 / Toyota Alphard</li>
-        <li><span class="material-icons-round">check_circle</span> 5 seats, leather interior</li>
-        <li><span class="material-icons-round">check_circle</span> Premium sound system</li>
-        <li><span class="material-icons-round">check_circle</span> Full premium insurance</li>
-        <li><span class="material-icons-round">check_circle</span> AI route planning</li>
-        <li><span class="material-icons-round">check_circle</span> VIP concierge service</li>
-        <li><span class="material-icons-round">check_circle</span> Priority route guidance included</li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat1">Mercedes-Benz CLS350 / Toyota Alphard</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat2">5 seats, leather interior</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat3">Premium sound system</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat4">Full premium insurance</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat5">AI route planning</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat6">VIP concierge service</span></li>
+        <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat7">Priority route guidance included</span></li>
       </ul>
-      <button class="card-btn" onclick="window.location='../../../index.html'">Browse Luxury</button>
+      <button class="card-btn" onclick="window.location='../../../index.html'" data-key="pricing_lux_btn">Browse Luxury</button>
     </div>
   </section>
 
@@ -126,8 +126,8 @@
     <div class="ai-insight-banner">
       <span class="material-icons-round">auto_awesome</span>
       <div>
-        <h3>AI Price Optimization</h3>
-        <p>Our AI continuously adjusts pricing based on demand, season, and car availability. Book early for the best
+        <h3 data-key="pricing_ai_title">AI Price Optimization</h3>
+        <p data-key="pricing_ai_desc">Our AI continuously adjusts pricing based on demand, season, and car availability. Book early for the best
           rates - our data shows prices are 18% lower when booked 7+ days in advance.</p>
       </div>
     </div>

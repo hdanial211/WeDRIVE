@@ -19,27 +19,27 @@
 
   <section class="page-hero contact-hero reveal-onload">
     <p class="guest-kicker"><span class="material-icons-round">support_agent</span> Melaka support desk</p>
-    <h1>Contact WeDRIVE</h1>
-    <p>Reach our team for booking help, payment support, or branch directions.</p>
+    <h1 data-key="contact_hero_title">Contact WeDRIVE</h1>
+    <p data-key="contact_hero_sub">Reach our team for booking help, payment support, or branch directions.</p>
   </section>
 
   <main class="contact-layout">
     <form class="contact-form reveal-on-scroll motion-sheen" id="contact-form">
-      <h2 class="contact-form-title">Send us a message</h2>
+      <h2 class="contact-form-title" data-key="contact_form_title">Send us a message</h2>
       <div class="form-group">
-        <label for="contact-name">Full name</label>
+        <label for="contact-name" data-key="contact_form_name">Full name</label>
         <input id="contact-name" type="text" value="Ahmad bin Ali" required autocomplete="name" />
       </div>
       <div class="form-group">
-        <label for="contact-email">Email</label>
+        <label for="contact-email" data-key="contact_form_email">Email</label>
         <input id="contact-email" type="email" value="ahmad@email.com" required autocomplete="email" />
       </div>
       <div class="form-group">
-        <label for="contact-phone">Phone</label>
+        <label for="contact-phone" data-key="contact_form_phone">Phone</label>
         <input id="contact-phone" type="tel" value="+60 12-345 6789" autocomplete="tel" />
       </div>
       <div class="form-group">
-        <label for="contact-subject">Subject</label>
+        <label for="contact-subject" data-key="contact_form_subject">Subject</label>
         <select id="contact-subject" aria-label="Subject">
           <option>Booking inquiry</option>
           <option>Payment support</option>
@@ -49,11 +49,11 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="contact-message">Message</label>
+        <label for="contact-message" data-key="contact_form_message">Message</label>
         <textarea id="contact-message" required>Hi WeDRIVE, I need help with my booking.</textarea>
       </div>
       <button class="form-submit" type="submit">
-        Send message
+        <span data-key="contact_form_submit">Send Message</span>
         <span class="material-icons-round">send</span>
       </button>
       <p class="contact-form-note" id="contact-success" role="status" aria-live="polite"></p>
@@ -61,17 +61,17 @@
 
     <aside class="contact-info-cards reveal-on-scroll">
       <a class="ci-card" href="https://www.google.com/maps/search/?api=1&query=Melaka%20Sentral" target="_blank" rel="noopener">
-        <h4><span class="material-icons-round">location_on</span> Visit our branch</h4>
-        <p>Melaka Sentral</p>
+        <h4><span class="material-icons-round">location_on</span> <span data-key="contact_info_branch">Melaka Sentral Branch</span></h4>
+        <p data-key="contact_info_branch_desc">Terminal Melaka Sentral, Peringgit, Melaka</p>
         <small>Open in Google Maps</small>
       </a>
       <a class="ci-card" href="tel:+6061234567" data-company-phone>
-        <h4><span class="material-icons-round">phone</span> Call us</h4>
+        <h4><span class="material-icons-round">phone</span> <span data-key="contact_info_phone">Phone Support</span></h4>
         <p data-company-phone>+60 6-123 4567</p>
-        <small>Mon-Fri, 9:00 AM-6:00 PM</small>
+        <small>Mon-Sun, 8:00 AM-10:00 PM</small>
       </a>
       <a class="ci-card" href="mailto:support@wedrive.my?subject=WeDRIVE%20Support%20Request" data-company-email>
-        <h4><span class="material-icons-round">email</span> Email us</h4>
+        <h4><span class="material-icons-round">email</span> <span data-key="contact_info_email">Email Support</span></h4>
         <p data-company-email>support@wedrive.my</p>
         <small>Response within 24 hours</small>
       </a>
@@ -81,8 +81,8 @@
         <small>Start chat instantly</small>
       </a>
       <div class="ci-card contact-hours-card">
-        <h4><span class="material-icons-round">schedule</span> Business hours</h4>
-        <p data-company-hours>Mon-Fri: 9:00 AM-6:00 PM<br />Sat: 9:00 AM-1:00 PM<br />Sun: Closed</p>
+        <h4><span class="material-icons-round">schedule</span> <span data-key="contact_info_hours">Operating Hours</span></h4>
+        <p data-company-hours data-key="contact_info_hours_val">Monday - Sunday: 08:00 - 22:00</p>
         <small>AI support remains available inside the chat widget.</small>
       </div>
     </aside>
