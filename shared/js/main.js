@@ -94,7 +94,7 @@
   function applyTheme(mode, animate) {
     var effectiveMode = getEffectiveTheme(mode);
     var link = document.getElementById('theme-link');
-    if (link) {
+    if (link && link.getAttribute('href') && /theme_(day|night)\.css/.test(link.getAttribute('href'))) {
       var base = link.getAttribute('href').replace(/theme_(day|night)\.css(\?.*)?$/, '');
       link.href = base + (effectiveMode === 'night' ? NIGHT_HREF : DAY_HREF);
     }
