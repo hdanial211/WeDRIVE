@@ -128,15 +128,6 @@
       '  </div>',
       '</nav>'
     ].join('\n');
-
-    // Inject navbar.css if not already present
-    if (!document.getElementById('navbar-css')) {
-      var link = document.createElement('link');
-      link.id   = 'navbar-css';
-      link.rel  = 'stylesheet';
-      link.href = base + 'shared/css/navbar.css';
-      document.head.appendChild(link);
-    }
   }
 
   // ─── INIT ───────────────────────────────────────────────────────────────────

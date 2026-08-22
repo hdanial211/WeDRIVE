@@ -27,15 +27,8 @@
     return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
   }
 
-  /* ── Inject shared/css/calendar.css ── */
-  function injectCalendarCSS() {
-    if (document.getElementById('wedrive-cal-css')) return;
-    var link = document.createElement('link');
-    link.id = 'wedrive-cal-css';
-    link.rel = 'stylesheet';
-    link.href = basePath() + 'shared/css/calendar.css';
-    document.head.appendChild(link);
-  }
+  /* ── Inject shared/css/calendar.css (no-op as wedrive.css contains all calendar styles) ── */
+  function injectCalendarCSS() {}
 
   /* ── Range highlight helper ── */
   function highlightRange(dayElem, pickupPicker, returnPicker) {

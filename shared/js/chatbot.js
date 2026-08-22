@@ -72,15 +72,6 @@
 
     // Inject HTML
     placeholder.innerHTML = HTML;
-
-    // Inject CSS
-    if (!document.getElementById('chatbot-css')) {
-      var link = document.createElement('link');
-      link.id = 'chatbot-css';
-      link.rel = 'stylesheet';
-      link.href = base + 'shared/css/chatbot.css';
-      document.head.appendChild(link);
-    }
   }
 
   if (document.readyState === 'loading') {

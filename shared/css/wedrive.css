@@ -151,11 +151,7 @@
    Source: shared/css/theme_night.css
    ===================================================== */
 
-/* =============================================
-   WeDRIVE - Night Mode Theme
-   Stitch MD3 Design System (Dark) + Legacy Compat
-   ============================================= */
-:root {
+html.night-mode, body.night-mode, [data-theme="dark"] {
   /* ── BRAND (Stitch MD3 Dark) ─────────────── */
   --primary: #adc6ff;
   --primary-dark: #6a9bff;
@@ -18179,4 +18175,15 @@ input[type="text"], input[type="email"], input[type="password"], input[type="tel
 /* Segmented Capsules */
 .pill, .badge, .status-pill, .booking-status-chip, .ai-chip, .segment-pill, .filter-pill, .user-pill {
   border-radius: 9999px !important;
+}
+
+/* Core Body Background & Text Colors for Day / Night */
+body, html {
+  background-color: var(--bg-body, #f7f9fb) !important;
+  color: var(--text-primary, #191c1e) !important;
+}
+
+body.night-mode, html.night-mode, html[data-theme="dark"] body {
+  background-color: #111418 !important;
+  color: #f1f5f9 !important;
 }

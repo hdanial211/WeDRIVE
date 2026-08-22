@@ -29,15 +29,8 @@
     return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
   }
 
-  /* ── Inject CSS (once) ── */
-  function injectCSS() {
-    if (document.getElementById('sp-css')) return;
-    var link = document.createElement('link');
-    link.id   = 'sp-css';
-    link.rel  = 'stylesheet';
-    link.href = basePath() + 'shared/css/search-popup.css';
-    document.head.appendChild(link);
-  }
+  /* ── Inject CSS (no-op as wedrive.css already contains all styles) ── */
+  function injectCSS() {}
 
   /* ── Build popup DOM (once) ── */
   function buildPopup() {

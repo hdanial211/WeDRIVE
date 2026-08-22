@@ -692,14 +692,6 @@
     var base = resolveBasePath();
     var url = base + 'shared/components/footer.html';
 
-    // Inject footer.css if not already present
-    if (!document.querySelector('link[href*="footer.css"]')) {
-      var cssLink = document.createElement('link');
-      cssLink.rel = 'stylesheet';
-      cssLink.href = base + 'shared/css/footer.css';
-      document.head.appendChild(cssLink);
-    }
-
     fetch(url)
       .then(function (res) {
         if (!res.ok) throw new Error('Cannot load footer: ' + url);
