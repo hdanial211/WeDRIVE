@@ -61,6 +61,30 @@
   </div>
   `;
 
+  function setupFabScrollCollapse() {
+    var fab = document.getElementById('chatbot-fab');
+    if (!fab) return;
+
+    var ticking = false;
+
+    function handleScroll() {
+      if (ticking) return;
+      window.requestAnimationFrame(function() {
+        var currentY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+        if (currentY > 60) {
+          fab.classList.add('fab-collapsed');
+        } else {
+          fab.classList.remove('fab-collapsed');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+
   function initChatbot() {
     var placeholder = document.getElementById('chatbot-placeholder');
     if (!placeholder) return;
@@ -72,6 +96,14 @@
 
     // Inject HTML
     placeholder.innerHTML = HTML;
+
+    // Apply translations to freshly injected elements (e.g. data-key="nav_ai")
+    if (typeof window.retranslatePage === 'function') {
+      window.retranslatePage();
+    }
+
+    // Scroll collapse handler: shrinks to logo when scrolling down, expands when at top
+    setupFabScrollCollapse();
   }
 
   if (document.readyState === 'loading') {

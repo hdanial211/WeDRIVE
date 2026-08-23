@@ -3313,44 +3313,104 @@ body:has(.right-panel) {
    15. APPLE FLOATING AI CHATBOT COMPONENT (CHATBOT.JS)
    ============================================================================== */
 
+/* Living Floating & Shimmer Animations */
+@keyframes fabAliveFloat {
+  0%, 100% {
+    transform: translateY(0px);
+    box-shadow: 0 8px 24px rgba(88, 86, 214, 0.42), 0 0 16px rgba(0, 113, 227, 0.28), 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+  50% {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 32px rgba(88, 86, 214, 0.58), 0 0 26px rgba(175, 82, 222, 0.42), 0 4px 12px rgba(0, 0, 0, 0.18);
+  }
+}
+
+@keyframes fabShimmerGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes aiSparkleTwinkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
+  }
+  50% {
+    transform: scale(1.15) rotate(8deg);
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.95));
+  }
+}
+
 .chatbot-fab {
   position: fixed;
   bottom: 28px;
   right: 28px;
   z-index: 9999;
-  background: linear-gradient(135deg, #0071E3 0%, #5856D6 55%, #AF52DE 100%);
-  color: #FFFFFF;
+  height: 48px;
+  min-width: 48px;
+  padding: 0 18px 0 14px;
   border-radius: var(--radius-pill);
-  padding: 10px 18px;
+  background: linear-gradient(135deg, #0071E3 0%, #5856D6 50%, #AF52DE 100%);
+  background-size: 220% 220%;
+  color: #FFFFFF;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 28px rgba(88, 86, 214, 0.45), 0 2px 8px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  justify-content: flex-start;
+  box-shadow: 0 8px 26px rgba(88, 86, 214, 0.45), 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   cursor: pointer;
   user-select: none;
-  transition: all 0.3s var(--ease-apple);
+  overflow: visible;
+  animation: fabAliveFloat 3.8s ease-in-out infinite, fabShimmerGradient 6s ease infinite;
+  transition: width 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s var(--ease-apple),
+              box-shadow 0.3s var(--ease-apple),
+              background 0.3s var(--ease-apple);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .chatbot-fab:hover {
-  background: linear-gradient(135deg, #0077ED 0%, #6361E0 55%, #B95EE8 100%);
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 12px 34px rgba(88, 86, 214, 0.55), 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation-play-state: paused;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 14px 36px rgba(88, 86, 214, 0.6), 0 0 28px rgba(0, 113, 227, 0.4), 0 4px 14px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #0077ED 0%, #6361E0 50%, #B95EE8 100%);
 }
 
 .chatbot-fab:active {
-  transform: scale(0.96);
+  transform: scale(0.95);
 }
 
 .chatbot-fab .material-icons-round {
   font-size: 21px;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.45));
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: aiSparkleTwinkle 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.65));
 }
 
 .chatbot-fab .fab-label {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  max-width: 140px;
+  opacity: 1;
+  margin-left: 8px;
+  overflow: hidden;
+  transition: max-width 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease,
+              margin-left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .chatbot-fab .notif-badge {
@@ -3368,6 +3428,44 @@ body:has(.right-panel) {
   align-items: center;
   justify-content: center;
   border: 2px solid var(--bg-body);
+  transition: all 0.3s var(--ease-apple);
+  box-shadow: 0 2px 6px rgba(255, 59, 48, 0.4);
+}
+
+/* ── Collapsed State on Scroll (Mengecilkan Tinggalkan Logo Jek) ── */
+.chatbot-fab.fab-collapsed {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 9999px;
+}
+
+.chatbot-fab.fab-collapsed .fab-label {
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  transform: translateX(4px);
+  pointer-events: none;
+}
+
+.chatbot-fab.fab-collapsed .notif-badge {
+  top: -2px;
+  right: -2px;
+}
+
+/* Expand smoothly on Hover when collapsed (Apple Dynamic Island style) */
+.chatbot-fab.fab-collapsed:hover {
+  width: auto;
+  padding: 0 18px 0 14px;
+  justify-content: flex-start;
+}
+
+.chatbot-fab.fab-collapsed:hover .fab-label {
+  max-width: 140px;
+  opacity: 1;
+  margin-left: 8px;
+  transform: translateX(0);
 }
 
 .chatbot-panel {
