@@ -348,9 +348,20 @@
     if (spotlightTimer) clearInterval(spotlightTimer);
     if (spotlightCars.length < 2) return;
 
+    var showcase = document.querySelector('.guest-hero-showcase');
+    if (showcase && !showcase.dataset.hoverBound) {
+      showcase.dataset.hoverBound = '1';
+      showcase.addEventListener('mouseenter', function () {
+        if (spotlightTimer) clearInterval(spotlightTimer);
+      });
+      showcase.addEventListener('mouseleave', function () {
+        startSpotlightCarousel();
+      });
+    }
+
     spotlightTimer = setInterval(function () {
       renderSpotlight(spotlightIndex + 1, true);
-    }, 3800);
+    }, 6000);
   }
 
   window.switchSpotlight = function (index) {
