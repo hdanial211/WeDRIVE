@@ -758,7 +758,7 @@
     if (!placeholder) return;
 
     var base = resolveBasePath();
-    var url = base + 'shared/components/footer.html?v=5.2.3';
+    var url = base + 'shared/components/footer.html?v=5.2.4';
 
     fetch(url)
       .then(function (res) {

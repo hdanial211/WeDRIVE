@@ -1631,40 +1631,22 @@ body.dark .wedrive-footer {
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Living Ambient Shimmer Line on Top Border */
-.footer-ambient-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.6), rgba(168, 85, 247, 0.5), rgba(0, 113, 227, 0.6), transparent);
-  background-size: 200% 100%;
-  animation: footerGlowBreath 8s ease-in-out infinite;
-}
-
-@keyframes footerGlowBreath {
-  0% { background-position: 0% 50%; opacity: 0.5; }
-  50% { background-position: 100% 50%; opacity: 0.9; }
-  100% { background-position: 0% 50%; opacity: 0.5; }
-}
-
 .footer-shell {
   max-width: 1360px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 32px;
 }
 
-/* Top Strip: Brand & Live Status */
+/* Top Strip: Brand & Clean Tagline */
 .footer-top-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
-  padding-bottom: 24px;
+  padding-bottom: 22px;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -1698,43 +1680,11 @@ body.dark .wedrive-footer {
   color: var(--primary);
 }
 
-.footer-badge {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: var(--radius-pill);
-  background: var(--primary-light);
-  color: var(--primary);
-  letter-spacing: 0.02em;
-}
-
-/* Living Status Indicator */
-.footer-live-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: var(--radius-pill);
-  background: var(--bg-surface-3);
-  border: 1px solid var(--border-subtle);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.footer-status-pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #34C759;
-  box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
-  animation: pulseStatus 2.2s infinite;
-}
-
-@keyframes pulseStatus {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 199, 89, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+.footer-tagline {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
 }
 
 /* 4-Column Directory Grid */
