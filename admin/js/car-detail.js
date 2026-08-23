@@ -698,15 +698,13 @@ function showToast(msg, type) {
    First click = Pickup date, Second click = Return date
    ══════════════════════════════════════════════ */
 
-let calPickup = null;   // Selected pickup date string
-let calReturn = null;   // Selected return date string
+let selectedCalDate = null; // Selected date string for details view
 
 function initCalendar() {
   const now = new Date();
   calYear = now.getFullYear();
   calMonth = now.getMonth();
-  calPickup = null;
-  calReturn = null;
+  selectedCalDate = null;
   renderCalendar();
 }
 
@@ -730,8 +728,7 @@ function calendarNext() {
 }
 
 function clearCalendarSelection() {
-  calPickup = null;
-  calReturn = null;
+  selectedCalDate = null;
   renderCalendar();
   const info = document.getElementById('cal-day-info');
   if (info) info.style.display = 'none';
@@ -782,22 +779,14 @@ function renderCalendar() {
     }
 
     const isToday = dateObj.getTime() === today.getTime();
-
-    // Check if this date is in selected range (Apple HIG continuous range styling)
-    let rangeClass = '';
-    if (calPickup && !calReturn && dateStr === calPickup) {
-      rangeClass = ' cal-range-single';
-    } else if (calPickup && calReturn) {
-      if (dateStr === calPickup) rangeClass = ' cal-range-start';
-      else if (dateStr === calReturn) rangeClass = ' cal-range-end';
-      else if (dateStr > calPickup && dateStr < calReturn) rangeClass = ' cal-range-mid';
-    }
+    const isSelected = selectedCalDate === dateStr;
 
     const todayClass = isToday ? ' today' : '';
+    const selectedClass = isSelected ? ' selected' : '';
     const clickable = status !== 'past';
 
     html += `
-    <div class="cal-cell ${status}${todayClass}${rangeClass}" 
+    <div class="cal-cell ${status}${todayClass}${selectedClass}" 
          ${clickable ? `onclick="selectCalDay('${dateStr}', '${status}')"` : ''}
          data-date="${dateStr}"
          title="${dateStr} - ${status.toUpperCase()}">
@@ -810,11 +799,6 @@ function renderCalendar() {
   }
 
   grid.innerHTML = html;
-  updateCalendarInfo();
-
-  // Show/hide clear button
-  const clearBtn = document.getElementById('cal-clear-btn');
-  if (clearBtn) clearBtn.style.display = (calPickup || calReturn) ? 'inline-flex' : 'none';
 }
 
 function getCarBookings() {
@@ -851,50 +835,77 @@ function buildDateStatusMap(bookings) {
 }
 
 function selectCalDay(dateStr, status) {
-  // If clicking a booked/pending date, just show info
+  if (status === 'past') return;
+  selectedCalDate = dateStr;
+  renderCalendar();
+
   if (status === 'booked' || status === 'pending') {
     showBookingInfo(dateStr, status);
-    return;
-  }
-
-  // Range selection logic
-  if (!calPickup || (calPickup && calReturn)) {
-    // First click or reset — set pickup
-    calPickup = dateStr;
-    calReturn = null;
   } else {
-    // Second click — set return
-    if (dateStr < calPickup) {
-      // Clicked before pickup — swap
-      calReturn = calPickup;
-      calPickup = dateStr;
-    } else if (dateStr === calPickup) {
-      // Same date — clear
-      calPickup = null;
-      calReturn = null;
-    } else {
-      // Check if any booked days exist in range
-      const statusMap = buildDateStatusMap(getCarBookings());
-      let hasConflict = false;
-      const checkDate = new Date(calPickup);
-      const endDate = new Date(dateStr);
-      while (checkDate <= endDate) {
-        const ds = checkDate.toISOString().slice(0, 10);
-        if (statusMap[ds] && statusMap[ds].status === 'booked') {
-          hasConflict = true;
-          break;
-        }
-        checkDate.setDate(checkDate.getDate() + 1);
-      }
-      if (hasConflict) {
-        showToast('Cannot select this range — contains booked dates.', 'info');
-        return;
-      }
-      calReturn = dateStr;
-    }
+    showAvailableDateInfo(dateStr);
   }
+}
 
-  renderCalendar();
+function showAvailableDateInfo(dateStr) {
+  const infoPanel = document.getElementById('cal-day-info');
+  if (!infoPanel) return;
+
+  const date = new Date(dateStr);
+  const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const rateNum = parseInt(String(carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
+
+  infoPanel.innerHTML = `
+    <div class="bs-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="bs-badge available" style="background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25);">
+          <span class="material-icons-round" style="font-size:14px;">check_circle</span>
+          Available for Rent
+        </span>
+        <span style="font-size:13.5px;font-weight:700;color:var(--text-primary);">${formattedDate}</span>
+      </div>
+      <button class="btn-outline-sm" onclick="clearCalendarSelection()" style="height:30px;padding:0 12px;font-size:12px;">
+        <span class="material-icons-round" style="font-size:14px;">close</span> Close
+      </button>
+    </div>
+    <div class="bs-grid">
+      <div class="bs-item">
+        <div class="bs-item-icon emerald">
+          <span class="material-icons-round" style="font-size:20px;">event_available</span>
+        </div>
+        <div>
+          <div class="bs-item-label">Vehicle Status</div>
+          <div class="bs-item-value" style="color:#10B981;">Ready to Book</div>
+        </div>
+      </div>
+      <div class="bs-item">
+        <div class="bs-item-icon">
+          <span class="material-icons-round" style="font-size:20px;">directions_car</span>
+        </div>
+        <div>
+          <div class="bs-item-label">Vehicle</div>
+          <div class="bs-item-value">${carData.name || 'Vehicle'} (${carData.plate || '--'})</div>
+        </div>
+      </div>
+      <div class="bs-item">
+        <div class="bs-item-icon purple">
+          <span class="material-icons-round" style="font-size:20px;">payments</span>
+        </div>
+        <div>
+          <div class="bs-item-label">Standard Daily Rate</div>
+          <div class="bs-item-value">RM ${rateNum}/day</div>
+        </div>
+      </div>
+      <div class="bs-item">
+        <div class="bs-item-icon amber">
+          <span class="material-icons-round" style="font-size:20px;">info</span>
+        </div>
+        <div>
+          <div class="bs-item-label">Schedule Note</div>
+          <div class="bs-item-value">No active bookings</div>
+        </div>
+      </div>
+    </div>`;
+  infoPanel.style.display = 'block';
 }
 
 function showBookingInfo(dateStr, status) {
@@ -911,6 +922,8 @@ function showBookingInfo(dateStr, status) {
   if (!booking) return;
 
   const infoPanel = document.getElementById('cal-day-info');
+  if (!infoPanel) return;
+
   const date = new Date(dateStr);
   const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   const isPending = booking.status === 'Pending';
@@ -978,138 +991,19 @@ function showBookingInfo(dateStr, status) {
         <div class="bs-total-amount">RM ${Number(total).toLocaleString()}</div>
       </div>
       <button class="btn-outline-sm" onclick="window.location.href='../../booking/bookings.html?search=${encodeURIComponent(carData.plate || '')}'" style="height:40px;padding:0 20px;">
-        <span class="material-icons-round" style="font-size:16px;">manage_accounts</span> Manage Booking
+        <span class="material-icons-round" style="font-size:16px;">manage_accounts</span> Manage in Bookings
       </button>
     </div>`;
   infoPanel.style.display = 'block';
 }
 
-function updateCalendarInfo() {
-  const infoPanel = document.getElementById('cal-day-info');
-  if (!infoPanel) return;
-  const rateNum = parseInt(String(carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
-
-  if (calPickup && calReturn) {
-    // Full range selected — show Bento Booking Summary
-    const p = new Date(calPickup);
-    const r = new Date(calReturn);
-    const days = Math.max(1, Math.round((r - p) / (1000 * 60 * 60 * 24)));
-    const total = days * rateNum;
-
-    const fmtPickup = p.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-    const fmtReturn = r.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-
-    infoPanel.innerHTML = `
-      <div class="bs-header">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span class="bs-badge">
-            <span class="material-icons-round" style="font-size:14px;">calendar_today</span>
-            New Booking Summary
-          </span>
-          <span style="font-size:13px;color:var(--text-secondary);font-weight:600;">${carData.name} (${carData.plate})</span>
-        </div>
-        <button class="btn-outline-sm" onclick="clearCalendarSelection()" style="height:30px;padding:0 12px;font-size:12px;color:#EF4444;border-color:rgba(239,68,68,0.3);">
-          <span class="material-icons-round" style="font-size:14px;">close</span> Reset Dates
-        </button>
-      </div>
-      <div class="bs-grid">
-        <div class="bs-item">
-          <div class="bs-item-icon">
-            <span class="material-icons-round" style="font-size:20px;">event_available</span>
-          </div>
-          <div>
-            <div class="bs-item-label">Pickup Date</div>
-            <div class="bs-item-value">${fmtPickup}</div>
-          </div>
-        </div>
-        <div class="bs-item">
-          <div class="bs-item-icon">
-            <span class="material-icons-round" style="font-size:20px;">event_busy</span>
-          </div>
-          <div>
-            <div class="bs-item-label">Return Date</div>
-            <div class="bs-item-value">${fmtReturn}</div>
-          </div>
-        </div>
-        <div class="bs-item">
-          <div class="bs-item-icon purple">
-            <span class="material-icons-round" style="font-size:20px;">timelapse</span>
-          </div>
-          <div>
-            <div class="bs-item-label">Rental Duration</div>
-            <div class="bs-item-value">${days} Day${days > 1 ? 's' : ''}</div>
-          </div>
-        </div>
-        <div class="bs-item">
-          <div class="bs-item-icon emerald">
-            <span class="material-icons-round" style="font-size:20px;">payments</span>
-          </div>
-          <div>
-            <div class="bs-item-label">Daily Rate</div>
-            <div class="bs-item-value">RM ${rateNum}/day</div>
-          </div>
-        </div>
-      </div>
-      <div class="bs-footer">
-        <div class="bs-total-wrap">
-          <div class="bs-total-label">Estimated Rental Total</div>
-          <div class="bs-total-amount">RM ${total.toLocaleString()}</div>
-        </div>
-        <button class="btn-confirm-booking" onclick="confirmBookingRange()">
-          <span class="material-icons-round" style="font-size:18px">check_circle</span>
-          Confirm Booking
-        </button>
-      </div>`;
-    infoPanel.style.display = 'block';
-  } else if (calPickup && !calReturn) {
-    // Only pickup selected
-    const p = new Date(calPickup);
-    const fmtPickup = p.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
-
-    infoPanel.innerHTML = `
-      <div class="bs-single-date">
-        <div class="bs-single-date-left">
-          <span class="bs-pulsing-dot"></span>
-          <div>
-            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:0.5px;">Pickup Selected</div>
-            <div style="font-size:14px;font-weight:700;color:var(--text-primary);">${fmtPickup}</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <span style="font-size:13px;color:var(--primary);font-weight:600;display:flex;align-items:center;gap:6px;">
-            <span class="material-icons-round" style="font-size:16px;">touch_app</span>
-            Now click a return date on the calendar to finish
-          </span>
-          <button class="btn-outline-sm" onclick="clearCalendarSelection()" style="height:30px;padding:0 12px;font-size:12px;">
-            Cancel
-          </button>
-        </div>
-      </div>`;
-    infoPanel.style.display = 'block';
-  } else {
-    infoPanel.style.display = 'none';
-  }
-}
-
-function confirmBookingRange() {
-  if (!calPickup || !calReturn) return;
-  const p = new Date(calPickup);
-  const r = new Date(calReturn);
-  const days = Math.max(1, Math.round((r - p) / (1000 * 60 * 60 * 24)));
-  const rateNum = parseInt(String(carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
-  const total = days * rateNum;
-
-  // Smoothly redirect to create booking with pre-filled parameters
-  window.location.href = `../../booking/bookings.html?action=add&carId=${carData.id}&pickup=${calPickup}&return=${calReturn}`;
-}
-
-window.confirmBookingRange = confirmBookingRange;
 window.clearCalendarSelection = clearCalendarSelection;
 window.showBookingInfo = showBookingInfo;
-window.updateCalendarInfo = updateCalendarInfo;
+window.showAvailableDateInfo = showAvailableDateInfo;
 window.calendarToday = calendarToday;
 window.calendarPrev = calendarPrev;
 window.calendarNext = calendarNext;
 window.selectCalDay = selectCalDay;
+
 
 

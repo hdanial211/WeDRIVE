@@ -6758,44 +6758,6 @@ body.page-is-leaving .page-container {
   pointer-events: none;
 }
 
-/* Continuous Apple Selection Band (Range Strip) */
-.cal-cell.cal-range-start::before {
-  content: '';
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  right: 0;
-  left: 50%;
-  background: rgba(0, 113, 227, 0.15);
-  z-index: -1;
-}
-
-.cal-cell.cal-range-mid::before {
-  content: '';
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 0;
-  right: 0;
-  background: rgba(0, 113, 227, 0.15);
-  z-index: -1;
-}
-
-.cal-cell.cal-range-end::before {
-  content: '';
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 0;
-  right: 50%;
-  background: rgba(0, 113, 227, 0.15);
-  z-index: -1;
-}
-
-.cal-cell.cal-range-single::before {
-  display: none !important;
-}
-
 /* Apple Circular Selection Pill */
 .cal-cell-inner {
   position: relative;
@@ -6886,42 +6848,21 @@ body.page-is-leaving .page-container {
   border-color: transparent !important;
 }
 
-/* Selected Start / End / Single Date States */
-.cal-cell.cal-range-start .cal-cell-inner,
-.cal-cell.cal-range-end .cal-cell-inner,
-.cal-cell.cal-range-single .cal-cell-inner {
+/* Active Selected Date Highlight */
+.cal-cell.selected .cal-cell-inner {
   background: var(--primary, #0071E3) !important;
   border-color: var(--primary, #0071E3) !important;
   box-shadow: 0 4px 16px rgba(0, 113, 227, 0.45);
+  transform: scale(1.08);
 }
 
-.cal-cell.cal-range-start .cal-day,
-.cal-cell.cal-range-end .cal-day,
-.cal-cell.cal-range-single .cal-day {
+.cal-cell.selected .cal-day {
   color: #FFFFFF !important;
   font-weight: 700;
 }
 
-.cal-cell.cal-range-start .cal-dot-indicator,
-.cal-cell.cal-range-end .cal-dot-indicator,
-.cal-cell.cal-range-single .cal-dot-indicator {
+.cal-cell.selected .cal-dot-indicator {
   background: #FFFFFF !important;
-}
-
-/* Range Middle */
-.cal-cell.cal-range-mid .cal-cell-inner {
-  background: transparent;
-  border-color: transparent;
-}
-
-.cal-cell.cal-range-mid .cal-day {
-  color: var(--primary, #0071E3) !important;
-  font-weight: 700;
-}
-
-.cal-cell.cal-range-mid .cal-rate {
-  color: var(--primary, #0071E3) !important;
-  opacity: 0.85;
 }
 
 /* Apple HIG Legend Bar */
