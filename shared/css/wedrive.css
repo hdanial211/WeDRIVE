@@ -5963,11 +5963,13 @@ body.lang-skeleton-reveal .guest-section-heading p {
 @keyframes pageTransitionIn {
   0% {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(14px) scale(0.992);
+    filter: blur(4px);
   }
   100% {
     opacity: 1;
-    transform: none;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
   }
 }
 
@@ -5975,16 +5977,22 @@ body.lang-skeleton-reveal .guest-section-heading p {
 @keyframes pageTransitionOut {
   0% {
     opacity: 1;
-    transform: none;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
   }
   100% {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-10px) scale(0.992);
+    filter: blur(3px);
   }
 }
 
 /* Universal Page Content Entry (IN) Animation */
+main.main .content,
+.customer-main .content,
+.admin-main .content,
 main,
+.content,
 .guest-page,
 .explore-page,
 .pricing-page,
@@ -6015,11 +6023,15 @@ main,
 .customer-shell,
 .admin-shell,
 .page-container {
-  animation: pageTransitionIn 0.35s var(--ease-apple);
+  animation: pageTransitionIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Universal Page Content Exit (OUT) Animation */
+body.page-is-leaving main.main .content,
+body.page-is-leaving .customer-main .content,
+body.page-is-leaving .admin-main .content,
 body.page-is-leaving main,
+body.page-is-leaving .content,
 body.page-is-leaving .guest-page,
 body.page-is-leaving .explore-page,
 body.page-is-leaving .pricing-page,
