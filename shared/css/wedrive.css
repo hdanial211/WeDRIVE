@@ -804,21 +804,47 @@ a  { color: var(--primary); text-decoration: none; transition: all 0.25s var(--e
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  margin-top: 14px;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 4px 0;
 }
 
+.showcase-dots button,
 .showcase-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  min-height: 7px;
+  max-width: 22px;
+  max-height: 7px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
   border-radius: var(--radius-pill);
-  background: var(--border-medium);
-  transition: all 0.25s var(--ease-apple);
+  background: var(--text-muted);
+  opacity: 0.35;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: all 0.3s var(--ease-apple);
 }
 
+.showcase-dots button:hover,
+.showcase-dot:hover {
+  opacity: 0.7;
+  transform: scale(1.15);
+}
+
+.showcase-dots button.active,
 .showcase-dot.active {
-  width: 18px;
+  width: 22px;
+  height: 7px;
+  min-width: 22px;
+  border-radius: var(--radius-pill);
   background: var(--primary);
+  opacity: 1;
+  box-shadow: 0 0 12px var(--primary-border);
 }
 
 /* ==============================================================================

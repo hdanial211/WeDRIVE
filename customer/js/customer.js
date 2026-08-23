@@ -301,7 +301,7 @@
     if (!dots || spotlightCars.length < 2) return;
 
     dots.innerHTML = spotlightCars.map(function (_, index) {
-      return '<button type="button" class="' + (index === spotlightIndex ? 'active' : '') + '" onclick="switchSpotlight(' + index + ')" aria-label="Show car ' + (index + 1) + '"></button>';
+      return '<button type="button" class="showcase-dot' + (index === spotlightIndex ? ' active' : '') + '" onclick="switchSpotlight(' + index + ')" aria-label="Show car ' + (index + 1) + '"></button>';
     }).join('');
   }
 
