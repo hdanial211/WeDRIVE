@@ -162,24 +162,38 @@ function renderBookingHistory(car, bookings) {
   }).join('');
 }
 
-/* ── Edit Details ── */
+/* ── Edit Details (Modal Popup) ── */
 function editDetails() {
-  const section = document.getElementById('edit-section');
-  section.style.display = 'block';
-  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
   // Populate form with current data
-  document.getElementById('edit-name').value = carData.name;
-  document.getElementById('edit-plate').value = carData.plate;
-  document.getElementById('edit-type').value = carData.type;
-  document.getElementById('edit-fuel').value = carData.fuel;
-  document.getElementById('edit-trans').value = carData.transmission;
-  document.getElementById('edit-rate').value = parseInt(carData.rate.replace(/[^0-9]/g, ''));
-  document.getElementById('edit-seats').value = carData.seats || 5;
+  if (carData) {
+    document.getElementById('edit-name').value = carData.name || '';
+    document.getElementById('edit-plate').value = carData.plate || '';
+    document.getElementById('edit-type').value = carData.type || 'sedan';
+    document.getElementById('edit-fuel').value = carData.fuel || 'Petrol';
+    document.getElementById('edit-trans').value = carData.transmission || carData.trans || 'Auto';
+    document.getElementById('edit-rate').value = parseInt(String(carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
+    document.getElementById('edit-seats').value = carData.seats || 5;
 
-  // Populate images grid
-  renderEditImagesGrid();
+    // Populate images grid
+    renderEditImagesGrid();
+  }
+
+  const modal = document.getElementById('edit-car-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
 }
+window.editDetails = editDetails;
+
+function closeEditCarModal() {
+  const modal = document.getElementById('edit-car-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+window.closeEditCarModal = closeEditCarModal;
 
 /* ── Render Edit Images Grid ── */
 function renderEditImagesGrid() {
@@ -335,8 +349,9 @@ function setMainImage(idx) {
 }
 
 function cancelEdit() {
-  document.getElementById('edit-section').style.display = 'none';
+  closeEditCarModal();
 }
+window.cancelEdit = cancelEdit;
 
 async function saveCarEdit(e) {
   e.preventDefault();

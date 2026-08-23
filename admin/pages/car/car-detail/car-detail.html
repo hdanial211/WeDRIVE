@@ -147,94 +147,6 @@
         <div id="cal-day-info" class="cal-day-info" style="display:none;"></div>
       </div>
 
-      <!-- EDIT FORM -->
-      <div class="card reveal-on-scroll" id="edit-section" style="display:none; margin-top:24px; border-radius:22px; padding:24px;">
-        <div class="card-header" style="margin-bottom:16px; border-bottom:1px solid var(--border-subtle); padding-bottom:14px;">
-          <h3 style="display:flex; align-items:center; gap:8px; font-size:17px; font-weight:700; color:var(--text-primary); margin:0;">
-            <span class="material-icons-round" style="font-size:20px; color:var(--primary);">edit_note</span>
-            <span>Edit Vehicle Details</span>
-          </h3>
-          <button class="btn-outline-sm" onclick="cancelEdit()">Cancel</button>
-        </div>
-        <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
-          <div class="form-group">
-            <label data-key="cd_edit_name">Vehicle Name</label>
-            <input type="text" id="edit-name" required />
-          </div>
-          <div class="form-group">
-            <label data-key="cd_edit_plate">Plate Number</label>
-            <input type="text" id="edit-plate" required />
-          </div>
-          <div class="form-group">
-            <label data-key="cd_edit_type">Vehicle Type</label>
-            <select id="edit-type">
-              <option value="sedan">Sedan</option>
-              <option value="suv">SUV</option>
-              <option value="hatchback">Hatchback</option>
-              <option value="mpv">MPV</option>
-              <option value="coupe">Coupe</option>
-              <option value="truck">Truck</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label data-key="cd_edit_fuel">Fuel Type</label>
-            <select id="edit-fuel">
-              <option value="Petrol">Petrol</option>
-              <option value="Diesel">Diesel</option>
-              <option value="Hybrid">Hybrid</option>
-              <option value="Electric">Electric</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label data-key="cd_edit_trans">Transmission</label>
-            <select id="edit-trans">
-              <option value="Auto">Auto</option>
-              <option value="Manual">Manual</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label data-key="cd_edit_rate">Daily Rate (RM)</label>
-            <input type="number" id="edit-rate" required />
-          </div>
-          <div class="form-group">
-            <label data-key="cd_edit_seats">Seats</label>
-            <select id="edit-seats">
-              <option value="2">2 Seats</option>
-              <option value="4">4 Seats</option>
-              <option value="5">5 Seats</option>
-              <option value="7">7 Seats</option>
-              <option value="8">8 Seats</option>
-              <option value="12">12 Seats</option>
-            </select>
-          </div>
-          <!-- Image Management -->
-          <div style="grid-column:1/-1;margin-top:8px;">
-            <label
-              style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:0.5px;margin-bottom:10px;display:block;">
-              Vehicle Photos (max 10)
-            </label>
-            <div id="edit-images-grid" class="edit-images-grid"></div>
-            <div style="margin-top:12px; display:flex; align-items:center; gap:10px;">
-              <label for="edit-image-upload" class="btn-outline-sm"
-                style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
-                <span class="material-icons-round" style="font-size:16px;">add_photo_alternate</span>
-                Add Photo
-              </label>
-              <input type="file" id="edit-image-upload" accept="image/*" multiple style="display:none;"
-                onchange="handleImageUpload(event)" />
-              <span style="font-size:12px;color:var(--text-tertiary);" id="img-count-label">0/10 photos</span>
-            </div>
-          </div>
-
-          <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;margin-top:12px;padding-top:16px;border-top:1px solid var(--border-subtle);">
-            <button type="button" class="btn-outline-sm" onclick="cancelEdit()">Cancel</button>
-            <button type="submit" class="btn-primary-sm" style="padding:0 24px;">
-              <span class="material-icons-round" style="font-size:14px">save</span> Save Changes
-            </button>
-          </div>
-        </form>
-      </div>
-
       <!-- BOOKING HISTORY -->
       <div class="card reveal-on-scroll" style="margin-top:24px; border-radius:22px; padding:0; overflow:hidden;">
         <div class="card-header" style="padding:20px 24px; border-bottom:1px solid var(--border-subtle); margin:0;">
@@ -283,6 +195,100 @@
       <div id="footer-placeholder" style="margin-top: 32px;"></div>
     </div>
   </main>
+
+  <!-- EDIT VEHICLE MODAL (POPUP) -->
+  <div class="modal-overlay" id="edit-car-modal" style="display:none;" onclick="if(event.target===this)closeEditCarModal()">
+    <div class="modal-container" style="width:100%;max-width:680px;max-height:90vh;overflow-y:auto;" role="dialog" aria-modal="true">
+      <div class="modal-header" style="border-bottom:1px solid var(--border-subtle);padding-bottom:16px;">
+        <h3 style="display:flex;align-items:center;gap:8px;color:var(--text-primary);font-size:18px;font-weight:700;margin:0;">
+          <span class="material-icons-round" style="font-size:22px;color:var(--primary);">edit_note</span>
+          <span data-key="cd_edit_modal_title">Edit Vehicle Details</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeEditCarModal()">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding:20px 0 0;">
+        <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
+          <div class="form-group">
+            <label data-key="cd_edit_name">Vehicle Name</label>
+            <input type="text" id="edit-name" required />
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_plate">Plate Number</label>
+            <input type="text" id="edit-plate" required />
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_type">Vehicle Type</label>
+            <select id="edit-type">
+              <option value="sedan">Sedan</option>
+              <option value="suv">SUV</option>
+              <option value="hatchback">Hatchback</option>
+              <option value="mpv">MPV</option>
+              <option value="coupe">Coupe</option>
+              <option value="truck">Truck</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_fuel">Fuel Type</label>
+            <select id="edit-fuel">
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Electric">Electric</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_trans">Transmission</label>
+            <select id="edit-trans">
+              <option value="Auto">Auto</option>
+              <option value="Manual">Manual</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label data-key="cd_edit_rate">Daily Rate (RM)</label>
+            <input type="number" id="edit-rate" required />
+          </div>
+          <div class="form-group" style="grid-column:1/-1;">
+            <label data-key="cd_edit_seats">Seats</label>
+            <select id="edit-seats">
+              <option value="2">2 Seats</option>
+              <option value="4">4 Seats</option>
+              <option value="5">5 Seats</option>
+              <option value="7">7 Seats</option>
+              <option value="8">8 Seats</option>
+              <option value="12">12 Seats</option>
+            </select>
+          </div>
+          <!-- Image Management -->
+          <div style="grid-column:1/-1;margin-top:4px;">
+            <label
+              style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:0.5px;margin-bottom:10px;display:block;">
+              Vehicle Photos (max 10)
+            </label>
+            <div id="edit-images-grid" class="edit-images-grid"></div>
+            <div style="margin-top:12px; display:flex; align-items:center; gap:10px;">
+              <label for="edit-image-upload" class="btn-outline-sm"
+                style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+                <span class="material-icons-round" style="font-size:16px;">add_photo_alternate</span>
+                Add Photo
+              </label>
+              <input type="file" id="edit-image-upload" accept="image/*" multiple style="display:none;"
+                onchange="handleImageUpload(event)" />
+              <span style="font-size:12px;color:var(--text-tertiary);" id="img-count-label">0/10 photos</span>
+            </div>
+          </div>
+
+          <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;margin-top:16px;padding-top:18px;border-top:1px solid var(--border-subtle);">
+            <button type="button" class="btn-outline-sm" onclick="closeEditCarModal()">Cancel</button>
+            <button type="submit" class="btn-primary-sm" style="padding:0 24px;">
+              <span class="material-icons-round" style="font-size:14px">save</span> Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- SYSTEM STATUS MODAL -->
   <div class="modal-overlay" id="status-redirect-modal" style="display:none">
@@ -375,7 +381,7 @@
   <script src="../../../../shared/js/api.js"></script>
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
-  <script src="../../../js/car-detail.js?v=5.2.16"></script>
+  <script src="../../../js/car-detail.js?v=5.2.18"></script>
 </body>
 
 </html>
