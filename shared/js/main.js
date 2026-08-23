@@ -1145,4 +1145,42 @@
   });
 })();
 
+/* =====================================================
+   SECTION 15E: GLOBAL AI ASSISTANT FAB PERSISTENCE
+   ===================================================== */
+(function ensureChatbotFab() {
+  function checkAndMountChatbot() {
+    if (document.getElementById('chatbot-fab')) return;
+
+    if (typeof window.initWeDriveChatbot === 'function') {
+      window.initWeDriveChatbot();
+      return;
+    }
+
+    // If chatbot script is not yet loaded, load it dynamically
+    var existingScript = document.querySelector('script[src*="chatbot.js"]');
+    if (!existingScript) {
+      var base = resolveBase();
+      var script = document.createElement('script');
+      script.src = base + 'shared/js/chatbot.js';
+      script.onload = function() {
+        if (typeof window.initWeDriveChatbot === 'function') {
+          window.initWeDriveChatbot();
+        }
+      };
+      document.body.appendChild(script);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAndMountChatbot);
+  } else {
+    checkAndMountChatbot();
+  }
+
+  // Backup check after page renders
+  setTimeout(checkAndMountChatbot, 400);
+})();
+
+
 

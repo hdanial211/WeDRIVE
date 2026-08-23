@@ -86,8 +86,23 @@
   }
 
   function initChatbot() {
+    if (document.getElementById('chatbot-fab')) return;
+
     var placeholder = document.getElementById('chatbot-placeholder');
-    if (!placeholder) return;
+    if (!placeholder) {
+      if (document.body) {
+        placeholder = document.createElement('div');
+        placeholder.id = 'chatbot-placeholder';
+        document.body.appendChild(placeholder);
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (!document.getElementById('chatbot-fab')) {
+            initChatbot();
+          }
+        });
+        return;
+      }
+    }
 
     var base = resolveBase();
 
@@ -106,12 +121,16 @@
     setupFabScrollCollapse();
   }
 
+  window.initWeDriveChatbot = initChatbot;
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initChatbot);
   } else {
     initChatbot();
   }
 
+  // Backup timer in case DOM finished late
+  setTimeout(initChatbot, 300);
 })();
 
 // --- GLOBAL CHATBOT LOGIC ---
