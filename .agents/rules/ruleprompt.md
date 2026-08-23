@@ -4,10 +4,18 @@ trigger: always_on
 
 # WeDRIVE Project Rules
 
-## 1. Theme & Design Consistency
+## 1. Theme & Design Consistency (Apple HIG Standard)
 
-- Setiap perubahan UI mesti ikut tema sedia ada (warna, font, layout).
-- Jangan cipta tema baru melainkan diarahkan oleh user.
+- Semua reka bentuk UI, komponen, peralihan, kad, butang, modal, tipografi, dan susun atur WAJIB mematuhi piawaian rasmi **Apple Human Interface Guidelines (HIG)** dan **Apple Design Resources**:
+  - `https://developer.apple.com/design/human-interface-guidelines/`
+  - `https://developer.apple.com/design/human-interface-guidelines/getting-started`
+  - `https://developer.apple.com/design/resources/`
+- Rujuk dokumen lengkap: `.agents/rules/apple_hig_design_system.md`.
+- **Tipografi:** SF Pro Display / SF Pro Text (`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`).
+- **Geometri:** Kad Bento Squircle (`border-radius: 24px/28px`), Butang/Pill (`border-radius: 9999px`), Input (`border-radius: 12px/14px`).
+- **Peralihan & Transisi Fizik Apple:** `cubic-bezier(0.16, 1, 0.3, 1)` dengan maklum balas sentuhan `transform: scale(0.97)` pada `:active`.
+- **Mod Siang & Malam:** Day Mode (`#F5F5F7` / `#FFFFFF`) dan Night Mode (`#000000` True Black / `#161618` Bento).
+- **Bahan Kaca:** Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
 
 ## 2. Git Version Control
 
