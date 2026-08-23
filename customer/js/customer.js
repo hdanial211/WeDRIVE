@@ -315,8 +315,11 @@
     var showcase = document.querySelector('.guest-hero-showcase');
     var img = document.getElementById('guest-spotlight-img');
 
-    if (animate && showcase) showcase.classList.add('is-changing');
+    if (animate && showcase) {
+      showcase.classList.add('is-changing');
+    }
 
+    var delay = animate ? 220 : 0;
     setTimeout(function () {
       if (img) {
         img.src = imagePath(car);
@@ -337,11 +340,13 @@
       renderSpotlightDots();
 
       if (showcase) {
-        setTimeout(function () {
-          showcase.classList.remove('is-changing');
-        }, 90);
+        requestAnimationFrame(function () {
+          setTimeout(function () {
+            showcase.classList.remove('is-changing');
+          }, 40);
+        });
       }
-    }, animate ? 160 : 0);
+    }, delay);
   }
 
   function startSpotlightCarousel() {
@@ -350,7 +355,7 @@
 
     spotlightTimer = setInterval(function () {
       renderSpotlight(spotlightIndex + 1, true);
-    }, 3800);
+    }, 4500);
   }
 
   window.switchSpotlight = function (index) {
