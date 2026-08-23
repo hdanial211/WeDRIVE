@@ -87,7 +87,7 @@
       '    </a>',
       '  </div>',
       '  <div class="sidebar-cta">',
-      '    <button class="sidebar-book-btn" onclick="window.location=\'' + base + 'customer/pages/dashboard/customer.html\'">',
+      '    <button class="sidebar-book-btn" onclick="(window.navigateToPage ? window.navigateToPage(\'' + base + 'customer/pages/dashboard/customer.html\') : window.location=\'' + base + 'customer/pages/dashboard/customer.html\')">',
       '      <span class="material-icons-round">add</span>',
       '      <span data-key="cust_new_booking">New Booking</span>',
       '    </button>',

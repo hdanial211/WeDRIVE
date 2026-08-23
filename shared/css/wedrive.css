@@ -1812,8 +1812,13 @@ footer,
 }
 
 .price-card .card-header {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
   margin-bottom: 20px;
   text-align: left;
+  width: 100%;
 }
 
 .price-card .card-icon {
@@ -1835,11 +1840,13 @@ footer,
   color: var(--text-primary);
   margin-bottom: 4px;
   letter-spacing: -0.02em;
+  width: 100%;
 }
 
 .price-card .card-header p {
   font-size: 13.5px;
   color: var(--text-secondary);
+  width: 100%;
 }
 
 .price-card .card-price {
@@ -5045,14 +5052,14 @@ main.main .content {
   margin-bottom: 28px;
 }
 
-.card-header {
+.card > .card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.card-header h3 {
+.card > .card-header h3 {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -5518,27 +5525,73 @@ body.lang-skeleton-reveal .guest-section-heading p {
   }
 }
 
-/* Applied to main page content on entry (leaves body transform-free so fixed FABs float properly) */
+/* Universal Page Content Entry (IN) Animation */
 main,
+.guest-page,
 .explore-page,
 .pricing-page,
 .how-it-works-page,
 .customer-main,
 .admin-main,
 .auth-shell,
-.auth-card {
+.auth-card,
+.booking-shell,
+.booking-container,
+.booking-main,
+.car-details-container,
+.details-main,
+.profile-page,
+.profile-container,
+.support-page,
+.support-container,
+.my-bookings-container,
+.bookings-main,
+.dashboard-container,
+.admin-content,
+.admin-layout,
+.content-wrapper,
+.lumina-center-stage,
+.complete-profile-card,
+.verification-card,
+.pending-card,
+.customer-shell,
+.admin-shell,
+.page-container {
   animation: pageTransitionIn 0.35s var(--ease-apple);
 }
 
-/* Applied when navigating away to another page (Page OUT) */
+/* Universal Page Content Exit (OUT) Animation */
 body.page-is-leaving main,
+body.page-is-leaving .guest-page,
 body.page-is-leaving .explore-page,
 body.page-is-leaving .pricing-page,
 body.page-is-leaving .how-it-works-page,
 body.page-is-leaving .customer-main,
 body.page-is-leaving .admin-main,
 body.page-is-leaving .auth-shell,
-body.page-is-leaving .auth-card {
+body.page-is-leaving .auth-card,
+body.page-is-leaving .booking-shell,
+body.page-is-leaving .booking-container,
+body.page-is-leaving .booking-main,
+body.page-is-leaving .car-details-container,
+body.page-is-leaving .details-main,
+body.page-is-leaving .profile-page,
+body.page-is-leaving .profile-container,
+body.page-is-leaving .support-page,
+body.page-is-leaving .support-container,
+body.page-is-leaving .my-bookings-container,
+body.page-is-leaving .bookings-main,
+body.page-is-leaving .dashboard-container,
+body.page-is-leaving .admin-content,
+body.page-is-leaving .admin-layout,
+body.page-is-leaving .content-wrapper,
+body.page-is-leaving .lumina-center-stage,
+body.page-is-leaving .complete-profile-card,
+body.page-is-leaving .verification-card,
+body.page-is-leaving .pending-card,
+body.page-is-leaving .customer-shell,
+body.page-is-leaving .admin-shell,
+body.page-is-leaving .page-container {
   animation: pageTransitionOut 0.22s cubic-bezier(0.32, 0.72, 0, 1) forwards !important;
   pointer-events: none !important;
 }
@@ -5554,6 +5607,7 @@ body.page-is-leaving .auth-card {
 
 @media (prefers-reduced-motion: reduce) {
   main,
+  .guest-page,
   .explore-page,
   .pricing-page,
   .how-it-works-page,
@@ -5561,6 +5615,28 @@ body.page-is-leaving .auth-card {
   .admin-main,
   .auth-shell,
   .auth-card,
+  .booking-shell,
+  .booking-container,
+  .booking-main,
+  .car-details-container,
+  .details-main,
+  .profile-page,
+  .profile-container,
+  .support-page,
+  .support-container,
+  .my-bookings-container,
+  .bookings-main,
+  .dashboard-container,
+  .admin-content,
+  .admin-layout,
+  .content-wrapper,
+  .lumina-center-stage,
+  .complete-profile-card,
+  .verification-card,
+  .pending-card,
+  .customer-shell,
+  .admin-shell,
+  .page-container,
   body.page-is-leaving main,
   ::view-transition-old(root),
   ::view-transition-new(root) {

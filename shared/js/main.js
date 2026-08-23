@@ -84,6 +84,13 @@
   var DAY_HREF = 'theme_day.css';
   var NIGHT_HREF = 'theme_night.css';
 
+  function getSavedTheme() {
+    return localStorage.getItem('wedrive-theme') || 
+           localStorage.getItem('wedrive_theme') || 
+           localStorage.getItem('theme') || 
+           'system';
+  }
+
   function getEffectiveTheme(mode) {
     if (mode === 'system') {
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day';
@@ -98,17 +105,36 @@
       var base = link.getAttribute('href').replace(/theme_(day|night)\.css(\?.*)?$/, '');
       link.href = base + (effectiveMode === 'night' ? NIGHT_HREF : DAY_HREF);
     }
-    /* Sync root class — allows CSS to target night-specific styles immediately */
-    document.documentElement.classList.toggle('night-mode', effectiveMode === 'night');
-    if (document.body) document.body.classList.toggle('night-mode', effectiveMode === 'night');
-    /* Set data-theme attribute for backward compatibility with [data-theme="dark"] CSS selectors */
-    document.documentElement.setAttribute('data-theme', effectiveMode === 'night' ? 'dark' : 'light');
-    localStorage.setItem(THEME_KEY, mode);
+    /* Sync root class & attributes immediately across html and body */
+    var isNight = effectiveMode === 'night';
+    document.documentElement.classList.toggle('night-mode', isNight);
+    document.documentElement.classList.toggle('dark', isNight);
+    if (document.body) {
+      document.body.classList.toggle('night-mode', isNight);
+      document.body.classList.toggle('dark', isNight);
+    }
+    /* Set data-theme attribute for CSS selectors */
+    document.documentElement.setAttribute('data-theme', isNight ? 'dark' : 'light');
+    if (document.body) {
+      document.body.setAttribute('data-theme', isNight ? 'dark' : 'light');
+    }
+
+    /* Save to all known storage keys for 100% platform-wide sync */
+    localStorage.setItem('wedrive-theme', mode);
+    localStorage.setItem('wedrive_theme', mode);
+    localStorage.setItem('theme', mode);
+
     updateThemeBtns(mode, animate);
+
+    try {
+      window.dispatchEvent(new CustomEvent('wedrive:themechange', {
+        detail: { mode: mode, effective: effectiveMode }
+      }));
+    } catch (_) {}
   }
 
   function updateThemeBtns(mode, animate) {
-    var lang = localStorage.getItem('wedrive-lang') || 'en';
+    var lang = localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_language') || 'ms';
     var isMalay = lang === 'ms';
 
     document.querySelectorAll('.theme-toggle').forEach(function (btn) {
@@ -122,7 +148,6 @@
         setTimeout(function () { btn.classList.remove('pop'); }, 320);
       }
 
-      // Show current mode icon: system (device theme), day (sun), night (moon)
       if (mode === 'system') {
         icon.textContent = 'settings_brightness';
         btn.setAttribute('aria-label', isMalay 
@@ -146,7 +171,7 @@
   window.updateThemeBtns = updateThemeBtns;
 
   window.toggleTheme = function () {
-    var current = localStorage.getItem(THEME_KEY) || 'system';
+    var current = getSavedTheme();
     var next = 'system';
     if (current === 'system') {
       next = 'day';
@@ -162,39 +187,47 @@
     applyTheme(theme, false);
   };
 
-
   function initTheme() {
-    var saved = localStorage.getItem(THEME_KEY) || 'system';
+    var saved = getSavedTheme();
     applyTheme(saved, false);
   }
 
-  // Run immediately so if script is in <head>, it prevents FOUC
+  // Run immediately so if script is in <head> or <body>, it applies instantaneously
   initTheme();
 
-  // Listen for device theme preference changes in real-time if set to system
+  // Listen for device theme preference changes in real-time
   var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   try {
     mediaQuery.addEventListener('change', function () {
-      var saved = localStorage.getItem(THEME_KEY) || 'system';
-      if (saved === 'system') {
+      if (getSavedTheme() === 'system') {
         applyTheme('system', false);
       }
     });
   } catch (e) {
     mediaQuery.addListener(function () {
-      var saved = localStorage.getItem(THEME_KEY) || 'system';
-      if (saved === 'system') {
+      if (getSavedTheme() === 'system') {
         applyTheme('system', false);
       }
     });
   }
 
+  // Cross-tab theme synchronization listener
+  window.addEventListener('storage', function (e) {
+    if (e.key === 'wedrive-theme' || e.key === 'wedrive_theme' || e.key === 'theme') {
+      if (e.newValue) applyTheme(e.newValue, false);
+    }
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
-      // Re-apply to body once it exists
-      var saved = localStorage.getItem(THEME_KEY) || 'system';
+      var saved = getSavedTheme();
       var effectiveMode = getEffectiveTheme(saved);
-      if (document.body) document.body.classList.toggle('night-mode', effectiveMode === 'night');
+      var isNight = effectiveMode === 'night';
+      if (document.body) {
+        document.body.classList.toggle('night-mode', isNight);
+        document.body.classList.toggle('dark', isNight);
+        document.body.setAttribute('data-theme', isNight ? 'dark' : 'light');
+      }
     });
   }
 })();
@@ -1084,6 +1117,19 @@
     return bar;
   }
 
+  // Global programmatic page transition navigator
+  window.navigateToPage = function (url, customDelay) {
+    if (!url) return;
+    var bar = getProgressBar();
+    if (bar) bar.classList.add('active');
+    if (document.body) document.body.classList.add('page-is-leaving');
+    if (document.documentElement) document.documentElement.classList.add('page-is-leaving');
+    var delay = typeof customDelay === 'number' ? customDelay : 200;
+    setTimeout(function () {
+      window.location.href = url;
+    }, delay);
+  };
+
   // Ensure clean state upon arrival (including browser back/forward cache)
   window.addEventListener('pageshow', function () {
     if (document.body) {
@@ -1096,52 +1142,47 @@
     if (bar) bar.classList.remove('active');
   });
 
-  // Intercept clicks on internal links to perform smooth Page OUT transition
+  // Universal click interceptor for seamless Page OUT transitions
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented) return;
-    if (e.button !== 0) return; // Only standard primary click
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // Allow modifier clicks (new tab)
+    if (e.button !== 0) return; // Standard click only
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // Allow new-tab modifier keys
 
+    // Check for <a> links
     var link = e.target.closest('a');
-    if (!link) return;
+    if (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+      if (link.hasAttribute('download')) return;
+      if (link.getAttribute('target') && link.getAttribute('target') !== '_self') return;
 
-    var href = link.getAttribute('href');
-    if (!href) return;
+      var targetUrl;
+      try {
+        targetUrl = new URL(link.href, window.location.href);
+      } catch (_) {
+        return;
+      }
 
-    // Ignore anchors, JS, protocols, modal triggers, or blank targets
-    if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-    if (link.hasAttribute('download')) return;
-    if (link.getAttribute('target') && link.getAttribute('target') !== '_self') return;
+      if (targetUrl.origin !== window.location.origin) return;
+      if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) {
+        return; // Same page anchor/reload
+      }
 
-    // Check same-origin navigation
-    var targetUrl;
-    try {
-      targetUrl = new URL(link.href, window.location.href);
-    } catch (_) {
+      e.preventDefault();
+      window.navigateToPage(link.href, 200);
       return;
     }
 
-    if (targetUrl.origin !== window.location.origin) return;
-    if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) {
-      return; // Same page
+    // Check for elements with data-href or data-navigate
+    var navEl = e.target.closest('[data-href], [data-navigate]');
+    if (navEl) {
+      var targetHref = navEl.getAttribute('data-href') || navEl.getAttribute('data-navigate');
+      if (targetHref && !targetHref.startsWith('#') && !targetHref.startsWith('javascript:')) {
+        e.preventDefault();
+        window.navigateToPage(targetHref, 200);
+      }
     }
-
-    // Trigger Page OUT transition
-    e.preventDefault();
-
-    var bar = getProgressBar();
-    if (bar) bar.classList.add('active');
-
-    if (document.body) {
-      document.body.classList.add('page-is-leaving');
-    }
-    if (document.documentElement) {
-      document.documentElement.classList.add('page-is-leaving');
-    }
-
-    setTimeout(function () {
-      window.location.href = link.href;
-    }, 220);
   });
 })();
 
