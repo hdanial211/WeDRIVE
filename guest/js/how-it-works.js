@@ -73,23 +73,6 @@
     animate();
   }
 
-  function initRipple() {
-    document.querySelectorAll('[data-hiw-ripple]').forEach(function (button) {
-      button.addEventListener('click', function (event) {
-        var rect = button.getBoundingClientRect();
-        var size = Math.max(rect.width, rect.height);
-        var ripple = document.createElement('span');
-        ripple.className = 'hiw-ripple';
-        ripple.style.width = size + 'px';
-        ripple.style.height = size + 'px';
-        ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
-        ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
-        button.appendChild(ripple);
-        window.setTimeout(function () { ripple.remove(); }, 700);
-      });
-    });
-  }
-
   function initProgressAndParallax() {
     function update() {
       var scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
@@ -159,7 +142,6 @@
     initReveal();
     initProgressAndParallax();
     initCursor();
-    initRipple();
     initViewerSharedModule();
     initHeroAndViewerSync();
   });
