@@ -1,8 +1,31 @@
-/**
- * WeDRIVE - Admin Module JS
- * Data fetched from shared/dummy/data.json
- * Switch to real API endpoint when backend is ready.
- */
+function renderAdminSkeletons() {
+  const tbody = document.getElementById('car-tbody');
+  if (tbody) {
+    let rows = '';
+    for (let i = 0; i < 5; i++) {
+      rows += `
+        <tr>
+          <td><span class="skeleton-text skeleton-shimmer" style="width:140px;height:16px;"></span></td>
+          <td><span class="skeleton-text skeleton-shimmer" style="width:75px;height:14px;"></span></td>
+          <td><span class="skeleton-text skeleton-shimmer" style="width:60px;height:14px;"></span></td>
+          <td><span class="skeleton-pill skeleton-shimmer" style="width:80px;height:24px;"></span></td>
+          <td><span class="skeleton-text skeleton-shimmer" style="width:70px;height:14px;"></span></td>
+          <td><span class="skeleton-text skeleton-shimmer" style="width:55px;height:14px;"></span></td>
+          <td><span class="skeleton-text skeleton-shimmer" style="width:65px;height:14px;"></span></td>
+          <td><span class="skeleton-pill skeleton-shimmer" style="width:70px;height:28px;"></span></td>
+        </tr>`;
+    }
+    tbody.innerHTML = rows;
+  }
+
+  ['stat-vehicles', 'stat-rentals', 'stat-revenue', 'stat-customers'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '<span class="skeleton-text skeleton-shimmer" style="width:60px;height:24px;display:inline-block;"></span>';
+  });
+}
+
+// Render skeleton immediately
+renderAdminSkeletons();
 
 // ─── FETCH & INITIALISE ───────────────────────────────────────────────────────
 window.WeDriveAPI.getAdminData()

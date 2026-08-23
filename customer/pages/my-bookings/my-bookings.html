@@ -317,8 +317,27 @@
       if (action === 'cancel') { alert('Booking cancellation request submitted for review.'); }
     }
 
+    function renderBookingSkeletons() {
+      var listEl = document.getElementById('mybk-list');
+      if (!listEl) return;
+      var html = '';
+      for (var i = 0; i < 3; i++) {
+        html += '<div class="mybk-card" style="pointer-events:none;">';
+        html += '  <div class="mybk-card-img skeleton-shimmer" style="height:100px;border-radius:12px;"></div>';
+        html += '  <div class="mybk-card-body" style="gap:16px;">';
+        html += '    <div><div class="skeleton-text skeleton-shimmer" style="width:120px;height:18px;margin-bottom:6px;"></div><div class="skeleton-text skeleton-shimmer" style="width:70px;height:12px;"></div></div>';
+        html += '    <div><div class="skeleton-text skeleton-shimmer" style="width:80px;height:12px;margin-bottom:6px;"></div><div class="skeleton-text skeleton-shimmer" style="width:140px;height:14px;"></div></div>';
+        html += '    <div><div class="skeleton-text skeleton-shimmer" style="width:60px;height:12px;margin-bottom:6px;"></div><div class="skeleton-pill skeleton-shimmer" style="width:80px;height:24px;"></div></div>';
+        html += '    <div><div class="skeleton-text skeleton-shimmer" style="width:90px;height:20px;margin-bottom:8px;"></div><div class="skeleton-pill skeleton-shimmer" style="width:90px;height:28px;"></div></div>';
+        html += '  </div>';
+        html += '</div>';
+      }
+      listEl.innerHTML = html;
+    }
+
     // Load bookings from Supabase
     async function loadMyBookings() {
+      renderBookingSkeletons();
       try {
         if (window.WeDriveGetSettings) {
           try {
@@ -354,7 +373,8 @@
 
     // Init after page load
     window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(loadMyBookings, 500);
+      renderBookingSkeletons();
+      setTimeout(loadMyBookings, 300);
     });
   </script>
 </body>

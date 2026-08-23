@@ -122,10 +122,10 @@
     for (var i = 0; i < SKELETON_N; i++) {
       html += [
         '<div class="sp-skeleton-item">',
-        '  <div class="sp-skel-thumb"></div>',
+        '  <div class="sp-skel-thumb skeleton-shimmer"></div>',
         '  <div class="sp-skel-lines">',
-        '    <div class="sp-skel-line short"></div>',
-        '    <div class="sp-skel-line long"></div>',
+        '    <div class="sp-skel-line short skeleton-shimmer"></div>',
+        '    <div class="sp-skel-line long skeleton-shimmer"></div>',
         '  </div>',
         '</div>'
       ].join('');
