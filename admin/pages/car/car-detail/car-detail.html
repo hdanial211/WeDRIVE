@@ -96,46 +96,53 @@
         </div>
       </div>
 
-      <!-- BOOKING CALENDAR -->
-      <div class="card reveal-on-scroll" style="margin-top:24px; border-radius:22px; padding:24px;">
-        <div class="card-header" style="margin-bottom:16px; border-bottom:1px solid var(--border-subtle); padding-bottom:14px;">
-          <h3 style="display:flex; align-items:center; gap:8px; font-size:17px; font-weight:700; color:var(--text-primary); margin:0;">
-            <span class="material-icons-round" style="font-size:20px; color:var(--primary);">calendar_month</span>
-            <span>Booking Calendar</span>
-          </h3>
-          <div style="display:flex;align-items:center;gap:8px;">
+      <!-- BOOKING CALENDAR (Apple HIG Graphical Date Picker) -->
+      <div class="card reveal-on-scroll" style="margin-top:24px; border-radius:24px; padding:26px 28px;">
+        <div class="cal-apple-header">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="material-icons-round" style="font-size:22px; color:var(--primary);">calendar_month</span>
+              <span id="cal-month-label" style="font-size:18px; font-weight:700; color:var(--text-primary); letter-spacing:-0.3px;">--</span>
+            </div>
+            <button class="cal-today-pill" onclick="calendarToday()" title="Jump to Current Month">
+              Today
+            </button>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
             <button class="btn-outline-sm" onclick="clearCalendarSelection()" id="cal-clear-btn"
-              style="display:none;color:#EF4444;border-color:rgba(239,68,68,0.3);height:34px;padding:0 12px;">
-              <span class="material-icons-round" style="font-size:14px">close</span> Clear
+              style="display:none; color:#EF4444; border-color:rgba(239,68,68,0.3); height:34px; padding:0 14px; border-radius:var(--radius-pill); font-size:12.5px; font-weight:600;">
+              <span class="material-icons-round" style="font-size:14px; margin-right:4px;">close</span> Reset Selection
             </button>
-            <button class="btn-outline-sm" onclick="calendarPrev()" id="cal-prev-btn" style="height:34px;width:34px;padding:0;display:flex;align-items:center;justify-content:center;">
-              <span class="material-icons-round" style="font-size:16px">chevron_left</span>
-            </button>
-            <span id="cal-month-label"
-              style="font-size:13.5px;font-weight:700;color:var(--text-primary);min-width:140px;text-align:center;">--</span>
-            <button class="btn-outline-sm" onclick="calendarNext()" id="cal-next-btn" style="height:34px;width:34px;padding:0;display:flex;align-items:center;justify-content:center;">
-              <span class="material-icons-round" style="font-size:16px">chevron_right</span>
-            </button>
+            <div class="cal-nav-group">
+              <button class="cal-nav-btn" onclick="calendarPrev()" id="cal-prev-btn" title="Previous Month" aria-label="Previous Month">
+                <span class="material-icons-round" style="font-size:18px;">chevron_left</span>
+              </button>
+              <button class="cal-nav-btn" onclick="calendarNext()" id="cal-next-btn" title="Next Month" aria-label="Next Month">
+                <span class="material-icons-round" style="font-size:18px;">chevron_right</span>
+              </button>
+            </div>
           </div>
         </div>
-        <div>
-          <p style="font-size:12.5px;color:var(--text-tertiary);margin:0 0 14px;display:flex;align-items:center;gap:6px;">
-            <span class="material-icons-round" style="font-size:16px;color:var(--primary);">info</span>
-            Click an available green date to set <strong>pickup</strong>, then another to set <strong>return</strong>.
-          </p>
-          <!-- Day headers -->
-          <div class="cal-grid cal-header">
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-            <div>Sun</div>
-          </div>
-          <!-- Calendar days -->
-          <div class="cal-grid" id="cal-days-grid"></div>
+
+        <p style="font-size:12.5px; color:var(--text-tertiary); margin:0 0 16px; display:flex; align-items:center; gap:6px;">
+          <span class="material-icons-round" style="font-size:16px; color:var(--primary);">touch_app</span>
+          Click an available date to set <strong>pickup</strong>, then another to set <strong>return</strong>.
+        </p>
+
+        <!-- Weekday headers -->
+        <div class="cal-grid cal-header">
+          <div>MON</div>
+          <div>TUE</div>
+          <div>WED</div>
+          <div>THU</div>
+          <div>FRI</div>
+          <div>SAT</div>
+          <div>SUN</div>
         </div>
+
+        <!-- Calendar days grid -->
+        <div class="cal-grid" id="cal-days-grid"></div>
+
         <!-- Legend -->
         <div class="cal-legend">
           <div class="cal-legend-item"><span class="cal-dot available"></span> Available</div>
@@ -143,6 +150,7 @@
           <div class="cal-legend-item"><span class="cal-dot pending"></span> Pending</div>
           <div class="cal-legend-item"><span class="cal-dot past"></span> Past</div>
         </div>
+
         <!-- Selected day info / Booking summary -->
         <div id="cal-day-info" class="cal-day-info" style="display:none;"></div>
       </div>
@@ -381,7 +389,7 @@
   <script src="../../../../shared/js/api.js"></script>
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
-  <script src="../../../js/car-detail.js?v=5.2.19"></script>
+  <script src="../../../js/car-detail.js?v=5.2.20"></script>
 </body>
 
 </html>

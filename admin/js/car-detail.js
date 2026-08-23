@@ -710,6 +710,13 @@ function initCalendar() {
   renderCalendar();
 }
 
+function calendarToday() {
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar();
+}
+
 function calendarPrev() {
   calMonth--;
   if (calMonth < 0) { calMonth = 11; calYear--; }
@@ -726,18 +733,22 @@ function clearCalendarSelection() {
   calPickup = null;
   calReturn = null;
   renderCalendar();
-  document.getElementById('cal-day-info').style.display = 'none';
+  const info = document.getElementById('cal-day-info');
+  if (info) info.style.display = 'none';
 }
 
 function renderCalendar() {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
 
-  document.getElementById('cal-month-label').textContent = `${monthNames[calMonth]} ${calYear}`;
+  const monthLabel = document.getElementById('cal-month-label');
+  if (monthLabel) {
+    monthLabel.textContent = `${monthNames[calMonth]} ${calYear}`;
+  }
 
   const carBookings = getCarBookings();
   const statusMap = buildDateStatusMap(carBookings);
-  const rateNum = parseInt((carData.rate || '').replace(/[^0-9]/g, '')) || 0;
+  const rateNum = parseInt((carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
   const rateLabel = `RM ${rateNum}`;
 
   const firstDay = new Date(calYear, calMonth, 1);
@@ -749,6 +760,7 @@ function renderCalendar() {
   today.setHours(0, 0, 0, 0);
 
   const grid = document.getElementById('cal-days-grid');
+  if (!grid) return;
   let html = '';
 
   for (let i = 0; i < startOffset; i++) {
@@ -771,10 +783,10 @@ function renderCalendar() {
 
     const isToday = dateObj.getTime() === today.getTime();
 
-    // Check if this date is in selected range
+    // Check if this date is in selected range (Apple HIG continuous range styling)
     let rangeClass = '';
     if (calPickup && !calReturn && dateStr === calPickup) {
-      rangeClass = ' cal-range-start';
+      rangeClass = ' cal-range-single';
     } else if (calPickup && calReturn) {
       if (dateStr === calPickup) rangeClass = ' cal-range-start';
       else if (dateStr === calReturn) rangeClass = ' cal-range-end';
@@ -787,9 +799,12 @@ function renderCalendar() {
     html += `
     <div class="cal-cell ${status}${todayClass}${rangeClass}" 
          ${clickable ? `onclick="selectCalDay('${dateStr}', '${status}')"` : ''}
-         data-date="${dateStr}">
-      <span class="cal-badge"></span>
-      <span class="cal-day">${d}</span>
+         data-date="${dateStr}"
+         title="${dateStr} - ${status.toUpperCase()}">
+      <div class="cal-cell-inner">
+        <span class="cal-day">${d}</span>
+        <span class="cal-dot-indicator ${status}"></span>
+      </div>
       <span class="cal-rate">${status !== 'past' ? rateLabel : ''}</span>
     </div>`;
   }
@@ -1092,4 +1107,9 @@ window.confirmBookingRange = confirmBookingRange;
 window.clearCalendarSelection = clearCalendarSelection;
 window.showBookingInfo = showBookingInfo;
 window.updateCalendarInfo = updateCalendarInfo;
+window.calendarToday = calendarToday;
+window.calendarPrev = calendarPrev;
+window.calendarNext = calendarNext;
+window.selectCalDay = selectCalDay;
+
 

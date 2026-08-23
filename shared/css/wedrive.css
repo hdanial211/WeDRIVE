@@ -6647,36 +6647,110 @@ body.page-is-leaving .page-container {
 }
 
 /* Apple Booking Calendar Grid & Cells */
+/* ==========================================================================
+   Apple Human Interface Guidelines (HIG) Graphical Date & Calendar Picker
+   ========================================================================== */
+
+.cal-apple-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cal-today-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill, 9999px);
+  background: rgba(0, 113, 227, 0.1);
+  border: 1px solid rgba(0, 113, 227, 0.25);
+  color: var(--primary, #0071E3);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.cal-today-pill:hover {
+  background: rgba(0, 113, 227, 0.18);
+  transform: translateY(-1px);
+}
+
+.cal-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.05));
+  padding: 4px;
+  border-radius: var(--radius-pill, 9999px);
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.1));
+}
+
+.cal-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.cal-nav-btn:hover {
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.1));
+  color: var(--primary, #0071E3);
+  transform: scale(1.08);
+}
+
+.cal-nav-btn:active {
+  transform: scale(0.92);
+}
+
+/* Apple Weekday Caption Row */
 .cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 6px 0;
+  width: 100%;
 }
 
 .cal-header {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cal-header > div {
   text-align: center;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   color: var(--text-tertiary, #86868B);
-  letter-spacing: 0.5px;
-  padding-bottom: 8px;
+  letter-spacing: 0.6px;
+  padding: 4px 0;
 }
 
+/* Apple HIG Graphical Date Cell */
 .cal-cell {
   position: relative;
-  aspect-ratio: 1.15;
-  border-radius: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--bg-surface-3, rgba(255, 255, 255, 0.06));
-  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.1));
+  height: 66px;
   cursor: pointer;
-  padding: 6px 4px;
   box-sizing: border-box;
-  transition: all 0.2s var(--ease-apple);
+  z-index: 1;
+  transition: transform 0.2s var(--ease-apple);
 }
 
 .cal-cell.empty {
@@ -6684,124 +6758,200 @@ body.page-is-leaving .page-container {
   pointer-events: none;
 }
 
-.cal-badge {
+/* Continuous Apple Selection Band (Range Strip) */
+.cal-cell.cal-range-start::before {
+  content: '';
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 6px;
-  height: 6px;
+  top: 4px;
+  bottom: 4px;
+  right: 0;
+  left: 50%;
+  background: rgba(0, 113, 227, 0.15);
+  z-index: -1;
+}
+
+.cal-cell.cal-range-mid::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 113, 227, 0.15);
+  z-index: -1;
+}
+
+.cal-cell.cal-range-end::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  right: 50%;
+  background: rgba(0, 113, 227, 0.15);
+  z-index: -1;
+}
+
+.cal-cell.cal-range-single::before {
+  display: none !important;
+}
+
+/* Apple Circular Selection Pill */
+.cal-cell-inner {
+  position: relative;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  transition: all 0.2s var(--ease-apple);
+  z-index: 2;
 }
 
-.cal-cell.available .cal-badge {
-  background: #10B981;
+.cal-cell:hover:not(.past) .cal-cell-inner {
+  background: rgba(0, 113, 227, 0.12);
+  border-color: rgba(0, 113, 227, 0.3);
+  transform: scale(1.06);
 }
 
-.cal-cell.booked .cal-badge {
-  background: #0071E3;
+.cal-cell:active:not(.past) .cal-cell-inner {
+  transform: scale(0.95);
 }
 
-.cal-cell.pending .cal-badge {
-  background: #F59E0B;
-}
-
-.cal-cell.past .cal-badge {
-  background: #64748B;
-}
-
+/* Day Number */
 .cal-day {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.cal-rate {
-  font-size: 10px;
+  font-size: 14.5px;
   font-weight: 600;
-  color: var(--text-tertiary);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+/* Rate Label */
+.cal-rate {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--text-tertiary, #86868B);
   margin-top: 2px;
+  line-height: 1;
 }
 
-.cal-cell:hover:not(.past) {
-  background: var(--bg-surface-2);
-  border-color: var(--primary, #0071E3);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+/* Apple UICalendarView Decorator Dot */
+.cal-dot-indicator {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  margin-top: 3px;
 }
 
-.cal-cell.available {
-  border-color: rgba(16, 185, 129, 0.25);
-  background: rgba(16, 185, 129, 0.06);
+.cal-dot-indicator.available { background: #10B981; }
+.cal-dot-indicator.booked { background: #0071E3; }
+.cal-dot-indicator.pending { background: #F59E0B; }
+.cal-dot-indicator.past { background: #64748B; }
+
+/* Status-specific background subtle tints */
+.cal-cell.available .cal-cell-inner {
+  border-color: rgba(16, 185, 129, 0.2);
 }
 
-.cal-cell.booked {
-  border-color: rgba(0, 113, 227, 0.25);
-  background: rgba(0, 113, 227, 0.08);
+.cal-cell.booked .cal-cell-inner {
+  border-color: rgba(0, 113, 227, 0.2);
 }
 
-.cal-cell.pending {
-  border-color: rgba(245, 158, 11, 0.25);
-  background: rgba(245, 158, 11, 0.08);
+.cal-cell.pending .cal-cell-inner {
+  border-color: rgba(245, 158, 11, 0.2);
 }
 
+/* Today Indicator */
+.cal-cell.today .cal-cell-inner {
+  border: 2px solid var(--primary, #0071E3) !important;
+}
+
+.cal-cell.today .cal-day {
+  color: var(--primary, #0071E3);
+  font-weight: 700;
+}
+
+/* Past Dates */
 .cal-cell.past {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
-  background: transparent;
 }
 
-.cal-cell.today {
-  border: 1.5px solid var(--primary, #0071E3) !important;
+.cal-cell.past .cal-cell-inner {
+  background: transparent !important;
+  border-color: transparent !important;
 }
 
-.cal-cell.cal-range-start,
-.cal-cell.cal-range-end {
+/* Selected Start / End / Single Date States */
+.cal-cell.cal-range-start .cal-cell-inner,
+.cal-cell.cal-range-end .cal-cell-inner,
+.cal-cell.cal-range-single .cal-cell-inner {
   background: var(--primary, #0071E3) !important;
-  color: #FFFFFF !important;
   border-color: var(--primary, #0071E3) !important;
-  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 113, 227, 0.45);
 }
 
 .cal-cell.cal-range-start .cal-day,
 .cal-cell.cal-range-end .cal-day,
-.cal-cell.cal-range-start .cal-rate,
-.cal-cell.cal-range-end .cal-rate {
+.cal-cell.cal-range-single .cal-day {
   color: #FFFFFF !important;
+  font-weight: 700;
 }
 
-.cal-cell.cal-range-mid {
-  background: rgba(0, 113, 227, 0.15) !important;
-  border-color: rgba(0, 113, 227, 0.3) !important;
-  color: var(--primary, #0071E3) !important;
+.cal-cell.cal-range-start .cal-dot-indicator,
+.cal-cell.cal-range-end .cal-dot-indicator,
+.cal-cell.cal-range-single .cal-dot-indicator {
+  background: #FFFFFF !important;
+}
+
+/* Range Middle */
+.cal-cell.cal-range-mid .cal-cell-inner {
+  background: transparent;
+  border-color: transparent;
 }
 
 .cal-cell.cal-range-mid .cal-day {
   color: var(--primary, #0071E3) !important;
+  font-weight: 700;
 }
 
+.cal-cell.cal-range-mid .cal-rate {
+  color: var(--primary, #0071E3) !important;
+  opacity: 0.85;
+}
+
+/* Apple HIG Legend Bar */
 .cal-legend {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
   justify-content: center;
-  margin-top: 18px;
-  padding-top: 14px;
+  margin-top: 20px;
+  padding-top: 16px;
   border-top: 1px solid var(--border-subtle);
   flex-wrap: wrap;
 }
 
 .cal-legend-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12.5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--border-subtle);
+  font-size: 12px;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .cal-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   display: inline-block;
 }
