@@ -348,20 +348,9 @@
     if (spotlightTimer) clearInterval(spotlightTimer);
     if (spotlightCars.length < 2) return;
 
-    var showcase = document.querySelector('.guest-hero-showcase');
-    if (showcase && !showcase.dataset.hoverBound) {
-      showcase.dataset.hoverBound = '1';
-      showcase.addEventListener('mouseenter', function () {
-        if (spotlightTimer) clearInterval(spotlightTimer);
-      });
-      showcase.addEventListener('mouseleave', function () {
-        startSpotlightCarousel();
-      });
-    }
-
     spotlightTimer = setInterval(function () {
       renderSpotlight(spotlightIndex + 1, true);
-    }, 6000);
+    }, 3800);
   }
 
   window.switchSpotlight = function (index) {
@@ -761,42 +750,8 @@
     });
   }
 
-  function renderCarSkeletons(container, count) {
-    if (!container) return;
-    var n = count || 6;
-    var html = [];
-    for (var i = 0; i < n; i++) {
-      html.push([
-        '<div class="skeleton-car-card">',
-        '  <div class="skeleton-car-img skeleton-shimmer"></div>',
-        '  <div class="skeleton-car-title skeleton-shimmer"></div>',
-        '  <div class="skeleton-car-sub skeleton-shimmer"></div>',
-        '  <div class="skeleton-car-chips">',
-        '    <div class="skeleton-car-chip skeleton-shimmer"></div>',
-        '    <div class="skeleton-car-chip skeleton-shimmer"></div>',
-        '    <div class="skeleton-car-chip skeleton-shimmer"></div>',
-        '  </div>',
-        '  <div class="skeleton-car-footer">',
-        '    <div class="skeleton-car-price skeleton-shimmer"></div>',
-        '    <div class="skeleton-car-btn skeleton-shimmer"></div>',
-        '  </div>',
-        '</div>'
-      ].join(''));
-    }
-    container.innerHTML = html.join('');
-  }
-
   function loadCars() {
     var grid = document.getElementById('cars-grid');
-    var recoGrid = document.getElementById('reco-grid');
-    
-    if (grid && (!allCars || !allCars.length)) {
-      renderCarSkeletons(grid, 6);
-    }
-    if (recoGrid) {
-      renderCarSkeletons(recoGrid, 2);
-    }
-
     if (!window.WeDriveAPI || !window.WeDriveAPI.getCars) {
       if (grid) grid.innerHTML = '<div class="empty-state">Unable to load cars.</div>';
       return;
@@ -809,35 +764,6 @@
         buildSpotlightCars();
         renderSpotlight(0, false);
         startSpotlightCarousel();
-
-        // Render AI recommendations on customer dashboard if container exists
-        if (recoGrid && allCars.length) {
-          var topReco = allCars.slice(0, 2);
-          recoGrid.innerHTML = topReco.map(function(car) {
-            return [
-              '<div class="car-card" onclick="bookCar(' + Number(car.id) + ')">',
-              '  <div class="car-img">',
-              '    <img src="' + imagePath(car) + '" alt="' + escapeHtml(car.name) + '" onerror="this.onerror=null;this.src=\'' + fallbackImagePath() + '\'" />',
-              '    <span class="status-badge available"><span class="status-dot"></span> ' + escapeHtml(t('available')) + '</span>',
-              '  </div>',
-              '  <div class="car-body">',
-              '    <div class="car-meta"><span class="car-type">' + escapeHtml(car.label || car.type || '') + '</span></div>',
-              '    <h3 class="car-name">' + escapeHtml(car.name) + '</h3>',
-              '    <div class="car-specs">',
-              '      <span class="spec-tag"><span class="material-icons-round">event_seat</span> ' + escapeHtml(car.seats || '5') + ' ' + escapeHtml(t('seatsShort')) + '</span>',
-              '      <span class="spec-tag"><span class="material-icons-round">local_gas_station</span> ' + escapeHtml(car.fuel || 'Petrol') + '</span>',
-              '    </div>',
-              '    <div class="car-footer">',
-              '      <div class="price">RM ' + carPrice(car) + '<span>' + escapeHtml(t('day')) + '</span></div>',
-              '      <button class="btn-book" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
-              '        <span class="material-icons-round" style="font-size:17px">event_available</span> ' + escapeHtml(t('bookNow')),
-              '      </button>',
-              '    </div>',
-              '  </div>',
-              '</div>'
-            ].join('');
-          }).join('');
-        }
 
         // Auto-handle type filter parameter from URL
         var params = new URLSearchParams(window.location.search);

@@ -126,14 +126,11 @@
     if (el.dataset.motionPrepared === '1') return;
 
     el.dataset.motionPrepared = '1';
-    if (window.anime && !prefersReducedMotion) {
-      el.style.opacity = '0';
-      el.style.willChange = 'transform, opacity, filter';
-      if (wantsBlur(el)) {
-        el.style.filter = 'blur(8px)';
-      }
-    } else {
-      finishInstant(el);
+    el.style.opacity = '0';
+    el.style.willChange = 'transform, opacity, filter';
+
+    if (wantsBlur(el)) {
+      el.style.filter = 'blur(10px)';
     }
   }
 
@@ -155,10 +152,14 @@
       translateX: translate.translateX,
       translateY: translate.translateY,
       easing: el.dataset.easing || 'easeOutExpo',
-      duration: getDuration(el, 480),
+      duration: getDuration(el, 860),
       delay: getDelay(el, fallbackDelay || 0),
       complete: function () {
-        finishInstant(el);
+        el.style.willChange = 'auto';
+        el.style.transform = '';
+        if (wantsBlur(el)) {
+          el.style.filter = 'none';
+        }
       }
     };
 
@@ -167,7 +168,7 @@
     }
 
     if (wantsBlur(el)) {
-      config.filter = ['blur(8px)', 'blur(0px)'];
+      config.filter = ['blur(10px)', 'blur(0px)'];
     }
 
     window.anime(config);
@@ -179,13 +180,8 @@
 
     els.forEach(prepareElement);
     els.forEach(function (el, index) {
-      animateReveal(el, 40 + (index * 60));
+      animateReveal(el, 60 + (index * 90));
     });
-
-    // Safety fallback: guaranteed visibility within 600ms
-    window.setTimeout(function () {
-      els.forEach(finishInstant);
-    }, 600);
   }
 
   function initScrollReveal() {
@@ -1444,7 +1440,29 @@
   }
 
   function initPageTransition() {
-    // Native navigation - do not intercept links or prevent default
+    if (!window.anime || prefersReducedMotion) return;
+
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest('a[href]');
+      if (!link) return;
+
+      var href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http')) return;
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      if (link.target && link.target !== '_self') return;
+
+      event.preventDefault();
+
+      window.anime({
+        targets: 'body',
+        opacity: [1, 0],
+        duration: 320,
+        easing: 'easeInQuad',
+        complete: function () {
+          window.location.href = href;
+        }
+      });
+    });
   }
 
   function runNavbarAnimation() {

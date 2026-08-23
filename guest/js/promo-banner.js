@@ -28,8 +28,10 @@
 
     let banners = [];
     try {
-      const data = await window.WeDriveAPI.getData();
-      banners = (data.marketing && data.marketing.banners) || [];
+      if (window.WeDriveAPI && window.WeDriveAPI.getMarketing) {
+        const m = await window.WeDriveAPI.getMarketing();
+        banners = (m && m.banners) || [];
+      }
     } catch (e) {
       return;
     }

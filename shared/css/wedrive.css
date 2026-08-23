@@ -148,127 +148,13 @@ h3 { font-size: clamp(1.25rem, 2.2vw, 1.65rem); letter-spacing: -0.02em; }
 p  { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.6; }
 a  { color: var(--primary); text-decoration: none; transition: all 0.25s var(--ease-apple); }
 
-/* ── Apple HIG Universal Tactile Micro-Interactions & Transitions ────────── */
-button,
-[role="button"],
-input[type="submit"],
-input[type="button"],
-.btn,
-.btn-primary,
-.btn-secondary,
-.btn-outline,
-.btn-ghost,
-.btn-social,
-.btn-book,
-.btn-search,
-.btn-search-compact,
-.search-btn,
-.search-btn-compact,
-.btn-primary-sm,
-.btn-guest,
-.hero-btn-primary,
-.hero-btn-outline,
-.hero-btn-secondary,
-.hero-btn-ghost,
-.filter-chip,
-.sug-chip,
-.mybk-tab,
-.tab-btn,
-.action-btn,
-.view-btn,
-.rebook-btn,
-.cancel-btn,
-.mybk-page-btn,
-.sidebar-nav-item,
-.nav-item,
-.customer-nav a,
-.chatbot-fab,
-.chat-send,
-.chat-close-btn,
-.guest-modal-close,
-.booking-popup-close,
-.showcase-dot {
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 0.2s var(--ease-apple),
-              background-color 0.25s var(--ease-apple),
-              border-color 0.25s var(--ease-apple),
-              box-shadow 0.25s var(--ease-apple),
-              color 0.2s var(--ease-apple),
-              opacity 0.2s ease !important;
+/* ── Apple HIG Tactile Micro-Interactions & Transitions ──────────────────── */
+button, .btn-primary, .btn-secondary, .btn-ghost, .btn-social, .action-btn, .filter-chip, .sug-chip, .sidebar-nav-item, .nav-item {
+  transition: all 0.25s var(--ease-apple);
 }
 
-button:active,
-[role="button"]:active,
-input[type="submit"]:active,
-input[type="button"]:active,
-.btn:active,
-.btn-primary:active,
-.btn-secondary:active,
-.btn-outline:active,
-.btn-ghost:active,
-.btn-social:active,
-.btn-book:active,
-.btn-search:active,
-.btn-search-compact:active,
-.search-btn:active,
-.search-btn-compact:active,
-.btn-primary-sm:active,
-.btn-guest:active,
-.hero-btn-primary:active,
-.hero-btn-outline:active,
-.hero-btn-secondary:active,
-.hero-btn-ghost:active,
-.filter-chip:active,
-.sug-chip:active,
-.mybk-tab:active,
-.tab-btn:active,
-.action-btn:active,
-.view-btn:active,
-.rebook-btn:active,
-.cancel-btn:active,
-.mybk-page-btn:active,
-.sidebar-nav-item:active,
-.nav-item:active,
-.customer-nav a:active,
-.chatbot-fab:active,
-.chat-send:active,
-.chat-close-btn:active,
-.guest-modal-close:active,
-.booking-popup-close:active,
-.showcase-dot:active {
-  transform: scale(0.96) !important;
-  transition: transform 0.1s var(--ease-apple) !important;
-}
-
-/* Interactive Card Elevate & Spring Press */
-.car-card,
-.mybk-card,
-.stat-card,
-.ai-card,
-.bento-card,
-.pricing-card {
-  transition: transform 0.3s var(--ease-apple),
-              box-shadow 0.3s var(--ease-apple),
-              border-color 0.3s var(--ease-apple),
-              background-color 0.3s var(--ease-apple) !important;
-}
-
-.car-card:hover,
-.mybk-card:hover,
-.stat-card:hover,
-.ai-card:hover,
-.bento-card:hover {
-  transform: translateY(-2.5px);
-}
-
-.car-card:active,
-.mybk-card:active,
-.stat-card:active,
-.ai-card:active {
-  transform: scale(0.985) !important;
-  transition: transform 0.1s var(--ease-apple) !important;
+button:active, .btn-primary:active, .btn-secondary:active, .btn-ghost:active, .btn-social:active, .action-btn:active, .filter-chip:active, .sug-chip:active {
+  transform: scale(0.97) !important;
 }
 
 /* ==============================================================================
@@ -1188,17 +1074,6 @@ input[type="button"]:active,
   gap: 28px;
 }
 
-@keyframes appleCardFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(14px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 .car-card {
   background: var(--bg-surface);
   border-radius: var(--radius-bento);
@@ -1209,7 +1084,6 @@ input[type="button"]:active,
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  animation: appleCardFadeIn 0.35s var(--ease-apple) both;
   transition: transform 0.35s var(--ease-apple), box-shadow 0.35s var(--ease-apple), border-color 0.25s ease;
 }
 
@@ -1580,17 +1454,41 @@ footer,
   font-size: 14px;
 }
 
-.footer-inner {
+.footer-content {
   max-width: 1280px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .footer-brand img {
-  height: 28px;
-  margin-bottom: 12px;
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 0;
+}
+
+.footer-brand .brand-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 .footer-links h4 {
@@ -1609,6 +1507,8 @@ footer,
 .footer-links a {
   color: var(--text-secondary);
   font-size: 13.5px;
+  font-weight: 500;
+  transition: color 0.2s var(--ease-apple);
 }
 
 .footer-links a:hover {
@@ -4746,340 +4646,3 @@ table tr:hover td {
     gap: 6px;
   }
 }
-
-/* ==============================================================================
-   18. UNIVERSAL APPLE HIG SHIMMER SKELETON SYSTEM
-   ============================================================================== */
-
-@keyframes appleSkeletonShimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.skeleton-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.05) 25%,
-    rgba(0, 0, 0, 0.11) 37%,
-    rgba(0, 0, 0, 0.05) 63%
-  ) !important;
-  background-size: 200% 100% !important;
-  animation: appleSkeletonShimmer 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite !important;
-  color: transparent !important;
-  pointer-events: none !important;
-  user-select: none !important;
-  border-color: transparent !important;
-}
-
-html[data-theme="dark"] .skeleton-shimmer,
-.night-mode .skeleton-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.05) 25%,
-    rgba(255, 255, 255, 0.13) 37%,
-    rgba(255, 255, 255, 0.05) 63%
-  ) !important;
-  background-size: 200% 100% !important;
-}
-
-.skeleton-box {
-  display: block;
-  border-radius: var(--radius-bento);
-  width: 100%;
-}
-
-.skeleton-text {
-  display: inline-block;
-  height: 1em;
-  border-radius: 6px;
-  width: 100%;
-}
-
-.skeleton-pill {
-  display: inline-block;
-  height: 32px;
-  border-radius: var(--radius-pill);
-}
-
-.skeleton-circle {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-/* Bento Car Card Skeleton */
-.skeleton-car-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-bento);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: var(--shadow-sm);
-  position: relative;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-.skeleton-car-img {
-  width: 100%;
-  height: 190px;
-  border-radius: 14px;
-}
-
-.skeleton-car-title {
-  width: 70%;
-  height: 22px;
-  border-radius: 6px;
-}
-
-.skeleton-car-sub {
-  width: 45%;
-  height: 14px;
-  border-radius: 4px;
-}
-
-.skeleton-car-chips {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.skeleton-car-chip {
-  width: 68px;
-  height: 26px;
-  border-radius: var(--radius-pill);
-}
-
-.skeleton-car-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 14px;
-  border-top: 1px solid var(--border-subtle);
-  margin-top: auto;
-}
-
-.skeleton-car-price {
-  width: 90px;
-  height: 26px;
-  border-radius: 6px;
-}
-
-.skeleton-car-btn {
-  width: 120px;
-  height: 40px;
-  border-radius: var(--radius-pill);
-}
-
-/* Bento Metric Skeleton */
-.skeleton-metric-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-bento);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  box-shadow: var(--shadow-sm);
-}
-
-/* Table Row Skeleton */
-.skeleton-table-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-/* ==============================================================================
-   19. APPLE HIG POINTING DEVICES & POINTER EFFECTS SYSTEM
-   (https://developer.apple.com/design/human-interface-guidelines/pointing-devices)
-   ============================================================================== */
-
-/* ── 1. Apple Adaptive Pointer (Dot & Ring) ── */
-.wedrive-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  background: var(--primary);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.25s var(--ease-apple), transform 0.1s var(--ease-apple), background-color 0.25s ease;
-}
-
-.wedrive-cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border: 1.5px solid rgba(0, 113, 227, 0.45);
-  background: rgba(0, 113, 227, 0.04);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99998;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: width 0.3s var(--ease-apple),
-              height 0.3s var(--ease-apple),
-              border-color 0.3s var(--ease-apple),
-              background 0.3s var(--ease-apple),
-              border-radius 0.3s var(--ease-apple),
-              opacity 0.25s var(--ease-apple),
-              transform 0.15s var(--ease-apple);
-}
-
-.wedrive-cursor-label {
-  position: fixed;
-  top: 0;
-  left: 0;
-  font-size: 11px;
-  font-weight: 600;
-  color: #FFFFFF;
-  background: rgba(0, 0, 0, 0.75);
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -170%);
-  opacity: 0;
-  white-space: nowrap;
-  transition: opacity 0.2s ease, transform 0.2s var(--ease-apple);
-}
-
-/* Visibility */
-body.motion-cursor-visible .wedrive-cursor-dot,
-body.motion-cursor-visible .wedrive-cursor-ring {
-  opacity: 1;
-}
-
-body.motion-cursor-has-label .wedrive-cursor-label {
-  opacity: 1;
-}
-
-/* ── 2. Apple HIG Hover & Magnetism States ── */
-body.motion-cursor-hover .wedrive-cursor-ring {
-  width: 48px;
-  height: 48px;
-  background: rgba(0, 113, 227, 0.08);
-  border-color: rgba(0, 113, 227, 0.6);
-}
-
-body.motion-cursor-magnetic .wedrive-cursor-ring {
-  width: 56px;
-  height: 56px;
-  background: rgba(0, 113, 227, 0.12);
-  border-color: var(--primary);
-  box-shadow: 0 0 16px rgba(0, 113, 227, 0.25);
-}
-
-body.motion-cursor-link .wedrive-cursor-ring {
-  width: 42px;
-  height: 42px;
-  border-color: var(--primary);
-}
-
-body.motion-cursor-drag .wedrive-cursor-ring {
-  width: 54px;
-  height: 54px;
-  border-radius: 16px;
-  border-style: dashed;
-  border-color: var(--primary);
-}
-
-body.motion-cursor-click .wedrive-cursor-ring {
-  width: 24px;
-  height: 24px;
-  transform: translate(-50%, -50%) scale(0.88);
-  background: rgba(0, 113, 227, 0.2);
-}
-
-body.motion-cursor-click .wedrive-cursor-dot {
-  transform: translate(-50%, -50%) scale(1.3);
-}
-
-/* Dark Mode Pointer */
-html[data-theme="dark"] .wedrive-cursor-dot,
-.night-mode .wedrive-cursor-dot {
-  background: #2997FF;
-}
-
-html[data-theme="dark"] .wedrive-cursor-ring,
-.night-mode .wedrive-cursor-ring {
-  border-color: rgba(41, 151, 255, 0.45);
-  background: rgba(41, 151, 255, 0.08);
-}
-
-html[data-theme="dark"] body.motion-cursor-hover .wedrive-cursor-ring,
-.night-mode body.motion-cursor-hover .wedrive-cursor-ring {
-  background: rgba(41, 151, 255, 0.15);
-  border-color: rgba(41, 151, 255, 0.75);
-}
-
-/* ── 3. Apple HIG Pointing Device Effects (Highlight & Lift) ── */
-
-/* Highlight Effect: Soft translucent capsule highlight */
-.nav-links a,
-.nav-item,
-.sidebar-nav-item,
-.filter-chip,
-.mybk-tab,
-.action-btn,
-.showcase-dot {
-  position: relative;
-  transition: transform 0.2s var(--ease-apple),
-              background-color 0.25s var(--ease-apple),
-              color 0.2s var(--ease-apple),
-              box-shadow 0.25s var(--ease-apple) !important;
-}
-
-.nav-links a:hover,
-.nav-item:hover,
-.dropdown-item:hover {
-  background-color: var(--primary-light);
-  border-radius: var(--radius-pill);
-}
-
-/* Lift Effect: 3D Elevation with Ambient Shadow for Cards and Main Buttons */
-.hero-btn-primary:hover,
-.hero-btn-outline:hover,
-.hero-btn-secondary:hover,
-.btn-primary:hover,
-.btn-book:hover,
-.btn-search:hover,
-.booking-popup-proceed:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.35);
-}
-
-html[data-theme="dark"] .hero-btn-primary:hover,
-html[data-theme="dark"] .hero-btn-outline:hover,
-html[data-theme="dark"] .btn-primary:hover,
-.night-mode .hero-btn-primary:hover,
-.night-mode .hero-btn-outline:hover,
-.night-mode .btn-primary:hover {
-  box-shadow: 0 8px 26px rgba(41, 151, 255, 0.4);
-}
-
-/* Apple Focus Ring for Pointing Device / Keyboard Accessibility */
-:focus-visible {
-  outline: none !important;
-  box-shadow: 0 0 0 3px var(--primary-light), 0 0 0 1.5px var(--primary) !important;
-}
-
-
