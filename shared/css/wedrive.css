@@ -1599,87 +1599,246 @@ body.night-mode .guest-kicker .material-icons-round,
    11. FOOTER & INSTAGRAM MOBILE FLOATING GLASS DOCK
    ============================================================================== */
 
-/* Footer */
-footer,
-.wedrive-footer {
-  background: var(--bg-surface);
-  border-top: 1px solid var(--border-subtle);
-  padding: 60px 32px 40px;
-  color: var(--text-secondary);
-  font-size: 14px;
+/* ==============================================================================
+   APPLE LIVING FOOTER SYSTEM (DYNAMIC, LIVING, BOTTOM-ANCHORED)
+   ============================================================================== */
+
+#footer-placeholder {
+  margin-top: auto !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.footer-content {
-  max-width: 1280px;
+footer,
+.wedrive-footer {
+  position: relative;
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.85));
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  border-top: 1px solid var(--border-subtle);
+  padding: 48px 32px 36px;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+body.night-mode .wedrive-footer,
+body.dark .wedrive-footer {
+  background: rgba(18, 18, 22, 0.9);
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Living Ambient Shimmer Line on Top Border */
+.footer-ambient-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.6), rgba(168, 85, 247, 0.5), rgba(0, 113, 227, 0.6), transparent);
+  background-size: 200% 100%;
+  animation: footerGlowBreath 8s ease-in-out infinite;
+}
+
+@keyframes footerGlowBreath {
+  0% { background-position: 0% 50%; opacity: 0.5; }
+  50% { background-position: 100% 50%; opacity: 0.9; }
+  100% { background-position: 0% 50%; opacity: 0.5; }
+}
+
+.footer-shell {
+  max-width: 1360px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* Top Strip: Brand & Live Status */
+.footer-top-strip {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
+  gap: 20px;
   flex-wrap: wrap;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.footer-brand {
+.footer-brand-lockup {
   display: inline-flex;
   align-items: center;
   gap: 12px;
 }
 
-.footer-brand img {
-  height: 32px;
-  width: auto;
-  object-fit: contain;
-  margin-bottom: 0;
+.footer-logo-img,
+.wedrive-footer img,
+.wedrive-footer [data-logo] {
+  height: 28px !important;
+  max-height: 28px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block;
 }
 
-.footer-brand .brand-text {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-}
-
-.footer-links {
+.footer-brand-title {
   display: flex;
   align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
 }
 
-.footer-links h4 {
-  font-size: 14.5px;
+.footer-brand-title .we {
+  color: var(--primary);
+}
+
+.footer-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-light);
+  color: var(--primary);
+  letter-spacing: 0.02em;
+}
+
+/* Living Status Indicator */
+.footer-live-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.footer-status-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34C759;
+  box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+  animation: pulseStatus 2.2s infinite;
+}
+
+@keyframes pulseStatus {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 199, 89, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+}
+
+/* 4-Column Directory Grid */
+.footer-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--text-primary);
   margin-bottom: 16px;
 }
 
-.footer-links ul {
+.footer-col ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
 }
 
-.footer-links a {
+.footer-col a {
   color: var(--text-secondary);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
-  transition: color 0.2s var(--ease-apple);
+  text-decoration: none;
+  transition: all 0.2s var(--ease-apple);
+  display: inline-block;
 }
 
-.footer-links a:hover {
+.footer-col a:hover {
   color: var(--primary);
+  transform: translateX(2px);
 }
 
-.footer-bottom {
-  max-width: 1280px;
-  margin: 40px auto 0;
-  padding-top: 24px;
-  border-top: 1px solid var(--border-subtle);
+.footer-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  width: 100%;
+}
+
+/* Bottom Legal & Meta Bar */
+.footer-bottom-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 13px;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
   color: var(--text-muted);
+}
+
+.footer-legal-copy strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.footer-meta-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-region-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.footer-region-pill .material-icons-round {
+  font-size: 14px;
+  color: var(--primary);
+}
+
+@media (max-width: 900px) {
+  .footer-directory-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+
+@media (max-width: 540px) {
+  .footer-directory-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .footer-top-strip,
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* Mobile Floating Glass Dock (Instagram iOS Concept) */

@@ -758,7 +758,7 @@
     if (!placeholder) return;
 
     var base = resolveBasePath();
-    var url = base + 'shared/components/footer.html';
+    var url = base + 'shared/components/footer.html?v=5.2.3';
 
     fetch(url)
       .then(function (res) {
@@ -772,12 +772,22 @@
         if (logo) logo.src = base + 'shared/logo/wedrive-icon.png';
 
         var footerRoutes = {
+          nav_browse: base + 'index.html',
           footer_pricing: base + 'guest/pages/pricing/pricing.html',
+          nav_how: base + 'guest/pages/how-it-works/how-it-works.html',
+          nav_explore: base + 'guest/pages/explore-melaka/explore-melaka.html',
+          footer_tech_360: base + 'guest/pages/how-it-works/how-it-works.html#interactive',
+          footer_car: base + 'shared/pages/footer/about/about.html',
+          footer_tech_pricing: base + 'guest/pages/pricing/pricing.html#features',
+          footer_tech_keyless: base + 'guest/pages/how-it-works/how-it-works.html#journey',
+          footer_faq: base + 'shared/pages/footer/faq/faq.html',
+          footer_contact: base + 'shared/pages/footer/contact/contact.html',
+          footer_support_center: base + 'customer/pages/support/support.html',
+          footer_support_roadside: base + 'shared/pages/footer/contact/contact.html#emergency',
           footer_privacy: base + 'shared/pages/footer/terms/terms.html#privacy',
           footer_terms: base + 'shared/pages/footer/terms/terms.html',
-          footer_car: base + 'shared/pages/footer/about/about.html',
-          footer_faq: base + 'shared/pages/footer/faq/faq.html',
-          footer_contact: base + 'shared/pages/footer/contact/contact.html'
+          footer_legal_insurance: base + 'shared/pages/footer/terms/terms.html#insurance',
+          footer_legal_about: base + 'shared/pages/footer/about/about.html'
         };
         Object.keys(footerRoutes).forEach(function (key) {
           var link = placeholder.querySelector('[data-key="' + key + '"]');
