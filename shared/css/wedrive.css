@@ -5053,27 +5053,186 @@ body.dark .customer-sidebar {
   margin-bottom: 24px;
 }
 
-.filter-chip {
-  padding: 6px 16px;
-  border-radius: var(--radius-pill);
-  background: var(--bg-surface-3);
-  border: 1px solid var(--border-subtle);
+/* Apple Design System: Search Input Pill (.input-wrap-sm, .input-wrap) */
+.input-wrap-sm,
+.input-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.12));
   color: var(--text-secondary);
-  font-size: 12.5px;
-  font-weight: 600;
+  box-sizing: border-box;
+  transition: all 0.25s var(--ease-apple);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.input-wrap-sm .material-icons-round,
+.input-wrap .material-icons-round {
+  font-size: 18px !important;
+  color: var(--text-tertiary, #86868B);
+  flex-shrink: 0;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.input-wrap-sm input,
+.input-wrap input {
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100% !important;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: var(--text-primary) !important;
+}
+
+.input-wrap-sm input::placeholder,
+.input-wrap input::placeholder {
+  color: var(--text-tertiary, #86868B);
+  opacity: 0.85;
+}
+
+.input-wrap-sm:focus-within,
+.input-wrap:focus-within {
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.12));
+  border-color: var(--primary, #0071E3);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.input-wrap-sm:focus-within .material-icons-round,
+.input-wrap:focus-within .material-icons-round {
+  color: var(--primary, #0071E3);
+}
+
+/* Apple Secondary Glass Pill Button (.btn-outline-sm) */
+.btn-outline-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.12));
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
   transition: all 0.2s var(--ease-apple);
 }
 
-.filter-chip:hover {
-  background: var(--bg-surface-2);
+.btn-outline-sm .material-icons-round {
+  font-size: 16px;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.btn-outline-sm:hover {
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.14));
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-outline-sm:hover .material-icons-round {
   color: var(--text-primary);
 }
 
-.filter-chip.active {
-  background: var(--primary);
+.btn-outline-sm:active {
+  transform: scale(0.97);
+}
+
+/* Apple Primary Pill Button (.btn-primary-sm) */
+.btn-primary-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--primary, #0071E3);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #FFFFFF;
-  border-color: var(--primary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+  transition: all 0.2s var(--ease-apple);
+}
+
+.btn-primary-sm .material-icons-round {
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+.btn-primary-sm:hover {
+  background: var(--primary-hover, #0077ED);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 113, 227, 0.45);
+}
+
+.btn-primary-sm:active {
+  transform: scale(0.97);
+}
+
+/* Apple Segmented Filter Chips (.filter-chip, .date-chip) */
+.filter-chip,
+.date-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.1));
+  color: var(--text-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.filter-chip:hover,
+.date-chip:hover {
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.12));
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.filter-chip.active,
+.date-chip.active {
+  background: var(--primary, #0071E3) !important;
+  color: #FFFFFF !important;
+  border-color: var(--primary, #0071E3) !important;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+}
+
+.filter-chip:active,
+.date-chip:active {
+  transform: scale(0.96);
 }
 
 .booking-actions button,
