@@ -1,243 +1,337 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>WeDRIVE - Welcome</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-high": "#e6e8ea",
-                        "on-error-container": "#93000a",
-                        "background": "#f7f9fb",
-                        "tertiary-fixed-dim": "#b7c8e1",
-                        "error-container": "#ffdad6",
-                        "surface-variant": "#e0e3e5",
-                        "outline-variant": "#c2c6d6",
-                        "on-secondary-fixed": "#111c2d",
-                        "surface-container": "#eceef0",
-                        "on-background": "#191c1e",
-                        "on-primary-container": "#fefcff",
-                        "primary-fixed": "#d8e2ff",
-                        "surface-container-highest": "#e0e3e5",
-                        "inverse-primary": "#adc6ff",
-                        "on-tertiary-fixed": "#0b1c30",
-                        "inverse-on-surface": "#eff1f3",
-                        "surface-dim": "#d8dadc",
-                        "secondary-container": "#d5e0f8",
-                        "on-primary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "primary-container": "#2170e4",
-                        "tertiary-fixed": "#d3e4fe",
-                        "on-tertiary": "#ffffff",
-                        "on-secondary": "#ffffff",
-                        "secondary-fixed": "#d8e3fb",
-                        "surface-tint": "#005ac2",
-                        "surface-container-low": "#f2f4f6",
-                        "primary-fixed-dim": "#adc6ff",
-                        "on-secondary-container": "#586377",
-                        "on-error": "#ffffff",
-                        "inverse-surface": "#2d3133",
-                        "outline": "#727785",
-                        "secondary": "#545f73",
-                        "tertiary-container": "#66768d",
-                        "surface-container-lowest": "#ffffff",
-                        "on-primary-fixed-variant": "#004395",
-                        "on-surface": "#191c1e",
-                        "on-secondary-fixed-variant": "#3c475a",
-                        "tertiary": "#4d5d73",
-                        "on-tertiary-fixed-variant": "#38485d",
-                        "secondary-fixed-dim": "#bcc7de",
-                        "on-tertiary-container": "#fdfcff",
-                        "on-primary-fixed": "#001a42",
-                        "surface": "#f7f9fb",
-                        "primary": "#0058be",
-                        "surface-bright": "#f7f9fb",
-                        "on-surface-variant": "#424754"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "unit": "4px",
-                        "lg": "24px",
-                        "gutter": "16px",
-                        "xl": "32px",
-                        "sm": "8px",
-                        "md": "16px",
-                        "container-padding": "24px",
-                        "xs": "4px"
-                    },
-                    "fontFamily": {
-                        "label-sm": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "h3": ["Inter"],
-                        "h1": ["Inter"],
-                        "h2": ["Inter"],
-                        "body-md": ["Inter"]
-                    },
-                    "fontSize": {
-                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
-                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
-                        "h3": ["18px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "600" }],
-                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
-                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        .fade-in-up {
-            animation: fadeInUp 1.2s ease-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png?v=2" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <style>
+    .welcome-page-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-body);
+    }
 
-        .fade-in-delayed {
-            animation: fadeIn 1s ease-out 1s forwards;
-            opacity: 0;
-        }
+    .welcome-bento {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 520px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(40px) saturate(190%);
+      -webkit-backdrop-filter: blur(40px) saturate(190%);
+      border: 1px solid var(--border-glass);
+      border-radius: 32px;
+      padding: 48px 36px 40px;
+      box-shadow: var(--shadow-glass), 0 24px 60px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: welcomeCardEntrance 0.6s var(--ease-apple) forwards;
+    }
 
-        .bounce-subtle {
-            animation: bounceSubtle 2s infinite ease-in-out;
-        }
+    @keyframes welcomeCardEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(24px) scale(0.96);
+        filter: blur(6px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .welcome-orb-wrap {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
+    .welcome-orb-glow {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 113, 227, 0.5) 0%, rgba(175, 82, 222, 0.35) 50%, transparent 70%);
+      filter: blur(14px);
+      animation: welcomeOrbPulse 3.6s ease-in-out infinite alternate;
+    }
 
-        @keyframes bounceSubtle {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(8px);
-            }
-        }
-    </style>
+    @keyframes welcomeOrbPulse {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.6;
+      }
+      100% {
+        transform: scale(1.15);
+        opacity: 1;
+      }
+    }
+
+    .welcome-orb-core {
+      position: relative;
+      z-index: 2;
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #0071E3 0%, #5856D6 50%, #AF52DE 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      box-shadow: 0 10px 28px rgba(88, 86, 214, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .welcome-orb-core .material-icons-round {
+      font-size: 38px;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+      animation: aiSparkleTwinkle 3.2s ease-in-out infinite;
+    }
+
+    .welcome-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 113, 227, 0.08);
+      border: 1px solid rgba(0, 113, 227, 0.2);
+      color: var(--primary);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    html.night-mode .welcome-kicker,
+    body.night-mode .welcome-kicker {
+      background: rgba(41, 151, 255, 0.15);
+      border-color: rgba(41, 151, 255, 0.35);
+      color: #5AC8FA;
+    }
+
+    .welcome-title {
+      font-size: clamp(1.8rem, 4vw, 2.3rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .welcome-title .gradient-name {
+      background: linear-gradient(135deg, #0071E3 0%, #5856D6 60%, #AF52DE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .welcome-lead {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      max-width: 420px;
+      margin: 0;
+      font-weight: 450;
+    }
+
+    .welcome-progress-shell {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .welcome-progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-surface-3);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .welcome-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0071E3 0%, #2997FF 50%, #5AC8FA 100%);
+      border-radius: var(--radius-pill);
+      box-shadow: 0 0 12px rgba(0, 113, 227, 0.6);
+      transition: width 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .welcome-status-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .welcome-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34C759;
+      box-shadow: 0 0 6px rgba(52, 199, 89, 0.8);
+      animation: statusDotPulse 1.8s infinite ease-in-out;
+    }
+  </style>
 </head>
-<body class="bg-surface text-on-surface h-screen w-full flex flex-col justify-center items-center overflow-hidden font-body-lg text-body-lg" style="opacity: 0; transition: opacity 0.5s ease-out;">
-<!-- Splash Content -->
-<main class="flex flex-col items-center justify-center text-center px-container-padding w-full max-w-7xl mx-auto z-10 relative">
-<!-- Greeting -->
-<h1 id="welcome-name" class="font-h1 text-h1 text-primary fade-in-up mb-xl tracking-tight uppercase">
-            WELCOME BACK, USER
-        </h1>
-<!-- Subtitle/Hint -->
-<div class="fade-in-delayed flex flex-col items-center gap-md">
-<p class="font-body-md text-body-md text-secondary">Preparing your dashboard...</p>
-<span class="material-symbols-outlined text-primary bounce-subtle" data-icon="keyboard_arrow_down" style="font-size: 32px;">
-                keyboard_arrow_down
-            </span>
-</div>
-</main>
-<!-- Subtle Background Elements (Optional, for depth) -->
-<div class="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
-<div class="w-[800px] h-[800px] bg-primary-fixed-dim rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" style="animation-duration: 8s;"></div>
-</div>
+<body class="guest-page" data-cursor-glow>
+  <div class="welcome-page-shell">
+    <div class="ambient-glow top-left" aria-hidden="true"></div>
+    <div class="ambient-glow bottom-right" aria-hidden="true"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../../../shared/js/supabase-config.js"></script>
-<script src="../../../shared/js/api.js"></script>
+    <main class="welcome-bento">
+      <div class="welcome-orb-wrap">
+        <div class="welcome-orb-glow"></div>
+        <div class="welcome-orb-core">
+          <span class="material-icons-round">auto_awesome</span>
+        </div>
+      </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", async () => {
-        var sessionRaw = localStorage.getItem('wedrive_session');
-        var name = 'USER';
-        var role = 'customer';
-        
-        if (sessionRaw) {
-            try {
-                var session = JSON.parse(sessionRaw);
-                if (session.username) {
-                    name = session.username.toUpperCase();
-                } else if (session.name) {
-                    name = session.name.split(' ')[0].toUpperCase();
-                } else if (session.email) {
-                    name = session.email.split('@')[0].toUpperCase();
-                }
-                role = session.role || 'customer';
-            } catch (e) {
-                console.error("Session parse error", e);
-            }
+      <span class="welcome-kicker" id="welcome-kicker-label">
+        <span class="material-icons-round" style="font-size: 15px;">verified</span>
+        <span id="kicker-text">PENGESAHAN BERJAYA</span>
+      </span>
+
+      <h1 class="welcome-title" id="welcome-heading">
+        Selamat Kembali, <br /><span id="welcome-user-name" class="gradient-name">USER</span>
+      </h1>
+
+      <p class="welcome-lead" id="welcome-subtitle">
+        Menyediakan papan pemuka AI peribadi dan pengesyoran kenderaan pintar anda...
+      </p>
+
+      <div class="welcome-progress-shell">
+        <div class="welcome-progress-track">
+          <div class="welcome-progress-bar" id="welcome-progress-bar"></div>
+        </div>
+        <div class="welcome-status-text">
+          <div class="welcome-status-dot"></div>
+          <span id="welcome-status-label">Menyelaraskan profil pintar...</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      var currentLang = localStorage.getItem('wedrive_language') || 'ms';
+      var isMs = currentLang === 'ms';
+
+      // Parse user session
+      var sessionRaw = localStorage.getItem('wedrive_session');
+      var name = isMs ? 'Pengguna' : 'User';
+      var role = 'customer';
+
+      if (sessionRaw) {
+        try {
+          var session = JSON.parse(sessionRaw);
+          if (session.name) {
+            name = session.name.split(' ')[0];
+          } else if (session.username) {
+            name = session.username;
+          } else if (session.email) {
+            name = session.email.split('@')[0];
+          }
+          role = session.role || 'customer';
+        } catch (e) {
+          console.error("Session parse error", e);
         }
-        
-        document.getElementById('welcome-name').textContent = 'WELCOME BACK, ' + name;
+      }
 
-        // Fade in
-        setTimeout(() => {
-            document.body.style.opacity = "1";
-        }, 50);
+      // Populate text
+      var nameEl = document.getElementById('welcome-user-name');
+      var headingEl = document.getElementById('welcome-heading');
+      var kickerTextEl = document.getElementById('kicker-text');
+      var subtitleEl = document.getElementById('welcome-subtitle');
+      var statusLabelEl = document.getElementById('welcome-status-label');
 
-        // Determine redirect URL based on role and profile status
-        var redirectUrl = '../../../customer/pages/dashboard/customer.html';
+      if (nameEl) nameEl.textContent = name;
 
-        if (role === 'admin') {
-            // Admin skips verification -- go straight to admin dashboard
-            redirectUrl = '../../../admin/pages/dashboard/admin.html';
-        } else {
-            // Customer: check profile completeness and verification status
-            try {
-                var sb = window.supabaseClient;
-                if (sb) {
-                    var authSession = await sb.auth.getSession();
-                    if (authSession.data.session) {
-                        var uid = authSession.data.session.user.id;
-                        var profileCheck = await window.WeDriveAPI.checkProfileComplete(uid);
+      if (!isMs) {
+        if (headingEl) headingEl.innerHTML = 'Welcome Back, <br /><span id="welcome-user-name" class="gradient-name">' + name + '</span>';
+        if (kickerTextEl) kickerTextEl.textContent = 'AUTHENTICATION SUCCESSFUL';
+        if (subtitleEl) subtitleEl.textContent = 'Preparing your personalized AI dashboard and smart vehicle recommendations...';
+        if (statusLabelEl) statusLabelEl.textContent = 'Synchronizing smart profile...';
+      }
 
-                        if (!profileCheck.complete) {
-                            // Profile incomplete -- go to complete profile
-                            redirectUrl = '../complete-profile/complete-profile.html';
-                        } else if (profileCheck.status === 'Pending') {
-                            // Documents submitted, waiting for admin review
-                            redirectUrl = '../verification-pending/verification-pending.html';
-                        } else if (profileCheck.status === 'Rejected') {
-                            // Admin rejected -- go back to complete profile (will show rejection banner)
-                            redirectUrl = '../complete-profile/complete-profile.html';
-                        } else if (profileCheck.status === 'Verified') {
-                            // All good -- go to customer dashboard
-                            redirectUrl = '../../../customer/pages/dashboard/customer.html';
-                        } else {
-                            // No verification status yet (null) -- go to complete profile
-                            redirectUrl = '../complete-profile/complete-profile.html';
-                        }
-                    }
-                }
-            } catch (err) {
-                console.error('Profile check error:', err);
-                // On error, still redirect to dashboard as fallback
+      // Animate progress bar
+      var pBar = document.getElementById('welcome-progress-bar');
+      setTimeout(function() {
+        if (pBar) pBar.style.width = '100%';
+      }, 80);
+
+      // Determine redirect URL
+      var redirectUrl = '../../../customer/pages/dashboard/customer.html';
+
+      if (role === 'admin') {
+        redirectUrl = '../../../admin/pages/dashboard/admin.html';
+      } else {
+        try {
+          var sb = window.supabaseClient;
+          if (sb) {
+            var authSession = await sb.auth.getSession();
+            if (authSession && authSession.data && authSession.data.session) {
+              var uid = authSession.data.session.user.id;
+              var profileCheck = await window.WeDriveAPI.checkProfileComplete(uid);
+
+              if (!profileCheck.complete) {
+                redirectUrl = '../complete-profile/complete-profile.html';
+              } else if (profileCheck.status === 'Pending') {
+                redirectUrl = '../verification-pending/verification-pending.html';
+              } else if (profileCheck.status === 'Rejected') {
+                redirectUrl = '../complete-profile/complete-profile.html';
+              } else if (profileCheck.status === 'Verified') {
                 redirectUrl = '../../../customer/pages/dashboard/customer.html';
+              } else {
+                redirectUrl = '../complete-profile/complete-profile.html';
+              }
             }
+          }
+        } catch (err) {
+          console.error('Profile check error:', err);
+          redirectUrl = '../../../customer/pages/dashboard/customer.html';
         }
+      }
 
-        // Automatic transition after 3 seconds
-        setTimeout(() => {
-            document.body.style.opacity = "0";
-            setTimeout(() => {
-                window.location.href = redirectUrl;
-            }, 500);
-        }, 3000);
+      // Smooth exit transition after 2.4s
+      setTimeout(function () {
+        document.body.classList.add('page-is-leaving');
+        setTimeout(function () {
+          window.location.href = redirectUrl;
+        }, 240);
+      }, 2300);
     });
-</script>
-
-</body></html>
+  </script>
+</body>
+</html>
