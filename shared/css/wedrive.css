@@ -287,27 +287,45 @@ body.dark #wedrive-navbar.navbar-floating {
 }
 
 /* Admin / Customer main portal specific floating navbar alignment */
-main.main .navbar,
-main.main #wedrive-navbar {
-  position: sticky;
-  top: 0;
-  z-index: 900;
+main.main #navbar-placeholder,
+.customer-main #navbar-placeholder {
   width: 100%;
-  border-bottom: 1px solid var(--border-subtle);
+  display: block;
+  box-sizing: border-box;
 }
 
-main.main .navbar.navbar-compact,
-main.main .navbar.navbar-floating,
-main.main #wedrive-navbar.navbar-compact,
-main.main #wedrive-navbar.navbar-floating {
-  top: 14px;
-  height: 48px;
-  padding: 0 20px;
-  width: calc(100% - 48px);
-  max-width: 1360px;
-  margin: 0 24px;
-  border-radius: var(--radius-pill);
+main.main .navbar,
+main.main #wedrive-navbar,
+.customer-main .navbar,
+.customer-main #wedrive-navbar {
+  position: sticky !important;
+  top: 14px !important;
+  z-index: 900;
+  width: calc(100% - 64px) !important;
+  max-width: calc(1400px - 64px) !important;
+  margin: 14px 32px 0 32px !important;
+  height: 52px;
+  padding: 0 24px;
+  border-radius: var(--radius-xl, 22px) !important;
   border: 1px solid var(--border-medium);
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.85));
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+body.night-mode main.main .navbar,
+body.dark main.main .navbar,
+body.night-mode main.main #wedrive-navbar,
+body.dark main.main #wedrive-navbar,
+body.night-mode .customer-main .navbar,
+body.dark .customer-main .navbar,
+body.night-mode .customer-main #wedrive-navbar,
+body.dark .customer-main #wedrive-navbar {
+  background: rgba(22, 22, 26, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
 }
 
 .nav-brand {
