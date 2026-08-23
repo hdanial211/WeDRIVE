@@ -4899,3 +4899,187 @@ html[data-theme="dark"] .skeleton-shimmer,
   border-bottom: 1px solid var(--border-subtle);
 }
 
+/* ==============================================================================
+   19. APPLE HIG POINTING DEVICES & POINTER EFFECTS SYSTEM
+   (https://developer.apple.com/design/human-interface-guidelines/pointing-devices)
+   ============================================================================== */
+
+/* ── 1. Apple Adaptive Pointer (Dot & Ring) ── */
+.wedrive-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease-apple), transform 0.1s var(--ease-apple), background-color 0.25s ease;
+}
+
+.wedrive-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(0, 113, 227, 0.45);
+  background: rgba(0, 113, 227, 0.04);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.3s var(--ease-apple),
+              height 0.3s var(--ease-apple),
+              border-color 0.3s var(--ease-apple),
+              background 0.3s var(--ease-apple),
+              border-radius 0.3s var(--ease-apple),
+              opacity 0.25s var(--ease-apple),
+              transform 0.15s var(--ease-apple);
+}
+
+.wedrive-cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -170%);
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.2s var(--ease-apple);
+}
+
+/* Visibility */
+body.motion-cursor-visible .wedrive-cursor-dot,
+body.motion-cursor-visible .wedrive-cursor-ring {
+  opacity: 1;
+}
+
+body.motion-cursor-has-label .wedrive-cursor-label {
+  opacity: 1;
+}
+
+/* ── 2. Apple HIG Hover & Magnetism States ── */
+body.motion-cursor-hover .wedrive-cursor-ring {
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 113, 227, 0.08);
+  border-color: rgba(0, 113, 227, 0.6);
+}
+
+body.motion-cursor-magnetic .wedrive-cursor-ring {
+  width: 56px;
+  height: 56px;
+  background: rgba(0, 113, 227, 0.12);
+  border-color: var(--primary);
+  box-shadow: 0 0 16px rgba(0, 113, 227, 0.25);
+}
+
+body.motion-cursor-link .wedrive-cursor-ring {
+  width: 42px;
+  height: 42px;
+  border-color: var(--primary);
+}
+
+body.motion-cursor-drag .wedrive-cursor-ring {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  border-style: dashed;
+  border-color: var(--primary);
+}
+
+body.motion-cursor-click .wedrive-cursor-ring {
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%) scale(0.88);
+  background: rgba(0, 113, 227, 0.2);
+}
+
+body.motion-cursor-click .wedrive-cursor-dot {
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+/* Dark Mode Pointer */
+html[data-theme="dark"] .wedrive-cursor-dot,
+.night-mode .wedrive-cursor-dot {
+  background: #2997FF;
+}
+
+html[data-theme="dark"] .wedrive-cursor-ring,
+.night-mode .wedrive-cursor-ring {
+  border-color: rgba(41, 151, 255, 0.45);
+  background: rgba(41, 151, 255, 0.08);
+}
+
+html[data-theme="dark"] body.motion-cursor-hover .wedrive-cursor-ring,
+.night-mode body.motion-cursor-hover .wedrive-cursor-ring {
+  background: rgba(41, 151, 255, 0.15);
+  border-color: rgba(41, 151, 255, 0.75);
+}
+
+/* ── 3. Apple HIG Pointing Device Effects (Highlight & Lift) ── */
+
+/* Highlight Effect: Soft translucent capsule highlight */
+.nav-links a,
+.nav-item,
+.sidebar-nav-item,
+.filter-chip,
+.mybk-tab,
+.action-btn,
+.showcase-dot {
+  position: relative;
+  transition: transform 0.2s var(--ease-apple),
+              background-color 0.25s var(--ease-apple),
+              color 0.2s var(--ease-apple),
+              box-shadow 0.25s var(--ease-apple) !important;
+}
+
+.nav-links a:hover,
+.nav-item:hover,
+.dropdown-item:hover {
+  background-color: var(--primary-light);
+  border-radius: var(--radius-pill);
+}
+
+/* Lift Effect: 3D Elevation with Ambient Shadow for Cards and Main Buttons */
+.hero-btn-primary:hover,
+.hero-btn-outline:hover,
+.hero-btn-secondary:hover,
+.btn-primary:hover,
+.btn-book:hover,
+.btn-search:hover,
+.booking-popup-proceed:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.35);
+}
+
+html[data-theme="dark"] .hero-btn-primary:hover,
+html[data-theme="dark"] .hero-btn-outline:hover,
+html[data-theme="dark"] .btn-primary:hover,
+.night-mode .hero-btn-primary:hover,
+.night-mode .hero-btn-outline:hover,
+.night-mode .btn-primary:hover {
+  box-shadow: 0 8px 26px rgba(41, 151, 255, 0.4);
+}
+
+/* Apple Focus Ring for Pointing Device / Keyboard Accessibility */
+:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px var(--primary-light), 0 0 0 1.5px var(--primary) !important;
+}
+
+
