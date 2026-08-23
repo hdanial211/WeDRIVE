@@ -232,7 +232,7 @@
     return resolveProjectBase() + 'shared/lang/' + lang + '.js';
   }
 
-  function applyTranslation(data, animate) {
+  function doApplyTranslation(data, animate) {
     // Set innerText for [data-key]
     document.querySelectorAll('[data-key]').forEach(function (el) {
       var key = el.getAttribute('data-key');
@@ -275,6 +275,32 @@
     }));
   }
 
+  function applyTranslation(data, animate) {
+    if (animate) {
+      setTimeout(function () {
+        doApplyTranslation(data, animate);
+
+        requestAnimationFrame(function () {
+          if (document.body) {
+            document.body.classList.remove('lang-skeleton-active');
+            document.body.classList.add('lang-skeleton-reveal');
+          }
+          document.documentElement.classList.remove('lang-skeleton-active');
+          document.documentElement.classList.add('lang-skeleton-reveal');
+
+          setTimeout(function () {
+            if (document.body) {
+              document.body.classList.remove('lang-skeleton-reveal');
+            }
+            document.documentElement.classList.remove('lang-skeleton-reveal');
+          }, 380);
+        });
+      }, 220);
+    } else {
+      doApplyTranslation(data, animate);
+    }
+  }
+
   function updateLangBtn(animate) {
     var currentLang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
     document.querySelectorAll('.lang-toggle').forEach(function (btn) {
@@ -296,6 +322,13 @@
   }
 
   function loadLanguage(lang, animate) {
+    if (animate) {
+      if (document.body) {
+        document.body.classList.add('lang-skeleton-active');
+      }
+      document.documentElement.classList.add('lang-skeleton-active');
+    }
+
     var globalVarName = 'wedrive_lang_' + lang;
     if (window[globalVarName]) {
       localStorage.setItem(LANG_KEY, lang);
@@ -328,6 +361,8 @@
       }
     };
     script.onerror = function () {
+      if (document.body) document.body.classList.remove('lang-skeleton-active');
+      document.documentElement.classList.remove('lang-skeleton-active');
       console.warn('[WeDRIVE] Failed to load language script: ' + script.src);
     };
     document.head.appendChild(script);
