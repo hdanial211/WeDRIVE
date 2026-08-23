@@ -5061,7 +5061,8 @@ body.dark .customer-sidebar {
   align-items: center;
   gap: 8px;
   height: 38px;
-  padding: 0 14px;
+  padding: 0 16px 0 12px;
+  min-width: 260px;
   border-radius: var(--radius-pill, 9999px);
   background: var(--bg-surface-3, rgba(255, 255, 255, 0.08));
   border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.12));
@@ -5074,7 +5075,7 @@ body.dark .customer-sidebar {
 .input-wrap-sm .material-icons-round,
 .input-wrap .material-icons-round {
   font-size: 18px !important;
-  color: var(--text-tertiary, #86868B);
+  color: var(--text-secondary, #64748B);
   flex-shrink: 0;
   pointer-events: none;
   transition: color 0.2s ease;
@@ -5083,6 +5084,7 @@ body.dark .customer-sidebar {
 .input-wrap-sm input,
 .input-wrap input {
   flex: 1;
+  min-width: 0 !important;
   background: transparent !important;
   border: none !important;
   outline: none !important;
@@ -5098,8 +5100,8 @@ body.dark .customer-sidebar {
 
 .input-wrap-sm input::placeholder,
 .input-wrap input::placeholder {
-  color: var(--text-tertiary, #86868B);
-  opacity: 0.85;
+  color: var(--text-secondary, #64748B);
+  opacity: 0.9;
 }
 
 .input-wrap-sm:focus-within,
