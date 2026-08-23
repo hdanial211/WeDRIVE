@@ -1667,17 +1667,26 @@ body.dark .wedrive-footer {
 }
 
 .footer-brand-title {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0 !important;
   font-size: 17px;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text-primary);
+  line-height: 1;
 }
 
 .footer-brand-title .we {
   color: var(--primary);
+  margin: 0;
+  padding: 0;
+}
+
+.footer-brand-title .drive {
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
 }
 
 .footer-tagline {
@@ -5270,15 +5279,45 @@ main.main {
   margin-left: 284px;
   min-height: 100vh;
   background: var(--bg-body);
-  padding: 0 0 60px;
+  padding: 0 14px 14px 0;
   box-sizing: border-box;
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
 main.main .content {
   padding: 24px 32px;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+main.main #footer-placeholder,
+.customer-main #footer-placeholder {
+  margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+main.main .wedrive-footer,
+.customer-main .wedrive-footer {
+  border-radius: var(--radius-xl, 22px);
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.03);
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+
+body.night-mode main.main .wedrive-footer,
+body.dark main.main .wedrive-footer,
+body.night-mode .customer-main .wedrive-footer,
+body.dark .customer-main .wedrive-footer {
+  background: rgba(22, 22, 26, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
 }
 
 .stats-grid {
