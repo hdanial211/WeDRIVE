@@ -230,6 +230,10 @@ button:active, .btn-primary:active, .btn-secondary:active, .btn-ghost:active, .b
   transform: scale(0.9);
 }
 
+#navbar-placeholder {
+  display: contents;
+}
+
 /* Apple Pure Glass Navbar */
 .navbar,
 #wedrive-navbar {
@@ -245,13 +249,65 @@ button:active, .btn-primary:active, .btn-secondary:active, .btn-ghost:active, .b
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
   border-bottom: 1px solid var(--border-subtle);
-  transition: height 0.35s var(--ease-apple), padding 0.35s var(--ease-apple), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  transition: top 0.35s var(--ease-apple), height 0.35s var(--ease-apple), padding 0.35s var(--ease-apple), width 0.35s var(--ease-apple), margin 0.35s var(--ease-apple), border-radius 0.35s var(--ease-apple), background 0.3s ease, border-color 0.3s ease, box-shadow 0.35s var(--ease-apple);
 }
 
-.navbar.navbar-compact {
+.navbar.navbar-compact,
+.navbar.navbar-floating,
+#wedrive-navbar.navbar-compact,
+#wedrive-navbar.navbar-floating {
+  top: 14px;
   height: 48px;
-  padding: 0 24px;
-  box-shadow: var(--shadow-sm);
+  padding: 0 20px;
+  width: calc(100% - 48px);
+  max-width: 1360px;
+  margin: 0 auto;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.85));
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+body.night-mode .navbar.navbar-compact,
+body.dark .navbar.navbar-compact,
+body.night-mode #wedrive-navbar.navbar-compact,
+body.dark #wedrive-navbar.navbar-compact,
+body.night-mode .navbar.navbar-floating,
+body.dark .navbar.navbar-floating,
+body.night-mode #wedrive-navbar.navbar-floating,
+body.dark #wedrive-navbar.navbar-floating {
+  background: rgba(22, 22, 26, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Admin / Customer main portal specific floating navbar alignment */
+main.main .navbar,
+main.main #wedrive-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  width: 100%;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+main.main .navbar.navbar-compact,
+main.main .navbar.navbar-floating,
+main.main #wedrive-navbar.navbar-compact,
+main.main #wedrive-navbar.navbar-floating {
+  top: 14px;
+  height: 48px;
+  padding: 0 20px;
+  width: calc(100% - 48px);
+  max-width: 1360px;
+  margin: 0 24px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
 }
 
 .nav-brand {

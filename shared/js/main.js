@@ -992,18 +992,18 @@
   var ticking = false;
 
   function onScroll() {
-    var scrollY = window.scrollY || 0;
+    var scrollY = window.scrollY || document.documentElement.scrollTop || (document.body ? document.body.scrollTop : 0);
     var delta = scrollY - lastScrollY;
 
-    // Desktop Top Navbar Compact Shrink
-    var navbar = document.querySelector('.navbar, #wedrive-navbar');
-    if (navbar) {
-      if (scrollY > 30) {
-        navbar.classList.add('navbar-compact');
+    // Desktop & Admin Top Navbar Compact & Floating Shrink
+    var navbars = document.querySelectorAll('.navbar, #wedrive-navbar');
+    navbars.forEach(function (navbar) {
+      if (scrollY > 20) {
+        navbar.classList.add('navbar-compact', 'navbar-floating');
       } else {
-        navbar.classList.remove('navbar-compact');
+        navbar.classList.remove('navbar-compact', 'navbar-floating');
       }
-    }
+    });
 
     // Mobile Bottom Floating Dock Condense (Instagram / Apple Feel)
     var dock = document.getElementById('apple-bottom-dock');
@@ -1027,6 +1027,7 @@
   }
 
   window.addEventListener('scroll', handleScroll, { passive: true });
+  document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
 
   function resolveBase() {
     var parts = window.location.pathname.split('/').filter(Boolean);
@@ -1190,6 +1191,12 @@
    SECTION 15E: GLOBAL AI ASSISTANT FAB PERSISTENCE
    ===================================================== */
 (function ensureChatbotFab() {
+  function resolveBase() {
+    var parts = window.location.pathname.split('/').filter(Boolean);
+    if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
+    return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+  }
+
   function checkAndMountChatbot() {
     if (document.getElementById('chatbot-fab')) return;
 
