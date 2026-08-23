@@ -6459,5 +6459,661 @@ body.page-is-leaving .page-container {
   background: var(--bg-surface-2);
 }
 
+/* ==============================================================================
+   APPLE DESIGN SYSTEM: VEHICLE DETAILS MODULE (car-detail.html)
+   ============================================================================== */
+
+/* Back Button (.btn-back) */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.12));
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.btn-back .material-icons-round {
+  font-size: 18px;
+  color: var(--text-secondary);
+  transition: transform 0.2s ease;
+}
+
+.btn-back:hover {
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.14));
+  border-color: var(--border-subtle);
+  transform: translateX(-2px);
+}
+
+.btn-back:hover .material-icons-round {
+  transform: translateX(-2px);
+  color: var(--primary, #0071E3);
+}
+
+.btn-back:active {
+  transform: scale(0.97);
+}
+
+/* Vehicle Hero Showcase (.car-hero, .car-hero-grid) */
+.car-hero {
+  border-radius: 24px;
+  padding: 26px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.car-hero-grid {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .car-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.car-hero-image {
+  width: 100%;
+  height: 260px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--bg-surface-2), var(--bg-surface-3));
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.car-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+  transition: transform 0.3s ease;
+}
+
+.car-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.car-thumb {
+  width: 76px;
+  height: 52px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid var(--border-subtle);
+  background: var(--bg-surface-3);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s var(--ease-apple);
+  opacity: 0.65;
+}
+
+.car-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-thumb:hover {
+  opacity: 0.95;
+  border-color: var(--border-medium);
+  transform: translateY(-2px);
+}
+
+.car-thumb.active {
+  border-color: var(--primary, #0071E3);
+  opacity: 1;
+  transform: scale(1.04);
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+}
+
+.car-hero-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Quick Spec Grid (.car-quick-stats) */
+.car-quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+
+@media (max-width: 640px) {
+  .car-quick-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cq-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.1));
+  box-sizing: border-box;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.cq-stat:hover {
+  background: var(--bg-surface-2);
+  border-color: var(--border-subtle);
+  transform: translateY(-1px);
+}
+
+.cq-stat .material-icons-round {
+  font-size: 22px;
+  color: var(--primary, #0071E3);
+  flex-shrink: 0;
+}
+
+.cq-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #86868B);
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.cq-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Apple Booking Calendar Grid & Cells */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.cal-header {
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #86868B);
+  letter-spacing: 0.5px;
+  padding-bottom: 8px;
+}
+
+.cal-cell {
+  position: relative;
+  aspect-ratio: 1.15;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.1));
+  cursor: pointer;
+  padding: 6px 4px;
+  box-sizing: border-box;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.cal-cell.empty {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cal-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.cal-cell.available .cal-badge {
+  background: #10B981;
+}
+
+.cal-cell.booked .cal-badge {
+  background: #0071E3;
+}
+
+.cal-cell.pending .cal-badge {
+  background: #F59E0B;
+}
+
+.cal-cell.past .cal-badge {
+  background: #64748B;
+}
+
+.cal-day {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.cal-rate {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.cal-cell:hover:not(.past) {
+  background: var(--bg-surface-2);
+  border-color: var(--primary, #0071E3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.cal-cell.available {
+  border-color: rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.06);
+}
+
+.cal-cell.booked {
+  border-color: rgba(0, 113, 227, 0.25);
+  background: rgba(0, 113, 227, 0.08);
+}
+
+.cal-cell.pending {
+  border-color: rgba(245, 158, 11, 0.25);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.cal-cell.past {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.cal-cell.today {
+  border: 1.5px solid var(--primary, #0071E3) !important;
+}
+
+.cal-cell.cal-range-start,
+.cal-cell.cal-range-end {
+  background: var(--primary, #0071E3) !important;
+  color: #FFFFFF !important;
+  border-color: var(--primary, #0071E3) !important;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.4);
+}
+
+.cal-cell.cal-range-start .cal-day,
+.cal-cell.cal-range-end .cal-day,
+.cal-cell.cal-range-start .cal-rate,
+.cal-cell.cal-range-end .cal-rate {
+  color: #FFFFFF !important;
+}
+
+.cal-cell.cal-range-mid {
+  background: rgba(0, 113, 227, 0.15) !important;
+  border-color: rgba(0, 113, 227, 0.3) !important;
+  color: var(--primary, #0071E3) !important;
+}
+
+.cal-cell.cal-range-mid .cal-day {
+  color: var(--primary, #0071E3) !important;
+}
+
+.cal-legend {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.cal-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.cal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.cal-dot.available { background: #10B981; }
+.cal-dot.booked { background: #0071E3; }
+.cal-dot.pending { background: #F59E0B; }
+.cal-dot.past { background: #64748B; }
+
+.cal-day-info {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+/* Edit Photos Management (.edit-images-grid) */
+.edit-images-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  min-height: 50px;
+  align-items: center;
+}
+
+.edit-img-item {
+  position: relative;
+  width: 90px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid var(--border-subtle);
+  background: var(--bg-surface-3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.edit-img-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-img-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFFFFF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-img-remove:hover {
+  background: #EF4444;
+  transform: scale(1.1);
+}
+
+.edit-img-main-badge {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  background: var(--primary, #0071E3);
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.edit-img-set-main {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #FFFFFF;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-img-set-main:hover {
+  background: #F59E0B;
+}
+
+/* Delete Vehicle Modal (.delete-modal-*) */
+.delete-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delete-modal-card {
+  background: var(--bg-surface);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(239, 68, 68, 0.15);
+  padding: 28px;
+  max-width: 440px;
+  width: 95%;
+  box-sizing: border-box;
+  text-align: center;
+  animation: modalCardScale 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delete-modal-icon-container {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.12);
+  color: #EF4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.delete-modal-icon-container .material-icons-round {
+  font-size: 32px;
+}
+
+.delete-modal-header-text h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.delete-modal-desc-container p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.delete-modal-input-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.delete-modal-input-group label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.delete-modal-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-medium);
+  box-sizing: border-box;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.delete-modal-input-wrap .material-icons-round {
+  font-size: 18px;
+  color: var(--text-tertiary);
+  margin-right: 8px;
+}
+
+.delete-modal-input-wrap input {
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: var(--text-primary) !important;
+  font-size: 14px !important;
+  padding: 0 !important;
+}
+
+.delete-modal-input-wrap:focus-within {
+  border-color: #EF4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  background: var(--bg-surface-2);
+}
+
+.delete-modal-error {
+  color: #EF4444;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.delete-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.delete-modal-btn-cancel {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.delete-modal-btn-cancel:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+}
+
+.delete-modal-btn-confirm {
+  height: 40px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill, 9999px);
+  background: #EF4444;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+  transition: all 0.2s var(--ease-apple);
+}
+
+.delete-modal-btn-confirm:hover {
+  background: #DC2626;
+  transform: translateY(-1px);
+}
+
+/* Form Grid & Inputs (.form-grid, .form-group) */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-tertiary, #86868B);
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select {
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.12));
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13.5px;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary, #0071E3);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+  background: var(--bg-surface-2);
+}
+
+
 
 
