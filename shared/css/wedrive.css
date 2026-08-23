@@ -568,53 +568,58 @@ button:active, .btn-primary:active, .btn-secondary:active, .btn-ghost:active, .b
   margin-bottom: 40px;
 }
 
-.hero-btn-primary {
+.hero-btn-primary,
+.hero-btn-outline,
+.hero-btn-secondary,
+.hero-btn-ghost {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  min-height: 50px;
-  padding: 12px 24px;
-  border-radius: var(--radius-btn);
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius-pill) !important;
+  font-size: 14.5px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-apple);
+}
+
+.hero-btn-primary {
   background: var(--primary);
   color: #FFFFFF !important;
-  font-size: 15.5px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
+  border: 1px solid transparent;
   box-shadow: 0 4px 16px rgba(0, 113, 227, 0.32);
-  transition: all 0.25s var(--ease-apple);
 }
 
 .hero-btn-primary:hover {
   background: var(--primary-hover);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 6px 22px rgba(0, 113, 227, 0.42);
 }
 
-.hero-btn-primary:active {
-  transform: scale(0.97);
-}
-
 .hero-btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 50px;
-  padding: 12px 22px;
-  border-radius: var(--radius-btn);
   background: var(--bg-surface);
   color: var(--text-primary) !important;
-  font-size: 15px;
-  font-weight: 600;
-  border: 1px solid var(--border-medium);
-  transition: all 0.25s var(--ease-apple);
+  border: 1.5px solid var(--border-medium);
+  box-shadow: var(--shadow-sm);
 }
 
 .hero-btn-outline:hover {
+  background: var(--bg-surface-3);
   border-color: var(--primary);
   color: var(--primary) !important;
-  background: var(--primary-light);
   transform: translateY(-1px);
+}
+
+.hero-btn-primary:active,
+.hero-btn-outline:active,
+.hero-btn-secondary:active,
+.hero-btn-ghost:active {
+  transform: scale(0.97) !important;
 }
 
 /* Hero Metrics */
