@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Welcome | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png?v=2" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png?v=2" />
   
-  <!-- Apple-Grade Typography: Inter Display & Authentic Cursive Hello Script -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
 
   <style>
     /* ==============================================================================
-       AUTHENTIC APPLE "HELLO" / SETUP ASSISTANT WELCOME EXPERIENCE
+       WEDRIVE LUMINA — AUTHENTIC APPLE INTELLIGENCE ONBOARDING SCREEN
        ============================================================================== */
     * {
       box-sizing: border-box;
@@ -24,47 +23,74 @@
       padding: 0;
     }
 
-    body.apple-oobe-screen {
+    body.apple-lumina-welcome {
       min-height: 100vh;
       width: 100vw;
-      background-color: #F5F5F7;
-      color: #1D1D1F;
+      background-color: var(--bg-body, #FBFBFD);
+      color: var(--text-primary, #1D1D1F);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       position: relative;
       user-select: none;
+      padding: 40px 24px;
       transition: background-color 0.4s var(--ease-apple), color 0.4s var(--ease-apple);
     }
 
-    /* Dark Mode / Night Mode (Pure OLED Studio Black) */
-    html.night-mode body.apple-oobe-screen,
-    body.apple-oobe-screen.night-mode {
+    html.night-mode body.apple-lumina-welcome,
+    body.apple-lumina-welcome.night-mode {
       background-color: #000000 !important;
       color: #F5F5F7 !important;
     }
 
-    /* Subtle Atmospheric Studio Vignette */
-    .apple-stage-backdrop {
-      position: absolute;
+    /* Ambient Glow Backdrop */
+    .lumina-ambient-backdrop {
+      position: fixed;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at 50% 45%, rgba(0, 113, 227, 0.04) 0%, transparent 60%);
-      transition: opacity 0.4s ease;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    html.night-mode .apple-stage-backdrop,
-    body.night-mode .apple-stage-backdrop {
-      background: radial-gradient(circle at 50% 45%, rgba(41, 151, 255, 0.08) 0%, transparent 65%);
+    .lumina-ambient-orb {
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 113, 227, 0.12) 0%, rgba(88, 86, 214, 0.06) 45%, transparent 70%);
+      filter: blur(80px);
+      animation: luminaOrbPulse 4.5s ease-in-out infinite alternate;
     }
 
-    /* Center Stage Container */
-    .apple-stage {
+    html.night-mode .lumina-ambient-orb,
+    body.night-mode .lumina-ambient-orb {
+      background: radial-gradient(circle, rgba(41, 151, 255, 0.16) 0%, rgba(175, 82, 222, 0.1) 45%, transparent 70%);
+    }
+
+    @keyframes luminaOrbPulse {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(1.12);
+        opacity: 1;
+      }
+    }
+
+    /* Top Empty Spacer for True Vertical Balance */
+    .lumina-top-spacer {
+      flex: 1;
+    }
+
+    /* Centerpiece Stage */
+    .lumina-center-stage {
       position: relative;
       z-index: 10;
       display: flex;
@@ -72,167 +98,147 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 32px 24px;
-      max-width: 540px;
+      max-width: 480px;
       width: 100%;
+      gap: 28px;
+      animation: luminaCardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* WeDRIVE Minimal Monogram */
-    .apple-logo-wrap {
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: scale(0.92);
-      animation: appleLogoIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-    }
-
-    @keyframes appleLogoIn {
-      to {
+    @keyframes luminaCardIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+        filter: blur(8px);
+      }
+      100% {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0) scale(1);
+        filter: blur(0);
       }
     }
 
-    .apple-brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.04);
-      border: 1px solid rgba(0, 0, 0, 0.06);
-      color: #1D1D1F;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-
-    html.night-mode .apple-brand-badge,
-    body.night-mode .apple-brand-badge {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.12);
-      color: #F5F5F7;
-    }
-
-    .apple-brand-badge img {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-    }
-
-    /* The Iconic "hello" Multi-Language Morphing Script */
-    .apple-hello-container {
-      height: 90px;
+    /* Apple Intelligence Radiant Lumina Ring */
+    .lumina-ring-assembly {
+      position: relative;
+      width: 130px;
+      height: 130px;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      margin-bottom: 12px;
     }
 
-    .apple-hello-script {
-      font-family: 'Caveat', cursive;
-      font-size: 72px;
-      font-weight: 700;
-      line-height: 1;
-      letter-spacing: -0.01em;
-      background: linear-gradient(135deg, #1D1D1F 30%, #434344 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .lumina-intelligence-ring {
       position: absolute;
-      opacity: 0;
-      transform: translateY(12px) scale(0.96);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      inset: -8px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg at 50% 50%, #0071E3, #5856D6, #AF52DE, #FF2D55, #FF9500, #0071E3);
+      filter: blur(12px);
+      opacity: 0.85;
+      animation: luminaRingSpin 7s linear infinite;
+      -webkit-mask: radial-gradient(transparent 58%, black 65%);
+      mask: radial-gradient(transparent 58%, black 65%);
     }
 
-    html.night-mode .apple-hello-script,
-    body.night-mode .apple-hello-script {
-      background: linear-gradient(135deg, #FFFFFF 30%, #A1A1A6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .apple-hello-script.active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .apple-hello-script.leaving {
-      opacity: 0;
-      transform: translateY(-12px) scale(1.03);
-    }
-
-    /* Clean Apple Display Subheadline */
-    .apple-display-name {
-      font-size: 26px;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      color: #1D1D1F;
-      line-height: 1.25;
-      margin-bottom: 32px;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: appleNameIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-    }
-
-    html.night-mode .apple-display-name,
-    body.night-mode .apple-display-name {
-      color: #F5F5F7;
-    }
-
-    @keyframes appleNameIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+    @keyframes luminaRingSpin {
+      100% {
+        transform: rotate(360deg);
       }
     }
 
-    .apple-display-name .user-highlight {
-      font-weight: 700;
-      color: #0071E3;
+    .lumina-core-capsule {
+      position: relative;
+      z-index: 2;
+      width: 96px;
+      height: 96px;
+      border-radius: 30px;
+      background: var(--bg-glass, rgba(255, 255, 255, 0.85));
+      backdrop-filter: blur(32px) saturate(190%);
+      -webkit-backdrop-filter: blur(32px) saturate(190%);
+      border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.6));
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    html.night-mode .apple-display-name .user-highlight,
-    body.night-mode .apple-display-name .user-highlight {
-      color: #2997FF;
+    html.night-mode .lumina-core-capsule,
+    body.night-mode .lumina-core-capsule {
+      background: rgba(24, 24, 28, 0.85);
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     }
 
-    /* Minimalist Apple Liquid Progress Bar (macOS / iOS Signature) */
-    .apple-progress-box {
+    .lumina-core-capsule img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0, 113, 227, 0.3));
+    }
+
+    /* Minimalist Typography */
+    .lumina-copy {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
-      width: 220px;
-      opacity: 0;
-      transform: translateY(8px);
-      animation: appleProgressIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+      gap: 8px;
     }
 
-    @keyframes appleProgressIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .lumina-title {
+      font-size: clamp(26px, 4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      color: var(--text-primary, #1D1D1F);
+      line-height: 1.2;
+      margin: 0;
     }
 
-    .apple-progress-track {
-      width: 100%;
-      height: 4px;
-      background: rgba(0, 0, 0, 0.08);
+    html.night-mode .lumina-title,
+    body.night-mode .lumina-title {
+      color: #F5F5F7;
+    }
+
+    .lumina-title .user-name-highlight {
+      font-weight: 800;
+      color: #0071E3;
+    }
+
+    html.night-mode .lumina-title .user-name-highlight,
+    body.night-mode .lumina-title .user-name-highlight {
+      color: #2997FF;
+    }
+
+    .lumina-subtext {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-secondary, #86868B);
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    html.night-mode .lumina-subtext,
+    body.night-mode .lumina-subtext {
+      color: #A1A1A6;
+    }
+
+    /* iOS / macOS Fluid Progress Bar */
+    .lumina-progress-track {
+      width: 200px;
+      height: 3.5px;
+      background: rgba(0, 0, 0, 0.06);
       border-radius: 999px;
       overflow: hidden;
       position: relative;
+      margin-top: 4px;
     }
 
-    html.night-mode .apple-progress-track,
-    body.night-mode .apple-progress-track {
-      background: rgba(255, 255, 255, 0.16);
+    html.night-mode .lumina-progress-track,
+    body.night-mode .lumina-progress-track {
+      background: rgba(255, 255, 255, 0.12);
     }
 
-    .apple-progress-liquid {
+    .lumina-progress-fill {
       position: absolute;
       left: 0;
       top: 0;
@@ -240,102 +246,104 @@
       width: 0%;
       background: #0071E3;
       border-radius: 999px;
-      transition: width 2.3s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 0 10px rgba(0, 113, 227, 0.6);
+      transition: width 2.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    html.night-mode .apple-progress-liquid,
-    body.night-mode .apple-progress-liquid {
+    html.night-mode .lumina-progress-fill,
+    body.night-mode .lumina-progress-fill {
       background: #2997FF;
-      box-shadow: 0 0 10px rgba(41, 151, 255, 0.5);
+      box-shadow: 0 0 12px rgba(41, 151, 255, 0.8);
     }
 
-    /* Quiet Apple Status Text */
-    .apple-status-caption {
-      font-size: 13.5px;
-      font-weight: 400;
-      color: #86868B;
-      letter-spacing: -0.01em;
-      transition: opacity 0.3s ease;
+    /* Bottom Secure Session Capsule */
+    .lumina-footer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      z-index: 10;
     }
 
-    html.night-mode .apple-status-caption,
-    body.night-mode .apple-status-caption {
+    .lumina-security-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: var(--bg-glass, rgba(255, 255, 255, 0.7));
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-glass, rgba(0, 0, 0, 0.05));
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      color: var(--text-muted, #86868B);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    html.night-mode .lumina-security-pill,
+    body.night-mode .lumina-security-pill {
+      background: rgba(24, 24, 28, 0.7);
+      border-color: rgba(255, 255, 255, 0.08);
       color: #A1A1A6;
     }
 
-    /* Bottom Minimalist Security/Privacy Notice */
-    .apple-footer-note {
-      position: absolute;
-      bottom: 24px;
-      font-size: 12px;
-      color: #86868B;
-      letter-spacing: -0.005em;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      opacity: 0;
-      animation: appleFooterIn 0.8s ease 0.6s forwards;
-    }
-
-    @keyframes appleFooterIn {
-      to {
-        opacity: 0.75;
-      }
-    }
-
-    .apple-footer-note .material-icons-round {
+    .lumina-security-pill .material-icons-round {
       font-size: 14px;
+      color: #34C759;
     }
 
-    /* Cinematic Exit Dissolve */
-    body.apple-oobe-screen.page-is-leaving {
+    /* Page Exit Transition */
+    body.apple-lumina-welcome.page-is-leaving {
       opacity: 0 !important;
-      transform: scale(1.015) !important;
+      transform: scale(1.012) !important;
       filter: blur(4px) !important;
-      transition: opacity 0.32s cubic-bezier(0.32, 0.72, 0, 1),
-                  transform 0.32s cubic-bezier(0.32, 0.72, 0, 1),
-                  filter 0.32s cubic-bezier(0.32, 0.72, 0, 1) !important;
+      transition: opacity 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                  transform 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+                  filter 0.3s cubic-bezier(0.32, 0.72, 0, 1) !important;
     }
   </style>
 </head>
-<body class="apple-oobe-screen" data-cursor-glow>
-  <div class="apple-stage-backdrop"></div>
+<body class="apple-lumina-welcome" data-cursor-glow>
+  <div class="lumina-ambient-backdrop">
+    <div class="lumina-ambient-orb"></div>
+  </div>
 
-  <main class="apple-stage">
-    <!-- Clean WeDRIVE Monogram Pill -->
-    <div class="apple-logo-wrap">
-      <div class="apple-brand-badge">
+  <div class="lumina-top-spacer"></div>
+
+  <main class="lumina-center-stage">
+    <!-- Apple Intelligence Lumina Radiant Ring Assembly -->
+    <div class="lumina-ring-assembly">
+      <div class="lumina-intelligence-ring"></div>
+      <div class="lumina-core-capsule">
         <img src="../../../shared/logo/wedrive-icon.png?v=2" alt="WeDRIVE" />
-        <span>WeDRIVE</span>
       </div>
     </div>
 
-    <!-- The Iconic Apple "hello" Multi-Language Sequence -->
-    <div class="apple-hello-container" aria-live="polite">
-      <span class="apple-hello-script active" id="hello-1">hello</span>
-      <span class="apple-hello-script" id="hello-2">selamat datang</span>
-      <span class="apple-hello-script" id="hello-3">welcome</span>
-      <span class="apple-hello-script" id="hello-4">ciao</span>
+    <!-- Clean Apple Typography -->
+    <div class="lumina-copy">
+      <h1 class="lumina-title" id="welcome-title">
+        Selamat Kembali, <span class="user-name-highlight" id="user-display-name">Hakim</span>
+      </h1>
+      <p class="lumina-subtext" id="welcome-subtext">
+        Menyediakan papan pemuka & kenderaan anda...
+      </p>
     </div>
 
-    <!-- Personalized Apple Subtitle -->
-    <h1 class="apple-display-name" id="apple-display-title">
-      Selamat Kembali, <span class="user-highlight" id="user-display-name">Hakim</span>
-    </h1>
-
-    <!-- Minimalist Apple Progress Bar -->
-    <div class="apple-progress-box">
-      <div class="apple-progress-track">
-        <div class="apple-progress-liquid" id="apple-liquid-fill"></div>
-      </div>
-      <p class="apple-status-caption" id="apple-status-text">Menyediakan ruang pemanduan anda...</p>
+    <!-- iOS Fluid Progress Bar -->
+    <div class="lumina-progress-track">
+      <div class="lumina-progress-fill" id="lumina-progress-fill"></div>
     </div>
   </main>
 
-  <!-- Apple Privacy / Security Footnote -->
-  <div class="apple-footer-note">
-    <span class="material-icons-round">lock</span>
-    <span id="apple-security-note">Disulitkan dengan teknologi keselamatan WeDRIVE Secure ID</span>
+  <!-- Bottom Apple Secure Session Pill -->
+  <div class="lumina-footer">
+    <div class="lumina-security-pill">
+      <span class="material-icons-round">verified_user</span>
+      <span id="welcome-security-text">Sesi Selamat · WeDRIVE Secure ID</span>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -371,50 +379,22 @@
 
       // Populate personalized name
       var userNameEl = document.getElementById('user-display-name');
-      var titleEl = document.getElementById('apple-display-title');
-      var statusEl = document.getElementById('apple-status-text');
-      var securityNoteEl = document.getElementById('apple-security-note');
+      var titleEl = document.getElementById('welcome-title');
+      var subtextEl = document.getElementById('welcome-subtext');
+      var securityTextEl = document.getElementById('welcome-security-text');
 
       if (userNameEl) userNameEl.textContent = name;
 
       if (!isMs) {
-        if (titleEl) titleEl.innerHTML = 'Welcome Back, <span class="user-highlight">' + name + '</span>';
-        if (statusEl) statusEl.textContent = 'Setting up your driving space...';
-        if (securityNoteEl) securityNoteEl.textContent = 'Protected by WeDRIVE Secure ID encryption';
+        if (titleEl) titleEl.innerHTML = 'Welcome Back, <span class="user-name-highlight">' + name + '</span>';
+        if (subtextEl) subtextEl.textContent = 'Setting up your personalized dashboard & vehicles...';
+        if (securityTextEl) securityTextEl.textContent = 'Secure Session · WeDRIVE Protected';
       }
 
-      // Animate Hello script sequence (Apple Setup Assistant Style)
-      var helloScripts = [
-        document.getElementById('hello-1'),
-        document.getElementById('hello-2'),
-        document.getElementById('hello-3'),
-        document.getElementById('hello-4')
-      ].filter(Boolean);
-
-      var currentIndex = 0;
-      var helloInterval = setInterval(function () {
-        if (helloScripts.length < 2) return;
-        var prevEl = helloScripts[currentIndex];
-        currentIndex = (currentIndex + 1) % helloScripts.length;
-        var nextEl = helloScripts[currentIndex];
-
-        if (prevEl) {
-          prevEl.classList.remove('active');
-          prevEl.classList.add('leaving');
-          setTimeout(function () {
-            prevEl.classList.remove('leaving');
-          }, 450);
-        }
-
-        if (nextEl) {
-          nextEl.classList.add('active');
-        }
-      }, 950);
-
-      // Smooth progress liquid fill
-      var liquidBar = document.getElementById('apple-liquid-fill');
+      // Animate progress bar fill
+      var progressFill = document.getElementById('lumina-progress-fill');
       setTimeout(function () {
-        if (liquidBar) liquidBar.style.width = '100%';
+        if (progressFill) progressFill.style.width = '100%';
       }, 100);
 
       // Determine redirect destination
@@ -450,14 +430,19 @@
         }
       }
 
-      // Smooth cinematic Apple exit dissolve after 2.8s
+      var isDebug = window.location.search.includes('debug=true');
+      if (isDebug) {
+        console.log("Welcome screen debug mode active - auto redirect paused");
+        return;
+      }
+
+      // Smooth cinematic Apple exit dissolve after 3.2s
       setTimeout(function () {
-        clearInterval(helloInterval);
         document.body.classList.add('page-is-leaving');
         setTimeout(function () {
           window.location.href = redirectUrl;
         }, 320);
-      }, 2750);
+      }, 3200);
     });
   </script>
 </body>
