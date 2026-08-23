@@ -3720,6 +3720,355 @@ body:has(.right-panel) {
 }
 
 /* ==============================================================================
+   15B. APPLE HIG PICKERS & FLATPICKR DATE/TIME POPOVER SUITE
+   Apple Human Interface Guidelines (HIG) - Pickers, Date/Time & Popover System
+   ============================================================================== */
+
+/* ── 1. Apple Glass Popover Date Picker Container ── */
+.flatpickr-calendar {
+  background: var(--bg-glass-strong, rgba(255, 255, 255, 0.88)) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(190%) !important;
+  backdrop-filter: blur(32px) saturate(190%) !important;
+  border: 1px solid var(--border-glass, rgba(0, 0, 0, 0.08)) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16), 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+  padding: 16px 14px 14px !important;
+  width: 320px !important;
+  font-family: var(--font-sans) !important;
+  box-sizing: border-box !important;
+  transition: transform 0.25s var(--ease-apple), opacity 0.2s var(--ease-apple) !important;
+  z-index: 99999 !important;
+}
+
+/* Night Mode Glass Popover */
+.night-mode .flatpickr-calendar,
+[data-theme="dark"] .flatpickr-calendar,
+[data-theme="night"] .flatpickr-calendar {
+  background: rgba(28, 28, 30, 0.90) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Remove default harsh arrow pointers for clean floating popover */
+.flatpickr-calendar::before,
+.flatpickr-calendar::after {
+  display: none !important;
+}
+
+/* ── 2. Apple HIG Month & Year Header ── */
+.flatpickr-months {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 4px 6px 12px !important;
+  position: relative !important;
+  background: transparent !important;
+}
+
+.flatpickr-months .flatpickr-month {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  fill: var(--text-primary) !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.flatpickr-current-month {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 0 !important;
+  position: static !important;
+  width: auto !important;
+  font-size: 15.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--text-primary) !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month .custom-year-select {
+  font-family: var(--font-sans) !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 4px 8px !important;
+  margin: 0 2px !important;
+  outline: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s var(--ease-apple) !important;
+}
+
+.night-mode .flatpickr-current-month .flatpickr-monthDropdown-months,
+.night-mode .flatpickr-current-month .custom-year-select,
+[data-theme="dark"] .flatpickr-current-month .flatpickr-monthDropdown-months,
+[data-theme="dark"] .flatpickr-current-month .custom-year-select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months:hover,
+.flatpickr-current-month .custom-year-select:hover {
+  background: rgba(0, 113, 227, 0.12) !important;
+  color: var(--primary) !important;
+}
+
+.flatpickr-current-month .numInputWrapper {
+  display: inline-flex !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  width: auto !important;
+}
+
+/* ── 3. Apple Navigation Chevrons ── */
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  position: static !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: var(--radius-pill) !important;
+  background: transparent !important;
+  color: var(--primary) !important;
+  fill: var(--primary) !important;
+  transition: all 0.2s var(--ease-apple) !important;
+  cursor: pointer !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover,
+.flatpickr-months .flatpickr-next-month:hover {
+  background: rgba(0, 113, 227, 0.12) !important;
+  transform: scale(1.08) !important;
+}
+
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
+  width: 14px !important;
+  height: 14px !important;
+  stroke: var(--primary) !important;
+  fill: var(--primary) !important;
+}
+
+/* ── 4. Weekdays Header ── */
+.flatpickr-weekdays {
+  margin-bottom: 6px !important;
+  height: auto !important;
+  background: transparent !important;
+}
+
+.flatpickr-weekdaycontainer {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  text-align: center !important;
+}
+
+span.flatpickr-weekday {
+  color: var(--text-muted) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* ── 5. Days Grid & Selection States ── */
+.flatpickr-days {
+  width: 100% !important;
+}
+
+.dayContainer {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  justify-content: space-between !important;
+  gap: 2px 0 !important;
+}
+
+.flatpickr-day {
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  margin: 1px auto !important;
+  border-radius: var(--radius-pill) !important;
+  color: var(--text-primary) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid transparent !important;
+  transition: all 0.18s var(--ease-apple) !important;
+  box-sizing: border-box !important;
+}
+
+.flatpickr-day:hover {
+  background: rgba(0, 113, 227, 0.1) !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+}
+
+/* Today Day */
+.flatpickr-day.today {
+  border: 1.5px solid var(--primary) !important;
+  color: var(--primary) !important;
+  font-weight: 700 !important;
+  background: transparent !important;
+}
+
+/* Selected Single Date or Range Anchors */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.range-start,
+.flatpickr-day.range-end {
+  background: #0071E3 !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.45) !important;
+  transform: scale(1.04) !important;
+}
+
+/* Range In-Between Selection Bridge */
+.flatpickr-day.inRange,
+.flatpickr-day.in-range {
+  background: rgba(0, 113, 227, 0.14) !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Range Start & End Boundary Corner Radius */
+.flatpickr-day.startRange,
+.flatpickr-day.range-start {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.flatpickr-day.endRange,
+.flatpickr-day.range-end {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/* Disabled Days */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+  color: var(--text-disabled, rgba(134, 134, 139, 0.4)) !important;
+  background: transparent !important;
+  cursor: default !important;
+}
+
+/* ── 6. Apple Time Picker / Stepper ── */
+.flatpickr-time {
+  border-top: 1px solid var(--border-subtle) !important;
+  padding-top: 10px !important;
+  margin-top: 8px !important;
+  background: transparent !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.flatpickr-time input {
+  font-family: var(--font-sans) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+.night-mode .flatpickr-time input,
+[data-theme="dark"] .flatpickr-time input {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
+}
+
+.flatpickr-time .flatpickr-am-pm {
+  font-weight: 700 !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 4px 10px !important;
+  background: rgba(0, 113, 227, 0.1) !important;
+  color: var(--primary) !important;
+}
+
+/* ── 7. Apple HIG Pull-Down Select Pickers System ── */
+select.form-control,
+select.form-input,
+select.filter-select,
+select.search-select,
+select.pf-select,
+select.cal-dropdown,
+select.phone-prefix-select,
+select.apple-picker {
+  font-family: var(--font-sans) !important;
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  color: var(--text-primary) !important;
+  background-color: var(--bg-surface-2) !important;
+  border: 1.5px solid var(--border-subtle) !important;
+  border-radius: var(--radius-input, 12px) !important;
+  padding: 10px 38px 10px 14px !important;
+  min-height: 44px !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2386868B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  background-size: 15px !important;
+  outline: none !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s var(--ease-apple), box-shadow 0.2s var(--ease-apple), background-color 0.2s var(--ease-apple) !important;
+}
+
+select.form-control:hover,
+select.form-input:hover,
+select.filter-select:hover,
+select.search-select:hover,
+select.pf-select:hover,
+select.cal-dropdown:hover,
+select.apple-picker:hover {
+  border-color: var(--border-medium) !important;
+  background-color: var(--bg-surface) !important;
+}
+
+select.form-control:focus,
+select.form-input:focus,
+select.filter-select:focus,
+select.search-select:focus,
+select.pf-select:focus,
+select.cal-dropdown:focus,
+select.apple-picker:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3.5px rgba(0, 113, 227, 0.22) !important;
+  background-color: var(--bg-surface) !important;
+}
+
+select option {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-sans) !important;
+  padding: 8px !important;
+}
+
+/* ==============================================================================
    16. APPLE CUSTOMER PORTAL & DASHBOARD (CUSTOMER.HTML, MY-BOOKINGS.HTML, ETC)
    ============================================================================== */
 
