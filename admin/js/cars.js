@@ -8,17 +8,56 @@ let allCar = [];
 let currentFilter = 'all';
 let currentSearch = '';
 
+let currentViewMode = localStorage.getItem('wedrive_car_view_mode') || 'grid';
+
 window.WeDriveAPI.getAdminData()
   .then(data => {
     allCar = data.car || [];
     populateCarStats(allCar);
     renderCarCards(allCar);
     renderCarTable(allCar);
+    setCarViewMode(currentViewMode);
     if (new URLSearchParams(window.location.search).get('action') === 'add') {
       addNewCar();
     }
   })
   .catch(err => console.error('Car data load error:', err));
+
+/* ── View Toggle (Grid vs List) ── */
+function setCarViewMode(mode) {
+  currentViewMode = mode;
+  localStorage.setItem('wedrive_car_view_mode', mode);
+  
+  const gridEl = document.getElementById('car-grid');
+  const listEl = document.getElementById('car-list-container');
+  const toggleBtn = document.getElementById('car-view-toggle-btn');
+  
+  if (mode === 'list') {
+    if (gridEl) gridEl.style.display = 'none';
+    if (listEl) {
+      listEl.style.display = 'block';
+      listEl.style.animation = 'pageTransitionIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+    }
+    if (toggleBtn) {
+      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">grid_view</span> Grid View`;
+      toggleBtn.title = "Switch to Grid View";
+    }
+  } else {
+    if (listEl) listEl.style.display = 'none';
+    if (gridEl) {
+      gridEl.style.display = 'grid';
+      gridEl.style.animation = 'pageTransitionIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+    }
+    if (toggleBtn) {
+      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">view_list</span> List View`;
+      toggleBtn.title = "Switch to List View";
+    }
+  }
+}
+
+function toggleCarView() {
+  setCarViewMode(currentViewMode === 'grid' ? 'list' : 'grid');
+}
 
 /* ── Stats ── */
 function populateCarStats(car) {
@@ -36,54 +75,51 @@ function renderCarCards(car) {
   const grid = document.getElementById('car-grid');
   if (!grid) return;
   if (car.length === 0) {
-    grid.innerHTML = '<div class="card" style="padding:40px;text-align:center;color:#94A3B8;grid-column:1/-1">No vehicles found</div>';
+    grid.innerHTML = '<div class="card" style="padding:40px;text-align:center;color:var(--text-tertiary);grid-column:1/-1">No vehicles found</div>';
     return;
   }
   grid.innerHTML = car.map(car => {
     const statusColors = {
-      'Available': { bg: '#D1FAE5', text: '#059669', icon: 'check_circle' },
-      'Rented': { bg: '#DBEAFE', text: '#2563EB', icon: 'car_rental' }
+      'Available': { bg: 'rgba(16, 185, 129, 0.15)', text: '#10B981', dot: '#10B981', icon: 'check_circle' },
+      'Rented': { bg: 'rgba(0, 113, 227, 0.15)', text: '#0071E3', dot: '#0071E3', icon: 'car_rental' }
     };
     const sc = statusColors[car.status] || statusColors['Available'];
+
+    const img0 = (car.images && car.images.length > 0) ? car.images[0] : null;
+    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : null;
 
     return `
     <div class="card car-card reveal-on-scroll">
       <!-- Car Image -->
-      <div style="width:100%;height:160px;background:linear-gradient(135deg,var(--slate-50),var(--slate-100));border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden;">
-        ${car.images && car.images.length > 0
-        ? (() => {
-            const img0 = car.images[0];
-            const src = (img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:'))
-              ? img0
-              : '../../../shared/model/' + img0;
-            return `<img src="${src}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`;
-          })()
+      <div style="width:100%;height:160px;background:linear-gradient(135deg,var(--bg-surface-2),var(--bg-surface-3));border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden;border:1px solid var(--border-subtle);">
+        ${src
+        ? `<img src="${src}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`
         : `<span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;">directions_car</span>`
       }
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <h4 style="font-size:16px;font-weight:700;color:var(--navy);margin:0;">${car.name}</h4>
+        <h4 style="font-size:16px;font-weight:700;color:var(--text-primary);margin:0;">${car.name}</h4>
         <span style="font-size:11px;font-weight:700;color:${sc.text};background:${sc.bg};padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:4px;">
-          <span class="material-icons-round" style="font-size:12px">${sc.icon}</span> ${car.status}
+          <span style="width:6px; height:6px; border-radius:50%; background:${sc.dot};"></span> ${car.status}
         </span>
       </div>
 
-      <div style="font-size:12px;color:var(--slate-400);font-weight:600;margin-bottom:12px;">${car.plate} · ${car.label || car.type}</div>
+      <div style="font-size:12px;color:var(--text-tertiary);font-weight:600;margin-bottom:12px;">${car.plate} · ${car.label || car.type}</div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;">
-        <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
+        <div style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);">
           <span class="material-icons-round" style="font-size:14px;color:var(--primary)">airline_seat_recline_normal</span> ${car.seats || 5} Seats
         </div>
-        <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
+        <div style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);">
           <span class="material-icons-round" style="font-size:14px;color:var(--primary)">settings</span> ${car.transmission}
         </div>
-        <div style="display:flex;align-items:center;gap:6px;color:var(--slate-600);">
+        <div style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);">
           <span class="material-icons-round" style="font-size:14px;color:var(--primary)">local_gas_station</span> ${car.fuel}
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--slate-100);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--border-subtle);">
         <div style="font-size:18px;font-weight:700;color:var(--primary);">${car.rate}</div>
         <button class="btn-primary-sm" onclick="manageCar(${car.id})" style="font-size:12px;padding:8px 16px;">
           <span class="material-icons-round" style="font-size:14px">edit</span> Manage
@@ -98,23 +134,45 @@ function renderCarTable(car) {
   const tbody = document.getElementById('car-tbody');
   if (!tbody) return;
   if (car.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94A3B8;padding:40px">No vehicles found</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text-tertiary);padding:40px">No vehicles found</td></tr>';
     return;
   }
   tbody.innerHTML = car.map(car => {
-    const statusClass = car.status === 'Available' ? 'available' : 'rented';
+    const statusColors = {
+      'Available': { bg: 'rgba(16, 185, 129, 0.15)', text: '#10B981', dot: '#10B981' },
+      'Rented': { bg: 'rgba(0, 113, 227, 0.15)', text: '#0071E3', dot: '#0071E3' }
+    };
+    const sc = statusColors[car.status] || statusColors['Available'];
+    
+    const img0 = (car.images && car.images.length > 0) ? car.images[0] : null;
+    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : null;
+
     return `
-    <tr>
-      <td><strong>${car.name}</strong></td>
-      <td>${car.plate}</td>
-      <td>${car.label || car.type}</td>
-      <td>${car.seats || 5} Seats</td>
-      <td>${car.transmission}</td>
-      <td>${car.fuel}</td>
-      <td><strong>${car.rate}</strong></td>
-      <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${car.status}</span></td>
-      <td>
-        <button class="btn-primary-sm" onclick="manageCar(${car.id})" style="font-size:12px;padding:6px 12px">
+    <tr style="border-bottom: 1px solid var(--border-subtle); transition: background 0.15s ease;">
+      <td style="padding:14px 20px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:48px; height:36px; border-radius:8px; overflow:hidden; background:var(--bg-surface-3); display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1px solid var(--border-subtle);">
+            ${src ? `<img src="${src}" alt="${car.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none';" />` : `<span class="material-icons-round" style="font-size:22px; color:var(--text-tertiary);">directions_car</span>`}
+          </div>
+          <div>
+            <div style="font-weight:600; color:var(--text-primary); font-size:14px;">${car.name}</div>
+            <div style="font-size:12px; color:var(--text-tertiary);">${car.label || car.type}</div>
+          </div>
+        </div>
+      </td>
+      <td style="padding:14px 20px; font-weight:600; color:var(--text-secondary); font-family:monospace; font-size:13px;">${car.plate}</td>
+      <td style="padding:14px 20px; color:var(--text-secondary);">${car.type || 'Sedan'}</td>
+      <td style="padding:14px 20px; color:var(--text-secondary);">${car.seats || 5} Seats</td>
+      <td style="padding:14px 20px; color:var(--text-secondary);">${car.transmission || 'Auto'}</td>
+      <td style="padding:14px 20px; color:var(--text-secondary);">${car.fuel || 'Petrol'}</td>
+      <td style="padding:14px 20px; font-weight:700; color:var(--primary); font-size:14px;">${car.rate}</td>
+      <td style="padding:14px 20px;">
+        <span style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; background:${sc.bg}; color:${sc.text};">
+          <span style="width:6px; height:6px; border-radius:50%; background:${sc.dot};"></span> ${car.status}
+        </span>
+      </td>
+      <td style="padding:14px 20px; text-align:right;">
+        <button class="btn-primary-sm" onclick="manageCar(${car.id})" style="font-size:12px; padding:6px 14px; height:32px;">
           <span class="material-icons-round" style="font-size:14px">edit</span> Manage
         </button>
       </td>

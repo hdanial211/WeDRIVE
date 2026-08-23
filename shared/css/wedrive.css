@@ -6277,11 +6277,187 @@ body.page-is-leaving .page-container {
   body.page-is-leaving main,
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-  }
 }
+}
+
+/* ==============================================================================
+   APPLE DESIGN SYSTEM: ADD VEHICLE MODAL & LIST TABLE STYLES
+   ============================================================================== */
+.modal-overlay,
+.add-car-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.add-car-modal-card,
+.modal-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  padding: 24px 28px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  animation: modalCardScale 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalCardScale {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.add-car-modal-header,
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.add-car-modal-header h3,
+.modal-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.add-car-modal-close-btn,
+.modal-close-btn {
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.add-car-modal-close-btn:hover,
+.modal-close-btn:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  transform: rotate(90deg);
+}
+
+.add-car-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.add-car-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.add-car-form-group label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+}
+
+.add-car-form-group input,
+.add-car-form-group select {
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 13.5px;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.add-car-form-group input:focus,
+.add-car-form-group select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+  background: var(--bg-surface-2);
+}
+
+.add-car-modal-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.add-car-btn-cancel {
+  height: 38px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.add-car-btn-cancel:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+}
+
+.add-car-btn-confirm {
+  height: 38px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--primary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+  transition: all 0.2s var(--ease-apple);
+}
+
+.add-car-btn-confirm:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+#car-list-container tr:hover {
+  background: var(--bg-surface-2);
+}
+
 
 

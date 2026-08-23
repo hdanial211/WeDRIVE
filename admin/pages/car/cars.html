@@ -60,10 +60,10 @@
               <input type="text" id="fl-search" placeholder="Search car name or plate..."
                 oninput="searchCar(this.value)" />
             </div>
-            <button class="btn-outline-sm" onclick="openCarListModal()" title="View list">
-              <span class="material-icons-round" style="font-size:16px">list_alt</span> List View
+            <button class="btn-outline-sm" id="car-view-toggle-btn" onclick="toggleCarView()" title="Toggle between List and Grid view">
+              <span class="material-icons-round" style="font-size:16px">view_list</span> List View
             </button>
-            <button class="btn-primary-sm" onclick="addNewCar()">
+            <button class="btn-primary-sm" onclick="addNewCar()" title="Add new car">
               <span class="material-icons-round" style="font-size:16px">add</span>
               <span data-key="fl_add_car">Add Car</span>
             </button>
@@ -74,6 +74,26 @@
       <!-- CAR CARDS GRID -->
       <div id="car-grid" class="car-grid">
         <!-- Populated by cars.js -->
+      </div>
+
+      <!-- CAR TABLE LIST VIEW (In-page responsive Apple table) -->
+      <div id="car-list-container" class="card reveal-on-scroll" style="display:none; overflow-x:auto; padding:0; border-radius:20px;">
+        <table style="width:100%; border-collapse:collapse; text-align:left;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border-subtle); background:var(--bg-surface-2);">
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_vehicle">Vehicle</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_plate">Plate No.</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_type">Type</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_seats">Seats</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_trans">Transmission</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_fuel">Fuel</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_rate">Daily Rate</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_status">Status</th>
+              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px; text-align:right;" data-key="fl_th_action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="car-tbody"></tbody>
+        </table>
       </div>
 
       <!-- FOOTER -->
@@ -120,7 +140,7 @@
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../js/cars.js"></script>
+  <script src="../../js/cars.js?v=5.2.16"></script>
 </body>
 
 </html>
