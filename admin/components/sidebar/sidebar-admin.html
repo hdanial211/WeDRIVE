@@ -29,7 +29,8 @@
 
   <!-- Navigation -->
   <nav class="sidebar-nav">
-    <div class="nav-section">Main</div>
+    <!-- 1. Operasi / Core Operations -->
+    <div class="nav-section" data-key="nav_sec_main">Main</div>
 
     <a class="nav-item" data-page="admin" data-href="dashboard/admin.html">
       <span class="material-icons-round">dashboard</span>
@@ -42,13 +43,13 @@
     </a>
 
     <a class="nav-item" data-page="bookings" data-href="booking/bookings.html">
-      <span class="material-icons-round">pending_actions</span>
+      <span class="material-icons-round">receipt_long</span>
       <span data-key="sidebar_bookings">Bookings</span>
     </a>
 
-    <a class="nav-item" data-page="reports" data-href="report/reports.html">
-      <span class="material-icons-round">payments</span>
-      <span data-key="sidebar_reports">Reports</span>
+    <a class="nav-item" data-page="customers" data-href="customer/customers.html">
+      <span class="material-icons-round">people</span>
+      <span data-key="sidebar_customers">Customers</span>
     </a>
 
     <a class="nav-item" data-page="calendar" data-href="calendar/calendar.html">
@@ -56,29 +57,29 @@
       <span data-key="sidebar_calendar">Calendar</span>
     </a>
 
-    <div class="nav-section">Intelligence</div>
+    <!-- 2. Analitik & Pemasaran / Business & Analytics -->
+    <div class="nav-section" data-key="nav_sec_analytics">Analytics</div>
 
+    <a class="nav-item" data-page="reports" data-href="report/reports.html">
+      <span class="material-icons-round">bar_chart</span>
+      <span data-key="sidebar_reports">Reports</span>
+    </a>
 
+    <a class="nav-item" data-page="marketing" data-href="marketing/marketing.html">
+      <span class="material-icons-round">campaign</span>
+      <span data-key="sidebar_marketing">Marketing</span>
+    </a>
+
+    <!-- 3. Kecerdasan AI / AI Intelligence -->
+    <div class="nav-section" data-key="nav_sec_intelligence">Intelligence</div>
 
     <a class="nav-item" data-page="chatbot-settings" data-href="chatbot/chatbot.html">
       <span class="material-icons-round">smart_toy</span>
       <span data-key="sidebar_chatbot">AI Chatbot</span>
     </a>
 
-    <a class="nav-item" data-page="customers" data-href="customer/customers.html">
-      <span class="material-icons-round">health_and_safety</span>
-      <span data-key="sidebar_customers">Customers</span>
-    </a>
-
-
-    <div class="nav-section">Marketing</div>
-
-    <a class="nav-item" data-page="marketing" data-href="marketing/marketing.html">
-      <span class="material-icons-round">campaign</span>
-      <span>Marketing</span>
-    </a>
-
-    <div class="nav-section">System</div>
+    <!-- 4. Sistem / System -->
+    <div class="nav-section" data-key="nav_sec_system">System</div>
 
     <a class="nav-item" data-page="settings" data-href="setting/settings.html">
       <span class="material-icons-round">settings</span>

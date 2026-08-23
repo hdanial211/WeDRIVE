@@ -142,7 +142,7 @@
     var base        = resolveBasePath();
 
     // Determine which module's sidebar to load
-    var sidebarPath = 'admin/components/sidebar/' + component + '.html';
+    var sidebarPath = 'admin/components/sidebar/' + component + '.html?v=5.2.8';
     var url         = base + sidebarPath;
 
     fetch(url)
@@ -155,6 +155,10 @@
         resolveLinks(placeholder, base);
         setActiveItem(placeholder, currentPage);
         setupMobileToggle(placeholder);
+        if (typeof window.setLanguage === 'function') {
+          var lang = localStorage.getItem('wedrive_lang') || localStorage.getItem('wedrive-lang') || 'ms';
+          window.setLanguage(lang);
+        }
       })
       .catch(function (err) {
         console.warn('[WeDRIVE Sidebar]', err.message);
