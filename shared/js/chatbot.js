@@ -26,7 +26,7 @@
   <div class="chatbot-panel" id="chatbot-panel">
     <div class="chat-panel-header">
       <div class="chat-bot-info">
-        <div class="chat-bot-avatar"><span class="material-icons-round">smart_toy</span></div>
+        <div class="chat-bot-avatar"><span class="material-icons-round">auto_awesome</span></div>
         <div>
           <div class="chat-bot-name" data-key="chatbot_bot_name">WeDRIVE AI</div>
           <div class="chat-bot-status"><div class="status-dot-sm"></div> <span data-key="chatbot_bot_status">Online · Ready to help</span></div>
@@ -55,7 +55,7 @@
 
   <!-- CHATBOT FAB -->
   <div class="chatbot-fab" id="chatbot-fab" onclick="toggleChat()">
-    <span class="material-icons-round" id="fab-icon">smart_toy</span>
+    <span class="material-icons-round" id="fab-icon">auto_awesome</span>
     <div class="fab-label" data-key="nav_ai">AI Assistant</div>
     <div class="notif-badge" id="notif-badge">1</div>
   </div>
@@ -222,7 +222,7 @@ function buildPersonalContext(userData) {
 window.toggleChat = async function() {
   window.chatOpen = !window.chatOpen;
   document.getElementById('chatbot-panel').classList.toggle('open', window.chatOpen);
-  document.getElementById('fab-icon').textContent = window.chatOpen ? 'close' : 'smart_toy';
+  document.getElementById('fab-icon').textContent = window.chatOpen ? 'close' : 'auto_awesome';
   document.getElementById('notif-badge').style.display = 'none';
   
   if (window.chatOpen && document.getElementById('chat-messages').children.length === 0) {
@@ -395,7 +395,7 @@ window.addChatMsg = function(text, isUser = false, showCar = null) {
   var processedText = parseMarkdown(text);
 
   div.innerHTML = `
-    <div class="chat-avatar">${isUser ? userAvatar : '<span class="material-icons-round chat-avatar-icon">smart_toy</span>'}</div>
+    <div class="chat-avatar">${isUser ? userAvatar : '<span class="material-icons-round chat-avatar-icon">auto_awesome</span>'}</div>
     <div>
       <div class="chat-bubble">${processedText}</div>
       ${carHtml}
@@ -428,7 +428,7 @@ window.showTypingIndicator = function() {
   const div = document.createElement('div');
   div.className = 'chat-msg bot'; div.id = 'chat-typing';
   div.innerHTML = `
-    <div class="chat-avatar"><span class="material-icons-round chat-avatar-icon">smart_toy</span></div>
+    <div class="chat-avatar"><span class="material-icons-round chat-avatar-icon">auto_awesome</span></div>
     <div class="chat-bubble"><div class="typing-indicator"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div></div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
