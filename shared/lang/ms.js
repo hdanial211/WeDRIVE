@@ -73,7 +73,7 @@ window.wedrive_lang_ms = {
   "chatbot_recent": "Terkini",
   "chatbot_bot_name": "Pembantu AI WeDRIVE",
   "chatbot_bot_status": "Dalam Talian · Sedia Membantu",
-  "chatbot_input_ph": "Tanya saya apa sahaja tentang penyewaan kereta...",
+  "chatbot_input_ph": "Tanya saya apa sahaja...",
   "chatbot_footer": "Respons AI dijana oleh Gemini · Sila sahkan butiran tempahan anda",
   "admin_title": "Papan Pemuka | Admin WeDRIVE",
   "admin_dashboard": "Papan Pemuka",
