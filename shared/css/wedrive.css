@@ -5341,3 +5341,90 @@ body.lang-skeleton-reveal .guest-section-heading p {
   }
 }
 
+/* ==============================================================================
+   15D. APPLE PAGE TRANSITION SYSTEM (IN & OUT SMOOTH ANIMATIONS)
+   ============================================================================== */
+
+/* Top Loading Laser Indicator Bar */
+#wedrive-page-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #0071E3 0%, #2997FF 50%, #5AC8FA 100%);
+  z-index: 999999;
+  box-shadow: 0 0 10px rgba(0, 113, 227, 0.6), 0 0 4px rgba(90, 200, 250, 0.8);
+  pointer-events: none;
+  opacity: 0;
+  transition: width 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+#wedrive-page-progress.active {
+  opacity: 1;
+  width: 100%;
+}
+
+/* Page Entry (IN) Animation */
+@keyframes pageTransitionIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.996);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Page Exit (OUT) Animation */
+@keyframes pageTransitionOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.992);
+    filter: blur(3px);
+  }
+}
+
+/* Applied to document body on page entry */
+body {
+  animation: pageTransitionIn 0.38s var(--ease-apple) forwards;
+}
+
+/* Applied when navigating away to another page (Page OUT) */
+body.page-is-leaving,
+html.page-is-leaving body {
+  animation: pageTransitionOut 0.24s cubic-bezier(0.32, 0.72, 0, 1) forwards !important;
+  pointer-events: none !important;
+}
+
+/* Modern View Transitions API Support */
+::view-transition-old(root) {
+  animation: 0.24s cubic-bezier(0.32, 0.72, 0, 1) both pageTransitionOut;
+}
+
+::view-transition-new(root) {
+  animation: 0.38s var(--ease-apple) both pageTransitionIn;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  body.page-is-leaving,
+  html.page-is-leaving body,
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+

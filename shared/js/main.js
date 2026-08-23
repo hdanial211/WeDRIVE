@@ -1060,3 +1060,89 @@
   }
 })();
 
+/* =====================================================
+   SECTION 15D: GLOBAL APPLE PAGE TRANSITION SYSTEM (IN & OUT)
+   ===================================================== */
+(function initGlobalPageTransitions() {
+  'use strict';
+
+  function getProgressBar() {
+    var bar = document.getElementById('wedrive-page-progress');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'wedrive-page-progress';
+      if (document.body) {
+        document.body.appendChild(bar);
+      } else {
+        document.addEventListener('DOMContentLoaded', function () {
+          if (!document.getElementById('wedrive-page-progress')) {
+            document.body.appendChild(bar);
+          }
+        });
+      }
+    }
+    return bar;
+  }
+
+  // Ensure clean state upon arrival (including browser back/forward cache)
+  window.addEventListener('pageshow', function () {
+    if (document.body) {
+      document.body.classList.remove('page-is-leaving');
+    }
+    if (document.documentElement) {
+      document.documentElement.classList.remove('page-is-leaving');
+    }
+    var bar = document.getElementById('wedrive-page-progress');
+    if (bar) bar.classList.remove('active');
+  });
+
+  // Intercept clicks on internal links to perform smooth Page OUT transition
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented) return;
+    if (e.button !== 0) return; // Only standard primary click
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // Allow modifier clicks (new tab)
+
+    var link = e.target.closest('a');
+    if (!link) return;
+
+    var href = link.getAttribute('href');
+    if (!href) return;
+
+    // Ignore anchors, JS, protocols, modal triggers, or blank targets
+    if (href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+    if (link.hasAttribute('download')) return;
+    if (link.getAttribute('target') && link.getAttribute('target') !== '_self') return;
+
+    // Check same-origin navigation
+    var targetUrl;
+    try {
+      targetUrl = new URL(link.href, window.location.href);
+    } catch (_) {
+      return;
+    }
+
+    if (targetUrl.origin !== window.location.origin) return;
+    if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search) {
+      return; // Same page
+    }
+
+    // Trigger Page OUT transition
+    e.preventDefault();
+
+    var bar = getProgressBar();
+    if (bar) bar.classList.add('active');
+
+    if (document.body) {
+      document.body.classList.add('page-is-leaving');
+    }
+    if (document.documentElement) {
+      document.documentElement.classList.add('page-is-leaving');
+    }
+
+    setTimeout(function () {
+      window.location.href = link.href;
+    }, 220);
+  });
+})();
+
+
