@@ -5118,6 +5118,45 @@ body.dark aside.sidebar {
   border-top: 1px solid var(--border-subtle);
 }
 
+/* Sidebar Mobile Toggle Button */
+.sidebar-toggle {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .sidebar-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.9));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-medium);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    color: var(--text-primary);
+    cursor: pointer;
+    z-index: 1002;
+    transition: transform 0.2s var(--ease-apple), background 0.2s;
+  }
+
+  body.night-mode .sidebar-toggle,
+  body.dark .sidebar-toggle {
+    background: rgba(22, 22, 26, 0.9);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .sidebar-toggle:active {
+    transform: scale(0.92);
+  }
+}
+
 main.main {
   margin-left: 284px;
   min-height: 100vh;
