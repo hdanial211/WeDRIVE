@@ -289,18 +289,23 @@ body.dark #wedrive-navbar.navbar-floating {
 /* Admin / Customer main portal specific floating navbar alignment */
 main.main #navbar-placeholder,
 .customer-main #navbar-placeholder {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 990;
   width: 100%;
   display: block;
   box-sizing: border-box;
+  pointer-events: none;
+  background: transparent;
 }
 
 main.main .navbar,
 main.main #wedrive-navbar,
 .customer-main .navbar,
 .customer-main #wedrive-navbar {
-  position: sticky !important;
-  top: 14px !important;
-  z-index: 900;
+  position: relative !important;
+  top: 0 !important;
+  z-index: 990;
   width: calc(100% - 64px) !important;
   max-width: calc(1400px - 64px) !important;
   margin: 14px 32px 0 32px !important;
@@ -313,6 +318,7 @@ main.main #wedrive-navbar,
   backdrop-filter: blur(28px) saturate(190%);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
+  pointer-events: auto;
 }
 
 body.night-mode main.main .navbar,
