@@ -30,6 +30,50 @@
   /* ── Inject shared/css/calendar.css (no-op as wedrive.css contains all calendar styles) ── */
   function injectCalendarCSS() {}
 
+  /* ── Dynamic Year Select Synchronizer (Restricts Years to Valid minDate/maxDate Range) ── */
+  function syncYearSelect(instance) {
+    if (!instance || !instance.customYearSelect) return;
+    var select = instance.customYearSelect;
+    var allowPast = instance.config && instance.config.allowPast;
+    var currentYear = new Date().getFullYear();
+    
+    var minYear = allowPast ? currentYear - 5 : currentYear;
+    if (instance.config && instance.config.minDate) {
+      var mDate = instance.config.minDate instanceof Date ? instance.config.minDate : new Date(instance.config.minDate);
+      if (!isNaN(mDate.getTime())) {
+        minYear = mDate.getFullYear();
+      }
+    }
+    
+    var maxYear = currentYear + 10;
+    if (instance.config && instance.config.maxDate) {
+      var mxDate = instance.config.maxDate instanceof Date ? instance.config.maxDate : new Date(instance.config.maxDate);
+      if (!isNaN(mxDate.getTime())) {
+        maxYear = mxDate.getFullYear();
+      }
+    }
+    
+    if (maxYear < minYear) maxYear = minYear;
+
+    var curVal = Number(select.value) || instance.currentYear;
+
+    select.innerHTML = '';
+    for (var i = minYear; i <= maxYear; i++) {
+      var opt = document.createElement('option');
+      opt.value = i;
+      opt.text = i;
+      select.appendChild(opt);
+    }
+
+    var targetYear = curVal;
+    if (targetYear < minYear) targetYear = minYear;
+    if (targetYear > maxYear) targetYear = maxYear;
+    select.value = targetYear;
+    if (instance.currentYear !== targetYear) {
+      instance.changeYear(targetYear);
+    }
+  }
+
   /* ── Range highlight helper ── */
   function highlightRange(dayElem, pickupPicker, returnPicker) {
     dayElem.classList.remove('range-start', 'in-range', 'range-end');
@@ -46,7 +90,11 @@
 
     if (cDay === pDay) dayElem.classList.add('range-start');
     if (cDay === rDay) dayElem.classList.add('range-end');
-    if (cDay > pDay && cDay < rDay) dayElem.classList.add('in-range');
+    if (cDay > pDay && cDay < rDay) {
+      if (!dayElem.classList.contains('flatpickr-disabled') && !dayElem.classList.contains('booked-date')) {
+        dayElem.classList.add('in-range');
+      }
+    }
   }
 
   function redrawRange(pickupPicker, returnPicker) {
@@ -72,8 +120,6 @@
 
     var allowPast = customConfig && customConfig.allowPast;
     var minDateSetting = allowPast ? null : "today";
-    var currentYear = new Date().getFullYear();
-    var minYear = allowPast ? currentYear - 5 : currentYear;
 
     var commonConfig = {
       minDate: minDateSetting,
@@ -88,14 +134,6 @@
         var select = document.createElement('select');
         select.className = 'flatpickr-monthDropdown-months custom-year-select';
         
-        for (var i = minYear; i <= currentYear + 10; i++) {
-            var opt = document.createElement('option');
-            opt.value = i;
-            opt.text = i;
-            select.appendChild(opt);
-        }
-        select.value = instance.currentYear;
-        
         select.addEventListener('change', function(e) {
             instance.changeYear(Number(e.target.value));
         });
@@ -106,20 +144,22 @@
         
         wrapper.appendChild(select);
         instance.customYearSelect = select;
+        syncYearSelect(instance);
+      },
+      onOpen: function(selectedDates, dateStr, instance) {
+        syncYearSelect(instance);
       },
       onYearChange: function(selectedDates, dateStr, instance) {
-        if (instance.customYearSelect) {
-          instance.customYearSelect.value = instance.currentYear;
-        }
+        syncYearSelect(instance);
       },
       onDayCreate: function(dObj, dStr, fp, dayElem) {
         highlightRange(dayElem, pPicker, rPicker);
         if (dayElem.dateObj && disabledDates && disabledDates.length > 0) {
           var dateToCheck = new Date(dayElem.dateObj.getFullYear(), dayElem.dateObj.getMonth(), dayElem.dateObj.getDate()).getTime();
           var isBooked = disabledDates.some(function(range) {
-            if (range.from && range.to) {
-              var f = new Date(range.from);
-              var t = new Date(range.to);
+            var f = range.from ? new Date(range.from) : (range instanceof Date ? range : null);
+            var t = range.to ? new Date(range.to) : f;
+            if (f && t) {
               var fTime = new Date(f.getFullYear(), f.getMonth(), f.getDate()).getTime();
               var tTime = new Date(t.getFullYear(), t.getMonth(), t.getDate()).getTime();
               return dateToCheck >= fTime && dateToCheck <= tTime;
@@ -131,7 +171,8 @@
           }
         }
       },
-      onMonthChange: function() {
+      onMonthChange: function(selectedDates, dateStr, instance) {
+        syncYearSelect(instance);
         setTimeout(function() { redrawRange(pPicker, rPicker); }, 10);
       }
     };
@@ -147,8 +188,28 @@
         if (pPicker && pPicker.isOpen) {
           pPicker.close();
         }
+        syncYearSelect(instance);
       },
-      onChange: function() {
+      onChange: function(selectedDates, dateStr, instance) {
+        if (selectedDates[0] && pPicker && pPicker.selectedDates[0] && disabledDates && disabledDates.length > 0) {
+          var pTime = new Date(pPicker.selectedDates[0].getFullYear(), pPicker.selectedDates[0].getMonth(), pPicker.selectedDates[0].getDate()).getTime();
+          var rTime = new Date(selectedDates[0].getFullYear(), selectedDates[0].getMonth(), selectedDates[0].getDate()).getTime();
+          
+          var hasConflict = disabledDates.some(function(range) {
+            var f = range.from ? new Date(range.from) : (range instanceof Date ? range : null);
+            var t = range.to ? new Date(range.to) : f;
+            if (!f) return false;
+            var fTime = new Date(f.getFullYear(), f.getMonth(), f.getDate()).getTime();
+            var tTime = new Date(t.getFullYear(), t.getMonth(), t.getDate()).getTime();
+            return (fTime >= pTime && fTime <= rTime) || (tTime >= pTime && tTime <= rTime);
+          });
+          
+          if (hasConflict) {
+            instance.clear();
+            triggerPickupRequiredFeedback();
+            return;
+          }
+        }
         if (typeof onChangeCallback === 'function') onChangeCallback(pPicker, rPicker);
         redrawRange(pPicker, rPicker);
       }
@@ -283,13 +344,13 @@
         
         // Prevent jumping over booked dates by finding the next disabled date
         if (selectedDates[0] && disabledDates && disabledDates.length > 0) {
-          var pickupTime = selectedDates[0].getTime();
+          var pickupTime = new Date(selectedDates[0].getFullYear(), selectedDates[0].getMonth(), selectedDates[0].getDate()).getTime();
           var nextDisabledDate = null;
           var nextDisabledTime = Infinity;
           
           disabledDates.forEach(function(range) {
-            if (range.from) {
-              var f = new Date(range.from);
+            var f = range.from ? new Date(range.from) : (range instanceof Date ? range : null);
+            if (f && !isNaN(f.getTime())) {
               var fTime = new Date(f.getFullYear(), f.getMonth(), f.getDate()).getTime();
               // If this disabled date is strictly AFTER the pickup date
               if (fTime > pickupTime && fTime < nextDisabledTime) {
@@ -303,11 +364,14 @@
             // Subtract one day so maxDate is the day before the next booking starts
             var maxReturnDate = new Date(nextDisabledDate.getTime() - 24 * 60 * 60 * 1000);
             rPicker.set('maxDate', maxReturnDate);
+            syncYearSelect(rPicker);
           } else {
             rPicker.set('maxDate', null); // No future bookings
+            syncYearSelect(rPicker);
           }
         } else {
           rPicker.set('maxDate', null);
+          syncYearSelect(rPicker);
         }
 
         updateReturnState();
@@ -323,6 +387,7 @@
           if (rPicker && !rPicker.selectedDates.length && selectedDates.length > 0) {
             if (pPicker) pPicker.close();
             rPicker.open();
+            syncYearSelect(rPicker);
           }
         }, 150);
 
@@ -343,8 +408,6 @@
 
     var allowPast = customConfig && customConfig.allowPast;
     var minDateSetting = allowPast ? null : "today";
-    var currentYear = new Date().getFullYear();
-    var minYear = allowPast ? currentYear - 5 : currentYear;
 
     var commonConfig = {
       minDate: minDateSetting,
@@ -358,14 +421,6 @@
         var select = document.createElement('select');
         select.className = 'flatpickr-monthDropdown-months custom-year-select';
         
-        for (var i = minYear; i <= currentYear + 10; i++) {
-            var opt = document.createElement('option');
-            opt.value = i;
-            opt.text = i;
-            select.appendChild(opt);
-        }
-        select.value = instance.currentYear;
-        
         select.addEventListener('change', function(e) {
             instance.changeYear(Number(e.target.value));
         });
@@ -376,11 +431,16 @@
         
         wrapper.appendChild(select);
         instance.customYearSelect = select;
+        syncYearSelect(instance);
+      },
+      onOpen: function(selectedDates, dateStr, instance) {
+        syncYearSelect(instance);
       },
       onYearChange: function(selectedDates, dateStr, instance) {
-        if (instance.customYearSelect) {
-          instance.customYearSelect.value = instance.currentYear;
-        }
+        syncYearSelect(instance);
+      },
+      onMonthChange: function(selectedDates, dateStr, instance) {
+        syncYearSelect(instance);
       }
     };
 

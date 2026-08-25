@@ -925,3 +925,22 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.47 Fix search button scroll target to smoothly align at filter bar and car grid without overshooting`
   - Tag Versi: `5.2.47`
+
+---
+
+## 📅 [MINOR UPDATE] 88. Had Dinamik Pilihan Tahun & Kawalan Ralat Tarikh Bertindih Kalendar (Dynamic Year Constraint & Booked Date Conflict Guard) (v5.2.48)
+
+- **Punca Masalah (Root Cause)**:
+  - Sebelum ini, menu *dropdown* tahun pada kalendar Flatpickr dibina sekali sahaja dengan senarai tahun sehingga 10 tahun ke hadapan (`currentYear + 10`).
+  - Apabila sesuatu kenderaan mempunyai tempahan sedia ada pada tarikh seterusnya (cth: 7 Oktober 2026), pemilih Tarikh Pulang telah menetapkan `maxDate` pada 6 Oktober 2026, tetapi menu *dropdown* tahun masih membenarkan pengguna memilih tahun 2027 hingga 2036.
+  - Ini membolehkan sorotan julat terputus atau merentasi tarikh yang telah ditempah.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/js/calendar.js`:
+    - Membina fungsi penyelarasan tahun dinamik `syncYearSelect(instance)` yang mengehadkan pilihan tahun dalam elemen `<select>` secara eksklusif antara `minDate` dan `maxDate`.
+    - Apabila terdapat tarikh tempahan seterusnya pada tahun yang sama, *dropdown* tahun bagi Tarikh Pulang secara automatik **hanya memaparkan 1 tahun sahaja** (`2026`) dan menghalang pengguna memilih tahun hadapan yang tidak sah.
+    - Menambah kawalan ralat pada `highlightRange()` dan fungsi `onChange` pemilih Tarikh Pulang supaya sebarang pemilihan tarikh yang merentasi jurang tempahan disekat serta merta dengan maklum balas gegaran haptik (*shake error feedback*).
+- **Pengesahan Ujian Visual (DevTools Screenshot)**:
+  - Menguji pemilihan tarikh 1 Oktober 2026 pada kereta yang ditempah pada 7 Oktober 2026: pemilih Tarikh Pulang kini mengunci tarikh selepas 6 Oktober dan *dropdown* tahun hanya memaparkan tahun tunggal `2026` sahaja dengan sempurna.
+- **Maklumat Git**:
+  - Commit: `5.2.48 Dynamically restrict calendar year select to valid booking window and block conflict ranges`
+  - Tag Versi: `5.2.48`
