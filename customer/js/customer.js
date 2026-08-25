@@ -465,15 +465,15 @@
 
     var chosen = [];
     if (sedanCar) {
-      sedanCar._customAi = isMs ? 'Padanan AI 98% · Korporat & Eksekutif' : '98% AI Match · Executive & Business';
+      sedanCar._customAi = isMs ? 'Pilihan Eksekutif' : 'Executive Choice';
       chosen.push(sedanCar);
     }
     if (suvCar) {
-      suvCar._customAi = isMs ? 'Padanan AI 96% · Keselesaan Keluarga' : '96% AI Match · Family Comfort & Trips';
+      suvCar._customAi = isMs ? 'Pilihan Keluarga' : 'Family Choice';
       chosen.push(suvCar);
     }
     if (hatchCar) {
-      hatchCar._customAi = isMs ? 'Padanan AI 94% · Jimat & Lincah Bandar' : '94% AI Match · Eco & Agile City Commute';
+      hatchCar._customAi = isMs ? 'Paling Jimat Bahan Api' : 'Best Fuel Economy';
       chosen.push(hatchCar);
     }
 
@@ -481,7 +481,7 @@
     if (chosen.length < 3) {
       for (var i = 0; i < cars.length && chosen.length < 3; i++) {
         if (chosen.indexOf(cars[i]) === -1) {
-          cars[i]._customAi = isMs ? 'Padanan AI 95% · Pilihan Popular' : '95% AI Match · Popular Choice';
+          cars[i]._customAi = isMs ? 'Pilihan Popular' : 'Popular Fleet';
           chosen.push(cars[i]);
         }
       }

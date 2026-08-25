@@ -425,7 +425,9 @@
       "fleet_badge": "WeDRIVE Full Catalog",
       "fleet_banner_title": "Looking for Sedans, SUVs, MPVs, Coupes, or Trucks?",
       "fleet_banner_desc": "Filter by specific transmission, seating capacity, and fuel efficiency with real-time dates availability.",
-      "cust_explore_fleet": "Explore All 8 Cars"
+      "cust_explore_fleet": "Explore All 8 Cars",
+      "cust_featured_fleet": "Featured Fleet",
+      "cust_featured_fleet_desc": "Top choices across vehicle classes in Melaka"
     },
     ms: {
       "nav_browse": "Pilih Kereta",
@@ -497,7 +499,9 @@
       "fleet_badge": "Katalog Penuh WeDRIVE",
       "fleet_banner_title": "Mencari Sedan, SUV, MPV, Coupe, atau Trak?",
       "fleet_banner_desc": "Tapis mengikut transmisi, bilangan tempat duduk, dan penjimatan bahan api dengan tarikh tersedia masa nyata.",
-      "cust_explore_fleet": "Teroka Kesemua 8 Kereta"
+      "cust_explore_fleet": "Teroka Kesemua 8 Kereta",
+      "cust_featured_fleet": "Pilihan Kenderaan Popular",
+      "cust_featured_fleet_desc": "Pilihan terbaik mengikut kategori kenderaan di Melaka"
     }
   };
 

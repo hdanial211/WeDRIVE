@@ -1202,6 +1202,7 @@ body.night-mode .guest-kicker .material-icons-round,
 }
 
 /* Filter Bar */
+.filter-bar,
 .filter-bar.guest-filter-bar {
   display: flex;
   align-items: center;
@@ -1245,10 +1246,12 @@ body.night-mode .guest-kicker .material-icons-round,
    07. BENTO CARS GRID & CAR CARDS
    ============================================================================== */
 
+.cars-grid,
 .cars-grid.guest-cars-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 28px;
+  width: 100%;
 }
 
 .car-card {

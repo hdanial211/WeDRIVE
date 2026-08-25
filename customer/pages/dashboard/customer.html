@@ -33,44 +33,6 @@
 
     <div class="main-content-area">
 
-      <!-- STATS & QUICK ACCESS (Unified Apple Bento Stats Grid) -->
-      <section class="stats-grid">
-        <a href="../browse-cars/browse-cars.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
-          <div class="stat-info">
-            <p class="label" data-key="nav_browse">Browse Fleet</p>
-            <h3 class="value">8 Cars</h3>
-            <span class="trend positive"><span class="material-icons-round">check_circle</span> <span data-key="quick_browse_sub">8 Available · Rent Now</span></span>
-          </div>
-          <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
-        </a>
-
-        <a href="../my-bookings/my-bookings.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
-          <div class="stat-info">
-            <p class="label" data-key="nav_bookings">My Bookings</p>
-            <h3 class="value" id="stat-active-rentals">1 Active</h3>
-            <span class="trend neutral"><span class="material-icons-round">history</span> <span data-key="quick_bookings_sub">Active & Past Records</span></span>
-          </div>
-          <div class="stat-icon green"><span class="material-icons-round">calendar_month</span></div>
-        </a>
-
-        <a href="../support/support.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
-          <div class="stat-info">
-            <p class="label" data-key="nav_support">Roadside Support</p>
-            <h3 class="value">24/7</h3>
-            <span class="trend positive"><span class="material-icons-round">headset_mic</span> <span data-key="quick_support_sub">Emergency Assistance</span></span>
-          </div>
-          <div class="stat-icon purple"><span class="material-icons-round">support_agent</span></div>
-        </a>
-
-        <a href="../profile/profile.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
-          <div class="stat-info">
-            <p class="label" data-key="nav_settings">Profile & Driver</p>
-            <h3 class="value">Verified</h3>
-            <span class="trend positive"><span class="material-icons-round">verified</span> <span data-key="quick_profile_sub">Verified Driver</span></span>
-          </div>
-          <div class="stat-icon amber"><span class="material-icons-round">verified_user</span></div>
-        </a>
-      </section>
 
       <!-- SECTION: Dynamic Active Rental / Ready for Journey Card -->
       <section class="dash-section" id="active-booking-section">
@@ -171,37 +133,20 @@
         </div>
       </section>
 
-      <!-- SECTION: AI Recommendations (3 Bento Cards) -->
+      <!-- SECTION: Featured / Recommended Vehicles -->
       <section class="dash-section">
         <div class="section-header">
           <div>
             <h2>
-              <span class="material-icons-round section-icon">psychology</span>
-              <span data-key="cust_ai_reco">AI Recommendations for You</span>
+              <span class="material-icons-round section-icon">directions_car</span>
+              <span data-key="cust_featured_fleet">Featured Fleet</span>
             </h2>
-            <p data-key="cust_ai_reco_desc">Curated based on your rental history and popular trips</p>
+            <p data-key="cust_featured_fleet_desc">Top choices across vehicle classes in Melaka</p>
           </div>
           <a href="../browse-cars/browse-cars.html" class="section-link" data-key="cust_view_all_cars">View All Cars →</a>
         </div>
-        <div class="reco-grid" id="reco-grid">
+        <div class="cars-grid" id="reco-grid">
           <!-- Populated by customer.js -->
-        </div>
-      </section>
-
-      <!-- SECTION: Horizontal Fleet Banner -->
-      <section class="dash-section" style="margin-top: 10px;">
-        <div class="fleet-explore-banner">
-          <div class="fleet-banner-content">
-            <span class="fleet-banner-badge" data-key="fleet_badge">WeDRIVE Full Catalog</span>
-            <h3 data-key="fleet_banner_title">Looking for Sedans, SUVs, MPVs, Coupes, or Trucks?</h3>
-            <p data-key="fleet_banner_desc">Filter by specific transmission, seating capacity, and fuel efficiency with real-time dates availability.</p>
-          </div>
-          <div class="fleet-banner-btn-wrap">
-            <a href="../browse-cars/browse-cars.html" class="btn-primary" data-key="btn_view_fleet">
-              <span class="material-icons-round">apps</span>
-              <span data-key="cust_explore_fleet">Explore All 8 Cars</span>
-            </a>
-          </div>
         </div>
       </section>
 

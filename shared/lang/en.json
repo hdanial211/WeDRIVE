@@ -748,5 +748,7 @@
   "fleet_badge": "WeDRIVE Full Catalog",
   "fleet_banner_title": "Looking for Sedans, SUVs, MPVs, Coupes, or Trucks?",
   "fleet_banner_desc": "Filter by specific transmission, seating capacity, and fuel efficiency with real-time dates availability.",
-  "cust_explore_fleet": "Explore All 8 Cars"
+  "cust_explore_fleet": "Explore All 8 Cars",
+  "cust_featured_fleet": "Featured Fleet",
+  "cust_featured_fleet_desc": "Top choices across vehicle classes in Melaka"
 }
