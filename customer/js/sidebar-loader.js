@@ -40,6 +40,7 @@
   // Sidebar nav items configuration
   var NAV_ITEMS = [
     { icon: 'dashboard', key: 'nav_dashboard', label: 'Dashboard', page: 'dashboard', href: '{base}customer/pages/dashboard/customer.html' },
+    { icon: 'directions_car', key: 'nav_browse', label: 'Browse Cars', page: 'browse-cars', href: '{base}customer/pages/browse-cars/browse-cars.html' },
     { icon: 'calendar_month', key: 'nav_bookings', label: 'My Bookings', page: 'my-bookings', href: '{base}customer/pages/my-bookings/my-bookings.html' }
   ];
 
@@ -52,6 +53,7 @@
   function detectActivePage() {
     var path = window.location.pathname;
     if (path.includes('/dashboard/')) return 'dashboard';
+    if (path.includes('/browse-cars/')) return 'browse-cars';
     if (path.includes('/my-bookings/')) return 'my-bookings';
     if (path.includes('/profile/')) return 'profile';
     if (path.includes('/support/')) return 'support';
@@ -87,7 +89,7 @@
       '    </a>',
       '  </div>',
       '  <div class="sidebar-cta">',
-      '    <button class="sidebar-book-btn" onclick="(window.navigateToPage ? window.navigateToPage(\'' + base + 'customer/pages/dashboard/customer.html\') : window.location=\'' + base + 'customer/pages/dashboard/customer.html\')">',
+      '    <button class="sidebar-book-btn" onclick="(window.navigateToPage ? window.navigateToPage(\'' + base + 'customer/pages/browse-cars/browse-cars.html\') : window.location=\'' + base + 'customer/pages/browse-cars/browse-cars.html\')">',
       '      <span class="material-icons-round">add</span>',
       '      <span data-key="cust_new_booking">New Booking</span>',
       '    </button>',

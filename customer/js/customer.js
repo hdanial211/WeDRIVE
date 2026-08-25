@@ -723,114 +723,157 @@
     window.location.href = '../car-details/booking/booking.html?' + params.join('&');
   };
 
+  var countdownInterval = null;
+
+  function startReturnCountdown(targetDate) {
+    if (countdownInterval) clearInterval(countdownInterval);
+
+    var daysEl = document.getElementById('cd-days');
+    var hoursEl = document.getElementById('cd-hours');
+    var minsEl = document.getElementById('cd-mins');
+    var secsEl = document.getElementById('cd-secs');
+    var deadlineTextEl = document.getElementById('cd-deadline-text');
+
+    if (!daysEl || !hoursEl || !minsEl || !secsEl) return;
+
+    var returnTime;
+    if (targetDate) {
+      if (typeof targetDate === 'string' && targetDate.includes('-')) {
+        var parts = targetDate.split('-');
+        returnTime = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 10, 0, 0).getTime();
+      } else {
+        returnTime = new Date(targetDate).getTime();
+      }
+    } else {
+      // Default demo countdown: 2 days, 14 hours from now
+      returnTime = Date.now() + (2 * 24 * 3600 + 14 * 3600 + 35 * 60 + 12) * 1000;
+    }
+
+    if (deadlineTextEl) {
+      var dObj = new Date(returnTime);
+      var months = lang() === 'ms'
+        ? ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogos', 'Sep', 'Okt', 'Nov', 'Dis']
+        : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      deadlineTextEl.textContent = dObj.getDate() + ' ' + months[dObj.getMonth()] + ' ' + dObj.getFullYear() + ' · 10:00 AM';
+    }
+
+    function update() {
+      var now = Date.now();
+      var diff = returnTime - now;
+
+      if (diff <= 0) {
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minsEl.textContent = '00';
+        secsEl.textContent = '00';
+        return;
+      }
+
+      var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      daysEl.textContent = String(d).padStart(2, '0');
+      hoursEl.textContent = String(h).padStart(2, '0');
+      minsEl.textContent = String(m).padStart(2, '0');
+      secsEl.textContent = String(s).padStart(2, '0');
+    }
+
+    update();
+    countdownInterval = setInterval(update, 1000);
+  }
+
   function updateActiveBookingSection() {
     var activeSec = document.getElementById('active-booking-section');
+    var activeCard = document.getElementById('active-booking-card');
+    var noRentalCard = document.getElementById('no-rental-card');
     if (!activeSec) return;
 
+    // Start default countdown on page load
+    startReturnCountdown();
+
     if (window.__GUEST_MODE__) {
-      activeSec.style.display = 'none';
+      if (activeCard) activeCard.style.display = 'none';
+      if (noRentalCard) noRentalCard.style.display = 'flex';
       return;
     }
 
     if (!window.WeDriveAPI || !window.WeDriveAPI.getCurrentUser) {
-      activeSec.style.display = 'none';
       return;
     }
 
     window.WeDriveAPI.getCurrentUser().then(function (user) {
       if (!user) {
-        activeSec.style.display = 'none';
+        if (activeCard) activeCard.style.display = 'none';
+        if (noRentalCard) noRentalCard.style.display = 'flex';
         return;
       }
 
       window.WeDriveAPI.getCustomerBookings(user.id).then(function (bookings) {
-        // Filter for active bookings: status not in Completed, Cancelled, Rejected
         var activeBookings = (bookings || []).filter(function (b) {
           return b.status !== 'Completed' && b.status !== 'Cancelled' && b.status !== 'Rejected';
         });
 
+        var activeCountEl = document.getElementById('stat-active-rentals');
+        if (activeCountEl) {
+          activeCountEl.textContent = activeBookings.length > 0 ? (activeBookings.length + ' ' + (lang() === 'ms' ? 'Aktif' : 'Active')) : (lang() === 'ms' ? 'Tiada' : '0 Active');
+        }
+
         if (!activeBookings.length) {
-          activeSec.style.display = 'none';
+          if (activeCard) activeCard.style.display = 'none';
+          if (noRentalCard) noRentalCard.style.display = 'flex';
           return;
         }
 
-        // Show the latest active booking
-        var booking = activeBookings[0];
-        activeSec.style.display = ''; // Reset display to default
+        if (activeCard) activeCard.style.display = 'grid';
+        if (noRentalCard) noRentalCard.style.display = 'none';
 
-        // Find the car details to get the correct image and category
+        var booking = activeBookings[0];
         var car = allCars.find(function(c) { return String(c.id) === String(booking.car_id); });
-        
-        // Update elements dynamically
+
         var imgEl = document.getElementById('active-car-img');
         if (imgEl) {
           imgEl.src = car ? imagePath(car) : fallbackImagePath();
         }
 
-        var tagEl = activeSec.querySelector('.booking-tag');
+        var tagEl = document.getElementById('active-booking-tag');
         if (tagEl) {
-          tagEl.textContent = (car ? (car.label || car.type) : 'CAR').toUpperCase();
+          tagEl.textContent = (car ? (car.label || car.type) : 'SEDAN').toUpperCase();
         }
 
-        var idEl = activeSec.querySelector('.booking-id');
+        var idEl = document.getElementById('active-booking-id');
         if (idEl) {
           idEl.textContent = 'Booking #' + (booking.booking_id || booking.id);
         }
 
-        var nameEl = activeSec.querySelector('.booking-car-name');
+        var nameEl = document.getElementById('active-booking-car-name');
         if (nameEl) {
-          nameEl.textContent = car ? car.name : booking.car;
+          nameEl.textContent = car ? car.name : (booking.car || 'BMW 320i M Sport');
         }
 
-        var subEl = activeSec.querySelector('.booking-car-sub');
+        var subEl = document.getElementById('active-booking-car-sub');
         if (subEl) {
-          subEl.textContent = car ? (car.ai || 'Executive Comfort') : 'AI Selected Class';
+          subEl.textContent = car ? (car.ai || 'Executive Class · Melaka Sentral') : 'Executive Class · Melaka Sentral';
         }
 
-        // Return Date Formatting
-        var returnValEl = activeSec.querySelector('.booking-specs-grid div:first-child .spec-value');
-        if (returnValEl && booking.end_date) {
-          var dateParts = booking.end_date.split('-');
-          if (dateParts.length === 3) {
-            var months = lang() === 'ms' 
-              ? ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogos', 'Sep', 'Okt', 'Nov', 'Dis']
-              : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            var dateObj = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
-            var formattedDate = dateObj.getDate() + ' ' + months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
-            returnValEl.textContent = formattedDate;
-          } else {
-            returnValEl.textContent = booking.end_date;
-          }
+        var pickupValEl = document.getElementById('active-pickup-val');
+        if (pickupValEl) {
+          pickupValEl.textContent = booking.pickup_location || booking.location || 'Melaka Sentral';
         }
 
-        // Range / Specs
-        var rangeValEl = activeSec.querySelector('.booking-specs-grid div:last-child .spec-value');
+        var rangeValEl = document.getElementById('active-range-val');
         if (rangeValEl) {
           var range = car && String(car.fuel).toLowerCase() === 'electric' ? '450 km' : '540 km';
           rangeValEl.innerHTML = '<span class="material-icons-round">route</span> ' + range;
         }
 
-        // Status chip
-        var statusChipEl = activeSec.querySelector('.booking-status-chip');
-        if (statusChipEl) {
-          var status = booking.status || 'Confirmed';
-          var isPremium = status === 'Confirmed' || status === 'Active';
-          statusChipEl.className = 'booking-status-chip ' + status.toLowerCase();
-          
-          var chipText = isPremium 
-            ? (lang() === 'ms' ? 'Sedia Premium' : 'Premium Ready')
-            : (lang() === 'ms' ? 'Menunggu Kelulusan' : 'Pending Approval');
-            
-          statusChipEl.innerHTML = '<span class="material-icons-round">' + (isPremium ? 'workspace_premium' : 'schedule') + '</span>' +
-            '<span>' + chipText + '</span>';
-        }
+        startReturnCountdown(booking.end_date);
       }).catch(function (err) {
         console.error('[Customer Dashboard] Error loading bookings:', err);
-        activeSec.style.display = 'none';
       });
     }).catch(function (err) {
       console.error('[Customer Dashboard] Error getting user:', err);
-      activeSec.style.display = 'none';
     });
   }
 

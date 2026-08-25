@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Browse and reserve premium rental cars with WeDRIVE. Instant availability and AI recommendations."/>
+  <title>Browse Cars | WeDRIVE Customer</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.24" />
+</head>
+<body data-particles="10" data-cursor-glow>
+
+  <!-- SIDEBAR & MOBILE BAR (loaded by sidebar-loader.js) -->
+  <div id="customer-sidebar-placeholder"></div>
+  <div id="mobile-menu-placeholder"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="customer-main" id="customer-main">
+    <!-- UTILITY TOP BAR -->
+    <header class="utility-bar">
+      <div>
+        <h1 class="utility-title">
+          <span data-key="cust_browse">Browse Available Cars</span>
+        </h1>
+        <p class="utility-subtitle" data-key="cust_browse_desc">Find and reserve your ideal ride with instant availability</p>
+      </div>
+      <div class="utility-actions"></div>
+    </header>
+
+    <div class="main-content-area">
+
+      <!-- SECTION: Browse Cars Catalog -->
+      <section class="dash-section browse-section" style="margin-top: 8px;">
+
+        <!-- Search Bar -->
+        <div class="search-bar-compact">
+          <div class="search-field-compact" onclick="document.getElementById('pickup-date').focus()">
+            <span class="material-icons-round">calendar_today</span>
+            <input type="text" id="pickup-date" placeholder="Pick-up Date" data-key-placeholder="search_from" readonly />
+          </div>
+          <div class="search-field-compact" onclick="document.getElementById('return-date').focus()">
+            <span class="material-icons-round">event</span>
+            <input type="text" id="return-date" placeholder="Return Date" data-key-placeholder="search_to" readonly />
+          </div>
+          <button class="search-btn-compact" type="button" onclick="applyFilters(true)">
+            <span class="material-icons-round">search</span>
+            <span data-key="search_btn">Search</span>
+          </button>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-bar">
+          <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
+          <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
+          <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
+          <button class="filter-chip" onclick="filterCars('hatchback', this)" data-key="filter_hatch">Hatchback</button>
+          <button class="filter-chip" onclick="filterCars('mpv', this)" data-key="filter_mpv">MPV</button>
+          <button class="filter-chip" onclick="filterCars('coupe', this)" data-key="filter_coupe">Coupe</button>
+          <button class="filter-chip" onclick="filterCars('truck', this)" data-key="filter_truck">Truck</button>
+          <span class="results-count" id="results-count" data-key="cust_showing">Showing <strong>8</strong> cars available</span>
+        </div>
+
+        <!-- Car Grid -->
+        <div class="cars-grid" id="cars-grid">
+          <!-- Car cards injected by JS -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- BOOKING CALENDAR POPUP MODAL -->
+  <div class="booking-popup-overlay" id="booking-popup" aria-hidden="true">
+    <div class="booking-popup-card">
+      <button class="booking-popup-close" onclick="closeBookingPopup()" aria-label="Close">
+        <span class="material-icons-round">close</span>
+      </button>
+      
+      <div class="booking-popup-car-preview">
+        <img id="popup-car-img" src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-040.jpg" alt="Car Preview" />
+        <div class="booking-popup-car-info">
+          <span class="popup-car-type" id="popup-car-type">Sedan</span>
+          <h3 id="popup-car-name">2023 BMW 320i M Sport 2.0</h3>
+          <p class="popup-car-price" id="popup-car-price">RM 120<span>/day</span></p>
+        </div>
+      </div>
+
+      <div class="booking-popup-dates">
+        <h4>
+          <span class="material-icons-round">event</span>
+          <span data-key="popup_select_dates">Select Your Dates</span>
+        </h4>
+        <div class="popup-date-fields">
+          <div class="popup-date-field">
+            <label for="popup-pickup-date" data-key="popup_pickup">Pick-up Date</label>
+            <div class="popup-date-input-wrap">
+              <span class="material-icons-round">calendar_today</span>
+              <input type="text" id="popup-pickup-date" placeholder="Select date" readonly />
+            </div>
+          </div>
+          <div class="popup-date-field">
+            <label for="popup-return-date" data-key="popup_return">Return Date</label>
+            <div class="popup-date-input-wrap">
+              <span class="material-icons-round">event</span>
+              <input type="text" id="popup-return-date" placeholder="Select date" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="popup-duration" id="popup-duration" hidden>
+          <span class="material-icons-round">timelapse</span>
+          <span id="popup-duration-text">3 days</span>
+          <span class="popup-total" id="popup-total">RM 360</span>
+        </div>
+      </div>
+
+      <button class="booking-popup-proceed" id="popup-proceed-btn" onclick="proceedToBooking()" disabled>
+        <span class="material-icons-round">arrow_forward</span>
+        <span data-key="popup_proceed">Continue to Booking</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CHATBOT -->
+  <div id="chatbot-placeholder"></div>
+
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="../../../shared/js/calendar.js?v=5.2.24"></script>
+  <script src="../../js/sidebar-loader.js?v=5.2.24"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/chatbot.js"></script>
+
+  <script src="../../js/customer.js?v=5.2.24"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/main.js?v=5.2.24"></script>
+</body>
+</html>

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="WeDRIVE Customer Dashboard - Manage your car rentals, view bookings, and get AI recommendations."/>
+  <meta name="description" content="WeDRIVE Customer Dashboard - Fast access hub, active rental countdown, and AI recommendations."/>
   <title>Dashboard | WeDRIVE Customer</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.23" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.24" />
 </head>
 <body data-particles="10" data-cursor-glow>
 
@@ -26,58 +26,152 @@
         <h1 class="utility-title" id="hero-greeting">
           <span data-key="cust_welcome">Welcome back!</span>
         </h1>
+        <p class="utility-subtitle" data-key="cust_dashboard_sub">Fast access hub and real-time vehicle management</p>
       </div>
       <div class="utility-actions"></div>
     </header>
 
     <div class="main-content-area">
 
-      <!-- SECTION: Active Booking -->
+      <!-- STATS & QUICK ACCESS (Unified Apple Bento Stats Grid) -->
+      <section class="stats-grid">
+        <a href="../browse-cars/browse-cars.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div class="stat-info">
+            <p class="label" data-key="nav_browse">Browse Fleet</p>
+            <h3 class="value">8 Cars</h3>
+            <span class="trend positive"><span class="material-icons-round">check_circle</span> <span data-key="quick_browse_sub">8 Available · Rent Now</span></span>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
+        </a>
+
+        <a href="../my-bookings/my-bookings.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div class="stat-info">
+            <p class="label" data-key="nav_bookings">My Bookings</p>
+            <h3 class="value" id="stat-active-rentals">1 Active</h3>
+            <span class="trend neutral"><span class="material-icons-round">history</span> <span data-key="quick_bookings_sub">Active & Past Records</span></span>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">calendar_month</span></div>
+        </a>
+
+        <a href="../support/support.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div class="stat-info">
+            <p class="label" data-key="nav_support">Roadside Support</p>
+            <h3 class="value">24/7</h3>
+            <span class="trend positive"><span class="material-icons-round">headset_mic</span> <span data-key="quick_support_sub">Emergency Assistance</span></span>
+          </div>
+          <div class="stat-icon purple"><span class="material-icons-round">support_agent</span></div>
+        </a>
+
+        <a href="../profile/profile.html" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
+          <div class="stat-info">
+            <p class="label" data-key="nav_settings">Profile & Driver</p>
+            <h3 class="value">Verified</h3>
+            <span class="trend positive"><span class="material-icons-round">verified</span> <span data-key="quick_profile_sub">Verified Driver</span></span>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">verified_user</span></div>
+        </a>
+      </section>
+
+      <!-- SECTION: Dynamic Active Rental / Ready for Journey Card -->
       <section class="dash-section" id="active-booking-section">
         <div class="section-header">
           <div>
-            <h2 data-key="cust_active_bookings">Active Bookings</h2>
-            <p data-key="cust_active_desc">Your current ongoing rental</p>
+            <h2 data-key="cust_rental_status">Rental Status</h2>
+            <p data-key="cust_rental_status_desc">Live vehicle countdown and return access</p>
           </div>
           <a href="../my-bookings/my-bookings.html" class="section-link" data-key="cust_view_all">View All</a>
         </div>
 
+        <!-- STATE 1: ACTIVE RENTAL CARD (with Live Countdown Timer) -->
         <div class="active-booking-card" id="active-booking-card">
           <div class="booking-status-chip">
             <span class="material-icons-round">workspace_premium</span>
-            <span>Premium Ready</span>
+            <span id="active-status-chip-text">Active Rental</span>
           </div>
           <div class="booking-image">
             <img src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg" alt="Active Rental Car" id="active-car-img"/>
           </div>
           <div class="booking-details">
             <div class="booking-tags">
-              <span class="booking-tag">SEDAN</span>
-              <span class="booking-id">Booking #WD-9942</span>
+              <span class="booking-tag" id="active-booking-tag">SEDAN</span>
+              <span class="booking-id" id="active-booking-id">Booking #WD-9942</span>
             </div>
-            <h3 class="booking-car-name">BMW 320i M Sport</h3>
-            <p class="booking-car-sub">Executive Sedan - M Sport</p>
+            <h3 class="booking-car-name" id="active-booking-car-name">BMW 320i M Sport</h3>
+            <p class="booking-car-sub" id="active-booking-car-sub">Executive Sedan · Melaka Sentral</p>
+
+            <!-- LIVE COUNTDOWN TIMER HUB (Days, Hours, Minutes, Seconds) -->
+            <div class="countdown-hub" id="countdown-hub">
+              <p class="countdown-header">
+                <span class="material-icons-round">schedule</span>
+                <span data-key="cust_countdown_title">Time Remaining to Return Vehicle</span>
+              </p>
+              <div class="countdown-grid">
+                <div class="countdown-unit">
+                  <span class="countdown-digit" id="cd-days">02</span>
+                  <span class="countdown-label" data-key="cd_days">Days</span>
+                </div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-unit">
+                  <span class="countdown-digit" id="cd-hours">14</span>
+                  <span class="countdown-label" data-key="cd_hours">Hours</span>
+                </div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-unit">
+                  <span class="countdown-digit" id="cd-mins">35</span>
+                  <span class="countdown-label" data-key="cd_mins">Mins</span>
+                </div>
+                <div class="countdown-sep">:</div>
+                <div class="countdown-unit countdown-pulse">
+                  <span class="countdown-digit" id="cd-secs">12</span>
+                  <span class="countdown-label" data-key="cd_secs">Secs</span>
+                </div>
+              </div>
+              <p class="countdown-deadline" id="countdown-deadline">
+                <span data-key="cust_deadline_prefix">Return Date:</span> <strong id="cd-deadline-text">Oct 28, 2026 · 10:00 AM</strong>
+              </p>
+            </div>
+
             <div class="booking-specs-grid">
               <div>
-                <p class="spec-label" data-key="cust_return_date">Return Date</p>
-                <p class="spec-value">Oct 24, 10:00 AM</p>
+                <p class="spec-label" data-key="cust_pickup_point">Pick-up Location</p>
+                <p class="spec-value" id="active-pickup-val">Melaka Sentral</p>
               </div>
               <div>
-                <p class="spec-label">Estimated Range</p>
-                <p class="spec-value spec-highlight">
+                <p class="spec-label" data-key="cust_range_est">Estimated Range</p>
+                <p class="spec-value spec-highlight" id="active-range-val">
                   <span class="material-icons-round">route</span>
                   540 km
                 </p>
               </div>
             </div>
             <div class="booking-actions">
-              <button class="btn-primary" type="button" data-key="cust_extend" data-href="../car-details/booking/booking.html" onclick="window.location.href='../car-details/booking/booking.html'">Extend Rental</button>
+              <button class="btn-primary" type="button" data-key="cust_extend" onclick="window.location.href='../my-bookings/my-bookings.html'">Extend Rental</button>
+              <a href="../browse-cars/browse-cars.html" class="btn-secondary" data-key="cust_rent_another">Rent Another Car</a>
             </div>
+          </div>
+        </div>
+
+        <!-- STATE 2: NO ACTIVE RENTAL CARD (Suggestion Card) -->
+        <div class="no-rental-card" id="no-rental-card" style="display: none;">
+          <div class="no-rental-content">
+            <div class="no-rental-icon">
+              <span class="material-icons-round">car_rental</span>
+            </div>
+            <div class="no-rental-text">
+              <h3 data-key="no_rental_title">Ready for Your Next Journey?</h3>
+              <p data-key="no_rental_desc">You currently have no ongoing rentals. Explore our premium AI-ready fleet in Melaka with instant keyless pickup.</p>
+            </div>
+          </div>
+          <div class="no-rental-action">
+            <a href="../browse-cars/browse-cars.html" class="btn-primary" data-key="btn_browse_fleet">
+              <span class="material-icons-round">directions_car</span>
+              <span data-key="nav_browse">Browse Available Cars</span>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- SECTION: AI Recommendations -->
+      <!-- SECTION: AI Recommendations (3 Bento Cards) -->
       <section class="dash-section">
         <div class="section-header">
           <div>
@@ -85,54 +179,29 @@
               <span class="material-icons-round section-icon">psychology</span>
               <span data-key="cust_ai_reco">AI Recommendations for You</span>
             </h2>
-            <p data-key="cust_ai_reco_desc">Curated based on your rental history</p>
+            <p data-key="cust_ai_reco_desc">Curated based on your rental history and popular trips</p>
           </div>
+          <a href="../browse-cars/browse-cars.html" class="section-link" data-key="cust_view_all_cars">View All Cars →</a>
         </div>
         <div class="reco-grid" id="reco-grid">
-          <!-- Populated by JS -->
+          <!-- Populated by customer.js -->
         </div>
       </section>
 
-      <!-- SECTION: Browse Cars -->
-      <section class="dash-section browse-section">
-        <div class="section-header">
-          <div>
-            <h2 data-key="cust_browse">Browse Available Cars</h2>
-            <p data-key="cust_browse_desc">Find your perfect rental</p>
+      <!-- SECTION: Horizontal Fleet Banner -->
+      <section class="dash-section" style="margin-top: 10px;">
+        <div class="fleet-explore-banner">
+          <div class="fleet-banner-content">
+            <span class="fleet-banner-badge" data-key="fleet_badge">WeDRIVE Full Catalog</span>
+            <h3 data-key="fleet_banner_title">Looking for Sedans, SUVs, MPVs, Coupes, or Trucks?</h3>
+            <p data-key="fleet_banner_desc">Filter by specific transmission, seating capacity, and fuel efficiency with real-time dates availability.</p>
           </div>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="search-bar-compact">
-          <div class="search-field-compact" onclick="document.getElementById('pickup-date').focus()">
-            <span class="material-icons-round">calendar_today</span>
-            <input type="text" id="pickup-date" placeholder="Pick-up Date" data-key-placeholder="search_from" readonly />
+          <div class="fleet-banner-btn-wrap">
+            <a href="../browse-cars/browse-cars.html" class="btn-primary" data-key="btn_view_fleet">
+              <span class="material-icons-round">apps</span>
+              <span data-key="cust_explore_fleet">Explore All 8 Cars</span>
+            </a>
           </div>
-          <div class="search-field-compact" onclick="document.getElementById('return-date').focus()">
-            <span class="material-icons-round">event</span>
-            <input type="text" id="return-date" placeholder="Return Date" data-key-placeholder="search_to" readonly />
-          </div>
-          <button class="search-btn-compact" type="button" onclick="applyFilters(true)">
-            <span class="material-icons-round">search</span>
-            <span data-key="search_btn">Search</span>
-          </button>
-        </div>
-
-        <!-- Filter Chips -->
-        <div class="filter-bar">
-          <button class="filter-chip active" onclick="filterCars('all', this)" data-key="filter_all">All Cars</button>
-          <button class="filter-chip" onclick="filterCars('sedan', this)" data-key="filter_sedan">Sedan</button>
-          <button class="filter-chip" onclick="filterCars('suv', this)" data-key="filter_suv">SUV</button>
-          <button class="filter-chip" onclick="filterCars('hatchback', this)" data-key="filter_hatch">Hatchback</button>
-          <button class="filter-chip" onclick="filterCars('mpv', this)" data-key="filter_mpv">MPV</button>
-          <button class="filter-chip" onclick="filterCars('coupe', this)" data-key="filter_coupe">Coupe</button>
-          <button class="filter-chip" onclick="filterCars('truck', this)" data-key="filter_truck">Truck</button>
-          <span class="results-count" id="results-count" data-key="cust_showing">Showing <strong>8</strong> cars available</span>
-        </div>
-
-        <!-- Car Grid -->
-        <div class="cars-grid" id="cars-grid">
-          <!-- Car cards injected by JS -->
         </div>
       </section>
 
@@ -183,7 +252,6 @@
         </div>
       </div>
 
-
       <button class="booking-popup-proceed" id="popup-proceed-btn" onclick="proceedToBooking()" disabled>
         <span class="material-icons-round">arrow_forward</span>
         <span data-key="popup_proceed">Continue to Booking</span>
@@ -198,16 +266,16 @@
   <div id="footer-placeholder"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../../shared/js/calendar.js?v=5.2.23"></script>
-  <script src="../../js/sidebar-loader.js?v=5.2.23"></script>
+  <script src="../../../shared/js/calendar.js?v=5.2.24"></script>
+  <script src="../../js/sidebar-loader.js?v=5.2.24"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
 
-  <script src="../../js/customer.js?v=5.2.23"></script>
+  <script src="../../js/customer.js?v=5.2.24"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=5.2.23"></script>
+  <script src="../../../shared/js/main.js?v=5.2.24"></script>
 </body>
 </html>

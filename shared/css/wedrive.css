@@ -4881,6 +4881,96 @@ body.dark .customer-sidebar {
   text-decoration: none;
 }
 
+/* Quick Access Hub (4 Apple Bento Tiles) */
+.quick-access-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.quick-tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-bento);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s var(--ease-apple);
+  position: relative;
+  overflow: hidden;
+}
+
+.quick-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md), 0 0 0 1px var(--primary-light);
+}
+
+.quick-tile:active {
+  transform: scale(0.98);
+}
+
+.quick-tile.highlight-tile {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.08) 0%, var(--bg-surface) 100%);
+  border-color: rgba(0, 113, 227, 0.3);
+}
+
+.quick-tile-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quick-tile-icon .material-icons-round {
+  font-size: 24px;
+}
+
+.quick-tile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.quick-tile-info h3 {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quick-tile-info p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quick-tile-arrow {
+  color: var(--text-muted);
+  font-size: 18px;
+  transition: transform 0.2s var(--ease-apple);
+}
+
+.quick-tile:hover .quick-tile-arrow {
+  transform: translateX(3px);
+  color: var(--primary);
+}
+
 .active-booking-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-medium);
@@ -5001,6 +5091,222 @@ body.dark .customer-sidebar {
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+/* Return Countdown Hub (Days, Hours, Minutes, Seconds) */
+.countdown-hub {
+  background: var(--bg-surface-3);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-bento);
+  padding: 16px 20px;
+  margin: 12px 0 16px;
+}
+
+.countdown-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  margin: 0 0 10px;
+}
+
+.countdown-header .material-icons-round {
+  font-size: 16px;
+}
+
+.countdown-grid {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.countdown-unit {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  box-shadow: var(--shadow-xs);
+}
+
+.countdown-digit {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Mono", monospace;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.countdown-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+}
+
+.countdown-sep {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.countdown-pulse .countdown-digit {
+  color: var(--primary);
+}
+
+.countdown-deadline {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.countdown-deadline strong {
+  color: var(--text-primary);
+}
+
+/* No Active Rental Welcoming Suggestion Card */
+.no-rental-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-bento);
+  padding: 32px 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.no-rental-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.no-rental-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.no-rental-icon .material-icons-round {
+  font-size: 32px;
+}
+
+.no-rental-text h3 {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  letter-spacing: -0.015em;
+}
+
+.no-rental-text p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 520px;
+  line-height: 1.45;
+}
+
+/* Horizontal Fleet Explore Banner */
+.fleet-explore-banner {
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-2) 100%);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-bento);
+  padding: 26px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.28s var(--ease-apple);
+}
+
+.fleet-explore-banner:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.fleet-banner-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.fleet-banner-content h3 {
+  font-size: 18.5px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  letter-spacing: -0.015em;
+}
+
+.fleet-banner-content p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.45;
+}
+
+@media (max-width: 1024px) {
+  .quick-access-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .active-booking-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .fleet-explore-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .quick-access-grid {
+    grid-template-columns: 1fr;
+  }
+  .countdown-unit {
+    min-width: 48px;
+    padding: 6px 8px;
+  }
+  .countdown-digit {
+    font-size: 20px;
+  }
+  .no-rental-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px 18px;
+    gap: 18px;
+  }
 }
 
 .reco-grid {
