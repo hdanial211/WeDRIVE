@@ -445,6 +445,7 @@ body.dark .customer-main #wedrive-navbar {
   align-items: center;
   justify-content: center;
   height: 32px;
+  min-width: 44px;
   padding: 0 12px;
   border-radius: var(--radius-pill);
   background: var(--bg-surface-3);
@@ -454,7 +455,19 @@ body.dark .customer-main #wedrive-navbar {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
+  line-height: 1;
+  vertical-align: middle;
+  box-sizing: border-box;
+  margin: 0;
   transition: all 0.2s var(--ease-apple);
+}
+
+.lang-toggle .lang-text,
+.btn-lang .lang-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .lang-toggle:hover,
@@ -477,17 +490,26 @@ body.dark .customer-main #wedrive-navbar {
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: var(--radius-pill);
+  padding: 0;
+  border-radius: 50%;
   background: var(--bg-surface-3);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
   cursor: pointer;
+  line-height: 1;
+  vertical-align: middle;
+  box-sizing: border-box;
+  margin: 0;
   transition: all 0.2s var(--ease-apple);
 }
 
 .theme-toggle .material-icons-round,
 .btn-theme .material-icons-round {
-  font-size: 16px;
+  font-size: 17px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.35s var(--ease-apple);
 }
 
@@ -501,6 +523,14 @@ body.dark .customer-main #wedrive-navbar {
 .theme-toggle:active,
 .btn-theme:active {
   transform: scale(0.95);
+}
+
+.utility-actions,
+.nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 /* Apple Nav Action Buttons */
