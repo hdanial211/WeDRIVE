@@ -95,9 +95,9 @@
             <button class="date-chip" id="date-chip-custom" onclick="showCustomDateRow(this)">Custom Range</button>
           </div>
           <div class="custom-date-row" id="custom-date-row" style="display:none;">
-            <input type="date" id="bk-date-from" />
+            <input type="text" id="bk-date-from" class="date-picker" placeholder="From Date" readonly />
             <span style="font-size:12px;color:var(--slate-400,#94A3B8)">to</span>
-            <input type="date" id="bk-date-to" />
+            <input type="text" id="bk-date-to" class="date-picker" placeholder="To Date" readonly />
             <button class="apply-btn" onclick="applyCustomDate()">Apply</button>
           </div>
         </div>

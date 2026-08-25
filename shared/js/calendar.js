@@ -139,22 +139,88 @@
       }
     }));
 
+    function triggerPickupRequiredFeedback() {
+      var returnWrapper = returnInput.closest('.search-field-compact, .popup-date-field, .popup-date-input-wrap, .date-field, .input-wrap') || returnInput;
+      var pickupWrapper = pickupInput.closest('.search-field-compact, .popup-date-field, .popup-date-input-wrap, .date-field, .input-wrap') || pickupInput;
+
+      // Reset animation classes to allow clean re-triggers
+      returnInput.classList.remove('date-shake-error');
+      returnWrapper.classList.remove('date-shake-error');
+      pickupInput.classList.remove('date-pickup-pulse');
+      pickupWrapper.classList.remove('date-pickup-pulse');
+      void returnWrapper.offsetWidth;
+      void pickupWrapper.offsetWidth;
+
+      // Shake the return date field
+      returnInput.classList.add('date-shake-error');
+      returnWrapper.classList.add('date-shake-error');
+      // Highlight & pulse the pickup date field
+      pickupInput.classList.add('date-pickup-pulse');
+      pickupWrapper.classList.add('date-pickup-pulse');
+
+      // Vibrate if supported (haptic feedback)
+      if (navigator.vibrate) {
+        try { navigator.vibrate([30, 50, 30]); } catch (e) {}
+      }
+
+      // Automatically focus and open the Pick-up Date calendar picker
+      setTimeout(function () {
+        if (pPicker) {
+          pPicker.open();
+          pickupInput.focus();
+        }
+      }, 100);
+
+      // Clean up classes after animations complete
+      setTimeout(function () {
+        returnInput.classList.remove('date-shake-error');
+        returnWrapper.classList.remove('date-shake-error');
+      }, 550);
+
+      setTimeout(function () {
+        pickupInput.classList.remove('date-pickup-pulse');
+        pickupWrapper.classList.remove('date-pickup-pulse');
+      }, 1600);
+    }
+
+    function onReturnAttempt(e) {
+      if (!pPicker || !pPicker.selectedDates.length) {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        returnInput.blur();
+        triggerPickupRequiredFeedback();
+        return false;
+      }
+    }
+
+    returnInput.addEventListener('click', onReturnAttempt, true);
+    returnInput.addEventListener('focus', onReturnAttempt, true);
+    returnInput.addEventListener('mousedown', onReturnAttempt, true);
+
+    var returnWrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field');
+    if (returnWrapper) {
+      returnWrapper.addEventListener('click', onReturnAttempt, true);
+      returnWrapper.addEventListener('mousedown', onReturnAttempt, true);
+    }
+
     function updateReturnState() {
       var wrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field');
       if (!pPicker || !pPicker.selectedDates.length) {
         rPicker.set('clickOpens', false);
-        returnInput.disabled = true;
+        returnInput.readOnly = true;
         if (wrapper) {
-          wrapper.style.opacity = '0.5';
-          wrapper.style.pointerEvents = 'none';
-          wrapper.style.transition = 'opacity 0.3s ease';
+          wrapper.style.opacity = '0.7';
+          wrapper.style.cursor = 'pointer';
+          wrapper.style.transition = 'opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease';
         }
       } else {
         rPicker.set('clickOpens', true);
-        returnInput.disabled = false;
+        returnInput.readOnly = false;
         if (wrapper) {
           wrapper.style.opacity = '1';
-          wrapper.style.pointerEvents = 'auto';
+          wrapper.style.cursor = 'pointer';
         }
       }
     }
@@ -216,20 +282,96 @@
     return { pickup: pPicker, return: rPicker };
   }
 
+  /* ── Initialize a Single Apple Picker ── */
+  function initSinglePicker(inputOrId, customConfig) {
+    var input = typeof inputOrId === 'string' ? document.getElementById(inputOrId) : inputOrId;
+    if (!input || !window.flatpickr) return null;
+
+    var commonConfig = {
+      minDate: "today",
+      dateFormat: "d/m/Y",
+      disableMobile: "true",
+      onReady: function(selectedDates, dateStr, instance) {
+        var yearInput = instance.currentYearElement;
+        var wrapper = yearInput ? yearInput.parentNode : null;
+        if (!wrapper) return;
+        
+        var select = document.createElement('select');
+        select.className = 'flatpickr-monthDropdown-months custom-year-select';
+        
+        var currentYear = new Date().getFullYear();
+        for (var i = currentYear - 5; i <= currentYear + 10; i++) {
+            var opt = document.createElement('option');
+            opt.value = i;
+            opt.text = i;
+            select.appendChild(opt);
+        }
+        select.value = instance.currentYear;
+        
+        select.addEventListener('change', function(e) {
+            instance.changeYear(Number(e.target.value));
+        });
+        
+        yearInput.style.display = 'none';
+        var arrows = wrapper.querySelectorAll('.arrowUp, .arrowDown');
+        arrows.forEach(function(a) { a.style.display = 'none'; });
+        
+        wrapper.appendChild(select);
+        instance.customYearSelect = select;
+      },
+      onYearChange: function(selectedDates, dateStr, instance) {
+        if (instance.customYearSelect) {
+          instance.customYearSelect.value = instance.currentYear;
+        }
+      }
+    };
+
+    return window.flatpickr(input, Object.assign({}, commonConfig, customConfig || {}));
+  }
+
   /* ── Expose Globally ── */
   window.WeDriveCalendar = {
-    initPairedPickers: initPairedPickers
+    initPairedPickers: initPairedPickers,
+    initSinglePicker: initSinglePicker
   };
 
-  /* ── Auto Init Main Pickers ── */
+  /* ── Auto Init Main Pickers Universally ── */
   function autoInit() {
-    var hasPickers = document.getElementById('pickup-date') || document.getElementById('popup-pickup-date');
-    if (!hasPickers) return;
+    if (!window.flatpickr) return;
 
     injectCalendarCSS();
 
-    // Init dashboard main pickers
-    window.WeDriveCalendar.mainPickers = initPairedPickers('pickup-date', 'return-date');
+    // 1. Dashboard & Browse Cars main pickers
+    if (document.getElementById('pickup-date') && document.getElementById('return-date')) {
+      window.WeDriveCalendar.mainPickers = initPairedPickers('pickup-date', 'return-date');
+    }
+
+    // 2. Admin Bookings filter range
+    if (document.getElementById('bk-date-from') && document.getElementById('bk-date-to')) {
+      window.WeDriveCalendar.adminBookingPickers = initPairedPickers('bk-date-from', 'bk-date-to');
+    }
+
+    // 3. Admin Marketing Banners range
+    if (document.getElementById('banner-start') && document.getElementById('banner-end')) {
+      window.WeDriveCalendar.bannerPickers = initPairedPickers('banner-start', 'banner-end');
+    }
+
+    // 4. Admin Seasonal range
+    if (document.getElementById('seasonal-start') && document.getElementById('seasonal-end')) {
+      window.WeDriveCalendar.seasonalPickers = initPairedPickers('seasonal-start', 'seasonal-end');
+    }
+
+    // 5. Admin Promo Expiry Single Picker
+    if (document.getElementById('promo-expiry')) {
+      initSinglePicker('promo-expiry');
+    }
+
+    // 6. Convert any generic date pickers or inputs with class .date-picker
+    document.querySelectorAll('.date-picker').forEach(function(input) {
+      if (!input._flatpickr) {
+        initSinglePicker(input);
+      }
+    });
   }
 
   if (document.readyState === 'loading') {

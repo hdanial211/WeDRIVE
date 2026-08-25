@@ -999,7 +999,9 @@
   }
 
   function loadCalendar() {
-    var pickers = document.querySelectorAll('#pickup-date, #return-date, #popup-pickup-date, #popup-return-date, .date-picker');
+    var pickers = document.querySelectorAll(
+      '#pickup-date, #return-date, #popup-pickup-date, #popup-return-date, #bk-pickup-date, #bk-return-date, #bk-date-from, #bk-date-to, #banner-start, #banner-end, #promo-expiry, #seasonal-start, #seasonal-end, .date-picker, input[type="date"]'
+    );
     if (!pickers.length) return;
 
     // Load Flatpickr CSS if not present

@@ -517,9 +517,9 @@ function openNewBookingModal() {
     + '<div style="grid-column:1/-1;"><label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;display:block;margin-bottom:6px">Vehicle</label>'
     + '<select id="nb-car" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;background:var(--card-bg,#fff);color:var(--navy,#1E293B);" onchange="recalcNewBooking()">' + carOptions + '</select></div>'
     + '<div><label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;display:block;margin-bottom:6px">Pick-up Date</label>'
-    + '<input type="date" id="nb-pickup" value="' + today + '" min="' + today + '" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;box-sizing:border-box;" onchange="recalcNewBooking()" /></div>'
+    + '<input type="text" id="nb-pickup" class="date-picker" placeholder="Select pick-up date" readonly style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;box-sizing:border-box;background:var(--bg-surface-3);cursor:pointer;" /></div>'
     + '<div><label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;display:block;margin-bottom:6px">Return Date</label>'
-    + '<input type="date" id="nb-return" value="' + tomorrow + '" min="' + tomorrow + '" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;box-sizing:border-box;" onchange="recalcNewBooking()" /></div>'
+    + '<input type="text" id="nb-return" class="date-picker" placeholder="Select return date" readonly style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:13px;box-sizing:border-box;background:var(--bg-surface-3);cursor:pointer;" /></div>'
     + '<input type="hidden" id="nb-location" value="Melaka Sentral" /></div>'
     + '<div style="background:var(--bg-surface-2,#F1F5F9);border-radius:12px;padding:14px;margin-bottom:16px;">'
     + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:10px">Booking Summary</div>'
@@ -535,6 +535,10 @@ function openNewBookingModal() {
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 
+  if (window.WeDriveCalendar) {
+    window.WeDriveCalendar.initPairedPickers('nb-pickup', 'nb-return', recalcNewBooking);
+  }
+
   // Pre-select vehicle if carId parameter is provided in URL
   var queryCarId = new URLSearchParams(window.location.search).get('carId');
   if (queryCarId) {
@@ -548,7 +552,17 @@ function openNewBookingModal() {
 
 function closeNewBookingModal() {
   var modal = document.getElementById('new-booking-modal');
-  if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function parseInputDate(str) {
+  if (!str) return null;
+  if (str.includes('/')) {
+    var parts = str.split('/');
+    return new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+  }
+  return new Date(str);
 }
 
 function recalcNewBooking() {
@@ -556,8 +570,17 @@ function recalcNewBooking() {
   var returnD = document.getElementById('nb-return');
   var carSel = document.getElementById('nb-car');
   if (!pickup || !returnD || !carSel) return;
-  var p = new Date(pickup.value);
-  var r = new Date(returnD.value);
+  var p = parseInputDate(pickup.value);
+  var r = parseInputDate(returnD.value);
+  if (!p || !r || isNaN(p.getTime()) || isNaN(r.getTime())) {
+    var daysEl = document.getElementById('nb-days');
+    var rateEl = document.getElementById('nb-rate');
+    var totalEl = document.getElementById('nb-total');
+    if (daysEl) daysEl.textContent = '-- days';
+    if (rateEl) rateEl.textContent = 'RM --';
+    if (totalEl) totalEl.textContent = 'RM --';
+    return;
+  }
   var days = Math.max(1, Math.ceil((r - p) / 86400000));
   var selectedOpt = carSel.options[carSel.selectedIndex];
   var rate = parseFloat(selectedOpt ? selectedOpt.getAttribute('data-price') : 0) || 0;
@@ -580,8 +603,8 @@ async function submitNewBooking() {
     showToast('Please fill in all required fields.', 'info');
     return;
   }
-  var p = new Date(pickup.value);
-  var r = new Date(returnD.value);
+  var p = parseInputDate(pickup.value);
+  var r = parseInputDate(returnD.value);
   var days = Math.max(1, Math.ceil((r - p) / 86400000));
   var selectedCarOpt = carSel.options[carSel.selectedIndex];
   var rate = parseFloat(selectedCarOpt.getAttribute('data-price')) || 0;
