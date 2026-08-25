@@ -4472,10 +4472,14 @@ body.dark .flatpickr-calendar,
   padding: 0 !important;
   position: static !important;
   width: auto !important;
+  height: auto !important;
+  min-height: 32px !important;
   font-size: 16px !important;
   font-weight: 700 !important;
+  line-height: 1.4 !important;
   letter-spacing: -0.02em !important;
   color: var(--text-primary) !important;
+  overflow: visible !important;
 }
 
 .flatpickr-current-month .flatpickr-monthDropdown-months,
@@ -4483,16 +4487,20 @@ body.dark .flatpickr-calendar,
   font-family: inherit !important;
   font-size: 16px !important;
   font-weight: 700 !important;
+  line-height: 1.4 !important;
   color: var(--text-primary) !important;
   background: transparent !important;
   border: none !important;
   border-radius: 6px !important;
-  padding: 2px 4px !important;
+  padding: 3px 6px 6px 6px !important;
   margin: 0 !important;
   outline: none !important;
   cursor: pointer !important;
   appearance: none !important;
   -webkit-appearance: none !important;
+  height: auto !important;
+  min-height: 28px !important;
+  box-sizing: border-box !important;
   transition: background 0.18s var(--ease-apple), color 0.18s var(--ease-apple) !important;
 }
 
@@ -4518,8 +4526,10 @@ body.dark .flatpickr-current-month .custom-year-select,
   display: inline-flex !important;
   font-size: 16px !important;
   font-weight: 700 !important;
+  line-height: 1.4 !important;
   color: var(--text-primary) !important;
   width: auto !important;
+  height: auto !important;
 }
 
 /* ── 3. Apple Navigation Chevrons Grouped on Top-Right ── */
