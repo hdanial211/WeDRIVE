@@ -205,6 +205,8 @@
       renderHeroStats();
       renderSpotlight(spotlightIndex, false);
       renderCars(lastRenderedCars.length ? lastRenderedCars : allCars);
+      renderRecommendations(allCars);
+      updateGreeting();
       if (typeof updateActiveBookingSection === 'function') {
         updateActiveBookingSection();
       }
@@ -437,6 +439,83 @@
         '      <button class="btn-book' + (window.__GUEST_MODE__ ? ' btn-book-guest' : '') + '" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
         '        <span class="material-icons-round" style="font-size:17px">' + (window.__GUEST_MODE__ ? 'lock' : 'event_available') + '</span>',
         '        ' + escapeHtml(buttonText),
+        '      </button>',
+        '    </div>',
+        '  </div>',
+        '</div>'
+      ].join('');
+    }).join('');
+  }
+
+  function renderRecommendations(cars) {
+    var recoGrid = document.getElementById('reco-grid');
+    if (!recoGrid) return;
+
+    if (!cars || !cars.length) {
+      recoGrid.innerHTML = '';
+      return;
+    }
+
+    // Pick top 3 recommended vehicles (e.g. BMW Sedan, GLA SUV, AXIA Hatchback / Alphard)
+    var recommended = [];
+    var typesSeen = {};
+    for (var i = 0; i < cars.length && recommended.length < 3; i++) {
+      var c = cars[i];
+      var tKey = (c.type || '').toLowerCase();
+      if (!typesSeen[tKey]) {
+        typesSeen[tKey] = true;
+        recommended.push(c);
+      }
+    }
+    if (recommended.length < 3) {
+      recommended = cars.slice(0, 3);
+    }
+
+    var isMs = lang() === 'ms';
+
+    var matchBadges = isMs ? [
+      'Padanan 98% · Paling Sesuai Perjalanan Korporat & Eksekutif',
+      'Padanan 96% · Terbaik untuk Percutian & Keselesaan Keluarga',
+      'Padanan 94% · Sangat Jimat & Lincah Bandar'
+    ] : [
+      '98% Match · Best for Executive & Business Travel',
+      '96% Match · Ideal for Family Comfort & Trips',
+      '94% Match · Highly Efficient City Commute'
+    ];
+
+    recoGrid.innerHTML = recommended.map(function (car, index) {
+      var safeName = escapeHtml(car.name);
+      var safeType = escapeHtml(car.label || car.type || '');
+      var safeFuel = escapeHtml(car.fuel || '');
+      var safeTrans = escapeHtml(car.trans || car.transmission || 'Auto');
+      var price = carPrice(car);
+      var img = imagePath(car);
+      var fallbackImg = fallbackImagePath(car);
+      var badgeText = matchBadges[index] || (isMs ? 'Padanan AI 95%' : '95% AI Match');
+      var btnLabel = isMs ? 'Tempah Pantas' : 'Quick Book';
+
+      return [
+        '<div class="reco-card" onclick="bookCar(' + Number(car.id) + ')">',
+        '  <div class="reco-badge">',
+        '    <span class="material-icons-round">psychology</span>',
+        '    <span>' + escapeHtml(badgeText) + '</span>',
+        '  </div>',
+        '  <div class="reco-img-wrap">',
+        '    <img src="' + img + '" alt="' + safeName + '" onerror="this.onerror=null;this.src=\'' + fallbackImg + '\'" />',
+        '  </div>',
+        '  <div class="reco-content">',
+        '    <span class="reco-type">' + safeType + '</span>',
+        '    <h3 class="reco-name">' + safeName + '</h3>',
+        '    <div class="reco-specs">',
+        '      <span><span class="material-icons-round">event_seat</span>' + Number(car.seats || 5) + ' ' + (isMs ? 'Tempat' : 'Seats') + '</span>',
+        '      <span><span class="material-icons-round">settings</span>' + safeTrans + '</span>',
+        '      <span><span class="material-icons-round">local_gas_station</span>' + safeFuel + '</span>',
+        '    </div>',
+        '    <div class="reco-footer">',
+        '      <div class="reco-price">RM ' + price + '<span>' + (isMs ? '/hari' : '/day') + '</span></div>',
+        '      <button class="btn-primary btn-sm" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
+        '        <span class="material-icons-round" style="font-size:16px">event_available</span>',
+        '        <span>' + escapeHtml(btnLabel) + '</span>',
         '      </button>',
         '    </div>',
         '  </div>',
@@ -779,6 +858,7 @@
         }
 
         applyFilters(false);
+        renderRecommendations(allCars);
         updateActiveBookingSection();
 
         if (typeParam) {
@@ -809,9 +889,41 @@
     }
   }
 
+  function updateGreeting() {
+    var greetingEl = document.getElementById('hero-greeting');
+    if (!greetingEl) return;
+
+    var isMs = lang() === 'ms';
+    var hour = new Date().getHours();
+    var timeGreeting = 'Welcome back';
+    if (hour < 12) {
+      timeGreeting = isMs ? 'Selamat Pagi' : 'Good morning';
+    } else if (hour < 18) {
+      timeGreeting = isMs ? 'Selamat Petang' : 'Good afternoon';
+    } else {
+      timeGreeting = isMs ? 'Selamat Malam' : 'Good evening';
+    }
+
+    if (window.WeDriveAPI && window.WeDriveAPI.getCurrentUser) {
+      window.WeDriveAPI.getCurrentUser().then(function (user) {
+        if (user && user.user_metadata) {
+          var name = user.user_metadata.nickname || user.user_metadata.first_name || user.user_metadata.full_name || 'Customer';
+          greetingEl.innerHTML = '<span>' + timeGreeting + ', ' + escapeHtml(name) + '!</span>';
+        } else {
+          greetingEl.innerHTML = '<span data-key="cust_welcome">' + (isMs ? 'Selamat Kembali!' : 'Welcome back!') + '</span>';
+        }
+      }).catch(function () {
+        greetingEl.innerHTML = '<span data-key="cust_welcome">' + (isMs ? 'Selamat Kembali!' : 'Welcome back!') + '</span>';
+      });
+    } else {
+      greetingEl.innerHTML = '<span data-key="cust_welcome">' + (isMs ? 'Selamat Kembali!' : 'Welcome back!') + '</span>';
+    }
+  }
+
   function init() {
     bindControls();
     loadCars();
+    updateGreeting();
     if (typeof flatpickr !== 'undefined') {
       initDatePickers();
     } else {

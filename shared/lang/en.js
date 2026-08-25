@@ -715,5 +715,22 @@ window.wedrive_lang_en = {
   "footer_support_roadside": "24/7 Roadside Assistance",
   "footer_legal_insurance": "Insurance Coverage",
   "footer_legal_about": "About WeDRIVE",
-  "footer_region": "Malaysia (MYR • RM)"
+  "footer_region": "Malaysia (MYR • RM)",
+  "cust_active_bookings": "Active Bookings",
+  "cust_active_desc": "Your current ongoing rental",
+  "cust_view_all": "View All",
+  "cust_return_date": "Return Date",
+  "cust_extend": "Extend Rental",
+  "cust_ai_reco": "AI Recommendations for You",
+  "cust_ai_reco_desc": "Curated based on your rental history",
+  "cust_browse": "Browse Available Cars",
+  "cust_browse_desc": "Find your perfect rental",
+  "popup_select_dates": "Select Your Dates",
+  "popup_pickup": "Pick-up Date",
+  "popup_return": "Return Date",
+  "popup_proceed": "Continue to Booking",
+  "cust_new_booking": "New Booking",
+  "filter_mpv": "MPV",
+  "filter_coupe": "Coupe",
+  "filter_truck": "Truck"
 };

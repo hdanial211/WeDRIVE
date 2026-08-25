@@ -9,7 +9,8 @@
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.23" />
 </head>
 <body data-particles="10" data-cursor-glow>
 
@@ -103,15 +104,15 @@
 
         <!-- Search Bar -->
         <div class="search-bar-compact">
-          <div class="search-field-compact">
+          <div class="search-field-compact" onclick="document.getElementById('pickup-date').focus()">
             <span class="material-icons-round">calendar_today</span>
-            <input type="text" id="pickup-date" placeholder="Pick-up Date" data-key-placeholder="search_from"/>
+            <input type="text" id="pickup-date" placeholder="Pick-up Date" data-key-placeholder="search_from" readonly />
           </div>
-          <div class="search-field-compact">
+          <div class="search-field-compact" onclick="document.getElementById('return-date').focus()">
             <span class="material-icons-round">event</span>
-            <input type="text" id="return-date" placeholder="Return Date" data-key-placeholder="search_to"/>
+            <input type="text" id="return-date" placeholder="Return Date" data-key-placeholder="search_to" readonly />
           </div>
-          <button class="search-btn-compact">
+          <button class="search-btn-compact" type="button" onclick="applyFilters(true)">
             <span class="material-icons-round">search</span>
             <span data-key="search_btn">Search</span>
           </button>
@@ -126,7 +127,7 @@
           <button class="filter-chip" onclick="filterCars('mpv', this)" data-key="filter_mpv">MPV</button>
           <button class="filter-chip" onclick="filterCars('coupe', this)" data-key="filter_coupe">Coupe</button>
           <button class="filter-chip" onclick="filterCars('truck', this)" data-key="filter_truck">Truck</button>
-          <span class="results-count" data-key="cust_showing">Showing <strong>8</strong> cars available</span>
+          <span class="results-count" id="results-count" data-key="cust_showing">Showing <strong>8</strong> cars available</span>
         </div>
 
         <!-- Car Grid -->
@@ -196,15 +197,17 @@
   <!-- FOOTER -->
   <div id="footer-placeholder"></div>
 
-  <script src="../../js/sidebar-loader.js?v=5.7.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="../../../shared/js/calendar.js?v=5.2.23"></script>
+  <script src="../../js/sidebar-loader.js?v=5.2.23"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
 
-  <script src="../../js/customer.js?v=5.7.0"></script>
+  <script src="../../js/customer.js?v=5.2.23"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=5.7.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.23"></script>
 </body>
 </html>

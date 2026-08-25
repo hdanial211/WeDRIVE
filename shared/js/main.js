@@ -383,7 +383,25 @@
       "footer_legal_insurance": "Insurance Coverage",
       "footer_legal_about": "About WeDRIVE",
       "footer_rights": "All rights reserved.",
-      "footer_region": "Malaysia (MYR • RM)"
+      "footer_region": "Malaysia (MYR • RM)",
+      "cust_welcome": "Welcome back!",
+      "cust_active_bookings": "Active Bookings",
+      "cust_active_desc": "Your current ongoing rental",
+      "cust_view_all": "View All",
+      "cust_return_date": "Return Date",
+      "cust_extend": "Extend Rental",
+      "cust_ai_reco": "AI Recommendations for You",
+      "cust_ai_reco_desc": "Curated based on your rental history",
+      "cust_browse": "Browse Available Cars",
+      "cust_browse_desc": "Find your perfect rental",
+      "popup_select_dates": "Select Your Dates",
+      "popup_pickup": "Pick-up Date",
+      "popup_return": "Return Date",
+      "popup_proceed": "Continue to Booking",
+      "cust_new_booking": "New Booking",
+      "filter_mpv": "MPV",
+      "filter_coupe": "Coupe",
+      "filter_truck": "Truck"
     },
     ms: {
       "nav_browse": "Pilih Kereta",
@@ -413,7 +431,25 @@
       "footer_legal_insurance": "Perlindungan Insurans",
       "footer_legal_about": "Mengenai WeDRIVE",
       "footer_rights": "Hak cipta terpelihara.",
-      "footer_region": "Malaysia (MYR • RM)"
+      "footer_region": "Malaysia (MYR • RM)",
+      "cust_welcome": "Selamat kembali!",
+      "cust_active_bookings": "Tempahan Aktif",
+      "cust_active_desc": "Sewaan semasa anda yang sedang berlangsung",
+      "cust_view_all": "Lihat Semua",
+      "cust_return_date": "Tarikh Pemulangan",
+      "cust_extend": "Lanjutkan Sewaan",
+      "cust_ai_reco": "Padanan Pintar AI untuk Anda",
+      "cust_ai_reco_desc": "Disusun khas berdasarkan rekod sewaan anda",
+      "cust_browse": "Pilih Kereta Tersedia",
+      "cust_browse_desc": "Cari kenderaan sewaan idaman anda",
+      "popup_select_dates": "Pilih Tarikh Anda",
+      "popup_pickup": "Tarikh Pengambilan",
+      "popup_return": "Tarikh Pemulangan",
+      "popup_proceed": "Teruskan ke Tempahan",
+      "cust_new_booking": "Tempahan Baharu",
+      "filter_mpv": "MPV",
+      "filter_coupe": "Coupe",
+      "filter_truck": "Trak"
     }
   };
 
