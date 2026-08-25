@@ -60,9 +60,9 @@
   }
 
   /* ── Initialize a Pair of Pickers ── */
-  function initPairedPickers(pickupId, returnId, onChangeCallback, disabledDates) {
-    var pickupInput = document.getElementById(pickupId);
-    var returnInput = document.getElementById(returnId);
+  function initPairedPickers(pickupId, returnId, onChangeCallback, disabledDates, customConfig) {
+    var pickupInput = typeof pickupId === 'string' ? document.getElementById(pickupId) : pickupId;
+    var returnInput = typeof returnId === 'string' ? document.getElementById(returnId) : returnId;
     if (!pickupInput || !returnInput || !window.flatpickr) return null;
 
     injectCalendarCSS();
@@ -70,20 +70,25 @@
     var pPicker = null;
     var rPicker = null;
 
+    var allowPast = customConfig && customConfig.allowPast;
+    var minDateSetting = allowPast ? null : "today";
+    var currentYear = new Date().getFullYear();
+    var minYear = allowPast ? currentYear - 5 : currentYear;
+
     var commonConfig = {
-      minDate: "today",
+      minDate: minDateSetting,
       dateFormat: "d/m/Y",
       disableMobile: "true",
       disable: disabledDates || [],
       onReady: function(selectedDates, dateStr, instance) {
         var yearInput = instance.currentYearElement;
-        var wrapper = yearInput.parentNode;
+        var wrapper = yearInput ? yearInput.parentNode : null;
+        if (!wrapper) return;
         
         var select = document.createElement('select');
         select.className = 'flatpickr-monthDropdown-months custom-year-select';
         
-        var currentYear = new Date().getFullYear();
-        for (var i = currentYear; i <= currentYear + 10; i++) {
+        for (var i = minYear; i <= currentYear + 10; i++) {
             var opt = document.createElement('option');
             opt.value = i;
             opt.text = i;
@@ -287,8 +292,13 @@
     var input = typeof inputOrId === 'string' ? document.getElementById(inputOrId) : inputOrId;
     if (!input || !window.flatpickr) return null;
 
+    var allowPast = customConfig && customConfig.allowPast;
+    var minDateSetting = allowPast ? null : "today";
+    var currentYear = new Date().getFullYear();
+    var minYear = allowPast ? currentYear - 5 : currentYear;
+
     var commonConfig = {
-      minDate: "today",
+      minDate: minDateSetting,
       dateFormat: "d/m/Y",
       disableMobile: "true",
       onReady: function(selectedDates, dateStr, instance) {
@@ -299,8 +309,7 @@
         var select = document.createElement('select');
         select.className = 'flatpickr-monthDropdown-months custom-year-select';
         
-        var currentYear = new Date().getFullYear();
-        for (var i = currentYear - 5; i <= currentYear + 10; i++) {
+        for (var i = minYear; i <= currentYear + 10; i++) {
             var opt = document.createElement('option');
             opt.value = i;
             opt.text = i;
@@ -341,27 +350,27 @@
 
     injectCalendarCSS();
 
-    // 1. Dashboard & Browse Cars main pickers
+    // 1. Dashboard & Browse Cars main pickers (Future only)
     if (document.getElementById('pickup-date') && document.getElementById('return-date')) {
       window.WeDriveCalendar.mainPickers = initPairedPickers('pickup-date', 'return-date');
     }
 
-    // 2. Admin Bookings filter range
+    // 2. Admin Bookings filter range (Allows past for filtering history)
     if (document.getElementById('bk-date-from') && document.getElementById('bk-date-to')) {
-      window.WeDriveCalendar.adminBookingPickers = initPairedPickers('bk-date-from', 'bk-date-to');
+      window.WeDriveCalendar.adminBookingPickers = initPairedPickers('bk-date-from', 'bk-date-to', null, null, { allowPast: true });
     }
 
-    // 3. Admin Marketing Banners range
+    // 3. Admin Marketing Banners range (Future only)
     if (document.getElementById('banner-start') && document.getElementById('banner-end')) {
       window.WeDriveCalendar.bannerPickers = initPairedPickers('banner-start', 'banner-end');
     }
 
-    // 4. Admin Seasonal range
+    // 4. Admin Seasonal range (Future only)
     if (document.getElementById('seasonal-start') && document.getElementById('seasonal-end')) {
       window.WeDriveCalendar.seasonalPickers = initPairedPickers('seasonal-start', 'seasonal-end');
     }
 
-    // 5. Admin Promo Expiry Single Picker
+    // 5. Admin Promo Expiry Single Picker (Future only)
     if (document.getElementById('promo-expiry')) {
       initSinglePicker('promo-expiry');
     }
@@ -369,7 +378,8 @@
     // 6. Convert any generic date pickers or inputs with class .date-picker
     document.querySelectorAll('.date-picker').forEach(function(input) {
       if (!input._flatpickr) {
-        initSinglePicker(input);
+        var allowPast = input.getAttribute('data-allow-past') === 'true';
+        initSinglePicker(input, { allowPast: allowPast });
       }
     });
   }
