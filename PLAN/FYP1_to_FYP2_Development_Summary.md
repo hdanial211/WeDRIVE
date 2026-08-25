@@ -905,3 +905,23 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.46 Ensure focus highlight follows seamless continuous pill shape without inner rectangular artifacts`
   - Tag Versi: `5.2.46`
+
+---
+
+## 🎯 [MINOR UPDATE] 87. Pembaikan Ketepatan Skrol Butang Carian Kereta (Precise Search Scroll Target Alignment) (v5.2.47)
+
+- **Punca Masalah (Root Cause)**:
+  - Sebelum ini, butang "Cari Kereta" memanggil `applyFilters(true)` yang mencari elemen `document.getElementById('cars')` dan melakukan `scrollIntoView()`.
+  - Pada halaman `browse-cars.html`, sasaran tersebut tidak didefinisikan secara tepat atau mengalami limpahan skrol sehingga tergelincir jauh ke bawah melepasi *footer*.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `customer/js/customer.js`:
+    - Mengemaskini fungsi `applyFilters(shouldScroll)` untuk mencari sasaran utama `.filter-bar`, `#cars-grid`, atau `#cars`.
+    - Mengira kedudukan puncak secara jitu (`target.getBoundingClientRect().top + window.pageYOffset - 16px`) dan menggunakan `window.scrollTo({ top: offsetPosition, behavior: 'smooth' })`.
+    - Mendedahkan `window.applyFilters = applyFilters;` ke skop global.
+  - Di dalam `customer/pages/browse-cars/browse-cars.html`:
+    - Menambah `id="cars"` pada `<section class="dash-section browse-section" id="cars">`.
+- **Hasil Visual (Visual Verification)**:
+  - Apabila butang "Cari Kereta" ditekan, skrin meluncur secara lancar dan memaparkan bar cip kategori ("Semua Kereta", "Sedan", "SUV", dsb.) serta barisan kad kereta pertama tepat di pandangan utama tanpa menggelongsor jauh ke bahagian *footer*.
+- **Maklumat Git**:
+  - Commit: `5.2.47 Fix search button scroll target to smoothly align at filter bar and car grid without overshooting`
+  - Tag Versi: `5.2.47`

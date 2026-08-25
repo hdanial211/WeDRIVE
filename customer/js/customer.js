@@ -268,10 +268,18 @@
     renderCars(list);
 
     if (shouldScroll) {
-      var carsSection = document.getElementById('cars');
-      if (carsSection) carsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var target = document.querySelector('.filter-bar') || document.getElementById('cars-grid') || document.getElementById('cars');
+      if (target) {
+        var topOffset = target.getBoundingClientRect().top + window.pageYOffset - 16;
+        window.scrollTo({
+          top: Math.max(0, topOffset),
+          behavior: 'smooth'
+        });
+      }
     }
   }
+
+  window.applyFilters = applyFilters;
 
   function renderHeroStats() {
     if (!allCars.length) return;
