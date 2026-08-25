@@ -104,6 +104,10 @@
       }
     }
 
+    if (placeholder && placeholder.parentElement !== document.body && document.body) {
+      document.body.appendChild(placeholder);
+    }
+
     var base = resolveBase();
 
     placeholder.setAttribute('role', 'complementary');

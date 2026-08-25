@@ -6189,8 +6189,8 @@ body.lang-skeleton-reveal .guest-section-heading p {
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
+    transform: none;
+    filter: none;
   }
 }
 
@@ -6244,7 +6244,7 @@ main,
 .customer-shell,
 .admin-shell,
 .page-container {
-  animation: pageTransitionIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: pageTransitionIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 /* Universal Page Content Exit (OUT) Animation */
