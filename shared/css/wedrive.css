@@ -8664,24 +8664,70 @@ body.page-is-leaving .page-container {
 
 /* ── 1. Universal Apple Pro Focus Halo ───────────────────────────────────── */
 :focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
 button:focus-visible,
-.search-field-compact input:focus-visible,
-.date-picker:focus-visible {
+select:focus-visible,
+textarea:focus-visible {
   outline: none !important;
   border-color: var(--primary, #0071E3) !important;
   box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.22) !important;
 }
 
+/* Standalone inputs focus halo (outside pill wrappers) */
+input:not(.search-field-compact input):not(.popup-date-input-wrap input):not(.input-wrap input):focus-visible {
+  outline: none !important;
+  border-color: var(--primary, #0071E3) !important;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.22) !important;
+}
+
+/* Inner inputs inside pill wrappers MUST NEVER show square/rectangular borders or highlights */
+.search-field-compact input,
+.search-field-compact input:focus,
+.search-field-compact input:focus-visible,
+.popup-date-input-wrap input,
+.popup-date-input-wrap input:focus,
+.popup-date-input-wrap input:focus-visible,
+.input-wrap input,
+.input-wrap input:focus,
+.input-wrap input:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Instead, the ENTIRE PILL WRAPPER receives the seamless continuous Apple pill halo */
+.search-field-compact:focus-within,
+.popup-date-input-wrap:focus-within,
+.input-wrap:focus-within {
+  border-color: var(--primary, #0071E3) !important;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2) !important;
+  border-radius: var(--radius-pill, 9999px) !important;
+  background: var(--bg-surface, #FFFFFF) !important;
+}
+
 body.theme-dark :focus-visible,
-body.theme-dark input:focus-visible,
+body.theme-dark button:focus-visible,
 body.theme-dark select:focus-visible,
-body.theme-dark textarea:focus-visible,
-body.theme-dark button:focus-visible {
+body.theme-dark textarea:focus-visible {
   border-color: var(--primary, #2997FF) !important;
   box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.3) !important;
+}
+
+body.theme-dark input:not(.search-field-compact input):not(.popup-date-input-wrap input):not(.input-wrap input):focus-visible {
+  border-color: var(--primary, #2997FF) !important;
+  box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.3) !important;
+}
+
+body.theme-dark .search-field-compact:focus-within,
+body.theme-dark .popup-date-input-wrap:focus-within,
+body.theme-dark .input-wrap:focus-within {
+  border-color: var(--primary, #2997FF) !important;
+  box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.3) !important;
+  background: var(--bg-surface, #161618) !important;
 }
 
 /* ── 2. Apple Tactile Press Physics (Spring Response) ─────────────────────── */

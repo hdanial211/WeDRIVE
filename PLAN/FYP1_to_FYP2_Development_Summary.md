@@ -887,3 +887,21 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.44 Harmonize system-wide geometry, flatpickr styling, spring transitions, and sidebar navigation`
   - Tag Versi: `5.2.44`
+
+---
+
+## 🔍 [MINOR UPDATE] 86. Pembaikan Sorotan Fokus Bentuk Kapsul Melengkung (Continuous Pill Focus Halo Elimination of Inner Rectangles) (v5.2.46)
+
+- **Punca Masalah (Root Cause)**:
+  - Sebelum ini, peraturan CSS `:focus-visible` dan `input:focus-visible` meletakkan bayang `box-shadow` dan sempadan biru secara langsung pada elemen `<input>` dalaman.
+  - Disebabkan elemen `<input>` dalaman bermula selepas ikon dan berbentuk segi empat, ia menghasilkan garisan sempadan tegak bersegi (*inner rectangular box*) yang memotong bentuk melengkung kapsul pil luar.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Menyahaktifkan sebarang `border`, `outline`, dan `box-shadow` pada semua elemen `<input>` di dalam kontena berkapsul (`.search-field-compact input`, `.popup-date-input-wrap input`, `.input-wrap input`, `.date-input-pill input`).
+    - Memindahkan keseluruhan kesan cincin fokus (*Apple Focus Halo*) kepada kontena pembungkus luar (`.search-field-compact:focus-within`, `.popup-date-input-wrap:focus-within`).
+    - Kesan cahaya biru kini melengkung 100% licin dan berterusan mengikut geometri kapsul pil asal (`border-radius: var(--radius-pill, 9999px)`), merangkumi ikon dan teks tanpa sebarang pemotongan petak.
+- **Pengesahan Ujian Visual (DevTools Screenshot)**:
+  - Diuji pada bar carian utama (`browse-cars.html`) dan modal popup tempahan pantas: cincin fokus biru kini membalut keseluruhan kapsul pil secara lancar dan sempurna 100%.
+- **Maklumat Git**:
+  - Commit: `5.2.46 Ensure focus highlight follows seamless continuous pill shape without inner rectangular artifacts`
+  - Tag Versi: `5.2.46`
