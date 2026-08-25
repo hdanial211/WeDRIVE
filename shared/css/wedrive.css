@@ -8594,6 +8594,181 @@ body.page-is-leaving .page-container {
   background: var(--bg-surface-2);
 }
 
+/* ==============================================================================
+   88. PURE APPLE HUMAN INTERFACE GUIDELINES (HIG) 100% MASTER SUITE
+   ============================================================================== */
+
+/* ── 1. Universal Apple Pro Focus Halo ───────────────────────────────────── */
+:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+.search-field-compact input:focus-visible,
+.date-picker:focus-visible {
+  outline: none !important;
+  border-color: var(--primary, #0071E3) !important;
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.22) !important;
+}
+
+body.theme-dark :focus-visible,
+body.theme-dark input:focus-visible,
+body.theme-dark select:focus-visible,
+body.theme-dark textarea:focus-visible,
+body.theme-dark button:focus-visible {
+  border-color: var(--primary, #2997FF) !important;
+  box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.3) !important;
+}
+
+/* ── 2. Apple Tactile Press Physics (Spring Response) ─────────────────────── */
+button:active,
+.btn-primary:active,
+.btn-primary-sm:active,
+.btn-outline:active,
+.btn-outline-sm:active,
+.filter-chip:active,
+.date-chip:active,
+.car-card:active,
+.dash-car-card:active,
+.mkt-card:active,
+.segmented-control button:active,
+.icon-btn:active,
+.sidebar-nav-item:active,
+.apple-pill-btn:active {
+  transform: scale(0.97) !important;
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* ── 3. Tabular Numerals for Numerical & Financial Data ──────────────────── */
+.price,
+.car-price,
+.stat-value,
+.metric-value,
+.dash-stat-num,
+.duration-badge,
+.popup-total,
+.popup-duration,
+#nb-total,
+#nb-rate,
+#nb-days,
+.flatpickr-day,
+.countdown-digits,
+.table-num,
+.pricing-val,
+.currency-amount {
+  font-variant-numeric: tabular-nums lining-nums !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
+}
+
+/* ── 4. Apple iOS Mobile Bottom Sheet Drawer with Grabber ─────────────────── */
+@media (max-width: 768px) {
+  .modal-container,
+  .booking-popup-card {
+    border-radius: 28px 28px 0 0 !important;
+    max-height: 88vh !important;
+    width: 100% !important;
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: translateY(0) !important;
+    animation: appleSheetSlideUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .modal-container::before,
+  .booking-popup-card::before {
+    content: "" !important;
+    display: block !important;
+    width: 36px !important;
+    height: 5px !important;
+    background: rgba(120, 120, 128, 0.35) !important;
+    border-radius: 3px !important;
+    margin: 10px auto 14px auto !important;
+  }
+}
+
+@keyframes appleSheetSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── 5. Apple Grouped Data Table Styling ──────────────────────────────────── */
+.data-table,
+table.custom-table,
+.table-responsive table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.06)) !important;
+}
+
+.data-table th,
+table.custom-table th,
+.table-responsive table th {
+  background: var(--bg-surface-3, #F0F0F3) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  color: var(--text-muted, #86868B) !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--border-medium, rgba(0, 0, 0, 0.08)) !important;
+}
+
+.data-table td,
+table.custom-table td,
+.table-responsive table td {
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.04)) !important;
+  font-size: 13.5px !important;
+  color: var(--text-primary) !important;
+}
+
+.data-table tr:last-child td,
+table.custom-table tr:last-child td,
+.table-responsive table tr:last-child td {
+  border-bottom: none !important;
+}
+
+.data-table tr:hover td,
+table.custom-table tr:hover td,
+.table-responsive table tr:hover td {
+  background: var(--bg-surface-2, rgba(0, 113, 227, 0.04)) !important;
+}
+
+/* ── 6. Minimum Touch Target (44px Rule) ─────────────────────────────────── */
+button,
+a.btn,
+.filter-chip,
+.date-chip,
+.sidebar-nav-item,
+.modal-close-btn,
+.flatpickr-day {
+  min-height: 38px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  button,
+  a.btn,
+  .filter-chip,
+  .date-chip,
+  .sidebar-nav-item,
+  .modal-close-btn {
+    min-height: 44px !important;
+  }
+}
+
+
 
 
 

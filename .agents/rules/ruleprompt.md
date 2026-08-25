@@ -7,10 +7,13 @@ trigger: always_on
 ## 1. Theme & Design Consistency (Apple HIG Standard)
 
 - Semua reka bentuk UI, komponen, peralihan, kad, butang, modal, tipografi, dan susun atur WAJIB mematuhi piawaian rasmi **Apple Human Interface Guidelines (HIG)** dan **Apple Design Resources**:
-  - `https://developer.apple.com/design/human-interface-guidelines/`
-  - `https://developer.apple.com/design/human-interface-guidelines/getting-started`
-  - `https://developer.apple.com/design/resources/`
-- Rujuk dokumen lengkap: `.agents/rules/apple_hig_design_system.md`.
+  - `https://developer.apple.com/design/human-interface-guidelines/getting-started` (Prinsip Utama, Clarity, Deference, Depth)
+  - `https://developer.apple.com/design/human-interface-guidelines/foundations` (Accessibility, Color, Dark Mode, Materials, Motion, Typography)
+  - `https://developer.apple.com/design/human-interface-guidelines/patterns` (Navigation, Modals, Search, Forms, Feedback, Loading)
+  - `https://developer.apple.com/design/human-interface-guidelines/components` (Segmented Controls, Buttons, Bento Cards, Date Pickers, Sheets)
+  - `https://developer.apple.com/design/human-interface-guidelines/inputs` (Touch Targets min 44px, Pointer/Mouse, Focus Halo Rings, Keyboard)
+  - `https://developer.apple.com/design/human-interface-guidelines/technologies` (AI Assistant Island, 3D 360 Viewer, Real-time Countdown)
+- **Rujukan Utama:** [`.agents/rules/apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_design_system.md).
 - **Tipografi:** SF Pro Display / SF Pro Text (`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`).
 - **Geometri:** Kad Bento Squircle (`border-radius: 24px/28px`), Butang/Pill (`border-radius: 9999px`), Input (`border-radius: 12px/14px`).
 - **Peralihan & Transisi Fizik Apple:** `cubic-bezier(0.16, 1, 0.3, 1)` dengan maklum balas sentuhan `transform: scale(0.97)` pada `:active`.
