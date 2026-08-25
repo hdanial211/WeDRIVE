@@ -456,66 +456,76 @@
       return;
     }
 
-    // Pick top 3 recommended vehicles (e.g. BMW Sedan, GLA SUV, AXIA Hatchback / Alphard)
-    var recommended = [];
-    var typesSeen = {};
-    for (var i = 0; i < cars.length && recommended.length < 3; i++) {
-      var c = cars[i];
-      var tKey = (c.type || '').toLowerCase();
-      if (!typesSeen[tKey]) {
-        typesSeen[tKey] = true;
-        recommended.push(c);
-      }
-    }
-    if (recommended.length < 3) {
-      recommended = cars.slice(0, 3);
-    }
-
     var isMs = lang() === 'ms';
 
-    var matchBadges = isMs ? [
-      'Padanan 98% · Paling Sesuai Perjalanan Korporat & Eksekutif',
-      'Padanan 96% · Terbaik untuk Percutian & Keselesaan Keluarga',
-      'Padanan 94% · Sangat Jimat & Lincah Bandar'
-    ] : [
-      '98% Match · Best for Executive & Business Travel',
-      '96% Match · Ideal for Family Comfort & Trips',
-      '94% Match · Highly Efficient City Commute'
-    ];
+    // Intelligently select 1 Executive Sedan, 1 Family SUV/MPV, 1 City Hatchback
+    var sedanCar = cars.find(function(c) { return String(c.type || '').toLowerCase() === 'sedan'; });
+    var suvCar = cars.find(function(c) { var t = String(c.type || '').toLowerCase(); return t === 'suv' || t === 'mpv'; });
+    var hatchCar = cars.find(function(c) { var t = String(c.type || '').toLowerCase(); return t === 'hatchback' || t === 'coupe'; });
 
-    recoGrid.innerHTML = recommended.map(function (car, index) {
+    var chosen = [];
+    if (sedanCar) {
+      sedanCar._customAi = isMs ? 'Padanan AI 98% · Korporat & Eksekutif' : '98% AI Match · Executive & Business';
+      chosen.push(sedanCar);
+    }
+    if (suvCar) {
+      suvCar._customAi = isMs ? 'Padanan AI 96% · Keselesaan Keluarga' : '96% AI Match · Family Comfort & Trips';
+      chosen.push(suvCar);
+    }
+    if (hatchCar) {
+      hatchCar._customAi = isMs ? 'Padanan AI 94% · Jimat & Lincah Bandar' : '94% AI Match · Eco & Agile City Commute';
+      chosen.push(hatchCar);
+    }
+
+    // Fallback if any category missing
+    if (chosen.length < 3) {
+      for (var i = 0; i < cars.length && chosen.length < 3; i++) {
+        if (chosen.indexOf(cars[i]) === -1) {
+          cars[i]._customAi = isMs ? 'Padanan AI 95% · Pilihan Popular' : '95% AI Match · Popular Choice';
+          chosen.push(cars[i]);
+        }
+      }
+    }
+
+    recoGrid.innerHTML = chosen.map(function (car) {
       var safeName = escapeHtml(car.name);
       var safeType = escapeHtml(car.label || car.type || '');
       var safeFuel = escapeHtml(car.fuel || '');
       var safeTrans = escapeHtml(car.trans || car.transmission || 'Auto');
-      var price = carPrice(car);
+      var safeAi = escapeHtml(car._customAi || car.ai || t('aiMatch'));
+      var rating = escapeHtml(car.rating || '⭐ 4.8');
+      var status = statusKey(car);
       var img = imagePath(car);
       var fallbackImg = fallbackImagePath(car);
-      var badgeText = matchBadges[index] || (isMs ? 'Padanan AI 95%' : '95% AI Match');
-      var btnLabel = isMs ? 'Tempah Pantas' : 'Quick Book';
+      var buttonText = isMs ? 'Tempah Pantas' : 'Quick Book';
 
       return [
-        '<div class="reco-card" onclick="bookCar(' + Number(car.id) + ')">',
-        '  <div class="reco-badge">',
-        '    <span class="material-icons-round">psychology</span>',
-        '    <span>' + escapeHtml(badgeText) + '</span>',
-        '  </div>',
-        '  <div class="reco-img-wrap">',
+        '<div class="car-card" onclick="bookCar(' + Number(car.id) + ')">',
+        '  <div class="car-img">',
         '    <img src="' + img + '" alt="' + safeName + '" onerror="this.onerror=null;this.src=\'' + fallbackImg + '\'" />',
-        '  </div>',
-        '  <div class="reco-content">',
-        '    <span class="reco-type">' + safeType + '</span>',
-        '    <h3 class="reco-name">' + safeName + '</h3>',
-        '    <div class="reco-specs">',
-        '      <span><span class="material-icons-round">event_seat</span>' + Number(car.seats || 5) + ' ' + (isMs ? 'Tempat' : 'Seats') + '</span>',
-        '      <span><span class="material-icons-round">settings</span>' + safeTrans + '</span>',
-        '      <span><span class="material-icons-round">local_gas_station</span>' + safeFuel + '</span>',
+        '    <div class="car-badges">',
+        '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
+        '      <span class="rating-pill">' + rating + '</span>',
         '    </div>',
-        '    <div class="reco-footer">',
-        '      <div class="reco-price">RM ' + price + '<span>' + (isMs ? '/hari' : '/day') + '</span></div>',
-        '      <button class="btn-primary btn-sm" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
-        '        <span class="material-icons-round" style="font-size:16px">event_available</span>',
-        '        <span>' + escapeHtml(btnLabel) + '</span>',
+        '  </div>',
+        '  <div class="car-body">',
+        '    <div class="car-topline">',
+        '      <p class="car-type">' + safeType + '</p>',
+        '      <span class="rating-pill"><span class="material-icons-round">reviews</span>' + escapeHtml(car.reviews || '12') + ' ' + escapeHtml(t('reviews')) + '</span>',
+        '    </div>',
+        '    <h3>' + safeName + '</h3>',
+        '    <div class="car-specs">',
+        '      <div class="spec"><span class="material-icons-round">local_gas_station</span>' + safeFuel + '</div>',
+        '      <div class="spec"><span class="material-icons-round">event_seat</span>' + Number(car.seats || 5) + ' ' + escapeHtml(t('seats')) + '</div>',
+        '      <div class="spec"><span class="material-icons-round">settings</span>' + safeTrans + '</div>',
+        '      <div class="spec"><span class="material-icons-round">verified</span>' + escapeHtml(statusText(car)) + '</div>',
+        '    </div>',
+        '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>',
+        '    <div class="car-footer">',
+        '      <div class="price">RM ' + carPrice(car) + '<span>' + escapeHtml(t('day')) + '</span></div>',
+        '      <button class="btn-book" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
+        '        <span class="material-icons-round" style="font-size:17px">event_available</span>',
+        '        ' + escapeHtml(buttonText),
         '      </button>',
         '    </div>',
         '  </div>',
