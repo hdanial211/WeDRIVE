@@ -948,7 +948,7 @@
 
     var isMs = lang() === 'ms';
     var hour = new Date().getHours();
-    var timeGreeting = 'Welcome back';
+    var timeGreeting = isMs ? 'Selamat Petang' : 'Good afternoon';
     if (hour < 12) {
       timeGreeting = isMs ? 'Selamat Pagi' : 'Good morning';
     } else if (hour < 18) {
@@ -958,10 +958,30 @@
     }
 
     if (window.WeDriveAPI && window.WeDriveAPI.getCurrentUser) {
-      window.WeDriveAPI.getCurrentUser().then(function (user) {
-        if (user && user.user_metadata) {
-          var name = user.user_metadata.nickname || user.user_metadata.first_name || user.user_metadata.full_name || 'Customer';
-          greetingEl.innerHTML = '<span>' + timeGreeting + ', ' + escapeHtml(name) + '!</span>';
+      window.WeDriveAPI.getCurrentUser().then(async function (user) {
+        var customerName = '';
+        if (user) {
+          // Check if there is a customer record in supabase
+          if (window.supabaseClient) {
+            try {
+              var profRes = await window.supabaseClient.from('customers').select('name').eq('auth_uid', user.id).maybeSingle();
+              if (profRes && profRes.data && profRes.data.name) {
+                customerName = profRes.data.name;
+              }
+            } catch (e) {}
+          }
+          if (!customerName && user.user_metadata) {
+            var metaName = user.user_metadata.name || user.user_metadata.nickname || user.user_metadata.first_name || '';
+            var role = user.user_metadata.role || '';
+            if (role !== 'admin' && !metaName.toLowerCase().includes('admin')) {
+              customerName = metaName;
+            }
+          }
+        }
+
+        if (customerName) {
+          var firstName = customerName.split(' ')[0];
+          greetingEl.innerHTML = '<span>' + timeGreeting + ', ' + escapeHtml(firstName) + '!</span>';
         } else {
           greetingEl.innerHTML = '<span data-key="cust_welcome">' + (isMs ? 'Selamat Kembali!' : 'Welcome back!') + '</span>';
         }

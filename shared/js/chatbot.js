@@ -299,47 +299,73 @@ window.toggleChat = async function() {
 
     window.removeTyping();
 
-    // Personalized greeting (Multilingual EN / MS)
+    // Detect current portal / role context
+    var currentPath = window.location.pathname.toLowerCase();
+    var isAdminPortal = currentPath.includes('/admin/');
+    var isCustomerPortal = currentPath.includes('/customer/');
+    var isGuestPortal = !isAdminPortal && !isCustomerPortal;
+
+    // Personalized greeting (Multilingual EN / MS & Role-Aware)
     var isMs = (localStorage.getItem('wedrive-lang') === 'ms');
-    var defaultGreeting = isMs 
-      ? 'Hai! Saya Pembantu AI WeDRIVE. Bagaimana saya boleh bantu anda hari ini?' 
-      : 'Hi! I am your WeDRIVE AI Assistant. How can I help you today?';
-    
-    var greeting = defaultGreeting;
-    if (isMs && settings.greeting_ms) {
-      greeting = settings.greeting_ms;
-    } else if (!isMs && settings.greeting) {
-      greeting = settings.greeting;
+    var greeting = '';
+
+    if (isAdminPortal) {
+      greeting = isMs
+        ? 'Hai! Saya Pembantu AI Pengurusan WeDRIVE. Bagaimana saya boleh bantu semakan operasi atau sistem anda hari ini?'
+        : 'Hi! I am your WeDRIVE Operations AI Assistant. How can I assist with your fleet management or system overview today?';
+    } else if (isCustomerPortal) {
+      if (userData && userData.profile && userData.profile.name) {
+        var firstName = userData.profile.name.split(' ')[0];
+        greeting = isMs
+          ? 'Hai <strong>' + firstName + '</strong>! Saya pembantu peribadi WeDRIVE anda. Ada apa yang boleh saya bantu mengenai sewaan atau tempahan anda?'
+          : 'Hi <strong>' + firstName + '</strong>! I\'m your personal WeDRIVE assistant. How can I help with your rentals or bookings today?';
+      } else {
+        greeting = isMs
+          ? 'Hai! Saya pembantu peribadi WeDRIVE anda. Saya sedia membantu dengan sewaan aktif, pemulangan kenderaan, dan tempahan baharu.'
+          : 'Hi! I\'m your personal WeDRIVE assistant. I can assist you with active rentals, returns, and new bookings.';
+      }
+    } else {
+      // Guest / Public portal
+      greeting = isMs
+        ? (settings.greeting_ms || 'Hai! Selamat datang ke WeDRIVE Melaka. Saya boleh membantu anda mencari kereta terbaik, menyemak kadar sewa, atau menjawab sebarang soalan.')
+        : (settings.greeting || 'Hi! Welcome to WeDRIVE Melaka. I can help you find the ideal car, check rental rates, or answer any questions.');
     }
 
-    if (userData && userData.profile && userData.profile.name) {
-      var firstName = userData.profile.name.split(' ')[0];
-      greeting = isMs
-        ? 'Hai <strong>' + firstName + '</strong>! Saya pembantu peribadi WeDRIVE anda. Saya boleh menyemak akaun dan tempahan anda. Ada apa yang boleh saya bantu hari ini?'
-        : 'Hi <strong>' + firstName + '</strong>! I\'m your personal WeDRIVE assistant. I can see your account and bookings. How can I help you today?';
-    }
     window.addChatMsg(greeting, false);
 
-    // Update suggestion chips for logged-in users
-    if (userData && userData.profile) {
-      var sugContainer = document.getElementById('chat-suggestions');
-      if (sugContainer) {
-        sugContainer.innerHTML = '';
+    // Update suggestion chips according to role & portal
+    var sugContainer = document.getElementById('chat-suggestions');
+    if (sugContainer) {
+      sugContainer.innerHTML = '';
+      var chips = [];
 
-        var chips = isMs ? [
+      if (isAdminPortal) {
+        chips = isMs ? [
+          { text: 'Status armada', query: 'Berapa banyak kereta tersedia dan disewa sekarang?' },
+          { text: 'Ringkasan tempahan', query: 'Tunjukkan ringkasan tempahan terkini' },
+          { text: 'Senarai pelanggan', query: 'Apakah status pengesahan pelanggan baharu?' },
+          { text: 'Bantuan sistem', query: 'Bagaimana cara meluluskan tempahan pelanggan?' }
+        ] : [
+          { text: 'Fleet status', query: 'How many cars are available vs rented today?' },
+          { text: 'Bookings summary', query: 'Show me recent bookings summary' },
+          { text: 'Customer list', query: 'What is the status of new customer verifications?' },
+          { text: 'System help', query: 'How do I approve customer bookings?' }
+        ];
+      } else if (isCustomerPortal) {
+        chips = isMs ? [
           { text: 'Tempahan saya', query: 'Tunjukkan tempahan saya' },
-          { text: 'Kereta tersedia', query: 'Kereta apa yang tersedia hari ini?' },
-          { text: 'Cadangan kereta', query: 'Cadangkan kereta untuk saya' },
-          { text: 'Status akaun', query: 'Apakah status akaun saya?' }
+          { text: 'Pilih kereta', query: 'Kereta apa yang tersedia untuk disewa?' },
+          { text: 'Pemulangan kereta', query: 'Bagaimana prosedur pemulangan kenderaan?' },
+          { text: 'Bantuan 24/7', query: 'Bagaimana saya boleh hubungi bantuan kecemasan?' }
         ] : [
           { text: 'My bookings', query: 'Show me my bookings' },
-          { text: 'Available cars', query: 'Cars available today?' },
-          { text: 'Recommend', query: 'Recommend me a car' },
-          { text: 'My account', query: 'What is my account status?' }
+          { text: 'Browse fleet', query: 'What cars are available to rent?' },
+          { text: 'Car return info', query: 'What is the vehicle return procedure?' },
+          { text: '24/7 Support', query: 'How do I contact emergency roadside assistance?' }
         ];
 
-        // Add active booking chip if applicable
-        if (userData.bookings && userData.bookings.length > 0) {
+        // Add active rental chip if customer has an ongoing rental
+        if (userData && userData.bookings && userData.bookings.length > 0) {
           var today = new Date().toISOString().split('T')[0];
           var hasActive = userData.bookings.some(function(b) {
             return (b.status === 'Active' || b.status === 'Confirmed') && b.start_date <= today && b.end_date >= today;
@@ -348,18 +374,31 @@ window.toggleChat = async function() {
             chips.unshift(isMs 
               ? { text: 'Sewaan aktif', query: 'Maklumat sewaan aktif saya' }
               : { text: 'My active rental', query: 'Tell me about my current active rental' });
-            chips.pop(); // Remove last to keep max 4
+            chips.pop();
           }
         }
-
-        chips.forEach(function(c) {
-          var btn = document.createElement('button');
-          btn.className = 'sug-chip';
-          btn.textContent = c.text;
-          btn.onclick = function() { quickSend(c.query); };
-          sugContainer.appendChild(btn);
-        });
+      } else {
+        // Guest portal chips
+        chips = isMs ? [
+          { text: 'Kereta tersedia', query: 'Kereta apa yang tersedia hari ini?' },
+          { text: 'Cadangan kereta', query: 'Cadangkan kereta untuk saya' },
+          { text: 'Cara tempah', query: 'Bagaimana cara menempah kereta?' },
+          { text: 'Pilihan bayaran', query: 'Apakah kaedah bayaran yang diterima?' }
+        ] : [
+          { text: 'Available cars', query: 'Cars available today?' },
+          { text: 'Recommend', query: 'Recommend me a car' },
+          { text: 'How to book', query: 'How do I book a car?' },
+          { text: 'Payment options', query: 'What payment options do you accept?' }
+        ];
       }
+
+      chips.forEach(function(c) {
+        var btn = document.createElement('button');
+        btn.className = 'sug-chip';
+        btn.textContent = c.text;
+        btn.onclick = function() { quickSend(c.query); };
+        sugContainer.appendChild(btn);
+      });
     }
   }
   if (window.chatOpen) setTimeout(() => document.getElementById('chat-input').focus(), 300);
@@ -586,6 +625,23 @@ window.sendChat = async function() {
     liveData += "\n[Live database details currently unavailable - fallback to general knowledge]";
   }
 
+  // Detect current portal context
+  var currentPath = window.location.pathname.toLowerCase();
+  var portalContext = "";
+  if (currentPath.includes('/admin/')) {
+    portalContext = `\n\n[PORTAL CONTEXT — ADMIN MANAGEMENT PORTAL]
+You are currently assisting a WeDRIVE Administrator / Manager in the Backoffice Dashboard.
+Focus on operational efficiency, fleet availability, reservations review, customer document verification, and system settings.`;
+  } else if (currentPath.includes('/customer/')) {
+    portalContext = `\n\n[PORTAL CONTEXT — CUSTOMER PORTAL]
+You are currently assisting a Customer in the WeDRIVE Customer Dashboard & Showroom.
+Focus on helping them view their active rental return countdown, review their booking status, explore cars to rent, and access 24/7 roadside assistance.`;
+  } else {
+    portalContext = `\n\n[PORTAL CONTEXT — PUBLIC / GUEST SHOWROOM]
+You are currently assisting a Guest Visitor on the public WeDRIVE website.
+Guide them on exploring our car rental fleet in Melaka, explain the booking process (Sign Up -> Verify -> Book), and provide details about rates and payment options.`;
+  }
+
   // Fetch personal context (uses cache after first load)
   var userData = await fetchChatUserData();
   var personalContext = buildPersonalContext(userData);
@@ -624,7 +680,7 @@ Always write the response in the language the user is chatting in (English or Ma
 Always use the exact markdown links built above. Do not use absolute domains.
 `;
 
-  const fullSystem = systemPrompt + (promoContext ? '\n\n' + promoContext : '') + liveData + personalContext + '\n\n' + bookingRulesInstruction;
+  const fullSystem = systemPrompt + portalContext + (promoContext ? '\n\n' + promoContext : '') + liveData + personalContext + '\n\n' + bookingRulesInstruction;
 
   if (!apiKey) {
     window.removeTyping();
