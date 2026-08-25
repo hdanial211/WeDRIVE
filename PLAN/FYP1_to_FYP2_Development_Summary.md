@@ -797,3 +797,93 @@ Keputusan Pembukaan Kalendar: autoReturnOpen: true, finalReturnValue: Berjaya di
 Commit: 5.2.38 Fix pill-shaped error shake and seamless return date calendar opening
 Tag Versi: 5.2.38
 Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
+
+---
+
+## 🛠️ [MINOR UPDATE] 80. Pembaikan Isu Klik Tetikus Pemilihan Semula Tarikh Pulang (Manual Mouse Re-Click Bug Fix) (v5.2.39)
+
+- **Punca Masalah (Root Cause)**:
+  - Konflik pendengar acara (*event listeners*) berganda dan gelembung klik (*click bubbling*) pada elemen pembungkus input.
+  - Sifat CSS `pointer-events: none` yang tertinggal selepas status bertukar.
+- **Tindakan Pembaikan (Implementation)**:
+  - Mengasingkan pendengar acara klik secara bersih di dalam `shared/js/calendar.js` menggunakan `e.stopPropagation()`.
+  - Memastikan `pointer-events: auto` ditetapkan pada kotak input dan pembungkus sebaik sahaja tarikh ambil dipilih.
+- **Maklumat Git**:
+  - Commit: `5.2.39 Fix manual mouse click re-selection on return date calendar`
+  - Tag Versi: `5.2.39`
+
+---
+
+## 🔒 [MINOR UPDATE] 81. Penguncian Mutlak Tarikh Pulang & Penutupan Eksklusif (Strict Return Date Locking & Mutual Exclusion) (v5.2.40)
+
+- **Logik Penguncian (Lock First Directive)**:
+  - Tarikh Pulang dikunci sepenuhnya (`clickOpens: false`, `opacity: 0.65`, `cursor: not-allowed`) selagi Tarikh Ambil kosong.
+  - Menekan Tarikh Pulang semasa kosong mencetuskan goncangan ralat bentuk pil melengkung (`9999px`) dan membuka kalendar Tarikh Ambil sahaja.
+- **Pembukaan Bebas (Seamless Unlocking)**:
+  - Sebaik sahaja Tarikh Ambil dipilih, Tarikh Pulang dibuka kuncinya (`opacity: 1`, `cursor: pointer`), `minDate` diselaraskan secara automatik, dan pengguna bebas memilih/menukar tarikh pulang pada bila-bila masa.
+- **Pencegahan Kalendar Bertindih (Mutual Exclusion)**:
+  - Membuka satu kalendar akan menutup kalendar pasangannya serta-merta.
+- **Maklumat Git**:
+  - Commit: `5.2.40 Strictly lock return date until pickup is selected and enforce mutual exclusion`
+  - Tag Versi: `5.2.40`
+
+---
+
+## 🌐 [MINOR UPDATE] 82. Penyelarasan Kalendar Merentas Semua Modul Sistem (Universal Calendar Synchronization) (v5.2.41)
+
+- **Penyatuan Arkitektur Kalendar**:
+  - Menyelaraskan semua halaman di dalam Modul Pelanggan (*Browse Cars, Dashboard, Car Details*) dan Modul Pentadbir (*Bookings Filter, New Booking Modal, Marketing Banners, Seasonal Pricing*) untuk menggunakan enjin universal yang sama daripada `shared/js/calendar.js`.
+- **Pautan Aset Lengkap**:
+  - Memastikan fail `flatpickr.min.css`, `flatpickr.min.js`, dan `calendar.js` dipautkan secara konsisten di semua halaman yang terlibat.
+- **Maklumat Git**:
+  - Commit: `5.2.41 Ensure flatpickr and calendar assets are globally linked across all customer and admin pages`
+  - Tag Versi: `5.2.41`
+
+---
+
+## 🏆 [MAJOR UPDATE] 83. Pemaktuban Standard 100% Apple Human Interface Guidelines (HIG) & Master Audit (v5.2.42)
+
+- **Pemaktuban 6 Pilar Apple HIG**:
+  1. **Getting Started**: 3 Prinsip Teras (Clarity, Deference, Depth) dan sasaran sentuhan minimum $\ge 44\text{px} \times 44\text{px}$.
+  2. **Foundations**: Tipografi San Francisco dengan nombor tabular (`tabular-nums`), Obsidian True Black (`#000000`), Apple Pro Blue (`#0071E3`/`#2997FF`), Bahan Kaca (*Glassmorphism blur 20px*), dan Fizik Spring Apple `cubic-bezier(0.16, 1, 0.3, 1)`.
+  3. **Patterns**: Bar navigasi terapung, Penguncian Tarikh Berpasangan (*Lock First*), Goncangan Ralat Bentuk Pil (*Pill Shake*), Lembaran Bawah Mudah Alih (*iOS Bottom Sheet Drawer* dengan *drag handle* `36px × 5px`).
+  4. **Components**: Kawalan Bersegmen (*Segmented Controls*), Kad Bento Squircle (`24px`/`28px`), Butang Kapsul Pil (`9999px`), Jambatan Julat Kalendar Kapsul Biru.
+  5. **Inputs**: Lingkaran Cincin Fokus Biru Apple (*Focus Halo Ring*), Tindak Balas Sentuhan Taktil `transform: scale(0.97)` semasa ditekan (`:active`), Kawalan Seretan 360°.
+  6. **Technologies**: Pembantu AI Terapung (*Floating AI Island*), Pelihat Kenderaan 360°, Pengiraan Detik Masa Nyata, Penukaran Bahasa Dwibahasa Lancar (*Skeleton Cross-Fade*).
+- **Fail Rujukan Kekal**:
+  - `.agents/rules/apple_hig_design_system.md` *(Spesifikasi Utama)*
+  - `.agents/rules/ruleprompt.md` *(SOP & 6 Pautan Rasmi Apple HIG)*
+  - `docs/APPLE_HIG_COMPLIANCE_AUDIT.md` *(Laporan Audit Semua Halaman)*
+- **Maklumat Git**:
+  - Commit: `5.2.42 Establish Apple HIG master specification, permanent rules, and 100% system-wide compliance suite`
+  - Tag Versi: `5.2.42`
+
+---
+
+## 💊 [MINOR UPDATE] 84. Penyeragaman Bentuk Kapsul Pil Modal Tempahan Pantas (Popup Modal Pill Shape Consistency) (v5.2.43)
+
+- **Isu**:
+  - Kotak Tarikh Ambil dan Pulang dalam modal tempahan sebelum ini bersegi empat (`border-radius: 12px`) dan ikon terlalu rapat dengan teks.
+- **Tindakan Pembaikan**:
+  - Menukar `.popup-date-input-wrap` kepada bentuk kapsul pil melengkung penuh **`border-radius: var(--radius-pill, 9999px)`** dengan ketinggian `48px`, padding `0 18px`, dan jarak ikon `gap: 10px`.
+  - Menukar kad ringkasan durasi sewa `.popup-duration` kepada bentuk kapsul pil melengkung **`border-radius: var(--radius-pill, 9999px)`** dengan padding `12px 20px`.
+- **Maklumat Git**:
+  - Commit: `5.2.43 Standardize quick booking modal date fields and duration to Apple pill shapes`
+  - Tag Versi: `5.2.43`
+
+---
+
+## 🎯 [MINOR UPDATE] 85. Penyeragaman Menyeluruh Bentuk, Flatpickr, Transisi, & Sidebar Sistem (Total System Consistency Harmonization) (v5.2.44)
+
+- **Bentuk Geometri Seragam**:
+  - Kapsul Pil (`9999px`) pada semua bar carian, input tarikh modal, kad ringkasan, cip penapis, dan borang tempahan pentadbir.
+  - Squircle Bento (`24px`/`28px`) pada semua kad, modal, dan bar sisi.
+- **Kalendar Flatpickr Universal**:
+  - Bekas kaca Apple (*blur 32px*, bucu `22px`), sel hari bulat, dan jambatan julat biru kapsul di seluruh sistem.
+- **Transisi & Fizik Spring Apple**:
+  - Transisi universal `cubic-bezier(0.16, 1, 0.3, 1)` dan tindak balas sentuhan `scale(0.97)` pada semua elemen interaktif.
+- **Bar Sisi Pelanggan & Pentadbir**:
+  - Struktur squircle seragam `24px` dengan menu berkapsul pil dan kesan cahaya aktif.
+- **Maklumat Git**:
+  - Commit: `5.2.44 Harmonize system-wide geometry, flatpickr styling, spring transitions, and sidebar navigation`
+  - Tag Versi: `5.2.44`

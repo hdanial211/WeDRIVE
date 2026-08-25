@@ -42,6 +42,14 @@ trigger: always_on
 - Version MESTI berturutan. Contoh: selepas `3.0.0`, seterusnya ialah `3.0.1` (patch), `3.1.0` (minor), atau `4.0.0` (major). JANGAN lompat ke belakang.
 - Setiap commit WAJIB ada tag di GitHub yang sepadan dengan version number.
 
+### 2.1. Mandatory Development Summary Logging (PLAN)
+
+- Setiap kali sebarang perubahan kod, pembaikan isu, atau penambahan ciri baharu dilakukan, pembangun/AI WAJIB mengemas kini fail:
+  `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- Setiap tajuk catatan perkembangan WAJIB diasingkan dan dilabelkan dengan jelas mengikut kategori:
+  - **`[MAJOR UPDATE]`**: Untuk modul baharu, rombakan arkitektur, penetapan piawaian sistem, atau integrasi ciri berskala besar.
+  - **`[MINOR UPDATE]`**: Untuk pembaikan pepijat (*bug fixes*), penyeragaman komponen/CSS, penalaan kalendar, atau pembaikan kecil.
+
 ## 3. Logo
 
 - Ikon di kiri, teks di kanan.
