@@ -137,7 +137,17 @@
     };
 
     rPicker = window.flatpickr(returnInput, Object.assign({}, commonConfig, {
-      clickOpens: true,
+      clickOpens: false,
+      onOpen: function(selectedDates, dateStr, instance) {
+        if (!pPicker || !pPicker.selectedDates.length) {
+          instance.close();
+          triggerPickupRequiredFeedback();
+          return;
+        }
+        if (pPicker && pPicker.isOpen) {
+          pPicker.close();
+        }
+      },
       onChange: function() {
         if (typeof onChangeCallback === 'function') onChangeCallback(pPicker, rPicker);
         redrawRange(pPicker, rPicker);
@@ -147,6 +157,11 @@
     function triggerPickupRequiredFeedback() {
       var returnWrapper = returnInput.closest('.search-field-compact, .popup-date-field, .popup-date-input-wrap, .date-field, .input-wrap') || returnInput;
       var pickupWrapper = pickupInput.closest('.search-field-compact, .popup-date-field, .popup-date-input-wrap, .date-field, .input-wrap') || pickupInput;
+
+      // Close return picker immediately if open
+      if (rPicker && rPicker.isOpen) {
+        rPicker.close();
+      }
 
       // Reset animation classes to allow clean re-triggers
       returnWrapper.classList.remove('date-shake-error');
@@ -183,18 +198,22 @@
     }
 
     function onReturnAttempt(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      // 1. If Pick-up Date is empty -> STRICTLY LOCK Return Date!
       if (!pPicker || !pPicker.selectedDates.length) {
-        if (e) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
+        if (rPicker && rPicker.isOpen) rPicker.close();
         triggerPickupRequiredFeedback();
         return false;
       }
+      
+      // 2. If Pick-up Date IS selected -> UNLOCKED! Close pickup and open return picker!
+      if (pPicker && pPicker.isOpen) {
+        pPicker.close();
+      }
       if (rPicker) {
-        if (e) {
-          e.stopPropagation();
-        }
         rPicker.open();
       }
     }
@@ -204,10 +223,13 @@
     returnInput.addEventListener('click', onReturnAttempt);
 
     function onPickupAttempt(e) {
+      if (e) {
+        e.stopPropagation();
+      }
+      if (rPicker && rPicker.isOpen) {
+        rPicker.close();
+      }
       if (pPicker) {
-        if (e) {
-          e.stopPropagation();
-        }
         pPicker.open();
       }
     }
@@ -232,20 +254,30 @@
         pWrapper.style.pointerEvents = 'auto';
       }
       if (!pPicker || !pPicker.selectedDates.length) {
+        // LOCKED STATE
         if (wrapper) {
-          wrapper.style.opacity = '0.7';
-          wrapper.style.cursor = 'pointer';
+          wrapper.style.opacity = '0.65';
+          wrapper.style.cursor = 'not-allowed';
           wrapper.style.transition = 'opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease';
         }
+        returnInput.style.cursor = 'not-allowed';
       } else {
+        // UNLOCKED STATE
         if (wrapper) {
           wrapper.style.opacity = '1';
           wrapper.style.cursor = 'pointer';
         }
+        returnInput.style.cursor = 'pointer';
       }
     }
 
     pPicker = window.flatpickr(pickupInput, Object.assign({}, commonConfig, {
+      clickOpens: true,
+      onOpen: function() {
+        if (rPicker && rPicker.isOpen) {
+          rPicker.close();
+        }
+      },
       onChange: function(selectedDates, dateStr) {
         rPicker.set('minDate', dateStr || "today");
         
@@ -288,10 +320,12 @@
         }
 
         setTimeout(function() {
-          if (!rPicker.selectedDates[0] && selectedDates.length > 0) {
+          if (rPicker && !rPicker.selectedDates.length && selectedDates.length > 0) {
+            if (pPicker) pPicker.close();
             rPicker.open();
           }
         }, 150);
+
         if (typeof onChangeCallback === 'function') onChangeCallback(pPicker, rPicker);
         redrawRange(pPicker, rPicker);
       }
