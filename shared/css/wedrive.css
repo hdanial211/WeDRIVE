@@ -6405,14 +6405,18 @@ main.main .content {
 }
 
 main.main #footer-placeholder,
-.customer-main #footer-placeholder {
+.customer-main #footer-placeholder,
+.main-content #footer-placeholder,
+.main-content-area #footer-placeholder {
   margin-top: auto;
   width: 100%;
   box-sizing: border-box;
 }
 
 main.main .wedrive-footer,
-.customer-main .wedrive-footer {
+.customer-main .wedrive-footer,
+.main-content .wedrive-footer,
+.main-content-area .wedrive-footer {
   width: 100%;
   border-radius: var(--radius-xl, 22px);
   border: 1px solid var(--border-medium);
@@ -6425,7 +6429,11 @@ main.main .wedrive-footer,
 body.night-mode main.main .wedrive-footer,
 body.dark main.main .wedrive-footer,
 body.night-mode .customer-main .wedrive-footer,
-body.dark .customer-main .wedrive-footer {
+body.dark .customer-main .wedrive-footer,
+body.night-mode .main-content .wedrive-footer,
+body.dark .main-content .wedrive-footer,
+body.night-mode .main-content-area .wedrive-footer,
+body.dark .main-content-area .wedrive-footer {
   background: rgba(22, 22, 26, 0.88);
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
