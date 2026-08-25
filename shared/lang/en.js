@@ -747,6 +747,7 @@ window.wedrive_lang_en = {
   "cd_secs": "Secs",
   "cust_deadline_prefix": "Return Date:",
   "cust_pickup_point": "Pick-up Location",
+  "cust_return_point": "Return Location",
   "cust_range_est": "Estimated Range",
   "cust_rent_another": "Rent Another Car",
   "no_rental_title": "Ready for Your Next Journey?",

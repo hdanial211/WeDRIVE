@@ -867,15 +867,9 @@
           subEl.textContent = car ? (car.ai || 'Executive Class · Melaka Sentral') : 'Executive Class · Melaka Sentral';
         }
 
-        var pickupValEl = document.getElementById('active-pickup-val');
-        if (pickupValEl) {
-          pickupValEl.textContent = booking.pickup_location || booking.location || 'Melaka Sentral';
-        }
-
-        var rangeValEl = document.getElementById('active-range-val');
-        if (rangeValEl) {
-          var range = car && String(car.fuel).toLowerCase() === 'electric' ? '450 km' : '540 km';
-          rangeValEl.innerHTML = '<span class="material-icons-round">route</span> ' + range;
+        var returnValEl = document.getElementById('active-return-val') || document.getElementById('active-pickup-val');
+        if (returnValEl) {
+          returnValEl.textContent = booking.dropoff_location || booking.return_location || booking.location || 'Melaka Sentral (HQ)';
         }
 
         startReturnCountdown(booking.end_date);
