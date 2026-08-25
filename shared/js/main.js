@@ -262,7 +262,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.22';
   }
 
   function doApplyTranslation(data, animate) {
@@ -354,6 +354,75 @@
     });
   }
 
+  var FALLBACK_LANG = {
+    en: {
+      "nav_browse": "Browse Cars",
+      "nav_explore": "Explore Melaka",
+      "nav_melaka": "Explore Melaka",
+      "nav_how": "How It Works",
+      "nav_ai": "AI Assistant",
+      "nav_login": "Log In",
+      "nav_signup": "Sign Up",
+      "nav_logout": "Log Out",
+      "footer_tagline": "Smart, premium vehicle rental service in Melaka.",
+      "footer_col_fleet": "Fleet & Rentals",
+      "footer_col_tech": "Features & Options",
+      "footer_col_support": "Help & Support",
+      "footer_col_legal": "Legal & Company",
+      "footer_pricing": "Pricing Plans",
+      "footer_tech_360": "360° Showroom",
+      "footer_car": "Car Connectivity",
+      "footer_tech_pricing": "Package Comparison",
+      "footer_tech_keyless": "Vehicle Pickup",
+      "footer_faq": "FAQ",
+      "footer_contact": "Contact",
+      "footer_support_center": "Customer Care Center",
+      "footer_support_roadside": "24/7 Roadside Assistance",
+      "footer_privacy": "Privacy Policy",
+      "footer_terms": "Service Terms",
+      "footer_legal_insurance": "Insurance Coverage",
+      "footer_legal_about": "About WeDRIVE",
+      "footer_rights": "All rights reserved.",
+      "footer_region": "Malaysia (MYR • RM)"
+    },
+    ms: {
+      "nav_browse": "Pilih Kereta",
+      "nav_explore": "Jalan-jalan Melaka",
+      "nav_melaka": "Jalan-jalan Melaka",
+      "nav_how": "Cara Berfungsi",
+      "nav_ai": "Pembantu AI",
+      "nav_login": "Log Masuk",
+      "nav_signup": "Daftar Akaun",
+      "nav_logout": "Log Keluar",
+      "footer_tagline": "Perkhidmatan sewaan kenderaan premium dan pintar di Melaka.",
+      "footer_col_fleet": "Armada & Sewaan",
+      "footer_col_tech": "Pilihan & Ciri",
+      "footer_col_support": "Bantuan & Khidmat",
+      "footer_col_legal": "Dasar & Syarikat",
+      "footer_pricing": "Pakej & Kadar Harga",
+      "footer_tech_360": "Bilik Pameran 360°",
+      "footer_car": "Maklumat Kenderaan",
+      "footer_tech_pricing": "Perbandingan Pakej",
+      "footer_tech_keyless": "Pengambilan Kenderaan",
+      "footer_faq": "Soalan Lazim (FAQ)",
+      "footer_contact": "Hubungi Kami",
+      "footer_support_center": "Pusat Khidmat Pelanggan",
+      "footer_support_roadside": "Bantuan Kecemasan 24/7",
+      "footer_privacy": "Dasar Privasi",
+      "footer_terms": "Terma Perkhidmatan",
+      "footer_legal_insurance": "Perlindungan Insurans",
+      "footer_legal_about": "Mengenai WeDRIVE",
+      "footer_rights": "Hak cipta terpelihara.",
+      "footer_region": "Malaysia (MYR • RM)"
+    }
+  };
+
+  function getMergedLangData(lang) {
+    var fallback = FALLBACK_LANG[lang] || {};
+    var loaded = window['wedrive_lang_' + lang] || {};
+    return Object.assign({}, fallback, loaded);
+  }
+
   function loadLanguage(lang, animate) {
     if (animate) {
       if (document.body) {
@@ -362,41 +431,25 @@
       document.documentElement.classList.add('lang-skeleton-active');
     }
 
-    var globalVarName = 'wedrive_lang_' + lang;
-    if (window[globalVarName]) {
-      localStorage.setItem(LANG_KEY, lang);
-      applyTranslation(window[globalVarName], animate);
-      return;
-    }
+    localStorage.setItem(LANG_KEY, lang);
 
-    // Script injection
+    // Apply merged synchronous dictionary immediately
+    applyTranslation(getMergedLangData(lang), animate);
+
+    // Script injection / refresh for full dictionary
     var scriptId = 'lang-script-' + lang;
     var existingScript = document.getElementById(scriptId);
-    if (existingScript) {
-      existingScript.onload = function () {
-        if (window[globalVarName]) {
-          localStorage.setItem(LANG_KEY, lang);
-          applyTranslation(window[globalVarName], animate);
-        }
-      };
-      return;
-    }
+    if (existingScript) existingScript.remove();
 
     var script = document.createElement('script');
     script.id = scriptId;
     script.src = resolveLangPath(lang);
     script.onload = function () {
-      if (window[globalVarName]) {
-        localStorage.setItem(LANG_KEY, lang);
-        applyTranslation(window[globalVarName], animate);
-      } else {
-        console.warn('[WeDRIVE] Global language object not found: ' + globalVarName);
-      }
+      applyTranslation(getMergedLangData(lang), false);
     };
     script.onerror = function () {
       if (document.body) document.body.classList.remove('lang-skeleton-active');
       document.documentElement.classList.remove('lang-skeleton-active');
-      console.warn('[WeDRIVE] Failed to load language script: ' + script.src);
     };
     document.head.appendChild(script);
   }
@@ -758,7 +811,7 @@
     if (!placeholder) return;
 
     var base = resolveBasePath();
-    var url = base + 'shared/components/footer.html?v=5.2.4';
+    var url = base + 'shared/components/footer.html?v=5.2.22';
 
     fetch(url)
       .then(function (res) {

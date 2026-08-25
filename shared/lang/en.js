@@ -701,5 +701,19 @@ window.wedrive_lang_en = {
   "footer_pricing": "Pricing Plans",
   "pricing_from_prefix": "From ",
   "pricing_starts_from": "Starts from",
-  "pricing_save_label": "Save 15% (RM {amt})"
+  "pricing_save_label": "Save 15% (RM {amt})",
+  "footer_tagline": "Smart, premium vehicle rental service in Melaka.",
+  "footer_col_fleet": "Fleet & Rentals",
+  "footer_col_tech": "Features & Options",
+  "footer_col_support": "Help & Support",
+  "footer_col_legal": "Legal & Company",
+  "nav_explore": "Explore Melaka",
+  "footer_tech_360": "360° Showroom",
+  "footer_tech_pricing": "Package Comparison",
+  "footer_tech_keyless": "Vehicle Pickup",
+  "footer_support_center": "Customer Care Center",
+  "footer_support_roadside": "24/7 Roadside Assistance",
+  "footer_legal_insurance": "Insurance Coverage",
+  "footer_legal_about": "About WeDRIVE",
+  "footer_region": "Malaysia (MYR • RM)"
 };

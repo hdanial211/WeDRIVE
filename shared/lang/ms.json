@@ -694,5 +694,19 @@
   "footer_pricing": "Pakej & Kadar Harga",
   "pricing_from_prefix": "Bermula dari ",
   "pricing_starts_from": "Bermula dari",
-  "pricing_save_label": "Jimat 15% (RM {amt})"
+  "pricing_save_label": "Jimat 15% (RM {amt})",
+  "footer_tagline": "Perkhidmatan sewaan kenderaan premium dan pintar di Melaka.",
+  "footer_col_fleet": "Armada & Sewaan",
+  "footer_col_tech": "Pilihan & Ciri",
+  "footer_col_support": "Bantuan & Khidmat",
+  "footer_col_legal": "Dasar & Syarikat",
+  "nav_explore": "Jalan-jalan Melaka",
+  "footer_tech_360": "Bilik Pameran 360°",
+  "footer_tech_pricing": "Perbandingan Pakej",
+  "footer_tech_keyless": "Pengambilan Kenderaan",
+  "footer_support_center": "Pusat Khidmat Pelanggan",
+  "footer_support_roadside": "Bantuan Kecemasan 24/7",
+  "footer_legal_insurance": "Perlindungan Insurans",
+  "footer_legal_about": "Mengenai WeDRIVE",
+  "footer_region": "Malaysia (MYR • RM)"
 }
