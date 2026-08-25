@@ -137,7 +137,7 @@
     };
 
     rPicker = window.flatpickr(returnInput, Object.assign({}, commonConfig, {
-      clickOpens: false,
+      clickOpens: true,
       onChange: function() {
         if (typeof onChangeCallback === 'function') onChangeCallback(pPicker, rPicker);
         redrawRange(pPicker, rPicker);
@@ -149,18 +149,15 @@
       var pickupWrapper = pickupInput.closest('.search-field-compact, .popup-date-field, .popup-date-input-wrap, .date-field, .input-wrap') || pickupInput;
 
       // Reset animation classes to allow clean re-triggers
-      returnInput.classList.remove('date-shake-error');
       returnWrapper.classList.remove('date-shake-error');
-      pickupInput.classList.remove('date-pickup-pulse');
       pickupWrapper.classList.remove('date-pickup-pulse');
+      returnInput.classList.remove('date-shake-error');
+      pickupInput.classList.remove('date-pickup-pulse');
       void returnWrapper.offsetWidth;
       void pickupWrapper.offsetWidth;
 
-      // Shake the return date field
-      returnInput.classList.add('date-shake-error');
+      // Shake only the outermost wrapper so it preserves its rounded pill shape
       returnWrapper.classList.add('date-shake-error');
-      // Highlight & pulse the pickup date field
-      pickupInput.classList.add('date-pickup-pulse');
       pickupWrapper.classList.add('date-pickup-pulse');
 
       // Vibrate if supported (haptic feedback)
@@ -172,18 +169,15 @@
       setTimeout(function () {
         if (pPicker) {
           pPicker.open();
-          pickupInput.focus();
         }
       }, 100);
 
       // Clean up classes after animations complete
       setTimeout(function () {
-        returnInput.classList.remove('date-shake-error');
         returnWrapper.classList.remove('date-shake-error');
       }, 550);
 
       setTimeout(function () {
-        pickupInput.classList.remove('date-pickup-pulse');
         pickupWrapper.classList.remove('date-pickup-pulse');
       }, 1600);
     }
@@ -194,35 +188,56 @@
           e.preventDefault();
           e.stopPropagation();
         }
-        returnInput.blur();
         triggerPickupRequiredFeedback();
         return false;
       }
+      if (rPicker) {
+        if (e) {
+          e.stopPropagation();
+        }
+        rPicker.open();
+      }
     }
 
-    returnInput.addEventListener('click', onReturnAttempt, true);
-    returnInput.addEventListener('focus', onReturnAttempt, true);
-    returnInput.addEventListener('mousedown', onReturnAttempt, true);
+    var returnWrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field, .input-wrap') || returnInput;
+    returnWrapper.addEventListener('click', onReturnAttempt);
+    returnInput.addEventListener('click', onReturnAttempt);
 
-    var returnWrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field');
-    if (returnWrapper) {
-      returnWrapper.addEventListener('click', onReturnAttempt, true);
-      returnWrapper.addEventListener('mousedown', onReturnAttempt, true);
+    function onPickupAttempt(e) {
+      if (pPicker) {
+        if (e) {
+          e.stopPropagation();
+        }
+        pPicker.open();
+      }
     }
+
+    var pickupWrapper = pickupInput.closest('.search-field-compact, .popup-date-field, .date-field, .input-wrap') || pickupInput;
+    pickupWrapper.addEventListener('click', onPickupAttempt);
+    pickupInput.addEventListener('click', onPickupAttempt);
 
     function updateReturnState() {
-      var wrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field');
+      var wrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field, .input-wrap');
+      var pWrapper = pickupInput.closest('.search-field-compact, .popup-date-field, .date-field, .input-wrap');
+      returnInput.readOnly = true;
+      pickupInput.readOnly = true;
+      returnInput.disabled = false;
+      pickupInput.disabled = false;
+      returnInput.style.pointerEvents = 'auto';
+      pickupInput.style.pointerEvents = 'auto';
+      if (wrapper) {
+        wrapper.style.pointerEvents = 'auto';
+      }
+      if (pWrapper) {
+        pWrapper.style.pointerEvents = 'auto';
+      }
       if (!pPicker || !pPicker.selectedDates.length) {
-        rPicker.set('clickOpens', false);
-        returnInput.readOnly = true;
         if (wrapper) {
           wrapper.style.opacity = '0.7';
           wrapper.style.cursor = 'pointer';
           wrapper.style.transition = 'opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease';
         }
       } else {
-        rPicker.set('clickOpens', true);
-        returnInput.readOnly = false;
         if (wrapper) {
           wrapper.style.opacity = '1';
           wrapper.style.cursor = 'pointer';

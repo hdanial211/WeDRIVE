@@ -5735,6 +5735,31 @@ body.dark .customer-sidebar {
   animation: appleDateErrorShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both !important;
   border-color: #ef4444 !important;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+  border-radius: var(--radius-pill, 9999px) !important;
+}
+
+.search-field-compact.date-shake-error,
+.popup-date-field.date-shake-error,
+.popup-date-input-wrap.date-shake-error,
+.date-field.date-shake-error,
+.input-wrap.date-shake-error {
+  border-radius: var(--radius-pill, 9999px) !important;
+}
+
+.search-field-compact.date-pickup-pulse,
+.popup-date-field.date-pickup-pulse,
+.popup-date-input-wrap.date-pickup-pulse,
+.date-field.date-pickup-pulse,
+.input-wrap.date-pickup-pulse {
+  border-radius: var(--radius-pill, 9999px) !important;
+}
+
+.date-shake-error input,
+.date-pickup-pulse input {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background: transparent !important;
 }
 
 body.night-mode .date-shake-error,
@@ -5747,6 +5772,7 @@ body.dark .date-shake-error {
   animation: applePickupPulse 0.75s cubic-bezier(0.25, 1, 0.5, 1) 2 alternate !important;
   border-color: var(--primary) !important;
   background: var(--bg-surface) !important;
+  border-radius: var(--radius-pill, 9999px) !important;
 }
 
 .mobile-menu-bar {
