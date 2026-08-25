@@ -973,7 +973,7 @@
     if (document.getElementById('sp-script')) return;
     var script = document.createElement('script');
     script.id = 'sp-script';
-    script.src = resolveBase() + 'shared/js/search-popup.js';
+    script.src = resolveBase() + 'shared/js/search-popup.js?v=5.2.49';
     document.body.appendChild(script);
   }
 

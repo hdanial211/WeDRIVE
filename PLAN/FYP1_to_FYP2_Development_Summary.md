@@ -944,3 +944,51 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.48 Dynamically restrict calendar year select to valid booking window and block conflict ranges`
   - Tag Versi: `5.2.48`
+
+---
+
+## 🚀 [MINOR UPDATE] 89. Pembaikan Penuh Butang Carian & Penghapusan Limpahan Ketinggian Skrol (Search Hijacking Fix & Ghost Height Overflow Removal) (v5.2.49)
+
+- **Punca Masalah Sebenar (Root Cause)**:
+  1. Skrip `shared/js/search-popup.js` (dimuatkan secara global oleh `main.js`) mempunyai pendengar acara lalai yang merampas klik butang `.search-btn-compact` pada halaman carian katalog (`browse-cars.html`) dan memanggil `openPopup('')` secara automatik.
+  2. Elemen popup `#sp-overlay` tidak mempunyai penggayaan CSS tetap di dalam `wedrive.css`, menyebabkan 6 keping imej kereta bersaiz penuh (1,688px tinggi setiap satu) dipaparkan dalam aliran dokumen biasa di bawah *footer*, mengakibatkan ketinggian halaman melonjak daripada 2,491px kepada **13,004px** (limpahan skrol kosong melebihi 10,500px).
+  3. Teks *"Available Cars"* yang kelihatan di bawah/belakang *sidebar* sebenarnya adalah label tajuk `<div class="sp-section-label">Available Cars</div>` di dalam `#sp-results` popup carian yang terselit di bawah footer.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/js/search-popup.js`:
+    - Menambah kawalan ketat `isCatalogPage` supaya pendengar carian global tidak merampas butang atau kotak input carian di halaman katalog `browse-cars.html`.
+  - Di dalam `shared/css/wedrive.css`:
+    - Menambah penggayaan modal penuh bertaraf Apple HIG untuk `.sp-overlay`, `.sp-modal`, `.sp-input-row`, `.sp-results`, dan `.sp-item-thumb` dengan `position: fixed !important; inset: 0 !important; z-index: 99999 !important; display: none !important;` supaya popup tidak sekali-kali mengganggu aliran dokumen atau ketinggian halaman.
+  - Di dalam `customer/js/customer.js`:
+    - Menyelaraskan fungsi `applyFilters(true)` dengan penimbal *rendering* 50ms untuk mengira dan meluncurkan skrin secara lembut tepat ke kedudukan `scrollY: 212px`.
+  - Di dalam `browse-cars.html` dan `main.js`:
+    - Mengemaskini parameter *cache-buster* kepada `?v=5.2.49`.
+- **Pengesahan Ujian Visual (DevTools Screenshot)**:
+  - Ketinggian keseluruhan halaman kembali normal pada **2,491px** (tiada lagi 13,000px limpahan kosong).
+  - Apabila butang *"Cari Kereta"* ditekan secara manual, skrin meluncur secara lancar dan mendarat **tepat pada barisan cip kategori ("Semua Kereta", "Sedan", dsb.) serta memaparkan 3 kad kenderaan teratas** secara penuh dan kemas tanpa sebarang teks terselit di belakang *sidebar*.
+- **Maklumat Git**:
+  - Commit: `5.2.49 Fix search popup hijacking and eliminate ghost document height overflow`
+  - Tag Versi: `5.2.49`
+
+---
+
+## 🚗 [MINOR UPDATE] 90. Penapisan Automatik Kereta Bertindih Tarikh Tempahan & Penyeragaman Status Tersedia (Date Range Conflict Filtering & Unified Available Status) (v5.2.50)
+
+- **Punca Keperluan (Context & Root Cause)**:
+  - Sebelum ini, fungsi penapis carian `applyFilters()` hanya menapis kategori kenderaan dan menyusun mengikut harga/penarafan tanpa memeriksa tarikh tempahan yang dipilih pada `pickup-date` dan `return-date`.
+  - Selain itu, status kenderaan (seperti BMW 320i yang sedang disewa hari ini) memaparkan lencana merah/oren *"Rented"* pada kad katalog pelanggan walaupun pelanggan melayari katalog untuk menempah perjalanan pada tarikh masa hadapan yang belum ditempah.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `customer/js/customer.js`:
+    - Menambah cache data tempahan aktif `allBookingsCache` yang dimuatkan serentak melalui `Promise.all([getCars(), getBookings()])` semasa `loadCars()`.
+    - Membina fungsi pembantu `parseDateDMY(dateStr)` untuk memproses tarikh format `DD/MM/YYYY` daripada kalendar Flatpickr kepada objek tarikh yang sah.
+    - Membina fungsi semakan pertindihan tarikh `isCarBookedOnDates(car, pickupDate, returnDate)` yang menyemak sama ada sesuatu kenderaan mempunyai tempahan aktif (`Confirmed`, `Active`, `Pending`) yang bertindih dengan tarikh carian pengguna.
+    - Mengintegrasikan penapisan tarikh ke dalam `applyFilters()`: sekiranya pengguna memilih tarikh sewaan, mana-mana kenderaan yang telah ditempah pada tarikh tersebut **dikeluarkan terus (disembunyikan secara automatik)** daripada senarai hasil carian.
+    - Menyelaraskan fungsi `statusKey(car)` bagi paparan katalog pelanggan: semua kenderaan yang boleh disewa dipaparkan dengan lencana hijau *"Available"* (*Tersedia*) kerana kenderaan yang bertindih tarikh sudah pun ditapis keluar secara automatik daripada paparan.
+  - Di dalam `customer.html` dan `browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.50`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Paparan Katalog Lalai**: Kesemua 8 kenderaan memaparkan lencana hijau *"Available"* (*Tersedia*) secara kemas dan seragam.
+  - **Ujian Penapisan Tarikh Bertindih (26/08/2026 – 27/08/2026)**: Kereta BMW 320i, Golf GTI, dan Axia G yang mempunyai tempahan aktif ditapis keluar secara automatik (`hasBMW: false`), hanya memaparkan 5 kereta yang benar-benar kosong.
+  - **Ujian Tarikh Awal Oktober (01/10/2026 – 05/10/2026)**: BMW 320i (yang kosong pada minggu pertama Oktober) dipaparkan dengan status *"Available"*, manakala Mercedes GLA250 (yang ditempah 2-6 Oktober) disembunyikan secara automatik.
+- **Maklumat Git**:
+  - Commit: `5.2.50 Filter out booked cars during selected date range and display Available for customer fleet catalog`
+  - Tag Versi: `5.2.50`

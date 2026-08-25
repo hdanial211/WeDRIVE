@@ -268,21 +268,31 @@
     if (initialized) return;
     initialized = true;
 
-    /* .search-field-compact input  (dashboard) */
+    /* Do NOT hijack on-page search buttons or inputs on catalog pages */
+    var path = window.location.pathname.toLowerCase();
+    var isCatalogPage = path.includes('browse-cars') || path.includes('browse') || !!document.getElementById('cars-grid') || !!document.querySelector('.cars-grid');
+
+    if (isCatalogPage) {
+      return;
+    }
+
+    /* .search-field-compact input */
     document.querySelectorAll('.search-field-compact input').forEach(function (inp) {
       if (inp.id === 'pickup-date' || inp.id === 'return-date') return; // Skip date pickers
       inp.addEventListener('focus', function () { openPopup(inp.value || ''); inp.blur(); });
     });
 
-    /* .search-btn-compact  (search button) */
+    /* Only wire .search-btn-compact if NOT on a catalog page and has no inline onclick */
     var btn = document.querySelector('.search-btn-compact');
-    if (btn) btn.addEventListener('click', function (e) { e.preventDefault(); openPopup(''); });
+    if (btn && !btn.hasAttribute('onclick')) {
+      btn.addEventListener('click', function (e) { e.preventDefault(); openPopup(''); });
+    }
 
     /* #faq-search  (support page) */
     var faq = document.getElementById('faq-search');
     if (faq) faq.addEventListener('focus', function () { openPopup(faq.value || ''); faq.blur(); });
 
-    /* [data-search-popup]  (any future input) */
+    /* [data-search-popup]  (any explicit trigger) */
     document.querySelectorAll('[data-search-popup]').forEach(function (el) {
       el.addEventListener('focus', function () { openPopup(el.value || ''); el.blur(); });
       el.addEventListener('click', function () { openPopup(el.value || ''); });

@@ -126,8 +126,57 @@
       .replace(/'/g, '&#39;');
   }
 
+  var allBookingsCache = [];
+
+  function parseDateDMY(dateStr) {
+    if (!dateStr) return null;
+    if (dateStr instanceof Date) return dateStr;
+    var str = String(dateStr).trim();
+    if (!str) return null;
+    var parts = str.split('/');
+    if (parts.length === 3) {
+      var day = Number(parts[0]);
+      var month = Number(parts[1]) - 1;
+      var year = Number(parts[2]);
+      return new Date(year, month, day);
+    }
+    var d = new Date(str);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function isCarBookedOnDates(car, pickupDate, returnDate) {
+    if (!pickupDate || !allBookingsCache || !allBookingsCache.length) return false;
+    var retDate = returnDate || pickupDate;
+    var searchStart = new Date(pickupDate.getFullYear(), pickupDate.getMonth(), pickupDate.getDate()).getTime();
+    var searchEnd = new Date(retDate.getFullYear(), retDate.getMonth(), retDate.getDate()).getTime();
+
+    return allBookingsCache.some(function (b) {
+      var matchCar = (Number(b.car_id) === Number(car.id)) || 
+                     (b.plate && car.plate && b.plate === car.plate) || 
+                     (b.car && car.name && b.car === car.name);
+      var activeStatus = ['Confirmed', 'Active', 'Pending'].includes(b.status);
+      if (!matchCar || !activeStatus) return false;
+
+      var startStr = b.start_date || b.pickup;
+      var endStr = b.end_date || b.return;
+      if (!startStr || !endStr) return false;
+
+      var bStart = new Date(startStr + (startStr.includes('T') ? '' : 'T00:00:00'));
+      var bEnd = new Date(endStr + (endStr.includes('T') ? '' : 'T00:00:00'));
+      if (isNaN(bStart.getTime()) || isNaN(bEnd.getTime())) return false;
+
+      var bookStart = new Date(bStart.getFullYear(), bStart.getMonth(), bStart.getDate()).getTime();
+      var bookEnd = new Date(bEnd.getFullYear(), bEnd.getMonth(), bEnd.getDate()).getTime();
+
+      // Two ranges overlap if searchStart <= bookEnd && searchEnd >= bookStart
+      return searchStart <= bookEnd && searchEnd >= bookStart;
+    });
+  }
+
   function statusKey(car) {
-    return String(car.status || '').toLowerCase() === 'available' ? 'available' : 'rented';
+    var rawStatus = String(car.status || '').toLowerCase();
+    if (rawStatus === 'maintenance' || rawStatus === 'inactive') return 'maintenance';
+    return 'available';
   }
 
   function statusText(car) {
@@ -250,6 +299,18 @@
       }
     }
 
+    // Filter by Date Range (Pick-up Date & Return Date)
+    var pInput = document.getElementById('pickup-date');
+    var rInput = document.getElementById('return-date');
+    var pickupDate = pInput ? parseDateDMY(pInput.value) : null;
+    var returnDate = rInput ? parseDateDMY(rInput.value) : null;
+
+    if (pickupDate) {
+      list = list.filter(function (car) {
+        return !isCarBookedOnDates(car, pickupDate, returnDate);
+      });
+    }
+
     if (availableOnly) {
       list = list.filter(function (car) { return statusKey(car) === 'available'; });
     }
@@ -268,14 +329,17 @@
     renderCars(list);
 
     if (shouldScroll) {
-      var target = document.querySelector('.filter-bar') || document.getElementById('cars-grid') || document.getElementById('cars');
-      if (target) {
-        var topOffset = target.getBoundingClientRect().top + window.pageYOffset - 16;
-        window.scrollTo({
-          top: Math.max(0, topOffset),
-          behavior: 'smooth'
-        });
-      }
+      setTimeout(function() {
+        var target = document.querySelector('.filter-bar') || document.getElementById('cars-grid') || document.getElementById('cars');
+        if (target) {
+          var rect = target.getBoundingClientRect();
+          var topOffset = rect.top + window.pageYOffset - 16;
+          window.scrollTo({
+            top: Math.max(0, Math.round(topOffset)),
+            behavior: 'smooth'
+          });
+        }
+      }, 50);
     }
   }
 
@@ -896,9 +960,13 @@
       return;
     }
 
-    window.WeDriveAPI.getCars()
-      .then(function (cars) {
-        allCars = cars || [];
+    var carsPromise = window.WeDriveAPI.getCars();
+    var bookingsPromise = window.WeDriveAPI.getBookings ? window.WeDriveAPI.getBookings() : Promise.resolve([]);
+
+    Promise.all([carsPromise, bookingsPromise])
+      .then(function (results) {
+        allCars = results[0] || [];
+        allBookingsCache = results[1] || [];
         renderHeroStats();
         buildSpotlightCars();
         renderSpotlight(0, false);
