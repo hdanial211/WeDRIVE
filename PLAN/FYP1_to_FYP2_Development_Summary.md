@@ -1187,3 +1187,25 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.57 Re-engineer active rental card to master Apple HIG standards using Stitch Gemini 3.1 Pro`
   - Tag Versi: `5.2.57`
+
+---
+
+## 📐 [MINOR UPDATE] 98. Penyelarasan Nisbah Kad Masa (Dipanjangkan) dan Kad Lokasi (Dikecilkan) (Proportional Alignment: Elongated Countdown & Compact Return Hub) (v5.2.58)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta agar kad Return Location dikecilkan sedikit manakala kad Time Remaining dipanjangkan agar ruangan lebih seimbang:
+    > *"saya rasa ni kecikkan gambar 1 return location tu n panjangkna gambar 2 tu"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Mengemaskini susun atur grid `.booking-meta-row`:
+      - Menukar `grid-template-columns: auto 1fr;` kepada `grid-template-columns: 1fr auto;`.
+      - Hasilnya:
+        - **Kad Masa (`countdown-hub`)**: Mendapat ruang `1fr` yang lebih panjang dan lapang, membolehkan paparan masa tabular bernafas dengan selesa.
+        - **Kad Lokasi (`booking-location-hub`)**: Dikecilkan secara automatik (`auto`) membungkus kandungan teks depot dan lencana zon pemulangan secara padat dan kemas tanpa ruang kosong berlebihan di bahagian kanan.
+  - Di dalam `customer/pages/dashboard/customer.html` dan `customer/pages/browse-cars/browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.58`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Visual Dashboard**: Paparan kad masa kini kelihatan lebih panjang dan seimbang manakala kad lokasi pemulangan menjadi padat dan kemas mengikut kehendak pengguna.
+- **Maklumat Git**:
+  - Commit: `5.2.58 Elongate active timer card and compact return location card layout`
+  - Tag Versi: `5.2.58`
