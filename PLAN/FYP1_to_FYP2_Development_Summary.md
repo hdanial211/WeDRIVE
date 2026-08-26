@@ -1105,3 +1105,29 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.54 Place return location beside compact countdown card on active booking hub`
   - Tag Versi: `5.2.54`
+
+---
+
+## 🎨 [MINOR UPDATE] 95. Integrasi Reka Bentuk 'Stitch Glassmorphism' pada Kad Tempahan Aktif (Stitch AI-Elevated Glassmorphism Active Rental Hub) (v5.2.55)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta reka bentuk bahagian ini dipertingkatkan menggunakan enjin Stitch AI agar kelihatan lebih menarik, anggun, dan bertaraf premium antarabangsa:
+    > *"Cuba awak suruh stitch yang buat kan yang itu sahaja untuk bagi menarik"*
+- **Tindakan Pembaikan (Implementation via Stitch MCP & Custom CSS)**:
+  - Menggunakan alat `StitchMCP.generate_screen_from_text` untuk projek WeDRIVE (`1862124494843018493`), menghasilkan lakaran skrin bertaraf Apple HIG dan mengekstrak komponen CSS moden:
+    - **Kedalaman Kaca (*Frosted Glassmorphism Layering*)**:
+      - Menyuntik `-webkit-backdrop-filter: blur(18px) saturate(180%); backdrop-filter: blur(18px) saturate(180%);` pada kedua-dua kad `.countdown-hub` dan `.booking-location-hub`.
+      - Menambah sempadan kaca halus `border: 1px solid var(--border-glass, rgba(0, 0, 0, 0.07))` dan bayang-bayang lembut bertingkat `box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02)`.
+    - **Perincian Mikro Unit Masa (*Refined Micro-Tiles*)**:
+      - Saiz jubin unit masa (`01 D : 17 H : 57 M : 10 S`) diperhalusi dengan bucu `border-radius: 11px`, fon digit `20px SF Pro/SF Mono`, dan pembahagi bertitik (`opacity: 0.6`).
+    - **Peningkatan Kad Lokasi Pemulangan (*Elevated Return Location Card*)**:
+      - Tipografi lokasi tebal `15.5px` dengan lencana zon pemulangan berwarna hijau Apple (`background: rgba(52, 199, 89, 0.12); border: 1px solid rgba(52, 199, 89, 0.25)`).
+    - **Sokongan Penuh Mod Gelap (*Dark Mode Glass*)**:
+      - Menyediakan penggayaan kaca gelap eksklusif untuk `body.night-mode` dan `body.dark` (`background: rgba(26, 26, 30, 0.85); border-color: rgba(255, 255, 255, 0.12)`).
+  - Di dalam `customer/pages/dashboard/customer.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.55`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Visual Dashboard**: Kad tempahan aktif memaparkan kontras kaca Apple yang sangat memukau, kemas, seimbang, dan interaktif dengan kesan animasi terapung (*hover elevation*).
+- **Maklumat Git**:
+  - Commit: `5.2.55 Elevate active booking countdown and return location card with Stitch glassmorphism styling`
+  - Tag Versi: `5.2.55`
