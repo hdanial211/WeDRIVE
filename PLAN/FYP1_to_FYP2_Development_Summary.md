@@ -1209,3 +1209,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.58 Elongate active timer card and compact return location card layout`
   - Tag Versi: `5.2.58`
+
+---
+
+## 🗑️ [MINOR UPDATE] 99. Pembuangan Lencana Zon Pemulangan pada Kad Lokasi (Removal of Keyless Drop-off Zone Badge) (v5.2.59)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta agar lencana kapsul teks *Keyless Drop-off Zone* pada kad lokasi pemulangan dibuang untuk paparan yang lebih ringkas dan bersih:
+    > *"perkataan ni buang"* (merujuk kepada lencana `Keyless Drop-off Zone`)
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `customer/pages/dashboard/customer.html`:
+    - Memadam elemen `.location-hub-sub` berserta ikon `key_off` dan teks `Keyless Drop-off Zone` dari dalam bekas `#booking-location-hub`.
+  - Di dalam `shared/css/wedrive.css`:
+    - Memperhalusi `.booking-location-hub` dengan `justify-content: center; gap: 8px;` dan menyelaraskan `.location-hub-header` agar kedudukan tajuk `Return Location` dan nama lokasi `Melaka Sentral (HQ)` berada tepat di tengah secara menegak (*vertically centered*).
+    - Memadam kod CSS `.location-hub-sub` yang tidak lagi digunakan.
+  - Di dalam `customer/pages/dashboard/customer.html` dan `customer/pages/browse-cars/browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.59`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Visual Dashboard**: Kad lokasi pemulangan kini tampil ultra-minimalis, hanya memaparkan ikon pin, tajuk `Return Location`, dan nama depot `Melaka Sentral (HQ)`.
+- **Maklumat Git**:
+  - Commit: `5.2.59 Remove keyless drop-off badge from active return location card`
+  - Tag Versi: `5.2.59`
+
+---
+
+## 📐 [MINOR UPDATE] 100. Perluasan Paparan Kiraan Masa Memenuhi Ruang Kad (Expanded Timer Typography Across Full Container Width) (v5.2.60)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta agar teks / nombor kiraan masa (*countdown timer readout*) dilebarkan dan dibesarkan supaya memenuhi keseluruhan ruang petak kad:
+    > *"tulisan tu expand sampai penuhkan muatkan petak ni"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Mengemaskini `.apple-timer-display`:
+      - Menggunakan `display: flex; justify-content: space-between; align-items: baseline; width: 100%;`.
+    - Membesarkan tipografi nombor `.apple-timer-num` dari `22px` kepada `28px` dengan ketebalan `font-weight: 750` dan mengekalkan `font-variant-numeric: tabular-nums;`.
+    - Menyelaraskan unit `.apple-timer-unit` kepada `13.5px` dan pemisah `.apple-timer-sep` kepada `20px`.
+    - Menyelaraskan saiz teks tajuk `.countdown-header` (12px) dan subjudul tarikh pemulangan `.countdown-deadline` (12px).
+  - Di dalam `customer/pages/dashboard/customer.html` dan `customer/pages/browse-cars/browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.60`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Visual Dashboard**: Angka kiraan masa `01d : 14h : 06m : 45s` kini terbentang kemas memenuhi seluruh kelebaran kad (*full width expansion*) dengan susunan yang sangat simetri, jelas dibaca, dan seimbang dalam kedua-dua mod cerah dan gelap.
+- **Maklumat Git**:
+  - Commit: `5.2.60 Expand active countdown timer typography to fill full container width`
+  - Tag Versi: `5.2.60`
