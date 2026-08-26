@@ -5628,16 +5628,32 @@ body.dark .customer-sidebar {
   color: var(--text-muted);
 }
 
+/* ==============================================================================
+   APPLE FLOATING SEARCH CAPSULE (Browse Cars & Customer Portal)
+   ============================================================================== */
 .search-bar-compact {
+  position: sticky;
+  top: 16px;
+  z-index: 95;
   display: flex;
-  gap: 12px;
-  padding: 10px 14px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-medium);
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.85));
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--border-medium, rgba(0, 0, 0, 0.08));
   border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
   margin-bottom: 24px;
   align-items: center;
+  transition: top 0.35s var(--ease-apple), background 0.3s ease, border-color 0.3s ease, box-shadow 0.35s var(--ease-apple);
+}
+
+body.night-mode .search-bar-compact,
+body.dark .search-bar-compact {
+  background: rgba(22, 22, 26, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.38), 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .search-field-compact {
@@ -5645,15 +5661,30 @@ body.dark .customer-sidebar {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--bg-surface-3);
+  background: rgba(0, 0, 0, 0.035);
   border-radius: var(--radius-pill);
   padding: 0 16px;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid transparent;
   transition: all 0.2s var(--ease-apple);
   cursor: pointer;
 }
 
-.search-field-compact:hover,
+body.night-mode .search-field-compact,
+body.dark .search-field-compact {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.search-field-compact:hover {
+  background: rgba(0, 0, 0, 0.055);
+  border-color: var(--border-subtle);
+}
+
+body.night-mode .search-field-compact:hover,
+body.dark .search-field-compact:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
 .search-field-compact:focus-within {
   border-color: var(--primary);
   background: var(--bg-surface);
@@ -5667,7 +5698,7 @@ body.dark .customer-sidebar {
 
 .search-field-compact input {
   width: 100%;
-  height: 44px;
+  height: 42px;
   border: none;
   background: transparent;
   font-size: 14px;
@@ -5679,8 +5710,8 @@ body.dark .customer-sidebar {
 }
 
 .search-btn-compact {
-  height: 44px;
-  padding: 0 24px;
+  height: 42px;
+  padding: 0 22px;
   border-radius: var(--radius-pill);
   background: var(--primary);
   color: #FFFFFF;
@@ -5691,11 +5722,18 @@ body.dark .customer-sidebar {
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
   transition: all 0.2s var(--ease-apple);
 }
 
 .search-btn-compact:hover {
   background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.35);
+}
+
+.search-btn-compact:active {
+  transform: scale(0.98);
 }
 
 /* ==============================================================================

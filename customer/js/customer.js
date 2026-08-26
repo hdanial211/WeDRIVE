@@ -333,7 +333,9 @@
         var target = document.querySelector('.filter-bar') || document.getElementById('cars-grid') || document.getElementById('cars');
         if (target) {
           var rect = target.getBoundingClientRect();
-          var topOffset = rect.top + window.pageYOffset - 16;
+          var searchBar = document.querySelector('.search-bar-compact');
+          var stickyOffset = searchBar ? (searchBar.offsetHeight + 24) : 16;
+          var topOffset = rect.top + window.pageYOffset - stickyOffset;
           window.scrollTo({
             top: Math.max(0, Math.round(topOffset)),
             behavior: 'smooth'

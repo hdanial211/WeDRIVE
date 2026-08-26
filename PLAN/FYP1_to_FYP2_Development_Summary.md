@@ -992,3 +992,28 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.50 Filter out booked cars during selected date range and display Available for customer fleet catalog`
   - Tag Versi: `5.2.50`
+
+---
+
+## 💎 [MINOR UPDATE] 91. Kapsul Carian Terapung Kaca Apple HIG & Kesan 'Sticky Frosted Glass' (Apple Floating Frosted Glass Search Capsule) (v5.2.51)
+
+- **Punca Keperluan (Design Rationale & Context)**:
+  - Sebelum ini, bar carian tarikh (`.search-bar-compact`) pada halaman katalog pelanggan `browse-cars.html` berbentuk kad statik dengan latar belakang putih biasa.
+  - Pengguna meminta reka bentuk bar carian ini dijadikan **terapung (*floating capsule*)** dengan kemasan kaca kabur (*frosted glassmorphism*) serupa seperti bar navigasi utama pada halaman pelawat (*guest navbar*).
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Mengemaskini `.search-bar-compact` dengan kedudukan terapung `position: sticky; top: 16px; z-index: 95;`.
+    - Menambah kesan kaca tulen bertaraf Apple HIG: `background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.85)); -webkit-backdrop-filter: blur(28px) saturate(190%); backdrop-filter: blur(28px) saturate(190%);`.
+    - Menambah bayang terapung lembut (*floating elevation shadows*): `box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);` dan sempadan kapsul penuh `border-radius: var(--radius-pill); border: 1px solid var(--border-medium);`.
+    - Menyelaraskan kotak input dalaman `.search-field-compact` dengan latar belakang semi-lutsinar kapsul pil berserta animasi interaktif dan fokus biru Apple.
+    - Menambah sokongan penuh Mod Gelap (*Dark Mode*) bagi `body.night-mode` dan `body.dark`: `background: rgba(22, 22, 26, 0.88); border-color: rgba(255, 255, 255, 0.12); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.38);`.
+  - Di dalam `customer/js/customer.js`:
+    - Menyelaraskan fungsi skrol lancar `applyFilters(true)` agar mengira ketinggian bar carian terapung (`searchBar.offsetHeight + 24`) supaya cip penapis kenderaan dan kad teratas berada kemas tepat di bawah kapsul terapung.
+  - Di dalam `browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.51`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Kesan Terapung (*Sticky Scrolling*)**: Semasa skrol ke bawah pada grid kenderaan, bar carian terapung dengan lancar di bahagian atas skrin (`top: 16px`) dengan kesan latar belakang kabur di atas kad-kad kereta yang bergerak.
+  - **Ujian Mod Gelap (*Dark Mode*)**: Kapsul carian mengekalkan kesan kaca gelap mewah yang kontras dan mudah dibaca.
+- **Maklumat Git**:
+  - Commit: `5.2.51 Implement Apple floating frosted glass capsule search bar on browse cars page`
+  - Tag Versi: `5.2.51`
