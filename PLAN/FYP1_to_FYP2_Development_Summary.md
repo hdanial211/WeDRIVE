@@ -1131,3 +1131,27 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.55 Elevate active booking countdown and return location card with Stitch glassmorphism styling`
   - Tag Versi: `5.2.55`
+
+---
+
+## 🏎️ [MINOR UPDATE] 96. Penukaran Gambar Kenderaan Kotak kepada Sudut Melengkung Bento Apple HIG (Curved Apple HIG Bento Vehicle Image Container) (v5.2.56)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta agar elemen gambar kenderaan yang kelihatan bersegi tepat/petak (`petak2`) ditukar menjadi melengkung (*curved*) supaya seragam dengan gaya reka bentuk keseluruhan:
+    > *"kalau boleh x nak benda petak2 nii kalau boleh ikut curved jugak"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Memperbaharui kelas `.booking-image`:
+      - Menambah `border-radius: var(--radius-bento, 20px);` dan `overflow: hidden;`.
+      - Menyuntik warna latar belakang permukaan `background: var(--bg-surface-2, #f5f6f9);`, sempadan halus `border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.06));`, dan bayang-bayang lembut `box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);`.
+      - Menetapkan `height: 100%; min-height: 190px; max-height: 220px;`.
+    - Memperbaharui kelas `.booking-image img`:
+      - Menambah `border-radius: var(--radius-bento, 20px);`, `object-fit: cover;`, dan kesan peralihan animasi licin `transition: transform 0.35s var(--ease-apple);`.
+      - Menambah kesan zum mikro dinamik semasa hover: `.active-booking-card:hover .booking-image img { transform: scale(1.03); }`.
+  - Di dalam `customer/pages/dashboard/customer.html` dan `customer/pages/browse-cars/browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.56`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Visual Dashboard**: Gambar kenderaan (BMW 320i M Sport) kini tampil dengan bucu melengkung `20px` yang sangat anggun dan serasi 100% dengan estetika kad bento Apple HIG di papan pemuka pelanggan.
+- **Maklumat Git**:
+  - Commit: `5.2.56 Apply curved Apple HIG bento corners to active booking vehicle image container`
+  - Tag Versi: `5.2.56`
