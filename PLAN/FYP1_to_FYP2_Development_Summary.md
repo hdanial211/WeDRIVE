@@ -1017,3 +1017,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.51 Implement Apple floating frosted glass capsule search bar on browse cars page`
   - Tag Versi: `5.2.51`
+
+---
+
+## 🔒 [MINOR UPDATE] 92. Penguatkuasaan Syarat Tunggal Goncangan Kalendar & Nyahaktif Automatik Selepas Pengisian Tarikh Mula (Strict Single Condition Calendar Shake & Auto-Disable Upon Pick-up Selection) (v5.2.52)
+
+- **Punca Keperluan (Context & Direct User Directive)**:
+  - Pengguna menetapkan satu syarat sahaja bila animasi goncangan ralat (`.date-shake-error` dan `.date-pickup-pulse`) dibenarkan berlaku:
+    > *"sepatutnya ada satu syarat sahaja bila nak goncangkan apabila user x isi lagi tarikh start pinjam. tapi kalau user dh letak tarik mula pinjam tu terus disable kan goncang tu. 1 sahaja syarat untuk goncangkan tu apabila user x letak lagi start pinjam.."*
+  - Sebelum ini, goncangan ralat kadangkala boleh terpicu secara tidak sengaja apabila pengguna mengklik tarikh pemulangan walaupun tarikh pengambilan sudah dipilih (disebabkan pemeriksaan bertindih atau pengendalian penutupan pemilih).
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/js/calendar.js`:
+    - Membina fungsi semakan `isPickupFilled()`:
+      ```javascript
+      function isPickupFilled() {
+        return (pPicker && pPicker.selectedDates && pPicker.selectedDates.length > 0) ||
+               (pickupInput && pickupInput.value && pickupInput.value.trim() !== '');
+      }
+      ```
+    - Di dalam `triggerPickupRequiredFeedback()`: Menyuntik sekatan mutlak awal (`if (isPickupFilled()) return;`). Sekiranya tarikh pengambilan telah dipilih atau diisi, fungsi goncangan **dinyahaktifkan 100% serta-merta**.
+    - Di dalam `onReturnAttempt(e)` dan `rPicker.onOpen`: Hanya mencetuskan maklum balas ralat jika `!isPickupFilled()`. Sebaik sahaja pengguna telah menetapkan tarikh pengambilan, interaksi dengan tarikh pemulangan akan membuka kalendar pemulangan secara lancar tanpa sebarang goncangan atau garis merah.
+    - Di dalam `rPicker.onChange`: Membuang panggilan `triggerPickupRequiredFeedback()` semasa tarikh bertindih, memadai dengan mengosongkan tarikh yang tidak sah tanpa mengganggu pengguna dengan animasi goncang.
+    - Di dalam `initPairedPickers`: Memastikan sebarang instans Flatpickr lama dimusnahkan (`destroy()`) dan pengendali klik diselaraskan secara eksklusif (`.onclick = onReturnAttempt`) bagi mengelakkan pertindihan *event listener*.
+  - Di dalam `browse-cars.html` dan `customer.html`:
+    - Mengemaskini *cache-buster* `calendar.js` kepada `?v=5.2.52`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian 1 (Tarikh Pengambilan KOSONG)**: Klik pada medan Tarikh Pemulangan $\to$ Berjaya mencetuskan goncangan ralat pada kotak pemulangan dan denyutan biru pada kotak pengambilan untuk memandu pengguna (`hasShakeError: true`).
+  - **Ujian 2 (Tarikh Pengambilan TERISI, cth: 26/08/2026)**: Klik pada medan Tarikh Pemulangan $\to$ Kalendar pemulangan terbuka serta-merta dengan **SIFAR goncangan** (`shakeOnReturnClick: false`, `shakeAfterSelection: false`). Pengguna boleh memilih tarikh pemulangan (cth: 29/08/2026) dengan lancar dan paparan julat biru Apple yang sempurna.
+- **Maklumat Git**:
+  - Commit: `5.2.52 Enforce strict single condition for date shake feedback and disable shake once pickup date is selected`
+  - Tag Versi: `5.2.52`

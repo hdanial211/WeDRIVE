@@ -113,6 +113,9 @@
     var returnInput = typeof returnId === 'string' ? document.getElementById(returnId) : returnId;
     if (!pickupInput || !returnInput || !window.flatpickr) return null;
 
+    if (pickupInput._flatpickr) pickupInput._flatpickr.destroy();
+    if (returnInput._flatpickr) returnInput._flatpickr.destroy();
+
     injectCalendarCSS();
 
     var pPicker = null;
@@ -120,6 +123,11 @@
 
     var allowPast = customConfig && customConfig.allowPast;
     var minDateSetting = allowPast ? null : "today";
+
+    function isPickupFilled() {
+      return (pPicker && pPicker.selectedDates && pPicker.selectedDates.length > 0) ||
+             (pickupInput && pickupInput.value && pickupInput.value.trim() !== '');
+    }
 
     var commonConfig = {
       minDate: minDateSetting,
@@ -137,6 +145,18 @@
         select.addEventListener('change', function(e) {
             instance.changeYear(Number(e.target.value));
         });
+        
+        var currentYear = instance.currentYear;
+        var minYear = allowPast ? currentYear - 3 : currentYear;
+        var maxYear = currentYear + 3;
+
+        for (var y = minYear; y <= maxYear; y++) {
+          var opt = document.createElement('option');
+          opt.value = y;
+          opt.textContent = y;
+          if (y === currentYear) opt.selected = true;
+          select.appendChild(opt);
+        }
         
         yearInput.style.display = 'none';
         var arrows = wrapper.querySelectorAll('.arrowUp, .arrowDown');
@@ -180,7 +200,7 @@
     rPicker = window.flatpickr(returnInput, Object.assign({}, commonConfig, {
       clickOpens: false,
       onOpen: function(selectedDates, dateStr, instance) {
-        if (!pPicker || !pPicker.selectedDates.length) {
+        if (!isPickupFilled()) {
           instance.close();
           triggerPickupRequiredFeedback();
           return;
@@ -206,7 +226,6 @@
           
           if (hasConflict) {
             instance.clear();
-            triggerPickupRequiredFeedback();
             return;
           }
         }
@@ -216,15 +235,17 @@
     }));
 
     function triggerPickupRequiredFeedback() {
+      if (isPickupFilled()) {
+        return;
+      }
+
       var returnWrapper = returnInput.closest('.search-field-compact, .popup-date-field, .popup-date-input-wrap, .date-field, .input-wrap') || returnInput;
       var pickupWrapper = pickupInput.closest('.search-field-compact, .popup-date-field, .popup-date-input-wrap, .date-field, .input-wrap') || pickupInput;
 
-      // Close return picker immediately if open
       if (rPicker && rPicker.isOpen) {
         rPicker.close();
       }
 
-      // Reset animation classes to allow clean re-triggers
       returnWrapper.classList.remove('date-shake-error');
       pickupWrapper.classList.remove('date-pickup-pulse');
       returnInput.classList.remove('date-shake-error');
@@ -232,23 +253,19 @@
       void returnWrapper.offsetWidth;
       void pickupWrapper.offsetWidth;
 
-      // Shake only the outermost wrapper so it preserves its rounded pill shape
       returnWrapper.classList.add('date-shake-error');
       pickupWrapper.classList.add('date-pickup-pulse');
 
-      // Vibrate if supported (haptic feedback)
       if (navigator.vibrate) {
         try { navigator.vibrate([30, 50, 30]); } catch (e) {}
       }
 
-      // Automatically focus and open the Pick-up Date calendar picker
       setTimeout(function () {
-        if (pPicker) {
+        if (pPicker && !isPickupFilled()) {
           pPicker.open();
         }
       }, 100);
 
-      // Clean up classes after animations complete
       setTimeout(function () {
         returnWrapper.classList.remove('date-shake-error');
       }, 550);
@@ -263,14 +280,12 @@
         e.preventDefault();
         e.stopPropagation();
       }
-      // 1. If Pick-up Date is empty -> STRICTLY LOCK Return Date!
-      if (!pPicker || !pPicker.selectedDates.length) {
+      if (!isPickupFilled()) {
         if (rPicker && rPicker.isOpen) rPicker.close();
         triggerPickupRequiredFeedback();
         return false;
       }
       
-      // 2. If Pick-up Date IS selected -> UNLOCKED! Close pickup and open return picker!
       if (pPicker && pPicker.isOpen) {
         pPicker.close();
       }
@@ -280,8 +295,8 @@
     }
 
     var returnWrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field, .input-wrap') || returnInput;
-    returnWrapper.addEventListener('click', onReturnAttempt);
-    returnInput.addEventListener('click', onReturnAttempt);
+    returnWrapper.onclick = onReturnAttempt;
+    returnInput.onclick = onReturnAttempt;
 
     function onPickupAttempt(e) {
       if (e) {
@@ -296,8 +311,8 @@
     }
 
     var pickupWrapper = pickupInput.closest('.search-field-compact, .popup-date-field, .date-field, .input-wrap') || pickupInput;
-    pickupWrapper.addEventListener('click', onPickupAttempt);
-    pickupInput.addEventListener('click', onPickupAttempt);
+    pickupWrapper.onclick = onPickupAttempt;
+    pickupInput.onclick = onPickupAttempt;
 
     function updateReturnState() {
       var wrapper = returnInput.closest('.search-field-compact, .popup-date-field, .date-field, .input-wrap');
