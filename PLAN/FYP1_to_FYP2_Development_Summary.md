@@ -1155,3 +1155,35 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.56 Apply curved Apple HIG bento corners to active booking vehicle image container`
   - Tag Versi: `5.2.56`
+
+---
+
+## 🍏 [MINOR UPDATE] 97. Penstrukturan Semula Kad Tempahan Aktif Piawaian Apple HIG Master melalui Stitch Gemini 3.1 Pro (Master Apple HIG Active Rental Hub with Gemini 3.1 Pro & Variants Ideation) (v5.2.57)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta agar elemen-elemen yang kelihatan seperti "AI-generic" dihapuskan dan digantikan dengan mutu pertukangan asli Apple (*human-crafted Apple minimalism*) mengikut peraturan rasmi Apple HIG:
+    > *"kalau boleh kan kurangkan sendikit nampak macam ai ..suruh stitch buatkan nampak premium macam apple ikut rules apple"*
+    > *"dekat stitch tu kan awak pakai gemini pro / redesign / ideate ..jangan pakai flash sebab saya nak maximum penggunaan stitch produce kalau boleh"*
+- **Tindakan Pembaikan (Implementation via Stitch Gemini 3.1 Pro & Apple HIG Tokens)**:
+  - Menggunakan enjin **Gemini 3.1 Pro** pada Stitch (`StitchMCP.generate_screen_from_text` dan `StitchMCP.generate_variants` dengan `creativeRange: "REFINE"`):
+    - **Struktur Kad Bento Squircle 24px**:
+      - Menggunakan bekas bento squircle `border-radius: 24px` dengan sempadan sub-piksel `1px solid rgba(0, 0, 0, 0.06)` dan bayang-bayang ambien meresap `0 4px 24px rgba(0, 0, 0, 0.04)`.
+    - **Ruang Gambar Kenderaan & Kapsul Status Bersinar**:
+      - Gambar kenderaan diletakkan di dalam kanvas bento `border-radius: 20px` berlatar belakang `#F5F5F7`.
+      - Lencana `Active Rental` menggunakan kapsul kaca beku berkontras lembut dengan titik status hijau bertenaga (`.status-pulse-dot`) bernafas halus (`animation: applePulseDot 2s infinite`).
+    - **Kiraan Masa Tabular San Francisco (*SF Pro Tabular Timer*)**:
+      - Membuang kotak digit bersempadan tebal lama yang nampak seperti widget generik web.
+      - Menggantikannya dengan tipografi tabular bersih `01d : 17h : 43m : 57s` (`font-variant-numeric: tabular-nums; font-size: 22px; font-weight: 700;`) yang stabil tanpa sebarang getaran angka.
+    - **Kad Lokasi Pemulangan Apple Maps**:
+      - Dilengkapi tajuk *Title Case* kemas `Return Location`, nama depot `Melaka Sentral (HQ)`, dan kapsul hijau Apple `Keyless Drop-off Zone`.
+    - **Butang Kapsul Apple HIG (*Apple Action Pill Buttons*)**:
+      - Butang utama `Extend Rental` menggunakan kapsul biru rasmi Apple (`#0071E3`) dengan bayang-bayang lembut dan maklum balas sentuhan taktil `active { transform: scale(0.97); }`.
+      - Butang sekunder `Rent Another Car` menggunakan kapsul kelabu Apple (`#F2F2F7`).
+  - Di dalam `customer/pages/dashboard/customer.html` dan `customer/pages/browse-cars/browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.57`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Visual Dashboard**: Kad tempahan aktif kini kelihatan 100% tulen seperti aplikasi asli iOS 18/macOS Sequoia tanpa sebarang kesan visual "AI robotik".
+  - **Ujian Dwibahasa (EN / MS)**: Pertukaran teks dwibahasa berfungsi secara dinamik (`Baki Masa Pemulangan Kenderaan`, `Lokasi Pemulangan`, `Lanjutkan Sewaan`).
+- **Maklumat Git**:
+  - Commit: `5.2.57 Re-engineer active rental card to master Apple HIG standards using Stitch Gemini 3.1 Pro`
+  - Tag Versi: `5.2.57`
