@@ -4407,6 +4407,7 @@ body:has(.right-panel) {
 
 /* ── 1. Apple Glass Popover Date Picker Container ── */
 .flatpickr-calendar {
+  position: fixed !important;
   background: var(--bg-glass-strong, rgba(255, 255, 255, 0.92)) !important;
   -webkit-backdrop-filter: blur(32px) saturate(190%) !important;
   backdrop-filter: blur(32px) saturate(190%) !important;
@@ -4419,7 +4420,7 @@ body:has(.right-panel) {
   max-width: 328px !important;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif !important;
   box-sizing: border-box !important;
-  transition: transform 0.25s var(--ease-apple), opacity 0.2s var(--ease-apple) !important;
+  transition: opacity 0.2s var(--ease-apple) !important;
   z-index: 99999 !important;
 }
 

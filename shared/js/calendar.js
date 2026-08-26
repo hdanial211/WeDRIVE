@@ -74,6 +74,56 @@
     }
   }
 
+  /* ── Apple HIG Fixed Popover Positioner (Synchronizes with sticky floating headers & scroll) ── */
+  function updateFixedCalendarPosition(fp) {
+    if (!fp || !fp.calendarContainer || !fp.isOpen) return;
+    var input = fp.input;
+    if (!input) return;
+    var inputRect = input.getBoundingClientRect();
+    var cal = fp.calendarContainer;
+    var calWidth = cal.offsetWidth || 328;
+    var calHeight = cal.offsetHeight || 340;
+
+    // Check if input element is currently visible in viewport
+    if (inputRect.bottom < 0 || inputRect.top > window.innerHeight) {
+      fp.close();
+      return;
+    }
+
+    var top = inputRect.bottom + 8;
+    var left = inputRect.left;
+
+    // If not enough room below, place above input
+    if (top + calHeight > window.innerHeight && inputRect.top > calHeight) {
+      top = inputRect.top - calHeight - 8;
+    }
+
+    // Align with right edge if it would overflow the screen
+    if (left + calWidth > window.innerWidth - 16) {
+      left = Math.max(16, inputRect.right - calWidth);
+    }
+    if (left < 16) left = 16;
+
+    cal.style.position = 'fixed';
+    cal.style.top = Math.round(top) + 'px';
+    cal.style.left = Math.round(left) + 'px';
+    cal.style.right = 'auto';
+    cal.style.bottom = 'auto';
+  }
+
+  function repositionAllOpenCalendars() {
+    document.querySelectorAll('input').forEach(function(inp) {
+      if (inp._flatpickr && inp._flatpickr.isOpen) {
+        updateFixedCalendarPosition(inp._flatpickr);
+      }
+    });
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', repositionAllOpenCalendars, { passive: true, capture: true });
+    window.addEventListener('resize', repositionAllOpenCalendars, { passive: true });
+  }
+
   /* ── Range highlight helper ── */
   function highlightRange(dayElem, pickupPicker, returnPicker) {
     dayElem.classList.remove('range-start', 'in-range', 'range-end');
@@ -134,6 +184,9 @@
       dateFormat: "d/m/Y",
       disableMobile: "true",
       disable: disabledDates || [],
+      position: function(self) {
+        updateFixedCalendarPosition(self);
+      },
       onReady: function(selectedDates, dateStr, instance) {
         var yearInput = instance.currentYearElement;
         var wrapper = yearInput ? yearInput.parentNode : null;
@@ -168,9 +221,11 @@
       },
       onOpen: function(selectedDates, dateStr, instance) {
         syncYearSelect(instance);
+        updateFixedCalendarPosition(instance);
       },
       onYearChange: function(selectedDates, dateStr, instance) {
         syncYearSelect(instance);
+        updateFixedCalendarPosition(instance);
       },
       onDayCreate: function(dObj, dStr, fp, dayElem) {
         highlightRange(dayElem, pPicker, rPicker);
@@ -193,6 +248,7 @@
       },
       onMonthChange: function(selectedDates, dateStr, instance) {
         syncYearSelect(instance);
+        updateFixedCalendarPosition(instance);
         setTimeout(function() { redrawRange(pPicker, rPicker); }, 10);
       }
     };
@@ -209,6 +265,7 @@
           pPicker.close();
         }
         syncYearSelect(instance);
+        updateFixedCalendarPosition(instance);
       },
       onChange: function(selectedDates, dateStr, instance) {
         if (selectedDates[0] && pPicker && pPicker.selectedDates[0] && disabledDates && disabledDates.length > 0) {
@@ -353,6 +410,8 @@
         if (rPicker && rPicker.isOpen) {
           rPicker.close();
         }
+        syncYearSelect(pPicker);
+        updateFixedCalendarPosition(pPicker);
       },
       onChange: function(selectedDates, dateStr) {
         rPicker.set('minDate', dateStr || "today");
@@ -428,6 +487,9 @@
       minDate: minDateSetting,
       dateFormat: "d/m/Y",
       disableMobile: "true",
+      position: function(self) {
+        updateFixedCalendarPosition(self);
+      },
       onReady: function(selectedDates, dateStr, instance) {
         var yearInput = instance.currentYearElement;
         var wrapper = yearInput ? yearInput.parentNode : null;
@@ -450,12 +512,15 @@
       },
       onOpen: function(selectedDates, dateStr, instance) {
         syncYearSelect(instance);
+        updateFixedCalendarPosition(instance);
       },
       onYearChange: function(selectedDates, dateStr, instance) {
         syncYearSelect(instance);
+        updateFixedCalendarPosition(instance);
       },
       onMonthChange: function(selectedDates, dateStr, instance) {
         syncYearSelect(instance);
+        updateFixedCalendarPosition(instance);
       }
     };
 

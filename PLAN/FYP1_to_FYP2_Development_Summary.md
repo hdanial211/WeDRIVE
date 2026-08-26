@@ -1047,3 +1047,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.52 Enforce strict single condition for date shake feedback and disable shake once pickup date is selected`
   - Tag Versi: `5.2.52`
+
+---
+
+## 📌 [MINOR UPDATE] 93. Penyelarasan Kalendar Terapung Terkunci & 'Real-Time Scroll Sync' (Apple HIG Viewport-Locked Floating Calendar Synchronization) (v5.2.53)
+
+- **Punca Keperluan (Design Rationale & Context)**:
+  - Apabila pengguna membuka pemilih tarikh kalendar (*Flatpickr*) pada bar carian terapung (`.search-bar-compact`) dan kemudian menatal skrin (*scroll down*), kalendar popover sebelum ini tertinggal pada koordinat mutlak dokumen asal (*detached/left behind*) kerana menggunakan `position: absolute` pada elemen `<body>`.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Menukar kedudukan `.flatpickr-calendar` kepada `position: fixed !important;` dengan aras `z-index: 99999 !important;` supaya sentiasa berlabuh tepat pada koordinat *viewport* berbanding bar carian terapung.
+  - Di dalam `shared/js/calendar.js`:
+    - Membina enjin kedudukan dinamik `updateFixedCalendarPosition(fp)`:
+      - Mengira koordinat terkini kotak input secara masa nyata (`input.getBoundingClientRect()`).
+      - Mengunci popover kalendar tepat di bawah kotak input dengan jurang Apple HIG 8px (`top = inputRect.bottom + 8px; left = inputRect.left`).
+      - Menyokong pengesanan sempadan skrin (*viewport overflow boundary detection*) untuk menyelaraskan popover ke atas jika ruang bawah tidak mencukupi atau mengimbangi ke kanan jika melebihi lebar skrin.
+      - Menutup kalendar secara automatik jika medan input ditatal sepenuhnya keluar dari skrin.
+    - Menambah pendengar acara global:
+      ```javascript
+      window.addEventListener('scroll', repositionAllOpenCalendars, { passive: true, capture: true });
+      window.addEventListener('resize', repositionAllOpenCalendars, { passive: true });
+      ```
+    - Memautkan pemanggil kedudukan tetap ke dalam `commonConfig.position`, `onOpen`, `onMonthChange`, dan `onYearChange`.
+  - Di dalam `browse-cars.html` dan `customer.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.53`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Semasa Skrol (Scroll Down 400px)**: Semasa skrol dari atas skrin ke bahagian tengah katalog kenderaan, popover kalendar bergerak secara sinkronik bersama bar carian terapung dan kekal tepat di bawah kotak input dengan jurang tepat 8px (`gap: 8px`).
+  - **Ujian Skrol Semula ke Atas (Scroll Back to Top)**: Kalendar meluncur semula ke posisi asal secara licin tanpa sebarang lompatan atau koordinat lari.
+- **Maklumat Git**:
+  - Commit: `5.2.53 Implement viewport fixed calendar positioning with real-time scroll sync for floating search capsule`
+  - Tag Versi: `5.2.53`
