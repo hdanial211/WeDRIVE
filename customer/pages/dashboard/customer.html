@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.24" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.54" />
 </head>
 <body data-particles="10" data-cursor-glow>
 
@@ -61,44 +61,56 @@
             <h3 class="booking-car-name" id="active-booking-car-name">BMW 320i M Sport</h3>
             <p class="booking-car-sub" id="active-booking-car-sub">Executive Sedan · Melaka Sentral</p>
 
-            <!-- LIVE COUNTDOWN TIMER HUB (Days, Hours, Minutes, Seconds) -->
-            <div class="countdown-hub" id="countdown-hub">
-              <p class="countdown-header">
-                <span class="material-icons-round">schedule</span>
-                <span data-key="cust_countdown_title">Time Remaining to Return Vehicle</span>
-              </p>
-              <div class="countdown-grid">
-                <div class="countdown-unit">
-                  <span class="countdown-digit" id="cd-days">02</span>
-                  <span class="countdown-label" data-key="cd_days">Days</span>
+            <!-- META ROW: Side-by-side Countdown Hub & Return Location -->
+            <div class="booking-meta-row">
+              <!-- LIVE COUNTDOWN TIMER HUB (Days, Hours, Minutes, Seconds) -->
+              <div class="countdown-hub" id="countdown-hub">
+                <p class="countdown-header">
+                  <span class="material-icons-round">schedule</span>
+                  <span data-key="cust_countdown_title">Time Remaining to Return Vehicle</span>
+                </p>
+                <div class="countdown-grid">
+                  <div class="countdown-unit">
+                    <span class="countdown-digit" id="cd-days">02</span>
+                    <span class="countdown-label" data-key="cd_days">Days</span>
+                  </div>
+                  <div class="countdown-sep">:</div>
+                  <div class="countdown-unit">
+                    <span class="countdown-digit" id="cd-hours">14</span>
+                    <span class="countdown-label" data-key="cd_hours">Hours</span>
+                  </div>
+                  <div class="countdown-sep">:</div>
+                  <div class="countdown-unit">
+                    <span class="countdown-digit" id="cd-mins">35</span>
+                    <span class="countdown-label" data-key="cd_mins">Mins</span>
+                  </div>
+                  <div class="countdown-sep">:</div>
+                  <div class="countdown-unit countdown-pulse">
+                    <span class="countdown-digit" id="cd-secs">12</span>
+                    <span class="countdown-label" data-key="cd_secs">Secs</span>
+                  </div>
                 </div>
-                <div class="countdown-sep">:</div>
-                <div class="countdown-unit">
-                  <span class="countdown-digit" id="cd-hours">14</span>
-                  <span class="countdown-label" data-key="cd_hours">Hours</span>
-                </div>
-                <div class="countdown-sep">:</div>
-                <div class="countdown-unit">
-                  <span class="countdown-digit" id="cd-mins">35</span>
-                  <span class="countdown-label" data-key="cd_mins">Mins</span>
-                </div>
-                <div class="countdown-sep">:</div>
-                <div class="countdown-unit countdown-pulse">
-                  <span class="countdown-digit" id="cd-secs">12</span>
-                  <span class="countdown-label" data-key="cd_secs">Secs</span>
+                <p class="countdown-deadline" id="countdown-deadline">
+                  <span data-key="cust_deadline_prefix">Return Date:</span> <strong id="cd-deadline-text">Oct 28, 2026 · 10:00 AM</strong>
+                </p>
+              </div>
+
+              <!-- RETURN LOCATION CARD -->
+              <div class="booking-location-hub">
+                <p class="location-hub-header">
+                  <span class="material-icons-round">place</span>
+                  <span data-key="cust_return_point">Return Location</span>
+                </p>
+                <div class="location-hub-body">
+                  <p class="location-hub-value" id="active-return-val">Melaka Sentral (HQ)</p>
+                  <span class="location-hub-sub">
+                    <span class="material-icons-round">check_circle</span>
+                    <span data-key="cust_dropoff_desc">HQ Drop-off Zone</span>
+                  </span>
                 </div>
               </div>
-              <p class="countdown-deadline" id="countdown-deadline">
-                <span data-key="cust_deadline_prefix">Return Date:</span> <strong id="cd-deadline-text">Oct 28, 2026 · 10:00 AM</strong>
-              </p>
             </div>
 
-            <div class="booking-specs-grid" style="grid-template-columns: 1fr;">
-              <div>
-                <p class="spec-label" data-key="cust_return_point">Return Location</p>
-                <p class="spec-value" id="active-return-val">Melaka Sentral (HQ)</p>
-              </div>
-            </div>
             <div class="booking-actions">
               <button class="btn-primary" type="button" data-key="cust_extend" onclick="window.location.href='../my-bookings/my-bookings.html'">Extend Rental</button>
               <a href="../browse-cars/browse-cars.html" class="btn-secondary" data-key="cust_rent_another">Rent Another Car</a>
@@ -203,16 +215,16 @@
   <div id="chatbot-placeholder"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../../shared/js/calendar.js?v=5.2.53"></script>
-  <script src="../../js/sidebar-loader.js?v=5.2.53"></script>
+  <script src="../../../shared/js/calendar.js?v=5.2.54"></script>
+  <script src="../../js/sidebar-loader.js?v=5.2.54"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/chatbot.js"></script>
 
-  <script src="../../js/customer.js?v=5.2.53"></script>
+  <script src="../../js/customer.js?v=5.2.54"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=5.2.53"></script>
+  <script src="../../../shared/js/main.js?v=5.2.54"></script>
 </body>
 </html>

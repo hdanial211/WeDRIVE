@@ -1077,3 +1077,31 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.53 Implement viewport fixed calendar positioning with real-time scroll sync for floating search capsule`
   - Tag Versi: `5.2.53`
+
+---
+
+## 🧭 [MINOR UPDATE] 94. Susun Atur Sebelah-Menyebelah Kad Kiraan Masa & Lokasi Pemulangan (Side-by-Side Compact Return Countdown & Location Hub) (v5.2.54)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta agar kad Lokasi Pemulangan (*Return Location*) diletakkan di sebelah kanan kad masa, dan kad masa diperkecilkan sedikit (*compact*):
+    > *"yang ni kan return location tu awak letak kanan sebelah masa tu..card masa tu awak kecikkan sikit"*
+  - Sebelum ini, kedua-dua kad ini disusun secara bertindan ke bawah (*vertical stack*) yang memakan ruang menegak yang agak besar.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `customer/pages/dashboard/customer.html`:
+    - Menggantikan susunan bertindan dengan bekas grid baris `.booking-meta-row`.
+    - Di sebelah kiri: Kad kiraan masa kompak `.countdown-hub` (`#countdown-hub`) yang memaparkan 4 unit masa Hari, Jam, Minit, Saat berserta tarikh pemulangan rasmi.
+    - Di sebelah kanan: Kad lokasi pemulangan khas `.booking-location-hub` (`#booking-location-hub`) yang memaparkan ikon pin, tajuk `Return Location`, nilai lokasi dinamik `#active-return-val`, dan lencana hijau `.location-hub-sub` (*HQ Drop-off Zone*).
+    - Mengemaskini *cache-buster* kepada `?v=5.2.54`.
+  - Di dalam `shared/css/wedrive.css`:
+    - Menambah gaya `.booking-meta-row { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: stretch; margin: 6px 0 16px; }`.
+    - Memperhalusi kad masa `.countdown-hub`: `padding: 12px 16px`, saiz unit `padding: 6px 9px; min-width: 46px;`, fon digit `19px SF Pro/SF Mono`, label `9px`.
+    - Mereka bentuk `.booking-location-hub`: kemasan kaca Apple HIG, tipografi kemas `font-size: 15px; font-weight: 800;` untuk nama lokasi, dan lencana hijau status zon pemulangan.
+    - Menyokong reponsif `@media (max-width: 680px)` yang menyusun semula kepada 1 lajur pada skrin peranti mudah alih.
+  - Di dalam `customer/pages/browse-cars/browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.54`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Susun Atur Dashboard (`customer.html`)**: Kad masa kompak dan kad lokasi pemulangan terletak kemas sebelah-menyebelah dengan ketinggian yang sama dan seimbang.
+  - **Ujian Dwibahasa (EN / MS)**: Pertukaran bahasa mengemas kini teks `Baki Masa Pemulangan Kenderaan` dan `Lokasi Pemulangan` dengan tepat tanpa sebarang herotan susun atur.
+- **Maklumat Git**:
+  - Commit: `5.2.54 Place return location beside compact countdown card on active booking hub`
+  - Tag Versi: `5.2.54`
