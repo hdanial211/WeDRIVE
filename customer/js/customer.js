@@ -555,7 +555,7 @@
     if (chosen.length < 3) {
       for (var i = 0; i < cars.length && chosen.length < 3; i++) {
         if (chosen.indexOf(cars[i]) === -1) {
-          cars[i]._customAi = isMs ? 'Pilihan Popular' : 'Popular Fleet';
+          cars[i]._customAi = isMs ? 'Pilihan Popular' : 'Popular Cars';
           chosen.push(cars[i]);
         }
       }

@@ -262,7 +262,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.22';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.61';
   }
 
   function doApplyTranslation(data, animate) {
@@ -365,7 +365,7 @@
       "nav_signup": "Sign Up",
       "nav_logout": "Log Out",
       "footer_tagline": "Smart, premium vehicle rental service in Melaka.",
-      "footer_col_fleet": "Fleet & Rentals",
+      "footer_col_fleet": "Cars & Rentals",
       "footer_col_tech": "Features & Options",
       "footer_col_support": "Help & Support",
       "footer_col_legal": "Legal & Company",
@@ -408,26 +408,25 @@
       "quick_support_sub": "Emergency Assistance",
       "quick_profile_sub": "Verified Driver",
       "cust_rental_status": "Rental Status",
-      "cust_rental_status_desc": "Live vehicle countdown and return access",
+      "footer_all_rights": "All rights reserved.",
+      "footer_region": "Malaysia (MYR • RM)",
+      "cust_active_rental_hub": "Active Rental Hub",
+      "cust_active_rental_badge": "Active Rental",
       "cust_countdown_title": "Time Remaining to Return Vehicle",
-      "cd_days": "Days",
-      "cd_hours": "Hours",
-      "cd_mins": "Mins",
-      "cd_secs": "Secs",
       "cust_deadline_prefix": "Return Date:",
       "cust_pickup_point": "Pick-up Location",
       "cust_return_point": "Return Location",
       "cust_range_est": "Estimated Range",
       "cust_rent_another": "Rent Another Car",
       "no_rental_title": "Ready for Your Next Journey?",
-      "no_rental_desc": "You currently have no ongoing rentals. Explore our premium AI-ready fleet in Melaka with instant keyless pickup.",
+      "no_rental_desc": "You currently have no ongoing rentals. Explore our premium AI-ready cars in Melaka with instant keyless pickup.",
       "btn_browse_fleet": "Browse Available Cars",
       "cust_view_all_cars": "View All Cars →",
       "fleet_badge": "WeDRIVE Full Catalog",
       "fleet_banner_title": "Looking for Sedans, SUVs, MPVs, Coupes, or Trucks?",
       "fleet_banner_desc": "Filter by specific transmission, seating capacity, and fuel efficiency with real-time dates availability.",
       "cust_explore_fleet": "Explore All 8 Cars",
-      "cust_featured_fleet": "Featured Fleet",
+      "cust_featured_fleet": "Featured Cars",
       "cust_featured_fleet_desc": "Top choices across vehicle classes in Melaka"
     },
     ms: {
@@ -440,7 +439,7 @@
       "nav_signup": "Daftar Akaun",
       "nav_logout": "Log Keluar",
       "footer_tagline": "Perkhidmatan sewaan kenderaan premium dan pintar di Melaka.",
-      "footer_col_fleet": "Armada & Sewaan",
+      "footer_col_fleet": "Kereta & Sewaan",
       "footer_col_tech": "Pilihan & Ciri",
       "footer_col_support": "Bantuan & Khidmat",
       "footer_col_legal": "Dasar & Syarikat",
@@ -449,7 +448,7 @@
       "footer_car": "Maklumat Kenderaan",
       "footer_tech_pricing": "Perbandingan Pakej",
       "footer_tech_keyless": "Pengambilan Kenderaan",
-      "footer_faq": "Soalan Lazim (FAQ)",
+      "footer_faq": "Soalan Lazim",
       "footer_contact": "Hubungi Kami",
       "footer_support_center": "Pusat Khidmat Pelanggan",
       "footer_support_roadside": "Bantuan Kecemasan 24/7",
@@ -495,14 +494,14 @@
       "cust_range_est": "Anggaran Jarak",
       "cust_rent_another": "Sewa Kereta Lain",
       "no_rental_title": "Rancang Perjalanan Seterusnya?",
-      "no_rental_desc": "Anda tiada sewaan yang sedang berlangsung. Teroka armada kereta premium sedia AI kami di Melaka dengan pengambilan tanpa kunci segera.",
+      "no_rental_desc": "Anda tiada sewaan yang sedang berlangsung. Teroka pilihan kereta premium sedia AI kami di Melaka dengan pengambilan tanpa kunci segera.",
       "btn_browse_fleet": "Pilih Kereta Tersedia",
       "cust_view_all_cars": "Lihat Semua Kereta →",
       "fleet_badge": "Katalog Penuh WeDRIVE",
       "fleet_banner_title": "Mencari Sedan, SUV, MPV, Coupe, atau Trak?",
       "fleet_banner_desc": "Tapis mengikut transmisi, bilangan tempat duduk, dan penjimatan bahan api dengan tarikh tersedia masa nyata.",
       "cust_explore_fleet": "Teroka Kesemua 8 Kereta",
-      "cust_featured_fleet": "Pilihan Kenderaan Popular",
+      "cust_featured_fleet": "Pilihan Kereta Popular",
       "cust_featured_fleet_desc": "Pilihan terbaik mengikut kategori kenderaan di Melaka"
     }
   };

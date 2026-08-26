@@ -1252,3 +1252,38 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.60 Expand active countdown timer typography to fill full container width`
   - Tag Versi: `5.2.60`
+
+---
+
+## 🚗 [MINOR UPDATE] 101. Penyelarasan Perkataan "Fleet" Kepada "Car / Cars" (Standardization of Fleet to Car / Cars) (v5.2.61)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta agar perkataan *Fleet* diubahsuai kepada *Car / Cars* untuk keselarasan istilah yang lebih mesra pengguna:
+    > *"Kalau boleh kan awak cari perkataan fleet tu ubah jadi Car boleh"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `customer/pages/dashboard/customer.html`:
+    - Menukar tajuk seksyen `Featured Fleet` kepada `Featured Cars` (`data-key="cust_featured_fleet"`).
+    - Menukar ayat promosi `Explore our premium AI-ready fleet...` kepada `...premium AI-ready cars...` (`data-key="no_rental_desc"`).
+  - Di dalam `customer/js/customer.js`:
+    - Mengemaskini lencana AI sekunder daripada `Popular Fleet` kepada `Popular Cars`.
+  - Di dalam `shared/lang/en.json` & `shared/lang/en.js`:
+    - Mengemaskini `about_stat_fleet` $\to$ `"Rental Cars"`
+    - Mengemaskini `footer_col_fleet` $\to$ `"Cars & Rentals"`
+    - Mengemaskini `cust_featured_fleet` $\to$ `"Featured Cars"`
+    - Mengemaskini `no_rental_desc` $\to$ `"You currently have no ongoing rentals. Explore our premium AI-ready cars in Melaka with instant keyless pickup."`
+  - Di dalam `shared/lang/ms.json` & `shared/lang/ms.js`:
+    - Mengemaskini `footer_col_fleet` $\to$ `"Kereta & Sewaan"`
+    - Mengemaskini `cust_featured_fleet` $\to$ `"Pilihan Kereta Popular"`
+    - Mengemaskini `no_rental_desc` $\to$ `"Anda tiada sewaan yang sedang berlangsung. Teroka pilihan kereta premium sedia AI kami di Melaka dengan pengambilan tanpa kunci segera."`
+  - Di dalam `shared/js/main.js`:
+    - Mengemaskini kamus *fallback* dwibahasa (EN & MS).
+    - Memperbaharui *cache-buster* `resolveLangPath` kepada `?v=5.2.61`.
+  - Di dalam `shared/components/footer.html` & `shared/pages/footer/about/about.html`:
+    - Menyelaraskan teks statik *Fleet* kepada *Kereta / Rental Cars*.
+  - Di dalam `customer/pages/dashboard/customer.html` dan `customer/pages/browse-cars/browse-cars.html`:
+    - Mengemaskini *cache-buster* kepada `?v=5.2.61`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Visual Dashboard**: Tajuk seksyen kenderaan kini dipaparkan dengan tepat sebagai `Featured Cars` (Bahasa Inggeris) dan `Pilihan Kereta Popular` (Bahasa Melayu) beserta ikon kereta yang sepadan.
+- **Maklumat Git**:
+  - Commit: `5.2.61 Standardize Fleet terminology to Car and Cars across UI and lang files`
+  - Tag Versi: `5.2.61`
