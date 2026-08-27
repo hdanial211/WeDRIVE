@@ -9,18 +9,20 @@
   <link rel="apple-touch-icon" href="../../../logo/wedrive-icon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <link rel="stylesheet" href="../../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=5.2.66" />
 </head>
 <body data-particles="6" data-cursor-glow>
   <div id="navbar-placeholder" data-module="guest"></div>
 
+  <!-- HERO -->
   <section class="page-hero reveal-onload">
+    <div class="about-story-kicker" data-key="about_kicker">About WeDRIVE</div>
     <h1 data-key="about_hero_title">Driving Melaka's Future with AI</h1>
     <p data-key="about_hero_sub">We're reimagining car rental through artificial intelligence, making every journey smarter and greener.</p>
   </section>
 
-  <div class="about-section">
-    <!-- Story -->
+  <main class="about-section">
+    <!-- STORY BENTO -->
     <div class="about-story reveal-on-scroll">
       <div class="about-story-text">
         <h2 data-key="about_story_title">Our Story</h2>
@@ -28,46 +30,96 @@
         <p data-key="about_story_p2">From predictive pricing to AI-powered route optimization, every feature is designed to make your Melaka experience effortless and unforgettable.</p>
       </div>
       <div class="about-story-img">
-        <img src="../../../images/melaka/stadthuys.jpg" alt="Melaka Heritage" />
+        <img src="../../../images/melaka/stadthuys.jpg" alt="Melaka Heritage Stadthuys" loading="lazy" />
+        <div class="about-story-badge" data-key="about_story_badge">📍 UNESCO World Heritage City</div>
       </div>
     </div>
 
-    <!-- Stats -->
+    <!-- STATS GRID -->
     <div class="stats-grid">
-      <div class="stat-card reveal-on-scroll"><div class="stat-value">10,000+</div><div class="stat-label" data-key="about_stat_renters">Happy Renters</div></div>
-      <div class="stat-card reveal-on-scroll"><div class="stat-value">50+</div><div class="stat-label" data-key="about_stat_fleet">Rental Cars</div></div>
-      <div class="stat-card reveal-on-scroll"><div class="stat-value">99.9%</div><div class="stat-label" data-key="about_stat_uptime">System Uptime</div></div>
-      <div class="stat-card reveal-on-scroll"><div class="stat-value">98%</div><div class="stat-label" data-key="about_stat_ai">AI Accuracy</div></div>
+      <div class="stat-card reveal-on-scroll">
+        <div class="stat-icon-box">
+          <span class="material-icons-round">people_alt</span>
+        </div>
+        <div class="stat-value">10,000+</div>
+        <div class="stat-label" data-key="about_stat_renters">Happy Renters</div>
+      </div>
+      <div class="stat-card reveal-on-scroll">
+        <div class="stat-icon-box">
+          <span class="material-icons-round">directions_car</span>
+        </div>
+        <div class="stat-value">50+</div>
+        <div class="stat-label" data-key="about_stat_fleet">Rental Cars</div>
+      </div>
+      <div class="stat-card reveal-on-scroll">
+        <div class="stat-icon-box">
+          <span class="material-icons-round">verified_user</span>
+        </div>
+        <div class="stat-value">99.9%</div>
+        <div class="stat-label" data-key="about_stat_uptime">System Uptime</div>
+      </div>
+      <div class="stat-card reveal-on-scroll">
+        <div class="stat-icon-box">
+          <span class="material-icons-round">psychology</span>
+        </div>
+        <div class="stat-value">98%</div>
+        <div class="stat-label" data-key="about_stat_ai">AI Accuracy</div>
+      </div>
     </div>
 
-    <!-- Features -->
-    <h2 class="section-title reveal-on-scroll"><span class="material-icons-round">auto_awesome</span> <span data-key="about_values_title">Our Core Values</span></h2>
+    <!-- CORE VALUES -->
+    <h2 class="section-title reveal-on-scroll">
+      <span class="material-icons-round">auto_awesome</span>
+      <span data-key="about_values_title">Our Core Values</span>
+    </h2>
     <div class="feature-grid">
       <div class="feature-card reveal-on-scroll">
-        <span class="material-icons-round">trending_down</span>
+        <div class="feature-icon-box blue">
+          <span class="material-icons-round">trending_down</span>
+        </div>
         <h4 data-key="about_feat_pricing_title">Predictive Pricing</h4>
         <p data-key="about_feat_pricing_desc">AI adjusts rates based on demand, ensuring you always get the best value.</p>
       </div>
       <div class="feature-card reveal-on-scroll">
-        <span class="material-icons-round">psychology</span>
+        <div class="feature-icon-box purple">
+          <span class="material-icons-round">psychology</span>
+        </div>
         <h4 data-key="about_feat_matching_title">Smart Matching</h4>
         <p data-key="about_feat_matching_desc">Our algorithm matches you to the perfect car based on your trip profile.</p>
       </div>
       <div class="feature-card reveal-on-scroll">
-        <span class="material-icons-round">eco</span>
+        <div class="feature-icon-box green">
+          <span class="material-icons-round">eco</span>
+        </div>
         <h4 data-key="about_feat_routes_title">Green Routes</h4>
         <p data-key="about_feat_routes_desc">AI suggests eco-friendly driving routes around Melaka heritage sites.</p>
       </div>
     </div>
-  </div>
+
+    <!-- CTA BENTO BANNER -->
+    <div class="about-cta-bento reveal-on-scroll">
+      <h3 data-key="about_cta_title">Ready for Smarter Travel in Melaka?</h3>
+      <p data-key="about_cta_sub">Experience our AI-optimized cars with instant booking, keyless access, and 24/7 intelligent assistance.</p>
+      <div class="about-cta-actions">
+        <a href="../../../../guest/pages/explore-melaka/explore-melaka.html" class="about-cta-btn-primary">
+          <span class="material-icons-round">directions_car</span>
+          <span data-key="about_cta_btn">Browse Available Cars</span>
+        </a>
+        <button type="button" class="about-cta-btn-secondary" onclick="if(window.openWeDriveChatbot){window.openWeDriveChatbot()}else{document.getElementById('chatbot-fab')?.click()}">
+          <span class="material-icons-round">smart_toy</span>
+          <span data-key="about_cta_chat">Ask AI Assistant</span>
+        </button>
+      </div>
+    </div>
+  </main>
 
   <div id="chatbot-placeholder"></div>
   <div id="footer-placeholder"></div>
-  <script src="../../../js/navbar-loader.js"></script>
+  <script src="../../../js/navbar-loader.js?v=5.2.66"></script>
   <script src="../../../js/api.js"></script>
   <script src="../../../js/chatbot.js"></script>
   <script src="../../../js/anime.min.js"></script>
   <script src="../../../js/animate.js"></script>
-  <script src="../../../js/main.js"></script>
+  <script src="../../../js/main.js?v=5.2.66"></script>
 </body>
 </html>

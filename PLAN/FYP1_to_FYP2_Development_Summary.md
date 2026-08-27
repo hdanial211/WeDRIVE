@@ -1387,3 +1387,31 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.65 Implement Apple-style sliding glider animation for segmented switches`
   - Tag Versi: `5.2.65`
+
+---
+
+## 🏛️ [MINOR UPDATE] 106. Transformasi Reka Bentuk Apple HIG Halaman Tentang Kami (Apple HIG About Us & Story Showcase Styling) (v5.2.66)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta reka bentuk CSS khusus bertaraf premium untuk halaman Tentang Kami:
+    > *"http://127.0.0.1:5504/shared/pages/footer/about/about.html buatkan page ni css pulak"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css` (Seksyen 11B: Apple About Us & Story Showcase):
+    - **Hero & Kicker**: Membina `.about-story-kicker` (kapsul pill kecil dengan `background: rgba(0, 113, 227, 0.1)` dan sempadan halus) serta tipografi Apple tajuk utama.
+    - **Bento Story Showcase (`.about-story`)**: Reka letak 2-lajur Bento (`1.15fr 0.85fr`) dengan kad kaca *Obsidian* berkabut (`backdrop-filter: blur(20px)`), sudut melengkung `28px`, gambar Stadthuys dengan efek zum hover `1.05`, dan lencana lokasi UNESCO terapung.
+    - **Papan Metrik Statistik (`.stats-grid` & `.stat-card`)**: 4-lajur kad kaca Apple beranimasi hover angkat (`translateY(-4px)`), nilai nombor format `tabular-nums` yang tebal, dan kotak ikon bercahaya.
+    - **Nilai Teras (`.feature-grid` & `.feature-card`)**: Kad bento 3-lajur dengan ikon Apple squircle berwana (Biru untuk ramalan harga, Ungu untuk padanan pintar, Hijau untuk laluan efisien).
+    - **Bento Banner Seruan Tindakan (`.about-cta-bento`)**: Sepanduk interaktif dwiton ungu-biru dengan butang pil kapsul utama (*Browse Available Cars*) dan butang pembantu AI (*Ask AI Assistant*).
+    - **Responsif Penuh**: Susun atur menyesuaikan diri secara lancar pada skrin tablet dan telefon pintar.
+  - Di dalam `shared/lang/en.json`, `shared/lang/en.js`, `shared/lang/ms.json`, `shared/lang/ms.js`:
+    - Menambah kunci dwibahasa: `about_kicker`, `about_story_badge`, `about_cta_title`, `about_cta_sub`, `about_cta_btn`, `about_cta_chat`.
+  - Di dalam `shared/pages/footer/about/about.html`:
+    - Mengemaskini struktur HTML dengan semantik Apple HIG, ikon Material Round, dan *cache-buster* `?v=5.2.66`.
+  - Di dalam `shared/js/main.js`:
+    - Memperbaharui *cache-buster* `resolveLangPath` kepada `?v=5.2.66`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Mod Malam & Mod Siang**: Kad bento, gambar Stadthuys, kotak ikon bertema, dan banner CTA terpapar dengan kontras serta bayang kaca yang sangat estetik.
+  - **Ujian Dwibahasa (EN / MS)**: Pertukaran bahasa menterjemahkan keseluruhan teks halaman termasuk lencana warisan UNESCO dan butang tindakan dengan pantas.
+- **Maklumat Git**:
+  - Commit: `5.2.66 Implement Apple HIG Bento design and styling for About Us page`
+  - Tag Versi: `5.2.66`
