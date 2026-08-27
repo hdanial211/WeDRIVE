@@ -1344,3 +1344,20 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.63 Complete global migration of Fleet terminology to Car across code and documentation`
   - Tag Versi: `5.2.63`
+
+---
+
+## 📐 [MINOR UPDATE] 104. Pendokumentasian Standard Geometri: Minimum Bulat Sempurna & Pengembangan Kapsul Mendatar (Design System Standard: Minimum Circular Geometry & Horizontal Pill Expansion) (v5.2.64)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna menetapkan garis panduan reka bentuk UI yang kekal bagi memastikan keseragaman geometri seluruh komponen WeDRIVE:
+    > *"Minimum kalau nak kecil jangan oval minimum bulat lepastu terus expand dari bulat tu lebarkan dia baru lawa ...catat mana2 minimum bulat bentuk sama size untuk mana2 pattern lepastu baru expand dari bulat tu tp saya tengok semua dh perfect"*
+- **Tindakan Pembaikan & Piawaian (Design System Standardization)**:
+  - Di dalam `.agents/rules/apple_hig_design_system.md` (Pilar 4: Komponen Antara Muka):
+    - Merekodkan peraturan rasmi:
+      1. **Bentuk Minimum Elemen Kompak (Ikon Tunggal)**: Elemen terkecil tanpa teks (cth. butang tema, butang tindakan bulat, butang tutup) **WAJIB mempunyai nisbah 1:1 bulat sempurna** (`width == height`, `aspect-ratio: 1 / 1 !important;`, `border-radius: 50% !important;`). Tidak dibenarkan berbentuk bujur/lonjong (*oval*).
+      2. **Prinsip Pengembangan Mendatar (Kapsul/Pil Berkandungan)**: Apabila elemen mengandungi teks atau label (cth. butang bahasa, butang utama, *filter chip*), kelebaran elemen **mengembang secara mendatar daripada diameter bulat asas tersebut** ke bentuk kapsul/pil Apple (`border-radius: var(--radius-pill, 9999px) !important;`) dengan kedua-dua sisi mengekalkan lengkungan separuh bulatan yang simetri dan estetik.
+  - Mengesahkan bahawa semua komponen sedia ada pada halaman log masuk, daftar, papan pemuka, penukar tema (`36px` $\times$ `36px`), dan butang bahasa (`36px` ketinggian pil) telah mencapai tahap kesempurnaan 100%.
+- **Maklumat Git**:
+  - Commit: `5.2.64 Document minimum circular geometry and horizontal pill expansion standard in design rules`
+  - Tag Versi: `5.2.64`

@@ -133,10 +133,13 @@ border: 1px solid var(--border-glass);
    - **Primary**: Kapsul warna penuh (`border-radius: 9999px`) dengan teks tebal dan pencahayaan lembut.
    - **Secondary / Tinted**: Butang squircle kelabu/biru lut sinar (`border-radius: 12px` – `14px`).
    - **Destructive**: Warna merah sistem Apple (`#FF3B30`) dengan pengesahan tindakan.
-4. **Lencana Status & Penunjuk Kapsul Melebar**:
+4. **Prinsip Geometri Minimum Bulat Sempurna & Pengembangan Kapsul (*Minimum Circular Base & Horizontal Pill Expansion Rule*)**:
+   - **Saiz Minimum Tanpa Teks (Ikon Tunggal)**: Elemen ikonik saiz terkecil (cth. `.theme-toggle`, butang ikon bulat, butang tindakan bulat) **WAJIB berbentuk bulatan 1:1 sempurna** (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; width == height`, cth. $36\text{px} \times 36\text{px}$). DILARANG SAMA SEKALI menjadi lonjong/bujur (*oval*).
+   - **Pengembangan Mendatar Berkandungan**: Apabila elemen mempunyai teks/label (cth. `.lang-toggle`, butang utama, *filter chip*), ia **mengembang secara mendatar dari diameter bulatan asas** menjadi kapsul/pil Apple (`border-radius: var(--radius-pill, 9999px) !important;`) dengan kedua-dua hujung mengekalkan kelengkungan separuh bulatan yang simetri dan estetik.
+5. **Lencana Status & Penunjuk Kapsul Melebar**:
    - Lencana status (Tersedia, Aktif, Selesai) menggunakan bentuk pil berkapsul dengan teks huruf besar berkod warna.
    - Penunjuk karusel: Titik tidak aktif `7px × 7px` $\to$ Kapsul aktif melebar `22px × 7px`.
-5. **Notifikasi Terapung (*Apple Toast Notifications*)**:
+6. **Notifikasi Terapung (*Apple Toast Notifications*)**:
    - Kapsul terapung di sudut skrin dengan ikon bulat, teks ringkas, bayang-bayang kaca berlapis, dan auto-hilang dalam 3 saat.
 
 ---
