@@ -1361,3 +1361,29 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.64 Document minimum circular geometry and horizontal pill expansion standard in design rules`
   - Tag Versi: `5.2.64`
+
+---
+
+## 🍏 [MINOR UPDATE] 105. Animasi Gelangsar Suis Apple iOS/macOS (Apple Segmented Glider & Spring Animation Engine) (v5.2.65)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna memuji rupa suis *Daily* vs *Weekly (Save 15%)* dan meminta animasinya dijadikan persis animasi fizikal Apple:
+    > *"Sumpah switch macam ni lawa cuma animation dia kalau boleh macam apple"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Membina `.pricing-toggle`, `.segmented-control`, `.toggle-glider`, `.segmented-glider` dengan gelangsar fizikal bebas (`z-index: 1`) di belakang butang teks telus (`z-index: 2`).
+    - Menetapkan fizik spring Apple: `transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), width 0.36s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, box-shadow 0.25s ease;`.
+    - Menyediakan reka bentuk permukaan *Obsidian True Black* (`#1C1C1E` dengan *highlight* tepi putih dan bayang lembut) untuk mod malam, serta putih tulen berkaca untuk mod siang.
+    - Menyelaraskan reka letak bekas ke tengah skrin: `display: flex; width: fit-content; margin: 0 auto 48px; backdrop-filter: blur(16px);`.
+    - Menambah maklum balas taktil Apple: `transform: scale(0.96);` semasa pengguna menekan (*active press*).
+  - Di dalam `shared/js/main.js`:
+    - Menambah **Seksyen 15F: Apple Segmented Control Glider Engine** (`initAppleSegmentedControlEngine` & `window.syncAppleSegmentedGliders`) yang mengira kedudukan `offsetLeft` dan `offsetWidth` secara automatik, serta menyegerak pergerakan semasa penukaran bahasa, tema, dan saiz skrin.
+  - Di dalam `guest/pages/pricing/pricing.html`:
+    - Menyisipkan `<div class="toggle-glider" aria-hidden="true"></div>`.
+    - Menambah animasi mikro transisi nombor harga dan mengemaskini *cache-buster* kepada `?v=5.2.65`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Gelangsar Mod Malam**: Gelangsar meleret dengan lancar dari `translateX(4px)` (lebar 77px) ke `translateX(79px)` (lebar 168px) dengan lengkung *spring Apple* tanpa kelipan atau lompatan.
+  - **Ujian Mod Siang**: Suis bertukar latar belakang putih tulen di atas trek kelabu separa telus dengan kontras teks dan bayang kaca yang sempurna.
+- **Maklumat Git**:
+  - Commit: `5.2.65 Implement Apple-style sliding glider animation for segmented switches`
+  - Tag Versi: `5.2.65`

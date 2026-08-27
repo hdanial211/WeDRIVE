@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.65" />
 </head>
 
 <body data-particles="6" data-cursor-glow>
@@ -26,6 +26,7 @@
 
   <!-- PRICING TOGGLE -->
   <div class="pricing-toggle reveal-on-scroll">
+    <div class="toggle-glider" aria-hidden="true"></div>
     <button class="toggle-btn active" data-period="daily" data-key="pricing_daily">Daily</button>
     <button class="toggle-btn" data-period="weekly"><span data-key="pricing_weekly">Weekly</span> <span class="save-badge" data-key="pricing_save_15">Save 15%</span></button>
   </div>
@@ -148,14 +149,22 @@
   <script src="../../../shared/js/chatbot.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/main.js?v=5.2.22"></script>
+  <script src="../../../shared/js/main.js?v=5.2.65"></script>
   <script>
     function updatePricingPeriod(period) {
       const isWeekly = period === 'weekly';
       const isMs = (localStorage.getItem('wedrive-lang') === 'ms');
 
       document.querySelectorAll('.amount').forEach(a => {
-        a.textContent = 'RM ' + (a.dataset[period] || '');
+        const targetVal = a.dataset[period] || '';
+        // Subtle micro-animation for numbers
+        a.style.transform = 'scale(0.92)';
+        a.style.opacity = '0.6';
+        setTimeout(() => {
+          a.textContent = 'RM ' + targetVal;
+          a.style.transform = 'scale(1)';
+          a.style.opacity = '1';
+        }, 120);
       });
 
       document.querySelectorAll('.period').forEach(s => {
@@ -180,6 +189,10 @@
           saveEl.style.display = 'none';
         }
       });
+
+      if (window.syncAppleSegmentedGliders) {
+        window.syncAppleSegmentedGliders(true);
+      }
     }
 
     // Toggle daily/weekly
@@ -187,6 +200,9 @@
       btn.addEventListener('click', () => {
         document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        if (window.syncAppleSegmentedGliders) {
+          window.syncAppleSegmentedGliders(true);
+        }
         updatePricingPeriod(btn.dataset.period);
       });
     });

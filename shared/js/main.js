@@ -262,7 +262,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.63';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.65';
   }
 
   function doApplyTranslation(data, animate) {
@@ -1387,5 +1387,96 @@
   setTimeout(checkAndMountChatbot, 400);
 })();
 
+/* =====================================================
+   SECTION 15F: APPLE SEGMENTED CONTROL GLIDER ENGINE
+   ===================================================== */
+(function initAppleSegmentedControlEngine() {
+  function syncControl(container, animate) {
+    if (!container) return;
+    var glider = container.querySelector('.toggle-glider, .segmented-glider');
+    if (!glider) {
+      glider = document.createElement('div');
+      glider.className = container.classList.contains('pricing-toggle') ? 'toggle-glider' : 'segmented-glider';
+      glider.setAttribute('aria-hidden', 'true');
+      container.prepend(glider);
+    }
 
+    var activeBtn = container.querySelector('.toggle-btn.active, button.active') || container.querySelector('.toggle-btn, button');
+    if (!activeBtn) return;
 
+    var left = activeBtn.offsetLeft;
+    var width = activeBtn.offsetWidth;
+
+    if (width === 0) {
+      // Element might still be rendering / hidden
+      setTimeout(function () { syncControl(container, false); }, 50);
+      return;
+    }
+
+    if (!animate) {
+      glider.style.transition = 'none';
+    } else {
+      glider.style.transition = 'transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), width 0.38s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, box-shadow 0.25s ease';
+    }
+
+    glider.style.width = width + 'px';
+    glider.style.transform = 'translateX(' + left + 'px)';
+
+    if (!animate) {
+      glider.offsetHeight; // Force reflow
+      glider.style.transition = '';
+    }
+  }
+
+  function initAllSegmentedControls() {
+    var controls = document.querySelectorAll('.pricing-toggle, .segmented-control');
+    controls.forEach(function (container) {
+      var glider = container.querySelector('.toggle-glider, .segmented-glider');
+      if (!glider) {
+        glider = document.createElement('div');
+        glider.className = container.classList.contains('pricing-toggle') ? 'toggle-glider' : 'segmented-glider';
+        glider.setAttribute('aria-hidden', 'true');
+        container.prepend(glider);
+      }
+
+      container.querySelectorAll('.toggle-btn, button').forEach(function (btn) {
+        if (btn._hasAppleGliderListener) return;
+        btn._hasAppleGliderListener = true;
+        btn.addEventListener('click', function () {
+          container.querySelectorAll('.toggle-btn, button').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          syncControl(container, true);
+        });
+      });
+
+      // Initial alignment without jump
+      syncControl(container, false);
+      setTimeout(function () { syncControl(container, false); }, 60);
+      setTimeout(function () { syncControl(container, false); }, 250);
+    });
+  }
+
+  window.syncAppleSegmentedGliders = function (animate) {
+    document.querySelectorAll('.pricing-toggle, .segmented-control').forEach(function (c) {
+      syncControl(c, animate !== false);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllSegmentedControls);
+  } else {
+    initAllSegmentedControls();
+  }
+
+  window.addEventListener('resize', function () {
+    window.syncAppleSegmentedGliders(false);
+  });
+
+  document.addEventListener('wedrive:language-applied', function () {
+    setTimeout(function () { window.syncAppleSegmentedGliders(true); }, 50);
+  });
+
+  document.addEventListener('wedrive:theme-changed', function () {
+    window.syncAppleSegmentedGliders(false);
+  });
+})();

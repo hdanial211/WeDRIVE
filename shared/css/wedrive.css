@@ -2003,55 +2003,114 @@ body.dark .wedrive-footer {
   margin: 0 auto;
 }
 
-.pricing-toggle {
+.pricing-toggle,
+.segmented-control {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 0;
   padding: 4px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-pill, 9999px);
   background: var(--bg-surface-3);
   border: 1px solid var(--border-subtle);
   width: fit-content;
   margin: 0 auto 48px;
+  user-select: none;
+  -webkit-user-select: none;
+  isolation: isolate;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-.pricing-toggle .toggle-btn {
-  height: 38px;
-  padding: 0 20px;
-  border-radius: var(--radius-pill);
-  font-size: 14px;
+.pricing-toggle .toggle-glider,
+.segmented-control .segmented-glider {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  height: calc(100% - 8px);
+  border-radius: var(--radius-pill, 9999px);
+  background: #FFFFFF;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  border: 0.5px solid rgba(0, 0, 0, 0.04);
+  z-index: 1;
+  pointer-events: none;
+  transform: translateX(0);
+  transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.36s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.25s ease,
+              box-shadow 0.25s ease;
+  will-change: transform, width;
+}
+
+html.night-mode .pricing-toggle .toggle-glider,
+body.night-mode .pricing-toggle .toggle-glider,
+[data-theme="dark"] .pricing-toggle .toggle-glider,
+html.night-mode .segmented-control .segmented-glider,
+body.night-mode .segmented-control .segmented-glider,
+[data-theme="dark"] .segmented-control .segmented-glider {
+  background: #1C1C1E;
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.pricing-toggle .toggle-btn,
+.segmented-control button {
+  position: relative;
+  z-index: 2;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 15px;
   font-weight: 500;
   color: var(--text-secondary);
-  background: transparent;
+  background: transparent !important;
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.25s var(--ease-apple);
+  justify-content: center;
+  gap: 10px;
+  outline: none;
+  transition: color 0.25s var(--ease-apple), transform 0.16s var(--ease-apple);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.pricing-toggle .toggle-btn:hover {
+.pricing-toggle .toggle-btn:hover,
+.segmented-control button:hover {
   color: var(--text-primary);
 }
 
-.pricing-toggle .toggle-btn.active {
-  background: var(--bg-surface);
+.pricing-toggle .toggle-btn.active,
+.segmented-control button.active {
   color: var(--text-primary);
   font-weight: 600;
-  box-shadow: var(--shadow-sm);
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.pricing-toggle .toggle-btn:active,
+.segmented-control button:active {
+  transform: scale(0.96);
 }
 
 .pricing-toggle .save-badge {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
-  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 12px;
   font-weight: 700;
-  background: rgba(52, 199, 89, 0.15);
+  background: rgba(52, 199, 89, 0.18);
   color: #34C759;
+  border: 0.5px solid rgba(52, 199, 89, 0.28);
+  transition: transform 0.25s var(--ease-apple), background 0.25s var(--ease-apple);
+}
+
+.pricing-toggle .toggle-btn.active .save-badge {
+  background: rgba(52, 199, 89, 0.25);
+  transform: scale(1.02);
 }
 
 .pricing-grid {
