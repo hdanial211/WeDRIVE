@@ -1415,3 +1415,41 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.66 Implement Apple HIG Bento design and styling for About Us page`
   - Tag Versi: `5.2.66`
+
+---
+
+## 🏢 [MINOR UPDATE] 107. Reka Bentuk Penjenamaan Korporat Eksekutif Halaman Tentang Kami, Jaminan Sewaan Sebenar & Ikon AI WeDRIVE (Stitch Corporate Executive Mobility Branding, Authentic Rental Guarantees & Sparkle AI Icon) (v5.2.67)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mahukan halaman *About Us* kelihatan seperti laman penjenamaan syarikat mobiliti korporat sebenar (bukan sekadar templat AI biasa):
+     > *"Terlalu nampak ai n x nampak macam page premium apa kata awak suruh mcp stitch buatkan page tu ..nampak macam branding company buat"*
+  2. Pengguna meminta penyingkiran piawaian sanitasi hospital/tangan bersih dan menggantikannya dengan maklumat jaminan sewaan kereta yang penting:
+     > *"clean_hands Pristine Sanitization apa benda ni kau igt aq buat apa..tolong lah info penting yang aq sewa kereta benda tu x penting"*
+  3. Pengguna mengingatkan penggunaan ikon rasmi pembantu AI WeDRIVE:
+     > *"ai aq dh lain kan kau ni pon jangan lupa"*
+- **Tindakan Pembaikan (Implementation)**:
+  - **Sistem Reka Bentuk Korporat Eksekutif (StitchMCP Integration)**:
+    - Di dalam `shared/css/wedrive.css` (Seksyen 11B: Corporate Executive Mobility):
+      - Membina sistem panel kaca spekular (`.glass-specular-panel`) dengan pencahayaan tepi 1px (`border-top: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(24px);`).
+      - Tajuk hero metalik editorial: `linear-gradient(180deg, #FFFFFF 0%, #B8B8B8 100%)` (Mod Malam) dan `linear-gradient(180deg, #111827 0%, #374151 100%)` (Mod Siang).
+      - **Seksyen Warisan & Masa Depan**: Reka letak 2-lajur menghubungkan infrastruktur mobiliti pintar dengan tapak warisan bersejarah Melaka berserta gambar Stadthuys dan lencana UNESCO Melaka.
+      - **Papan Metrik Impak & Skala**: 4 metrik perniagaan bergaris pemisah metalik halus (`10,000+ Happy Renters`, `50+ Rental Cars`, `99.9% System Uptime`, `98% AI Accuracy`).
+      - **4 Tiang Asas Kepercayaan (*Architecture of Trust*)**: Kad kaca berkilau dengan ikon bulat (*Trust & Transparency*, *Intelligent AI Matching*, *Sustainable Mobility*, *White-Glove 24/7 Concierge*).
+  - **Jaminan & Standard Sewaan Sebenar (*Authentic Car Rental Guarantees*)**:
+    - Menggantikan ikon `clean_hands` dan teks sanitasi kepada 3 jaminan sewaan utama yang praktikal untuk pelanggan kereta sewa Melaka:
+      1. 🛡️ **Insurans Komprehensif & CDW** (`about_std_insur` / ikon `shield`).
+      2. 📍 **Penghantaran ke Melaka Sentral & Hotel** (`about_std_delivery` / ikon `near_me`).
+      3. 🔑 **Kelulusan Segera & Kunci Digital** (`about_std_instant` / ikon `vpn_key`).
+  - **Penyelarasan Ikon AI WeDRIVE**:
+    - Menggantikan ikon `smart_toy` kepada ikon rasmi `auto_awesome` (bintang berkilau AI WeDRIVE) pada butang seruan tindakan *Tanya Pembantu AI* / *Ask AI Assistant* di dalam `about.html`.
+  - **Pembaikan Ralat Penukaran Bahasa**:
+    - Membetulkan panggilan fungsi terjemahan di dalam `shared/js/main.js` daripada `updateLangBtn` $\to$ `syncToggleButtons` untuk memastikan penukaran bahasa lancar tanpa ralat konsol.
+  - **Penyelarasan Kamus Dwibahasa**:
+    - Mengemaskini semua kunci di dalam `shared/lang/en.json`, `shared/lang/en.js`, `shared/lang/ms.json`, `shared/lang/ms.js`, dan kamus sandaran `shared/js/main.js`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Reka Bentuk Penjenamaan Korporat**: Hero korporat, kad warisan Melaka, 4 tiang kepercayaan kaca, dan bar jaminan terpapar dengan kemas dan elegan.
+  - **Ujian Bar Jaminan Sewaan**: 3 jaminan kereta sewa terpapar jelas tanpa sebarang teks sanitasi yang tidak relevan.
+  - **Ujian Butang AI & Chatbot**: Menekan butang *Tanya Pembantu AI* (`.about-btn-secondary`) dengan ikon `auto_awesome` membuka tetingkap *Pembantu AI WeDRIVE* secara serta-merta dengan animasi lembut.
+- **Maklumat Git**:
+  - Commit: `5.2.67 Redesign About Us page with Stitch corporate mobility branding, authentic rental guarantees, and sparkle AI icon`
+  - Tag Versi: `5.2.67`

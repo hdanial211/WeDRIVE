@@ -262,7 +262,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.66';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.67';
   }
 
   function doApplyTranslation(data, animate) {
@@ -293,7 +293,7 @@
       if (data[key] !== undefined) el.innerHTML = data[key];
     });
 
-    updateLangBtn(animate);
+    syncToggleButtons(localStorage.getItem(LANG_KEY) || DEFAULT_LANG, animate);
 
     if (typeof window.updateThemeBtns === 'function') {
       var currentTheme = localStorage.getItem('wedrive-theme') || 'system';
