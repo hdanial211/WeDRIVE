@@ -312,7 +312,7 @@ window.toggleChat = async function() {
     if (isAdminPortal) {
       greeting = isMs
         ? 'Hai! Saya Pembantu AI Pengurusan WeDRIVE. Bagaimana saya boleh bantu semakan operasi atau sistem anda hari ini?'
-        : 'Hi! I am your WeDRIVE Operations AI Assistant. How can I assist with your fleet management or system overview today?';
+        : 'Hi! I am your WeDRIVE Operations AI Assistant. How can I assist with your car management or system overview today?';
     } else if (isCustomerPortal) {
       if (userData && userData.profile && userData.profile.name) {
         var firstName = userData.profile.name.split(' ')[0];
@@ -341,12 +341,12 @@ window.toggleChat = async function() {
 
       if (isAdminPortal) {
         chips = isMs ? [
-          { text: 'Status armada', query: 'Berapa banyak kereta tersedia dan disewa sekarang?' },
+          { text: 'Status kereta', query: 'Berapa banyak kereta tersedia dan disewa sekarang?' },
           { text: 'Ringkasan tempahan', query: 'Tunjukkan ringkasan tempahan terkini' },
           { text: 'Senarai pelanggan', query: 'Apakah status pengesahan pelanggan baharu?' },
           { text: 'Bantuan sistem', query: 'Bagaimana cara meluluskan tempahan pelanggan?' }
         ] : [
-          { text: 'Fleet status', query: 'How many cars are available vs rented today?' },
+          { text: 'Car status', query: 'How many cars are available vs rented today?' },
           { text: 'Bookings summary', query: 'Show me recent bookings summary' },
           { text: 'Customer list', query: 'What is the status of new customer verifications?' },
           { text: 'System help', query: 'How do I approve customer bookings?' }
@@ -359,7 +359,7 @@ window.toggleChat = async function() {
           { text: 'Bantuan 24/7', query: 'Bagaimana saya boleh hubungi bantuan kecemasan?' }
         ] : [
           { text: 'My bookings', query: 'Show me my bookings' },
-          { text: 'Browse fleet', query: 'What cars are available to rent?' },
+          { text: 'Browse cars', query: 'What cars are available to rent?' },
           { text: 'Car return info', query: 'What is the vehicle return procedure?' },
           { text: '24/7 Support', query: 'How do I contact emergency roadside assistance?' }
         ];
@@ -631,7 +631,7 @@ window.sendChat = async function() {
   if (currentPath.includes('/admin/')) {
     portalContext = `\n\n[PORTAL CONTEXT — ADMIN MANAGEMENT PORTAL]
 You are currently assisting a WeDRIVE Administrator / Manager in the Backoffice Dashboard.
-Focus on operational efficiency, fleet availability, reservations review, customer document verification, and system settings.`;
+Focus on operational efficiency, car availability, reservations review, customer document verification, and system settings.`;
   } else if (currentPath.includes('/customer/')) {
     portalContext = `\n\n[PORTAL CONTEXT — CUSTOMER PORTAL]
 You are currently assisting a Customer in the WeDRIVE Customer Dashboard & Showroom.
@@ -639,7 +639,7 @@ Focus on helping them view their active rental return countdown, review their bo
   } else {
     portalContext = `\n\n[PORTAL CONTEXT — PUBLIC / GUEST SHOWROOM]
 You are currently assisting a Guest Visitor on the public WeDRIVE website.
-Guide them on exploring our car rental fleet in Melaka, explain the booking process (Sign Up -> Verify -> Book), and provide details about rates and payment options.`;
+Guide them on exploring our rental cars in Melaka, explain the booking process (Sign Up -> Verify -> Book), and provide details about rates and payment options.`;
   }
 
   // Fetch personal context (uses cache after first load)

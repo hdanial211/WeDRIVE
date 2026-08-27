@@ -10,17 +10,17 @@ To establish a benchmark for the proposed WeDRIVE system, three popular car rent
 
 ### 2.2.1 SOCAR Malaysia
 SOCAR is a prominent app-based car-sharing platform in Malaysia that allows users to book vehicles hourly, daily, or weekly. 
-- **Strengths:** SOCAR has a large fleet of vehicles spread across multiple key urban areas (Kuala Lumpur, Penang, Johor Bahru). The booking process is entirely automated through a mobile app, using Bluetooth-enabled keyless entry for vehicle access.
+- **Strengths:** SOCAR has a large car inventory spread across multiple key urban areas (Kuala Lumpur, Penang, Johor Bahru). The booking process is entirely automated through a mobile app, using Bluetooth-enabled keyless entry for vehicle access.
 - **Weaknesses:** The platform is highly dependent on its mobile application, lacking a feature-rich web portal for desktop users. Customer verification is often slow during peak periods. Importantly, SOCAR only displays static, standardized photos of the vehicle model, meaning users cannot visually inspect the physical vehicle's exact body or interior condition before booking.
 
 ### 2.2.2 GoCar Malaysia
 GoCar is another major car-sharing service in Malaysia offering round-trip and one-way booking configurations.
-- **Strengths:** GoCar provides flexible rental durations and has integrated electric vehicles (EVs) into its fleet. It allows bookings via both a web portal and mobile app, offering instant keyless activation.
+- **Strengths:** GoCar provides flexible rental durations and has integrated electric vehicles (EVs) into its car lineup. It allows bookings via both a web portal and mobile app, offering instant keyless activation.
 - **Weaknesses:** The user interface is functional but basic, lacking premium design aesthetics. The calendar booking system does not block pre-booked dates interactively on the calendar dropdown for all cars, sometimes resulting in user confusion. No interactive visual inspection tools are offered, and customer service relies on standard, slow ticketing flows.
 
 ### 2.2.3 Moovby
 Moovby is a peer-to-peer (P2P) car rental marketplace, often described as the "Airbnb for cars" in Malaysia and Indonesia. It allows private car owners to rent out their idle vehicles to renters.
-- **Strengths:** Moovby offers a highly diverse fleet ranging from budget hatchbacks to premium vehicles. It supports booking via a responsive web application.
+- **Strengths:** Moovby offers a highly diverse car selection ranging from budget hatchbacks to premium vehicles. It supports booking via a responsive web application.
 - **Weaknesses:** Because it is a P2P network, the quality and maintenance of vehicles vary significantly. Visual representations are uploaded by individual owners, often resulting in low-quality, incomplete, or outdated photographs. Moovby does not enforce standard verification checks on vehicle body damage, nor does it support interactive 360-degree inspectable views or automated AI chatbots for local tourist guidance.
 
 ---
@@ -70,7 +70,7 @@ This project utilizes the **Agile Scrum Methodology**, which is highly suited fo
 ```mermaid
 graph TD
     A[Phase 0: Database Setup & Config] --> B[Phase 1 & 2: Login/Signup Auth]
-    B --> C[Phase 3: Fleet DB & SDK Insertion]
+    B --> C[Phase 3: Car DB & SDK Insertion]
     C --> D[Phase 4 & 5: Dashboards & Booking Flow]
     D --> E[Phase 6 & 7: Customer Profile & Bookings]
     E --> F[Phase 8 & 9: Admin Dashboard & Cars CRUD]
@@ -118,10 +118,10 @@ The project schedule is structured in a tabular Gantt format, tracking the progr
 | **Phase 0** | Database & Project Initialization | Supabase workspace, `api.js` structure | 06 Mar 2026 | 21 Mar 2026 | Completed |
 | **Phase 1** | Authentication & Google OAuth | Login UI, email/pass auth, Google callback | 22 Mar 2026 | 05 Apr 2026 | Completed |
 | **Phase 2** | Signup Flow & Customer Creation | Signup UI, `customers` database table | 06 Apr 2026 | 15 Apr 2026 | Completed |
-| **Phase 3** | Fleet Integration & SDK Setup | `cars` database table, global SDK imports | 16 Apr 2026 | 25 Apr 2026 | Completed |
+| **Phase 3** | Car Integration & SDK Setup | `cars` database table, global SDK imports | 16 Apr 2026 | 25 Apr 2026 | Completed |
 | **Phase 4** | Booking Flow & Date Blocking | `bookings` table, Flatpickr calendar logic | 26 Apr 2026 | 10 May 2026 | Completed |
 | **Phase 5** | Customer Dashboards & Profiles | My Bookings UI, Profile Verification workflow | 11 May 2026 | 20 May 2026 | Completed |
-| **Phase 6** | Admin Dashboard & Fleet CRUD | Admin portal, Cars list manager, Add/Edit modal | 21 May 2026 | 02 Jun 2026 | Completed |
+| **Phase 6** | Admin Dashboard & Cars CRUD | Admin portal, Cars list manager, Add/Edit modal | 21 May 2026 | 02 Jun 2026 | Completed |
 | **Phase 7** | Admin Bookings & Customer Control | Customer block toggle, receipt details modal | 03 Jun 2026 | 12 Jun 2026 | Completed |
 | **Phase 8** | Analytical Reports & Settings | Charts generation, configurations panel | 13 Jun 2026 | 18 Jun 2026 | Completed |
 | **Phase 9** | Deployment, Testing & Verification | Live site on Vercel, responsive validation | 19 Jun 2026 | 22 Jun 2026 | Completed |

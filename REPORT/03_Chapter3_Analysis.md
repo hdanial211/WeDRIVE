@@ -61,7 +61,7 @@ This table holds the verified user profile details.
 | `auth_uid` | UUID | REFERENCES auth.users | Link to Supabase Auth user record. |
 
 ### 3.3.3 Table: cars
-This table stores the vehicle fleet properties and media links.
+This table stores the vehicle properties and media links.
 - **Primary Key:** `id` (SERIAL)
 - **RLS Status:** Enabled (Read-only for guests/customers; write/modify for admins)
 

@@ -14,13 +14,13 @@ Section 2.2 discusses the facts and findings gathered through research, covering
 
 The car rental industry in Malaysia is a vital component of the nation's transportation and tourism sectors. With Malaysia attracting over 26 million tourists annually (Tourism Malaysia, 2024) and a growing domestic travel culture, the demand for flexible, short-term vehicle rental services has steadily increased. Major tourist destinations such as Melaka, Penang, Langkawi, and Sabah have particularly high demand for car rental services, as public transportation options in these areas may be limited.
 
-Traditionally, car rental businesses in Malaysia have operated through a combination of walk-in offices, phone bookings, and basic websites. Many small and medium-sized operators still manage their fleets using spreadsheets, WhatsApp communication, and manual record-keeping. While larger companies such as Hertz, Avis, and Europcar have established digital booking platforms, the majority of local car rental businesses lack comprehensive digital management solutions (Kumar and Singh, 2025).
+Traditionally, car rental businesses in Malaysia have operated through a combination of walk-in offices, phone bookings, and basic websites. Many small and medium-sized operators still manage their cars using spreadsheets, WhatsApp communication, and manual record-keeping. While larger companies such as Hertz, Avis, and Europcar have established digital booking platforms, the majority of local car rental businesses lack comprehensive digital management solutions (Kumar and Singh, 2025).
 
 **AI in the Transportation and Hospitality Sector**
 
 The integration of Artificial Intelligence (AI) into transportation and hospitality services has accelerated significantly in recent years. AI technologies, particularly chatbots and recommendation systems, have demonstrated substantial benefits in enhancing customer engagement, reducing operational costs, and improving service personalization (Adamopoulou and Moussiades, 2020).
 
-In the context of car rental services, AI can be applied in several key areas. First, AI chatbots can provide instant responses to customer inquiries regarding vehicle availability, pricing, and booking procedures, operating 24/7 without human intervention (Nguyen and Do, 2026). Second, AI-driven recommendation engines can suggest suitable vehicles based on customer preferences, trip requirements, and historical data (Rybo AI, 2024). Third, AI-powered analytics can help operators optimize fleet utilization, predict demand patterns, and adjust pricing strategies dynamically (Gupta, 2024).
+In the context of car rental services, AI can be applied in several key areas. First, AI chatbots can provide instant responses to customer inquiries regarding vehicle availability, pricing, and booking procedures, operating 24/7 without human intervention (Nguyen and Do, 2026). Second, AI-driven recommendation engines can suggest suitable vehicles based on customer preferences, trip requirements, and historical data (Rybo AI, 2024). Third, AI-powered analytics can help operators optimize car utilization, predict demand patterns, and adjust pricing strategies dynamically (Gupta, 2024).
 
 Research by Zhang and Wang (2026) on the landscape of AI chatbot adoption in tourism and hospitality reveals that while AI chatbots are widely used in hotels and airlines, their adoption in the car rental sector remains relatively low, particularly in Southeast Asian markets. This gap presents an opportunity for innovation, which the WeDRIVE project aims to address.
 
@@ -57,7 +57,7 @@ SOCAR is a leading car-sharing platform in Malaysia that operates primarily thro
 - Heavily reliant on mobile app; limited web browser functionality
 - No AI-powered chatbot or intelligent recommendations
 - No 360-degree vehicle preview before booking
-- Limited administrative tools for fleet operators (designed for SOCAR's internal use only)
+- Limited administrative tools for car rental operators (designed for SOCAR's internal use only)
 
 > *[Figure 2.1: SOCAR Mobile Application Interface - To be inserted]*
 
@@ -91,7 +91,7 @@ GoCar is a comprehensive on-demand mobility platform in Malaysia that extends be
 
 **c) KAYAK (kayak.com.my)**
 
-KAYAK is a global travel metasearch engine that aggregates car rental deals from hundreds of different travel sites and rental providers. Unlike SOCAR and GoCar, KAYAK does not own or operate a vehicle fleet; instead, it functions as a comparison platform.
+KAYAK is a global travel metasearch engine that aggregates car rental deals from hundreds of different travel sites and rental providers. Unlike SOCAR and GoCar, KAYAK does not own or operate a car inventory; instead, it functions as a comparison platform.
 
 *Key Features:*
 - Metasearch engine aggregating deals from multiple providers
@@ -110,7 +110,7 @@ KAYAK is a global travel metasearch engine that aggregates car rental deals from
 
 *Limitations:*
 - Acts as intermediary only; redirects to third-party providers for actual booking
-- No direct fleet management capabilities
+- No direct car management capabilities
 - Final pricing may differ from displayed estimates due to provider-specific fees
 - No direct customer relationship management or post-booking support
 - Quality of service depends entirely on the selected third-party provider
@@ -126,7 +126,7 @@ Table 2.1 presents a comprehensive comparison of the three existing systems agai
 | Feature | SOCAR | GoCar | KAYAK | WeDRIVE (Proposed) |
 |---|---|---|---|---|
 | Platform Type | Mobile App | Mobile App + Web | Web Metasearch | Web Application |
-| Fleet Ownership | Own Fleet | Own Fleet | No Fleet (Aggregator) | Own Fleet Management |
+| Car Ownership | Own Cars | Own Cars | No Cars (Aggregator) | Own Car Management |
 | AI Chatbot | No | No | AI Mode (Search) | Yes (Gemini + Grok) |
 | 360-Degree Vehicle View | No | No | No | Yes (200 frames) |
 | Admin Dashboard | Internal Only | Internal Only | N/A | Full Admin Panel |
@@ -142,7 +142,7 @@ Table 2.1 presents a comprehensive comparison of the three existing systems agai
 | Vehicle Categories | 30+ Models | Multiple | Aggregated | 8 Models (Expandable) |
 | IoT/Keyless Access | Yes (Bluetooth) | Yes | N/A | No (Out of Scope) |
 
-The comparison reveals that while existing platforms such as SOCAR and GoCar excel in mobile-first car-sharing experiences with IoT-enabled keyless access, they lack AI-powered customer support, interactive vehicle previews, and accessible fleet management tools for small operators. KAYAK provides excellent comparison features but does not offer direct booking or fleet management capabilities. WeDRIVE aims to fill this gap by providing a comprehensive, web-based solution with integrated AI chatbot support, 360-degree vehicle visualization, and a full administrative dashboard accessible to small and medium-sized car rental operators.
+The comparison reveals that while existing platforms such as SOCAR and GoCar excel in mobile-first car-sharing experiences with IoT-enabled keyless access, they lack AI-powered customer support, interactive vehicle previews, and accessible car management tools for small operators. KAYAK provides excellent comparison features but does not offer direct booking or car management capabilities. WeDRIVE aims to fill this gap by providing a comprehensive, web-based solution with integrated AI chatbot support, 360-degree vehicle visualization, and a full administrative dashboard accessible to small and medium-sized car rental operators.
 
 ### 2.2.3 Technique
 
@@ -212,7 +212,8 @@ The Agile methodology for this project is structured into the following iterativ
 **Phase 3: Implementation - Iteration 1: Core Modules (PSM II)**
 - Develop the landing page and authentication system (login, signup, forgot password)
 - Implement the customer dashboard and vehicle browsing functionality
-- Build the admin dashboard with basic fleet management
+- Build the admin dashboard with basic car management
+- Set up database tables and API integration
 - Set up database tables and API integration
 
 **Phase 4: Implementation - Iteration 2: Advanced Features (PSM II)**
@@ -314,7 +315,7 @@ The project is planned across two semesters: PSM I (Semester 6, Session 2025/202
 
 ## 2.6 Conclusion
 
-This chapter has presented a comprehensive literature review covering the car rental industry domain, existing systems analysis, and the techniques and technologies applicable to the WeDRIVE project. The analysis of three existing platforms (SOCAR, GoCar, and KAYAK) revealed key gaps in AI-powered customer support, interactive vehicle visualization, and accessible fleet management tools for small operators, which WeDRIVE aims to address.
+This chapter has presented a comprehensive literature review covering the car rental industry domain, existing systems analysis, and the techniques and technologies applicable to the WeDRIVE project. The analysis of three existing platforms (SOCAR, GoCar, and KAYAK) revealed key gaps in AI-powered customer support, interactive vehicle visualization, and accessible car management tools for small operators, which WeDRIVE aims to address.
 
 The Agile (Iterative) methodology was selected as the project development approach, offering flexibility, incremental delivery, and continuous improvement capabilities that align well with the project's multi-module architecture. The project requirements, including software, hardware, and other resources, were documented, and a detailed project schedule was presented with milestones spanning both PSM I and PSM II semesters.
 

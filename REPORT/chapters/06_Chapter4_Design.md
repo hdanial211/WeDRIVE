@@ -171,7 +171,7 @@ The logical data model refines the ERD into normalized table structures suitable
 | Table Name | Description | Primary Key | Foreign Keys | Records |
 |---|---|---|---|---|
 | customers | Registered customer accounts and profiles | id (UUID) | - | 5 |
-| cars | Vehicle fleet inventory and specifications | id (INTEGER) | - | 8 |
+| cars | Car inventory and specifications | id (INTEGER) | - | 8 |
 | bookings | Rental booking transactions | id (INTEGER) | customer_id -> customers.id, car_id -> cars.id | 110 |
 | admins | System administrator accounts | id (INTEGER) | - | 1 |
 | marketing | Promotional banners, promo codes, seasonal pricing | id (INTEGER) | - | Variable |
@@ -260,7 +260,7 @@ Full customer experience for registered users:
 Comprehensive administration dashboard:
 
 - `pages/dashboard/admin.html` - Admin overview dashboard
-- `pages/car/cars.html` - Fleet management
+- `pages/car/cars.html` - Car management
 - `pages/car/car-detail/car-detail.html` - Individual vehicle management
 - `pages/booking/bookings.html` - Booking management
 - `pages/customer/customers.html` - Customer management

@@ -49,15 +49,15 @@ The primary goal of this project is to develop WeDRIVE, an AI-enabled car rental
 The scope of WeDRIVE defines the boundaries, target users, and functional modules of the system:
 
 ### 1.5.1 Target Users
-1. **Guest Users:** Anonymous visitors who can browse the vehicle fleet, view pricing, read guides ("How it Works"), and explore Melaka's attractions.
+1. **Guest Users:** Anonymous visitors who can browse the available cars, view pricing, read guides ("How it Works"), and explore Melaka's attractions.
 2. **Registered Customers:** Verified users who have completed their profile verification (IC, driving license, and phone number). They can select vehicles, verify availability on a blocked calendar, proceed through checkout, view booking receipts, and interact with the AI chatbot.
 3. **Administrator:** System operators who manage the vehicle inventory (CRUD operations), verify customer profiles, monitor booking records, track rental revenue, update configuration settings, and review chatbot analytics.
 
 ### 1.5.2 System Modules
-- **Fleet Showcase and 360 Viewer:** A premium catalog displaying 8 Malaysian vehicle models with an interactive 360-degree exterior rotation viewer (utilizing 200 sequential frames) and a 3D cubemap interior panorama.
+- **Car Showcase and 360 Viewer:** A premium catalog displaying 8 Malaysian vehicle models with an interactive 360-degree exterior rotation viewer (utilizing 200 sequential frames) and a 3D cubemap interior panorama.
 - **Authentication and Profile Verification:** Secure signup and login using Supabase Auth (Email/Password & Google OAuth). An automated splash redirect forces users with incomplete profiles to upload verification details before booking.
 - **Dynamic Booking and Calendar Blocking:** A Flatpickr-based calendar integration that queries the database in real-time to disable and gray-out dates that overlap with active bookings for the selected car.
-- **Admin Management Panel:** A centralized dashboard featuring real-time statistics (total revenue, active rentals, fleet utilization), sortable customer and booking tables, search filters, and an overlay-based booking modification manager.
+- **Admin Management Panel:** A centralized dashboard featuring real-time statistics (total revenue, active rentals, car utilization), sortable customer and booking tables, search filters, and an overlay-based booking modification manager.
 - **AI Support Chatbot:** A responsive chat widget powered by a Large Language Model (LLM) configured to answer system FAQs and generate tourism itineraries in Melaka.
 
 ---
@@ -66,10 +66,10 @@ The scope of WeDRIVE defines the boundaries, target users, and functional module
 The implementation of WeDRIVE offers substantial benefits to multiple stakeholders:
 
 - **For Customers:** It provides an interactive and trustworthy booking experience. The 360-degree inspection eliminates disputes regarding vehicle damage, while the real-time calendar prevents double-bookings. The localized AI chatbot acts as a virtual tour guide, improving their visit to Melaka.
-- **For Rental Operators (Admins):** It automates administrative tasks. The dashboard offers immediate insights into daily operations, revenue tracking, and fleet status. Document collection is structured and secured, minimizing data handling overhead.
+- **For Rental Operators (Admins):** It automates administrative tasks. The dashboard offers immediate insights into daily operations, revenue tracking, and car status. Document collection is structured and secured, minimizing data handling overhead.
 - **Academic and Technical Value:** The project demonstrates the feasibility of combining Serverless Database-as-a-Service (BaaS) like Supabase with lightweight, vanilla HTML5/CSS3/JS architectures to achieve premium, high-performance web applications without the overhead of heavy JavaScript frameworks.
 
 ---
 
 ## 1.7 Conclusion
-This chapter has outlined the foundational context of the WeDRIVE AI-Enabled Car Rental System. By addressing the issues of limited fleet transparency, insecure verification workflows, and the absence of integrated tourist assistance, WeDRIVE introduces a secure, real-time, and interactive solution. The project objectives, questions, and scopes defined here serve as the roadmap for the system's literature review, methodology, analysis, and implementation. The next chapter will explore the academic literature and existing industry platforms to justify the chosen technical solutions.
+This chapter has outlined the foundational context of the WeDRIVE AI-Enabled Car Rental System. By addressing the issues of limited car inventory transparency, insecure verification workflows, and the absence of integrated tourist assistance, WeDRIVE introduces a secure, real-time, and interactive solution. The project objectives, questions, and scopes defined here serve as the roadmap for the system's literature review, methodology, analysis, and implementation. The next chapter will explore the academic literature and existing industry platforms to justify the chosen technical solutions.

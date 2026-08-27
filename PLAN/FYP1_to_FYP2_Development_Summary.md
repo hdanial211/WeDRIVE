@@ -1313,3 +1313,34 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.62 Ensure 1:1 perfect circle for theme toggle and sync email input placeholders`
   - Tag Versi: `5.2.62`
+
+---
+
+## 🚗 [MINOR UPDATE] 103. Penyelarasan Menyeluruh Istilah "Fleet" Kepada "Car / Cars" (Full Project Fleet-to-Car Terminology Migration) (v5.2.63)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta penukaran komprehensif bagi seluruh sistem agar tiada lagi istilah *Fleet* digunakan:
+    > *"Tukarkan semua perkataan Fleet jadi Car"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `admin/pages/car/car-detail/car-detail.html`:
+    - Mengemaskini keterangan butang lupus kenderaan daripada `Decommission vehicle from fleet` $\to$ `Decommission car from system`.
+  - Di dalam `shared/js/chatbot.js`:
+    - Mengemaskini ucapan pembantu operasi AI daripada `fleet management` $\to$ `car management`.
+    - Mengemaskini *chip* cadangan soalan pentadbir dan pelanggan: `Fleet status` $\to$ `Car status` / `Status kereta`, `Browse fleet` $\to$ `Browse cars`.
+    - Mengemaskini *system prompt context* (portal pentadbir dan pelawat awam) daripada `fleet availability / car rental fleet` $\to$ `car availability / rental cars`.
+  - Di dalam `shared/lang/ms.json` & `shared/lang/ms.js`:
+    - Mengemaskini `about_stat_fleet` $\to$ `"Kereta Pilihan"`.
+  - Di dalam `customer/pages/dashboard/customer.html`:
+    - Membuang atribut lewah `data-key="btn_browse_fleet"` pada tag `<a>` luaran agar tidak menimpa ikon dan teks anak.
+  - Di dalam semua dokumen laporan projek (`REPORT/01_Chapter1_Introduction.md`, `REPORT/02_Chapter2_Literature_Review.md`, `REPORT/03_Chapter3_Analysis.md`, `REPORT/chapters/01_Abstract.md`, `REPORT/chapters/03_Chapter1_Introduction.md`, `REPORT/chapters/04_Chapter2_Literature_Review.md`, `REPORT/chapters/05_Chapter3_Analysis.md`, `REPORT/chapters/06_Chapter4_Design.md`, `REPORT/GAMBAR/1.1_wedrive_system_overview.svg`):
+    - Menggantikan semua istilah *Fleet* kepada *Car / Cars / Car inventory / Car management*.
+  - Di dalam `shared/js/main.js`:
+    - Memperbaharui *cache-buster* `resolveLangPath` kepada `?v=5.2.63`.
+  - Di dalam `customer.html`, `browse-cars.html`, `login.html`, `signup.html`:
+    - Mengemaskini *cache-buster* aset kepada `?v=5.2.63`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Carian Global**: Carian `grep` projek mengesahkan 0 baki teks antaramuka yang menggunakan perkataan *Fleet*.
+  - **Ujian Chatbot**: Butang cadangan dan ucapan AI kini memaparkan `Car status` dan `Browse cars` secara selaras dan lancar.
+- **Maklumat Git**:
+  - Commit: `5.2.63 Complete global migration of Fleet terminology to Car across code and documentation`
+  - Tag Versi: `5.2.63`

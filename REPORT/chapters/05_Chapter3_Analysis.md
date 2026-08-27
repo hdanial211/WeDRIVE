@@ -38,7 +38,7 @@ The current car rental process in Malaysia, particularly among small to medium-s
 
 5. **Manual Error Prone Processes:** Manual data entry and record-keeping increase the likelihood of errors such as double bookings, incorrect pricing, and lost customer information.
 
-6. **No Data-Driven Decision Making:** Without centralized analytics, operators cannot easily assess fleet utilization rates, identify popular vehicles, determine peak booking periods, or evaluate the effectiveness of marketing campaigns.
+6. **No Data-Driven Decision Making:** Without centralized analytics, operators cannot easily assess car utilization rates, identify popular vehicles, determine peak booking periods, or evaluate the effectiveness of marketing campaigns.
 
 **Proposed Solution: WeDRIVE System**
 
@@ -46,16 +46,14 @@ WeDRIVE addresses each of these problems through its integrated, web-based platf
 
 | Current Problem | WeDRIVE Solution |
 |---|---|
-| No real-time availability | Live vehicle availability updated through Supabase database |
-| Limited vehicle information | 360-degree vehicle viewer with 200-frame rotation and interior panorama |
-| Scattered data management | Centralized Supabase PostgreSQL database for all system data |
-| Limited operating hours | 24/7 online booking portal with AI chatbot support |
-| Manual errors | Automated booking management with conflict detection |
-| No analytics | Built-in reporting dashboard with revenue and utilization charts |
+| Manual booking via WhatsApp/phone | 24/7 web booking portal with real-time availability |
+| Static vehicle photos | Interactive 360-degree exterior view and interior panorama |
+| Scattered business data | Centralized database with automated reporting and analytics |
+| Business-hours-only support | 24/7 AI chatbot with Gemini/Grok API integration |
+| Manual data entry errors | Automated booking workflow with date validation and conflict prevention |
+| Lack of business insights | Dynamic revenue charts, car utilization tracking, and exportable reports |
 
-> *[Figure 3.2: Proposed Car Rental Process (WeDRIVE) - Flowchart to be inserted]*
-
-## 3.3 Requirement Analysis
+### 3.3 Requirement Analysis
 
 ### 3.3.1 Data Requirement
 
@@ -152,11 +150,11 @@ The DFD Level 0 provides a more detailed view of the major processes within the 
 The major processes identified are:
 
 - **P1 - Authentication Process:** Handles user registration, login (email/password and Google OAuth), session management, and role-based access control.
-- **P2 - Vehicle Management Process:** Manages the vehicle fleet including adding, editing, deleting vehicles, updating availability status, and providing vehicle data for browsing.
+- **P2 - Vehicle Management Process:** Manages the cars including adding, editing, deleting vehicles, updating availability status, and providing vehicle data for browsing.
 - **P3 - Booking Management Process:** Handles the complete booking lifecycle from vehicle selection through date selection, payment processing, booking confirmation, and status tracking.
 - **P4 - Customer Management Process:** Manages customer profiles, booking history, and document verification.
 - **P5 - AI Chatbot Process:** Processes customer queries, generates AI-powered responses using Gemini/Grok APIs, and provides vehicle recommendations.
-- **P6 - Reporting and Analytics Process:** Generates business reports including revenue charts, fleet utilization rates, and booking statistics.
+- **P6 - Reporting and Analytics Process:** Generates business reports including revenue charts, car utilization rates, and booking statistics.
 - **P7 - Marketing Management Process:** Manages promotional banners, discount codes, and seasonal pricing adjustments.
 
 **Data Flow Diagram Level 1**
