@@ -262,7 +262,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.61';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.2.62';
   }
 
   function doApplyTranslation(data, animate) {
@@ -334,9 +334,8 @@
     }
   }
 
-  function updateLangBtn(animate) {
-    var currentLang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
-    document.querySelectorAll('.lang-toggle').forEach(function (btn) {
+  function syncToggleButtons(currentLang, animate) {
+    document.querySelectorAll('.lang-toggle, .btn-lang').forEach(function (btn) {
       var label = btn.querySelector('.lang-text');
       if (label) {
         label.textContent = currentLang === 'ms' ? 'MS' : 'EN';
@@ -364,6 +363,8 @@
       "nav_login": "Log In",
       "nav_signup": "Sign Up",
       "nav_logout": "Log Out",
+      "login_email_ph": "Enter your email",
+      "signup_email_ph": "Enter your email",
       "footer_tagline": "Smart, premium vehicle rental service in Melaka.",
       "footer_col_fleet": "Cars & Rentals",
       "footer_col_tech": "Features & Options",
@@ -438,6 +439,8 @@
       "nav_login": "Log Masuk",
       "nav_signup": "Daftar Akaun",
       "nav_logout": "Log Keluar",
+      "login_email_ph": "Masukkan emel anda",
+      "signup_email_ph": "Masukkan emel anda",
       "footer_tagline": "Perkhidmatan sewaan kenderaan premium dan pintar di Melaka.",
       "footer_col_fleet": "Kereta & Sewaan",
       "footer_col_tech": "Pilihan & Ciri",

@@ -9,13 +9,16 @@
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png?v=2" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
-<script src="../../../shared/js/main.js"></script>
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.62" />
+  <script src="../../../shared/js/main.js?v=5.2.62"></script>
   <style>
     /* 2FA Challenge Modal Styles */
     .login-tfa-dialog-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(10px);
       display: flex;
@@ -25,9 +28,11 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
+
     .login-tfa-dialog-overlay.active {
       opacity: 1;
     }
+
     .login-tfa-dialog {
       background: var(--bg-surface, #ffffff);
       border: 1.5px solid var(--border-color, #E2E8F0);
@@ -38,9 +43,11 @@
       transform: scale(0.95) translateY(10px);
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+
     .login-tfa-dialog-overlay.active .login-tfa-dialog {
       transform: scale(1) translateY(0);
     }
+
     .login-tfa-dialog-header {
       padding: 20px 24px;
       border-bottom: 1px solid var(--border-color, #E2E8F0);
@@ -48,6 +55,7 @@
       align-items: center;
       justify-content: space-between;
     }
+
     .login-tfa-dialog-title {
       font-size: 18px;
       font-weight: 700;
@@ -56,10 +64,12 @@
       gap: 10px;
       color: var(--text-primary, #1E293B);
     }
+
     .login-tfa-dialog-body {
       padding: 24px;
       text-align: center;
     }
+
     .login-tfa-icon-container {
       width: 56px;
       height: 56px;
@@ -71,22 +81,26 @@
       justify-content: center;
       margin: 0 auto 16px;
     }
+
     .login-tfa-icon {
       color: var(--primary, #3B82F6);
       font-size: 28px;
     }
+
     .login-tfa-heading {
       font-size: 16px;
       font-weight: 700;
       color: var(--text-primary, #1E293B);
       margin-bottom: 8px;
     }
+
     .login-tfa-desc {
       font-size: 13px;
       color: var(--text-secondary, #94A3B8);
       line-height: 1.6;
       margin-bottom: 20px;
     }
+
     .login-tfa-code-container {
       display: flex;
       gap: 10px;
@@ -94,11 +108,14 @@
       align-items: center;
       margin: 24px auto 28px;
     }
+
     .login-tfa-code-container .tfa-digit-input {
       width: 46px !important;
       height: 56px !important;
-      padding: 16px 0 12px !important; /* Offsets font baseline to achieve pixel-perfect vertical centering */
-      line-height: 26px !important; /* Restricts cursor (caret) height to match the font-size exactly */
+      padding: 16px 0 12px !important;
+      /* Offsets font baseline to achieve pixel-perfect vertical centering */
+      line-height: 26px !important;
+      /* Restricts cursor (caret) height to match the font-size exactly */
       box-sizing: border-box !important;
       text-align: center !important;
       font-size: 26px !important;
@@ -112,21 +129,25 @@
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
     }
+
     .login-tfa-code-container .tfa-digit-input:hover {
       border-color: var(--outline, #94A3B8) !important;
       transform: translateY(-1px) !important;
     }
+
     .login-tfa-code-container .tfa-digit-input:focus {
       border-color: var(--primary, #3B82F6) !important;
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12), 0 4px 12px rgba(59, 130, 246, 0.08) !important;
       background: #FFFFFF !important;
       transform: translateY(-2px) scale(1.04) !important;
     }
+
     .login-tfa-code-container .tfa-digit-input.has-val {
       border-color: var(--primary, #3B82F6) !important;
       background: var(--bg-surface-lowest, #FFFFFF) !important;
       box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08) !important;
     }
+
     .tfa-divider-dash {
       width: 10px;
       height: 3.5px;
@@ -136,15 +157,18 @@
       margin: 0 4px;
       flex-shrink: 0;
     }
+
     .login-tfa-demo-note {
       font-size: 12px;
       color: var(--text-muted, #94A3B8);
       margin-bottom: 24px;
     }
+
     .login-tfa-actions {
       display: flex;
       gap: 12px;
     }
+
     .login-tfa-actions button {
       flex: 1;
       height: 46px;
@@ -156,24 +180,28 @@
       gap: 8px;
       cursor: pointer;
     }
-    
+
     /* Night mode overrides */
     body.night-mode .login-tfa-dialog-overlay {
       background: rgba(15, 23, 42, 0.85);
     }
+
     body.night-mode .login-tfa-code-container .tfa-digit-input {
       border-color: rgba(255, 255, 255, 0.08) !important;
       background: rgba(17, 20, 24, 0.5) !important;
       box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
     }
+
     body.night-mode .login-tfa-code-container .tfa-digit-input:hover {
       border-color: rgba(255, 255, 255, 0.18) !important;
     }
+
     body.night-mode .login-tfa-code-container .tfa-digit-input:focus {
       border-color: var(--primary-fixed-dim, #60a5fa) !important;
       box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.18), 0 8px 20px rgba(0, 0, 0, 0.4) !important;
       background: var(--bg-surface-3, #23282f) !important;
     }
+
     body.night-mode .login-tfa-code-container .tfa-digit-input.has-val {
       border-color: var(--primary-fixed-dim, #60a5fa) !important;
       background: var(--bg-surface-2, #1a1e24) !important;
@@ -223,14 +251,14 @@
           <label for="email" data-key="login_email">Email Address</label>
           <div class="input-wrap">
             <span class="material-icons-round">mail</span>
-            <input type="email" id="email" data-key-ph="login_email_ph" placeholder="you@example.com" value="admin@wedrive.my" required />
+            <input type="email" id="email" data-key-ph="login_email_ph" placeholder="Enter your email" required />
           </div>
         </div>
         <div class="form-group">
           <label for="password" data-key="login_password">Password</label>
           <div class="input-wrap">
             <span class="material-icons-round">lock</span>
-            <input type="password" id="password" data-key-ph="login_password_ph" placeholder="Enter your password" value="admin123"
+            <input type="password" id="password" data-key-ph="login_password_ph" placeholder="Enter your password"
               required />
           </div>
         </div>
@@ -344,7 +372,7 @@
 
     function openTfaChallengeModal() {
       var inputs = document.querySelectorAll('.tfa-digit-input');
-      inputs.forEach(function(input) {
+      inputs.forEach(function (input) {
         input.value = '';
         input.classList.remove('has-val');
       });
@@ -352,7 +380,7 @@
       var dialog = document.getElementById('login-tfa-dialog');
       if (dialog) {
         dialog.style.display = 'flex';
-        setTimeout(function() {
+        setTimeout(function () {
           dialog.classList.add('active');
           if (inputs[0]) inputs[0].focus();
         }, 10);
@@ -363,11 +391,11 @@
       var dialog = document.getElementById('login-tfa-dialog');
       if (dialog) {
         dialog.classList.remove('active');
-        setTimeout(function() {
+        setTimeout(function () {
           dialog.style.display = 'none';
         }, 300);
       }
-      
+
       var btn = document.getElementById('login-btn');
       if (btn) {
         btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
@@ -405,28 +433,28 @@
     style.textContent = '@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }';
     document.head.appendChild(style);
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       var inputs = document.querySelectorAll('.tfa-digit-input');
-      
-      inputs.forEach(function(input, index) {
+
+      inputs.forEach(function (input, index) {
         // Handle keyboard typing and focus transition
-        input.addEventListener('input', function(e) {
+        input.addEventListener('input', function (e) {
           var val = input.value;
           input.value = val.replace(/[^0-9]/g, '');
-          
+
           if (input.value.length > 0) {
             input.classList.add('has-val');
           } else {
             input.classList.remove('has-val');
           }
-          
+
           if (input.value.length === 1 && index < inputs.length - 1) {
             inputs[index + 1].focus();
           }
         });
 
         // Handle backspace / left-right arrows
-        input.addEventListener('keydown', function(e) {
+        input.addEventListener('keydown', function (e) {
           if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
             inputs[index - 1].value = '';
             inputs[index - 1].classList.remove('has-val');
@@ -441,11 +469,11 @@
         });
 
         // Handle paste event (distribute pasted code across inputs)
-        input.addEventListener('paste', function(e) {
+        input.addEventListener('paste', function (e) {
           e.preventDefault();
           var pastedData = (e.clipboardData || window.clipboardData).getData('text').trim();
           var digits = pastedData.replace(/[^0-9]/g, '').substring(0, 6);
-          
+
           for (var i = 0; i < digits.length; i++) {
             if (inputs[i]) {
               inputs[i].value = digits[i];
@@ -514,14 +542,16 @@
   <script src="../../../shared/js/animate.js"></script>
 
   <!-- Two-Factor Auth Challenge Dialog Modal Overlay -->
-  <div id="login-tfa-dialog" class="login-tfa-dialog-overlay" style="display:none" onclick="if(event.target === this) closeTfaChallengeModal()">
+  <div id="login-tfa-dialog" class="login-tfa-dialog-overlay" style="display:none"
+    onclick="if(event.target === this) closeTfaChallengeModal()">
     <div class="login-tfa-dialog">
       <div class="login-tfa-dialog-header">
         <h3 class="login-tfa-dialog-title">
           <span class="material-icons-round" style="color: var(--primary, #3B82F6);">phonelink_lock</span>
           <span>Two-Factor Authentication</span>
         </h3>
-        <button type="button" onclick="closeTfaChallengeModal()" style="border:none;background:transparent;cursor:pointer;color:var(--text-muted, #94A3B8);display:flex;align-items:center;padding:0;">
+        <button type="button" onclick="closeTfaChallengeModal()"
+          style="border:none;background:transparent;cursor:pointer;color:var(--text-muted, #94A3B8);display:flex;align-items:center;padding:0;">
           <span class="material-icons-round" style="font-size:20px">close</span>
         </button>
       </div>
@@ -535,17 +565,24 @@
         </p>
 
         <div class="login-tfa-code-container">
-          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 1" autocomplete="one-time-code" />
-          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 2" />
-          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 3" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]"
+            aria-label="Digit 1" autocomplete="one-time-code" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]"
+            aria-label="Digit 2" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]"
+            aria-label="Digit 3" />
           <span class="tfa-divider-dash"></span>
-          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 4" />
-          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 5" />
-          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 6" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]"
+            aria-label="Digit 4" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]"
+            aria-label="Digit 5" />
+          <input type="text" class="tfa-digit-input" maxlength="1" inputmode="numeric" pattern="[0-9]"
+            aria-label="Digit 6" />
         </div>
 
         <div class="login-tfa-actions">
-          <button class="btn-social" type="button" onclick="closeTfaChallengeModal()" style="margin-bottom:0">Cancel</button>
+          <button class="btn-social" type="button" onclick="closeTfaChallengeModal()"
+            style="margin-bottom:0">Cancel</button>
           <button class="btn-primary" type="button" onclick="submitTfaChallengeCode()" id="login-tfa-submit-btn">
             <span class="material-icons-round" style="font-size:18px">verified</span> Verify &amp; Sign In
           </button>

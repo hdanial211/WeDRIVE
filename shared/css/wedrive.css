@@ -444,21 +444,24 @@ body.dark .customer-main #wedrive-navbar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
-  min-width: 44px;
-  padding: 0 12px;
-  border-radius: var(--radius-pill);
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  min-width: 46px !important;
+  padding: 0 14px !important;
+  border-radius: var(--radius-pill, 9999px) !important;
   background: var(--bg-surface-3);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 1;
   vertical-align: middle;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   margin: 0;
+  flex-shrink: 0 !important;
   transition: all 0.2s var(--ease-apple);
 }
 
@@ -485,27 +488,33 @@ body.dark .customer-main #wedrive-navbar {
 .theme-toggle,
 .btn-theme,
 .theme-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border-radius: 50%;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1 / 1 !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
   background: var(--bg-surface-3);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
   cursor: pointer;
   line-height: 1;
   vertical-align: middle;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   margin: 0;
+  flex-shrink: 0 !important;
   transition: all 0.2s var(--ease-apple);
 }
 
 .theme-toggle .material-icons-round,
 .btn-theme .material-icons-round {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -9108,7 +9117,7 @@ table.custom-table tr:hover td,
 }
 
 /* ── 6. Minimum Touch Target (44px Rule) ─────────────────────────────────── */
-button,
+button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn),
 a.btn,
 .filter-chip,
 .date-chip,
@@ -9120,7 +9129,7 @@ a.btn,
 }
 
 @media (max-width: 768px) {
-  button,
+  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn),
   a.btn,
   .filter-chip,
   .date-chip,

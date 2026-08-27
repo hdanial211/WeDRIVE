@@ -1287,3 +1287,29 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.61 Standardize Fleet terminology to Car and Cars across UI and lang files`
   - Tag Versi: `5.2.61`
+
+---
+
+## 🔘 [MINOR UPDATE] 102. Pembetulan Butang Tema Bulat Sempurna & Kemas Kini Placeholder Emel (Perfect Circular Theme Toggle & Dynamic Email Placeholder Sync) (v5.2.62)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna mendapati bahawa butang penukar tema (*theme toggle button*) di sudut atas kelihatan bujur / lonjong (*oval*) dan bukan bulat sempurna:
+    > *"ni tukar buatkan bulat jangan oval"*
+  - Pengguna juga mendapati suntingan teks *placeholder* emel pada borang log masuk tidak berubah kerana diatasi oleh enjin penterjemahan dwibahasa `data-key-ph`.
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Mengemaskini `.theme-toggle`, `.btn-theme`, `.theme-toggle-btn` dengan saiz tepat `width: 36px !important; height: 36px !important; min-width: 36px !important; max-width: 36px !important; min-height: 36px !important; max-height: 36px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`.
+    - Mengemaskini `.lang-toggle`, `.btn-lang` dengan ketinggian selaras `height: 36px !important; min-height: 36px !important; max-height: 36px !important; min-width: 46px !important; border-radius: var(--radius-pill, 9999px) !important;`.
+    - Menambah pengecualian `:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn)` pada peraturan global aksesibiliti `button { min-height: 38px; }` dan `min-height: 44px;` agar tidak meregangkan butang ikon bulat.
+  - Di dalam `shared/lang/en.json`, `shared/lang/en.js`, `shared/lang/ms.json`, `shared/lang/ms.js`, `shared/js/main.js`:
+    - Menyelaraskan nilai `login_email_ph` dan `signup_email_ph` kepada `"Enter your email"` (EN) dan `"Masukkan emel anda"` (MS).
+    - Memperbaharui *cache-buster* `resolveLangPath` kepada `?v=5.2.62`.
+  - Di dalam `account/pages/login/login.html`, `account/pages/signup/signup.html`:
+    - Menyelaraskan teks statik *placeholder* emel kepada `"Enter your email"`.
+    - Mengemaskini *cache-buster* kepada `?v=5.2.62`.
+- **Pengesahan Ujian Visual (DevTools Automated & Manual Verification)**:
+  - **Ujian Dimensi DevTools**: Butang penukar tema kini berukuran tepat $36\text{px} \times 36\text{px}$ (nisbah 1:1, bulat sempurna tanpa bentuk bujur) bersambung selaras dengan butang bahasa berukuran ketinggian $36\text{px}$.
+  - **Ujian Borang Log Masuk**: *Placeholder* emel kini memaparkan `"Enter your email"` (EN) dan `"Masukkan emel anda"` (MS) dengan sempurna tanpa nilai *hardcoded*.
+- **Maklumat Git**:
+  - Commit: `5.2.62 Ensure 1:1 perfect circle for theme toggle and sync email input placeholders`
+  - Tag Versi: `5.2.62`
