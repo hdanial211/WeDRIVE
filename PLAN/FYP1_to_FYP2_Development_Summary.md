@@ -1573,3 +1573,30 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.72 Create and integrate frontend-ui custom agent skill for Apple HIG craft and styling`
   - Tag Versi: `5.2.72`
+
+---
+
+## ⚡ [MINOR UPDATE] 113. Integrasi Pelayan Context7 MCP & Ejen Skill Dokumentasi Langsung (Context7 Live Documentation MCP Server) (v5.2.73)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna meminta agar sistem menggunakan Context7 bagi memastikan semua rujukan kod dan API sentiasa tepat mengikut versi terkini:
+    > *"Saya nak awak guna tu Context7"*
+- **Tindakan Pembaikan & Integrasi (Implementation & Configuration)**:
+  - **Konfigurasi Pelayan MCP (`~/.gemini/config/mcp_config.json`)**:
+    - Menambah pelayan `context7` menggunakan pakej `@upstash/context7-mcp`:
+      ```json
+      "context7": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@upstash/context7-mcp"
+        ]
+      }
+      ```
+  - **Penciptaan Custom Agent Skill ([`.agents/skills/context7/SKILL.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/skills/context7/SKILL.md))**:
+    - Menetapkan panduan bila dan bagaimana membuat carian dokumentasi masa nyata bagi pakej-pakej utama (Supabase JS, Flatpickr, Anime.js, Playwright) bagi menghapuskan masalah kod lapuk (*zero deprecated APIs*).
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate dalam 12.8s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.73 Configure Context7 live documentation MCP server and agent skill`
+  - Tag Versi: `5.2.73`
