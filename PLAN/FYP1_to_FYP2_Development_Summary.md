@@ -1705,3 +1705,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.77 Implement Admin Session Inactivity Timeout Guardian with Apple HIG warning modal and auto-logout`
   - Tag Versi: `5.2.77`
+
+---
+
+## 🎨 [MINOR UPDATE] 118. Penyatuan Penuh Penggayaan Panel Admin ke Dalam Master CSS `wedrive.css` (Universal Admin Styling Centralization) (v5.2.78)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna menetapkan arahan tegas agar keseluruhan sistem menggunakan **SATU fail CSS master sahaja** iaitu `shared/css/wedrive.css` dan memautkan semua modul ke fail tersebut demi konsistensi visual 100%:
+    > *"saya nak pakai satu sahaja file css tu n kaitkan semua dekat satu tu sahaja /shared/css supaya consistent pakai sama sahaja bentuknya"*
+- **Tindakan Pembaikan & Pembersihan (Implementation & Consolidation)**:
+  - **1. Penambahan Bahagian 16 ke Dalam Master CSS (`shared/css/wedrive.css`)**:
+    - Memindahkan dan menyelaraskan semua gaya khusus panel Admin mengikut piawaian Apple HIG:
+      - **Jadual Boleh Susun (*Sortable Table Headers*)**: `th.sortable`, `th.sort-asc`, `th.sort-desc` dengan ikon anak panah biru Apple dan transisi pantas.
+      - **Cip Tarikh & Penapis Julat (*Date Chips & Filter Row*)**: `.date-chip` berkapsul pil `9999px`, `.custom-date-row`, dan `.apply-btn` dengan sentuhan taktil `scale(0.97)`.
+      - **Grid Tetapan Bento (*Bento Settings Grid*)**: `.settings-grid`, `.settings-card` bucu squircle `20px`, `.settings-header`, `.form-grid-custom`, dan `.settings-hero` gradien biru Apple melengkung `24px` dengan ikon aksen telus.
+  - **2. Pembersihan 10 Halaman Admin (`admin/pages/`)**:
+    - Membuang kesemua blok gaya sebaris `<style>` di dalam `bookings.html`, `customers.html`, dan `settings.html` (kini 0 tag `<style>` sebaris di seluruh Admin).
+    - Membuang pautan lapuk `sidebar.css` dan pautan berganda `wedrive.css` merentasi semua 10 halaman pentadbir:
+      1. `admin/pages/dashboard/admin.html`
+      2. `admin/pages/car/cars.html`
+      3. `admin/pages/car/car-detail/car-detail.html`
+      4. `admin/pages/booking/bookings.html`
+      5. `admin/pages/customer/customers.html`
+      6. `admin/pages/report/reports.html`
+      7. `admin/pages/calendar/calendar.html`
+      8. `admin/pages/chatbot/chatbot.html`
+      9. `admin/pages/marketing/marketing.html`
+      10. `admin/pages/setting/settings.html`
+    - Kesemua 10 halaman pentadbir kini memuatkan **SATU** pautan lembaran gaya master: `shared/css/wedrive.css`.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **7/7 Ujian Lulus (100% Pass Rate dalam 18.4s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.78 Centralize all admin styles and controls into shared master CSS wedrive.css`
+  - Tag Versi: `5.2.78`
