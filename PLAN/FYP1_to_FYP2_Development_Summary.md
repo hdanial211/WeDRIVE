@@ -1534,3 +1534,22 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.70 Modularize agent ruleprompt into focused rule files within character limits`
   - Tag Versi: `5.2.70`
+
+---
+
+## 🛡️ [MINOR UPDATE] 111. Penambahan Standard Keselamatan Siber & Audit Kerentanan Strix Dalam `.agents/rules/` (Cybersecurity & AI Vulnerability Scanning Standards) (v5.2.71)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna meminta standard audit keselamatan dan kerentanan siber berasaskan AI (Strix AI / OWASP) dimasukkan ke dalam peraturan ejen:
+    > *"boleh nnti masukkan jugak dalam agent"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `.agents/rules/security_and_audit.md`:
+    - **Seni Bina Keselamatan & Amalan Terbaik OWASP**: Perlindungan rahsia sifar (*Zero Plaintext Secrets*), Kawalan Akses Berasaskan Peranan (*RBAC*), Keselamatan Baris Data Supabase (*Row Level Security / RLS*), dan Sanitasi Input bagi menghalang *XSS* serta *SQL Injection*.
+    - **Ujian Keselamatan AI Beretika (Strix)**: Pengimbasan automatik pengurusan sesi/kredensial, privasi data pelanggan, dan keselamatan titik akhir (*endpoint security*) Chatbot & AI.
+  - Di dalam `.agents/rules/ruleprompt.md`:
+    - Menambah rujukan silang terpaut ke fail `security_and_audit.md`.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate dalam 12.2s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.71 Add cybersecurity and Strix AI vulnerability audit rules to agents ruleset`
+  - Tag Versi: `5.2.71`
