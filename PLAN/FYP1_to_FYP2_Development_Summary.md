@@ -1626,3 +1626,22 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.74 Resolve Safari CSS vendor prefix and inline style linter warnings`
   - Tag Versi: `5.2.74`
+
+---
+
+## 🔑 [MINOR UPDATE] 115. Konfigurasi Kunci Rahsia Context7 API & Pengesahan Carian Dokumentasi Langsung (Context7 API Key Authentication & Verification) (v5.2.75)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna membekalkan Kunci API Rahsia (*Context7 Secret Key*) daripada papan pemuka akaun rasmi Context7:
+    > `ctx7sk-c0d54ea8-5d59-47a5-a63d-f296e8c576ec`
+- **Tindakan Pembaikan & Konfigurasi (Implementation & Authentication)**:
+  - Di dalam `~/.gemini/config/mcp_config.json`:
+    - Mengemaskini konfigurasi pelayan `context7` MCP dengan kunci API melalui hujah CLI (`--api-key`) dan pembolehubah persekitaran (`CONTEXT7_API_KEY`).
+  - **Pengesahan Panggilan API Secara Langsung**:
+    - Ujian carian API dijalankan terhadap endpoint `https://context7.com/api/v2/libs/search?libraryName=flatpickr&query=minDate`.
+    - **Hasil**: Respons status 200 OK dengan 3 pustaka didokumentasikan (59,893 token & 613 core snippets) disahkan berjaya diperoleh secara masa nyata.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate dalam 12.2s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.75 Configure Context7 authenticated API key and verify live documentation lookups`
+  - Tag Versi: `5.2.75`
