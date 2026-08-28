@@ -196,3 +196,22 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium dan "padu", jadikan lam
   - **JANGAN cipta atau daftar akaun baharu (*sign up*)** semasa testing supaya tidak berlaku data bertindan (*duplicate*).
   - Pada halaman login, jika kredensial sudah auto-fill, terus klik butang **Sign In** sahaja.
   - **JANGAN buka tab baharu secara berlebihan**; kekalkan ujian pada tab sedia ada menggunakan kursor dan elemen pada skrin.
+
+## 17. Playwright CLI Automated Testing & Isolated `tests/` Directory (MANDATORY)
+
+- **Isolasi Folder Ujian (Zero Root Clutter):**
+  - Semua dependensi `@playwright/test`, `package.json`, `playwright.config.js`, `node_modules/`, dan skrip ujian E2E **WAJIB disimpan secara terasing di dalam folder `tests/` sahaja**.
+  - **JANGAN** letakkan fail `package.json` atau output ujian di direktori akar (*root directory*).
+- **Protokol Ujian Wajib Selepas Setiap Modul/Ciri Siap (Post-Task Test Execution):**
+  - Setiap kali selesai menyiapkan tugas pembangunan, penambahan ciri baharu, atau pembaikan UI/UX, pembangun/AI **WAJIB menjalankan suite ujian Playwright**:
+    ```bash
+    cd tests && npx playwright test
+    ```
+  - Pastikan semua ujian lulus (**100% Pass Rate**) bagi menjamin tiada regresi kod (*zero regressions*).
+- **Penyelenggaraan & Penambahan Skrip Ujian (`tests/e2e/`):**
+  - Sentiasa kemas kini dan tambah fail ujian E2E baharu di `tests/e2e/` apabila membina ciri baharu (contoh: Aliran Tempahan, Pengurusan Kenderaan, Muat Naik Dokumen OCR, Integrasi Supabase).
+  - Skrip ujian sedia ada:
+    - `01_auth.spec.js` (Log Masuk & Validasi Borang)
+    - `02_theme_and_lang.spec.js` (Suis Tema Day/Night/Auto & Dwibahasa EN/MS)
+    - `03_about_corporate.spec.js` (Penjenamaan Korporat, Jaminan & Pemicu AI Sparkles)
+    - `04_pricing_glider.spec.js` (Suis Gelangsar Animasi Fizikal Apple)

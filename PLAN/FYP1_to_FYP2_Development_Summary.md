@@ -1493,3 +1493,24 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.68 Setup isolated Playwright CLI test suite in dedicated tests directory`
   - Tag Versi: `5.2.68`
+
+---
+
+## 📋 [MINOR UPDATE] 109. Pendokumentasian Peraturan & Protokol Pengujian Automatik Playwright Dalam `.agents/rules/` (Mandatory Automated Testing SOP in Agent Rules) (v5.2.69)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna menetapkan SOP kekal agar ejen/AI sentiasa menjalankan ujian Playwright automatik setiap kali selesai membina atau mengubahsuai mana-mana bahagian sistem:
+    > *"nnti awak masukkan dalam agent setiap kali lepas abis buat"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `.agents/rules/ruleprompt.md`:
+    - Menambah **Seksyen 17: Playwright CLI Automated Testing & Isolated `tests/` Directory (MANDATORY)**:
+      1. **Isolasi Folder Ujian**: Semua fail ujian, konfigurasi, dan nod dependensi kekal di dalam folder `tests/` (direktori akar kekal bersih).
+      2. **Protokol Ujian Selepas Tugas (Post-Task Test Execution)**: WAJIB menjalankan `cd tests && npx playwright test` setiap kali selesai tugasan pembangunan untuk mengesahkan 100% *pass rate* sebelum *commit*.
+      3. **Penyelenggaraan & Penambahan Skrip Ujian**: Menambah suite ujian E2E baharu di `tests/e2e/` selaras dengan modul baharu yang dibina.
+  - Di dalam `.agents/rules/playwright_testing.md`:
+    - Mencipta fail peraturan khusus *always_on* yang menetapkan piawaian seni bina ujian E2E, panduan *selectors*, pengurusan kredensial rasmi, dan pengesahan transisi fizik Apple HIG.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate)** secara konsisten.
+- **Maklumat Git**:
+  - Commit: `5.2.69 Establish mandatory Playwright automated testing SOP in agent rules`
+  - Tag Versi: `5.2.69`
