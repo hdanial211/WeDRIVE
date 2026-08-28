@@ -1600,3 +1600,29 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.73 Configure Context7 live documentation MCP server and agent skill`
   - Tag Versi: `5.2.73`
+
+---
+
+## 🧹 [MINOR UPDATE] 114. Pembersihan Masalah Linter IDE & Keserasian Awalan CSS Safari (IDE Linter Warnings & Safari Vendor Prefix Resolution) (v5.2.74)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna meminta agar semua senarai masalah (*problems*) dalam IDE disemak dan diselesaikan:
+    > *"Okey @[current_problems] cuba check kenapa ada banyak problem"*
+  - **Punca Masalah**: Amaran linter Microsoft Edge Tools / CSS Validator mengenai:
+    1. Kekurangan awalan vendor Safari (`-webkit-backdrop-filter` dan `-webkit-user-select`).
+    2. Susunan sifat CSS di mana sifat berawalan vendor mesti diletakkan sebelum sifat standard (`-webkit-` dahulu, kemudian standard).
+    3. Penggunaan gaya dalam talian (*inline styles*) di dalam `account/pages/login/login.html` dan `index.html`.
+- **Tindakan Pembaikan (Implementation)**:
+  - **`account/pages/login/login.html`**:
+    - Menambah `-webkit-backdrop-filter: blur(10px);` sebelum `backdrop-filter: blur(10px);`.
+    - Memindahkan semua gaya *inline* kepada kelas CSS tersusun: `.btn-icon-18`, `.btn-icon-20`, `.login-top-controls`, `.login-tfa-title-icon`, `.login-tfa-close-btn`, `.login-tfa-cancel-btn`, dan `.login-tfa-dialog-overlay:not(.active)`.
+  - **`index.html`**:
+    - Menggantikan gaya *inline* pautan kad metrik kadar permulaan kepada kelas `.guest-metric-card-link`.
+  - **`shared/css/wedrive.css`**:
+    - Menyelaras dan membetulkan susunan semua sifat CSS (`-webkit-backdrop-filter`, `-webkit-user-select`, `-webkit-text-size-adjust`, `-webkit-appearance`) supaya awalan vendor mendahului sifat standard di seluruh fail.
+    - Menambah kelas `.guest-metric-card-link { text-decoration: none; color: inherit; display: block; }`.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate dalam 12.2s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.74 Resolve Safari CSS vendor prefix and inline style linter warnings`
+  - Tag Versi: `5.2.74`

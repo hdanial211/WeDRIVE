@@ -150,8 +150,8 @@ html.night-mode, body.night-mode, [data-theme="dark"] {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   background-color: var(--bg-body);
 }
 
@@ -1390,8 +1390,8 @@ body.night-mode .guest-kicker .material-icons-round,
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .status-pill.available {
@@ -1422,8 +1422,8 @@ body.night-mode .guest-kicker .material-icons-round,
   font-size: 12px;
   font-weight: 600;
   background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.85));
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   color: var(--text-primary);
   border: 1px solid var(--border-medium);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -1940,6 +1940,7 @@ body.dark .wedrive-footer {
   border: 1px solid var(--border-glass);
   box-shadow: var(--shadow-glass);
   transition: transform 0.4s var(--ease-apple), opacity 0.35s var(--ease-apple);
+  -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -2016,12 +2017,12 @@ body.dark .wedrive-footer {
   border: 1px solid var(--border-subtle);
   width: fit-content;
   margin: 0 auto 48px;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
   isolation: isolate;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
 }
 
 .pricing-toggle .toggle-glider,
@@ -2393,8 +2394,8 @@ body.night-mode .segmented-control .segmented-glider,
   border-radius: var(--radius-pill, 9999px);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   color: #C0C0C0;
   font-size: 11px;
   font-weight: 700;
@@ -2463,8 +2464,8 @@ body.night-mode .segmented-control .segmented-glider,
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-bento, 28px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
   position: relative;
 }
 
@@ -2541,8 +2542,8 @@ body.night-mode .segmented-control .segmented-glider,
   bottom: 16px;
   left: 16px;
   background: rgba(11, 19, 38, 0.85);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   color: #FFFFFF;
   padding: 6px 14px;
   border-radius: var(--radius-pill, 9999px);
@@ -2816,8 +2817,8 @@ body.night-mode .segmented-control .segmented-glider,
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   transition: transform 0.25s var(--ease-apple), background 0.2s ease, border-color 0.2s ease;
 }
 
@@ -2997,6 +2998,7 @@ body.night-mode .segmented-control .segmented-glider,
   color: var(--text-primary);
   opacity: 0.035;
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   white-space: nowrap;
 }
@@ -3181,6 +3183,7 @@ body.night-mode .segmented-control .segmented-glider,
   min-height: 280px;
   border-radius: calc(var(--radius-bento) - 8px);
   object-fit: cover;
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
 }
@@ -3191,6 +3194,7 @@ body.night-mode .segmented-control .segmented-glider,
   margin-bottom: 84px;
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -3396,6 +3400,7 @@ body.night-mode .segmented-control .segmented-glider,
   align-items: center;
   justify-content: center;
   cursor: grab;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -3408,6 +3413,7 @@ body.night-mode .segmented-control .segmented-glider,
   width: 100%;
   height: 100%;
   object-fit: contain;
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
   position: relative;
@@ -3529,6 +3535,7 @@ body.night-mode .segmented-control .segmented-glider,
   border: 1px solid var(--border-medium);
   width: fit-content;
   min-width: 260px;
+  -webkit-user-select: none;
   user-select: none;
   box-sizing: border-box;
 }
@@ -3789,8 +3796,8 @@ body.night-mode .explore-hero-media img {
   border-radius: var(--radius-pill);
   background: rgba(0, 113, 227, 0.3);
   border: 1px solid rgba(90, 200, 250, 0.4);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   color: #5AC8FA;
   font-size: 12px;
   font-weight: 700;
@@ -3857,8 +3864,8 @@ body.night-mode .explore-hero-media img {
 
 .explore-plan {
   background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(32px) saturate(190%);
   -webkit-backdrop-filter: blur(32px) saturate(190%);
+  backdrop-filter: blur(32px) saturate(190%);
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 24px;
   padding: 32px 28px;
@@ -4083,8 +4090,8 @@ body.night-mode .destination-card:hover {
   top: 12px;
   left: 12px;
   background: rgba(18, 18, 22, 0.65);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
   font-size: 11.5px;
@@ -4636,6 +4643,7 @@ body:has(.right-panel) {
   box-shadow: 0 8px 26px rgba(88, 86, 214, 0.45), 0 2px 8px rgba(0, 0, 0, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.28);
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   overflow: visible;
   animation: fabAliveFloat 3.8s ease-in-out infinite, fabShimmerGradient 6s ease infinite;
@@ -4749,8 +4757,8 @@ body:has(.right-panel) {
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-bento);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
   display: flex;
   flex-direction: column;
   z-index: 10000;
@@ -5103,8 +5111,8 @@ body.dark .flatpickr-calendar,
   margin: 0 !important;
   outline: none !important;
   cursor: pointer !important;
-  appearance: none !important;
   -webkit-appearance: none !important;
+  appearance: none !important;
   height: auto !important;
   min-height: 28px !important;
   box-sizing: border-box !important;
@@ -6341,8 +6349,8 @@ body.dark .countdown-unit,
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .night-mode .reco-badge,
@@ -6652,8 +6660,8 @@ body.dark .date-shake-error {
   inset: 0;
   z-index: 99999;
   background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -7919,6 +7927,7 @@ table tr:hover td {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     opacity: 0;
     pointer-events: none;
@@ -8104,6 +8113,7 @@ body.lang-skeleton-active .guest-section-heading h2,
 body.lang-skeleton-active .guest-section-heading p {
   position: relative !important;
   color: transparent !important;
+  -webkit-user-select: none !important;
   user-select: none !important;
   pointer-events: none !important;
   border-radius: 8px !important;
@@ -8374,8 +8384,8 @@ body.page-is-leaving .page-container {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9312,8 +9322,8 @@ body.page-is-leaving .page-container {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9745,8 +9755,8 @@ a.btn,
   width: 100vw !important;
   height: 100vh !important;
   background: rgba(0, 0, 0, 0.45) !important;
-  backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(20px) !important;
   z-index: 99999 !important;
   display: none !important;
   align-items: flex-start !important;
@@ -9911,3 +9921,10 @@ a.btn,
 
 
 
+
+
+.guest-metric-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

@@ -20,6 +20,7 @@
       right: 0;
       bottom: 0;
       background: rgba(15, 23, 42, 0.6);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
@@ -28,6 +29,17 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
+
+    .login-tfa-dialog-overlay:not(.active) {
+      display: none;
+    }
+
+    .btn-icon-18 { font-size: 18px; }
+    .btn-icon-20 { font-size: 20px; }
+    .login-top-controls { position: fixed; top: 16px; right: 20px; z-index: 9999; display: flex; align-items: center; gap: 8px; }
+    .login-tfa-title-icon { color: var(--primary, #3B82F6); }
+    .login-tfa-close-btn { border: none; background: transparent; cursor: pointer; color: var(--text-muted, #94A3B8); display: flex; align-items: center; padding: 0; }
+    .login-tfa-cancel-btn { margin-bottom: 0; }
 
     .login-tfa-dialog-overlay.active {
       opacity: 1;
@@ -212,7 +224,7 @@
 <body data-particles="10" data-cursor-glow>
   <!-- Left Panel -->
   <div class="left-panel">
-    <a href="../../../index.html" class="brand" style="text-decoration: none;">
+    <a href="../../../index.html" class="brand">
       <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" class="brand-logo" />
       <div class="brand-text">
         <span class="we">We</span><span class="drive">DRIVE</span>
@@ -270,7 +282,7 @@
           <a href="../forgot-password/forgot-password.html" class="forgot" data-key="login_forgot">Forgot password?</a>
         </div>
         <button type="submit" class="btn-primary" id="login-btn">
-          <span class="material-icons-round" style="font-size:18px">login</span>
+          <span class="material-icons-round btn-icon-18">login</span>
           <span data-key="login_btn">Sign In</span>
         </button>
       </form>
@@ -290,7 +302,7 @@
       <!-- Continue as Guest -->
       <div class="guest-link">
         <a href="../../../index.html" class="btn-guest">
-          <span class="material-icons-round" style="font-size:18px">visibility</span>
+          <span class="material-icons-round btn-icon-18">visibility</span>
           <span data-key="login_guest">Continue as Guest</span>
         </a>
       </div>
@@ -298,7 +310,7 @@
   </div>
 
   <!-- THEME + LANG ICON BUTTONS (fixed position) -->
-  <div style="position:fixed;top:16px;right:20px;z-index:9999;display:flex;align-items:center;gap:8px;">
+  <div class="login-top-controls">
     <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch to Bahasa Melayu">
       <span class="lang-text">MS</span>
     </button>
@@ -542,17 +554,16 @@
   <script src="../../../shared/js/animate.js"></script>
 
   <!-- Two-Factor Auth Challenge Dialog Modal Overlay -->
-  <div id="login-tfa-dialog" class="login-tfa-dialog-overlay" style="display:none"
+  <div id="login-tfa-dialog" class="login-tfa-dialog-overlay"
     onclick="if(event.target === this) closeTfaChallengeModal()">
     <div class="login-tfa-dialog">
       <div class="login-tfa-dialog-header">
         <h3 class="login-tfa-dialog-title">
-          <span class="material-icons-round" style="color: var(--primary, #3B82F6);">phonelink_lock</span>
+          <span class="material-icons-round login-tfa-title-icon">phonelink_lock</span>
           <span>Two-Factor Authentication</span>
         </h3>
-        <button type="button" onclick="closeTfaChallengeModal()"
-          style="border:none;background:transparent;cursor:pointer;color:var(--text-muted, #94A3B8);display:flex;align-items:center;padding:0;">
-          <span class="material-icons-round" style="font-size:20px">close</span>
+        <button type="button" onclick="closeTfaChallengeModal()" class="login-tfa-close-btn">
+          <span class="material-icons-round btn-icon-20">close</span>
         </button>
       </div>
       <div class="login-tfa-dialog-body">
@@ -581,10 +592,9 @@
         </div>
 
         <div class="login-tfa-actions">
-          <button class="btn-social" type="button" onclick="closeTfaChallengeModal()"
-            style="margin-bottom:0">Cancel</button>
+          <button class="btn-social login-tfa-cancel-btn" type="button" onclick="closeTfaChallengeModal()">Cancel</button>
           <button class="btn-primary" type="button" onclick="submitTfaChallengeCode()" id="login-tfa-submit-btn">
-            <span class="material-icons-round" style="font-size:18px">verified</span> Verify &amp; Sign In
+            <span class="material-icons-round btn-icon-18">verified</span> Verify &amp; Sign In
           </button>
         </div>
       </div>
