@@ -1675,3 +1675,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.76 Upgrade login form with native OS password manager autocomplete and persistent Remember Me`
   - Tag Versi: `5.2.76`
+
+---
+
+## 🛡️ [MAJOR UPDATE] 117. Sistem Pengurusan Sesi Ketidakaktifan Pentadbir & Log Keluar Automatik (Admin Session Inactivity Timeout Guardian) (v5.2.77)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna meminta agar sistem portal Pentadbir (**Admin**) mempunyai perlindungan sesi pintar: jika tiada aktiviti selama 10 minit, popup amaran dengan pemasa 1 minit dipaparkan. Jika tiada sebarang tindak balas, sistem akan melog keluar secara automatik:
+    > *"admin ni kan boleh x kalau dah lama x usik pape dia reminder n keluar popup dalam 10 menit sahaja kalau xde response buat reminder 1 menit timer n terus log out"*
+- **Tindakan Pembaikan & Seni Bina Sistem (Implementation & Security Architecture)**:
+  - **1. Pengesanan Ketidakaktifan (*User Activity Monitoring*)**:
+    - Membina modul [`admin/js/admin-idle-timeout.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/js/admin-idle-timeout.js) yang memantau interaksi pengguna (`mousemove`, `mousedown`, `keydown`, `touchstart`, `scroll`, `click`) dengan pengawalan *throttling* (1 saat) untuk prestasi optimum.
+    - Menetapkan had masa ketidakaktifan asas kepada **10 Minit (600,000 ms)**.
+  - **2. Modal Amaran Kaca Apple HIG Bento (*Frosted Glassmorphism Modal*)**:
+    - Selepas 10 minit tiada aktiviti, modal kaca `#admin-session-timeout-modal` dipaparkan secara animasi pegas (*spring physics*):
+      - Latar kabur: `-webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);`.
+      - Ikon keselamatan berdenyut (*pulsing security hourglass*).
+      - Lencana pemasa digital masa nyata **1 Minit (60 saat)** (`01:00` $\to$ `00:00`) yang bertukar warna merah berdenyut apabila $\le 15$ saat.
+      - Butang dwi-tindakan:
+        - **"Kekalkan Sesi / Stay Logged In"**: Menetapkan semula pemasa 10 minit dan menutup modal.
+        - **"Log Keluar Sekarang / Log Out Now"**: Menamatkan sesi serta merta.
+  - **3. Log Keluar Automatik & Pembersihan Sesi Selamat (*Secure Wipe & Auto-Logout*)**:
+    - Apabila pemasa mencecah `00:00`, sistem memadamkan `wedrive_session` daripada `localStorage` & `sessionStorage`, menandatangani keluar daripada Supabase Auth, dan mengalihkan pengguna ke `account/pages/login/login.html?session_expired=expired`.
+  - **4. Pemuat Automatik Global (*Global Auto-Loader Integration*)**:
+    - Diintegrasikan ke dalam [`shared/js/sidebar-loader.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/shared/js/sidebar-loader.js) dan dipautkan pada semua 10 halaman Admin (`dashboard`, `bookings`, `cars`, `car-detail`, `calendar`, `customers`, `chatbot`, `marketing`, `reports`, `settings`).
+    - Menyediakan API ujian global `window.WeDriveAdminSession.testWarning(seconds)` bagi memudahkan demonstrasi dan penilaian QA.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **7/7 Ujian Lulus (100% Pass Rate dalam 18.8s)** merangkumi suite baharu [`tests/e2e/05_admin_idle_timeout.spec.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/tests/e2e/05_admin_idle_timeout.spec.js).
+- **Maklumat Git**:
+  - Commit: `5.2.77 Implement Admin Session Inactivity Timeout Guardian with Apple HIG warning modal and auto-logout`
+  - Tag Versi: `5.2.77`

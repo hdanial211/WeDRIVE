@@ -10,19 +10,6 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
-<link rel="stylesheet" href="../../../shared/css/sidebar.css" />
-<style>
-    th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
-    th.sortable:hover { color: var(--primary, #3B82F6); }
-    th.sort-asc::after { content: ' \2191'; color: var(--primary, #3B82F6); font-size: 11px; }
-    th.sort-desc::after { content: ' \2193'; color: var(--primary, #3B82F6); font-size: 11px; }
-    th.sort-asc, th.sort-desc { color: var(--primary, #3B82F6); }
-    .date-chip { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--slate-200, #E2E8F0); background: transparent; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--slate-500, #64748B); }
-    .date-chip:hover, .date-chip.active { background: var(--primary, #3B82F6); color: #fff; border-color: var(--primary, #3B82F6); }
-    .custom-date-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
-    .custom-date-row input[type="date"] { padding: 6px 10px; border: 1.5px solid var(--slate-200, #E2E8F0); border-radius: 8px; font-size: 12px; background: var(--card-bg, #fff); color: var(--navy, #1E293B); }
-    .custom-date-row .apply-btn { padding: 7px 16px; border-radius: 8px; border: none; background: var(--primary, #3B82F6); color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; }
-  </style>
 
   <!-- AUTH GUARD -->
   <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
@@ -185,6 +172,7 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../../../shared/js/calendar.js?v=5.2.40"></script>
   <script src="../../js/bookings.js"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
   <script>
     function showCustomDateRow(btn) {
       var row = document.getElementById('custom-date-row');

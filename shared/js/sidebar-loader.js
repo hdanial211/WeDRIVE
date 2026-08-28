@@ -159,6 +159,12 @@
           var lang = localStorage.getItem('wedrive_lang') || localStorage.getItem('wedrive-lang') || 'ms';
           window.setLanguage(lang);
         }
+        // Auto-load Admin Session Inactivity Timeout Guardian
+        if (component === 'sidebar-admin' && !window.WeDriveAdminSession && !document.querySelector('script[src*="admin-idle-timeout.js"]')) {
+          var timeoutScript = document.createElement('script');
+          timeoutScript.src = base + 'admin/js/admin-idle-timeout.js?v=5.2.77';
+          document.body.appendChild(timeoutScript);
+        }
       })
       .catch(function (err) {
         console.warn('[WeDRIVE Sidebar]', err.message);
