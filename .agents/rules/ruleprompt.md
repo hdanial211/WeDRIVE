@@ -2,216 +2,75 @@
 trigger: always_on
 ---
 
-# WeDRIVE Project Rules
+# WeDRIVE Core Project Rules
 
 ## 1. Theme & Design Consistency (Apple HIG Standard)
 
-- Semua reka bentuk UI, komponen, peralihan, kad, butang, modal, tipografi, dan susun atur WAJIB mematuhi piawaian rasmi **Apple Human Interface Guidelines (HIG)** dan **Apple Design Resources**:
-  - `https://developer.apple.com/design/human-interface-guidelines/getting-started` (Prinsip Utama, Clarity, Deference, Depth)
-  - `https://developer.apple.com/design/human-interface-guidelines/foundations` (Accessibility, Color, Dark Mode, Materials, Motion, Typography)
-  - `https://developer.apple.com/design/human-interface-guidelines/patterns` (Navigation, Modals, Search, Forms, Feedback, Loading)
-  - `https://developer.apple.com/design/human-interface-guidelines/components` (Segmented Controls, Buttons, Bento Cards, Date Pickers, Sheets)
-  - `https://developer.apple.com/design/human-interface-guidelines/inputs` (Touch Targets min 44px, Pointer/Mouse, Focus Halo Rings, Keyboard)
-  - `https://developer.apple.com/design/human-interface-guidelines/technologies` (AI Assistant Island, 3D 360 Viewer, Real-time Countdown)
-- **Rujukan Utama:** [`.agents/rules/apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_design_system.md).
-- **Tipografi:** SF Pro Display / SF Pro Text (`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`).
-- **Geometri:** Kad Bento Squircle (`border-radius: 24px/28px`), Butang/Pill (`border-radius: 9999px`), Input (`border-radius: 12px/14px`).
-- **Peralihan & Transisi Fizik Apple:** `cubic-bezier(0.16, 1, 0.3, 1)` dengan maklum balas sentuhan `transform: scale(0.97)` pada `:active`.
-- **Mod Siang & Malam:** Day Mode (`#F5F5F7` / `#FFFFFF`) dan Night Mode (`#000000` True Black / `#161618` Bento).
-- **Bahan Kaca:** Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
+- Semua reka bentuk UI, komponen, peralihan, kad, butang, modal, tipografi, dan susun atur WAJIB mematuhi piawaian rasmi **Apple Human Interface Guidelines (HIG)**:
+  - **Rujukan Utama:** [`.agents/rules/apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_design_system.md).
+  - **Tipografi:** SF Pro Display / SF Pro Text (`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`).
+  - **Geometri Asas:** Elemen bulat minimum nisbah 1:1 (`aspect-ratio: 1 / 1; border-radius: 50%`), Butang/Pill kapsul mengembang mendatar (`border-radius: 9999px`), Kad Bento Squircle (`border-radius: 24px/28px`), Input (`border-radius: 12px/14px`).
+  - **Peralihan & Transisi Fizik Apple:** `cubic-bezier(0.16, 1, 0.3, 1)` dengan maklum balas sentuhan `transform: scale(0.97)` pada `:active`.
+  - **Mod Siang & Malam:** Day Mode (`#F5F5F7` / `#FFFFFF`) dan Night Mode (`#000000` True Black / `#161618` Bento).
+  - **Bahan Kaca:** Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
+
+---
 
 ## 2. Git Version Control
 
-- Setiap perubahan WAJIB push ke GitHub.
-- Format commit message: `X.X.X Description of changes` (Wajib bermula dengan nombor versi).
-- JANGAN letak huruf `v` di depan version number (Contoh betul: `3.0.0`, BUKAN `v3.0.0`).
+- Setiap perubahan WAJIB ditujah (push) ke GitHub.
+- Format commit message: `X.X.X Description of changes` (Wajib bermula dengan nombor versi tanpa huruf `v`).
 - **Penomboran Versi FYP 2:**
-  - FYP 2 disambung secara berturutan bermula dari versi **`3.0.0`** (menyambung daripada versi akhir FYP 1 iaitu `2.9.9` / `Last FYP 1`).
-  - Setiap commit, perubahan kod, atau laporan perkembangan WAJIB memulakan tajuk/mesej dengan nombor versi berturutan (contoh: `3.0.0`, `3.0.1`, `3.1.0`, dsb).
+  - FYP 2 disambung secara berturutan bermula dari versi **`3.0.0`** (selepas FYP 1 versi `2.9.9`).
+  - Setiap commit WAJIB mempunyai tag GitHub yang sepadan dengan nombor versi.
 
-### Struktur Version (Major.Minor.Patch)
-
-| Bahagian | Bila guna                                          | Contoh                                    |
+| Bahagian | Bila Guna                                          | Contoh                                    |
 | -------- | -------------------------------------------------- | ----------------------------------------- |
-| Major    | Modul baru / redesign keseluruhan (FYP 2 permulaan) | `3.0.0 Start FYP 2 Architecture & AI`     |
+| Major    | Modul baru / redesign keseluruhan                  | `3.0.0 Start FYP 2 Architecture & AI`     |
 | Minor    | Tambah feature / improvement / perubahan sederhana | `3.1.0 Add AI Document OCR Verification`  |
 | Patch    | Bug fix / tweak kecil / styling update             | `3.0.1 Fix hover animation, adjust spacing` |
 
-### Peraturan Version
+---
 
-- Version MESTI berturutan. Contoh: selepas `3.0.0`, seterusnya ialah `3.0.1` (patch), `3.1.0` (minor), atau `4.0.0` (major). JANGAN lompat ke belakang.
-- Setiap commit WAJIB ada tag di GitHub yang sepadan dengan version number.
-
-### 2.1. Mandatory Development Summary Logging (PLAN)
+## 3. Mandatory Development Summary Logging (PLAN)
 
 - Setiap kali sebarang perubahan kod, pembaikan isu, atau penambahan ciri baharu dilakukan, pembangun/AI WAJIB mengemas kini fail:
   `PLAN/FYP1_to_FYP2_Development_Summary.md`
-- Setiap tajuk catatan perkembangan WAJIB diasingkan dan dilabelkan dengan jelas mengikut kategori:
-  - **`[MAJOR UPDATE]`**: Untuk modul baharu, rombakan arkitektur, penetapan piawaian sistem, atau integrasi ciri berskala besar.
-  - **`[MINOR UPDATE]`**: Untuk pembaikan pepijat (*bug fixes*), penyeragaman komponen/CSS, penalaan kalendar, atau pembaikan kecil.
+- Labelkan setiap catatan perkembangan dengan jelas:
+  - **`[MAJOR UPDATE]`**: Modul baharu, rombakan arkitektur, atau integrasi ciri berskala besar.
+  - **`[MINOR UPDATE]`**: Pembaikan pepijat, penyeragaman komponen/CSS, atau penalaan UI.
 
-## 3. Logo
+---
 
-- Ikon di kiri, teks di kanan.
-- Background mesti transparent.
-- Favicon (logo pada tab browser) WAJIB ada di setiap page.
+## 4. Logo, Branding & Emoji Rules
 
-## 4. No Emoji
+- **Logo:** Ikon di kiri, teks di kanan, latar belakang telus (transparent), dan favicon WAJIB ada di setiap page.
+- **Terminology:** Gunakan perkataan **"Car / Cars"** untuk semua elemen antaramuka pelanggan (jangan guna istilah "Fleet").
+- **No Emoji:** JANGAN gunakan emoji dalam kod sumber, nama fail, atau teks antaramuka.
 
-- JANGAN gunakan emoji dalam kod, commit message, atau UI.
+---
 
-## 5. File Management
+## 5. Automated Testing & Playwright CLI Protocol
 
-- File yang tidak digunakan WAJIB dipindahkan ke folder `bin/`.
-- Path: `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM KHAS 6/BITU3983 PROJECT II(FYP 2)/AI CAR RENTAL SYSTEM/bin`
-
-## 6. Folder Structure
-
-- Susun semua file supaya kemas, tidak berselerak, dan mudah maintain.
-- Gunakan folder berasingan untuk setiap kumpulan fail berkaitan.
-- Setiap kali tambah atau buang file/folder, WAJIB update file ini:
-  `/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM KHAS 6/BITU3983 PROJECT II(FYP 2)/AI CAR RENTAL SYSTEM/docs/PROJECT_STRUCTURE.md`
-
-## 7. CSS Architecture (1 Module = 1 CSS)
-
-Setiap modul ada SATU fail CSS utama sahaja:
-
-| Modul    | CSS File                    | Kegunaan                                  |
-| -------- | --------------------------- | ----------------------------------------- |
-| Admin    | `admin/css/admin.css`       | Semua gaya admin pages                    |
-| Customer | `customer/css/customer.css` | Semua gaya customer pages                 |
-| Guest    | `guest/css/guest.css`       | Semua gaya guest pages (Pricing, Explore) |
-| Account  | `account/css/auth.css`      | Gaya login, signup, forgot password       |
-
-### Peraturan CSS
-
-- JANGAN buat file CSS baru yang duplicate fungsi sedia ada.
-- JANGAN letak inline `<style>` besar dalam HTML. Pindahkan ke fail CSS modul.
-- Fail `shared/css/` hanya untuk komponen GLOBAL: theme, navbar, footer, chatbot, animation, sidebar.
-- Pastikan theme (Day/Night mode) konsisten di semua page.
-
-## 8. Multilingual & Theme Support
-
-Projek ini menyokong:
-- **Theme:** Night mode & Day mode (toggle)
-- **Bahasa:** English & Melayu (dynamic language switching)
-
-Kedua-dua feature ini WAJIB berfungsi di semua page.
-
-## 9. Dummy Data
-
-- Data dummy / frontend data mesti disimpan secara tersusun dalam `shared/dummy/`.
-- Data mesti boleh sync dengan backend apabila backend sudah siap.
-- Gunakan satu fail data utama (`shared/dummy/data.json`) sebagai single source of truth.
-
-## 10. Sidebar & Navigation
-
-### Navigation Pattern
-
-| Modul    | Jenis Navigation | Loader                          |
-| -------- | ---------------- | ------------------------------- |
-| Admin    | Sidebar          | `shared/js/sidebar-loader.js`   |
-| Customer | Sidebar          | `customer/js/sidebar-loader.js` |
-| Guest    | Top Navbar       | `shared/js/navbar-loader.js`    |
-| Account  | Tiada (standalone) | -                             |
-
-- JANGAN campur sidebar dan navbar dalam satu modul.
-- Guest pages guna **top navbar** sahaja.
-- Customer dan Admin pages guna **sidebar** sahaja.
-
-### Sidebar Components
-
-| Modul    | Sidebar Component                              |
-| -------- | ---------------------------------------------- |
-| Admin    | `admin/components/sidebar/sidebar-admin.html`  |
-| Customer | Dijana oleh `customer/js/sidebar-loader.js`    |
-
-- Sidebar admin dan customer adalah BERBEZA antara satu sama lain.
-- Dalam modul yang sama, semua page WAJIB guna sidebar yang konsisten.
-
-
-## 11. Auth Guard
-
-| Status Semasa | Penerangan                                  |
-| ------------- | ------------------------------------------- |
-| DISABLED      | Development mode - tiada redirect ke login  |
-| AKTIF         | Akan diaktifkan selepas semua page siap      |
-
-- Semasa development: Auth guard di-disable supaya mudah navigate antara page.
-- Selepas semua page siap dan tested: Auth guard akan diaktifkan semula - redirect ke login page untuk user yang belum login.
-
-## 12. Stitch Design Reference
-
-- Rujukan reka bentuk Stitch disimpan di `docs/stitch-reference/`.
-- Semua perubahan UI mesti konsisten dengan design reference yang ada.
-- Stitch Project ID: `1862124494843018493`
-
-## 13. Mobile Responsive
-
-- SEMUA page WAJIB boleh dilihat dan berfungsi pada peranti telefon (mobile).
-- Setiap page WAJIB ada meta viewport tag:
-  ```html
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+- **Isolasi Folder Ujian:** Semua skrip ujian dan dependensi disimpan di dalam folder terasing `tests/` (Rujuk [`.agents/rules/playwright_testing.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/playwright_testing.md)).
+- **Mandatory Post-Task Test Run:** Setiap kali selesai sesuatu tugas pembangunan, jalankan:
+  ```bash
+  cd tests && npx playwright test
   ```
-- Gunakan media queries untuk breakpoint utama:
-  - `max-width: 1100px` - Tablet landscape
-  - `max-width: 900px` - Tablet portrait
-  - `max-width: 768px` - Mobile landscape / small tablet
-  - `max-width: 600px` - Mobile portrait
-- Sidebar WAJIB auto-collapse menjadi hamburger menu pada mobile.
-- Grid dan layout WAJIB responsive (contoh: 4 columns > 2 columns > 1 column).
-- Font size, padding, dan spacing WAJIB sesuai untuk skrin kecil.
-- Touch target minimum 44x44px untuk butang dan link pada mobile.
+- Pastikan semua ujian mencapai **100% Pass Rate** sebelum commit.
 
-## 14. UI/UX, Branding & Backend References
+---
 
-Untuk memastikan kualiti projek WeDRIVE sentiasa premium dan "padu", jadikan laman web berikut sebagai rujukan standard:
-
-### UI/UX & Branding Standard (Premium & Modern)
-- **Airbnb (airbnb.com):** Rujukan utama untuk *booking flow* yang lancar, carian tarikh (calendar), peta interaktif, dan *clean UI*.
-- **Stripe (stripe.com):** Rujukan untuk *glassmorphism*, animasi *micro-interactions* yang sangat lancar, borang pembayaran (payment form) yang kemas, dan tipografi yang jelas.
-- **Apple (apple.com):** Rujukan untuk *scrollytelling*, paparan produk 3D/premium, ruang putih (*whitespace*), dan tipografi berkelas tinggi.
-- **Linear (linear.app):** Rujukan untuk *dark mode* yang sempurna, *glowing borders*, dan *keyboard-first navigation* untuk Admin Dashboard.
-- **Vercel (vercel.com):** Rujukan untuk kelajuan antaramuka (speed), *minimalist dashboard*, dan komponen yang responsif.
-
-### Backend & System Architecture Standard
-- API mestilah pantas dan konsisten seperti standard RESTful (atau GraphQL) moden.
-- Pengurusan *state* dan *loading skeletons* mesti meniru gaya UX platform di atas supaya *user* tidak rasa sistem perlahan.
-- Seni bina sistem haruslah *modular* (boleh dikembangkan) dan menyokong *lazy loading* untuk prestasi optimum (seperti modul kalendar Flatpickr WeDRIVE).
-
-## 15. Graphify & Token Optimization (MANDATORY)
+## 6. Graphify & Token Optimization (MANDATORY)
 
 - **Jimat Kuota AI (Token Saver):**
-  - Setiap kali membuka tab / sesi perbualan baharu, **JANGAN baca (*load/read*) setiap fail dan folder secara pukal / manual**.
-  - **WAJIB gunakan MCP Graphify** (`query_graph`, `get_node`, `shortest_path`) atau periksa `graphify-out/graph.json` / `graphify-out/GRAPH_TREE.html` untuk mencari fail, fungsi, dan hubung kait kod secara terus.
-  - Hanya baca fail spesifik yang perlu diubah atau dibaiki sahaja untuk meminimumkan penggunaan kuota dan token perbualan.
+  - Setiap kali membuka sesi baharu, **JANGAN baca (*load/read*) fail secara pukal**.
+  - **WAJIB gunakan MCP Graphify** (`query_graph`, `get_node`, `shortest_path`) atau periksa `graphify-out/graph.json` untuk mencari fail dan hubung kait kod secara terus.
 
-## 16. Testing Protocol & Official Credentials (MANDATORY)
+---
 
-- **Kredensial Pengujian Standard (Rujuk `docs/INFO`):**
-  - **Admin:** `admin@wedrive.my` | Kata Laluan: `admin123`
-  - **Customer:** `ahmad@wedrive.my` | Kata Laluan: `customer123`
-- **Peraturan Semasa Browser / Automated Testing:**
-  - **JANGAN ubah** email atau kata laluan akaun-akaun ini.
-  - **JANGAN cipta atau daftar akaun baharu (*sign up*)** semasa testing supaya tidak berlaku data bertindan (*duplicate*).
-  - Pada halaman login, jika kredensial sudah auto-fill, terus klik butang **Sign In** sahaja.
-  - **JANGAN buka tab baharu secara berlebihan**; kekalkan ujian pada tab sedia ada menggunakan kursor dan elemen pada skrin.
+## 7. Rujukan Peraturan Modul Berkaitan
 
-## 17. Playwright CLI Automated Testing & Isolated `tests/` Directory (MANDATORY)
-
-- **Isolasi Folder Ujian (Zero Root Clutter):**
-  - Semua dependensi `@playwright/test`, `package.json`, `playwright.config.js`, `node_modules/`, dan skrip ujian E2E **WAJIB disimpan secara terasing di dalam folder `tests/` sahaja**.
-  - **JANGAN** letakkan fail `package.json` atau output ujian di direktori akar (*root directory*).
-- **Protokol Ujian Wajib Selepas Setiap Modul/Ciri Siap (Post-Task Test Execution):**
-  - Setiap kali selesai menyiapkan tugas pembangunan, penambahan ciri baharu, atau pembaikan UI/UX, pembangun/AI **WAJIB menjalankan suite ujian Playwright**:
-    ```bash
-    cd tests && npx playwright test
-    ```
-  - Pastikan semua ujian lulus (**100% Pass Rate**) bagi menjamin tiada regresi kod (*zero regressions*).
-- **Penyelenggaraan & Penambahan Skrip Ujian (`tests/e2e/`):**
-  - Sentiasa kemas kini dan tambah fail ujian E2E baharu di `tests/e2e/` apabila membina ciri baharu (contoh: Aliran Tempahan, Pengurusan Kenderaan, Muat Naik Dokumen OCR, Integrasi Supabase).
-  - Skrip ujian sedia ada:
-    - `01_auth.spec.js` (Log Masuk & Validasi Borang)
-    - `02_theme_and_lang.spec.js` (Suis Tema Day/Night/Auto & Dwibahasa EN/MS)
-    - `03_about_corporate.spec.js` (Penjenamaan Korporat, Jaminan & Pemicu AI Sparkles)
-    - `04_pricing_glider.spec.js` (Suis Gelangsar Animasi Fizikal Apple)
+- **Navigation, Responsif & UI/UX:** [`.agents/rules/navigation_and_ui.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/navigation_and_ui.md)
+- **Kod, CSS & Backend Architecture:** [`.agents/rules/code_and_backend.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/code_and_backend.md)
+- **Apple Device Support:** [`.agents/rules/apple_device_support.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_device_support.md)

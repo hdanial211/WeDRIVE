@@ -4,38 +4,44 @@ trigger: always_on
 
 # Playwright Automated Testing Standard (WeDRIVE)
 
-## 1. Directory Structure & Isolation
+## 1. Official Test Credentials
 
-All automated tests and dependencies MUST be strictly isolated inside the `tests/` folder:
+- **Admin:** `admin@wedrive.my` | Kata Laluan: `admin123`
+- **Customer:** `ahmad@wedrive.my` | Kata Laluan: `customer123`
+
+### Peraturan Ujian Pelayar & Kredensial
+- JANGAN ubah email atau kata laluan akaun ini.
+- JANGAN cipta akaun baharu (*sign up*) semasa ujian untuk mengelakkan data bertindan.
+- Pada halaman login, jika kredensial sudah auto-fill, terus klik butang Sign In.
+- JANGAN buka banyak tab; kekalkan ujian pada tab sedia ada.
+
+---
+
+## 2. Directory Structure & Modular Isolation
+
+Semua dependensi `@playwright/test`, konfigurasi, dan skrip ujian E2E WAJIB disimpan secara terasing di dalam folder `tests/`:
 
 ```text
 tests/
 ├── e2e/
-│   ├── 01_auth.spec.js           # Login & form validation
-│   ├── 02_theme_and_lang.spec.js  # Theme (Day/Night/System) & Language (EN/MS)
-│   ├── 03_about_corporate.spec.js# Corporate branding, guarantees, AI trigger
-│   └── 04_pricing_glider.spec.js # Segmented control apple slider
+│   ├── 01_auth.spec.js           # Ujian E2E Log Masuk & Validasi Borang
+│   ├── 02_theme_and_lang.spec.js  # Ujian Suis Tema (Dark/Light/Auto) & Dwibahasa (EN/MS)
+│   ├── 03_about_corporate.spec.js# Ujian Penjenamaan Korporat, Jaminan & AI Sparkles
+│   └── 04_pricing_glider.spec.js # Ujian Gelangsar Suis Apple (Daily vs Weekly)
 ├── package.json                  # Isolated npm scripts & dependencies
 ├── package-lock.json
 ├── playwright.config.js          # Browser & base URL config
 └── node_modules/                 # Local test packages (git-ignored)
 ```
 
-## 2. Mandatory Test Execution Protocol
+---
 
-After completing any development feature, page update, bug fix, or UI refactoring:
-1. Run automated test suite:
+## 3. Mandatory Post-Task Test Execution Protocol
+
+Setiap kali selesai menyiapkan tugasan pembangunan, penambahan ciri, pembaikan UI/UX, atau reka letak:
+1. Jalankan suite ujian Playwright:
    ```bash
    cd tests && npx playwright test
    ```
-2. Verify all tests pass (100% pass rate).
-3. If any test fails, diagnose whether it is an intentional UI change or a regression:
-   - If regression: fix the application code immediately.
-   - If intentional UI update: update the test spec locator/assertion accordingly.
-
-## 3. Best Practices for WeDRIVE Test Suites
-
-- **Single Tab & Stable Context**: Do not open unnecessary tabs or spam popups.
-- **Login Testing**: Use existing credentials and click sign-in directly (never create duplicate signups).
-- **Selectors**: Prefer semantic attributes (`[data-key]`, `id`, `.class`) and avoid brittle XPath selectors.
-- **Apple HIG Animations**: Ensure `waitForTimeout` or locator wait handles fluid CSS transition timings (typically ~300ms - 500ms).
+2. Pastikan semua ujian lulus (**100% Pass Rate**).
+3. Jika terdapat ujian yang gagal, kenal pasti punca (regresi atau perubahan elemen disengajakan) dan betulkan serta-merta sebelum commit.

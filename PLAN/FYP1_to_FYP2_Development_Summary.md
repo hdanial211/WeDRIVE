@@ -1514,3 +1514,23 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.69 Establish mandatory Playwright automated testing SOP in agent rules`
   - Tag Versi: `5.2.69`
+
+---
+
+## 🗂️ [MINOR UPDATE] 110. Pemodularan & Pengasingan Fail Peraturan Ejen `.agents/rules/` (Agent Rules Modularization Under Character Limit) (v5.2.70)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Fail `ruleprompt.md` sebelum ini telah melebihi had 12,000 aksara Antigravity IDE (12,710 / 12,000 aksara dengan amaran merah):
+    > *"dalam ruleprompt tu dah penuh cuba awak asingkan rule prompt tu"*
+- **Tindakan Pembaikan & Pemodularan (Modular Architecture)**:
+  - Mengasingkan fail `ruleprompt.md` yang besar kepada modul-modul peraturan khusus di dalam `.agents/rules/` dengan atribut `trigger: always_on`:
+    1. **`ruleprompt.md`** (`4,890` aksara): Peraturan teras projek, ringkasan reka bentuk Apple HIG, penomboran versi Git, pendokumentasian wajib fail PLAN, protokol ujian, dan pengoptimuman Graphify.
+    2. **`navigation_and_ui.md`** (`2,724` aksara): Corak navigasi bar sisi (Admin vs Customer vs Guest), garis panduan responsif mudah alih & *breakpoints*, dan rujukan standard UI/UX industri (Airbnb, Stripe, Apple, Linear, Vercel).
+    3. **`code_and_backend.md`** (`2,045` aksara): Pengurusan fail/folder (`bin/`), seni bina CSS (*1 Module = 1 CSS*), dwibahasa & tema, *dummy data sync*, dan status *Auth Guard*.
+    4. **`playwright_testing.md`** (`1,823` aksara): Kredensial rasmi ujian, protokol ujian automasi Playwright CLI, struktur folder terasing `tests/`, dan peraturan pelaksanaan ujian pasca-tugasan.
+  - **Status Had Aksara**: Kesemua 7 fail peraturan kini berada jauh di bawah had maksimum 12,000 aksara (berstatus hijau tanpa sebarang amaran amaran merah).
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate dalam 11.3s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.70 Modularize agent ruleprompt into focused rule files within character limits`
+  - Tag Versi: `5.2.70`
