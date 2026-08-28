@@ -1553,3 +1553,23 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.71 Add cybersecurity and Strix AI vulnerability audit rules to agents ruleset`
   - Tag Versi: `5.2.71`
+
+---
+
+## 🎨 [MINOR UPDATE] 112. Penciptaan & Integrasi Custom Agent Skill Front-End UI (`frontend-ui`) (Frontend UI Craft & Engineering Skill) (v5.2.72)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna bersetuju untuk membina kemahiran khusus *Front-End UI Skill* bagi memastikan mutu estetika dan ketukangan UI WeDRIVE sentiasa bertaraf dunia:
+    > *"awak tahu Skill UI for Front-End" $\to$ "yes betul"*
+- **Tindakan Pembaikan & Seni Bina Skill (Skill Architecture)**:
+  - Membina kemahiran ejen baharu di dalam folder [`.agents/skills/frontend-ui/SKILL.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/skills/frontend-ui/SKILL.md):
+    1. **Prinsip Utama Ketukangan UI (*UI Craft & Depth*)**: Penolakan templat AI yang kaku, penggunaan palet warna kurasi (*Obsidian Black & Crisp Day*), pencahayaan tepi spekular 1px, bayang-bayang bertingkat, dan kesan kaca kabur tepu tinggi (`backdrop-filter: blur(24px) saturate(180%)`).
+    2. **Piawaian Geometri & Tipografi**: Peraturan nisbah minimum 1:1 bulat sempurna pada ikon dan pengembangan mendatar ke bentuk kapsul/pil, serta tipografi Apple SF Pro dengan `tabular-nums` untuk pemasa/harga.
+    3. **Fizik Spring & Mikro-Interaksi**: Lengkung fizik Apple *cubic-bezier*, suis gelangsar fizikal terapung (*sliding gliders*), animasi goncang ralat berbentuk pil, dan *skeleton reveal*.
+    4. **Ergonomik & Responsif Mudah Alih**: Sasaran sentuhan minimum $44\text{px} \times 44\text{px}$ pada telefon pintar dan pelarasan adaptif 3 *breakpoints* (Desktop, Tablet, Mobile).
+    5. **Protokol Verifikasi Dwi-Peringkat**: Audit visual masa nyata (DevTools MCP) + Ujian Automatik E2E (Playwright CLI).
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate dalam 11.8s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.72 Create and integrate frontend-ui custom agent skill for Apple HIG craft and styling`
+  - Tag Versi: `5.2.72`
