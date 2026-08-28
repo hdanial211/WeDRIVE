@@ -7290,11 +7290,15 @@ a.btn-sm {
 }
 
 .custom-date-row {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.custom-date-row.active {
   display: inline-flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  margin-top: 10px !important;
-  flex-wrap: wrap !important;
 }
 
 .custom-date-row input.date-picker {
@@ -10182,11 +10186,15 @@ th.sort-desc {
 }
 
 .custom-date-row {
-  display: flex;
+  display: none;
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 10px;
+}
+
+.custom-date-row.active {
+  display: flex !important;
 }
 
 .custom-date-row input[type="date"] {

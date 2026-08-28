@@ -181,7 +181,40 @@ function filterByDate(period, btn) {
   currentDateFilter = period;
   document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
   if (btn) btn.classList.add('active');
+
+  // Hide custom date picker row for predefined periods (all, month, year)
+  var row = document.getElementById('custom-date-row');
+  if (row && period !== 'custom') {
+    row.style.display = 'none';
+    row.classList.remove('active');
+  }
+
   applyFilters();
+}
+
+function showCustomDateRow(btn) {
+  var row = document.getElementById('custom-date-row');
+  var customBtn = btn || document.getElementById('date-chip-custom');
+  var isCurrentlyVisible = row && (row.classList.contains('active') || (row.style.display !== 'none' && row.style.display !== ''));
+
+  document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
+
+  if (!isCurrentlyVisible) {
+    if (customBtn) customBtn.classList.add('active');
+    if (row) {
+      row.style.display = 'inline-flex';
+      row.classList.add('active');
+    }
+    currentDateFilter = 'custom';
+  } else {
+    var allBtn = document.getElementById('date-chip-all');
+    if (allBtn) allBtn.classList.add('active');
+    if (row) {
+      row.style.display = 'none';
+      row.classList.remove('active');
+    }
+    filterByDate('all', allBtn);
+  }
 }
 
 function applyCustomDate() {

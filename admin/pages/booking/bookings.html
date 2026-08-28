@@ -171,22 +171,7 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../../../shared/js/calendar.js?v=5.2.40"></script>
-  <script src="../../js/bookings.js"></script>
-  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
-  <script>
-    function showCustomDateRow(btn) {
-      var row = document.getElementById('custom-date-row');
-      var isShown = row && row.style.display !== 'none';
-      document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
-      if (!isShown) {
-        if (btn) btn.classList.add('active');
-        if (row) row.style.display = 'flex';
-      } else {
-        document.getElementById('date-chip-all').classList.add('active');
-        if (row) row.style.display = 'none';
-        filterByDate('all', null);
-      }
-    }
-  </script>
+  <script src="../../js/bookings.js?v=5.2.78"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.78"></script>
 </body>
 </html>

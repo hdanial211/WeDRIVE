@@ -1738,3 +1738,26 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.78 Centralize all admin styles and controls into shared master CSS wedrive.css`
   - Tag Versi: `5.2.78`
+
+---
+
+## 📅 [MINOR UPDATE] 119. Penstrukturan Penapis Julat Tarikh Tempahan Admin & Pemaparan Dinamik Custom Range (Admin Bookings Custom Date Range Filter Toggle) (v5.2.79)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna meminta agar baris pemilihan tarikh khusus (*Custom Range*) disorokkan secara lalai (*hidden by default*) dan hanya dipaparkan apabila cip **"Custom Range"** ditekan:
+    > *"custom page ni buat dia tekan custom range baru keluar pilih tarikh tu"*
+- **Tindakan Pembaikan & Seni Bina Penapis (Implementation & Toggle Logic)**:
+  - **1. Pembersihan Sifat CSS (`shared/css/wedrive.css`)**:
+    - Menghapuskan peraturan `display: inline-flex !important` yang sebelum ini memaksa `.custom-date-row` sentiasa terpapar walaupun pada pilihan *All Time*.
+    - Menetapkan `.custom-date-row { display: none; }` secara lalai dan `.custom-date-row.active { display: inline-flex !important; }`.
+  - **2. Penyelarasan Logik JavaScript (`admin/js/bookings.js` & `admin/pages/booking/bookings.html`)**:
+    - Mengemaskini fungsi `filterByDate(period, btn)` supaya apabila memilih tempoh pratetap (`all`, `month`, `year`), baris `#custom-date-row` disorokkan serta-merta (`display: none;` dan membuang kelas `.active`).
+    - Menambah baik fungsi `showCustomDateRow(btn)` untuk mengaktifkan baris `#custom-date-row` (`display: inline-flex;` dan `.active`) hanya apabila butang *Custom Range* dipilih, serta mengembalikan pilihan ke *All Time* jika ditogol keluar.
+    - Mengeluarkan pemfokusan automatik Flatpickr yang tidak diingini semasa penukaran cip.
+  - **3. Ujian Automatik Baharu (`tests/e2e/06_bookings_filter.spec.js`)**:
+    - Membina ujian Playwright automatik untuk mengesahkan bahawa baris tarikh disorokkan secara lalai dan hanya muncul apabila cip *Custom Range* ditekan.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **8/8 Ujian Lulus (100% Pass Rate dalam 21.9s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.79 Toggle custom date range filter row only when Custom Range chip is selected`
+  - Tag Versi: `5.2.79`
