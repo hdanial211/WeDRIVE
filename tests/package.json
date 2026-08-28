@@ -1,0 +1,34 @@
+{
+  "name": "ai-car-rental-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "ai-car-rental-system": "bin/ai-insights.js"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:codegen": "playwright codegen http://localhost:8088"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdanial211/WeDRIVE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hdanial211/WeDRIVE/issues"
+  },
+  "homepage": "https://github.com/hdanial211/WeDRIVE#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1"
+  }
+}

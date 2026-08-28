@@ -6,3 +6,10 @@ bin/
 REPORT/REPORT FYP.docx
 REPORT/REPORT FYP.pdf
 
+tests/node_modules/
+tests/playwright-report/
+tests/test-results/
+tests/blob-report/
+playwright-report/
+test-results/
+blob-report/

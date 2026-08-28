@@ -1453,3 +1453,43 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.67 Redesign About Us page with Stitch corporate mobility branding, authentic rental guarantees, and sparkle AI icon`
   - Tag Versi: `5.2.67`
+
+---
+
+## 🎭 [MINOR UPDATE] 108. Penyediaan Suite Ujian Automatik Playwright CLI Terasing Dalam Folder `tests/` (Isolated Playwright CLI Automated Test Architecture) (v5.2.68)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna bersetuju menggunakan Playwright CLI untuk ujian E2E automatik bagi projek FYP 2 WeDRIVE.
+  2. Pengguna menetapkan syarat susun atur fail yang kemas dan teratur agar tidak menyepahkan direktori akar (*root directory*):
+     > *"kalau boleh awak masukkan dalah satu folder saya xnak bersepah"*
+- **Tindakan Pembaikan & Struktur Terasing (Implementation & Modular Isolation)**:
+  - **Struktur Folder Terpencil (`tests/`)**:
+    - Memindahkan semua fail konfigurasi, pakej, dan skrip ujian daripada direktori akar ke dalam satu folder khusus:
+      ```
+      tests/
+      ├── e2e/
+      │   ├── 01_auth.spec.js           # Ujian E2E Log Masuk & Validasi Borang
+      │   ├── 02_theme_and_lang.spec.js  # Ujian Suis Tema (Dark/Light/Auto) & Dwibahasa (EN/MS)
+      │   ├── 03_about_corporate.spec.js# Ujian Penjenamaan Korporat, Jaminan & AI Sparkles
+      │   └── 04_pricing_glider.spec.js # Ujian Gelangsar Suis Apple (Daily vs Weekly)
+      ├── package.json                  # Pakej devDependencies @playwright/test & skrip npm
+      ├── package-lock.json
+      ├── playwright.config.js          # Konfigurasi Chromium, baseURL & reporter
+      └── node_modules/                 # Modul terasing yang diabaikan oleh Git
+      ```
+  - **Kemaskini Konfigurasi & Perlindungan Git (`.gitignore`)**:
+    - Mengemaskini `tests/playwright.config.js` dengan `testDir: './e2e'`, `baseURL: 'http://localhost:8088'`, dan `workers: 1` bagi mengelakkan konflik sesi.
+    - Menambah peraturan perlindungan `.gitignore` di peringkat akar projek:
+      `tests/node_modules/`, `tests/playwright-report/`, `tests/test-results/`, `tests/blob-report/`.
+    - Direktori akar projek kekal bersih, teratur, dan hanya mengandungi modul aplikasi WeDRIVE yang standard.
+- **Pengesahan Ujian Automatik (Automated Test Execution)**:
+  - Ujian dijalankan menggunakan perintah: `cd tests && npx playwright test`
+  - **Keputusan**: **5/5 Ujian Lulus (100% Pass Rate dalam 13.2 saat)**:
+    1. `✓ 01_auth.spec.js`: Halaman log masuk memuatkan input dan butang `#login-btn` ditekan tanpa ralat.
+    2. `✓ 02_theme_and_lang.spec.js (Theme)`: Suis tema beralih antara *dark*, *light*, dan *system*.
+    3. `✓ 02_theme_and_lang.spec.js (Lang)`: Suis bahasa menterjemahkan teks antara `en` dan `ms`.
+    4. `✓ 03_about_corporate.spec.js`: 4 kad tiang kepercayaan, 3 jaminan sewaan, dan butang AI berikon `auto_awesome` membuka chatbot secara responsif.
+    5. `✓ 04_pricing_glider.spec.js`: Gelangsar Apple meleret lancar antara pakej harian dan mingguan.
+- **Maklumat Git**:
+  - Commit: `5.2.68 Setup isolated Playwright CLI test suite in dedicated tests directory`
+  - Tag Versi: `5.2.68`
