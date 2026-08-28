@@ -1645,3 +1645,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.75 Configure Context7 authenticated API key and verify live documentation lookups`
   - Tag Versi: `5.2.75`
+
+---
+
+## 🔐 [MINOR UPDATE] 116. Penyelarasan Sistem Cadangan Kata Laluan OS & Penyimpanan "Remember Me" (Native OS Password Manager & Remember Me Architecture) (v5.2.76)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna bertanyakan bagaimana fungsi *Remember Me* dan simpanan kata laluan berfungsi merentasi sistem Apple (iCloud Keychain), Android (Google Password Manager), dan Windows (Windows Hello / Edge Credential Vault), serta bagaimana cadangan sistem dipaparkan secara automatik:
+    > *"remember me tu save macam apple ke android ke windows punya cara nnti tekan jek nnti ada suggestion dari system"*
+- **Tindakan Pembaikan & Seni Bina Dwi-Peringkat (Implementation & Dual-Layer Autofill)**:
+  - **Peringkat 1: Pengurus Kata Laluan OS / Pelayar (*Native OS Password Managers*)**:
+    - Di dalam `account/pages/login/login.html`:
+      - Mengemaskini atribut medan borang log masuk mengikut standard piawaian W3C & Apple/Google/Microsoft:
+        - Borang: `<form id="login-form" method="POST" action="#" onsubmit="handleLogin(event)" autocomplete="on">`.
+        - E-mel: `name="username"` dengan `autocomplete="username email"`.
+        - Kata Laluan: `name="password"` dengan `autocomplete="current-password"`.
+      - **Hasil**: Apabila pengguna menekan medan input:
+        1. 🍏 **Apple (iOS/macOS)**: Memaparkan bar cadangan pantas *iCloud Keychain QuickType* di atas papan kekunci dan pengesahan Face ID / Touch ID.
+        2. 🤖 **Android (Google)**: Memaparkan tindanan cadangan *Google Autofill* secara automatik.
+        3. 🪟 **Windows (Edge/Chrome)**: Memaparkan menu *drop-down* cadangan akaun tersimpan dengan ikon kunci Windows Hello.
+        4. Selepas log masuk berjaya, pelayar akan memaparkan dialog asli: *"Save Password to Keychain / Google Password Manager / Microsoft Edge?"*.
+      - Mengintegrasikan API moden **Credential Management API** (`navigator.credentials.store()`) untuk memicu dialog simpanan asli pelayar secara programatik.
+  - **Peringkat 2: Penyimpanan Aplikasi WeDRIVE ("Remember Me")**:
+    - Apabila kotak semak *Remember Me* ditanda (`#remember-me`):
+      - E-mel disimpan di dalam storan tempatan (`localStorage.setItem('wedrive_remember_email', email)`).
+      - Apabila pengguna membuka semula laman log masuk, e-mel dipra-isi (*auto pre-filled*) dan kotak *Remember Me* ditanda secara automatik.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **5/5 Ujian Lulus (100% Pass Rate dalam 13.0s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.76 Upgrade login form with native OS password manager autocomplete and persistent Remember Me`
+  - Tag Versi: `5.2.76`
