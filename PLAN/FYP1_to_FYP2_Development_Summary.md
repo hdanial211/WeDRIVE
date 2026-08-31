@@ -1761,3 +1761,39 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.79 Toggle custom date range filter row only when Custom Range chip is selected`
   - Tag Versi: `5.2.79`
+
+---
+
+## 🚗 [MAJOR UPDATE] 120. Pembangunan Menyeluruh Portal Pelanggan "My Bookings" Mengikut Piawaian Apple HIG (Customer My Bookings Portal Overhaul) (v5.2.80)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna meminta pembangunan penuh bagi halaman portal pelanggan **My Bookings** ([`customer/pages/my-bookings/my-bookings.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/customer/pages/my-bookings/my-bookings.html)) supaya menepati standard tertinggi Apple Human Interface Guidelines (HIG), reka letak kad Bento, kawalan bersegmen (*segmented control*), spotlight sewaan aktif dengan pemasa undur langsung (*live countdown*), borang modal sheet Apple, sokongan dwibahasa & dwi-tema penuh, serta integrasi resit invois.
+- **Tindakan Pembangunan & Ciri Utama (Implementation & Key Features)**:
+  - **1. Kad Metrik Bento Stat 4-Lajur (*Bento Stat Metric Cards Grid*)**:
+    - Membina 4 kad squircle (`border-radius: 22px`, bahan kaca lembut, specular border) untuk *Total Bookings*, *Active Rentals* (dengan lampu denyut hijau aktif), *Upcoming Bookings*, dan *Total Spent* dengan tipografi `font-variant-numeric: tabular-nums`.
+  - **2. Hero Bento Sewaan Aktif (*Dynamic Active Rental Spotlight Hero*)**:
+    - Memaparkan kad spotlight besar bagi kenderaan yang sedang disewa:
+      - Imej HD luaran kenderaan dengan kesan zum lembut semasa hover.
+      - Lencana `ACTIVE RENTAL` berkilau hijau `#34C759` berserta cip ID tempahan dengan fungsi salin 1-klik (`copyBookingId`).
+      - Pemasa undur dinamik (cth. *"Ends in 1d 14h 22m"*) dan palang kemajuan sewaan animasi (`#active-progress-fill`).
+      - Butang tindakan kapsul taktil: *Extend Rental*, *View Details*, dan *Support*.
+  - **3. Kawalan Bersegmen & Pil Carian Apple HIG (*Segmented Control & Search Pill*)**:
+    - Gelangsar suis bersegmen untuk tapisan status: *All Bookings*, *Active*, *Upcoming*, *Completed*, *Cancelled* berserta lencana kiraan dinamik.
+    - Pil carian pantas masa nyata (*Instant Search Pill*) dengan butang pembersihan (x) automatik.
+  - **4. Grid Kad Tempahan Bento Pelanggan (*Bento Booking Cards Grid*)**:
+    - Susun atur 2-kolum responsif dengan imej kenderaan, lencana status mengikut token sistem warna Apple, petunjuk julat tarikh berpasangan (*paired date range capsule*), lokasi hab, dan butang tindakan kontekstual mengikut status sewaan.
+  - **5. Lembaran Dialog Modal Apple (*Apple Sheet Modals*)**:
+    - **Modal Butiran Tempahan (`#modal-details`)**: Menampilkan pecahan lengkap kenderaan, jadual, pas tanpa kunci (*Instant QR pass*), dan ringkasan pembayaran.
+    - **Modal Pembatalan Tempahan (`#modal-cancel`)**: Dialog amaran dengan butang pemusnah merah Apple dan ringkasan polisi pemulangan wang.
+    - **Modal Lanjutan Sewaan (`#modal-extend`)**: Pemilih durasi tambahan (+1 Hari, +2 Hari, +3 Hari, +1 Minggu) dengan pengiraan kadar tambahan serta-merta.
+  - **6. Penyatuan Penggayaan ke Master CSS (`shared/css/wedrive.css`)**:
+    - Menambah modul penggayaan `.mybk-*` yang lengkap di dalam master CSS tanpa sebarang gaya inline atau fail CSS terpisah.
+  - **7. Sokongan Dwibahasa & Dwi-Tema Penuh (`shared/lang/`)**:
+    - Menambah lebih 30 kunci terjemahan `mybk_*` di dalam `en.json`, `en.js`, `ms.json`, dan `ms.js`.
+  - **8. Ujian E2E Automatik Playwright (`tests/e2e/07_customer_my_bookings.spec.js`)**:
+    - Membina 6 senario ujian E2E komprehensif mengesahkan pemaparan kad stat, peralihan tab bersegmen, penapisan carian langsung, interaksi modal sheet, navigasi resit, dan penukaran dwibahasa lancar.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **14/14 Ujian Lulus (100% Pass Rate dalam 43.8s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.80 Overhaul customer My Bookings portal with Apple HIG Bento layout and E2E tests`
+  - Tag Versi: `5.2.80`

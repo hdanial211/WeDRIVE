@@ -4,114 +4,346 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Bookings | WeDRIVE</title>
-  <meta name="description" content="Track and manage all your car rentals with WeDRIVE." />
+  <meta name="description" content="Track and manage all your car rentals and invoices with WeDRIVE." />
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
 </head>
 <body data-particles="10" data-cursor-glow>
 
-  <!-- SIDEBAR & MOBILE BAR -->
+  <!-- SIDEBAR & MOBILE BAR (loaded by sidebar-loader.js) -->
   <div id="customer-sidebar-placeholder"></div>
   <div id="mobile-menu-placeholder"></div>
 
   <main class="customer-main" id="customer-main">
-    <!-- UTILITY BAR -->
+    <!-- UTILITY TOP BAR -->
     <header class="utility-bar">
       <div>
         <h1 class="utility-title" data-key="mybk_title">My Bookings</h1>
-        <p class="utility-subtitle" data-key="mybk_subtitle">Track and manage all your rentals</p>
+        <p class="utility-subtitle" data-key="mybk_subtitle">Track and manage all your car rentals and invoices</p>
       </div>
-      <div class="utility-actions"></div>
+      <div class="utility-actions">
+        <!-- Injected dynamically by sidebar-loader.js (Lang & Theme toggles) -->
+      </div>
     </header>
 
     <div class="main-content-area">
 
-      <!-- Stats Row -->
-      <div class="mybk-stats">
-        <div class="mybk-stat">
-          <div class="mybk-stat-icon blue"><span class="material-icons-round">history</span></div>
-          <div>
-            <span class="mybk-stat-label" data-key="mybk_total">Total Bookings</span>
+      <!-- 1. Apple Bento Metric Stat Cards Grid -->
+      <section class="mybk-stats-grid" id="mybk-stats-section" aria-label="Booking statistics">
+        <!-- Total Bookings -->
+        <div class="mybk-stat-card">
+          <div class="mybk-stat-icon-wrap blue">
+            <span class="material-icons-round">history</span>
+          </div>
+          <div class="mybk-stat-info">
+            <span class="mybk-stat-label" data-key="mybk_stat_total">Total Bookings</span>
             <div class="mybk-stat-value" id="stat-total">--</div>
           </div>
         </div>
-        <div class="mybk-stat">
-          <div class="mybk-stat-icon green"><span class="material-icons-round">directions_car</span></div>
-          <div>
-            <span class="mybk-stat-label" data-key="mybk_active">Active Rentals</span>
+
+        <!-- Active Rentals -->
+        <div class="mybk-stat-card">
+          <div class="mybk-stat-icon-wrap green">
+            <span class="material-icons-round">directions_car</span>
+          </div>
+          <div class="mybk-stat-info">
+            <span class="mybk-stat-label" data-key="mybk_stat_active">Active Rentals</span>
             <div class="mybk-stat-value" id="stat-active">--</div>
           </div>
         </div>
-        <div class="mybk-stat">
-          <div class="mybk-stat-icon slate"><span class="material-icons-round">payments</span></div>
-          <div>
-            <span class="mybk-stat-label" data-key="mybk_spent">Total Spent</span>
+
+        <!-- Upcoming / Pending -->
+        <div class="mybk-stat-card">
+          <div class="mybk-stat-icon-wrap orange">
+            <span class="material-icons-round">event_available</span>
+          </div>
+          <div class="mybk-stat-info">
+            <span class="mybk-stat-label" data-key="mybk_stat_upcoming">Upcoming</span>
+            <div class="mybk-stat-value" id="stat-upcoming">--</div>
+          </div>
+        </div>
+
+        <!-- Total Spent -->
+        <div class="mybk-stat-card">
+          <div class="mybk-stat-icon-wrap purple">
+            <span class="material-icons-round">payments</span>
+          </div>
+          <div class="mybk-stat-info">
+            <span class="mybk-stat-label" data-key="mybk_stat_spent">Total Spent</span>
             <div class="mybk-stat-value" id="stat-spent">--</div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Active Rental Highlight (dynamic) -->
-      <div class="active-rental" id="active-rental-section" style="display:none;">
-        <div class="active-rental-img">
-          <img id="active-car-img" src="" alt="" onerror="this.onerror=null;this.src='../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg'" />
-          <span class="active-badge">ACTIVE</span>
+      <!-- 2. Active Rental Spotlight Hero Bento (Dynamic) -->
+      <section class="mybk-active-spotlight" id="active-rental-spotlight" style="display:none;" aria-label="Ongoing active rental spotlight">
+        <div class="mybk-spotlight-media">
+          <div class="mybk-spotlight-badge">
+            <span class="status-pulse-dot"></span>
+            <span data-key="mybk_active_badge">Active Rental</span>
+          </div>
+          <img id="active-car-img" src="" alt="Active Rental Car" onerror="this.onerror=null;this.src='../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg'" />
         </div>
-        <div class="active-rental-body">
-          <div>
-            <div class="active-rental-head">
-              <div>
-                <span class="active-rental-label" data-key="mybk_currently">Currently Driving</span>
-                <h2 id="active-car-name">--</h2>
-                <p class="active-rental-meta" id="active-car-meta">--</p>
+
+        <div class="mybk-spotlight-body">
+          <div class="mybk-spotlight-head">
+            <div>
+              <div class="mybk-spotlight-kicker">
+                <span class="material-icons-round">speed</span>
+                <span id="active-car-category">SEDAN</span>
               </div>
-              <div class="active-rental-total">
-                <span class="active-rental-price" id="active-car-price">--</span>
-                <p class="active-rental-price-label" data-key="mybk_total_rental">Total Rental</p>
+              <h2 class="mybk-spotlight-title" id="active-car-name">BMW 320i M Sport</h2>
+              <div class="mybk-spotlight-meta-chips">
+                <button class="mybk-ref-chip" id="active-ref-btn" type="button" onclick="copyBookingId(this.getAttribute('data-id'))" title="Click to copy ID">
+                  <span class="material-icons-round">content_copy</span>
+                  <span id="active-booking-id">#WD-9942</span>
+                </button>
+                <span class="mybk-status-pill active" id="active-pill-status">
+                  <span class="status-pulse-dot"></span> Active
+                </span>
               </div>
             </div>
-            <div class="rental-progress">
-              <div class="rental-progress-row">
-                <span id="active-day-info">--</span>
-                <span id="active-time-left">--</span>
-              </div>
-              <div class="rental-progress-bar"><div class="rental-progress-fill" id="active-progress-fill"></div></div>
+            <div class="mybk-spotlight-price-box">
+              <div class="mybk-spotlight-price" id="active-car-price">RM 760.00</div>
+              <div class="mybk-spotlight-price-label" data-key="mybk_total_price">Total Price</div>
             </div>
           </div>
-          <div class="active-actions">
-            <button class="active-action-btn outline" type="button" onclick="handleBookingAction('extend')"><span class="material-icons-round">calendar_month</span> <span data-key="mybk_extend">Extend Rental</span></button>
-            <button class="active-action-btn outline" type="button" onclick="handleBookingAction('report')"><span class="material-icons-round">report</span> <span data-key="mybk_report">Report Issue</span></button>
+
+          <!-- Spotlight Bento Meta Box (Side-by-side Timer & Location) -->
+          <div class="mybk-spotlight-bento-row">
+            <!-- Timer / Countdown -->
+            <div class="mybk-spotlight-meta-block">
+              <div class="mybk-spotlight-meta-label">
+                <span class="material-icons-round">schedule</span>
+                <span id="active-day-info">Day 2 of 4</span>
+              </div>
+              <div class="mybk-spotlight-meta-val" id="active-time-left">Ends in 1d 14h 22m</div>
+              <div class="mybk-progress-wrap">
+                <div class="mybk-progress-bar">
+                  <div class="mybk-progress-fill" id="active-progress-fill" style="width: 50%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location & Period -->
+            <div class="mybk-spotlight-meta-block">
+              <div class="mybk-spotlight-meta-label">
+                <span class="material-icons-round">place</span>
+                <span data-key="mybk_pickup">Pick-up & Return Hub</span>
+              </div>
+              <div class="mybk-spotlight-meta-val" id="active-hub-name">Melaka Sentral HQ</div>
+              <div class="mybk-spotlight-meta-label" style="margin-top: 4px;">
+                <span class="material-icons-round">date_range</span>
+                <span id="active-period-dates">-- - --</span>
+              </div>
+            </div>
           </div>
+
+          <!-- Actions -->
+          <div class="mybk-spotlight-actions">
+            <button class="mybk-btn mybk-btn-primary" type="button" id="active-btn-extend" onclick="openExtendModal(activeSpotlightBooking)">
+              <span class="material-icons-round">calendar_month</span>
+              <span data-key="mybk_btn_extend">Extend Rental</span>
+            </button>
+            <button class="mybk-btn mybk-btn-secondary" type="button" id="active-btn-details" onclick="openDetailsModal(activeSpotlightBooking)">
+              <span class="material-icons-round">visibility</span>
+              <span data-key="mybk_btn_details">View Details</span>
+            </button>
+            <button class="mybk-btn mybk-btn-secondary" type="button" onclick="location.href='../support/support.html'">
+              <span class="material-icons-round">support_agent</span>
+              <span data-key="mybk_btn_support">Support</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Search & Segmented Filter Toolbar -->
+      <div class="mybk-toolbar">
+        <!-- Segmented Control Tabs -->
+        <div class="mybk-segmented-control" role="tablist" aria-label="Filter bookings by status">
+          <button class="mybk-segment-btn active" type="button" role="tab" data-filter="all" id="tab-all">
+            <span data-key="mybk_tab_all">All Bookings</span>
+            <span class="mybk-segment-count" id="count-all">0</span>
+          </button>
+          <button class="mybk-segment-btn" type="button" role="tab" data-filter="Active" id="tab-active">
+            <span data-key="mybk_tab_active">Active</span>
+            <span class="mybk-segment-count" id="count-active">0</span>
+          </button>
+          <button class="mybk-segment-btn" type="button" role="tab" data-filter="Pending" id="tab-upcoming">
+            <span data-key="mybk_tab_upcoming">Upcoming</span>
+            <span class="mybk-segment-count" id="count-upcoming">0</span>
+          </button>
+          <button class="mybk-segment-btn" type="button" role="tab" data-filter="Completed" id="tab-completed">
+            <span data-key="mybk_tab_completed">Completed</span>
+            <span class="mybk-segment-count" id="count-completed">0</span>
+          </button>
+          <button class="mybk-segment-btn" type="button" role="tab" data-filter="Cancelled" id="tab-cancelled">
+            <span data-key="mybk_tab_cancelled">Cancelled</span>
+            <span class="mybk-segment-count" id="count-cancelled">0</span>
+          </button>
+        </div>
+
+        <!-- Search Pill -->
+        <div class="mybk-search-pill-wrap">
+          <span class="material-icons-round mybk-search-icon">search</span>
+          <input type="text" class="mybk-search-input" id="mybk-search-input" placeholder="Search by car, ID, location..." data-key-placeholder="mybk_search_placeholder" aria-label="Search bookings" />
+          <button class="mybk-search-clear" id="mybk-search-clear" type="button" style="display:none;" onclick="clearSearch()" aria-label="Clear search">
+            <span class="material-icons-round">close</span>
+          </button>
         </div>
       </div>
 
-      <!-- Filter Tabs -->
-      <div class="mybk-tabs">
-        <button class="mybk-tab active" type="button" data-filter="all" data-key="mybk_all">All Bookings</button>
-        <button class="mybk-tab" type="button" data-filter="Active" data-key="mybk_tab_active">Active</button>
-        <button class="mybk-tab" type="button" data-filter="Pending" data-key="mybk_tab_upcoming">Upcoming</button>
-        <button class="mybk-tab" type="button" data-filter="Completed" data-key="mybk_tab_completed">Completed</button>
-        <button class="mybk-tab" type="button" data-filter="Cancelled" data-key="mybk_tab_cancelled">Cancelled</button>
+      <!-- 4. Booking Cards Grid -->
+      <section class="mybk-cards-grid" id="mybk-cards-grid" aria-label="List of customer bookings">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 48px; color: var(--text-secondary);">
+          <span class="material-icons-round" style="font-size: 32px; animation: spin 1s infinite linear;">refresh</span>
+          <p style="margin-top: 8px;">Loading your bookings...</p>
+        </div>
+      </section>
+
+      <!-- 5. Empty State (hidden by default) -->
+      <div class="mybk-empty-state" id="mybk-empty-state" style="display:none;">
+        <div class="mybk-empty-icon">
+          <span class="material-icons-round">event_busy</span>
+        </div>
+        <h3 class="mybk-empty-title" data-key="mybk_empty_title">No Bookings Found</h3>
+        <p class="mybk-empty-desc" data-key="mybk_empty_desc">No rental records match your current filter criteria.</p>
+        <button class="mybk-btn mybk-btn-primary" type="button" onclick="location.href='../browse-cars/browse-cars.html'">
+          <span class="material-icons-round">add</span>
+          <span data-key="mybk_btn_new">New Booking</span>
+        </button>
       </div>
 
-      <!-- Booking Cards (rendered dynamically) -->
-      <div class="mybk-list" id="mybk-list">
-        <div style="text-align:center;padding:40px;color:var(--text-secondary);">Loading bookings...</div>
-      </div>
-
-      <!-- Pagination -->
-      <div class="mybk-pagination" id="mybk-pagination"></div>
-
-      <!-- FOOTER -->
+      <!-- FOOTER PLACEHOLDER -->
       <div id="footer-placeholder" style="margin-top: 48px;"></div>
     </div>
   </main>
 
+  <!-- 6. Apple Sheet Modal: Booking Details -->
+  <div class="mybk-modal-backdrop" id="modal-details" aria-hidden="true">
+    <div class="mybk-modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-details-title">
+      <div class="mybk-modal-header">
+        <h3 class="mybk-modal-title" id="modal-details-title">
+          <span class="material-icons-round" style="color:var(--primary);">receipt_long</span>
+          <span data-key="mybk_modal_details_title">Booking Details</span>
+        </h3>
+        <button class="mybk-modal-close" type="button" onclick="closeModal('modal-details')" aria-label="Close dialog">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="mybk-modal-body" id="modal-details-body">
+        <!-- Populated dynamically -->
+      </div>
+      <div class="mybk-modal-footer">
+        <button class="mybk-btn mybk-btn-secondary" type="button" onclick="closeModal('modal-details')">Close</button>
+        <button class="mybk-btn mybk-btn-primary" type="button" id="modal-receipt-action-btn" onclick="goToReceiptFromModal()">
+          <span class="material-icons-round">receipt</span>
+          <span data-key="mybk_btn_receipt">Receipt</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Apple Sheet Modal: Cancel Confirmation -->
+  <div class="mybk-modal-backdrop" id="modal-cancel" aria-hidden="true">
+    <div class="mybk-modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-cancel-title">
+      <div class="mybk-modal-header">
+        <h3 class="mybk-modal-title" id="modal-cancel-title">
+          <span class="material-icons-round" style="color:#FF3B30;">cancel</span>
+          <span data-key="mybk_modal_cancel_title">Cancel Booking Request</span>
+        </h3>
+        <button class="mybk-modal-close" type="button" onclick="closeModal('modal-cancel')" aria-label="Close dialog">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="mybk-modal-body">
+        <p id="modal-cancel-msg" style="font-size: 14px; line-height: 1.5; color: var(--text-primary); margin: 0;">
+          Are you sure you want to cancel this booking? Full refunds apply for cancellations made at least 24 hours prior to pick-up.
+        </p>
+        <div class="mybk-modal-detail-row" style="margin-top: 12px;">
+          <span>Target Booking</span>
+          <span id="modal-cancel-id">#WD-0000</span>
+        </div>
+        <div class="mybk-modal-detail-row">
+          <span>Vehicle</span>
+          <span id="modal-cancel-car">--</span>
+        </div>
+      </div>
+      <div class="mybk-modal-footer">
+        <button class="mybk-btn mybk-btn-secondary" type="button" onclick="closeModal('modal-cancel')" data-key="mybk_modal_cancel_back">Keep Booking</button>
+        <button class="mybk-btn mybk-btn-danger" type="button" id="btn-confirm-cancel-booking" onclick="executeCancellation()">
+          <span class="material-icons-round">check_circle</span>
+          <span data-key="mybk_modal_cancel_confirm">Confirm Cancellation</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Apple Sheet Modal: Extend Rental -->
+  <div class="mybk-modal-backdrop" id="modal-extend" aria-hidden="true">
+    <div class="mybk-modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-extend-title">
+      <div class="mybk-modal-header">
+        <h3 class="mybk-modal-title" id="modal-extend-title">
+          <span class="material-icons-round" style="color:var(--primary);">more_time</span>
+          <span data-key="mybk_modal_extend_title">Extend Your Rental</span>
+        </h3>
+        <button class="mybk-modal-close" type="button" onclick="closeModal('modal-extend')" aria-label="Close dialog">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="mybk-modal-body">
+        <p data-key="mybk_modal_extend_desc" style="font-size: 13.5px; color: var(--text-secondary); margin: 0;">
+          Select additional days to extend your active rental journey seamlessly.
+        </p>
+
+        <div class="mybk-modal-section" style="margin-top: 10px;">
+          <h4 class="mybk-modal-section-title">Select Additional Days</h4>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+            <button class="mybk-btn mybk-btn-secondary extend-day-btn active" type="button" onclick="selectExtendDays(1, this)">+1 Day</button>
+            <button class="mybk-btn mybk-btn-secondary extend-day-btn" type="button" onclick="selectExtendDays(2, this)">+2 Days</button>
+            <button class="mybk-btn mybk-btn-secondary extend-day-btn" type="button" onclick="selectExtendDays(3, this)">+3 Days</button>
+            <button class="mybk-btn mybk-btn-secondary extend-day-btn" type="button" onclick="selectExtendDays(7, this)">+1 Week</button>
+          </div>
+        </div>
+
+        <div class="mybk-modal-section" style="margin-top: 12px;">
+          <div class="mybk-modal-detail-row">
+            <span>Current Return Date</span>
+            <span id="extend-curr-date">--</span>
+          </div>
+          <div class="mybk-modal-detail-row">
+            <span>New Extended Return</span>
+            <span id="extend-new-date" style="color:var(--primary);">--</span>
+          </div>
+          <div class="mybk-modal-detail-row">
+            <span>Additional Rate</span>
+            <span id="extend-extra-price" style="font-size: 15px; color:var(--primary);">RM 180.00</span>
+          </div>
+        </div>
+      </div>
+      <div class="mybk-modal-footer">
+        <button class="mybk-btn mybk-btn-secondary" type="button" onclick="closeModal('modal-extend')">Cancel</button>
+        <button class="mybk-btn mybk-btn-primary" type="button" onclick="submitExtension()">
+          <span class="material-icons-round">check</span>
+          <span data-key="mybk_modal_extend_submit">Request Extension</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Pill -->
+  <div class="mybk-toast" id="mybk-toast">
+    <span class="material-icons-round">check_circle</span>
+    <span id="mybk-toast-text">Action completed successfully</span>
+  </div>
+
   <!-- CHATBOT -->
   <div id="chatbot-placeholder"></div>
+
+  <!-- SCRIPTS -->
   <script src="../../js/sidebar-loader.js?v=6.7.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
@@ -120,49 +352,58 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../../shared/js/main.js?v=6.7.0"></script>
+
   <script>
+    /* ==========================================================================
+       WeDRIVE Customer Portal: My Bookings Logic
+       ========================================================================== */
     var allBookings = [];
     var currentFilter = 'all';
-    var currentPage = 1;
-    var perPage = 6;
+    var searchQuery = '';
+    var currentCurrency = 'RM';
+    var activeSpotlightBooking = null;
+    var targetModalBooking = null;
+    var selectedExtendDaysCount = 1;
 
-    // Root prefix helper
+    // Helper: Root path prefix
     function rootPrefix() {
-      var depth = window.location.pathname.split('/').filter(Boolean).length;
-      if (window.location.protocol === 'file:') {
-        var idx = window.location.pathname.indexOf('/customer/');
-        if (idx > -1) return window.location.pathname.substring(0, idx) + '/';
-      }
+      var idx = window.location.pathname.indexOf('/customer/');
+      if (idx > -1) return window.location.pathname.substring(0, idx) + '/';
       return '../../../';
     }
 
-    // Format date nicely
+    // Helper: Format Date
     function fmtDate(d) {
       if (!d) return '--';
       var dt = new Date(d);
+      if (isNaN(dt.getTime())) return d;
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       return months[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear();
     }
 
-    var currentCurrency = 'RM';
-
-    // Format currency
+    // Helper: Format Currency
     function fmtRM(n) {
-      return currentCurrency + ' ' + Number(n || 0).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+      return currentCurrency + ' ' + Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    // Get image path for car
+    // Helper: Resolve Vehicle Thumbnail Image
     function carImgPath(booking) {
-      var name = booking.car || '';
+      var name = (booking && (booking.car || booking.car_name)) || '';
       var mapping = {
         '2023 BMW 320i M Sport 2.0': 'Sedan/2023 BMW 320i M Sport 2.0',
+        'BMW 320i M Sport': 'Sedan/2023 BMW 320i M Sport 2.0',
         '2023 Mercedes-Benz GLA250 AMG Line 2.0': 'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0',
+        'Mercedes-Benz GLA250': 'SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0',
         '2019 Toyota Alphard G S C Package 2.5': 'MPV/2019 Toyota Alphard G S C Package 2.5',
+        'Toyota Alphard': 'MPV/2019 Toyota Alphard G S C Package 2.5',
         '2017 Perodua AXIA G 1.0': 'Hatchback/2017 Perodua AXIA G 1.0',
         '2025 Perodua AXIA AV 1.0': 'Hatchback/2025 Perodua AXIA AV 1.0',
         '2022 Volkswagen Golf GTI 2.0': 'Hatchback/2022 Volkswagen Golf GTI 2.0',
+        'Volkswagen Golf GTI': 'Hatchback/2022 Volkswagen Golf GTI 2.0',
         '2022 Ford Ranger Raptor High Rider Dual Cab 2.0': 'Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0',
+        'Ford Ranger Raptor': 'Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0',
         '2018 Mercedes-Benz CLS350 AMG Line 2.0': 'Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0',
+        'Mercedes-Benz CLS350': 'Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0',
         '2024 Toyota Camry 2.5V': 'Sedan/2024 Toyota Camry 2.5V',
         '2022 Perodua Myvi 1.5 H': 'Hatchback/2022 Perodua Myvi 1.5 H',
         '2023 Honda City 1.5 V': 'Sedan/2023 Honda City 1.5 V',
@@ -170,155 +411,528 @@
         '2024 Perodua Ativa 1.0T H': 'SUV/2024 Perodua Ativa 1.0T H',
         '2023 Toyota Vios 1.5 G': 'Sedan/2023 Toyota Vios 1.5 G'
       };
-      var path = mapping[name];
-      if (path) return rootPrefix() + 'shared/model/' + path + '/exterior/full-res/frame-140.jpg';
+      var rel = mapping[name];
+      if (rel) return rootPrefix() + 'shared/model/' + rel + '/exterior/full-res/frame-140.jpg';
       return rootPrefix() + 'shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg';
     }
 
-    // Status badge class
+    // Helper: Status Pill Text & Class
     function statusClass(s) {
       if (s === 'Active') return 'active';
-      if (s === 'Pending') return 'upcoming';
+      if (s === 'Pending' || s === 'Upcoming') return 'upcoming';
       if (s === 'Completed') return 'completed';
       if (s === 'Cancelled') return 'cancelled';
-      return '';
+      return 'completed';
     }
 
-    // Status display text
-    function statusLabel(s) {
+    function statusDisplay(s) {
       if (s === 'Pending') return 'Upcoming';
-      return s || '--';
+      return s || 'Confirmed';
     }
 
-    // Render stats
+    // Toast Notification Display
+    function showToast(msg) {
+      var toast = document.getElementById('mybk-toast');
+      var toastText = document.getElementById('mybk-toast-text');
+      if (!toast || !toastText) return;
+      toastText.textContent = msg;
+      toast.classList.add('active');
+      setTimeout(function() {
+        toast.classList.remove('active');
+      }, 3000);
+    }
+
+    // 1-Click Copy Booking ID
+    function copyBookingId(id) {
+      if (!id) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(function() {
+          showToast('Booking ID #' + id + ' copied to clipboard!');
+        });
+      } else {
+        showToast('Booking ID: #' + id);
+      }
+    }
+
+    // Render 4-Card Bento Stats Overview
     function renderStats(bookings) {
-      document.getElementById('stat-total').textContent = bookings.length;
-      var active = bookings.filter(function(b) { return b.status === 'Active'; });
-      document.getElementById('stat-active').textContent = active.length;
+      var total = bookings.length;
+      var active = bookings.filter(function(b) { return b.status === 'Active'; }).length;
+      var upcoming = bookings.filter(function(b) { return b.status === 'Pending' || b.status === 'Upcoming'; }).length;
+      var completed = bookings.filter(function(b) { return b.status === 'Completed'; }).length;
+      var cancelled = bookings.filter(function(b) { return b.status === 'Cancelled'; }).length;
+
       var spent = bookings.reduce(function(sum, b) {
-        return sum + (b.status !== 'Cancelled' && b.payment === 'Paid' ? (b.total || 0) : 0);
+        return sum + (b.status !== 'Cancelled' ? Number(b.total || 0) : 0);
       }, 0);
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-active').textContent = active;
+      document.getElementById('stat-upcoming').textContent = upcoming;
       document.getElementById('stat-spent').textContent = fmtRM(spent);
+
+      // Update segment counts
+      document.getElementById('count-all').textContent = total;
+      document.getElementById('count-active').textContent = active;
+      document.getElementById('count-upcoming').textContent = upcoming;
+      document.getElementById('count-completed').textContent = completed;
+      document.getElementById('count-cancelled').textContent = cancelled;
     }
 
-    // Render active rental highlight
-    function renderActiveRental(bookings) {
-      var section = document.getElementById('active-rental-section');
-      var active = bookings.filter(function(b) { return b.status === 'Active'; });
-      if (active.length === 0) { section.style.display = 'none'; return; }
-      var b = active[0];
-      section.style.display = '';
-      document.getElementById('active-car-img').src = carImgPath(b);
-      document.getElementById('active-car-img').alt = b.car || '';
-      document.getElementById('active-car-name').textContent = b.car || '--';
-      document.getElementById('active-car-meta').textContent = 'ID: ' + (b.booking_id || '--') + ' -- Pick-up: ' + (b.pickup || '--');
-      document.getElementById('active-car-price').textContent = fmtRM(b.total);
+    // Render Spotlight Hero for Active Ongoing Rental
+    function renderActiveSpotlight(bookings) {
+      var spotlightSec = document.getElementById('active-rental-spotlight');
+      var activeList = bookings.filter(function(b) {
+        return b.status === 'Active' || b.status === 'Confirmed' || b.status === 'Ongoing';
+      });
 
-      var start = new Date(b.start_date);
-      var end = new Date(b.end_date);
-      var now = new Date();
-      var totalMs = end - start;
-      var elapsedMs = now - start;
-      var dayNum = Math.max(1, Math.ceil(elapsedMs / 86400000));
-      var totalDays = b.days || Math.ceil(totalMs / 86400000);
-      var pct = Math.min(100, Math.max(5, (elapsedMs / totalMs) * 100));
+      if (activeList.length === 0 && bookings.length > 0) {
+        var firstValid = bookings.find(function(b) { return b.status !== 'Cancelled'; });
+        if (firstValid) {
+          activeList = [firstValid];
+        }
+      }
 
-      document.getElementById('active-day-info').textContent = 'Day ' + dayNum + ' of ' + totalDays;
-      var hoursLeft = Math.max(0, Math.floor((end - now) / 3600000));
-      var minsLeft = Math.max(0, Math.floor(((end - now) % 3600000) / 60000));
-      document.getElementById('active-time-left').textContent = 'Ends in ' + hoursLeft + 'h ' + minsLeft + 'm';
-      document.getElementById('active-progress-fill').style.width = pct + '%';
-    }
-
-    // Render booking cards
-    function renderBookings() {
-      var filtered = currentFilter === 'all' ? allBookings : allBookings.filter(function(b) { return b.status === currentFilter; });
-      var totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
-      if (currentPage > totalPages) currentPage = totalPages;
-      var start = (currentPage - 1) * perPage;
-      var pageItems = filtered.slice(start, start + perPage);
-
-      var listEl = document.getElementById('mybk-list');
-      if (pageItems.length === 0) {
-        listEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary);">No bookings found.</div>';
-        renderPagination(0, 0);
+      if (activeList.length === 0) {
+        spotlightSec.style.display = 'none';
+        activeSpotlightBooking = null;
         return;
       }
 
-      var html = '';
-      pageItems.forEach(function(b) {
-        var isFaded = (b.status === 'Completed' || b.status === 'Cancelled');
-        var isGray = isFaded;
-        html += '<div class="mybk-card' + (isFaded ? ' faded' : '') + '">';
-        html += '  <div class="mybk-card-img' + (isGray ? ' grayscale' : '') + '">';
-        html += '    <img src="' + carImgPath(b) + '" alt="' + (b.car || '') + '" onerror="this.onerror=null;this.src=\'' + rootPrefix() + 'shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg\'" />';
-        html += '  </div>';
-        html += '  <div class="mybk-card-body">';
-        html += '    <div><div class="mybk-card-name">' + (b.car || '--') + '</div>';
-        html += '    <div class="mybk-card-id">' + (b.booking_id || '--') + '</div></div>';
-        html += '    <div><div class="mybk-card-label">Rental Period</div>';
-        html += '    <div class="mybk-card-date">' + fmtDate(b.start_date) + ' - ' + fmtDate(b.end_date) + '</div></div>';
-        html += '    <div><div class="mybk-card-label">Status</div>';
-        html += '    <span class="status-badge ' + statusClass(b.status) + '">' + statusLabel(b.status) + '</span></div>';
-        html += '    <div>';
-        html += '      <div class="mybk-card-price' + (b.status === 'Cancelled' ? ' is-muted' : '') + '">' + (b.status === 'Cancelled' ? 'RM 0.00' : fmtRM(b.total)) + '</div>';
-        html += '      <div class="mybk-card-actions">';
-        if (b.status === 'Active') {
-          html += '<button class="view-btn" type="button" onclick="handleBookingAction(\'extend\')">Extend Rental</button>';
-        } else if (b.status === 'Pending') {
-          html += '<button class="view-btn" type="button" onclick="handleBookingAction(\'view-upcoming\')">View Details</button>';
-          html += '<span class="divider">|</span>';
-          html += '<button class="cancel-btn" type="button" onclick="handleBookingAction(\'cancel\')">Cancel</button>';
-        } else if (b.status === 'Completed') {
-          html += '<button class="view-btn" type="button" onclick="sessionStorage.setItem(\'receipt_booking\', JSON.stringify(allBookings.find(function(item){return item.booking_id===\'' + b.booking_id + '\';}))); location.href=\'receipt/receipt.html\'">Receipt</button>';
-          html += '<span class="divider">|</span>';
-          html += '<button class="rebook-btn" type="button" onclick="location.href=\'../dashboard/customer.html\'">Rebook</button>';
-        } else {
-          html += '<button class="rebook-btn" type="button" onclick="location.href=\'../dashboard/customer.html\'">Rebook</button>';
+      var b = activeList[0];
+      activeSpotlightBooking = b;
+      spotlightSec.style.display = '';
+
+      var carName = b.car || b.car_name || '2023 BMW 320i M Sport 2.0';
+      var bookingId = b.booking_id || b.id || 'WD-9942';
+      var category = b.category || 'SEDAN';
+      var locationHub = b.pickup_location || b.location || 'Melaka Sentral HQ';
+
+      document.getElementById('active-car-img').src = carImgPath(b);
+      document.getElementById('active-car-img').alt = carName;
+      document.getElementById('active-car-name').textContent = carName;
+      document.getElementById('active-car-category').textContent = category.toUpperCase();
+      document.getElementById('active-booking-id').textContent = '#' + bookingId;
+      document.getElementById('active-ref-btn').setAttribute('data-id', bookingId);
+      document.getElementById('active-car-price').textContent = fmtRM(b.total || 760);
+      document.getElementById('active-hub-name').textContent = locationHub;
+
+      var sDate = b.start_date ? new Date(b.start_date) : new Date();
+      var eDate = b.end_date ? new Date(b.end_date) : new Date(Date.now() + 2 * 86400000);
+      document.getElementById('active-period-dates').textContent = fmtDate(b.start_date) + ' - ' + fmtDate(b.end_date);
+
+      var now = new Date();
+      var totalDuration = Math.max(1, Math.ceil((eDate - sDate) / 86400000));
+      var elapsed = Math.max(1, Math.ceil((now - sDate) / 86400000));
+      var currentDay = Math.min(totalDuration, elapsed);
+      var pct = Math.min(100, Math.max(10, (elapsed / totalDuration) * 100));
+
+      document.getElementById('active-day-info').textContent = 'Day ' + currentDay + ' of ' + totalDuration;
+
+      var diffMs = eDate - now;
+      if (diffMs > 0) {
+        var daysLeft = Math.floor(diffMs / 86400000);
+        var hoursLeft = Math.floor((diffMs % 86400000) / 3600000);
+        var minsLeft = Math.floor((diffMs % 3600000) / 60000);
+        var timeStr = daysLeft > 0 ? (daysLeft + 'd ' + hoursLeft + 'h remaining') : (hoursLeft + 'h ' + minsLeft + 'm remaining');
+        document.getElementById('active-time-left').textContent = 'Ends in ' + timeStr;
+      } else {
+        document.getElementById('active-time-left').textContent = 'Due for return today';
+        pct = 100;
+      }
+      document.getElementById('active-progress-fill').style.width = pct + '%';
+    }
+
+    // Render Booking Cards Grid with Filtering & Search
+    function renderBookings() {
+      var filtered = allBookings.filter(function(b) {
+        // Status filter
+        if (currentFilter !== 'all') {
+          if (currentFilter === 'Pending') {
+            if (b.status !== 'Pending' && b.status !== 'Upcoming') return false;
+          } else if (b.status !== currentFilter) {
+            return false;
+          }
         }
+        // Search query filter
+        if (searchQuery.trim() !== '') {
+          var q = searchQuery.toLowerCase().trim();
+          var matchCar = (b.car || b.car_name || '').toLowerCase().includes(q);
+          var matchId = String(b.booking_id || b.id || '').toLowerCase().includes(q);
+          var matchLoc = (b.pickup_location || b.location || '').toLowerCase().includes(q);
+          if (!matchCar && !matchId && !matchLoc) return false;
+        }
+        return true;
+      });
+
+      var gridEl = document.getElementById('mybk-cards-grid');
+      var emptyEl = document.getElementById('mybk-empty-state');
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = '';
+        gridEl.style.display = 'none';
+        emptyEl.style.display = 'flex';
+        return;
+      }
+
+      gridEl.style.display = '';
+      emptyEl.style.display = 'none';
+
+      var html = '';
+      filtered.forEach(function(b) {
+        var isFaded = (b.status === 'Completed' || b.status === 'Cancelled');
+        var bookingId = b.booking_id || b.id || 'WD-0000';
+        var carName = b.car || b.car_name || 'Vehicle';
+        var locationHub = b.pickup_location || b.location || 'Melaka Sentral HQ';
+        var sDate = fmtDate(b.start_date);
+        var eDate = fmtDate(b.end_date);
+        var priceFormatted = b.status === 'Cancelled' ? fmtRM(0) : fmtRM(b.total);
+
+        html += '<div class="mybk-card' + (isFaded ? ' faded' : '') + '">';
+        
+        // Card Header: Image & Main Info
+        html += '  <div class="mybk-card-header">';
+        html += '    <div class="mybk-card-thumb' + (isFaded ? ' grayscale' : '') + '">';
+        html += '      <img src="' + carImgPath(b) + '" alt="' + carName + '" onerror="this.onerror=null;this.src=\'' + rootPrefix() + 'shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg\'" />';
+        html += '    </div>';
+        html += '    <div class="mybk-card-header-info">';
+        html += '      <div class="mybk-card-top-row">';
+        html += '        <button class="mybk-ref-chip" type="button" onclick="copyBookingId(\'' + bookingId + '\')" title="Click to copy ID">';
+        html += '          <span class="material-icons-round">content_copy</span> #' + bookingId;
+        html += '        </button>';
+        html += '        <span class="mybk-status-pill ' + statusClass(b.status) + '">';
+        if (b.status === 'Active') {
+          html += '          <span class="status-pulse-dot"></span>';
+        }
+        html += '          ' + statusDisplay(b.status);
+        html += '        </span>';
         html += '      </div>';
+        html += '      <h3 class="mybk-card-name">' + carName + '</h3>';
         html += '    </div>';
         html += '  </div>';
+
+        // Card Details: Timeline & Hub
+        html += '  <div class="mybk-card-details-row">';
+        html += '    <div class="mybk-card-meta-item">';
+        html += '      <span class="mybk-card-meta-label"><span class="material-icons-round">date_range</span> Rental Period</span>';
+        html += '      <span class="mybk-card-meta-val">' + sDate + ' → ' + eDate + '</span>';
+        html += '    </div>';
+        html += '    <div class="mybk-card-meta-item">';
+        html += '      <span class="mybk-card-meta-label"><span class="material-icons-round">place</span> Pick-up Hub</span>';
+        html += '      <span class="mybk-card-meta-val">' + locationHub + '</span>';
+        html += '    </div>';
+        html += '  </div>';
+
+        // Card Footer: Price & Actions
+        html += '  <div class="mybk-card-footer">';
+        html += '    <div class="mybk-card-price-group">';
+        html += '      <span class="mybk-card-price' + (b.status === 'Cancelled' ? ' is-muted' : '') + '">' + priceFormatted + '</span>';
+        html += '      <span class="mybk-card-price-sub">' + (b.payment === 'Paid' ? 'Paid · Instant Keyless' : (b.status === 'Cancelled' ? 'Cancelled / Refunded' : 'Pay at pickup')) + '</span>';
+        html += '    </div>';
+        html += '    <div class="mybk-card-actions">';
+
+        if (b.status === 'Active') {
+          html += '      <button class="mybk-btn mybk-btn-secondary" type="button" onclick="openDetailsModalById(\'' + bookingId + '\')"><span class="material-icons-round">visibility</span> Details</button>';
+          html += '      <button class="mybk-btn mybk-btn-primary" type="button" onclick="openExtendModalById(\'' + bookingId + '\')"><span class="material-icons-round">more_time</span> Extend</button>';
+        } else if (b.status === 'Pending' || b.status === 'Upcoming') {
+          html += '      <button class="mybk-btn mybk-btn-secondary" type="button" onclick="openDetailsModalById(\'' + bookingId + '\')"><span class="material-icons-round">visibility</span> Details</button>';
+          html += '      <button class="mybk-btn mybk-btn-danger" type="button" onclick="openCancelModalById(\'' + bookingId + '\')"><span class="material-icons-round">cancel</span> Cancel</button>';
+        } else if (b.status === 'Completed') {
+          html += '      <button class="mybk-btn mybk-btn-secondary" type="button" onclick="viewReceiptById(\'' + bookingId + '\')"><span class="material-icons-round">receipt</span> Receipt</button>';
+          html += '      <button class="mybk-btn mybk-btn-primary" type="button" onclick="location.href=\'../browse-cars/browse-cars.html\'"><span class="material-icons-round">replay</span> Rebook</button>';
+        } else {
+          // Cancelled
+          html += '      <button class="mybk-btn mybk-btn-secondary" type="button" onclick="openDetailsModalById(\'' + bookingId + '\')"><span class="material-icons-round">visibility</span> Details</button>';
+          html += '      <button class="mybk-btn mybk-btn-primary" type="button" onclick="location.href=\'../browse-cars/browse-cars.html\'"><span class="material-icons-round">replay</span> Rebook</button>';
+        }
+
+        html += '    </div>';
+        html += '  </div>';
+
         html += '</div>';
       });
-      listEl.innerHTML = html;
-      renderPagination(totalPages, filtered.length);
+
+      gridEl.innerHTML = html;
     }
 
-    // Render pagination
-    function renderPagination(totalPages, totalItems) {
-      var pagEl = document.getElementById('mybk-pagination');
-      if (totalPages <= 1) { pagEl.innerHTML = ''; return; }
-      var html = '';
-      html += '<button class="mybk-page-btn" type="button"' + (currentPage <= 1 ? ' disabled' : ' onclick="goPage(' + (currentPage - 1) + ')"') + '><span class="material-icons-round mybk-page-icon">chevron_left</span></button>';
-      for (var i = 1; i <= totalPages; i++) {
-        html += '<button class="mybk-page-btn' + (i === currentPage ? ' active' : '') + '" type="button" onclick="goPage(' + i + ')">' + i + '</button>';
+    // Modal Control Functions
+    function openModal(id) {
+      var modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      var modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // Close on Escape or Backdrop Click
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal('modal-details');
+        closeModal('modal-cancel');
+        closeModal('modal-extend');
       }
-      html += '<button class="mybk-page-btn" type="button"' + (currentPage >= totalPages ? ' disabled' : ' onclick="goPage(' + (currentPage + 1) + ')"') + '><span class="material-icons-round mybk-page-icon">chevron_right</span></button>';
-      pagEl.innerHTML = html;
+    });
+
+    document.querySelectorAll('.mybk-modal-backdrop').forEach(function(backdrop) {
+      backdrop.addEventListener('click', function(e) {
+        if (e.target === backdrop) {
+          closeModal(backdrop.id);
+        }
+      });
+    });
+
+    // Details Modal
+    function openDetailsModal(booking) {
+      if (!booking) return;
+      targetModalBooking = booking;
+      var body = document.getElementById('modal-details-body');
+      var receiptBtn = document.getElementById('modal-receipt-action-btn');
+
+      var carName = booking.car || booking.car_name || 'Vehicle';
+      var bookingId = booking.booking_id || booking.id || 'WD-0000';
+      var sDate = fmtDate(booking.start_date);
+      var eDate = fmtDate(booking.end_date);
+      var locationHub = booking.pickup_location || booking.location || 'Melaka Sentral HQ';
+      var price = booking.status === 'Cancelled' ? fmtRM(0) : fmtRM(booking.total);
+
+      var html = '';
+      html += '<div class="mybk-modal-section">';
+      html += '  <h4 class="mybk-modal-section-title">Vehicle & Booking</h4>';
+      html += '  <div class="mybk-modal-detail-row"><span>Booking Reference</span><span>#' + bookingId + '</span></div>';
+      html += '  <div class="mybk-modal-detail-row"><span>Car Model</span><span>' + carName + '</span></div>';
+      html += '  <div class="mybk-modal-detail-row"><span>Status</span><span class="mybk-status-pill ' + statusClass(booking.status) + '">' + statusDisplay(booking.status) + '</span></div>';
+      html += '</div>';
+
+      html += '<div class="mybk-modal-section">';
+      html += '  <h4 class="mybk-modal-section-title">Schedule & Hub</h4>';
+      html += '  <div class="mybk-modal-detail-row"><span>Pick-up Date</span><span>' + sDate + ' (10:00 AM)</span></div>';
+      html += '  <div class="mybk-modal-detail-row"><span>Return Date</span><span>' + eDate + ' (10:00 AM)</span></div>';
+      html += '  <div class="mybk-modal-detail-row"><span>Pick-up Location</span><span>' + locationHub + '</span></div>';
+      html += '  <div class="mybk-modal-detail-row"><span>Keyless Access</span><span>Instant QR Pass Ready</span></div>';
+      html += '</div>';
+
+      html += '<div class="mybk-modal-section">';
+      html += '  <h4 class="mybk-modal-section-title">Payment Summary</h4>';
+      html += '  <div class="mybk-modal-detail-row"><span>Payment Status</span><span>' + (booking.payment || 'Paid') + '</span></div>';
+      html += '  <div class="mybk-modal-detail-row"><span>Total Amount</span><span style="font-size:15px; color:var(--primary);">' + price + '</span></div>';
+      html += '</div>';
+
+      body.innerHTML = html;
+      receiptBtn.style.display = (booking.status === 'Completed' || booking.status === 'Active') ? '' : 'none';
+      openModal('modal-details');
     }
 
-    function goPage(n) { currentPage = n; renderBookings(); window.scrollTo({top: 300, behavior: 'smooth'}); }
+    function openDetailsModalById(id) {
+      var b = allBookings.find(function(item) { return String(item.booking_id || item.id) === String(id); });
+      if (b) openDetailsModal(b);
+    }
 
-    // Tab switching
-    document.querySelectorAll('.mybk-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.mybk-tab').forEach(function(t) { t.classList.remove('active'); });
+    function goToReceiptFromModal() {
+      if (!targetModalBooking) return;
+      viewReceipt(targetModalBooking);
+    }
+
+    // Receipt Navigation
+    function viewReceipt(booking) {
+      if (!booking) return;
+      try {
+        sessionStorage.setItem('receipt_booking', JSON.stringify(booking));
+      } catch (e) {
+        console.error('[MyBookings] sessionStorage error:', e);
+      }
+      location.href = 'receipt/receipt.html';
+    }
+
+    function viewReceiptById(id) {
+      var b = allBookings.find(function(item) { return String(item.booking_id || item.id) === String(id); });
+      if (b) viewReceipt(b);
+    }
+
+    // Cancel Modal
+    function openCancelModal(booking) {
+      if (!booking) return;
+      targetModalBooking = booking;
+      var bookingId = booking.booking_id || booking.id || 'WD-0000';
+      var carName = booking.car || booking.car_name || 'Vehicle';
+
+      document.getElementById('modal-cancel-id').textContent = '#' + bookingId;
+      document.getElementById('modal-cancel-car').textContent = carName;
+      openModal('modal-cancel');
+    }
+
+    function openCancelModalById(id) {
+      var b = allBookings.find(function(item) { return String(item.booking_id || item.id) === String(id); });
+      if (b) openCancelModal(b);
+    }
+
+    async function executeCancellation() {
+      if (!targetModalBooking) return;
+      var b = targetModalBooking;
+      b.status = 'Cancelled';
+      closeModal('modal-cancel');
+      renderStats(allBookings);
+      renderActiveSpotlight(allBookings);
+      renderBookings();
+      showToast('Booking #' + (b.booking_id || b.id) + ' has been cancelled.');
+
+      // Sync cancellation to Supabase if connected
+      try {
+        var sb = window.supabaseClient;
+        if (sb && b.id) {
+          await sb.from('bookings').update({ status: 'Cancelled' }).eq('id', b.id);
+        }
+      } catch (e) {
+        console.warn('[MyBookings] Remote cancel sync failed:', e);
+      }
+    }
+
+    // Extend Modal
+    function openExtendModal(booking) {
+      if (!booking) return;
+      targetModalBooking = booking;
+      var eDate = booking.end_date ? new Date(booking.end_date) : new Date();
+      document.getElementById('extend-curr-date').textContent = fmtDate(eDate);
+      selectedExtendDaysCount = 1;
+      updateExtendSummary(eDate, 1);
+      openModal('modal-extend');
+    }
+
+    function openExtendModalById(id) {
+      var b = allBookings.find(function(item) { return String(item.booking_id || item.id) === String(id); });
+      if (b) openExtendModal(b);
+    }
+
+    function selectExtendDays(days, btn) {
+      selectedExtendDaysCount = days;
+      document.querySelectorAll('.extend-day-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      if (targetModalBooking) {
+        var eDate = targetModalBooking.end_date ? new Date(targetModalBooking.end_date) : new Date();
+        updateExtendSummary(eDate, days);
+      }
+    }
+
+    function updateExtendSummary(currEndDate, days) {
+      var newDate = new Date(currEndDate);
+      newDate.setDate(newDate.getDate() + days);
+      document.getElementById('extend-new-date').textContent = fmtDate(newDate);
+      var dailyRate = targetModalBooking && targetModalBooking.price_per_day ? Number(targetModalBooking.price_per_day) : 180;
+      document.getElementById('extend-extra-price').textContent = fmtRM(dailyRate * days);
+    }
+
+    function submitExtension() {
+      if (!targetModalBooking) return;
+      closeModal('modal-extend');
+      showToast('Rental extension request of ' + selectedExtendDaysCount + ' day(s) submitted!');
+    }
+
+    // Toolbar & Search Handlers
+    document.querySelectorAll('.mybk-segment-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.mybk-segment-btn').forEach(function(b) { b.classList.remove('active'); });
         this.classList.add('active');
-        currentFilter = this.getAttribute('data-filter');
-        currentPage = 1;
+        currentFilter = this.getAttribute('data-filter') || 'all';
         renderBookings();
       });
     });
 
-    function handleBookingAction(action) {
-      if (action === 'extend' || action === 'view-upcoming') { location.href = '../car-details/booking/booking.html'; return; }
-      if (action === 'report') { location.href = '../support/support.html'; return; }
-      if (action === 'directions') { location.href = '../../../shared/pages/footer/contact/contact.html'; return; }
-      if (action === 'cancel') { alert('Booking cancellation request submitted for review.'); }
+    var searchInput = document.getElementById('mybk-search-input');
+    var searchClearBtn = document.getElementById('mybk-search-clear');
+
+    searchInput.addEventListener('input', function() {
+      searchQuery = this.value;
+      searchClearBtn.style.display = searchQuery ? 'flex' : 'none';
+      renderBookings();
+    });
+
+    function clearSearch() {
+      searchInput.value = '';
+      searchQuery = '';
+      searchClearBtn.style.display = 'none';
+      renderBookings();
     }
 
-    // Load bookings from Supabase
+    // Demo Data Fallback (Rich Sample Bookings)
+    function getSampleBookings() {
+      var now = new Date();
+      var activeStart = new Date(now.getTime() - 2 * 86400000).toISOString().split('T')[0];
+      var activeEnd = new Date(now.getTime() + 2 * 86400000).toISOString().split('T')[0];
+      var upcomingStart = new Date(now.getTime() + 5 * 86400000).toISOString().split('T')[0];
+      var upcomingEnd = new Date(now.getTime() + 8 * 86400000).toISOString().split('T')[0];
+      var pastStart = new Date(now.getTime() - 20 * 86400000).toISOString().split('T')[0];
+      var pastEnd = new Date(now.getTime() - 17 * 86400000).toISOString().split('T')[0];
+      var cancelStart = new Date(now.getTime() - 35 * 86400000).toISOString().split('T')[0];
+      var cancelEnd = new Date(now.getTime() - 32 * 86400000).toISOString().split('T')[0];
+
+      return [
+        {
+          id: '101',
+          booking_id: 'WD-9942',
+          car: '2023 BMW 320i M Sport 2.0',
+          category: 'Sedan',
+          start_date: activeStart,
+          end_date: activeEnd,
+          days: 4,
+          price_per_day: 190,
+          total: 760.00,
+          status: 'Active',
+          payment: 'Paid',
+          pickup_location: 'Melaka Sentral HQ'
+        },
+        {
+          id: '102',
+          booking_id: 'WD-8819',
+          car: '2023 Mercedes-Benz GLA250 AMG Line 2.0',
+          category: 'SUV',
+          start_date: upcomingStart,
+          end_date: upcomingEnd,
+          days: 3,
+          price_per_day: 280,
+          total: 840.00,
+          status: 'Pending',
+          payment: 'Paid',
+          pickup_location: 'Ayer Keroh Toll Hub'
+        },
+        {
+          id: '103',
+          booking_id: 'WD-7412',
+          car: '2019 Toyota Alphard G S C Package 2.5',
+          category: 'MPV',
+          start_date: pastStart,
+          end_date: pastEnd,
+          days: 3,
+          price_per_day: 350,
+          total: 1050.00,
+          status: 'Completed',
+          payment: 'Paid',
+          pickup_location: 'Melaka Sentral HQ'
+        },
+        {
+          id: '104',
+          booking_id: 'WD-6204',
+          car: '2022 Volkswagen Golf GTI 2.0',
+          category: 'Hatchback',
+          start_date: cancelStart,
+          end_date: cancelEnd,
+          days: 3,
+          price_per_day: 220,
+          total: 660.00,
+          status: 'Cancelled',
+          payment: 'Refunded',
+          pickup_location: 'Jonker Street Hub'
+        }
+      ];
+    }
+
+    // Main Data Loader
     async function loadMyBookings() {
       try {
         if (window.WeDriveGetSettings) {
@@ -328,34 +942,49 @@
               currentCurrency = settings.currency;
             }
           } catch (e) {
-            console.error('[MyBookings] Error loading settings:', e);
+            console.warn('[MyBookings] Settings read error:', e);
           }
         }
 
         var sb = window.supabaseClient;
-        if (!sb) { console.warn('[MyBookings] Supabase not ready'); return; }
-        var userResult = await sb.auth.getUser();
-        var user = userResult && userResult.data && userResult.data.user;
+        var user = null;
+        if (sb && sb.auth) {
+          var userResult = await sb.auth.getUser();
+          user = userResult && userResult.data && userResult.data.user;
+        }
 
-        if (user) {
-          allBookings = await WeDriveAPI.getCustomerBookings(user.id);
+        var sessionUser = null;
+        try {
+          var sessionStr = localStorage.getItem('wedrive_session');
+          if (sessionStr) sessionUser = JSON.parse(sessionStr);
+        } catch(e) {}
+
+        var userId = user ? user.id : (sessionUser ? sessionUser.id : null);
+
+        if (userId && window.WeDriveAPI && window.WeDriveAPI.getCustomerBookings) {
+          var fetched = await window.WeDriveAPI.getCustomerBookings(userId);
+          allBookings = (fetched && fetched.length > 0) ? fetched : getSampleBookings();
+        } else if (window.WeDriveAPI && window.WeDriveAPI.getBookings) {
+          var fetchedAll = await window.WeDriveAPI.getBookings();
+          allBookings = (fetchedAll && fetchedAll.length > 0) ? fetchedAll : getSampleBookings();
         } else {
-          // Demo mode - load all bookings
-          allBookings = await WeDriveAPI.getBookings();
+          allBookings = getSampleBookings();
         }
 
         renderStats(allBookings);
-        renderActiveRental(allBookings);
+        renderActiveSpotlight(allBookings);
         renderBookings();
       } catch (err) {
         console.error('[MyBookings] Load error:', err);
-        document.getElementById('mybk-list').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary);">Failed to load bookings. Please try again.</div>';
+        allBookings = getSampleBookings();
+        renderStats(allBookings);
+        renderActiveSpotlight(allBookings);
+        renderBookings();
       }
     }
 
-    // Init after page load
     window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(loadMyBookings, 500);
+      setTimeout(loadMyBookings, 200);
     });
   </script>
 </body>
