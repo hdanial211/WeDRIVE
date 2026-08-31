@@ -1823,3 +1823,37 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.81 Conclude expired rentals to Completed and strictly filter active ongoing rentals in spotlight`
   - Tag Versi: `5.2.81`
+
+---
+
+## 🧾 [MAJOR UPDATE] 122. Pembangunan Menyeluruh Halaman Invois Digital & Resit Tempahan Pelanggan Mengikut Piawaian Apple HIG (Customer Booking Receipt & Digital Invoice Overhaul) (v5.2.82)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna meminta pembangunan penuh bagi halaman **Booking Receipt & Digital Invoice** ([`customer/pages/my-bookings/receipt/receipt.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/customer/pages/my-bookings/receipt/receipt.html)) supaya menepati piawaian Apple Human Interface Guidelines (HIG), reka letak kad Bento squircle `28px`, meterai keselamatan digital disahkan (*Verified Digital Security Seal*), pas serahan kenderaan kod QR, pecahan kewangan dinamik beritem, susun atur cetakan A4/PDF mesra pengguna, sokongan dwibahasa & dwi-tema penuh, serta integrasi ujian Playwright E2E.
+- **Tindakan Pembangunan & Ciri Utama (Implementation & Key Features)**:
+  - **1. Kad Invois Master Bento Squircle (*Master Bento Squircle Invoice Container*)**:
+    - Dibina dengan bucu melengkung `28px`, kemasan kaca (*glassmorphism*), *specular ambient highlight bar* tiga warna (biru/hijau/biru), dan bayang-bayang lembut (`0 20px 48px rgba(0,0,0,0.06)`).
+  - **2. Pengepala Invois Korporat (*Hero Corporate Header*)**:
+    - Menampilkan penjenamaan rasmi WeDRIVE Melaka Premium, nombor pendaftaran SST (`W10-2401-32000891`), alamat operasi hab Melaka, meterai keselamatan digital hijau `#34C759` berserta denyutan aktif, nombor rujukan invois dengan butang salin 1-klik (`receipt-copy-btn`), dan tarikh dikeluarkan.
+  - **3. Grid 2-Kolum Maklumat Pelanggan & Kenderaan (*Customer & Vehicle Bento Grid*)**:
+    - **Subkad Pelanggan**: Nama pemandu, emel, nombor telefon, nombor kad pengenalan (IC), dan lesen memandu disahkan (*Verified Driver's License*).
+    - **Subkad Kenderaan**: Model kereta, plat pendaftaran berkapsul squircle, kelas kategori, kadar sewaan harian, jenis transmisi/bahan api, dan ciri kunci pintar tanpa kunci (*Keyless Smart Access*).
+  - **4. Jambatan Jadual Sewaan (*Schedule Bridge Bento Card*)**:
+    - Garis masa sewaan berpasangan: Tarikh & masa pengambilan $\to$ Pil tempoh sewaan di tengah $\to$ Tarikh & masa pemulangan $\to$ Petunjuk hab lokasi fizikal (*Melaka Sentral HQ*).
+  - **5. Pecahan Kewangan Beritem (*Itemized Financial Calculation Breakdown*)**:
+    - Kadar sewaan asas harian, yuran platform, perlindungan insurans, diskaun promosi, cukai SST (8% dinamik daripada tetapan Supabase), deposit keselamatan boleh pulangan (20%), dan **Kad Sorotan Jumlah Bayaran (*Grand Total Highlight Card*)** dengan tipografi angka tabular bersaiz besar (`font-variant-numeric: tabular-nums`).
+  - **6. Pas Serahan Kenderaan Digital QR (*Digital Vehicle Handover QR Pass*)**:
+    - Paparan pas digital ala *Apple Wallet* dengan kod QR masa nyata dan token keselamatan digital (`WD-SEC-XXXX-MLK`) untuk pengesahan serahan kunci pantas di hab Melaka.
+  - **7. Dok Tindakan & Pengoptimuman Cetakan/PDF (*Action Dock & @media print*)**:
+    - Butang tindakan kapsul pil: *Print Invoice*, *Download PDF* (dengan maklum balas segera dan pencetus dialog cetakan), *Copy Share Link* (dengan notifikasi *toast* terapung), dan *Back to My Bookings*.
+    - Lembaran gaya `@media print` khusus yang menyembunyikan sidebar, navbar, butang terapung, dan footer untuk menghasilkan cetakan dokumen invois A4/Letter rasmi yang kemas pada latar belakang putih.
+  - **8. Penyatuan Gaya Master CSS (`shared/css/wedrive.css`)**:
+    - Menambah Seksyen 17 dalam fail CSS master global tanpa sebarang gaya inline.
+  - **9. Sokongan Dwibahasa Penuh & Ujian E2E Playwright (`tests/e2e/08_customer_receipt.spec.js`)**:
+    - Menambah kunci terjemahan `receipt_*` dalam `en.json`, `en.js`, `ms.json`, `ms.js`, dan menyokong atribut `[data-key]` & `[data-i18n]` dalam `shared/js/main.js`.
+    - Membina 6 senario ujian automatik E2E Playwright mengesahkan paparan meterai digital, perincian kenderaan, pecahan kewangan, pas QR, tindakan butang, dan penukaran dwibahasa lancar.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **20/20 Ujian Lulus (100% Pass Rate dalam 56.7s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.82 Overhaul customer booking receipt and digital invoice with Apple HIG standards and E2E tests`
+  - Tag Versi: `5.2.82`

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Booking Receipt | WeDRIVE</title>
+  <title>Booking Receipt & Digital Invoice | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link rel="stylesheet" href="../../../../shared/css/wedrive.css" />
 </head>
@@ -15,272 +15,534 @@
   <div id="mobile-menu-placeholder"></div>
 
   <main class="customer-main receipt-main" id="customer-main">
-  <div class="receipt-wrapper reveal-onload">
-    <div class="receipt-card">
-      <div class="receipt-header">
-        <div class="receipt-logo">
-          <img src="../../../../shared/logo/wedrive-icon.png" alt="WeDRIVE" />
-          <span>WeDRIVE</span>
+    <div class="receipt-container reveal-onload">
+      
+      <!-- Apple Breadcrumb Navigation -->
+      <nav class="receipt-breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="../../dashboard/customer.html" class="receipt-breadcrumb-link">
+          <span class="material-icons-round" style="font-size: 16px;">dashboard</span>
+          <span data-i18n="nav_dashboard">Dashboard</span>
+        </a>
+        <span class="material-icons-round receipt-breadcrumb-sep">chevron_right</span>
+        <a href="../my-bookings.html" class="receipt-breadcrumb-link">
+          <span data-i18n="receipt_breadcrumb_my_bookings">My Bookings</span>
+        </a>
+        <span class="material-icons-round receipt-breadcrumb-sep">chevron_right</span>
+        <span class="receipt-breadcrumb-current" data-i18n="receipt_breadcrumb_current">Official Receipt</span>
+      </nav>
+
+      <!-- Master Squircle Bento Invoice Card -->
+      <div class="receipt-bento-card" id="receipt-printable-card">
+        
+        <!-- Hero Header -->
+        <header class="receipt-hero-header">
+          <div class="receipt-brand-box">
+            <div class="receipt-brand-logo-row">
+              <img src="../../../../shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" class="receipt-brand-logo-img" />
+              <div>
+                <span class="receipt-brand-title">WeDRIVE</span>
+                <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary);">Melaka Premium Mobility</div>
+              </div>
+            </div>
+            <div class="receipt-brand-meta">
+              <span>WeDrive Car Rental Sdn. Bhd. (1389421-V)</span><br />
+              <span>SST Reg: W10-2401-32000891 &bull; Lot 123, Jalan Hang Tuah, 75300 Melaka</span>
+            </div>
+          </div>
+
+          <div class="receipt-meta-right">
+            <div class="receipt-verified-seal" id="receipt-verified-badge">
+              <span class="receipt-verified-pulse"></span>
+              <span data-i18n="receipt_badge_verified">VERIFIED DIGITAL INVOICE</span>
+            </div>
+            
+            <div class="receipt-inv-id-box">
+              <div class="receipt-inv-number">
+                <span id="receipt-booking-id">#WD-9842</span>
+                <button type="button" class="receipt-copy-btn" id="receipt-copy-btn" title="Copy Invoice ID" aria-label="Copy Invoice ID">
+                  <span class="material-icons-round" style="font-size: 17px;">content_copy</span>
+                </button>
+              </div>
+              <div class="receipt-inv-date">
+                <span data-i18n="receipt_issued_date">Issued Date</span>: <strong id="receipt-issue-date">--</strong>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content Body -->
+        <div class="receipt-content-body">
+          
+          <!-- 2-Column Bento Grid: Customer & Vehicle -->
+          <div class="receipt-grid-2col">
+            
+            <!-- Subcard 1: Customer Info -->
+            <div class="receipt-bento-subcard">
+              <div class="receipt-subcard-header">
+                <span class="receipt-subcard-title">
+                  <span class="material-icons-round">person</span>
+                  <span data-i18n="receipt_sec_customer">Customer Information</span>
+                </span>
+                <span class="badge" style="font-size: 10px; padding: 2px 8px; border-radius: 9999px; background: rgba(52, 199, 89, 0.12); color: #34C759; font-weight: 700;">Verified Driver</span>
+              </div>
+              
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_cust_name">Full Name</span>
+                <span class="receipt-row-val" id="receipt-cust-name">Ahmad bin Ali</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_cust_email">Email Address</span>
+                <span class="receipt-row-val" id="receipt-cust-email">ahmad@wedrive.my</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_cust_phone">Contact Phone</span>
+                <span class="receipt-row-val" id="receipt-cust-phone">+60 12-345 6789</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_cust_ic">NRIC / Passport</span>
+                <span class="receipt-row-val" id="receipt-cust-ic">010515-04-1234</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_cust_license">Driver's License</span>
+                <span class="receipt-row-val highlight-blue" id="receipt-cust-license">D12345678 (Class D)</span>
+              </div>
+            </div>
+
+            <!-- Subcard 2: Vehicle Details -->
+            <div class="receipt-bento-subcard">
+              <div class="receipt-subcard-header">
+                <span class="receipt-subcard-title">
+                  <span class="material-icons-round">directions_car</span>
+                  <span data-i18n="receipt_sec_vehicle">Vehicle Details</span>
+                </span>
+                <span class="plate-capsule receipt-row-val" id="receipt-car-plate">WDR 3388</span>
+              </div>
+              
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_vehicle_name">Vehicle Model</span>
+                <span class="receipt-row-val" id="receipt-car-name">2023 BMW 320i M Sport 2.0</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_vehicle_cat">Category / Class</span>
+                <span class="receipt-row-val" id="receipt-car-category">Premium Sedan (5 Seats)</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label" data-i18n="receipt_base_rate">Daily Rate</span>
+                <span class="receipt-row-val highlight-blue" id="receipt-car-daily-rate">MYR 450.00 / day</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label">Transmission / Fuel</span>
+                <span class="receipt-row-val" id="receipt-car-specs">Automatic &bull; Petrol (RON95/97)</span>
+              </div>
+              <div class="receipt-row-item">
+                <span class="receipt-row-label">Keyless Access</span>
+                <span class="receipt-row-val" style="color: #34C759; font-weight: 700;">Smart QR & Key FOB</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Schedule Bridge Bento Card -->
+          <div class="receipt-schedule-card">
+            <div class="receipt-subcard-title" style="padding-bottom: 0;">
+              <span class="material-icons-round">event_note</span>
+              <span data-i18n="receipt_sec_schedule">Rental Schedule & Hub</span>
+            </div>
+
+            <div class="receipt-schedule-timeline">
+              <div class="receipt-schedule-point">
+                <span class="receipt-point-label" data-i18n="receipt_pickup_time">Pick-up Date & Time</span>
+                <span class="receipt-point-date" id="receipt-pickup-date">Nov 15, 2026</span>
+                <span class="receipt-point-time" id="receipt-pickup-time">10:00 AM (Morning)</span>
+              </div>
+
+              <div class="receipt-schedule-duration-pill">
+                <span class="receipt-duration-days" id="receipt-duration-days">3 Days</span>
+                <span class="receipt-duration-label" data-i18n="receipt_duration">Duration</span>
+              </div>
+
+              <div class="receipt-schedule-point" style="text-align: right;">
+                <span class="receipt-point-label" data-i18n="receipt_return_time">Return Date & Time</span>
+                <span class="receipt-point-date" id="receipt-return-date">Nov 18, 2026</span>
+                <span class="receipt-point-time" id="receipt-return-time">10:00 AM (Morning)</span>
+              </div>
+            </div>
+
+            <div class="receipt-hub-indicator">
+              <span class="material-icons-round">place</span>
+              <div>
+                <span data-i18n="receipt_location_hub">Hub Location</span>: 
+                <strong id="receipt-location-hub">Melaka Sentral HQ &bull; Terminal Bus Utama</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Itemized Financial Breakdown Bento Card -->
+          <div class="receipt-finance-card">
+            <div class="receipt-subcard-title" style="padding-bottom: 0;">
+              <span class="material-icons-round">receipt_long</span>
+              <span data-i18n="receipt_sec_financial">Itemized Payment Breakdown</span>
+            </div>
+
+            <div class="receipt-finance-row" id="receipt-base-row">
+              <span class="receipt-finance-label" id="receipt-base-label" data-i18n="receipt_base_rate">Base Rental Rate (MYR 450.00 x 3 days)</span>
+              <span class="receipt-finance-val" id="receipt-base-amount">MYR 1,350.00</span>
+            </div>
+
+            <div class="receipt-finance-row" id="receipt-service-row">
+              <span class="receipt-finance-label" data-i18n="receipt_service_fee">Service & Platform Fee</span>
+              <span class="receipt-finance-val" id="receipt-service-amount">MYR 15.00</span>
+            </div>
+
+            <div class="receipt-finance-row" id="receipt-insurance-row">
+              <span class="receipt-finance-label" data-i18n="receipt_insurance">Coverage & Protection (CDW Basic)</span>
+              <span class="receipt-finance-val" id="receipt-insurance-amount">MYR 0.00</span>
+            </div>
+
+            <div class="receipt-finance-row" id="receipt-discount-row" style="display: none;">
+              <span class="receipt-finance-label" data-i18n="receipt_discount">Promotional Discount</span>
+              <span class="receipt-finance-val discount" id="receipt-discount-amount">- MYR 50.00</span>
+            </div>
+
+            <div class="receipt-finance-row" id="receipt-tax-row" style="display: none;">
+              <span class="receipt-finance-label" id="receipt-tax-label" data-i18n="receipt_tax">Sales & Services Tax (SST 8%)</span>
+              <span class="receipt-finance-val" id="receipt-tax-amount">MYR 108.00</span>
+            </div>
+
+            <div class="receipt-finance-row" id="receipt-deposit-row">
+              <span class="receipt-finance-label" id="receipt-deposit-label" data-i18n="receipt_deposit">Security Deposit (20%, Refundable)</span>
+              <span class="receipt-finance-val" id="receipt-deposit-amount">MYR 270.00</span>
+            </div>
+
+            <div class="receipt-finance-divider"></div>
+
+            <!-- Grand Total Highlight Card -->
+            <div class="receipt-total-highlight">
+              <div class="receipt-total-label-box">
+                <span class="receipt-total-main-label" data-i18n="receipt_total_paid">Total Amount Paid</span>
+                <span class="receipt-total-status-note" id="receipt-payment-status-note">
+                  <span class="material-icons-round" style="font-size: 16px;">verified</span>
+                  <span id="receipt-payment-method-desc" data-i18n="receipt_payment_status_paid">Payment Successful - Gateway Approved</span>
+                </span>
+              </div>
+              <div class="receipt-total-main-amt" id="receipt-total-amount">MYR 1,635.00</div>
+            </div>
+
+          </div>
+
+          <!-- Digital Vehicle Handover QR Code Pass Bento Card -->
+          <div class="receipt-qr-pass-card">
+            <div class="receipt-qr-code-frame">
+              <img id="receipt-qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=WeDRIVE-WD-9842-VERIFIED" alt="Verification QR Code" class="receipt-qr-img" />
+            </div>
+            <div class="receipt-qr-info">
+              <div class="receipt-qr-title">
+                <span class="material-icons-round">qr_code_scanner</span>
+                <span data-i18n="receipt_qr_title">Digital Vehicle Handover Pass</span>
+                <span class="badge" style="font-size: 10px; padding: 2px 8px; border-radius: 9999px; background: rgba(0, 113, 227, 0.12); color: var(--primary); font-weight: 700;" data-i18n="receipt_qr_code_label">VALIDATED PASS</span>
+              </div>
+              <p class="receipt-qr-desc" data-i18n="receipt_qr_desc">
+                Present this secure QR code at our Melaka pickup hub for instant key handover or contactless digital access.
+              </p>
+              <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); font-family: monospace;">
+                DIGITAL TOKEN: <span id="receipt-security-hash">WD-SEC-8924081-MLK</span>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="receipt-id">
-          <strong id="receipt-booking-id">WD-9842-AX</strong>
-          <small id="receipt-booking-date">Nov 15, 2024</small>
-        </div>
+
+        <!-- Receipt Footer Notice & Action Dock -->
+        <footer class="receipt-card-footer">
+          <p class="receipt-support-notice">
+            <span data-i18n="receipt_footer_thankyou">Thank you for choosing WeDRIVE Melaka. For 24/7 roadside assistance or inquiries, contact us at</span>
+            <a href="mailto:support@wedrive.my" id="receipt-footer-email">support@wedrive.my</a> &bull; 
+            <a href="tel:+6062719558" id="receipt-footer-phone">+60 6-271 9558</a>
+          </p>
+
+          <div class="receipt-actions-dock">
+            <button type="button" class="receipt-action-btn btn-secondary" onclick="window.print()" id="btn-print-receipt">
+              <span class="material-icons-round">print</span>
+              <span data-i18n="receipt_btn_print">Print Invoice</span>
+            </button>
+
+            <button type="button" class="receipt-action-btn btn-secondary" onclick="downloadReceiptPDF(this)" id="btn-download-pdf">
+              <span class="material-icons-round">download</span>
+              <span data-i18n="receipt_btn_download">Download PDF</span>
+            </button>
+
+            <button type="button" class="receipt-action-btn btn-secondary" onclick="copyReceiptLink()" id="btn-share-receipt">
+              <span class="material-icons-round">share</span>
+              <span data-i18n="receipt_btn_share">Copy Link</span>
+            </button>
+
+            <a href="../my-bookings.html" class="receipt-action-btn btn-primary" id="btn-back-my-bookings">
+              <span class="material-icons-round">arrow_back</span>
+              <span data-i18n="receipt_btn_back">My Bookings</span>
+            </a>
+          </div>
+        </footer>
+
       </div>
-      <div class="receipt-body">
-        <div class="receipt-section">
-          <h4>Customer Information</h4>
-          <div class="receipt-row"><span>Name</span><span class="value" id="receipt-cust-name">Ahmad bin Ali</span></div>
-          <div class="receipt-row"><span>Email</span><span class="value" id="receipt-cust-email">ahmad@email.com</span></div>
-          <div class="receipt-row"><span>Phone</span><span class="value" id="receipt-cust-phone">+60 12-345 6789</span></div>
-          <div class="receipt-row"><span>License No.</span><span class="value" id="receipt-cust-license">D12345678</span></div>
-        </div>
-        <div class="receipt-divider"></div>
-        <div class="receipt-section">
-          <h4>Vehicle Details</h4>
-          <div class="receipt-row"><span>Vehicle</span><span class="value" id="receipt-car-name">BMW 320i M Sport (2023)</span></div>
-          <div class="receipt-row"><span>Category</span><span class="value" id="receipt-car-category">Premium Sedan - M Sport</span></div>
-          <div class="receipt-row"><span>Plate No.</span><span class="value" id="receipt-car-plate">WDR 3388</span></div>
-        </div>
-        <div class="receipt-divider"></div>
-        <div class="receipt-section">
-          <h4>Rental Period</h4>
-          <div class="receipt-row"><span>Pick-up</span><span class="value" id="receipt-pickup-time">Nov 15, 2024 - 10:00 AM</span></div>
-          <div class="receipt-row"><span>Return</span><span class="value" id="receipt-return-time">Nov 18, 2024 - 10:00 AM</span></div>
-          <div class="receipt-row"><span>Duration</span><span class="value" id="receipt-duration">3 Days</span></div>
-          <div class="receipt-row"><span>Location</span><span class="value" id="receipt-location">Melaka Central Hub</span></div>
-        </div>
-        <div class="receipt-divider"></div>
-        <div class="receipt-section">
-          <h4>Payment Breakdown</h4>
-          <div class="receipt-row" id="receipt-base-row"><span>Base Rate</span><span class="value" id="receipt-base-amount">RM 1,350.00</span></div>
-          <div class="receipt-row" id="receipt-service-row"><span>Service Fee</span><span class="value" id="receipt-service-amount">RM 50.00</span></div>
-          <div class="receipt-row" id="receipt-insurance-row"><span>Insurance (Basic)</span><span class="value" id="receipt-insurance-amount">RM 0.00</span></div>
-          <div class="receipt-row discount" id="receipt-discount-row"><span>AI Dynamic Discount</span><span class="value" id="receipt-discount-amount">- RM 120.00</span></div>
-          <div class="receipt-row" id="receipt-tax-row" style="display: none;"><span>Tax (0%)</span><span class="value" id="receipt-tax-amount">RM 0.00</span></div>
-          <div class="receipt-row" id="receipt-deposit-row"><span>Security Deposit (refundable)</span><span class="value" id="receipt-deposit-amount">RM 500.00</span></div>
-          <div class="receipt-total"><span>Total Paid</span><span class="total-amount" id="receipt-total-amount">RM 1,780.00</span></div>
-          <div class="receipt-paid" id="receipt-payment-status"><span class="material-icons-round">check_circle</span> Payment Successful - Visa ending 1111</div>
-        </div>
-      </div>
-      <div class="receipt-footer">
-        <p id="receipt-footer-text">Thank you for choosing WeDRIVE. For support, contact <span data-company-email>support@wedrive.my</span> or call <span data-company-phone>+60 6-123 4567</span></p>
-        <div class="receipt-actions">
-          <button class="receipt-btn outline" type="button" onclick="window.print()"><span class="material-icons-round">print</span> Print</button>
-          <button class="receipt-btn outline" type="button" onclick="downloadReceiptDemo(this)"><span class="material-icons-round">download</span> Download PDF</button>
-          <button class="receipt-btn primary" type="button" onclick="window.location='../my-bookings.html'"><span class="material-icons-round">list_alt</span> My Bookings</button>
-        </div>
-      </div>
-      <div id="footer-placeholder" style="margin-top: 48px;"></div>
+
+      <div id="footer-placeholder" style="margin-top: 40px;"></div>
     </div>
-  </div>
   </main>
+
   <div id="chatbot-placeholder"></div>
+
+  <!-- Toast Notification -->
+  <div class="receipt-toast" id="receipt-toast">
+    <span class="material-icons-round" style="color: #34C759;">check_circle</span>
+    <span id="receipt-toast-msg">Copied to clipboard!</span>
+  </div>
+
+  <!-- Script Modules -->
   <script src="../../../js/sidebar-loader.js?v=5.7.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../../shared/js/supabase-config.js"></script>
+  <script src="../../../../shared/js/api.js"></script>
   <script src="../../../../shared/js/chatbot.js"></script>
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
   <script src="../../../../shared/js/main.js?v=5.7.0"></script>
+
   <script>
-    function downloadReceiptDemo(button) {
-      button.innerHTML = '<span class="material-icons-round">download_done</span> PDF Ready';
-      window.setTimeout(function () { window.print(); }, 300);
+    var currentReceiptBooking = null;
+    var currentCurrency = 'MYR';
+
+    function showToast(msg) {
+      var toast = document.getElementById('receipt-toast');
+      var toastMsg = document.getElementById('receipt-toast-msg');
+      if (!toast) return;
+      toastMsg.textContent = msg || 'Done';
+      toast.classList.add('active');
+      setTimeout(function() {
+        toast.classList.remove('active');
+      }, 3000);
+    }
+
+    function copyReceiptId() {
+      var id = currentReceiptBooking ? (currentReceiptBooking.booking_id || currentReceiptBooking.id) : 'WD-9842';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(function() {
+          showToast('Invoice #' + id + ' copied to clipboard!');
+        });
+      } else {
+        showToast('Invoice #' + id);
+      }
+    }
+
+    function copyReceiptLink() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(window.location.href).then(function() {
+          showToast('Receipt link copied to clipboard!');
+        });
+      } else {
+        showToast('Receipt link copied!');
+      }
+    }
+
+    function downloadReceiptPDF(btn) {
+      if (!btn) return;
+      var originalHtml = btn.innerHTML;
+      btn.innerHTML = '<span class="material-icons-round">download_done</span> PDF Ready';
+      setTimeout(function() {
+        window.print();
+        setTimeout(function() {
+          btn.innerHTML = originalHtml;
+        }, 1500);
+      }, 300);
+    }
+
+    function fmtDate(d) {
+      if (!d) return '--';
+      var dt = new Date(d);
+      if (isNaN(dt.getTime())) return String(d);
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return months[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear();
+    }
+
+    function fmtRM(num) {
+      return currentCurrency + ' ' + Number(num || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     async function initReceipt() {
       var booking = null;
+
+      // 1. Read from sessionStorage ('receipt_booking' or 'confirmed_booking')
       try {
-        booking = JSON.parse(sessionStorage.getItem('receipt_booking'));
+        var recStr = sessionStorage.getItem('receipt_booking');
+        if (recStr) booking = JSON.parse(recStr);
       } catch (e) {
-        console.error('Error loading receipt booking:', e);
+        console.warn('[Receipt] sessionStorage read error:', e);
       }
 
+      if (!booking) {
+        try {
+          var confStr = sessionStorage.getItem('confirmed_booking');
+          if (confStr) booking = JSON.parse(confStr);
+        } catch(e) {}
+      }
+
+      // 2. Read settings from Supabase
       var settings = {
         currency: 'MYR',
-        tax_rate: 0,
+        tax_rate: 8,
         deposit_percentage: 20
       };
 
       if (window.WeDriveGetSettings) {
         try {
-          settings = await window.WeDriveGetSettings();
-        } catch (e) {}
-      }
-
-      var currency = settings.currency || 'MYR';
-
-      if (!booking) {
-        // Try fallback to last confirmed booking
-        try {
-          var confirmed = sessionStorage.getItem('confirmed_booking');
-          if (confirmed) {
-            booking = JSON.parse(confirmed);
+          var fetchedSettings = await window.WeDriveGetSettings();
+          if (fetchedSettings) {
+            settings = Object.assign(settings, fetchedSettings);
+            currentCurrency = settings.currency || 'MYR';
           }
-        } catch(e) {}
+        } catch (e) {
+          console.warn('[Receipt] Settings fetch error:', e);
+        }
       }
 
+      // 3. Fallback: Query Supabase for customer's latest booking
       if (!booking) {
-        // Fetch last booking from DB
         try {
           var sb = window.supabaseClient;
-          if (sb) {
-            var userResult = await sb.auth.getUser();
-            var user = userResult && userResult.data && userResult.data.user;
-            if (user) {
-              var bookings = await window.WeDriveAPI.getCustomerBookings(user.id);
-              if (bookings && bookings.length > 0) {
-                // Find first completed or confirmed booking
-                booking = bookings.find(function(b) { return b.status === 'Completed'; }) || bookings[0];
-              }
+          var user = null;
+          if (sb && sb.auth) {
+            var userRes = await sb.auth.getUser();
+            user = userRes && userRes.data && userRes.data.user;
+          }
+          var sessionUser = null;
+          try {
+            var sStr = localStorage.getItem('wedrive_session');
+            if (sStr) sessionUser = JSON.parse(sStr);
+          } catch(e) {}
+
+          var uid = user ? user.id : (sessionUser ? sessionUser.id : null);
+          if (uid && window.WeDriveAPI && window.WeDriveAPI.getCustomerBookings) {
+            var custBookings = await window.WeDriveAPI.getCustomerBookings(uid);
+            if (custBookings && custBookings.length > 0) {
+              booking = custBookings.find(function(b) { return b.status === 'Completed'; }) || custBookings[0];
             }
           }
         } catch (err) {
-          console.error('Error fetching fallback booking for receipt:', err);
+          console.warn('[Receipt] DB booking fallback error:', err);
         }
       }
 
+      // 4. Default Mock Booking if running standalone or offline
       if (!booking) {
-        // Default demo fallback values if everything else fails
         booking = {
-          booking_id: 'WD-9842-AX',
-          car: 'BMW 320i M Sport',
+          id: '101',
+          booking_id: 'WD-9842',
+          car: '2023 BMW 320i M Sport 2.0',
+          category: 'Premium Sedan',
           plate: 'WDR 3388',
           customer: 'Ahmad bin Ali',
-          email: 'ahmad@email.com',
+          email: 'ahmad@wedrive.my',
           phone: '+60 12-345 6789',
-          start_date: '2026-05-22',
-          end_date: '2026-05-25',
+          ic: '010515-04-1234',
+          license: 'D12345678 (Class D)',
+          start_date: '2026-08-25',
+          end_date: '2026-08-28',
           days: 3,
           daily: 450,
-          total: 1350 + 50 - 120,
-          pickup: 'Melaka Central Hub',
-          created_at: new Date().toISOString()
+          total: 1635.00,
+          status: 'Completed',
+          payment: 'Paid',
+          pickup: 'Melaka Sentral HQ',
+          created_at: '2026-08-25T10:00:00Z'
         };
       }
 
-      function fmtDate(d) {
-        if (!d) return '--';
-        var dt = new Date(d);
-        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        return months[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear();
-      }
+      currentReceiptBooking = booking;
 
-      function fmtCurrency(val) {
-        return currency + ' ' + Number(val || 0).toFixed(2);
-      }
+      // Populate Elements
+      var bookingId = booking.booking_id || booking.id || 'WD-9842';
+      document.getElementById('receipt-booking-id').textContent = '#' + bookingId;
+      document.getElementById('receipt-issue-date').textContent = fmtDate(booking.created_at || booking.start_date);
 
-      // Populate elements
-      document.getElementById('receipt-booking-id').textContent = booking.booking_id || booking.id || 'WD-XXXX-XX';
-      document.getElementById('receipt-booking-date').textContent = fmtDate(booking.created_at || booking.start_date);
-      
-      document.getElementById('receipt-cust-name').textContent = booking.customer || 'Guest User';
-      document.getElementById('receipt-cust-email').textContent = booking.email || '--';
-      document.getElementById('receipt-cust-phone').textContent = booking.phone || '--';
-      
-      // Try to load customer profile to get license
-      if (window.supabaseClient && booking.auth_uid) {
-        try {
-          var profile = await window.WeDriveAPI.getCustomerProfile(booking.auth_uid);
-          if (profile && profile.license) {
-            document.getElementById('receipt-cust-license').textContent = profile.license;
-          } else if (booking.ic) {
-            document.getElementById('receipt-cust-license').textContent = 'Verified (IC: ' + booking.ic + ')';
-          }
-        } catch(e) {}
-      } else if (booking.ic) {
-        document.getElementById('receipt-cust-license').textContent = 'Verified (IC: ' + booking.ic + ')';
-      }
+      // Customer Info
+      document.getElementById('receipt-cust-name').textContent = booking.customer || 'Ahmad bin Ali';
+      document.getElementById('receipt-cust-email').textContent = booking.email || 'ahmad@wedrive.my';
+      document.getElementById('receipt-cust-phone').textContent = booking.phone || '+60 12-345 6789';
+      document.getElementById('receipt-cust-ic').textContent = booking.ic || '010515-04-1234';
+      document.getElementById('receipt-cust-license').textContent = booking.license || 'D12345678 (Class D)';
 
-      document.getElementById('receipt-car-name').textContent = booking.car || 'Standard Car';
-      document.getElementById('receipt-car-plate').textContent = booking.plate || '--';
-      
-      // Determine category
-      var category = 'Premium vehicle';
-      if (booking.car) {
-        var lower = booking.car.toLowerCase();
-        if (lower.includes('myvi') || lower.includes('city') || lower.includes('vios')) category = 'Sedan / Hatchback';
-        else if (lower.includes('gla') || lower.includes('x50') || lower.includes('ativa')) category = 'SUV / Crossover';
-        else if (lower.includes('camry') || lower.includes('bmw')) category = 'Premium Sedan';
-      }
+      // Vehicle Info
+      var carName = booking.car || booking.car_name || '2023 BMW 320i M Sport 2.0';
+      var plateNo = booking.plate || 'WDR 3388';
+      var category = booking.category || 'Premium Sedan (5 Seats)';
+      var dailyRate = Number(booking.daily || booking.price_per_day || 450);
+
+      document.getElementById('receipt-car-name').textContent = carName;
+      document.getElementById('receipt-car-plate').textContent = plateNo;
       document.getElementById('receipt-car-category').textContent = category;
+      document.getElementById('receipt-car-daily-rate').textContent = fmtRM(dailyRate) + ' / day';
 
-      document.getElementById('receipt-pickup-time').textContent = fmtDate(booking.start_date) + ' - 10:00 AM';
-      document.getElementById('receipt-return-time').textContent = fmtDate(booking.end_date) + ' - 10:00 AM';
-      document.getElementById('receipt-duration').textContent = (booking.days || 1) + ' Day' + ((booking.days || 1) > 1 ? 's' : '');
-      document.getElementById('receipt-location').textContent = booking.pickup || 'Melaka Sentral';
+      // Schedule Info
+      var days = Number(booking.days || 1);
+      document.getElementById('receipt-pickup-date').textContent = fmtDate(booking.start_date);
+      document.getElementById('receipt-return-date').textContent = fmtDate(booking.end_date);
+      document.getElementById('receipt-duration-days').textContent = days + ' Day' + (days > 1 ? 's' : '');
+      document.getElementById('receipt-location-hub').textContent = (booking.pickup || booking.pickup_location || 'Melaka Sentral HQ') + ' \u2022 Terminal Hub';
 
-      // Financial calculations
-      var days = booking.days || 1;
-      var dailyRate = Number(booking.daily) || 120;
+      // Financial Calculation Breakdown
       var baseCost = dailyRate * days;
-      var serviceFee = 15; 
-      
-      // Addon details
-      var addonCost = 0;
-      var addonLabel = 'None';
-      // If we can infer addons from booking total
-      var diff = Number(booking.total) - baseCost - serviceFee;
-      
-      // Check tax first
-      var taxRate = Number(settings.tax_rate) || 0;
-      // total = (baseCost + addonCost) * (1 + taxRate/100) + serviceFee
-      // total - serviceFee = (baseCost + addonCost) * (1 + taxRate/100)
-      // baseCost + addonCost = (total - serviceFee) / (1 + taxRate/100)
-      var subtotal = (Number(booking.total) - serviceFee) / (1 + (taxRate / 100));
-      addonCost = Math.max(0, subtotal - baseCost);
-      var taxCost = (baseCost + addonCost) * (taxRate / 100);
-
-      // Deposit
+      var serviceFee = 15.00;
+      var taxRate = Number(settings.tax_rate) || 8;
       var depositRate = Number(settings.deposit_percentage) || 20;
-      var depositCost = (baseCost + addonCost) * (depositRate / 100);
 
-      // Update Breakdown labels and amounts
-      document.getElementById('receipt-base-row').querySelector('span').textContent = 'Base Rate (' + fmtCurrency(dailyRate) + ' x ' + days + ' days)';
-      document.getElementById('receipt-base-amount').textContent = fmtCurrency(baseCost);
-      document.getElementById('receipt-service-amount').textContent = fmtCurrency(serviceFee);
-
-      // Addons
-      var insAmount = 0;
-      if (addonCost > 0) {
-        insAmount = addonCost;
-        document.getElementById('receipt-insurance-row').querySelector('span').textContent = 'Add-ons & Insurance';
-        document.getElementById('receipt-insurance-amount').textContent = fmtCurrency(insAmount);
-        document.getElementById('receipt-insurance-row').style.display = 'flex';
-      } else {
-        document.getElementById('receipt-insurance-row').style.display = 'none';
+      var total = Number(booking.total || 0);
+      if (total <= 0) {
+        var sub = baseCost + serviceFee;
+        var tax = sub * (taxRate / 100);
+        var dep = baseCost * (depositRate / 100);
+        total = sub + tax + dep;
       }
 
-      // Discount
-      document.getElementById('receipt-discount-row').style.display = 'none'; // No active dynamic discounts saved in booking total
+      var depositAmount = baseCost * (depositRate / 100);
+      var taxAmount = (baseCost + serviceFee) * (taxRate / 100);
 
-      // Tax row
+      document.getElementById('receipt-base-label').textContent = 'Base Rental Rate (' + fmtRM(dailyRate) + ' x ' + days + ' days)';
+      document.getElementById('receipt-base-amount').textContent = fmtRM(baseCost);
+      document.getElementById('receipt-service-amount').textContent = fmtRM(serviceFee);
+      document.getElementById('receipt-insurance-amount').textContent = fmtRM(0);
+
       var taxRow = document.getElementById('receipt-tax-row');
-      if (taxRow) {
-        if (taxRate > 0) {
-          taxRow.style.display = 'flex';
-          taxRow.querySelector('span').textContent = 'Tax (' + taxRate + '%)';
-          taxRow.querySelector('#receipt-tax-amount').textContent = fmtCurrency(taxCost);
-        } else {
-          taxRow.style.display = 'none';
-        }
+      if (taxRate > 0) {
+        taxRow.style.display = 'flex';
+        document.getElementById('receipt-tax-label').textContent = 'Sales & Services Tax (SST ' + taxRate + '%)';
+        document.getElementById('receipt-tax-amount').textContent = fmtRM(taxAmount);
+      } else {
+        taxRow.style.display = 'none';
       }
 
-      // Deposit row
       var depRow = document.getElementById('receipt-deposit-row');
       if (depRow) {
-        depRow.querySelector('span').textContent = 'Security Deposit (' + depositRate + '%, refundable)';
-        depRow.querySelector('#receipt-deposit-amount').textContent = fmtCurrency(depositCost);
+        document.getElementById('receipt-deposit-label').textContent = 'Security Deposit (' + depositRate + '%, Refundable)';
+        document.getElementById('receipt-deposit-amount').textContent = fmtRM(depositAmount);
       }
 
-      // Total
-      document.getElementById('receipt-total-amount').textContent = fmtCurrency(booking.total);
+      document.getElementById('receipt-total-amount').textContent = fmtRM(total);
 
-      // Payment status info
-      var cardInfo = booking.payment === 'Paid' ? 'Payment Successful - Demo Gateway Approved' : 'Payment Method: ' + (booking.payment || 'Demo Card');
-      document.getElementById('receipt-payment-status').innerHTML = '<span class="material-icons-round">check_circle</span> ' + cardInfo;
+      // QR Code Generation
+      var qrData = encodeURIComponent('WeDRIVE-VERIFIED-INVOICE:' + bookingId + ':CAR:' + plateNo + ':CUST:' + (booking.customer || 'Customer'));
+      var qrImg = document.getElementById('receipt-qr-image');
+      if (qrImg) {
+        qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + qrData;
+      }
+      document.getElementById('receipt-security-hash').textContent = 'WD-SEC-' + Math.abs(bookingId.split('').reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0)).toString(16).toUpperCase() + '-MLK';
+
+      // Copy Button listener
+      var copyBtn = document.getElementById('receipt-copy-btn');
+      if (copyBtn) {
+        copyBtn.onclick = copyReceiptId;
+      }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', function() {
       setTimeout(initReceipt, 100);
     });
   </script>

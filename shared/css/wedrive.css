@@ -11496,3 +11496,792 @@ body.dark .mybk-modal-detail-row {
   }
 }
 
+/* ==========================================================================
+   17. CUSTOMER BOOKING RECEIPT & DIGITAL INVOICE (Apple HIG)
+   ========================================================================== */
+
+.receipt-main {
+  padding: 32px 24px 64px;
+  min-height: calc(100vh - 80px);
+}
+
+.receipt-container {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Apple Breadcrumb Navigation */
+.receipt-breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.receipt-breadcrumb-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.receipt-breadcrumb-link:hover {
+  color: var(--primary);
+}
+
+.receipt-breadcrumb-sep {
+  font-size: 16px;
+  opacity: 0.5;
+}
+
+.receipt-breadcrumb-current {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Master Receipt Squircle Bento Card */
+.receipt-bento-card {
+  background: var(--bg-card);
+  border-radius: 28px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.night-mode .receipt-bento-card,
+body.dark .receipt-bento-card {
+  background: #161618;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Specular Top Ambient Highlight */
+.receipt-bento-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0071E3 0%, #34C759 50%, #0071E3 100%);
+  opacity: 0.85;
+}
+
+/* Receipt Hero Header */
+.receipt-hero-header {
+  padding: 32px 36px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.01);
+  gap: 20px;
+}
+
+body.night-mode .receipt-hero-header,
+body.dark .receipt-hero-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.receipt-brand-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.receipt-brand-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.receipt-brand-logo-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.receipt-brand-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.receipt-brand-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.receipt-meta-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  text-align: right;
+}
+
+/* Verified Digital Security Seal Badge */
+.receipt-verified-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(52, 199, 89, 0.12);
+  color: #34C759;
+  border: 1px solid rgba(52, 199, 89, 0.28);
+}
+
+.receipt-verified-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34C759;
+  box-shadow: 0 0 8px #34C759;
+  animation: pulseGreen 2s infinite ease-in-out;
+}
+
+.receipt-inv-id-box {
+  font-family: inherit;
+}
+
+.receipt-inv-number {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.receipt-copy-btn {
+  background: transparent;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.receipt-copy-btn:hover {
+  color: var(--primary);
+  background: rgba(0, 113, 227, 0.1);
+}
+
+.receipt-copy-btn:active {
+  transform: scale(0.92);
+}
+
+.receipt-inv-date {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Receipt Body Container */
+.receipt-content-body {
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* 2-Column Bento Grid for Info */
+.receipt-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.receipt-bento-subcard {
+  background: rgba(0, 0, 0, 0.015);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+}
+
+body.night-mode .receipt-bento-subcard,
+body.dark .receipt-bento-subcard {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.receipt-subcard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.night-mode .receipt-subcard-header,
+body.dark .receipt-subcard-header {
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.receipt-subcard-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.receipt-subcard-title .material-icons-round {
+  font-size: 15px;
+  color: var(--primary);
+}
+
+/* Rows inside Subcards */
+.receipt-row-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 13px;
+  gap: 12px;
+}
+
+.receipt-row-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.receipt-row-val {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+}
+
+.receipt-row-val.highlight-blue {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.receipt-row-val.plate-capsule {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-card-secondary, #F0F0F3);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+  border: 1px solid var(--border-color);
+}
+
+body.night-mode .receipt-row-val.plate-capsule,
+body.dark .receipt-row-val.plate-capsule {
+  background: #262629;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Schedule Bridge Bento Card */
+.receipt-schedule-card {
+  background: rgba(0, 113, 227, 0.03);
+  border: 1px solid rgba(0, 113, 227, 0.15);
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.night-mode .receipt-schedule-card,
+body.dark .receipt-schedule-card {
+  background: rgba(41, 151, 255, 0.04);
+  border-color: rgba(41, 151, 255, 0.18);
+}
+
+.receipt-schedule-timeline {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.receipt-schedule-point {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.receipt-point-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.receipt-point-date {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.receipt-point-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.receipt-schedule-duration-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border-radius: 9999px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+body.night-mode .receipt-schedule-duration-pill,
+body.dark .receipt-schedule-duration-pill {
+  background: #1D1D20;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.receipt-duration-days {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.receipt-duration-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.receipt-hub-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-top: 12px;
+  border-top: 1px dashed rgba(0, 113, 227, 0.15);
+}
+
+.receipt-hub-indicator .material-icons-round {
+  color: var(--primary);
+  font-size: 18px;
+}
+
+/* Itemized Financial Calculation Bento */
+.receipt-finance-card {
+  background: rgba(0, 0, 0, 0.015);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+body.night-mode .receipt-finance-card,
+body.dark .receipt-finance-card {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.receipt-finance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.receipt-finance-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.receipt-finance-val {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.receipt-finance-val.discount {
+  color: #34C759;
+  font-weight: 700;
+}
+
+.receipt-finance-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 4px 0;
+}
+
+/* Total Paid Grand Highlight Card */
+.receipt-total-highlight {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.08) 0%, rgba(52, 199, 89, 0.08) 100%);
+  border: 1px solid rgba(0, 113, 227, 0.2);
+}
+
+body.night-mode .receipt-total-highlight,
+body.dark .receipt-total-highlight {
+  background: linear-gradient(135deg, rgba(41, 151, 255, 0.12) 0%, rgba(52, 199, 89, 0.12) 100%);
+  border-color: rgba(41, 151, 255, 0.25);
+}
+
+.receipt-total-label-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.receipt-total-main-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.receipt-total-status-note {
+  font-size: 12px;
+  color: #34C759;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.receipt-total-main-amt {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* QR Code & Digital Handover Pass Bento */
+.receipt-qr-pass-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 24px;
+  background: var(--bg-card-secondary, #F9F9FB);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+}
+
+body.night-mode .receipt-qr-pass-card,
+body.dark .receipt-qr-pass-card {
+  background: #1B1B1E;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.receipt-qr-code-frame {
+  width: 100px;
+  height: 100px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.receipt-qr-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.receipt-qr-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.receipt-qr-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.receipt-qr-title .material-icons-round {
+  color: var(--primary);
+  font-size: 20px;
+}
+
+.receipt-qr-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Receipt Footer Notice */
+.receipt-card-footer {
+  padding: 24px 36px 32px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.01);
+}
+
+body.night-mode .receipt-card-footer,
+body.dark .receipt-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.receipt-support-notice {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.receipt-support-notice a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Floating Actions Dock */
+.receipt-actions-dock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.receipt-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill, 9999px);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.receipt-action-btn:active {
+  transform: scale(0.97);
+}
+
+.receipt-action-btn.btn-primary {
+  background: var(--primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+}
+
+.receipt-action-btn.btn-primary:hover {
+  background: #0077ED;
+  box-shadow: 0 6px 20px rgba(0, 113, 227, 0.4);
+}
+
+.receipt-action-btn.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.receipt-action-btn.btn-secondary:hover {
+  background: var(--bg-card-secondary, #F0F0F3);
+  border-color: rgba(0, 113, 227, 0.3);
+}
+
+body.night-mode .receipt-action-btn.btn-secondary,
+body.dark .receipt-action-btn.btn-secondary {
+  background: #1E1E22;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.night-mode .receipt-action-btn.btn-secondary:hover,
+body.dark .receipt-action-btn.btn-secondary:hover {
+  background: #28282D;
+  border-color: rgba(41, 151, 255, 0.3);
+}
+
+/* Toast for Receipt Actions */
+.receipt-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(22, 22, 24, 0.92);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.receipt-toast.active {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Print Optimization Stylesheet */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  #customer-sidebar-placeholder,
+  #mobile-menu-placeholder,
+  #chatbot-placeholder,
+  .receipt-breadcrumb-nav,
+  .receipt-actions-dock,
+  .receipt-copy-btn,
+  .sidebar,
+  .theme-toggle,
+  .lang-toggle,
+  #footer-placeholder {
+    display: none !important;
+  }
+  .customer-main,
+  .receipt-main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .receipt-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+  .receipt-bento-card {
+    border: 1px solid #DDDDDD !important;
+    box-shadow: none !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+  }
+  .receipt-hero-header,
+  .receipt-card-footer {
+    background: #FAFAFA !important;
+  }
+  .receipt-verified-seal {
+    border: 1px solid #34C759 !important;
+    color: #34C759 !important;
+  }
+  .receipt-total-highlight {
+    background: #F0FDF4 !important;
+    border: 1px solid #86EFAC !important;
+  }
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .receipt-main {
+    padding: 20px 14px 48px;
+  }
+  .receipt-hero-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 20px 20px;
+  }
+  .receipt-meta-right {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .receipt-content-body {
+    padding: 24px 20px;
+    gap: 20px;
+  }
+  .receipt-grid-2col {
+    grid-template-columns: 1fr;
+  }
+  .receipt-schedule-timeline {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .receipt-schedule-duration-pill {
+    margin: 4px auto;
+  }
+  .receipt-qr-pass-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+  .receipt-total-highlight {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .receipt-actions-dock {
+    flex-direction: column;
+    width: 100%;
+  }
+  .receipt-action-btn {
+    width: 100%;
+  }
+}
+
+

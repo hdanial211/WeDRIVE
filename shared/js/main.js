@@ -266,9 +266,9 @@
   }
 
   function doApplyTranslation(data, animate) {
-    // Set innerText for [data-key]
-    document.querySelectorAll('[data-key]').forEach(function (el) {
-      var key = el.getAttribute('data-key');
+    // Set innerText for [data-key] and [data-i18n]
+    document.querySelectorAll('[data-key], [data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-key') || el.getAttribute('data-i18n');
       if (data[key] !== undefined) el.innerText = data[key];
     });
 
@@ -428,7 +428,16 @@
       "fleet_banner_desc": "Filter by specific transmission, seating capacity, and fuel efficiency with real-time dates availability.",
       "cust_explore_fleet": "Explore All 8 Cars",
       "cust_featured_fleet": "Featured Cars",
-      "cust_featured_fleet_desc": "Top choices across vehicle classes in Melaka"
+      "cust_featured_fleet_desc": "Top choices across vehicle classes in Melaka",
+      "receipt_title": "Booking Receipt & Invoice",
+      "receipt_subtitle": "Official digital tax invoice and verified proof of rental payment.",
+      "receipt_breadcrumb_my_bookings": "My Bookings",
+      "receipt_breadcrumb_current": "Official Receipt",
+      "receipt_badge_verified": "VERIFIED DIGITAL INVOICE",
+      "receipt_badge_paid": "PAID IN FULL",
+      "receipt_btn_print": "Print Invoice",
+      "receipt_btn_download": "Download PDF",
+      "receipt_btn_back": "My Bookings"
     },
     ms: {
       "nav_browse": "Pilih Kereta",
@@ -505,7 +514,16 @@
       "fleet_banner_desc": "Tapis mengikut transmisi, bilangan tempat duduk, dan penjimatan bahan api dengan tarikh tersedia masa nyata.",
       "cust_explore_fleet": "Teroka Kesemua 8 Kereta",
       "cust_featured_fleet": "Pilihan Kereta Popular",
-      "cust_featured_fleet_desc": "Pilihan terbaik mengikut kategori kenderaan di Melaka"
+      "cust_featured_fleet_desc": "Pilihan terbaik mengikut kategori kenderaan di Melaka",
+      "receipt_title": "Resit Tempahan & Invois",
+      "receipt_subtitle": "Invois cukai digital rasmi dan bukti sah pembayaran sewaan kenderaan.",
+      "receipt_breadcrumb_my_bookings": "Tempahan Saya",
+      "receipt_breadcrumb_current": "Resit Rasmi",
+      "receipt_badge_verified": "INVOIS DIGITAL DISAHKAN",
+      "receipt_badge_paid": "DIBAYAR PENUH",
+      "receipt_btn_print": "Cetak Invois",
+      "receipt_btn_download": "Muat Turun PDF",
+      "receipt_btn_back": "Tempahan Saya"
     }
   };
 
