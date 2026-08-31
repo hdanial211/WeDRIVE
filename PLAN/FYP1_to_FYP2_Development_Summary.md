@@ -1909,3 +1909,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.84 Deploy Apple SF Pro Display webfont links across all system pages`
   - Tag Versi: `5.2.84`
+
+---
+
+### Minor Update 125 (`v5.2.85`): Redesign Customer Receipt into Official Corporate Tax Invoice & Rental Statement (Apple & Stripe Luxury Standard)
+- **Tarikh & Masa**: 1 September 2026, 05:05 AM
+- **Fail Terlibat**:
+  - `customer/pages/my-bookings/receipt/receipt.html`
+  - `shared/css/wedrive.css` (Section 17: Official Corporate Tax Invoice & Digital Statement)
+  - `shared/lang/en.json` & `shared/lang/en.js`
+  - `shared/lang/ms.json` & `shared/lang/ms.js`
+  - `tests/e2e/08_customer_receipt.spec.js`
+  - `tests/e2e/07_customer_my_bookings.spec.js`
+- **Penerangan Pembaharuan & Seni Bina Rasmi**:
+  - **1. Pengepala Rasmi & Identiti Korporat (*Corporate Letterhead & Legal Identifiers*)**:
+    - Menambah pengepala rasmi penuh dengan nama syarikat berdaftar: **WeDRIVE MOBILITY SDN. BHD.**, No. SSM: `202401038921 (1548291-K)`, No. Cukai SST Kastam: `W10-2401-32000891`, Lesen Kementerian Pelancongan (MOTAC): `KPK/LN 9842 (Kenderaan Pandu Sendiri)`, serta alamat ibu pejabat korporat di Menara WeDRIVE Melaka.
+    - Menambah reben atas pensijilan pematuhan *LHDN e-Invoice Validated* & *SST Act 2018 Compliant*.
+  - **2. Ledger Dua Pihak (*Bilateral Lessor vs Lessee Entity Ledger*)**:
+    - **ISSUED BY (PEMBERI SEWA)**: Butiran hub operasi, nombor cukai SST, talian bantuan, dan *e-Invoice UUID*.
+    - **BILLED TO / RENTER (PENYEWA UTAMA)**: Nama penuh penyewa, No. Kad Pengenalan / Pasport, Lesen Memandu (Kelas D - CDL), alamat emel, dan nombor telefon.
+  - **3. Manifes & Jadual Penempatan Kenderaan (*Vehicle Manifest & Deployment*)**:
+    - Memaparkan spesifikasi teknikal audit kenderaan: Nombor Casis / VIN (`PL1-FC1-2026-994821`), Nombor Enjin (`L15B7-889104`), Milenaj Awal (`14,250 KM`), Polisi Minyak Penuh-ke-Penuh, serta garis masa serahan & pemulangan kenderaan.
+  - **4. Jadual Cukai & Perakaunan Berkanun (*Statutory Itemized Accounting Schedule*)**:
+    - Susun atur jadual berbilang lajur (*No., Item Description & Details, Qty / Duration, Unit Rate, Tax SST, Amount*) merangkumi:
+      - 1. Caj Sewaan Harian Kenderaan (Pengecualian Cukai).
+      - 2. Yuran Platform Pintar Telematik & Concierge (8% SST).
+      - 3. Pelepasan Kerosakan Perlanggaran Komprehensif (CDW + Tanpa Lebihan).
+      - 4. Cukai Perkhidmatan (8% SST atas Perkhidmatan Platform).
+      - 5. Deposit Keselamatan & Kerosakan Boleh Pulang.
+    - Menambah ringkasan perakaunan (*Subtotal Excl. Tax, SST 8%, Deposit, Subtotal Payable*) dan sepanduk Jumlah Keseluruhan Dibil & Dibayar (*GRAND TOTAL AMOUNT BILLED & PAID*).
+  - **5. Penyata Jumlah Dalam Perkataan Dinamik (*Dynamic Amount in Words Banner*)**:
+    - Algoritma penukaran mata wang Ringgit Malaysia ke perkataan dalam dwibahasa secara dinamik (English: *RINGGIT MALAYSIA: ONE THOUSAND SIX HUNDRED THIRTY-SIX AND TWENTY CENTS ONLY* / Melayu: *RINGGIT MALAYSIA: SATU RIBU ENAM RATUS TIGA PULUH ENAM DAN DUA PULUH SEN SAHAJA*).
+  - **6. Meterai Holografik Digital, Tandatangan Korporat & Pas QR (*Holographic Seal & Verification*)**:
+    - Meterai digital timbul (*Embossed Digital Tax Seal*) dengan cincin kecerunan hijau zamrud.
+    - Tandatangan digital rasmi: **Afiq Danial** (*Head of Treasury & Billing Operations*) berserta hash keselamatan SHA-256.
+    - Pas Kod QR pintar berformat URL verifikasi terus untuk serahan kunci di hab Melaka.
+  - **7. Pendedahan Statut & Cetakan A4 Sempurna (*Statutory Disclosures & Media Print*)**:
+    - Klausa perundangan rasmi di bawah Akta Pengangkutan Jalan 1987 dan Akta Industri Pelancongan 1992.
+    - Lembaran gaya cetakan khusus `@media print` untuk format dokumen kertas invois cukai A4 tanpa gangguan navigasi atau butang.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian Playwright mengesahkan **20/20 Ujian Lulus (100% Pass Rate)**.
+- **Maklumat Git**:
+  - Commit: `5.2.85 Redesign customer receipt into official corporate tax invoice and rental statement`
+  - Tag Versi: `5.2.85`

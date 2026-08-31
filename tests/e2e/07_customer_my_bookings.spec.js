@@ -149,7 +149,7 @@ test.describe('Customer My Bookings Portal E2E Tests', () => {
 
     // Should navigate to receipt/receipt.html
     await page.waitForURL(/receipt\.html/);
-    await expect(page.locator('#receipt-booking-id')).toBeVisible();
+    await expect(page.locator('#receipt-booking-id, #receipt-invoice-id').first()).toBeVisible();
   });
 
   test('Bilingual toggle (EN <-> MS) updates labels smoothly without reload', async ({ page }) => {
