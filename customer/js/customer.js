@@ -895,8 +895,19 @@
       }
 
       window.WeDriveAPI.getCustomerBookings(user.id).then(function (bookings) {
+        var now = new Date();
+        var todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
         var activeBookings = (bookings || []).filter(function (b) {
-          return b.status !== 'Completed' && b.status !== 'Cancelled' && b.status !== 'Rejected';
+          if (b.status === 'Completed' || b.status === 'Cancelled' || b.status === 'Rejected') return false;
+          var endStr = b.end_date || b.return;
+          if (endStr) {
+            var endDt = new Date(endStr + (endStr.includes('T') ? '' : 'T23:59:59'));
+            if (!isNaN(endDt.getTime()) && endDt.getTime() < todayStart) {
+              return false; // Ended in the past
+            }
+          }
+          return true;
         });
 
         var activeCountEl = document.getElementById('stat-active-rentals');

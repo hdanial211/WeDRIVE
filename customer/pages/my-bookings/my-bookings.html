@@ -479,19 +479,42 @@
       document.getElementById('count-cancelled').textContent = cancelled;
     }
 
+    // Real-time status normalization based on rental calendar dates
+    function normalizeBookingStatus(b) {
+      if (!b) return 'Completed';
+      if (b.status === 'Cancelled' || b.status === 'Rejected') return 'Cancelled';
+
+      var now = new Date();
+      var todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+      var startStr = b.start_date || b.pickup;
+      var endStr = b.end_date || b.return;
+
+      if (!endStr) return b.status || 'Completed';
+
+      var startDt = startStr ? new Date(startStr + (startStr.includes('T') ? '' : 'T00:00:00')) : null;
+      var endDt = new Date(endStr + (endStr.includes('T') ? '' : 'T23:59:59'));
+
+      // If return date is in the past, rental has ended -> Completed
+      if (!isNaN(endDt.getTime()) && endDt.getTime() < todayStart) {
+        return 'Completed';
+      }
+
+      // If start date is in the future -> Upcoming (Pending)
+      if (startDt && !isNaN(startDt.getTime()) && startDt.getTime() > now.getTime()) {
+        return 'Pending';
+      }
+
+      // Ongoing within start and return date
+      return 'Active';
+    }
+
     // Render Spotlight Hero for Active Ongoing Rental
     function renderActiveSpotlight(bookings) {
       var spotlightSec = document.getElementById('active-rental-spotlight');
       var activeList = bookings.filter(function(b) {
-        return b.status === 'Active' || b.status === 'Confirmed' || b.status === 'Ongoing';
+        return b.status === 'Active';
       });
-
-      if (activeList.length === 0 && bookings.length > 0) {
-        var firstValid = bookings.find(function(b) { return b.status !== 'Cancelled'; });
-        if (firstValid) {
-          activeList = [firstValid];
-        }
-      }
 
       if (activeList.length === 0) {
         spotlightSec.style.display = 'none';
@@ -971,12 +994,27 @@
           allBookings = getSampleBookings();
         }
 
+        // Apply real-time date normalization so past bookings are cleanly marked Completed
+        allBookings.forEach(function(b) {
+          var realStatus = normalizeBookingStatus(b);
+          if (b.status !== realStatus) {
+            var oldStatus = b.status;
+            b.status = realStatus;
+            if (oldStatus === 'Active' && realStatus === 'Completed' && sb && b.id) {
+              sb.from('bookings').update({ status: 'Completed' }).eq('id', b.id).then(function(){}).catch(function(){});
+            }
+          }
+        });
+
         renderStats(allBookings);
         renderActiveSpotlight(allBookings);
         renderBookings();
       } catch (err) {
         console.error('[MyBookings] Load error:', err);
         allBookings = getSampleBookings();
+        allBookings.forEach(function(b) {
+          b.status = normalizeBookingStatus(b);
+        });
         renderStats(allBookings);
         renderActiveSpotlight(allBookings);
         renderBookings();

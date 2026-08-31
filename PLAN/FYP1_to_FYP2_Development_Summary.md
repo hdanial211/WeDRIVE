@@ -1797,3 +1797,29 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.80 Overhaul customer My Bookings portal with Apple HIG Bento layout and E2E tests`
   - Tag Versi: `5.2.80`
+
+---
+
+## ⏱️ [MINOR UPDATE] 121. Penyelarasan Automatik Status Tempahan Lampau & Penapisan Spotlight Sewaan Aktif Masa Nyata (Real-time Booking Status Normalization & Expired Rental Concluding) (v5.2.81)
+
+- **Punca Isu (Issue Analysis & User Query)**:
+  - Pengguna bertanya mengapa tempahan yang tarikh pemulangannya telah tamat (cth. *28 Ogos 2026*, sedangkan tarikh semasa adalah *1 September 2026*) masih dipaparkan sebagai `Active Rental` dengan nota *"Due for return today"*.
+  - **Punca**: Sebelum ini, sistem hanya menyemak string `b.status === 'Active'` daripada rekod lama pangkalan data tanpa menilai secara dinamik sama ada `end_date` telah berlalu berbanding tarikh hari ini (`new Date()`).
+- **Tindakan Pembaikan (Implementation & Auto-concluding Logic)**:
+  - **1. Fungsi Penyelarasan Status Masa Nyata (`normalizeBookingStatus(booking)`)**:
+    - Dibina di dalam [`customer/pages/my-bookings/my-bookings.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/customer/pages/my-bookings/my-bookings.html):
+      - Jika `end_date < todayStart` $\rightarrow$ Status diselaraskan secara automatik kepada **`Completed`**.
+      - Jika `start_date > now` $\rightarrow$ Status diselaraskan kepada **`Pending`** (Upcoming).
+      - Hanya sewaan dalam julat `start_date <= now <= end_date` dikategorikan sebagai **`Active`**.
+  - **2. Penapisan Spotlight Sewaan Aktif (*Strict Active Rental Spotlight Filtering*)**:
+    - Bahagian Spotlight Hero (`#active-rental-spotlight`) hanya dipaparkan jika terdapat sewaan yang BENAR-BENAR sedang berlangsung pada hari ini.
+    - Sekiranya tiada sewaan aktif (kesemua sewaan lampau telah selesai), Spotlight disorokkan secara kemas (`display: none`), dan rekod dipaparkan di bawah tab *Completed* bersama butang *Receipt* dan *Rebook*.
+  - **3. Penyelarasan Dashboard Pelanggan (`customer/js/customer.js`)**:
+    - Menapis keluar tempahan tamat tarikh daripada kiraan `activeBookings` pada Dashboard Pelanggan supaya bertukar secara tepat kepada kad *"Ready for Your Next Journey?"*.
+  - **4. Sinkronisasi Automatik ke Supabase**:
+    - Mengemaskini status tempahan yang telah tamat tempoh kepada `Completed` di pangkalan data secara automatik.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **14/14 Ujian Lulus (100% Pass Rate dalam 42.5s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.81 Conclude expired rentals to Completed and strictly filter active ongoing rentals in spotlight`
+  - Tag Versi: `5.2.81`
