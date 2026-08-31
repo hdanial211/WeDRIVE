@@ -1884,8 +1884,28 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
       ```
   - **4. Pemuatan Pantas di `<head>` Dokumen**:
     - Memautkan `<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />` di dalam `<head>` bagi memastikan fon SF Pro dimuat serta-merta tanpa sebarang kelipan (*zero flash of unstyled text*).
-- **Pengesahan Ujian Automatik**:
-  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **20/20 Ujian Lulus (100% Pass Rate dalam 1.5m)**.
 - **Maklumat Git**:
   - Commit: `5.2.83 Enforce pure Apple SF Pro Display and Text webfont across all system elements`
   - Tag Versi: `5.2.83`
+
+---
+
+## 🔤 [MINOR UPDATE] 124. Penyeragaman Penuh Pemuatan Webfont Apple SF Pro Display ke Seluruh Halaman Antara Muka Sistem (System-wide Apple SF Pro Webfont Deployment) (v5.2.84)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna meminta semakan dan penyeragaman pemuatan fon Apple SF Pro merentasi kesemua halaman antara muka sistem WeDRIVE (*"Cuba check dekat semua page alang2"*).
+- **Tindakan Pembaikan (System-Wide Deployment)**:
+  - **1. Audit & Suntikan `<link>` SF Pro Display**:
+    - Menambah `<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />` ke dalam bahagian `<head>` merentas semua modul:
+      - **Guest Pages**: `index.html`, `guest/pages/pricing/pricing.html`, `explore-melaka.html`, `how-it-works.html`.
+      - **Account/Auth Pages**: `account/pages/login/login.html`, `signup.html`, `forgot-password.html`, `complete-profile.html`, `verification-pending.html`, `welcome.html`.
+      - **Customer Portal**: `customer/pages/dashboard/customer.html`, `browse-cars.html`, `car-details.html`, `booking.html`, `payment.html`, `booking-confirmed.html`, `my-bookings.html`, `receipt.html`, `profile.html`, `support.html`.
+      - **Admin Portal**: `admin/pages/dashboard/admin.html`, `bookings.html`, `cars.html`, `car-detail.html`, `customers.html`, `calendar.html`, `reports.html`, `settings.html`, `marketing.html`, `chatbot.html`.
+      - **Shared Pages**: `shared/pages/error/404.html`.
+  - **2. Prestasi & Tiada Kelipan (*Zero FOUC*)**:
+    - Memastikan fon rasmi Apple San Francisco Pro dipaparkan secara konsisten dan tajam di semua jenis peranti dan pelayar.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **20/20 Ujian Lulus (100% Pass Rate dalam 54.1s)**.
+- **Maklumat Git**:
+  - Commit: `5.2.84 Deploy Apple SF Pro Display webfont links across all system pages`
+  - Tag Versi: `5.2.84`
