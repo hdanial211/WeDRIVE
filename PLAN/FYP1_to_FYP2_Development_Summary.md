@@ -1857,3 +1857,35 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.82 Overhaul customer booking receipt and digital invoice with Apple HIG standards and E2E tests`
   - Tag Versi: `5.2.82`
+
+---
+
+## 🔤 [MINOR UPDATE] 123. Penyeragaman Penuh Tipografi Tulen Apple San Francisco (Pure Apple SF Pro Display & Text Typography Enforcement) (v5.2.83)
+
+- **Punca Isu (Context & User Feedback)**:
+  - Pengguna mendapati fon tulisan di beberapa halaman tidak menyerupai rupa dan tekstur fon rasmi Apple (*"Tulisan tu macam bukan apple punya font jek kan??"*).
+  - **Punca**: Sebelum ini, sistem bergantung semata-mata kepada fon sistem setempat (`-apple-system`) atau fon Google fallback (`Inter`). Pada peranti atau pelayar bukan Mac / Safari yang tiada fon Apple terbina, ia jatuh semula kepada fon standard tanpa pemuatan langsung pek fon **SF Pro**. Di samping itu, elemen borang (`button`, `input`, `select`, `textarea`) tidak mewarisi sifat tipografi secara tegas.
+- **Tindakan Pembaikan (Implementation & Typography System)**:
+  - **1. Integrasi Webfont Rasmi Apple SF Pro (`@import cdnfonts/sf-pro-display`)**:
+    - Memuatkan pek fon rasmi **SF Pro Display** & **SF Pro Text** secara terus di bahagian teratas [`shared/css/wedrive.css`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/shared/css/wedrive.css).
+  - **2. Penyelarasan Susunan Fon Global (`--font-sans`)**:
+    - Menyusun keutamaan fon Apple secara mutlak:
+      ```css
+      --font-sans: "SF Pro Display", "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Inter", sans-serif;
+      ```
+  - **3. Penguatkuasaan Tipografi pada Semua Elemen UI & Kawalan Borang**:
+    - Menguatkuasakan `--font-sans` merentasi `html`, `body`, `button`, `input`, `select`, `textarea`, `optgroup`, `table`, `th`, dan `td`.
+    - Mengaktifkan penghalusan sub-piksel Apple (*Apple Subpixel Font Smoothing*):
+      ```css
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      letter-spacing: -0.011em;
+      ```
+  - **4. Pemuatan Pantas di `<head>` Dokumen**:
+    - Memautkan `<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />` di dalam `<head>` bagi memastikan fon SF Pro dimuat serta-merta tanpa sebarang kelipan (*zero flash of unstyled text*).
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **20/20 Ujian Lulus (100% Pass Rate dalam 1.5m)**.
+- **Maklumat Git**:
+  - Commit: `5.2.83 Enforce pure Apple SF Pro Display and Text webfont across all system elements`
+  - Tag Versi: `5.2.83`
