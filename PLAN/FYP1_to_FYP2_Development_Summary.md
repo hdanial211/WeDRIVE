@@ -1999,3 +1999,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.87 Restore customer my bookings toast notification and responsive layout styles`
   - Tag Versi: `5.2.87`
+
+---
+
+### Minor Update 128 (`v5.2.88`): Apple HIG Redesign for Account Module, Zero Inline Styles, Universal Form Accessibility & Master CSS Section 18
+- **Tarikh & Masa**: 4 September 2026, 12:30 AM
+- **Fail Terlibat**:
+  - `account/pages/complete-profile/complete-profile.html`
+  - `account/pages/forgot-password/forgot-password.html`
+  - `account/pages/verification-pending/verification-pending.html`
+  - `account/pages/welcome/welcome.html`
+  - `account/pages/login/login.html`
+  - `admin/pages/calendar/calendar.html`
+  - `admin/pages/marketing/marketing.html`
+  - `admin/pages/setting/settings.html`
+  - `customer/pages/my-bookings/my-bookings.html`
+  - `shared/css/wedrive.css` (Section 18: Complete Profile, Account Flow & HIG Shared Utilities)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Pembaikan Isu**:
+  - **1. Reka Bentuk Semula Lengkap Profil Mengikut Apple HIG Bento (*Complete Profile Redesign*)**:
+    - Membetulkan saiz logo WeDRIVE yang terlimpah dengan menghadkan `.reset-brand img` kepada dimensi tetap `32px × 32px` dengan `object-fit: contain`.
+    - Membina susun atur Bento 2-kolum (340px sidebar + 1fr borang utama) dengan kad squircle `border-radius: 24px`, bayang lembut Apple, dan keserasian penuh Mod Siang (`#F5F5F7` / `#FFFFFF`) serta Mod Malam (`#000000` / `#161618`).
+    - Membina penunjuk langkah persediaan (*Apple HIG Stepper*) dengan lencana bulat nombor/tanda semak hijau zamrud dan aksen biru Apple bercahaya.
+    - mereka bentuk zon muat naik dokumen seret & lepas (*Drag & Drop upload zones*) dengan sempadan putus-putus kemas, ikon awan timbul, dan pratonton mikro dokumen.
+    - Menyeragamkan butang hantar taktil berkapsul pil Apple (`border-radius: 9999px`) dengan tindak balas sentuhan `scale(0.97)` semasa ditekan.
+  - **2. Penyeragaman Halaman Pemulihan Kata Laluan (`forgot-password.html`)**:
+    - Menambah gaya `.reset-card`, `.reset-icon`, `.reset-progress`, `.reset-btn`, `.reset-hints`, dan `.reset-error-box` terus ke dalam `shared/css/wedrive.css`.
+    - Menyingkirkan blok `<style>` dalaman dan membersihkan semua gaya sebaris HTML kepada kelas utiliti semantik Apple HIG.
+    - Mengintegrasikan dwi-tema Mod Siang dan Malam yang lancar dengan header kaca terapung 64px.
+  - **3. Penyeragaman Halaman Menunggu Pengesahan (`verification-pending.html`)**:
+    - Menambah gaya `.pending-card`, animasi denyutan lembut jam pasir amber (`.pending-anim`), lencana status berkapsul, dan bar kemajuan bertahap ke dalam `shared/css/wedrive.css`.
+    - Menyingkirkan 164 baris blok `<style>` dalaman daripada fail HTML untuk mematuhi piawaian arkitektur "Satu Fail CSS Master Global Sahaja".
+    - Menghapuskan semua gaya sebaris pada butang tindakan dan ikon.
+  - **4. Pembaikan Penuh Linter & Kebolehcapaian Input (WCAG & HTML5)**:
+    - Menambah label `for`, `title`, dan `aria-label` yang sah pada semua elemen input dan pilihan yang dikesan oleh linter dalam `complete-profile.html`, `admin/pages/setting/settings.html`, `admin/pages/calendar/calendar.html`, dan `admin/pages/marketing/marketing.html`.
+    - Membetulkan urutan awalan vendor `-webkit-user-select` dan `-webkit-backdrop-filter` dalam `welcome.html`.
+    - Menambah `rel="noopener noreferrer"` pada pautan luar Google AI Studio dalam `marketing.html`.
+    - Menambah atribut kebolehcapaian `role="status"` dan `aria-live="polite"` pada notifikasi toast `mybk-toast` dalam `my-bookings.html`.
+    - Menambah `-moz-text-size-adjust: 100%;` dan peraturan bar skrol piawai Safari/WebKit dalam `wedrive.css`.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **100% Pass Rate**.
+- **Maklumat Git**:
+  - Commit: `5.2.88 Apple HIG redesign for account module, zero inline styles and form accessibility`
+  - Tag Versi: `5.2.88`

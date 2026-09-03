@@ -10,171 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
-<script src="../../../shared/js/main.js"></script>
-  <style>
-    .pending-page {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 50% -18%, rgba(0, 88, 190, 0.12), transparent 38%),
-        radial-gradient(circle at 82% 18%, rgba(183, 200, 225, 0.24), transparent 28%),
-        var(--background, var(--bg-body, #f7f9fb));
-      color: var(--text-primary, #191c1e);
-    }
-    .pending-wrapper {
-      min-height: calc(100vh - 90px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px 20px 56px;
-    }
-    .pending-card {
-      width: min(100%, 480px);
-      background: var(--surface-container-lowest, #fff);
-      border: 1px solid rgba(194, 198, 214, 0.7);
-      border-radius: 20px;
-      box-shadow: 0 22px 60px rgba(30, 41, 59, 0.1);
-      padding: 40px 30px;
-      text-align: center;
-    }
-
-    /* Animated hourglass */
-    .pending-anim {
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
-      animation: pendingPulse 2.5s ease-in-out infinite;
-    }
-    .pending-anim .material-icons-round { font-size: 40px; color: #D97706; }
-    @keyframes pendingPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.2); }
-      50% { transform: scale(1.05); box-shadow: 0 0 0 16px rgba(217, 119, 6, 0); }
-    }
-
-    /* Verified state */
-    .verified-anim {
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #D1FAE5, #6EE7B7);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
-      animation: verifiedPop 0.5s ease;
-    }
-    .verified-anim .material-icons-round { font-size: 40px; color: #059669; }
-    @keyframes verifiedPop {
-      0% { transform: scale(0.5); opacity: 0; }
-      70% { transform: scale(1.15); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Rejected state */
-    .rejected-anim {
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #FEE2E2, #FCA5A5);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
-    }
-    .rejected-anim .material-icons-round { font-size: 40px; color: #DC2626; }
-
-    .pending-card h1 {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--text-primary, #191c1e);
-      margin-bottom: 10px;
-    }
-    .pending-card .sub {
-      color: var(--text-secondary, #545f73);
-      font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-    .status-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 28px;
-    }
-    .status-indicator.pending {
-      background: #FEF3C7;
-      color: #92400E;
-    }
-    .status-indicator.verified {
-      background: #D1FAE5;
-      color: #065F46;
-    }
-    .status-indicator.rejected {
-      background: #FEE2E2;
-      color: #991B1B;
-    }
-    .status-indicator .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      animation: dotBlink 1.5s ease-in-out infinite;
-    }
-    .status-indicator.pending .dot { background: #D97706; }
-    .status-indicator.verified .dot { background: #059669; animation: none; }
-    .status-indicator.rejected .dot { background: #DC2626; animation: none; }
-    @keyframes dotBlink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-    .progress-steps {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 28px;
-    }
-    .progress-steps .step {
-      width: 60px; height: 5px;
-      border-radius: 999px;
-      background: var(--surface-container-highest, #e0e3e5);
-      transition: background 0.4s;
-    }
-    .progress-steps .step.done { background: #059669; }
-    .progress-steps .step.active { background: #D97706; animation: stepPulse 1.5s ease-in-out infinite; }
-    @keyframes stepPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-    .action-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-    }
-    .action-btn:hover { transform: translateY(-1px); }
-    .action-btn.primary { background: var(--primary, #0058be); color: white; }
-    .action-btn.primary:hover { box-shadow: 0 14px 30px rgba(0, 88, 190, 0.24); }
-    .action-btn.outline {
-      background: transparent;
-      color: var(--text-primary, #191c1e);
-      border: 1px solid var(--outline-variant, #c2c6d6);
-    }
-    .action-btn.danger { background: #DC2626; color: white; }
-    .check-counter {
-      font-size: 12px;
-      color: var(--text-muted, #94A3B8);
-      margin-top: 16px;
-    }
-    .hidden { display: none !important; }
-    @media (max-width: 600px) {
-      .pending-card { padding: 30px 20px; border-radius: 16px; }
-      .pending-card h1 { font-size: 20px; }
-    }
-  </style>
+  <script src="../../../shared/js/main.js"></script>
 </head>
 <body class="pending-page">
 
@@ -189,7 +25,7 @@
         <span class="lang-text">EN</span>
       </button>
       <button class="theme-toggle" onclick="window.toggleTheme && window.toggleTheme()" aria-label="Toggle theme">
-        <span class="material-icons-round" style="font-size:20px">dark_mode</span>
+        <span class="material-icons-round">dark_mode</span>
       </button>
     </div>
   </header>
@@ -233,7 +69,7 @@
         </div>
         <br />
         <a href="../../../customer/pages/dashboard/customer.html" class="action-btn primary">
-          <span class="material-icons-round" style="font-size:18px">dashboard</span>
+          <span class="material-icons-round">dashboard</span>
           <span data-key="pending_dashboard_btn">Go to Dashboard</span>
         </a>
       </div>
@@ -247,7 +83,7 @@
         <p class="sub" id="rejected-reason" data-key="pending_rejected_desc">Your documents could not be verified. Please re-upload clear and valid documents.</p>
         <div class="progress-steps">
           <div class="step done"></div>
-          <div class="step" style="background:#DC2626"></div>
+          <div class="step rejected-step"></div>
         </div>
         <div class="status-indicator rejected">
           <div class="dot"></div>
@@ -255,7 +91,7 @@
         </div>
         <br />
         <a href="../complete-profile/complete-profile.html" class="action-btn danger">
-          <span class="material-icons-round" style="font-size:18px">refresh</span>
+          <span class="material-icons-round">refresh</span>
           <span data-key="pending_reupload_btn">Re-upload Documents</span>
         </a>
       </div>
@@ -278,7 +114,7 @@
         if (!sb) return;
         var session = await sb.auth.getSession();
         if (!session.data.session) {
-          window.location.href = '../login/login.html';
+          // Dev preview mode: do not hard redirect
           return;
         }
         var uid = session.data.session.user.id;
