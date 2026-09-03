@@ -214,16 +214,16 @@
       <div class="modal-body pt-20">
         <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
           <div class="form-group">
-            <label data-key="cd_edit_name">Vehicle Name</label>
-            <input type="text" id="edit-name" required />
+            <label for="edit-name" data-key="cd_edit_name">Vehicle Name</label>
+            <input type="text" id="edit-name" placeholder="Vehicle Name" title="Vehicle Name" required />
           </div>
           <div class="form-group">
-            <label data-key="cd_edit_plate">Plate Number</label>
-            <input type="text" id="edit-plate" required />
+            <label for="edit-plate" data-key="cd_edit_plate">Plate Number</label>
+            <input type="text" id="edit-plate" placeholder="Plate Number" title="Plate Number" required />
           </div>
           <div class="form-group">
-            <label data-key="cd_edit_type">Vehicle Type</label>
-            <select id="edit-type">
+            <label for="edit-type" data-key="cd_edit_type">Vehicle Type</label>
+            <select id="edit-type" title="Vehicle Type" aria-label="Vehicle Type">
               <option value="sedan">Sedan</option>
               <option value="suv">SUV</option>
               <option value="hatchback">Hatchback</option>
@@ -233,8 +233,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label data-key="cd_edit_fuel">Fuel Type</label>
-            <select id="edit-fuel">
+            <label for="edit-fuel" data-key="cd_edit_fuel">Fuel Type</label>
+            <select id="edit-fuel" title="Fuel Type" aria-label="Fuel Type">
               <option value="Petrol">Petrol</option>
               <option value="Diesel">Diesel</option>
               <option value="Hybrid">Hybrid</option>
@@ -242,19 +242,19 @@
             </select>
           </div>
           <div class="form-group">
-            <label data-key="cd_edit_trans">Transmission</label>
-            <select id="edit-trans">
+            <label for="edit-trans" data-key="cd_edit_trans">Transmission</label>
+            <select id="edit-trans" title="Transmission" aria-label="Transmission">
               <option value="Auto">Auto</option>
               <option value="Manual">Manual</option>
             </select>
           </div>
           <div class="form-group">
-            <label data-key="cd_edit_rate">Daily Rate (RM)</label>
-            <input type="number" id="edit-rate" required />
+            <label for="edit-rate" data-key="cd_edit_rate">Daily Rate (RM)</label>
+            <input type="number" id="edit-rate" placeholder="Daily Rate" title="Daily Rate (RM)" required />
           </div>
           <div class="form-group col-span-full">
-            <label data-key="cd_edit_seats">Seats</label>
-            <select id="edit-seats">
+            <label for="edit-seats" data-key="cd_edit_seats">Seats</label>
+            <select id="edit-seats" title="Seats" aria-label="Seats">
               <option value="2">2 Seats</option>
               <option value="4">4 Seats</option>
               <option value="5">5 Seats</option>
@@ -309,7 +309,7 @@
         </p>
         <div class="flex-end gap-12">
           <button class="btn-outline-sm" onclick="closeStatusRedirectModal()">Cancel</button>
-          <button class="btn-primary-sm" id="status-modal-action-btn"></button>
+          <button class="btn-primary-sm" id="status-modal-action-btn" title="Manage Status" aria-label="Manage Status">Manage</button>
         </div>
       </div>
     </div>

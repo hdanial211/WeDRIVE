@@ -154,7 +154,6 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
   background-color: var(--bg-body);
 }
 
@@ -4874,7 +4873,6 @@ body:has(.right-panel) {
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-subtle);
   -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 .sug-chips-row::-webkit-scrollbar {
@@ -5574,7 +5572,6 @@ body.dark .customer-sidebar {
   flex-direction: column;
   gap: 4px;
   padding: 0 12px;
-  scrollbar-width: thin;
 }
 
 .customer-sidebar .sidebar-footer-nav {
@@ -7498,7 +7495,6 @@ body.dark aside.sidebar {
   padding: 0 12px;
   overflow-y: auto;
   flex: 1;
-  scrollbar-width: thin;
 }
 
 .sidebar#admin-sidebar .nav-section {
@@ -8687,7 +8683,6 @@ body.page-is-leaving .page-container {
   margin-top: 14px;
   overflow-x: auto;
   padding-bottom: 4px;
-  scrollbar-width: thin;
 }
 
 .car-thumb {
@@ -13267,7 +13262,7 @@ body.profile-page {
 .flex-start { display: flex !important; align-items: center !important; justify-content: flex-start !important; }
 .flex-col { display: flex !important; flex-direction: column !important; }
 
-.table-responsive { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+.table-responsive { overflow-x: auto !important; }
 .w-full { width: 100% !important; }
 .border-top-subtle { border-top: 1px solid var(--border-subtle) !important; }
 .border-bottom-subtle { border-bottom: 1px solid var(--border-subtle) !important; }

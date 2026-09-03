@@ -225,30 +225,30 @@
       <input type="hidden" id="banner-edit-id" />
       <div class="modal-body">
         <div class="form-group mb-16">
-          <label>Banner Title</label>
-          <input type="text" class="form-input" id="banner-title" placeholder="e.g. Raya Special Offer!" />
+          <label for="banner-title">Banner Title</label>
+          <input type="text" class="form-input" id="banner-title" placeholder="e.g. Raya Special Offer!" title="Banner Title" />
         </div>
         <div class="form-group mb-16">
-          <label>Message</label>
-          <textarea class="form-input resize-v" id="banner-message" rows="3" placeholder="Promo details shown to customers..."></textarea>
+          <label for="banner-message">Message</label>
+          <textarea class="form-input resize-v" id="banner-message" rows="3" placeholder="Promo details shown to customers..." title="Message"></textarea>
         </div>
         <div class="form-grid mb-16">
           <div class="form-group">
-            <label>Start Date</label>
-            <input type="text" class="form-input date-picker" id="banner-start" placeholder="DD/MM/YYYY" readonly />
+            <label for="banner-start">Start Date</label>
+            <input type="text" class="form-input date-picker" id="banner-start" placeholder="DD/MM/YYYY" title="Start Date" readonly />
           </div>
           <div class="form-group">
-            <label>End Date</label>
-            <input type="text" class="form-input date-picker" id="banner-end" placeholder="DD/MM/YYYY" readonly />
+            <label for="banner-end">End Date</label>
+            <input type="text" class="form-input date-picker" id="banner-end" placeholder="DD/MM/YYYY" title="End Date" readonly />
           </div>
         </div>
         <div class="form-group mb-16">
-          <label>Banner Color</label>
-          <input type="color" class="form-color-input" id="banner-color" value="#3B82F6" />
+          <label for="banner-color">Banner Color</label>
+          <input type="color" class="form-color-input" id="banner-color" value="#3B82F6" title="Banner Color" aria-label="Banner Color" />
         </div>
         <div class="toggle-wrap">
-          <label class="toggle-switch">
-            <input type="checkbox" id="banner-active" checked />
+          <label class="toggle-switch" for="banner-active" aria-label="Banner active status">
+            <input type="checkbox" id="banner-active" checked title="Banner active status" aria-label="Banner active status" />
             <span class="toggle-slider"></span>
           </label>
           <span class="toggle-label">Active (visible to customers)</span>
@@ -279,34 +279,34 @@
       <div class="modal-body">
         <div class="form-grid mb-16">
           <div class="form-group">
-            <label>Promo Code</label>
-            <input type="text" class="form-input uppercase" id="promo-code" placeholder="e.g. MELAKA20" />
+            <label for="promo-code">Promo Code</label>
+            <input type="text" class="form-input uppercase" id="promo-code" placeholder="e.g. MELAKA20" title="Promo Code" />
           </div>
           <div class="form-group">
-            <label>Discount Value</label>
-            <input type="number" class="form-input" id="promo-discount" placeholder="20" min="1" max="100" />
+            <label for="promo-discount">Discount Value</label>
+            <input type="number" class="form-input" id="promo-discount" placeholder="20" min="1" max="100" title="Discount Value" />
           </div>
         </div>
         <div class="form-grid mb-16">
           <div class="form-group">
-            <label>Discount Type</label>
-            <select class="form-input" id="promo-type">
+            <label for="promo-type">Discount Type</label>
+            <select class="form-input" id="promo-type" title="Discount Type" aria-label="Discount Type">
               <option value="percent">Percentage (%)</option>
               <option value="fixed">Fixed Amount (RM)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Usage Limit</label>
-            <input type="number" class="form-input" id="promo-limit" placeholder="100" min="1" />
+            <label for="promo-limit">Usage Limit</label>
+            <input type="number" class="form-input" id="promo-limit" placeholder="100" min="1" title="Usage Limit" />
           </div>
         </div>
         <div class="form-group mb-16">
-          <label>Expiry Date</label>
-          <input type="text" class="form-input date-picker" id="promo-expiry" placeholder="DD/MM/YYYY" readonly />
+          <label for="promo-expiry">Expiry Date</label>
+          <input type="text" class="form-input date-picker" id="promo-expiry" placeholder="DD/MM/YYYY" title="Expiry Date" readonly />
         </div>
         <div class="toggle-wrap">
-          <label class="toggle-switch">
-            <input type="checkbox" id="promo-active" checked />
+          <label class="toggle-switch" for="promo-active" aria-label="Promo active status">
+            <input type="checkbox" id="promo-active" checked title="Promo active status" aria-label="Promo active status" />
             <span class="toggle-slider"></span>
           </label>
           <span class="toggle-label">Active</span>
@@ -336,35 +336,35 @@
       <input type="hidden" id="seasonal-edit-id" />
       <div class="modal-body">
         <div class="form-group mb-16">
-          <label>Event Name</label>
-          <input type="text" class="form-input" id="seasonal-name" placeholder="e.g. Hari Raya, School Holiday" />
+          <label for="seasonal-name">Event Name</label>
+          <input type="text" class="form-input" id="seasonal-name" placeholder="e.g. Hari Raya, School Holiday" title="Event Name" />
         </div>
         <div class="form-grid mb-16">
           <div class="form-group">
-            <label>Start Date</label>
-            <input type="text" class="form-input date-picker" id="seasonal-start" placeholder="DD/MM/YYYY" readonly />
+            <label for="seasonal-start">Start Date</label>
+            <input type="text" class="form-input date-picker" id="seasonal-start" placeholder="DD/MM/YYYY" title="Start Date" readonly />
           </div>
           <div class="form-group">
-            <label>End Date</label>
-            <input type="text" class="form-input date-picker" id="seasonal-end" placeholder="DD/MM/YYYY" readonly />
+            <label for="seasonal-end">End Date</label>
+            <input type="text" class="form-input date-picker" id="seasonal-end" placeholder="DD/MM/YYYY" title="End Date" readonly />
           </div>
         </div>
         <div class="form-grid mb-16">
           <div class="form-group">
-            <label>Price Direction</label>
-            <select class="form-input" id="seasonal-direction">
+            <label for="seasonal-direction">Price Direction</label>
+            <select class="form-input" id="seasonal-direction" title="Price Direction" aria-label="Price Direction">
               <option value="increase">Increase (Surcharge)</option>
               <option value="decrease">Decrease (Discount)</option>
             </select>
           </div>
           <div class="form-group">
-            <label>Adjustment (%)</label>
-            <input type="number" class="form-input" id="seasonal-value" placeholder="e.g. 30" min="1" max="100" />
+            <label for="seasonal-value">Adjustment (%)</label>
+            <input type="number" class="form-input" id="seasonal-value" placeholder="e.g. 30" min="1" max="100" title="Adjustment (%)" />
           </div>
         </div>
         <div class="toggle-wrap">
-          <label class="toggle-switch">
-            <input type="checkbox" id="seasonal-active" checked />
+          <label class="toggle-switch" for="seasonal-active" aria-label="Seasonal active status">
+            <input type="checkbox" id="seasonal-active" checked title="Seasonal active status" aria-label="Seasonal active status" />
             <span class="toggle-slider"></span>
           </label>
           <span class="toggle-label">Active</span>
