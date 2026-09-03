@@ -1952,3 +1952,31 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.85 Redesign customer receipt into official corporate tax invoice and rental statement`
   - Tag Versi: `5.2.85`
+
+---
+
+### Minor Update 126 (`v5.2.86`): Fix Receipt Layout Alignment, Symmetrical Ledgers & Eliminate AI-Gimmick Aesthetic for Authentic Corporate Tax Invoice
+- **Tarikh & Masa**: 3 September 2026, 05:20 PM
+- **Fail Terlibat**:
+  - `customer/pages/my-bookings/receipt/receipt.html`
+  - `shared/css/wedrive.css` (Section 17 & Global Footer Selector Scoping)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Pembaikan Isu**:
+  - **1. Pembaikan Masalah Jajaran Teks & Kolon Bersepah (*Fix Left Text-Wrap & Floating Colons*)**:
+    - Membaiki isu tanda titik bertindih (`:`) terbiar di luar tag `<span>` yang menyebabkan teks berganjak terlalu ke kiri pada bahagian metadata atas.
+    - Menyeragamkan `.receipt-meta-row`, `.receipt-party-row`, dan `.receipt-spec-row` dengan struktur kontena kemas (`display: flex; justify-content: space-between; align-items: center`), di mana label berada kemas di sebelah kiri, dan nilai berangka berada di sebelah kanan dengan format `tabular-nums`. Tanda titik bertindih disembunyikan (`display: none`) bagi mengelakkan herotan grid.
+  - **2. Penyingkiran Elemen "AI-Look" & Pengukuhan Estetik Korporat Rasmi (*De-AI & True Corporate Aesthetic*)**:
+    - Menyingkirkan reben gelap neon atas (`.receipt-doc-ribbon`), titik hijau neon berdenyut (`.receipt-verified-pulse`), dan pelekat meterai kecerunan radial palsu (`.receipt-embossed-seal-circle`).
+    - Menggantikannya dengan **Cap Rasmi Korporat Sebenar (*Authentic Corporate Rubber Stamp*)**: cincin berganda bulatan geometri dengan teks timbul rasmi `WeDRIVE MOBILITY SDN. BHD. • CERTIFIED OFFICIAL • *202401038921*` yang condong sedikit (-6 darjah) menyerupai cop basah pejabat korporat.
+    - Menyeragamkan lencana `[DIBAYAR PENUH]` / `[PAID IN FULL]` dengan gaya lencana kapsul korporat ringkas dan profesional.
+  - **3. Pengasingan Bar Tindakan Butang & Pembersihan Footer Global (*Action Dock De-coupling*)**:
+    - Mengeluarkan `.receipt-actions-dock` daripada kad dokumen invois bercetak `#receipt-printable-card`.
+    - Membetulkan pemilih CSS global pada baris 1745 `shared/css/wedrive.css` daripada `footer, .wedrive-footer` kepada `.wedrive-footer` sahaja, menghapuskan bekas segi empat kelabu cerah yang hodoh di bahagian bawah dokumen mod gelap.
+  - **4. Keserasian Dwi-Tema Penuh (Mod Siang & Malam)**:
+    - Mod Siang: Lembaran kertas putih suci `#FFFFFF` dengan bayang lembut dan garisan sempadan sub-piksel kemas menyerupai invois syarikat sewa kereta antarabangsa (Avis / Hertz / Porsche Drive).
+    - Mod Malam: Kad hitam Obsidian `#161618` dengan kontras tinggi, teks tajam, dan elemen visual yang tenang tanpa kilauan neon yang keterlaluan.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **20/20 Ujian Lulus (100% Pass Rate dalam 2.3m)**.
+- **Maklumat Git**:
+  - Commit: `5.2.86 Fix receipt layout alignment and refine official corporate aesthetic`
+  - Tag Versi: `5.2.86`

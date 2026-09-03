@@ -32,26 +32,15 @@
         <span class="receipt-breadcrumb-current" data-i18n="receipt_breadcrumb_current">Official Tax Invoice</span>
       </nav>
 
-      <!-- Master Squircle Official Corporate Tax Invoice Card -->
+      <!-- Master Official Corporate Tax Invoice Document Card -->
       <div class="receipt-bento-card" id="receipt-printable-card">
         
-        <!-- Top Official Document Header Ribbon -->
-        <div class="receipt-doc-ribbon">
-          <div class="receipt-ribbon-left">
-            <span class="material-icons-round">verified_user</span>
-            <span data-i18n="receipt_doc_type_badge">OFFICIAL TAX INVOICE & RENTAL CONTRACT STATEMENT</span>
-          </div>
-          <div class="receipt-ribbon-right">
-            <span data-i18n="receipt_doc_compliance">LHDN e-INVOICE VALIDATED • SST ACT 2018 COMPLIANT</span>
-          </div>
-        </div>
-
         <!-- Corporate Letterhead Hero -->
         <header class="receipt-hero-header">
           <div class="receipt-brand-box">
             <div class="receipt-brand-logo-row">
               <img src="../../../../shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" class="receipt-brand-logo-img" />
-              <div>
+              <div class="receipt-brand-text">
                 <div class="receipt-company-title" data-i18n="receipt_company_name">WeDRIVE MOBILITY SDN. BHD.</div>
                 <div class="receipt-company-reg-line" data-i18n="receipt_company_reg">SSM No: 202401038921 (1548291-K) • SST ID: W10-2401-32000891 • MOTAC: KPK/LN 9842</div>
               </div>
@@ -65,36 +54,44 @@
           <div class="receipt-meta-right">
             <div class="receipt-inv-title-main" data-i18n="receipt_title">Official Tax Invoice</div>
             
-            <div class="receipt-status-badges-row">
+            <div class="receipt-status-badge-wrap">
               <div class="receipt-verified-seal" id="receipt-verified-badge">
-                <span class="receipt-verified-pulse"></span>
+                <span class="material-icons-round" style="font-size: 15px;">check_circle</span>
                 <span data-i18n="receipt_badge_paid">PAID IN FULL</span>
-              </div>
-              <div class="receipt-verified-seal" style="background: rgba(0, 113, 227, 0.1); color: var(--primary); border-color: rgba(0, 113, 227, 0.25);">
-                <span class="material-icons-round" style="font-size: 13px;">receipt</span>
-                <span>ORIGINAL</span>
               </div>
             </div>
             
             <div class="receipt-inv-meta-grid">
-              <span class="receipt-meta-field-label" data-i18n="receipt_invoice_no">Invoice No.</span>:
-              <span class="receipt-meta-field-val">
-                <span id="receipt-invoice-id">WD-INV-2026-08832</span>
-                <button type="button" class="receipt-copy-btn" id="receipt-copy-btn" title="Copy Invoice Number" aria-label="Copy Invoice Number">
-                  <span class="material-icons-round" style="font-size: 15px;">content_copy</span>
-                </button>
-              </span>
+              <div class="receipt-meta-row">
+                <span class="receipt-meta-field-label" data-i18n="receipt_invoice_no">Invoice No.</span>
+                <span class="receipt-meta-colon">:</span>
+                <span class="receipt-meta-field-val">
+                  <span id="receipt-invoice-id">WD-INV-2026-08832</span>
+                  <button type="button" class="receipt-copy-btn" id="receipt-copy-btn" title="Copy Invoice Number" aria-label="Copy Invoice Number">
+                    <span class="material-icons-round" style="font-size: 14px;">content_copy</span>
+                  </button>
+                </span>
+              </div>
 
-              <span class="receipt-meta-field-label" data-i18n="receipt_booking_ref">Booking Ref</span>:
-              <span class="receipt-meta-field-val" id="receipt-booking-ref">
-                <span id="receipt-booking-id">BK-2026-9281</span>
-              </span>
+              <div class="receipt-meta-row">
+                <span class="receipt-meta-field-label" data-i18n="receipt_booking_ref">Booking Ref</span>
+                <span class="receipt-meta-colon">:</span>
+                <span class="receipt-meta-field-val" id="receipt-booking-ref">
+                  <span id="receipt-booking-id">BK-2026-9281</span>
+                </span>
+              </div>
 
-              <span class="receipt-meta-field-label" data-i18n="receipt_issued_date">Date of Issue</span>:
-              <span class="receipt-meta-field-val" id="receipt-issue-date">--</span>
+              <div class="receipt-meta-row">
+                <span class="receipt-meta-field-label" data-i18n="receipt_issued_date">Date of Issue</span>
+                <span class="receipt-meta-colon">:</span>
+                <span class="receipt-meta-field-val" id="receipt-issue-date">--</span>
+              </div>
 
-              <span class="receipt-meta-field-label" data-i18n="receipt_payment_method">Payment Method</span>:
-              <span class="receipt-meta-field-val" id="receipt-meta-pay-method">FPX (Maybank2u)</span>
+              <div class="receipt-meta-row">
+                <span class="receipt-meta-field-label" data-i18n="receipt_payment_method">Payment Method</span>
+                <span class="receipt-meta-colon">:</span>
+                <span class="receipt-meta-field-val" id="receipt-meta-pay-method">FPX (Maybank2u)</span>
+              </div>
             </div>
           </div>
         </header>
@@ -108,26 +105,30 @@
             <!-- Box 1: Issued By (Lessor) -->
             <div class="receipt-party-box">
               <div class="receipt-party-header">
-                <span class="material-icons-round">apartment</span>
+                <span class="material-icons-round">business</span>
                 <span data-i18n="receipt_issued_by">ISSUED BY (LESSOR)</span>
               </div>
               <div class="receipt-party-name">WeDRIVE Mobility Sdn. Bhd.</div>
               <div class="receipt-party-details">
                 <div class="receipt-party-row">
-                  <span>Operating Station:</span>
-                  <strong>Melaka Sentral Terminal Hub</strong>
+                  <span class="receipt-party-label">Operating Station</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val">Melaka Sentral Terminal Hub</strong>
                 </div>
                 <div class="receipt-party-row">
-                  <span>SST Tax Registration:</span>
-                  <strong>W10-2401-32000891</strong>
+                  <span class="receipt-party-label">SST Registration</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val">W10-2401-32000891</strong>
                 </div>
                 <div class="receipt-party-row">
-                  <span>e-Invoice UUID:</span>
-                  <strong style="font-family: var(--font-mono); font-size: 11px;">8942-eINV-20260901-77291</strong>
+                  <span class="receipt-party-label">e-Invoice UUID</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val" style="font-family: var(--font-mono); font-size: 11px;">8942-eINV-20260901-77291</strong>
                 </div>
                 <div class="receipt-party-row">
-                  <span>Contact Helpline:</span>
-                  <strong>+60 6-288 3388</strong>
+                  <span class="receipt-party-label">Contact Helpline</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val">+60 6-288 3388</strong>
                 </div>
               </div>
             </div>
@@ -135,26 +136,30 @@
             <!-- Box 2: Billed To (Renter/Lessee) -->
             <div class="receipt-party-box">
               <div class="receipt-party-header">
-                <span class="material-icons-round">person_outline</span>
+                <span class="material-icons-round">person</span>
                 <span data-i18n="receipt_billed_to">BILLED TO / RENTER (LESSEE)</span>
               </div>
               <div class="receipt-party-name" id="receipt-cust-name">Ahmad bin Ali</div>
               <div class="receipt-party-details">
                 <div class="receipt-party-row">
-                  <span data-i18n="receipt_cust_ic">NRIC / Passport</span>:
-                  <strong id="receipt-cust-ic">010515-04-1234</strong>
+                  <span class="receipt-party-label" data-i18n="receipt_cust_ic">NRIC / Passport</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val" id="receipt-cust-ic">010515-04-1234</strong>
                 </div>
                 <div class="receipt-party-row">
-                  <span data-i18n="receipt_cust_license">Driver's License</span>:
-                  <strong id="receipt-cust-license" style="color: var(--primary);">D12345678 (Class D)</strong>
+                  <span class="receipt-party-label" data-i18n="receipt_cust_license">Driver's License</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val" id="receipt-cust-license" style="color: var(--primary);">D12345678 (Class D)</strong>
                 </div>
                 <div class="receipt-party-row">
-                  <span data-i18n="receipt_cust_email">Email Address</span>:
-                  <strong id="receipt-cust-email">ahmad@wedrive.my</strong>
+                  <span class="receipt-party-label" data-i18n="receipt_cust_email">Email Address</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val" id="receipt-cust-email">ahmad@wedrive.my</strong>
                 </div>
                 <div class="receipt-party-row">
-                  <span data-i18n="receipt_cust_phone">Contact Phone</span>:
-                  <strong id="receipt-cust-phone">+60 12-345 6789</strong>
+                  <span class="receipt-party-label" data-i18n="receipt_cust_phone">Contact Phone</span>
+                  <span class="receipt-party-colon">:</span>
+                  <strong class="receipt-party-val" id="receipt-cust-phone">+60 12-345 6789</strong>
                 </div>
               </div>
             </div>
@@ -164,7 +169,7 @@
           <!-- Vehicle & Journey Deployment Manifest -->
           <div class="receipt-manifest-card">
             <div class="receipt-manifest-header">
-              <span style="display: flex; align-items: center; gap: 6px;">
+              <span class="receipt-manifest-title-left">
                 <span class="material-icons-round" style="font-size: 18px;">directions_car</span>
                 <span data-i18n="receipt_sec_vehicle">Vehicle Manifest & Deployment</span>
               </span>
@@ -175,17 +180,29 @@
               <div class="receipt-vehicle-spec-block">
                 <div class="receipt-vehicle-name-title" id="receipt-car-name">2026 Honda Civic 1.5 VTEC Turbo</div>
                 <div class="receipt-vehicle-spec-list">
-                  <span class="receipt-spec-label" data-i18n="receipt_vehicle_cat">Category / Class:</span>
-                  <span class="receipt-spec-val" id="receipt-car-category">Premium Sedan (5 Seats • Automatic)</span>
+                  <div class="receipt-spec-row">
+                    <span class="receipt-spec-label" data-i18n="receipt_vehicle_cat">Category / Class</span>
+                    <span class="receipt-spec-colon">:</span>
+                    <span class="receipt-spec-val" id="receipt-car-category">Premium Sedan (5 Seats • Automatic)</span>
+                  </div>
 
-                  <span class="receipt-spec-label" data-i18n="receipt_vehicle_vin">Chassis / VIN No:</span>
-                  <span class="receipt-spec-val" id="receipt-car-vin">PL1-FC1-2026-994821</span>
+                  <div class="receipt-spec-row">
+                    <span class="receipt-spec-label" data-i18n="receipt_vehicle_vin">Chassis / VIN No.</span>
+                    <span class="receipt-spec-colon">:</span>
+                    <span class="receipt-spec-val" id="receipt-car-vin">PL1-FC1-2026-994821</span>
+                  </div>
 
-                  <span class="receipt-spec-label" data-i18n="receipt_vehicle_engine">Engine Number:</span>
-                  <span class="receipt-spec-val" id="receipt-car-engine">L15B7-889104</span>
+                  <div class="receipt-spec-row">
+                    <span class="receipt-spec-label" data-i18n="receipt_vehicle_engine">Engine Number</span>
+                    <span class="receipt-spec-colon">:</span>
+                    <span class="receipt-spec-val" id="receipt-car-engine">L15B7-889104</span>
+                  </div>
 
-                  <span class="receipt-spec-label" data-i18n="receipt_vehicle_odo">Initial Odometer:</span>
-                  <span class="receipt-spec-val" id="receipt-car-odo">14,250 KM (Full Fuel Policy)</span>
+                  <div class="receipt-spec-row">
+                    <span class="receipt-spec-label" data-i18n="receipt_vehicle_odo">Initial Odometer</span>
+                    <span class="receipt-spec-colon">:</span>
+                    <span class="receipt-spec-val" id="receipt-car-odo">14,250 KM (Full Fuel Policy)</span>
+                  </div>
                 </div>
               </div>
 
@@ -218,75 +235,77 @@
               <span data-i18n="receipt_sec_financial">Statutory Accounting & Itemized Tax Schedule</span>
             </div>
 
-            <table class="receipt-tax-table">
-              <thead>
-                <tr>
-                  <th class="receipt-col-num" data-i18n="receipt_tax_table_no">NO.</th>
-                  <th data-i18n="receipt_tax_table_desc">ITEM DESCRIPTION & DETAILS</th>
-                  <th class="receipt-col-qty" data-i18n="receipt_tax_table_qty">QTY / DURATION</th>
-                  <th class="receipt-col-rate" data-i18n="receipt_tax_table_rate">UNIT RATE (MYR)</th>
-                  <th class="receipt-col-tax" data-i18n="receipt_tax_table_tax">TAX (SST)</th>
-                  <th class="receipt-col-amt" data-i18n="receipt_tax_table_amt">AMOUNT (MYR)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="receipt-col-num">1</td>
-                  <td class="receipt-col-desc">
-                    <span data-i18n="receipt_item_rental">Vehicle Daily Rental Charge</span>
-                    <small id="receipt-table-car-desc">2026 Honda Civic 1.5 VTEC Turbo (Class: Sedan)</small>
-                  </td>
-                  <td class="receipt-col-qty" id="receipt-table-days">3 Days</td>
-                  <td class="receipt-col-rate" id="receipt-table-rate">RM 450.00</td>
-                  <td class="receipt-col-tax">0% (Exempt)</td>
-                  <td class="receipt-col-amt" id="receipt-table-rental-amt">RM 1,350.00</td>
-                </tr>
-                <tr>
-                  <td class="receipt-col-num">2</td>
-                  <td class="receipt-col-desc">
-                    <span data-i18n="receipt_item_platform">WeDRIVE Intelligent Telematics & Mobility Concierge Fee</span>
-                    <small>Smart GPS telemetry, roadside dispatch readiness & digital key provisioning</small>
-                  </td>
-                  <td class="receipt-col-qty">1 Unit</td>
-                  <td class="receipt-col-rate">RM 15.00</td>
-                  <td class="receipt-col-tax">8% SST</td>
-                  <td class="receipt-col-amt">RM 15.00</td>
-                </tr>
-                <tr>
-                  <td class="receipt-col-num">3</td>
-                  <td class="receipt-col-desc">
-                    <span data-i18n="receipt_item_insurance">Comprehensive Collision Damage Waiver (CDW + Zero Excess)</span>
-                    <small>Full accidental damage waiver & third-party property indemnity included</small>
-                  </td>
-                  <td class="receipt-col-qty" id="receipt-table-ins-days">3 Days</td>
-                  <td class="receipt-col-rate">RM 0.00</td>
-                  <td class="receipt-col-tax">0% (Complimentary)</td>
-                  <td class="receipt-col-amt">RM 0.00</td>
-                </tr>
-                <tr id="receipt-table-tax-row">
-                  <td class="receipt-col-num">4</td>
-                  <td class="receipt-col-desc">
-                    <span data-i18n="receipt_item_tax">Service Tax (8% SST under Sales & Service Tax Act 2018)</span>
-                    <small>Statutory taxable service on platform fee (8% of RM 15.00)</small>
-                  </td>
-                  <td class="receipt-col-qty">1 Unit</td>
-                  <td class="receipt-col-rate">RM 1.20</td>
-                  <td class="receipt-col-tax">-</td>
-                  <td class="receipt-col-amt" id="receipt-table-tax-amt">RM 1.20</td>
-                </tr>
-                <tr>
-                  <td class="receipt-col-num">5</td>
-                  <td class="receipt-col-desc">
-                    <span data-i18n="receipt_item_deposit">Refundable Security & Damage Deposit</span>
-                    <small>To be automatically refunded within 24 hours post-return inspection</small>
-                  </td>
-                  <td class="receipt-col-qty">1 Deposit</td>
-                  <td class="receipt-col-rate" id="receipt-table-dep-rate">RM 270.00</td>
-                  <td class="receipt-col-tax">Non-Taxable</td>
-                  <td class="receipt-col-amt" id="receipt-table-dep-amt">RM 270.00</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="receipt-table-scroll-container">
+              <table class="receipt-tax-table">
+                <thead>
+                  <tr>
+                    <th class="receipt-col-num" data-i18n="receipt_tax_table_no">NO.</th>
+                    <th data-i18n="receipt_tax_table_desc">ITEM DESCRIPTION & DETAILS</th>
+                    <th class="receipt-col-qty" data-i18n="receipt_tax_table_qty">QTY / DURATION</th>
+                    <th class="receipt-col-rate" data-i18n="receipt_tax_table_rate">UNIT RATE (MYR)</th>
+                    <th class="receipt-col-tax" data-i18n="receipt_tax_table_tax">TAX (SST)</th>
+                    <th class="receipt-col-amt" data-i18n="receipt_tax_table_amt">AMOUNT (MYR)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="receipt-col-num">1</td>
+                    <td class="receipt-col-desc">
+                      <span data-i18n="receipt_item_rental">Vehicle Daily Rental Charge</span>
+                      <small id="receipt-table-car-desc">2026 Honda Civic 1.5 VTEC Turbo (Class: Sedan)</small>
+                    </td>
+                    <td class="receipt-col-qty" id="receipt-table-days">3 Days</td>
+                    <td class="receipt-col-rate" id="receipt-table-rate">RM 450.00</td>
+                    <td class="receipt-col-tax">0% (Exempt)</td>
+                    <td class="receipt-col-amt" id="receipt-table-rental-amt">RM 1,350.00</td>
+                  </tr>
+                  <tr>
+                    <td class="receipt-col-num">2</td>
+                    <td class="receipt-col-desc">
+                      <span data-i18n="receipt_item_platform">WeDRIVE Intelligent Telematics & Mobility Concierge Fee</span>
+                      <small>Smart GPS telemetry, roadside dispatch readiness & digital key provisioning</small>
+                    </td>
+                    <td class="receipt-col-qty">1 Unit</td>
+                    <td class="receipt-col-rate">RM 15.00</td>
+                    <td class="receipt-col-tax">8% SST</td>
+                    <td class="receipt-col-amt">RM 15.00</td>
+                  </tr>
+                  <tr>
+                    <td class="receipt-col-num">3</td>
+                    <td class="receipt-col-desc">
+                      <span data-i18n="receipt_item_insurance">Comprehensive Collision Damage Waiver (CDW + Zero Excess)</span>
+                      <small>Full accidental damage waiver & third-party property indemnity included</small>
+                    </td>
+                    <td class="receipt-col-qty" id="receipt-table-ins-days">3 Days</td>
+                    <td class="receipt-col-rate">RM 0.00</td>
+                    <td class="receipt-col-tax">0% (Complimentary)</td>
+                    <td class="receipt-col-amt">RM 0.00</td>
+                  </tr>
+                  <tr id="receipt-table-tax-row">
+                    <td class="receipt-col-num">4</td>
+                    <td class="receipt-col-desc">
+                      <span data-i18n="receipt_item_tax">Service Tax (8% SST under Sales & Service Tax Act 2018)</span>
+                      <small>Statutory taxable service on platform fee (8% of RM 15.00)</small>
+                    </td>
+                    <td class="receipt-col-qty">1 Unit</td>
+                    <td class="receipt-col-rate">RM 1.20</td>
+                    <td class="receipt-col-tax">-</td>
+                    <td class="receipt-col-amt" id="receipt-table-tax-amt">RM 1.20</td>
+                  </tr>
+                  <tr>
+                    <td class="receipt-col-num">5</td>
+                    <td class="receipt-col-desc">
+                      <span data-i18n="receipt_item_deposit">Refundable Security & Damage Deposit</span>
+                      <small>To be automatically refunded within 24 hours post-return inspection</small>
+                    </td>
+                    <td class="receipt-col-qty">1 Deposit</td>
+                    <td class="receipt-col-rate" id="receipt-table-dep-rate">RM 270.00</td>
+                    <td class="receipt-col-tax">Non-Taxable</td>
+                    <td class="receipt-col-amt" id="receipt-table-dep-amt">RM 270.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
             <!-- Accounting Subtotal Breakdown -->
             <div class="receipt-accounting-summary">
@@ -328,17 +347,23 @@
             <span class="receipt-words-text" id="receipt-amount-words-val">RINGGIT MALAYSIA: ONE THOUSAND SIX HUNDRED THIRTY-SIX AND TWENTY CENTS ONLY</span>
           </div>
 
-          <!-- Official Seal, Signatory & QR Verification Grid -->
+          <!-- Official Verification & Corporate Authorization Grid -->
           <div class="receipt-auth-grid">
             
-            <!-- Column 1: Official Holographic Seal -->
+            <!-- Column 1: Official Corporate Seal Stamp -->
             <div class="receipt-auth-card">
-              <div class="receipt-embossed-seal-circle">
-                <span class="material-icons-round receipt-seal-icon">verified</span>
-                <span class="receipt-seal-text-sub">OFFICIAL</span>
+              <div class="receipt-corporate-stamp">
+                <div class="stamp-inner-ring">
+                  <div class="stamp-top-text">WeDRIVE MOBILITY</div>
+                  <div class="stamp-center-icon">
+                    <span class="material-icons-round">verified</span>
+                  </div>
+                  <div class="stamp-mid-text">CERTIFIED OFFICIAL</div>
+                  <div class="stamp-bottom-text">202401038921</div>
+                </div>
               </div>
-              <div class="receipt-auth-title">DIGITAL TAX SEAL</div>
-              <div class="receipt-auth-status">WeDRIVE MOBILITY SDN BHD<br><small style="color: var(--text-secondary); font-size: 9px;">AUTHENTICITY VERIFIED</small></div>
+              <div class="receipt-auth-title">CORPORATE DIGITAL SEAL</div>
+              <div class="receipt-auth-status">WeDRIVE MOBILITY SDN. BHD.<br><small style="color: var(--text-secondary); font-size: 10px;">AUTHENTICITY VERIFIED</small></div>
             </div>
 
             <!-- Column 2: Authorized Signatory -->
@@ -358,7 +383,7 @@
                 <img id="receipt-qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=WeDRIVE-OFFICIAL-TAX-INVOICE-WD-INV-2026-08832-VERIFIED" alt="Verification QR Code" class="receipt-qr-img" />
               </div>
               <div class="receipt-auth-title" data-i18n="receipt_qr_code_label">VALIDATED TAX INVOICE PASS</div>
-              <div class="receipt-auth-status" style="font-size: 10px; font-family: var(--font-mono);" id="receipt-security-hash">WD-SEC-8849-MLK</div>
+              <div class="receipt-auth-status" style="font-size: 11px; font-family: var(--font-mono); font-weight: 700;" id="receipt-security-hash">WD-SEC-8849-MLK</div>
             </div>
 
           </div>
@@ -369,40 +394,47 @@
               <span class="material-icons-round" style="font-size: 16px; color: var(--primary);">gavel</span>
               <span data-i18n="receipt_legal_title">Statutory Disclosures & Rental Terms</span>
             </div>
-            <ul class="receipt-legal-list">
-              <li data-i18n="receipt_legal_clause_1">1. This document constitutes an official computerized tax invoice and legally binding vehicle rental contract under the Road Transport Act 1987 & Tourism Industry Act 1992. No physical signature is required.</li>
-              <li data-i18n="receipt_legal_clause_2">2. Security deposit of RM270.00 will be automatically refunded to the originating bank account within 24 hours of vehicle return inspection.</li>
-              <li data-i18n="receipt_legal_clause_3">3. Vehicle is insured under Comprehensive Motor Policy No. POL-WD-2026-9812 with 24/7 Nationwide Emergency Roadside Assistance.</li>
-            </ul>
+            <div class="receipt-legal-list">
+              <div class="receipt-legal-item">
+                <span class="receipt-legal-num">1.</span>
+                <span data-i18n="receipt_legal_clause_1">This document constitutes an official computerized tax invoice and legally binding vehicle rental contract under the Road Transport Act 1987 & Tourism Industry Act 1992. No physical signature is required.</span>
+              </div>
+              <div class="receipt-legal-item">
+                <span class="receipt-legal-num">2.</span>
+                <span data-i18n="receipt_legal_clause_2">Security deposit of RM270.00 will be automatically refunded to the originating bank account within 24 hours of vehicle return inspection.</span>
+              </div>
+              <div class="receipt-legal-item">
+                <span class="receipt-legal-num">3.</span>
+                <span data-i18n="receipt_legal_clause_3">Vehicle is insured under Comprehensive Motor Policy No. POL-WD-2026-9812 with 24/7 Nationwide Emergency Roadside Assistance.</span>
+              </div>
+            </div>
           </div>
 
         </div>
 
-        <!-- Receipt Actions Dock -->
-        <footer class="receipt-card-footer">
-          <div class="receipt-actions-dock">
-            <button type="button" class="receipt-action-btn btn-secondary" onclick="window.print()" id="btn-print-receipt">
-              <span class="material-icons-round">print</span>
-              <span data-i18n="receipt_btn_print">Print Official Invoice</span>
-            </button>
+      </div>
 
-            <button type="button" class="receipt-action-btn btn-secondary" onclick="downloadReceiptPDF(this)" id="btn-download-pdf">
-              <span class="material-icons-round">download</span>
-              <span data-i18n="receipt_btn_download">Download PDF</span>
-            </button>
+      <!-- Receipt Actions Dock (Placed outside the document card) -->
+      <div class="receipt-actions-dock">
+        <button type="button" class="receipt-action-btn btn-secondary" onclick="window.print()" id="btn-print-receipt">
+          <span class="material-icons-round">print</span>
+          <span data-i18n="receipt_btn_print">Print Official Invoice</span>
+        </button>
 
-            <button type="button" class="receipt-action-btn btn-secondary" onclick="copyReceiptLink()" id="btn-share-receipt">
-              <span class="material-icons-round">share</span>
-              <span data-i18n="receipt_btn_share">Copy Invoice Link</span>
-            </button>
+        <button type="button" class="receipt-action-btn btn-secondary" onclick="downloadReceiptPDF(this)" id="btn-download-pdf">
+          <span class="material-icons-round">download</span>
+          <span data-i18n="receipt_btn_download">Download PDF</span>
+        </button>
 
-            <a href="../my-bookings.html" class="receipt-action-btn btn-primary" id="btn-back-my-bookings">
-              <span class="material-icons-round">arrow_back</span>
-              <span data-i18n="receipt_btn_back">My Bookings</span>
-            </a>
-          </div>
-        </footer>
+        <button type="button" class="receipt-action-btn btn-secondary" onclick="copyReceiptLink()" id="btn-share-receipt">
+          <span class="material-icons-round">share</span>
+          <span data-i18n="receipt_btn_share">Copy Invoice Link</span>
+        </button>
 
+        <a href="../my-bookings.html" class="receipt-action-btn btn-primary" id="btn-back-my-bookings">
+          <span class="material-icons-round">arrow_back</span>
+          <span data-i18n="receipt_btn_back">My Bookings</span>
+        </a>
       </div>
 
       <div id="footer-placeholder" style="margin-top: 40px;"></div>
