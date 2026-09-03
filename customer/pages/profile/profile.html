@@ -95,11 +95,11 @@
                     <button type="button" class="phone-cc-btn" id="pf-phone-cc-btn" onclick="togglePhoneCCDropdown('pf-phone-cc')" disabled>
                       <span class="phone-flag" id="pf-phone-flag">MY</span>
                       <span class="phone-cc-code" id="pf-phone-cc-val">+60</span>
-                      <span class="material-icons-round" style="font-size:14px;opacity:0.5">expand_more</span>
+                      <span class="material-icons-round fs-14 opacity-50">expand_more</span>
                     </button>
                     <input type="tel" id="pf-phone" value="" aria-label="Phone Number" title="Phone Number"
                       placeholder="12-345 6789" readonly oninput="formatPhoneInput(this)" />
-                    <div class="phone-cc-dropdown" id="pf-phone-cc" style="display:none;"></div>
+                    <div class="phone-cc-dropdown hidden" id="pf-phone-cc"></div>
                   </div>
                 </div>
               </div>
@@ -137,7 +137,7 @@
               <section class="pf-card pf-bento-wide" id="pf-change-password-card">
                 <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Change Password</h3>
                 <p class="pf-card-desc">It is recommended to update your password periodically to keep your WeDRIVE account secure.</p>
-                <div class="pf-actions-bar compact" style="margin-top:0">
+                <div class="pf-actions-bar compact mt-0">
                   <button class="pf-btn primary" type="button" onclick="openPasswordDialog()">
                     <span class="material-icons-round">vpn_key</span> Change Password
                   </button>
@@ -145,13 +145,13 @@
               </section>
 
               <!-- Google OAuth Card -->
-              <section class="pf-card pf-bento-wide" id="pf-oauth-security-card" style="display:none;">
+              <section class="pf-card pf-bento-wide hidden" id="pf-oauth-security-card">
                 <h3 class="pf-section-title"><span class="material-icons-round">lock</span> Account Security</h3>
-                <div class="pf-security-banner" style="margin-bottom: 0; background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.15);">
-                  <img src="../../../shared/images/icons/google-color.svg" alt="Google" style="width: 32px; height: 32px; flex-shrink: 0;" />
+                <div class="pf-security-banner oauth-banner mb-0">
+                  <img src="../../../shared/images/icons/google-color.svg" alt="Google" class="google-oauth-icon" />
                   <div>
                     <strong data-key="oauth_google_title">Secured with Google Sign-In</strong>
-                    <p data-key="oauth_google_desc" style="margin-top: 4px; font-size: 13px; color: var(--text-secondary, #475569); line-height: 1.5;">This account is authenticated via Google Sign-In. Credential management, security configurations, and password updates are handled directly through your Google Account settings.</p>
+                    <p data-key="oauth_google_desc" class="oauth-google-desc">This account is authenticated via Google Sign-In. Credential management, security configurations, and password updates are handled directly through your Google Account settings.</p>
                   </div>
                 </div>
               </section>
@@ -292,7 +292,7 @@
                     <option>USD ($)</option>
                   </select>
               </div>
-              <div class="pf-actions-bar" id="pf-pref-actions-bar" style="margin-top: 24px; display: none;">
+              <div class="pf-actions-bar mt-24 hidden" id="pf-pref-actions-bar">
                 <button class="pf-btn outline" type="button" onclick="cancelPreferenceChanges()">Cancel</button>
                 <button class="pf-btn primary" type="button" onclick="savePreferenceChanges()"><span class="material-icons-round">save</span> Save Settings</button>
               </div>
@@ -303,25 +303,6 @@
           <div class="pf-panel" id="panel-notifications">
             <div class="pf-panel-header">
               <h2 class="pf-panel-title">Notification Settings</h2>
-              <p class="pf-panel-desc">Control how and when we communicate with you.</p>
-            </div>
-
-            <div class="pf-bento-grid">
-              <!-- Email Notifications -->
-              <section class="pf-card pf-bento-wide">
-                <h3 class="pf-section-title"><span class="material-icons-round">email</span> Email Notifications</h3>
-                <p class="pf-card-desc">Manage email communications to your email address.</p>
-                <div class="pf-notif-list">
-                  <div class="pf-toggle-row">
-                    <div>
-                      <div class="pf-toggle-label">Booking Updates</div>
-                      <div class="pf-toggle-desc">Confirmations, cancellations, and itinerary changes.</div>
-                    </div><label class="pf-switch"><input type="checkbox" checked
-                        aria-label="Booking Updates notifications" title="Booking Updates notifications" /><span
-                        class="pf-slider"></span></label>
-                  </div>
-                  <div class="pf-toggle-row">
-                    <div>
                       <div class="pf-toggle-label">Promotions & Offers</div>
                       <div class="pf-toggle-desc">Exclusive deals, seasonal discounts, and partner offers.</div>
                     </div><label class="pf-switch"><input type="checkbox" checked
@@ -393,7 +374,7 @@
       </div><!-- /.pf-layout -->
 
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 48px;"></div>
+      <div id="footer-placeholder" class="mt-48"></div>
     </div>
   </main>
   <script src="../../js/sidebar-loader.js?v=8.3.28"></script>
@@ -1808,7 +1789,7 @@
 
       var html = '';
 
-      html += '<div class="pf-bento-grid" style="margin-bottom: 24px;">';
+      html += '<div class="pf-bento-grid mb-24">';
 
       if (primaryCard) {
         var brandClass = (primaryCard.brand || '').toLowerCase() === 'visa' ? 'visa' : 'mc';
@@ -1817,7 +1798,7 @@
         html += '  <section class="pf-card pf-bento-wide">';
         html += '    <div class="pf-pay-card-head">';
         html += '      <span class="pf-primary-pill">Primary Default</span>';
-        html += '      <button class="pf-text-btn" style="color: var(--danger, #ef4444); display: flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer;" onclick="deleteCard(\'' + primaryCard.id + '\')"><span class="material-icons-round" style="font-size: 16px;">delete</span> Remove</button>';
+        html += '      <button class="pf-text-btn btn-remove-card" onclick="deleteCard(\'' + primaryCard.id + '\')"><span class="material-icons-round fs-16">delete</span> Remove</button>';
         html += '    </div>';
         html += '    <div class="pf-pay-card-body">';
         html += '      <div class="pf-card-brand-lg ' + brandClass + '">' + brandLabel + '</div>';
@@ -1835,10 +1816,10 @@
         html += '    </div>';
         html += '  </section>';
       } else {
-        html += '  <section class="pf-card pf-bento-wide" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 200px; border: 2px dashed var(--border-color, #cbd5e1); background: transparent;">';
-        html += '    <span class="material-icons-round" style="font-size: 40px; color: var(--text-secondary); margin-bottom: 8px;">credit_card</span>';
-        html += '    <div style="font-weight: 600; color: var(--text-primary);">No Saved Cards</div>';
-        html += '    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Add a primary card for automatic billing.</div>';
+        html += '  <section class="pf-card pf-bento-wide pf-empty-card-box">';
+        html += '    <span class="material-icons-round fs-40 text-secondary mb-8">credit_card</span>';
+        html += '    <div class="fw-600">No Saved Cards</div>';
+        html += '    <div class="fs-13 text-secondary mt-4">Add a primary card for automatic billing.</div>';
         html += '  </section>';
       }
 
@@ -1860,18 +1841,18 @@
           var brandClass = (c.brand || '').toLowerCase() === 'visa' ? 'visa' : 'mc';
           var brandLabel = (c.brand || '').toUpperCase() === 'VISA' ? 'VISA' : 'MC';
 
-          html += '<section class="pf-card" style="margin-bottom: 16px;">';
-          html += '  <div class="pf-pay-secondary" style="display: flex; justify-content: space-between; align-items: center;">';
-          html += '    <div class="pf-pay-sec-left" style="display: flex; align-items: center; gap: 16px;">';
+          html += '<section class="pf-card mb-16">';
+          html += '  <div class="pf-pay-secondary flex-between">';
+          html += '    <div class="pf-pay-sec-left flex-center gap-16">';
           html += '      <div class="pf-card-brand-sm ' + brandClass + '">' + brandLabel + '</div>';
           html += '      <div class="pf-pay-sec-info">';
-          html += '        <div class="pf-card-number-sm" style="font-weight: 600;">' + c.number + '</div>';
-          html += '        <div class="pf-pay-meta" style="font-size: 12px; color: var(--text-secondary);">Exp ' + c.expiry + ' | ' + (c.cardholder || '').toUpperCase() + '</div>';
+          html += '        <div class="pf-card-number-sm fw-600">' + c.number + '</div>';
+          html += '        <div class="pf-pay-meta fs-12 text-secondary">Exp ' + c.expiry + ' | ' + (c.cardholder || '').toUpperCase() + '</div>';
           html += '      </div>';
           html += '    </div>';
-          html += '    <div class="pf-pay-sec-actions" style="display: flex; gap: 12px;">';
-          html += '      <button class="pf-text-btn" style="color: var(--danger, #ef4444); display: flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer;" onclick="deleteCard(\'' + c.id + '\')"><span class="material-icons-round" style="font-size: 16px;">delete</span> Remove</button>';
-          html += '      <button class="pf-text-btn primary" style="color: var(--primary, #3b82f6); display: flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; font-weight: 500;" onclick="makeCardPrimary(\'' + c.id + '\')">Make Primary</button>';
+          html += '    <div class="pf-pay-sec-actions flex-center gap-12">';
+          html += '      <button class="pf-text-btn btn-remove-card" onclick="deleteCard(\'' + c.id + '\')"><span class="material-icons-round fs-16">delete</span> Remove</button>';
+          html += '      <button class="pf-text-btn primary btn-make-primary" onclick="makeCardPrimary(\'' + c.id + '\')">Make Primary</button>';
           html += '    </div>';
           html += '  </div>';
           html += '</section>';
@@ -2067,11 +2048,11 @@
   </script>
 
   <!-- Add Payment Method Dialog Modal Overlay -->
-  <div id="add-payment-dialog" class="pf-dialog-overlay" style="display:none" onclick="if(event.target === this) closeAddPaymentDialog()">
+  <div id="add-payment-dialog" class="pf-dialog-overlay hidden" onclick="if(event.target === this) closeAddPaymentDialog()">
     <div class="pf-dialog">
       <div class="pf-dialog-header">
         <h3 class="pf-dialog-title">
-          <span class="material-icons-round" style="color: var(--primary, #3B82F6);">credit_card</span>
+          <span class="material-icons-round text-primary-accent">credit_card</span>
           <span>Add Payment Method</span>
         </h3>
         <button type="button" class="pf-dialog-close" onclick="closeAddPaymentDialog()" aria-label="Close dialog">
@@ -2079,7 +2060,7 @@
         </button>
       </div>
       <div class="pf-dialog-body">
-        <form id="add-card-form" onsubmit="handleAddCard(event)" style="display: flex; flex-direction: column; gap: 16px;">
+        <form id="add-card-form" onsubmit="handleAddCard(event)" class="flex-col gap-16">
           <div class="pf-field">
             <label for="new-card-name">Cardholder Name</label>
             <input type="text" id="new-card-name" placeholder="Name on card" required />
@@ -2090,7 +2071,7 @@
             <input type="text" id="new-card-number" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNumberInput(this)" required />
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="grid-2col gap-16">
             <div class="pf-field">
               <label for="new-card-expiry">Expiry Date</label>
               <input type="text" id="new-card-expiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiryInput(this)" required />
@@ -2101,10 +2082,10 @@
             </div>
           </div>
 
-          <div class="pf-field" style="display: flex; align-items: center; justify-content: space-between; flex-direction: row; gap: 10px; margin-top: 8px;">
+          <div class="pf-field flex-between flex-row gap-10 mt-8">
             <div>
-              <span style="font-weight: 600; font-size: 14px;">Set as Primary Default</span>
-              <p style="font-size: 12px; color: var(--text-secondary); margin: 4px 0 0 0;">Use this card for future bookings and charges.</p>
+              <span class="fw-600 fs-14">Set as Primary Default</span>
+              <p class="fs-12 text-secondary m-0 mt-4">Use this card for future bookings and charges.</p>
             </div>
             <label class="pf-switch">
               <input type="checkbox" id="new-card-primary" />
@@ -2112,7 +2093,7 @@
             </label>
           </div>
 
-          <div class="pf-pwd-step-actions" style="margin-top: 16px;">
+          <div class="pf-pwd-step-actions mt-16">
             <button class="pf-btn outline" type="button" onclick="closeAddPaymentDialog()">Cancel</button>
             <button class="pf-btn primary" type="submit">
               <span class="material-icons-round">save</span> Save Card
@@ -2124,11 +2105,11 @@
   </div>
 
   <!-- Change Password Dialog Modal Overlay -->
-  <div id="change-password-dialog" class="pf-dialog-overlay" style="display:none" onclick="if(event.target === this) closePasswordDialog()">
+  <div id="change-password-dialog" class="pf-dialog-overlay hidden" onclick="if(event.target === this) closePasswordDialog()">
     <div class="pf-dialog">
       <div class="pf-dialog-header">
         <h3 class="pf-dialog-title">
-          <span class="material-icons-round" style="color: var(--primary, #3B82F6);">vpn_key</span>
+          <span class="material-icons-round text-primary-accent">vpn_key</span>
           <span>Change Password</span>
         </h3>
         <button type="button" class="pf-dialog-close" onclick="closePasswordDialog()" aria-label="Close dialog">
@@ -2248,11 +2229,11 @@
   </div>
 
   <!-- Two-Factor Authentication Dialog Modal Overlay -->
-  <div id="two-factor-auth-dialog" class="pf-dialog-overlay" style="display:none" onclick="if(event.target === this) closeTFADialog()">
+  <div id="two-factor-auth-dialog" class="pf-dialog-overlay hidden" onclick="if(event.target === this) closeTFADialog()">
     <div class="pf-dialog">
       <div class="pf-dialog-header">
         <h3 class="pf-dialog-title">
-          <span class="material-icons-round" style="color: var(--primary, #3B82F6);">phonelink_lock</span>
+          <span class="material-icons-round text-primary-accent">phonelink_lock</span>
           <span>Two-Factor Authentication</span>
         </h3>
         <button type="button" class="pf-dialog-close" onclick="closeTFADialog()" aria-label="Close dialog">
@@ -2277,13 +2258,13 @@
 
           <div class="pf-tfa-secret-box">
             <span class="pf-tfa-secret-text" id="pf-tfa-secret-key">WD7V 4E2R 9I2V E910</span>
-            <button type="button" class="pf-text-btn" onclick="copyTFASecret()" style="font-size:12px; font-weight:600; padding:4px 8px; min-width:auto;">Copy</button>
+            <button type="button" class="pf-text-btn copy-btn-compact" onclick="copyTFASecret()">Copy</button>
           </div>
 
           <div class="pf-pwd-step-actions">
             <button class="pf-btn outline" type="button" onclick="closeTFADialog()">Cancel</button>
             <button class="pf-btn primary" type="button" onclick="goToTFAStepVerify()">
-              Next <span class="material-icons-round" style="margin-left:4px">arrow_forward</span>
+              Next <span class="material-icons-round ml-4">arrow_forward</span>
             </button>
           </div>
         </div>
@@ -2335,7 +2316,7 @@
             <div class="pf-tfa-recovery-code">DF6G-2H4J</div>
           </div>
 
-          <div class="pf-pwd-step-actions" style="margin-top:20px">
+          <div class="pf-pwd-step-actions mt-20">
             <button class="pf-btn outline" type="button" onclick="copyTFARecoveryCodes()">
               <span class="material-icons-round">content_copy</span> Copy Codes
             </button>
@@ -2350,10 +2331,10 @@
   </div>
 
   <!-- Disable 2FA Dialog Modal Overlay -->
-  <div id="tfa-disable-confirm-dialog" class="pf-dialog-overlay" style="display:none" onclick="if(event.target === this) closeTFADisableDialog()">
+  <div id="tfa-disable-confirm-dialog" class="pf-dialog-overlay hidden" onclick="if(event.target === this) closeTFADisableDialog()">
     <div class="pf-dialog">
       <div class="pf-dialog-header">
-        <h3 class="pf-dialog-title" style="color: var(--danger, #ef4444)">
+        <h3 class="pf-dialog-title text-danger">
           <span class="material-icons-round">warning</span>
           <span>Disable Two-Factor Auth</span>
         </h3>
@@ -2362,8 +2343,8 @@
         </button>
       </div>
       <div class="pf-dialog-body">
-        <div class="pf-pwd-step-icon-container" style="background: rgba(239, 68, 68, 0.08); border-color: rgba(239, 68, 68, 0.15)">
-          <span class="material-icons-round pf-pwd-step-icon" style="color: var(--danger, #ef4444)">gpp_bad</span>
+        <div class="pf-pwd-step-icon-container danger-icon-container">
+          <span class="material-icons-round pf-pwd-step-icon text-danger">gpp_bad</span>
         </div>
         <h4 class="pf-pwd-step-heading">Are you sure?</h4>
         <p class="pf-pwd-step-desc">
@@ -2380,15 +2361,15 @@
   </div>
 
   <!-- Unsaved Changes Dialog Modal Overlay -->
-  <div id="unsaved-changes-dialog" class="pf-dialog-overlay" style="display:none">
+  <div id="unsaved-changes-dialog" class="pf-dialog-overlay hidden">
     <div class="pf-dialog">
       <div class="pf-dialog-header">
         <h3 class="pf-dialog-title" data-key="unsaved_title">Unsaved Changes</h3>
       </div>
-      <div class="pf-dialog-body" style="padding-top: 10px;">
-        <p data-key="unsaved_desc" style="font-size: 14px; line-height: 1.5; color: var(--on-surface-variant); margin-bottom: 24px;">You have unsaved changes in your settings. Would you like to save or discard your changes before leaving?</p>
-        <div style="display: flex; gap: 12px; justify-content: flex-end;">
-          <button class="pf-btn outline" onclick="handleUnsavedChangesDialog('discard')" data-key="unsaved_btn_discard" style="border-color: var(--danger, #ef4444); color: var(--danger, #ef4444);">Discard</button>
+      <div class="pf-dialog-body pt-10">
+        <p data-key="unsaved_desc" class="unsaved-changes-desc">You have unsaved changes in your settings. Would you like to save or discard your changes before leaving?</p>
+        <div class="flex-end gap-12">
+          <button class="pf-btn outline btn-danger-outline" onclick="handleUnsavedChangesDialog('discard')" data-key="unsaved_btn_discard">Discard</button>
           <button class="pf-btn outline" onclick="handleUnsavedChangesDialog('cancel')" data-key="unsaved_btn_cancel">Stay here</button>
           <button class="pf-btn primary" onclick="handleUnsavedChangesDialog('save')" data-key="unsaved_btn_save">Save Settings</button>
         </div>

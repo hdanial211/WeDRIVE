@@ -27,11 +27,11 @@
       <div class="chatbot-grid">
 
         <!-- ─── LEFT COLUMN: CONFIGURATION CARDS ──────────────────── -->
-        <div class="settings-column" style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="settings-column flex-col gap-20">
           
           <!-- CARD 1: API Settings -->
           <div class="card reveal-onload">
-            <div class="card-header chatbot-card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div class="card-header chatbot-card-header flex-between flex-center mb-16">
               <div>
                 <h3 class="chatbot-title">
                   <span class="material-icons-round chatbot-title-icon">vpn_key</span>
@@ -55,7 +55,7 @@
               </div>
 
               <div class="form-group">
-                <label style="display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px;">
+                <label class="flex-center gap-6 fw-600 fs-13">
                   OpenRouter API Key
                 </label>
                 <div class="api-row">
@@ -64,15 +64,15 @@
                     <span class="material-icons-round toggle-eye" onclick="toggleKey('api-key', this)">visibility_off</span>
                   </div>
                   <button class="btn-test-inline" id="btn-test-openrouter" onclick="testSingleKey('openrouter')">
-                    <span class="material-icons-round" style="font-size: 16px;">bolt</span> Test
+                    <span class="material-icons-round fs-16">bolt</span> Test
                   </button>
                 </div>
                 <div class="key-status" id="status-openrouter"></div>
               </div>
 
-              <div style="margin-top: 12px; display: flex; gap: 8px;">
-                <button class="btn-save" onclick="saveSettings()" style="padding: 10px 16px; font-size: 13px; border-radius: 8px; flex: 1;">
-                  <span class="material-icons-round" style="font-size: 18px;">save</span> Save API Key
+              <div class="mt-12 flex-row gap-8">
+                <button class="btn-save btn-save-flex" onclick="saveSettings()">
+                  <span class="material-icons-round fs-18">save</span> Save API Key
                 </button>
               </div>
             </div>
@@ -80,7 +80,7 @@
 
           <!-- CARD 2: AI Prompt & Persona -->
           <div class="card reveal-on-scroll">
-            <div class="card-header chatbot-card-header" style="margin-bottom: 16px;">
+            <div class="card-header chatbot-card-header mb-16">
               <h3 class="chatbot-title">
                 <span class="material-icons-round chatbot-title-icon">psychology</span>
                 AI Agent Persona
@@ -91,8 +91,8 @@
             <div class="chatbot-settings-form">
               <!-- Welcome Greeting -->
               <div class="form-group">
-                <label style="font-weight: 600; font-size: 13px;">Welcome Message</label>
-                <div class="hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Shown when a customer first opens the chatbot.</div>
+                <label class="fw-600 fs-13">Welcome Message</label>
+                <div class="hint fs-12 text-muted mb-4">Shown when a customer first opens the chatbot.</div>
                 <input type="text" id="greeting-msg" class="form-input" placeholder="Hi! I'm WeDRIVE Bot. How can I help?" />
               </div>
 
@@ -100,21 +100,21 @@
 
               <!-- System Prompt -->
               <div class="form-group">
-                <label style="font-weight: 600; font-size: 13px;">System Prompt & Instructions</label>
-                <div class="hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Core personality instructions for the assistant.</div>
+                <label class="fw-600 fs-13">System Prompt & Instructions</label>
+                <div class="hint fs-12 text-muted mb-4">Core personality instructions for the assistant.</div>
                 <textarea id="system-prompt" rows="8" class="form-input" placeholder="You are WeDRIVE assistant..."></textarea>
               </div>
 
               <!-- Promotions Context -->
               <div class="form-group">
-                <label style="font-weight: 600; font-size: 13px;">Promotions & Extra Context</label>
-                <div class="hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Dynamic company offers, campaigns, or policies to append.</div>
+                <label class="fw-600 fs-13">Promotions & Extra Context</label>
+                <div class="hint fs-12 text-muted mb-4">Dynamic company offers, campaigns, or policies to append.</div>
                 <textarea id="promo-context" rows="4" class="form-input" placeholder="Current promo: 10% off for weekend bookings..."></textarea>
               </div>
 
-              <div style="margin-top: 12px; display: flex;">
-                <button class="btn-save" onclick="saveSettings()" style="padding: 10px 16px; font-size: 13px; border-radius: 8px; width: 100%;">
-                  <span class="material-icons-round" style="font-size: 18px;">save</span> Save AI Persona & Promos
+              <div class="mt-12 flex-row">
+                <button class="btn-save w-full btn-save-sm" onclick="saveSettings()">
+                  <span class="material-icons-round fs-18">save</span> Save AI Persona & Promos
                 </button>
               </div>
             </div>
@@ -123,13 +123,13 @@
         </div>
 
         <!-- ─── RIGHT COLUMN: LIVE TEST CHAT (PLAYGROUND & AUTO-SYNC) ──────────────────── -->
-        <div class="chat-column" style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="chat-column flex-col gap-20">
           <!-- Chatbot Playground -->
           <div class="card reveal-on-scroll chatbot-card-flat">
             <div class="chat-container">
               <div class="chat-header">
                 <div class="bot-avatar">
-                  <span class="material-icons-round" style="font-size: 20px;">smart_toy</span>
+                  <span class="material-icons-round fs-20">smart_toy</span>
                 </div>
                 <div class="bot-info">
                   <h4>WeDRIVE Bot Playground</h4>
@@ -163,7 +163,7 @@
 
           <!-- CARD 3: Database Auto-Sync -->
           <div class="card reveal-on-scroll">
-            <div class="card-header chatbot-card-header" style="margin-bottom: 16px;">
+            <div class="card-header chatbot-card-header mb-16">
               <h3 class="chatbot-title">
                 <span class="material-icons-round chatbot-title-icon">sync</span>
                 Database Auto-Sync Context
@@ -172,22 +172,22 @@
             </div>
 
             <div class="chatbot-settings-form">
-              <div class="info-box" style="background: rgba(16, 185, 129, 0.03); border-color: rgba(16, 185, 129, 0.1);">
-                <span class="material-icons-round" style="color: #10B981;">database</span>
+              <div class="info-box info-box-success">
+                <span class="material-icons-round text-success">database</span>
                 <div>
                   <strong>Live System Aware</strong> — The assistant auto-fetches live cars, prices, status (Available/Rented), system operating hours, deposit, and locations from Supabase.
                 </div>
               </div>
 
               <div class="form-group">
-                <label style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 13px;">
+                <label class="flex-between flex-center fw-600 fs-13">
                   Context Preview
-                  <button class="btn-test-inline" id="btn-refresh-data" onclick="refreshLiveData()" style="font-size: 11px; padding: 6px 12px; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-color);">
-                    <span class="material-icons-round" style="font-size: 14px;">refresh</span> Refresh Data
+                  <button class="btn-test-inline btn-refresh-data" id="btn-refresh-data" onclick="refreshLiveData()">
+                    <span class="material-icons-round fs-14">refresh</span> Refresh Data
                   </button>
                 </label>
-                <div class="hint" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Real-time JSON/data appended to the system instructions.</div>
-                <pre id="live-data-preview" style="display: none;"></pre>
+                <div class="hint fs-12 text-muted mb-8">Real-time JSON/data appended to the system instructions.</div>
+                <pre id="live-data-preview" class="hidden"></pre>
               </div>
             </div>
           </div>
@@ -196,12 +196,12 @@
       </div>
 
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 32px;"></div>
+      <div id="footer-placeholder" class="mt-32"></div>
     </div>
 
     <!-- TOAST -->
     <div id="toast" class="toast">
-      <span class="material-icons-round" style="font-size: 18px;">check_circle</span>
+      <span class="material-icons-round fs-18">check_circle</span>
       <span id="toast-text">Settings saved successfully!</span>
     </div>
   </main>

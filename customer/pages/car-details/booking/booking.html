@@ -69,24 +69,24 @@
             </div>
           </div>
           <!-- Hidden Select for compatibility with scripts -->
-          <select id="bk-pickup-location" aria-label="Pick-up Location" style="display:none;">
+          <select id="bk-pickup-location" aria-label="Pick-up Location" class="hidden">
             <option value="Melaka Sentral" selected>Melaka Sentral</option>
           </select>
 
           <!-- Pickup Location details and Map -->
-          <div style="margin-top:20px; border-top:1px solid var(--slate-100,#F1F5F9); padding-top:20px;">
-            <label style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--primary,#3B82F6); letter-spacing:0.5px; display:block; margin-bottom:10px;">
+          <div class="booking-location-box">
+            <label class="location-box-title">
               Pick-up Location
             </label>
-            <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; background:var(--bg-surface-2,#F1F5F9); padding:14px 18px; border-radius:12px;">
-              <span class="material-icons-round" style="color:var(--primary,#3B82F6); font-size:24px; margin-top:2px;">location_on</span>
+            <div class="location-card-info">
+              <span class="material-icons-round location-card-icon">location_on</span>
               <div>
-                <strong style="color:var(--navy,#1E293B); font-size:14px; display:block; margin-bottom:4px;">Pick-up Location: Melaka Sentral</strong>
-                <span id="booking-hq-address" style="color:var(--slate-600); font-size:13px; line-height:1.5;">HQ Office: Lot 123, Jalan Hang Tuah, 75300 Melaka</span>
+                <strong class="location-card-name">Pick-up Location: Melaka Sentral</strong>
+                <span id="booking-hq-address" class="location-card-address">HQ Office: Lot 123, Jalan Hang Tuah, 75300 Melaka</span>
               </div>
             </div>
             <!-- Interactive Map Container -->
-            <div id="pickup-map" style="width:100%; height:200px; border-radius:12px; border:1px solid var(--slate-200,#E2E8F0); overflow:hidden; z-index:1;"></div>
+            <div id="pickup-map" class="pickup-map-container"></div>
           </div>
         </section>
 
@@ -133,13 +133,13 @@
           <h3 class="bk-section-title" data-key="bk_payment_summary">Payment Summary</h3>
           <div class="payment-row"><span class="label" id="base-label">Base Rate (2 days)</span><span class="value" id="base-value">RM500.00</span></div>
           <div class="payment-row"><span class="label" id="addon-label">Add-ons (Full Insurance)</span><span class="value" id="addon-value">RM70.00</span></div>
-          <div class="payment-row" id="tax-row" style="display:none;"><span class="label" id="tax-label">Tax</span><span class="value" id="tax-value">RM0.00</span></div>
+          <div class="payment-row hidden" id="tax-row"><span class="label" id="tax-label">Tax</span><span class="value" id="tax-value">RM0.00</span></div>
           <div class="payment-row"><span class="label" data-key="bk_service_fee">Service Fee (AI-Optimized)</span><span class="value">RM15.00</span></div>
           <div class="payment-total">
             <span class="label" data-key="bk_total">Total Price</span>
             <span class="value" id="total-price">RM585.00</span>
           </div>
-          <div id="duration-warning" style="color:var(--danger,#EF4444); font-size:12px; font-weight:600; margin-bottom:12px; display:none; text-align:center;"></div>
+          <div id="duration-warning" class="duration-warning-msg hidden"></div>
           <button class="btn-confirm" id="btn-confirm-booking" type="button" onclick="confirmBooking()">
             <span data-key="bk_confirm">Confirm Booking</span>
             <span class="material-icons-round">arrow_forward</span>
@@ -183,7 +183,7 @@
       </aside>
     </div>
     <!-- FOOTER -->
-    <div id="footer-placeholder" style="margin-top: 48px;"></div>
+    <div id="footer-placeholder" class="mt-48"></div>
   </section>
   </main>
 

@@ -44,7 +44,7 @@
         <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-econ-amt" data-daily="95" data-weekly="565">RM 95</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
-        <div class="card-savings-pill" id="price-econ-save" style="display:none;"></div>
+        <div class="card-savings-pill" id="price-econ-save"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_econ_feat1">Perodua AXIA G / AXIA AV</span></li>
@@ -67,7 +67,7 @@
         <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-sedan-amt" data-daily="450" data-weekly="2678">RM 450</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
-        <div class="card-savings-pill" id="price-sedan-save" style="display:none;"></div>
+        <div class="card-savings-pill" id="price-sedan-save"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_sedan_feat1">BMW 320i M Sport</span></li>
@@ -90,7 +90,7 @@
         <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-suv-amt" data-daily="320" data-weekly="1904">RM 320</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
-        <div class="card-savings-pill" id="price-suv-save" style="display:none;"></div>
+        <div class="card-savings-pill" id="price-suv-save"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_suv_feat1">Mercedes-Benz GLA250</span></li>
@@ -113,7 +113,7 @@
         <span class="price-from-label" data-key="pricing_starts_from">Starts from</span>
         <span class="amount" id="price-lux-amt" data-daily="380" data-weekly="2261">RM 380</span>
         <span class="period" data-key="pricing_per_day">/ day</span>
-        <div class="card-savings-pill" id="price-lux-save" style="display:none;"></div>
+        <div class="card-savings-pill" id="price-lux-save"></div>
       </div>
       <ul class="card-features">
         <li><span class="material-icons-round">check_circle</span> <span data-key="pricing_lux_feat1">Mercedes-Benz CLS350 / Toyota Alphard</span></li>
@@ -184,10 +184,10 @@
           const discountedWeekly = Number(amtEl.dataset.weekly || Math.round(fullWeekly * 0.85));
           const exactSavings = fullWeekly - discountedWeekly; // Exact 15% discount amount!
 
-          saveEl.style.display = 'inline-flex';
+          saveEl.classList.add('active');
           saveEl.textContent = isMs ? `Jimat 15% (RM ${exactSavings})` : `Save 15% (RM ${exactSavings})`;
         } else {
-          saveEl.style.display = 'none';
+          saveEl.classList.remove('active');
         }
       });
 

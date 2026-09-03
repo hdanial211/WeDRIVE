@@ -80,7 +80,7 @@
       </section>
 
       <!-- 2. Active Rental Spotlight Hero Bento (Dynamic) -->
-      <section class="mybk-active-spotlight" id="active-rental-spotlight" style="display:none;" aria-label="Ongoing active rental spotlight">
+      <section class="mybk-active-spotlight" id="active-rental-spotlight" aria-label="Ongoing active rental spotlight">
         <div class="mybk-spotlight-media">
           <div class="mybk-spotlight-badge">
             <span class="status-pulse-dot"></span>
@@ -124,7 +124,7 @@
               <div class="mybk-spotlight-meta-val" id="active-time-left">Ends in 1d 14h 22m</div>
               <div class="mybk-progress-wrap">
                 <div class="mybk-progress-bar">
-                  <div class="mybk-progress-fill" id="active-progress-fill" style="width: 50%;"></div>
+                  <div class="mybk-progress-fill w-half" id="active-progress-fill"></div>
                 </div>
               </div>
             </div>
@@ -136,7 +136,7 @@
                 <span data-key="mybk_pickup">Pick-up & Return Hub</span>
               </div>
               <div class="mybk-spotlight-meta-val" id="active-hub-name">Melaka Sentral HQ</div>
-              <div class="mybk-spotlight-meta-label" style="margin-top: 4px;">
+              <div class="mybk-spotlight-meta-label mt-4">
                 <span class="material-icons-round">date_range</span>
                 <span id="active-period-dates">-- - --</span>
               </div>
@@ -191,7 +191,7 @@
         <div class="mybk-search-pill-wrap">
           <span class="material-icons-round mybk-search-icon">search</span>
           <input type="text" class="mybk-search-input" id="mybk-search-input" placeholder="Search by car, ID, location..." data-key-placeholder="mybk_search_placeholder" aria-label="Search bookings" />
-          <button class="mybk-search-clear" id="mybk-search-clear" type="button" style="display:none;" onclick="clearSearch()" aria-label="Clear search">
+          <button class="mybk-search-clear hidden" id="mybk-search-clear" type="button" onclick="clearSearch()" aria-label="Clear search">
             <span class="material-icons-round">close</span>
           </button>
         </div>
@@ -199,14 +199,14 @@
 
       <!-- 4. Booking Cards Grid -->
       <section class="mybk-cards-grid" id="mybk-cards-grid" aria-label="List of customer bookings">
-        <div style="grid-column: 1 / -1; text-align: center; padding: 48px; color: var(--text-secondary);">
-          <span class="material-icons-round" style="font-size: 32px; animation: spin 1s infinite linear;">refresh</span>
-          <p style="margin-top: 8px;">Loading your bookings...</p>
+        <div class="mybk-loading-box">
+          <span class="material-icons-round fs-32 spin-icon">refresh</span>
+          <p class="mt-8">Loading your bookings...</p>
         </div>
       </section>
 
       <!-- 5. Empty State (hidden by default) -->
-      <div class="mybk-empty-state" id="mybk-empty-state" style="display:none;">
+      <div class="mybk-empty-state hidden" id="mybk-empty-state">
         <div class="mybk-empty-icon">
           <span class="material-icons-round">event_busy</span>
         </div>
@@ -219,7 +219,7 @@
       </div>
 
       <!-- FOOTER PLACEHOLDER -->
-      <div id="footer-placeholder" style="margin-top: 48px;"></div>
+      <div id="footer-placeholder" class="mt-48"></div>
     </div>
   </main>
 
@@ -228,7 +228,7 @@
     <div class="mybk-modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-details-title">
       <div class="mybk-modal-header">
         <h3 class="mybk-modal-title" id="modal-details-title">
-          <span class="material-icons-round" style="color:var(--primary);">receipt_long</span>
+          <span class="material-icons-round text-primary-accent">receipt_long</span>
           <span data-key="mybk_modal_details_title">Booking Details</span>
         </h3>
         <button class="mybk-modal-close" type="button" onclick="closeModal('modal-details')" aria-label="Close dialog">
@@ -253,7 +253,7 @@
     <div class="mybk-modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-cancel-title">
       <div class="mybk-modal-header">
         <h3 class="mybk-modal-title" id="modal-cancel-title">
-          <span class="material-icons-round" style="color:#FF3B30;">cancel</span>
+          <span class="material-icons-round text-danger">cancel</span>
           <span data-key="mybk_modal_cancel_title">Cancel Booking Request</span>
         </h3>
         <button class="mybk-modal-close" type="button" onclick="closeModal('modal-cancel')" aria-label="Close dialog">
@@ -261,10 +261,10 @@
         </button>
       </div>
       <div class="mybk-modal-body">
-        <p id="modal-cancel-msg" style="font-size: 14px; line-height: 1.5; color: var(--text-primary); margin: 0;">
+        <p id="modal-cancel-msg" class="modal-cancel-msg">
           Are you sure you want to cancel this booking? Full refunds apply for cancellations made at least 24 hours prior to pick-up.
         </p>
-        <div class="mybk-modal-detail-row" style="margin-top: 12px;">
+        <div class="mybk-modal-detail-row mt-12">
           <span>Target Booking</span>
           <span id="modal-cancel-id">#WD-0000</span>
         </div>
@@ -288,7 +288,7 @@
     <div class="mybk-modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-extend-title">
       <div class="mybk-modal-header">
         <h3 class="mybk-modal-title" id="modal-extend-title">
-          <span class="material-icons-round" style="color:var(--primary);">more_time</span>
+          <span class="material-icons-round text-primary-accent">more_time</span>
           <span data-key="mybk_modal_extend_title">Extend Your Rental</span>
         </h3>
         <button class="mybk-modal-close" type="button" onclick="closeModal('modal-extend')" aria-label="Close dialog">
@@ -296,13 +296,13 @@
         </button>
       </div>
       <div class="mybk-modal-body">
-        <p data-key="mybk_modal_extend_desc" style="font-size: 13.5px; color: var(--text-secondary); margin: 0;">
+        <p data-key="mybk_modal_extend_desc" class="modal-extend-desc">
           Select additional days to extend your active rental journey seamlessly.
         </p>
 
-        <div class="mybk-modal-section" style="margin-top: 10px;">
+        <div class="mybk-modal-section mt-10">
           <h4 class="mybk-modal-section-title">Select Additional Days</h4>
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+          <div class="grid-4col gap-8">
             <button class="mybk-btn mybk-btn-secondary extend-day-btn active" type="button" onclick="selectExtendDays(1, this)">+1 Day</button>
             <button class="mybk-btn mybk-btn-secondary extend-day-btn" type="button" onclick="selectExtendDays(2, this)">+2 Days</button>
             <button class="mybk-btn mybk-btn-secondary extend-day-btn" type="button" onclick="selectExtendDays(3, this)">+3 Days</button>
@@ -310,18 +310,18 @@
           </div>
         </div>
 
-        <div class="mybk-modal-section" style="margin-top: 12px;">
+        <div class="mybk-modal-section mt-12">
           <div class="mybk-modal-detail-row">
             <span>Current Return Date</span>
             <span id="extend-curr-date">--</span>
           </div>
           <div class="mybk-modal-detail-row">
             <span>New Extended Return</span>
-            <span id="extend-new-date" style="color:var(--primary);">--</span>
+            <span id="extend-new-date" class="text-primary-accent">--</span>
           </div>
           <div class="mybk-modal-detail-row">
             <span>Additional Rate</span>
-            <span id="extend-extra-price" style="font-size: 15px; color:var(--primary);">RM 180.00</span>
+            <span id="extend-extra-price" class="fs-15 text-primary-accent">RM 180.00</span>
           </div>
         </div>
       </div>
@@ -518,14 +518,14 @@
       });
 
       if (activeList.length === 0) {
-        spotlightSec.style.display = 'none';
+        spotlightSec.classList.remove('active');
         activeSpotlightBooking = null;
         return;
       }
 
       var b = activeList[0];
       activeSpotlightBooking = b;
-      spotlightSec.style.display = '';
+      spotlightSec.classList.add('active');
 
       var carName = b.car || b.car_name || '2023 BMW 320i M Sport 2.0';
       var bookingId = b.booking_id || b.id || 'WD-9942';
@@ -594,13 +594,13 @@
 
       if (filtered.length === 0) {
         gridEl.innerHTML = '';
-        gridEl.style.display = 'none';
-        emptyEl.style.display = 'flex';
+        gridEl.classList.add('hidden');
+        emptyEl.classList.remove('hidden');
         return;
       }
 
-      gridEl.style.display = '';
-      emptyEl.style.display = 'none';
+      gridEl.classList.remove('hidden');
+      emptyEl.classList.add('hidden');
 
       var html = '';
       filtered.forEach(function(b) {
@@ -746,7 +746,7 @@
       html += '<div class="mybk-modal-section">';
       html += '  <h4 class="mybk-modal-section-title">Payment Summary</h4>';
       html += '  <div class="mybk-modal-detail-row"><span>Payment Status</span><span>' + (booking.payment || 'Paid') + '</span></div>';
-      html += '  <div class="mybk-modal-detail-row"><span>Total Amount</span><span style="font-size:15px; color:var(--primary);">' + price + '</span></div>';
+      html += '  <div class="mybk-modal-detail-row"><span>Total Amount</span><span class="fs-15 text-primary-accent">' + price + '</span></div>';
       html += '</div>';
 
       body.innerHTML = html;
@@ -873,14 +873,18 @@
 
     searchInput.addEventListener('input', function() {
       searchQuery = this.value;
-      searchClearBtn.style.display = searchQuery ? 'flex' : 'none';
+      if (searchQuery) {
+        searchClearBtn.classList.remove('hidden');
+      } else {
+        searchClearBtn.classList.add('hidden');
+      }
       renderBookings();
     });
 
     function clearSearch() {
       searchInput.value = '';
       searchQuery = '';
-      searchClearBtn.style.display = 'none';
+      searchClearBtn.classList.add('hidden');
       renderBookings();
     }
 

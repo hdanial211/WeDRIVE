@@ -22,7 +22,7 @@
 
     <div class="content">
       <!-- STATS -->
-      <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="stats-grid grid-3col">
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="fl_stat_total">Total Cars</div>
@@ -47,24 +47,24 @@
       </div>
 
       <!-- FILTER + SEARCH + ACTIONS -->
-      <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+      <div class="card reveal-on-scroll mb-20 px-22 py-16">
+        <div class="flex-between gap-12 flex-wrap">
+          <div class="flex-center gap-8 flex-wrap">
             <button class="filter-chip active" onclick="filterCar('all', this)">All</button>
             <button class="filter-chip" onclick="filterCar('Available', this)">Available</button>
             <button class="filter-chip" onclick="filterCar('Rented', this)">Rented</button>
           </div>
-          <div style="display:flex; gap:10px; align-items:center;">
-            <div class="input-wrap-sm" style="min-width:280px; width:300px;">
-              <span class="material-icons-round" style="font-size:18px">search</span>
+          <div class="flex-center gap-10">
+            <div class="input-wrap-sm input-search-fixed">
+              <span class="material-icons-round fs-18">search</span>
               <input type="text" id="fl-search" placeholder="Search car name or plate..."
                 oninput="searchCar(this.value)" />
             </div>
             <button class="btn-outline-sm" id="car-view-toggle-btn" onclick="toggleCarView()" title="Toggle between List and Grid view">
-              <span class="material-icons-round" style="font-size:16px">view_list</span> List View
+              <span class="material-icons-round fs-16">view_list</span> List View
             </button>
             <button class="btn-primary-sm" onclick="addNewCar()" title="Add new car">
-              <span class="material-icons-round" style="font-size:16px">add</span>
+              <span class="material-icons-round fs-16">add</span>
               <span data-key="fl_add_car">Add Car</span>
             </button>
           </div>
@@ -77,19 +77,19 @@
       </div>
 
       <!-- CAR TABLE LIST VIEW (In-page responsive Apple table) -->
-      <div id="car-list-container" class="card reveal-on-scroll" style="display:none; overflow-x:auto; padding:0; border-radius:20px;">
-        <table style="width:100%; border-collapse:collapse; text-align:left;">
+      <div id="car-list-container" class="card reveal-on-scroll hidden table-responsive p-0 radius-20">
+        <table class="car-admin-table">
           <thead>
-            <tr style="border-bottom:1px solid var(--border-subtle); background:var(--bg-surface-2);">
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_vehicle">Vehicle</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_plate">Plate No.</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_type">Type</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_seats">Seats</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_trans">Transmission</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_fuel">Fuel</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_rate">Daily Rate</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;" data-key="fl_th_status">Status</th>
-              <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px; text-align:right;" data-key="fl_th_action">Action</th>
+            <tr class="car-table-header-row">
+              <th class="car-th" data-key="fl_th_vehicle">Vehicle</th>
+              <th class="car-th" data-key="fl_th_plate">Plate No.</th>
+              <th class="car-th" data-key="fl_th_type">Type</th>
+              <th class="car-th" data-key="fl_th_seats">Seats</th>
+              <th class="car-th" data-key="fl_th_trans">Transmission</th>
+              <th class="car-th" data-key="fl_th_fuel">Fuel</th>
+              <th class="car-th" data-key="fl_th_rate">Daily Rate</th>
+              <th class="car-th" data-key="fl_th_status">Status</th>
+              <th class="car-th text-right" data-key="fl_th_action">Action</th>
             </tr>
           </thead>
           <tbody id="car-tbody"></tbody>
@@ -97,21 +97,20 @@
       </div>
 
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 32px;"></div>
+      <div id="footer-placeholder" class="mt-32"></div>
     </div>
   </main>
 
   <!-- CARS LIST MODAL -->
-  <div id="cars-list-modal" class="modal-overlay" style="display:none;">
-    <div class="modal-container" style="max-width:960px;width:95%;">
+  <div id="cars-list-modal" class="modal-overlay hidden">
+    <div class="modal-container modal-wide">
       <div class="modal-header">
-        <h3><span class="material-icons-round"
-            style="font-size:20px;vertical-align:middle;margin-right:6px;">list_alt</span> Cars List</h3>
+        <h3><span class="material-icons-round fs-20 va-middle mr-6">list_alt</span> Cars List</h3>
         <button class="modal-close-btn" onclick="closeCarListModal()">
           <span class="material-icons-round">close</span>
         </button>
       </div>
-      <div class="modal-body" style="overflow-x:auto;">
+      <div class="modal-body table-responsive">
         <table>
           <thead>
             <tr>

@@ -654,7 +654,7 @@
         return;
       }
 
-      btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploading;
+      btn.innerHTML = '<span class="material-icons-round spin-icon fs-18">refresh</span> ' + m.uploading;
       btn.disabled = true;
 
       try {
@@ -671,28 +671,28 @@
         var uniqueCheck = await window.WeDriveAPI.checkICAndLicenseUnique(ic, license, uid);
         if (!uniqueCheck.unique) {
           alert(uniqueCheck.error || m.alreadyRegistered);
-          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified_user</span> ' + m.submitBtnText;
+          btn.innerHTML = '<span class="material-icons-round fs-18">verified_user</span> ' + m.submitBtnText;
           btn.disabled = false;
           return;
         }
 
         // Upload IC Front document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingIcFront;
+        btn.innerHTML = '<span class="material-icons-round spin-icon fs-18">refresh</span> ' + m.uploadingIcFront;
         var icUpload = await window.WeDriveAPI.uploadDocument(uid, icFile, 'ic_front');
         if (!icUpload.success) throw new Error('IC Front upload failed: ' + icUpload.error);
 
         // Upload IC Back document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingIcBack;
+        btn.innerHTML = '<span class="material-icons-round spin-icon fs-18">refresh</span> ' + m.uploadingIcBack;
         var icBackUpload = await window.WeDriveAPI.uploadDocument(uid, icBackFile, 'ic_back');
         if (!icBackUpload.success) throw new Error('IC Back upload failed: ' + icBackUpload.error);
 
         // Upload License Front document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingLicFront;
+        btn.innerHTML = '<span class="material-icons-round spin-icon fs-18">refresh</span> ' + m.uploadingLicFront;
         var licenseUpload = await window.WeDriveAPI.uploadDocument(uid, licenseFile, 'license_front');
         if (!licenseUpload.success) throw new Error('License Front upload failed: ' + licenseUpload.error);
 
         // Upload License Back document
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.uploadingLicBack;
+        btn.innerHTML = '<span class="material-icons-round spin-icon fs-18">refresh</span> ' + m.uploadingLicBack;
         var licenseBackUpload = await window.WeDriveAPI.uploadDocument(uid, licenseBackFile, 'license_back');
         if (!licenseBackUpload.success) throw new Error('License Back upload failed: ' + licenseBackUpload.error);
 
@@ -716,7 +716,7 @@
         }
 
         // Update profile
-        btn.innerHTML = '<span class="material-icons-round spin-icon" style="font-size:18px">refresh</span> ' + m.saving;
+        btn.innerHTML = '<span class="material-icons-round spin-icon fs-18">refresh</span> ' + m.saving;
         var updateResult = await window.WeDriveAPI.updateCustomerProfile(uid, {
           name: name,
           username: username,
@@ -751,7 +751,7 @@
       } catch (err) {
         console.error('Profile submit error:', err);
         alert(m.errorPrefix + (err.message || 'Something went wrong. Please try again.'));
-        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">verified_user</span> ' + m.submitBtnText;
+        btn.innerHTML = '<span class="material-icons-round fs-18">verified_user</span> ' + m.submitBtnText;
         btn.disabled = false;
       }
     }

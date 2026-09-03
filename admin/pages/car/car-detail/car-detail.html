@@ -23,7 +23,7 @@
     <div class="content">
 
       <!-- BACK BUTTON -->
-      <div style="margin-bottom: 20px;">
+      <div class="mb-20">
         <button class="btn-back" data-navigate="../cars.html">
           <span class="material-icons-round">arrow_back</span>
           <span data-key="cd_back">Back to Cars</span>
@@ -39,9 +39,8 @@
               <!-- Main Image -->
               <img id="cd-main-img"
                 src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg"
-                alt="Car Preview" style="display:none;" />
-              <span id="cd-img-fallback" class="material-icons-round"
-                style="font-size:80px;color:var(--primary);opacity:0.5;">directions_car</span>
+                alt="Car Preview" class="hidden" />
+              <span id="cd-img-fallback" class="material-icons-round cd-img-fallback-icon">directions_car</span>
             </div>
             <!-- Thumbnail Strip -->
             <div id="cd-thumbnails" class="car-thumbnails"></div>
@@ -49,11 +48,11 @@
 
           <!-- Car Overview -->
           <div class="car-hero-info">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;">
-              <h1 id="cd-name" style="font-size:26px;font-weight:700;color:var(--text-primary);margin:0;">--</h1>
+            <div class="flex-center gap-12 mb-8 flex-wrap">
+              <h1 id="cd-name" class="fs-26 fw-700 text-primary m-0">--</h1>
               <span class="status-badge" id="cd-status">--</span>
             </div>
-            <p style="color:var(--text-tertiary);font-size:14px;font-weight:600;margin:0 0 18px;" id="cd-plate-type">--</p>
+            <p class="cd-plate-type" id="cd-plate-type">--</p>
 
             <div class="car-quick-stats">
               <div class="cq-stat">
@@ -79,15 +78,15 @@
               </div>
             </div>
 
-            <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:18px;border-top:1px solid var(--border-subtle);">
-              <div style="font-size:26px;font-weight:800;color:var(--primary);" id="cd-rate">--</div>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <div class="cd-rate-row border-top-subtle">
+              <div class="fs-26 fw-800 text-primary-accent" id="cd-rate">--</div>
+              <div class="flex-center gap-10 flex-wrap">
                 <button class="btn-outline-sm" onclick="updateStatus()">
-                  <span class="material-icons-round" style="font-size:15px">sync</span>
+                  <span class="material-icons-round fs-15">sync</span>
                   <span>Update Status</span>
                 </button>
                 <button class="btn-primary-sm" onclick="editDetails()">
-                  <span class="material-icons-round" style="font-size:15px">edit</span>
+                  <span class="material-icons-round fs-15">edit</span>
                   <span>Edit Details</span>
                 </button>
               </div>
@@ -97,31 +96,31 @@
       </div>
 
       <!-- BOOKING CALENDAR (Apple HIG Graphical Date Picker) -->
-      <div class="card reveal-on-scroll" style="margin-top:24px; border-radius:24px; padding:26px 28px;">
+      <div class="card reveal-on-scroll cd-cal-card">
         <div class="cal-apple-header">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <span class="material-icons-round" style="font-size:22px; color:var(--primary);">calendar_month</span>
-              <span id="cal-month-label" style="font-size:18px; font-weight:700; color:var(--text-primary); letter-spacing:-0.3px;">--</span>
+          <div class="flex-center gap-12">
+            <div class="flex-center gap-8">
+              <span class="material-icons-round fs-22 text-primary-accent">calendar_month</span>
+              <span id="cal-month-label" class="fs-18 fw-700 text-primary">--</span>
             </div>
             <button class="cal-today-pill" onclick="calendarToday()" title="Jump to Current Month">
               Today
             </button>
           </div>
-          <div style="display:flex; align-items:center; gap:8px;">
+          <div class="flex-center gap-8">
             <div class="cal-nav-group">
               <button class="cal-nav-btn" onclick="calendarPrev()" id="cal-prev-btn" title="Previous Month" aria-label="Previous Month">
-                <span class="material-icons-round" style="font-size:18px;">chevron_left</span>
+                <span class="material-icons-round fs-18">chevron_left</span>
               </button>
               <button class="cal-nav-btn" onclick="calendarNext()" id="cal-next-btn" title="Next Month" aria-label="Next Month">
-                <span class="material-icons-round" style="font-size:18px;">chevron_right</span>
+                <span class="material-icons-round fs-18">chevron_right</span>
               </button>
             </div>
           </div>
         </div>
 
-        <p style="font-size:12.5px; color:var(--text-tertiary); margin:0 0 16px; display:flex; align-items:center; gap:6px;">
-          <span class="material-icons-round" style="font-size:16px; color:var(--primary);">info</span>
+        <p class="cd-cal-hint">
+          <span class="material-icons-round fs-16 text-primary-accent">info</span>
           Pilih mana-mana tarikh pada kalendar untuk melihat maklumat ketersediaan atau butiran tempahan.
         </p>
 
@@ -148,28 +147,28 @@
         </div>
 
         <!-- Selected day info / Booking summary -->
-        <div id="cal-day-info" class="cal-day-info" style="display:none;"></div>
+        <div id="cal-day-info" class="cal-day-info hidden"></div>
       </div>
 
       <!-- BOOKING HISTORY -->
-      <div class="card reveal-on-scroll" style="margin-top:24px; border-radius:22px; padding:0; overflow:hidden;">
-        <div class="card-header" style="padding:20px 24px; border-bottom:1px solid var(--border-subtle); margin:0;">
-          <h3 style="display:flex; align-items:center; gap:8px; font-size:17px; font-weight:700; color:var(--text-primary); margin:0;">
-            <span class="material-icons-round" style="font-size:20px; color:var(--primary);">history</span>
+      <div class="card reveal-on-scroll cd-history-card">
+        <div class="card-header cd-history-header border-bottom-subtle">
+          <h3 class="flex-center gap-8 fs-17 fw-700 text-primary m-0">
+            <span class="material-icons-round fs-20 text-primary-accent">history</span>
             <span>Booking History</span>
           </h3>
         </div>
-        <div style="overflow-x:auto;">
-          <table style="width:100%; border-collapse:collapse; text-align:left;">
+        <div class="table-responsive">
+          <table class="car-admin-table">
             <thead>
-              <tr style="background:var(--bg-surface-2); border-bottom:1px solid var(--border-subtle);">
-                <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;">Booking ID</th>
-                <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;">Customer</th>
-                <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;">Pick-up</th>
-                <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;">Return</th>
-                <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;">Days</th>
-                <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;">Total</th>
-                <th style="padding:14px 20px; font-size:12px; font-weight:700; text-transform:uppercase; color:var(--text-tertiary); letter-spacing:0.5px;">Status</th>
+              <tr class="car-table-header-row">
+                <th class="car-th">Booking ID</th>
+                <th class="car-th">Customer</th>
+                <th class="car-th">Pick-up</th>
+                <th class="car-th">Return</th>
+                <th class="car-th">Days</th>
+                <th class="car-th">Total</th>
+                <th class="car-th">Status</th>
               </tr>
             </thead>
             <tbody id="cd-bookings-tbody"></tbody>
@@ -178,41 +177,41 @@
       </div>
 
       <!-- QUICK ACTIONS -->
-      <div class="stats-grid reveal-on-scroll" style="grid-template-columns:repeat(2,1fr);margin-top:24px;gap:20px;">
-        <div class="card" style="padding:24px;text-align:center;cursor:pointer;border-radius:20px;" onclick="viewInsurance()">
-          <div style="width:48px;height:48px;border-radius:50%;background:rgba(0,113,227,0.12);color:var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
-            <span class="material-icons-round" style="font-size:26px;">verified_user</span>
+      <div class="stats-grid reveal-on-scroll grid-2col mt-24 gap-20">
+        <div class="card cd-action-card" onclick="viewInsurance()">
+          <div class="cd-icon-circle blue">
+            <span class="material-icons-round fs-26">verified_user</span>
           </div>
-          <h4 style="font-size:15px;font-weight:700;color:var(--text-primary);margin:0 0 4px;">Insurance Info</h4>
-          <p style="font-size:12.5px;color:var(--text-tertiary);margin:0;">View coverage & policy details</p>
+          <h4 class="fs-15 fw-700 text-primary mb-4 m-0">Insurance Info</h4>
+          <p class="fs-12 text-muted m-0">View coverage & policy details</p>
         </div>
-        <div class="card" style="padding:24px;text-align:center;cursor:pointer;border-radius:20px;" onclick="deleteCar()">
-          <div style="width:48px;height:48px;border-radius:50%;background:rgba(239,68,68,0.12);color:#EF4444;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
-            <span class="material-icons-round" style="font-size:26px;">delete_forever</span>
+        <div class="card cd-action-card" onclick="deleteCar()">
+          <div class="cd-icon-circle red">
+            <span class="material-icons-round fs-26">delete_forever</span>
           </div>
-          <h4 style="font-size:15px;font-weight:700;color:#EF4444;margin:0 0 4px;">Remove Vehicle</h4>
-          <p style="font-size:12.5px;color:var(--text-tertiary);margin:0;">Decommission car from system</p>
+          <h4 class="fs-15 fw-700 text-danger mb-4 m-0">Remove Vehicle</h4>
+          <p class="fs-12 text-muted m-0">Decommission car from system</p>
         </div>
       </div>
 
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 32px;"></div>
+      <div id="footer-placeholder" class="mt-32"></div>
     </div>
   </main>
 
   <!-- EDIT VEHICLE MODAL (POPUP) -->
-  <div class="modal-overlay" id="edit-car-modal" style="display:none;" onclick="if(event.target===this)closeEditCarModal()">
-    <div class="modal-container" style="width:100%;max-width:680px;max-height:90vh;overflow-y:auto;" role="dialog" aria-modal="true">
-      <div class="modal-header" style="border-bottom:1px solid var(--border-subtle);padding-bottom:16px;">
-        <h3 style="display:flex;align-items:center;gap:8px;color:var(--text-primary);font-size:18px;font-weight:700;margin:0;">
-          <span class="material-icons-round" style="font-size:22px;color:var(--primary);">edit_note</span>
+  <div class="modal-overlay hidden" id="edit-car-modal" onclick="if(event.target===this)closeEditCarModal()">
+    <div class="modal-container modal-edit-car" role="dialog" aria-modal="true">
+      <div class="modal-header border-bottom-subtle pb-16">
+        <h3 class="flex-center gap-8 text-primary fs-18 fw-700 m-0">
+          <span class="material-icons-round fs-22 text-primary-accent">edit_note</span>
           <span data-key="cd_edit_modal_title">Edit Vehicle Details</span>
         </h3>
         <button class="modal-close-btn" onclick="closeEditCarModal()">
           <span class="material-icons-round">close</span>
         </button>
       </div>
-      <div class="modal-body" style="padding:20px 0 0;">
+      <div class="modal-body pt-20">
         <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
           <div class="form-group">
             <label data-key="cd_edit_name">Vehicle Name</label>
@@ -253,7 +252,7 @@
             <label data-key="cd_edit_rate">Daily Rate (RM)</label>
             <input type="number" id="edit-rate" required />
           </div>
-          <div class="form-group" style="grid-column:1/-1;">
+          <div class="form-group col-span-full">
             <label data-key="cd_edit_seats">Seats</label>
             <select id="edit-seats">
               <option value="2">2 Seats</option>
@@ -265,28 +264,26 @@
             </select>
           </div>
           <!-- Image Management -->
-          <div style="grid-column:1/-1;margin-top:4px;">
-            <label
-              style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-tertiary);letter-spacing:0.5px;margin-bottom:10px;display:block;">
+          <div class="col-span-full mt-4">
+            <label class="edit-photos-label">
               Vehicle Photos (max 10)
             </label>
             <div id="edit-images-grid" class="edit-images-grid"></div>
-            <div style="margin-top:12px; display:flex; align-items:center; gap:10px;">
-              <label for="edit-image-upload" class="btn-outline-sm"
-                style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
-                <span class="material-icons-round" style="font-size:16px;">add_photo_alternate</span>
+            <div class="mt-12 flex-center gap-10">
+              <label for="edit-image-upload" class="btn-outline-sm cursor-pointer flex-center gap-6">
+                <span class="material-icons-round fs-16">add_photo_alternate</span>
                 Add Photo
               </label>
-              <input type="file" id="edit-image-upload" accept="image/*" multiple style="display:none;"
+              <input type="file" id="edit-image-upload" accept="image/*" multiple class="hidden"
                 onchange="handleImageUpload(event)" />
-              <span style="font-size:12px;color:var(--text-tertiary);" id="img-count-label">0/10 photos</span>
+              <span class="fs-12 text-muted" id="img-count-label">0/10 photos</span>
             </div>
           </div>
 
-          <div style="grid-column:1/-1;display:flex;gap:12px;justify-content:flex-end;margin-top:16px;padding-top:18px;border-top:1px solid var(--border-subtle);">
+          <div class="col-span-full flex-end gap-12 mt-16 pt-18 border-top-subtle">
             <button type="button" class="btn-outline-sm" onclick="closeEditCarModal()">Cancel</button>
-            <button type="submit" class="btn-primary-sm" style="padding:0 24px;">
-              <span class="material-icons-round" style="font-size:14px">save</span> Save Changes
+            <button type="submit" class="btn-primary-sm px-24">
+              <span class="material-icons-round fs-14">save</span> Save Changes
             </button>
           </div>
         </form>
@@ -295,22 +292,22 @@
   </div>
 
   <!-- SYSTEM STATUS MODAL -->
-  <div class="modal-overlay" id="status-redirect-modal" style="display:none">
-    <div class="modal-container" style="width:100%;max-width:480px">
-      <div class="modal-header" style="border-bottom:1px solid var(--border-subtle);padding-bottom:14px;">
-        <h3 style="display:flex;align-items:center;gap:8px;color:var(--text-primary);">
-          <span class="material-icons-round" style="font-size:22px;color:#F59E0B;">warning</span>
+  <div class="modal-overlay hidden" id="status-redirect-modal">
+    <div class="modal-container max-w-480">
+      <div class="modal-header border-bottom-subtle pb-14">
+        <h3 class="flex-center gap-8 text-primary">
+          <span class="material-icons-round fs-22 text-amber">warning</span>
           <span>System Managed Status</span>
         </h3>
         <button class="modal-close-btn" onclick="closeStatusRedirectModal()">
           <span class="material-icons-round">close</span>
         </button>
       </div>
-      <div class="modal-body" style="padding:20px 0 0;">
-        <p id="status-modal-desc" style="font-size:13.5px;line-height:1.6;color:var(--text-secondary);margin:0 0 24px;">
+      <div class="modal-body pt-20">
+        <p id="status-modal-desc" class="status-modal-desc">
           Vehicle status is automatically managed by booking records and cannot be updated manually.
         </p>
-        <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <div class="flex-end gap-12">
           <button class="btn-outline-sm" onclick="closeStatusRedirectModal()">Cancel</button>
           <button class="btn-primary-sm" id="status-modal-action-btn"></button>
         </div>
@@ -319,24 +316,24 @@
   </div>
 
   <!-- REMOVE PHOTO CONFIRMATION MODAL -->
-  <div class="modal-overlay" id="remove-photo-modal" style="display:none;" onclick="if(event.target===this)closeRemovePhotoModal()">
-    <div class="modal-container" style="width:100%;max-width:400px;" role="dialog" aria-modal="true">
-      <div style="text-align:center;padding:8px 0 16px;">
-        <span class="material-icons-round" style="font-size:48px;color:#EF4444;display:block;margin-bottom:12px;">delete_outline</span>
-        <h3 style="font-size:18px;font-weight:700;color:var(--text-primary);margin:0 0 8px;">Remove Photo?</h3>
-        <p style="font-size:13.5px;color:var(--text-tertiary);margin:0;">This photo will be removed from the vehicle. You can add new photos anytime.</p>
+  <div class="modal-overlay hidden" id="remove-photo-modal" onclick="if(event.target===this)closeRemovePhotoModal()">
+    <div class="modal-container max-w-400" role="dialog" aria-modal="true">
+      <div class="py-8-16">
+        <span class="material-icons-round fs-48 text-danger block mb-12">delete_outline</span>
+        <h3 class="fs-18 fw-700 text-primary mb-8 m-0">Remove Photo?</h3>
+        <p class="fs-13 text-muted m-0">This photo will be removed from the vehicle. You can add new photos anytime.</p>
       </div>
-      <div style="display:flex;gap:12px;justify-content:center;margin-top:12px;">
-        <button class="btn-outline-sm" onclick="closeRemovePhotoModal()" style="padding:0 20px;">Cancel</button>
-        <button class="btn-primary-sm" id="remove-photo-confirm-btn" onclick="confirmRemovePhoto()" style="padding:0 20px;background:#EF4444;border-color:#EF4444;">
-          <span class="material-icons-round" style="font-size:14px;">delete</span> Remove
+      <div class="flex-center gap-12 mt-12">
+        <button class="btn-outline-sm px-20" onclick="closeRemovePhotoModal()">Cancel</button>
+        <button class="btn-primary-sm btn-remove-photo px-20" id="remove-photo-confirm-btn" onclick="confirmRemovePhoto()">
+          <span class="material-icons-round fs-14">delete</span> Remove
         </button>
       </div>
     </div>
   </div>
 
 
-  <div class="modal-overlay delete-modal-overlay" id="delete-car-modal" style="display:none">
+  <div class="modal-overlay delete-modal-overlay hidden" id="delete-car-modal">
     <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
       <!-- Header Icon (Red Warning) -->
       <div class="delete-modal-icon-container">
@@ -360,7 +357,7 @@
             <span class="material-icons-round">lock</span>
             <input type="password" id="delete-admin-password" data-key-ph="cd_delete_modal_pwd_ph" placeholder="Enter password to confirm" required />
           </div>
-          <div id="delete-modal-error" class="delete-modal-error" style="display:none;"></div>
+          <div id="delete-modal-error" class="delete-modal-error hidden"></div>
         </div>
         
         <!-- Actions Row -->

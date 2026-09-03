@@ -36,7 +36,7 @@
       <div class="header-action reveal-on-scroll">
         <div>
           <h1 data-key="mkt_title">Marketing</h1>
-          <p class="subtitle" data-key="mkt_subtitle" style="margin-top: 4px; color: var(--text-muted);">Manage banners, promo codes, and seasonal pricing</p>
+          <p class="subtitle mt-4 text-muted" data-key="mkt_subtitle">Manage banners, promo codes, and seasonal pricing</p>
         </div>
       </div>
 
@@ -83,16 +83,16 @@
       <!-- Tabs (reuse filter-chip from admin.css) -->
       <div class="mkt-tabs reveal-up">
         <button class="filter-chip active" id="tab-banners" onclick="switchTab('banners')">
-          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">campaign</span><span data-key="mkt_btn_banners">Banners</span>
+          <span class="material-icons-round fs-16 va-middle mr-4">campaign</span><span data-key="mkt_btn_banners">Banners</span>
         </button>
         <button class="filter-chip" id="tab-promos" onclick="switchTab('promos')">
-          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">confirmation_number</span><span data-key="mkt_btn_promos">Promo Codes</span>
+          <span class="material-icons-round fs-16 va-middle mr-4">confirmation_number</span><span data-key="mkt_btn_promos">Promo Codes</span>
         </button>
         <button class="filter-chip" id="tab-seasonal" onclick="switchTab('seasonal')">
-          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">event</span><span data-key="mkt_btn_seasonal">Seasonal Pricing</span>
+          <span class="material-icons-round fs-16 va-middle mr-4">event</span><span data-key="mkt_btn_seasonal">Seasonal Pricing</span>
         </button>
         <button class="filter-chip" id="tab-ai" onclick="switchTab('ai')">
-          <span class="material-icons-round" style="font-size:16px;vertical-align:middle;margin-right:4px">auto_awesome</span>AI Suggestions
+          <span class="material-icons-round fs-16 va-middle mr-4">auto_awesome</span>AI Suggestions
         </button>
       </div>
 
@@ -149,7 +149,7 @@
               <p class="helper-text">Dapatkan free key di <a href="https://aistudio.google.com" target="_blank" rel="noopener noreferrer">aistudio.google.com</a> &bull; Gemini 2.5 Flash percuma</p>
             </div>
           </div>
-          <div id="ai-key-status" style="margin-top:10px;font-size:12px;display:none;"></div>
+          <div id="ai-key-status" class="mt-10 fs-12 hidden"></div>
         </div>
 
         <!-- AI Suggestion Generator -->
@@ -187,7 +187,7 @@
           </button>
 
           <!-- Output -->
-          <div id="ai-output-wrapper" class="mkt-output-wrapper" style="display:none;">
+          <div id="ai-output-wrapper" class="mkt-output-wrapper hidden">
             <div class="mkt-output-header">
               <div class="mkt-output-title">
                 <span class="material-icons-round">auto_awesome</span>
@@ -199,10 +199,10 @@
             </div>
             <div id="ai-output" class="mkt-output-box"></div>
             <!-- Interactive Action Cards -->
-            <div id="ai-suggestions-container" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;"></div>
+            <div id="ai-suggestions-container" class="ai-suggestions-grid"></div>
           </div>
 
-          <div id="ai-error" class="mkt-error-box" style="display:none;"></div>
+          <div id="ai-error" class="mkt-error-box hidden"></div>
         </div>
 
       </div><!-- /section-ai -->
@@ -211,11 +211,11 @@
   </main>
 
   <!-- BANNER MODAL (reuse modal-overlay, modal-container, modal-header, modal-body from admin.css) -->
-  <div class="modal-overlay" id="modal-banner" style="display:none">
-    <div class="modal-container" style="width:100%;max-width:520px">
+  <div class="modal-overlay hidden" id="modal-banner">
+    <div class="modal-container max-w-520">
       <div class="modal-header">
         <h3 id="modal-banner-title">
-          <span class="material-icons-round" style="color:var(--primary);margin-right:8px;font-size:22px">campaign</span>
+          <span class="material-icons-round text-primary-accent mr-8 fs-22">campaign</span>
           Add Banner
         </h3>
         <button class="modal-close-btn" onclick="closeModal('banner')">
@@ -224,15 +224,15 @@
       </div>
       <input type="hidden" id="banner-edit-id" />
       <div class="modal-body">
-        <div class="form-group" style="margin-bottom:16px">
+        <div class="form-group mb-16">
           <label>Banner Title</label>
           <input type="text" class="form-input" id="banner-title" placeholder="e.g. Raya Special Offer!" />
         </div>
-        <div class="form-group" style="margin-bottom:16px">
+        <div class="form-group mb-16">
           <label>Message</label>
-          <textarea class="form-input" id="banner-message" rows="3" placeholder="Promo details shown to customers..." style="resize:vertical"></textarea>
+          <textarea class="form-input resize-v" id="banner-message" rows="3" placeholder="Promo details shown to customers..."></textarea>
         </div>
-        <div class="form-grid" style="margin-bottom:16px">
+        <div class="form-grid mb-16">
           <div class="form-group">
             <label>Start Date</label>
             <input type="text" class="form-input date-picker" id="banner-start" placeholder="DD/MM/YYYY" readonly />
@@ -242,7 +242,7 @@
             <input type="text" class="form-input date-picker" id="banner-end" placeholder="DD/MM/YYYY" readonly />
           </div>
         </div>
-        <div class="form-group" style="margin-bottom:16px">
+        <div class="form-group mb-16">
           <label>Banner Color</label>
           <input type="color" class="form-color-input" id="banner-color" value="#3B82F6" />
         </div>
@@ -257,18 +257,18 @@
       <div class="modal-footer">
         <button class="btn-back" onclick="closeModal('banner')" data-key="mkt_btn_cancel">Cancel</button>
         <button class="btn-primary-sm" onclick="saveBanner()">
-          <span class="material-icons-round" style="font-size:16px">save</span> <span data-key="mkt_btn_save">Save</span>
+          <span class="material-icons-round fs-16">save</span> <span data-key="mkt_btn_save">Save</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- PROMO CODE MODAL -->
-  <div class="modal-overlay" id="modal-promo" style="display:none">
-    <div class="modal-container" style="width:100%;max-width:520px">
+  <div class="modal-overlay hidden" id="modal-promo">
+    <div class="modal-container max-w-520">
       <div class="modal-header">
         <h3 id="modal-promo-title">
-          <span class="material-icons-round" style="color:var(--primary);margin-right:8px;font-size:22px">local_offer</span>
+          <span class="material-icons-round text-primary-accent mr-8 fs-22">local_offer</span>
           Add Promo Code
         </h3>
         <button class="modal-close-btn" onclick="closeModal('promo')">
@@ -277,17 +277,17 @@
       </div>
       <input type="hidden" id="promo-edit-id" />
       <div class="modal-body">
-        <div class="form-grid" style="margin-bottom:16px">
+        <div class="form-grid mb-16">
           <div class="form-group">
             <label>Promo Code</label>
-            <input type="text" class="form-input" id="promo-code" placeholder="e.g. MELAKA20" style="text-transform:uppercase" />
+            <input type="text" class="form-input uppercase" id="promo-code" placeholder="e.g. MELAKA20" />
           </div>
           <div class="form-group">
             <label>Discount Value</label>
             <input type="number" class="form-input" id="promo-discount" placeholder="20" min="1" max="100" />
           </div>
         </div>
-        <div class="form-grid" style="margin-bottom:16px">
+        <div class="form-grid mb-16">
           <div class="form-group">
             <label>Discount Type</label>
             <select class="form-input" id="promo-type">
@@ -300,7 +300,7 @@
             <input type="number" class="form-input" id="promo-limit" placeholder="100" min="1" />
           </div>
         </div>
-        <div class="form-group" style="margin-bottom:16px">
+        <div class="form-group mb-16">
           <label>Expiry Date</label>
           <input type="text" class="form-input date-picker" id="promo-expiry" placeholder="DD/MM/YYYY" readonly />
         </div>
@@ -315,18 +315,18 @@
       <div class="modal-footer">
         <button class="btn-back" onclick="closeModal('promo')" data-key="mkt_btn_cancel">Cancel</button>
         <button class="btn-primary-sm" onclick="savePromo()">
-          <span class="material-icons-round" style="font-size:16px">save</span> <span data-key="mkt_btn_save">Save</span>
+          <span class="material-icons-round fs-16">save</span> <span data-key="mkt_btn_save">Save</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- SEASONAL PRICING MODAL -->
-  <div class="modal-overlay" id="modal-seasonal" style="display:none">
-    <div class="modal-container" style="width:100%;max-width:520px">
+  <div class="modal-overlay hidden" id="modal-seasonal">
+    <div class="modal-container max-w-520">
       <div class="modal-header">
         <h3 id="modal-seasonal-title">
-          <span class="material-icons-round" style="color:var(--primary);margin-right:8px;font-size:22px">event</span>
+          <span class="material-icons-round text-primary-accent mr-8 fs-22">event</span>
           Add Seasonal Rate
         </h3>
         <button class="modal-close-btn" onclick="closeModal('seasonal')">
@@ -335,11 +335,11 @@
       </div>
       <input type="hidden" id="seasonal-edit-id" />
       <div class="modal-body">
-        <div class="form-group" style="margin-bottom:16px">
+        <div class="form-group mb-16">
           <label>Event Name</label>
           <input type="text" class="form-input" id="seasonal-name" placeholder="e.g. Hari Raya, School Holiday" />
         </div>
-        <div class="form-grid" style="margin-bottom:16px">
+        <div class="form-grid mb-16">
           <div class="form-group">
             <label>Start Date</label>
             <input type="text" class="form-input date-picker" id="seasonal-start" placeholder="DD/MM/YYYY" readonly />
@@ -349,7 +349,7 @@
             <input type="text" class="form-input date-picker" id="seasonal-end" placeholder="DD/MM/YYYY" readonly />
           </div>
         </div>
-        <div class="form-grid" style="margin-bottom:16px">
+        <div class="form-grid mb-16">
           <div class="form-group">
             <label>Price Direction</label>
             <select class="form-input" id="seasonal-direction">
@@ -373,7 +373,7 @@
       <div class="modal-footer">
         <button class="btn-back" onclick="closeModal('seasonal')" data-key="mkt_btn_cancel">Cancel</button>
         <button class="btn-primary-sm" onclick="saveSeasonal()">
-          <span class="material-icons-round" style="font-size:16px">save</span> <span data-key="mkt_btn_save">Save</span>
+          <span class="material-icons-round fs-16">save</span> <span data-key="mkt_btn_save">Save</span>
         </button>
       </div>
     </div>

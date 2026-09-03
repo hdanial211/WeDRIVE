@@ -278,19 +278,19 @@
             <button type="button" class="promo-btn" onclick="applyPromo(this)">Apply</button>
           </div>
 
-          <div class="summary-row" id="checkout-tax-row" style="display: none;"><span>Tax (0%)</span><span class="amount">RM 0.00</span></div>
+          <div class="summary-row hidden" id="checkout-tax-row"><span>Tax (0%)</span><span class="amount">RM 0.00</span></div>
           <div class="summary-row" id="checkout-deposit-row"><span>Refundable deposit</span><span class="amount">RM 0.00</span></div>
 
           <!-- Payment Type Selector -->
-          <div id="checkout-payment-type" style="margin:12px 0;background:var(--bg-surface-2,#F1F5F9);border-radius:12px;padding:4px;display:flex;gap:4px;">
-            <button type="button" id="ptype-full" onclick="selectPaymentType('full')" style="flex:1;padding:9px 6px;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:#3B82F6;color:#fff;">
-              <span class="material-icons-round" style="font-size:14px;vertical-align:middle">payments</span> Full Payment
+          <div id="checkout-payment-type" class="checkout-ptype-toggle">
+            <button type="button" id="ptype-full" onclick="selectPaymentType('full')" class="ptype-btn active">
+              <span class="material-icons-round fs-14 va-middle">payments</span> Full Payment
             </button>
-            <button type="button" id="ptype-deposit" onclick="selectPaymentType('deposit')" style="flex:1;padding:9px 6px;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--slate-500,#64748B);">
-              <span class="material-icons-round" style="font-size:14px;vertical-align:middle">savings</span> Deposit Only
+            <button type="button" id="ptype-deposit" onclick="selectPaymentType('deposit')" class="ptype-btn">
+              <span class="material-icons-round fs-14 va-middle">savings</span> Deposit Only
             </button>
           </div>
-          <div id="checkout-balance-row" style="display:none;" class="summary-row"><span style="color:#D97706">Balance on pickup</span><span class="amount" style="color:#D97706">RM 0.00</span></div>
+          <div id="checkout-balance-row" class="summary-row hidden"><span class="text-amber">Balance on pickup</span><span class="amount text-amber">RM 0.00</span></div>
           <div class="summary-row total" id="checkout-total-row"><span>Total due today</span><span class="amount">RM 0.00</span></div>
 
           <button type="button" class="btn-pay" id="btn-pay" onclick="completePayment()">
@@ -301,7 +301,7 @@
         </aside>
       </div>
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 48px;"></div>
+      <div id="footer-placeholder" class="mt-48"></div>
     </div>
   </main>
 

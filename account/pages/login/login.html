@@ -329,7 +329,7 @@
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
       var btn = document.getElementById('login-btn');
-      btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Signing in...';
+      btn.innerHTML = '<span class="material-icons-round fs-18 spin-icon">refresh</span> Signing in...';
       btn.disabled = true;
 
       try {
@@ -383,13 +383,13 @@
           }
         } else {
           alert(response.error || 'Login failed. Please check your credentials.');
-          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
+          btn.innerHTML = '<span class="material-icons-round fs-18">login</span><span data-key="login_btn">Sign In</span>';
           btn.disabled = false;
         }
       } catch (err) {
         console.error('Login error:', err);
         alert('An error occurred during login.');
-        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
+        btn.innerHTML = '<span class="material-icons-round fs-18">login</span><span data-key="login_btn">Sign In</span>';
         btn.disabled = false;
       }
     }
@@ -431,7 +431,7 @@
 
       var btn = document.getElementById('login-btn');
       if (btn) {
-        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">login</span><span data-key="login_btn">Sign In</span>';
+        btn.innerHTML = '<span class="material-icons-round fs-18">login</span><span data-key="login_btn">Sign In</span>';
         btn.disabled = false;
       }
       var gBtn = document.getElementById('google-login-btn');

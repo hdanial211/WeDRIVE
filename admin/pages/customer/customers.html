@@ -20,7 +20,7 @@
 
     <div class="content">
       <!-- STATS -->
-      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="stats-grid grid-4col">
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="cu_stat_total">Total Customers</div>
@@ -45,31 +45,31 @@
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label" data-key="cu_stat_spent">Total Spent</div>
-            <div class="value" id="cu-spent" style="font-size:24px">--</div>
+            <div class="value fs-24" id="cu-spent">--</div>
           </div>
           <div class="stat-icon purple"><span class="material-icons-round">payments</span></div>
         </div>
       </div>
 
       <!-- SEARCH -->
-      <div class="card reveal-on-scroll" style="margin-bottom:20px; padding:16px 22px;">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-          <div class="input-wrap-sm" style="flex:1; max-width:360px;">
-            <span class="material-icons-round" style="font-size:18px">search</span>
+      <div class="card reveal-on-scroll mb-20 px-22 py-16">
+        <div class="flex-between flex-center gap-12">
+          <div class="input-wrap-sm input-search-customer">
+            <span class="material-icons-round fs-18">search</span>
             <input type="text" id="cu-search" placeholder="Search by name, email or phone..." oninput="searchCustomers(this.value)" />
           </div>
         </div>
       </div>
 
       <!-- PENDING VERIFICATIONS CARD -->
-      <div class="card reveal-on-scroll" id="pending-verifications-card" style="margin-bottom:20px; display:none; border:1px solid #FCD34D;">
-        <div class="card-header" style="border-bottom:1px solid var(--slate-100); padding-bottom:12px; margin-bottom:14px;">
-          <h3 style="color:#D97706; display:flex; align-items:center; gap:8px;">
+      <div class="card reveal-on-scroll pending-verifications-card hidden" id="pending-verifications-card">
+        <div class="card-header border-bottom-subtle pb-12 mb-14">
+          <h3 class="flex-center gap-8 text-amber">
             <span class="material-icons-round">pending_actions</span>
             <span>Pending Verifications</span>
           </h3>
         </div>
-        <div style="overflow-x:auto;">
+        <div class="table-responsive">
           <table>
             <thead>
               <tr>
@@ -91,7 +91,7 @@
         <div class="card-header">
           <h3 data-key="cu_table_title">Customer Records</h3>
         </div>
-        <div style="overflow-x:auto;">
+        <div class="table-responsive">
           <table>
             <thead>
               <tr>
@@ -112,7 +112,7 @@
       </div>
 
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 32px;"></div>
+      <div id="footer-placeholder" class="mt-32"></div>
     </div>
   </main>
 

@@ -23,58 +23,58 @@
 
     <div class="content">
       <!-- PAGE HEADER (simplified - no nav buttons here) -->
-      <div style="margin-bottom:24px">
-        <h1 style="font-size:24px;font-weight:700;color:var(--navy)" data-key="cal_title">Calendar Overview</h1>
-        <p style="font-size:13px;color:var(--slate-400);margin-top:4px" data-key="cal_subtitle">Monitor bookings, events and seasonal pricing at a glance</p>
+      <div class="mb-24">
+        <h1 class="fs-24 fw-700 text-primary-accent" data-key="cal_title">Calendar Overview</h1>
+        <p class="fs-13 text-muted mt-4" data-key="cal_subtitle">Monitor bookings, events and seasonal pricing at a glance</p>
       </div>
 
       <!-- STATS -->
-      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
-        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('bookings')" style="cursor:pointer">
+      <div class="stats-grid grid-4col mb-24">
+        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('bookings')">
           <div class="stat-info">
             <div class="label" data-key="cal_stat_bookings">Bookings This Month</div>
             <div class="value" id="cal-stat-bookings">0</div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">event_available</span></div>
         </div>
-        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('cars')" style="cursor:pointer">
+        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('cars')">
           <div class="stat-info">
             <div class="label" data-key="cal_stat_cars_rented">Cars Rented Today</div>
             <div class="value" id="cal-stat-rented">0</div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">directions_car</span></div>
         </div>
-        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('events')" style="cursor:pointer">
+        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('events')">
           <div class="stat-info">
             <div class="label" data-key="cal_stat_events">Active Events</div>
             <div class="value" id="cal-stat-events">0</div>
           </div>
           <div class="stat-icon purple"><span class="material-icons-round">celebration</span></div>
         </div>
-        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('revenue')" style="cursor:pointer">
+        <div class="stat-card reveal-onload cal-stat-clickable" onclick="showStatPopup('revenue')">
           <div class="stat-info">
             <div class="label" data-key="cal_stat_revenue">Revenue This Month</div>
-            <div class="value" id="cal-stat-revenue" style="font-size:24px">RM 0</div>
+            <div class="value fs-24" id="cal-stat-revenue">RM 0</div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">payments</span></div>
         </div>
       </div>
 
       <!-- STAT POPUP MODAL -->
-      <div class="cal-stat-modal-overlay" id="cal-stat-modal" style="display:none">
+      <div class="cal-stat-modal-overlay hidden" id="cal-stat-modal">
         <div class="cal-stat-modal">
           <div class="cal-stat-modal-header">
-            <h3 id="cal-stat-modal-title" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:var(--navy)"></h3>
+            <h3 id="cal-stat-modal-title" class="flex-center gap-8 fs-16 fw-700 text-primary-accent"></h3>
             <button class="modal-close-btn" id="cal-stat-modal-close">
               <span class="material-icons-round">close</span>
             </button>
           </div>
-          <div id="cal-stat-modal-body" style="padding:16px 20px 20px"></div>
+          <div id="cal-stat-modal-body" class="cal-stat-modal-body"></div>
         </div>
       </div>
 
       <!-- TOOLBAR: Navigation + Legend Filters (combined into one bar) -->
-      <div class="card reveal-on-scroll cal-toolbar" style="margin-bottom:20px;padding:14px 22px">
+      <div class="card reveal-on-scroll cal-toolbar mb-20 px-22 py-14">
         <div class="cal-toolbar-inner">
           <!-- LEFT: Navigation controls -->
           <div class="cal-nav-group">
@@ -134,7 +134,7 @@
       </div>
 
       <!-- CALENDAR GRID -->
-      <div class="card reveal-on-scroll" style="padding:0;overflow:hidden">
+      <div class="card reveal-on-scroll p-0 overflow-hidden">
         <!-- Day headers -->
         <div class="adm-cal-header">
           <div data-key="cal_sun">Sun</div>
@@ -150,14 +150,14 @@
       </div>
 
       <!-- DAY DETAIL MODAL (Premium Popup) -->
-      <div class="cal-day-modal-overlay" id="cal-detail-panel" style="display:none">
+      <div class="cal-day-modal-overlay hidden" id="cal-detail-panel">
         <div class="cal-day-modal">
           <div class="cal-day-modal-header" id="cal-detail-header">
             <div class="cal-day-modal-header-content">
               <div class="cal-day-modal-date" id="cal-detail-day-num"></div>
               <div>
-                <h3 id="cal-detail-title" style="margin:0;font-size:18px;font-weight:700;color:white"></h3>
-                <div id="cal-detail-subtitle" style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px"></div>
+                <h3 id="cal-detail-title" class="cal-detail-title"></h3>
+                <div id="cal-detail-subtitle" class="cal-detail-subtitle"></div>
               </div>
             </div>
             <button class="cal-day-modal-close" id="cal-detail-close">
@@ -169,7 +169,7 @@
       </div>
 
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 32px;"></div>
+      <div id="footer-placeholder" class="mt-32"></div>
     </div><!-- /content -->
   </main>
 

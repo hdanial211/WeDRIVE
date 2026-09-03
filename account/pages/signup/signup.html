@@ -17,7 +17,7 @@
 <body data-particles="10" data-cursor-glow>
   <!-- Left Panel -->
   <div class="left-panel">
-    <a href="../login/login.html" class="brand" style="text-decoration: none;">
+    <a href="../login/login.html" class="brand no-underline">
       <img src="../../../shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" class="brand-logo" />
       <div class="brand-text">
         <span class="we">We</span><span class="drive">DRIVE</span>
@@ -76,8 +76,8 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-primary" id="signup-btn" style="margin-top: 10px;">
-          <span class="material-icons-round" style="font-size:18px">person_add</span>
+        <button type="submit" class="btn-primary mt-10" id="signup-btn">
+          <span class="material-icons-round fs-18">person_add</span>
           <span data-key="signup_btn">Create Account</span>
         </button>
       </form>
@@ -97,7 +97,7 @@
       <!-- Continue as Guest -->
       <div class="guest-link">
         <a href="../../../index.html" class="btn-guest">
-          <span class="material-icons-round" style="font-size:18px">visibility</span>
+          <span class="material-icons-round fs-18">visibility</span>
           <span data-key="login_guest">Continue as Guest</span>
         </a>
       </div>
@@ -105,7 +105,7 @@
   </div>
 
   <!-- THEME + LANG ICON BUTTONS (fixed position) -->
-  <div style="position:fixed;top:16px;right:20px;z-index:9999;display:flex;align-items:center;gap:8px;">
+  <div class="top-fixed-actions">
     <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch to Bahasa Melayu">
       <span class="lang-text">MS</span>
     </button>
@@ -127,7 +127,7 @@
       }
 
       var btn = document.getElementById('signup-btn');
-      btn.innerHTML = '<span class="material-icons-round" style="font-size:18px;animation:spin 1s linear infinite">refresh</span> Creating...';
+      btn.innerHTML = '<span class="material-icons-round fs-18 spin-icon">refresh</span> Creating...';
       btn.disabled = true;
 
       try {
@@ -148,13 +148,13 @@
           window.location.href = '../welcome/welcome.html';
         } else {
           alert(response.error || 'Signup failed. Please try again.');
-          btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">person_add</span><span data-key="signup_btn">Create Account</span>';
+          btn.innerHTML = '<span class="material-icons-round fs-18">person_add</span><span data-key="signup_btn">Create Account</span>';
           btn.disabled = false;
         }
       } catch (err) {
         console.error('Signup error:', err);
         alert('An error occurred during sign up.');
-        btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">person_add</span><span data-key="signup_btn">Create Account</span>';
+        btn.innerHTML = '<span class="material-icons-round fs-18">person_add</span><span data-key="signup_btn">Create Account</span>';
         btn.disabled = false;
       }
     }

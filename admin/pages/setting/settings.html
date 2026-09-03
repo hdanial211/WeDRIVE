@@ -72,7 +72,7 @@
             <h3 data-key="st_rental_title">Rental Configuration</h3>
           </div>
           <div class="form-grid-custom">
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="grid-2col gap-16">
               <div class="form-group">
                 <label for="st-currency" data-key="st_currency">Currency</label>
                 <div class="input-wrap-sm">
@@ -89,7 +89,7 @@
               </div>
             </div>
             
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="grid-2col gap-16">
               <div class="form-group">
                 <label for="st-min-days" data-key="st_min_days">Min Rental Days</label>
                 <div class="input-wrap-sm">
@@ -106,7 +106,7 @@
               </div>
             </div>
 
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="grid-2col gap-16">
               <div class="form-group">
                 <label for="st-late-fee" data-key="st_late_fee">Late Fee (RM/hour)</label>
                 <div class="input-wrap-sm">
@@ -135,24 +135,24 @@
       </div>
 
       <!-- PICKUP LOCATIONS (Hidden by default or display:none, kept for compatibility) -->
-      <div class="settings-card reveal-on-scroll" style="margin-bottom:24px; display:none;">
+      <div class="settings-card reveal-on-scroll mb-24 hidden">
         <div class="settings-header">
           <span class="material-icons-round">location_on</span>
           <h3 data-key="st_locations_title">Pick-up Locations</h3>
         </div>
-        <div id="locations-list" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        <div id="locations-list" class="flex-wrap gap-10"></div>
       </div>
 
       <!-- SAVE BUTTON -->
-      <div class="reveal-on-scroll" style="display:flex; justify-content:flex-end; gap:12px; margin-top:16px;">
-        <button class="btn-primary-sm" onclick="saveSettings()" style="padding:14px 36px; font-size:14px; border-radius:12px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);">
-          <span class="material-icons-round" style="font-size:18px">save</span>
+      <div class="reveal-on-scroll flex-end gap-12 mt-16">
+        <button class="btn-primary-sm btn-save-settings" onclick="saveSettings()">
+          <span class="material-icons-round fs-18">save</span>
           <span data-key="st_save">Save Changes</span>
         </button>
       </div>
 
       <!-- FOOTER -->
-      <div id="footer-placeholder" style="margin-top: 32px;"></div>
+      <div id="footer-placeholder" class="mt-32"></div>
     </div>
   </main>
 

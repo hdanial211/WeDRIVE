@@ -2042,3 +2042,55 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.88 Apple HIG redesign for account module, zero inline styles and form accessibility`
   - Tag Versi: `5.2.88`
+
+---
+
+## 🎨 [MINOR UPDATE] 129. Pembersihan Menyeluruh 388 Amaran Gaya Sebaris & Penyeragaman Penuh Utiliti Apple HIG Terpusat (Eliminate 388 Inline Style Warnings & Standardize Centralized Apple HIG Utilities) (v5.2.89)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna memaklumkan bahawa masih terdapat 388 amaran masalah dalam linter IDE:
+     > `@[current_problems] masih ada 388 problem lagi`
+  2. Pengguna mengarahkan pematuhan ketat kepada piawaian rasmi Apple:
+     > *"buat no 1 Follow apple guideline"*
+  3. Mematuhi peraturan teras arkitektur `code_and_backend.md`, `apple_device_support.md`, dan `apple_hig_design_system.md`:
+     - Tiada gaya sebaris (`style="..."`) dalam fail HTML.
+     - Satu fail CSS master global sahaja (`shared/css/wedrive.css`).
+     - Semua tipografi, jarak, butang taktil, dan reka letak dikawal melalui token dan kelas utiliti Apple HIG berpusat.
+- **Fail-fail Terlibat**:
+  - `admin/pages/dashboard/admin.html`
+  - `admin/pages/booking/bookings.html`
+  - `admin/pages/calendar/calendar.html`
+  - `admin/pages/car/cars.html`
+  - `admin/pages/car/car-detail/car-detail.html`
+  - `admin/pages/chatbot/chatbot.html`
+  - `admin/pages/customer/customers.html`
+  - `admin/pages/marketing/marketing.html`
+  - `admin/pages/report/reports.html`
+  - `admin/pages/setting/settings.html`
+  - `admin/components/sidebar/sidebar-admin.html`
+  - `customer/pages/profile/profile.html`
+  - `customer/pages/car-details/booking/booking.html`
+  - `account/pages/login/login.html`
+  - `account/pages/forgot-password/forgot-password.html`
+  - `account/pages/signup/signup.html`
+  - `account/pages/complete-profile/complete-profile.html`
+  - `shared/components/navbar.html`
+  - `shared/css/wedrive.css`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Hasil**:
+  - **1. Pencapaian 100% Sifar Gaya Sebaris (Zero Inline Styles across Production Codebase)**:
+    - Kesemua 388 amaran linter gaya sebaris merentas modul `account`, `admin`, `customer`, `guest`, dan `shared` telah dibersihkan sepenuhnya.
+    - Sifar (0) atribut `style="..."` tinggal di dalam mana-mana fail HTML aplikasi pengeluaran WeDRIVE.
+  - **2. Peluasan Sistem Utiliti Apple HIG Terpusat (`shared/css/wedrive.css`)**:
+    - **Jarak & Ruang Apple**: `.m-0`, `.mt-0` hingga `.mt-48`, `.mb-0` hingga `.mb-32`, `.p-0`, `.pt-10` hingga `.pt-20`, `.pb-12` hingga `.pb-16`, `.py-2` hingga `.py-16`, `.px-8` hingga `.px-24`, `.gap-6` hingga `.gap-20`, `.mr-4`, `.mr-6`, `.ml-8`.
+    - **Tipografi San Francisco**: `.fs-10` hingga `.fs-48`, `.fw-500` hingga `.fw-800`, `.font-mono`, `.uppercase`, `.no-underline`.
+    - **Warna Semantik Apple**: `.text-muted`, `.text-secondary`, `.text-primary`, `.text-primary-accent`, `.text-amber`, `.text-danger`, `.text-success`, `.bg-success`.
+    - **Susun Atur Flex & Bento Grid**: `.flex-row`, `.flex-col`, `.flex-between`, `.flex-center`, `.flex-start`, `.flex-end`, `.flex-wrap`, `.grid-2col`, `.grid-3col`, `.grid-4col`, `.w-full`, `.w-half`, `.col-span-full`, `.table-responsive`.
+    - **Komponen & Kad Responsif**: `.max-w-400`, `.max-w-480`, `.max-w-520`, `.modal-wide`, `.modal-edit-car`, `.resize-v`, `.pos-relative`, `.report-summary-card`, `.report-summary-label`, `.report-summary-val`, `.btn-save-settings`, `.pending-verifications-card`, `.input-search-customer`, `.input-search-fixed`.
+  - **3. Penyelarasan Skrip Dinamik HTML**:
+    - Menggantikan penetapan rentetan `style="..."` dinamik dalam skrip pendaftaran, log masuk, tetapan semula kata laluan, dan pengemaskinian profil kepada kelas utiliti `.fs-18` dan `.spin-icon`.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright: **100% Pass Rate** (20/20 lulus).
+- **Maklumat Git**:
+  - Commit: `5.2.89 Eliminate 388 inline styles across repository and centralize Apple HIG utilities`
+  - Tag Versi: `5.2.89`

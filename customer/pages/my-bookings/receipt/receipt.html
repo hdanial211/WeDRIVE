@@ -21,7 +21,7 @@
       <!-- Apple Breadcrumb Navigation -->
       <nav class="receipt-breadcrumb-nav" aria-label="Breadcrumb">
         <a href="../../dashboard/customer.html" class="receipt-breadcrumb-link">
-          <span class="material-icons-round" style="font-size: 16px;">dashboard</span>
+          <span class="material-icons-round fs-16">dashboard</span>
           <span data-i18n="nav_dashboard">Dashboard</span>
         </a>
         <span class="material-icons-round receipt-breadcrumb-sep">chevron_right</span>
@@ -56,7 +56,7 @@
             
             <div class="receipt-status-badge-wrap">
               <div class="receipt-verified-seal" id="receipt-verified-badge">
-                <span class="material-icons-round" style="font-size: 15px;">check_circle</span>
+                <span class="material-icons-round fs-15">check_circle</span>
                 <span data-i18n="receipt_badge_paid">PAID IN FULL</span>
               </div>
             </div>
@@ -68,7 +68,7 @@
                 <span class="receipt-meta-field-val">
                   <span id="receipt-invoice-id">WD-INV-2026-08832</span>
                   <button type="button" class="receipt-copy-btn" id="receipt-copy-btn" title="Copy Invoice Number" aria-label="Copy Invoice Number">
-                    <span class="material-icons-round" style="font-size: 14px;">content_copy</span>
+                    <span class="material-icons-round fs-14">content_copy</span>
                   </button>
                 </span>
               </div>
@@ -123,7 +123,7 @@
                 <div class="receipt-party-row">
                   <span class="receipt-party-label">e-Invoice UUID</span>
                   <span class="receipt-party-colon">:</span>
-                  <strong class="receipt-party-val" style="font-family: var(--font-mono); font-size: 11px;">8942-eINV-20260901-77291</strong>
+                  <strong class="receipt-party-val font-mono fs-11">8942-eINV-20260901-77291</strong>
                 </div>
                 <div class="receipt-party-row">
                   <span class="receipt-party-label">Contact Helpline</span>
@@ -149,7 +149,7 @@
                 <div class="receipt-party-row">
                   <span class="receipt-party-label" data-i18n="receipt_cust_license">Driver's License</span>
                   <span class="receipt-party-colon">:</span>
-                  <strong class="receipt-party-val" id="receipt-cust-license" style="color: var(--primary);">D12345678 (Class D)</strong>
+                  <strong class="receipt-party-val text-primary-accent" id="receipt-cust-license">D12345678 (Class D)</strong>
                 </div>
                 <div class="receipt-party-row">
                   <span class="receipt-party-label" data-i18n="receipt_cust_email">Email Address</span>
@@ -170,7 +170,7 @@
           <div class="receipt-manifest-card">
             <div class="receipt-manifest-header">
               <span class="receipt-manifest-title-left">
-                <span class="material-icons-round" style="font-size: 18px;">directions_car</span>
+                <span class="material-icons-round fs-18">directions_car</span>
                 <span data-i18n="receipt_sec_vehicle">Vehicle Manifest & Deployment</span>
               </span>
               <span class="receipt-plate-capsule" id="receipt-car-plate">WDR 3388</span>
@@ -217,7 +217,7 @@
                 </div>
 
                 <div class="receipt-journey-node">
-                  <span class="receipt-node-dot" style="background: #34C759;"></span>
+                  <span class="receipt-node-dot bg-success"></span>
                   <div class="receipt-node-info">
                     <span class="receipt-node-title" data-i18n="receipt_return_time">Return Time & Hub</span>
                     <span class="receipt-node-time" id="receipt-return-datetime">31 Aug 2026, 10:00 AM</span>
@@ -231,7 +231,7 @@
           <!-- Statutory Itemized Accounting Table -->
           <div class="receipt-tax-table-wrapper">
             <div class="receipt-tax-table-title-bar">
-              <span class="material-icons-round" style="font-size: 16px; color: var(--primary);">receipt_long</span>
+              <span class="material-icons-round fs-16 text-primary-accent">receipt_long</span>
               <span data-i18n="receipt_sec_financial">Statutory Accounting & Itemized Tax Schedule</span>
             </div>
 
@@ -332,7 +332,7 @@
               <div class="receipt-grand-total-label-box">
                 <span class="receipt-grand-total-label" data-i18n="receipt_total_paid">GRAND TOTAL AMOUNT BILLED & PAID</span>
                 <span class="receipt-grand-total-status">
-                  <span class="material-icons-round" style="font-size: 16px;">check_circle</span>
+                  <span class="material-icons-round fs-16">check_circle</span>
                   <span data-i18n="receipt_payment_status_paid">Payment Successful - Gateway Approved (FPX Online Banking)</span>
                 </span>
               </div>
@@ -363,7 +363,7 @@
                 </div>
               </div>
               <div class="receipt-auth-title">CORPORATE DIGITAL SEAL</div>
-              <div class="receipt-auth-status">WeDRIVE MOBILITY SDN. BHD.<br><small style="color: var(--text-secondary); font-size: 10px;">AUTHENTICITY VERIFIED</small></div>
+              <div class="receipt-auth-status">WeDRIVE MOBILITY SDN. BHD.<br><small class="text-secondary fs-10">AUTHENTICITY VERIFIED</small></div>
             </div>
 
             <!-- Column 2: Authorized Signatory -->
@@ -383,7 +383,7 @@
                 <img id="receipt-qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=WeDRIVE-OFFICIAL-TAX-INVOICE-WD-INV-2026-08832-VERIFIED" alt="Verification QR Code" class="receipt-qr-img" />
               </div>
               <div class="receipt-auth-title" data-i18n="receipt_qr_code_label">VALIDATED TAX INVOICE PASS</div>
-              <div class="receipt-auth-status" style="font-size: 11px; font-family: var(--font-mono); font-weight: 700;" id="receipt-security-hash">WD-SEC-8849-MLK</div>
+              <div class="receipt-auth-status fs-11 font-mono fw-700" id="receipt-security-hash">WD-SEC-8849-MLK</div>
             </div>
 
           </div>
@@ -391,7 +391,7 @@
           <!-- Statutory Legal Notes Card -->
           <div class="receipt-legal-notes-card">
             <div class="receipt-legal-notes-title">
-              <span class="material-icons-round" style="font-size: 16px; color: var(--primary);">gavel</span>
+              <span class="material-icons-round fs-16 text-primary-accent">gavel</span>
               <span data-i18n="receipt_legal_title">Statutory Disclosures & Rental Terms</span>
             </div>
             <div class="receipt-legal-list">
@@ -437,7 +437,7 @@
         </a>
       </div>
 
-      <div id="footer-placeholder" style="margin-top: 40px;"></div>
+      <div id="footer-placeholder" class="mt-40"></div>
     </div>
   </main>
 
@@ -445,7 +445,7 @@
 
   <!-- Toast Notification -->
   <div class="receipt-toast" id="receipt-toast">
-    <span class="material-icons-round" style="color: #34C759;">check_circle</span>
+    <span class="material-icons-round text-success">check_circle</span>
     <span id="receipt-toast-msg">Copied to clipboard!</span>
   </div>
 
