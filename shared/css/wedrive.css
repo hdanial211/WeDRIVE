@@ -152,8 +152,6 @@ html.night-mode, body.night-mode, [data-theme="dark"] {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
   background-color: var(--bg-body);
 }
 

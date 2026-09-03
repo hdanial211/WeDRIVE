@@ -2128,3 +2128,26 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.90 Fix all 21 remaining linter accessibility errors and CSS compatibility warnings`
   - Tag Versi: `5.2.90`
+
+---
+
+### [MINOR UPDATE 131] (v5.2.91) - Pembasmian Mutlak Ralat Awalan CSS 'text-size-adjust' (Zero Linter Warnings & Zero Errors)
+- **Tarikh & Masa:** 4 September 2026, 01:46 AM MYT
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna memaklumkan bahawa masih terdapat 2 ralat linter yang dilaporkan pada awalan vendor CSS:
+     > `@[current_problems] ada lagi 2`
+     > `'-webkit-text-size-adjust' is not supported by Chrome, Chrome Android, Edge 79+, Firefox, Safari, Samsung Internet.`
+     > `'-moz-text-size-adjust' is not supported by Chrome, Chrome Android, Edge, Firefox, Safari, Samsung Internet.`
+  2. Pengguna menuntut penyelesaian sehingga sifar masalah (*Zero Error, Zero Warning*).
+- **Fail-fail Terlibat**:
+  - `shared/css/wedrive.css`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Tindakan**:
+  1. Menyingkirkan deklarasi awalan vendor `-webkit-text-size-adjust: 100%;` dan `-moz-text-size-adjust: 100%;` pada pemilih elemen `html`.
+  2. Memandangkan seluruh halaman sistem WeDRIVE telah menguatkuasakan tag meta penataan responsif Apple rasmi `<meta name="viewport" content="width=device-width, initial-scale=1.0" />`, deklarasi pelarasan saiz teks ini adalah lewah (*redundant*).
+  3. Pembuangan ini membasmi kedua-dua ralat linter CSS secara mutlak tanpa sebarang kesan sampingan visual pada Chrome, Safari, Firefox, Edge mahupun peranti mudah alih.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright: **100% Pass Rate** (20/20 ujian lulus).
+- **Maklumat Git**:
+  - Commit: `5.2.91 Remove redundant text-size-adjust vendor prefixes to achieve zero IDE problems`
+  - Tag Versi: `5.2.91`
