@@ -1980,3 +1980,22 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.86 Fix receipt layout alignment and refine official corporate aesthetic`
   - Tag Versi: `5.2.86`
+
+---
+
+### Minor Update 127 (`v5.2.87`): Restore Customer My Bookings Toast Notification & Responsive Layout Styles
+- **Tarikh & Masa**: 3 September 2026, 05:28 PM
+- **Fail Terlibat**:
+  - `shared/css/wedrive.css` (Section 16: Customer My Bookings Portal)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Pembaikan Isu**:
+  - **1. Pemulihan Gaya CSS Notifikasi Toast My Bookings (`.mybk-toast`)**:
+    - Mengembalikan kelas CSS `.mybk-toast`, `.mybk-toast.active`, dan ikon bulatan hijau `.mybk-toast span.material-icons-round` yang sebelum ini tertrim semasa penggantian Section 17.
+    - Notifikasi toast kapsul terapung ala Apple HIG kini muncul semula dengan kemas di bahagian tengah bawah skrin apabila pengguna menekan butang salin ID tempahan atau melakukan sebarang tindakan dalam portal My Bookings.
+  - **2. Pemulihan Pertanyaan Media Responsif Portal My Bookings**:
+    - Memulihkan peraturan media `@media (max-width: 1100px)`, `@media (max-width: 768px)`, dan `@media (max-width: 480px)` bagi memastikan grid metrik dan kad spotlight tersusun rapi pada skrin tablet dan telefon pintar.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **20/20 Ujian Lulus (100% Pass Rate dalam 1.4m)**.
+- **Maklumat Git**:
+  - Commit: `5.2.87 Restore customer my bookings toast notification and responsive layout styles`
+  - Tag Versi: `5.2.87`

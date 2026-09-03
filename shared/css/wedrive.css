@@ -11391,6 +11391,119 @@ body.dark .mybk-modal-detail-row {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.mybk-modal-detail-row span:first-child {
+  color: var(--text-secondary);
+}
+
+.mybk-modal-detail-row span:last-child {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Toast Copy Notification */
+.mybk-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(22, 22, 24, 0.92);
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s var(--ease-apple);
+}
+
+.mybk-toast.active {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.mybk-toast span.material-icons-round {
+  color: #34C759;
+  font-size: 18px;
+}
+
+/* 7. Responsive Media Queries */
+@media (max-width: 1100px) {
+  .mybk-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mybk-active-spotlight {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .mybk-spotlight-media {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mybk-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .mybk-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mybk-segmented-control {
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
+  }
+  .mybk-search-pill-wrap {
+    max-width: 100%;
+    width: 100%;
+  }
+  .mybk-spotlight-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .mybk-spotlight-price-box {
+    text-align: left;
+  }
+  .mybk-spotlight-bento-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .mybk-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .mybk-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .mybk-card-thumb {
+    width: 100%;
+    height: 120px;
+  }
+  .mybk-card-details-row {
+    grid-template-columns: 1fr;
+  }
+  .mybk-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .mybk-card-actions {
+    justify-content: space-between;
+  }
+}
+
 /* ==========================================================================
    17. CUSTOMER BOOKING RECEIPT & OFFICIAL CORPORATE TAX INVOICE (Apple HIG)
    ========================================================================== */
