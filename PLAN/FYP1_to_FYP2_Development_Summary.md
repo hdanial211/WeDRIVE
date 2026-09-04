@@ -2655,3 +2655,31 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.5.5 Align Stitch MCP rules to Gemini 3.8 Ultra High Quality tier and clarify API enum mapping`
   - Tag Versi: `5.5.5`
+
+---
+
+## 🚀 [MINOR UPDATE] 145. Pembersihan Ralat Linter & Penyingkiran Gaya Sebaris (Zero Inline Styles) (v5.5.6)
+
+- **Punca Keperluan (Context & User Directives)**:
+  > *"@[current_problems] fix"*
+  - Editor IDE mengesan 17 isu linter terdiri daripada ralat ketiadaan label pada borang fail input, gaya CSS sebaris (*inline styles*) dalam beberapa halaman pentadbir, dan susunan awalan vendor `backdrop-filter` dalam `wedrive.css`.
+
+- **Tindakan Pembaikan & Pelaksanaan (Implementation Highlights)**:
+  1. **Pembaikan Ralat Aksesibiliti & Label Borang (`add-car.html`)**:
+     - Menambah atribut `title="Muat naik imej kenderaan"` dan `aria-label="Muat naik imej kenderaan"` pada input fail `#car-photo-input` (selesaikan ralat: *Form elements must have labels*).
+  2. **Penyelarasan Susunan Vendor Prefix (`shared/css/wedrive.css`)**:
+     - Mengubah susunan `-webkit-backdrop-filter` sebelum standard `backdrop-filter` pada baris 14567 selaras dengan piawaian linting CSS moden.
+  3. **Penghapusan Gaya Sebaris & Pengenalan Utiliti CSS Dedikasi**:
+     - Menambah kelas utiliti bersih ke dalam `shared/css/wedrive.css`:
+       - `.img-preview-140` dan `.img-preview-180` (menggantikan `style="max-height: 140px/180px"` pada `add-car.html` dan `verifications.html`).
+       - `.chat-messages-scroll`, `.btn-icon-send`, `.btn-xs`, dan `.pre-preview-180` (menggantikan gaya sebaris pada `chatbot.html`).
+       - `.depot-fill-75`, `.depot-fill-65`, dan `.depot-fill-50` (menggantikan `style="width: 75%/65%/50%"` pada `operations.html`).
+       - `.min-h-180` (menggantikan `style="min-height: 180px"` pada `marketing.html`).
+       - `.btn-table-action` (menggantikan `style="height:32px; padding:0 10px; font-size:11px;"` pada `export-reports.html`).
+  4. **Pengesahan & Ujian Automasi**:
+     - Menjalankan suite Playwright penuh: **28/28 ujian lulus (100% Pass Rate)**.
+     - Pangkalan pengetahuan Graphify disegerakkan (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `5.5.6 Fix all IDE linter errors and eliminate inline styles across admin pages`
+  - Tag Versi: `5.5.6`

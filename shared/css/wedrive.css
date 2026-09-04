@@ -14564,8 +14564,8 @@ body.pending-page {
   border: 1px solid var(--border-color) !important;
   border-radius: 20px !important;
   box-shadow: var(--shadow-sm) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
 }
 
 .apple-pagination-info {
@@ -14714,3 +14714,50 @@ body.pending-page {
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
+.depot-fill-75 { width: 75% !important; }
+.depot-fill-65 { width: 65% !important; }
+.depot-fill-50 { width: 50% !important; }
+
+/* Dedicated Clean Utilities for Admin Modals and Dashboards (Zero Inline Styles) */
+.img-preview-140 {
+  max-height: 140px !important;
+  margin: 0 auto !important;
+  object-fit: contain !important;
+}
+
+.img-preview-180 {
+  max-height: 180px !important;
+  object-fit: contain !important;
+}
+
+.chat-messages-scroll {
+  min-height: 280px !important;
+  max-height: 380px !important;
+  overflow-y: auto !important;
+}
+
+.btn-icon-send {
+  width: 40px !important;
+  height: 40px !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+.btn-xs {
+  height: 30px !important;
+  font-size: 11px !important;
+  padding: 0 8px !important;
+}
+
+.pre-preview-180 {
+  max-height: 180px !important;
+}
+
+.min-h-180 {
+  min-height: 180px !important;
+}
+
+.btn-table-action {
+  height: 32px !important;
+  padding: 0 10px !important;
+  font-size: 11px !important;
+}

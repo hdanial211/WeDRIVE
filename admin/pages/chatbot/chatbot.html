@@ -177,14 +177,14 @@
                 <button class="filter-chip" onclick="quickPlayMsg('Berapakah kadar deposit keselamatan?')">Kadar Deposit</button>
               </div>
 
-              <div class="chat-messages p-18" id="chat-messages" style="min-height: 280px; max-height: 380px; overflow-y: auto;">
+              <div class="chat-messages chat-messages-scroll p-18" id="chat-messages">
                 <!-- Messages dynamically loaded -->
               </div>
 
               <div class="chat-input-bar p-12 border-top-subtle bg-surface-2 flex-center gap-10">
                 <input type="text" id="chat-input" class="form-input radius-pill flex-1" placeholder="Taip soalan untuk menguji jawapan ejen AI..." 
                        onkeydown="if(event.key==='Enter')sendTestMsg()" />
-                <button onclick="sendTestMsg()" id="send-btn" class="btn-primary flex-center p-10 radius-50" style="width:40px; height:40px; aspect-ratio: 1/1;" title="Hantar Mesej">
+                <button onclick="sendTestMsg()" id="send-btn" class="btn-primary btn-icon-send flex-center p-10 radius-50" title="Hantar Mesej">
                   <span class="material-icons-round fs-18">send</span>
                 </button>
               </div>
@@ -214,12 +214,12 @@
               <div class="form-group">
                 <label class="flex-between flex-center fw-600 fs-13 text-title mb-6">
                   Pratonton Konteks Diserap
-                  <button class="btn-secondary" id="btn-refresh-data" onclick="refreshLiveData()" style="height:30px; font-size:11px; padding:0 8px;">
+                  <button class="btn-secondary btn-xs" id="btn-refresh-data" onclick="refreshLiveData()">
                     <span class="material-icons-round fs-14">refresh</span> Segarkan Semula
                   </button>
                 </label>
                 <div class="fs-12 text-muted mb-8">Format JSON yang disematkan ke dalam memori arahan model AI:</div>
-                <pre id="live-data-preview" class="hidden p-14 radius-14 bg-surface-3 fs-11 text-secondary overflow-auto" style="max-height: 180px;"></pre>
+                <pre id="live-data-preview" class="hidden pre-preview-180 p-14 radius-14 bg-surface-3 fs-11 text-secondary overflow-auto"></pre>
               </div>
             </div>
           </div>

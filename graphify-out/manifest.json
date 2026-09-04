@@ -570,9 +570,9 @@
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {
-    "mtime": 1788536134.097745,
-    "seen": 1788536888.776463,
-    "ast_hash": "3532aa96953850802726425d8bcdf2cc",
+    "mtime": 1788539165.5082846,
+    "seen": 1788539326.5854568,
+    "ast_hash": "f4fc23916bb2308f64bdf358efdd7c51",
     "semantic_hash": ""
   },
   "admin/pages/customer/customers.html": {
@@ -588,9 +588,9 @@
     "semantic_hash": ""
   },
   "admin/pages/marketing/marketing.html": {
-    "mtime": 1788536336.9536242,
-    "seen": 1788536888.776475,
-    "ast_hash": "981a58c865bd6a7d22bdadcca80d1689",
+    "mtime": 1788539197.2915213,
+    "seen": 1788539326.585462,
+    "ast_hash": "f3f8d4c95518b53cefbde17cb5dd8335",
     "semantic_hash": ""
   },
   "admin/pages/report/reports.html": {
@@ -11214,9 +11214,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car.html": {
-    "mtime": 1788536758.3072584,
-    "seen": 1788536888.776451,
-    "ast_hash": "0b914363947c9b6fed0abcea48baf4c9",
+    "mtime": 1788539152.5736957,
+    "seen": 1788539326.585452,
+    "ast_hash": "cc21fe26a608c06cc1288ea70c161bdb",
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
@@ -11232,21 +11232,21 @@
     "semantic_hash": ""
   },
   "admin/pages/customer/verifications.html": {
-    "mtime": 1788536078.8144574,
-    "seen": 1788536888.776468,
-    "ast_hash": "50cc352d5d82aeee7d049610fa699b81",
+    "mtime": 1788539177.1869912,
+    "seen": 1788539326.585459,
+    "ast_hash": "cc120c1156ef5a3904bb36b25457ae92",
     "semantic_hash": ""
   },
   "admin/pages/dashboard/operations.html": {
-    "mtime": 1788535875.9123113,
-    "seen": 1788536888.776472,
-    "ast_hash": "b638662183176abefdf0420f7985d320",
+    "mtime": 1788539187.5741038,
+    "seen": 1788539326.585461,
+    "ast_hash": "fb50afdd8e185f2366d76417c0d5a37a",
     "semantic_hash": ""
   },
   "admin/pages/report/export-reports.html": {
-    "mtime": 1788536106.4291952,
-    "seen": 1788536888.776479,
-    "ast_hash": "fbf61ad2a47fadfd41554b31a57c0646",
+    "mtime": 1788539208.02636,
+    "seen": 1788539326.585463,
+    "ast_hash": "5170e620c47cc1dd27070f22aaa17921",
     "semantic_hash": ""
   },
   ".agents/rules/stitch_design_system.md": {

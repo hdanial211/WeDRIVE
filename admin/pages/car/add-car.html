@@ -236,9 +236,9 @@
                   <div class="fs-13 fw-600 text-title">Muat Naik Gambar Kenderaan</div>
                   <div class="fs-11 text-muted mt-2">Format disokong: PNG, JPG, WEBP (Latar belakang telus digalakkan)</div>
                 </div>
-                <img id="photo-preview-img" class="doc-preview-img hidden" alt="Pratonton Kenderaan" style="max-height: 140px; margin: 0 auto; object-fit: contain;" />
+                <img id="photo-preview-img" class="doc-preview-img img-preview-140 hidden" alt="Pratonton Kenderaan" />
               </div>
-              <input type="file" id="car-photo-input" class="hidden" accept="image/*" onchange="previewCarPhoto(this)" />
+              <input type="file" id="car-photo-input" class="hidden" accept="image/*" title="Muat naik imej kenderaan" aria-label="Muat naik imej kenderaan" onchange="previewCarPhoto(this)" />
             </div>
           </div>
         </div>
@@ -254,7 +254,7 @@
           <div class="grid-2 gap-24 items-center">
             <div class="card p-20 radius-24 bg-surface-2">
               <div class="car-card-img-wrap mb-14 radius-16 overflow-hidden bg-surface-3 p-12 text-center">
-                <img id="preview-display-img" src="../../../shared/images/cars/honda-crv-2024.png" alt="Pratonton Kenderaan" class="w-full obj-contain" style="max-height: 140px;" onerror="this.src='../../../shared/images/cars/perodua-myvi-2023.png'" />
+                <img id="preview-display-img" src="../../../shared/images/cars/honda-crv-2024.png" alt="Pratonton Kenderaan" class="w-full obj-contain img-preview-140" onerror="this.src='../../../shared/images/cars/perodua-myvi-2023.png'" />
               </div>
               <div class="flex-between items-start mb-8">
                 <div>
