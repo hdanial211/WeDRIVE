@@ -366,9 +366,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_design_system.md": {
-    "mtime": 1788537010.2755005,
-    "seen": 1788537225.059947,
-    "ast_hash": "512d01a8b992c2535d70dcdf54179caa",
+    "mtime": 1788537292.7981155,
+    "seen": 1788537360.6856692,
+    "ast_hash": "9e29c01b8ba8a4dbc149f38352bc9d83",
     "semantic_hash": ""
   },
   ".agents/rules/code_and_backend.md": {
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/ruleprompt.md": {
-    "mtime": 1788537021.9190307,
-    "seen": 1788537225.059953,
-    "ast_hash": "66bc811027714716f5da142c50409c6a",
+    "mtime": 1788537302.92445,
+    "seen": 1788537360.685673,
+    "ast_hash": "14d9b13331cd297ce517ef56e52a8a1a",
     "semantic_hash": ""
   },
   ".agents/rules/security_and_audit.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788537212.0941966,
-    "seen": 1788537225.059961,
-    "ast_hash": "b47aa437f0faf9c4f32ef034f7974154",
+    "mtime": 1788537348.248882,
+    "seen": 1788537360.6856792,
+    "ast_hash": "01963efdc2749378d880cda11cbe77cd",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -708,9 +708,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788534926.9624755,
-    "seen": 1788535032.518633,
-    "ast_hash": "bd36f39629e63172bafc092a13a74acd",
+    "mtime": 1788537326.4278483,
+    "seen": 1788537360.685736,
+    "ast_hash": "988212b5f3dbf41c443887c0b5096e60",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11250,14 +11250,14 @@
     "semantic_hash": ""
   },
   ".agents/rules/stitch_design_system.md": {
-    "mtime": 1788537186.2381747,
-    "seen": 1788537225.059955,
-    "ast_hash": "9ecd56e9c0acef6b97ac7f51e21865f5",
+    "mtime": 1788537284.4428806,
+    "seen": 1788537360.685676,
+    "ast_hash": "da920a2b128d9086f839461b444366de",
     "semantic_hash": ""
   },
-  "DESIGN.md": {
+  ".agents/DESIGN.md": {
     "mtime": 1788537195.6932523,
-    "seen": 1788537225.0599601,
+    "seen": 1788537360.685666,
     "ast_hash": "58ec94dcdea9b87d90e0985bb2cba707",
     "semantic_hash": ""
   }

@@ -366,9 +366,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_design_system.md": {
-    "mtime": 1788537292.7981155,
-    "seen": 1788537360.6856692,
-    "ast_hash": "9e29c01b8ba8a4dbc149f38352bc9d83",
+    "mtime": 1788537414.1565049,
+    "seen": 1788537548.586576,
+    "ast_hash": "1f24281512b1ccaa8f99919ca1079f11",
     "semantic_hash": ""
   },
   ".agents/rules/code_and_backend.md": {
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/ruleprompt.md": {
-    "mtime": 1788537302.92445,
-    "seen": 1788537360.685673,
-    "ast_hash": "14d9b13331cd297ce517ef56e52a8a1a",
+    "mtime": 1788537446.7638574,
+    "seen": 1788537548.586581,
+    "ast_hash": "d0ed7187c2112021b45d19ae65e1d772",
     "semantic_hash": ""
   },
   ".agents/rules/security_and_audit.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788537348.248882,
-    "seen": 1788537360.6856792,
-    "ast_hash": "01963efdc2749378d880cda11cbe77cd",
+    "mtime": 1788537473.694565,
+    "seen": 1788537548.586588,
+    "ast_hash": "e4c830ff6cac962ec2b2816efea00c29",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -11259,6 +11259,12 @@
     "mtime": 1788537195.6932523,
     "seen": 1788537360.685666,
     "ast_hash": "58ec94dcdea9b87d90e0985bb2cba707",
+    "semantic_hash": ""
+  },
+  ".agents/rules/apple_hig_components.md": {
+    "mtime": 1788537425.0762157,
+    "seen": 1788537548.586575,
+    "ast_hash": "423e86caf107d587ab0bc5b5f5d8daab",
     "semantic_hash": ""
   }
 }

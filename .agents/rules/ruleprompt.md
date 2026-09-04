@@ -7,7 +7,7 @@ trigger: always_on
 ## 1. Theme & Design Consistency (Apple HIG Standard)
 
 - Semua reka bentuk UI, komponen, peralihan, kad, butang, modal, tipografi, dan susun atur WAJIB mematuhi piawaian rasmi **Apple Human Interface Guidelines (HIG)**:
-  - **Rujukan Utama:** [`.agents/rules/apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_design_system.md).
+  - **Rujukan Utama:** [`.agents/rules/apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_design_system.md) (Pilar 1–3: Asas & Corak) & [`.agents/rules/apple_hig_components.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_components.md) (Pilar 4–6: Komponen, Input & Teknologi).
   - **Tipografi:** SF Pro Display / SF Pro Text (`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`).
   - **Geometri Asas:** Elemen bulat minimum nisbah 1:1 (`aspect-ratio: 1 / 1; border-radius: 50%`), Butang/Pill kapsul mengembang mendatar (`border-radius: 9999px`), Kad Bento Squircle (`border-radius: 24px/28px`), Input (`border-radius: 12px/14px`).
   - **Peralihan & Transisi Fizik Apple:** `cubic-bezier(0.16, 1, 0.3, 1)` dengan maklum balas sentuhan `transform: scale(0.97)` pada `:active`.

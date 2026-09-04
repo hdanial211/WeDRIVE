@@ -2594,3 +2594,30 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.5.2 Move DESIGN.md into .agents directory for cleaner project structure`
   - Tag Versi: `5.5.2`
+
+---
+
+## 🚀 [MINOR UPDATE] 143. Pemecahan Modular Peraturan Apple HIG kepada 2 Fail Tanpa Mengurangkan Kandungan (Bawah Had 12,000 Aksara IDE) (v5.5.3)
+
+- **Punca Keperluan (Context & User Directives)**:
+  > *"terlalu penuh lahh separete kan 2 content tu supaya x terlebih ..jangan kurangkan pecahkan 2 sahaja dalam rules"*
+  - Editor peraturan Antigravity IDE memaparkan amaran merah had saiz kandungan (`12266/12000` aksara) pada `apple_hig_design_system.md`.
+  - Pengguna mengarahkan kandungan dipecahkan kepada 2 fail peraturan terpisah di bawah `.agents/rules/` tanpa mengurangkan sebarang isi kandungan (*zero content reduction*).
+
+- **Tindakan Pembaikan & Pelaksanaan (Implementation Highlights)**:
+  1. **Pemecahan Bersih Mengikut Kategori Apple HIG**:
+     - **Bahagian 1: Asas & Corak Interaksi** (`apple_hig_design_system.md`):
+       - Mengandungi Preamble, Pilar 1 (Prinsip Asas & Larangan AI Murahan), Pilar 2 (Asas Tipografi, Warna Mod Siang/Malam, Bahan Kaca, Fizik Spring), dan Pilar 3 (Navigasi, Modal, Carian, Paired Date Lock, Tactile Feedback).
+       - Saiz: **8,646 aksara** (jauh di bawah had 12,000 aksara).
+     - **Bahagian 2: Komponen, Interaksi & Teknologi** (`apple_hig_components.md`):
+       - Mengandungi Pilar 4 (Kawalan Bersegmen, Kad Bento, Butang Apple, 1:1 Circle & Pill Expansion Rule, Lencana, Toasts), Pilar 5 (Kursor, Focus Halo, Aksesibiliti), Pilar 6 (Floating AI Island, 360 Viewer, Bilingual Engine, Stitch MCP Ultra High-Quality Tier), serta Senarai Semak Audit Mandatori.
+       - Saiz: **6,055 aksara** (jauh di bawah had 12,000 aksara).
+  2. **100% Pengekalan Kandungan**:
+     - Tiada teks, token, formula CSS, atau senarai semak yang dipotong atau diringkaskan.
+  3. **Penyelarasan Rujukan**:
+     - Kedua-dua fail saling merujuk satu sama lain dengan pautan terus ke fail masing-masing.
+     - `.agents/rules/ruleprompt.md` dikemas kini untuk menyenaraikan kedua-dua Bahagian 1 dan Bahagian 2.
+
+- **Maklumat Git**:
+  - Commit: `5.5.3 Split Apple HIG rules into two modular files under 12000 chars without reducing content`
+  - Tag Versi: `5.5.3`
