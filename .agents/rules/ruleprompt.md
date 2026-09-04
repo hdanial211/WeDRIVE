@@ -113,7 +113,7 @@ trigger: always_on
   - **Projek Rujukan Stitch:** `1862124494843018493` (*AI-Powered Car Rental Management*).
   - **Sistem Reka Bentuk (*Design System*):** `assets/40090a9886c4444abca795c82673f4c8` atau `assets/518f31ad774f458da15c7fc5ff999bbf` (*Precision & Clarity / WeDRIVE Lumina*).
   - **Tahap Kualiti Model (*Ultra High-Quality Model Tier*):** Sentiasa gunakan model penaakulan tertinggi **`GEMINI_3_1_PRO`** (Model `GEMINI_3_PRO` telah ditamatkan/deprecated) bagi memastikan kualiti susun atur Apple HIG, squircle 24px/28px, tipografi `tabular-nums`, dan tiada templat murahan.
-  - **Konsistensi `DESIGN.md`:** Setiap token warna, saiz sudut squircle, dan tipografi WAJIB berpandukan fail rujukan punca [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/DESIGN.md).
+  - **Konsistensi `DESIGN.md`:** Setiap token warna, saiz sudut squircle, dan tipografi WAJIB berpandukan fail rujukan punca [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md).
 - **Penyelarasan Kod Fizikal & Integriti Data**:
   - Semua kod CSS yang dijana daripada Stitch WAJIB diselaraskan secara berpusat ke dalam `shared/css/wedrive.css`.
   - Semua medan dan butang tindakan WAJIB disambung terus ke punca data operasi sebenar (`window.WeDriveAPI` / Supabase).

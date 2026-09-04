@@ -13,6 +13,12 @@ AI CAR RENTAL SYSTEM/
 |
 +-- index.html                  # Landing Page / Browse Cars (Entry Point)
 |
++-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk
+|   +-- DESIGN.md               # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
+|   +-- rules/                  # Peraturan Pembangunan, Apple HIG, Stitch MCP & Keselamatan
+|   +-- skills/                 # Alatan kemahiran automasi
+|   +-- workflows/              # Aliran kerja persistent
+|
 +-- vercel.json                # Vercel deployment config
 |
 +-- supabase/                   # Supabase Configuration & Scripts

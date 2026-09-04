@@ -176,7 +176,7 @@ border: 1px solid var(--border-glass);
    - Bagi reka bentuk halaman baharu atau peningkatan estetika skrin, pembangun/AI diwajibkan menggunakan **Stitch MCP** (`generate_screen_from_text`, `get_screen`, `apply_design_system`) dengan model penaakulan tertinggi: **`GEMINI_3_1_PRO`** (Model `GEMINI_3_PRO` telah ditamatkan/deprecated).
    - Gunakan sistem reka bentuk *WeDRIVE Lumina / Apple HIG Precision* (`assets/40090a9886c4444abca795c82673f4c8` atau `assets/518f31ad774f458da15c7fc5ff999bbf`) di bawah projek Stitch `1862124494843018493`.
    - Pastikan reka letak menggunakan kad squircle Bento 24px/28px, warna sistem Apple, tipografi `tabular-nums`, dan tiada klise templat AI murahan.
-   - Semua token reka letak disegerakkan bersama [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/DESIGN.md).
+   - Semua token reka letak disegerakkan bersama [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md).
 
 ---
 

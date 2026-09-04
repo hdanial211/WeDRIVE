@@ -2571,3 +2571,26 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 
 - **Pengesahan & Status**:
   - Semua peraturan diselaraskan secara konsisten merentas `.agents/rules/`, `DESIGN.md`, dan pangkalan pengetahuan Graphify.
+
+---
+
+## 🚀 [MINOR UPDATE] 142. Pemindahan Lokasi DESIGN.md ke dalam Direktori .agents/ (v5.5.2)
+
+- **Punca Keperluan (Context & User Directives)**:
+  > *"DESIGN.md ni letak dalam .agent supata x bersepah"*
+  - Pengguna mengarahkan penstrukturan fail yang kemas supaya direktori punca repositori tidak berselerak dengan memindahkan `DESIGN.md` ke dalam folder `.agents/`.
+
+- **Tindakan Pembaikan & Pelaksanaan (Implementation Highlights)**:
+  1. **Pemindahan Fail**:
+     - Memindahkan `DESIGN.md` $\to$ `.agents/DESIGN.md` secara selamat melalui Git tracker (`git mv`).
+  2. **Penyelarasan Rujukan Dokumentasi & Peraturan**:
+     - Mengemas kini laluan rujukan fail di dalam `.agents/rules/stitch_design_system.md`.
+     - Mengemas kini laluan rujukan fail di dalam `.agents/rules/apple_hig_design_system.md`.
+     - Mengemas kini laluan rujukan fail di dalam `.agents/rules/ruleprompt.md`.
+     - Mengemas kini struktur seni bina fail di dalam `docs/PROJECT_STRUCTURE.md`.
+  3. **Penyelarasan Pangkalan Pengetahuan Graphify**:
+     - Menjalankan `graphify update .` untuk memetakan lokasi nod baharu `.agents/DESIGN.md` tanpa membazirkan token AI.
+
+- **Maklumat Git**:
+  - Commit: `5.5.2 Move DESIGN.md into .agents directory for cleaner project structure`
+  - Tag Versi: `5.5.2`

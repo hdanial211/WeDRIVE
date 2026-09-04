@@ -29,7 +29,7 @@ Setiap kali alatan Stitch MCP digunakan untuk mereka bentuk skrin atau mengemas 
 | **Design System** | `assets/d66115a696e44b2381ec5f5d829e8a88` / `assets/40090a9886c4444abca795c82673f4c8` / `assets/518f31ad774f458da15c7fc5ff999bbf` | Sistem reka bentuk rasmi *WeDRIVE Lumina & Apple HIG Precision* |
 | **Model Generasi (`modelId`)** | **`GEMINI_3_1_PRO`** | **MANDATORI:** Tahap penaakulan tertinggi (Ultra High Quality Tier) bagi memastikan kehalusan Apple HIG |
 | **Device Type** | `DESKTOP` (Admin) / `MOBILE` (Pelanggan) | Dilarang menggunakan `AGNOSTIC` melainkan komponen bebas peranti |
-| **Rujukan Gaya Utama** | `DESIGN.md` | Fail spesifikasi master di direktori punca repositori |
+| **Rujukan Gaya Utama** | `.agents/DESIGN.md` | Fail spesifikasi master di direktori `.agents/` |
 
 ---
 
@@ -48,7 +48,7 @@ Penjanaan antaramuka menggunakan model penaakulan tinggi `GEMINI_3_1_PRO` mempro
 ## 🛠️ 3. Alur Kerja Penjanaan Antaramuka Stitch (Step-by-Step Workflow)
 
 1. **Pastikan Konsistensi `DESIGN.md`**:
-   - Semak fail [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/DESIGN.md) di direktori punca.
+   - Semak fail [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md) di direktori `.agents/`.
    - Pastikan warna Day Mode (`#F5F5F7` / `#FFFFFF`), Obsidian Night Mode (`#000000` / `#161618`), radius bento `24px`/`28px`, kapsul `9999px`, dan butang bulat 1:1 `50%` diselaraskan.
    - Muat naik versi terkini melalui `upload_design_md` jika terdapat perubahan token.
 2. **Jana Skrin Menggunakan `generate_screen_from_text`**:
