@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "admin/js/bookings.js": {
-    "mtime": 1787901115.6241074,
-    "seen": 1788210346.312758,
-    "ast_hash": "25a930ccba057f9b26d221e9f97c4e9f",
+    "mtime": 1788530017.749166,
+    "seen": 1788530927.4013429,
+    "ast_hash": "8fc9d15bc0694011c89c85959e98ddca",
     "semantic_hash": ""
   },
   "admin/js/calendar.js": {
@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
-    "mtime": 1787897500.8305562,
-    "seen": 1787898737.194575,
-    "ast_hash": "0e82185acd5777cbe886601f084f2fac",
+    "mtime": 1788529996.201793,
+    "seen": 1788530927.401345,
+    "ast_hash": "d1c1f0c9aadb17d1b11c4b83335518f4",
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
@@ -42,10 +42,10 @@
     "semantic_hash": "293e4ebfbb04a88f64c9e847beb10779"
   },
   "admin/js/customers.js": {
-    "mtime": 1782682238.747489,
-    "seen": 1787436189.091381,
-    "ast_hash": "daca916104760f4fe0b32680d1f008c2",
-    "semantic_hash": "daca916104760f4fe0b32680d1f008c2"
+    "mtime": 1788530038.2172706,
+    "seen": 1788530927.4013472,
+    "ast_hash": "4bc69f337d19afdc8ac79af04db1cb10",
+    "semantic_hash": ""
   },
   "admin/js/marketing-ai.js": {
     "mtime": 1782147887.3881125,
@@ -168,9 +168,9 @@
     "semantic_hash": ""
   },
   "shared/js/navbar-loader.js": {
-    "mtime": 1788512850.539733,
-    "seen": 1788513134.7991302,
-    "ast_hash": "c175d884bcb321960fbda9d2dad48799",
+    "mtime": 1788529915.809986,
+    "seen": 1788530927.4013598,
+    "ast_hash": "fb7e24b6c1938c2f5c0df972d1033ebe",
     "semantic_hash": ""
   },
   "shared/js/promo-banner.js": {
@@ -186,9 +186,9 @@
     "semantic_hash": ""
   },
   "shared/js/sidebar-loader.js": {
-    "mtime": 1788512652.337426,
-    "seen": 1788513134.799134,
-    "ast_hash": "810798315b77d09ff7d25b937820309e",
+    "mtime": 1788530069.9921017,
+    "seen": 1788530927.401362,
+    "ast_hash": "144ca3fe0aff1c2275b0a5608dff8f99",
     "semantic_hash": ""
   },
   "shared/js/supabase-config.js": {
@@ -210,27 +210,27 @@
     "semantic_hash": "854d79deba14cee1934248c66858e171"
   },
   "shared/lang/en.js": {
-    "mtime": 1788511073.7108464,
-    "seen": 1788511709.959473,
-    "ast_hash": "e2702766253187db9b284b3e5243677b",
+    "mtime": 1788529824.146834,
+    "seen": 1788530927.4013638,
+    "ast_hash": "089184fb0d1dec44a2a801a855561a38",
     "semantic_hash": ""
   },
   "shared/lang/en.json": {
-    "mtime": 1788511037.423403,
-    "seen": 1788511709.959475,
-    "ast_hash": "159186d472a5056ecd38335f68767a4d",
+    "mtime": 1788529856.6763992,
+    "seen": 1788530927.4013638,
+    "ast_hash": "ff3a4e5a4284d8ce2744d6157d3fea5e",
     "semantic_hash": ""
   },
   "shared/lang/ms.js": {
-    "mtime": 1788511061.6223545,
-    "seen": 1788511709.959477,
-    "ast_hash": "d613e50165d3fee1d87eeefb2b1aa16e",
+    "mtime": 1788529800.7441244,
+    "seen": 1788530927.401365,
+    "ast_hash": "8ee931befefc20e254a4c223a5fe4234",
     "semantic_hash": ""
   },
   "shared/lang/ms.json": {
-    "mtime": 1788511045.825554,
-    "seen": 1788511709.959478,
-    "ast_hash": "18d706dd9dd5f570ec7a182c2abc7908",
+    "mtime": 1788529814.5526073,
+    "seen": 1788530927.401365,
+    "ast_hash": "67f095caa84b3bd97b582678be00602e",
     "semantic_hash": ""
   },
   "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/source.json": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788513120.5401292,
-    "seen": 1788513134.799179,
-    "ast_hash": "70a9cff72002d944c7e2394ffaa95cc2",
+    "mtime": 1788530910.3860018,
+    "seen": 1788530927.4014468,
+    "ast_hash": "36c478156749a5c91c8ebbd8d6c5fde8",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -540,69 +540,69 @@
     "semantic_hash": ""
   },
   "admin/components/sidebar/sidebar-admin.html": {
-    "mtime": 1788512614.743424,
-    "seen": 1788513134.799198,
-    "ast_hash": "7e44fb6079538f10fd7aa64b14fba1b7",
+    "mtime": 1788530090.6840765,
+    "seen": 1788530927.401458,
+    "ast_hash": "8bcf76f789f4d6df8284ae40a97a9385",
     "semantic_hash": ""
   },
   "admin/pages/booking/bookings.html": {
-    "mtime": 1788509118.7652485,
-    "seen": 1788511709.9596732,
-    "ast_hash": "133f9ed69f3fe81b6f8e4ce75bf89e0b",
+    "mtime": 1788530331.1686897,
+    "seen": 1788530927.40146,
+    "ast_hash": "b4273bdb593552e42ad60c6c1a05e76d",
     "semantic_hash": ""
   },
   "admin/pages/calendar/calendar.html": {
-    "mtime": 1788454644.4323194,
-    "seen": 1788455589.590807,
-    "ast_hash": "ca507fb4c9f14a084d186a8f89bc71db",
+    "mtime": 1788530473.7546575,
+    "seen": 1788530927.40146,
+    "ast_hash": "0991b821cbf92220a4a9c67ad78b84de",
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788456366.4388788,
-    "seen": 1788456832.3467698,
-    "ast_hash": "96989f0dfce9a46601c75afde7f2a8f8",
+    "mtime": 1788530490.8617208,
+    "seen": 1788530927.401461,
+    "ast_hash": "c436bca26c183233816e17007d06b52f",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
-    "mtime": 1788454671.8640645,
-    "seen": 1788455589.590809,
-    "ast_hash": "8caac11526967b71a9e15444fcec5623",
+    "mtime": 1788530306.5197642,
+    "seen": 1788530927.401461,
+    "ast_hash": "70068d12d9f72caa70a8feadaf534f2e",
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {
-    "mtime": 1788454784.070739,
-    "seen": 1788455589.5908108,
-    "ast_hash": "d107abda62dbf2a291bac920892327f2",
+    "mtime": 1788530456.7709994,
+    "seen": 1788530927.401462,
+    "ast_hash": "235a68d17a4d127ad1f2fb41df553994",
     "semantic_hash": ""
   },
   "admin/pages/customer/customers.html": {
-    "mtime": 1788454816.505412,
-    "seen": 1788455589.590812,
-    "ast_hash": "dbc9ecd33a82ce29278f3e3b81ca1280",
+    "mtime": 1788530349.551363,
+    "seen": 1788530927.401462,
+    "ast_hash": "1f05c7451c7ca7b407ed769c9b44e2f2",
     "semantic_hash": ""
   },
   "admin/pages/dashboard/admin.html": {
-    "mtime": 1788454545.3961036,
-    "seen": 1788455589.590813,
-    "ast_hash": "fbfa26df8eee8450aacefa133cb62a6c",
+    "mtime": 1788530284.3891606,
+    "seen": 1788530927.401463,
+    "ast_hash": "5e0e706252c43ea68275ec0ed595f29d",
     "semantic_hash": ""
   },
   "admin/pages/marketing/marketing.html": {
-    "mtime": 1788456398.8043144,
-    "seen": 1788456832.346782,
-    "ast_hash": "ec9d4269845e36078b24a229595d5c11",
+    "mtime": 1788530462.4400563,
+    "seen": 1788530927.401463,
+    "ast_hash": "e71592eab9631276877c64751aad5b3b",
     "semantic_hash": ""
   },
   "admin/pages/report/reports.html": {
-    "mtime": 1788454891.2976482,
-    "seen": 1788455589.590815,
-    "ast_hash": "b15dcc91ab61a89a2b47fdc8fd5e7253",
+    "mtime": 1788530369.8654797,
+    "seen": 1788530927.401464,
+    "ast_hash": "7abb19c7cf472b8c41550282448dae8b",
     "semantic_hash": ""
   },
   "admin/pages/setting/settings.html": {
-    "mtime": 1788454921.2653425,
-    "seen": 1788455589.590815,
-    "ast_hash": "d2d09ad7d55b73d262ea51d4068a7692",
+    "mtime": 1788530482.561116,
+    "seen": 1788530927.4014652,
+    "ast_hash": "4561afb5e1dfa126b28f9f2d4cad5448",
     "semantic_hash": ""
   },
   "bin/ai-insights.html": {
@@ -11175,6 +11175,24 @@
     "mtime": 1788209946.1224546,
     "seen": 1788210346.3129249,
     "ast_hash": "298cbde3fd2276e74ebab0617de7ae28",
+    "semantic_hash": ""
+  },
+  "admin/js/analytics.js": {
+    "mtime": 1788529027.2182994,
+    "seen": 1788530927.401302,
+    "ast_hash": "8d02d57201b659930afb37a392b94b8d",
+    "semantic_hash": ""
+  },
+  "tests/e2e/09_admin_ai_analytics.spec.js": {
+    "mtime": 1788530566.3327389,
+    "seen": 1788530927.401438,
+    "ast_hash": "5ce6aef3ed356f53fdbc0da44982a6da",
+    "semantic_hash": ""
+  },
+  "admin/pages/analytics/analytics.html": {
+    "mtime": 1788530448.1572568,
+    "seen": 1788530927.401459,
+    "ast_hash": "75458b65ee9296cea8b96f46b3c83576",
     "semantic_hash": ""
   }
 }

@@ -71,8 +71,9 @@
         .promo-strip-msg { font-size: 13px; opacity: .9; }
         .promo-strip-dismiss {
           background: rgba(255,255,255,.2); border: none; color: #fff; cursor: pointer;
-          border-radius: 50%; width: 28px; height: 28px; display: flex;
-          align-items: center; justify-content: center; flex-shrink: 0;
+          border-radius: 50% !important; width: 28px !important; height: 28px !important;
+          min-width: 28px !important; min-height: 28px !important; aspect-ratio: 1 / 1 !important;
+          display: flex; align-items: center; justify-content: center; flex-shrink: 0 !important;
           font-size: 18px; transition: background .2s;
         }
         .promo-strip-dismiss:hover { background: rgba(255,255,255,.35); }

@@ -713,9 +713,14 @@ body.dark .nav-links:has(.nav-icon-link) {
 }
 
 .navbar .user-av {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--radius-pill);
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   background: var(--primary);
   color: #FFFFFF;
   font-size: 11px;
@@ -723,6 +728,7 @@ body.dark .nav-links:has(.nav-icon-link) {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0 !important;
 }
 
 .navbar .btn-logout {
@@ -1772,9 +1778,14 @@ body.night-mode .guest-kicker .material-icons-round,
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-pill);
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   background: var(--bg-surface-3);
   color: var(--text-secondary);
   border: none;
@@ -1782,6 +1793,7 @@ body.night-mode .guest-kicker .material-icons-round,
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0 !important;
 }
 
 .guest-modal-media img {
@@ -2799,15 +2811,20 @@ body.night-mode .segmented-control .segmented-glider,
 }
 
 .standard-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   background: rgba(0, 113, 227, 0.12);
   color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
   border: 1px solid rgba(0, 113, 227, 0.25);
 }
 
@@ -4932,9 +4949,15 @@ body:has(.right-panel) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-pill);
-  width: 28px;
-  height: 28px;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  max-width: 28px !important;
+  max-height: 28px !important;
+  flex-shrink: 0 !important;
   transition: background 0.2s;
 }
 
@@ -5377,8 +5400,11 @@ span.flatpickr-weekday {
 .flatpickr-day {
   width: 36px !important;
   height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
   max-width: 36px !important;
   max-height: 36px !important;
+  aspect-ratio: 1 / 1 !important;
   line-height: 36px !important;
   margin: 0 auto !important;
   border-radius: 50% !important;
@@ -5391,6 +5417,7 @@ span.flatpickr-weekday {
   border: 1px solid transparent !important;
   transition: all 0.18s var(--ease-apple) !important;
   box-sizing: border-box !important;
+  flex-shrink: 0 !important;
   cursor: pointer !important;
 }
 
@@ -6799,9 +6826,14 @@ body.dark .date-shake-error {
   right: 18px;
   background: var(--bg-surface-2);
   border: 1px solid var(--border-subtle);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6809,6 +6841,7 @@ body.dark .date-shake-error {
   cursor: pointer;
   transition: all 0.2s;
   z-index: 10;
+  flex-shrink: 0 !important;
 }
 
 .booking-popup-close:hover {
@@ -7543,9 +7576,14 @@ body.dark aside.sidebar {
 }
 
 .sidebar-user .avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-pill);
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   background: var(--primary-light);
   color: var(--primary);
   font-size: 14px;
@@ -7553,6 +7591,7 @@ body.dark aside.sidebar {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0 !important;
 }
 
 .sidebar-user .user-info .name {
@@ -7805,14 +7844,19 @@ body.dark .main-content-area .wedrive-footer {
 }
 
 .stat-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-pill);
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
 }
 
 .stat-icon.blue {
@@ -8580,13 +8624,19 @@ body.page-is-leaving .page-container {
   background: var(--bg-surface-3);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0 !important;
   transition: all 0.2s var(--ease-apple);
 }
 
@@ -8936,9 +8986,14 @@ body.page-is-leaving .page-container {
 }
 
 .cal-nav-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   background: transparent;
   border: none;
   color: var(--text-primary);
@@ -8946,6 +9001,7 @@ body.page-is-leaving .page-container {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0 !important;
   transition: all 0.2s var(--ease-apple);
 }
 
@@ -9005,9 +9061,14 @@ body.page-is-leaving .page-container {
 /* Apple Circular Selection Pill */
 .cal-cell-inner {
   position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9016,6 +9077,7 @@ body.page-is-leaving .page-container {
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
   transition: all 0.2s var(--ease-apple);
   z-index: 2;
+  flex-shrink: 0 !important;
 }
 
 .cal-cell:hover:not(.past) .cal-cell-inner {
@@ -9859,25 +9921,88 @@ table.custom-table tr:hover td,
 }
 
 /* ── 6. Minimum Touch Target (44px Rule) ─────────────────────────────────── */
-button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn),
+button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main),
 a.btn,
 .filter-chip,
 .date-chip,
-.sidebar-nav-item,
-.modal-close-btn,
-.flatpickr-day {
+.sidebar-nav-item {
   min-height: 38px;
   box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
-  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn),
+  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main),
   a.btn,
   .filter-chip,
   .date-chip,
-  .sidebar-nav-item,
-  .modal-close-btn {
+  .sidebar-nav-item {
     min-height: 44px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   APPLE HIG MASTER GEOMETRY: PERFECT 1:1 CIRCULAR BASE FOR ALL ICON/CLOSE BUTTONS
+   (Guarantees zero oval/egg distortion across all screens & viewports)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.modal-close-btn,
+.add-car-modal-close-btn,
+.mybk-modal-close,
+.guest-modal-close,
+.booking-popup-close,
+.pf-dialog-close,
+.sp-close-btn,
+.mybk-search-clear,
+.cal-nav-btn,
+.cal-day-modal-close,
+.chat-close-btn,
+.login-tfa-close-btn,
+.promo-strip-dismiss,
+.drawer-close,
+.close-btn,
+.btn-close,
+.icon-btn-circle {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+  .modal-close-btn,
+  .add-car-modal-close-btn,
+  .mybk-modal-close,
+  .guest-modal-close,
+  .booking-popup-close,
+  .pf-dialog-close,
+  .sp-close-btn,
+  .mybk-search-clear,
+  .cal-nav-btn,
+  .cal-day-modal-close,
+  .chat-close-btn,
+  .login-tfa-close-btn,
+  .promo-strip-dismiss,
+  .drawer-close,
+  .close-btn,
+  .btn-close,
+  .icon-btn-circle {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
   }
 }
 
@@ -9950,12 +10075,20 @@ a.btn,
   background: none !important;
   border: none !important;
   cursor: pointer !important;
-  padding: 6px !important;
-  color: var(--text-tertiary, #86868b) !important;
+  padding: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  aspect-ratio: 1 / 1 !important;
   border-radius: 50% !important;
+  color: var(--text-tertiary, #86868b) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  flex-shrink: 0 !important;
   transition: background 0.2s ease, color 0.2s ease !important;
 }
 
@@ -10982,9 +11115,17 @@ body.dark .mybk-segment-count {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  border-radius: 50%;
+  padding: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   font-size: 16px;
+  flex-shrink: 0 !important;
   transition: color 0.2s ease;
 }
 
@@ -11448,14 +11589,20 @@ body.dark .mybk-modal-header {
 .mybk-modal-close {
   background: var(--bg-surface-2, #EEF0F5);
   border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
   cursor: pointer;
+  flex-shrink: 0 !important;
   transition: all 0.2s ease;
 }
 
@@ -13487,6 +13634,44 @@ body.profile-page {
 .mt-40 { margin-top: 40px !important; }
 
 /* Profile Helper Classes */
+.pf-user-avatar {
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+}
+
+.pf-dialog-close {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  background: var(--bg-surface-3, rgba(0, 0, 0, 0.05)) !important;
+  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08)) !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  transition: all 0.2s var(--ease-apple) !important;
+}
+
+.pf-dialog-close:hover {
+  background: var(--bg-surface-2, rgba(0, 0, 0, 0.1)) !important;
+  color: var(--text-primary) !important;
+}
+
 .opacity-50 { opacity: 0.5 !important; }
 .oauth-banner { margin-bottom: 0 !important; background: rgba(59, 130, 246, 0.08) !important; border-color: rgba(59, 130, 246, 0.15) !important; }
 .google-oauth-icon { width: 32px !important; height: 32px !important; flex-shrink: 0 !important; }

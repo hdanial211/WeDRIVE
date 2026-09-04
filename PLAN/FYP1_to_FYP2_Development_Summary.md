@@ -2400,3 +2400,43 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.3.5 Add dedicated AI module to topbar and implement contextual dynamic sub-navigation in sidebar`
   - Tag Versi: `5.3.5`
+
+---
+
+## 🔘 [MINOR UPDATE] 138. Penghapusan Menyeluruh Bentuk Bujur & Penyeragaman Geometri 1:1 Bulat Sempurna (Eradication of All Oval Shapes & Master 1:1 Circle Geometry Standard) (v5.3.6)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna mengesan bahawa butang tutup dialog / modal (`X`) dan beberapa elemen interaktif bulat masih herot menjadi bentuk lonjong / bujur telur (*vertical oval*):
+    > *"kenapa still ada bujuk lagi ..cuba carik semua bujur..minimum bulat ..kalau besar expand kiri kanan ataupun atas bawah"*
+  - Pengguna menetapkan piawaian geometri mutlak:
+    1. **Asas Minimum Bulat Sempurna**: Sebarang elemen ikon tunggal / butang tutup / avatar saiz asas WAJIB berbentuk bulatan 1:1 sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; width == height`).
+    2. **Pengembangan Mendatar (Horizontal Pill Capsule)**: Elemen berkandungan teks/label (cth. butang tindakan, cip penapis, suis bahasa) mengembang ke kiri-kanan dengan bucu separuh bulatan simetri (`border-radius: var(--radius-pill, 9999px)`).
+    3. **Pengembangan Menegak/Dua Dimensi (Bento Squircle Cards)**: Kad dan bekas modal mengembang ke atas-bawah menggunakan sudut squircle (`border-radius: 20px - 28px`), DILARANG SAMA SEKALI menjadi bujur.
+- **Punca Utama & Analisis Ralat (Root Cause)**:
+  1. Peraturan sasaran sentuh aksesibiliti di `wedrive.css` mentakrifkan `button:not(...)` dengan `min-height: 38px;` (desktop) dan `min-height: 44px !important;` (mobile). Ini menimpa butang tutup modal seperti `.modal-close-btn` dan `.mybk-modal-close` yang mempunyai lebar `32px` atau `36px`, menjadikannya berketinggian `38px` atau `44px` dan menghasilkan bentuk bujur telur.
+  2. Beberapa komponen menggunakan `border-radius: var(--radius-pill)` (9999px) pada bekas bersaiz tetap tanpa `aspect-ratio: 1 / 1 !important;`, menyebabkan kecondongan bentuk apabila terdapat pengecutan flexbox.
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Kemas Kini Peraturan Sasaran Sentuh (`wedrive.css`)**:
+     - Menyingkirkan `.modal-close-btn` dan `.flatpickr-day` daripada peraturan `min-height: 38px / 44px`.
+     - Menambah senarai pengecualian lengkap pada pemilih `button:not(...)` bagi merangkumi semua butang bulat dan ikon (`.modal-close-btn`, `.add-car-modal-close-btn`, `.mybk-modal-close`, `.guest-modal-close`, `.booking-popup-close`, `.pf-dialog-close`, `.sp-close-btn`, `.mybk-search-clear`, `.cal-nav-btn`, `.cal-day-modal-close`, `.chat-close-btn`, `.login-tfa-close-btn`, `.promo-strip-dismiss`, `.drawer-close`, `.close-btn`, `.btn-close`, `.flatpickr-day`, `.flatpickr-prev-month`, `.flatpickr-next-month`, dsb.).
+  2. **Pengasasan Master Apple HIG Circular Rule (`wedrive.css`)**:
+     - Menguatkuasakan ukuran seimbang `width: 36px !important; height: 36px !important; min-width: 36px !important; min-height: 36px !important; max-width: 36px !important; max-height: 36px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;` pada semua butang tutup dan ikon bulat.
+     - Pada skrin sentuh mudah alih (`max-width: 768px`), KEDUA-DUA lebar dan tinggi mengembang serentak ke `44px !important` agar sasaran sentuh HIG dipenuhi sambil mengekalkan bulatan 1:1 tanpa herotan bujur.
+  3. **Penyeragaman Elemen Bulat Lain**:
+     - `.stat-icon`: `width: 44px; height: 44px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; flex-shrink: 0 !important;`.
+     - `.sidebar-user .avatar`: `width: 38px; height: 38px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; flex-shrink: 0 !important;`.
+     - `.navbar .user-av`: `width: 24px; height: 24px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; flex-shrink: 0 !important;`.
+     - `.pf-user-avatar`: `width: 72px; height: 72px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; object-fit: cover !important; flex-shrink: 0 !important;`.
+     - `.promo-strip-dismiss` di `shared/js/promo-banner.js` & `guest/js/promo-banner.js`: Ditambah `aspect-ratio: 1 / 1 !important; border-radius: 50% !important; min-width: 28px !important; min-height: 28px !important;`.
+     - `.flatpickr-day`: `aspect-ratio: 1 / 1 !important; min-width: 36px !important; min-height: 36px !important; border-radius: 50% !important;`.
+- **Pengesahan Ujian Visual & Dimensi (DevTools Automated Inspection)**:
+  - Pemeriksaan `getBoundingClientRect()` mendapati:
+    - `.mybk-modal-close`: Lebar `35.28px` & Tinggi `35.28px` (Nisbah 1:1 tepat).
+    - `.cal-nav-btn`: Lebar `36px` & Tinggi `36px` (Nisbah 1:1 tepat).
+    - `.theme-toggle`: Lebar `36px` & Tinggi `36px` (Nisbah 1:1 tepat).
+    - `.stat-icon`: Lebar `44px` & Tinggi `44px` (Nisbah 1:1 tepat).
+    - `.sidebar-user .avatar`: Lebar `38px` & Tinggi `38px` (Nisbah 1:1 tepat).
+  - Kesemua 21 ujian E2E Playwright lulus sepenuhnya (**100% Pass Rate**).
+- **Maklumat Git**:
+  - Commit: `5.3.6 Eradicate all oval shapes by enforcing 1:1 perfect circle on all close and icon buttons`
+  - Tag Versi: `5.3.6`
