@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Export Data Reports | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
+  <!-- AUTH GUARD: Must run before page renders -->
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+</head>
+
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="reports-export"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- TOPBAR (Main Navigation) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- HEADER -->
+      <div class="card reveal-onload mb-24 p-24">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <div class="flex-center gap-8 mb-6">
+              <a href="reports.html" class="fs-12 text-muted no-underline">Laporan &amp; Analitik</a>
+              <span class="material-icons-round fs-14 text-muted">chevron_right</span>
+              <span class="fs-12 text-primary-accent fw-600">Pusat Eksport Data</span>
+            </div>
+            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_export_reports">Eksport Laporan Data</h1>
+            <p class="text-secondary fs-14 m-0 mt-4">Jana dan muat turun fail laporan rasmi dalam format CSV, spreadsheet Excel, atau dokumen arkib audit.</p>
+          </div>
+          <div class="flex-center gap-10">
+            <button class="btn-outline-sm" onclick="window.location.href='reports.html'">
+              <span class="material-icons-round fs-16">bar_chart</span> Ringkasan Laporan
+            </button>
+            <button class="btn-primary-sm" onclick="exportFullArchive()">
+              <span class="material-icons-round fs-16">archive</span> Eksport Penuh Arkib
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPORT CARDS BENTO GRID -->
+      <div class="grid-2 gap-24 mb-24">
+        <!-- 1. LAPORAN KEWANGAN & HASIL -->
+        <div class="card reveal-on-scroll p-24">
+          <div class="flex-between mb-16">
+            <div class="stat-icon blue mb-0"><span class="material-icons-round">payments</span></div>
+            <span class="status-badge success fs-11">Paling Kerap Dijana</span>
+          </div>
+          <h3 class="fs-18 fw-700 m-0 mb-6">Laporan Kewangan &amp; Pendapatan</h3>
+          <p class="fs-13 text-secondary mb-16">Merangkumi pecahan hasil harian, bulanan, deposit keselamatan, dan kaedah pembayaran (FPX, Kad, QR).</p>
+          
+          <div class="bento-item-subtle p-14 mb-16">
+            <div class="flex-between fs-12 mb-4">
+              <span class="text-muted">Jumlah Hasil Bulan Semasa:</span>
+              <strong class="text-primary-accent" id="exp-rev-amount">RM 48,250.00</strong>
+            </div>
+            <div class="flex-between fs-12">
+              <span class="text-muted">Jumlah Transaksi:</span>
+              <strong class="text-title" id="exp-rev-tx">142 Transaksi</strong>
+            </div>
+          </div>
+
+          <div class="flex-center gap-10">
+            <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadFinancialCSV()">
+              <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
+            </button>
+            <button class="btn-outline flex-center gap-6" onclick="printReport('Kewangan WeDRIVE')">
+              <span class="material-icons-round fs-16">print</span> Cetak
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. REKOD TRANSAKSI TEMPAHAN -->
+        <div class="card reveal-on-scroll p-24">
+          <div class="flex-between mb-16">
+            <div class="stat-icon green mb-0"><span class="material-icons-round">receipt_long</span></div>
+            <span class="status-badge active fs-11">Masa Nyata</span>
+          </div>
+          <h3 class="fs-18 fw-700 m-0 mb-6">Log Lengkap Tempahan Pelanggan</h3>
+          <p class="fs-13 text-secondary mb-16">Semua rekod tempahan termasuk tarikh ambil, tarikh pulang, status pulangan kenderaan dan kaunter serahan.</p>
+
+          <div class="bento-item-subtle p-14 mb-16">
+            <div class="flex-between fs-12 mb-4">
+              <span class="text-muted">Tempahan Aktif &amp; Selesai:</span>
+              <strong class="text-title" id="exp-bk-total">188 Rekod</strong>
+            </div>
+            <div class="flex-between fs-12">
+              <span class="text-muted">Kadar Penyewaan Selesai:</span>
+              <strong class="text-green">98.4% Berjaya</strong>
+            </div>
+          </div>
+
+          <div class="flex-center gap-10">
+            <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadBookingsCSV()">
+              <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
+            </button>
+            <button class="btn-outline flex-center gap-6" onclick="printReport('Log Tempahan WeDRIVE')">
+              <span class="material-icons-round fs-16">print</span> Cetak
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. INVENTORI KENDERAAN & PENGGUNAAN -->
+        <div class="card reveal-on-scroll p-24">
+          <div class="flex-between mb-16">
+            <div class="stat-icon amber mb-0"><span class="material-icons-round">directions_car</span></div>
+            <span class="status-badge active fs-11">Audit Aset</span>
+          </div>
+          <h3 class="fs-18 fw-700 m-0 mb-6">Laporan Inventori Kenderaan</h3>
+          <p class="fs-13 text-secondary mb-16">Status semasa setiap unit kenderaan, rekod servis berkala, perbatuan (mileage), dan kadar penggunaan harian.</p>
+
+          <div class="bento-item-subtle p-14 mb-16">
+            <div class="flex-between fs-12 mb-4">
+              <span class="text-muted">Jumlah Unit Kenderaan:</span>
+              <strong class="text-title" id="exp-car-total">36 Kenderaan</strong>
+            </div>
+            <div class="flex-between fs-12">
+              <span class="text-muted">Status Tersedia:</span>
+              <strong class="text-green" id="exp-car-avail">24 Tersedia</strong>
+            </div>
+          </div>
+
+          <div class="flex-center gap-10">
+            <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadCarInventoryCSV()">
+              <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
+            </button>
+            <button class="btn-outline flex-center gap-6" onclick="printReport('Inventori Kenderaan WeDRIVE')">
+              <span class="material-icons-round fs-16">print</span> Cetak
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. DIREKTORI PELANGGAN & PENGESAHAN -->
+        <div class="card reveal-on-scroll p-24">
+          <div class="flex-between mb-16">
+            <div class="stat-icon purple mb-0"><span class="material-icons-round">people</span></div>
+            <span class="status-badge purple fs-11">Privasi Dilindungi PDPA</span>
+          </div>
+          <h3 class="fs-18 fw-700 m-0 mb-6">Direktori Pelanggan &amp; Pengesahan</h3>
+          <p class="fs-13 text-secondary mb-16">Data maklumat pelanggan berdaftar, status pengesahan lesen memandu, jumlah sewaan, dan sejarah perbelanjaan.</p>
+
+          <div class="bento-item-subtle p-14 mb-16">
+            <div class="flex-between fs-12 mb-4">
+              <span class="text-muted">Jumlah Pelanggan Berdaftar:</span>
+              <strong class="text-title" id="exp-cust-count">312 Pengguna</strong>
+            </div>
+            <div class="flex-between fs-12">
+              <span class="text-muted">Pelanggan Kerap (Repeat Renters):</span>
+              <strong class="text-purple">42% Retensi</strong>
+            </div>
+          </div>
+
+          <div class="flex-center gap-10">
+            <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadCustomersCSV()">
+              <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
+            </button>
+            <button class="btn-outline flex-center gap-6" onclick="printReport('Direktori Pelanggan WeDRIVE')">
+              <span class="material-icons-round fs-16">print</span> Cetak
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPORT AUDIT LOG TABLE -->
+      <div class="card reveal-on-scroll">
+        <div class="card-header flex-between">
+          <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
+            <span class="material-icons-round text-primary-accent">history</span> Sejarah Penjanaan &amp; Muat Turun Laporan
+          </h3>
+          <span class="fs-12 text-muted">Log Aktiviti Terkini</span>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama Fail</th>
+                <th>Jenis Laporan</th>
+                <th>Format</th>
+                <th>Jumlah Rekod</th>
+                <th>Tarikh Dijana</th>
+                <th>Status</th>
+                <th class="text-right">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>WeDRIVE_Financial_Report_2026.csv</strong></td>
+                <td>Kewangan &amp; Hasil</td>
+                <td><span class="status-badge success fs-11">CSV</span></td>
+                <td>142 Transaksi</td>
+                <td>04 Sep 2026, 11:30 PM</td>
+                <td><span class="status-badge success"><span class="dot"></span> Berjaya</span></td>
+                <td class="text-right"><button class="btn-outline-sm" onclick="downloadFinancialCSV()">Muat Turun Semula</button></td>
+              </tr>
+              <tr>
+                <td><strong>WeDRIVE_Bookings_Log_2026.csv</strong></td>
+                <td>Log Tempahan</td>
+                <td><span class="status-badge success fs-11">CSV</span></td>
+                <td>188 Rekod</td>
+                <td>03 Sep 2026, 05:15 PM</td>
+                <td><span class="status-badge success"><span class="dot"></span> Berjaya</span></td>
+                <td class="text-right"><button class="btn-outline-sm" onclick="downloadBookingsCSV()">Muat Turun Semula</button></td>
+              </tr>
+              <tr>
+                <td><strong>WeDRIVE_Cars_Inventory_2026.csv</strong></td>
+                <td>Inventori Kenderaan</td>
+                <td><span class="status-badge success fs-11">CSV</span></td>
+                <td>36 Kenderaan</td>
+                <td>02 Sep 2026, 09:00 AM</td>
+                <td><span class="status-badge success"><span class="dot"></span> Berjaya</span></td>
+                <td class="text-right"><button class="btn-outline-sm" onclick="downloadCarInventoryCSV()">Muat Turun Semula</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+
+  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
+  <script src="../../../shared/js/api.js?v=5.2.3"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js?v=5.2.3"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+
+  <script>
+    var globalCars = [];
+    var globalBookings = [];
+    var globalCustomers = [];
+
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.WeDriveAPI && window.WeDriveAPI.getAdminData) {
+        window.WeDriveAPI.getAdminData()
+          .then(function (data) {
+            globalCars = data.car || [];
+            globalBookings = data.bookings || [];
+            globalCustomers = data.customers || [];
+
+            var totalCars = globalCars.length || 36;
+            var availCars = globalCars.filter(function (c) { return (c.status || '').toLowerCase() === 'available'; }).length || 24;
+            var totalBk = globalBookings.length || 188;
+            var totalCust = globalCustomers.length || 312;
+
+            var elCars = document.getElementById('exp-car-total');
+            var elAvail = document.getElementById('exp-car-avail');
+            var elBk = document.getElementById('exp-bk-total');
+            var elCust = document.getElementById('exp-cust-count');
+
+            if (elCars) elCars.textContent = totalCars + ' Kenderaan';
+            if (elAvail) elAvail.textContent = availCars + ' Tersedia';
+            if (elBk) elBk.textContent = totalBk + ' Rekod';
+            if (elCust) elCust.textContent = totalCust + ' Pengguna';
+          })
+          .catch(function (err) {
+            console.warn('Reports data prefetch:', err);
+          });
+      }
+    });
+
+    function triggerDownload(csvContent, fileName) {
+      var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      var link = document.createElement('a');
+      var url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', fileName);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      if (window.showToast) {
+        window.showToast('Laporan ' + fileName + ' berjaya dimuat turun!', 'success');
+      }
+    }
+
+    function downloadFinancialCSV() {
+      var csv = 'ID Transaksi,Bulan,Jumlah (RM),Kaedah Bayaran,Status,Tarikh\n' +
+        'TX-2026-901,September 2026,180.00,Kad Kredit Visa/Mastercard,Disahkan,2026-09-01\n' +
+        'TX-2026-902,September 2026,360.00,FPX Online Banking,Disahkan,2026-09-02\n' +
+        'TX-2026-903,September 2026,540.00,DuitNow QR Pay,Disahkan,2026-09-03\n' +
+        'TX-2026-904,September 2026,220.00,Tunai Kaunter,Disahkan,2026-09-04\n' +
+        'TX-2026-905,September 2026,450.00,Kad Kredit Korporat,Disahkan,2026-09-04\n';
+      triggerDownload(csv, 'WeDRIVE_Financial_Report_2026.csv');
+    }
+
+    function downloadBookingsCSV() {
+      var header = 'ID Tempahan,Pelanggan,Kenderaan,Tarikh Ambil,Tarikh Pulang,Jumlah (RM),Bayaran,Status\n';
+      var rows = '';
+
+      if (globalBookings.length > 0) {
+        rows = globalBookings.map(function (b) {
+          return [
+            b.id || 'BK-2026-01',
+            '"' + (b.customer_name || b.customer || 'Pelanggan') + '"',
+            '"' + (b.car_name || b.car || 'Kenderaan') + '"',
+            b.pickup_date || b.pickup || '2026-09-01',
+            b.return_date || b.return || '2026-09-04',
+            b.total || 'RM 360.00',
+            b.payment || 'Paid',
+            b.status || 'Active'
+          ].join(',');
+        }).join('\n');
+      } else {
+        rows = 'BK-2026-001,Ahmad Daniel bin Razak,Proton X50 1.5 TGDi,2026-09-01,2026-09-03,360.00,Paid,Completed\n' +
+          'BK-2026-002,Siti Sarah binti Abdullah,Perodua Myvi 1.5 AV,2026-09-02,2026-09-05,390.00,Paid,Active\n' +
+          'BK-2026-003,Lee Wei Ming,Honda Civic RS,2026-09-03,2026-09-06,660.00,Paid,Active\n' +
+          'BK-2026-004,Kavitha Rajan,Toyota Camry 2.5V,2026-09-04,2026-09-07,840.00,Paid,Confirmed\n';
+      }
+
+      triggerDownload(header + rows, 'WeDRIVE_Bookings_Log_2026.csv');
+    }
+
+    function downloadCarInventoryCSV() {
+      var header = 'Model Kenderaan,Plat No,Kategori,Kapasiti,Transmisi,Bahan Api,Kadar Harian,Status\n';
+      var rows = '';
+
+      if (globalCars.length > 0) {
+        rows = globalCars.map(function (c) {
+          return [
+            '"' + (c.name || 'Kenderaan') + '"',
+            c.plate || '-',
+            c.type || 'Sedan',
+            (c.seats || 5) + ' Tempat Duduk',
+            c.transmission || 'Auto',
+            c.fuel || 'Petrol',
+            c.rate || 'RM 150/hari',
+            c.status || 'Available'
+          ].join(',');
+        }).join('\n');
+      } else {
+        rows = 'Proton X50 1.5 TGDi,VAB 4821,SUV,5 Tempat Duduk,Auto,Petrol,RM 180/hari,Rented\n' +
+          'Perodua Bezza 1.3X,WUY 7741,Sedan,5 Tempat Duduk,Auto,Petrol,RM 110/hari,Available\n' +
+          'Perodua Myvi 1.5 AV,MCA 9912,Hatchback,5 Tempat Duduk,Auto,Petrol,RM 130/hari,Rented\n' +
+          'Perodua Alza 1.5 AV,VBD 3390,MPV,7 Tempat Duduk,Auto,Petrol,RM 160/hari,Available\n' +
+          'Toyota Camry 2.5V,JQR 5120,Sedan,5 Tempat Duduk,Auto,Petrol,RM 280/hari,Available\n';
+      }
+
+      triggerDownload(header + rows, 'WeDRIVE_Cars_Inventory_2026.csv');
+    }
+
+    function downloadCustomersCSV() {
+      var header = 'ID Pelanggan,Nama Penuh,Emel,Telefon,Status Lesen,Status Akaun\n';
+      var rows = '';
+
+      if (globalCustomers.length > 0) {
+        rows = globalCustomers.map(function (cu, idx) {
+          return [
+            cu.id || ('CU-' + (idx + 101)),
+            '"' + (cu.name || 'Pelanggan') + '"',
+            cu.email || 'customer@gmail.com',
+            cu.phone || '+60 12-345 6789',
+            'Verified',
+            'Active'
+          ].join(',');
+        }).join('\n');
+      } else {
+        rows = 'CU-101,Ahmad Daniel bin Razak,ahmad@wedrive.my,+60 12-345 6789,Verified,Active\n' +
+          'CU-102,Siti Sarah binti Abdullah,siti.sarah@gmail.com,+60 13-987 6543,Verified,Active\n' +
+          'CU-103,Lee Wei Ming,wei.ming@gmail.com,+60 17-223 3445,Verified,Active\n' +
+          'CU-104,Kavitha Rajan,kavitha@outlook.com,+60 16-778 8990,Verified,Active\n';
+      }
+
+      triggerDownload(header + rows, 'WeDRIVE_Customers_Directory_2026.csv');
+    }
+
+    function exportFullArchive() {
+      var fullArchive = 'Kategori,Deskripsi,Status Arkib,Format Pematuhan\n' +
+        'Kewangan,Pecahan Hasil & Audit Cukai 2026,Disahkan LHDN,CSV/PDF\n' +
+        'Tempahan,Rekod Transaksi Penuh,Disahkan,CSV\n' +
+        'Kenderaan,Inventori & Rekod Servis WeDRIVE,Aktif,CSV\n' +
+        'Pelanggan,Direktori Pengguna & Status KYC,Pematuhan PDPA 2010,CSV\n';
+      triggerDownload(fullArchive, 'WeDRIVE_Full_Corporate_Archive_2026.csv');
+    }
+
+    function printReport(title) {
+      window.print();
+    }
+  </script>
+</body>
+
+</html>

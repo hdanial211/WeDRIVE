@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Booking | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
+  <!-- AUTH GUARD: Must run before page renders -->
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+</head>
+
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="bookings-add"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- TOPBAR (Main Navigation) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- HEADER -->
+      <div class="card reveal-onload mb-24 p-24">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <div class="flex-center gap-8 mb-6">
+              <a href="bookings.html" class="fs-12 text-muted no-underline">Pengurusan Tempahan</a>
+              <span class="material-icons-round fs-14 text-muted">chevron_right</span>
+              <span class="fs-12 text-primary-accent fw-600">Tempahan Kaunter Baharu</span>
+            </div>
+            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_add_booking">Cipta Tempahan</h1>
+            <p class="text-secondary fs-14 m-0 mt-4">Daftarkan tempahan baharu di kaunter atau tempahan korporat dengan pengiraan kos automatik.</p>
+          </div>
+          <div class="flex-center gap-10">
+            <button type="button" class="btn-outline-sm" onclick="window.location.href='bookings.html'">
+              <span class="material-icons-round fs-16">arrow_back</span> Batal
+            </button>
+            <button type="button" class="btn-primary-sm" onclick="document.getElementById('new-booking-form').requestSubmit()">
+              <span class="material-icons-round fs-16">check_circle</span> Sahkan Tempahan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CREATE BOOKING FORM BENTO -->
+      <form id="new-booking-form" onsubmit="handleBookingSubmit(event)">
+        <div class="grid-2 gap-24">
+          <!-- CARD 1: BUTIRAN PELANGGAN -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">person</span> Maklumat Pelanggan
+              </h3>
+            </div>
+
+            <div class="mb-16">
+              <label class="form-label" for="nb-cust-name">Nama Penuh Pelanggan <span class="text-danger">*</span></label>
+              <input type="text" id="nb-cust-name" class="form-input" placeholder="cth: Ahmad Daniel bin Razak" required />
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label" for="nb-cust-email">Emel <span class="text-danger">*</span></label>
+                <input type="email" id="nb-cust-email" class="form-input" placeholder="ahmad@gmail.com" required />
+              </div>
+              <div>
+                <label class="form-label" for="nb-cust-phone">Nombor Telefon <span class="text-danger">*</span></label>
+                <input type="tel" id="nb-cust-phone" class="form-input" placeholder="+60 12-345 6789" required />
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label" for="nb-cust-ic">No. Kad Pengenalan / Pasport <span class="text-danger">*</span></label>
+              <input type="text" id="nb-cust-ic" class="form-input" placeholder="000101-04-1234" required />
+            </div>
+          </div>
+
+          <!-- CARD 2: PILIHAN KENDERAAN -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">directions_car</span> Pilihan Kenderaan Tersedia
+              </h3>
+            </div>
+
+            <div class="mb-16">
+              <label class="form-label" for="nb-car-select">Pilih Model Kereta Tersedia <span class="text-danger">*</span></label>
+              <select id="nb-car-select" class="form-input" onchange="updateVehicleDetails()" required>
+                <option value="180" data-car-name="Proton X50 1.5 TGDi" data-car-plate="VAB 4821">Proton X50 (SUV) - RM 180/hari (VAB 4821)</option>
+                <option value="110" data-car-name="Perodua Bezza 1.3X" data-car-plate="WUY 7741">Perodua Bezza (Sedan) - RM 110/hari (WUY 7741)</option>
+                <option value="130" data-car-name="Perodua Myvi 1.5 AV" data-car-plate="MCA 9912">Perodua Myvi (Hatchback) - RM 130/hari (MCA 9912)</option>
+                <option value="160" data-car-name="Perodua Alza 1.5 AV" data-car-plate="VBD 3390">Perodua Alza (MPV 7-Seater) - RM 160/hari (VBD 3390)</option>
+                <option value="220" data-car-name="Honda Civic 1.5 RS" data-car-plate="WB 8319 K">Honda Civic RS (Sedan) - RM 220/hari (WB 8319 K)</option>
+                <option value="280" data-car-name="Toyota Camry 2.5V" data-car-plate="JQR 5120">Toyota Camry (Executive) - RM 280/hari (JQR 5120)</option>
+                <option value="450" data-car-name="Toyota Vellfire 2.5" data-car-plate="VEE 1122">Toyota Vellfire (VIP Luxury) - RM 450/hari (VEE 1122)</option>
+              </select>
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label">Kadar Harian</label>
+                <div class="fs-18 fw-800 text-primary-accent" id="nb-rate-display">RM 180 / hari</div>
+              </div>
+              <div>
+                <label class="form-label">Deposit Keselamatan</label>
+                <div class="fs-18 fw-800 text-title">RM 200 (Boleh Dikembalikan)</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label" for="nb-pickup-hub">Hab Lokasi Pengambilan</label>
+              <select id="nb-pickup-hub" class="form-input">
+                <option value="Melaka Sentral Hub">Melaka Sentral Hub</option>
+                <option value="Depot Lapangan Terbang Melaka (MKZ)">Depot Lapangan Terbang Melaka (MKZ)</option>
+                <option value="Pusat Bandar Jonker Point">Pusat Bandar Jonker Point</option>
+                <option value="Ayer Keroh Depot">Ayer Keroh Depot</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- CARD 3: TARIKH BERPASANGAN APPLE HIG -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">date_range</span> Tarikh &amp; Masa Sewaan
+              </h3>
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label" for="nb-date-pickup">Tarikh Ambil (Pickup) <span class="text-danger">*</span></label>
+                <div class="input-wrap">
+                  <span class="material-icons-round fs-18">event</span>
+                  <input type="text" id="nb-date-pickup" class="form-input" placeholder="Pilih Tarikh Ambil" required />
+                </div>
+              </div>
+              <div>
+                <label class="form-label" for="nb-date-return">Tarikh Pulang (Return) <span class="text-danger">*</span></label>
+                <div class="input-wrap">
+                  <span class="material-icons-round fs-18">event_available</span>
+                  <input type="text" id="nb-date-return" class="form-input" placeholder="Pilih Tarikh Pulang" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="bento-item-subtle p-14 fs-13">
+              <div class="flex-between">
+                <span class="text-muted">Jumlah Tempoh Sewaan:</span>
+                <strong class="text-primary-accent" id="nb-days-display">1 Hari</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4: PERLINDUNGAN & TAMBAHAN -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">shield</span> Perlindungan &amp; Servis Tambahan
+              </h3>
+            </div>
+
+            <div class="flex-column gap-12">
+              <label class="bento-item-subtle p-14 flex-between cursor-pointer">
+                <div class="flex-center gap-10">
+                  <input type="checkbox" id="add-cdw" checked onchange="calculateBookingTotal()" />
+                  <div>
+                    <div class="fw-700 fs-14">Perlindungan Komprehensif (CDW)</div>
+                    <div class="fs-12 text-muted">Liabiliti kerosakan sifar tanpa lebihan</div>
+                  </div>
+                </div>
+                <strong class="text-primary-accent fs-14">RM 35/hari</strong>
+              </label>
+
+              <label class="bento-item-subtle p-14 flex-between cursor-pointer">
+                <div class="flex-center gap-10">
+                  <input type="checkbox" id="add-driver" onchange="calculateBookingTotal()" />
+                  <div>
+                    <div class="fw-700 fs-14">Pemandu Tambahan Berdaftar</div>
+                    <div class="fs-12 text-muted">Dua pemandu sah diinsuranskan</div>
+                  </div>
+                </div>
+                <strong class="text-primary-accent fs-14">RM 20/hari</strong>
+              </label>
+
+              <label class="bento-item-subtle p-14 flex-between cursor-pointer">
+                <div class="flex-center gap-10">
+                  <input type="checkbox" id="add-baby" onchange="calculateBookingTotal()" />
+                  <div>
+                    <div class="fw-700 fs-14">Kerusi Keselamatan Kanak-Kanak (ISOFIX)</div>
+                    <div class="fs-12 text-muted">Standard keselamatan ECE R44</div>
+                  </div>
+                </div>
+                <strong class="text-primary-accent fs-14">RM 15/hari</strong>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUMMARY CARD -->
+        <div class="card p-24 mt-24">
+          <div class="flex-between flex-wrap gap-16">
+            <div>
+              <div class="fs-13 text-muted mb-4">Ringkasan Kos Keseluruhan:</div>
+              <div class="flex-center gap-16 flex-wrap">
+                <div>Sewaan (<span id="calc-days-label">1 hari</span>): <strong id="calc-rental-subtotal">RM 180.00</strong></div>
+                <div>Perlindungan: <strong id="calc-coverage-subtotal">RM 35.00</strong></div>
+                <div>Deposit: <strong>RM 200.00</strong></div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="fs-12 text-muted">Jumlah Perlu Dibayar</div>
+              <div class="fs-24 fw-800 text-primary-accent" id="calc-grand-total">RM 415.00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="flex-between mt-24 p-20 card">
+          <span class="fs-13 text-muted">Tempahan ini akan disahkan secara serta-merta dan resit rasmi dijana.</span>
+          <div class="flex-center gap-10">
+            <button type="button" class="btn-outline" onclick="window.location.href='bookings.html'">Batal</button>
+            <button type="submit" class="btn-primary">
+              <span class="material-icons-round fs-16">check_circle</span> Sahkan &amp; Cetak Kontrak
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+
+  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
+  <script src="../../../shared/js/api.js?v=5.2.3"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js?v=5.2.3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+
+  <script>
+    var fpPickup, fpReturn;
+    var currentRate = 180;
+    var rentalDays = 1;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+
+      fpPickup = flatpickr('#nb-date-pickup', {
+        minDate: 'today',
+        defaultDate: today,
+        dateFormat: 'Y-m-d',
+        onChange: function (selectedDates, dateStr) {
+          handlePickupChange(dateStr);
+        }
+      });
+
+      fpReturn = flatpickr('#nb-date-return', {
+        minDate: tomorrow,
+        defaultDate: tomorrow,
+        dateFormat: 'Y-m-d',
+        onChange: function () {
+          calculateBookingTotal();
+        }
+      });
+
+      // Check if car param is supplied in URL
+      var urlCar = new URLSearchParams(window.location.search).get('car');
+      if (urlCar) {
+        var sel = document.getElementById('nb-car-select');
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].text.toLowerCase().includes(urlCar.toLowerCase()) || sel.options[i].getAttribute('data-car-plate') === urlCar) {
+            sel.selectedIndex = i;
+            break;
+          }
+        }
+      }
+
+      updateVehicleDetails();
+    });
+
+    function handlePickupChange(dateStr) {
+      if (!dateStr) return;
+      var pickDate = new Date(dateStr);
+      var minReturn = new Date(pickDate);
+      minReturn.setDate(minReturn.getDate() + 1);
+
+      fpReturn.set('minDate', minReturn);
+      if (fpReturn.selectedDates[0] && fpReturn.selectedDates[0] <= pickDate) {
+        fpReturn.setDate(minReturn);
+      }
+      calculateBookingTotal();
+    }
+
+    function updateVehicleDetails() {
+      var sel = document.getElementById('nb-car-select');
+      var rate = parseInt(sel.value, 10) || 180;
+      currentRate = rate;
+      document.getElementById('nb-rate-display').textContent = 'RM ' + rate + ' / hari';
+      calculateBookingTotal();
+    }
+
+    function calculateBookingTotal() {
+      var pickStr = document.getElementById('nb-date-pickup').value;
+      var retStr = document.getElementById('nb-date-return').value;
+
+      var days = 1;
+      if (pickStr && retStr) {
+        var p = new Date(pickStr);
+        var r = new Date(retStr);
+        var diffTime = r - p;
+        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        days = Math.max(1, diffDays);
+      }
+      rentalDays = days;
+
+      var rentalSubtotal = days * currentRate;
+
+      // Add-ons
+      var coverageDaily = 0;
+      if (document.getElementById('add-cdw').checked) coverageDaily += 35;
+      if (document.getElementById('add-driver').checked) coverageDaily += 20;
+      if (document.getElementById('add-baby').checked) coverageDaily += 15;
+
+      var coverageSubtotal = days * coverageDaily;
+      var grandTotal = rentalSubtotal + coverageSubtotal + 200; // Deposit RM200
+
+      document.getElementById('nb-days-display').textContent = days + ' Hari';
+      document.getElementById('calc-days-label').textContent = days + ' hari';
+      document.getElementById('calc-rental-subtotal').textContent = 'RM ' + rentalSubtotal.toFixed(2);
+      document.getElementById('calc-coverage-subtotal').textContent = 'RM ' + coverageSubtotal.toFixed(2);
+      document.getElementById('calc-grand-total').textContent = 'RM ' + grandTotal.toFixed(2);
+    }
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+
+      var custName = document.getElementById('nb-cust-name').value.trim();
+      var sel = document.getElementById('nb-car-select');
+      var selectedOpt = sel.options[sel.selectedIndex];
+      var carName = selectedOpt.getAttribute('data-car-name') || 'Proton X50';
+      var carPlate = selectedOpt.getAttribute('data-car-plate') || 'VAB 4821';
+      var grandTotal = document.getElementById('calc-grand-total').textContent;
+
+      var newBooking = {
+        id: 'BK-2026-' + Math.floor(100 + Math.random() * 900),
+        customer_name: custName,
+        customer: custName,
+        email: document.getElementById('nb-cust-email').value.trim(),
+        phone: document.getElementById('nb-cust-phone').value.trim(),
+        ic_no: document.getElementById('nb-cust-ic').value.trim(),
+        car_name: carName,
+        car: carName,
+        plate: carPlate,
+        pickup_date: document.getElementById('nb-date-pickup').value,
+        pickup: document.getElementById('nb-date-pickup').value,
+        return_date: document.getElementById('nb-date-return').value,
+        return: document.getElementById('nb-date-return').value,
+        location: document.getElementById('nb-pickup-hub').value,
+        total: grandTotal,
+        payment: 'Paid',
+        status: 'Active'
+      };
+
+      // Save via WeDriveAPI / localStorage
+      try {
+        var existing = JSON.parse(localStorage.getItem('wedrive_custom_bookings') || '[]');
+        existing.unshift(newBooking);
+        localStorage.setItem('wedrive_custom_bookings', JSON.stringify(existing));
+      } catch (err) {
+        console.warn('LocalStorage save error:', err);
+      }
+
+      if (window.showToast) {
+        window.showToast('Tempahan ' + newBooking.id + ' berjaya dicipta untuk ' + custName + '!', 'success');
+      }
+
+      setTimeout(function () {
+        window.location.href = 'active-bookings.html';
+      }, 700);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Active Bookings | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
+  <!-- AUTH GUARD: Must run before page renders -->
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+</head>
+
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="bookings-active"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- TOPBAR (Main Navigation) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- HEADER BANNER -->
+      <div class="card reveal-onload mb-20 p-24">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <div class="flex-center gap-8 mb-6">
+              <span class="status-badge active"><span class="dot"></span> Live On-Going Rentals</span>
+              <span class="fs-12 text-muted" id="active-count-badge">-- tempahan aktif</span>
+            </div>
+            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_active_bookings">Tempahan Aktif</h1>
+            <p class="text-secondary fs-14 m-0 mt-4">Semakan kenderaan yang sedang dipandu pelanggan, status bayaran sewa, dan pengurusan pulangan kunci.</p>
+          </div>
+          <div class="flex-center gap-10">
+            <button class="btn-outline-sm" onclick="window.location.href='bookings.html'">
+              <span class="material-icons-round fs-16">receipt_long</span> Semua Tempahan
+            </button>
+            <button class="btn-primary-sm" onclick="window.location.href='new-booking.html'">
+              <span class="material-icons-round fs-16">add</span> Tempahan Baharu
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS KPI ROW -->
+      <div class="stats-grid mb-20">
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Tempahan Aktif</div>
+            <div class="value text-primary-accent" id="active-stat-count">--</div>
+            <div class="change up"><span class="material-icons-round fs-14">directions_car</span> Sedang berlangsung</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">bolt</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Pulangan Hari Ini</div>
+            <div class="value text-amber" id="active-stat-today">--</div>
+            <div class="change"><span class="material-icons-round fs-14">schedule</span> Sebelum tengah malam</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">assignment_return</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Deposit Dipegang</div>
+            <div class="value text-green" id="active-stat-deposit">RM --</div>
+            <div class="change up"><span class="material-icons-round fs-14">security</span> Selamat dalam akaun escrow</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">verified_user</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Nilai Sewaan Aktif</div>
+            <div class="value fs-24 text-title" id="active-stat-revenue">RM --</div>
+            <div class="change up"><span class="material-icons-round fs-14">payments</span> Tempahan berjalan</div>
+          </div>
+          <div class="stat-icon purple"><span class="material-icons-round">account_balance_wallet</span></div>
+        </div>
+      </div>
+
+      <!-- FILTER + SEARCH -->
+      <div class="card reveal-on-scroll mb-20 px-22 py-16">
+        <div class="flex-between flex-wrap gap-12">
+          <div class="flex-center gap-8 flex-wrap">
+            <span class="fs-13 fw-600 text-muted">Tapis:</span>
+            <button class="filter-chip active" onclick="filterActiveType('all', this)">Semua Aktif</button>
+            <button class="filter-chip" onclick="filterActiveType('today', this)">Pulang Hari Ini</button>
+            <button class="filter-chip" onclick="filterActiveType('paid', this)">Bayaran Penuh</button>
+          </div>
+          <div class="flex-center gap-10">
+            <div class="input-wrap-sm input-search-fixed">
+              <span class="material-icons-round fs-18">search</span>
+              <input type="text" id="active-search" placeholder="Cari ID, pelanggan, atau kereta..." oninput="searchActive(this.value)" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE BOOKINGS TABLE -->
+      <div class="card reveal-on-scroll">
+        <div class="card-header flex-between flex-wrap gap-10">
+          <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
+            <span class="material-icons-round text-primary-accent">receipt_long</span> Rekod Tempahan Sedang Aktif
+          </h3>
+          <span class="fs-12 text-muted" id="active-table-count">Memaparkan rekod aktif</span>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>ID Tempahan</th>
+                <th>Pelanggan</th>
+                <th>Kenderaan</th>
+                <th>Tarikh Ambil</th>
+                <th>Tarikh Pulang</th>
+                <th>Jumlah (RM)</th>
+                <th>Bayaran</th>
+                <th>Status</th>
+                <th class="text-right">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="active-bookings-tbody">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+
+  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
+  <script src="../../../shared/js/api.js?v=5.2.3"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js?v=5.2.3"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+
+  <script>
+    var activeBookingsList = [];
+    var currentFilterType = 'all';
+    var searchQuery = '';
+
+    function initActiveBookings() {
+      window.WeDriveAPI.getAdminData()
+        .then(function (data) {
+          var allBookings = data.bookings || [];
+          activeBookingsList = allBookings.filter(function (b) {
+            var st = (b.status || '').toLowerCase();
+            return st === 'active' || st === 'confirmed';
+          });
+
+          // Compute stats
+          var count = activeBookingsList.length;
+          var totalRevenue = activeBookingsList.reduce(function (sum, b) {
+            var num = parseFloat(String(b.total || '').replace(/[^0-9.]/g, '')) || 0;
+            return sum + num;
+          }, 0);
+
+          var totalDeposit = count * 200;
+
+          document.getElementById('active-stat-count').textContent = count;
+          document.getElementById('active-stat-today').textContent = Math.min(count, 2);
+          document.getElementById('active-stat-deposit').textContent = 'RM ' + totalDeposit.toLocaleString();
+          document.getElementById('active-stat-revenue').textContent = 'RM ' + totalRevenue.toLocaleString();
+          document.getElementById('active-count-badge').textContent = count + ' tempahan aktif';
+
+          renderActiveTable();
+        })
+        .catch(function (err) {
+          console.error('Error loading active bookings:', err);
+        });
+    }
+
+    function renderActiveTable() {
+      var filtered = activeBookingsList.filter(function (b) {
+        var matchType = true;
+        if (currentFilterType === 'paid') {
+          matchType = (b.payment || '').toLowerCase() === 'paid';
+        }
+        var cName = (b.customer_name || b.customer || '').toLowerCase();
+        var carName = (b.car_name || b.car || '').toLowerCase();
+        var bId = String(b.id || '').toLowerCase();
+        var matchSearch = !searchQuery ||
+          bId.includes(searchQuery) ||
+          cName.includes(searchQuery) ||
+          carName.includes(searchQuery);
+
+        return matchType && matchSearch;
+      });
+
+      var tbody = document.getElementById('active-bookings-tbody');
+      if (!tbody) return;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="p-32 text-center text-muted">Tiada tempahan aktif ditemui.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function (b) {
+        var paymentBadge = (b.payment || '').toLowerCase() === 'paid' ? 'success' : 'pending';
+        var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : 'BK-2026-0' + b.id) : 'BK-2026-01';
+        var cust = b.customer_name || b.customer || 'Pelanggan WeDRIVE';
+        var car = b.car_name || b.car || 'Kenderaan WeDRIVE';
+        var pickup = b.pickup_date || b.pickup || '-';
+        var returnD = b.return_date || b.return || '-';
+        var total = b.total ? (String(b.total).startsWith('RM') ? b.total : 'RM ' + b.total) : 'RM 360';
+
+        return '<tr>' +
+          '<td><strong class="text-primary-accent">' + bId + '</strong></td>' +
+          '<td><strong>' + cust + '</strong></td>' +
+          '<td>' + car + '</td>' +
+          '<td><span class="fs-13">' + pickup + '</span></td>' +
+          '<td><span class="fs-13 fw-600 text-title">' + returnD + '</span></td>' +
+          '<td><strong class="text-title">' + total + '</strong></td>' +
+          '<td><span class="status-badge ' + paymentBadge + '"><span class="dot"></span> ' + (b.payment || 'Paid') + '</span></td>' +
+          '<td><span class="status-badge active"><span class="dot"></span> Active</span></td>' +
+          '<td class="text-right">' +
+            '<button class="btn-outline-sm mr-6" onclick="window.location.href=\'../../../customer/pages/receipt/receipt.html?id=' + (b.id || '') + '\'">Resit</button>' +
+            '<button class="btn-primary-sm" onclick="window.location.href=\'bookings.html\'">Urus</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function filterActiveType(type, btn) {
+      currentFilterType = type;
+      document.querySelectorAll('.filter-chip').forEach(function (c) { c.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+      renderActiveTable();
+    }
+
+    function searchActive(val) {
+      searchQuery = (val || '').trim().toLowerCase();
+      renderActiveTable();
+    }
+
+    document.addEventListener('DOMContentLoaded', initActiveBookings);
+  </script>
+</body>
+
+</html>

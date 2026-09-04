@@ -8,26 +8,18 @@ trigger: always_on
 
 ### Navigation Pattern
 
-| Modul    | Jenis Navigation | Loader                          |
-| -------- | ---------------- | ------------------------------- |
-| Admin    | Sidebar          | `shared/js/sidebar-loader.js`   |
-| Customer | Sidebar          | `customer/js/sidebar-loader.js` |
-| Guest    | Top Navbar       | `shared/js/navbar-loader.js`    |
-| Account  | Tiada (standalone) | -                             |
+| Modul    | Jenis Navigation | Main Navigation | Sub-Main Navigation | Loader |
+| -------- | ---------------- | --------------- | ------------------- | ------ |
+| **Admin** | **Dwi-Navigasi (Topbar Main + Sidebar Sub-Main)** | **Top Navbar** (6 Modul Utama: Dashboard, Cars, Bookings, Customers, Reports, AI Intelligence) | **Sidebar Kontekstual** (Alatan Sub-Main mengikut modul aktif) | `shared/js/navbar-loader.js` + `shared/js/sidebar-loader.js` |
+| **Customer** | Sidebar Sahaja | - | Menu Pelanggan Penuh | `customer/js/sidebar-loader.js` |
+| **Guest** | Top Navbar Sahaja | Top Navbar Awam | - | `shared/js/navbar-loader.js` |
+| **Account** | Tiada (Standalone) | - | - | - |
 
-- JANGAN campur sidebar dan navbar dalam satu modul.
-- Guest pages guna **top navbar** sahaja.
-- Customer dan Admin pages guna **sidebar** sahaja.
-
-### Sidebar Components
-
-| Modul    | Sidebar Component                              |
-| -------- | ---------------------------------------------- |
-| Admin    | `admin/components/sidebar/sidebar-admin.html`  |
-| Customer | Dijana oleh `customer/js/sidebar-loader.js`    |
-
-- Sidebar admin dan customer adalah BERBEZA antara satu sama lain.
-- Dalam modul yang sama, semua page WAJIB guna sidebar yang konsisten.
+### Peraturan Khusus Navigasi Admin (Topbar Main + Sidebar Sub-Main Architecture)
+- **Topbar sebagai Main Navigation:** Topbar mengawal peralihan antara 6 modul utama sistem pentadbir (Dashboard, Cars, Bookings, Customers, Reports, AI Intelligence).
+- **Sidebar sebagai Sub-Main Navigation:** Sidebar bertindak sebagai navigasi anak (*sub-navigation*) yang menyesuaikan diri secara dinamik mengikut modul yang dipilih di topbar.
+- **Setiap Item Sub-Main Wajib Ada Halaman Fizikal Tersendiri:** Setiap sub-item dalam bar sisi WAJIB mempunyai fail fizikal `.html` sendiri (contoh: `available-cars.html`, `rented-cars.html`, `add-car.html`, `active-bookings.html`, `new-booking.html`, `operations.html`, dsb.), dan BUKAN berkongsi URL dengan query string atau hash.
+- **Konsistensi Modul:** Semua halaman dalam modul yang sama WAJIB mengekalkan struktur Topbar Main dan Sidebar Sub-Main yang seragam.
 
 ---
 

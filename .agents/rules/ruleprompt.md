@@ -72,6 +72,8 @@ trigger: always_on
 ## 7. Rujukan Peraturan Modul Berkaitan
 
 - **Navigation, Responsif & UI/UX:** [`.agents/rules/navigation_and_ui.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/navigation_and_ui.md)
+  - **Seni Bina Navigasi Admin:** Modul Admin WAJIB menggunakan **Topbar sebagai Main Navigation** (6 modul teras: Dashboard, Cars, Bookings, Customers, Reports, AI Intelligence) dan **Sidebar sebagai Sub-Main Navigation** (alatan kontekstual fizikal `.html` khusus).
 - **Kod, CSS & Backend Architecture:** [`.agents/rules/code_and_backend.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/code_and_backend.md)
 - **Apple Device Support:** [`.agents/rules/apple_device_support.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_device_support.md)
 - **Keselamatan Siber & Audit Kerentanan (Strix):** [`.agents/rules/security_and_audit.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/security_and_audit.md)
+

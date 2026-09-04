@@ -2440,3 +2440,61 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.3.6 Eradicate all oval shapes by enforcing 1:1 perfect circle on all close and icon buttons`
   - Tag Versi: `5.3.6`
+
+---
+
+## 🏛️ [MAJOR UPDATE] 139. Seni Bina Dwi-Navigasi Pentadbir (Topbar Main + Sidebar Sub-Main) & Pelaksanaan Penuh 8 Halaman Khusus Fizikal (v5.4.0)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna mengarahkan penstrukturan semula navigasi pentadbir:
+    > *"update jugak dekat agent tu yang dekat admin kita buat sidebar as submain ,dekat topbar kita buat as main"*
+    > *"okey now saya nak dekat admin tu setiap sidebar tu mesti ada page sendiri..kalau xde buat guna mcp stitch atau apa2 ..klau share tu mesti seperate kan ..../Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM KHAS 6/BITU3983 PROJECT II(FYP 2)/AI CAR RENTAL SYSTEM/.agents baca ni dulu sebelum buat"*
+    > *"gunakan semua mcp n skill untuk buat semua page tu...n buatkan page tu x nampak ai..nampak macam official page"*
+- **Seni Bina Dwi-Navigasi Rasmi (Dual-Navigation Hierarchy)**:
+  1. **Topbar sebagai Main Navigation**:
+     - Mengawal peralihan antara 6 modul utama sistem pentadbir:
+       1. `Papan Pemuka` (`dashboard/admin.html` & `dashboard/operations.html`)
+       2. `Kenderaan` (`car/cars.html`, `car/available-cars.html`, `car/rented-cars.html`, `car/add-car.html`)
+       3. `Tempahan` (`booking/bookings.html`, `booking/active-bookings.html`, `booking/new-booking.html`, `calendar/calendar.html`)
+       4. `Pelanggan` (`customer/customers.html`, `customer/verifications.html`)
+       5. `Laporan` (`report/reports.html`, `report/export-reports.html`)
+       6. `Kecerdasan AI` (`analytics/analytics.html`, `chatbot/chatbot.html`, `marketing/marketing.html`)
+  2. **Sidebar sebagai Sub-Main Navigation (Contextual Sub-Navigation)**:
+     - Menyesuaikan alatan secara automatik mengikut modul aktif di topbar.
+     - Setiap pautan merujuk kepada fail fizikal `.html` tersendiri, tanpa parameter URL `?filter=...` atau hash `#operations`.
+- **Pelaksanaan Penuh 8 Halaman Khusus Fizikal (Official Enterprise Look, Zero AI Cheesy Look)**:
+  1. **`admin/pages/dashboard/operations.html` (Status Operasi)**:
+     - Pemantauan masa nyata ketersediaan kenderaan di 3 hab utama Melaka (Hab Lapangan Terbang MKZ, Hab Melaka Sentral, Pusat Bandar Jonker Point).
+     - Senarai semakan protokol sanitasi & pemeriksaan harian standard ISO.
+     - Jadual serahan dan pulangan hari ini yang dihubungkan terus ke pangkalan data tempahan.
+  2. **`admin/pages/car/available-cars.html` (Kenderaan Tersedia)**:
+     - Direktori khusus kereta berstatus *Available* dengan paparan kad Bento squircle Apple.
+     - Penapis kategori (Semua, Sedan, SUV, MPV, Hatchback), carian pantas, dan suis dwi-paparan (*Grid / Senarai*).
+     - Butang tindakan segera tempahan (*Instant Reserve*) yang membawa terus ke borang tempahan berserta ID kenderaan.
+  3. **`admin/pages/car/rented-cars.html` (Sedang Disewa)**:
+     - Penjejakan kenderaan aktif di atas jalan raya berserta maklumat penyewa semasa, tarikh pulangan, dan baki tempoh sewaan.
+     - Integrasi terus ke log sewaan aktif dan perincian kenderaan.
+  4. **`admin/pages/car/add-car.html` (Tambah Kereta Baharu)**:
+     - Meja pendaftaran kenderaan berskrin penuh mengandungi maklumat asas, spesifikasi transmisi/bahan api/kerusi, kadar harga sewaan, deposit, dan pilihan ciri pintar (Apple CarPlay, Dashcam 4K, Keyless, Reverse Cam).
+     - Zon muat naik foto kenderaan interaktif dengan pratonton langsung (*drag-and-drop file preview*).
+  5. **`admin/pages/booking/active-bookings.html` (Tempahan Aktif)**:
+     - Lejar pengurusan tempahan sedang berjalan dengan penunjuk status bayaran sewa, deposit dipegang, dan kiraan masa pulangan.
+     - Butang tindakan pantas untuk melihat resit rasmi dan pengurusan pulangan kenderaan.
+  6. **`admin/pages/booking/new-booking.html` (Cipta Tempahan)**:
+     - Meja tempahan kaunter rasmi dengan aliran pemilihan tarikh berpasangan Apple HIG (*Paired Date Range Lock Flow*).
+     - Pengiraan kos automatik: hari sewaan, pilihan perlindungan CDW, pemandu tambahan, kerusi kanak-kanak, dan deposit.
+  7. **`admin/pages/customer/verifications.html` (Pengesahan Lesen)**:
+     - Meja semakan pengesahan identiti dan lesen memandu pelanggan bagi pematuhan Akta Pengangkutan Jalan & insurans.
+     - Modal pemeriksaan dokumen dwisisi (MyKad & Lesen Memandu JPJ) dengan butang kelulusan dan penolakan berserta alasan.
+  8. **`admin/pages/report/export-reports.html` (Eksport Laporan Data)**:
+     - Pusat eksport rasmi dengan keupayaan penjanaan fail `.csv` secara langsung melalui objek `Blob` bagi laporan kewangan, log tempahan, inventori kenderaan, dan direktori pelanggan.
+     - Jadual sejarah muat turun dokumen arkib.
+- **Pematuhan Piawaian `.agents`**:
+  - Dikemas kini fail `.agents/rules/navigation_and_ui.md` bagi mendokumentasikan seni bina Topbar Main + Sidebar Sub-Main secara rasmi.
+  - Dikemas kini `docs/PROJECT_STRUCTURE.md` untuk menyenaraikan kesemua 8 fail sub-halaman baharu.
+  - Penyingkiran sepenuhnya sebarang perkataan "Armada" kepada "Kenderaan / Cars", penyingkiran gaya sebaris (*inline styles*), dan penyeragaman token kelas pembantu di `shared/css/wedrive.css`.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright (`cd tests && npx playwright test`): **100% Pass Rate** (27/27 ujian lulus).
+- **Maklumat Git**:
+  - Commit: `5.4.0 Implement Topbar Main and Sidebar Sub-Main architecture with 8 dedicated admin pages`
+  - Tag Versi: `5.4.0`

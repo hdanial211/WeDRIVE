@@ -18,7 +18,7 @@
       sectionLabel: 'Papan Pemuka',
       items: [
         { page: 'admin', href: 'dashboard/admin.html', icon: 'dashboard', key: 'sidebar_overview', label: 'Ringkasan Utama' },
-        { page: 'operations', href: 'dashboard/admin.html#operations', icon: 'speed', key: 'admin_stat_active', label: 'Status Operasi' }
+        { page: 'operations', href: 'dashboard/operations.html', icon: 'speed', key: 'admin_stat_active', label: 'Status Operasi' }
       ]
     },
     car: {
@@ -26,9 +26,9 @@
       sectionLabel: 'Pengurusan Kereta',
       items: [
         { page: 'car-all', href: 'car/cars.html', icon: 'directions_car', key: 'sidebar_all_cars', label: 'Semua Kenderaan' },
-        { page: 'car-available', href: 'car/cars.html?filter=Available', icon: 'check_circle', key: 'sidebar_available_cars', label: 'Kenderaan Tersedia' },
-        { page: 'car-rented', href: 'car/cars.html?filter=Rented', icon: 'car_rental', key: 'sidebar_rented_cars', label: 'Sedang Disewa' },
-        { page: 'car-add', href: 'car/cars.html?action=add', icon: 'add_circle', key: 'sidebar_add_car', label: 'Tambah Kereta Baharu' }
+        { page: 'car-available', href: 'car/available-cars.html', icon: 'check_circle', key: 'sidebar_available_cars', label: 'Kenderaan Tersedia' },
+        { page: 'car-rented', href: 'car/rented-cars.html', icon: 'car_rental', key: 'sidebar_rented_cars', label: 'Sedang Disewa' },
+        { page: 'car-add', href: 'car/add-car.html', icon: 'add_circle', key: 'sidebar_add_car', label: 'Tambah Kereta Baharu' }
       ]
     },
     booking: {
@@ -37,8 +37,8 @@
       items: [
         { page: 'bookings-all', href: 'booking/bookings.html', icon: 'receipt_long', key: 'sidebar_all_bookings', label: 'Semua Tempahan' },
         { page: 'calendar', href: 'calendar/calendar.html', icon: 'calendar_month', key: 'sidebar_calendar', label: 'Kalendar Tempahan' },
-        { page: 'bookings-active', href: 'booking/bookings.html?status=Active', icon: 'bolt', key: 'sidebar_active_bookings', label: 'Tempahan Aktif' },
-        { page: 'bookings-add', href: 'booking/bookings.html?action=add', icon: 'add_circle', key: 'sidebar_add_booking', label: 'Cipta Tempahan' }
+        { page: 'bookings-active', href: 'booking/active-bookings.html', icon: 'bolt', key: 'sidebar_active_bookings', label: 'Tempahan Aktif' },
+        { page: 'bookings-add', href: 'booking/new-booking.html', icon: 'add_circle', key: 'sidebar_add_booking', label: 'Cipta Tempahan' }
       ]
     },
     customer: {
@@ -46,7 +46,7 @@
       sectionLabel: 'Pengurusan Pelanggan',
       items: [
         { page: 'customers-all', href: 'customer/customers.html', icon: 'people', key: 'sidebar_customers', label: 'Direktori Pelanggan' },
-        { page: 'customers-pending', href: 'customer/customers.html?filter=pending', icon: 'verified_user', key: 'sidebar_pending_verifications', label: 'Pengesahan Lesen' }
+        { page: 'customers-pending', href: 'customer/verifications.html', icon: 'verified_user', key: 'sidebar_pending_verifications', label: 'Pengesahan Lesen' }
       ]
     },
     report: {
@@ -54,7 +54,7 @@
       sectionLabel: 'Laporan & Analitik',
       items: [
         { page: 'reports-summary', href: 'report/reports.html', icon: 'bar_chart', key: 'sidebar_reports', label: 'Laporan Hasil & Sewaan' },
-        { page: 'reports-export', href: 'report/reports.html?tab=export', icon: 'file_download', key: 'sidebar_export_reports', label: 'Eksport Laporan Data' }
+        { page: 'reports-export', href: 'report/export-reports.html', icon: 'file_download', key: 'sidebar_export_reports', label: 'Eksport Laporan Data' }
       ]
     },
     ai: {
@@ -104,39 +104,51 @@
     if (path.includes('/report/')) {
       return 'report';
     }
-    if (path.includes('/dashboard/') || path.endsWith('/admin.html')) {
+    if (path.includes('/dashboard/') || path.endsWith('/admin.html') || path.endsWith('/operations.html')) {
       return 'dashboard';
     }
     return 'dashboard';
   }
 
   function detectActiveSubItem(items, currentPage) {
-    var search = window.location.search || '';
     var pathname = window.location.pathname || '';
 
-    // 1. If explicit query parameter match (e.g. ?filter=Available or ?action=add)
-    for (var i = 0; i < items.length; i++) {
-      var it = items[i];
-      if (it.href.indexOf('?') !== -1) {
-        var q = it.href.split('?')[1];
-        if (search.indexOf(q) !== -1) {
-          return it.page;
+    // Normalize aliases
+    if (currentPage === 'car') currentPage = 'car-all';
+    if (currentPage === 'bookings') currentPage = 'bookings-all';
+    if (currentPage === 'customers') currentPage = 'customers-all';
+    if (currentPage === 'reports') currentPage = 'reports-summary';
+
+    // 1. If explicit currentPage matches an item
+    if (currentPage) {
+      for (var k = 0; k < items.length; k++) {
+        if (items[k].page === currentPage) {
+          return items[k].page;
         }
       }
     }
 
-    // 2. If no search query or non-query item matching current path
+    // 2. Direct pathname match against item.href
     for (var j = 0; j < items.length; j++) {
       var item = items[j];
-      if (item.href.indexOf('?') === -1 && item.href.indexOf('#') === -1) {
-        var cleanHref = item.href.replace(/\.html$/, '');
-        if (pathname.indexOf(cleanHref) !== -1) {
-          return item.page;
+      var cleanHref = item.href.split('?')[0].split('#')[0];
+      if (cleanHref && (pathname.endsWith('/' + cleanHref) || pathname.endsWith(cleanHref))) {
+        return item.page;
+      }
+    }
+
+    // 3. Match against filename only (e.g. 'available-cars.html')
+    var currentFile = pathname.split('/').pop() || '';
+    if (currentFile) {
+      for (var m = 0; m < items.length; m++) {
+        var itemFile = items[m].href.split('/').pop();
+        if (itemFile === currentFile) {
+          return items[m].page;
         }
       }
     }
 
-    // 3. Fallback to currentPage passed from HTML placeholder
+    // 4. Fallback to currentPage passed from HTML placeholder or first item
     return currentPage || (items.length ? items[0].page : '');
   }
 

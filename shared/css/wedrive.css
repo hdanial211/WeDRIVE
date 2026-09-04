@@ -14452,5 +14452,98 @@ body.pending-page {
   font-style: italic;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   ADMIN DEDICATED SUB-PAGE SUITE (Apple HIG Official Enterprise Design)
+   ───────────────────────────────────────────────────────────────────────────── */
+.bento-item-subtle {
+  background: var(--bg-surface-2) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 16px !important;
+}
 
+.car-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)) !important;
+  gap: 20px !important;
+}
 
+.car-card-img-wrap {
+  width: 100% !important;
+  height: 160px !important;
+  background: linear-gradient(135deg, var(--bg-surface-2), var(--bg-surface-3)) !important;
+  border-radius: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 14px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--border-subtle) !important;
+  position: relative !important;
+}
+
+.car-card-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 16px !important;
+}
+
+.car-card-badge {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+}
+
+.doc-kyc-card {
+  background: var(--bg-surface-1) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: 20px !important;
+  padding: 20px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.doc-kyc-card:hover {
+  border-color: var(--primary) !important;
+  transform: translateY(-2px) !important;
+}
+
+.doc-preview-box {
+  width: 100% !important;
+  height: 190px !important;
+  background: var(--bg-surface-2) !important;
+  border: 1px dashed var(--border-subtle) !important;
+  border-radius: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  position: relative !important;
+  margin-bottom: 14px !important;
+}
+
+.doc-preview-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  padding: 8px !important;
+}
+
+.export-tile {
+  background: var(--bg-surface-1) !important;
+  border: 1.5px solid var(--border-subtle) !important;
+  border-radius: 20px !important;
+  padding: 22px !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.export-tile:hover {
+  border-color: var(--primary) !important;
+  transform: translateY(-2px) !important;
+}
+
+.export-tile.active {
+  border-color: var(--primary) !important;
+  background: rgba(0, 113, 227, 0.05) !important;
+  box-shadow: 0 0 0 1px var(--primary) inset !important;
+}

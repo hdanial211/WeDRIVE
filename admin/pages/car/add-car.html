@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add New Car | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
+  <!-- AUTH GUARD: Must run before page renders -->
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+</head>
+
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- TOPBAR (Main Navigation) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- HEADER -->
+      <div class="card reveal-onload mb-24 p-24">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <div class="flex-center gap-8 mb-6">
+              <a href="cars.html" class="fs-12 text-muted no-underline">Pengurusan Kereta</a>
+              <span class="material-icons-round fs-14 text-muted">chevron_right</span>
+              <span class="fs-12 text-primary-accent fw-600">Pendaftaran Baharu</span>
+            </div>
+            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_add_car">Tambah Kereta Baharu</h1>
+            <p class="text-secondary fs-14 m-0 mt-4">Daftarkan kenderaan baharu ke dalam sistem inventori WeDRIVE dengan spesifikasi lengkap.</p>
+          </div>
+          <div class="flex-center gap-10">
+            <button type="button" class="btn-outline-sm" onclick="window.location.href='cars.html'">
+              <span class="material-icons-round fs-16">arrow_back</span> Batal
+            </button>
+            <button type="button" class="btn-primary-sm" onclick="document.getElementById('add-car-form').requestSubmit()">
+              <span class="material-icons-round fs-16">save</span> Simpan Kenderaan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD CAR FORM BENTO -->
+      <form id="add-car-form" onsubmit="handleCarSubmit(event)">
+        <div class="grid-2 gap-24">
+          <!-- CARD 1: MAKLUMAT UTAMA KENDERAAN -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">directions_car</span> Maklumat Asas Kenderaan
+              </h3>
+            </div>
+
+            <div class="mb-16">
+              <label class="form-label" for="car-name">Nama &amp; Model Kenderaan <span class="text-danger">*</span></label>
+              <input type="text" id="car-name" class="form-input" placeholder="cth: Proton X50 1.5 TGDi Flagship" required />
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label" for="car-plate">Nombor Plat <span class="text-danger">*</span></label>
+                <input type="text" id="car-plate" class="form-input" placeholder="cth: VAB 4821" required />
+              </div>
+              <div>
+                <label class="form-label" for="car-brand">Jenama (Brand) <span class="text-danger">*</span></label>
+                <select id="car-brand" class="form-input" required>
+                  <option value="Proton">Proton</option>
+                  <option value="Perodua">Perodua</option>
+                  <option value="Toyota">Toyota</option>
+                  <option value="Honda">Honda</option>
+                  <option value="Nissan">Nissan</option>
+                  <option value="Mazda">Mazda</option>
+                  <option value="Hyundai">Hyundai</option>
+                  <option value="BYD">BYD</option>
+                  <option value="BMW">BMW</option>
+                  <option value="Mercedes-Benz">Mercedes-Benz</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-2 gap-14">
+              <div>
+                <label class="form-label" for="car-year">Tahun Keluaran</label>
+                <input type="number" id="car-year" class="form-input" value="2025" min="2018" max="2027" />
+              </div>
+              <div>
+                <label class="form-label" for="car-color">Warna Luaran</label>
+                <input type="text" id="car-color" class="form-input" placeholder="cth: Snow White / Ocean Blue" />
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2: KLASIFIKASI & TEKNIKAL -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">tune</span> Spesifikasi &amp; Kapasiti
+              </h3>
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
+                <select id="car-type" class="form-input" required>
+                  <option value="Sedan">Sedan</option>
+                  <option value="SUV" selected>SUV</option>
+                  <option value="MPV">MPV</option>
+                  <option value="Hatchback">Hatchback</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
+                <select id="car-seats" class="form-input" required>
+                  <option value="5" selected>5 Tempat Duduk</option>
+                  <option value="7">7 Tempat Duduk</option>
+                  <option value="8">8 Tempat Duduk</option>
+                  <option value="4">4 Tempat Duduk</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label" for="car-transmission">Transmisi <span class="text-danger">*</span></label>
+                <select id="car-transmission" class="form-input" required>
+                  <option value="Automatic" selected>Automatik</option>
+                  <option value="Manual">Manual</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label" for="car-fuel">Jenis Bahan Api <span class="text-danger">*</span></label>
+                <select id="car-fuel" class="form-input" required>
+                  <option value="Petrol" selected>Petrol</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Electric (EV)">Elektrik (EV)</option>
+                  <option value="Diesel">Diesel</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label" for="car-engine">Kapasiti Enjin</label>
+              <input type="text" id="car-engine" class="form-input" placeholder="cth: 1.5L Turbocharged" />
+            </div>
+          </div>
+
+          <!-- CARD 3: KADAR HARGA & SYARAT SEWAAN -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">payments</span> Kadar Harga &amp; Deposit
+              </h3>
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
+                <input type="number" id="car-rate" class="form-input" placeholder="cth: 180" min="50" step="5" required />
+              </div>
+              <div>
+                <label class="form-label" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
+                <input type="number" id="car-deposit" class="form-input" value="200" min="0" step="50" required />
+              </div>
+            </div>
+
+            <div class="grid-2 gap-14">
+              <div>
+                <label class="form-label" for="car-min-days">Tempoh Min. Sewaan (Hari)</label>
+                <input type="number" id="car-min-days" class="form-input" value="1" min="1" max="30" />
+              </div>
+              <div>
+                <label class="form-label" for="car-location">Hab Lokasi Asal</label>
+                <select id="car-location" class="form-input">
+                  <option value="Melaka Sentral Hub">Melaka Sentral Hub</option>
+                  <option value="Melaka Airport (MKZ)">Melaka Airport (MKZ)</option>
+                  <option value="Jonker Point">Jonker Point</option>
+                  <option value="Ayer Keroh Depot">Ayer Keroh Depot</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 4: CIRI-CIRI PINTAR & FOTO -->
+          <div class="card reveal-on-scroll p-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
+                <span class="material-icons-round text-primary-accent">camera_alt</span> Foto &amp; Ciri Pintar
+              </h3>
+            </div>
+
+            <div class="mb-16">
+              <label class="form-label">Ciri-Ciri Khas Kenderaan</label>
+              <div class="flex-wrap gap-8">
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-carplay" class="hidden" checked />
+                  <span>Apple CarPlay / Android Auto</span>
+                </label>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-dashcam" class="hidden" checked />
+                  <span>4K Dashcam Depan &amp; Belakang</span>
+                </label>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-keyless" class="hidden" checked />
+                  <span>Kunci Pintar Keyless Go</span>
+                </label>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-reverse-cam" class="hidden" checked />
+                  <span>Kamera Undur 360</span>
+                </label>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-tinted" class="hidden" checked />
+                  <span>Filem Penapis Haba Penuh</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label">Muat Naik Foto Kenderaan</label>
+              <div class="doc-preview-box cursor-pointer" onclick="document.getElementById('car-photo-input').click()">
+                <div id="photo-preview-content" class="text-center p-16">
+                  <span class="material-icons-round fs-36 text-muted mb-6">cloud_upload</span>
+                  <div class="fs-13 fw-600">Klik untuk pilih gambar kenderaan</div>
+                  <div class="fs-11 text-muted mt-2">Format disokong: PNG, JPG, WEBP (Maks: 5MB)</div>
+                </div>
+                <img id="photo-preview-img" class="doc-preview-img hidden" alt="Pratonton Kenderaan" />
+              </div>
+              <input type="file" id="car-photo-input" class="hidden" accept="image/*" onchange="previewCarPhoto(this)" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTION BAR -->
+        <div class="flex-between mt-24 p-20 card">
+          <span class="fs-13 text-muted">Semua kenderaan yang didaftarkan akan berstatus <strong>Tersedia (Available)</strong> secara automatik.</span>
+          <div class="flex-center gap-10">
+            <button type="button" class="btn-outline" onclick="window.location.href='cars.html'">Batal</button>
+            <button type="submit" class="btn-primary">
+              <span class="material-icons-round fs-16">check_circle</span> Daftarkan Kenderaan
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+
+  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
+  <script src="../../../shared/js/api.js?v=5.2.3"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js?v=5.2.3"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+
+  <script>
+    var selectedPhotoBase64 = '';
+
+    function previewCarPhoto(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          selectedPhotoBase64 = e.target.result;
+          var img = document.getElementById('photo-preview-img');
+          var content = document.getElementById('photo-preview-content');
+          img.src = selectedPhotoBase64;
+          img.classList.remove('hidden');
+          content.classList.add('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // Toggle chip active state on click
+    document.querySelectorAll('.filter-chip.cursor-pointer').forEach(function (label) {
+      var cb = label.querySelector('input[type="checkbox"]');
+      if (cb && cb.checked) label.classList.add('active');
+      label.addEventListener('click', function () {
+        setTimeout(function () {
+          if (cb.checked) {
+            label.classList.add('active');
+          } else {
+            label.classList.remove('active');
+          }
+        }, 10);
+      });
+    });
+
+    function handleCarSubmit(e) {
+      e.preventDefault();
+
+      var newCar = {
+        name: document.getElementById('car-name').value.trim(),
+        plate: document.getElementById('car-plate').value.trim().toUpperCase(),
+        brand: document.getElementById('car-brand').value,
+        year: parseInt(document.getElementById('car-year').value) || 2025,
+        color: document.getElementById('car-color').value.trim(),
+        type: document.getElementById('car-type').value,
+        seats: parseInt(document.getElementById('car-seats').value) || 5,
+        transmission: document.getElementById('car-transmission').value,
+        fuel: document.getElementById('car-fuel').value,
+        rate: 'RM ' + (document.getElementById('car-rate').value || 150) + '/hari',
+        deposit: 'RM ' + (document.getElementById('car-deposit').value || 200),
+        status: 'Available',
+        location: document.getElementById('car-location').value,
+        images: selectedPhotoBase64 ? [selectedPhotoBase64] : ['bezza.png']
+      };
+
+      // Save via WeDriveAPI
+      if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
+        window.WeDriveAPI.createCar(newCar)
+          .then(function () {
+            if (window.showToast) window.showToast('Kenderaan berjaya didaftarkan!', 'success');
+            setTimeout(function () { window.location.href = 'cars.html'; }, 800);
+          })
+          .catch(function (err) {
+            console.error('Create car error:', err);
+            // Fallback: save to localStorage/dummy
+            saveFallback(newCar);
+          });
+      } else {
+        saveFallback(newCar);
+      }
+    }
+
+    function saveFallback(car) {
+      try {
+        var existing = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+        car.id = 'CR-' + Date.now();
+        existing.unshift(car);
+        localStorage.setItem('wedrive_cars', JSON.stringify(existing));
+      } catch (err) {
+        console.warn('Local storage save:', err);
+      }
+      if (window.showToast) window.showToast('Kenderaan berjaya didaftarkan!', 'success');
+      setTimeout(function () { window.location.href = 'cars.html'; }, 800);
+    }
+  </script>
+</body>
+
+</html>

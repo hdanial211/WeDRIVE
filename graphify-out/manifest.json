@@ -186,9 +186,9 @@
     "semantic_hash": ""
   },
   "shared/js/sidebar-loader.js": {
-    "mtime": 1788530069.9921017,
-    "seen": 1788530927.401362,
-    "ast_hash": "144ca3fe0aff1c2275b0a5608dff8f99",
+    "mtime": 1788534441.1211982,
+    "seen": 1788535032.518569,
+    "ast_hash": "8b9243a04d51f8555acbb9a6cfd204f7",
     "semantic_hash": ""
   },
   "shared/js/supabase-config.js": {
@@ -384,9 +384,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/navigation_and_ui.md": {
-    "mtime": 1787888908.6494436,
-    "seen": 1787898737.1946082,
-    "ast_hash": "21325e11d30fe01b15f2bf91a5351518",
+    "mtime": 1788534634.8996482,
+    "seen": 1788535032.518593,
+    "ast_hash": "fca55bceb11e5341d72d97c5b87e798d",
     "semantic_hash": ""
   },
   ".agents/rules/playwright_testing.md": {
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/ruleprompt.md": {
-    "mtime": 1787889160.554205,
-    "seen": 1787898737.194609,
-    "ast_hash": "db411e2504288581841dd6103332b113",
+    "mtime": 1788535014.9712656,
+    "seen": 1788535032.518594,
+    "ast_hash": "a15c0e97a7ad6342637eb74811d8696a",
     "semantic_hash": ""
   },
   ".agents/rules/security_and_audit.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788532397.1736062,
-    "seen": 1788532411.348757,
-    "ast_hash": "55d0d50e3795750e7628da4fb3d28c46",
+    "mtime": 1788534967.6062284,
+    "seen": 1788535032.5185971,
+    "ast_hash": "c556ada0e564456a23f9c7ad492733da",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -540,15 +540,15 @@
     "semantic_hash": ""
   },
   "admin/components/sidebar/sidebar-admin.html": {
-    "mtime": 1788530090.6840765,
-    "seen": 1788530927.401458,
+    "mtime": 1788534441.1228514,
+    "seen": 1788535032.5186088,
     "ast_hash": "8bcf76f789f4d6df8284ae40a97a9385",
     "semantic_hash": ""
   },
   "admin/pages/booking/bookings.html": {
-    "mtime": 1788530331.1686897,
-    "seen": 1788530927.40146,
-    "ast_hash": "b4273bdb593552e42ad60c6c1a05e76d",
+    "mtime": 1788533889.1250033,
+    "seen": 1788535032.51861,
+    "ast_hash": "03fcaffe7a9630e0f5cc8785f6f5c6bc",
     "semantic_hash": ""
   },
   "admin/pages/calendar/calendar.html": {
@@ -564,9 +564,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
-    "mtime": 1788530306.5197642,
-    "seen": 1788530927.401461,
-    "ast_hash": "70068d12d9f72caa70a8feadaf534f2e",
+    "mtime": 1788533883.9431026,
+    "seen": 1788535032.518614,
+    "ast_hash": "47ccb87cc2df5cd72305deea9be79c65",
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {
@@ -576,15 +576,15 @@
     "semantic_hash": ""
   },
   "admin/pages/customer/customers.html": {
-    "mtime": 1788530349.551363,
-    "seen": 1788530927.401462,
-    "ast_hash": "1f05c7451c7ca7b407ed769c9b44e2f2",
+    "mtime": 1788533895.0251458,
+    "seen": 1788535032.518616,
+    "ast_hash": "096054be6cc712ea532c53182a313b23",
     "semantic_hash": ""
   },
   "admin/pages/dashboard/admin.html": {
-    "mtime": 1788530284.3891606,
-    "seen": 1788530927.401463,
-    "ast_hash": "5e0e706252c43ea68275ec0ed595f29d",
+    "mtime": 1788533729.5063581,
+    "seen": 1788535032.5186172,
+    "ast_hash": "34ccb9d42798188d1b61280675d7feb9",
     "semantic_hash": ""
   },
   "admin/pages/marketing/marketing.html": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "admin/pages/report/reports.html": {
-    "mtime": 1788530369.8654797,
-    "seen": 1788530927.401464,
-    "ast_hash": "7abb19c7cf472b8c41550282448dae8b",
+    "mtime": 1788533899.8488855,
+    "seen": 1788535032.518621,
+    "ast_hash": "5f95ccedfaa336b96da29525455c5725",
     "semantic_hash": ""
   },
   "admin/pages/setting/settings.html": {
@@ -708,9 +708,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1784406438.2601414,
-    "seen": 1787898737.194632,
-    "ast_hash": "2cc32d740a3f931adfd6ea9240b145ae",
+    "mtime": 1788534926.9624755,
+    "seen": 1788535032.518633,
+    "ast_hash": "bd36f39629e63172bafc092a13a74acd",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11184,15 +11184,69 @@
     "semantic_hash": ""
   },
   "tests/e2e/09_admin_ai_analytics.spec.js": {
-    "mtime": 1788530566.3327389,
-    "seen": 1788530927.401438,
-    "ast_hash": "5ce6aef3ed356f53fdbc0da44982a6da",
+    "mtime": 1788533910.4031448,
+    "seen": 1788535032.5185878,
+    "ast_hash": "e85b57fa6934f6bfc695ee9b1a6884a8",
     "semantic_hash": ""
   },
   "admin/pages/analytics/analytics.html": {
     "mtime": 1788530448.1572568,
     "seen": 1788530927.401459,
     "ast_hash": "75458b65ee9296cea8b96f46b3c83576",
+    "semantic_hash": ""
+  },
+  "tests/e2e/10_admin_sidebar_pages.spec.js": {
+    "mtime": 1788533923.1837537,
+    "seen": 1788535032.5185878,
+    "ast_hash": "a466d6e139e39d2dd48eef6e205d8ac7",
+    "semantic_hash": ""
+  },
+  "admin/pages/booking/active-bookings.html": {
+    "mtime": 1788534810.2140965,
+    "seen": 1788535032.51861,
+    "ast_hash": "aa3b908da571ecf46976968a122671b1",
+    "semantic_hash": ""
+  },
+  "admin/pages/booking/new-booking.html": {
+    "mtime": 1788534833.1543376,
+    "seen": 1788535032.518611,
+    "ast_hash": "53c3d53eaa35bef13a4ac79e35b96b3b",
+    "semantic_hash": ""
+  },
+  "admin/pages/car/add-car.html": {
+    "mtime": 1788534789.451966,
+    "seen": 1788535032.518612,
+    "ast_hash": "ed9d85cabbcb2b28622c72784986cdb9",
+    "semantic_hash": ""
+  },
+  "admin/pages/car/available-cars.html": {
+    "mtime": 1788534758.2426722,
+    "seen": 1788535032.518612,
+    "ast_hash": "d97a7f2fe953a34bd3edccb0617fa491",
+    "semantic_hash": ""
+  },
+  "admin/pages/car/rented-cars.html": {
+    "mtime": 1788534771.6875706,
+    "seen": 1788535032.518614,
+    "ast_hash": "134788274524be60f3f8c20ba56dcd80",
+    "semantic_hash": ""
+  },
+  "admin/pages/customer/verifications.html": {
+    "mtime": 1788534856.0400403,
+    "seen": 1788535032.518616,
+    "ast_hash": "e827f3253fca427881422c4c37d947b3",
+    "semantic_hash": ""
+  },
+  "admin/pages/dashboard/operations.html": {
+    "mtime": 1788534743.9518397,
+    "seen": 1788535032.518618,
+    "ast_hash": "229137d936a3200b90c4b74af59b6fd6",
+    "semantic_hash": ""
+  },
+  "admin/pages/report/export-reports.html": {
+    "mtime": 1788534884.9691846,
+    "seen": 1788535032.51862,
+    "ast_hash": "acfdb12d451915f13bac7fba7591ddc9",
     "semantic_hash": ""
   }
 }

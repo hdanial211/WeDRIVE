@@ -94,9 +94,9 @@ test.describe('WeDRIVE Admin AI Data Analytics & Contextual Navigation Architect
     await expect(carRentedLink).toBeVisible();
     await expect(carAddLink).toBeVisible();
 
-    // 5. Test filter click in sidebar: Kenderaan Tersedia
+    // 5. Test sidebar navigation: Kenderaan Tersedia has its own dedicated page
     await carAvailableLink.click();
-    await expect(page).toHaveURL(/.*\/admin\/pages\/car\/cars\.html\?filter=Available/);
+    await expect(page).toHaveURL(/.*\/admin\/pages\/car\/available-cars\.html/);
   });
 });
 

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>License Verifications | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
+  <!-- AUTH GUARD: Must run before page renders -->
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+</head>
+
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="customers-pending"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- TOPBAR (Main Navigation) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- HEADER -->
+      <div class="card reveal-onload mb-20 p-24">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <div class="flex-center gap-8 mb-6">
+              <span class="status-badge active"><span class="dot"></span> Pusat Pengesahan Identiti Pelanggan</span>
+              <span class="fs-12 text-muted" id="vf-count-badge">-- permohonan menunggu</span>
+            </div>
+            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_pending_verifications">Pengesahan Lesen</h1>
+            <p class="text-secondary fs-14 m-0 mt-4">Semakan ketulenan dokumen kad pengenalan dan lesen memandu pelanggan bagi pematuhan insurans dan JPJ.</p>
+          </div>
+          <div class="flex-center gap-10">
+            <button class="btn-outline-sm" onclick="window.location.href='customers.html'">
+              <span class="material-icons-round fs-16">people</span> Direktori Pelanggan
+            </button>
+            <button class="btn-primary-sm" onclick="approveAllPending()">
+              <span class="material-icons-round fs-16">done_all</span> Luluskan Semua Sah
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS KPI ROW -->
+      <div class="stats-grid mb-20">
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Menunggu Semakan</div>
+            <div class="value text-amber" id="vf-stat-pending">--</div>
+            <div class="change"><span class="material-icons-round fs-14">hourglass_top</span> Perlu semakan admin</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">pending_actions</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Disahkan Sah</div>
+            <div class="value text-green" id="vf-stat-approved">--</div>
+            <div class="change up"><span class="material-icons-round fs-14">check_circle</span> Sedia untuk sewaan</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">verified</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Dokumen Ditolak</div>
+            <div class="value text-red" id="vf-stat-rejected">0</div>
+            <div class="change"><span class="material-icons-round fs-14">error_outline</span> Gambar kabur / tamat tempoh</div>
+          </div>
+          <div class="stat-icon red"><span class="material-icons-round">gpp_bad</span></div>
+        </div>
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label">Purata Masa Kelulusan</div>
+            <div class="value text-primary-accent">&lt; 15 min</div>
+            <div class="change up"><span class="material-icons-round fs-14">speed</span> Standard perkhidmatan</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">timer</span></div>
+        </div>
+      </div>
+
+      <!-- FILTER + SEARCH -->
+      <div class="card reveal-on-scroll mb-20 px-22 py-16">
+        <div class="flex-between flex-wrap gap-12">
+          <div class="flex-center gap-8 flex-wrap">
+            <span class="fs-13 fw-600 text-muted">Status Semakan:</span>
+            <button class="filter-chip active" onclick="filterVerificationStatus('all', this)">Semua</button>
+            <button class="filter-chip" onclick="filterVerificationStatus('pending', this)">Menunggu</button>
+            <button class="filter-chip" onclick="filterVerificationStatus('verified', this)">Disahkan</button>
+          </div>
+          <div class="flex-center gap-10">
+            <div class="input-wrap-sm input-search-fixed">
+              <span class="material-icons-round fs-18">search</span>
+              <input type="text" id="vf-search" placeholder="Cari nama, emel atau no IC..." oninput="searchVerification(this.value)" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VERIFICATIONS TABLE -->
+      <div class="card reveal-on-scroll">
+        <div class="card-header flex-between flex-wrap gap-10">
+          <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
+            <span class="material-icons-round text-primary-accent">fact_check</span> Barisan Semakan Dokumen Pelanggan
+          </h3>
+          <span class="fs-12 text-muted" id="vf-table-count">Memaparkan senarai permohonan</span>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Pelanggan</th>
+                <th>No. Kad Pengenalan</th>
+                <th>No. Lesen &amp; Kelas</th>
+                <th>Tarikh Luput Lesen</th>
+                <th>Tarikh Hantar</th>
+                <th>Status</th>
+                <th class="text-right">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="vf-tbody">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+
+  <!-- KYC INSPECTION MODAL -->
+  <div id="kyc-modal" class="modal-overlay hidden" onclick="if(event.target===this)closeKycModal()">
+    <div class="modal-card modal-wide">
+      <div class="card-header flex-between border-bottom-subtle pb-16 mb-20">
+        <div>
+          <h3 class="m-0 fs-18 fw-700" id="kyc-modal-name">Pemeriksaan Dokumen Pelanggan</h3>
+          <p class="fs-13 text-muted m-0 mt-2" id="kyc-modal-sub">Semak ketulenan maklumat MyKad dan Lesen Memandu.</p>
+        </div>
+        <button class="btn-icon" onclick="closeKycModal()"><span class="material-icons-round">close</span></button>
+      </div>
+      <div class="grid-2 gap-20 mb-24">
+        <!-- DOC 1: MYKAD -->
+        <div class="bento-item-subtle p-18">
+          <div class="flex-between mb-12">
+            <span class="fs-13 fw-700 text-title">Kad Pengenalan (MyKad)</span>
+            <span class="status-badge success fs-11">Depan &amp; Belakang</span>
+          </div>
+          <div class="doc-preview-box mb-8">
+            <img id="kyc-mykad-preview" src="../../../shared/img/docs/sample_mykad.png" class="doc-preview-img" alt="MyKad" onerror="this.src='../../../shared/logo/wedrive-icon.png'" />
+          </div>
+          <div class="fs-12 text-muted">No. IC: <strong class="text-title" id="kyc-ic-val">-</strong></div>
+        </div>
+
+        <!-- DOC 2: LESEN MEMANDU -->
+        <div class="bento-item-subtle p-18">
+          <div class="flex-between mb-12">
+            <span class="fs-13 fw-700 text-title">Lesen Memandu JPJ</span>
+            <span class="status-badge success fs-11">Kelas D / DA</span>
+          </div>
+          <div class="doc-preview-box mb-8">
+            <img id="kyc-license-preview" src="../../../shared/img/docs/sample_license.png" class="doc-preview-img" alt="Lesen Memandu" onerror="this.src='../../../shared/logo/wedrive-icon.png'" />
+          </div>
+          <div class="fs-12 text-muted">Tarikh Luput: <strong class="text-title" id="kyc-expiry-val">-</strong></div>
+        </div>
+      </div>
+      <div class="flex-between border-top-subtle pt-18">
+        <span class="fs-13 text-muted">Pengesahan ini mematuhi Akta Pengangkutan Jalan 1987.</span>
+        <div class="flex-center gap-10">
+          <button class="btn-outline" onclick="rejectCurrentCustomer()"><span class="material-icons-round fs-16 text-danger">close</span> Tolak</button>
+          <button class="btn-primary" onclick="approveCurrentCustomer()"><span class="material-icons-round fs-16">check_circle</span> Luluskan Dokumen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.8"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
+  <script src="../../../shared/js/api.js?v=5.2.3"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js?v=5.2.3"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+
+  <script>
+    var customersList = [];
+    var currentFilter = 'all';
+    var searchQuery = '';
+    var activeCustId = null;
+
+    function initVerifications() {
+      window.WeDriveAPI.getAdminData()
+        .then(function (data) {
+          customersList = (data.customers || []).map(function (c, idx) {
+            return {
+              id: c.id || ('CUST-' + (idx + 1)),
+              name: c.name || 'Pelanggan WeDRIVE',
+              email: c.email || 'customer@gmail.com',
+              phone: c.phone || '+60 12-345 6789',
+              ic: c.ic || ('9' + (idx % 10) + '0512-04-5' + (idx + 100)),
+              license: 'D - 8' + (idx + 100) + '92',
+              expiry: '2028-11-20',
+              submitted: '2026-09-02',
+              status: idx % 3 === 0 ? 'Pending' : 'Verified'
+            };
+          });
+
+          updateStats();
+          renderTable();
+        })
+        .catch(function (err) {
+          console.error('Verifications error:', err);
+        });
+    }
+
+    function updateStats() {
+      var pending = customersList.filter(function (c) { return c.status.toLowerCase() === 'pending'; }).length;
+      var approved = customersList.filter(function (c) { return c.status.toLowerCase() === 'verified'; }).length;
+      var rejected = customersList.filter(function (c) { return c.status.toLowerCase() === 'rejected'; }).length;
+
+      document.getElementById('vf-stat-pending').textContent = pending;
+      document.getElementById('vf-stat-approved').textContent = approved;
+      document.getElementById('vf-stat-rejected').textContent = rejected;
+      document.getElementById('vf-count-badge').textContent = pending + ' permohonan menunggu';
+    }
+
+    function renderTable() {
+      var filtered = customersList.filter(function (c) {
+        var matchStatus = currentFilter === 'all' || c.status.toLowerCase() === currentFilter.toLowerCase();
+        var matchSearch = !searchQuery ||
+          c.name.toLowerCase().includes(searchQuery) ||
+          c.email.toLowerCase().includes(searchQuery) ||
+          c.ic.toLowerCase().includes(searchQuery);
+        return matchStatus && matchSearch;
+      });
+
+      var tbody = document.getElementById('vf-tbody');
+      if (!tbody) return;
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="p-32 text-center text-muted">Tiada permohonan pengesahan mengikut tapisan.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function (c) {
+        var badge = c.status.toLowerCase() === 'verified' ? 'success' : (c.status.toLowerCase() === 'pending' ? 'pending' : 'danger');
+        return '<tr>' +
+          '<td>' +
+            '<strong>' + c.name + '</strong>' +
+            '<div class="fs-12 text-muted">' + c.email + '</div>' +
+          '</td>' +
+          '<td><span class="fs-13 fw-600">' + c.ic + '</span></td>' +
+          '<td><span class="fs-13">' + c.license + '</span></td>' +
+          '<td><span class="fs-13 text-muted">' + c.expiry + '</span></td>' +
+          '<td><span class="fs-13 text-muted">' + c.submitted + '</span></td>' +
+          '<td><span class="status-badge ' + badge + '"><span class="dot"></span> ' + c.status + '</span></td>' +
+          '<td class="text-right">' +
+            '<button class="btn-outline-sm mr-6" onclick="openKycModal(\'' + c.id + '\')">Periksa</button>' +
+            (c.status.toLowerCase() === 'pending'
+              ? '<button class="btn-primary-sm" onclick="quickApprove(\'' + c.id + '\')">Lulus</button>'
+              : '<button class="btn-outline-sm" onclick="quickReject(\'' + c.id + '\')">Kaji Semula</button>') +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function filterVerificationStatus(st, btn) {
+      currentFilter = st;
+      document.querySelectorAll('.filter-chip').forEach(function (c) { c.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+      renderTable();
+    }
+
+    function searchVerification(val) {
+      searchQuery = (val || '').trim().toLowerCase();
+      renderTable();
+    }
+
+    function openKycModal(id) {
+      var c = customersList.find(function (item) { return item.id === id; });
+      if (!c) return;
+      activeCustId = id;
+      document.getElementById('kyc-modal-name').textContent = 'Pemeriksaan Dokumen: ' + c.name;
+      document.getElementById('kyc-ic-val').textContent = c.ic;
+      document.getElementById('kyc-expiry-val').textContent = c.expiry + ' (Sah)';
+      document.getElementById('kyc-modal').classList.remove('hidden');
+    }
+
+    function closeKycModal() {
+      document.getElementById('kyc-modal').classList.add('hidden');
+      activeCustId = null;
+    }
+
+    function approveCurrentCustomer() {
+      if (!activeCustId) return;
+      quickApprove(activeCustId);
+      closeKycModal();
+    }
+
+    function rejectCurrentCustomer() {
+      if (!activeCustId) return;
+      quickReject(activeCustId);
+      closeKycModal();
+    }
+
+    function quickApprove(id) {
+      var c = customersList.find(function (item) { return item.id === id; });
+      if (c) {
+        c.status = 'Verified';
+        updateStats();
+        renderTable();
+        if (window.showToast) window.showToast('Dokumen ' + c.name + ' berjaya disahkan!', 'success');
+      }
+    }
+
+    function quickReject(id) {
+      var c = customersList.find(function (item) { return item.id === id; });
+      if (c) {
+        c.status = 'Rejected';
+        updateStats();
+        renderTable();
+        if (window.showToast) window.showToast('Dokumen ' + c.name + ' telah ditolak untuk semakan semula.', 'error');
+      }
+    }
+
+    function approveAllPending() {
+      customersList.forEach(function (c) {
+        if (c.status.toLowerCase() === 'pending') c.status = 'Verified';
+      });
+      updateStats();
+      renderTable();
+      if (window.showToast) window.showToast('Semua permohonan menunggu telah disahkan!', 'success');
+    }
+
+    document.addEventListener('DOMContentLoaded', initVerifications);
+  </script>
+</body>
+
+</html>

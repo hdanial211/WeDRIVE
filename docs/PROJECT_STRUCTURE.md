@@ -83,28 +83,38 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- how-it-works.js          # Animasi 360, scrollytelling, ripple & interaksi halaman How It Works
 |       +-- promo-banner.js          # Logik banner promosi
 |
-+-- admin/                      # Modul Admin
-|   +-- pages/                             # FLOW: Sidebar navigation hierarchy
++-- admin/                      # Modul Admin (Topbar Main + Sidebar Sub-Main)
+|   +-- pages/                             # FLOW: Topbar Main modules -> Contextual Sidebar sub-pages
 |   |   +-- dashboard/
-|   |   |   +-- admin.html                 # Admin Dashboard
+|   |   |   +-- admin.html                 # Ringkasan Utama (Executive Overview)
+|   |   |   +-- operations.html            # Status Operasi (Operations Status & Depot Hubs)
 |   |   +-- car/
-|   |   |   +-- cars.html                  # Pengurusan Car (Kereta)
+|   |   |   +-- cars.html                  # Semua Kenderaan (All Cars Directory)
+|   |   |   +-- available-cars.html        # Kenderaan Tersedia (Available Cars)
+|   |   |   +-- rented-cars.html           # Sedang Disewa (Rented On-Road Tracking)
+|   |   |   +-- add-car.html               # Tambah Kereta Baharu (Vehicle Registration Desk)
 |   |   |   +-- car-detail/
 |   |   |       +-- car-detail.html        # Detail & Urus Kereta Individu
 |   |   +-- booking/
-|   |   |   +-- bookings.html              # Pengurusan Tempahan
+|   |   |   +-- bookings.html              # Semua Tempahan (All Bookings Ledger)
+|   |   |   +-- active-bookings.html       # Tempahan Aktif (Active Bookings Management)
+|   |   |   +-- new-booking.html           # Cipta Tempahan (Manual Reservation Desk)
 |   |   +-- customer/
-|   |   |   +-- customers.html             # Pengurusan Pelanggan
+|   |   |   +-- customers.html             # Direktori Pelanggan (Customer Directory)
+|   |   |   +-- verifications.html         # Pengesahan Lesen (License KYC Verifications)
 |   |   +-- report/
-|   |   |   +-- reports.html               # Laporan & Analitik
+|   |   |   +-- reports.html               # Laporan Hasil & Sewaan (Financial Reports)
+|   |   |   +-- export-reports.html        # Eksport Laporan Data (Data Export Center)
 |   |   +-- calendar/
-|   |   |   +-- calendar.html              # Calendar Overview
+|   |   |   +-- calendar.html              # Kalendar Tempahan (Calendar Overview)
+|   |   +-- analytics/
+|   |   |   +-- analytics.html             # Analisis Data AI (AI Analytics)
 |   |   +-- chatbot/
-|   |   |   +-- chatbot.html               # AI Chatbot Settings
+|   |   |   +-- chatbot.html               # Kunci API & Chatbot AI (AI Chatbot Settings)
 |   |   +-- marketing/
-|   |   |   +-- marketing.html             # Marketing (Banners, Promo, Seasonal)
+|   |   |   +-- marketing.html             # Pemasaran Pintar AI (AI Smart Marketing)
 |   |   +-- setting/
-|   |       +-- settings.html              # Tetapan Sistem
+|   |       +-- settings.html              # Tetapan Sistem (System Settings)
 |   +-- components/
 |   |   +-- sidebar/
 |   |       +-- sidebar-admin.html   # Admin Sidebar Navigation
