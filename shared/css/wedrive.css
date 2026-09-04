@@ -460,6 +460,24 @@ body.dark .nav-links:has(.nav-icon-link) {
   box-shadow: none !important;
 }
 
+/* Centering for icon-only navigation in topbar when brand is omitted (Admin portal) */
+.navbar.navbar-no-brand,
+.navbar:not(:has(.nav-brand)) {
+  position: relative !important;
+}
+
+.navbar.navbar-no-brand .nav-links.nav-icons-bar,
+.navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.navbar.navbar-no-brand .nav-actions,
+.navbar:not(:has(.nav-brand)) .nav-actions {
+  margin-left: auto !important;
+}
+
 .nav-link.nav-icon-link {
   width: 40px !important;
   height: 40px !important;

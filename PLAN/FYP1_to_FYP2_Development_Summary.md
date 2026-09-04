@@ -2266,3 +2266,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.3.2 Refine contextual sidebar to module-only items and expand topbar icon spacing`
   - Tag Versi: `5.3.2`
+
+---
+
+### [MINOR UPDATE 135] (v5.3.3) - Pembuangan Logo Brand & Profil Pengguna/Log Keluar Bertindih pada Topbar Pentadbir (Admin Topbar Streamlining)
+- **Tarikh**: 4 September 2026
+- **Objektif**: Menghapuskan elemen pendua pada bar navigasi atas (topbar) pentadbir kerana elemen-elemen tersebut telah wujud secara khusus dan jelas pada bar sisi (sidebar).
+- **Maklum Balas Pengguna**:
+  - Pengguna melampirkan tangkapan skrin logo WeDRIVE dan kapsul profil `AD Admin` serta butang `Log Keluar` pada topbar:
+    > `dekat topbar ni buang ni sebab dekat sidebar dh ada`
+- **Fail-fail Terlibat**:
+  - `shared/js/navbar-loader.js`
+  - `shared/css/wedrive.css`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Tindakan**:
+  1. **Penyingkiran Elemen Bertindih pada Topbar Pentadbir (`navbar-loader.js`)**:
+     - Menetapkan konfigurasi `hideBrand: true` dan `actions: ''` khusus bagi modul pentadbir (`admin`).
+     - Mengelakkan penjanaan markup `.nav-brand` (Logo WeDRIVE dan teks) pada topbar apabila dimuatkan dalam portal admin.
+     - Mengeluarkan kapsul profil `.user-pill` (`AD Admin`) dan butang `.btn-logout` (`Log Keluar`) daripada `.nav-actions` pada topbar kerana kedua-duanya telah sedia ada pada kad profil dan bahagian bawah bar sisi pentadbir.
+     - Mengekalkan suis penukar bahasa (`.lang-toggle`, MS/EN) dan suis tema Apple (`.theme-toggle`, Day/Night) pada bahagian kanan topbar.
+  2. **Pemusatan Navigasi Ikon Topbar Apple HIG (`wedrive.css`)**:
+     - Menambah penggayaan kelas `.navbar.navbar-no-brand` dan `.navbar:not(:has(.nav-brand))`.
+     - Memposisikan bar ikon navigasi modular (`.nav-links.nav-icons-bar`) tepat di tengah-tengah garisan mendatar topbar secara simetri menggunakan `position: absolute; left: 50%; transform: translateX(-50%);`.
+     - Memastikan `.nav-actions` kekal kemas di sudut hujung kanan dengan `margin-left: auto;`.
+  3. **Integriti Portal Pengguna Lain Terjamin**:
+     - Halaman tetamu (guest / `index.html`) mengekalkan logo jenama WeDRIVE serta butang tindakan Log In / Sign Up sepenuhnya tanpa sebarang regresi.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright (`cd tests && npx playwright test`): **100% Pass Rate** (20/20 ujian lulus tanpa ralat).
+- **Maklumat Git**:
+  - Commit: `5.3.3 Remove duplicate brand logo and user logout from admin topbar`
+  - Tag Versi: `5.3.3`

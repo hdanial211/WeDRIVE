@@ -66,6 +66,7 @@
     // Admin dashboard
     admin: {
       iconOnly: true,
+      hideBrand: true,
       links: [
         { key: 'admin_dashboard',  href: '{base}admin/pages/dashboard/admin.html', icon: 'dashboard',      label: 'Dashboard',  id: 'nl-dash'      },
         { key: 'sidebar_car',      href: '{base}admin/pages/car/cars.html',         icon: 'directions_car', label: 'Cars',       id: 'nl-cars'      },
@@ -73,16 +74,7 @@
         { key: 'sidebar_customers',href: '{base}admin/pages/customer/customers.html', icon: 'people',       label: 'Customers', id: 'nl-users'     },
         { key: 'sidebar_reports',  href: '{base}admin/pages/report/reports.html',   icon: 'bar_chart',    label: 'Reports',    id: 'nl-reports'   }
       ],
-      actions: `
-        <div class="user-pill" id="user-pill">
-          <div class="user-av" id="user-av">AD</div>
-          <span class="user-name" id="user-name-nav">Admin</span>
-        </div>
-        <button class="btn-logout" onclick="(function(){ var sb=window.supabaseClient; if(sb){sb.auth.signOut().then(function(){localStorage.clear();window.location='{base}account/pages/login/login.html';})}else{localStorage.clear();window.location='{base}account/pages/login/login.html';} })()">
-          <span class="material-icons-round" style="font-size:16px">logout</span>
-          <span data-key="nav_logout">Logout</span>
-        </button>
-      `
+      actions: ''
     }
   };
 
@@ -132,13 +124,24 @@
     else if (module === 'admin') brandLink = base + 'admin/pages/dashboard/admin.html';
     else if (module === 'guest') brandLink = base + 'index.html';
 
+    var hideBrand = config.hideBrand || (module === 'admin');
+    var brandHtml = '';
+    if (!hideBrand) {
+      brandHtml = [
+        '  <a href="' + brandLink + '" class="nav-brand" style="text-decoration: none;">',
+        '    <img class="brand-logo" id="navbar-logo" src="' + base + 'shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" />',
+        '    <div class="brand-text"><span class="we">We</span><span class="drive">DRIVE</span></div>',
+        '  </a>'
+      ].join('\n');
+    }
+
+    var navbarClasses = ['navbar'];
+    if (hideBrand) navbarClasses.push('navbar-no-brand');
+
     // Inject navbar HTML
     placeholder.innerHTML = [
-      '<nav class="navbar" id="wedrive-navbar">',
-      '  <a href="' + brandLink + '" class="nav-brand" style="text-decoration: none;">',
-      '    <img class="brand-logo" id="navbar-logo" src="' + base + 'shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" />',
-      '    <div class="brand-text"><span class="we">We</span><span class="drive">DRIVE</span></div>',
-      '  </a>',
+      '<nav class="' + navbarClasses.join(' ') + '" id="wedrive-navbar">',
+      brandHtml,
       '  <div class="nav-links' + (isIconOnly ? ' nav-icons-bar' : '') + '" id="navbar-links">' + linksHtml + '</div>',
       '  <div class="nav-actions" id="navbar-actions">',
       '    <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch Language">',
@@ -150,7 +153,7 @@
       actionsHtml,
       '  </div>',
       '</nav>'
-    ].join('\n');
+    ].filter(Boolean).join('\n');
   }
 
   // ─── INIT ───────────────────────────────────────────────────────────────────
