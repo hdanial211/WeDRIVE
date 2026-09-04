@@ -17,6 +17,17 @@ window.WeDriveAPI.getAdminData()
     renderCarCards(allCar);
     renderCarTable(allCar);
     setCarViewMode(currentViewMode);
+
+    var filterParam = new URLSearchParams(window.location.search).get('filter');
+    if (filterParam) {
+      var chips = document.querySelectorAll('.filter-chip');
+      chips.forEach(function(c) {
+        if (c.textContent.trim().toLowerCase() === filterParam.toLowerCase()) {
+          filterCar(filterParam, c);
+        }
+      });
+    }
+
     if (new URLSearchParams(window.location.search).get('action') === 'add') {
       addNewCar();
     }

@@ -2338,3 +2338,65 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.3.4 Ensure all sidebar items link to actual pages without cross-module mixups`
   - Tag Versi: `5.3.4`
+
+---
+
+### [MINOR UPDATE 137] (v5.3.5) - Seni Bina Navigasi Kontekstual Dwi-Lapisan (Topbar Utama & Sidebar Sub-Alat) + Penambahan Modul Teras Kecerdasan AI
+- **Tarikh**: 4 September 2026
+- **Objektif**: Melaksanakan seni bina navigasi dwi-lapisan standard Apple HIG (Topbar mengawal 6 modul utama, Sidebar mengawal sub-alat kontekstual secara automatik), mewujudkan modul teras khusus Kecerdasan AI (merangkumi Analisis Data AI, Kunci API & Chatbot AI, dan Pemasaran Pintar AI), serta menyelesaikan 27 amaran gaya sebaris (inline CSS) pada halaman Analisis Data AI.
+- **Maklum Balas Pengguna**:
+  > `data analysis oleh ai pon kalau boleh saya nak dekat satu page..kalau xde boleh add dekat page n dekat sidebar`  
+  > `ai chat bot betul ke dekat situ sidebar bila saya tekan...sepatutnya dia sendiri sahaja ..kiranya dia adalah main`  
+  > `aikk kenapa main tu letak dekat sidebar ..patutunya dekat topbar`  
+  > `sepatutnya sidebar untuk yang sub ..topbar untuk main`  
+  > `contohnya sidebar tu ikut ..kalau kita top bar tu dekat car ..so sidebar tunjuk car sahaja...kalau customer ..so sidebar tunjuk customer punya sahaja`  
+  > `tambah ai satu lg: ai ni ada untuk ai analysis, ai untuk letak api key, ai untuk marketing, semua berkaitan dengan ai`  
+  > `Proceed tapi settlekan current problem dulu sebelum proceed`
+- **Fail-fail Terlibat**:
+  - `admin/pages/analytics/analytics.html`
+  - `admin/js/analytics.js`
+  - `shared/js/navbar-loader.js`
+  - `shared/js/sidebar-loader.js`
+  - `admin/components/sidebar/sidebar-admin.html`
+  - `shared/css/wedrive.css`
+  - `shared/lang/ms.js`, `shared/lang/ms.json`
+  - `shared/lang/en.js`, `shared/lang/en.json`
+  - `admin/js/cars.js`, `admin/js/bookings.js`, `admin/js/customers.js`
+  - `admin/pages/dashboard/admin.html`, `admin/pages/car/cars.html`, `admin/pages/booking/bookings.html`, `admin/pages/customer/customers.html`, `admin/pages/report/reports.html`, `admin/pages/chatbot/chatbot.html`, `admin/pages/marketing/marketing.html`, `admin/pages/calendar/calendar.html`, `admin/pages/setting/settings.html`, `admin/pages/car/car-detail/car-detail.html`
+  - `tests/e2e/09_admin_ai_analytics.spec.js`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Tindakan**:
+  1. **Penyelesaian Mutlak 27 Amaran Linter Gaya Sebaris (`analytics.html` & `wedrive.css`)**:
+     - Memindahkan kesemua 27 atribut `style="..."` daripada `analytics.html` ke kelas CSS luaran berpusat di `shared/css/wedrive.css` (`.ai-header-banner`, `.ai-engine-badge`, `.ai-time-glider`, `.ai-progress-track`, `.ai-progress-bar`, `.ai-sentiment-quote-box`, `.ai-sentiment-quote-text`, dsb.).
+     - Menghapuskan 100% amaran linter IDE tanpa menjejaskan visual sedikit pun.
+  2. **Pengasasan 6 Modul Utama Topbar Pentadbir (`navbar-loader.js`)**:
+     - Memperkenalkan susunan ikon navigasi berpusat bagi 6 modul teras pentadbir:
+       1. `Papan Pemuka` (`dashboard/admin.html`, ikon: `dashboard`, `#nl-dash`)
+       2. `Kenderaan` (`car/cars.html`, ikon: `directions_car`, `#nl-cars`)
+       3. `Tempahan` (`booking/bookings.html`, ikon: `receipt_long`, `#nl-bookings`)
+       4. `Pelanggan` (`customer/customers.html`, ikon: `people`, `#nl-users`)
+       5. `Laporan` (`report/reports.html`, ikon: `bar_chart`, `#nl-reports`)
+       6. `Kecerdasan AI` (`analytics/analytics.html`, ikon: `auto_awesome`, `#nl-ai`)
+     - Logik pemadanan laluan (`path matching`) automatik mengaktifkan ikon yang sepadan mengikut domain halaman semasa.
+  3. **Enjin Bar Sisi Kontekstual Dinamik (`sidebar-loader.js`)**:
+     - Bar sisi kini mengesan modul teras yang aktif daripada Topbar dan memaparkan hanya sub-alat yang berkaitan secara automatik:
+       - **Kecerdasan AI**: `Analisis Data AI`, `Kunci API & Chatbot AI`, `Pemasaran Pintar AI`.
+       - **Kenderaan**: `Semua Kenderaan`, `Kenderaan Tersedia` (`?filter=Available`), `Sedang Disewa` (`?filter=Rented`), `Tambah Kereta Baharu` (`?action=add`).
+       - **Tempahan**: `Semua Tempahan`, `Kalendar` (`calendar/calendar.html`), `Tempahan Aktif` (`?status=Active`), `Cipta Tempahan` (`?action=add`).
+       - **Pelanggan**: `Direktori Pelanggan`, `Pengesahan Lesen` (`?filter=pending`).
+       - **Laporan**: `Laporan Hasil & Sewaan`, `Eksport Laporan Data` (`?tab=export`).
+       - **Papan Pemuka**: `Ringkasan Utama`, `Status Operasi`.
+     - Bahagian *Footer* bar sisi kekal menyokong `Tetapan` (`setting/settings.html`) dan `Log Keluar`.
+  4. **Penyelarasan Cache-Buster Universal (`?v=5.3.5`)**:
+     - Mengemas kini versi parameter pertanyaan `?v=5.3.5` pada tag skrip `navbar-loader.js` dan `sidebar-loader.js` merentas semua 10 fail halaman pentadbir bagi memastikan tiada pelayar yang memuatkan skrip legasi dari memori cache.
+  5. **Suite Ujian Automasi E2E Baharu (`09_admin_ai_analytics.spec.js`)**:
+     - Mencipta ujian Playwright komprehensif yang mengesahkan:
+       - Kehadiran dan susunan 6 modul Topbar dengan ikon `#nl-ai` aktif pada halaman analitik.
+       - Kehadiran 3 sub-alat AI pada bar sisi kontekstual.
+       - Interaktiviti penapis ufuk masa (7 Hari, 30 Hari, Puncak Cuti).
+       - Peralihan modul ke Kenderaan (`cars.html`) dan transformasi bar sisi ke sub-alat armada berserta penapisan URL (`?filter=Available`).
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright (`cd tests && npx playwright test`): **100% Pass Rate** (21/21 ujian lulus tanpa sebarang ralat).
+- **Maklumat Git**:
+  - Commit: `5.3.5 Add dedicated AI module to topbar and implement contextual dynamic sub-navigation in sidebar`
+  - Tag Versi: `5.3.5`

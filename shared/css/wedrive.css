@@ -7573,8 +7573,6 @@ body.dark aside.sidebar {
   padding: 4px 16px 16px;
   overflow-y: auto;
   flex: 1;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
 }
 
 .sidebar#admin-sidebar .sidebar-nav::-webkit-scrollbar {
@@ -14145,5 +14143,129 @@ body.pending-page {
     font-size: 20px;
   }
 }
+
+/* ── AI Data Analytics Master Styles ── */
+.ai-header-banner {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.08) 0%, rgba(175, 82, 222, 0.08) 100%);
+  border: 1px solid rgba(0, 113, 227, 0.2);
+}
+
+.ai-engine-badge {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.dot-indicator.dot-green {
+  background: #34C759;
+}
+
+.ai-header-title {
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.ai-time-glider {
+  background: var(--bg-surface-2);
+  border-radius: 9999px;
+  padding: 4px;
+  display: inline-flex;
+  border: 1px solid var(--border-subtle);
+}
+
+.ai-demand-chart-wrap {
+  min-height: 220px;
+}
+
+.ai-legend-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.ai-legend-box.box-projected {
+  background: var(--primary);
+}
+
+.ai-legend-box.box-capacity {
+  background: var(--slate-200, #E2E8F0);
+}
+
+.ai-progress-track {
+  background: var(--bg-surface-2);
+  border-radius: 9999px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.ai-progress-track.track-sm {
+  height: 6px;
+}
+
+.ai-progress-bar {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-progress-bar.bar-suv {
+  width: 96%;
+  background: linear-gradient(90deg, #0071E3, #2997FF);
+}
+
+.ai-progress-bar.bar-mpv {
+  width: 92%;
+  background: linear-gradient(90deg, #0071E3, #30B0C7);
+}
+
+.ai-progress-bar.bar-sedan {
+  width: 84%;
+  background: linear-gradient(90deg, #34C759, #30B0C7);
+}
+
+.ai-progress-bar.bar-compact {
+  width: 74%;
+  background: linear-gradient(90deg, #FF9500, #34C759);
+}
+
+.ai-progress-bar.bar-cleanliness {
+  width: 98.2%;
+  background: #34C759;
+}
+
+.ai-progress-bar.bar-keyless {
+  width: 96.8%;
+  background: #0071E3;
+}
+
+.ai-progress-bar.bar-aircond {
+  width: 95.0%;
+  background: #30B0C7;
+}
+
+.ai-strategy-card.card-blue {
+  border-left: 4px solid #0071E3;
+}
+
+.ai-strategy-card.card-purple {
+  border-left: 4px solid #AF52DE;
+}
+
+.ai-strategy-card.card-green {
+  border-left: 4px solid #34C759;
+}
+
+.ai-sentiment-quote-box {
+  background: var(--bg-surface-2);
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+}
+
+.ai-sentiment-quote-text {
+  font-style: italic;
+}
+
 
 

@@ -28,6 +28,14 @@ window.WeDriveAPI.getAdminData()
       return c;
     });
     applyCustomerFilters();
+    var filterParam = new URLSearchParams(window.location.search).get('filter');
+    if (filterParam === 'pending') {
+      var pendingCard = document.getElementById('pending-verifications-card');
+      if (pendingCard) {
+        pendingCard.classList.remove('hidden');
+        pendingCard.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   })
   .catch(err => console.error('Customers data load error:', err));
 

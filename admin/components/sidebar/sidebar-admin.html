@@ -1,12 +1,10 @@
 <!--
-  WeDRIVE - Admin Sidebar Component
-  shared/components/sidebar-admin.html
+  WeDRIVE - Admin Contextual Sidebar Component Shell
+  admin/components/sidebar/sidebar-admin.html
 
   Loaded via fetch() into #sidebar-placeholder on every admin page.
-  Active link is detected automatically by sidebar-loader.js using window.location.pathname.
-
-  Link href values must match the actual file paths relative to admin/pages/.
-  Logo path resolves via data-base-path set on #sidebar-placeholder by the loader.
+  Sub-navigation items inside .sidebar-nav are populated dynamically by
+  sidebar-loader.js based on the active Topbar module.
 -->
 <aside class="sidebar" id="admin-sidebar">
 
@@ -27,49 +25,9 @@
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="sidebar-nav">
-    <div class="nav-section" data-key="nav_sec_main">Main</div>
-
-    <a class="nav-item" data-page="admin" data-href="dashboard/admin.html">
-      <span class="material-icons-round">dashboard</span>
-      <span data-key="admin_dashboard">Dashboard</span>
-    </a>
-
-    <a class="nav-item" data-page="car" data-href="car/cars.html">
-      <span class="material-icons-round">directions_car</span>
-      <span data-key="sidebar_car">Cars</span>
-    </a>
-
-    <a class="nav-item" data-page="bookings" data-href="booking/bookings.html">
-      <span class="material-icons-round">receipt_long</span>
-      <span data-key="sidebar_bookings">Bookings</span>
-    </a>
-
-    <a class="nav-item" data-page="customers" data-href="customer/customers.html">
-      <span class="material-icons-round">people</span>
-      <span data-key="sidebar_customers">Customers</span>
-    </a>
-
-    <a class="nav-item" data-page="calendar" data-href="calendar/calendar.html">
-      <span class="material-icons-round">calendar_month</span>
-      <span data-key="sidebar_calendar">Calendar</span>
-    </a>
-
-    <a class="nav-item" data-page="reports" data-href="report/reports.html">
-      <span class="material-icons-round">bar_chart</span>
-      <span data-key="sidebar_reports">Reports</span>
-    </a>
-
-    <a class="nav-item" data-page="marketing" data-href="marketing/marketing.html">
-      <span class="material-icons-round">campaign</span>
-      <span data-key="sidebar_marketing">Marketing</span>
-    </a>
-
-    <a class="nav-item" data-page="chatbot-settings" data-href="chatbot/chatbot.html">
-      <span class="material-icons-round">smart_toy</span>
-      <span data-key="sidebar_chatbot">AI Chatbot</span>
-    </a>
+  <!-- Navigation (Populated contextually by sidebar-loader.js) -->
+  <nav class="sidebar-nav" id="sidebar-nav-sub">
+    <!-- Populated dynamically based on active module: dashboard, car, booking, customer, report, or ai -->
   </nav>
 
   <!-- Footer (Fixed at bottom) -->

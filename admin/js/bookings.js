@@ -36,6 +36,17 @@ window.WeDriveAPI.getAdminData()
       var searchInput = document.getElementById('bk-search');
       if (searchInput) searchInput.value = searchParam;
     }
+
+    var statusParam = new URLSearchParams(window.location.search).get('status');
+    if (statusParam) {
+      var chips = document.querySelectorAll('.filter-chip');
+      chips.forEach(function(c) {
+        if (c.textContent.trim().toLowerCase() === statusParam.toLowerCase()) {
+          filterBookings(statusParam, c);
+        }
+      });
+    }
+
     applyFilters();
     renderTodayPickups();
     if (new URLSearchParams(window.location.search).get('action') === 'add') {

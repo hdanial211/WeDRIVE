@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Data Analysis | WeDRIVE</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="analytics"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- TOPBAR (Main Module Navigation) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- HEADER BANNER & TIME HORIZON GLIDER -->
+      <div class="card reveal-onload mb-24 ai-header-banner">
+        <div class="flex-between flex-wrap gap-16 align-center">
+          <div>
+            <div class="flex-row align-center gap-8 mb-6">
+              <span class="badge badge-purple ai-engine-badge">
+                <span class="material-icons-round fs-14">psychology</span> WeDRIVE AI Engine v2.4
+              </span>
+              <span class="badge badge-blue" id="ai-status-indicator">
+                <span class="dot-indicator dot-green"></span> <span data-key="ai_model_active">Model Aktif: Gemini 2.5 Flash</span>
+              </span>
+            </div>
+            <h1 class="fs-24 fw-800 ai-header-title" data-key="ai_analytics_title">Analisis Data AI</h1>
+            <p class="text-muted fs-14 mt-4" data-key="ai_analytics_subtitle">Kecerdasan ramalan permintaan masa nyata, pengoptimuman armada & analisis kualiti perkhidmatan WeDRIVE Melaka.</p>
+          </div>
+
+          <div class="flex-row align-center gap-12 flex-wrap">
+            <!-- Time Horizon Segmented Control -->
+            <div class="segmented-control ai-time-glider" id="time-glider">
+              <button class="segmented-btn active" data-horizon="7d" onclick="switchHorizon('7d')">7 Hari</button>
+              <button class="segmented-btn" data-horizon="30d" onclick="switchHorizon('30d')">30 Hari</button>
+              <button class="segmented-btn" data-horizon="peak" onclick="switchHorizon('peak')">Puncak Cuti</button>
+            </div>
+
+            <!-- Re-Run AI Model Button -->
+            <button class="btn-primary" id="btn-rerun-ai" onclick="rerunAIModel()">
+              <span class="material-icons-round fs-18">auto_awesome</span>
+              <span data-key="ai_btn_rerun">Jana Semula AI</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 TOP BENTO METRIC KPI CARDS -->
+      <div class="stats-grid grid-4col mb-24">
+        <!-- KPI 1: Model Accuracy -->
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="ai_kpi_accuracy">Ketepatan Ramalan AI</div>
+            <div class="value fs-24" id="ai-accuracy">94.6%</div>
+            <div class="change up" id="ai-accuracy-change"><span class="material-icons-round fs-14">arrow_upward</span> +3.2% (R² = 0.91)</div>
+          </div>
+          <div class="stat-icon purple"><span class="material-icons-round">psychology</span></div>
+        </div>
+
+        <!-- KPI 2: Demand Surge Index -->
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="ai_kpi_surge">Lonjakan Permintaan</div>
+            <div class="value fs-24" id="ai-surge">+34%</div>
+            <div class="change up" id="ai-surge-change"><span class="material-icons-round fs-14">trending_up</span> Hujung Minggu Puncak</div>
+          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">bolt</span></div>
+        </div>
+
+        <!-- KPI 3: Dynamic Pricing Uplift -->
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="ai_kpi_uplift">Peningkatan Hasil AI</div>
+            <div class="value fs-24" id="ai-uplift">RM 4,820</div>
+            <div class="change up" id="ai-uplift-change"><span class="material-icons-round fs-14">arrow_upward</span> +18.4% unjuran dinamik</div>
+          </div>
+          <div class="stat-icon green"><span class="material-icons-round">payments</span></div>
+        </div>
+
+        <!-- KPI 4: Fleet Health Index -->
+        <div class="stat-card reveal-onload">
+          <div class="stat-info">
+            <div class="label" data-key="ai_kpi_health">Kesihatan Armada AI</div>
+            <div class="value fs-24" id="ai-health">98.2<span class="fs-14 fw-500 text-muted">/100</span></div>
+            <div class="change up" id="ai-health-change"><span class="material-icons-round fs-14">check_circle</span> Tiada risiko kritikal</div>
+          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">verified</span></div>
+        </div>
+      </div>
+
+      <!-- MAIN ROW 1: DEMAND FORECAST CHART + CATEGORY DEMAND -->
+      <div class="grid-2 mb-24">
+        <!-- 7-Day Demand vs Capacity Chart -->
+        <div class="card reveal-on-scroll">
+          <div class="card-header flex-between align-center mb-16">
+            <div>
+              <h3 data-key="ai_chart_demand_title" class="fs-17 fw-700">Ramalan Permintaan vs Kapasiti Armada</h3>
+              <p class="fs-12 text-muted" data-key="ai_chart_demand_sub">Unjuran bilangan tempahan harian berbanding unit kenderaan aktif sedia ada.</p>
+            </div>
+            <span class="badge badge-amber fs-11" id="surge-alert-pill">
+              <span class="material-icons-round fs-14">warning</span> <span data-key="ai_surge_alert">Puncak: Jumaat - Ahad</span>
+            </span>
+          </div>
+
+          <div id="ai-demand-chart" class="py-12 ai-demand-chart-wrap"></div>
+
+          <div class="flex-row justify-center gap-20 mt-12 fs-12 text-muted">
+            <span class="flex-row align-center gap-6"><span class="ai-legend-box box-projected"></span> <span data-key="ai_legend_projected">Unjuran Tempahan</span></span>
+            <span class="flex-row align-center gap-6"><span class="ai-legend-box box-capacity"></span> <span data-key="ai_legend_capacity">Kapasiti Maksimum (8 Unit)</span></span>
+          </div>
+        </div>
+
+        <!-- Vehicle Category Demand Breakdown -->
+        <div class="card reveal-on-scroll">
+          <div class="card-header mb-16">
+            <h3 data-key="ai_cat_title" class="fs-17 fw-700">Inteligens Permintaan Mengikut Kategori</h3>
+            <p class="fs-12 text-muted" data-key="ai_cat_sub">Tahap tekanan permintaan kecerdasan buatan bagi setiap segmen kenderaan.</p>
+          </div>
+
+          <div class="flex-col gap-16 mt-8" id="category-demand-list">
+            <!-- SUVs -->
+            <div>
+              <div class="flex-between fs-13 fw-600 mb-4">
+                <span class="flex-row align-center gap-6"><span class="material-icons-round fs-16 text-primary">directions_car</span> SUV (Proton X70, Mercedes GLA)</span>
+                <span class="text-primary font-tabular">96% (Kritikal)</span>
+              </div>
+              <div class="ai-progress-track">
+                <div class="ai-progress-bar bar-suv"></div>
+              </div>
+            </div>
+
+            <!-- MPVs -->
+            <div>
+              <div class="flex-between fs-13 fw-600 mb-4">
+                <span class="flex-row align-center gap-6"><span class="material-icons-round fs-16 text-primary">airport_shuttle</span> MPV / Van (Toyota Alphard)</span>
+                <span class="text-primary font-tabular">92% (Tinggi)</span>
+              </div>
+              <div class="ai-progress-track">
+                <div class="ai-progress-bar bar-mpv"></div>
+              </div>
+            </div>
+
+            <!-- Sedans -->
+            <div>
+              <div class="flex-between fs-13 fw-600 mb-4">
+                <span class="flex-row align-center gap-6"><span class="material-icons-round fs-16 text-primary">directions_car</span> Sedan (BMW 320i, Honda City)</span>
+                <span class="text-primary font-tabular">84% (Stabil)</span>
+              </div>
+              <div class="ai-progress-track">
+                <div class="ai-progress-bar bar-sedan"></div>
+              </div>
+            </div>
+
+            <!-- Compact / Hatchback -->
+            <div>
+              <div class="flex-between fs-13 fw-600 mb-4">
+                <span class="flex-row align-center gap-6"><span class="material-icons-round fs-16 text-primary">electric_car</span> Kompak (Perodua Myvi, Axia)</span>
+                <span class="text-primary font-tabular">74% (Kapasiti Sederhana)</span>
+              </div>
+              <div class="ai-progress-track">
+                <div class="ai-progress-bar bar-compact"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN ROW 2: STRATEGIC AI RECOMMENDATIONS (BENTO 3-COL) -->
+      <div class="card reveal-on-scroll mb-24">
+        <div class="card-header mb-16">
+          <div class="flex-between align-center">
+            <div>
+              <h3 data-key="ai_strat_title" class="fs-17 fw-700">Tindakan Strategik Disyorkan Enjin AI</h3>
+              <p class="fs-12 text-muted" data-key="ai_strat_sub">Cadangan autonomi untuk memaksimumkan kadar utilisasi dan margin keuntungan.</p>
+            </div>
+            <span class="badge badge-green fs-11"><span class="material-icons-round fs-14">check</span> 3 Strategi Aktif</span>
+          </div>
+        </div>
+
+        <div class="grid-3col gap-20">
+          <!-- Rec 1: Repositioning -->
+          <div class="report-summary-card ai-strategy-card card-blue">
+            <div class="flex-row align-center gap-8 mb-8">
+              <span class="material-icons-round text-primary fs-20">share_location</span>
+              <span class="fw-700 fs-14" data-key="ai_strat_1_title">Pengagihan Semula Armada</span>
+            </div>
+            <p class="fs-12 text-muted mb-12" data-key="ai_strat_1_desc">Pindahkan 2 unit SUV ke Hub Tol Ayer Keroh sebelum Jumaat 3:00 PM bagi menyambut ketibaan pelancong hujung minggu.</p>
+            <div class="badge badge-blue fs-11" data-key="ai_strat_1_tag">Impak: +14% Utilisasi</div>
+          </div>
+
+          <!-- Rec 2: Dynamic Multiplier -->
+          <div class="report-summary-card ai-strategy-card card-purple">
+            <div class="flex-row align-center gap-8 mb-8">
+              <span class="material-icons-round text-purple fs-20">price_change</span>
+              <span class="fw-700 fs-14" data-key="ai_strat_2_title">Penetapan Harga Dinamik (1.15x)</span>
+            </div>
+            <p class="fs-12 text-muted mb-12" data-key="ai_strat_2_desc">Kadar sewaan harian MPV & SUV disyorkan dinaikkan 15% pada Sabtu-Ahad kerana bekalan terhad di Melaka Tengah.</p>
+            <div class="badge badge-purple fs-11" data-key="ai_strat_2_tag">Impak: +RM 2,140 Hasil</div>
+          </div>
+
+          <!-- Rec 3: Off-Peak Campaign -->
+          <div class="report-summary-card ai-strategy-card card-green">
+            <div class="flex-row align-center gap-8 mb-8">
+              <span class="material-icons-round text-green fs-20">local_offer</span>
+              <span class="fw-700 fs-14" data-key="ai_strat_3_title">Insentif Korporat Hari Bekerja</span>
+            </div>
+            <p class="fs-12 text-muted mb-12" data-key="ai_strat_3_desc">Sedan kompak mempunyai kapasiti lebihan hari Selasa-Rabu; lancarkan promosi potongan 10% untuk pelanggan perniagaan.</p>
+            <div class="badge badge-green fs-11" data-key="ai_strat_3_tag">Impak: 0 Unit Melahu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN ROW 3: PREDICTIVE MAINTENANCE & CUSTOMER SENTIMENT -->
+      <div class="grid-2 mb-24">
+        <!-- Predictive Maintenance Table -->
+        <div class="card reveal-on-scroll">
+          <div class="card-header mb-16">
+            <h3 data-key="ai_maint_title" class="fs-17 fw-700">Telematik & Ramalan Penyelenggaraan Pintar</h3>
+            <p class="fs-12 text-muted" data-key="ai_maint_sub">Pengesanan awal kehausan brek, minyak enjin, dan tayar menggunakan telematik.</p>
+          </div>
+
+          <div class="table-container">
+            <table class="table" id="ai-maintenance-table">
+              <thead>
+                <tr>
+                  <th data-key="ai_th_car">Kenderaan</th>
+                  <th data-key="ai_th_wear">Kehausan</th>
+                  <th data-key="ai_th_next">Servis Seterusnya</th>
+                  <th data-key="ai_th_status">Status AI</th>
+                </tr>
+              </thead>
+              <tbody id="maintenance-tbody">
+                <!-- Populated dynamically by analytics.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Customer Review Sentiment NLP -->
+        <div class="card reveal-on-scroll">
+          <div class="card-header flex-between align-center mb-16">
+            <div>
+              <h3 data-key="ai_nlp_title" class="fs-17 fw-700">Analisis Sentimen Pelanggan (NLP)</h3>
+              <p class="fs-12 text-muted" data-key="ai_nlp_sub">Pemprosesan bahasa semulajadi bagi maklum balas dan ulasan sewaan.</p>
+            </div>
+            <span class="badge badge-green fs-12 fw-700">96.4% Positif</span>
+          </div>
+
+          <div class="flex-col gap-12">
+            <!-- Sentiment Attribute Progress Bars -->
+            <div class="flex-between fs-12">
+              <span>Kebersihan & Keharuman Kenderaan</span>
+              <span class="fw-700 text-green font-tabular">98.2%</span>
+            </div>
+            <div class="ai-progress-track track-sm">
+              <div class="ai-progress-bar bar-cleanliness"></div>
+            </div>
+
+            <div class="flex-between fs-12 mt-4">
+              <span>Kelancaran Pengambilan Tanpa Kunci (Keyless)</span>
+              <span class="fw-700 text-primary font-tabular">96.8%</span>
+            </div>
+            <div class="ai-progress-track track-sm">
+              <div class="ai-progress-bar bar-keyless"></div>
+            </div>
+
+            <div class="flex-between fs-12 mt-4">
+              <span>Keberkesanan Pendingin Hawa (Cuaca Melaka)</span>
+              <span class="fw-700 text-primary font-tabular">95.0%</span>
+            </div>
+            <div class="ai-progress-track track-sm">
+              <div class="ai-progress-bar bar-aircond"></div>
+            </div>
+
+            <!-- Recent AI Sentiment Feedback Snippet -->
+            <div class="mt-12 p-12 ai-sentiment-quote-box">
+              <div class="flex-row align-center gap-8 mb-4">
+                <span class="badge badge-green fs-10">SENTIMEN POSITIF</span>
+                <span class="fs-11 text-muted">Ahmad R. · Honda City</span>
+              </div>
+              <p class="fs-12 m-0 ai-sentiment-quote-text">"Kereta sangat wangi dan bersih. Pengambilan guna app langsung tidak perlu tunggu lama di Ayer Keroh!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+
+  <script src="../../../shared/js/navbar-loader.js?v=5.3.5"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.3.5"></script>
+  <script src="../../../shared/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../js/analytics.js?v=1"></script>
+</body>
+</html>
