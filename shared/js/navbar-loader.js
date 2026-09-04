@@ -65,10 +65,13 @@
 
     // Admin dashboard
     admin: {
+      iconOnly: true,
       links: [
-        { key: 'admin_nav_dash',  href: '{base}admin/pages/dashboard/admin.html', label: 'Dashboard',  id: 'nl-dash'  },
-        { key: 'admin_nav_cars',  href: '{base}admin/pages/car/cars.html',         label: 'Cars',        id: 'nl-cars'  },
-        { key: 'admin_nav_users', href: '{base}admin/pages/customer/customers.html', label: 'Customers',   id: 'nl-users' }
+        { key: 'admin_dashboard',  href: '{base}admin/pages/dashboard/admin.html', icon: 'dashboard',      label: 'Dashboard',  id: 'nl-dash'      },
+        { key: 'sidebar_car',      href: '{base}admin/pages/car/cars.html',         icon: 'directions_car', label: 'Cars',       id: 'nl-cars'      },
+        { key: 'sidebar_bookings', href: '{base}admin/pages/booking/bookings.html', icon: 'receipt_long',   label: 'Bookings',   id: 'nl-bookings'  },
+        { key: 'sidebar_customers',href: '{base}admin/pages/customer/customers.html', icon: 'people',       label: 'Customers', id: 'nl-users'     },
+        { key: 'sidebar_reports',  href: '{base}admin/pages/report/reports.html',   icon: 'bar_chart',    label: 'Reports',    id: 'nl-reports'   }
       ],
       actions: `
         <div class="user-pill" id="user-pill">
@@ -92,12 +95,32 @@
 
     // Determine active link by current path
     var currentPath = window.location.pathname;
+    var isIconOnly  = config.iconOnly || false;
 
     // Build links HTML
     var linksHtml = config.links.map(function (link) {
-      var href    = link.href.replace(/{base}/g, base);
-      var isActive = currentPath.endsWith(href.replace(base, '').replace('{base}', '')) || false;
-      var extra   = link.extra || '';
+      var href      = link.href.replace(/{base}/g, base);
+      var cleanHref = href.replace(base, '').replace('{base}', '');
+      var isActive  = currentPath.endsWith(cleanHref);
+
+      if (!isActive && module === 'admin') {
+        if (cleanHref.includes('/dashboard/') && (currentPath.includes('/dashboard/') || currentPath.endsWith('/admin.html'))) {
+          isActive = true;
+        } else if (cleanHref.includes('/car/') && currentPath.includes('/car/')) {
+          isActive = true;
+        } else if (cleanHref.includes('/booking/') && (currentPath.includes('/booking/') || currentPath.includes('/calendar/'))) {
+          isActive = true;
+        } else if (cleanHref.includes('/customer/') && currentPath.includes('/customer/')) {
+          isActive = true;
+        } else if (cleanHref.includes('/report/') && (currentPath.includes('/report/') || currentPath.includes('/marketing/') || currentPath.includes('/chatbot/'))) {
+          isActive = true;
+        }
+      }
+
+      var extra     = link.extra || '';
+      if (isIconOnly && link.icon) {
+        return '<a href="' + href + '" class="nav-link nav-icon-link' + (isActive ? ' active' : '') + '" id="' + link.id + '" data-key-title="' + link.key + '" title="' + link.label + '" aria-label="' + link.label + '" ' + extra + '><span class="material-icons-round">' + link.icon + '</span></a>';
+      }
       return '<a href="' + href + '" class="nav-link' + (isActive ? ' active' : '') + '" id="' + link.id + '" data-key="' + link.key + '" ' + extra + '>' + link.label + '</a>';
     }).join('');
 
@@ -116,7 +139,7 @@
       '    <img class="brand-logo" id="navbar-logo" src="' + base + 'shared/logo/wedrive-icon.png" alt="WeDRIVE Logo" />',
       '    <div class="brand-text"><span class="we">We</span><span class="drive">DRIVE</span></div>',
       '  </a>',
-      '  <div class="nav-links" id="navbar-links">' + linksHtml + '</div>',
+      '  <div class="nav-links' + (isIconOnly ? ' nav-icons-bar' : '') + '" id="navbar-links">' + linksHtml + '</div>',
       '  <div class="nav-actions" id="navbar-actions">',
       '    <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch Language">',
       '      <span class="lang-text">MS</span>',

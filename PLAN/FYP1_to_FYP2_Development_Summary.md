@@ -2151,3 +2151,118 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.2.91 Remove redundant text-size-adjust vendor prefixes to achieve zero IDE problems`
   - Tag Versi: `5.2.91`
+
+---
+
+### [MAJOR UPDATE 132] (v5.3.0) - Rombakan Seni Bina Navigasi Pentadbir (Top Bar Ikon Minimalis, Bar Sisi Kontekstual Dinamik & Penyelarasan MCP Composio)
+- **Tarikh & Masa:** 4 September 2026, 04:10 PM MYT
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mengarahkan rombakan hierarki navigasi modul Pentadbir:
+     > `sidebar focus yang kecil2 ...kalau topbar tu focus yang main...nnti kalau dh ada dekat topbar contoh saya tekan customer sidebar tu keluar customer side2 ...kalau tekan cars ..keluar semua cars2 punya kecil2`
+     > `topbar tu guna icon sahaja..ganti`
+  2. Pengguna mengarahkan supaya folder ujian dan fail tangkapan skrin sentiasa kemas di dalam `tests/` dan dibuang selepas ujian selesai:
+     > `tests letak dalam ni..jangan letak kat luar ...n nanti buat gambar tu sebab saya xnak banyak sangat file2 testing ni..lepas testing nnti buang`
+  3. Pengguna melaporkan ralat pengesahan MCP Composio:
+     > `composio Authenticate Error: calling "initialize": sending "initialize": Unauthorized`
+- **Fail-fail Terlibat**:
+  - `shared/js/navbar-loader.js`
+  - `shared/js/sidebar-loader.js`
+  - `shared/css/wedrive.css`
+  - `admin/components/sidebar/sidebar-admin.html`
+  - `admin/pages/booking/bookings.html`
+  - `shared/lang/en.js`, `shared/lang/ms.js`, `shared/lang/en.json`, `shared/lang/ms.json`
+  - `~/.gemini/config/mcp_config.json`, `~/.gemini/antigravity-ide/mcp_config.json`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Tindakan**:
+  1. **Top Bar Pentadbir Ikonik Minimalis Apple HIG (`navbar-loader.js` & `wedrive.css`)**:
+     - Mengubah konfigurasi `NAV_CONFIG.admin` kepada mod ikon sahaja (`iconOnly: true`) dengan 5 modul teras: Papan Pemuka (`dashboard`), Kereta (`directions_car`), Tempahan (`receipt_long`), Pelanggan (`people`), dan Laporan (`bar_chart`).
+     - Melaksanakan butang bulat 1:1 sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; width: 36px; height: 36px;`) dengan maklum balas taktil Apple (`hover scale 1.06`, `active scale 0.95`).
+     - Mengintegrasikan atribut dwibahasa `data-key-title` bagi memastikan fungsi pertukaran bahasa (MS $\leftrightarrow$ EN) mengemas kini tooltip `title` dan `aria-label` tanpa memadam ligatur teks ikon Material Icons.
+  2. **Bar Sisi Kontekstual Dinamik ("Fokus Yang Kecil-Kecil") (`sidebar-loader.js`)**:
+     - Membina enjin kontekstual `ADMIN_CONTEXT_MODULES` dan fungsi `renderAdminContextualNav()` yang membaca modul aktif semasa dan memaparkan sub-item tindakan khusus di dalam bar sisi:
+       - **Papan Pemuka:** Ringkasan Utama, Tindakan Segera, Analitik Pantas.
+       - **Kereta:** Semua Kenderaan, Tambah Kenderaan Baharu (membuka modal tambah serta-merta), Rekod Penyelenggaraan.
+       - **Tempahan:** Semua Tempahan, Tempahan Aktif, Menunggu Kelulusan, Selesai (berinteraksi terus dengan penapis cip status halaman).
+       - **Pelanggan:** Senarai Pelanggan, Status Pengesahan IC/Lesen.
+       - **Laporan:** Hasil Sewaan, Penggunaan Armada, Eksport Laporan.
+     - Menetapkan pautan **Tetapan (Settings)** dan **Log Keluar (Logout)** dipasak secara kekal di bahagian paling bawah (`.sidebar-footer`) di seluruh halaman pentadbir.
+  3. **Penalaan Kontras & Bahan Kaca Apple HIG (`wedrive.css`)**:
+     - Memperbaiki kad wira tetapan `.settings-hero` daripada kecerunan gelap statik kepada Bento Surface adaptif (`var(--bg-surface)` dan `var(--text-primary)`), memastikan kebolehbacaan optimum 100% pada Mod Siang dan Mod Malam.
+     - Menggantikan sempadan biru neon tebal pada kad `.today-pickups-card` kepada sempadan halus Apple HIG `var(--border-medium)`.
+  4. **Penyelesaian Penuh Ralat MCP Composio (`mcp_config.json`)**:
+     - Mengenal pasti punca ralat `Error: calling "initialize": sending "initialize": Unauthorized`: nilai `x-consumer-api-key` sebelum ini mengandungi karakter terlindung titik bullet (`ck_q5F•••••••••••••_-e9`) akibat salinan visual dari papan pemuka web.
+     - Membuang pengepala tidak sah tersebut dan mengemas kini konfigurasi pelayan ke format rasmi `serverUrl: "https://connect.composio.dev/mcp"`. Ini membolehkan butang "Authenticate" pada Antigravity IDE memulakan aliran piawai OAuth 2.0 (`.well-known/oauth-protected-resource`) secara selamat melalui pelayar web.
+  5. **Pengurusan Ujian Bersih & Penyingkiran Tangkapan Skrin**:
+     - Memastikan semua dependensi dan skrip ujian terasing kemas dalam `tests/`.
+     - Memadam direktori tangkapan skrin visual sementara `tests/temp_screenshots/` selepas pengesahan berjaya.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright (`cd tests && npx playwright test`): **100% Pass Rate** (20/20 ujian lulus tanpa sebarang regresi).
+- **Maklumat Git**:
+  - Commit: `5.3.0 Implement icon-only admin topbar, dynamic contextual sidebar, and fix composio MCP auth`
+  - Tag Versi: `5.3.0`
+
+---
+
+### [MINOR UPDATE 133] (v5.3.1) - Penyelarasan Penuh Jarak & Irama Grid Apple HIG (8-Point Grid Spacing, Capsule Toolbar Dock & Squircle Bento Buttons)
+- **Tarikh & Masa:** 4 September 2026, 04:30 PM MYT
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mengarahkan penentukuran jarak antara semua elemen mematuhi panduan penuh `.agents` (Apple HIG Design System & Device Support Standards):
+     > `Jarak antara satu benda dengan satu benda tu ikut apple punya awak baca fully agent ni /Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM KHAS 6/BITU3983 PROJECT II(FYP 2)/AI CAR RENTAL SYSTEM/.agents`
+- **Fail-fail Terlibat**:
+  - `shared/css/wedrive.css`
+  - `shared/js/navbar-loader.js`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Tindakan**:
+  1. **Top Bar Apple Segmented Capsule Dock (`.nav-links.nav-icons-dock`)**:
+     - Kelima-lima butang ikon navigasi kini ditempatkan di dalam bekas kapsul bersepadu (*integrated capsule track*) dengan `padding: 4px; gap: 4px;` dan sempadan sub-piksel kaca Apple, mewujudkan irama visual yang seimbang dan simetri dengan logo dan suis tema/bahasa.
+  2. **Irama Grid 8-Point & Kedudukan Bar Sisi Floating Apple HIG (`wedrive.css`)**:
+     - Membetulkan offset tidak sejajar (14px) kepada gandaan tepat 8pt: `top: 16px; left: 16px; bottom: 16px; width: 256px;` dengan bucu Bento Squircle `24px`.
+     - Melaraskan `main.main` kepada `margin-left: 288px;` ($16\text{px} + 256\text{px} + 16\text{px}$), menghasilkan jarak tepat 16px antara bar sisi terapung dan kawasan kandungan.
+     - Melaraskan margin `navbar` kepada `16px 24px 0 24px` dan padding `.content` kepada `24px 24px 24px 24px` supaya tepi kiri navbar dan kad kandungan sejajar secara menegak dengan sempurna.
+  3. **Bar Sisi: Item Aktif Pil Biru Lembut & Tipografi Apple (`wedrive.css`)**:
+     - Mengubah item aktif bar sisi daripada warna biru neon legap kepada **pil biru lembut lut sinar Apple** (`var(--primary-light)` / `rgba(0, 113, 227, 0.12)`) dengan teks biru `var(--primary)` dan sempadan aksen halus mengikut spesifikasi mutlak Peraturan HIG Pilar 3 (Baris 107).
+     - Menetapkan jejari bucu squircle `12px` pada setiap sub-item untuk memadankan gaya bar sisi natif macOS Settings & Finder.
+  4. **Pembetulan Geometri Butang Tindakan Pantas (`.actions-grid .action-btn`)**:
+     - Mengasingkan peraturan `.action-btn` modal agar tidak merosakkan grid 3x3 dashboard.
+     - Butang tindakan pantas kini berbentuk squircle kemas (`16px`) dengan susunan ikon di atas, teks di bawah, min-height 74px, dan jarak grid 12px yang lapang dan bernafas.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright (`cd tests && npx playwright test`): **100% Pass Rate** (20/20 ujian lulus tanpa sebarang ralat).
+- **Maklumat Git**:
+  - Commit: `5.3.1 Implement strict Apple HIG 8-point grid spacing and capsule toolbar dock`
+  - Tag Versi: `5.3.1`
+
+---
+
+### [MINOR UPDATE 134] (v5.3.2) - Penalaan Ketepatan Bar Sisi Kontekstual Modul Tunggal & Penyingkiran Capsule Dock Topbar (Apple HIG Ergonomic Spacing)
+- **Tarikh & Masa:** 4 September 2026, 04:46 PM MYT
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mengarahkan ikon bar atas (top bar) tidak diletakkan dalam bekas capsule dock yang tebal/buruk, sebaliknya diselarikan terus secara telus dengan latar belakang bar atas (*seamless background*) dengan jarak yang lebih lapang:
+     > `top bar tu icon tu jangan letak capsule dock sebab buruk samakan kan jek dengan belakang tu tapi jarakkan sikit...`
+  2. Pengguna menegur agar bar sisi HANYA memaparkan item kontekstual milik modul semasa sahaja (seperti mana portal pelanggan hanya memaparkan navigasi pelanggan) dan tidak memaparkan modul luar lain:
+     > `kenapa tunjuk semua??? sepatutnya apa yang dekat main sahaja ..macam customer tunjuk customer sahaja`
+  3. Pengguna mengarahkan agar item bar sisi tidak dirapatkan atau disempitkan, sebaliknya diberi jarak lapang dan memanfaatkan ruang menegak dengan elegan:
+     > `ni jangan rapat2 ...jarak2 sikit ...penuhkan ruang kosong tu... sama jugak dengan sidebar tu amik jarak sikit banyak ruang kosong yang digunakan jangan sempit sangat`
+- **Fail-fail Terlibat**:
+  - `shared/css/wedrive.css`
+  - `shared/js/sidebar-loader.js`
+  - `shared/lang/en.json`, `shared/lang/ms.json`, `shared/lang/en.js`, `shared/lang/ms.js`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Tindakan**:
+  1. **Top Bar Icon Navigation Telus & Lapang (`wedrive.css`)**:
+     - Membuang sepenuhnya sebarang bekas kapsul bersempadan di sekeliling ikon (`background: transparent !important; border: none !important; box-shadow: none !important;`).
+     - Menjarakkan kelima-lima ikon navigasi dengan ruang yang lapang dan bernafas: `gap: 28px !important;`.
+     - Setiap ikon berbentuk bulatan bulat nisbah 1:1 sempurna (`40px × 40px`, `border-radius: 50% !important; aspect-ratio: 1 / 1`).
+     - Ikon aktif menerima latar belakang biru Apple berkilau (`box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35)`).
+  2. **Bar Sisi Terhad Khusus Modul Semasa (`sidebar-loader.js`)**:
+     - Memastikan bar sisi HANYA memaparkan sub-item milik modul aktif sahaja (Contoh: Dashboard hanya memaparkan Alat Papan Pemuka; Cars hanya memaparkan Pengurusan Kenderaan; Bookings hanya memaparkan Tempahan & Jadual).
+     - Menghapuskan paparan seksyen "Main Operations" dan "Analytics" luar daripada bar sisi agar selari dengan prinsip reka bentuk portal pelanggan WeDRIVE.
+  3. **Ergonomik Ruang Bar Sisi & Jarak Selesa (`wedrive.css`)**:
+     - Meluaskan lebar bar sisi daripada `256px` kepada `268px` untuk mengelakkan rasa sempit (*cramped*).
+     - Menyelaraskan `main.main` kepada `margin-left: 300px;` bagi mengekalkan keharmonian visual.
+     - Menjarakkan item navigasi bar sisi dengan `gap: 14px;` dan `min-height: 52px;` dengan padding dalaman `13px 18px` dan bucu Bento Squircle `16px`.
+     - Membesarkan saiz ikon kepada `23px` untuk keterlihatan yang tajam dan taktil.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright (`cd tests && npx playwright test`): **100% Pass Rate** (20/20 ujian lulus tanpa ralat).
+- **Maklumat Git**:
+  - Commit: `5.3.2 Refine contextual sidebar to module-only items and expand topbar icon spacing`
+  - Tag Versi: `5.3.2`
