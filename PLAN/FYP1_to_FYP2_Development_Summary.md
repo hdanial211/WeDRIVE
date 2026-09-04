@@ -2683,3 +2683,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.5.6 Fix all IDE linter errors and eliminate inline styles across admin pages`
   - Tag Versi: `5.5.6`
+
+---
+
+## 🚀 [MINOR UPDATE] 146. Integrasi Alur Kerja Rasmi Stitch MCP (stitch_generation.md) Hasil Sesi /grill-me (v5.5.7)
+
+- **Punca Keperluan (Context & User Directives)**:
+  > *"/Users/hakim/.../.agents saya nak awak update latest /grill-me apa yang awak faham tentang ni"*
+  - Pengguna meminta sesi `/grill-me` bagi menyelaraskan hala tuju pembangunan sistem `.agents` dan mengukuhkan keupayaan alur kerja automasi antaramuka.
+
+- **Keputusan Sesi Temuduga /grill-me**:
+  1. **Fokus Utama:** Penambahan alur kerja (*Workflows*) & kemahiran (*Skills*) khusus.
+  2. **Pemilihan Alur Kerja:** Membina fail alur kerja rasmi `.agents/workflows/stitch_generation.md` berteraskan piawaian **Gemini 3.8 Ultra High-Quality Tier** (`GEMINI_3_1_PRO`) dan token `DESIGN.md`.
+  3. **Skop Alur Kerja:** Meliputi 5 fasa menyeluruh dari formula prompt korporat, protokol kesabaran (*polling* `get_screen` 30s hingga 10 cubaan), penapis *anti-cheesy AI*, penyepaduan kod bersih tanpa gaya sebaris ke dalam `shared/css/wedrive.css`, hingga ke ujian automasi Playwright (100% Pass Rate).
+  4. **Penyelarasan Peraturan:** Memautkan alur kerja ini terus ke dalam `.agents/rules/stitch_design_system.md` dan `.agents/rules/ruleprompt.md`.
+
+- **Tindakan Pembaikan & Pelaksanaan (Implementation Highlights)**:
+  1. **Penciptaan `.agents/workflows/stitch_generation.md`**:
+     - Mengandungi Fasa 0 (Prinsip Kualiti & Parameter Mandatori: `projectId: 1862124494843018493`, `modelId: GEMINI_3_1_PRO`, `designSystem: assets/d66115a696e44b2381ec5f5d829e8a88`).
+     - Fasa 1 (Formula Prompting Korporat: 5 blok teras Apple HIG & mobiliti Melaka).
+     - Fasa 2 (Protokol Kesabaran & Batas Masa / Patience & Polling Protocol).
+     - Fasa 3 (Penapis Penyingkiran Templat AI Murahan / Anti-Cheesy AI Filter).
+     - Fasa 4 (Pengintegrasian Kod Fizikal Bersih / Zero Inline Styles).
+     - Fasa 5 (Pengesahan Ujian Automasi Playwright & Kemaskini Graphify).
+  2. **Pautan Rasmi dalam Peraturan**:
+     - `.agents/rules/stitch_design_system.md`: Ditambah pautan rujukan alur kerja di bawah Seksyen 3.
+     - `.agents/rules/ruleprompt.md`: Ditambah pautan mandatori di bawah Seksyen 9.
+  3. **Pengesahan & Ujian Automasi**:
+     - Menjalankan suite Playwright penuh: **28/28 ujian lulus (100% Pass Rate)**.
+     - Pangkalan pengetahuan Graphify disegerakkan (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `5.5.7 Integrate official corporate Stitch MCP UI generation workflow from grill-me interview`
+  - Tag Versi: `5.5.7`

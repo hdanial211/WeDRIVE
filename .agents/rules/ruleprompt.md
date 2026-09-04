@@ -117,6 +117,7 @@ trigger: always_on
 - **Penyelarasan Kod Fizikal & Integriti Data**:
   - Semua kod CSS yang dijana daripada Stitch WAJIB diselaraskan secara berpusat ke dalam `shared/css/wedrive.css`.
   - Semua medan dan butang tindakan WAJIB disambung terus ke punca data operasi sebenar (`window.WeDriveAPI` / Supabase).
+- **Panduan Alur Kerja Mandatori**: Semua proses penjanaan dan penyepaduan skrin WAJIB mematuhi langkah alur kerja rasmi di [`.agents/workflows/stitch_generation.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/stitch_generation.md).
 
 
 

@@ -50,6 +50,8 @@ Penjanaan antaramuka menggunakan piawaian penaakulan tinggi Gemini 3.8 (`GEMINI_
 
 ## 🛠️ 3. Alur Kerja Penjanaan Antaramuka Stitch (Step-by-Step Workflow)
 
+> 📖 **Panduan Alur Kerja Penuh:** Rujuk fail alur kerja rasmi di [`.agents/workflows/stitch_generation.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/stitch_generation.md).
+
 1. **Pastikan Konsistensi `DESIGN.md`**:
    - Semak fail [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md) di direktori `.agents/`.
    - Pastikan warna Day Mode (`#F5F5F7` / `#FFFFFF`), Obsidian Night Mode (`#000000` / `#161618`), radius bento `24px`/`28px`, kapsul `9999px`, dan butang bulat 1:1 `50%` diselaraskan.
