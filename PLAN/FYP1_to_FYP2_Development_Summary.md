@@ -2296,3 +2296,45 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.3.3 Remove duplicate brand logo and user logout from admin topbar`
   - Tag Versi: `5.3.3`
+
+---
+
+### [MINOR UPDATE 136] (v5.3.4) - Penyelarasan Navigasi Bar Sisi & Pautan Halaman Fizikal Tanpa Percampuran Modul (Full Sidebar Page Verification)
+- **Tarikh**: 4 September 2026
+- **Objektif**: Menyelaras dan mengesahkan seluruh pautan bar sisi (sidebar) portal Admin dan Customer agar setiap pautan membuka halaman fizikal `.html` yang sah tanpa sebarang pautan mati/sauh dalam-halaman dan tanpa percampuran modul.
+- **Maklum Balas Pengguna**:
+  > `cuba check semua page dekat sidebar tu ..pastikan tidak bercampur n ada page bila tekan ...`
+- **Fail-fail Terlibat**:
+  - `admin/components/sidebar/sidebar-admin.html`
+  - `shared/js/sidebar-loader.js`
+  - `shared/js/navbar-loader.js`
+  - `shared/css/wedrive.css`
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md`
+- **Penerangan Pembaharuan & Tindakan**:
+  1. **Penggabungan 8 Halaman Teras Pentadbir dalam Bar Sisi (`sidebar-admin.html`)**:
+     - Menyatukan semua 8 halaman operasi pentadbir di bawah seksyen tunggal `OPERASI UTAMA` (`nav_sec_main`):
+       1. **Papan Pemuka** (`dashboard/admin.html`)
+       2. **Kenderaan** (`car/cars.html`)
+       3. **Tempahan** (`booking/bookings.html`)
+       4. **Pelanggan** (`customer/customers.html`)
+       5. **Kalendar** (`calendar/calendar.html`)
+       6. **Laporan** (`report/reports.html`)
+       7. **Pemasaran** (`marketing/marketing.html`)
+       8. **AI Chatbot** (`chatbot/chatbot.html`)
+     - Bahagian bawah (*Footer*): **Tetapan** (`setting/settings.html`) dan **Log Keluar** (`logout()`).
+     - Membuang pautan sauh dalam-halaman yang mengelirukan (seperti `#overview`, `#ai-forecast`, `#car-status`, `#today-pickups-card`) daripada bar sisi supaya setiap kali pengguna menekan item, halaman fizikal baharu akan dibuka dengan serta-merta ("ada page bila tekan").
+  2. **Pengasingan Mutlak Modul (Zero Cross-Module Mixing)**:
+     - Portal pentadbir HANYA memuatkan pautan pentadbir (`admin/pages/...`).
+     - Portal pelanggan HANYA memuatkan pautan pelanggan (`customer/pages/...`): Papan Pemuka, Cari Kereta, Tempahan Saya, Profil/Tetapan, Sokongan.
+     - Tiada sebarang pautan bercampur antara peranan pengguna.
+  3. **Penyingkiran Pautan Navigasi Berulang pada Topbar Pentadbir (`navbar-loader.js`)**:
+     - Mengosongkan `admin.links: []` pada konfigurasi navbar loader bagi mengelakkan penduaan pautan halaman di bahagian atas skrin memandangkan semua halaman boleh diakses terus daripada bar sisi.
+  4. **Pengoptimuman Ketinggian & Tipografi Apple HIG (`wedrive.css`)**:
+     - Menyelaraskan jarak item navigasi (`gap: 8px`), saiz sasaran sentuhan minimum Apple (`min-height: 44px`), dan saiz kad pengguna (`sidebar-user`) agar kesemua 8 item dan footer muat sepenuhnya di atas lipatan skrin tanpa sebarang tatalan (`scrollHeight === clientHeight: 722px`).
+  5. **Pengesahan Interaksi Menyeluruh (End-to-End Browser Check)**:
+     - Menguji setiap butang navigasi bar sisi secara langsung menggunakan Chrome DevTools MCP. Setiap halaman dimuatkan dengan jayanya dengan status kod 200, tajuk dokumen yang betul, dan penonjolan kelas `active` yang tepat.
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan suite ujian automasi penuh Playwright (`cd tests && npx playwright test`): **100% Pass Rate** (20/20 ujian lulus tanpa ralat).
+- **Maklumat Git**:
+  - Commit: `5.3.4 Ensure all sidebar items link to actual pages without cross-module mixups`
+  - Tag Versi: `5.3.4`

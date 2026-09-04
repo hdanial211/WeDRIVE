@@ -67,13 +67,7 @@
     admin: {
       iconOnly: true,
       hideBrand: true,
-      links: [
-        { key: 'admin_dashboard',  href: '{base}admin/pages/dashboard/admin.html', icon: 'dashboard',      label: 'Dashboard',  id: 'nl-dash'      },
-        { key: 'sidebar_car',      href: '{base}admin/pages/car/cars.html',         icon: 'directions_car', label: 'Cars',       id: 'nl-cars'      },
-        { key: 'sidebar_bookings', href: '{base}admin/pages/booking/bookings.html', icon: 'receipt_long',   label: 'Bookings',   id: 'nl-bookings'  },
-        { key: 'sidebar_customers',href: '{base}admin/pages/customer/customers.html', icon: 'people',       label: 'Customers', id: 'nl-users'     },
-        { key: 'sidebar_reports',  href: '{base}admin/pages/report/reports.html',   icon: 'bar_chart',    label: 'Reports',    id: 'nl-reports'   }
-      ],
+      links: [],
       actions: ''
     }
   };
