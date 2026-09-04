@@ -147,6 +147,12 @@ Sistem WeDRIVE memancarkan aura kecekapan korporat bertaraf antarabangsa setandi
 - Transisi: `cubic-bezier(0.16, 1, 0.3, 1)`.
 - Maklum balas taktil: `:active { transform: scale(0.97); }`.
 
-## 5. Integrasi Stitch MCP & Gemini 3 Pro
-- Semua reka bentuk UI baharu diselaraskan bersama Stitch MCP (`projectId: 1862124494843018493`, design system `assets/518f31ad774f458da15c7fc5ff999bbf`) menggunakan model penaakulan tinggi `GEMINI_3_1_PRO`.
+## 5. Integrasi Stitch MCP & Ultra High-Quality Tier (Gemini 3.1 Pro)
+- **Prinsip Teras: Kualiti Menyeluruh Mengatasi Kepantasan (*Quality Over Speed*)**:
+  - *Lambat asal kualiti terbaik; pantang cepat tetapi kualiti sifar (zero quality)*.
+  - Dilarang menggunakan model ringan/Flash untuk penjanaan antaramuka.
+- **Konfigurasi Stitch MCP**:
+  - `projectId`: `1862124494843018493`
+  - `designSystem`: `assets/d66115a696e44b2381ec5f5d829e8a88` / `assets/40090a9886c4444abca795c82673f4c8` / `assets/518f31ad774f458da15c7fc5ff999bbf`
+  - `modelId`: **`GEMINI_3_1_PRO`** (Model `GEMINI_3_PRO` telah ditamatkan/deprecated)
 - Semua gaya CSS fizikal disatukan 100% ke dalam `shared/css/wedrive.css`.

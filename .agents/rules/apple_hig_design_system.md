@@ -171,10 +171,12 @@ border: 1px solid var(--border-glass);
    - Kanvas rendering 360 darjah dengan kawalan seretan sentuh dan butang sudut pandangan.
 3. **Sistem Dwibahasa Lancar (*Smooth Bilingual Engine*)**:
    - Penukaran bahasa segera (Bahasa Melayu & English) dengan efek *skeleton shimmer cross-fade* tanpa penyegaran semula halaman.
-4. **Penyelarasan Reka Letak Melalui Stitch MCP & Model Berprestasi Tinggi (*Stitch MCP & Gemini 3 Pro Standard*)**:
-   - Bagi reka bentuk halaman baharu atau peningkatan estetika skrin, pembangun/AI diwajibkan menggunakan **Stitch MCP** (`generate_screen_from_text`, `get_screen`, `apply_design_system`) dengan model berprestasi tinggi (`GEMINI_3_1_PRO` / `GEMINI_3_PRO`).
-   - Gunakan sistem reka bentuk *Precision & Clarity / WeDRIVE Lumina* (`assets/518f31ad774f458da15c7fc5ff999bbf`) di bawah projek Stitch `1862124494843018493`.
-   - Pastikan reka letak menggunakan kad squircle Bento 24px/28px, warna sistem Apple, dan tiada klise templat AI murahan.
+4. **Penyelarasan Reka Letak Melalui Stitch MCP & Model Penaakulan Tinggi (*Stitch MCP Ultra High-Quality Standard*)**:
+   - **Prinsip Utama**: *Lambat asal kualiti terbaik; pantang cepat tetapi kualiti sifar (zero quality)*. Dilarang menggunakan model pantas/ringan (Flash) yang mengorbankan kehalusan reka bentuk.
+   - Bagi reka bentuk halaman baharu atau peningkatan estetika skrin, pembangun/AI diwajibkan menggunakan **Stitch MCP** (`generate_screen_from_text`, `get_screen`, `apply_design_system`) dengan model penaakulan tertinggi: **`GEMINI_3_1_PRO`** (Model `GEMINI_3_PRO` telah ditamatkan/deprecated).
+   - Gunakan sistem reka bentuk *WeDRIVE Lumina / Apple HIG Precision* (`assets/40090a9886c4444abca795c82673f4c8` atau `assets/518f31ad774f458da15c7fc5ff999bbf`) di bawah projek Stitch `1862124494843018493`.
+   - Pastikan reka letak menggunakan kad squircle Bento 24px/28px, warna sistem Apple, tipografi `tabular-nums`, dan tiada klise templat AI murahan.
+   - Semua token reka letak disegerakkan bersama [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/DESIGN.md).
 
 ---
 

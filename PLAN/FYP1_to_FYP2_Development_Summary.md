@@ -2544,3 +2544,30 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.5.0 Implement Apple HIG Stitch redesign for 11 admin pages and pagination for bookings`
   - Tag Versi: `5.5.0`
+
+---
+
+## 🚀 [MINOR UPDATE] 141. Pengemaskinian Peraturan Stitch MCP: Standard Mandatori Kualiti Tertinggi (Ultra High-Quality Tier), Prinsip Quality Over Speed & Penamatan Gemini 3 Pro (v5.5.1)
+
+- **Punca Keperluan (Context & User Directives)**:
+  > *"stitch_design_system.md ni yang lama update yang baharu sebab gemini 3.1 pro dh xde kan ...guna 3.8 as paling high quality..saya nak lambat asal quality terbaik..jangan cepat tapi zero quality"*
+  1. Pengguna menekankan falsafah kualiti mutlak: **"Lambat asal kualiti terbaik; jangan cepat tetapi kualiti sifar (*zero quality*)"**.
+  2. Model `GEMINI_3_PRO` telah ditamatkan (*deprecated*) dalam Stitch MCP. Model penaakulan tertinggi yang aktif ialah `GEMINI_3_1_PRO` (tahap Gemini 3.1 Pro / 3.8 Flagship Tier). Model Flash (`GEMINI_3_FLASH`) dilarang sama sekali daripada digunakan untuk reka bentuk utama kerana memotong ketelitian demi kepantasan.
+  3. Memastikan `DESIGN.md` sentiasa konsisten dan disegerakkan bersama Stitch MCP dan kod fizikal projek.
+
+- **Tindakan Pembaikan & Pelaksanaan (Implementation Highlights)**:
+  1. **Kemaskini `.agents/rules/stitch_design_system.md`**:
+     - Memperkenalkan bahagian mandatori: *Prinsip Teras: Kualiti Menyeluruh Mengatasi Kepantasan (Quality Over Speed)*.
+     - Mengisytiharkan penamatan rasmi `GEMINI_3_PRO` (*deprecated*).
+     - Menetapkan model generasi tunggal mandatori: **`GEMINI_3_1_PRO`** (Ultra High-Quality Reasoning Tier).
+     - Menetapkan larangan mutlak terhadap model pantas (`GEMINI_3_FLASH`) untuk antaramuka teras.
+     - Menetapkan protokol kesabaran alatan (*Patience & Polling Protocol*): Dilarang mencuba semula (*DO NOT RETRY*) secara tergesa-gesa; gunakan kaedah `get_screen` selang 30 saat sehingga 10 kali jika berlaku batas masa rangkaian (*timeout*).
+     - Menambah sistem reka bentuk baharu yang dijana daripada `DESIGN.md`: `assets/d66115a696e44b2381ec5f5d829e8a88`.
+  2. **Kemaskini `.agents/rules/apple_hig_design_system.md` & `.agents/rules/ruleprompt.md`**:
+     - Pilar 6 Seksyen 4 dalam `apple_hig_design_system.md` dan Seksyen 9 dalam `ruleprompt.md` dikemas kini untuk membuang rujukan `GEMINI_3_PRO` lapuk dan menguatkuasakan piawaian Ultra High-Quality `GEMINI_3_1_PRO`.
+  3. **Penyelarasan [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/DESIGN.md)**:
+     - Seksyen 5 dikemas kini dengan prinsip *Quality Over Speed* dan konfigurasi model `GEMINI_3_1_PRO`.
+     - Dimuat naik ke Stitch MCP melalui `upload_design_md` dan dijana aset sistem reka bentuk rasmi terkini `assets/d66115a696e44b2381ec5f5d829e8a88`.
+
+- **Pengesahan & Status**:
+  - Semua peraturan diselaraskan secara konsisten merentas `.agents/rules/`, `DESIGN.md`, dan pangkalan pengetahuan Graphify.
