@@ -1,16 +1,16 @@
-# Graph Report - AI CAR RENTAL SYSTEM  (2026-09-05)
+# Graph Report - AI CAR RENTAL SYSTEM  (2026-09-04)
 
 ## Corpus Check
-- 97 files · ~20,827,850 words
+- 97 files · ~20,828,565 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2640 nodes · 5133 edges · 174 communities (111 shown, 63 thin omitted)
+- 2640 nodes · 5133 edges · 173 communities (110 shown, 63 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 286 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `78c0a3d8`
+- Built from commit: `68390431`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -84,14 +84,14 @@
 - fn
 - .invert
 - customer/js/sidebar-loader.js
-- _activateAction
+- _deactivateAction
 - vo
 - applyMatrix4
 - vl
 - chatbot-admin.js
 - marketing.js
 - WeDRIVE - Title Page, Declaration, Acknowledgements, and Abstract
-- Apple Human Interface Guidelines (HIG) Standard
+- Apple Human Interface Guidelines (HIG) & Design System Standard
 - CHAPTER 2: LITERATURE REVIEW AND PROJECT METHODOLOGY
 - WeDRIVE Lumina & Apple Human Interface Guidelines (HIG) Design System
 - Uo
@@ -147,7 +147,7 @@
 - jh
 - wl
 - WeDRIVE Project Structure & Database Integration Guide
-- Apple Human Interface Guidelines (HIG) Standard
+- Apple Human Interface Guidelines (HIG) & Design System Standard
 - Apple Device Support & Universal Responsiveness Standards
 - WeDRIVE Cybersecurity & Vulnerability Auditing Standards
 - Context7 Live Documentation & API Skill
@@ -172,7 +172,6 @@
 - bc
 - 09_admin_ai_analytics.spec.js
 - xr
-- _deactivateAction
 - dh
 - .constructor
 - remove
@@ -207,7 +206,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (174 total, 63 thin omitted)
+## Communities (173 total, 63 thin omitted)
 
 ### Community 0 - "three.min.js"
 Cohesion: 0.02
@@ -398,8 +397,8 @@ Cohesion: 0.13
 Nodes (14): dispose(), Hr(), i(), jr(), c(), qr(), C(), i() (+6 more)
 
 ### Community 62 - "setValue"
-Cohesion: 0.14
-Nodes (5): _s(), setValue(), Tu(), xc, ys()
+Cohesion: 0.12
+Nodes (7): bind(), getValue(), _s(), setValue(), Tu(), xc, ys()
 
 ### Community 63 - ".fromBufferAttribute"
 Cohesion: 0.36
@@ -417,9 +416,9 @@ Nodes (9): [MAJOR UPDATE 132] (v5.3.0) - Rombakan Seni Bina Navigasi Pentadbir (
 Cohesion: 0.33
 Nodes (8): buildNavItems(), detectActivePage(), init(), initSidebarToggle(), renderMobileBar(), renderSidebar(), renderUtilityActions(), resolveBase()
 
-### Community 69 - "_activateAction"
-Cohesion: 0.16
-Nodes (10): _activateAction(), _addInactiveAction(), _addInactiveBinding(), bind(), _bindAction(), clipAction(), getValue(), _isActiveAction() (+2 more)
+### Community 69 - "_deactivateAction"
+Cohesion: 0.12
+Nodes (18): _activateAction(), _addInactiveAction(), _addInactiveBinding(), _bindAction(), clipAction(), _deactivateAction(), existingAction(), _isActiveAction() (+10 more)
 
 ### Community 71 - "applyMatrix4"
 Cohesion: 0.12
@@ -433,9 +432,9 @@ Nodes (5): MKT, renderAll(), renderBanners(), renderPromos(), renderSeasonal()
 Cohesion: 0.13
 Nodes (14): 1. Title Page (Front Cover Template), 2. Title Page (Second Page), 3. Declaration Page, 4. Dedication Page, 5. Acknowledgement Page, 6. Abstract, 7. Abstrak, ABSTRACT (+6 more)
 
-### Community 76 - "Apple Human Interface Guidelines (HIG) Standard"
+### Community 76 - "Apple Human Interface Guidelines (HIG) & Design System Standard"
 Cohesion: 0.20
-Nodes (9): 1. Tipografi Apple San Francisco, 2. Palet Warna & Mod Gelap Adaptif (Apple System Colors), 3. Bahan Kaca (Apple Materials), 4. Fizik Pergerakan (Motion Physics), Apple Human Interface Guidelines (HIG) Standard, 🏛️ PILAR 1: GETTING STARTED & CORE PRINCIPLES, 🎨 PILAR 2: FOUNDATIONS (ASAS REKA BENTUK), 🧩 PILAR 3: PATTERNS (CORAK INTERAKSI & STRUKTUR) (+1 more)
+Nodes (9): 1. Tipografi & Skala San Francisco (SF Typography Hierarchy), 2. Palet Warna & Mod Gelap Adaptif (Apple System Colors), 3. Bahan Kaca & Ketelusan (Apple Materials & Vibrancy), 4. Fizik Pergerakan & Transisi Spring (Apple Motion Physics), Apple Human Interface Guidelines (HIG) & Design System Standard, 🏛️ PILAR 1: GETTING STARTED & CORE PRINCIPLES, 🎨 PILAR 2: FOUNDATIONS (ASAS REKA BENTUK), 🧩 PILAR 3: PATTERNS (CORAK INTERAKSI & STRUKTUR) (+1 more)
 
 ### Community 77 - "CHAPTER 2: LITERATURE REVIEW AND PROJECT METHODOLOGY"
 Cohesion: 0.14
@@ -569,9 +568,9 @@ Nodes (3): jh, qh(), jt()
 Cohesion: 0.40
 Nodes (4): Cara Menambah Halaman atau Fungsi Baharu, Pusat Pangkalan Data (The api.js File), Struktur Fail (Architecture), WeDRIVE Project Structure & Database Integration Guide
 
-### Community 142 - "Apple Human Interface Guidelines (HIG) Standard"
+### Community 142 - "Apple Human Interface Guidelines (HIG) & Design System Standard"
 Cohesion: 0.29
-Nodes (6): Apple Human Interface Guidelines (HIG) Standard, 🎛️ PILAR 4: COMPONENTS (KOMPONEN ANTARA MUKA), 🖱️ PILAR 5: INPUTS & INTERACTIONS (INTERAKSI & INPUT), 🤖 PILAR 6: TECHNOLOGIES (TEKNOLOGI & CIRI KHUSUS), 📋 SENARAI SEMAK AUDIT & RUJUKAN SEBELUM SIAP, WeDRIVE Master Specification — Bahagian 2: Komponen, Interaksi & Teknologi (Pilar 4 – 6)
+Nodes (6): Apple Human Interface Guidelines (HIG) & Design System Standard, 🎛️ PILAR 4: COMPONENTS (KOMPONEN ANTARA MUKA), 🖱️ PILAR 5: INPUTS & INTERACTIONS (INTERAKSI & INPUT), 🤖 PILAR 6: TECHNOLOGIES (TEKNOLOGI & CIRI KHUSUS), 📋 SENARAI SEMAK AUDIT & RUJUKAN SEBELUM MEMBINA CIRI BAHARU, WeDRIVE Master Specification — Bahagian 2: Komponen, Interaksi & Teknologi (Pilar 4 – 6)
 
 ### Community 143 - "Apple Device Support & Universal Responsiveness Standards"
 Cohesion: 0.50
@@ -600,10 +599,6 @@ Nodes (5): 🔤 [MINOR UPDATE] 124. Penyeragaman Penuh Pemuatan Webfont Apple SF
 ### Community 166 - "xr"
 Cohesion: 0.22
 Nodes (7): getParameter(), v(), x(), y(), Sr(), xr(), y()
-
-### Community 167 - "_deactivateAction"
-Cohesion: 0.25
-Nodes (10): _deactivateAction(), existingAction(), _removeInactiveAction(), _removeInactiveBinding(), _removeInactiveBindingsForAction(), _takeBackAction(), _takeBackBinding(), uncacheAction() (+2 more)
 
 ### Community 169 - ".constructor"
 Cohesion: 0.19

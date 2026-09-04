@@ -366,9 +366,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_design_system.md": {
-    "mtime": 1788538373.6418607,
-    "seen": 1788538411.315053,
-    "ast_hash": "6b3c95388b55330d72bcf4ae85822629",
+    "mtime": 1788537414.1565049,
+    "seen": 1788537548.586576,
+    "ast_hash": "1f24281512b1ccaa8f99919ca1079f11",
     "semantic_hash": ""
   },
   ".agents/rules/code_and_backend.md": {
@@ -11262,9 +11262,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_components.md": {
-    "mtime": 1788538387.1744776,
-    "seen": 1788538411.315052,
-    "ast_hash": "709db316cad21a742bb73645217f110c",
+    "mtime": 1788537425.0762157,
+    "seen": 1788537548.586575,
+    "ast_hash": "423e86caf107d587ab0bc5b5f5d8daab",
     "semantic_hash": ""
   }
 }
