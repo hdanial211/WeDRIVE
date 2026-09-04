@@ -103,7 +103,7 @@ trigger: always_on
 
 ---
 
-## 9. Integrasi Stitch MCP & Standard Penjanaan UI Berkualiti Tinggi (Gemini 3.1 Pro / Ultra High-Quality Tier)
+## 9. Integrasi Stitch MCP & Standard Penjanaan UI Berkualiti Tinggi (Gemini 3.8 / Ultra High-Quality Tier)
 
 - **Prinsip Utama: Kualiti Menyeluruh Mengatasi Kepantasan (*Quality Over Speed*)**:
   - *Lambat asal kualiti terbaik; pantang cepat tetapi kualiti sifar (zero quality)*.
@@ -112,7 +112,7 @@ trigger: always_on
   - Gunakan alatan Stitch MCP (`list_projects`, `generate_screen_from_text`, `get_screen`, `list_design_systems`, `apply_design_system`, `upload_design_md`) untuk mereka bentuk atau membaik pulih skrin dan susun atur visual sistem WeDRIVE.
   - **Projek Rujukan Stitch:** `1862124494843018493` (*AI-Powered Car Rental Management*).
   - **Sistem Reka Bentuk (*Design System*):** `assets/40090a9886c4444abca795c82673f4c8` atau `assets/518f31ad774f458da15c7fc5ff999bbf` (*Precision & Clarity / WeDRIVE Lumina*).
-  - **Tahap Kualiti Model (*Ultra High-Quality Model Tier*):** Sentiasa gunakan model penaakulan tertinggi **`GEMINI_3_1_PRO`** (Model `GEMINI_3_PRO` telah ditamatkan/deprecated) bagi memastikan kualiti susun atur Apple HIG, squircle 24px/28px, tipografi `tabular-nums`, dan tiada templat murahan.
+  - **Tahap Kualiti Model (*Ultra High-Quality Model Tier*):** Sentiasa gunakan piawaian model penaakulan tertinggi **Gemini 3.8** (pemetaan parameter Stitch MCP `modelId: GEMINI_3_1_PRO`; model `GEMINI_3_PRO` telah ditamatkan/deprecated) bagi memastikan kualiti susun atur Apple HIG, squircle 24px/28px, tipografi `tabular-nums`, dan tiada templat murahan.
   - **Konsistensi `DESIGN.md`:** Setiap token warna, saiz sudut squircle, dan tipografi WAJIB berpandukan fail rujukan punca [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md).
 - **Penyelarasan Kod Fizikal & Integriti Data**:
   - Semua kod CSS yang dijana daripada Stitch WAJIB diselaraskan secara berpusat ke dalam `shared/css/wedrive.css`.

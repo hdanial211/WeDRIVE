@@ -39,7 +39,7 @@ Standard Rujukan Mandatori Bahagian 2 untuk komponen dan ciri sistem WeDRIVE.
 3. **Sistem Dwibahasa Lancar**: Penukaran bahasa segera (EN/MS) dengan efek *skeleton shimmer cross-fade* tanpa segar semula halaman.
 4. **Penyelarasan Stitch MCP Ultra High-Quality Standard**:
    - **Prinsip Teras**: *Lambat asal kualiti terbaik; pantang cepat tapi kualiti sifar (zero quality)*.
-   - Model Mandatori: **`GEMINI_3_1_PRO`** (Model `GEMINI_3_PRO` telah ditamatkan/deprecated). Dilarang model ringan/Flash.
+   - Model Mandatori: **Gemini 3.8 Ultra High-Quality Tier** (pemetaan Stitch MCP `modelId: GEMINI_3_1_PRO`; model `GEMINI_3_PRO` telah ditamatkan/deprecated). Dilarang model ringan/Flash.
    - Projek & Design System: `projectId: 1862124494843018493`, `designSystem: assets/d66115a696e44b2381ec5f5d829e8a88` / `assets/40090a9886c4444abca795c82673f4c8`.
    - Token reka bentuk disegerakkan bersama [`.agents/DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md).
 

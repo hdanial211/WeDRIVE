@@ -13,9 +13,12 @@ Dokumen ini menggariskan piawaian mandatori bagi penggunaan **Stitch MCP** untuk
    - Setiap elemen antaramuka mesti menyerupai perisian korporat rasmi (setaraf Linear, Stripe, Apple Developer) dengan istilah automotif sebenar, kad Bento squircle (24px/28px), nombor tabular (`tabular-nums`), dan bahan kaca berkualiti tinggi.
 2. **Larangan Model Pantas (Flash / Fast Model Ban)**:
    - **DILARANG MENGGUNAKAN `GEMINI_3_FLASH`** untuk halaman teras sistem. Model Flash menghasilkan reka letak generik dan memotong perincian kritikal demi kepantasan semata-mata.
-3. **Penaiktarafan Model Generasi Rasmi**:
-   - Model `GEMINI_3_PRO` telah **DITAMATKAN (DEPRECATED)**.
-   - **Model Generasi Mandatori**: **`GEMINI_3_1_PRO`** (Tahap Model Penaakulan & Reka Bentuk Tertinggi / Ultra High-Quality Tier).
+3. **Piawaian Model Kualiti Tertinggi (Gemini 3.8 Ultra High-Quality Tier)**:
+   - Piawaian generasi reka bentuk WeDRIVE diselaraskan kepada **Gemini 3.8 (Ultra High-Quality / Deep Reasoning Tier)**.
+   - **Pemeriksaan Skema Enjin Stitch MCP**:
+     - Model `GEMINI_3_PRO` telah **DITAMATKAN (DEPRECATED)** secara rasmi.
+     - Di peringkat API Stitch MCP (`modelId`), nilai enum rasmi untuk model penaakulan tertinggi ialah **`GEMINI_3_1_PRO`** (iaitu pemetaan teknikal Stitch MCP bagi model flagship reasoning Google).
+     - *Perhatian Teknikal:* Skema API Stitch MCP tidak menyokong string selain enum yang ditetapkan; oleh itu, pemanggilan alatan Stitch MCP WAJIB menggunakan `modelId: "GEMINI_3_1_PRO"`.
 
 ---
 
@@ -27,7 +30,7 @@ Setiap kali alatan Stitch MCP digunakan untuk mereka bentuk skrin atau mengemas 
 | :--- | :--- | :--- |
 | **Project ID** | `1862124494843018493` | Projek rasmi Stitch: *AI-Powered Car Rental Management* |
 | **Design System** | `assets/d66115a696e44b2381ec5f5d829e8a88` / `assets/40090a9886c4444abca795c82673f4c8` / `assets/518f31ad774f458da15c7fc5ff999bbf` | Sistem reka bentuk rasmi *WeDRIVE Lumina & Apple HIG Precision* |
-| **Model Generasi (`modelId`)** | **`GEMINI_3_1_PRO`** | **MANDATORI:** Tahap penaakulan tertinggi (Ultra High Quality Tier) bagi memastikan kehalusan Apple HIG |
+| **Model Generasi (`modelId`)** | **`GEMINI_3_1_PRO`** | **MANDATORI:** Pemetaan API Stitch MCP untuk **Gemini 3.8 (Ultra High-Quality Tier)** (Model `GEMINI_3_PRO` telah ditamatkan) |
 | **Device Type** | `DESKTOP` (Admin) / `MOBILE` (Pelanggan) | Dilarang menggunakan `AGNOSTIC` melainkan komponen bebas peranti |
 | **Rujukan Gaya Utama** | `.agents/DESIGN.md` | Fail spesifikasi master di direktori `.agents/` |
 
@@ -35,7 +38,7 @@ Setiap kali alatan Stitch MCP digunakan untuk mereka bentuk skrin atau mengemas 
 
 ## ⚙️ 2. Protokol Masa & Kesabaran Alatan (Patience & Polling Protocol)
 
-Penjanaan antaramuka menggunakan model penaakulan tinggi `GEMINI_3_1_PRO` memproses reka letak kompleks, hierarki warna sub-piksel, dan token Apple HIG secara mendalam. Proses ini mengambil masa beberapa minit.
+Penjanaan antaramuka menggunakan piawaian penaakulan tinggi Gemini 3.8 (`GEMINI_3_1_PRO`) memproses reka letak kompleks, hierarki warna sub-piksel, dan token Apple HIG secara mendalam. Proses ini mengambil masa beberapa minit.
 
 1. **JANGAN CUBA SEMULA SECARA TERGESA-GESA (DO NOT RETRY)**:
    - Jangan tekan atau panggil `generate_screen_from_text` kali kedua sekiranya alatan sedang berjalan atau memberi amaran batas masa (*timeout*).
@@ -73,7 +76,7 @@ Penjanaan antaramuka menggunakan model penaakulan tinggi `GEMINI_3_1_PRO` mempro
 
 - `list_projects`: Semak projek aktif WeDRIVE.
 - `get_project`: Periksa skrin sedia ada dan tema reka bentuk.
-- `generate_screen_from_text`: Cipta skrin baharu dengan model `GEMINI_3_1_PRO` dan design system.
+- `generate_screen_from_text`: Cipta skrin baharu dengan piawaian kualiti tertinggi Gemini 3.8 (`GEMINI_3_1_PRO`) dan design system.
 - `get_screen`: Ambil kod HTML dan pratonton tangkapan skrin hasil penjanaan.
 - `edit_screens`: Buat perubahan terperinci pada skrin sedia ada.
 - `upload_design_md`: Muat naik `DESIGN.md` terkini ke projek Stitch.

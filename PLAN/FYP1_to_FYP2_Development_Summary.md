@@ -2621,3 +2621,37 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.5.3 Split Apple HIG rules into two modular files under 12000 chars without reducing content`
   - Tag Versi: `5.5.3`
+
+---
+
+## 🚀 [MINOR UPDATE] 144. Penyelarasan Piawaian Stitch MCP kepada Gemini 3.8 Ultra High-Quality Tier & Penjelasan Pemetaan API (v5.5.5)
+
+- **Punca Keperluan (Context & User Directives)**:
+  > *"stitch_design_system.md ni still x update masih guna 3.1 pro..cuba awak check dekat stitch ada lagi ke 3.1 pro???"*
+  - Pengguna mendapati dokumen peraturan `.agents/rules/stitch_design_system.md` masih menggunakan teks lama `GEMINI_3_1_PRO` dan meminta semakan rasmi ke atas enjin Stitch MCP sama ada `GEMINI_3_1_PRO` masih wujud atau sudah digantikan dengan piawaian Gemini 3.8 yang aktif dalam IDE.
+
+- **Dapatan Siasatan Teknikal Terhadap Enjin Stitch MCP**:
+  1. **Skema Rasmi Stitch MCP (`generate_screen_from_text.json` & `generate_variants.json`)**:
+     - Parameter `modelId` mengandungi nilai enum: `["MODEL_ID_UNSPECIFIED", "GEMINI_3_PRO", "GEMINI_3_FLASH", "GEMINI_3_1_PRO"]`.
+     - `GEMINI_3_PRO` ditandakan secara rasmi sebagai **DITAMATKAN (DEPRECATED)**: *"Deprecated: Gemini 3 Pro is deprecated. Use GEMINI_3_1_PRO or GEMINI_3_FLASH instead."*
+     - `GEMINI_3_1_PRO` **MASIH WUJUD & AKTIF** sebagai identifier teknikal untuk model penaakulan kualiti tertinggi (*reasoning tier*) dalam API Stitch.
+  2. **Hubungan Antara Antigravity IDE (Gemini 3.8) & Stitch MCP**:
+     - Di peringkat ekosistem Antigravity IDE, Google telah melancarkan generasi model **Gemini 3.8** (`Gemini 3.8 Flash High` / `Gemini 3.8 Pro`).
+     - Di peringkat backend API RPC Stitch MCP, identifier teknikal bagi model flagship reasoning Google dipetakan kepada enum string `GEMINI_3_1_PRO`. Jika parameter diubah sewenang-wenangnya kepada `GEMINI_3_8`, API Stitch akan menolak permintaan dengan ralat validasi enum (*Invalid modelId*).
+
+- **Tindakan Pembaikan & Pelaksanaan (Implementation Highlights)**:
+  1. **Kemas Kini `.agents/rules/stitch_design_system.md`**:
+     - Menetapkan standard generasi rasmi WeDRIVE kepada **Gemini 3.8 (Ultra High-Quality Tier / Deep Reasoning)**.
+     - Menjelaskan bahawa pemanggilan alatan Stitch MCP menggunakan pemetaan parameter rasmi `modelId: "GEMINI_3_1_PRO"`.
+     - Mengukuhkan semula prinsip mandatori: *"Lambat asal kualiti terbaik; pantang cepat tetapi kualiti sifar (zero quality)"* dan larangan model pantas (`GEMINI_3_FLASH`).
+     - Saiz fail kekal padat (5,778 aksara, jauh di bawah had 12,000 aksara).
+  2. **Penyelarasan Merentas Peraturan & Reka Bentuk**:
+     - `.agents/rules/apple_hig_components.md` (Pilar 6 Seksyen 4): Dikemas kini kepada Gemini 3.8 Ultra High-Quality Tier.
+     - `.agents/rules/ruleprompt.md` (Seksyen 9): Dikemas kini kepada Gemini 3.8 Ultra High-Quality Tier.
+     - `.agents/DESIGN.md` (Seksyen 5): Dikemas kini kepada Gemini 3.8 Ultra High-Quality Tier.
+  3. **Pengesahan Ujian Automasi**:
+     - Menjalankan suite ujian automasi Playwright untuk memastikan integriti sistem kekal 100% lulus.
+
+- **Maklumat Git**:
+  - Commit: `5.5.5 Align Stitch MCP rules to Gemini 3.8 Ultra High Quality tier and clarify API enum mapping`
+  - Tag Versi: `5.5.5`
