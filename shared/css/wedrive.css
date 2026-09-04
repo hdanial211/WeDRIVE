@@ -14547,3 +14547,170 @@ body.pending-page {
   background: rgba(0, 113, 227, 0.05) !important;
   box-shadow: 0 0 0 1px var(--primary) inset !important;
 }
+
+/* ==========================================================================
+   26. APPLE HIG EXECUTIVE BENTO & PAGINATION SYSTEM (v5.5.0)
+   ========================================================================== */
+
+.apple-pagination-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  margin-top: 24px !important;
+  padding: 14px 22px !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--shadow-sm) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+}
+
+.apple-pagination-info {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  font-variant-numeric: tabular-nums !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.apple-pagination-info strong {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+}
+
+.apple-pagination-controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  background: var(--bg-secondary) !important;
+  padding: 4px !important;
+  border-radius: var(--radius-pill, 9999px) !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+.apple-page-btn {
+  min-width: 36px !important;
+  height: 36px !important;
+  padding: 0 10px !important;
+  border-radius: var(--radius-pill, 9999px) !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.apple-page-btn:hover:not(:disabled):not(.active) {
+  background: rgba(0, 113, 227, 0.08) !important;
+  color: var(--primary) !important;
+}
+
+.apple-page-btn.active {
+  background: var(--primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+.apple-page-btn:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+}
+
+.apple-page-btn:active:not(:disabled) {
+  transform: scale(0.95) !important;
+}
+
+/* Executive Header Hero for Admin Pages */
+.bento-header-hero {
+  margin-bottom: 24px !important;
+}
+
+.bento-breadcrumbs {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  margin-bottom: 8px !important;
+}
+
+.bento-breadcrumbs a {
+  color: var(--text-secondary) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.bento-breadcrumbs a:hover {
+  color: var(--primary) !important;
+}
+
+.bento-breadcrumbs .material-icons-round {
+  font-size: 14px !important;
+  color: var(--text-muted) !important;
+}
+
+.bento-title-main {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.028em !important;
+  color: var(--text-primary) !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.bento-subtitle-main {
+  font-size: 14px !important;
+  color: var(--text-secondary) !important;
+  margin: 6px 0 0 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Live Operational Pulse Indicator */
+.live-pulse-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: #34C759 !important;
+  display: inline-block !important;
+  box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7) !important;
+  animation: appleLivePulse 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
+}
+
+@keyframes appleLivePulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(52, 199, 89, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+}
+
+/* Depot Capacity Progress */
+.depot-capacity-track {
+  width: 100% !important;
+  height: 6px !important;
+  background: var(--bg-secondary) !important;
+  border-radius: var(--radius-pill) !important;
+  overflow: hidden !important;
+  margin-top: 8px !important;
+}
+
+.depot-capacity-fill {
+  height: 100% !important;
+  background: linear-gradient(90deg, #0071E3, #34C759) !important;
+  border-radius: var(--radius-pill) !important;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+

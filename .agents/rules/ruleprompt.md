@@ -42,6 +42,20 @@ trigger: always_on
 
 ---
 
+## 3B. Mandatori Penyediaan Dokumen Keperluan Produk (PRD) Sebelum Pembangunan
+
+- Sebelum memulakan sebarang tugasan pembangunan baharu, penambahan modul, rombakan seni bina, atau pengubahsuaian UI/UX, AI/pembangun **WAJIB menyediakan seksyen PRD (Product Requirements Document)** yang terperinci di dalam `implementation_plan.md`.
+- PRD WAJIB mengandungi komponen berikut:
+  1. **Objektif & Skop Perniagaan (*Objective & Scope*)**: Menyatakan masalah yang diselesaikan dan impak operasi.
+  2. **Sasaran Pengguna & Aliran Penggunaan (*User Personas & Use Cases*)**: Aliran tindakan pentadbir atau pelanggan.
+  3. **Keperluan Fungsian Spesifik (*Functional Requirements*)**: Huraian tepat setiap butang, input, jadual, dan modal.
+  4. **Keperluan Bukan Fungsian & Apple HIG (*Non-Functional & Apple HIG UX*)**: Saiz sentuh (min 44px), `tabular-nums`, sudut squircle (24px), bahan kaca lut sinar, dan responsif.
+  5. **Integriti Data & Pemetaan API (*Data Models & API Contracts*)**: Sumber data sebenar (`window.WeDriveAPI` / Supabase) tanpa data palsu.
+  6. **Kriteria Penerimaan & Ujian (*Acceptance Criteria & Verification Plan*)**: Senarai semak kelulusan dan suite ujian automasi Playwright (100% Pass Rate).
+
+
+---
+
 ## 4. Logo, Branding & Emoji Rules
 
 - **Logo:** Ikon di kiri, teks di kanan, latar belakang telus (transparent), dan favicon WAJIB ada di setiap page.
@@ -76,4 +90,29 @@ trigger: always_on
 - **Kod, CSS & Backend Architecture:** [`.agents/rules/code_and_backend.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/code_and_backend.md)
 - **Apple Device Support:** [`.agents/rules/apple_device_support.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_device_support.md)
 - **Keselamatan Siber & Audit Kerentanan (Strix):** [`.agents/rules/security_and_audit.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/security_and_audit.md)
+
+---
+
+## 8. Larangan Reka Bentuk 'Terlalu AI' & Standard Penjenamaan Korporat Sebenar
+
+- **Sistem Mesti Kelihatan Seperti Perisian Korporat Rasmi**: Portal Admin WeDRIVE WAJIB menyerupai sistem mobiliti dan logistik pengurusan kenderaan profesional bertaraf enterprise (seperti Stripe Dashboard, Linear, Apple Developer), BUKAN templat AI generik.
+- **Tiada Elemen 'Cheesy AI'**:
+  - Dilarang mereka cipta perkataan AI yang mengarut (*Quantum Neural Fleet*, *Supercharged Velocity*, sanitasi tangan hospital).
+  - Dilarang membuat graf atau nombor statistik statik palsu tanpa kaitan operasi.
+  - Setiap tindakan, jadual, dan butang WAJIB mempamerkan integriti perniagaan kereta sewa sebenar: status kenderaan, penyewa, kadar harian, deposit keselamatan, pengesahan lesen JPJ, dan rekod serahan/pulangan.
+
+---
+
+## 9. Integrasi Stitch MCP & Standard Penjanaan UI Berkualiti Tinggi (Gemini Pro / 3.1 Pro)
+
+- **Mandatori Penggunaan Stitch MCP Bagi Reka Letak Baharu**:
+  - Gunakan alatan Stitch MCP (`list_projects`, `generate_screen_from_text`, `get_screen`, `list_design_systems`, `apply_design_system`) untuk mereka bentuk atau membaik pulih skrin dan susun atur visual sistem WeDRIVE.
+  - **Projek Rujukan Stitch:** `1862124494843018493` (*AI-Powered Car Rental Management*).
+  - **Sistem Reka Bentuk (*Design System*):** `assets/518f31ad774f458da15c7fc5ff999bbf` (*Precision & Clarity / WeDRIVE Lumina*).
+  - **Tahap Kualiti Model (*High-Fidelity Model Tier*):** Sentiasa gunakan model penaakulan tinggi `GEMINI_3_1_PRO` / `GEMINI_3_PRO` bagi memastikan kualiti susun atur Apple HIG, squircle 24px/28px, tipografi `tabular-nums`, dan tiada templat murahan.
+- **Penyelarasan Kod Fizikal & Integriti Data**:
+  - Semua kod CSS yang dijana daripada Stitch WAJIB diselaraskan secara berpusat ke dalam `shared/css/wedrive.css`.
+  - Semua medan dan butang tindakan WAJIB disambung terus ke punca data operasi sebenar (`window.WeDriveAPI` / Supabase).
+
+
 

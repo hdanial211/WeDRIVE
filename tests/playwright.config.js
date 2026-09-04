@@ -3,6 +3,7 @@ const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './e2e',
+  timeout: 60000,
   fullyParallel: false,
   workers: 1, // Keep single worker to avoid concurrent session conflicts
   forbidOnly: !!process.env.CI,

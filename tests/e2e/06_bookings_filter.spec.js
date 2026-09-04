@@ -53,4 +53,36 @@ test.describe('Admin Bookings Date Range Filter Tests', () => {
     await expect(chipAll).toHaveClass(/active/);
     await expect(customDateRow).toBeHidden();
   });
+
+  test('Bookings table implements 10-records-per-page Apple pagination with numbered buttons', async ({ page }) => {
+    await page.goto('http://localhost:8088/admin/pages/booking/bookings.html');
+    await page.waitForLoadState('networkidle');
+
+    const pagination = page.locator('#bookings-pagination');
+    await expect(pagination).toBeVisible();
+
+    const info = pagination.locator('.apple-pagination-info');
+    await expect(info).toBeVisible();
+    await expect(info).toContainText(/Memaparkan|Showing/i);
+
+    // Assert that page 1 button is active
+    const page1Btn = pagination.locator('.apple-page-btn', { hasText: /^1$/ });
+    await expect(page1Btn).toHaveClass(/active/);
+
+    // Count rows in tbody - should not exceed 10
+    const rows = page.locator('#bookings-tbody tr');
+    const rowCount = await rows.count();
+    expect(rowCount).toBeLessThanOrEqual(10);
+
+    // If more than 10 records exist, page 2 button should be clickable
+    const page2Btn = pagination.locator('.apple-page-btn', { hasText: /^2$/ });
+    if (await page2Btn.count() > 0) {
+      await page2Btn.click();
+      await expect(page2Btn).toHaveClass(/active/);
+      await expect(page1Btn).not.toHaveClass(/active/);
+      const rowsP2 = page.locator('#bookings-tbody tr');
+      expect(await rowsP2.count()).toBeLessThanOrEqual(10);
+    }
+  });
 });
+

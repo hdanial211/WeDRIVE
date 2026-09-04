@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Marketing | Admin | WeDRIVE</title>
-  <meta name="description" content="Manage promo banners, promo codes, and seasonal pricing for WeDRIVE car rental." />
+  <title>Pengurusan Pemasaran &amp; Promosi | WeDRIVE Fleet Ops</title>
+  <meta name="description" content="Pusat pengurusan kod kupon, sepanduk promosi portal, dan pelarasan kadar harga bermusim WeDRIVE." />
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
   <!-- AUTH GUARD -->
-  <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
-
-  <!-- Head styles moved to admin.css -->
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
 <body data-particles="6" data-cursor-glow>
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
   <div id="sidebar-placeholder"
        data-component="sidebar-admin"
        data-page="marketing">
@@ -27,372 +25,234 @@
 
   <!-- MAIN -->
   <main class="main">
-    <!-- NAVBAR -->
+    <!-- TOPBAR (Main Navigation) -->
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
 
-      <!-- Page Header -->
-      <div class="header-action reveal-on-scroll">
-        <div>
-          <h1 data-key="mkt_title">Marketing</h1>
-          <p class="subtitle mt-4 text-muted" data-key="mkt_subtitle">Manage banners, promo codes, and seasonal pricing</p>
-        </div>
-      </div>
-
-      <!-- Stats (reuse stat-card from admin.css) -->
-      <div class="mkt-stats reveal-up">
-        <div class="stat-card">
-          <div class="stat-info">
-            <div class="label" data-key="mkt_active_banners">Active Banners</div>
-            <div class="value" id="stat-active-banners">0</div>
-          </div>
-          <div class="stat-icon purple">
-            <span class="material-icons-round">campaign</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <div class="label" data-key="mkt_active_promos">Active Promo Codes</div>
-            <div class="value" id="stat-active-codes">0</div>
-          </div>
-          <div class="stat-icon blue">
-            <span class="material-icons-round">confirmation_number</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <div class="label" data-key="mkt_code_uses">Total Code Uses</div>
-            <div class="value" id="stat-total-uses">0</div>
-          </div>
-          <div class="stat-icon green">
-            <span class="material-icons-round">bar_chart</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <div class="label" data-key="mkt_active_seasonal">Active Seasonal Rates</div>
-            <div class="value" id="stat-active-seasons">0</div>
-          </div>
-          <div class="stat-icon amber">
-            <span class="material-icons-round">event</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabs (reuse filter-chip from admin.css) -->
-      <div class="mkt-tabs reveal-up">
-        <button class="filter-chip active" id="tab-banners" onclick="switchTab('banners')">
-          <span class="material-icons-round fs-16 va-middle mr-4">campaign</span><span data-key="mkt_btn_banners">Banners</span>
-        </button>
-        <button class="filter-chip" id="tab-promos" onclick="switchTab('promos')">
-          <span class="material-icons-round fs-16 va-middle mr-4">confirmation_number</span><span data-key="mkt_btn_promos">Promo Codes</span>
-        </button>
-        <button class="filter-chip" id="tab-seasonal" onclick="switchTab('seasonal')">
-          <span class="material-icons-round fs-16 va-middle mr-4">event</span><span data-key="mkt_btn_seasonal">Seasonal Pricing</span>
-        </button>
-        <button class="filter-chip" id="tab-ai" onclick="switchTab('ai')">
-          <span class="material-icons-round fs-16 va-middle mr-4">auto_awesome</span>AI Suggestions
-        </button>
-      </div>
-
-      <!-- BANNERS TAB -->
-      <div class="mkt-section active reveal-up" id="section-banners">
-        <div class="mkt-grid" id="banners-grid"></div>
-        <button class="mkt-add-btn" onclick="openModal('banner')">
-          <span class="material-icons-round">add</span> <span data-key="mkt_add_banner">Add New Banner</span>
-        </button>
-      </div>
-
-      <!-- PROMO CODES TAB -->
-      <div class="mkt-section reveal-up" id="section-promos">
-        <div class="mkt-grid" id="promos-grid"></div>
-        <button class="mkt-add-btn" onclick="openModal('promo')">
-          <span class="material-icons-round">add</span> <span data-key="mkt_add_promo">Add New Promo Code</span>
-        </button>
-      </div>
-
-      <!-- SEASONAL PRICING TAB -->
-      <div class="mkt-section reveal-up" id="section-seasonal">
-        <div class="mkt-grid" id="seasonal-grid"></div>
-        <button class="mkt-add-btn" onclick="openModal('seasonal')">
-          <span class="material-icons-round">add</span> <span data-key="mkt_add_seasonal">Add Seasonal Rate</span>
-        </button>
-      </div>
-
-      <!-- AI SUGGESTIONS TAB -->
-      <div class="mkt-section reveal-up" id="section-ai">
-
-        <!-- API Key Configuration -->
-        <div class="card mkt-card-padding">
-          <div class="mkt-ai-header">
-            <span class="material-icons-round mkt-header-icon">key</span>
-            <div>
-              <h3>AI API Configuration</h3>
-              <p>Key disimpan dalam Supabase - tidak perlu edit kod</p>
+      <!-- APPLE BENTO HERO HEADER (Stitch Precision & Clarity) -->
+      <div class="card bento-header-hero mb-24 reveal-onload">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
+              <a href="../dashboard/dashboard.html">Admin</a>
+              <span class="material-icons-round">chevron_right</span>
+              <a href="marketing.html">Pemasaran &amp; Promosi</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span class="current">Pengurusan Promosi &amp; Kempen</span>
+            </nav>
+            <div class="flex-center gap-10 mb-6">
+              <span class="status-badge active"><span class="live-pulse-dot"></span> Kempen Promosi Aktif</span>
+              <span class="fs-12 text-muted fw-600">Penyelarasan Kod Diskaun, Sepanduk &amp; Tarif Bermusim</span>
             </div>
+            <h1 class="bento-title-main m-0" data-key="mkt_title">Pengurusan Promosi &amp; Kempen Armada</h1>
+            <p class="bento-subtitle-main m-0 mt-6" data-key="mkt_subtitle">Kawal selia tawaran diskaun pelanggan, sepanduk pemasaran portal awam, serta lonjakan kadar sewaan semasa musim perayaan.</p>
           </div>
-          <div class="mkt-api-row">
-            <div class="form-group">
-              <label>Gemini API Key (Free Tier)</label>
-              <div class="mkt-api-input-wrap">
-                <div class="mkt-password-container">
-                  <input type="password" id="ai-api-key" class="form-input" placeholder="Masukkan Gemini API Key..." />
-                  <button onclick="toggleApiKeyVisibility()" type="button" class="eye-toggle" id="ai-key-toggle-btn">
-                    <span class="material-icons-round" id="ai-key-eye-icon">visibility</span>
-                  </button>
-                </div>
-                <button class="btn-primary-sm btn-save-key" onclick="saveAiApiKey()">
-                  <span class="material-icons-round">save</span> Save Key
+          <div class="flex-center gap-10">
+            <button class="btn-secondary" onclick="openModal('banner')">
+              <span class="material-icons-round fs-16">add_photo_alternate</span> Tambah Sepanduk
+            </button>
+            <button class="btn-primary" onclick="openModal('promo')">
+              <span class="material-icons-round fs-16">add</span> Cipta Kod Promo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS KPI ROW (Apple Bento Style with tabular-nums) -->
+      <div class="grid-4 mb-24 reveal-onload">
+        <div class="card p-20 radius-24 hover-elevate transition-apple">
+          <div class="flex-between mb-8">
+            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_active_banners">Sepanduk Aktif</span>
+            <span class="material-icons-round fs-20 text-primary">campaign</span>
+          </div>
+          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-active-banners">0</div>
+          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
+            <span class="material-icons-round fs-14 text-primary">visibility</span> Paparan portal utama
+          </div>
+        </div>
+
+        <div class="card p-20 radius-24 hover-elevate transition-apple">
+          <div class="flex-between mb-8">
+            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_active_promos">Kod Kupon Sah</span>
+            <span class="material-icons-round fs-20 text-emerald">confirmation_number</span>
+          </div>
+          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-active-codes">0</div>
+          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
+            <span class="material-icons-round fs-14 text-emerald">check_circle</span> Sedia untuk ditebus
+          </div>
+        </div>
+
+        <div class="card p-20 radius-24 hover-elevate transition-apple">
+          <div class="flex-between mb-8">
+            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_code_uses">Jumlah Penebusan</span>
+            <span class="material-icons-round fs-20 text-primary">bar_chart</span>
+          </div>
+          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-total-uses">0</div>
+          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
+            <span class="material-icons-round fs-14 text-primary">trending_up</span> Penjimatan dinikmati pelanggan
+          </div>
+        </div>
+
+        <div class="card p-20 radius-24 hover-elevate transition-apple">
+          <div class="flex-between mb-8">
+            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_active_seasonal">Kadar Bermusim Aktif</span>
+            <span class="material-icons-round fs-20 text-amber">event</span>
+          </div>
+          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-active-seasons">0</div>
+          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
+            <span class="material-icons-round fs-14 text-amber">date_range</span> Lonjakan musim perayaan
+          </div>
+        </div>
+      </div>
+
+      <!-- APPLE HIG SEGMENTED TABS -->
+      <div class="card p-8 radius-24 mb-24 reveal-on-scroll bg-surface-2 border-subtle">
+        <div class="flex-center gap-8 flex-wrap">
+          <button class="filter-chip active" id="tab-banners" onclick="switchTab('banners')">
+            <span class="material-icons-round fs-16 mr-4">campaign</span><span data-key="mkt_btn_banners">Sepanduk Portal</span>
+          </button>
+          <button class="filter-chip" id="tab-promos" onclick="switchTab('promos')">
+            <span class="material-icons-round fs-16 mr-4">confirmation_number</span><span data-key="mkt_btn_promos">Kod Diskaun</span>
+          </button>
+          <button class="filter-chip" id="tab-seasonal" onclick="switchTab('seasonal')">
+            <span class="material-icons-round fs-16 mr-4">event</span><span data-key="mkt_btn_seasonal">Tarif Bermusim</span>
+          </button>
+          <button class="filter-chip" id="tab-ai" onclick="switchTab('ai')">
+            <span class="material-icons-round fs-16 mr-4">psychology</span>Cadangan Strategi Pintar
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. BANNERS TAB -->
+      <div class="mkt-section active reveal-up" id="section-banners">
+        <div class="mkt-grid mb-20" id="banners-grid"></div>
+        <button class="mkt-add-btn radius-20" onclick="openModal('banner')">
+          <span class="material-icons-round">add</span> <span data-key="mkt_add_banner">Tambah Sepanduk Baharu</span>
+        </button>
+      </div>
+
+      <!-- 2. PROMO CODES TAB -->
+      <div class="mkt-section reveal-up" id="section-promos">
+        <div class="mkt-grid mb-20" id="promos-grid"></div>
+        <button class="mkt-add-btn radius-20" onclick="openModal('promo')">
+          <span class="material-icons-round">add</span> <span data-key="mkt_add_promo">Tambah Kod Promo Baharu</span>
+        </button>
+      </div>
+
+      <!-- 3. SEASONAL PRICING TAB -->
+      <div class="mkt-section reveal-up" id="section-seasonal">
+        <div class="mkt-grid mb-20" id="seasonal-grid"></div>
+        <button class="mkt-add-btn radius-20" onclick="openModal('seasonal')">
+          <span class="material-icons-round">add</span> <span data-key="mkt_add_seasonal">Tambah Kadar Bermusim Baharu</span>
+        </button>
+      </div>
+
+      <!-- 4. AI STRATEGY & SUGGESTIONS TAB -->
+      <div class="mkt-section reveal-up" id="section-ai">
+        <div class="grid-2 gap-24">
+          <!-- API Key Configuration Card -->
+          <div class="card p-24 radius-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+              <div>
+                <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                  <span class="material-icons-round text-primary">key</span> Konfigurasi Model Ramalan Pemasaran
+                </h3>
+                <p class="fs-13 text-secondary m-0 mt-2">Kunci disimpan dalam pangkalan data Supabase secara disulitkan</p>
+              </div>
+              <span class="status-badge available"><span class="material-icons-round fs-12">lock</span> Selamat</span>
+            </div>
+
+            <div class="form-group mb-16">
+              <label class="form-label fs-13 fw-600">Gemini API Key (Google AI Studio)</label>
+              <div class="flex-center gap-10 mt-6">
+                <input type="password" id="ai-api-key" class="form-input radius-14 flex-1" placeholder="Masukkan Gemini API Key..." />
+                <button class="btn-secondary" onclick="togglePasswordVisibility('ai-api-key', this)">
+                  <span class="material-icons-round fs-16">visibility</span>
                 </button>
               </div>
-              <p class="helper-text">Dapatkan free key di <a href="https://aistudio.google.com" target="_blank" rel="noopener noreferrer">aistudio.google.com</a> &bull; Gemini 2.5 Flash percuma</p>
             </div>
-          </div>
-          <div id="ai-key-status" class="mt-10 fs-12 hidden"></div>
-        </div>
 
-        <!-- AI Suggestion Generator -->
-        <div class="card mkt-card-padding">
-          <div class="mkt-ai-header">
-            <div class="mkt-ai-header-icon-wrap">
-              <span class="material-icons-round">auto_awesome</span>
-            </div>
-            <div>
-              <h3>AI Marketing Content Generator</h3>
-              <p>Jana idea promosi berdasarkan tarikh & event semasa</p>
-            </div>
-          </div>
-
-          <div class="mkt-generator-grid">
-            <div class="form-group">
-              <label for="ai-prompt-context">Target Month / Event</label>
-              <input type="text" id="ai-prompt-context" class="form-input" placeholder="e.g., Hari Raya Jun 2026, School holidays..." />
-            </div>
-            <div class="form-group">
-              <label for="ai-content-type">Type of Content</label>
-              <select id="ai-content-type" class="form-input" title="Type of Content" aria-label="Type of Content">
-                <option value="banner">Promo Banner Ideas</option>
-                <option value="promo">Promo Code Suggestions</option>
-                <option value="email">Email Campaign Copy</option>
-                <option value="social">Social Media Captions</option>
-                <option value="pricing">Seasonal Pricing Strategy</option>
-              </select>
-            </div>
-          </div>
-
-          <button onclick="generateAiSuggestions()" id="ai-generate-btn" class="mkt-generate-btn">
-            <span class="material-icons-round">auto_awesome</span>
-            Generate AI Marketing Content
-          </button>
-
-          <!-- Output -->
-          <div id="ai-output-wrapper" class="mkt-output-wrapper hidden">
-            <div class="mkt-output-header">
-              <div class="mkt-output-title">
-                <span class="material-icons-round">auto_awesome</span>
-                AI Generated Content
+            <div class="card p-14 radius-16 bg-surface-2 border-subtle mb-16 fs-12 text-secondary">
+              <div class="flex-center gap-8 items-start">
+                <span class="material-icons-round text-primary fs-18">insights</span>
+                <div>
+                  Enjin analisis pasaran menganalisis kalendar percutian rasmi Malaysia dan mencadangkan kadar promosi terbaik untuk meningkatkan kadar penggunaan kenderaan.
+                </div>
               </div>
-              <button onclick="copyAiOutput()" class="mkt-copy-btn">
-                <span class="material-icons-round">content_copy</span> Copy
+            </div>
+
+            <div class="flex-center gap-10">
+              <button class="btn-primary flex-1" id="btn-save-ai-key" onclick="saveAIApiKey()">
+                <span class="material-icons-round fs-16">save</span> Simpan Kunci
+              </button>
+              <button class="btn-secondary flex-1" id="btn-generate-ai" onclick="generateMarketingSuggestions()">
+                <span class="material-icons-round fs-16">auto_awesome</span> Jana Cadangan
               </button>
             </div>
-            <div id="ai-output" class="mkt-output-box"></div>
-            <!-- Interactive Action Cards -->
-            <div id="ai-suggestions-container" class="ai-suggestions-grid"></div>
           </div>
 
-          <div id="ai-error" class="mkt-error-box hidden"></div>
+          <!-- Suggestions Output Card -->
+          <div class="card p-24 radius-24">
+            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-emerald">lightbulb</span> Cadangan Kempen Disyorkan
+              </h3>
+              <span id="ai-status-indicator" class="status-badge active fs-11">Sedia</span>
+            </div>
+
+            <div id="ai-suggestions-content" class="fs-13 text-secondary lh-16" style="min-height: 180px;">
+              <div class="p-20 text-center text-muted">
+                <span class="material-icons-round fs-36 text-primary mb-8">psychology</span>
+                <div class="fw-600 text-title">Jana Strategi Berdasarkan Kalendar Fleet</div>
+                <div class="fs-12 text-muted mt-2">Klik butang "Jana Cadangan" untuk mendapatkan syor kempen berasaskan data cuti umum Melaka &amp; Malaysia.</div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-      </div><!-- /section-ai -->
-
-    </div><!-- /content -->
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
   </main>
 
-  <!-- BANNER MODAL (reuse modal-overlay, modal-container, modal-header, modal-body from admin.css) -->
-  <div class="modal-overlay hidden" id="modal-banner">
-    <div class="modal-container max-w-520">
-      <div class="modal-header">
-        <h3 id="modal-banner-title">
-          <span class="material-icons-round text-primary-accent mr-8 fs-22">campaign</span>
-          Add Banner
-        </h3>
-        <button class="modal-close-btn" onclick="closeModal('banner')">
+  <!-- MODAL FOR ADD/EDIT (Apple HIG Sheet Dialog) -->
+  <div id="mkt-modal" class="modal-overlay hidden" onclick="if(event.target===this)closeModal()">
+    <div class="modal-card radius-28 p-24">
+      <div class="card-header flex-between border-bottom-subtle pb-14 mb-18">
+        <h3 class="m-0 fs-18 fw-700 text-title" id="modal-title">Borang Kempen</h3>
+        <button class="modal-close-btn" onclick="closeModal()">
           <span class="material-icons-round">close</span>
         </button>
       </div>
-      <input type="hidden" id="banner-edit-id" />
-      <div class="modal-body">
-        <div class="form-group mb-16">
-          <label for="banner-title">Banner Title</label>
-          <input type="text" class="form-input" id="banner-title" placeholder="e.g. Raya Special Offer!" title="Banner Title" />
-        </div>
-        <div class="form-group mb-16">
-          <label for="banner-message">Message</label>
-          <textarea class="form-input resize-v" id="banner-message" rows="3" placeholder="Promo details shown to customers..." title="Message"></textarea>
-        </div>
-        <div class="form-grid mb-16">
-          <div class="form-group">
-            <label for="banner-start">Start Date</label>
-            <input type="text" class="form-input date-picker" id="banner-start" placeholder="DD/MM/YYYY" title="Start Date" readonly />
-          </div>
-          <div class="form-group">
-            <label for="banner-end">End Date</label>
-            <input type="text" class="form-input date-picker" id="banner-end" placeholder="DD/MM/YYYY" title="End Date" readonly />
-          </div>
-        </div>
-        <div class="form-group mb-16">
-          <label for="banner-color">Banner Color</label>
-          <input type="color" class="form-color-input" id="banner-color" value="#3B82F6" title="Banner Color" aria-label="Banner Color" />
-        </div>
-        <div class="toggle-wrap">
-          <label class="toggle-switch" for="banner-active" aria-label="Banner active status">
-            <input type="checkbox" id="banner-active" checked title="Banner active status" aria-label="Banner active status" />
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">Active (visible to customers)</span>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-back" onclick="closeModal('banner')" data-key="mkt_btn_cancel">Cancel</button>
-        <button class="btn-primary-sm" onclick="saveBanner()">
-          <span class="material-icons-round fs-16">save</span> <span data-key="mkt_btn_save">Save</span>
-        </button>
-      </div>
+      <div id="modal-form"></div>
     </div>
   </div>
 
-  <!-- PROMO CODE MODAL -->
-  <div class="modal-overlay hidden" id="modal-promo">
-    <div class="modal-container max-w-520">
-      <div class="modal-header">
-        <h3 id="modal-promo-title">
-          <span class="material-icons-round text-primary-accent mr-8 fs-22">local_offer</span>
-          Add Promo Code
-        </h3>
-        <button class="modal-close-btn" onclick="closeModal('promo')">
-          <span class="material-icons-round">close</span>
-        </button>
-      </div>
-      <input type="hidden" id="promo-edit-id" />
-      <div class="modal-body">
-        <div class="form-grid mb-16">
-          <div class="form-group">
-            <label for="promo-code">Promo Code</label>
-            <input type="text" class="form-input uppercase" id="promo-code" placeholder="e.g. MELAKA20" title="Promo Code" />
-          </div>
-          <div class="form-group">
-            <label for="promo-discount">Discount Value</label>
-            <input type="number" class="form-input" id="promo-discount" placeholder="20" min="1" max="100" title="Discount Value" />
-          </div>
-        </div>
-        <div class="form-grid mb-16">
-          <div class="form-group">
-            <label for="promo-type">Discount Type</label>
-            <select class="form-input" id="promo-type" title="Discount Type" aria-label="Discount Type">
-              <option value="percent">Percentage (%)</option>
-              <option value="fixed">Fixed Amount (RM)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="promo-limit">Usage Limit</label>
-            <input type="number" class="form-input" id="promo-limit" placeholder="100" min="1" title="Usage Limit" />
-          </div>
-        </div>
-        <div class="form-group mb-16">
-          <label for="promo-expiry">Expiry Date</label>
-          <input type="text" class="form-input date-picker" id="promo-expiry" placeholder="DD/MM/YYYY" title="Expiry Date" readonly />
-        </div>
-        <div class="toggle-wrap">
-          <label class="toggle-switch" for="promo-active" aria-label="Promo active status">
-            <input type="checkbox" id="promo-active" checked title="Promo active status" aria-label="Promo active status" />
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">Active</span>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-back" onclick="closeModal('promo')" data-key="mkt_btn_cancel">Cancel</button>
-        <button class="btn-primary-sm" onclick="savePromo()">
-          <span class="material-icons-round fs-16">save</span> <span data-key="mkt_btn_save">Save</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SEASONAL PRICING MODAL -->
-  <div class="modal-overlay hidden" id="modal-seasonal">
-    <div class="modal-container max-w-520">
-      <div class="modal-header">
-        <h3 id="modal-seasonal-title">
-          <span class="material-icons-round text-primary-accent mr-8 fs-22">event</span>
-          Add Seasonal Rate
-        </h3>
-        <button class="modal-close-btn" onclick="closeModal('seasonal')">
-          <span class="material-icons-round">close</span>
-        </button>
-      </div>
-      <input type="hidden" id="seasonal-edit-id" />
-      <div class="modal-body">
-        <div class="form-group mb-16">
-          <label for="seasonal-name">Event Name</label>
-          <input type="text" class="form-input" id="seasonal-name" placeholder="e.g. Hari Raya, School Holiday" title="Event Name" />
-        </div>
-        <div class="form-grid mb-16">
-          <div class="form-group">
-            <label for="seasonal-start">Start Date</label>
-            <input type="text" class="form-input date-picker" id="seasonal-start" placeholder="DD/MM/YYYY" title="Start Date" readonly />
-          </div>
-          <div class="form-group">
-            <label for="seasonal-end">End Date</label>
-            <input type="text" class="form-input date-picker" id="seasonal-end" placeholder="DD/MM/YYYY" title="End Date" readonly />
-          </div>
-        </div>
-        <div class="form-grid mb-16">
-          <div class="form-group">
-            <label for="seasonal-direction">Price Direction</label>
-            <select class="form-input" id="seasonal-direction" title="Price Direction" aria-label="Price Direction">
-              <option value="increase">Increase (Surcharge)</option>
-              <option value="decrease">Decrease (Discount)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="seasonal-value">Adjustment (%)</label>
-            <input type="number" class="form-input" id="seasonal-value" placeholder="e.g. 30" min="1" max="100" title="Adjustment (%)" />
-          </div>
-        </div>
-        <div class="toggle-wrap">
-          <label class="toggle-switch" for="seasonal-active" aria-label="Seasonal active status">
-            <input type="checkbox" id="seasonal-active" checked title="Seasonal active status" aria-label="Seasonal active status" />
-            <span class="toggle-slider"></span>
-          </label>
-          <span class="toggle-label">Active</span>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-back" onclick="closeModal('seasonal')" data-key="mkt_btn_cancel">Cancel</button>
-        <button class="btn-primary-sm" onclick="saveSeasonal()">
-          <span class="material-icons-round fs-16">save</span> <span data-key="mkt_btn_save">Save</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
-  <div id="mkt-toast"></div>
-
+  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.8"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../../../shared/js/supabase-config.js"></script>
-  <script src="../../../shared/js/api.js"></script>
-  <script src="../../../shared/js/navbar-loader.js?v=5.3.5"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.3.5"></script>
-  <script src="../../../shared/js/main.js"></script>
+  <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
+  <script src="../../../shared/js/api.js?v=5.2.3"></script>
   <script src="../../../shared/js/anime.min.js"></script>
-  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../../shared/js/animate.js?v=5.2.3"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="../../../shared/js/calendar.js?v=5.2.40"></script>
-  <script src="../../js/marketing.js"></script>
-  <script src="../../js/marketing-ai.js"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+  <script src="../../js/marketing.js?v=5.5.0"></script>
+
+  <script>
+    function togglePasswordVisibility(id, btn) {
+      var input = document.getElementById(id);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.querySelector('span').textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        btn.querySelector('span').textContent = 'visibility';
+      }
+    }
+  </script>
 </body>
 </html>

@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Add New Car | WeDRIVE</title>
+  <title>Tambah Kereta Baharu | WeDRIVE Fleet Ops</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
   <!-- AUTH GUARD: Must run before page renders -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
@@ -25,23 +25,29 @@
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
-      <!-- HEADER -->
-      <div class="card reveal-onload mb-24 p-24">
+      <!-- APPLE BENTO HERO HEADER -->
+      <div class="card bento-header-hero mb-24 reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <div class="flex-center gap-8 mb-6">
-              <a href="cars.html" class="fs-12 text-muted no-underline">Pengurusan Kereta</a>
-              <span class="material-icons-round fs-14 text-muted">chevron_right</span>
-              <span class="fs-12 text-primary-accent fw-600">Pendaftaran Baharu</span>
+            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
+              <a href="../dashboard/dashboard.html">Admin</a>
+              <span class="material-icons-round">chevron_right</span>
+              <a href="cars.html">Pengurusan Kereta</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span class="current">Pendaftaran Baharu</span>
+            </nav>
+            <div class="flex-center gap-10 mb-6">
+              <span class="status-badge active"><span class="material-icons-round fs-14">add_circle</span> Pendaftaran Armada</span>
+              <span class="fs-12 text-muted fw-600">Verifikasi Spesifikasi JPJ &amp; Insurans Komersil</span>
             </div>
-            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_add_car">Tambah Kereta Baharu</h1>
-            <p class="text-secondary fs-14 m-0 mt-4">Daftarkan kenderaan baharu ke dalam sistem inventori WeDRIVE dengan spesifikasi lengkap.</p>
+            <h1 class="bento-title-main m-0">Tambah Kenderaan Baharu</h1>
+            <p class="bento-subtitle-main m-0 mt-6">Daftarkan model armada baharu ke dalam repositori inventori rasmi WeDRIVE dengan rekod spesifikasi, kadar harian dan deposit keselamatan.</p>
           </div>
           <div class="flex-center gap-10">
-            <button type="button" class="btn-outline-sm" onclick="window.location.href='cars.html'">
+            <button type="button" class="btn-secondary" onclick="window.location.href='cars.html'">
               <span class="material-icons-round fs-16">arrow_back</span> Batal
             </button>
-            <button type="button" class="btn-primary-sm" onclick="document.getElementById('add-car-form').requestSubmit()">
+            <button type="button" class="btn-primary" onclick="document.getElementById('add-car-form').requestSubmit()">
               <span class="material-icons-round fs-16">save</span> Simpan Kenderaan
             </button>
           </div>
@@ -51,27 +57,27 @@
       <!-- ADD CAR FORM BENTO -->
       <form id="add-car-form" onsubmit="handleCarSubmit(event)">
         <div class="grid-2 gap-24">
-          <!-- CARD 1: MAKLUMAT UTAMA KENDERAAN -->
-          <div class="card reveal-on-scroll p-24">
+          <!-- CARD 1: MAKLUMAT ASAS -->
+          <div class="card p-24 radius-24 reveal-onload">
             <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
-                <span class="material-icons-round text-primary-accent">directions_car</span> Maklumat Asas Kenderaan
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">directions_car</span> Maklumat Asas &amp; Identiti JPJ
               </h3>
             </div>
 
             <div class="mb-16">
-              <label class="form-label" for="car-name">Nama &amp; Model Kenderaan <span class="text-danger">*</span></label>
-              <input type="text" id="car-name" class="form-input" placeholder="cth: Proton X50 1.5 TGDi Flagship" required />
+              <label class="form-label fs-13 fw-600" for="car-name">Nama &amp; Varian Model <span class="text-danger">*</span></label>
+              <input type="text" id="car-name" class="form-input radius-14" placeholder="cth: Proton X50 1.5 TGDi Flagship" required oninput="updateLivePreview()" />
             </div>
 
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label" for="car-plate">Nombor Plat <span class="text-danger">*</span></label>
-                <input type="text" id="car-plate" class="form-input" placeholder="cth: VAB 4821" required />
+                <label class="form-label fs-13 fw-600" for="car-plate">No. Pendaftaran (Plat) <span class="text-danger">*</span></label>
+                <input type="text" id="car-plate" class="form-input radius-14 tabular-nums" placeholder="cth: VAB 4821" required oninput="this.value = this.value.toUpperCase(); updateLivePreview();" />
               </div>
               <div>
-                <label class="form-label" for="car-brand">Jenama (Brand) <span class="text-danger">*</span></label>
-                <select id="car-brand" class="form-input" required>
+                <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
+                <select id="car-brand" class="form-input radius-14" required onchange="updateLivePreview()">
                   <option value="Proton">Proton</option>
                   <option value="Perodua">Perodua</option>
                   <option value="Toyota">Toyota</option>
@@ -88,28 +94,28 @@
 
             <div class="grid-2 gap-14">
               <div>
-                <label class="form-label" for="car-year">Tahun Keluaran</label>
-                <input type="number" id="car-year" class="form-input" value="2025" min="2018" max="2027" />
+                <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan</label>
+                <input type="number" id="car-year" class="form-input radius-14 tabular-nums" value="2025" min="2018" max="2027" oninput="updateLivePreview()" />
               </div>
               <div>
-                <label class="form-label" for="car-color">Warna Luaran</label>
-                <input type="text" id="car-color" class="form-input" placeholder="cth: Snow White / Ocean Blue" />
+                <label class="form-label fs-13 fw-600" for="car-color">Warna Rasmi Badan</label>
+                <input type="text" id="car-color" class="form-input radius-14" placeholder="cth: Space Grey / Snow White" />
               </div>
             </div>
           </div>
 
-          <!-- CARD 2: KLASIFIKASI & TEKNIKAL -->
-          <div class="card reveal-on-scroll p-24">
+          <!-- CARD 2: SPESIFIKASI & KAPASITI -->
+          <div class="card p-24 radius-24 reveal-onload">
             <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
-                <span class="material-icons-round text-primary-accent">tune</span> Spesifikasi &amp; Kapasiti
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">tune</span> Klasifikasi &amp; Konfigurasi Teknikal
               </h3>
             </div>
 
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
-                <select id="car-type" class="form-input" required>
+                <label class="form-label fs-13 fw-600" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
+                <select id="car-type" class="form-input radius-14" required onchange="updateLivePreview()">
                   <option value="Sedan">Sedan</option>
                   <option value="SUV" selected>SUV</option>
                   <option value="MPV">MPV</option>
@@ -117,8 +123,8 @@
                 </select>
               </div>
               <div>
-                <label class="form-label" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
-                <select id="car-seats" class="form-input" required>
+                <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
+                <select id="car-seats" class="form-input radius-14" required onchange="updateLivePreview()">
                   <option value="5" selected>5 Tempat Duduk</option>
                   <option value="7">7 Tempat Duduk</option>
                   <option value="8">8 Tempat Duduk</option>
@@ -129,119 +135,161 @@
 
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label" for="car-transmission">Transmisi <span class="text-danger">*</span></label>
-                <select id="car-transmission" class="form-input" required>
-                  <option value="Automatic" selected>Automatik</option>
-                  <option value="Manual">Manual</option>
+                <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
+                <select id="car-transmission" class="form-input radius-14" required onchange="updateLivePreview()">
+                  <option value="Automatic" selected>Automatik (AT/CVT/DCT)</option>
+                  <option value="Manual">Manual (MT)</option>
                 </select>
               </div>
               <div>
-                <label class="form-label" for="car-fuel">Jenis Bahan Api <span class="text-danger">*</span></label>
-                <select id="car-fuel" class="form-input" required>
-                  <option value="Petrol" selected>Petrol</option>
-                  <option value="Hybrid">Hybrid</option>
-                  <option value="Electric (EV)">Elektrik (EV)</option>
-                  <option value="Diesel">Diesel</option>
+                <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
+                <select id="car-fuel" class="form-input radius-14" required>
+                  <option value="Petrol" selected>Petrol (RON95/97)</option>
+                  <option value="Hybrid">Hybrid (HEV)</option>
+                  <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
+                  <option value="Diesel">Diesel Euro 5</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label class="form-label" for="car-engine">Kapasiti Enjin</label>
-              <input type="text" id="car-engine" class="form-input" placeholder="cth: 1.5L Turbocharged" />
+              <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
+              <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 1.5L Turbocharged VVT-i" />
             </div>
           </div>
 
-          <!-- CARD 3: KADAR HARGA & SYARAT SEWAAN -->
-          <div class="card reveal-on-scroll p-24">
+          <!-- CARD 3: KADAR HARGA & DEPOSIT -->
+          <div class="card p-24 radius-24 reveal-on-scroll">
             <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
-                <span class="material-icons-round text-primary-accent">payments</span> Kadar Harga &amp; Deposit
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">payments</span> Struktur Tarif &amp; Deposit
               </h3>
             </div>
 
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
-                <input type="number" id="car-rate" class="form-input" placeholder="cth: 180" min="50" step="5" required />
+                <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
+                <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="180" value="180" min="50" step="5" required oninput="updateLivePreview()" />
               </div>
               <div>
-                <label class="form-label" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
-                <input type="number" id="car-deposit" class="form-input" value="200" min="0" step="50" required />
+                <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
+                <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" value="200" min="0" step="50" required oninput="updateLivePreview()" />
               </div>
             </div>
 
             <div class="grid-2 gap-14">
               <div>
-                <label class="form-label" for="car-min-days">Tempoh Min. Sewaan (Hari)</label>
-                <input type="number" id="car-min-days" class="form-input" value="1" min="1" max="30" />
+                <label class="form-label fs-13 fw-600" for="car-min-days">Tempoh Minimum (Hari)</label>
+                <input type="number" id="car-min-days" class="form-input radius-14 tabular-nums" value="1" min="1" max="30" />
               </div>
               <div>
-                <label class="form-label" for="car-location">Hab Lokasi Asal</label>
-                <select id="car-location" class="form-input">
-                  <option value="Melaka Sentral Hub">Melaka Sentral Hub</option>
+                <label class="form-label fs-13 fw-600" for="car-location">Depoh Penyerahan Utama</label>
+                <select id="car-location" class="form-input radius-14">
+                  <option value="Melaka Sentral Hub">Melaka Sentral Hub (Depoh Utama)</option>
                   <option value="Melaka Airport (MKZ)">Melaka Airport (MKZ)</option>
-                  <option value="Jonker Point">Jonker Point</option>
-                  <option value="Ayer Keroh Depot">Ayer Keroh Depot</option>
+                  <option value="Jonker Point">Jonker Point Kiosk</option>
+                  <option value="Ayer Keroh Depot">Ayer Keroh Fleet Service Depot</option>
                 </select>
               </div>
             </div>
           </div>
 
-          <!-- CARD 4: CIRI-CIRI PINTAR & FOTO -->
-          <div class="card reveal-on-scroll p-24">
+          <!-- CARD 4: FOTO & CIRI-CIRI PERALATAN -->
+          <div class="card p-24 radius-24 reveal-on-scroll">
             <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8">
-                <span class="material-icons-round text-primary-accent">camera_alt</span> Foto &amp; Ciri Pintar
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">photo_camera</span> Foto &amp; Ciri Standard
               </h3>
             </div>
 
             <div class="mb-16">
-              <label class="form-label">Ciri-Ciri Khas Kenderaan</label>
+              <label class="form-label fs-13 fw-600">Peralatan Standard Armada</label>
               <div class="flex-wrap gap-8">
-                <label class="filter-chip cursor-pointer">
+                <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-carplay" class="hidden" checked />
                   <span>Apple CarPlay / Android Auto</span>
                 </label>
-                <label class="filter-chip cursor-pointer">
+                <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-dashcam" class="hidden" checked />
                   <span>4K Dashcam Depan &amp; Belakang</span>
                 </label>
-                <label class="filter-chip cursor-pointer">
+                <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-keyless" class="hidden" checked />
-                  <span>Kunci Pintar Keyless Go</span>
+                  <span>Sistem Masuk Pintar Tanpa Kunci</span>
                 </label>
-                <label class="filter-chip cursor-pointer">
+                <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-reverse-cam" class="hidden" checked />
-                  <span>Kamera Undur 360</span>
+                  <span>Kamera Undur 360 Berdefinisi Tinggi</span>
                 </label>
-                <label class="filter-chip cursor-pointer">
+                <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-tinted" class="hidden" checked />
-                  <span>Filem Penapis Haba Penuh</span>
+                  <span>Filem Penapis Haba Berdaftar JPJ</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label class="form-label">Muat Naik Foto Kenderaan</label>
-              <div class="doc-preview-box cursor-pointer" onclick="document.getElementById('car-photo-input').click()">
-                <div id="photo-preview-content" class="text-center p-16">
-                  <span class="material-icons-round fs-36 text-muted mb-6">cloud_upload</span>
-                  <div class="fs-13 fw-600">Klik untuk pilih gambar kenderaan</div>
-                  <div class="fs-11 text-muted mt-2">Format disokong: PNG, JPG, WEBP (Maks: 5MB)</div>
+              <label class="form-label fs-13 fw-600">Imej Kenderaan</label>
+              <div class="doc-preview-box cursor-pointer p-16 text-center radius-16 border-dashed" onclick="document.getElementById('car-photo-input').click()">
+                <div id="photo-preview-content">
+                  <span class="material-icons-round fs-32 text-primary mb-6">cloud_upload</span>
+                  <div class="fs-13 fw-600 text-title">Muat Naik Gambar Kenderaan</div>
+                  <div class="fs-11 text-muted mt-2">Format disokong: PNG, JPG, WEBP (Latar belakang telus digalakkan)</div>
                 </div>
-                <img id="photo-preview-img" class="doc-preview-img hidden" alt="Pratonton Kenderaan" />
+                <img id="photo-preview-img" class="doc-preview-img hidden" alt="Pratonton Kenderaan" style="max-height: 140px; margin: 0 auto; object-fit: contain;" />
               </div>
               <input type="file" id="car-photo-input" class="hidden" accept="image/*" onchange="previewCarPhoto(this)" />
             </div>
           </div>
         </div>
 
+        <!-- REAL-TIME LIVE PREVIEW BENTO CARD -->
+        <div class="card p-24 radius-24 mt-24 reveal-on-scroll">
+          <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+            <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+              <span class="material-icons-round text-emerald">preview</span> Pratonton Kad Kenderaan (Customer &amp; Admin View)
+            </h3>
+            <span class="status-badge active"><span class="material-icons-round fs-12">visibility</span> Live Preview</span>
+          </div>
+          <div class="grid-2 gap-24 items-center">
+            <div class="card p-20 radius-24 bg-surface-2">
+              <div class="car-card-img-wrap mb-14 radius-16 overflow-hidden bg-surface-3 p-12 text-center">
+                <img id="preview-display-img" src="../../../shared/images/cars/honda-crv-2024.png" alt="Pratonton Kenderaan" class="w-full obj-contain" style="max-height: 140px;" onerror="this.src='../../../shared/images/cars/perodua-myvi-2023.png'" />
+              </div>
+              <div class="flex-between items-start mb-8">
+                <div>
+                  <h4 class="fs-17 fw-700 m-0 text-title" id="preview-display-name">Proton X50 1.5 TGDi Flagship</h4>
+                  <span class="fs-12 text-secondary" id="preview-display-specs">SUV • Automatik • 5 Tempat Duduk</span>
+                </div>
+                <span class="status-badge fs-12 fw-700 tabular-nums px-8 py-4 radius-8" id="preview-display-plate">VAB 4821</span>
+              </div>
+              <div class="flex-between items-center border-top-subtle pt-12 mt-12">
+                <div>
+                  <div class="fs-11 text-muted">Kadar Rasmi Harian</div>
+                  <div class="fs-18 fw-800 text-primary tabular-nums" id="preview-display-rate">RM 180<span class="fs-11 text-secondary fw-500">/hari</span></div>
+                </div>
+                <span class="status-badge available"><span class="material-icons-round fs-12">check_circle</span> Tersedia</span>
+              </div>
+            </div>
+            <div>
+              <h4 class="fs-15 fw-700 text-title mb-8">Pengesahan Operasi Pendaftaran</h4>
+              <p class="fs-13 text-secondary lh-16 m-0 mb-12">
+                Setiap kenderaan yang didaftarkan akan terus dikaitkan dengan pangkalan data inventori operasi WeDRIVE, membolehkan tempahan segera melalui kaunter atau portal pelanggan.
+              </p>
+              <ul class="fs-13 text-secondary p-0 m-0 pl-18 lh-18">
+                <li>Status awal kenderaan ditetapkan kepada <strong>Tersedia (Available)</strong>.</li>
+                <li>Deposit keselamatan dipegang secara automatik bagi setiap kontrak sewaan.</li>
+                <li>Jadual berkala penyelenggaraan JPJ akan dimulakan dari tarikh pendaftaran ini.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <!-- ACTION BAR -->
-        <div class="flex-between mt-24 p-20 card">
-          <span class="fs-13 text-muted">Semua kenderaan yang didaftarkan akan berstatus <strong>Tersedia (Available)</strong> secara automatik.</span>
+        <div class="flex-between mt-24 p-20 card radius-24">
+          <span class="fs-13 text-muted">Pastikan butiran pendaftaran nombor plat dan kadar harian disemak dengan teliti sebelum simpan.</span>
           <div class="flex-center gap-10">
-            <button type="button" class="btn-outline" onclick="window.location.href='cars.html'">Batal</button>
+            <button type="button" class="btn-secondary" onclick="window.location.href='cars.html'">Batal</button>
             <button type="submit" class="btn-primary">
               <span class="material-icons-round fs-16">check_circle</span> Daftarkan Kenderaan
             </button>
@@ -277,9 +325,26 @@
           img.src = selectedPhotoBase64;
           img.classList.remove('hidden');
           content.classList.add('hidden');
+
+          var liveImg = document.getElementById('preview-display-img');
+          if (liveImg) liveImg.src = selectedPhotoBase64;
         };
         reader.readAsDataURL(input.files[0]);
       }
+    }
+
+    function updateLivePreview() {
+      var nameVal = document.getElementById('car-name').value.trim() || 'Proton X50 1.5 TGDi Flagship';
+      var plateVal = document.getElementById('car-plate').value.trim().toUpperCase() || 'VAB 4821';
+      var typeVal = document.getElementById('car-type').value;
+      var transVal = document.getElementById('car-transmission').value === 'Automatic' ? 'Automatik' : 'Manual';
+      var seatsVal = document.getElementById('car-seats').value + ' Tempat Duduk';
+      var rateVal = document.getElementById('car-rate').value || '180';
+
+      document.getElementById('preview-display-name').textContent = nameVal;
+      document.getElementById('preview-display-plate').textContent = plateVal;
+      document.getElementById('preview-display-specs').textContent = typeVal + ' • ' + transVal + ' • ' + seatsVal;
+      document.getElementById('preview-display-rate').innerHTML = 'RM ' + rateVal + '<span class="fs-11 text-secondary fw-500">/hari</span>';
     }
 
     // Toggle chip active state on click
@@ -314,19 +379,18 @@
         deposit: 'RM ' + (document.getElementById('car-deposit').value || 200),
         status: 'Available',
         location: document.getElementById('car-location').value,
-        images: selectedPhotoBase64 ? [selectedPhotoBase64] : ['bezza.png']
+        images: selectedPhotoBase64 ? [selectedPhotoBase64] : ['../../../shared/images/cars/honda-crv-2024.png']
       };
 
       // Save via WeDriveAPI
       if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
         window.WeDriveAPI.createCar(newCar)
           .then(function () {
-            if (window.showToast) window.showToast('Kenderaan berjaya didaftarkan!', 'success');
+            if (window.showToast) window.showToast('Kenderaan berjaya didaftarkan ke dalam sistem!', 'success');
             setTimeout(function () { window.location.href = 'cars.html'; }, 800);
           })
           .catch(function (err) {
             console.error('Create car error:', err);
-            // Fallback: save to localStorage/dummy
             saveFallback(newCar);
           });
       } else {
@@ -343,7 +407,7 @@
       } catch (err) {
         console.warn('Local storage save:', err);
       }
-      if (window.showToast) window.showToast('Kenderaan berjaya didaftarkan!', 'success');
+      if (window.showToast) window.showToast('Kenderaan berjaya didaftarkan ke dalam sistem!', 'success');
       setTimeout(function () { window.location.href = 'cars.html'; }, 800);
     }
   </script>

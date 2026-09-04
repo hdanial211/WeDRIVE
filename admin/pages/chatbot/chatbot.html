@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Chatbot Settings | Admin | WeDRIVE</title>
+  <title>Konfigurasi Pembantu AI | WeDRIVE Fleet Ops</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
+  <!-- AUTH GUARD -->
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
 <body data-particles="6" data-cursor-glow>
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
   <div id="sidebar-placeholder"
        data-component="sidebar-admin"
        data-page="chatbot-settings">
@@ -20,101 +22,129 @@
 
   <!-- MAIN -->
   <main class="main">
-    <!-- NAVBAR -->
+    <!-- TOPBAR (Main Navigation) -->
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
+      <!-- APPLE BENTO HERO HEADER -->
+      <div class="card bento-header-hero mb-24 reveal-onload">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
+              <a href="../dashboard/dashboard.html">Admin</a>
+              <span class="material-icons-round">chevron_right</span>
+              <a href="chatbot.html">AI Intelligence</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span class="current">Konfigurasi Pembantu Maya</span>
+            </nav>
+            <div class="flex-center gap-10 mb-6">
+              <span class="status-badge active"><span class="live-pulse-dot"></span> Pembantu Maya 24/7</span>
+              <span class="fs-12 text-muted fw-600">OpenRouter Gateway • Gemini 2.5 Flash</span>
+            </div>
+            <h1 class="bento-title-main m-0">Konfigurasi Pembantu Khidmat Pelanggan</h1>
+            <p class="bento-subtitle-main m-0 mt-6">Urus kunci pintu masuk API, persona komunikasi, promosi semasa, dan pantau respons ejen secara langsung melalui konsol simulasi.</p>
+          </div>
+          <div class="flex-center gap-10">
+            <button class="btn-secondary" onclick="refreshLiveData()">
+              <span class="material-icons-round fs-16">refresh</span> Segarkan Data Armada
+            </button>
+            <button class="btn-primary" onclick="saveSettings()">
+              <span class="material-icons-round fs-16">save</span> Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="chatbot-grid">
 
         <!-- ─── LEFT COLUMN: CONFIGURATION CARDS ──────────────────── -->
         <div class="settings-column flex-col gap-20">
           
           <!-- CARD 1: API Settings -->
-          <div class="card reveal-onload">
-            <div class="card-header chatbot-card-header flex-between flex-center mb-16">
+          <div class="card p-24 radius-24 reveal-onload">
+            <div class="card-header chatbot-card-header flex-between flex-center mb-16 border-bottom-subtle pb-12">
               <div>
-                <h3 class="chatbot-title">
-                  <span class="material-icons-round chatbot-title-icon">vpn_key</span>
-                  API Configuration
+                <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
+                  <span class="material-icons-round text-primary">vpn_key</span>
+                  Konfigurasi Kunci API AI
                 </h3>
-                <p class="chatbot-subtitle">Set up your AI provider API credentials</p>
+                <p class="fs-13 text-secondary m-0 mt-2">Sambungan pintu masuk keselamatan OpenRouter.ai</p>
               </div>
-              <span id="api-status" class="api-status disconnected">
-                <span class="dot-indicator"></span> Not Connected
+              <span id="api-status" class="api-status disconnected radius-pill px-10 py-4">
+                <span class="dot-indicator"></span> Belum Disambung
               </span>
             </div>
 
             <div class="chatbot-settings-form">
               <!-- Info Box -->
-              <div class="info-box">
-                <span class="material-icons-round">info</span>
-                <div>
-                  <strong>OpenRouter.ai</strong> is WeDRIVE's AI gateway. It routes queries to <strong>Gemini 2.5 Flash</strong>.
-                  Get a key from <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a> (free tier available).
+              <div class="card p-14 radius-16 bg-surface-2 border-subtle mb-16 fs-12 text-secondary">
+                <div class="flex-center gap-8 items-start">
+                  <span class="material-icons-round text-primary fs-18">info</span>
+                  <div>
+                    <strong>OpenRouter.ai</strong> bertindak sebagai pintu masuk AI rasmi WeDRIVE untuk menyalurkan pertanyaan pelanggan kepada model <strong>Gemini 2.5 Flash</strong> dengan latensi sub-saat.
+                  </div>
                 </div>
               </div>
 
-              <div class="form-group">
-                <label class="flex-center gap-6 fw-600 fs-13">
+              <div class="form-group mb-16">
+                <label class="flex-center gap-6 fw-600 fs-13 text-title mb-6">
                   OpenRouter API Key
                 </label>
-                <div class="api-row">
-                  <div class="api-key-wrap">
-                    <input type="password" id="api-key" placeholder="sk-or-v1-..." class="form-input" autocomplete="off" />
-                    <span class="material-icons-round toggle-eye" onclick="toggleKey('api-key', this)">visibility_off</span>
+                <div class="api-row flex-center gap-10">
+                  <div class="api-key-wrap position-relative flex-1">
+                    <input type="password" id="api-key" placeholder="sk-or-v1-..." class="form-input radius-14" autocomplete="off" />
+                    <span class="material-icons-round toggle-eye cursor-pointer" onclick="toggleKey('api-key', this)">visibility_off</span>
                   </div>
-                  <button class="btn-test-inline" id="btn-test-openrouter" onclick="testSingleKey('openrouter')">
-                    <span class="material-icons-round fs-16">bolt</span> Test
+                  <button class="btn-secondary" id="btn-test-openrouter" onclick="testSingleKey('openrouter')">
+                    <span class="material-icons-round fs-16">bolt</span> Uji Sambungan
                   </button>
                 </div>
-                <div class="key-status" id="status-openrouter"></div>
+                <div class="key-status mt-4" id="status-openrouter"></div>
               </div>
 
               <div class="mt-12 flex-row gap-8">
-                <button class="btn-save btn-save-flex" onclick="saveSettings()">
-                  <span class="material-icons-round fs-18">save</span> Save API Key
+                <button class="btn-primary w-full" onclick="saveSettings()">
+                  <span class="material-icons-round fs-18">save</span> Simpan Kunci API
                 </button>
               </div>
             </div>
           </div>
 
           <!-- CARD 2: AI Prompt & Persona -->
-          <div class="card reveal-on-scroll">
-            <div class="card-header chatbot-card-header mb-16">
-              <h3 class="chatbot-title">
-                <span class="material-icons-round chatbot-title-icon">psychology</span>
-                AI Agent Persona
+          <div class="card p-24 radius-24 reveal-on-scroll">
+            <div class="card-header chatbot-card-header mb-16 border-bottom-subtle pb-12">
+              <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">psychology</span>
+                Persona &amp; Garis Panduan Ejen Pintar
               </h3>
-              <p class="chatbot-subtitle">Configure greeting message and behavior parameters</p>
+              <p class="fs-13 text-secondary m-0 mt-2">Tetapkan mesej aluan dan arahan tatatertib interaksi pengguna</p>
             </div>
 
             <div class="chatbot-settings-form">
               <!-- Welcome Greeting -->
-              <div class="form-group">
-                <label class="fw-600 fs-13">Welcome Message</label>
-                <div class="hint fs-12 text-muted mb-4">Shown when a customer first opens the chatbot.</div>
-                <input type="text" id="greeting-msg" class="form-input" placeholder="Hi! I'm WeDRIVE Bot. How can I help?" />
+              <div class="form-group mb-16">
+                <label class="fw-600 fs-13 text-title">Mesej Aluan Awal (Welcome Message)</label>
+                <div class="fs-12 text-muted mb-6">Dipaparkan serta-merta apabila pelanggan membuka widget perbualan.</div>
+                <input type="text" id="greeting-msg" class="form-input radius-14" placeholder="Hai! Saya Pembantu WeDRIVE. Bagaimana saya boleh bantu anda hari ini?" />
               </div>
 
-              <div class="section-divider">Prompts</div>
-
               <!-- System Prompt -->
-              <div class="form-group">
-                <label class="fw-600 fs-13">System Prompt & Instructions</label>
-                <div class="hint fs-12 text-muted mb-4">Core personality instructions for the assistant.</div>
-                <textarea id="system-prompt" rows="8" class="form-input" placeholder="You are WeDRIVE assistant..."></textarea>
+              <div class="form-group mb-16">
+                <label class="fw-600 fs-13 text-title">Arahan Sistem Teras (System Prompt)</label>
+                <div class="fs-12 text-muted mb-6">Peraturan rasmi kepatuhan, gaya bahasa, dan sekatan keselamatan ejen.</div>
+                <textarea id="system-prompt" rows="8" class="form-input radius-14" placeholder="Anda adalah Pembantu WeDRIVE..."></textarea>
               </div>
 
               <!-- Promotions Context -->
-              <div class="form-group">
-                <label class="fw-600 fs-13">Promotions & Extra Context</label>
-                <div class="hint fs-12 text-muted mb-4">Dynamic company offers, campaigns, or policies to append.</div>
-                <textarea id="promo-context" rows="4" class="form-input" placeholder="Current promo: 10% off for weekend bookings..."></textarea>
+              <div class="form-group mb-16">
+                <label class="fw-600 fs-13 text-title">Konteks Promosi &amp; Dasar Semasa</label>
+                <div class="fs-12 text-muted mb-6">Kenyataan tawaran bermusim yang diserapkan ke dalam jawapan AI secara automatik.</div>
+                <textarea id="promo-context" rows="4" class="form-input radius-14" placeholder="Promosi Semasa: Diskaun 10% untuk sewaan hujung minggu..."></textarea>
               </div>
 
               <div class="mt-12 flex-row">
-                <button class="btn-save w-full btn-save-sm" onclick="saveSettings()">
-                  <span class="material-icons-round fs-18">save</span> Save AI Persona & Promos
+                <button class="btn-primary w-full" onclick="saveSettings()">
+                  <span class="material-icons-round fs-18">save</span> Simpan Persona &amp; Promosi
                 </button>
               </div>
             </div>
@@ -125,69 +155,71 @@
         <!-- ─── RIGHT COLUMN: LIVE TEST CHAT (PLAYGROUND & AUTO-SYNC) ──────────────────── -->
         <div class="chat-column flex-col gap-20">
           <!-- Chatbot Playground -->
-          <div class="card reveal-on-scroll chatbot-card-flat">
+          <div class="card p-0 radius-24 reveal-on-scroll overflow-hidden border-subtle">
             <div class="chat-container">
-              <div class="chat-header">
-                <div class="bot-avatar">
+              <div class="chat-header p-16 border-bottom-subtle bg-surface-2 flex-center gap-12">
+                <div class="bot-avatar bg-primary text-white p-8 radius-50 flex-center">
                   <span class="material-icons-round fs-20">smart_toy</span>
                 </div>
                 <div class="bot-info">
-                  <h4>WeDRIVE Bot Playground</h4>
-                  <span>
-                    <span class="live-indicator-dot"></span> Live test console
+                  <h4 class="fs-15 fw-700 m-0 text-title">Konsol Ujian Ejen (Simulasi Pelanggan)</h4>
+                  <span class="fs-12 text-secondary flex-center gap-4">
+                    <span class="live-pulse-dot"></span> Sesi Interaktif Langsung
                   </span>
                 </div>
               </div>
 
               <!-- Suggestion Chips for quick testing -->
-              <div class="chat-playground-suggestions">
-                <button class="play-chip" onclick="quickPlayMsg('What cars are available today?')">Available Cars</button>
-                <button class="play-chip" onclick="quickPlayMsg('Suggest a premium vehicle')">Recommend</button>
-                <button class="play-chip" onclick="quickPlayMsg('Where can I pick up the car in Melaka?')">Locations</button>
-                <button class="play-chip" onclick="quickPlayMsg('What are the opening hours and deposit policy?')">Hours & Deposit</button>
+              <div class="chat-playground-suggestions p-12 bg-surface-3 flex-wrap gap-8 flex-center">
+                <button class="filter-chip" onclick="quickPlayMsg('Apakah kereta yang tersedia hari ini?')">Kereta Tersedia</button>
+                <button class="filter-chip" onclick="quickPlayMsg('Cadangkan sebuah kenderaan keluarga 7 tempat duduk')">Cadangan MPV</button>
+                <button class="filter-chip" onclick="quickPlayMsg('Di manakah lokasi depoh penyerahan di Melaka?')">Lokasi Depoh</button>
+                <button class="filter-chip" onclick="quickPlayMsg('Berapakah kadar deposit keselamatan?')">Kadar Deposit</button>
               </div>
 
-              <div class="chat-messages" id="chat-messages">
+              <div class="chat-messages p-18" id="chat-messages" style="min-height: 280px; max-height: 380px; overflow-y: auto;">
                 <!-- Messages dynamically loaded -->
               </div>
 
-              <div class="chat-input-bar">
-                <input type="text" id="chat-input" placeholder="Type a query to test AI responses..." 
+              <div class="chat-input-bar p-12 border-top-subtle bg-surface-2 flex-center gap-10">
+                <input type="text" id="chat-input" class="form-input radius-pill flex-1" placeholder="Taip soalan untuk menguji jawapan ejen AI..." 
                        onkeydown="if(event.key==='Enter')sendTestMsg()" />
-                <button onclick="sendTestMsg()" id="send-btn">
-                  <span class="material-icons-round">send</span>
+                <button onclick="sendTestMsg()" id="send-btn" class="btn-primary flex-center p-10 radius-50" style="width:40px; height:40px; aspect-ratio: 1/1;" title="Hantar Mesej">
+                  <span class="material-icons-round fs-18">send</span>
                 </button>
               </div>
             </div>
           </div>
 
           <!-- CARD 3: Database Auto-Sync -->
-          <div class="card reveal-on-scroll">
-            <div class="card-header chatbot-card-header mb-16">
-              <h3 class="chatbot-title">
-                <span class="material-icons-round chatbot-title-icon">sync</span>
-                Database Auto-Sync Context
+          <div class="card p-24 radius-24 reveal-on-scroll">
+            <div class="card-header chatbot-card-header mb-16 border-bottom-subtle pb-12">
+              <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">sync</span>
+                Penyelarasan Pangkalan Data Langsung
               </h3>
-              <p class="chatbot-subtitle">System details automatically injected into the AI</p>
+              <p class="fs-13 text-secondary m-0 mt-2">Data operasi yang disuntik terus ke dalam pengetahuan AI</p>
             </div>
 
             <div class="chatbot-settings-form">
-              <div class="info-box info-box-success">
-                <span class="material-icons-round text-success">database</span>
-                <div>
-                  <strong>Live System Aware</strong> — The assistant auto-fetches live cars, prices, status (Available/Rented), system operating hours, deposit, and locations from Supabase.
+              <div class="card p-14 radius-16 bg-surface-2 border-subtle mb-16 fs-12 text-secondary">
+                <div class="flex-center gap-8 items-start">
+                  <span class="material-icons-round text-emerald fs-18">database</span>
+                  <div>
+                    <strong>Kesedaran Sistem Masa Nyata</strong> — Ejen secara automatik mengakses senarai kenderaan terkini, status ketersediaan di depoh, waktu operasi, kadar sewaan dan lokasi penyerahan.
+                  </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="flex-between flex-center fw-600 fs-13">
-                  Context Preview
-                  <button class="btn-test-inline btn-refresh-data" id="btn-refresh-data" onclick="refreshLiveData()">
-                    <span class="material-icons-round fs-14">refresh</span> Refresh Data
+                <label class="flex-between flex-center fw-600 fs-13 text-title mb-6">
+                  Pratonton Konteks Diserap
+                  <button class="btn-secondary" id="btn-refresh-data" onclick="refreshLiveData()" style="height:30px; font-size:11px; padding:0 8px;">
+                    <span class="material-icons-round fs-14">refresh</span> Segarkan Semula
                   </button>
                 </label>
-                <div class="hint fs-12 text-muted mb-8">Real-time JSON/data appended to the system instructions.</div>
-                <pre id="live-data-preview" class="hidden"></pre>
+                <div class="fs-12 text-muted mb-8">Format JSON yang disematkan ke dalam memori arahan model AI:</div>
+                <pre id="live-data-preview" class="hidden p-14 radius-14 bg-surface-3 fs-11 text-secondary overflow-auto" style="max-height: 180px;"></pre>
               </div>
             </div>
           </div>
@@ -202,18 +234,19 @@
     <!-- TOAST -->
     <div id="toast" class="toast">
       <span class="material-icons-round fs-18">check_circle</span>
-      <span id="toast-text">Settings saved successfully!</span>
+      <span id="toast-text">Tetapan berjaya disimpan!</span>
     </div>
   </main>
 
-  <script src="../../../shared/js/navbar-loader.js?v=5.3.5"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.3.5"></script>
-  <script src="../../../shared/js/main.js"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/main.js?v=5.2.8"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../../../shared/js/supabase-config.js"></script>
-  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
+  <script src="../../../shared/js/api.js?v=5.2.3"></script>
   <script src="../../../shared/js/anime.min.js"></script>
-  <script src="../../../shared/js/animate.js"></script>
-  <script src="../../js/chatbot-admin.js"></script>
+  <script src="../../../shared/js/animate.js?v=5.2.3"></script>
+  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+  <script src="../../js/chatbot-admin.js?v=5.5.0"></script>
 </body>
 </html>

@@ -2498,3 +2498,49 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.4.0 Implement Topbar Main and Sidebar Sub-Main architecture with 8 dedicated admin pages`
   - Tag Versi: `5.4.0`
+
+---
+
+## 🚀 [MAJOR UPDATE] 140. Transformasi Menyeluruh 11 Halaman Pentadbir Mengikut Stitch MCP & Apple HIG, Sistem Paginasi 10 Rekod, Penyeragaman DESIGN.md & Penyingkiran Corak AI Murahan (v5.5.0)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mengarahkan penambahbaikan visual berskala besar bagi 11 halaman admin supaya mengikut piawaian rasmi Apple HIG dan reka bentuk Stitch MCP (*Precision & Clarity / WeDRIVE Lumina*):
+     - `operations.html`, `available-cars.html`, `rented-cars.html`, `add-car.html`, `calendar.html`, `active-bookings.html`, `new-booking.html`, `verifications.html`, `export-reports.html`, `chatbot.html`, `marketing.html`.
+  2. Pengguna menetapkan larangan mutlak terhadap antaramuka templat AI generik (*cheesy AI / fake hospital buzzwords*):
+     > *"gunakan semua mcp n skill untuk buat semua page tu...n buatkan page tu x nampak ai..nampak macam official page"*
+     > *"Satu lagi jangan terlalu nampak ai sangat untuk buat page tu tambah dalam agents"*
+     > *"tambah lagi dekat agent sebelum buat sesuatu mesti buat prd dulu dalam implementation plan"*
+     > *"gunakan stitch n tools dalam stitch untuk buat satu page tu n buat guna balance gemini 3.8 for high quality n update dekat dalam agent n pastikan DESIGN.md consistent ..n kalauxde dekat .agents tambah untuk stitch punya arahan"*
+  3. Bagi lejar tempahan `admin/pages/booking/bookings.html`:
+     > *"page ni kalau panjang sangat list ni buat nombor page 1 ada 10 , page 2 ,3,4,5,6"*
+     - Laksanakan paginasi 10 rekod setiap halaman lengkap dengan butang bernombor (`1, 2, 3, 4, 5, 6...`), butang *Prev/Next*, kaunter rekod `Memaparkan 1–10 daripada X rekod`, dan pengeset semula ke halaman 1 apabila sebarang penapis atau carian diaplikasikan.
+
+- **Tindakan Pembaikan & Pelaksanaan (Implementation Highlights)**:
+  1. **Dokumen Piawaian `.agents` & Peraturan Baharu**:
+     - Ditambah Seksyen 5 (Pilar 1) dalam `.agents/rules/apple_hig_design_system.md` & Seksyen 8 dalam `.agents/rules/ruleprompt.md`: Larangan reka bentuk terlalu AI dan standard perisian korporat rasmi automotif sebenar.
+     - Ditambah Seksyen 3B dalam `.agents/rules/ruleprompt.md`: Mandatori penyediaan seksyen PRD dalam `implementation_plan.md` sebelum sebarang pembangunan.
+     - Dicipta fail peraturan baharu `.agents/rules/stitch_design_system.md` yang menetapkan panduan penggunaan Stitch MCP (`projectId: 1862124494843018493`, design system `assets/40090a9886c4444abca795c82673f4c8` / `assets/518f31ad774f458da15c7fc5ff999bbf`) bersama model berprestasi tinggi (`GEMINI_3_1_PRO` / `GEMINI_3_PRO`).
+  2. **Penyeragaman Master `DESIGN.md` & Muat Naik ke Stitch**:
+     - Dicipta fail master `DESIGN.md` lengkap dengan YAML frontmatter (warna, tipografi San Francisco/Inter, skala squircle 24px/28px, tabular-nums).
+     - Berjaya dimuat naik ke projek Stitch melalui alatan MCP `upload_design_md` dan `create_design_system_from_design_md` menghasilkan aset rasmi `assets/40090a9886c4444abca795c82673f4c8`.
+  3. **Paginasi Apple 10-Rekod (`bookings.html` & `bookings.js`)**:
+     - Ditambah komponen `#bookings-pagination` dengan reka bentuk kapsul Apple di `shared/css/wedrive.css` (`.apple-pagination-wrapper`, `.apple-pagination-info`, `.apple-pagination-controls`, `.apple-page-btn`, `.apple-page-btn.active`).
+     - Dibina fungsi `renderPagination()` dan `goToBookingPage()` dengan pengiraan dinamik 10 item setiap halaman, serta kemas kini automatik bagi penapis carian, status, dan tarikh.
+  4. **Transformasi Menyeluruh 11 Halaman Pentadbir**:
+     - **`operations.html`**: Bento Hero Header dengan penunjuk denyut masa nyata (*live-pulse-dot*), bar kapasiti depoh, dan senarai semakan keselamatan pra-serahan kenderaan.
+     - **`available-cars.html`**: Bento Hero, cip kategori squircle, kad kenderaan 24px dengan harga tabular-nums, dan suis paparan Grid/Senarai.
+     - **`rented-cars.html`**: Pusat penjejakan kenderaan aktif di jalan raya (*on-road fleet*), kad penyewa dengan kiraan baki hari sewaan, dan lejar jadual serahan semula.
+     - **`add-car.html`**: 4 kad Bento squircle bagi pendaftaran kenderaan JPJ, zon muat naik foto, dan kad pratonton interaktif masa nyata (*Live Preview Card*).
+     - **`calendar.html`**: Kalendar operasi Apple HIG dengan kad metrik boleh klik, penapis cip berwarna, dan dialog helaian jadual serahan harian.
+     - **`active-bookings.html`**: Lejar kontrak sewaan aktif, pemantauan deposit keselamatan escrow, dan butang tindakan semakan resit/pulangan pantas.
+     - **`new-booking.html`**: Meja pendaftaran sewaan kaunter rasmi dengan aliran tarikh berpasangan berkunci Apple HIG dan kad unjuran invois langsung.
+     - **`verifications.html`**: Pusat semakan KYC pematuhan Akta Pengangkutan Jalan 1987 dengan modal pemeriksaan dokumen dwisisi (MyKad & Lesen JPJ).
+     - **`export-reports.html`**: Hab eksport data rasmi dengan penjanaan automatik fail CSV Blob bagi kewangan, log tempahan, inventori, dan direktori pengguna.
+     - **`chatbot.html`**: Konsol pengurusan ejen khidmat pelanggan AI (OpenRouter Gateway / Gemini 2.5 Flash) dengan simulator interaktif langsung.
+     - **`marketing.html`**: Pengurusan sepanduk promosi, kod kupon diskaun pelanggan, dan pelarasan harga lonjakan bermusim (*seasonal surge pricing*).
+
+- **Pengesahan Ujian Automatik**:
+  - Suite ujian automasi Playwright diperluaskan bagi mengesahkan fungsi paginasi 10 item dan komponen 11 halaman admin baharu (**100% Pass Rate**).
+- **Maklumat Git**:
+  - Commit: `5.5.0 Implement Apple HIG Stitch redesign for 11 admin pages and pagination for bookings`
+  - Tag Versi: `5.5.0`

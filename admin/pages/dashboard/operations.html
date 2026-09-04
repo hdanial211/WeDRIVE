@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Operations Status | WeDRIVE</title>
+  <title>Status Operasi Hab &amp; Kenderaan | WeDRIVE Operations</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
-  <!-- AUTH GUARD: Must run before page renders -->
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
+  <!-- AUTH GUARD -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
 
@@ -25,19 +25,26 @@
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
-      <!-- HEADER BENTO -->
-      <div class="card reveal-onload mb-24 p-24">
+      <!-- BENTO HEADER HERO -->
+      <div class="bento-header-hero reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <div class="flex-center gap-8 mb-6">
-              <span class="status-badge active"><span class="dot"></span> Live Operations Hub</span>
-              <span class="fs-12 text-muted" id="ops-live-clock">--:--:--</span>
+            <div class="bento-breadcrumbs">
+              <a href="admin.html">Papan Pemuka</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span>Status Operasi</span>
             </div>
-            <h1 class="fs-26 fw-800 m-0 text-title" data-key="admin_stat_active">Status Operasi</h1>
-            <p class="text-secondary fs-14 m-0 mt-4">Pemantauan masa nyata ketersediaan kenderaan, jadual serahan harian, dan kesiapsagaan depot.</p>
+            <div class="flex-center gap-10 flex-wrap">
+              <h1 class="bento-title-main">Status Operasi Hab &amp; Kenderaan</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> Live Depot Network</span>
+            </div>
+            <p class="bento-subtitle-main">Pemantauan kesiapsagaan 3 depot Melaka, pemeriksaan standard ISO kenderaan, dan jadual serahan harian.</p>
           </div>
           <div class="flex-center gap-10">
-            <button class="btn-outline-sm" onclick="refreshOpsData()">
+            <span class="fs-13 fw-600 text-secondary px-14 py-8 bg-secondary radius-pill tabular-nums flex-center gap-6" id="ops-live-clock">
+              <span class="material-icons-round fs-16 text-muted">schedule</span> --:--:--
+            </span>
+            <button class="btn-outline-sm" onclick="refreshOpsData()" title="Muat Semula Data Operasi">
               <span class="material-icons-round fs-16">refresh</span> Muat Semula
             </button>
             <button class="btn-primary-sm" onclick="window.location.href='../booking/new-booking.html'">
@@ -52,7 +59,7 @@
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label">Kenderaan Di Jalan Raya</div>
-            <div class="value text-primary-accent" id="ops-on-road">--</div>
+            <div class="value text-primary-accent tabular-nums" id="ops-on-road">--</div>
             <div class="change up"><span class="material-icons-round fs-14">directions_car</span> Sedang aktif disewa</div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">speed</span></div>
@@ -60,7 +67,7 @@
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label">Sedia Untuk Serahan</div>
-            <div class="value text-green" id="ops-ready">--</div>
+            <div class="value text-green tabular-nums" id="ops-ready">--</div>
             <div class="change up"><span class="material-icons-round fs-14">check_circle</span> Di depot sedia diambil</div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">verified</span></div>
@@ -68,7 +75,7 @@
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label">Pulangan Dijadual Hari Ini</div>
-            <div class="value text-amber" id="ops-returns-today">--</div>
+            <div class="value text-amber tabular-nums" id="ops-returns-today">--</div>
             <div class="change" id="ops-returns-sub"><span class="material-icons-round fs-14">schedule</span> Sebelum 11:59 PM</div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">assignment_return</span></div>
@@ -76,7 +83,7 @@
         <div class="stat-card reveal-onload">
           <div class="stat-info">
             <div class="label">Kadar Penggunaan Kenderaan</div>
-            <div class="value" id="ops-utilization">--%</div>
+            <div class="value tabular-nums" id="ops-utilization">--%</div>
             <div class="change up"><span class="material-icons-round fs-14">trending_up</span> Penanda aras optimum</div>
           </div>
           <div class="stat-icon purple"><span class="material-icons-round">donut_large</span></div>
@@ -89,50 +96,65 @@
         <div class="card reveal-on-scroll p-24">
           <div class="card-header border-bottom-subtle pb-14 mb-16 flex-between">
             <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
-              <span class="material-icons-round text-primary-accent">warehouse</span> Kesiapsagaan Hab &amp; Depot WeDRIVE
+              <span class="material-icons-round text-primary-accent">warehouse</span> Kesiapsagaan Hab &amp; Depot Melaka
             </h3>
-            <span class="status-badge success fs-11"><span class="dot"></span> Semua Zon Beroperasi</span>
+            <span class="status-badge success fs-11"><span class="dot"></span> 3 Hab Beroperasi</span>
           </div>
           <div class="ops-depot-list">
-            <div class="ops-depot-item bento-item-subtle flex-between p-14 mb-10">
-              <div class="flex-center gap-12">
-                <span class="material-icons-round text-primary-accent fs-22">flight</span>
-                <div>
-                  <div class="fw-700 fs-14">Depot Lapangan Terbang Melaka (MKZ)</div>
-                  <div class="fs-12 text-muted">Kaunter Utama &amp; Parkir P1 - P12</div>
+            <div class="ops-depot-item bento-item-subtle p-16 mb-12 radius-16">
+              <div class="flex-between flex-center">
+                <div class="flex-center gap-12">
+                  <span class="material-icons-round text-primary-accent fs-24">flight</span>
+                  <div>
+                    <div class="fw-700 fs-14 text-title">Depot Lapangan Terbang Melaka (MKZ)</div>
+                    <div class="fs-12 text-muted">Kaunter Utama Terminal &amp; Parkir P1–P12</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="fw-800 fs-15 text-green tabular-nums" id="ops-depot-mkz">12 Unit Sedia</div>
+                  <div class="fs-11 text-muted">Staf Bertugas: 3 Pegawai</div>
                 </div>
               </div>
-              <div class="text-right">
-                <div class="fw-700 fs-14 text-green" id="ops-depot-mkz">12 Unit Sedia</div>
-                <div class="fs-11 text-muted">Staf Bertugas: 3</div>
+              <div class="depot-capacity-track">
+                <div class="depot-capacity-fill" id="fill-depot-mkz" style="width: 75%;"></div>
               </div>
             </div>
 
-            <div class="ops-depot-item bento-item-subtle flex-between p-14 mb-10">
-              <div class="flex-center gap-12">
-                <span class="material-icons-round text-primary-accent fs-22">directions_bus</span>
-                <div>
-                  <div class="fw-700 fs-14">Hab Pengangkutan Melaka Sentral</div>
-                  <div class="fs-12 text-muted">Zon Transit Antara Negeri</div>
+            <div class="ops-depot-item bento-item-subtle p-16 mb-12 radius-16">
+              <div class="flex-between flex-center">
+                <div class="flex-center gap-12">
+                  <span class="material-icons-round text-primary-accent fs-24">directions_bus</span>
+                  <div>
+                    <div class="fw-700 fs-14 text-title">Hab Pengangkutan Melaka Sentral</div>
+                    <div class="fs-12 text-muted">Platform Pelepasan &amp; Zon Transit Bas Antara Negeri</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="fw-800 fs-15 text-green tabular-nums" id="ops-depot-sentral">10 Unit Sedia</div>
+                  <div class="fs-11 text-muted">Staf Bertugas: 3 Pegawai</div>
                 </div>
               </div>
-              <div class="text-right">
-                <div class="fw-700 fs-14 text-green" id="ops-depot-sentral">10 Unit Sedia</div>
-                <div class="fs-11 text-muted">Staf Bertugas: 3</div>
+              <div class="depot-capacity-track">
+                <div class="depot-capacity-fill" id="fill-depot-sentral" style="width: 65%;"></div>
               </div>
             </div>
 
-            <div class="ops-depot-item bento-item-subtle flex-between p-14">
-              <div class="flex-center gap-12">
-                <span class="material-icons-round text-primary-accent fs-22">store</span>
-                <div>
-                  <div class="fw-700 fs-14">Pusat Bandar Melaka (Jonker Point)</div>
-                  <div class="fs-12 text-muted">Zon Pengambilan Ekspres Bandar</div>
+            <div class="ops-depot-item bento-item-subtle p-16 radius-16">
+              <div class="flex-between flex-center">
+                <div class="flex-center gap-12">
+                  <span class="material-icons-round text-primary-accent fs-24">store</span>
+                  <div>
+                    <div class="fw-700 fs-14 text-title">Pusat Bandar Melaka (Jonker Point)</div>
+                    <div class="fs-12 text-muted">Zon Pengambilan Ekspres Kawasan Warisan UNESCO</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <div class="fw-800 fs-15 text-green tabular-nums" id="ops-depot-jonker">8 Unit Sedia</div>
+                  <div class="fs-11 text-muted">Staf Bertugas: 2 Pegawai</div>
                 </div>
               </div>
-              <div class="text-right">
-                <div class="fw-700 fs-14 text-green" id="ops-depot-jonker">8 Unit Sedia</div>
-                <div class="fs-11 text-muted">Staf Bertugas: 2</div>
+              <div class="depot-capacity-track">
+                <div class="depot-capacity-fill" id="fill-depot-jonker" style="width: 50%;"></div>
               </div>
             </div>
           </div>
@@ -142,36 +164,58 @@
         <div class="card reveal-on-scroll p-24">
           <div class="card-header border-bottom-subtle pb-14 mb-16 flex-between">
             <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
-              <span class="material-icons-round text-amber">task_alt</span> Protokol Pemeriksaan Harian
+              <span class="material-icons-round text-amber">task_alt</span> Protokol Pemeriksaan Turnover Kenderaan
             </h3>
-            <span class="fs-12 fw-600 text-muted">Standard ISO Kualiti</span>
+            <span class="fs-12 fw-600 text-muted">Standard Audit JPJ &amp; Insurans</span>
           </div>
           <div class="ops-checklist">
-            <div class="flex-between py-10 border-bottom-subtle">
+            <div class="flex-between py-12 border-bottom-subtle">
               <div class="flex-center gap-10">
-                <span class="material-icons-round text-green fs-18">check_circle</span>
-                <span class="fs-13 fw-600">Penyahjangkitan &amp; Sanitasi Kabin</span>
+                <span class="material-icons-round text-green fs-20">check_circle</span>
+                <div>
+                  <span class="fs-13 fw-700 text-title">Pemeriksaan Paras Minyak Enjin &amp; Cecair Brek</span>
+                  <div class="fs-11 text-muted">Standard kelulusan pemeriksaan harian sebelum serahan</div>
+                </div>
               </div>
-              <span class="status-badge success fs-11">100% Selesai</span>
+              <span class="status-badge success fs-11">100% Disahkan</span>
             </div>
-            <div class="flex-between py-10 border-bottom-subtle">
+            <div class="flex-between py-12 border-bottom-subtle">
               <div class="flex-center gap-10">
-                <span class="material-icons-round text-green fs-18">check_circle</span>
-                <span class="fs-13 fw-600">Pemeriksaan Tekanan Tayar &amp; Brek</span>
+                <span class="material-icons-round text-green fs-20">check_circle</span>
+                <div>
+                  <span class="fs-13 fw-700 text-title">Tekanan Tayar &amp; Tolok Kedalaman Bunga JPJ</span>
+                  <div class="fs-11 text-muted">Minimum 2.5mm kedalaman bunga tayar dipatuhi</div>
+                </div>
               </div>
-              <span class="status-badge success fs-11">Selesai 08:00 AM</span>
+              <span class="status-badge success fs-11">Lulus 08:00 AM</span>
             </div>
-            <div class="flex-between py-10 border-bottom-subtle">
+            <div class="flex-between py-12 border-bottom-subtle">
               <div class="flex-center gap-10">
-                <span class="material-icons-round text-green fs-18">check_circle</span>
-                <span class="fs-13 fw-600">Penentukuran Kunci Pintar RFID &amp; Digital</span>
+                <span class="material-icons-round text-green fs-20">check_circle</span>
+                <div>
+                  <span class="fs-13 fw-700 text-title">Diagnostik Sistem OBD-II &amp; Voltan Bateri 12V</span>
+                  <div class="fs-11 text-muted">Tiada kod ralat enjin (CEL) dikesan pada semua unit sedia</div>
+                </div>
+              </div>
+              <span class="status-badge success fs-11">Normal</span>
+            </div>
+            <div class="flex-between py-12 border-bottom-subtle">
+              <div class="flex-center gap-10">
+                <span class="material-icons-round text-green fs-20">check_circle</span>
+                <div>
+                  <span class="fs-13 fw-700 text-title">Penentukuran Kunci Pintar RFID &amp; Kunci Sandaran</span>
+                  <div class="fs-11 text-muted">Penyelarasan kod transceiver kunci digital</div>
+                </div>
               </div>
               <span class="status-badge success fs-11">Aktif</span>
             </div>
-            <div class="flex-between py-10">
+            <div class="flex-between py-12">
               <div class="flex-center gap-10">
-                <span class="material-icons-round text-primary-accent fs-18">autorenew</span>
-                <span class="fs-13 fw-600">Pembersihan Unit Baharu Pulang</span>
+                <span class="material-icons-round text-primary-accent fs-20">autorenew</span>
+                <div>
+                  <span class="fs-13 fw-700 text-title">Pencucian &amp; Perincian Dalaman Unit Pulang</span>
+                  <div class="fs-11 text-muted">Proses pembersihan rapi sebelum dimasukkan ke inventori</div>
+                </div>
               </div>
               <span class="status-badge pending fs-11" id="ops-cleaning-status">2 Dalam Giliran</span>
             </div>
@@ -186,7 +230,7 @@
             <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
               <span class="material-icons-round text-primary-accent">pending_actions</span> Jadual Serahan &amp; Pulangan Hari Ini
             </h3>
-            <p class="text-secondary fs-13 m-0 mt-4">Jadual pengesahan serahan kunci dan penerimaan kenderaan mengikut hab.</p>
+            <p class="text-secondary fs-13 m-0 mt-4">Jadual pengesahan serahan kunci dan penerimaan kenderaan mengikut hab di Melaka.</p>
           </div>
           <div class="flex-center gap-8">
             <button class="btn-outline-sm" onclick="window.location.href='../booking/bookings.html'">
@@ -206,7 +250,7 @@
                 <th>Kenderaan</th>
                 <th>Plat No.</th>
                 <th>Jenis Operasi</th>
-                <th>Masa &amp; Lokasi</th>
+                <th>Masa &amp; Lokasi Hab</th>
                 <th>Status</th>
                 <th class="text-right">Tindakan</th>
               </tr>
@@ -223,8 +267,8 @@
     </div>
   </main>
 
-  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=5.5.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
   <script src="../../../shared/js/main.js?v=5.2.8"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
@@ -238,7 +282,8 @@
       var clockEl = document.getElementById('ops-live-clock');
       if (!clockEl) return;
       var now = new Date();
-      clockEl.textContent = now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      clockEl.innerHTML = '<span class="material-icons-round fs-16 text-muted">schedule</span> ' + 
+        now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
     setInterval(updateClock, 1000);
     updateClock();
@@ -270,6 +315,13 @@
           if (dSentral) dSentral.textContent = sentral + ' Unit Sedia';
           if (dJonker) dJonker.textContent = jonker + ' Unit Sedia';
 
+          var fMkz = document.getElementById('fill-depot-mkz');
+          var fSentral = document.getElementById('fill-depot-sentral');
+          var fJonker = document.getElementById('fill-depot-jonker');
+          if (fMkz) fMkz.style.width = Math.min(100, Math.round((mkz / 15) * 100)) + '%';
+          if (fSentral) fSentral.style.width = Math.min(100, Math.round((sentral / 12) * 100)) + '%';
+          if (fJonker) fJonker.style.width = Math.min(100, Math.round((jonker / 10) * 100)) + '%';
+
           // Populate operations roster from actual bookings
           var tbody = document.getElementById('ops-table-tbody');
           if (!tbody) return;
@@ -282,21 +334,21 @@
 
           tbody.innerHTML = displayBookings.map(function (b, idx) {
             var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : 'BK-2026-0' + b.id) : 'BK-2026-0' + (idx + 80);
-            var cust = b.customer_name || b.name || 'Pelanggan WeDRIVE';
+            var cust = b.customer || b.customer_name || b.name || 'Pelanggan WeDRIVE';
             var carName = b.car_name || b.car || 'Kenderaan';
             var plate = b.plate || 'VAB 4821';
             var opType = idx % 2 === 0 ? 'Serahan Kunci (Pickup)' : 'Pulangan Kenderaan (Return)';
-            var locTime = (b.pickup_date || 'Hari Ini') + ' - ' + (idx % 2 === 0 ? 'Hab Melaka Sentral' : 'Depot MKZ');
+            var locTime = (b.start_date || b.pickup_date || 'Hari Ini') + ' • ' + (idx % 2 === 0 ? 'Hab Melaka Sentral' : 'Depot MKZ Airport');
             var statusBadge = (b.status || '').toLowerCase() === 'completed' ? 'success' : ((b.status || '').toLowerCase() === 'active' ? 'active' : 'pending');
             var statusLabel = (b.status || '').toLowerCase() === 'completed' ? 'Selesai' : ((b.status || '').toLowerCase() === 'active' ? 'Aktif' : 'Menunggu');
 
             return '<tr>' +
-              '<td><strong class="text-primary-accent">' + bId + '</strong></td>' +
+              '<td><strong class="text-primary-accent tabular-nums">' + bId + '</strong></td>' +
               '<td><strong>' + cust + '</strong></td>' +
               '<td>' + carName + '</td>' +
-              '<td><span class="fs-12 fw-700">' + plate + '</span></td>' +
+              '<td><span class="fs-12 fw-700 tabular-nums">' + plate + '</span></td>' +
               '<td><span class="fw-600">' + opType + '</span></td>' +
-              '<td><span class="fs-12 text-muted">' + locTime + '</span></td>' +
+              '<td><span class="fs-12 text-muted tabular-nums">' + locTime + '</span></td>' +
               '<td><span class="status-badge ' + statusBadge + '"><span class="dot"></span> ' + statusLabel + '</span></td>' +
               '<td class="text-right">' +
                 '<button class="btn-outline-sm" onclick="window.location.href=\'../booking/active-bookings.html\'">Urus</button>' +

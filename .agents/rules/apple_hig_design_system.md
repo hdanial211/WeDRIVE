@@ -33,6 +33,12 @@ Setiap halaman dan elemen visual WAJIB menegakkan 3 Prinsip Utama Apple:
    - Menggunakan permukaan primer, sekunder, tersier, bahan kaca (*Apple Thin Glassmorphism*), dan bayang-bayang lembut yang tidak bertompok (*diffuse soft shadows*).
 4. **Sasaran Sentuhan Minimum (Minimum Touch Target)**:
    - Semua butang, ikon boleh tekan, dan medan input WAJIB mempunyai sasaran sentuh sekurang-kurangnya **44px × 44px**.
+5. **Keaslian Korporat & Larangan Reka Bentuk 'Terlalu AI' (*Authentic Enterprise Standard vs AI Clichés*)**:
+   - **DILARANG SAMA SEKALI** membina antara muka yang kelihatan seperti templat AI generik, murah, atau olok-olok.
+   - **Tiada 'AI Buzzwords' Kosong**: Dilarang meletakkan lencana atau teks seperti "Quantum AI", "Supercharged Fleet", atau protokol sanitasi hospital yang tidak berkaitan dengan perniagaan kereta sewa.
+   - **Perisian Korporat Sebenar (Linear & Stripe Standard)**: Reka letak, kad Bento, jadual, dan butang WAJIB memancarkan kualiti perisian korporat rasmi dengan istilah perniagaan automotif tulen (Kenderaan, Penyewa, Deposit Keselamatan, Invois Cukai, Pengesahan JPJ, Protokol Kunci).
+   - **Kefungsian Data Sebenar**: Tiada metrik atau graf palsu semata-mata hiasan; semua data mesti disambung ke sumber operasi sebenar (`window.WeDriveAPI`).
+
 
 ---
 
@@ -165,6 +171,10 @@ border: 1px solid var(--border-glass);
    - Kanvas rendering 360 darjah dengan kawalan seretan sentuh dan butang sudut pandangan.
 3. **Sistem Dwibahasa Lancar (*Smooth Bilingual Engine*)**:
    - Penukaran bahasa segera (Bahasa Melayu & English) dengan efek *skeleton shimmer cross-fade* tanpa penyegaran semula halaman.
+4. **Penyelarasan Reka Letak Melalui Stitch MCP & Model Berprestasi Tinggi (*Stitch MCP & Gemini 3 Pro Standard*)**:
+   - Bagi reka bentuk halaman baharu atau peningkatan estetika skrin, pembangun/AI diwajibkan menggunakan **Stitch MCP** (`generate_screen_from_text`, `get_screen`, `apply_design_system`) dengan model berprestasi tinggi (`GEMINI_3_1_PRO` / `GEMINI_3_PRO`).
+   - Gunakan sistem reka bentuk *Precision & Clarity / WeDRIVE Lumina* (`assets/518f31ad774f458da15c7fc5ff999bbf`) di bawah projek Stitch `1862124494843018493`.
+   - Pastikan reka letak menggunakan kad squircle Bento 24px/28px, warna sistem Apple, dan tiada klise templat AI murahan.
 
 ---
 

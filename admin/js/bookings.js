@@ -12,6 +12,9 @@ let currentSortDir = 'desc';
 let currentDateFilter = 'all';
 let customDateFrom = null;
 let customDateTo = null;
+let currentPage = 1;
+const itemsPerPage = 10;
+
 
 
 window.WeDriveAPI.getAdminData()
@@ -70,33 +73,95 @@ function populateBookingStats(bookings) {
 function renderBookings(bookings) {
   var tbody = document.getElementById('bookings-tbody');
   if (!tbody) return;
-  if (bookings.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94A3B8;padding:40px">No bookings found</td></tr>';
+  if (!bookings || bookings.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#94A3B8;padding:40px">Tiada rekod tempahan dijumpai / No bookings found</td></tr>';
+    renderPagination(0, 1, itemsPerPage);
     return;
   }
-  tbody.innerHTML = bookings.map(b => {
-    var statusClass = b.status.toLowerCase();
+
+  var totalItems = bookings.length;
+  var totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  var startIndex = (currentPage - 1) * itemsPerPage;
+  var endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+  var pageItems = bookings.slice(startIndex, endIndex);
+
+  tbody.innerHTML = pageItems.map(b => {
+    var statusClass = b.status ? b.status.toLowerCase() : 'pending';
     var paymentClass = b.payment === 'Paid' ? 'available' : 'maintenance';
     return `
     <tr>
-      <td><strong>${b.id}</strong></td>
-      <td>${b._customer}</td>
-      <td>${b._car_name}<br><small style="color:#94A3B8">${b._car_plate}</small></td>
-      <td>${formatDate(b._pickup)}</td>
-      <td>${formatDate(b._return)}</td>
-      <td><strong>RM ${b._total.toLocaleString()}</strong></td>
-      <td><span class="status-badge ${paymentClass}"><span class="dot"></span> ${b.payment}</span></td>
-      <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${b.status}</span></td>
+      <td><strong style="font-variant-numeric: tabular-nums;">#${b.id}</strong></td>
+      <td><strong>${b._customer}</strong></td>
+      <td>${b._car_name}<br><small style="color:var(--text-muted);font-variant-numeric: tabular-nums;">${b._car_plate}</small></td>
+      <td style="font-variant-numeric: tabular-nums;">${formatDate(b._pickup)}</td>
+      <td style="font-variant-numeric: tabular-nums;">${formatDate(b._return)}</td>
+      <td><strong style="font-variant-numeric: tabular-nums; color:var(--primary);">RM ${(b._total || 0).toLocaleString()}</strong></td>
+      <td><span class="status-badge ${paymentClass}"><span class="dot"></span> ${b.payment || 'Unpaid'}</span></td>
+      <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${b.status || 'Pending'}</span></td>
       <td>
-        <button class="btn-primary-sm" onclick="viewBooking(${b.id})" style="font-size:12px;padding:6px 10px">
+        <button class="btn-primary-sm" onclick="viewBooking(${b.id})" title="Lihat Perincian" style="font-size:12px;padding:6px 10px;border-radius:var(--radius-pill);">
           <span class="material-icons-round" style="font-size:14px">visibility</span>
         </button>
       </td>
     </tr>`;
   }).join('');
+
+  renderPagination(totalItems, currentPage, itemsPerPage);
 }
 
+function renderPagination(totalItems, page, perPage) {
+  var pagContainer = document.getElementById('bookings-pagination');
+  if (!pagContainer) return;
+  if (totalItems === 0) {
+    pagContainer.innerHTML = '<div class="apple-pagination-info">Tiada rekod tempahan untuk dipaparkan.</div>';
+    return;
+  }
+
+  var totalPages = Math.ceil(totalItems / perPage) || 1;
+  var startItem = (page - 1) * perPage + 1;
+  var endItem = Math.min(page * perPage, totalItems);
+
+  var isMalay = (localStorage.getItem('wedrive_lang') || 'en') === 'ms';
+  var infoText = isMalay
+    ? `Menunjukkan <strong>${startItem}–${endItem}</strong> daripada <strong>${totalItems}</strong> rekod tempahan`
+    : `Showing <strong>${startItem}–${endItem}</strong> of <strong>${totalItems}</strong> bookings`;
+
+  var buttonsHtml = '';
+  // Prev button
+  var prevDisabled = page <= 1 ? 'disabled' : '';
+  buttonsHtml += `<button class="apple-page-btn" ${prevDisabled} onclick="goToBookingPage(${page - 1})" title="Sebelumnya"><span class="material-icons-round" style="font-size:16px;">chevron_left</span></button>`;
+
+  // Page numbers (1, 2, 3, 4, 5, 6...)
+  for (var p = 1; p <= totalPages; p++) {
+    var activeClass = p === page ? 'active' : '';
+    buttonsHtml += `<button class="apple-page-btn ${activeClass}" onclick="goToBookingPage(${p})">${p}</button>`;
+  }
+
+  // Next button
+  var nextDisabled = page >= totalPages ? 'disabled' : '';
+  buttonsHtml += `<button class="apple-page-btn" ${nextDisabled} onclick="goToBookingPage(${page + 1})" title="Seterusnya"><span class="material-icons-round" style="font-size:16px;">chevron_right</span></button>`;
+
+  pagContainer.innerHTML = `
+    <div class="apple-pagination-info">${infoText}</div>
+    <div class="apple-pagination-controls">${buttonsHtml}</div>
+  `;
+}
+
+function goToBookingPage(p) {
+  currentPage = p;
+  applyFilters();
+  var tableCard = document.getElementById('bookings-pagination');
+  if (tableCard) {
+    tableCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+window.goToBookingPage = goToBookingPage;
+
 function filterBookings(status, btn) {
+  currentPage = 1;
   currentFilter = status;
   document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
@@ -104,9 +169,11 @@ function filterBookings(status, btn) {
 }
 
 function searchBookings(query) {
+  currentPage = 1;
   currentSearch = query.toLowerCase();
   applyFilters();
 }
+
 
 function applyFilters() {
   var filtered = allBookings;
@@ -167,6 +234,7 @@ function applyFilters() {
 }
 
 function sortBy(col) {
+  currentPage = 1;
   if (currentSortCol === col) {
     currentSortDir = currentSortDir === 'asc' ? 'desc' : 'asc';
   } else {
@@ -189,6 +257,7 @@ function updateSortHeaders() {
 }
 
 function filterByDate(period, btn) {
+  currentPage = 1;
   currentDateFilter = period;
   document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -232,11 +301,13 @@ function applyCustomDate() {
   var from = document.getElementById('bk-date-from');
   var to = document.getElementById('bk-date-to');
   if (!from || !to || !from.value || !to.value) return;
+  currentPage = 1;
   customDateFrom = from.value;
   customDateTo = to.value;
   currentDateFilter = 'custom';
   applyFilters();
 }
+
 
 
 function viewBooking(id) {

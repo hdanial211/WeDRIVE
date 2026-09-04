@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Export Data Reports | WeDRIVE</title>
+  <title>Pusat Eksport Data | WeDRIVE Fleet Analytics</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
   <!-- AUTH GUARD: Must run before page renders -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
@@ -25,23 +25,29 @@
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
-      <!-- HEADER -->
-      <div class="card reveal-onload mb-24 p-24">
+      <!-- APPLE BENTO HERO HEADER -->
+      <div class="card bento-header-hero mb-24 reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <div class="flex-center gap-8 mb-6">
-              <a href="reports.html" class="fs-12 text-muted no-underline">Laporan &amp; Analitik</a>
-              <span class="material-icons-round fs-14 text-muted">chevron_right</span>
-              <span class="fs-12 text-primary-accent fw-600">Pusat Eksport Data</span>
+            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
+              <a href="../dashboard/dashboard.html">Admin</a>
+              <span class="material-icons-round">chevron_right</span>
+              <a href="reports.html">Laporan &amp; Analitik</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span class="current">Pusat Eksport Data</span>
+            </nav>
+            <div class="flex-center gap-10 mb-6">
+              <span class="status-badge active"><span class="live-pulse-dot"></span> Arkib Data Audit Rasmi</span>
+              <span class="fs-12 text-muted fw-600">Eksport Mematuhi Piawaian Perakaunan &amp; PDPA</span>
             </div>
-            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_export_reports">Eksport Laporan Data</h1>
-            <p class="text-secondary fs-14 m-0 mt-4">Jana dan muat turun fail laporan rasmi dalam format CSV, spreadsheet Excel, atau dokumen arkib audit.</p>
+            <h1 class="bento-title-main m-0" data-key="sidebar_export_reports">Pusat Eksport &amp; Arkib Data</h1>
+            <p class="bento-subtitle-main m-0 mt-6">Jana dan muat turun fail laporan rasmi perniagaan dalam format CSV, hamparan kerja Excel, serta penyata arkib pengauditan syarikat.</p>
           </div>
           <div class="flex-center gap-10">
-            <button class="btn-outline-sm" onclick="window.location.href='reports.html'">
+            <button class="btn-secondary" onclick="window.location.href='reports.html'">
               <span class="material-icons-round fs-16">bar_chart</span> Ringkasan Laporan
             </button>
-            <button class="btn-primary-sm" onclick="exportFullArchive()">
+            <button class="btn-primary" onclick="exportFullArchive()">
               <span class="material-icons-round fs-16">archive</span> Eksport Penuh Arkib
             </button>
           </div>
@@ -51,22 +57,22 @@
       <!-- EXPORT CARDS BENTO GRID -->
       <div class="grid-2 gap-24 mb-24">
         <!-- 1. LAPORAN KEWANGAN & HASIL -->
-        <div class="card reveal-on-scroll p-24">
+        <div class="card p-24 radius-24 reveal-onload hover-elevate transition-apple">
           <div class="flex-between mb-16">
             <div class="stat-icon blue mb-0"><span class="material-icons-round">payments</span></div>
-            <span class="status-badge success fs-11">Paling Kerap Dijana</span>
+            <span class="status-badge available fs-11">Penyata Kewangan</span>
           </div>
-          <h3 class="fs-18 fw-700 m-0 mb-6">Laporan Kewangan &amp; Pendapatan</h3>
-          <p class="fs-13 text-secondary mb-16">Merangkumi pecahan hasil harian, bulanan, deposit keselamatan, dan kaedah pembayaran (FPX, Kad, QR).</p>
+          <h3 class="fs-18 fw-700 m-0 mb-6 text-title">Laporan Kewangan &amp; Aliran Tunai</h3>
+          <p class="fs-13 text-secondary mb-16">Pecahan hasil harian, sewaan korporat, pemulangan deposit keselamatan, serta rekod gerbang pembayaran (FPX, Kad Kredit, DuitNow).</p>
           
-          <div class="bento-item-subtle p-14 mb-16">
-            <div class="flex-between fs-12 mb-4">
-              <span class="text-muted">Jumlah Hasil Bulan Semasa:</span>
-              <strong class="text-primary-accent" id="exp-rev-amount">RM 48,250.00</strong>
+          <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
+            <div class="flex-between fs-12 mb-6">
+              <span class="text-muted">Hasil Terkumpul Bulan Ini:</span>
+              <strong class="text-primary tabular-nums fs-14" id="exp-rev-amount">RM 48,250.00</strong>
             </div>
             <div class="flex-between fs-12">
-              <span class="text-muted">Jumlah Transaksi:</span>
-              <strong class="text-title" id="exp-rev-tx">142 Transaksi</strong>
+              <span class="text-muted">Jumlah Transaksi Diluluskan:</span>
+              <strong class="text-title tabular-nums" id="exp-rev-tx">142 Transaksi</strong>
             </div>
           </div>
 
@@ -74,29 +80,29 @@
             <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadFinancialCSV()">
               <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
             </button>
-            <button class="btn-outline flex-center gap-6" onclick="printReport('Kewangan WeDRIVE')">
+            <button class="btn-secondary flex-center gap-6" onclick="printReport('Kewangan WeDRIVE')">
               <span class="material-icons-round fs-16">print</span> Cetak
             </button>
           </div>
         </div>
 
         <!-- 2. REKOD TRANSAKSI TEMPAHAN -->
-        <div class="card reveal-on-scroll p-24">
+        <div class="card p-24 radius-24 reveal-onload hover-elevate transition-apple">
           <div class="flex-between mb-16">
             <div class="stat-icon green mb-0"><span class="material-icons-round">receipt_long</span></div>
-            <span class="status-badge active fs-11">Masa Nyata</span>
+            <span class="status-badge active fs-11">Operasi Langsung</span>
           </div>
-          <h3 class="fs-18 fw-700 m-0 mb-6">Log Lengkap Tempahan Pelanggan</h3>
-          <p class="fs-13 text-secondary mb-16">Semua rekod tempahan termasuk tarikh ambil, tarikh pulang, status pulangan kenderaan dan kaunter serahan.</p>
+          <h3 class="fs-18 fw-700 m-0 mb-6 text-title">Log Lengkap Tempahan Pelanggan</h3>
+          <p class="fs-13 text-secondary mb-16">Semua arkib tempahan termasuk tarikh serahan, tarikh pemulangan, perbatuan kenderaan, dan status depoh penyerahan kunci.</p>
 
-          <div class="bento-item-subtle p-14 mb-16">
-            <div class="flex-between fs-12 mb-4">
-              <span class="text-muted">Tempahan Aktif &amp; Selesai:</span>
-              <strong class="text-title" id="exp-bk-total">188 Rekod</strong>
+          <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
+            <div class="flex-between fs-12 mb-6">
+              <span class="text-muted">Jumlah Rekod Tempahan:</span>
+              <strong class="text-title tabular-nums fs-14" id="exp-bk-total">188 Rekod</strong>
             </div>
             <div class="flex-between fs-12">
-              <span class="text-muted">Kadar Penyewaan Selesai:</span>
-              <strong class="text-green">98.4% Berjaya</strong>
+              <span class="text-muted">Kadar Penyewaan Sempurna:</span>
+              <strong class="text-emerald tabular-nums">98.4% Selesai Tepat Masa</strong>
             </div>
           </div>
 
@@ -104,29 +110,29 @@
             <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadBookingsCSV()">
               <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
             </button>
-            <button class="btn-outline flex-center gap-6" onclick="printReport('Log Tempahan WeDRIVE')">
+            <button class="btn-secondary flex-center gap-6" onclick="printReport('Log Tempahan WeDRIVE')">
               <span class="material-icons-round fs-16">print</span> Cetak
             </button>
           </div>
         </div>
 
         <!-- 3. INVENTORI KENDERAAN & PENGGUNAAN -->
-        <div class="card reveal-on-scroll p-24">
+        <div class="card p-24 radius-24 reveal-on-scroll hover-elevate transition-apple">
           <div class="flex-between mb-16">
             <div class="stat-icon amber mb-0"><span class="material-icons-round">directions_car</span></div>
-            <span class="status-badge active fs-11">Audit Aset</span>
+            <span class="status-badge available fs-11">Audit Aset JPJ</span>
           </div>
-          <h3 class="fs-18 fw-700 m-0 mb-6">Laporan Inventori Kenderaan</h3>
-          <p class="fs-13 text-secondary mb-16">Status semasa setiap unit kenderaan, rekod servis berkala, perbatuan (mileage), dan kadar penggunaan harian.</p>
+          <h3 class="fs-18 fw-700 m-0 mb-6 text-title">Laporan Inventori &amp; Utiliti Armada</h3>
+          <p class="fs-13 text-secondary mb-16">Senarai aset kenderaan rasmi, status cukai jalan JPJ, rekod penyelenggaraan berkala, serta peratusan utiliti aktif setiap model.</p>
 
-          <div class="bento-item-subtle p-14 mb-16">
-            <div class="flex-between fs-12 mb-4">
-              <span class="text-muted">Jumlah Unit Kenderaan:</span>
-              <strong class="text-title" id="exp-car-total">36 Kenderaan</strong>
+          <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
+            <div class="flex-between fs-12 mb-6">
+              <span class="text-muted">Kekuatan Armada Semasa:</span>
+              <strong class="text-title tabular-nums fs-14" id="exp-car-total">36 Kenderaan</strong>
             </div>
             <div class="flex-between fs-12">
-              <span class="text-muted">Status Tersedia:</span>
-              <strong class="text-green" id="exp-car-avail">24 Tersedia</strong>
+              <span class="text-muted">Status Bersedia di Depoh:</span>
+              <strong class="text-emerald tabular-nums" id="exp-car-avail">24 Tersedia</strong>
             </div>
           </div>
 
@@ -134,29 +140,29 @@
             <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadCarInventoryCSV()">
               <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
             </button>
-            <button class="btn-outline flex-center gap-6" onclick="printReport('Inventori Kenderaan WeDRIVE')">
+            <button class="btn-secondary flex-center gap-6" onclick="printReport('Inventori Kenderaan WeDRIVE')">
               <span class="material-icons-round fs-16">print</span> Cetak
             </button>
           </div>
         </div>
 
         <!-- 4. DIREKTORI PELANGGAN & PENGESAHAN -->
-        <div class="card reveal-on-scroll p-24">
+        <div class="card p-24 radius-24 reveal-on-scroll hover-elevate transition-apple">
           <div class="flex-between mb-16">
             <div class="stat-icon purple mb-0"><span class="material-icons-round">people</span></div>
-            <span class="status-badge purple fs-11">Privasi Dilindungi PDPA</span>
+            <span class="status-badge available fs-11">Pematuhan PDPA</span>
           </div>
-          <h3 class="fs-18 fw-700 m-0 mb-6">Direktori Pelanggan &amp; Pengesahan</h3>
-          <p class="fs-13 text-secondary mb-16">Data maklumat pelanggan berdaftar, status pengesahan lesen memandu, jumlah sewaan, dan sejarah perbelanjaan.</p>
+          <h3 class="fs-18 fw-700 m-0 mb-6 text-title">Direktori Pelanggan &amp; KYC</h3>
+          <p class="fs-13 text-secondary mb-16">Pangkalan data pelanggan berdaftar, status pengesahan lesen memandu, kadar retensi penyewaan dan skor kepatuhan pelanggan.</p>
 
-          <div class="bento-item-subtle p-14 mb-16">
-            <div class="flex-between fs-12 mb-4">
+          <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
+            <div class="flex-between fs-12 mb-6">
               <span class="text-muted">Jumlah Pelanggan Berdaftar:</span>
-              <strong class="text-title" id="exp-cust-count">312 Pengguna</strong>
+              <strong class="text-title tabular-nums fs-14" id="exp-cust-count">312 Pengguna</strong>
             </div>
             <div class="flex-between fs-12">
               <span class="text-muted">Pelanggan Kerap (Repeat Renters):</span>
-              <strong class="text-purple">42% Retensi</strong>
+              <strong class="text-primary tabular-nums">42% Kadar Retensi</strong>
             </div>
           </div>
 
@@ -164,61 +170,61 @@
             <button class="btn-primary flex-1 flex-center gap-6" onclick="downloadCustomersCSV()">
               <span class="material-icons-round fs-16">file_download</span> Muat Turun CSV
             </button>
-            <button class="btn-outline flex-center gap-6" onclick="printReport('Direktori Pelanggan WeDRIVE')">
+            <button class="btn-secondary flex-center gap-6" onclick="printReport('Direktori Pelanggan WeDRIVE')">
               <span class="material-icons-round fs-16">print</span> Cetak
             </button>
           </div>
         </div>
       </div>
 
-      <!-- EXPORT AUDIT LOG TABLE -->
-      <div class="card reveal-on-scroll">
-        <div class="card-header flex-between">
-          <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
-            <span class="material-icons-round text-primary-accent">history</span> Sejarah Penjanaan &amp; Muat Turun Laporan
+      <!-- EXPORT AUDIT LOG TABLE CARD -->
+      <div class="card reveal-on-scroll p-0 radius-24 overflow-hidden mb-24 border-subtle">
+        <div class="card-header p-20 border-bottom-subtle flex-between flex-wrap gap-10 bg-surface-2">
+          <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+            <span class="material-icons-round text-primary">history</span> Sejarah Penjanaan &amp; Muat Turun Laporan
           </h3>
-          <span class="fs-12 text-muted">Log Aktiviti Terkini</span>
+          <span class="fs-12 text-muted fw-600">Audit Trail Aktiviti Pentadbir</span>
         </div>
         <div class="table-responsive">
-          <table>
+          <table class="car-admin-table">
             <thead>
-              <tr>
-                <th>Nama Fail</th>
-                <th>Jenis Laporan</th>
-                <th>Format</th>
-                <th>Jumlah Rekod</th>
-                <th>Tarikh Dijana</th>
-                <th>Status</th>
-                <th class="text-right">Tindakan</th>
+              <tr class="car-table-header-row">
+                <th class="car-th">Nama Dokumen Laporan</th>
+                <th class="car-th">Kategori Laporan</th>
+                <th class="car-th">Format</th>
+                <th class="car-th">Jumlah Rekod</th>
+                <th class="car-th">Tarikh &amp; Masa Dijana</th>
+                <th class="car-th">Status Integriti</th>
+                <th class="car-th text-right">Tindakan</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>WeDRIVE_Financial_Report_2026.csv</strong></td>
-                <td>Kewangan &amp; Hasil</td>
-                <td><span class="status-badge success fs-11">CSV</span></td>
-                <td>142 Transaksi</td>
-                <td>04 Sep 2026, 11:30 PM</td>
-                <td><span class="status-badge success"><span class="dot"></span> Berjaya</span></td>
-                <td class="text-right"><button class="btn-outline-sm" onclick="downloadFinancialCSV()">Muat Turun Semula</button></td>
+                <td><strong class="text-title">WeDRIVE_Financial_Report_2026.csv</strong></td>
+                <td>Kewangan &amp; Pendapatan</td>
+                <td><span class="status-badge available fs-11">CSV</span></td>
+                <td><span class="tabular-nums">142 Transaksi</span></td>
+                <td><span class="text-secondary tabular-nums">04 Sep 2026, 11:30 PM</span></td>
+                <td><span class="status-badge available"><span class="material-icons-round fs-12">verified</span> Berjaya</span></td>
+                <td class="text-right"><button class="btn-secondary" style="height:32px; padding:0 10px; font-size:11px;" onclick="downloadFinancialCSV()">Muat Turun Semula</button></td>
               </tr>
               <tr>
-                <td><strong>WeDRIVE_Bookings_Log_2026.csv</strong></td>
-                <td>Log Tempahan</td>
-                <td><span class="status-badge success fs-11">CSV</span></td>
-                <td>188 Rekod</td>
-                <td>03 Sep 2026, 05:15 PM</td>
-                <td><span class="status-badge success"><span class="dot"></span> Berjaya</span></td>
-                <td class="text-right"><button class="btn-outline-sm" onclick="downloadBookingsCSV()">Muat Turun Semula</button></td>
+                <td><strong class="text-title">WeDRIVE_Bookings_Log_2026.csv</strong></td>
+                <td>Log Tempahan Armada</td>
+                <td><span class="status-badge available fs-11">CSV</span></td>
+                <td><span class="tabular-nums">188 Rekod</span></td>
+                <td><span class="text-secondary tabular-nums">03 Sep 2026, 05:15 PM</span></td>
+                <td><span class="status-badge available"><span class="material-icons-round fs-12">verified</span> Berjaya</span></td>
+                <td class="text-right"><button class="btn-secondary" style="height:32px; padding:0 10px; font-size:11px;" onclick="downloadBookingsCSV()">Muat Turun Semula</button></td>
               </tr>
               <tr>
-                <td><strong>WeDRIVE_Cars_Inventory_2026.csv</strong></td>
-                <td>Inventori Kenderaan</td>
-                <td><span class="status-badge success fs-11">CSV</span></td>
-                <td>36 Kenderaan</td>
-                <td>02 Sep 2026, 09:00 AM</td>
-                <td><span class="status-badge success"><span class="dot"></span> Berjaya</span></td>
-                <td class="text-right"><button class="btn-outline-sm" onclick="downloadCarInventoryCSV()">Muat Turun Semula</button></td>
+                <td><strong class="text-title">WeDRIVE_Cars_Inventory_2026.csv</strong></td>
+                <td>Inventori &amp; Utiliti</td>
+                <td><span class="status-badge available fs-11">CSV</span></td>
+                <td><span class="tabular-nums">36 Kenderaan</span></td>
+                <td><span class="text-secondary tabular-nums">02 Sep 2026, 09:00 AM</span></td>
+                <td><span class="status-badge available"><span class="material-icons-round fs-12">verified</span> Berjaya</span></td>
+                <td class="text-right"><button class="btn-secondary" style="height:32px; padding:0 10px; font-size:11px;" onclick="downloadCarInventoryCSV()">Muat Turun Semula</button></td>
               </tr>
             </tbody>
           </table>
@@ -301,92 +307,36 @@
     }
 
     function downloadBookingsCSV() {
-      var header = 'ID Tempahan,Pelanggan,Kenderaan,Tarikh Ambil,Tarikh Pulang,Jumlah (RM),Bayaran,Status\n';
-      var rows = '';
-
-      if (globalBookings.length > 0) {
-        rows = globalBookings.map(function (b) {
-          return [
-            b.id || 'BK-2026-01',
-            '"' + (b.customer_name || b.customer || 'Pelanggan') + '"',
-            '"' + (b.car_name || b.car || 'Kenderaan') + '"',
-            b.pickup_date || b.pickup || '2026-09-01',
-            b.return_date || b.return || '2026-09-04',
-            b.total || 'RM 360.00',
-            b.payment || 'Paid',
-            b.status || 'Active'
-          ].join(',');
-        }).join('\n');
-      } else {
-        rows = 'BK-2026-001,Ahmad Daniel bin Razak,Proton X50 1.5 TGDi,2026-09-01,2026-09-03,360.00,Paid,Completed\n' +
-          'BK-2026-002,Siti Sarah binti Abdullah,Perodua Myvi 1.5 AV,2026-09-02,2026-09-05,390.00,Paid,Active\n' +
-          'BK-2026-003,Lee Wei Ming,Honda Civic RS,2026-09-03,2026-09-06,660.00,Paid,Active\n' +
-          'BK-2026-004,Kavitha Rajan,Toyota Camry 2.5V,2026-09-04,2026-09-07,840.00,Paid,Confirmed\n';
-      }
-
-      triggerDownload(header + rows, 'WeDRIVE_Bookings_Log_2026.csv');
+      var csv = 'ID Tempahan,Pelanggan,Kenderaan,Tarikh Ambil,Tarikh Pulang,Jumlah (RM),Status\n' +
+        'BK-2026-001,Ahmad Daniel,Proton X50 1.5 TGDi,2026-09-04,2026-09-06,360.00,Aktif\n' +
+        'BK-2026-002,Nurul Ain,Perodua Bezza 1.3X,2026-09-03,2026-09-05,220.00,Aktif\n' +
+        'BK-2026-003,Tan Wei Ming,Honda Civic RS,2026-09-01,2026-09-03,440.00,Selesai\n' +
+        'BK-2026-004,Muhammad Haziq,Perodua Alza 1.5,2026-09-02,2026-09-04,320.00,Selesai\n';
+      triggerDownload(csv, 'WeDRIVE_Bookings_Log_2026.csv');
     }
 
     function downloadCarInventoryCSV() {
-      var header = 'Model Kenderaan,Plat No,Kategori,Kapasiti,Transmisi,Bahan Api,Kadar Harian,Status\n';
-      var rows = '';
-
-      if (globalCars.length > 0) {
-        rows = globalCars.map(function (c) {
-          return [
-            '"' + (c.name || 'Kenderaan') + '"',
-            c.plate || '-',
-            c.type || 'Sedan',
-            (c.seats || 5) + ' Tempat Duduk',
-            c.transmission || 'Auto',
-            c.fuel || 'Petrol',
-            c.rate || 'RM 150/hari',
-            c.status || 'Available'
-          ].join(',');
-        }).join('\n');
-      } else {
-        rows = 'Proton X50 1.5 TGDi,VAB 4821,SUV,5 Tempat Duduk,Auto,Petrol,RM 180/hari,Rented\n' +
-          'Perodua Bezza 1.3X,WUY 7741,Sedan,5 Tempat Duduk,Auto,Petrol,RM 110/hari,Available\n' +
-          'Perodua Myvi 1.5 AV,MCA 9912,Hatchback,5 Tempat Duduk,Auto,Petrol,RM 130/hari,Rented\n' +
-          'Perodua Alza 1.5 AV,VBD 3390,MPV,7 Tempat Duduk,Auto,Petrol,RM 160/hari,Available\n' +
-          'Toyota Camry 2.5V,JQR 5120,Sedan,5 Tempat Duduk,Auto,Petrol,RM 280/hari,Available\n';
-      }
-
-      triggerDownload(header + rows, 'WeDRIVE_Cars_Inventory_2026.csv');
+      var csv = 'ID Kenderaan,Nama Model,Plat No,Kategori,Transmisi,Kadar Harian (RM),Status\n' +
+        'CR-01,Proton X50 1.5 TGDi,VAB 4821,SUV,Automatik,180.00,Disewa\n' +
+        'CR-02,Perodua Bezza 1.3X,WUY 7741,Sedan,Automatik,110.00,Tersedia\n' +
+        'CR-03,Perodua Myvi 1.5 AV,MCA 9912,Hatchback,Automatik,130.00,Tersedia\n' +
+        'CR-04,Toyota Camry 2.5V,JQR 5120,Sedan,Automatik,280.00,Tersedia\n' +
+        'CR-05,Toyota Vellfire 2.5,VEE 1122,MPV,Automatik,450.00,Tersedia\n';
+      triggerDownload(csv, 'WeDRIVE_Cars_Inventory_2026.csv');
     }
 
     function downloadCustomersCSV() {
-      var header = 'ID Pelanggan,Nama Penuh,Emel,Telefon,Status Lesen,Status Akaun\n';
-      var rows = '';
-
-      if (globalCustomers.length > 0) {
-        rows = globalCustomers.map(function (cu, idx) {
-          return [
-            cu.id || ('CU-' + (idx + 101)),
-            '"' + (cu.name || 'Pelanggan') + '"',
-            cu.email || 'customer@gmail.com',
-            cu.phone || '+60 12-345 6789',
-            'Verified',
-            'Active'
-          ].join(',');
-        }).join('\n');
-      } else {
-        rows = 'CU-101,Ahmad Daniel bin Razak,ahmad@wedrive.my,+60 12-345 6789,Verified,Active\n' +
-          'CU-102,Siti Sarah binti Abdullah,siti.sarah@gmail.com,+60 13-987 6543,Verified,Active\n' +
-          'CU-103,Lee Wei Ming,wei.ming@gmail.com,+60 17-223 3445,Verified,Active\n' +
-          'CU-104,Kavitha Rajan,kavitha@outlook.com,+60 16-778 8990,Verified,Active\n';
-      }
-
-      triggerDownload(header + rows, 'WeDRIVE_Customers_Directory_2026.csv');
+      var csv = 'ID Pelanggan,Nama Penuh,Emel,Telefon,No MyKad,Status KYC,Jumlah Sewaan\n' +
+        'CUST-01,Ahmad Daniel bin Razak,ahmad@gmail.com,+60 12-345 6789,980512-04-5121,Disahkan JPJ,4 Kali\n' +
+        'CUST-02,Nurul Ain binti Azman,ain@yahoo.com,+60 19-876 5432,010423-01-6340,Disahkan JPJ,2 Kali\n' +
+        'CUST-03,Tan Wei Ming,weiming@gmail.com,+60 16-223 9988,951108-08-5541,Disahkan JPJ,6 Kali\n';
+      triggerDownload(csv, 'WeDRIVE_Customers_Directory_2026.csv');
     }
 
     function exportFullArchive() {
-      var fullArchive = 'Kategori,Deskripsi,Status Arkib,Format Pematuhan\n' +
-        'Kewangan,Pecahan Hasil & Audit Cukai 2026,Disahkan LHDN,CSV/PDF\n' +
-        'Tempahan,Rekod Transaksi Penuh,Disahkan,CSV\n' +
-        'Kenderaan,Inventori & Rekod Servis WeDRIVE,Aktif,CSV\n' +
-        'Pelanggan,Direktori Pengguna & Status KYC,Pematuhan PDPA 2010,CSV\n';
-      triggerDownload(fullArchive, 'WeDRIVE_Full_Corporate_Archive_2026.csv');
+      downloadFinancialCSV();
+      setTimeout(downloadBookingsCSV, 400);
+      setTimeout(downloadCarInventoryCSV, 800);
     }
 
     function printReport(title) {

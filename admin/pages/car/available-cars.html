@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Available Cars | WeDRIVE</title>
+  <title>Kenderaan Tersedia | WeDRIVE Showroom</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.4.0" />
-  <!-- AUTH GUARD: Must run before page renders -->
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
+  <!-- AUTH GUARD -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
 
@@ -25,16 +25,20 @@
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
-      <!-- HEADER BANNER -->
-      <div class="card reveal-onload mb-20 p-24">
+      <!-- BENTO HEADER HERO -->
+      <div class="bento-header-hero reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <div class="flex-center gap-8 mb-6">
-              <span class="status-badge success"><span class="dot"></span> Ready For Immediate Rental</span>
-              <span class="fs-12 text-muted" id="avail-count-badge">-- unit sedia</span>
+            <div class="bento-breadcrumbs">
+              <a href="cars.html">Pengurusan Kereta</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span>Kenderaan Tersedia</span>
             </div>
-            <h1 class="fs-26 fw-800 m-0 text-title" data-key="sidebar_available_cars">Kenderaan Tersedia</h1>
-            <p class="text-secondary fs-14 m-0 mt-4">Senarai kenderaan yang telah diperiksa, disanitasi, dan sedia untuk tempahan pelanggan.</p>
+            <div class="flex-center gap-10 flex-wrap">
+              <h1 class="bento-title-main">Inventori Kenderaan Sedia Disewa</h1>
+              <span class="status-badge success"><span class="dot"></span> <span id="avail-count-badge">-- unit sedia</span></span>
+            </div>
+            <p class="bento-subtitle-main">Pemeriksaan fizikal berkala lulus, cukai jalan JPJ aktif, dan sedia untuk tempahan pelanggan kaunter serta portal dalam talian.</p>
           </div>
           <div class="flex-center gap-10">
             <button class="btn-outline-sm" onclick="window.location.href='cars.html'">
@@ -47,7 +51,7 @@
         </div>
       </div>
 
-      <!-- SEARCH + VIEW CONTROLS -->
+      <!-- SEARCH + CATEGORY FILTER CONTROLS -->
       <div class="card reveal-on-scroll mb-20 px-22 py-16">
         <div class="flex-between gap-12 flex-wrap">
           <div class="flex-center gap-8 flex-wrap">
@@ -76,7 +80,7 @@
       </div>
 
       <!-- CAR TABLE LIST VIEW -->
-      <div id="avail-list" class="card reveal-on-scroll hidden table-responsive p-0 radius-20">
+      <div id="avail-list" class="card reveal-on-scroll hidden table-responsive p-0 radius-24">
         <table class="car-admin-table">
           <thead>
             <tr class="car-table-header-row">
@@ -100,8 +104,8 @@
     </div>
   </main>
 
-  <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=5.5.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
   <script src="../../../shared/js/main.js?v=5.2.8"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
@@ -150,31 +154,33 @@
         gridEl.innerHTML = filtered.map(function (car) {
           var img0 = (car.images && car.images.length > 0) ? car.images[0] : '';
           var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
-          var rateFormatted = car.rate ? (String(car.rate).startsWith('RM') ? car.rate : 'RM ' + car.rate + '/hari') : 'RM 150/hari';
+          var rateNum = car.rate ? String(car.rate).replace(/[^0-9]/g, '') : '150';
 
-          return '<div class="card reveal-onload p-18">' +
-            '<div class="car-card-img-wrap">' +
+          return '<div class="card reveal-onload p-18 radius-24">' +
+            '<div class="car-card-img-wrap radius-16">' +
               '<img src="' + src + '" alt="' + car.name + '" class="car-card-img" onerror="this.src=\'../../../shared/model/bezza.png\'" />' +
               '<span class="status-badge success car-card-badge"><span class="dot"></span> Tersedia</span>' +
             '</div>' +
-            '<div class="car-card-body">' +
+            '<div class="car-card-body pt-14">' +
               '<div class="flex-between mb-8">' +
-                '<h3 class="fs-16 fw-700 m-0">' + car.name + '</h3>' +
-                '<span class="fs-12 fw-700 text-muted">' + (car.plate || '-') + '</span>' +
+                '<h3 class="fs-17 fw-800 m-0 text-title">' + car.name + '</h3>' +
+                '<span class="fs-12 fw-700 text-muted tabular-nums">' + (car.plate || '-') + '</span>' +
               '</div>' +
-              '<div class="flex-wrap gap-8 fs-12 text-muted mb-14">' +
-                '<span class="flex-center gap-4"><span class="material-icons-round fs-14">airline_seat_recline_normal</span> ' + (car.seats || 5) + ' Kerusi</span>' +
-                '<span class="flex-center gap-4"><span class="material-icons-round fs-14">settings</span> ' + (car.transmission || 'Auto') + '</span>' +
-                '<span class="flex-center gap-4"><span class="material-icons-round fs-14">local_gas_station</span> ' + (car.fuel || 'Petrol') + '</span>' +
+              '<div class="flex-wrap gap-10 fs-12 text-muted mb-16">' +
+                '<span class="flex-center gap-4"><span class="material-icons-round fs-15">airline_seat_recline_normal</span> ' + (car.seats || 5) + ' Kerusi</span>' +
+                '<span class="flex-center gap-4"><span class="material-icons-round fs-15">settings</span> ' + (car.transmission || 'Auto') + '</span>' +
+                '<span class="flex-center gap-4"><span class="material-icons-round fs-15">local_gas_station</span> ' + (car.fuel || 'Petrol') + '</span>' +
               '</div>' +
-              '<div class="flex-between border-top-subtle pt-12">' +
+              '<div class="flex-between border-top-subtle pt-12 flex-center">' +
                 '<div>' +
                   '<div class="fs-11 text-muted">Kadar Sewaan</div>' +
-                  '<div class="fs-16 fw-800 text-primary-accent">' + rateFormatted + '</div>' +
+                  '<div class="fs-18 fw-800 text-primary-accent tabular-nums">RM ' + rateNum + '<span class="fs-12 fw-500 text-muted">/hari</span></div>' +
                 '</div>' +
                 '<div class="flex-center gap-6">' +
                   '<button class="btn-outline-sm" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                  '<button class="btn-primary-sm" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
+                  '<button class="btn-primary-sm" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">' +
+                    '<span class="material-icons-round fs-15">add_task</span> Tempah' +
+                  '</button>' +
                 '</div>' +
               '</div>' +
             '</div>' +
@@ -189,16 +195,16 @@
           tbody.innerHTML = '<tr><td colspan="9" class="text-center py-24 text-muted">Tiada kenderaan sepadan.</td></tr>';
         } else {
           tbody.innerHTML = filtered.map(function (car) {
-            var rateFormatted = car.rate ? (String(car.rate).startsWith('RM') ? car.rate : 'RM ' + car.rate + '/hari') : 'RM 150/hari';
+            var rateNum = car.rate ? String(car.rate).replace(/[^0-9]/g, '') : '150';
             return '<tr>' +
               '<td><strong>' + car.name + '</strong></td>' +
-              '<td><span class="fs-12 fw-700">' + (car.plate || '-') + '</span></td>' +
+              '<td><span class="fs-12 fw-700 tabular-nums">' + (car.plate || '-') + '</span></td>' +
               '<td>' + (car.type || '-') + '</td>' +
               '<td>' + (car.seats || 5) + ' Tempat Duduk</td>' +
               '<td>' + (car.transmission || 'Auto') + '</td>' +
               '<td>' + (car.fuel || 'Petrol') + '</td>' +
-              '<td><strong class="text-primary-accent">' + rateFormatted + '</strong></td>' +
-              '<td><span class="status-badge success"><span class="dot"></span> Available</span></td>' +
+              '<td><strong class="text-primary-accent tabular-nums">RM ' + rateNum + '/hari</strong></td>' +
+              '<td><span class="status-badge success"><span class="dot"></span> Tersedia</span></td>' +
               '<td class="text-right">' +
                 '<button class="btn-outline-sm mr-6" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
                 '<button class="btn-primary-sm" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
