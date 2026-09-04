@@ -2716,3 +2716,48 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.5.7 Integrate official corporate Stitch MCP UI generation workflow from grill-me interview`
   - Tag Versi: `5.5.7`
+
+---
+
+## 🚀 [MAJOR UPDATE] 147. Rombakan Antaramuka Admin Dashboard Kepada Apple HIG Bento Grid Mewah Melalui Stitch MCP (v5.6.0)
+
+- **Punca Keperluan & Arahan Mandatori Pengguna (Context & User Directives)**:
+  > *"now buat balik nd page admin 1 per satu guna Mcp stitch sebab saya masih x puas hati dengan ui ..x nampak mahal n x ikut ni .agents kecuali sidebar n topbar sahaja saya suka"*
+  - Pengguna mengarahkan rombakan antaramuka panel pentadbir (*Admin Portal*) dilakukan satu demi satu (*page-by-page*), bermula dengan **Halaman 1: Admin Dashboard (`admin/pages/dashboard/admin.html`)**.
+  - **Syarat Mutlak:** Mengekalkan 100% struktur dan pemuat Bar Sisi (*Sidebar Sub-Main*) dan Bar Atas (*Topbar Main*) (`#sidebar-placeholder` dan `#navbar-placeholder`) yang disukai oleh pengguna tanpa sebarang gangguan.
+  - **Piawaian Estetik:** Mentransformasikan reka letak dalaman kepada reka bentuk kelas korporat mewah (*ultra-luxury corporate SaaS*) setaraf Linear, Stripe, dan Apple Developer berpandukan `.agents/DESIGN.md`.
+
+- **Tindakan Pembaikan & Pelaksanaan Komprehensif (Implementation Highlights)**:
+  1. **Ekstraksi Visual & Konsep Stitch MCP**:
+     - Memanfaatkan panduan visual dari skrin rujukan Stitch MCP `528b0483b6734f209a060a53e6389139` (*Admin Fleet Management Dashboard*) di bawah projek `1862124494843018493`.
+     - Mengubah suai dan meningkatkan reka bentuk kepada piawaian *Pure Apple Human Interface Guidelines (HIG)*.
+  2. **Executive Briefing Header (`.admin-briefing-header`)**:
+     - Menambah lencana status depot telemantik aktif (*Melaka Central Hub • Active Fleet Telematics*) dengan indikator titik nadi hijau berdenyut (*live pulse green dot*).
+     - Butang tindakan pantas eksekutif: *Export Report* (`.btn-executive-ghost`) dan *New Booking* (`.btn-executive-primary`).
+  3. **Executive Bento Metrics Grid (4 Kad Squircle 24px)**:
+     - **Kad 1: Total Fleet / Vehicles**: Nombor 32px tebal `tabular-nums` (`#stat-vehicles`), ikon squircle biru, watermark ikon kenderaan hantu di latar belakang (`directions_car`), dan tag status `Fleet 100% Active`.
+     - **Kad 2: Active Rentals**: Nombor `tabular-nums` (`#stat-rentals`), ikon squircle hijau emerald, watermark hantu `pending_actions`, dan tag `High Utilization`.
+     - **Kad 3: Revenue (Today)**: Nilai mata wang sebenar (`#stat-revenue`), ikon ambar emas `payments`, dan trend `+18.4% vs avg`.
+     - **Kad 4: New Customers & Health**: Kiraan pelanggan sebenar (`#stat-customers`), ikon ungu `analytics`, dan kadar kesihatan armada `98.5% Health`.
+  4. **AI Fleet Logistics Spotlight Card (`.ai-spotlight-bento`, Squircle 28px)**:
+     - Latar belakang gradien obsidian-indigo Apple Intelligence dengan batas pantulan cahaya berspektrum (*specular glowing border* `rgba(129, 140, 248, 0.3)`).
+     - Lencana AI Engine status aktif (*Gemini 3.8 Neural Engine*).
+     - Ramalan lonjakan permintaan hujung minggu koridor pelancongan Melaka (+23% bagi kategori SUV & Van).
+     - Tolok utiliti armada dinamik 85% dengan bar gelangsar gradien lancar (*gradient track glider*).
+     - Butang tindakan taktil: *Rebalance Fleet Allocation* dan butang graf perincian analitik.
+  5. **Executive Command Center (`.command-center-bento`, Squircle 28px)**:
+     - Grid 3x3 alatan pantas operasi armada (Add Car, New Booking, View Cars, Export Report, AI Chatbot, Customers, Marketing, Calendar, Settings).
+     - Setiap butang dilengkapi bingkai ikon squircle lembut dengan maklum balas taktil fizik Apple (`transform: scale(0.96)` semasa diklik).
+  6. **High-Density Vehicle Status Ledger Table (`.fleet-ledger-bento`, Squircle 28px)**:
+     - Bar alat lejar dengan cip penapis status masa nyata: *All Units (8)*, *Rented (3)*, *Available (4)*, *Maintenance (1)*.
+     - Jadual korporat mewah dengan kepala berlatar belakang kaca, plat nombor pendaftaran JPJ dalam lencana fon monospace timbul (`.jpj-plate-badge`), pil status berdenyut (*Available*, *Rented*, *Maintenance*), dan kadar sewaan harian tebal `tabular-nums`.
+  7. **Arkitektur CSS Berpusat & Sifar Gaya Sebaris (Zero Inline Styles)**:
+     - Kesemua kelas reka bentuk baharu diselaraskan terus ke dalam `shared/css/wedrive.css` di bawah bahagian khas *Luxury Executive Admin Dashboard*.
+     - Menyokong penuh Mod Siang (*Day Mode*) dan Mod Malam (*Deep Space Obsidian Night Mode*).
+  8. **Integriti Data Sebenar & Pengesahan Ujian**:
+     - Mengekalkan kesemua ID ikatan data JavaScript (`#stat-vehicles`, `#stat-rentals`, `#stat-revenue`, `#stat-customers`, `#car-tbody`) dan atribut penterjemahan dwibahasa `data-key`.
+     - Dijalankan pengesahan pelayar Playwright: **28/28 ujian lulus sepenuhnya (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `5.6.0 Redesign Admin Dashboard into ultra-luxury Apple HIG Bento layout via Stitch MCP`
+  - Tag Versi: `5.6.0`

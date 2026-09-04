@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/ruleprompt.md": {
-    "mtime": 1788538902.6969805,
-    "seen": 1788539038.340873,
-    "ast_hash": "f720829dd0e27d4933f47af2f0d944b3",
+    "mtime": 1788539632.4170804,
+    "seen": 1788539747.5331662,
+    "ast_hash": "16f672a1230ecaff2507a5900cbc33dd",
     "semantic_hash": ""
   },
   ".agents/rules/security_and_audit.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788538927.5173707,
-    "seen": 1788539038.340883,
-    "ast_hash": "ec08c33154554e21041ffe1fa3b24dac",
+    "mtime": 1788539648.4964519,
+    "seen": 1788539747.53318,
+    "ast_hash": "710ec9d4a007f1868683b16a99e2ebbb",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -11250,9 +11250,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/stitch_design_system.md": {
-    "mtime": 1788538887.3941228,
-    "seen": 1788539038.340876,
-    "ast_hash": "cd2601154627942ffa962d556fcd0d18",
+    "mtime": 1788539621.8690145,
+    "seen": 1788539747.53317,
+    "ast_hash": "4779379a311b50852fc82f5fd9097fc3",
     "semantic_hash": ""
   },
   ".agents/DESIGN.md": {
@@ -11265,6 +11265,12 @@
     "mtime": 1788538893.6755757,
     "seen": 1788539038.340831,
     "ast_hash": "6d7a8c08f7d4d55d949a603a2e76e703",
+    "semantic_hash": ""
+  },
+  ".agents/workflows/stitch_generation.md": {
+    "mtime": 1788539606.9534457,
+    "seen": 1788539747.5331788,
+    "ast_hash": "4e7999f1c5d6be0f314804dbbb960fb8",
     "semantic_hash": ""
   }
 }

@@ -28,7 +28,7 @@ function updateStatsUI() {
   if (vehiclesChangeEl) {
     const available = adminStats.available_vehicles !== undefined ? adminStats.available_vehicles : adminStats.total_vehicles;
     const text = isMalay ? `${available} tersedia` : `${available} available`;
-    vehiclesChangeEl.innerHTML = `<span class="material-icons-round" style="font-size:14px">check_circle</span> ${text}`;
+    vehiclesChangeEl.innerHTML = `<span class="material-icons-round fs-14">check_circle</span> ${text}`;
   }
 
   // 2. Active Rentals Sub-label
@@ -36,7 +36,7 @@ function updateStatsUI() {
   if (rentalsChangeEl) {
     const active = adminStats.active_rentals || 0;
     const text = isMalay ? `${active} aktif hari ini` : `${active} active today`;
-    rentalsChangeEl.innerHTML = `<span class="material-icons-round" style="font-size:14px">arrow_upward</span> ${text}`;
+    rentalsChangeEl.innerHTML = `<span class="material-icons-round fs-14">arrow_upward</span> ${text}`;
   }
 
   // 3. Revenue Sub-label
@@ -44,7 +44,7 @@ function updateStatsUI() {
   if (revenueChangeEl) {
     const revenueMonth = adminStats.revenue_this_month || 0;
     const text = isMalay ? `RM ${revenueMonth.toLocaleString()} bulan ini` : `RM ${revenueMonth.toLocaleString()} this month`;
-    revenueChangeEl.innerHTML = `<span class="material-icons-round" style="font-size:14px">arrow_upward</span> ${text}`;
+    revenueChangeEl.innerHTML = `<span class="material-icons-round fs-14">arrow_upward</span> ${text}`;
   }
 
   // 4. Customers Sub-label
@@ -52,7 +52,7 @@ function updateStatsUI() {
   if (customersChangeEl) {
     const newCustMonth = adminStats.new_customers_this_month !== undefined ? adminStats.new_customers_this_month : adminStats.new_customers;
     const text = isMalay ? `${newCustMonth} berdaftar bulan ini` : `${newCustMonth} registered this month`;
-    customersChangeEl.innerHTML = `<span class="material-icons-round" style="font-size:14px">arrow_upward</span> ${text}`;
+    customersChangeEl.innerHTML = `<span class="material-icons-round fs-14">arrow_upward</span> ${text}`;
   }
 }
 
@@ -80,10 +80,10 @@ function populateCar(car) {
   tbody.innerHTML = car.map(v => `
     <tr>
       <td><strong>${v.name}</strong></td>
-      <td>${v.plate}</td>
+      <td><span class="jpj-plate-badge">${v.plate}</span></td>
       <td>${v.label || v.type}</td>
       <td><span class="status-badge ${v.status.toLowerCase()}"><span class="dot"></span> ${v.status}</span></td>
-      <td>${v.rate}</td>
+      <td><span class="font-tabular fw-700">${v.rate}</span></td>
       <td>${v.seats || 5} Seater</td>
       <td>${v.transmission}</td>
       <td><button class="btn-primary-sm" data-navigate="../car/car-detail/car-detail.html?id=${v.id}">Manage</button></td>
