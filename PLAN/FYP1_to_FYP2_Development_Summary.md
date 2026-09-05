@@ -3477,3 +3477,40 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.8 Aligned table action buttons horizontally side-by-side with Apple capsule styling`
   - Tag Versi: `5.7.8`
+
+---
+
+### 164. Transformasi Modal Perincian Pelanggan Kepada Apple HIG Obsidian Bento & Lightbox Pemeriksaan Dokumen (v5.7.9)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REDESIGN & STITCH MCP INTEGRATION]`
+- **Modul Terlibat**:
+  - `admin/js/customers.js`
+  - `admin/pages/customer/customers.html`
+  - `shared/css/wedrive.css`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan rungutan pengguna (*"ni macam xsiap lagi sahaja..fix juga ni..kalau xde idea sangat suruh mcp stitch buatkan page ni"*) terhadap pop-up Perincian Pelanggan (*Customer Details Modal*) yang sebelum ini kelihatan mentah, teks kelabu gelap sukar dibaca pada tema gelap akibat warna teks navy hardcoded (`#1E293B`), kad dokumen tidak teratur dan memotong butang tindakan di bahagian bawah, tiada pratonton gambar interaktif (*lightbox*), dan butang kelulusan/penolakan tersembunyi jauh di bawah skrin.
+
+- **Tindakan & Penambahbaikan Teknikal (Stitch MCP Screen ID `3808dc4db0244ea599a20071cd01bb76` / Gemini 3.8)**:
+  1. **Struktur Bento Hero 2-Kolum & Kad Profil Pelanggan**:
+     - Membina kad profil Bento (`.cust-profile-card`) dengan squircle avatar cerun elektrik blue (`.cust-avatar-squircle`), nama penuh, emel, tarikh pendaftaran, dan pil status bercahaya (*glowing status dot pill*: Hijau bagi Disahkan, Jingga bagi Menunggu, Merah bagi Ditolak).
+  2. **Grid Metrik 2x3 Padat & Tipografi Apple `tabular-nums`**:
+     - 6 jubin metrik Bento (`.cust-metric-tile`): No. Telefon, No. Kad Pengenalan (IC), No. Lesen Memandu, Tarikh Daftar, Jumlah Tempahan, serta sorotan Jumlah Perbelanjaan (`.spent-highlight`) berfon tebal biru elektrik dengan sokongan angka tabular.
+  3. **Pemeriksaan Dokumen Pengesahan 4-Kad Bersama Lightbox Interaktif**:
+     - 4 kad dokumen sebaris (`.cust-docs-grid`): MyKad Depan, MyKad Belakang, Lesen Memandu Depan, Lesen Memandu Belakang.
+     - Setiap kad mempunyai kotak lakaran kecil (`.cust-doc-thumb-box`) dengan lapisan hover kanta zum (`.cust-doc-zoom-btn`), tag status pengesahan, dan sokongan sandaran kemas (*empty state dashed card*) dengan ikon `cloud_off` dan status *Belum Dimuat Naik / Not Uploaded*.
+     - Integrasi fungsi `openDocLightbox(url, title)` dan `closeDocLightbox()` untuk membuka pratonton dokumen berskala besar dengan latar belakang kabur `backdrop-filter: blur(20px)`.
+  4. **Jadual Sejarah Tempahan Kompak & Bar Tindakan Melekat (*Sticky Action Bar*)**:
+     - Memaparkan sejarah sewaan kenderaan pelanggan dalam jadual berketumpatan tinggi Apple HIG (`.cust-history-table`).
+     - Bar tindakan melekat di bahagian bawah modal (`.cust-modal-footer`) yang sentiasa kelihatan tanpa perlu skrol, lengkap dengan butang Tutup, Tolak Pengesahan (Apple Red), dan Sahkan Pelanggan (Apple Emerald Green).
+  5. **Sokongan Dwibahasa Penuh (MS/EN) & Penyeragaman Tema Gelap/Terang**:
+     - Kesemua label modal beralih secara dinamik mengikut tetapan bahasa pengguna (`localStorage.getItem('wedrive_lang')`).
+     - Penggunaan token rasmi `--bg-surface`, `--bg-surface-2`, `--text-primary`, `--text-secondary`, dan `--primary` memastikan kebolehbacaan berkontras tinggi pada Mod Gelap Obsidian mahupun Mod Cerah.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Visual Chrome DevTools MCP**: Mengesahkan modal pop-up tampil mewah bertaraf eksekutif, teks kontras tinggi terbaca dengan jelas, pratonton dokumen boleh dizum secara interaktif, dan bar butang melekat di bahagian bawah.
+  - **Ujian Automasi Playwright**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed).
+
+- **Maklumat Git**:
+  - Commit: `5.7.9 Modernized Apple HIG Obsidian Bento Customer Details modal with document inspection and sticky action bar`
+  - Tag Versi: `5.7.9`

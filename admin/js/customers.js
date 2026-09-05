@@ -203,9 +203,11 @@ function applyCustomerFilters() {
 async function viewCustomer(id) {
   var c = allCustomers.find(x => x.id === id);
   if (!c) return;
-  var custBookings = allBookingsData.filter(b =>
-    b.auth_uid === c.auth_uid || b.email === c.email
-  );
+  var custBookings = (typeof allBookingsData !== 'undefined' && Array.isArray(allBookingsData))
+    ? allBookingsData.filter(b => b.auth_uid === c.auth_uid || b.email === c.email)
+    : [];
+
+  var isMalay = (localStorage.getItem('wedrive_lang') || 'en') === 'ms';
 
   // Fetch document URLs from database
   var docs = {};
@@ -213,154 +215,249 @@ async function viewCustomer(id) {
     docs = await window.WeDriveAPI.getCustomerDocuments(id);
   } catch (e) { console.warn('Failed to load documents', e); }
 
-  var verStatus = docs.verification_status || c.verification_status || '--';
-  var verBadgeClass = verStatus === 'Verified' ? 'available' : verStatus === 'Rejected' ? 'maintenance' : verStatus === 'Pending' ? 'pending-badge' : '';
-
-  // Build booking history rows
-  var bookingRows = custBookings.length > 0
-    ? custBookings.slice(0, 8).map(b => `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-color,#E2E8F0);font-size:12px;">
-        <span>#${b.id} ${b.car || ''}</span>
-        <span class="status-badge ${(b.status||'').toLowerCase()}" style="font-size:10px;padding:2px 8px">${b.status}</span>
-      </div>`).join('')
-    : '<div style="color:#94A3B8;font-size:13px;padding:12px 0">No bookings yet</div>';
-
-  // Document preview HTML
-  var icFrontDocHtml = docs.ic_document_url
-    ? `<a href="${docs.ic_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
-        <img src="${docs.ic_document_url}" alt="IC Front" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
-      </a>`
-    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
-
-  var icBackDocHtml = docs.ic_back_document_url
-    ? `<a href="${docs.ic_back_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
-        <img src="${docs.ic_back_document_url}" alt="IC Back" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
-      </a>`
-    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
-
-  var licFrontDocHtml = docs.license_document_url
-    ? `<a href="${docs.license_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
-        <img src="${docs.license_document_url}" alt="License Front" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
-      </a>`
-    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
-
-  var licBackDocHtml = docs.license_back_document_url
-    ? `<a href="${docs.license_back_document_url}" target="_blank" style="display:block;border:1px solid var(--border-color,#E2E8F0);border-radius:10px;overflow:hidden;max-height:140px;">
-        <img src="${docs.license_back_document_url}" alt="License Back" style="width:100%;max-height:140px;object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\\'padding:20px;text-align:center;color:#94A3B8;font-size:11px;\\'>PDF / Preview unavailable</div>'" />
-      </a>`
-    : '<div style="color:#94A3B8;font-size:11px;padding:12px;text-align:center;border:1px dashed #CBD5E1;border-radius:10px">Not uploaded</div>';
-
-  // Verification action buttons (only if Pending)
-  var verActions = '';
-  if (verStatus === 'Pending') {
-    verActions = `
-      <div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border-color,#E2E8F0);">
-        <button class="btn-primary-sm" onclick="approveCustomer(${id})" style="flex:1;padding:10px;background:#059669;display:flex;align-items:center;justify-content:center;gap:6px;">
-          <span class="material-icons-round" style="font-size:16px">verified</span> Approve
-        </button>
-        <button class="btn-outline-sm" onclick="openRejectModal(${id})" style="flex:1;padding:10px;color:#DC2626;border-color:#FCA5A5;display:flex;align-items:center;justify-content:center;gap:6px;">
-          <span class="material-icons-round" style="font-size:16px">cancel</span> Reject
-        </button>
-      </div>`;
+  var verStatus = docs.verification_status || c.verification_status || 'Pending';
+  var verStatusText = verStatus;
+  if (isMalay) {
+    if (verStatus === 'Verified') verStatusText = 'Disahkan';
+    else if (verStatus === 'Rejected') verStatusText = 'Ditolak';
+    else if (verStatus === 'Pending') verStatusText = 'Menunggu';
   }
 
   // Build initials avatar
-  var initials = c._name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+  var initials = (c._name || 'Customer').split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
 
-  // Create modal
+  // Document card helper
+  function buildDocCard(url, title, missingFallback) {
+    if (url) {
+      return `
+        <div class="cust-doc-card">
+          <div class="cust-doc-thumb-box" onclick="openDocLightbox('${url.replace(/'/g, "\\'")}', '${title.replace(/'/g, "\\'")}')">
+            <img src="${url}" alt="${title}" class="cust-doc-img" onerror="this.parentElement.innerHTML='<div class=\\'cust-doc-empty\\'><span class=\\'material-icons-round\\'>broken_image</span><span>${isMalay ? 'Pratonton tidak sah' : 'Preview invalid'}</span></div>'" />
+            <div class="cust-doc-hover-overlay">
+              <div class="cust-doc-zoom-btn">
+                <span class="material-icons-round" style="font-size:20px;">visibility</span>
+              </div>
+            </div>
+          </div>
+          <div class="cust-doc-meta">
+            <div class="cust-doc-title" title="${title}">${title}</div>
+            <span class="cust-doc-tag uploaded"><span class="material-icons-round" style="font-size:12px;">check_circle</span> ${isMalay ? 'Dimuat Naik' : 'Uploaded'}</span>
+          </div>
+        </div>
+      `;
+    } else {
+      return `
+        <div class="cust-doc-card">
+          <div class="cust-doc-empty">
+            <span class="material-icons-round">cloud_off</span>
+            <span>${missingFallback || (isMalay ? 'Belum Dimuat Naik' : 'Not Uploaded')}</span>
+          </div>
+          <div class="cust-doc-meta">
+            <div class="cust-doc-title" title="${title}">${title}</div>
+            <span class="cust-doc-tag missing">${isMalay ? 'Tiada Fail' : 'No File'}</span>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  var icFrontCard = buildDocCard(docs.ic_document_url, isMalay ? 'MyKad (Depan)' : 'MyKad (Front)');
+  var icBackCard = buildDocCard(docs.ic_back_document_url, isMalay ? 'MyKad (Belakang)' : 'MyKad (Back)');
+  var licFrontCard = buildDocCard(docs.license_document_url, isMalay ? 'Lesen Memandu (Depan)' : 'Driving License (Front)');
+  var licBackCard = buildDocCard(docs.license_back_document_url, isMalay ? 'Lesen Memandu (Belakang)' : 'Driving License (Back)');
+
+  // Build booking history rows
+  var bookingRows = custBookings.length > 0
+    ? custBookings.slice(0, 8).map(b => {
+        var bStatus = (b.status || 'Active').toLowerCase();
+        var bBadgeClass = bStatus === 'completed' ? 'available' : bStatus === 'cancelled' ? 'maintenance' : 'pending-badge';
+        return `
+          <tr>
+            <td>
+              <div style="font-weight:600;color:var(--text-primary);">#${b.id} ${b.car || 'Kenderaan'}</div>
+            </td>
+            <td style="color:var(--text-secondary);font-size:11px;">
+              ${b.start_date || b.date || '--'}
+            </td>
+            <td>
+              <span class="status-badge ${bBadgeClass}" style="font-size:10px;padding:3px 8px;">${b.status || 'Active'}</span>
+            </td>
+          </tr>
+        `;
+      }).join('')
+    : `<tr><td colspan="3"><div class="cust-history-empty"><span class="material-icons-round">event_busy</span> ${isMalay ? 'Tiada rekod tempahan lagi' : 'No booking records yet'}</div></td></tr>`;
+
+  // Create or get modal
   var modal = document.getElementById('customer-detail-modal');
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'customer-detail-modal';
-    modal.className = 'modal-overlay';
     document.body.appendChild(modal);
   }
+  modal.className = 'cust-modal-overlay';
+  modal.onclick = function(e) {
+    if (e.target === modal) closeCustomerModal();
+  };
 
   modal.innerHTML = `
-  <div class="modal-container" style="max-width:560px;width:94%;max-height:90vh;overflow-y:auto;">
-    <div class="modal-header">
-      <h3><span class="material-icons-round" style="font-size:20px;vertical-align:middle;margin-right:6px;">person</span> Customer Details</h3>
-      <button class="modal-close-btn" onclick="closeCustomerModal()"><span class="material-icons-round">close</span></button>
-    </div>
-    <div style="padding:24px;">
-      <!-- Profile Header -->
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#1D4ED8);display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;flex-shrink:0;">${initials}</div>
+    <div class="cust-modal-container">
+      <!-- Sticky Apple Header -->
+      <div class="cust-modal-header">
+        <div class="cust-modal-header-left">
+          <div class="cust-modal-icon-badge">
+            <span class="material-icons-round" style="font-size:22px;">badge</span>
+          </div>
+          <div>
+            <h3 class="cust-modal-title">${isMalay ? 'Maklumat Pelanggan' : 'Customer Details'}</h3>
+            <p class="cust-modal-subtitle">ID: CUST-${c.id} &bull; ${c._email}</p>
+          </div>
+        </div>
+        <button class="cust-modal-close-btn" onclick="closeCustomerModal()" title="${isMalay ? 'Tutup' : 'Close'}">
+          <span class="material-icons-round" style="font-size:20px;">close</span>
+        </button>
+      </div>
+
+      <!-- Scrollable Bento Canvas -->
+      <div class="cust-modal-body">
+        <!-- Hero Bento Row (Profile + 2x3 Metrics) -->
+        <div class="cust-hero-bento-grid">
+          <!-- Profile Card -->
+          <div class="cust-profile-card">
+            <div class="cust-profile-glow"></div>
+            <div class="cust-avatar-squircle">${initials}</div>
+            <div class="cust-profile-name">${c._name}</div>
+            <div class="cust-profile-email">${c._email}</div>
+            <div class="cust-member-since">${isMalay ? 'Ahli sejak' : 'Member since'} ${formatDate(c._joined)}</div>
+            <div class="cust-status-pill ${verStatus.toLowerCase()}">
+              <span class="dot"></span>
+              <span>${verStatusText}</span>
+            </div>
+          </div>
+
+          <!-- 2x3 Metrics Grid -->
+          <div class="cust-metrics-grid">
+            <div class="cust-metric-tile">
+              <span class="cust-metric-label">${isMalay ? 'No. Telefon' : 'Phone'}</span>
+              <span class="cust-metric-value">${c._phone || '--'}</span>
+            </div>
+            <div class="cust-metric-tile">
+              <span class="cust-metric-label">${isMalay ? 'No. Kad Pengenalan' : 'IC No.'}</span>
+              <span class="cust-metric-value">${c.ic || '--'}</span>
+            </div>
+            <div class="cust-metric-tile">
+              <span class="cust-metric-label">${isMalay ? 'No. Lesen Memandu' : 'Driving License'}</span>
+              <span class="cust-metric-value">${c._license || '--'}</span>
+            </div>
+            <div class="cust-metric-tile">
+              <span class="cust-metric-label">${isMalay ? 'Tarikh Daftar' : 'Joined Date'}</span>
+              <span class="cust-metric-value">${formatDate(c._joined)}</span>
+            </div>
+            <div class="cust-metric-tile">
+              <span class="cust-metric-label">${isMalay ? 'Jumlah Tempahan' : 'Total Bookings'}</span>
+              <span class="cust-metric-value">${c._total_bookings || 0}</span>
+            </div>
+            <div class="cust-metric-tile spent-highlight">
+              <span class="cust-metric-label">${isMalay ? 'Jumlah Perbelanjaan' : 'Total Spent'}</span>
+              <span class="cust-metric-value">RM ${(c._total_spent || 0).toLocaleString()}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Uploaded Documents Bento -->
         <div>
-          <div style="font-size:16px;font-weight:700;color:var(--navy,#1E293B)">${c._name}</div>
-          <div style="font-size:13px;color:var(--slate-400,#94A3B8)">${c._email}</div>
+          <div class="cust-section-title">
+            <span class="material-icons-round">folder_shared</span>
+            <span>${isMalay ? 'Dokumen Pengesahan Dihantar' : 'Uploaded Verification Documents'}</span>
+          </div>
+          <div class="cust-docs-grid">
+            ${icFrontCard}
+            ${icBackCard}
+            ${licFrontCard}
+            ${licBackCard}
+          </div>
         </div>
-        <div style="margin-left:auto">
-          <span class="status-badge ${verBadgeClass}" style="font-size:11px"><span class="dot"></span> ${verStatus}</span>
-        </div>
-      </div>
 
-      <!-- Info Grid -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
-        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Phone</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c._phone}</div>
-        </div>
-        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">IC</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c.ic || '--'}</div>
-        </div>
-        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">License</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c._license}</div>
-        </div>
-        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Joined</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${formatDate(c._joined)}</div>
-        </div>
-        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Total Bookings</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${c._total_bookings}</div>
-        </div>
-        <div style="background:var(--bg-surface-2,#F1F5F9);padding:12px;border-radius:10px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Total Spent</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">RM ${(c._total_spent || 0).toLocaleString()}</div>
-        </div>
-      </div>
-
-      <!-- Documents Section -->
-      <div style="margin-bottom:20px;">
-        <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:10px">Uploaded Documents</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;row-gap:16px;">
-          <div>
-            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">IC (Front)</div>
-            ${icFrontDocHtml}
+        <!-- Rental History Bento -->
+        <div>
+          <div class="cust-section-title">
+            <span class="material-icons-round">history</span>
+            <span>${isMalay ? 'Sejarah Tempahan Terkini' : 'Recent Booking History'}</span>
           </div>
-          <div>
-            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">IC (Back)</div>
-            ${icBackDocHtml}
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">Driving License (Front)</div>
-            ${licFrontDocHtml}
-          </div>
-          <div>
-            <div style="font-size:11px;font-weight:600;color:var(--slate-400,#94A3B8);margin-bottom:6px">Driving License (Back)</div>
-            ${licBackDocHtml}
+          <div class="cust-history-card">
+            <table class="cust-history-table">
+              <thead>
+                <tr>
+                  <th>${isMalay ? 'Kenderaan' : 'Vehicle'}</th>
+                  <th>${isMalay ? 'Tarikh' : 'Dates'}</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${bookingRows}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
-      <!-- Booking History -->
-      <div style="margin-bottom:8px;">
-        <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:8px">Booking History</div>
-        <div style="max-height:140px;overflow-y:auto;">${bookingRows}</div>
+      <!-- Sticky Action Footer -->
+      <div class="cust-modal-footer">
+        <button class="cust-btn-close" onclick="closeCustomerModal()">${isMalay ? 'Tutup' : 'Close'}</button>
+        ${verStatus === 'Pending' ? `
+          <button class="cust-btn-reject" onclick="openRejectModal(${id})">
+            <span class="material-icons-round" style="font-size:18px;">cancel</span> ${isMalay ? 'Tolak Pengesahan' : 'Reject'}
+          </button>
+          <button class="cust-btn-approve" onclick="approveCustomer(${id})">
+            <span class="material-icons-round" style="font-size:18px;">verified_user</span> ${isMalay ? 'Sahkan Pelanggan' : 'Approve Verification'}
+          </button>
+        ` : ''}
       </div>
-
-      ${verActions}
     </div>
-  </div>`;
+  `;
+
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
 
 function closeCustomerModal() {
   var modal = document.getElementById('customer-detail-modal');
-  if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+function openDocLightbox(url, title) {
+  if (!url) return;
+  var lb = document.getElementById('wedrive-doc-lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'wedrive-doc-lightbox';
+    lb.className = 'cust-lightbox-overlay';
+    document.body.appendChild(lb);
+  }
+  lb.innerHTML = `
+    <div class="cust-lightbox-box">
+      <div class="cust-lightbox-header">
+        <span class="cust-lightbox-title">${title || 'Dokumen Pelanggan'}</span>
+        <button class="cust-modal-close-btn" onclick="closeDocLightbox()" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.2);">
+          <span class="material-icons-round" style="font-size:20px;">close</span>
+        </button>
+      </div>
+      <img src="${url}" class="cust-lightbox-img" alt="${title || 'Document'}" />
+    </div>
+  `;
+  lb.style.display = 'flex';
+  lb.onclick = function(e) {
+    if (e.target === lb) closeDocLightbox();
+  };
+}
+
+function closeDocLightbox() {
+  var lb = document.getElementById('wedrive-doc-lightbox');
+  if (lb) {
+    lb.style.display = 'none';
+  }
 }
 
 // ---- Custom modal helpers (replace native confirm/prompt) ----
