@@ -2961,3 +2961,53 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.5 Fix bento header left alignment and spacing rhythm across admin sub-pages`
   - Tag Versi: `5.6.5`
+
+---
+
+## 🚀 [MINOR UPDATE] 153. Penyeragaman Kad Statistik Sebaris Bento Pentadbir & Pembaikan Grid 4-Kolum (v5.6.6)
+
+- **Punca Keperluan & Arahan Pengguna (Context & User Feedback)**:
+  > *"ni pon sama asal card tu besar2 ...boleh jadikan dia sebaris kot"*
+  - Pengguna mendapati 4 kad statistik pada halaman kenderaan sedang disewa (`rented-cars.html`) tersusun bertingkat menegak (*stacked rows*) secara gergasi selebar 100% tetingkap, dan meminta supaya dijadikan sebaris (*single row*) yang padat, kemas, dan ergonomik.
+
+- **Punca Reka Bentuk Terdahulu (Root Cause Analysis)**:
+  1. **Ketiadaan Takrifan CSS Bagi Kelas `.grid-4`**: Elemen pembungkus menggunakan `<div class="grid-4 mb-24 reveal-onload">`. Namun, kelas `.grid-4` tidak ditakrifkan dalam lembaran gaya CSS (hanya `.grid-4col` dan `.stats-grid`).
+  2. **Peluncuran Default Kepada `display: block`**: Disebabkan `.grid-4` tidak dikenali oleh CSS, kontena bertindak sebagai elemen blok biasa. Setiap kad di dalamnya (`.card.p-20`) mengambil lebar penuh 100% (melebihi 1000px) dan tersusun ke bawah secara bertingkat 4 baris gergasi.
+  3. **Struktur Kad Tidak Standard**: Kad-kad dalam 5 sub-halaman menggunakan `.card.p-20` dengan saiz fon nombor besar (`fs-28`) berbanding komponen Bento rasmi `.stats-grid` dan `.stat-card` yang diperkenalkan dalam versi 5.6.4.
+
+- **Tindakan Pembaikan & Penyeragaman (Implementation Highlights)**:
+  1. **Penakrifan Kelas `.grid-4`, `.grid-4col`, dan `.stats-grid` Berpusat (`shared/css/wedrive.css`)**:
+     - Memastikan sebarang kegunaan `.grid-4`, `.grid-4col`, atau `.stats-grid` sentiasa menghasilkan susun atur grid 4-kolum mendatar:
+       ```css
+       .stats-grid,
+       .grid-4,
+       .grid-4col {
+         display: grid !important;
+         grid-template-columns: repeat(4, 1fr) !important;
+         gap: 16px !important;
+         margin-bottom: 22px !important;
+       }
+       ```
+     - Mengemas kini responsif pada breakpoint peranti:
+       - Tablet ($\le 1100\text{px}$): `grid-template-columns: repeat(2, 1fr) !important;`
+       - Telefon Pintar ($\le 540\text{px}$): `grid-template-columns: 1fr !important;`
+  2. **Penyelarasan Struktur Kompak `.stat-card` Pada 5 Sub-Halaman Pentadbir**:
+     - Mengemas kini HTML kepada struktur rasmi `.stats-grid` dan `.stat-card` (aliran baris mendatar dengan ikon bento bertaraf warna):
+       - `admin/pages/car/rented-cars.html` (Sedang Di Jalan Raya, Pulang Hari Ini, Purata Tempoh Sewaan, Kadar Ketepatan Masa)
+       - `admin/pages/booking/active-bookings.html` (Tempahan Aktif, Pulangan Hari Ini, Deposit Dipegang, Nilai Sewaan Aktif)
+       - `admin/pages/customer/verifications.html` (Menunggu Semakan, Disahkan Sah JPJ, Dokumen Ditolak, SLA Purata Semakan)
+       - `admin/pages/calendar/calendar.html` (Tempahan Bulan Ini, Sedang Disewa Hari Ini, Kempen & Promosi Aktif, Hasil Sewaan Bulan Ini)
+       - `admin/pages/marketing/marketing.html` (Sepanduk Aktif, Kod Kupon Sah, Jumlah Penebusan, Kadar Bermusim Aktif)
+  3. **Pembersihan Terminologi Standard Korporat**:
+     - Menggantikan istilah "Indeks utiliti armada" kepada "Indeks utiliti sewaan" selaras dengan peraturan Rule 4 (*No Fleet / Armada terminology*).
+  4. **Pengesahan Visual & Geometri**:
+     - Disahkan melalui DevTools:
+       - `allSameRow`: **true** (Keempat-empat kad berada pada aras menegak `top: 358.75px` yang tepat sama).
+       - `cardWidths`: **[261px, 261px, 261px, 261px]** (seimbang sempurna 1 baris).
+     - Kandungan utama di bawahnya (katalog kereta, jadual kontrak) kini terus kelihatan tanpa perlu skrol yang panjang.
+  5. **Pengujian Automasi Penuh (Playwright E2E)**:
+     - Kesemua **29/29 ujian lulus 100% (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `5.6.6 Unify single row bento stat cards and fix 4-column grid styling`
+  - Tag Versi: `5.6.6`

@@ -53,49 +53,41 @@
       </div>
 
       <!-- METRICS ROW (Apple Bento Clickable Cards) -->
-      <div class="grid-4 mb-24 reveal-onload">
-        <div class="card p-20 radius-24 cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('bookings')">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="cal_stat_bookings">Tempahan Bulan Ini</span>
-            <span class="material-icons-round fs-20 text-primary">event_available</span>
+      <div class="stats-grid mb-24 reveal-onload">
+        <div class="stat-card cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('bookings')">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_bookings">Tempahan Bulan Ini</div>
+            <div class="value text-primary-accent tabular-nums" id="cal-stat-bookings">0</div>
+            <div class="change up"><span class="material-icons-round fs-14">touch_app</span> Klik untuk perincian</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="cal-stat-bookings">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-primary">touch_app</span> Klik untuk perincian
-          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">event_available</span></div>
         </div>
 
-        <div class="card p-20 radius-24 cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('cars')">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="cal_stat_cars_rented">Sedang Disewa Hari Ini</span>
-            <span class="material-icons-round fs-20 text-emerald">directions_car</span>
+        <div class="stat-card cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('cars')">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_cars_rented">Sedang Disewa Hari Ini</div>
+            <div class="value text-green tabular-nums" id="cal-stat-rented">0</div>
+            <div class="change up"><span class="material-icons-round fs-14">touch_app</span> Klik untuk unit aktif</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="cal-stat-rented">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-emerald">touch_app</span> Klik untuk unit aktif
-          </div>
+          <div class="stat-icon green"><span class="material-icons-round">directions_car</span></div>
         </div>
 
-        <div class="card p-20 radius-24 cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('events')">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="cal_stat_events">Kempen &amp; Promosi Aktif</span>
-            <span class="material-icons-round fs-20 text-primary">celebration</span>
+        <div class="stat-card cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('events')">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_events">Kempen &amp; Promosi Aktif</div>
+            <div class="value text-primary-accent tabular-nums" id="cal-stat-events">0</div>
+            <div class="change up"><span class="material-icons-round fs-14">touch_app</span> Klik untuk senarai kempen</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="cal-stat-events">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-primary">touch_app</span> Klik untuk senarai kempen
-          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">celebration</span></div>
         </div>
 
-        <div class="card p-20 radius-24 cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('revenue')">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="cal_stat_revenue">Hasil Sewaan Bulan Ini</span>
-            <span class="material-icons-round fs-20 text-amber">payments</span>
+        <div class="stat-card cal-stat-clickable hover-elevate transition-apple cursor-pointer" onclick="showStatPopup('revenue')">
+          <div class="stat-info">
+            <div class="label" data-key="cal_stat_revenue">Hasil Sewaan Bulan Ini</div>
+            <div class="value text-amber tabular-nums" id="cal-stat-revenue">RM 0</div>
+            <div class="change"><span class="material-icons-round fs-14">touch_app</span> Unjuran kewangan</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="cal-stat-revenue">RM 0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-amber">touch_app</span> Klik unjuran perolehan
-          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">payments</span></div>
         </div>
       </div>
 

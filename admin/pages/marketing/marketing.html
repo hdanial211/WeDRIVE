@@ -59,50 +59,42 @@
         </div>
       </div>
 
-      <!-- STATS KPI ROW (Apple Bento Style with tabular-nums) -->
-      <div class="grid-4 mb-24 reveal-onload">
-        <div class="card p-20 radius-24 hover-elevate transition-apple">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_active_banners">Sepanduk Aktif</span>
-            <span class="material-icons-round fs-20 text-primary">campaign</span>
+      <!-- STATS KPI ROW (Apple Bento Stats Grid with tabular-nums) -->
+      <div class="stats-grid mb-24 reveal-onload">
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_active_banners">Sepanduk Aktif</div>
+            <div class="value text-primary-accent tabular-nums" id="stat-active-banners">0</div>
+            <div class="change up"><span class="material-icons-round fs-14">visibility</span> Paparan portal utama</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-active-banners">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-primary">visibility</span> Paparan portal utama
-          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">campaign</span></div>
         </div>
 
-        <div class="card p-20 radius-24 hover-elevate transition-apple">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_active_promos">Kod Kupon Sah</span>
-            <span class="material-icons-round fs-20 text-emerald">confirmation_number</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_active_promos">Kod Kupon Sah</div>
+            <div class="value text-green tabular-nums" id="stat-active-codes">0</div>
+            <div class="change up"><span class="material-icons-round fs-14">check_circle</span> Sedia untuk ditebus</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-active-codes">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-emerald">check_circle</span> Sedia untuk ditebus
-          </div>
+          <div class="stat-icon green"><span class="material-icons-round">confirmation_number</span></div>
         </div>
 
-        <div class="card p-20 radius-24 hover-elevate transition-apple">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_code_uses">Jumlah Penebusan</span>
-            <span class="material-icons-round fs-20 text-primary">bar_chart</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_code_uses">Jumlah Penebusan</div>
+            <div class="value text-primary-accent tabular-nums" id="stat-total-uses">0</div>
+            <div class="change up"><span class="material-icons-round fs-14">trending_up</span> Penjimatan pelanggan</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-total-uses">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-primary">trending_up</span> Penjimatan dinikmati pelanggan
-          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">bar_chart</span></div>
         </div>
 
-        <div class="card p-20 radius-24 hover-elevate transition-apple">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase" data-key="mkt_active_seasonal">Kadar Bermusim Aktif</span>
-            <span class="material-icons-round fs-20 text-amber">event</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label" data-key="mkt_active_seasonal">Kadar Bermusim Aktif</div>
+            <div class="value text-amber tabular-nums" id="stat-active-seasons">0</div>
+            <div class="change"><span class="material-icons-round fs-14">event</span> Lonjakan perayaan</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="stat-active-seasons">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-amber">date_range</span> Lonjakan musim perayaan
-          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">event</span></div>
         </div>
       </div>
 

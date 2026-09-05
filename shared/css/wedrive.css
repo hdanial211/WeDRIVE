@@ -14933,11 +14933,13 @@ html.night-mode .admin-depot-badge,
 }
 
 /* ── Executive Bento Stat Cards ────────────────────────────────────────────── */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 22px;
+.stats-grid,
+.grid-4,
+.grid-4col {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+  margin-bottom: 22px !important;
 }
 
 .stat-card {
@@ -15636,7 +15638,9 @@ html.night-mode .bento-ghost-icon,
 
 /* ── Responsive Adaptations ────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
-  .stats-grid {
+  .stats-grid,
+  .grid-4,
+  .grid-4col {
     grid-template-columns: repeat(2, 1fr) !important;
   }
   .grid-2 {
@@ -15659,7 +15663,9 @@ html.night-mode .bento-ghost-icon,
 }
 
 @media (max-width: 540px) {
-  .stats-grid {
+  .stats-grid,
+  .grid-4,
+  .grid-4col {
     grid-template-columns: 1fr !important;
   }
   .actions-grid {

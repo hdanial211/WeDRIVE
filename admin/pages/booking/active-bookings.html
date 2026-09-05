@@ -54,50 +54,42 @@
         </div>
       </div>
 
-      <!-- STATS KPI ROW (Apple Bento Style) -->
-      <div class="grid-4 mb-24 reveal-onload">
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">Tempahan Aktif</span>
-            <span class="material-icons-round fs-20 text-primary">bolt</span>
+      <!-- STATS KPI ROW (Apple Bento Stats Grid) -->
+      <div class="stats-grid mb-24 reveal-onload">
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Tempahan Aktif</div>
+            <div class="value text-primary-accent tabular-nums" id="active-stat-count">--</div>
+            <div class="change up"><span class="material-icons-round fs-14">directions_car</span> Sedang di jalan raya</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="active-stat-count">--</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-emerald">directions_car</span> Sedang di jalan raya
-          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">bolt</span></div>
         </div>
 
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">Pulangan Hari Ini</span>
-            <span class="material-icons-round fs-20 text-amber">assignment_return</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Pulangan Hari Ini</div>
+            <div class="value text-amber tabular-nums" id="active-stat-today">--</div>
+            <div class="change"><span class="material-icons-round fs-14">schedule</span> Sebelum 11:59 Malam</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="active-stat-today">--</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-amber">schedule</span> Sebelum 11:59 Malam
-          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">assignment_return</span></div>
         </div>
 
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">Deposit Dipegang</span>
-            <span class="material-icons-round fs-20 text-emerald">verified_user</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Deposit Dipegang</div>
+            <div class="value text-green tabular-nums" id="active-stat-deposit">RM --</div>
+            <div class="change up"><span class="material-icons-round fs-14">lock</span> Akaun Escrow WeDRIVE</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="active-stat-deposit">RM --</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-emerald">lock</span> Akaun Escrow WeDRIVE
-          </div>
+          <div class="stat-icon green"><span class="material-icons-round">verified_user</span></div>
         </div>
 
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">Nilai Sewaan Aktif</span>
-            <span class="material-icons-round fs-20 text-primary">payments</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Nilai Sewaan Aktif</div>
+            <div class="value text-primary-accent tabular-nums" id="active-stat-revenue">RM --</div>
+            <div class="change up"><span class="material-icons-round fs-14">trending_up</span> Kontrak berjalan</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="active-stat-revenue">RM --</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-primary">trending_up</span> Kontrak berjalan
-          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">payments</span></div>
         </div>
       </div>
 

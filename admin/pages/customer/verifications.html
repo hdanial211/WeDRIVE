@@ -54,50 +54,42 @@
         </div>
       </div>
 
-      <!-- STATS KPI ROW (Apple Bento Style) -->
-      <div class="grid-4 mb-24 reveal-onload">
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">Menunggu Semakan</span>
-            <span class="material-icons-round fs-20 text-amber">pending_actions</span>
+      <!-- STATS KPI ROW (Apple Bento Stats Grid) -->
+      <div class="stats-grid mb-24 reveal-onload">
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Menunggu Semakan</div>
+            <div class="value text-amber tabular-nums" id="vf-stat-pending">--</div>
+            <div class="change"><span class="material-icons-round fs-14">hourglass_top</span> Perlu audit pegawai</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="vf-stat-pending">--</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-amber">hourglass_top</span> Perlu audit pegawai
-          </div>
+          <div class="stat-icon amber"><span class="material-icons-round">pending_actions</span></div>
         </div>
 
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">Disahkan Sah JPJ</span>
-            <span class="material-icons-round fs-20 text-emerald">verified</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Disahkan Sah JPJ</div>
+            <div class="value text-green tabular-nums" id="vf-stat-approved">--</div>
+            <div class="change up"><span class="material-icons-round fs-14">check_circle</span> Sedia serahan kunci</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="vf-stat-approved">--</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-emerald">check_circle</span> Sedia serahan kunci
-          </div>
+          <div class="stat-icon green"><span class="material-icons-round">verified</span></div>
         </div>
 
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">Dokumen Ditolak</span>
-            <span class="material-icons-round fs-20 text-danger">gpp_bad</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">Dokumen Ditolak</div>
+            <div class="value text-danger tabular-nums" id="vf-stat-rejected">0</div>
+            <div class="change down"><span class="material-icons-round fs-14">error_outline</span> Gambar kabur / tamat tempoh</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title" id="vf-stat-rejected">0</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-danger">error_outline</span> Gambar kabur / tamat tempoh
-          </div>
+          <div class="stat-icon red"><span class="material-icons-round">gpp_bad</span></div>
         </div>
 
-        <div class="card p-20 radius-24">
-          <div class="flex-between mb-8">
-            <span class="fs-12 fw-700 text-muted uppercase">SLA Purata Semakan</span>
-            <span class="material-icons-round fs-20 text-primary">speed</span>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="label">SLA Purata Semakan</div>
+            <div class="value text-primary-accent tabular-nums">&lt; 15 Minit</div>
+            <div class="change up"><span class="material-icons-round fs-14">bolt</span> Piagam pelanggan rasmi</div>
           </div>
-          <div class="fs-28 fw-800 tabular-nums text-title">&lt; 15 Minit</div>
-          <div class="fs-12 text-secondary mt-4 flex-center gap-4">
-            <span class="material-icons-round fs-14 text-primary">bolt</span> Piagam pelanggan rasmi
-          </div>
+          <div class="stat-icon blue"><span class="material-icons-round">speed</span></div>
         </div>
       </div>
 
