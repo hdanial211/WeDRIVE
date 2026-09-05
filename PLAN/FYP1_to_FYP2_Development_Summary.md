@@ -3177,3 +3177,51 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.0 Fix segmented control active class toggle to ensure mutually exclusive single button selection`
   - Tag Versi: `5.7.0`
+
+---
+
+### 156. Penyeragaman Istilah Bahasa Melayu Tulen & Pembasmian Perkataan Pinjaman Asing (v5.7.1)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[LOCALIZATION & LINGUISTIC REFINEMENT]`
+- **Modul Terlibat**:
+  - `shared/lang/ms.json` & `shared/lang/ms.js`
+  - `shared/lang/en.json` & `shared/lang/en.js`
+  - `admin/pages/car/cars.html` & `admin/js/cars.js`
+  - `admin/pages/car/available-cars.html`
+  - `admin/pages/car/rented-cars.html`
+  - `admin/pages/car/add-car.html`
+  - `admin/pages/booking/new-booking.html`
+  - `admin/pages/booking/active-bookings.html`
+  - `admin/pages/calendar/calendar.html`
+  - `admin/pages/report/export-reports.html`
+  - `admin/pages/chatbot/chatbot.html`
+  - `admin/pages/dashboard/admin.html`
+  - `admin/pages/dashboard/operations.html`
+
+- **Objektif & Latar Belakang**:
+  - Memenuhi teguran khusus pengguna mengenai penggunaan perkataan yang bukan daripada Bahasa Melayu standard atau perkataan pinjaman canggung:
+    *"banyak saya perasan perkataan bukan dari bahasa melayu...double check bali macam ni: depoh"*
+  - Menilai semula keseluruhan sistem bagi menggantikan perkataan seperti "depoh", "depot", "utiliti", dan "sanitasi" kepada istilah bahasa Melayu yang profesional, tulen, dan lazim digunakan dalam industri sewa kenderaan rasmi Malaysia (seperti Mayflower, Wahdah, Socar).
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pembasmian Perkataan "Depoh / Depot"**:
+     - Menggantikan "Lokasi Depoh / Depoh Utama Melaka Sentral" kepada **"Pusat Operasi / Cawangan Utama Melaka Sentral"**.
+     - Menggantikan "Depot Lapangan Terbang Melaka (MKZ)" kepada **"Cawangan Lapangan Terbang Melaka (MKZ)"**.
+     - Menggantikan "Ayer Keroh Depot" kepada **"Pusat Servis Ayer Keroh"**.
+     - Menggantikan "3 Depots Synchronized" kepada **"3 Cawangan Beroperasi"**.
+     - Menggantikan "rekod pulangan depoh" kepada **"rekod pemulangan cawangan"**.
+  2. **Pembasmian Perkataan "Siap Sanitasi" & "Utiliti"**:
+     - Menggantikan "Siap Sanitasi" kepada **"Sedia Bersih"** selaras dengan larangan istilah hospital/AI dalam Peraturan 8.
+     - Menggantikan "Utiliti Kereta" dan "Indeks Utiliti Sewaan" kepada **"Kadar Penggunaan Kereta"** dan **"Kadar Penggunaan Sewaan"**.
+  3. **Penyeragaman Dwibahasa Penuh & Bahasa Melayu di `cars.html`**:
+     - Menggantikan teks statik Bahasa Inggeris di kad ringkasan dan penapis: `TOTAL CARS` $\rightarrow$ `JUMLAH KERETA`, `AVAILABLE` $\rightarrow$ `TERSEDIA`, `RENTED` $\rightarrow$ `SEDANG DISEWA`, `All` $\rightarrow$ `Semua`, `Available` $\rightarrow$ `Tersedia`, `Rented` $\rightarrow$ `Sedang Disewa`.
+     - Menggantikan teks butang tukar paparan: `List View` / `Grid View` $\rightarrow$ `Paparan Senarai` / `Paparan Grid`.
+     - Mengemas kini kekunci bahasa `fl_total_cars`, `fl_available`, `fl_rented`, `fl_filter_all`, `fl_filter_avail`, `fl_filter_rented`, `fl_search_ph`, `fl_view_list`, `fl_view_grid`, `fl_add_car`, `fl_hub_location`, dan `fl_hub_name` dalam kamus `ms.json`, `ms.js`, `en.json`, dan `en.js`.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Pelayar DevTools**: Disahkan secara visual di halaman `cars.html`, `operations.html`, `available-cars.html`, dan `rented-cars.html`. Tiada lagi perkataan "depoh", dan semua label terpapar dalam Bahasa Melayu yang anggun dan tulen.
+  - **Ujian Playwright E2E**: Menjalankan keseluruhan suite 29 ujian automasi dengan kadar kelulusan 100%.
+
+- **Maklumat Git**:
+  - Commit: `5.7.1 Standardize authentic Malay terminology across admin system and eliminate depoh loanwords`
+  - Tag Versi: `5.7.1`

@@ -47,7 +47,7 @@ test.describe('Customer My Bookings Portal E2E Tests', () => {
 
   test('Segmented filter tabs switch correctly (All, Active, Upcoming, Completed, Cancelled)', async ({ page }) => {
     await page.goto('http://localhost:8088/customer/pages/my-bookings/my-bookings.html');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(500);
 
     const tabAll = page.locator('#tab-all');

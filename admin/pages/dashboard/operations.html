@@ -36,9 +36,9 @@
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
               <h1 class="bento-title-main" data-key="ops_title">Status Operasi Hab &amp; Kenderaan</h1>
-              <span class="status-badge active"><span class="live-pulse-dot"></span> <span data-key="ops_live_network">Live Depot Network</span></span>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span data-key="ops_live_network">Rangkaian Cawangan Langsung</span></span>
             </div>
-            <p class="bento-subtitle-main" data-key="ops_subtitle">Pemantauan kesiapsagaan 3 depot Melaka, pemeriksaan standard ISO kenderaan, dan jadual serahan harian.</p>
+            <p class="bento-subtitle-main" data-key="ops_subtitle">Pemantauan kesiapsagaan 3 cawangan Melaka, pemeriksaan kualiti kenderaan standard, dan jadual serahan harian.</p>
           </div>
           <div class="flex-center gap-10">
             <span class="fs-13 fw-600 text-secondary px-14 py-8 bg-secondary radius-pill tabular-nums flex-center gap-6" id="ops-live-clock">
@@ -68,7 +68,7 @@
           <div class="stat-info">
             <div class="label" data-key="ops_kpi_ready">Sedia Untuk Serahan</div>
             <div class="value text-green tabular-nums" id="ops-ready">--</div>
-            <div class="change up"><span class="material-icons-round fs-14">check_circle</span> <span data-key="ops_kpi_ready_sub">Di depot sedia diambil</span></div>
+            <div class="change up"><span class="material-icons-round fs-14">check_circle</span> <span data-key="ops_kpi_ready_sub">Di cawangan sedia diambil</span></div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">verified</span></div>
         </div>
@@ -96,9 +96,9 @@
         <div class="card reveal-on-scroll p-24">
           <div class="card-header border-bottom-subtle pb-14 mb-16 flex-between">
             <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
-              <span class="material-icons-round text-primary-accent">warehouse</span> <span data-key="ops_depot_title">Kesiapsagaan Hab &amp; Depot Melaka</span>
+              <span class="material-icons-round text-primary-accent">warehouse</span> <span data-key="ops_depot_title">Kesiapsagaan Hab &amp; Cawangan Melaka</span>
             </h3>
-            <span class="status-badge success fs-11"><span class="dot"></span> <span data-key="ops_depot_badge">3 Hab Beroperasi</span></span>
+            <span class="status-badge success fs-11"><span class="dot"></span> <span data-key="ops_depot_badge">3 Cawangan Beroperasi</span></span>
           </div>
           <div class="ops-depot-list">
             <div class="ops-depot-item bento-item-subtle p-16 mb-12 radius-16">
@@ -106,7 +106,7 @@
                 <div class="flex-center gap-12">
                   <span class="material-icons-round text-primary-accent fs-24">flight</span>
                   <div>
-                    <div class="fw-700 fs-14 text-title" data-key="ops_depot_mkz_name">Depot Lapangan Terbang Melaka (MKZ)</div>
+                    <div class="fw-700 fs-14 text-title" data-key="ops_depot_mkz_name">Cawangan Lapangan Terbang Melaka (MKZ)</div>
                     <div class="fs-12 text-muted" data-key="ops_depot_mkz_sub">Kaunter Utama Terminal &amp; Parkir P1–P12</div>
                   </div>
                 </div>
@@ -359,7 +359,7 @@
           : (isEn ? 'Vehicle Return' : 'Pemulangan Kenderaan');
         var hubName = idx % 2 === 0 
           ? (isEn ? 'Melaka Sentral Hub' : 'Hab Melaka Sentral') 
-          : (isEn ? 'MKZ Airport Depot' : 'Depot MKZ Airport');
+          : (isEn ? 'MKZ Airport Branch' : 'Cawangan Lapangan Terbang MKZ');
         var locTime = (b.start_date || b.pickup_date || (isEn ? 'Today' : 'Hari Ini')) + ' • ' + hubName;
         var statusBadge = (b.status || '').toLowerCase() === 'completed' ? 'success' : ((b.status || '').toLowerCase() === 'active' ? 'active' : 'pending');
         var statusLabel = (b.status || '').toLowerCase() === 'completed' 

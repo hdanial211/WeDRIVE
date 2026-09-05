@@ -35,7 +35,7 @@ test.describe('WeDRIVE Operations Dashboard Bilingual Localization Tests', () =>
     await expect(refreshBtn).toHaveText('Muat Semula');
     await expect(kpiOnRoad).toHaveText('Kenderaan Di Jalan Raya');
     await expect(kpiReady).toHaveText('Sedia Untuk Serahan');
-    await expect(depotTitle).toHaveText('Kesiapsagaan Hab & Depot Melaka');
+    await expect(depotTitle).toHaveText('Kesiapsagaan Hab & Cawangan Melaka');
     await expect(depotUnits).toHaveText('Unit Sedia');
     await expect(protoTitle).toHaveText('Protokol Pemeriksaan Turnover Kenderaan');
     await expect(rosterTitle).toHaveText('Jadual Serahan & Pulangan Hari Ini');

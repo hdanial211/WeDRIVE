@@ -25,21 +25,21 @@
       <div class="stats-grid grid-3col">
         <div class="card stat-card reveal-on-scroll">
           <div class="stat-info">
-            <span class="stat-label" data-key="fl_total_cars">TOTAL CARS</span>
+            <span class="stat-label" data-key="fl_total_cars">JUMLAH KERETA</span>
             <div class="stat-value tabular-nums" id="fl-total">0</div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
         </div>
         <div class="card stat-card reveal-on-scroll">
           <div class="stat-info">
-            <span class="stat-label" data-key="fl_available">AVAILABLE</span>
+            <span class="stat-label" data-key="fl_available">TERSEDIA</span>
             <div class="stat-value tabular-nums" id="fl-available">0</div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">check_circle</span></div>
         </div>
         <div class="card stat-card reveal-on-scroll">
           <div class="stat-info">
-            <span class="stat-label" data-key="fl_rented">RENTED</span>
+            <span class="stat-label" data-key="fl_rented">SEDANG DISEWA</span>
             <div class="stat-value tabular-nums" id="fl-rented">0</div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">car_rental</span></div>
@@ -51,27 +51,27 @@
         <div class="flex-between gap-12 flex-wrap">
           <div class="apple-segmented-control" role="tablist" aria-label="Penapis Status Kereta">
             <button class="apple-segment-item active" data-status="all" onclick="filterCar('all', this)">
-              All (<span id="count-all" class="tabular-nums">0</span>)
+              <span data-key="fl_filter_all">Semua</span> (<span id="count-all" class="tabular-nums">0</span>)
             </button>
             <button class="apple-segment-item" data-status="Available" onclick="filterCar('Available', this)">
-              Available (<span id="count-avail" class="tabular-nums">0</span>)
+              <span data-key="fl_filter_avail">Tersedia</span> (<span id="count-avail" class="tabular-nums">0</span>)
             </button>
             <button class="apple-segment-item" data-status="Rented" onclick="filterCar('Rented', this)">
-              Rented (<span id="count-rented" class="tabular-nums">0</span>)
+              <span data-key="fl_filter_rented">Sedang Disewa</span> (<span id="count-rented" class="tabular-nums">0</span>)
             </button>
           </div>
           <div class="flex-center gap-10">
             <div class="input-wrap-sm input-search-fixed">
               <span class="material-icons-round fs-18">search</span>
-              <input type="text" id="fl-search" placeholder="Search car name or plate..."
+              <input type="text" id="fl-search" placeholder="Cari model atau plat nombor..." data-key="fl_search_ph"
                 oninput="searchCar(this.value)" />
             </div>
-            <button class="btn-outline-sm" id="car-view-toggle-btn" onclick="toggleCarView()" title="Toggle between List and Grid view">
-              <span class="material-icons-round fs-16">view_list</span> List View
+            <button class="btn-outline-sm" id="car-view-toggle-btn" onclick="toggleCarView()" title="Tukar antara paparan Senarai dan Grid">
+              <span class="material-icons-round fs-16">view_list</span> <span data-key="fl_view_list">Senarai</span>
             </button>
-            <button class="btn-primary-sm" onclick="addNewCar()" title="Add new car">
+            <button class="btn-primary-sm" onclick="addNewCar()" title="Tambah kereta baharu">
               <span class="material-icons-round fs-16">add</span>
-              <span data-key="fl_add_car">Add Car</span>
+              <span data-key="fl_add_car">Tambah Kereta</span>
             </button>
           </div>
         </div>

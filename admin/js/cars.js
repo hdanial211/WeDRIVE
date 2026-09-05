@@ -43,6 +43,9 @@ function setCarViewMode(mode) {
   const listEl = document.getElementById('car-list-container');
   const toggleBtn = document.getElementById('car-view-toggle-btn');
   
+  const lang = localStorage.getItem('wedrive_lang') || 'ms';
+  const isEn = lang === 'en';
+
   if (mode === 'list') {
     if (gridEl) gridEl.style.display = 'none';
     if (listEl) {
@@ -50,8 +53,8 @@ function setCarViewMode(mode) {
       listEl.style.animation = 'pageTransitionIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards';
     }
     if (toggleBtn) {
-      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">grid_view</span> Grid View`;
-      toggleBtn.title = "Switch to Grid View";
+      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">grid_view</span> ${isEn ? 'Grid View' : 'Paparan Grid'}`;
+      toggleBtn.title = isEn ? 'Switch to Grid View' : 'Tukar ke Paparan Grid';
     }
   } else {
     if (listEl) listEl.style.display = 'none';
@@ -60,8 +63,8 @@ function setCarViewMode(mode) {
       gridEl.style.animation = 'pageTransitionIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards';
     }
     if (toggleBtn) {
-      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">view_list</span> List View`;
-      toggleBtn.title = "Switch to List View";
+      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">view_list</span> ${isEn ? 'List View' : 'Paparan Senarai'}`;
+      toggleBtn.title = isEn ? 'Switch to List View' : 'Tukar ke Paparan Senarai';
     }
   }
 }
@@ -138,8 +141,8 @@ function renderCarCards(car) {
             <span class="apple-rental-value fw-600 ${isAvail ? 'text-emerald' : 'text-primary'}">${sc.label}</span>
           </div>
           <div class="apple-rental-row">
-            <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Lokasi Depoh</span>
-            <span class="apple-rental-value">Depoh Utama Melaka Sentral</span>
+            <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Operasi</span>
+            <span class="apple-rental-value">Cawangan Utama Melaka Sentral</span>
           </div>
         </div>
 

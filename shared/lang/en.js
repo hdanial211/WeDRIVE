@@ -1016,7 +1016,20 @@ window.wedrive_lang_en = {
   "ops_status_active": "Active",
   "ops_status_pending": "Pending",
   "ops_btn_manage": "Manage",
-  "ops_no_schedule": "No active handover schedules today."
+  "ops_no_schedule": "No active handover schedules today.",
+  "admin_depots_synced": "3 Branches Operational",
+  "fl_total_cars": "TOTAL CARS",
+  "fl_available": "AVAILABLE",
+  "fl_rented": "RENTED",
+  "fl_filter_all": "All",
+  "fl_filter_avail": "Available",
+  "fl_filter_rented": "Rented",
+  "fl_search_ph": "Search car model or plate...",
+  "fl_view_list": "List View",
+  "fl_view_grid": "Grid View",
+  "fl_add_car": "Add Car",
+  "fl_hub_location": "Operating Branch",
+  "fl_hub_name": "Melaka Sentral Main Branch"
 };
 
 if (typeof module !== 'undefined' && module.exports) {
