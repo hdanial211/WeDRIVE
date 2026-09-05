@@ -210,27 +210,27 @@
     "semantic_hash": "854d79deba14cee1934248c66858e171"
   },
   "shared/lang/en.js": {
-    "mtime": 1788529824.146834,
-    "seen": 1788530927.4013638,
-    "ast_hash": "089184fb0d1dec44a2a801a855561a38",
+    "mtime": 1788595791.045442,
+    "seen": 1788596175.8022778,
+    "ast_hash": "42f01455a2aa39a32d4f675e28b8779c",
     "semantic_hash": ""
   },
   "shared/lang/en.json": {
-    "mtime": 1788529856.6763992,
-    "seen": 1788530927.4013638,
-    "ast_hash": "ff3a4e5a4284d8ce2744d6157d3fea5e",
+    "mtime": 1788595778.181748,
+    "seen": 1788596175.802279,
+    "ast_hash": "d45dbd00c44cee686f6992aceebe743a",
     "semantic_hash": ""
   },
   "shared/lang/ms.js": {
-    "mtime": 1788529800.7441244,
-    "seen": 1788530927.401365,
-    "ast_hash": "8ee931befefc20e254a4c223a5fe4234",
+    "mtime": 1788595812.3213632,
+    "seen": 1788596175.802279,
+    "ast_hash": "001eaccb6543f903acaa9e57ea9d203d",
     "semantic_hash": ""
   },
   "shared/lang/ms.json": {
-    "mtime": 1788529814.5526073,
-    "seen": 1788530927.401365,
-    "ast_hash": "67f095caa84b3bd97b582678be00602e",
+    "mtime": 1788595801.9691463,
+    "seen": 1788596175.80228,
+    "ast_hash": "7eab5d2de6f60751cbbf886fd9873670",
     "semantic_hash": ""
   },
   "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/source.json": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788541009.6525486,
-    "seen": 1788541043.352746,
-    "ast_hash": "68700e7ffc0a33a71d178fe059cc51ab",
+    "mtime": 1788596163.752534,
+    "seen": 1788596175.802315,
+    "ast_hash": "f2e083c1ce4647249c7e4707f2197512",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -552,9 +552,9 @@
     "semantic_hash": ""
   },
   "admin/pages/calendar/calendar.html": {
-    "mtime": 1788535989.0860653,
-    "seen": 1788536888.776449,
-    "ast_hash": "f2cfc43be5a88e0ad2ec087c2796d7df",
+    "mtime": 1788595725.0693758,
+    "seen": 1788596175.802332,
+    "ast_hash": "431fa7806e7912b24e52880d4ac08d1a",
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
@@ -570,9 +570,9 @@
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {
-    "mtime": 1788539165.5082846,
-    "seen": 1788539326.5854568,
-    "ast_hash": "f4fc23916bb2308f64bdf358efdd7c51",
+    "mtime": 1788595669.616166,
+    "seen": 1788596175.802336,
+    "ast_hash": "0e421acdc8b2e12b019d12d223bde7b6",
     "semantic_hash": ""
   },
   "admin/pages/customer/customers.html": {
@@ -582,15 +582,15 @@
     "semantic_hash": ""
   },
   "admin/pages/dashboard/admin.html": {
-    "mtime": 1788540507.2468812,
-    "seen": 1788541043.35277,
-    "ast_hash": "df6bbe2a12e396b8913881576a595998",
+    "mtime": 1788595601.7035127,
+    "seen": 1788596175.802337,
+    "ast_hash": "294bb3bbf1c3a95ed1e40461ae3c7d2e",
     "semantic_hash": ""
   },
   "admin/pages/marketing/marketing.html": {
-    "mtime": 1788539197.2915213,
-    "seen": 1788539326.585462,
-    "ast_hash": "f3f8d4c95518b53cefbde17cb5dd8335",
+    "mtime": 1788595652.6316988,
+    "seen": 1788596175.8023381,
+    "ast_hash": "695b97210a404e242cf8a14101ba86ee",
     "semantic_hash": ""
   },
   "admin/pages/report/reports.html": {
@@ -846,9 +846,9 @@
     "semantic_hash": ""
   },
   "shared/components/footer.html": {
-    "mtime": 1787745560.3910778,
-    "seen": 1787898737.1946418,
-    "ast_hash": "ff61421d00b9537eab57d026dafbd19a",
+    "mtime": 1788595754.0687459,
+    "seen": 1788596175.8023639,
+    "ast_hash": "d8513499979738034563dc436b48fbe9",
     "semantic_hash": ""
   },
   "shared/components/navbar.html": {
@@ -864,9 +864,9 @@
     "semantic_hash": ""
   },
   "shared/pages/footer/about/about.html": {
-    "mtime": 1787897500.8537786,
-    "seen": 1787898737.194643,
-    "ast_hash": "28bb879756736279fbfa1d1615f2cc78",
+    "mtime": 1788595856.1293883,
+    "seen": 1788596175.802366,
+    "ast_hash": "a3e05387fb1c2362b4fab23f7edb1594",
     "semantic_hash": ""
   },
   "shared/pages/footer/contact/contact.html": {
@@ -11190,9 +11190,9 @@
     "semantic_hash": ""
   },
   "admin/pages/analytics/analytics.html": {
-    "mtime": 1788530448.1572568,
-    "seen": 1788530927.401459,
-    "ast_hash": "75458b65ee9296cea8b96f46b3c83576",
+    "mtime": 1788595647.108238,
+    "seen": 1788596175.80233,
+    "ast_hash": "865d8a390dd2e2fcb406023f6556ee03",
     "semantic_hash": ""
   },
   "tests/e2e/10_admin_sidebar_pages.spec.js": {
@@ -11202,21 +11202,21 @@
     "semantic_hash": ""
   },
   "admin/pages/booking/active-bookings.html": {
-    "mtime": 1788536011.6795917,
-    "seen": 1788536888.776439,
-    "ast_hash": "e1bf7c1cb62f7df01c7036488289199e",
+    "mtime": 1788595691.827348,
+    "seen": 1788596175.80233,
+    "ast_hash": "fea0932190e47079d182f534e1be02c3",
     "semantic_hash": ""
   },
   "admin/pages/booking/new-booking.html": {
-    "mtime": 1788536048.9423752,
-    "seen": 1788536888.776447,
-    "ast_hash": "32b1ae38397e66e1ea3f7daa72d0ea99",
+    "mtime": 1788595702.2074363,
+    "seen": 1788596175.802332,
+    "ast_hash": "d908fb0d3ea3bd96ea85cb9844a229f0",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car.html": {
-    "mtime": 1788539152.5736957,
-    "seen": 1788539326.585452,
-    "ast_hash": "cc21fe26a608c06cc1288ea70c161bdb",
+    "mtime": 1788595735.2596233,
+    "seen": 1788596175.8023329,
+    "ast_hash": "5971c5660375cf5b419991c5a8f223b5",
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
@@ -11226,15 +11226,15 @@
     "semantic_hash": ""
   },
   "admin/pages/car/rented-cars.html": {
-    "mtime": 1788535940.2716718,
-    "seen": 1788536888.7764611,
-    "ast_hash": "42cbd644de4efae2d67022a076f4ba68",
+    "mtime": 1788595745.7417622,
+    "seen": 1788596175.802335,
+    "ast_hash": "26df6271103bb2dda54a0315e50886af",
     "semantic_hash": ""
   },
   "admin/pages/customer/verifications.html": {
-    "mtime": 1788539177.1869912,
-    "seen": 1788539326.585459,
-    "ast_hash": "cc120c1156ef5a3904bb36b25457ae92",
+    "mtime": 1788595682.4534984,
+    "seen": 1788596175.802337,
+    "ast_hash": "d98d5feb1118f99c3ef919034eb15cae",
     "semantic_hash": ""
   },
   "admin/pages/dashboard/operations.html": {
@@ -11244,9 +11244,9 @@
     "semantic_hash": ""
   },
   "admin/pages/report/export-reports.html": {
-    "mtime": 1788539208.02636,
-    "seen": 1788539326.585463,
-    "ast_hash": "5170e620c47cc1dd27070f22aaa17921",
+    "mtime": 1788595716.6797953,
+    "seen": 1788596175.802339,
+    "ast_hash": "894c6bb5c0322cacc9116f529b031fc7",
     "semantic_hash": ""
   },
   ".agents/rules/stitch_design_system.md": {

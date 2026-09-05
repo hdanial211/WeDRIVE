@@ -2806,3 +2806,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.1 Replace all fleet and armada terminology with car and kereta across entire system`
   - Tag Versi: `5.6.1`
+
+---
+
+## 🚀 [MINOR UPDATE] 149. Penalaan Kompak & Ramping Kad Bento Statistik Admin Dashboard (v5.6.2)
+
+- **Punca Keperluan & Arahan Pengguna (Context & User Feedback)**:
+  > *"ni terlalu besar sangat kecil kan sikit... x lawa besar2"*
+  - Pengguna mendapati 4 kad metrik bento di baris atas Admin Dashboard kelihatan terlalu gergasi dan mempunyai ruang kosong menegak yang berlebihan (terlalu kembung / *bloated*).
+
+- **Tindakan Pembaikan & Penalaan Ramping (Implementation Highlights)**:
+  1. **Penurunan Ketinggian & Padding Kad (`.stat-card`)**:
+     - Mengurangkan padding daripada `24px 22px 20px 22px` kepada `16px 18px 14px 18px` (menjimatkan ~38px ketinggian mati).
+     - Menyelaraskan jejari sudut squircle daripada `24px` kepada `18px` yang lebih tajam, kemas, dan padat.
+     - Mengurangkan jurang grid (`.stats-grid gap`) daripada `20px` kepada `16px`, dan margin bawah daripada `28px` kepada `22px`.
+  2. **Skala Tipografi Lebih Seimbang & Profesional**:
+     - Menurunkan saiz angka metrik utama (`.stat-info .value`) daripada `32px` kepada `24px` dengan `font-weight: 700` dan `letter-spacing: -0.02em`.
+     - Mengurangkan saiz label atas (`.stat-info .label`) kepada `11px` (`letter-spacing: 0.04em`).
+  3. **Pengoptimuman Kotak Ikon & Watermark Hantu**:
+     - Kotak ikon squircle (`.stat-icon`) dikecilkan daripada `44px x 44px` kepada `36px x 36px` dengan ikon `20px` dan jejari `10px`.
+     - Ikon tera air hantu di bucu kad (`.bento-ghost-icon`) dikecilkan daripada `96px` kepada `64px` dengan kelegapan lebih halus `0.025` bagi mengelakkan kekusutan visual.
+  4. **Penyelarasan Kod & CSS Caching**:
+     - Membuang kelas lama `fs-24` pada kad pendapatan bagi memastikan kesemua 4 kad mempunyai skala fon seragam.
+     - Mengemas kini versi pautan cache CSS dalam `admin.html` kepada `?v=5.6.2`.
+  5. **Pengesahan & Ujian Automasi**:
+     - Ketinggian kad berjaya diturunkan daripada ~185px kepada ~148px (penurunan saiz ~20% yang amat kemas dan tidak lagi besar keterlaluan).
+     - Suite ujian automasi Playwright: **28/28 ujian lulus sepenuhnya (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `5.6.2 Make admin dashboard bento stat cards compact sleek and refined`
+  - Tag Versi: `5.6.2`
