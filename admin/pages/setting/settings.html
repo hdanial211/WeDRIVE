@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Settings | WeDRIVE</title>
+  <title>Tetapan Sistem | WeDRIVE Admin</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.6" />
-  <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.8.0" />
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
 <body data-particles="6" data-cursor-glow>
   <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="settings"></div>
@@ -19,136 +19,203 @@
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
-      <!-- HERO HEADER -->
-      <div class="settings-hero reveal-onload">
-        <h2 data-key="st_company_settings">System Settings</h2>
-        <p>Manage company details, operational configurations, tax values, and rental rules.</p>
-        <span class="material-icons-round hero-icon">settings</span>
-      </div>
-
-      <div class="settings-grid">
-        <!-- COMPANY DETAILS -->
-        <div class="settings-card reveal-onload">
-          <div class="settings-header">
-            <span class="material-icons-round">business</span>
-            <h3 data-key="st_company_title">Company Details</h3>
+      <!-- APPLE BENTO HERO HEADER -->
+      <div class="bento-header-hero reveal-onload mb-24">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <div class="bento-breadcrumbs">
+              <a href="../dashboard/admin.html">Pentadbiran</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span>Tetapan Sistem</span>
+            </div>
+            <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+              <h1 class="bento-title-main">Tetapan Sistem &amp; Polisi Operasi</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Konfigurasi Berpusat</span></span>
+            </div>
+            <p class="bento-subtitle-main">
+              Urus identiti syarikat, lokasi operasi tunggal (HQ), had tempoh sewaan, struktur cukai, deposit, dan polisi denda lewat.
+            </p>
           </div>
-          <div class="form-grid-custom">
-            <div class="form-group">
-              <label for="st-name" data-key="st_name">Company Name</label>
-              <div class="input-wrap-sm">
-                <span class="material-icons-round">business</span>
-                <input type="text" id="st-name" placeholder="Company Name" title="Company Name" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="st-email" data-key="st_email">Email</label>
-              <div class="input-wrap-sm">
-                <span class="material-icons-round">email</span>
-                <input type="email" id="st-email" placeholder="Email Address" title="Email Address" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="st-phone" data-key="st_phone">Phone</label>
-              <div class="input-wrap-sm">
-                <span class="material-icons-round">phone</span>
-                <input type="text" id="st-phone" placeholder="Phone Number" title="Phone Number" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="st-address" data-key="st_address">Address</label>
-              <div class="input-wrap-sm">
-                <span class="material-icons-round">place</span>
-                <input type="text" id="st-address" placeholder="Company Address" title="Company Address" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- RENTAL SETTINGS -->
-        <div class="settings-card reveal-on-scroll">
-          <div class="settings-header">
-            <span class="material-icons-round">rule</span>
-            <h3 data-key="st_rental_title">Rental Configuration</h3>
-          </div>
-          <div class="form-grid-custom">
-            <div class="grid-2col gap-16">
-              <div class="form-group">
-                <label for="st-currency" data-key="st_currency">Currency</label>
-                <div class="input-wrap-sm">
-                  <span class="material-icons-round">monetization_on</span>
-                  <input type="text" id="st-currency" placeholder="e.g. RM" title="Currency" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="st-tax" data-key="st_tax">Tax Rate (%)</label>
-                <div class="input-wrap-sm">
-                  <span class="material-icons-round">percent</span>
-                  <input type="number" id="st-tax" placeholder="e.g. 6" title="Tax Rate (%)" />
-                </div>
-              </div>
-            </div>
-            
-            <div class="grid-2col gap-16">
-              <div class="form-group">
-                <label for="st-min-days" data-key="st_min_days">Min Rental Days</label>
-                <div class="input-wrap-sm">
-                  <span class="material-icons-round">today</span>
-                  <input type="number" id="st-min-days" placeholder="e.g. 1" title="Min Rental Days" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="st-max-days" data-key="st_max_days">Max Rental Days</label>
-                <div class="input-wrap-sm">
-                  <span class="material-icons-round">date_range</span>
-                  <input type="number" id="st-max-days" placeholder="e.g. 30" title="Max Rental Days" />
-                </div>
-              </div>
-            </div>
-
-            <div class="grid-2col gap-16">
-              <div class="form-group">
-                <label for="st-late-fee" data-key="st_late_fee">Late Fee (RM/hour)</label>
-                <div class="input-wrap-sm">
-                  <span class="material-icons-round">schedule</span>
-                  <input type="number" id="st-late-fee" placeholder="e.g. 20" title="Late Fee (RM/hour)" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="st-deposit" data-key="st_deposit">Deposit (%)</label>
-                <div class="input-wrap-sm">
-                  <span class="material-icons-round">savings</span>
-                  <input type="number" id="st-deposit" placeholder="e.g. 10" title="Deposit (%)" />
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="st-hours" data-key="st_hours">Operating Hours</label>
-              <div class="input-wrap-sm">
-                <span class="material-icons-round">alarm</span>
-                <input type="text" id="st-hours" placeholder="e.g. 08:00 - 22:00" title="Operating Hours" />
-              </div>
-            </div>
+          <div class="flex-center gap-10">
+            <button class="btn-primary-sm btn-save-settings" onclick="saveSettings()">
+              <span class="material-icons-round fs-18">save</span>
+              <span data-key="st_save">Simpan Perubahan</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- PICKUP LOCATIONS (Hidden by default or display:none, kept for compatibility) -->
-      <div class="settings-card reveal-on-scroll mb-24 hidden">
-        <div class="settings-header">
-          <span class="material-icons-round">location_on</span>
-          <h3 data-key="st_locations_title">Pick-up Locations</h3>
+      <!-- BENTO SETTINGS GRID -->
+      <div class="grid-2 gap-24 items-start mb-24">
+
+        <!-- KAD 1: PROFIL SYARIKAT & PERHUBUNGAN -->
+        <div class="card p-24 radius-24 reveal-onload">
+          <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+            <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+              <span class="material-icons-round text-primary">business</span>
+              <span>Profil Syarikat &amp; Maklumat Rasmi</span>
+            </h3>
+            <span class="fs-12 text-secondary">Global Sync</span>
+          </div>
+
+          <div class="form-group mb-16">
+            <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-name">Nama Rasmi Syarikat</label>
+            <div class="position-relative">
+              <input type="text" id="st-name" class="form-input radius-14 pl-40" placeholder="WeDRIVE Car Rental Malaysia" />
+              <span class="material-icons-round position-absolute top-50 translate-middle-y left-14 text-secondary fs-18">apartment</span>
+            </div>
+          </div>
+
+          <div class="grid-2 gap-14 mb-16">
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-email">Emel Rasmi Sokongan</label>
+              <div class="position-relative">
+                <input type="email" id="st-email" class="form-input radius-14 pl-40" placeholder="support@wedrive.my" />
+                <span class="material-icons-round position-absolute top-50 translate-middle-y left-14 text-secondary fs-18">email</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-phone">No. Telefon Operasi</label>
+              <div class="position-relative">
+                <input type="text" id="st-phone" class="form-input radius-14 pl-40 tabular-nums" placeholder="06-2345678" />
+                <span class="material-icons-round position-absolute top-50 translate-middle-y left-14 text-secondary fs-18">phone</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-14 radius-16 bg-surface-2 border-subtle fs-12 text-secondary flex-start gap-10">
+            <span class="material-icons-round text-primary fs-20 flex-shrink-0">sync</span>
+            <div>Maklumat syarikat ini diselaraskan secara automatik ke seluruh footer laman, pautan WhatsApp sokongan pelanggan, dan resit digital.</div>
+          </div>
         </div>
-        <div id="locations-list" class="d-flex flex-wrap gap-10"></div>
+
+        <!-- KAD 2: PUSAT OPERASI, SERAHAN & PULANGAN TUNGGAL (HQ LOCATION) -->
+        <div class="card p-24 radius-24 reveal-onload">
+          <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+            <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+              <span class="material-icons-round text-emerald">location_on</span>
+              <span>Pusat Operasi, Serahan &amp; Pulangan Tunggal (HQ)</span>
+            </h3>
+            <span class="hq-badge-pill"><span class="ai-pulse-dot mr-4"></span> Lokasi Rasmi Sahaja</span>
+          </div>
+
+          <div class="form-group mb-16">
+            <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-address">Alamat Pusat Serahan Utama (HQ Location)</label>
+            <div class="position-relative">
+              <input type="text" id="st-address" class="form-input radius-14 pl-40" placeholder="Lot 123, Jalan Melaka Sentral, 75000 Melaka" />
+              <span class="material-icons-round position-absolute top-50 translate-middle-y left-14 text-secondary fs-18">pin_drop</span>
+            </div>
+            <div class="fs-11 text-muted mt-4">Semua pelanggan akan mengambil dan memulangkan kenderaan di alamat tunggal ini.</div>
+          </div>
+
+          <div class="form-group mb-16">
+            <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-hours">Waktu Operasi Pusat Serahan</label>
+            <div class="position-relative">
+              <input type="text" id="st-hours" class="form-input radius-14 pl-40" placeholder="8:00 AM - 10:00 PM (Setiap Hari)" />
+              <span class="material-icons-round position-absolute top-50 translate-middle-y left-14 text-secondary fs-18">schedule</span>
+            </div>
+          </div>
+
+          <div class="card p-14 radius-16 bg-surface-2 border-subtle fs-12 text-secondary flex-start gap-10">
+            <span class="material-icons-round text-emerald fs-20 flex-shrink-0">verified</span>
+            <div><strong>Dasar Lokasi Tunggal WeDRIVE:</strong> Seluruh sistem dikunci kepada pusat operasi rasmi ini bagi menjamin kelancaran logistik kenderaan, pendaftaran kereta, dan audit serah/terima.</div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- SAVE BUTTON -->
-      <div class="reveal-on-scroll flex-end gap-12 mt-16">
-        <button class="btn-primary-sm btn-save-settings" onclick="saveSettings()">
-          <span class="material-icons-round fs-18">save</span>
-          <span data-key="st_save">Save Changes</span>
-        </button>
+      <!-- ROW 2: POLISI SEWAAN & PINTU MASUK AI -->
+      <div class="grid-2 gap-24 items-start mb-24">
+
+        <!-- KAD 3: STRUKTUR TARIF, CUKAI & DENDA LEWAT -->
+        <div class="card p-24 radius-24 reveal-on-scroll">
+          <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+            <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+              <span class="material-icons-round text-primary">payments</span>
+              <span>Polisi Sewaan, Cukai &amp; Denda Lewat</span>
+            </h3>
+            <span class="fs-12 text-secondary">Kewangan</span>
+          </div>
+
+          <div class="grid-2 gap-14 mb-16">
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-currency">Mata Wang Sistem</label>
+              <input type="text" id="st-currency" class="form-input radius-14" placeholder="MYR" readonly />
+            </div>
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-tax">Kadar Cukai Jualan/Perkhidmatan (%)</label>
+              <input type="number" id="st-tax" class="form-input radius-14 tabular-nums" placeholder="0" min="0" max="25" />
+            </div>
+          </div>
+
+          <div class="grid-2 gap-14 mb-16">
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-min-days">Tempoh Min Sewaan (Hari)</label>
+              <input type="number" id="st-min-days" class="form-input radius-14 tabular-nums" placeholder="1" min="1" max="14" />
+            </div>
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-max-days">Tempoh Maks Sewaan (Hari)</label>
+              <input type="number" id="st-max-days" class="form-input radius-14 tabular-nums" placeholder="30" min="1" max="90" />
+            </div>
+          </div>
+
+          <div class="grid-2 gap-14">
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-deposit">Kadar Deposit Keselamatan (%)</label>
+              <input type="number" id="st-deposit" class="form-input radius-14 tabular-nums" placeholder="20" min="0" max="100" />
+            </div>
+            <div class="form-group">
+              <label class="form-label fs-13 fw-600 mb-6 d-block" for="st-late-fee">Caj Pulangan Lewat (RM / jam)</label>
+              <input type="number" id="st-late-fee" class="form-input radius-14 tabular-nums" placeholder="25" min="0" step="5" />
+            </div>
+          </div>
+          <div class="fs-11 text-muted mt-8">Caj pulangan lewat digunakan secara automatik dalam modul Operasi jika kenderaan lewat dipulangkan melebihi masa sewaan.</div>
+        </div>
+
+        <!-- KAD 4: KECERDASAN AI & PUSAT KUNCI API -->
+        <div class="card p-24 radius-24 reveal-on-scroll flex-col justify-between">
+          <div>
+            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary-accent">vpn_key</span>
+                <span>Pusat Kunci API AI (Dedicated AI Vault)</span>
+              </h3>
+              <span class="status-badge active"><span class="ai-pulse-dot mr-4"></span> 4 Slot AI</span>
+            </div>
+
+            <p class="fs-13 text-secondary lh-relaxed mb-18">
+              Kunci API AI diasingkan secara khusus di bawah modul <strong>Kecerdasan AI</strong> bagi menjamin keselamatan dan pengesanan automatik model percuma (Google Gemini, OpenRouter, Groq).
+            </p>
+
+            <div class="card p-16 radius-18 bg-surface-2 border-subtle mb-20">
+              <div class="flex-between mb-8 fs-12">
+                <span class="text-secondary">Slot 1 · Sistem Teras:</span>
+                <strong class="text-primary">AI Core &amp; Data Controller</strong>
+              </div>
+              <div class="flex-between mb-8 fs-12">
+                <span class="text-secondary">Slot 2 · Enjin Harga &amp; Acara:</span>
+                <strong class="text-primary">Dynamic Pricing &amp; Surge AI</strong>
+              </div>
+              <div class="flex-between mb-8 fs-12">
+                <span class="text-secondary">Slot 3 · Khidmat Pelanggan:</span>
+                <strong class="text-primary">WeDRIVE Customer Chatbot</strong>
+              </div>
+              <div class="flex-between fs-12">
+                <span class="text-secondary">Slot 4 · Automasi Studio:</span>
+                <strong class="text-primary">360° Studio Downloader &amp; Ingestion</strong>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <a href="../ai/api-keys.html" class="btn-primary w-100 flex-center gap-8 py-12 radius-14 text-decoration-none">
+              <span class="material-icons-round fs-18">settings_suggest</span>
+              <span>Buka Pusat Kunci API AI (AI Key Vault)</span>
+              <span class="material-icons-round fs-16">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
       </div>
 
       <!-- FOOTER -->
@@ -156,14 +223,14 @@
     </div>
   </main>
 
-  <script src="../../../shared/js/navbar-loader.js?v=5.3.5"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.3.5"></script>
-  <script src="../../../shared/js/main.js"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=5.8.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.8.0"></script>
+  <script src="../../../shared/js/main.js?v=5.8.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../js/settings.js"></script>
+  <script src="../../js/settings.js?v=5.8.0"></script>
 </body>
 </html>

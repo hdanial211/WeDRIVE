@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ms" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pusat Kunci API AI | WeDRIVE Admin</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.8.0" />
+  <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="ai-keys"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- TOPBAR (Main Navigation) -->
+    <div id="navbar-placeholder" data-module="admin"></div>
+
+    <div class="content">
+      <!-- APPLE BENTO HERO HEADER -->
+      <div class="bento-header-hero reveal-onload mb-24">
+        <div class="flex-between flex-wrap gap-16">
+          <div>
+            <div class="bento-breadcrumbs">
+              <a href="../dashboard/admin.html">Kecerdasan AI</a>
+              <span class="material-icons-round">chevron_right</span>
+              <span>Pusat Kunci API AI</span>
+            </div>
+            <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+              <h1 class="bento-title-main">Pengurusan Kunci API AI (AI Key Vault)</h1>
+              <span class="status-badge active"><span class="ai-pulse-dot mr-6"></span> <span>Pintu Masuk AI Berpusat</span></span>
+            </div>
+            <p class="bento-subtitle-main">
+              Konfigurasi 4 slot kunci API AI percuma secara terasing. Sistem secara pintar mengesan pembekal kunci secara automatik (Google Gemini, OpenRouter, Groq, OpenAI) sebaik sahaja ditampal.
+            </p>
+          </div>
+          <div class="flex-center gap-10">
+            <button class="btn-outline-sm" onclick="testAllKeys()">
+              <span class="material-icons-round fs-16">bolt</span> Uji Semua Sambungan
+            </button>
+            <button class="btn-primary-sm" onclick="saveAllKeys()">
+              <span class="material-icons-round fs-16">save</span> Simpan Kunci API
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANDUAN KUNCI PERCUMA 100% (ZERO COST) -->
+      <div class="ai-guide-card reveal-onload">
+        <div class="flex-start gap-16 items-start">
+          <div class="w-44 h-44 radius-50 flex-center bg-primary-10 border-primary-20 flex-shrink-0">
+            <span class="material-icons-round text-primary fs-24">lightbulb</span>
+          </div>
+          <div class="flex-1">
+            <h3 class="fs-16 fw-700 text-title m-0 mb-6">Panduan Kunci API 100% Percuma (Zero Cost Forever)</h3>
+            <p class="fs-13 text-secondary m-0 mb-10 lh-relaxed">
+              WeDRIVE menyokong penuh penggunaan kunci AI percuma tanpa memerlukan kad kredit. Anda boleh mendaftar dan menjana kunci API secara percuma melalui pembekal di bawah:
+            </p>
+            <div class="ai-guide-links">
+              <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="ai-guide-btn">
+                <span class="material-icons-round fs-16 text-primary">cloud</span>
+                <span>Google AI Studio (Gemini 2.5 Flash - Percuma 1,500 RPD)</span>
+                <span class="material-icons-round fs-14">open_in_new</span>
+              </a>
+              <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" class="ai-guide-btn">
+                <span class="material-icons-round fs-16 text-primary">alt_route</span>
+                <span>OpenRouter Free Tier (Akses Percuma Model :free)</span>
+                <span class="material-icons-round fs-14">open_in_new</span>
+              </a>
+              <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" class="ai-guide-btn">
+                <span class="material-icons-round fs-16 text-primary">speed</span>
+                <span>Groq Cloud (Llama 3.3 Ultra Fast - Percuma)</span>
+                <span class="material-icons-round fs-14">open_in_new</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 BENTO SLOTS GRID -->
+      <div class="ai-vault-grid reveal-on-scroll">
+
+        <!-- SLOT 1: AI CORE & SYSTEM CONTROLLER -->
+        <div class="ai-vault-card" id="card-slot-1">
+          <div>
+            <div class="ai-vault-card-header">
+              <div>
+                <div class="ai-slot-badge">Slot 1 · Sistem Teras</div>
+                <h3 class="ai-slot-title">AI Core &amp; System Controller</h3>
+                <p class="ai-slot-desc">Analisis data raya, kesihatan armada, unjuran hasil eksekutif, dan automasi pentadbiran.</p>
+              </div>
+              <span class="ai-provider-badge" id="badge-slot-1">
+                <span class="dot-indicator"></span>
+                <span class="badge-text">Menunggu Kunci</span>
+              </span>
+            </div>
+
+            <div class="form-group mb-14">
+              <label class="form-label fs-12 fw-600 mb-6 d-block" for="key-slot-1">Kunci API (API Key)</label>
+              <div class="ai-key-input-container">
+                <input type="password" id="key-slot-1" class="ai-key-input" placeholder="Tampal kunci cth: AIzaSy... atau sk-or-v1-..." autocomplete="off" oninput="handleKeyInput(1, this.value)" />
+                <button type="button" class="ai-eye-btn" onclick="toggleVisibility('key-slot-1', this)" title="Lihat/Sembunyi Kunci">
+                  <span class="material-icons-round fs-18">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex-between align-center mb-10">
+              <span class="fs-12 text-secondary">Model Aktif:</span>
+              <span class="fs-12 fw-600 tabular-nums text-primary" id="model-slot-1">gemini-2.5-flash (auto)</span>
+            </div>
+
+            <div class="ai-test-status" id="status-slot-1"></div>
+          </div>
+
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+            <span class="fs-11 text-muted" id="latency-slot-1">Latensi: -- ms</span>
+            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-1" onclick="testSingleSlot(1)">
+              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 2: AI EVENT & DYNAMIC PRICING ENGINE -->
+        <div class="ai-vault-card" id="card-slot-2">
+          <div>
+            <div class="ai-vault-card-header">
+              <div>
+                <div class="ai-slot-badge">Slot 2 · Enjin Harga &amp; Acara</div>
+                <h3 class="ai-slot-title">AI Event &amp; Dynamic Pricing</h3>
+                <p class="ai-slot-desc">Pengimbasan cuti umum, perayaan Melaka, cuaca, surcaj automatik (surge pricing) &amp; promosi.</p>
+              </div>
+              <span class="ai-provider-badge" id="badge-slot-2">
+                <span class="dot-indicator"></span>
+                <span class="badge-text">Menunggu Kunci</span>
+              </span>
+            </div>
+
+            <div class="form-group mb-14">
+              <label class="form-label fs-12 fw-600 mb-6 d-block" for="key-slot-2">Kunci API (API Key)</label>
+              <div class="ai-key-input-container">
+                <input type="password" id="key-slot-2" class="ai-key-input" placeholder="Tampal kunci cth: AIzaSy... atau gsk_..." autocomplete="off" oninput="handleKeyInput(2, this.value)" />
+                <button type="button" class="ai-eye-btn" onclick="toggleVisibility('key-slot-2', this)" title="Lihat/Sembunyi Kunci">
+                  <span class="material-icons-round fs-18">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex-between align-center mb-10">
+              <span class="fs-12 text-secondary">Model Aktif:</span>
+              <span class="fs-12 fw-600 tabular-nums text-primary" id="model-slot-2">gemini-2.5-flash (auto)</span>
+            </div>
+
+            <div class="ai-test-status" id="status-slot-2"></div>
+          </div>
+
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+            <span class="fs-11 text-muted" id="latency-slot-2">Latensi: -- ms</span>
+            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-2" onclick="testSingleSlot(2)">
+              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 3: CUSTOMER SERVICE AI CHATBOT -->
+        <div class="ai-vault-card" id="card-slot-3">
+          <div>
+            <div class="ai-vault-card-header">
+              <div>
+                <div class="ai-slot-badge">Slot 3 · Khidmat Pelanggan</div>
+                <h3 class="ai-slot-title">Customer Service AI Chatbot</h3>
+                <p class="ai-slot-desc">Ejen Maya 24/7 WeDRIVE Bot menjawab pertanyaan katalog kereta, ketersediaan, syarat sewaan &amp; FAQ.</p>
+              </div>
+              <span class="ai-provider-badge" id="badge-slot-3">
+                <span class="dot-indicator"></span>
+                <span class="badge-text">Menunggu Kunci</span>
+              </span>
+            </div>
+
+            <div class="form-group mb-14">
+              <label class="form-label fs-12 fw-600 mb-6 d-block" for="key-slot-3">Kunci API (API Key)</label>
+              <div class="ai-key-input-container">
+                <input type="password" id="key-slot-3" class="ai-key-input" placeholder="Tampal kunci cth: AIzaSy... atau sk-or-v1-..." autocomplete="off" oninput="handleKeyInput(3, this.value)" />
+                <button type="button" class="ai-eye-btn" onclick="toggleVisibility('key-slot-3', this)" title="Lihat/Sembunyi Kunci">
+                  <span class="material-icons-round fs-18">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex-between align-center mb-10">
+              <span class="fs-12 text-secondary">Model Aktif:</span>
+              <span class="fs-12 fw-600 tabular-nums text-primary" id="model-slot-3">gemini-2.5-flash (auto)</span>
+            </div>
+
+            <div class="ai-test-status" id="status-slot-3"></div>
+          </div>
+
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+            <span class="fs-11 text-muted" id="latency-slot-3">Latensi: -- ms</span>
+            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-3" onclick="testSingleSlot(3)">
+              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+            </button>
+          </div>
+        </div>
+
+        <!-- SLOT 4: 360 STUDIO DOWNLOADER & INGESTION AI -->
+        <div class="ai-vault-card" id="card-slot-4">
+          <div>
+            <div class="ai-vault-card-header">
+              <div>
+                <div class="ai-slot-badge">Slot 4 · Automasi Studio 360°</div>
+                <h3 class="ai-slot-title">360° Studio Downloader AI</h3>
+                <p class="ai-slot-desc">Ejen pemprosesan 360: tampal pautan URL (Carsome/Impel/Spincar), AI sedut bingkai luaran &amp; kubus dalaman secara automatik.</p>
+              </div>
+              <span class="ai-provider-badge" id="badge-slot-4">
+                <span class="dot-indicator"></span>
+                <span class="badge-text">Menunggu Kunci</span>
+              </span>
+            </div>
+
+            <div class="form-group mb-14">
+              <label class="form-label fs-12 fw-600 mb-6 d-block" for="key-slot-4">Kunci API (API Key)</label>
+              <div class="ai-key-input-container">
+                <input type="password" id="key-slot-4" class="ai-key-input" placeholder="Tampal kunci cth: AIzaSy... atau sk-or-v1-..." autocomplete="off" oninput="handleKeyInput(4, this.value)" />
+                <button type="button" class="ai-eye-btn" onclick="toggleVisibility('key-slot-4', this)" title="Lihat/Sembunyi Kunci">
+                  <span class="material-icons-round fs-18">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- MODUL UJI SEDUT PAUTAN 360 -->
+            <div class="ai-360-tester">
+              <label class="form-label fs-11 fw-600 text-title mb-4 d-block">Uji Sedut Pautan 360° (Live URL Tester)</label>
+              <div class="flex-start gap-8">
+                <input type="url" id="test-360-url" class="form-input radius-10 fs-12 flex-1" placeholder="https://cdn.impel.io/spincar... atau pautan Carsome" />
+                <button class="btn-primary-sm py-6 px-12 fs-12 flex-shrink-0" onclick="testIngest360Link()">
+                  <span class="material-icons-round fs-14">download</span> Sedut
+                </button>
+              </div>
+              <div id="result-360-ingest" class="fs-11 mt-6 text-muted"></div>
+            </div>
+
+            <div class="ai-test-status mt-10" id="status-slot-4"></div>
+          </div>
+
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+            <span class="fs-11 text-muted" id="latency-slot-4">Latensi: -- ms</span>
+            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-4" onclick="testSingleSlot(4)">
+              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+
+  <script src="../../../shared/js/navbar-loader.js?v=5.8.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.8.0"></script>
+  <script src="../../../shared/js/main.js?v=5.8.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
+  <script src="../../../shared/js/api.js"></script>
+  <script src="../../../shared/js/anime.min.js"></script>
+  <script src="../../../shared/js/animate.js"></script>
+  <script src="../../js/api-keys.js?v=5.8.0"></script>
+</body>
+</html>

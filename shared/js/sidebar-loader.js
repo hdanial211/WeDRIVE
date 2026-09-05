@@ -62,7 +62,8 @@
       sectionLabel: 'Kecerdasan AI',
       items: [
         { page: 'analytics', href: 'analytics/analytics.html', icon: 'insights', key: 'sidebar_ai_analytics', label: 'Analisis Data AI' },
-        { page: 'chatbot-settings', href: 'chatbot/chatbot.html', icon: 'smart_toy', key: 'sidebar_ai_api_chatbot', label: 'Kunci API & Chatbot AI' },
+        { page: 'ai-keys', href: 'ai/api-keys.html', icon: 'vpn_key', key: 'sidebar_ai_keys', label: 'Pusat Kunci API AI' },
+        { page: 'chatbot-settings', href: 'chatbot/chatbot.html', icon: 'smart_toy', key: 'sidebar_ai_api_chatbot', label: 'Chatbot Khidmat Pelanggan' },
         { page: 'marketing', href: 'marketing/marketing.html', icon: 'campaign', key: 'sidebar_ai_marketing', label: 'Pemasaran Pintar AI' }
       ]
     }

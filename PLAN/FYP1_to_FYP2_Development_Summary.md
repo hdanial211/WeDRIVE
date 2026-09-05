@@ -3631,3 +3631,54 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.8.2 Reset add car form to pristine blank state with clean placeholder prompts`
   - Tag Versi: `5.8.2`
+
+---
+
+## 🚀 [MAJOR UPDATE] 168. Pusat Kunci API AI Berdedikasi (Auto-Detection & Free-Tier), Penyatuan Lokasi Tunggal HQ, dan Integrasi Studio 360° Interaktif (v5.9.0)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives & Audit Findings)**:
+  1. *Audit Halaman Tetapan (`admin/pages/setting/settings.html`)*: Pengguna meminta pemeriksaan menyeluruh sama ada logik tetapan diguna pakai di seluruh sistem atau sekadar "asal ada". Hasil audit mendapati sebahagian tetapan berfungsi (Maklumat Syarikat, Kadar Cukai SST 8%, Had Hari Tempahan yang disegerakkan ke resit & tempahan), namun Opsyen Cawangan tersembunyi (`display:none`), Denda Lewat terputus dari operasi penalti, dan mata wang diabaikan oleh label teks statik "RM".
+  2. *Penyatuan Lokasi Operasi Tunggal (Single HQ Location)*: Pengguna mengarahkan seluruh sistem ditukar kepada **SATU sahaja tempat ambil dan tempat pulang kenderaan** mengikut lokasi pentadbir (HQ Melaka) dan membuang kekeliruan cawangan berpecah.
+  3. *Pusat Kunci API AI Khas (Dedicated AI Key Vault)*: Permintaan membina halaman berasingan di bawah modul AI Intelligence khas untuk menyimpan 4 kunci API AI tanpa dicampur aduk dengan tetapan lain:
+     - **Slot 1**: Kawalan Sistem & Analitik Data (`ai_core_key`).
+     - **Slot 2**: Enjin Acara & Penetapan Harga Dinamik (`ai_event_key`).
+     - **Slot 3**: Khidmat Pelanggan AI Chatbot Concierge (`ai_chatbot_key`).
+     - **Slot 4**: Studio & Pemuat Turun Automatik 360° (`ai_360_key`) - Menerima pautan SpinCar/viewer, menyedut bingkai luaran dan kubemap dalaman secara automatik.
+  4. *Pengecaman Automatik Kunci API (Auto-Detection Engine)*: Sistem berkeupayaan mengecam pembekal API serta-merta apabila pengguna menampal kunci (`AIzaSy...` $\rightarrow$ Google Gemini, `sk-or-v1-...` $\rightarrow$ OpenRouter, `gsk_...` $\rightarrow$ Groq, `hf_...` $\rightarrow$ HuggingFace, `sk-proj-...` $\rightarrow$ OpenAI, `sk-ant-...` $\rightarrow$ Anthropic).
+  5. *Mandatori Kunci Percuma 100% (Zero Cost & No Credit Card)*: Panduan rasmi disepadukan ke dalam UI bagi membolehkan pentadbir menjana kunci percuma tanpa kad kredit melalui Google AI Studio (Gemini 2.5 Flash, 15 RPM / 1,500 RPD) dan OpenRouter Free Tier (`:free`).
+  6. *Penjanaan Skrin Menggunakan Stitch MCP*: Skrin direka bentuk melalui model Stitch MCP bertaraf Gemini 3.8 / Pro (`GEMINI_3_1_PRO`) dengan piawaian Obsidian Bento Apple HIG.
+  7. *Pengalaman 360° Pada Kereta*: Menambah muat naik folder 360° luaran dan panorama 360° dalaman pada borang pendaftaran kenderaan, serta membezakan paparan pelanggan: kenderaan dengan aset 360 memaparkan lencana ungu `360° View` dan butang interaktif, manakala kenderaan tanpa 360 hanya memaparkan galeri gambar biasa.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Penjanaan Skrin Stitch MCP & Seni Bina CSS (`shared/css/wedrive.css`)**:
+     - Skrin dijana melalui Stitch MCP projek `1862124494843018493` (`2d180b669ba54a988b645673eb8aed72`).
+     - Menambah kelas Obsidian Bento Apple HIG: `.ai-guide-card`, `.ai-vault-grid`, `.ai-vault-card`, `.ai-provider-badge`, `.ai-pulse-dot`, `.ai-key-input`, `.ai-360-tester`, `.bento-360-grid`, `.upload-360-dropzone`, `.frames-counter-pill`, `.reel-preview-strip`, `.scrub-slider`, `.badge-360`, dan `.hq-location-bento`.
+  2. **Pembinaan Halaman Pusat Kunci API AI (`admin/pages/ai/api-keys.html` & `admin/js/api-keys.js`)**:
+     - Membina UI Apple HIG mengandungi kad panduan kunci percuma, 4 kad slot kunci AI berdedikasi, penguji kelajuan sambungan langsung (*live ping latency*), butang sembunyi/papar kata laluan, dan kotak ujian sedutan pautan 360°.
+     - Enjin `detectProvider(key)` mengecam awalan kunci secara automatik dan menukar lencana serta penerangan model dalam masa nyata.
+     - Menyimpan konfigurasi ke dalam pangkalan data Supabase (`settings` / `ai_keys`) serta menyegerakkan kunci chatbot ke `wedrive_chatbot_settings` bagi menjamin keserasian dengan pembantu maya sedia ada.
+     - Mendaftarkan item navigasi `ai-keys` ke dalam bar sisi modul AI Intelligence melalui `shared/js/sidebar-loader.js`.
+  3. **Penyatuan Lokasi Tunggal HQ Pada Tetapan Sistem (`admin/pages/setting/settings.html` & `admin/js/settings.js`)**:
+     - Menukar susun atur tetapan kepada kad Bento Apple HIG dengan seksyen *"Pusat Operasi, Serahan & Pulangan Tunggal WeDRIVE (HQ)"* yang mengunci alamat operasi di Melaka.
+     - Menyediakan kad pintas pantas ke Pusat Kunci API AI.
+     - Menghubungkan kadar denda lewat dan menyelaraskan pengekalan tetapan di Supabase.
+  4. **Penaiktarafan Borang Tambah Kereta (`admin/pages/car/add-car.html`)**:
+     - Menukar medan cawangan kepada lokasi HQ Melaka yang terkunci secara seragam.
+     - Menambah Kad 5: *Studio Pengalaman 360° Interaktif* dengan sokongan muat naik folder bingkai luaran (`webkitdirectory`), muat naik panorama dalaman, dan kotak input pautan sedutan automatik AI 360°.
+     - Kad pratonton langsung dilengkapi suis mod paparan `[ 📷 Foto Utama | 🔄 360° Luaran | 💺 360° Dalaman ]` dengan sokongan putaran interaktif (drag-to-rotate) dan gelangsar *scrub* 0°–360°.
+  5. **Pembezaan Lencana & Pengalaman 360° Pelanggan (`customer/js/customer.js`)**:
+     - Memeriksa atribut kenderaan (`has_360`, `has360`, `exterior_360`).
+     - Kenderaan dengan 360° dipaparkan dengan lencana berkilau ungu `<span class="badge-360"><span class="material-icons-round fs-12">360</span> 360° View</span>` pada kad dan butang `360° Interactive View` pada modal tempahan.
+     - Kenderaan standard hanya memaparkan gambar konvensional tanpa butang 360°.
+
+- **Pengesahan & Ujian Automasi**:
+  1. **Ujian Visual Chrome DevTools MCP**:
+     - Pengesahan `api-keys.html`: Pengecaman automatik kunci `AIzaSy...` (Google Gemini) dan `sk-or-v1-...` (OpenRouter) berfungsi secara dinamik. Ujian pautan sedutan 360° mensimulasikan muat turun 24 bingkai dan panorama 4K berjaya.
+     - Pengesahan `settings.html`: Susun atur Bento dengan lokasi tunggal HQ dan pautan pantas ke AI Key Vault.
+     - Pengesahan `add-car.html`: Lokasi HQ terkunci dan studio 360° berfungsi dengan pratonton putaran.
+     - Pengesahan `customer.html`: Kad BMW 320i M Sport memaparkan lencana `360° View` dan modal tempahan memaparkan butang interaktif 360°.
+  2. **Ujian Automasi Playwright**: Kesemua 29 ujian automasi lulus penuh (100% Pass Rate).
+
+- **Maklumat Git**:
+  - Commit: `5.9.0 Dedicated AI API Key Vault with auto-detection, single HQ location unification, and 360 Studio integration`
+  - Tag Versi: `5.9.0`

@@ -476,6 +476,7 @@
       var fallbackImg = fallbackImagePath();
       var buttonText = window.__GUEST_MODE__ ? t('signInToBook') : t('bookNow');
       var metaItems = [];
+      var has360 = Boolean(car.has_360 || car.has360 || car.exterior_360 || (Array.isArray(car.exterior_frames) && car.exterior_frames.length));
 
       if (shouldRevealPlate() && safePlate) {
         metaItems.push('<span>' + escapeHtml(t('plate')) + ': ' + safePlate + '</span>');
@@ -492,6 +493,7 @@
         '    <div class="car-badges">',
         '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
         '      <span class="rating-pill">' + rating + '</span>',
+        (has360 ? '      <span class="badge-360"><span class="material-icons-round" style="font-size:12px">360</span> 360° View</span>' : ''),
         '    </div>',
         '  </div>',
         '  <div class="car-body">',
@@ -572,6 +574,7 @@
       var img = imagePath(car);
       var fallbackImg = fallbackImagePath(car);
       var buttonText = isMs ? 'Tempah Pantas' : 'Quick Book';
+      var has360 = Boolean(car.has_360 || car.has360 || car.exterior_360 || (Array.isArray(car.exterior_frames) && car.exterior_frames.length));
 
       return [
         '<div class="car-card" onclick="bookCar(' + Number(car.id) + ')">',
@@ -580,6 +583,7 @@
         '    <div class="car-badges">',
         '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
         '      <span class="rating-pill">' + rating + '</span>',
+        (has360 ? '      <span class="badge-360"><span class="material-icons-round" style="font-size:12px">360</span> 360° View</span>' : ''),
         '    </div>',
         '  </div>',
         '  <div class="car-body">',
@@ -697,6 +701,25 @@
     var priceEl = document.getElementById('popup-car-price');
     if (priceEl) priceEl.innerHTML = 'RM ' + carPrice(car) + '<span>' + t('day') + '</span>';
 
+    // 360 Experience vs Standard Photo Badge
+    var badgeWrap = document.getElementById('popup-car-360-badge');
+    if (!badgeWrap) {
+      badgeWrap = document.createElement('div');
+      badgeWrap.id = 'popup-car-360-badge';
+      badgeWrap.className = 'mt-8';
+      var info = popup.querySelector('.booking-popup-car-info');
+      if (info) info.appendChild(badgeWrap);
+    }
+    if (badgeWrap) {
+      var has360 = Boolean(car.has_360 || car.has360 || car.exterior_360);
+      var isMs = lang() === 'ms';
+      if (has360) {
+        badgeWrap.innerHTML = '<span class="badge-360"><span class="material-icons-round" style="font-size:12px">360</span> 360° Interactive View</span>';
+      } else {
+        badgeWrap.innerHTML = '<span style="font-size:11px; color:var(--text-tertiary, #86868b); display:inline-flex; align-items:center; gap:4px; font-weight:500;"><span class="material-icons-round" style="font-size:13px">photo_camera</span> ' + (isMs ? 'Galeri Foto Standard' : 'Standard Photo Gallery') + '</span>';
+      }
+    }
+
     // Reset duration/total
     var durEl = document.getElementById('popup-duration');
     if (durEl) durEl.hidden = true;
@@ -802,7 +825,7 @@
       'price=' + encodeURIComponent(carPrice(selectedBookingCar)),
       'pickup=' + encodeURIComponent(pickup ? pickup.value : ''),
       'return=' + encodeURIComponent(ret ? ret.value : ''),
-      'location=' + encodeURIComponent(loc && loc.value ? loc.value : 'Melaka Sentral')
+      'location=' + encodeURIComponent(loc && loc.value ? loc.value : 'Pusat Operasi Utama WeDRIVE (HQ Melaka)')
     ];
     window.location.href = '../car-details/booking/booking.html?' + params.join('&');
   };
@@ -1205,6 +1228,16 @@
       if (sp) sp.textContent = 'RM ' + (car.pricePerDay || 0);
 
       if (car.image && heroImg) heroImg.src = car.image;
+
+      var has360 = Boolean(car.has_360 || car.has360 || car.exterior_360);
+      var thumb360 = document.querySelector('.thumb-360');
+      var thumbInterior = document.querySelector('.thumb-interior');
+      if (thumb360) {
+        thumb360.style.display = has360 ? 'flex' : 'none';
+      }
+      if (thumbInterior) {
+        thumbInterior.style.display = (has360 && car.interior_360) ? 'flex' : 'none';
+      }
 
       var btn = document.getElementById('btn-book');
       if (btn) btn.onclick = function() { window.location = 'booking/booking.html?id=' + carId; };

@@ -115,12 +115,14 @@ AI CAR RENTAL SYSTEM/
 |   |   |   +-- calendar.html              # Kalendar Tempahan (Calendar Overview)
 |   |   +-- analytics/
 |   |   |   +-- analytics.html             # Analisis Data AI (AI Analytics)
+|   |   +-- ai/
+|   |   |   +-- api-keys.html              # Pusat Kunci API AI Berdedikasi (Dedicated 4-Slot AI Vault)
 |   |   +-- chatbot/
 |   |   |   +-- chatbot.html               # Kunci API & Chatbot AI (AI Chatbot Settings)
 |   |   +-- marketing/
 |   |   |   +-- marketing.html             # Pemasaran Pintar AI (AI Smart Marketing)
 |   |   +-- setting/
-|   |       +-- settings.html              # Tetapan Sistem (System Settings)
+|   |       +-- settings.html              # Tetapan Sistem (System Settings & Single HQ Location)
 |   +-- components/
 |   |   +-- sidebar/
 |   |       +-- sidebar-admin.html   # Admin Sidebar Navigation
@@ -128,6 +130,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- admin.css           # Gaya khusus untuk Admin
 |   +-- js/
 |       +-- admin.js            # Logik Dashboard
+|       +-- api-keys.js         # Logik Pusat Kunci API AI (Auto-Detection, Free Tier, 360 Ingestion)
 |       +-- cars.js             # Logik Car Management
 |       +-- car-detail.js      # Logik Detail Kereta
 |       +-- bookings.js         # Logik Tempahan (refund 85%/50%, reminder email)
