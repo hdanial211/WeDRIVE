@@ -382,25 +382,37 @@ window.showDayDetail = function (ds) {
   // Summary chips
   html += '<div class="cal-day-summary">';
   html += `<div class="cal-day-chip available-chip">
-    <span class="material-icons-round" style="font-size:15px">check_circle</span>
-    ${carsAvailable} ${lang === 'ms' ? 'Tersedia' : 'Available'}
+    <span class="material-icons-round">check_circle</span>
+    <div class="cal-day-chip-info">
+      <span class="cal-day-chip-val tabular-nums">${carsAvailable}</span>
+      <span class="cal-day-chip-lbl">${lang === 'ms' ? 'Tersedia' : 'Available'}</span>
+    </div>
   </div>`;
   html += `<div class="cal-day-chip rented-chip">
-    <span class="material-icons-round" style="font-size:15px">directions_car</span>
-    ${carsRented} ${lang === 'ms' ? 'Disewa' : 'Rented'}
+    <span class="material-icons-round">directions_car</span>
+    <div class="cal-day-chip-info">
+      <span class="cal-day-chip-val tabular-nums">${carsRented}</span>
+      <span class="cal-day-chip-lbl">${lang === 'ms' ? 'Disewa' : 'Rented'}</span>
+    </div>
   </div>`;
   if (inspections.length > 0) {
-    html += `<div class="cal-day-chip inspection-chip" style="background:rgba(234,179,8,0.12);color:#d97706;border:1px solid rgba(234,179,8,0.2)">
-      <span class="material-icons-round" style="font-size:15px">build</span>
-      ${inspections.length} ${lang === 'ms' ? 'Pemeriksaan' : 'Inspections'}
+    html += `<div class="cal-day-chip inspection-chip">
+      <span class="material-icons-round">build</span>
+      <div class="cal-day-chip-info">
+        <span class="cal-day-chip-val tabular-nums">${inspections.length}</span>
+        <span class="cal-day-chip-lbl">${lang === 'ms' ? 'Pemeriksaan' : 'Inspections'}</span>
+      </div>
     </div>`;
   }
   if (seasonals.length > 0) {
     const s = seasonals[0];
     const sign = s.direction === 'increase' ? '+' : '-';
     html += `<div class="cal-day-chip seasonal-chip">
-      <span class="material-icons-round" style="font-size:15px">${s.direction === 'increase' ? 'trending_up' : 'trending_down'}</span>
-      ${s.name}: ${sign}${s.adjustment_value}%
+      <span class="material-icons-round">${s.direction === 'increase' ? 'trending_up' : 'trending_down'}</span>
+      <div class="cal-day-chip-info">
+        <span class="cal-day-chip-val tabular-nums">${sign}${s.adjustment_value}%</span>
+        <span class="cal-day-chip-lbl">${s.name}</span>
+      </div>
     </div>`;
   }
   html += '</div>';
@@ -408,48 +420,82 @@ window.showDayDetail = function (ds) {
   // Bookings as cards
   if (bookings.length > 0) {
     html += `<div class="cal-day-section-title">
-      <span class="material-icons-round" style="font-size:18px;color:#3B82F6">event_available</span>
-      ${lang === 'ms' ? 'Tempahan' : 'Bookings'} (${bookings.length})
+      <span class="material-icons-round cal-sec-icon">event_available</span>
+      <span>${lang === 'ms' ? 'Tempahan Kenderaan' : 'Car Bookings'}</span>
+      <span class="cal-sec-count tabular-nums">${bookings.length}</span>
     </div>`;
     bookings.forEach(b => {
       const sc = b.status === 'Confirmed' ? 'confirmed' : (b.status === 'Pending' ? 'pending' : 'completed');
+      const statusLabel = lang === 'ms' ? ({
+        'Confirmed': 'Disahkan',
+        'Pending': 'Menunggu',
+        'Completed': 'Selesai',
+        'Active': 'Aktif',
+        'Cancelled': 'Dibatalkan'
+      }[b.status] || b.status) : b.status;
       html += `<div class="cal-booking-card">
         <div class="cal-booking-card-icon booking-icon">
-          <span class="material-icons-round" style="color:white;font-size:20px">directions_car</span>
+          <span class="material-icons-round">directions_car</span>
         </div>
-        <div style="flex:1;min-width:0">
-          <div style="font-weight:700;font-size:13px;color:var(--navy)">${b.car}</div>
-          <div style="font-size:12px;color:var(--slate-500);margin-top:2px">${b.customer} · ${b.id}</div>
-          <div style="font-size:11px;color:var(--slate-400);margin-top:2px">${b.pickup} → ${b.return}</div>
+        <div class="cal-booking-card-body">
+          <div class="cal-booking-car-name">${b.car}</div>
+          <div class="cal-booking-customer-meta">
+            <span class="material-icons-round fs-14">person</span>
+            <span>${b.customer}</span>
+            <span class="dot-sep">•</span>
+            <span class="cal-booking-id">#${b.id}</span>
+          </div>
+          <div class="cal-booking-dates">
+            <span class="material-icons-round fs-14">date_range</span>
+            <span class="tabular-nums">${b.pickup}</span>
+            <span class="date-arrow">→</span>
+            <span class="tabular-nums">${b.return}</span>
+          </div>
         </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-weight:800;font-size:15px;color:var(--navy)">RM ${b.total}</div>
-          <span class="status-badge ${sc}" style="font-size:10px;margin-top:4px"><span class="dot"></span>${b.status}</span>
+        <div class="cal-booking-card-aside">
+          <div class="cal-booking-amount tabular-nums">RM ${Number(b.total || 0).toLocaleString()}</div>
+          <span class="status-badge ${sc}">
+            <span class="dot"></span>
+            <span>${statusLabel}</span>
+          </span>
         </div>
       </div>`;
     });
   } else if (inspections.length === 0) {
-    html += `<div style="text-align:center;padding:24px 16px;color:var(--slate-400)">
-      <span class="material-icons-round" style="font-size:36px;opacity:0.4;display:block;margin-bottom:8px">event_busy</span>
-      <div style="font-size:13px">${lang === 'ms' ? 'Tiada aktiviti pada hari ini' : 'No activities on this day'}</div>
+    html += `<div class="cal-day-empty">
+      <span class="material-icons-round">event_busy</span>
+      <div class="cal-day-empty-title">${lang === 'ms' ? 'Tiada aktiviti tempahan pada hari ini' : 'No booking activities scheduled for this day'}</div>
     </div>`;
   }
 
   // Inspections as cards
   if (inspections.length > 0) {
-    html += `<div class="cal-day-section-title" style="margin-top:20px">
-      <span class="material-icons-round" style="font-size:18px;color:#EAB308">build</span>
-      ${lang === 'ms' ? 'Buffer Pemeriksaan / Inspection' : 'Inspection Buffers'} (${inspections.length})
+    html += `<div class="cal-day-section-title">
+      <span class="material-icons-round cal-sec-icon" style="color:#FF9F0A">build</span>
+      <span>${lang === 'ms' ? 'Buffer Pemeriksaan & Penyelenggaraan' : 'Inspection & Buffer Block'}</span>
+      <span class="cal-sec-count tabular-nums">${inspections.length}</span>
     </div>`;
     inspections.forEach(b => {
-      html += `<div class="cal-booking-card" style="border-left:3px solid #EAB308;background:var(--bg-surface-2,#F1F5F9)">
-        <div class="cal-booking-card-icon" style="background:#EAB308;display:flex;align-items:center;justify-content:center;border-radius:8px;width:32px;height:32px;flex-shrink:0;">
-          <span class="material-icons-round" style="color:white;font-size:18px">build</span>
+      html += `<div class="cal-booking-card inspection-card">
+        <div class="cal-booking-card-icon inspection-icon">
+          <span class="material-icons-round">build</span>
         </div>
-        <div style="flex:1;min-width:0;margin-left:10px">
-          <div style="font-weight:700;font-size:13px;color:var(--navy)">${b.car}</div>
-          <div style="font-size:12px;color:var(--slate-500);margin-top:2px">${lang === 'ms' ? 'Hari pemeriksaan selepas tempahan #' : 'Inspection block after booking #'}${b.id}</div>
-          <div style="font-size:11px;color:var(--slate-400);margin-top:2px">${lang === 'ms' ? 'Pelanggan' : 'Customer'}: ${b.customer}</div>
+        <div class="cal-booking-card-body">
+          <div class="cal-booking-car-name">${b.car}</div>
+          <div class="cal-inspection-meta">
+            <span class="cal-inspection-badge">${lang === 'ms' ? 'Pemeriksaan Selepas Tempahan' : 'Post-Rental Inspection'}</span>
+            <span class="cal-booking-id">#${b.id}</span>
+          </div>
+          <div class="cal-booking-customer-meta" style="margin-top:5px">
+            <span class="material-icons-round fs-14">person</span>
+            <span>${lang === 'ms' ? 'Penyewa Terdahulu:' : 'Previous Renter:'} ${b.customer}</span>
+          </div>
+        </div>
+        <div class="cal-booking-card-aside">
+          <span class="status-badge warning">
+            <span class="dot"></span>
+            <span>${lang === 'ms' ? 'Wajib' : 'Required'}</span>
+          </span>
         </div>
       </div>`;
     });
@@ -457,19 +503,25 @@ window.showDayDetail = function (ds) {
 
   // Active banners
   if (banners.length > 0) {
-    html += `<div class="cal-day-section-title" style="margin-top:20px">
-      <span class="material-icons-round" style="font-size:18px;color:#8B5CF6">campaign</span>
-      ${lang === 'ms' ? 'Promosi Aktif' : 'Active Promotions'} (${banners.length})
+    html += `<div class="cal-day-section-title">
+      <span class="material-icons-round cal-sec-icon" style="color:#AF52DE">campaign</span>
+      <span>${lang === 'ms' ? 'Promosi & Kempen Aktif' : 'Active Promotions'}</span>
+      <span class="cal-sec-count tabular-nums">${banners.length}</span>
     </div>`;
     banners.forEach(b => {
-      html += `<div class="cal-booking-card" style="border-left:3px solid ${b.color}">
+      html += `<div class="cal-booking-card" style="border-left:3px solid ${b.color || '#AF52DE'}">
         <div class="cal-booking-card-icon event-icon">
-          <span class="material-icons-round" style="color:white;font-size:20px">campaign</span>
+          <span class="material-icons-round">campaign</span>
         </div>
-        <div style="flex:1;min-width:0">
-          <div style="font-weight:700;font-size:13px;color:var(--navy)">${b.title}</div>
-          <div style="font-size:12px;color:var(--slate-500);margin-top:2px">${b.message}</div>
-          <div style="font-size:11px;color:var(--slate-400);margin-top:2px">${b.start_date} → ${b.end_date}</div>
+        <div class="cal-booking-card-body">
+          <div class="cal-booking-car-name">${b.title}</div>
+          <div class="cal-booking-customer-meta">${b.message}</div>
+          <div class="cal-booking-dates">
+            <span class="material-icons-round fs-14">date_range</span>
+            <span class="tabular-nums">${b.start_date}</span>
+            <span class="date-arrow">→</span>
+            <span class="tabular-nums">${b.end_date}</span>
+          </div>
         </div>
       </div>`;
     });
@@ -477,24 +529,31 @@ window.showDayDetail = function (ds) {
 
   // Seasonal pricing
   if (seasonals.length > 0) {
-    html += `<div class="cal-day-section-title" style="margin-top:20px">
-      <span class="material-icons-round" style="font-size:18px;color:#F59E0B">event</span>
-      ${lang === 'ms' ? 'Harga Bermusim' : 'Seasonal Pricing'}
+    html += `<div class="cal-day-section-title">
+      <span class="material-icons-round cal-sec-icon" style="color:#FF9F0A">event</span>
+      <span>${lang === 'ms' ? 'Kadar Harga Bermusim' : 'Seasonal Pricing'}</span>
+      <span class="cal-sec-count tabular-nums">${seasonals.length}</span>
     </div>`;
     seasonals.forEach(s => {
       const sign = s.direction === 'increase' ? '+' : '-';
-      const dirColor = s.direction === 'increase' ? '#EF4444' : '#10B981';
+      const dirColor = s.direction === 'increase' ? '#FF453A' : '#30D158';
       const dirIcon = s.direction === 'increase' ? 'trending_up' : 'trending_down';
       html += `<div class="cal-booking-card">
         <div class="cal-booking-card-icon seasonal-icon">
-          <span class="material-icons-round" style="color:white;font-size:20px">${dirIcon}</span>
+          <span class="material-icons-round">${dirIcon}</span>
         </div>
-        <div style="flex:1;min-width:0">
-          <div style="font-weight:700;font-size:13px;color:var(--navy)">${s.name}</div>
-          <div style="font-size:12px;color:var(--slate-500);margin-top:2px">${s.adjustment_type} · ${s.start_date} → ${s.end_date}</div>
+        <div class="cal-booking-card-body">
+          <div class="cal-booking-car-name">${s.name}</div>
+          <div class="cal-booking-customer-meta">${s.adjustment_type}</div>
+          <div class="cal-booking-dates">
+            <span class="material-icons-round fs-14">date_range</span>
+            <span class="tabular-nums">${s.start_date}</span>
+            <span class="date-arrow">→</span>
+            <span class="tabular-nums">${s.end_date}</span>
+          </div>
         </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-weight:800;font-size:16px;color:${dirColor}">${sign}${s.adjustment_value}%</div>
+        <div class="cal-booking-card-aside">
+          <div class="cal-booking-amount tabular-nums" style="color:${dirColor}">${sign}${s.adjustment_value}%</div>
         </div>
       </div>`;
     });

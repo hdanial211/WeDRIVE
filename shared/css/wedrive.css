@@ -15812,6 +15812,54 @@ html.night-mode .bento-ghost-icon,
   background: #FF9500;
 }
 
+.status-badge.confirmed,
+.status-badge.disahkan {
+  background: rgba(52, 199, 89, 0.12);
+  color: #34C759;
+  border: 1px solid rgba(52, 199, 89, 0.25);
+}
+.status-badge.confirmed .dot,
+.status-badge.disahkan .dot {
+  background: #34C759;
+}
+
+.status-badge.pending,
+.status-badge.menunggu {
+  background: rgba(255, 149, 0, 0.12);
+  color: #FF9500;
+  border: 1px solid rgba(255, 149, 0, 0.25);
+}
+.status-badge.pending .dot,
+.status-badge.menunggu .dot {
+  background: #FF9500;
+}
+
+.status-badge.completed,
+.status-badge.selesai {
+  background: rgba(0, 113, 227, 0.12);
+  color: #0071E3;
+  border: 1px solid rgba(0, 113, 227, 0.25);
+}
+.status-badge.completed .dot,
+.status-badge.selesai .dot {
+  background: #0071E3;
+}
+
+.status-badge.warning,
+.status-badge.amaran,
+.status-badge.required,
+.status-badge.wajib {
+  background: rgba(255, 149, 0, 0.12);
+  color: #FF9500;
+  border: 1px solid rgba(255, 149, 0, 0.25);
+}
+.status-badge.warning .dot,
+.status-badge.amaran .dot,
+.status-badge.required .dot,
+.status-badge.wajib .dot {
+  background: #FF9500;
+}
+
 /* ── Responsive Adaptations ────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .stats-grid,
@@ -16539,45 +16587,351 @@ body.day-mode .cal-filter-chip.active {
 
 .cal-stat-modal,
 .cal-day-modal {
-  background: var(--surface-card, #161618);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
+  background: var(--bg-card, #161618);
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.12));
+  border-radius: 28px;
   padding: 24px;
   width: 100%;
-  max-width: 580px;
+  max-width: 560px;
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
   animation: modalPopIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
 .cal-day-modal-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 14px;
-  margin-bottom: 16px;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  padding-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .cal-day-modal-header-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .cal-day-modal-date {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
   background: rgba(0, 113, 227, 0.12);
-  color: var(--primary-accent, #0071E3);
+  color: var(--primary, #0071E3);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
-  border: 1px solid rgba(0, 113, 227, 0.2);
+  border: 1px solid rgba(0, 113, 227, 0.25);
+  flex-shrink: 0;
+}
+
+.cal-detail-title {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  line-height: 1.2 !important;
+}
+
+.cal-detail-subtitle {
+  font-size: 13px !important;
+  color: var(--text-secondary) !important;
+  margin-top: 3px !important;
+  font-weight: 500 !important;
+}
+
+.cal-day-modal-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.cal-day-modal-close:hover {
+  background: var(--bg-surface-3);
+  color: var(--text-primary);
+  transform: scale(1.06);
+}
+
+/* Apple Bento Summary Stat Metrics */
+.cal-day-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cal-day-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.cal-day-chip .material-icons-round {
+  font-size: 20px !important;
+  flex-shrink: 0;
+}
+
+.cal-day-chip-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cal-day-chip-val {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.cal-day-chip-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cal-day-chip.available-chip {
+  background: rgba(52, 199, 89, 0.08) !important;
+  border-color: rgba(52, 199, 89, 0.2) !important;
+  color: #34C759 !important;
+}
+.cal-day-chip.available-chip .cal-day-chip-val {
+  color: #34C759 !important;
+}
+
+.cal-day-chip.rented-chip {
+  background: rgba(0, 113, 227, 0.08) !important;
+  border-color: rgba(0, 113, 227, 0.2) !important;
+  color: var(--primary, #0071E3) !important;
+}
+.cal-day-chip.rented-chip .cal-day-chip-val {
+  color: var(--primary, #0071E3) !important;
+}
+
+.cal-day-chip.inspection-chip {
+  background: rgba(255, 159, 10, 0.08) !important;
+  border-color: rgba(255, 159, 10, 0.2) !important;
+  color: #FF9F0A !important;
+}
+.cal-day-chip.inspection-chip .cal-day-chip-val {
+  color: #FF9F0A !important;
+}
+
+.cal-day-chip.seasonal-chip {
+  background: rgba(175, 82, 222, 0.08) !important;
+  border-color: rgba(175, 82, 222, 0.2) !important;
+  color: #AF52DE !important;
+}
+.cal-day-chip.seasonal-chip .cal-day-chip-val {
+  color: #AF52DE !important;
+}
+
+/* Section Header */
+.cal-day-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-tertiary);
+  margin: 22px 0 12px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cal-day-section-title .cal-sec-icon {
+  font-size: 16px !important;
+  color: var(--primary, #0071E3);
+}
+
+.cal-day-section-title .cal-sec-count {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  padding: 2px 7px;
+  border-radius: 9999px;
+  margin-left: auto;
+}
+
+/* Booking & Inspection Item Cards */
+.cal-booking-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--bg-surface-1, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 10px;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.cal-booking-card:hover {
+  background: var(--bg-surface-2);
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+}
+
+.cal-booking-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cal-booking-card-icon .material-icons-round {
+  font-size: 20px !important;
+}
+
+.cal-booking-card-icon.booking-icon {
+  background: rgba(0, 113, 227, 0.12);
+  color: var(--primary, #0071E3);
+}
+
+.cal-booking-card-icon.inspection-icon {
+  background: rgba(255, 159, 10, 0.12);
+  color: #FF9F0A;
+}
+
+.cal-booking-card-icon.event-icon {
+  background: rgba(175, 82, 222, 0.12);
+  color: #AF52DE;
+}
+
+.cal-booking-card-icon.seasonal-icon {
+  background: rgba(255, 69, 58, 0.12);
+  color: #FF453A;
+}
+
+.cal-booking-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cal-booking-car-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cal-booking-customer-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.cal-booking-customer-meta .dot-sep {
+  opacity: 0.4;
+}
+
+.cal-booking-id {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary, #86868B);
+}
+
+.cal-booking-dates {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary, #86868B);
+  margin-top: 4px;
+}
+
+.cal-booking-dates .date-arrow {
+  opacity: 0.6;
+}
+
+.cal-inspection-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.cal-inspection-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #FF9F0A;
+  background: rgba(255, 159, 10, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.cal-booking-card-aside {
+  text-align: right;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.cal-booking-amount {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.cal-booking-card.inspection-card {
+  background: rgba(255, 159, 10, 0.04);
+  border-color: rgba(255, 159, 10, 0.18);
+}
+.cal-booking-card.inspection-card:hover {
+  background: rgba(255, 159, 10, 0.07);
+  border-color: rgba(255, 159, 10, 0.28);
+}
+
+.cal-day-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-tertiary);
+}
+.cal-day-empty .material-icons-round {
+  font-size: 40px !important;
+  opacity: 0.35;
+  display: block;
+  margin: 0 auto 10px auto;
+}
+.cal-day-empty-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 /* ── Marketing & Promotions Apple HIG Styling ── */

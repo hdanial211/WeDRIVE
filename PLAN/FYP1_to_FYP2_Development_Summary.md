@@ -3403,3 +3403,44 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.6 Clean borderless Apple calendar typography and eliminated nested dropdown cards`
   - Tag Versi: `5.7.6`
+
+---
+
+### 162. Transformasi Dialog Lembaran Perincian Harian Kalendar Apple HIG (v5.7.7)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REFINEMENT & APPLE HIG]`
+- **Modul Terlibat**:
+  - `admin/js/calendar.js`
+  - `admin/pages/calendar/calendar.html`
+  - `shared/css/wedrive.css`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan rungutan pengguna (*"ni pon buruk ..tolong cantikkan"*) terhadap pop-up perincian harian kalendar (`.cal-day-modal`) yang dibuka apabila pengguna menekan sel tarikh pada kalendar.
+  - Sebelum ini, pop-up tersebut memaparkan teks mentah tanpa struktur (*unpadded raw text lines*) berserta emoji raw (`✓`, `🚗`, `🔧`, `🗓️`), ikon kereta melayang di atas nama kenderaan, jalur tebal kuning gelap yang tidak sedap dipandang, ketiadaan kad Bento, dan tiada penataan CSS tersusun.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pemansuhan Kesemua Emoji Raw Serta Pematuhan Peraturan Standard Korporat**:
+     - Menyingkirkan semua emoji dan menggantikannya dengan ikon vektor rasmi *Google Material Icons Round* (`check_circle`, `directions_car`, `build`, `event_available`, `campaign`, dsb.).
+  2. **Struktur Kad Bento Mini Bagi Metrik Harian (`.cal-day-summary`)**:
+     - Mengubah baris ringkasan kepada grid responsif cip Bento Apple:
+       - **Tersedia / Available**: Latar belakang hijau kaca lut sinar (`rgba(52, 199, 89, 0.08)`) dengan sempadan aksen halus dan kiraan tebal `tabular-nums`.
+       - **Disewa / Rented**: Latar belakang biru aksen kaca (`rgba(0, 113, 227, 0.08)`).
+       - **Pemeriksaan / Inspections**: Latar belakang jingga/amber kaca (`rgba(255, 159, 10, 0.08)`).
+       - **Musiman / Seasonal**: Latar belakang ungu kaca (`rgba(175, 82, 222, 0.08)`).
+  3. **Reka Bentuk Kad Item Tempahan & Pemeriksaan Apple HIG (`.cal-booking-card`)**:
+     - Mengelompokkan setiap tempahan ke dalam kad squircle (`border-radius: 18px`, `background: var(--bg-surface-1)`, batas `border-subtle`).
+     - Menyediakan ikon kenderaan dalam bekas bulat-segi 42x42px berlatar belakang kaca biru.
+     - Menyusun maklumat nama pelanggan, nombor tempahan, dan julat tarikh (`pickup → return`) secara kemas dengan pemisah dot halus.
+     - Menyeragamkan paparan harga sewaan (`tabular-nums`) bersama lencana status berpil penuh Apple (`.status-badge.confirmed` dan `.status-badge.warning` dengan titik bersinar).
+  4. **Penyeragaman Lencana Status Dwibahasa Penuh**:
+     - Menambah sokongan terjemahan status pintar bagi lencana (*Disahkan / Confirmed*, *Wajib / Required*, *Menunggu / Pending*, *Selesai / Completed*).
+  5. **Kemas Kini Versi Anti-Cache (Cache Busting)**:
+     - Mengemaskini tag fail pada `calendar.html` kepada `wedrive.css?v=5.7.7` dan `calendar.js?v=5.7.7`.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Chrome DevTools & Visual Snapshot**: Mengesahkan modal pop-up tampil sangat mewah, padat, berorientasikan korporat mobiliti Apple, dan tiada lagi teks berterabur mahupun emoji raw.
+  - **Ujian Automasi Playwright**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed dalam 1.3m).
+
+- **Maklumat Git**:
+  - Commit: `5.7.7 Modernized Apple HIG calendar day detail modal with Bento stat chips and booking cards`
+  - Tag Versi: `5.7.7`
