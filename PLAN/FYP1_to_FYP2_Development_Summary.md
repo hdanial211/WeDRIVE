@@ -2761,3 +2761,48 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.0 Redesign Admin Dashboard into ultra-luxury Apple HIG Bento layout via Stitch MCP`
   - Tag Versi: `5.6.0`
+
+---
+
+## 🚀 [MINOR UPDATE] 148. Penyeragaman Mandatori Terminologi 'Car' / 'Kereta' & Pemansuhan Istilah 'Fleet' / 'Armada' (v5.6.1)
+
+- **Arahan Mandatori Pengguna (Mandatory User Directive)**:
+  > *"Saya dh kata jangan guna perkataan fleet ...tukar kan kepada car"*
+  - Mematuhi Seksyen 4 `.agents/rules/ruleprompt.md`: *"Gunakan perkataan 'Car / Cars' untuk semua elemen antaramuka pelanggan (jangan guna istilah 'Fleet')."*
+  - Melaksanakan audit menyeluruh ke atas semua halaman, fail antaramuka, fail konfigurasi dwibahasa, dan CSS untuk membuang dan menggantikan sebarang perkataan `fleet` atau `armada` dengan `car` / `kereta`.
+
+- **Tindakan Pembaikan & Penyelarasan Menyeluruh (Comprehensive Implementation)**:
+  1. **Halaman Admin Dashboard (`admin/pages/dashboard/admin.html`)**:
+     - Menukar `Melaka Central Hub • Active Fleet Telematics` $\rightarrow$ `Melaka Central Hub • Active Car Telematics`.
+     - Menukar `fleet health status` $\rightarrow$ `car health status`.
+     - Menukar lencana metrik `Fleet 100% Active` $\rightarrow$ `Cars 100% Active`.
+     - Menukar tajuk tolok AI `PROJECTED FLEET UTILIZATION` $\rightarrow$ `PROJECTED CAR UTILIZATION`.
+     - Menukar butang tindakan AI `Rebalance Fleet Allocation` $\rightarrow$ `Rebalance Car Allocation`.
+     - Menukar kapsyen arahan `Direct operational access to fleet workflows` $\rightarrow$ `Direct operational access to car workflows`.
+     - Menyelaraskan kelas lejar status kepada `.car-ledger-bento`.
+  2. **Halaman-Halaman Admin Berkaitan (`admin/pages/`)**:
+     - `marketing/marketing.html`: Menukar tajuk dari `WeDRIVE Fleet Ops` $\rightarrow$ `WeDRIVE Admin`, dan `Jana Strategi Berdasarkan Kalendar Fleet` $\rightarrow$ `Jana Strategi Berdasarkan Kalendar Kereta`, serta `Pengurusan Promosi & Kempen Armada` $\rightarrow$ `Pengurusan Promosi & Kempen Kereta`.
+     - `analytics/analytics.html`: Menukar `Kesihatan Armada AI` $\rightarrow$ `Kesihatan Kereta AI`, `Kapasiti Armada` $\rightarrow$ `Kapasiti Kereta`, dan `Pengagihan Semula Armada` $\rightarrow$ `Pengagihan Semula Kereta`.
+     - `chatbot/chatbot.html`: Menukar `WeDRIVE Fleet Ops` $\rightarrow$ `WeDRIVE Admin` dan `Segarkan Data Armada` $\rightarrow$ `Segarkan Data Kereta`.
+     - `customer/verifications.html`: Menukar tajuk `WeDRIVE Fleet Ops` $\rightarrow$ `WeDRIVE Admin`.
+     - `booking/active-bookings.html`: Menukar tajuk `WeDRIVE Fleet Ops` $\rightarrow$ `WeDRIVE Admin`.
+     - `booking/new-booking.html`: Menukar `Pemilihan Kenderaan Armada` $\rightarrow$ `Pemilihan Kereta`.
+     - `report/export-reports.html`: Menukar tajuk `WeDRIVE Fleet Analytics` $\rightarrow$ `WeDRIVE Admin Reports`, `Inventori & Utiliti Armada` $\rightarrow$ `Inventori & Utiliti Kereta`, `Kekuatan Armada Semasa:` $\rightarrow$ `Jumlah Kereta Semasa:`, dan `Log Tempahan Armada` $\rightarrow$ `Log Tempahan Kereta`.
+     - `calendar/calendar.html`: Menukar tajuk `WeDRIVE Fleet Ops` $\rightarrow$ `WeDRIVE Admin` dan `Jadual Operasi Armada` $\rightarrow$ `Jadual Operasi Kereta`.
+     - `car/add-car.html`: Menukar `WeDRIVE Fleet Ops` $\rightarrow$ `WeDRIVE Admin`, `Pendaftaran Armada` $\rightarrow$ `Pendaftaran Kereta`, `Ayer Keroh Fleet Service Depot` $\rightarrow$ `Ayer Keroh Car Service Depot`, dan `Peralatan Standard Armada` $\rightarrow$ `Peralatan Standard Kereta`.
+     - `car/rented-cars.html`: Menukar tajuk `WeDRIVE Fleet Ops` $\rightarrow$ `WeDRIVE Admin` dan `Indeks utiliti armada` $\rightarrow$ `Indeks utiliti kereta`.
+  3. **Komponen Bersama & Halaman Awam (`shared/`)**:
+     - `shared/components/footer.html`: Mengemas kini pengepala kepada `<!-- Column 1: Kereta & Sewaan -->`.
+     - `shared/pages/footer/about/about.html`: Menukar `corporate fleet` $\rightarrow$ `rental cars` dan kelas `.fleet-standards-bar` diselaraskan dengan `.car-standards-bar`.
+  4. **Pusat Kamus Dwibahasa (`shared/lang/en.json`, `en.js`, `ms.json`, `ms.js`)**:
+     - Menyelaraskan teks penterjemahan rasmi bagi kunci `ai_analytics_subtitle`, `ai_kpi_health`, `ai_chart_demand_title`, `ai_chart_demand_sub`, `ai_strat_1_title`, dan `about_values_sub` supaya menggunakan `car` / `kereta`.
+  5. **CSS Master (`shared/css/wedrive.css`)**:
+     - Menambah kelas pemilih `.car-ledger-bento` dan `.car-standards-bar` bagi menyokong penjenamaan yang bersih dan seragam.
+  6. **Pengesahan & Ujian Automasi**:
+     - Imbasan ripgrep mengesahkan 0 kemunculan teks 'fleet' atau 'armada' di kesemua elemen antaramuka pengguna.
+     - Suite ujian automasi Playwright: **28/28 ujian lulus sepenuhnya (100% Pass Rate)**.
+     - Pengesahan visual pelayar mengesahkan lencana, kad, tolok utiliti, dan butang memaparkan perkataan 'Car' dan 'Kereta' secara sempurna.
+
+- **Maklumat Git**:
+  - Commit: `5.6.1 Replace all fleet and armada terminology with car and kereta across entire system`
+  - Tag Versi: `5.6.1`

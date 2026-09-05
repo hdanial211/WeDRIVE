@@ -2793,7 +2793,8 @@ body.night-mode .segmented-control .segmented-glider,
   flex-grow: 1;
 }
 
-/* ── Executive Fleet Standards ─────────────────────────────────────────── */
+/* ── Executive Car Standards ─────────────────────────────────────────── */
+.car-standards-bar,
 .fleet-standards-bar {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2958,6 +2959,7 @@ body.night-mode .segmented-control .segmented-glider,
     gap: 32px;
     padding: 36px 28px;
   }
+  .car-standards-bar,
   .fleet-standards-bar {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -15385,7 +15387,8 @@ html.night-mode .bento-ghost-icon,
   color: var(--primary) !important;
 }
 
-/* ── High-Density Fleet Ledger Bento Card ──────────────────────────────────── */
+/* ── High-Density Car Status Ledger Bento Card ──────────────────────────────────── */
+.car-ledger-bento,
 .fleet-ledger-bento {
   background: var(--bg-surface);
   border: 1px solid var(--border-medium);
