@@ -2904,3 +2904,60 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.4 Tune compact stat cards size across admin dashboard`
   - Tag Versi: `5.6.4`
+
+---
+
+## 🚀 [MINOR UPDATE] 152. Penjajaran Kiri Bersih & Ritma Ruang Pengepala Hero Bento (v5.6.5)
+
+- **Punca Keperluan & Arahan Pengguna (Context & User Feedback)**:
+  > *"kenapa tajuk tu terlalu jarak patutnya rapat ke kiri n bagi space"*
+  - Pengguna mendapati susun atur tajuk pada halaman inventori kenderaan tersedia (`available-cars.html`) dan sub-halaman pentadbir lain kelihatan janggal kerana tajuk utama teranjak terlalu jauh ke tengah/kanan dan tidak rapat ke kiri selari dengan breadcrumb dan perenggan penerangan.
+
+- **Punca Reka Bentuk Terdahulu (Root Cause Analysis)**:
+  1. **Penggunaan Kelas `.flex-center` Pada Baris Tajuk**: Tajuk `<h1 class="bento-title-main">` dan lencana status dibungkus dalam `<div class="flex-center ...">`. Kelas `.flex-center` mengandungi `justify-content: center !important;`, menyebabkan tajuk terpusat secara mendatar dalam kolum kiri dan teranjak sebanyak 70.7px (`left: 394.7px`) dari garisan margin kiri dokumen (`left: 324px`).
+  2. **Ketidakselarian Garisan Kiri (*Visual Misalignment*)**: Elemen di atas (`.bento-breadcrumbs`) dan di bawah (`.bento-subtitle-main`) terletak rapat di sebelah kiri (`left: 324px`), manakala tajuk di tengah tertolak ke sebelah kanan, menghasilkan jurang kosong yang canggung dan tidak teratur.
+  3. **Ketiadaan Ritma Ruang Menegak Yang Konsisten**: Jarak antara remah roti (*breadcrumb*), tajuk, dan sari kata tidak mempunyai margin standard yang kemas mengikut Apple HIG.
+
+- **Tindakan Pembaikan & Penyeragaman (Implementation Highlights)**:
+  1. **Penyeragaman CSS Master `.bento-header-hero` (`shared/css/wedrive.css`)**:
+     - Menetapkan peraturan tegas:
+       ```css
+       .bento-header-hero > .flex-between > div:first-child .flex-center,
+       .bento-header-hero .bento-title-row,
+       .bento-header-hero .flex-start {
+         display: flex !important;
+         align-items: center !important;
+         justify-content: flex-start !important;
+         gap: 12px !important;
+         flex-wrap: wrap !important;
+       }
+       ```
+     - Memperbaiki ritma ruang menegak Apple HIG:
+       - `.bento-breadcrumbs`: `margin-bottom: 10px !important;` (ruang bernafas kemas).
+       - `.bento-title-main`: `margin: 0 !important; line-height: 1.25 !important;`.
+       - `.bento-subtitle-main`: `margin: 8px 0 0 0 !important; line-height: 1.5 !important;`.
+  2. **Kemas Kini Seluruh Sub-Halaman Pentadbir**:
+     - Mengemas kini kelas kontena pengepala daripada `flex-center` kepada `.bento-title-row flex-start` atau `.flex-start gap-10 mb-8` pada 11 fail sub-halaman pentadbir:
+       - `admin/pages/car/available-cars.html`
+       - `admin/pages/dashboard/operations.html`
+       - `admin/pages/car/rented-cars.html`
+       - `admin/pages/car/add-car.html`
+       - `admin/pages/booking/active-bookings.html`
+       - `admin/pages/booking/new-booking.html`
+       - `admin/pages/customer/verifications.html`
+       - `admin/pages/report/export-reports.html`
+       - `admin/pages/marketing/marketing.html`
+       - `admin/pages/calendar/calendar.html`
+       - `admin/pages/chatbot/chatbot.html`
+  3. **Pengesahan Visual & Pengukuran Posisi**:
+     - Disahkan melalui ukuran DevTools pelayar:
+       - `breadcrumbsRect.left`: **324px**
+       - `titleRect.left`: **324px** (telah rapat ke kiri sepenuhnya, 0px offset)
+       - `subtitleRect.left`: **324px**
+     - Sempurna pada Mod Siang (*Day Mode*) dan Mod Malam (*Obsidian Night Mode*).
+  4. **Pengujian Automasi Penuh (Playwright E2E)**:
+     - Kesemua **29/29 ujian lulus 100% (100% Pass Rate)** merangkumi modul Auth, Theme/Lang, About, Pricing, Inactivity Timeout, Bookings Filter & Pagination, Customer Portal, Resit Cukai Rasmi, AI Intelligence, dan Sub-halaman Bar Sisi.
+
+- **Maklumat Git**:
+  - Commit: `5.6.5 Fix bento header left alignment and spacing rhythm across admin sub-pages`
+  - Tag Versi: `5.6.5`

@@ -14639,6 +14639,16 @@ body.pending-page {
   margin-bottom: 24px !important;
 }
 
+.bento-header-hero > .flex-between > div:first-child .flex-center,
+.bento-header-hero .bento-title-row,
+.bento-header-hero .flex-start {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+
 .bento-breadcrumbs {
   display: inline-flex !important;
   align-items: center !important;
@@ -14648,7 +14658,7 @@ body.pending-page {
   color: var(--text-muted) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.04em !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 10px !important;
 }
 
 .bento-breadcrumbs a {
@@ -14672,13 +14682,13 @@ body.pending-page {
   letter-spacing: -0.028em !important;
   color: var(--text-primary) !important;
   margin: 0 !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
 }
 
 .bento-subtitle-main {
   font-size: 14px !important;
   color: var(--text-secondary) !important;
-  margin: 6px 0 0 0 !important;
+  margin: 8px 0 0 0 !important;
   line-height: 1.5 !important;
 }
 
