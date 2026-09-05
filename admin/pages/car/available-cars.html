@@ -101,7 +101,7 @@
               <th class="car-th">Bahan Api</th>
               <th class="car-th">Kadar Harian</th>
               <th class="car-th">Status</th>
-              <th class="car-th text-right">Tindakan</th>
+              <th class="car-th table-action-cell">Tindakan</th>
             </tr>
           </thead>
           <tbody id="avail-tbody"></tbody>
@@ -256,9 +256,11 @@
               '<td>' + (car.fuel || 'Petrol') + '</td>' +
               '<td><strong class="text-primary-accent tabular-nums">RM ' + rateNum + '/hari</strong></td>' +
               '<td><span class="status-badge success"><span class="dot"></span> Tersedia</span></td>' +
-              '<td class="text-right">' +
-                '<button class="apple-btn-capsule-secondary mr-6" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
+              '<td class="table-action-cell">' +
+                '<div class="table-action-group">' +
+                  '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
+                  '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
+                '</div>' +
               '</td>' +
             '</tr>';
           }).join('');

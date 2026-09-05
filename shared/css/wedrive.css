@@ -16232,15 +16232,18 @@ body.theme-dark .apple-segment-btn.active .apple-segment-count {
   background: var(--surface-1, #FFFFFF);
   color: var(--text-primary, #1D1D1F);
   border-radius: 9999px;
-  padding: 7px 14px;
+  padding: 6px 14px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   outline: none;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 [data-theme="dark"] .apple-btn-capsule-secondary {
   background: #2C2C2E;
@@ -16262,16 +16265,19 @@ body.theme-dark .apple-segment-btn.active .apple-segment-count {
   color: #FFFFFF;
   border: none;
   border-radius: 9999px;
-  padding: 7px 14px;
+  padding: 6px 14px;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   outline: none;
   box-shadow: 0 2px 8px rgba(0, 113, 227, 0.25);
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 [data-theme="dark"] .apple-btn-capsule-primary {
   background: #2997FF;
@@ -16283,6 +16289,23 @@ body.theme-dark .apple-segment-btn.active .apple-segment-count {
 }
 .apple-btn-capsule-primary:active {
   transform: scale(0.97);
+}
+
+/* Table Side-by-Side Action Cell Helpers (Kiri Kanan Layout) */
+.table-action-cell {
+  white-space: nowrap !important;
+  min-width: 156px !important;
+  width: 156px !important;
+  text-align: right !important;
+}
+
+.table-action-group {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
 }
 
 /* ==========================================================================

@@ -3444,3 +3444,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.7 Modernized Apple HIG calendar day detail modal with Bento stat chips and booking cards`
   - Tag Versi: `5.7.7`
+
+---
+
+### 163. Penyelarasan Susun Atur Butang Tindakan Kiri-Kanan Mendatar Jadual (v5.7.8)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REFINEMENT & RESPONSIVE DESIGN]`
+- **Modul Terlibat**:
+  - `admin/pages/booking/active-bookings.html`
+  - `admin/pages/car/rented-cars.html`
+  - `admin/pages/car/available-cars.html`
+  - `shared/css/wedrive.css`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan rungutan pengguna (*"ni macam ni x tersusun ...buat kiri kanan lahh"*) terhadap butang tindakan operasi jadual (khususnya butang `Resit` dan `Urus` pada halaman Tempahan Aktif) yang terlipat menegak (*stacked vertically*) di mana butang `Resit` berada di atas dan `Urus` berada di bawah akibat pengecutan lajur jadual tanpa sekatan `white-space`.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pengenalan Kelas Bantuan Sel Jadual Kiri-Kanan Rasmi (`.table-action-cell` & `.table-action-group`)**:
+     - Membina kelas utiliti standard dalam `shared/css/wedrive.css`:
+       - `.table-action-cell`: Ditetapkan dengan `white-space: nowrap !important; min-width: 156px !important; width: 156px !important; text-align: right !important;`.
+       - `.table-action-group`: Bekas `display: inline-flex !important; align-items: center !important; justify-content: flex-end !important; gap: 8px !important; flex-wrap: nowrap !important; white-space: nowrap !important;`.
+  2. **Penyeragaman Butang Kapsul Apple HIG (`.apple-btn-capsule-secondary` & `.apple-btn-capsule-primary`)**:
+     - Mengemas kini butang kepada varian kapsul bulat penuh rasmi (`border-radius: 9999px; height: 32px; padding: 6px 14px; font-size: 12px; font-weight: 600; white-space: nowrap !important; flex-shrink: 0 !important;`).
+     - Menghapuskan penggunaan butang raw berbeza saiz (`btn-secondary` dan `btn-primary`) dalam jadual.
+  3. **Penyelarasan Merentas Semua Jadual Pengurusan**:
+     - Mengemaskini lajur tindakan pada `active-bookings.html` (`Resit` dan `Urus`), `rented-cars.html` (`Perincian` dan `Urus`), serta `available-cars.html` (`Perincian` dan `Tempah`) agar kesemuanya kekal mendatar side-by-side (`kiri kanan`) tanpa sebarang kemungkinan terlipat.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Chrome DevTools & Visual Snapshot**: Mengesahkan koordinat menegak kedua-dua butang adalah sama tepat (`btn1Top: 613.67px`, `btn2Top: 613.67px`, `isSameRow: true`), dengan jurang 8px mendatar yang sempurna.
+  - **Ujian Automasi Playwright**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed dalam 1.8m).
+
+- **Maklumat Git**:
+  - Commit: `5.7.8 Aligned table action buttons horizontally side-by-side with Apple capsule styling`
+  - Tag Versi: `5.7.8`

@@ -144,7 +144,7 @@
               <th class="car-th">Tarikh Jangkaan Pulang</th>
               <th class="car-th">Kadar Harian</th>
               <th class="car-th">Status Operasi</th>
-              <th class="car-th text-right">Tindakan</th>
+              <th class="car-th table-action-cell">Tindakan</th>
             </tr>
           </thead>
           <tbody id="rented-tbody"></tbody>
@@ -337,9 +337,11 @@
               '<td><span class="text-amber fw-600 tabular-nums">' + (bk.return_date || '-') + '</span></td>' +
               '<td><strong class="text-primary tabular-nums">RM ' + rateNum + '/hari</strong></td>' +
               '<td><span class="status-badge active"><span class="live-pulse-dot"></span> Disewa</span></td>' +
-              '<td class="text-right">' +
-                '<button class="apple-btn-capsule-secondary mr-6" style="padding:4px 10px; font-size:11px;" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                '<button class="apple-btn-capsule-primary" style="padding:4px 10px; font-size:11px;" onclick="window.location.href=\'../booking/active-bookings.html\'">Urus</button>' +
+              '<td class="table-action-cell">' +
+                '<div class="table-action-group">' +
+                  '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
+                  '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/active-bookings.html\'">Urus</button>' +
+                '</div>' +
               '</td>' +
             '</tr>';
           }).join('');

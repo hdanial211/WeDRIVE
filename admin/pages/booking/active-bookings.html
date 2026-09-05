@@ -10,7 +10,7 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.7.8" />
   <!-- AUTH GUARD: Must run before page renders -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
@@ -128,7 +128,7 @@
                 <th class="car-th">Jumlah Bayaran</th>
                 <th class="car-th">Status Bayaran</th>
                 <th class="car-th">Status Kontrak</th>
-                <th class="car-th text-right">Tindakan Operasi</th>
+                <th class="car-th table-action-cell">Tindakan Operasi</th>
               </tr>
             </thead>
             <tbody id="active-bookings-tbody">
@@ -237,9 +237,11 @@
           '<td><strong class="text-title tabular-nums">' + total + '</strong></td>' +
           '<td><span class="' + paymentBadge + '"><span class="material-icons-round fs-12">' + (isPaid ? 'check_circle' : 'hourglass_empty') + '</span> ' + (isPaid ? 'Disahkan' : 'Belum Selesai') + '</span></td>' +
           '<td><span class="status-badge active"><span class="live-pulse-dot"></span> Aktif</span></td>' +
-          '<td class="text-right">' +
-            '<button class="btn-secondary mr-6" style="height:32px; padding:0 10px; font-size:11px;" onclick="window.location.href=\'../../../customer/pages/receipt/receipt.html?id=' + (b.id || '') + '\'">Resit</button>' +
-            '<button class="btn-primary" style="height:32px; padding:0 10px; font-size:11px;" onclick="window.location.href=\'bookings.html\'">Urus</button>' +
+          '<td class="table-action-cell">' +
+            '<div class="table-action-group">' +
+              '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'../../../customer/pages/receipt/receipt.html?id=' + (b.id || '') + '\'">Resit</button>' +
+              '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'bookings.html\'">Urus</button>' +
+            '</div>' +
           '</td>' +
         '</tr>';
       }).join('');
