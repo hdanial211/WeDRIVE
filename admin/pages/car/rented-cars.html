@@ -41,10 +41,10 @@
             <p class="bento-subtitle-main">Pemantauan operasi masa nyata kenderaan di tangan penyewa berdaftar, jadual tarikh pemulangan, dan rekod serahan kunci.</p>
           </div>
           <div class="flex-center gap-10">
-            <button class="btn-outline-sm" onclick="window.location.href='cars.html'">
+            <button class="apple-btn-capsule-secondary" onclick="window.location.href='cars.html'">
               <span class="material-icons-round fs-16">directions_car</span> Semua Kereta
             </button>
-            <button class="btn-primary-sm" onclick="window.location.href='../booking/active-bookings.html'">
+            <button class="apple-btn-capsule-primary" onclick="window.location.href='../booking/active-bookings.html'">
               <span class="material-icons-round fs-16">receipt_long</span> Log Tempahan Aktif
             </button>
           </div>
@@ -87,23 +87,41 @@
         </div>
       </div>
 
-      <!-- SEARCH + CATEGORY FILTER CONTROLS -->
-      <div class="card reveal-on-scroll mb-20 px-22 py-16">
-        <div class="flex-between gap-12 flex-wrap">
-          <div class="flex-center gap-8 flex-wrap">
-            <span class="fs-13 fw-600 text-muted">Kategori:</span>
-            <button class="filter-chip active" onclick="filterCategory('all', this)">Semua</button>
-            <button class="filter-chip" onclick="filterCategory('Sedan', this)">Sedan</button>
-            <button class="filter-chip" onclick="filterCategory('SUV', this)">SUV</button>
-            <button class="filter-chip" onclick="filterCategory('MPV', this)">MPV</button>
-            <button class="filter-chip" onclick="filterCategory('Hatchback', this)">Hatchback</button>
+      <!-- SEARCH + APPLE SEGMENTED CONTROL HUB -->
+      <div class="card reveal-on-scroll mb-20 px-22 py-16 radius-24">
+        <div class="flex-between gap-16 flex-wrap">
+          <div class="apple-segmented-control" id="rented-cat-segments">
+            <button class="apple-segment-item active" data-cat="all" onclick="filterCategory('all', this)">
+              <span>Semua</span>
+              <span class="apple-segment-count" id="count-all">0</span>
+            </button>
+            <button class="apple-segment-item" data-cat="truck" onclick="filterCategory('truck', this)">
+              <span>Truck / Pickup</span>
+              <span class="apple-segment-count" id="count-truck">0</span>
+            </button>
+            <button class="apple-segment-item" data-cat="hatchback" onclick="filterCategory('hatchback', this)">
+              <span>Hatchback</span>
+              <span class="apple-segment-count" id="count-hatchback">0</span>
+            </button>
+            <button class="apple-segment-item" data-cat="sedan" onclick="filterCategory('sedan', this)">
+              <span>Sedan</span>
+              <span class="apple-segment-count" id="count-sedan">0</span>
+            </button>
+            <button class="apple-segment-item" data-cat="suv" onclick="filterCategory('suv', this)">
+              <span>SUV</span>
+              <span class="apple-segment-count" id="count-suv">0</span>
+            </button>
+            <button class="apple-segment-item" data-cat="mpv" onclick="filterCategory('mpv', this)">
+              <span>MPV</span>
+              <span class="apple-segment-count" id="count-mpv">0</span>
+            </button>
           </div>
           <div class="flex-center gap-10">
-            <div class="input-wrap-sm input-search-fixed">
+            <div class="input-wrap-sm input-search-fixed radius-9999">
               <span class="material-icons-round fs-18">search</span>
               <input type="text" id="rented-search" placeholder="Cari nama model, plat, atau penyewa..." oninput="searchRented(this.value)" />
             </div>
-            <button class="btn-secondary" id="rented-view-toggle" onclick="toggleRentedView()" title="Tukar paparan Grid / Senarai">
+            <button class="apple-btn-capsule-secondary" id="rented-view-toggle" onclick="toggleRentedView()" title="Tukar paparan Grid / Senarai">
               <span class="material-icons-round fs-16">view_list</span> Senarai
             </button>
           </div>
@@ -116,7 +134,7 @@
       </div>
 
       <!-- CAR TABLE LIST VIEW -->
-      <div id="rented-list" class="card reveal-on-scroll hidden table-responsive p-0 radius-24 overflow-hidden">
+      <div id="rented-list" class="card reveal-on-scroll hidden table-responsive p-0 radius-24 overflow-hidden border-subtle">
         <table class="car-admin-table">
           <thead>
             <tr class="car-table-header-row">
@@ -193,11 +211,31 @@
           var dueTodayEl = document.getElementById('stat-due-today');
           if (dueTodayEl) dueTodayEl.textContent = dueToday > 0 ? dueToday : '2';
 
+          updateSegmentCounts();
           renderRented();
         })
         .catch(function (err) {
           console.error('Error loading rented cars:', err);
         });
+    }
+
+    function updateSegmentCounts() {
+      var counts = {
+        all: rentedCars.length,
+        truck: 0,
+        hatchback: 0,
+        sedan: 0,
+        suv: 0,
+        mpv: 0
+      };
+      rentedCars.forEach(function(item) {
+        var t = (item.car.type || '').toLowerCase();
+        if (counts[t] !== undefined) counts[t]++;
+      });
+      Object.keys(counts).forEach(function(k) {
+        var el = document.getElementById('count-' + k);
+        if (el) el.textContent = counts[k];
+      });
     }
 
     function renderRented() {
@@ -213,7 +251,15 @@
 
       var gridEl = document.getElementById('rented-grid');
       if (filtered.length === 0) {
-        gridEl.innerHTML = '<div class="card p-40 text-center text-muted col-span-full radius-24">Tiada kenderaan yang sedang disewa sepadan dengan kriteria carian.</div>';
+        gridEl.innerHTML = 
+          '<div class="card p-40 text-center col-span-full radius-24 bg-surface-2 border-subtle">' +
+            '<span class="material-icons-round fs-48 text-muted mb-12 block">search_off</span>' +
+            '<h4 class="fs-16 fw-700 text-primary mb-6">Tiada Kenderaan Sedang Disewa Sepadan</h4>' +
+            '<p class="fs-13 text-secondary max-w-400 mx-auto mb-16">Tiada rekod sewaan aktif bagi kategori atau kata kunci yang dipilih buat masa ini.</p>' +
+            '<button class="apple-btn-capsule-primary mx-auto" onclick="filterCategory(\'all\')">' +
+              '<span class="material-icons-round fs-14">replay</span> Tunjukkan Semua Kenderaan (' + rentedCars.length + ')' +
+            '</button>' +
+          '</div>';
       } else {
         gridEl.innerHTML = filtered.map(function (item) {
           var car = item.car;
@@ -221,38 +267,52 @@
           var img0 = (car.images && car.images.length > 0) ? car.images[0] : '';
           var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
           var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '180';
+          var todayStr = new Date().toISOString().split('T')[0];
+          var isToday = bk.return_date === todayStr;
 
-          return '<div class="card p-20 radius-24 reveal-onload hover-elevate transition-apple">' +
-            '<div class="car-card-img-wrap mb-16 radius-18 overflow-hidden position-relative bg-surface-2 p-12">' +
-              '<img src="' + src + '" alt="' + car.name + '" class="car-card-img w-full obj-contain" style="max-height: 150px;" onerror="this.src=\'../../../shared/model/bezza.png\'" />' +
-              '<span class="status-badge active position-absolute" style="top: 10px; right: 10px;"><span class="live-pulse-dot"></span> Disewa</span>' +
+          return '<div class="apple-car-showcase-card reveal-onload">' +
+            '<div class="apple-car-studio-canvas">' +
+              '<div class="glass-status-pill">' +
+                '<span class="live-pulse-dot"></span> Sedang Disewa' +
+              '</div>' +
+              '<img src="' + src + '" alt="' + car.name + '" class="apple-car-studio-img" onerror="this.src=\'../../../shared/model/bezza.png\'" />' +
             '</div>' +
-            '<div class="car-card-body">' +
-              '<div class="flex-between items-start mb-10">' +
-                '<div>' +
-                  '<h3 class="fs-17 fw-700 m-0 text-title">' + car.name + '</h3>' +
-                  '<span class="fs-12 text-secondary">' + (car.type || 'Sedan') + ' • ' + (car.transmission || 'Auto') + '</span>' +
-                '</div>' +
-                '<span class="status-badge fs-12 fw-700 tabular-nums px-8 py-4 radius-8">' + (car.plate || 'WKV 8821') + '</span>' +
+            '<div class="apple-car-card-body">' +
+              '<div class="apple-car-meta-header">' +
+                '<span class="apple-category-pill">' + (car.type || 'Kereta') + '</span>' +
+                '<span class="apple-plate-pill tabular-nums">' + (car.plate || 'WKV 8821') + '</span>' +
               '</div>' +
-              '<div class="card p-12 mb-14 radius-14 bg-surface-2 fs-12 border-subtle">' +
-                '<div class="flex-between mb-6">' +
-                  '<span class="text-muted flex-center gap-4"><span class="material-icons-round fs-14">person</span> Penyewa:</span>' +
-                  '<strong class="text-title">' + (bk.customer_name || 'Pelanggan Rasmi') + '</strong>' +
+              '<h3 class="apple-car-title" title="' + car.name + '">' + car.name + '</h3>' +
+              '<div class="apple-micro-specs">' +
+                '<span class="apple-spec-tag"><span class="material-icons-round">settings</span> ' + (car.transmission || 'Auto') + '</span>' +
+                '<span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ' + (car.fuel || 'Petrol') + '</span>' +
+                '<span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ' + (car.seats || 5) + ' Tempat Duduk</span>' +
+              '</div>' +
+              '<div class="apple-rental-callout">' +
+                '<div class="apple-rental-row">' +
+                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">person</span> Penyewa</span>' +
+                  '<span class="apple-rental-value">' + (bk.customer_name || 'Pelanggan Rasmi') + '</span>' +
                 '</div>' +
-                '<div class="flex-between">' +
-                  '<span class="text-muted flex-center gap-4"><span class="material-icons-round fs-14">event</span> Pulang:</span>' +
-                  '<strong class="text-amber tabular-nums">' + (bk.return_date || 'Seterusnya') + '</strong>' +
+                '<div class="apple-rental-row">' +
+                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">event</span> Pulang</span>' +
+                  '<span class="apple-rental-value tabular-nums ' + (isToday ? 'text-amber fw-700' : '') + '">' + (bk.return_date || 'Seterusnya') + (isToday ? ' <span class="status-badge amber fs-10 py-2 px-6">Hari Ini</span>' : '') + '</span>' +
+                '</div>' +
+                '<div class="apple-rental-row">' +
+                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">confirmation_number</span> ID Tempahan</span>' +
+                  '<span class="apple-rental-value tabular-nums fs-11 text-secondary">' + (bk.id || '#BK-2026-001') + '</span>' +
                 '</div>' +
               '</div>' +
-              '<div class="flex-between items-center border-top-subtle pt-12">' +
+              '<div class="apple-car-footer">' +
                 '<div>' +
-                  '<div class="fs-11 text-muted">Kadar Rasmi</div>' +
-                  '<div class="fs-16 fw-800 text-primary tabular-nums">RM ' + rateNum + '<span class="fs-11 text-secondary fw-500">/hari</span></div>' +
+                  '<div class="apple-car-rate">RM ' + rateNum + ' <span class="apple-car-rate-sub">/hari</span></div>' +
                 '</div>' +
                 '<div class="flex-center gap-8">' +
-                  '<button class="btn-secondary" style="height:36px; padding:0 12px; font-size:12px;" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                  '<button class="btn-primary" style="height:36px; padding:0 12px; font-size:12px;" onclick="window.location.href=\'../booking/active-bookings.html\'">Log Sewaan</button>' +
+                  '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">' +
+                    '<span class="material-icons-round fs-14">info</span> Perincian' +
+                  '</button>' +
+                  '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/active-bookings.html\'">' +
+                    '<span class="material-icons-round fs-14">receipt_long</span> Log Sewaan' +
+                  '</button>' +
                 '</div>' +
               '</div>' +
             '</div>' +
@@ -272,14 +332,14 @@
 
             return '<tr>' +
               '<td><strong class="text-title">' + car.name + '</strong><br><span class="fs-11 text-secondary">' + (car.type || 'Sedan') + '</span></td>' +
-              '<td><span class="fs-12 fw-700 tabular-nums">' + (car.plate || 'WKV 8821') + '</span></td>' +
+              '<td><span class="apple-plate-pill tabular-nums">' + (car.plate || 'WKV 8821') + '</span></td>' +
               '<td><strong class="text-title">' + (bk.customer_name || '-') + '</strong></td>' +
               '<td><span class="text-amber fw-600 tabular-nums">' + (bk.return_date || '-') + '</span></td>' +
               '<td><strong class="text-primary tabular-nums">RM ' + rateNum + '/hari</strong></td>' +
               '<td><span class="status-badge active"><span class="live-pulse-dot"></span> Disewa</span></td>' +
               '<td class="text-right">' +
-                '<button class="btn-secondary mr-6" style="height:32px; padding:0 10px; font-size:11px;" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                '<button class="btn-primary" style="height:32px; padding:0 10px; font-size:11px;" onclick="window.location.href=\'../booking/active-bookings.html\'">Urus</button>' +
+                '<button class="apple-btn-capsule-secondary mr-6" style="padding:4px 10px; font-size:11px;" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
+                '<button class="apple-btn-capsule-primary" style="padding:4px 10px; font-size:11px;" onclick="window.location.href=\'../booking/active-bookings.html\'">Urus</button>' +
               '</td>' +
             '</tr>';
           }).join('');
@@ -288,9 +348,10 @@
     }
 
     function filterCategory(cat, btn) {
-      currentCat = cat;
-      document.querySelectorAll('.filter-chip').forEach(function (c) { c.classList.remove('active'); });
-      if (btn) btn.classList.add('active');
+      currentCat = cat || 'all';
+      document.querySelectorAll('.apple-segment-item').forEach(function (c) {
+        c.classList.toggle('active', c.getAttribute('data-cat') === currentCat);
+      });
       renderRented();
     }
 
@@ -306,12 +367,16 @@
 
       if (viewMode === 'grid') {
         viewMode = 'list';
+        gridEl.classList.add('hidden');
         gridEl.style.display = 'none';
+        listEl.classList.remove('hidden');
         listEl.style.display = 'block';
         btn.innerHTML = '<span class="material-icons-round fs-16">grid_view</span> Grid';
       } else {
         viewMode = 'grid';
+        listEl.classList.add('hidden');
         listEl.style.display = 'none';
+        gridEl.classList.remove('hidden');
         gridEl.style.display = 'grid';
         btn.innerHTML = '<span class="material-icons-round fs-16">view_list</span> Senarai';
       }

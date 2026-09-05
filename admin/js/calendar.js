@@ -57,12 +57,16 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // Detail close button + click outside
   document.getElementById('cal-detail-close').addEventListener('click', () => {
-    document.getElementById('cal-detail-panel').style.display = 'none';
+    const p = document.getElementById('cal-detail-panel');
+    p.classList.add('hidden');
+    p.style.display = 'none';
     clearSelected();
   });
   document.getElementById('cal-detail-panel').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) {
-      document.getElementById('cal-detail-panel').style.display = 'none';
+      const p = document.getElementById('cal-detail-panel');
+      p.classList.add('hidden');
+      p.style.display = 'none';
       clearSelected();
     }
   });
@@ -497,16 +501,21 @@ window.showDayDetail = function (ds) {
   }
 
   body.innerHTML = html;
+  panel.classList.remove('hidden');
   panel.style.display = 'flex';
 };
 
 // ── Stat Card Popup ───────────────────────────────────────────────────────────
 function closeStatModal() {
-  document.getElementById('cal-stat-modal').style.display = 'none';
+  const m = document.getElementById('cal-stat-modal');
+  m.classList.add('hidden');
+  m.style.display = 'none';
 }
 
 window.showStatPopup = function (type) {
   const modal = document.getElementById('cal-stat-modal');
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
   const titleEl = document.getElementById('cal-stat-modal-title');
   const bodyEl = document.getElementById('cal-stat-modal-body');
   const lang = localStorage.getItem('wedrive-lang') || 'en';

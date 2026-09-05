@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.2" />
 
   <!-- AUTH GUARD -->
   <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
@@ -59,13 +59,13 @@
       <!-- FILTER BAR -->
       <div class="card reveal-on-scroll mb-20 px-22 py-16">
         <div class="flex-between flex-wrap gap-12">
-          <div class="flex-wrap gap-8">
-            <button class="filter-chip active" onclick="filterBookings('all', this)" data-key="bk_filter_all">All</button>
-            <button class="filter-chip" onclick="filterBookings('Active', this)">Active</button>
-            <button class="filter-chip" onclick="filterBookings('Confirmed', this)" data-key="bk_f_confirmed">Confirmed</button>
-            <button class="filter-chip" onclick="filterBookings('Pending', this)" data-key="bk_f_pending">Pending</button>
-            <button class="filter-chip" onclick="filterBookings('Completed', this)" data-key="bk_f_completed">Completed</button>
-            <button class="filter-chip" onclick="filterBookings('Cancelled', this)">Cancelled</button>
+          <div class="apple-segmented-control" role="tablist" aria-label="Penapis Status Tempahan">
+            <button class="apple-segment-item active" onclick="filterBookings('all', this)" data-key="bk_filter_all">All</button>
+            <button class="apple-segment-item" onclick="filterBookings('Active', this)">Active</button>
+            <button class="apple-segment-item" onclick="filterBookings('Confirmed', this)" data-key="bk_f_confirmed">Confirmed</button>
+            <button class="apple-segment-item" onclick="filterBookings('Pending', this)" data-key="bk_f_pending">Pending</button>
+            <button class="apple-segment-item" onclick="filterBookings('Completed', this)" data-key="bk_f_completed">Completed</button>
+            <button class="apple-segment-item" onclick="filterBookings('Cancelled', this)">Cancelled</button>
           </div>
           <div class="flex-center gap-8">
             <div class="input-wrap-sm">
@@ -75,13 +75,13 @@
           </div>
         </div>
         <!-- Date Range Filter (NOTA 10) -->
-        <div class="mt-14 border-top-subtle pt-12">
-          <div class="date-range-label">Date Range (Pick-up Date)</div>
-          <div class="flex-center flex-wrap gap-8">
-            <button class="date-chip active" id="date-chip-all" onclick="filterByDate('all', this)">All Time</button>
-            <button class="date-chip" id="date-chip-month" onclick="filterByDate('month', this)">This Month</button>
-            <button class="date-chip" id="date-chip-year" onclick="filterByDate('year', this)">This Year</button>
-            <button class="date-chip" id="date-chip-custom" onclick="showCustomDateRow(this)">Custom Range</button>
+        <div class="mt-14 border-top-subtle pt-12 flex-between flex-wrap gap-12">
+          <div class="date-range-label fs-13 fw-600 text-secondary">Date Range (Pick-up Date):</div>
+          <div class="apple-segmented-control" role="tablist" aria-label="Penapis Tarikh">
+            <button class="apple-segment-item apple-segment-date active" id="date-chip-all" onclick="filterByDate('all', this)">All Time</button>
+            <button class="apple-segment-item apple-segment-date" id="date-chip-month" onclick="filterByDate('month', this)">This Month</button>
+            <button class="apple-segment-item apple-segment-date" id="date-chip-year" onclick="filterByDate('year', this)">This Year</button>
+            <button class="apple-segment-item apple-segment-date" id="date-chip-custom" onclick="showCustomDateRow(this)">Custom Range</button>
           </div>
           <div class="custom-date-row hidden" id="custom-date-row">
             <input type="text" id="bk-date-from" class="date-picker" data-allow-past="true" placeholder="From Date" readonly />

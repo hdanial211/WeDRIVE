@@ -3062,3 +3062,59 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.7 Refine and compact bento hero header styling across admin sub-pages`
   - Tag Versi: `5.6.7`
+
+---
+
+### 153. Audit Menyeluruh Kualiti Antaramuka Pentadbir, Pembetulan Pengecaman Fokus Bujur & Penyeragaman Estetik Apple HIG (v5.6.8)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[MAJOR UPDATE]` / `[UI/UX REFINEMENT & SYSTEM AUDIT]`
+- **Modul Terlibat**:
+  - `shared/css/wedrive.css`
+  - `admin/pages/dashboard/admin.html`
+  - `admin/pages/dashboard/operations.html`
+  - `admin/pages/car/cars.html` & `admin/js/cars.js`
+  - `admin/pages/car/available-cars.html` & `admin/js/available-cars.js`
+  - `admin/pages/car/rented-cars.html`
+  - `admin/pages/car/add-car.html`
+  - `admin/pages/car/car-detail.html` & `admin/js/car-detail.js`
+  - `admin/pages/booking/bookings.html`
+  - `admin/pages/booking/active-bookings.html`
+  - `admin/pages/booking/new-booking.html`
+  - `admin/pages/customer/customers.html`
+  - `admin/pages/customer/verifications.html`
+  - `admin/pages/report/reports.html`
+  - `admin/pages/report/export-reports.html`
+  - `admin/pages/calendar/calendar.html`
+  - `admin/pages/analytics/analytics.html`
+  - `admin/pages/chatbot/chatbot.html`
+  - `admin/pages/marketing/marketing.html` & `admin/js/marketing.js`
+  - `admin/pages/setting/settings.html` & `admin/js/settings.js`
+
+- **Objektif & Latar Belakang**:
+  - Memenuhi maklum balas kritikal pengguna:
+    1. *"buruk"* — Reka bentuk kad kereta lama dengan teks spesifikasi menegak bertingkat dan susun atur tidak teratur.
+    2. *"asal highlight dia kotak..saya nak ikut bulatan tu penuh jangan ikut kotak tu"* — Masalah penonjolan fokus (*focus ring*) pelayar yang memaparkan garisan kotak segi empat tepat yang hodoh dan memotong bucu kapsul bujur input carian.
+    3. *"as admin tengok page tu ....kau rasa admin suka ke page macam tu x tersusun ...aq nak kau testing satu per satu"* — Permintaan untuk menjalankan audit menyeluruh halaman demi halaman menggunakan pelayar sebenar (Chrome DevTools), menyusun atur semua elemen antaramuka, membetulkan butang yang tidak berfungsi, dan memastikan perisian pentadbir kelihatan korporat, teratur, dan mewah mengikut standard Apple HIG.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pembasmian Kotak Fokus Segi Empat & Pengenalan Cahaya Pengecaman Bujur Apple**:
+     - Menetapkan `input:focus, select:focus, textarea:focus { outline: none !important; }` di seluruh sistem untuk membatalkan garisan kotak lalai pelayar.
+     - Mengaplikasikan peraturan `:focus-within` pada semua bekas input kapsul (`.input-wrap`, `.input-wrap-sm`, `.input-search-fixed`, `.search-pill`, dsb.) dengan `border-radius: 9999px`, warna sempadan `#0071E3`, dan kilauan cahaya lembut `box-shadow: 0 0 0 3.5px rgba(0, 113, 227, 0.18)` yang 100% menepati kontur lengkungan bujur.
+  2. **Rombakan Kad Pameran Kereta Pentadbir (`.apple-car-showcase-card`)**:
+     - Menukar templat kad kereta lama dalam `admin/js/cars.js` dan `admin/js/available-cars.js` kepada struktur kad Apple Bento moden: kanvas nisbah studio 16:10, lencana status kaca terapung dengan titik nadi hijau, nombor plat format JPJ berlatar hitam (`tabular-nums`), lencana spesifikasi mendatar (transmisi, tempat duduk, bahan api), dan butang tindakan kapsul berperalihan lembut `scale(0.97)`.
+  3. **Penstrukturan Semula Modul Pemasaran & Promosi (`marketing.html`)**:
+     - Menambah kelas susun atur `.mkt-section` (`display: none !important;` dan `.active { display: block !important; }`) bagi membolehkan pertukaran tab (Sepanduk, Kod Kupon, Kadar Bermusim, Cadangan Pintar) berfungsi secara dinamik tanpa pertindihan kandungan.
+     - Mereka bentuk komponen visual Apple Bento untuk sepanduk promosi, kad baucar kod promo bergaris putus-putus, bar kemajuan penggunaan, dan butang tindakan squircle taktikal.
+  4. **Penalaan Penjajaran & Modal Detail Kereta**:
+     - Memperbaiki konflik paparan `.hidden` pada modal pengesahan (`#insurance-modal`, `#status-modal`, `#edit-modal`, `#delete-modal`) dalam `car-detail.js`.
+     - Memperbetulkan isu pertindihan tajuk dan lencana status pada kad konfigurasi API di `chatbot.html`.
+  5. **Pengujian Menyeluruh Halaman demi Halaman Melalui Chrome DevTools**:
+     - Menguji setiap butang, penapis segmen, carian, suis tema, suis bahasa, dan navigasi dwi-baris merentas kesemua 18 halaman pentadbir dalam satu tab pelayar tunggal.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Pelayar DevTools**: Mengesahkan setiap tindakan antaramuka secara visual dengan tangkapan skrin sebenar.
+  - **Ujian Playwright E2E**: Menjalankan keseluruhan suite 29 ujian automasi dengan kadar kelulusan 100%.
+
+- **Maklumat Git**:
+  - Commit: `5.6.8 Comprehensive admin UI audit, oval focus glow fix and Apple HIG styling standardization`
+  - Tag Versi: `5.6.8`

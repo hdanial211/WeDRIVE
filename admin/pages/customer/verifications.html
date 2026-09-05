@@ -10,7 +10,7 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.2" />
   <!-- AUTH GUARD: Must run before page renders -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
@@ -292,7 +292,7 @@
     }
 
     function openKycModal(id) {
-      var c = customersList.find(function (item) { return item.id === id; });
+      var c = customersList.find(function (item) { return String(item.id) === String(id); });
       if (!c) return;
       activeCustId = id;
 
@@ -300,16 +300,21 @@
       document.getElementById('kyc-modal-sub').textContent = 'MyKad: ' + c.ic + ' • Lesen: ' + c.license + ' (' + c.expiry + ')';
       document.getElementById('kyc-ic-val').textContent = c.ic;
       document.getElementById('kyc-expiry-val').textContent = c.expiry;
-      document.getElementById('kyc-modal').classList.remove('hidden');
+      
+      var modal = document.getElementById('kyc-modal');
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
     }
 
     function closeKycModal() {
-      document.getElementById('kyc-modal').classList.add('hidden');
+      var modal = document.getElementById('kyc-modal');
+      modal.classList.add('hidden');
+      modal.style.display = 'none';
       activeCustId = null;
     }
 
     function quickApprove(id) {
-      var c = customersList.find(function (item) { return item.id === id; });
+      var c = customersList.find(function (item) { return String(item.id) === String(id); });
       if (c) {
         c.status = 'Verified';
         updateStats();
@@ -326,7 +331,7 @@
 
     function rejectCurrentCustomer() {
       if (!activeCustId) return;
-      var c = customersList.find(function (item) { return item.id === activeCustId; });
+      var c = customersList.find(function (item) { return String(item.id) === String(activeCustId); });
       if (c) {
         c.status = 'Rejected';
         updateStats();

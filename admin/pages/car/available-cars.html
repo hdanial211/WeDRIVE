@@ -10,7 +10,7 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.0" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.2" />
   <!-- AUTH GUARD -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
@@ -51,16 +51,25 @@
         </div>
       </div>
 
-      <!-- SEARCH + CATEGORY FILTER CONTROLS -->
+      <!-- SEARCH + APPLE SEGMENTED CATEGORY FILTER -->
       <div class="card reveal-on-scroll mb-20 px-22 py-16">
         <div class="flex-between gap-12 flex-wrap">
-          <div class="flex-center gap-8 flex-wrap">
-            <span class="fs-13 fw-600 text-muted">Kategori:</span>
-            <button class="filter-chip active" onclick="filterCategory('all', this)">Semua</button>
-            <button class="filter-chip" onclick="filterCategory('Sedan', this)">Sedan</button>
-            <button class="filter-chip" onclick="filterCategory('SUV', this)">SUV</button>
-            <button class="filter-chip" onclick="filterCategory('MPV', this)">MPV</button>
-            <button class="filter-chip" onclick="filterCategory('Hatchback', this)">Hatchback</button>
+          <div class="apple-segmented-control" role="tablist" aria-label="Tapisan Kategori Kereta">
+            <button class="apple-segment-item active" data-cat="all" onclick="filterCategory('all', this)">
+              Semua (<span id="count-all" class="tabular-nums">0</span>)
+            </button>
+            <button class="apple-segment-item" data-cat="sedan" onclick="filterCategory('sedan', this)">
+              Sedan (<span id="count-sedan" class="tabular-nums">0</span>)
+            </button>
+            <button class="apple-segment-item" data-cat="suv" onclick="filterCategory('suv', this)">
+              SUV (<span id="count-suv" class="tabular-nums">0</span>)
+            </button>
+            <button class="apple-segment-item" data-cat="mpv" onclick="filterCategory('mpv', this)">
+              MPV (<span id="count-mpv" class="tabular-nums">0</span>)
+            </button>
+            <button class="apple-segment-item" data-cat="hatchback" onclick="filterCategory('hatchback', this)">
+              Hatchback (<span id="count-hatchback" class="tabular-nums">0</span>)
+            </button>
           </div>
           <div class="flex-center gap-10">
             <div class="input-wrap-sm input-search-fixed">
@@ -130,11 +139,31 @@
 
           var badgeEl = document.getElementById('avail-count-badge');
           if (badgeEl) badgeEl.textContent = availableCars.length + ' unit sedia disewa';
+          
+          updateSegmentCounts();
           renderAvailable();
         })
         .catch(function (err) {
           console.error('Error loading available cars:', err);
         });
+    }
+
+    function updateSegmentCounts() {
+      var counts = {
+        all: availableCars.length,
+        sedan: 0,
+        suv: 0,
+        mpv: 0,
+        hatchback: 0
+      };
+      availableCars.forEach(function(car) {
+        var t = (car.type || '').toLowerCase();
+        if (counts[t] !== undefined) counts[t]++;
+      });
+      Object.keys(counts).forEach(function(k) {
+        var el = document.getElementById('count-' + k);
+        if (el) el.textContent = counts[k];
+      });
     }
 
     function renderAvailable() {
@@ -146,40 +175,62 @@
         return matchCat && matchSearch;
       });
 
-      // Render Cards
+      // Render Cards (Apple HIG Bento Showcase Standard)
       var gridEl = document.getElementById('avail-grid');
       if (filtered.length === 0) {
-        gridEl.innerHTML = '<div class="card p-40 text-center text-muted col-span-full">Tiada kenderaan tersedia buat masa ini mengikut tapisan.</div>';
+        gridEl.innerHTML = 
+          '<div class="card p-40 text-center col-span-full radius-24 bg-surface-2 border-subtle">' +
+            '<span class="material-icons-round fs-48 text-muted mb-12 block">search_off</span>' +
+            '<h4 class="fs-16 fw-700 text-primary mb-6">Tiada Kenderaan Sedia Disewa</h4>' +
+            '<p class="fs-13 text-secondary max-w-400 mx-auto mb-16">Tiada kenderaan sepadan dengan tapisan kategori atau kata kunci carian yang dipilih.</p>' +
+            '<button class="apple-btn-capsule-primary mx-auto" onclick="filterCategory(\'all\')">' +
+              '<span class="material-icons-round fs-14">replay</span> Papar Semua Kenderaan Tersedia (' + availableCars.length + ')' +
+            '</button>' +
+          '</div>';
       } else {
         gridEl.innerHTML = filtered.map(function (car) {
           var img0 = (car.images && car.images.length > 0) ? car.images[0] : '';
           var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
-          var rateNum = car.rate ? String(car.rate).replace(/[^0-9]/g, '') : '150';
+          var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
 
-          return '<div class="card reveal-onload p-18 radius-24">' +
-            '<div class="car-card-img-wrap radius-16">' +
-              '<img src="' + src + '" alt="' + car.name + '" class="car-card-img" onerror="this.src=\'../../../shared/model/bezza.png\'" />' +
-              '<span class="status-badge success car-card-badge"><span class="dot"></span> Tersedia</span>' +
+          return '<div class="apple-car-showcase-card reveal-onload">' +
+            '<div class="apple-car-studio-canvas">' +
+              '<div class="glass-status-pill">' +
+                '<span class="live-pulse-dot" style="background:#10B981"></span> Tersedia' +
+              '</div>' +
+              '<img src="' + src + '" alt="' + car.name + '" class="apple-car-studio-img" onerror="this.src=\'../../../shared/model/bezza.png\'" />' +
             '</div>' +
-            '<div class="car-card-body pt-14">' +
-              '<div class="flex-between mb-8">' +
-                '<h3 class="fs-17 fw-800 m-0 text-title">' + car.name + '</h3>' +
-                '<span class="fs-12 fw-700 text-muted tabular-nums">' + (car.plate || '-') + '</span>' +
+            '<div class="apple-car-card-body">' +
+              '<div class="apple-car-meta-header">' +
+                '<span class="apple-category-pill">' + (car.type || 'Kereta') + '</span>' +
+                '<span class="apple-plate-pill tabular-nums">' + (car.plate || '-') + '</span>' +
               '</div>' +
-              '<div class="flex-wrap gap-10 fs-12 text-muted mb-16">' +
-                '<span class="flex-center gap-4"><span class="material-icons-round fs-15">airline_seat_recline_normal</span> ' + (car.seats || 5) + ' Kerusi</span>' +
-                '<span class="flex-center gap-4"><span class="material-icons-round fs-15">settings</span> ' + (car.transmission || 'Auto') + '</span>' +
-                '<span class="flex-center gap-4"><span class="material-icons-round fs-15">local_gas_station</span> ' + (car.fuel || 'Petrol') + '</span>' +
+              '<h3 class="apple-car-title" title="' + car.name + '">' + car.name + '</h3>' +
+              '<div class="apple-micro-specs">' +
+                '<span class="apple-spec-tag"><span class="material-icons-round">settings</span> ' + (car.transmission || 'Auto') + '</span>' +
+                '<span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ' + (car.fuel || 'Petrol') + '</span>' +
+                '<span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ' + (car.seats || 5) + ' Kerusi</span>' +
               '</div>' +
-              '<div class="flex-between border-top-subtle pt-12 flex-center">' +
-                '<div>' +
-                  '<div class="fs-11 text-muted">Kadar Sewaan</div>' +
-                  '<div class="fs-18 fw-800 text-primary-accent tabular-nums">RM ' + rateNum + '<span class="fs-12 fw-500 text-muted">/hari</span></div>' +
+              '<div class="apple-rental-callout">' +
+                '<div class="apple-rental-row">' +
+                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Lokasi Depoh</span>' +
+                  '<span class="apple-rental-value">Depoh Utama Melaka Sentral</span>' +
                 '</div>' +
-                '<div class="flex-center gap-6">' +
-                  '<button class="btn-outline-sm" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                  '<button class="btn-primary-sm" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">' +
-                    '<span class="material-icons-round fs-15">add_task</span> Tempah' +
+                '<div class="apple-rental-row">' +
+                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">verified</span> Kebersihan</span>' +
+                  '<span class="apple-rental-value"><span class="status-badge success fs-10 py-2 px-6">Siap Sanitasi</span></span>' +
+                '</div>' +
+              '</div>' +
+              '<div class="apple-car-footer">' +
+                '<div>' +
+                  '<div class="apple-car-rate">RM ' + rateNum + ' <span class="apple-car-rate-sub">/hari</span></div>' +
+                '</div>' +
+                '<div class="flex-center gap-8">' +
+                  '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">' +
+                    '<span class="material-icons-round fs-14">info</span> Perincian' +
+                  '</button>' +
+                  '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">' +
+                    '<span class="material-icons-round fs-14">add_task</span> Tempah' +
                   '</button>' +
                 '</div>' +
               '</div>' +
@@ -195,10 +246,10 @@
           tbody.innerHTML = '<tr><td colspan="9" class="text-center py-24 text-muted">Tiada kenderaan sepadan.</td></tr>';
         } else {
           tbody.innerHTML = filtered.map(function (car) {
-            var rateNum = car.rate ? String(car.rate).replace(/[^0-9]/g, '') : '150';
+            var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
             return '<tr>' +
               '<td><strong>' + car.name + '</strong></td>' +
-              '<td><span class="fs-12 fw-700 tabular-nums">' + (car.plate || '-') + '</span></td>' +
+              '<td><span class="apple-plate-pill tabular-nums">' + (car.plate || '-') + '</span></td>' +
               '<td>' + (car.type || '-') + '</td>' +
               '<td>' + (car.seats || 5) + ' Tempat Duduk</td>' +
               '<td>' + (car.transmission || 'Auto') + '</td>' +
@@ -206,8 +257,8 @@
               '<td><strong class="text-primary-accent tabular-nums">RM ' + rateNum + '/hari</strong></td>' +
               '<td><span class="status-badge success"><span class="dot"></span> Tersedia</span></td>' +
               '<td class="text-right">' +
-                '<button class="btn-outline-sm mr-6" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                '<button class="btn-primary-sm" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
+                '<button class="apple-btn-capsule-secondary mr-6" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
+                '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
               '</td>' +
             '</tr>';
           }).join('');
@@ -217,8 +268,13 @@
 
     function filterCategory(cat, btn) {
       currentCat = cat;
-      document.querySelectorAll('.filter-chip').forEach(function (c) { c.classList.remove('active'); });
-      if (btn) btn.classList.add('active');
+      document.querySelectorAll('.apple-segment-btn').forEach(function (b) { b.classList.remove('active'); });
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        var defaultBtn = document.querySelector('.apple-segment-btn[data-cat="' + cat + '"]');
+        if (defaultBtn) defaultBtn.classList.add('active');
+      }
       renderAvailable();
     }
 
@@ -234,12 +290,16 @@
 
       if (viewMode === 'grid') {
         viewMode = 'list';
+        gridEl.classList.add('hidden');
         gridEl.style.display = 'none';
+        listEl.classList.remove('hidden');
         listEl.style.display = 'block';
         btn.innerHTML = '<span class="material-icons-round fs-16">grid_view</span> Grid';
       } else {
         viewMode = 'grid';
+        listEl.classList.add('hidden');
         listEl.style.display = 'none';
+        gridEl.classList.remove('hidden');
         gridEl.style.display = 'grid';
         btn.innerHTML = '<span class="material-icons-round fs-16">view_list</span> Senarai';
       }

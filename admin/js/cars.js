@@ -76,71 +76,92 @@ function populateCarStats(car) {
   const available = car.filter(c => c.status === 'Available').length;
   const rented = car.filter(c => c.status === 'Rented').length;
 
-  document.getElementById('fl-total').textContent = total;
-  document.getElementById('fl-available').textContent = available;
-  document.getElementById('fl-rented').textContent = rented;
+  const totalEl = document.getElementById('fl-total');
+  if (totalEl) totalEl.textContent = total;
+  const availEl = document.getElementById('fl-available');
+  if (availEl) availEl.textContent = available;
+  const rentedEl = document.getElementById('fl-rented');
+  if (rentedEl) rentedEl.textContent = rented;
+
+  const cntAll = document.getElementById('count-all');
+  if (cntAll) cntAll.textContent = total;
+  const cntAvail = document.getElementById('count-avail');
+  if (cntAvail) cntAvail.textContent = available;
+  const cntRented = document.getElementById('count-rented');
+  if (cntRented) cntRented.textContent = rented;
 }
 
-/* ── Card Grid ── */
+/* ── Card Grid (Apple HIG Bento Showcase) ── */
 function renderCarCards(car) {
   const grid = document.getElementById('car-grid');
   if (!grid) return;
   if (car.length === 0) {
-    grid.innerHTML = '<div class="card" style="padding:40px;text-align:center;color:var(--text-tertiary);grid-column:1/-1">No vehicles found</div>';
+    grid.innerHTML = '<div class="card p-40 text-center col-span-full radius-24 bg-surface-2 border-subtle text-muted">No vehicles found</div>';
     return;
   }
-  grid.innerHTML = car.map(car => {
-    const statusColors = {
-      'Available': { bg: 'rgba(16, 185, 129, 0.15)', text: '#10B981', dot: '#10B981', icon: 'check_circle' },
-      'Rented': { bg: 'rgba(0, 113, 227, 0.15)', text: '#0071E3', dot: '#0071E3', icon: 'car_rental' }
-    };
-    const sc = statusColors[car.status] || statusColors['Available'];
+  grid.innerHTML = car.map(c => {
+    const isAvail = c.status === 'Available';
+    const sc = isAvail
+      ? { text: '#10B981', dot: '#10B981', label: 'Tersedia' }
+      : { text: '#0071E3', dot: '#0071E3', label: 'Sedang Disewa' };
 
-    const img0 = (car.images && car.images.length > 0) ? car.images[0] : null;
-    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : null;
+    const img0 = (c.images && c.images.length > 0) ? c.images[0] : null;
+    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+    const rateNum = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : '150';
 
     return `
-    <div class="card car-card reveal-on-scroll">
-      <!-- Car Image -->
-      <div style="width:100%;height:160px;background:linear-gradient(135deg,var(--bg-surface-2),var(--bg-surface-3));border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden;border:1px solid var(--border-subtle);">
-        ${src
-        ? `<img src="${src}" alt="${car.name}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;display:none;align-items:center;justify-content:center;width:100%;height:100%;">directions_car</span>`
-        : `<span class="material-icons-round" style="font-size:56px;color:var(--primary);opacity:0.6;">directions_car</span>`
-      }
+    <div class="apple-car-showcase-card reveal-on-scroll">
+      <div class="apple-car-studio-canvas">
+        <div class="glass-status-pill">
+          <span class="live-pulse-dot" style="background:${sc.dot}"></span> ${sc.label}
+        </div>
+        <img src="${src}" alt="${c.name}" class="apple-car-studio-img" onerror="this.src='../../../shared/model/bezza.png'" />
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <h4 style="font-size:16px;font-weight:700;color:var(--text-primary);margin:0;">${car.name}</h4>
-        <span style="font-size:11px;font-weight:700;color:${sc.text};background:${sc.bg};padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:4px;">
-          <span style="width:6px; height:6px; border-radius:50%; background:${sc.dot};"></span> ${car.status}
-        </span>
-      </div>
-
-      <div style="font-size:12px;color:var(--text-tertiary);font-weight:600;margin-bottom:12px;">${car.plate} · ${car.label || car.type}</div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:12px;">
-        <div style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);">
-          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">airline_seat_recline_normal</span> ${car.seats || 5} Seats
+      <div class="apple-car-card-body">
+        <div class="apple-car-meta-header">
+          <span class="apple-category-pill">${c.type || 'Kereta'}</span>
+          <span class="apple-plate-pill tabular-nums">${c.plate || '-'}</span>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);">
-          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">settings</span> ${car.transmission}
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;color:var(--text-secondary);">
-          <span class="material-icons-round" style="font-size:14px;color:var(--primary)">local_gas_station</span> ${car.fuel}
-        </div>
-      </div>
 
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--border-subtle);">
-        <div style="font-size:18px;font-weight:700;color:var(--primary);">${car.rate}</div>
-        <button class="btn-primary-sm" onclick="manageCar(${car.id})" style="font-size:12px;padding:8px 16px;">
-          <span class="material-icons-round" style="font-size:14px">edit</span> Manage
-        </button>
+        <h3 class="apple-car-title" title="${c.name}">${c.name}</h3>
+
+        <div class="apple-micro-specs">
+          <span class="apple-spec-tag"><span class="material-icons-round">settings</span> ${c.transmission || 'Auto'}</span>
+          <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ${c.fuel || 'Petrol'}</span>
+          <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ${c.seats || 5} Kerusi</span>
+        </div>
+
+        <div class="apple-rental-callout">
+          <div class="apple-rental-row">
+            <span class="apple-rental-label"><span class="material-icons-round fs-15">info</span> Status Operasi</span>
+            <span class="apple-rental-value fw-600 ${isAvail ? 'text-emerald' : 'text-primary'}">${sc.label}</span>
+          </div>
+          <div class="apple-rental-row">
+            <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Lokasi Depoh</span>
+            <span class="apple-rental-value">Depoh Utama Melaka Sentral</span>
+          </div>
+        </div>
+
+        <div class="apple-car-footer">
+          <div>
+            <div class="apple-car-rate">RM ${rateNum} <span class="apple-car-rate-sub">/hari</span></div>
+          </div>
+          <div class="flex-center gap-8">
+            <button class="apple-btn-capsule-secondary" onclick="window.location.href='car-detail/car-detail.html?id=${c.id}'">
+              <span class="material-icons-round fs-14">info</span> Perincian
+            </button>
+            <button class="apple-btn-capsule-primary" onclick="manageCar(${c.id})">
+              <span class="material-icons-round fs-14">tune</span> Urus
+            </button>
+          </div>
+        </div>
       </div>
     </div>`;
   }).join('');
 }
 
-/* ── Table ── */
+/* ── Table (Apple Precision Standard) ── */
 function renderCarTable(car) {
   const tbody = document.getElementById('car-tbody');
   if (!tbody) return;
@@ -149,21 +170,21 @@ function renderCarTable(car) {
     return;
   }
   tbody.innerHTML = car.map(car => {
-    const statusColors = {
-      'Available': { bg: 'rgba(16, 185, 129, 0.15)', text: '#10B981', dot: '#10B981' },
-      'Rented': { bg: 'rgba(0, 113, 227, 0.15)', text: '#0071E3', dot: '#0071E3' }
-    };
-    const sc = statusColors[car.status] || statusColors['Available'];
+    const isAvail = car.status === 'Available';
+    const sc = isAvail
+      ? { bg: 'rgba(16, 185, 129, 0.12)', text: '#10B981', dot: '#10B981', label: 'Tersedia' }
+      : { bg: 'rgba(0, 113, 227, 0.12)', text: '#0071E3', dot: '#0071E3', label: 'Sedang Disewa' };
     
     const img0 = (car.images && car.images.length > 0) ? car.images[0] : null;
-    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : null;
+    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+    const rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
 
     return `
     <tr style="border-bottom: 1px solid var(--border-subtle); transition: background 0.15s ease;">
       <td style="padding:14px 20px;">
         <div style="display:flex; align-items:center; gap:12px;">
           <div style="width:48px; height:36px; border-radius:8px; overflow:hidden; background:var(--bg-surface-3); display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1px solid var(--border-subtle);">
-            ${src ? `<img src="${src}" alt="${car.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.style.display='none';" />` : `<span class="material-icons-round" style="font-size:22px; color:var(--text-tertiary);">directions_car</span>`}
+            <img src="${src}" alt="${car.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='../../../shared/model/bezza.png';" />
           </div>
           <div>
             <div style="font-weight:600; color:var(--text-primary); font-size:14px;">${car.name}</div>
@@ -171,20 +192,20 @@ function renderCarTable(car) {
           </div>
         </div>
       </td>
-      <td style="padding:14px 20px; font-weight:600; color:var(--text-secondary); font-family:monospace; font-size:13px;">${car.plate}</td>
+      <td style="padding:14px 20px;"><span class="apple-plate-pill tabular-nums">${car.plate}</span></td>
       <td style="padding:14px 20px; color:var(--text-secondary);">${car.type || 'Sedan'}</td>
       <td style="padding:14px 20px; color:var(--text-secondary);">${car.seats || 5} Seats</td>
       <td style="padding:14px 20px; color:var(--text-secondary);">${car.transmission || 'Auto'}</td>
       <td style="padding:14px 20px; color:var(--text-secondary);">${car.fuel || 'Petrol'}</td>
-      <td style="padding:14px 20px; font-weight:700; color:var(--primary); font-size:14px;">${car.rate}</td>
+      <td style="padding:14px 20px; font-weight:700; color:var(--primary); font-size:14px;">RM ${rateNum}/hari</td>
       <td style="padding:14px 20px;">
         <span style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; background:${sc.bg}; color:${sc.text};">
-          <span style="width:6px; height:6px; border-radius:50%; background:${sc.dot};"></span> ${car.status}
+          <span style="width:6px; height:6px; border-radius:50%; background:${sc.dot};"></span> ${sc.label}
         </span>
       </td>
       <td style="padding:14px 20px; text-align:right;">
-        <button class="btn-primary-sm" onclick="manageCar(${car.id})" style="font-size:12px; padding:6px 14px; height:32px;">
-          <span class="material-icons-round" style="font-size:14px">edit</span> Manage
+        <button class="apple-btn-capsule-primary" onclick="manageCar(${car.id})">
+          <span class="material-icons-round fs-14">tune</span> Urus
         </button>
       </td>
     </tr>`;
@@ -194,8 +215,13 @@ function renderCarTable(car) {
 /* ── Filter ── */
 function filterCar(status, btn) {
   currentFilter = status;
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
+  document.querySelectorAll('.apple-segment-btn, .filter-chip').forEach(c => c.classList.remove('active'));
+  if (btn) {
+    btn.classList.add('active');
+  } else {
+    const target = document.querySelector(`.apple-segment-btn[data-status="${status}"]`);
+    if (target) target.classList.add('active');
+  }
   applyFilters();
 }
 

@@ -88,6 +88,7 @@ function renderCarImages(car) {
     const firstSrc = resolveImgSrc(car.images[0]);
     mainImg.src = firstSrc;
     mainImg.alt = car.name;
+    mainImg.classList.remove('hidden');
     mainImg.style.display = 'block';
     fallback.style.display = 'none';
 
@@ -125,6 +126,7 @@ function switchImage(idx) {
   const fallback = document.getElementById('cd-img-fallback');
   const src = resolveImgSrc(carData.images[idx]);
   mainImg.src = src;
+  mainImg.classList.remove('hidden');
   mainImg.style.display = 'block';
   fallback.style.display = 'none';
 
@@ -180,6 +182,7 @@ function editDetails() {
 
   const modal = document.getElementById('edit-car-modal');
   if (modal) {
+    modal.classList.remove('hidden');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
@@ -189,6 +192,7 @@ window.editDetails = editDetails;
 function closeEditCarModal() {
   const modal = document.getElementById('edit-car-modal');
   if (modal) {
+    modal.classList.add('hidden');
     modal.style.display = 'none';
     document.body.style.overflow = '';
   }
@@ -312,6 +316,7 @@ function removeImage(idx) {
   _pendingRemoveIdx = idx;
   const modal = document.getElementById('remove-photo-modal');
   if (modal) {
+    modal.classList.remove('hidden');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
@@ -321,6 +326,7 @@ function closeRemovePhotoModal() {
   _pendingRemoveIdx = -1;
   const modal = document.getElementById('remove-photo-modal');
   if (modal) {
+    modal.classList.add('hidden');
     modal.style.display = 'none';
     document.body.style.overflow = '';
   }
@@ -438,6 +444,7 @@ async function saveCarEdit(e) {
 function closeStatusRedirectModal() {
   const modal = document.getElementById('status-redirect-modal');
   if (modal) {
+    modal.classList.add('hidden');
     modal.style.display = 'none';
     document.body.style.overflow = '';
   }
@@ -468,14 +475,31 @@ async function updateStatus() {
     };
   }
 
+  modal.classList.remove('hidden');
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
 
 /* ── Quick Actions ── */
 function viewInsurance() {
-  alert(`Insurance Info for ${carData.name}\n\nPlate: ${carData.plate}\nType: ${carData.label || carData.type}\n\nInsurance details will be available when backend is integrated.`);
+  const modal = document.getElementById('insurance-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
 }
+window.viewInsurance = viewInsurance;
+
+function closeInsuranceModal() {
+  const modal = document.getElementById('insurance-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+window.closeInsuranceModal = closeInsuranceModal;
 
 function updateDeleteModalDescription() {
   const descEl = document.getElementById('delete-car-desc');
@@ -510,6 +534,7 @@ function deleteCar() {
   updateDeleteModalDescription();
   
   if (modal) {
+    modal.classList.remove('hidden');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
@@ -519,6 +544,7 @@ window.deleteCar = deleteCar;
 function closeDeleteCarModal() {
   const modal = document.getElementById('delete-car-modal');
   if (modal) {
+    modal.classList.add('hidden');
     modal.style.display = 'none';
     document.body.style.overflow = '';
   }

@@ -156,20 +156,26 @@ function populateSummaryCards(bookings, cars) {
 }
 
 function toggleExportDropdown(e) {
-  e.stopPropagation();
+  if (e) e.stopPropagation();
   var dropdown = document.getElementById('export-dropdown');
   if (!dropdown) return;
   
-  if (dropdown.style.display === 'none') {
+  var isHidden = dropdown.classList.contains('hidden') || dropdown.style.display === 'none' || window.getComputedStyle(dropdown).display === 'none';
+  if (isHidden) {
+    dropdown.classList.remove('hidden');
     dropdown.style.display = 'flex';
   } else {
+    dropdown.classList.add('hidden');
     dropdown.style.display = 'none';
   }
 }
 
 function handleExport(format) {
   var dropdown = document.getElementById('export-dropdown');
-  if (dropdown) dropdown.style.display = 'none';
+  if (dropdown) {
+    dropdown.classList.add('hidden');
+    dropdown.style.display = 'none';
+  }
 
   if (format === 'pdf') {
     window.print();

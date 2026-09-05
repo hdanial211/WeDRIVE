@@ -10,7 +10,7 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.2" />
   <script src="../../../shared/js/auth-guard.js" data-role="admin"></script>
 </head>
 
@@ -23,24 +23,24 @@
     <div class="content">
       <!-- STATS -->
       <div class="stats-grid grid-3col">
-        <div class="stat-card reveal-onload">
+        <div class="card stat-card reveal-on-scroll">
           <div class="stat-info">
-            <div class="label" data-key="fl_stat_total">Total Cars</div>
-            <div class="value" id="fl-total">--</div>
+            <span class="stat-label" data-key="fl_total_cars">TOTAL CARS</span>
+            <div class="stat-value tabular-nums" id="fl-total">0</div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
         </div>
-        <div class="stat-card reveal-onload">
+        <div class="card stat-card reveal-on-scroll">
           <div class="stat-info">
-            <div class="label" data-key="fl_stat_available">Available</div>
-            <div class="value" id="fl-available">--</div>
+            <span class="stat-label" data-key="fl_available">AVAILABLE</span>
+            <div class="stat-value tabular-nums" id="fl-available">0</div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">check_circle</span></div>
         </div>
-        <div class="stat-card reveal-onload">
+        <div class="card stat-card reveal-on-scroll">
           <div class="stat-info">
-            <div class="label" data-key="fl_stat_rented">Rented</div>
-            <div class="value" id="fl-rented">--</div>
+            <span class="stat-label" data-key="fl_rented">RENTED</span>
+            <div class="stat-value tabular-nums" id="fl-rented">0</div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">car_rental</span></div>
         </div>
@@ -49,10 +49,16 @@
       <!-- FILTER + SEARCH + ACTIONS -->
       <div class="card reveal-on-scroll mb-20 px-22 py-16">
         <div class="flex-between gap-12 flex-wrap">
-          <div class="flex-center gap-8 flex-wrap">
-            <button class="filter-chip active" onclick="filterCar('all', this)">All</button>
-            <button class="filter-chip" onclick="filterCar('Available', this)">Available</button>
-            <button class="filter-chip" onclick="filterCar('Rented', this)">Rented</button>
+          <div class="apple-segmented-control" role="tablist" aria-label="Penapis Status Kereta">
+            <button class="apple-segment-item active" data-status="all" onclick="filterCar('all', this)">
+              All (<span id="count-all" class="tabular-nums">0</span>)
+            </button>
+            <button class="apple-segment-item" data-status="Available" onclick="filterCar('Available', this)">
+              Available (<span id="count-avail" class="tabular-nums">0</span>)
+            </button>
+            <button class="apple-segment-item" data-status="Rented" onclick="filterCar('Rented', this)">
+              Rented (<span id="count-rented" class="tabular-nums">0</span>)
+            </button>
           </div>
           <div class="flex-center gap-10">
             <div class="input-wrap-sm input-search-fixed">

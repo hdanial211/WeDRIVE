@@ -24,7 +24,7 @@
 
       <!-- BACK BUTTON -->
       <div class="mb-20">
-        <button class="btn-back" data-navigate="../cars.html">
+        <button class="btn-back" onclick="window.location.href='../cars.html'" data-navigate="../cars.html">
           <span class="material-icons-round">arrow_back</span>
           <span data-key="cd_back">Back to Cars</span>
         </button>
@@ -39,7 +39,7 @@
               <!-- Main Image -->
               <img id="cd-main-img"
                 src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg"
-                alt="Car Preview" class="hidden" />
+                alt="Car Preview" style="display:none;" />
               <span id="cd-img-fallback" class="material-icons-round cd-img-fallback-icon">directions_car</span>
             </div>
             <!-- Thumbnail Strip -->
@@ -374,6 +374,49 @@
     </div>
   </div>
 
+  <!-- INSURANCE INFO MODAL -->
+  <div class="modal-overlay hidden" id="insurance-modal" onclick="if(event.target===this)closeInsuranceModal()">
+    <div class="modal-container max-w-480 radius-24" role="dialog" aria-modal="true">
+      <div class="modal-header border-bottom-subtle pb-16">
+        <h3 class="flex-center gap-8 text-primary fs-18 fw-700 m-0">
+          <span class="material-icons-round fs-22 text-primary-accent">verified_user</span>
+          <span>Maklumat Insurans & Perlindungan</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeInsuranceModal()">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body pt-20">
+        <div class="card p-16 radius-18 bg-surface-2 border-subtle mb-16">
+          <div class="flex-between mb-8">
+            <span class="text-secondary fs-12">Penyedia Insurans:</span>
+            <strong class="text-primary fs-13">Etiqa Takaful Malaysia</strong>
+          </div>
+          <div class="flex-between mb-8">
+            <span class="text-secondary fs-12">Jenis Polisi:</span>
+            <span class="apple-category-pill">Komprehensif (Semua Pemandu)</span>
+          </div>
+          <div class="flex-between mb-8">
+            <span class="text-secondary fs-12">No. Polisi Rasmi:</span>
+            <span class="tabular-nums fw-700 fs-12 text-primary">POL-2026-WD-88912</span>
+          </div>
+          <div class="flex-between mb-8">
+            <span class="text-secondary fs-12">Tempoh Sah Sehingga:</span>
+            <span class="tabular-nums fw-600 fs-12 text-green">31 Disember 2026</span>
+          </div>
+          <div class="flex-between">
+            <span class="text-secondary fs-12">Bantuan Kerosakan 24/7:</span>
+            <span class="tabular-nums fw-700 fs-12 text-primary">1-800-88-DRIVE</span>
+          </div>
+        </div>
+        <p class="fs-12 text-secondary m-0 mb-16">Kenderaan ini dilindungi sepenuhnya terhadap kerosakan kemalangan, kecurian, kebakaran, dan liabiliti pihak ketiga bagi semua sewaan aktif WeDRIVE.</p>
+        <div class="flex-end">
+          <button class="btn-primary-sm px-20 radius-9999" onclick="closeInsuranceModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="../../../../shared/js/navbar-loader.js?v=5.3.5"></script>
   <script src="../../../../shared/js/sidebar-loader.js?v=5.3.5"></script>
   <script src="../../../../shared/js/main.js"></script>
@@ -382,7 +425,7 @@
   <script src="../../../../shared/js/api.js"></script>
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
-  <script src="../../../js/car-detail.js?v=5.2.21"></script>
+  <script src="../../../js/car-detail.js?v=5.3.0"></script>
 </body>
 
 </html>

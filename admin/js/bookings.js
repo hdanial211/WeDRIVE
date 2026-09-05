@@ -163,8 +163,8 @@ window.goToBookingPage = goToBookingPage;
 function filterBookings(status, btn) {
   currentPage = 1;
   currentFilter = status;
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
+  document.querySelectorAll('.filter-chip, .apple-segment-item').forEach(c => c.classList.remove('active'));
+  if (btn) btn.classList.add('active');
   applyFilters();
 }
 
@@ -259,7 +259,7 @@ function updateSortHeaders() {
 function filterByDate(period, btn) {
   currentPage = 1;
   currentDateFilter = period;
-  document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.date-chip, .apple-segment-date').forEach(c => c.classList.remove('active'));
   if (btn) btn.classList.add('active');
 
   // Hide custom date picker row for predefined periods (all, month, year)
@@ -277,7 +277,7 @@ function showCustomDateRow(btn) {
   var customBtn = btn || document.getElementById('date-chip-custom');
   var isCurrentlyVisible = row && (row.classList.contains('active') || (row.style.display !== 'none' && row.style.display !== ''));
 
-  document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.date-chip, .apple-segment-date').forEach(c => c.classList.remove('active'));
 
   if (!isCurrentlyVisible) {
     if (customBtn) customBtn.classList.add('active');
