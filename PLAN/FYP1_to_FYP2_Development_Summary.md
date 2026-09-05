@@ -2876,3 +2876,31 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.3 Fix bilingual language switching on admin operations dashboard`
   - Tag Versi: `5.6.3`
+
+---
+
+## 🚀 [MINOR UPDATE] 151. Penalaan Saiz Kompak Kad Statistik Bento Pentadbir (v5.6.4)
+
+- **Punca Keperluan & Arahan Pengguna (Context & User Feedback)**:
+  > *"ni terlalu besar sangat kecil kan sikit... x lawa besar2"*
+  - Pengguna meminta agar kad-kad statistik di bahagian atas papan pemuka dan sub-halaman pentadbir (`cars.html`, `bookings.html`, `operations.html`) dikecilkan saiznya supaya lebih kemas, ergonomik, dan menepati estetika reka bentuk Apple Human Interface Guidelines (HIG).
+
+- **Punca Reka Bentuk Terdahulu (Analysis)**:
+  1. Kad statistik standard menggunakan susun atur menegak bertingkat (*vertical column layout*) dengan padding yang tebal (16px–24px) dan saiz fon yang terlalu besar (24px–26px).
+  2. Ketinggian kad yang memakan ruang menegak menyebabkan elemen kandungan utama seperti katalog kereta, jadual serahan harian, dan rekod tempahan tertolak ke bawah garis lipatan skrin (*below the fold*).
+
+- **Tindakan Pembaikan & Penalaan Reka Bentuk (Implementation Highlights)**:
+  1. **Penukaran Kepada Susun Atur Baris Mendatar Kompak (`.stat-card`)**:
+     - Mengubah aliran flex kepada baris (`flex-direction: row; align-items: center; justify-content: space-between; gap: 14px;`).
+     - Mengurangkan padding kepada `13px 18px` dan radius bento kepada `16px`.
+     - Mengoptimumkan saiz fon nilai kepada `22px` (`tabular-nums`) dan label kepada `11px` dengan `line-height: 1.25` bagi mengelakkan teks terpotong.
+     - Mengecilkan saiz ikon kepada `38px x 38px` dengan bucu bulat `11px` yang seimbang.
+  2. **Pengekalan Elemen Multi-Baris Khusus Papan Pemuka Utama**:
+     - Menggunakan pemilih moden CSS `:has(.stat-header-row)` untuk mengekalkan susun atur multi-baris pada kad ringkasan utama `admin.html` yang mempunyai cipset analitik peratusan di bahagian bawah.
+  3. **Keserasian Responsif & Dwi-Tema**:
+     - Disahkan kelihatan sempurna pada Mod Siang (*Day Mode*) dan Mod Malam (*Obsidian Night Mode*).
+     - Grid responsif mengekalkan 4 lajur pada desktop, 2 lajur pada tablet (<=1100px), dan 1 lajur pada telefon pintar (<=540px).
+
+- **Maklumat Git**:
+  - Commit: `5.6.4 Tune compact stat cards size across admin dashboard`
+  - Tag Versi: `5.6.4`
