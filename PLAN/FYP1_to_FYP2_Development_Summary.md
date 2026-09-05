@@ -3118,3 +3118,34 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.8 Comprehensive admin UI audit, oval focus glow fix and Apple HIG styling standardization`
   - Tag Versi: `5.6.8`
+
+---
+
+### 154. Penalaan Gambar Penuh (Full-Bleed) Tanpa Pelapik Gelap Pada Kad Pameran Kenderaan Pentadbir (v5.6.9)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[MINOR UPDATE]` / `[UI/UX REFINEMENT]`
+- **Modul Terlibat**:
+  - `shared/css/wedrive.css`
+  - `admin/pages/car/cars.html`
+  - `admin/pages/car/available-cars.html`
+  - `admin/pages/car/rented-cars.html`
+
+- **Objektif & Latar Belakang**:
+  - Berdasarkan maklum balas dan tangkapan skrin pengguna (*"buat gambar ni full sahaja"*), gambar kenderaan pada kad pameran pentadbir (`.apple-car-showcase-card`) sebelum ini mempunyai pelapik dalaman (`padding: 16px`) dan `object-fit: contain` yang menyebabkan gambar berada di dalam kotak bingkai gelap kecil dengan jurang ruang kosong yang ketara di bahagian atas, kiri, kanan, dan bawah.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pembuangan Pelapik Bingkai Dalaman**:
+     - Menetapkan `padding: 0 !important;` pada `.apple-car-studio-canvas` bagi membolehkan imej menyentuh terus sempadan kad squircle.
+  2. **Pelarasan Mod Liputan Gambar Penuh (*Full-Bleed Object Cover*)**:
+     - Mengubah suai gaya `.apple-car-studio-img` kepada `object-fit: cover !important;` dengan `width: 100%;` dan `height: 100%;` serta `display: block;`.
+     - Imej studio kenderaan kini memenuhi keseluruhan kanvas nisbah 16:10 secara lancar dari tepi ke tepi tanpa sebarang jurang bingkai gelap, manakala lengkungan bucu atas dipotong kemas oleh `border-radius: 24px` dan `overflow: hidden` kad induk.
+  3. **Pengekalan Kedudukan Lencana Kaca Terapung**:
+     - Lencana status terapung (`.glass-status-pill`) kekal terapung anggun di sudut atas kanan di atas permukaan imej kenderaan dengan kesan kaca `backdrop-filter: blur(16px) saturate(180%)`.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Pelayar DevTools**: Disahkan secara visual di halaman `cars.html`, `available-cars.html`, dan `rented-cars.html`. Gambar kereta kini 100% penuh dan bersih.
+  - **Ujian Playwright E2E**: Menjalankan keseluruhan suite 29 ujian automasi dengan kadar kelulusan 100%.
+
+- **Maklumat Git**:
+  - Commit: `5.6.9 Make admin car showcase card images full bleed without inset padding`
+  - Tag Versi: `5.6.9`
