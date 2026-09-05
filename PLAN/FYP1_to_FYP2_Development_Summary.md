@@ -2836,3 +2836,43 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.2 Make admin dashboard bento stat cards compact sleek and refined`
   - Tag Versi: `5.6.2`
+
+---
+
+## 🚀 [MINOR UPDATE] 150. Pembaikan Sistem Dwibahasa Penuh Halaman Operasi Pentadbir (v5.6.3)
+
+- **Punca Keperluan & Arahan Pengguna (Context & User Feedback)**:
+  > *"http://localhost:8088/admin/pages/dashboard/operations.html dekat sini bahasa x boleh tukar ..fix skrg"*
+  - Pengguna melaporkan bahawa fungsi pertukaran bahasa (English / Bahasa Melayu) pada bar navigasi atas gagal menukar teks dan komponen pada halaman Operasi Pentadbir (`operations.html`), menyebabkan teks kekal dalam Bahasa Melayu.
+
+- **Punca Masalah Yang Dikenal Pasti (Root Cause Analysis)**:
+  1. **Ketiadaan Atribut `data-key`**: Hampir kesemua tajuk, butang, kad KPI, senarai protokol, dan jadual tugasan di `operations.html` ditulis secara teks statik Melayu tanpa atribut `data-key` untuk dikesan oleh `main.js`.
+  2. **Ketiadaan Kunci Terjemahan `ops_*`**: Kamus dwibahasa rasmi (`en.json`, `en.js`, `ms.json`, `ms.js`, serta `FALLBACK_LANG` dalam `main.js`) tidak mempunyai 59 kunci khusus untuk modul operasi.
+  3. **Penjanaan Data Dinamik Tanpa Sokongan I18n**: Fungsi `refreshOpsData()` dan `renderOpsUI()` mencantum teks unit secara terus (`+ ' Unit Sedia'`) dan memaparkan jenis operasi statik tanpa merujuk kamus dwibahasa.
+  4. **Kelewatan Pemuatan Skrip Kamus**: `main.js` bergantung kepada muat turun tak segerak (*asynchronous fetch*) fail terjemahan yang boleh melambatkan penterjemahan jika fail belum dimuat masuk ke memori.
+
+- **Tindakan Pembaikan Menyeluruh (Implementation Highlights)**:
+  1. **Penambahan 59 Kunci Terjemahan Dwibahasa Rasmi**:
+     - Menambah kunci lengkap `ops_*` merangkumi metrik KPI, kad kesiapsiagaan depoh, protokol pemeriksaan kenderaan ISO, kepala jadual operasi, jenis giliran tugasan, dan butang tindakan ke dalam:
+       - `shared/lang/en.json` & `shared/lang/en.js`
+       - `shared/lang/ms.json` & `shared/lang/ms.js`
+       - `FALLBACK_LANG` dalam `shared/js/main.js` untuk jaminan penterjemahan serta-merta tanpa kebergantungan rangkaian.
+  2. **Penyelarasan DOM `operations.html` Dengan Atribut `data-key`**:
+     - Menambah atribut `data-key` pada tajuk halaman (`ops_title`), lencana status rangkaian (`ops_live_network`), sub-tajuk (`ops_subtitle`), butang tindakan (`ops_btn_refresh`, `ops_btn_create_booking`, `ops_btn_all_bookings`, `ops_btn_active_bookings`), kad 4 KPI (`ops_kpi_on_road`, `ops_kpi_ready`, `ops_kpi_returns`, `ops_kpi_utilization` beserta subteks), senarai depoh cawangan, protokol ISO, dan kepala lajur jadual.
+     - Mengasingkan nilai angka depoh daripada label teks: `<span id="ops-depot-mkz">12</span> <span data-key="ops_units_ready">Unit Sedia</span>`.
+  3. **Pemuatan Awal (*Preloading*) & Caching Versi Kamus**:
+     - Menambah tag `<script src="../../../shared/lang/en.js?v=5.6.3"></script>` dan `<script src="../../../shared/lang/ms.js?v=5.6.3"></script>` sebelum `main.js?v=5.6.3` di `operations.html`.
+     - Mengemas kini versi parameter pencegah cache kamus dalam `main.js` kepada `?v=5.6.3`.
+  4. **Penyelarasan Dinamik Mengikut Acara `wedrive:language-applied`**:
+     - Menstruktur semula fungsi rendering jadual dan pecahan depoh menggunakan `renderOpsUI(data)` yang membaca kamus `window.WeDriveLang` secara aktif.
+     - Menyimpan cache memori data operasi terkini (`_cachedOpsData`) supaya apabila pengguna mengklik suis bahasa di navbar, acara `wedrive:language-applied` akan memicu penulisan semula jadual dan status tugasan dalam bahasa yang dipilih secara masa nyata tanpa perlu muat semula (*reload*) halaman.
+  5. **Pengujian Automasi Menyeluruh (Playwright E2E)**:
+     - Membina suite ujian baharu `tests/e2e/11_operations_lang.spec.js` untuk mengesahkan:
+       - Keadaan awal Bahasa Melayu (Tajuk "Pusat Kawalan Operasi Kereta", "Segerak Sekarang", "Kereta Bergerak").
+       - Peralihan ke Bahasa Inggeris ("Car Operations Command Center", "Sync Now", "Active Cars on Road").
+       - Peralihan kembali ke Bahasa Melayu dengan konsistensi 100%.
+     - Suite ujian automasi Playwright: **29/29 ujian lulus sepenuhnya (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `5.6.3 Fix bilingual language switching on admin operations dashboard`
+  - Tag Versi: `5.6.3`

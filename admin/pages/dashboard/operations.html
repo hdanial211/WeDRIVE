@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Status Operasi Hab &amp; Kenderaan | WeDRIVE Operations</title>
+  <title data-key="ops_page_title">Status Operasi Hab &amp; Kenderaan | WeDRIVE Operations</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
@@ -30,25 +30,25 @@
         <div class="flex-between flex-wrap gap-16">
           <div>
             <div class="bento-breadcrumbs">
-              <a href="admin.html">Papan Pemuka</a>
+              <a href="admin.html" data-key="nav_sec_dashboard">Papan Pemuka</a>
               <span class="material-icons-round">chevron_right</span>
-              <span>Status Operasi</span>
+              <span data-key="ops_breadcrumb_status">Status Operasi</span>
             </div>
             <div class="flex-center gap-10 flex-wrap">
-              <h1 class="bento-title-main">Status Operasi Hab &amp; Kenderaan</h1>
-              <span class="status-badge active"><span class="live-pulse-dot"></span> Live Depot Network</span>
+              <h1 class="bento-title-main" data-key="ops_title">Status Operasi Hab &amp; Kenderaan</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span data-key="ops_live_network">Live Depot Network</span></span>
             </div>
-            <p class="bento-subtitle-main">Pemantauan kesiapsagaan 3 depot Melaka, pemeriksaan standard ISO kenderaan, dan jadual serahan harian.</p>
+            <p class="bento-subtitle-main" data-key="ops_subtitle">Pemantauan kesiapsagaan 3 depot Melaka, pemeriksaan standard ISO kenderaan, dan jadual serahan harian.</p>
           </div>
           <div class="flex-center gap-10">
             <span class="fs-13 fw-600 text-secondary px-14 py-8 bg-secondary radius-pill tabular-nums flex-center gap-6" id="ops-live-clock">
               <span class="material-icons-round fs-16 text-muted">schedule</span> --:--:--
             </span>
-            <button class="btn-outline-sm" onclick="refreshOpsData()" title="Muat Semula Data Operasi">
-              <span class="material-icons-round fs-16">refresh</span> Muat Semula
+            <button class="btn-outline-sm" onclick="refreshOpsData()" data-key-title="ops_btn_refresh_title" title="Muat Semula Data Operasi">
+              <span class="material-icons-round fs-16">refresh</span> <span data-key="ops_btn_refresh">Muat Semula</span>
             </button>
             <button class="btn-primary-sm" onclick="window.location.href='../booking/new-booking.html'">
-              <span class="material-icons-round fs-16">add</span> Cipta Tempahan
+              <span class="material-icons-round fs-16">add</span> <span data-key="ops_btn_create_booking">Cipta Tempahan</span>
             </button>
           </div>
         </div>
@@ -58,33 +58,33 @@
       <div class="stats-grid mb-24">
         <div class="stat-card reveal-onload">
           <div class="stat-info">
-            <div class="label">Kenderaan Di Jalan Raya</div>
+            <div class="label" data-key="ops_kpi_on_road">Kenderaan Di Jalan Raya</div>
             <div class="value text-primary-accent tabular-nums" id="ops-on-road">--</div>
-            <div class="change up"><span class="material-icons-round fs-14">directions_car</span> Sedang aktif disewa</div>
+            <div class="change up"><span class="material-icons-round fs-14">directions_car</span> <span data-key="ops_kpi_on_road_sub">Sedang aktif disewa</span></div>
           </div>
           <div class="stat-icon blue"><span class="material-icons-round">speed</span></div>
         </div>
         <div class="stat-card reveal-onload">
           <div class="stat-info">
-            <div class="label">Sedia Untuk Serahan</div>
+            <div class="label" data-key="ops_kpi_ready">Sedia Untuk Serahan</div>
             <div class="value text-green tabular-nums" id="ops-ready">--</div>
-            <div class="change up"><span class="material-icons-round fs-14">check_circle</span> Di depot sedia diambil</div>
+            <div class="change up"><span class="material-icons-round fs-14">check_circle</span> <span data-key="ops_kpi_ready_sub">Di depot sedia diambil</span></div>
           </div>
           <div class="stat-icon green"><span class="material-icons-round">verified</span></div>
         </div>
         <div class="stat-card reveal-onload">
           <div class="stat-info">
-            <div class="label">Pulangan Dijadual Hari Ini</div>
+            <div class="label" data-key="ops_kpi_returns">Pulangan Dijadual Hari Ini</div>
             <div class="value text-amber tabular-nums" id="ops-returns-today">--</div>
-            <div class="change" id="ops-returns-sub"><span class="material-icons-round fs-14">schedule</span> Sebelum 11:59 PM</div>
+            <div class="change" id="ops-returns-sub"><span class="material-icons-round fs-14">schedule</span> <span data-key="ops_kpi_returns_sub">Sebelum 11:59 PM</span></div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">assignment_return</span></div>
         </div>
         <div class="stat-card reveal-onload">
           <div class="stat-info">
-            <div class="label">Kadar Penggunaan Kenderaan</div>
+            <div class="label" data-key="ops_kpi_utilization">Kadar Penggunaan Kenderaan</div>
             <div class="value tabular-nums" id="ops-utilization">--%</div>
-            <div class="change up"><span class="material-icons-round fs-14">trending_up</span> Penanda aras optimum</div>
+            <div class="change up"><span class="material-icons-round fs-14">trending_up</span> <span data-key="ops_kpi_utilization_sub">Penanda aras optimum</span></div>
           </div>
           <div class="stat-icon purple"><span class="material-icons-round">donut_large</span></div>
         </div>
@@ -96,9 +96,9 @@
         <div class="card reveal-on-scroll p-24">
           <div class="card-header border-bottom-subtle pb-14 mb-16 flex-between">
             <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
-              <span class="material-icons-round text-primary-accent">warehouse</span> Kesiapsagaan Hab &amp; Depot Melaka
+              <span class="material-icons-round text-primary-accent">warehouse</span> <span data-key="ops_depot_title">Kesiapsagaan Hab &amp; Depot Melaka</span>
             </h3>
-            <span class="status-badge success fs-11"><span class="dot"></span> 3 Hab Beroperasi</span>
+            <span class="status-badge success fs-11"><span class="dot"></span> <span data-key="ops_depot_badge">3 Hab Beroperasi</span></span>
           </div>
           <div class="ops-depot-list">
             <div class="ops-depot-item bento-item-subtle p-16 mb-12 radius-16">
@@ -106,13 +106,13 @@
                 <div class="flex-center gap-12">
                   <span class="material-icons-round text-primary-accent fs-24">flight</span>
                   <div>
-                    <div class="fw-700 fs-14 text-title">Depot Lapangan Terbang Melaka (MKZ)</div>
-                    <div class="fs-12 text-muted">Kaunter Utama Terminal &amp; Parkir P1–P12</div>
+                    <div class="fw-700 fs-14 text-title" data-key="ops_depot_mkz_name">Depot Lapangan Terbang Melaka (MKZ)</div>
+                    <div class="fs-12 text-muted" data-key="ops_depot_mkz_sub">Kaunter Utama Terminal &amp; Parkir P1–P12</div>
                   </div>
                 </div>
                 <div class="text-right">
-                  <div class="fw-800 fs-15 text-green tabular-nums" id="ops-depot-mkz">12 Unit Sedia</div>
-                  <div class="fs-11 text-muted">Staf Bertugas: 3 Pegawai</div>
+                  <div class="fw-800 fs-15 text-green tabular-nums"><span id="ops-depot-mkz">12</span> <span data-key="ops_units_ready">Unit Sedia</span></div>
+                  <div class="fs-11 text-muted"><span data-key="ops_staff_duty">Staf Bertugas:</span> 3 <span data-key="ops_staff_officers">Pegawai</span></div>
                 </div>
               </div>
               <div class="depot-capacity-track">
@@ -125,13 +125,13 @@
                 <div class="flex-center gap-12">
                   <span class="material-icons-round text-primary-accent fs-24">directions_bus</span>
                   <div>
-                    <div class="fw-700 fs-14 text-title">Hab Pengangkutan Melaka Sentral</div>
-                    <div class="fs-12 text-muted">Platform Pelepasan &amp; Zon Transit Bas Antara Negeri</div>
+                    <div class="fw-700 fs-14 text-title" data-key="ops_depot_sentral_name">Hab Pengangkutan Melaka Sentral</div>
+                    <div class="fs-12 text-muted" data-key="ops_depot_sentral_sub">Platform Pelepasan &amp; Zon Transit Bas Antara Negeri</div>
                   </div>
                 </div>
                 <div class="text-right">
-                  <div class="fw-800 fs-15 text-green tabular-nums" id="ops-depot-sentral">10 Unit Sedia</div>
-                  <div class="fs-11 text-muted">Staf Bertugas: 3 Pegawai</div>
+                  <div class="fw-800 fs-15 text-green tabular-nums"><span id="ops-depot-sentral">10</span> <span data-key="ops_units_ready">Unit Sedia</span></div>
+                  <div class="fs-11 text-muted"><span data-key="ops_staff_duty">Staf Bertugas:</span> 3 <span data-key="ops_staff_officers">Pegawai</span></div>
                 </div>
               </div>
               <div class="depot-capacity-track">
@@ -144,13 +144,13 @@
                 <div class="flex-center gap-12">
                   <span class="material-icons-round text-primary-accent fs-24">store</span>
                   <div>
-                    <div class="fw-700 fs-14 text-title">Pusat Bandar Melaka (Jonker Point)</div>
-                    <div class="fs-12 text-muted">Zon Pengambilan Ekspres Kawasan Warisan UNESCO</div>
+                    <div class="fw-700 fs-14 text-title" data-key="ops_depot_jonker_name">Pusat Bandar Melaka (Jonker Point)</div>
+                    <div class="fs-12 text-muted" data-key="ops_depot_jonker_sub">Zon Pengambilan Ekspres Kawasan Warisan UNESCO</div>
                   </div>
                 </div>
                 <div class="text-right">
-                  <div class="fw-800 fs-15 text-green tabular-nums" id="ops-depot-jonker">8 Unit Sedia</div>
-                  <div class="fs-11 text-muted">Staf Bertugas: 2 Pegawai</div>
+                  <div class="fw-800 fs-15 text-green tabular-nums"><span id="ops-depot-jonker">8</span> <span data-key="ops_units_ready">Unit Sedia</span></div>
+                  <div class="fs-11 text-muted"><span data-key="ops_staff_duty">Staf Bertugas:</span> 2 <span data-key="ops_staff_officers">Pegawai</span></div>
                 </div>
               </div>
               <div class="depot-capacity-track">
@@ -164,60 +164,60 @@
         <div class="card reveal-on-scroll p-24">
           <div class="card-header border-bottom-subtle pb-14 mb-16 flex-between">
             <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
-              <span class="material-icons-round text-amber">task_alt</span> Protokol Pemeriksaan Turnover Kenderaan
+              <span class="material-icons-round text-amber">task_alt</span> <span data-key="ops_proto_title">Protokol Pemeriksaan Turnover Kenderaan</span>
             </h3>
-            <span class="fs-12 fw-600 text-muted">Standard Audit JPJ &amp; Insurans</span>
+            <span class="fs-12 fw-600 text-muted" data-key="ops_proto_badge">Standard Audit JPJ &amp; Insurans</span>
           </div>
           <div class="ops-checklist">
             <div class="flex-between py-12 border-bottom-subtle">
               <div class="flex-center gap-10">
                 <span class="material-icons-round text-green fs-20">check_circle</span>
                 <div>
-                  <span class="fs-13 fw-700 text-title">Pemeriksaan Paras Minyak Enjin &amp; Cecair Brek</span>
-                  <div class="fs-11 text-muted">Standard kelulusan pemeriksaan harian sebelum serahan</div>
+                  <span class="fs-13 fw-700 text-title" data-key="ops_proto_item1_title">Pemeriksaan Paras Minyak Enjin &amp; Cecair Brek</span>
+                  <div class="fs-11 text-muted" data-key="ops_proto_item1_sub">Standard kelulusan pemeriksaan harian sebelum serahan</div>
                 </div>
               </div>
-              <span class="status-badge success fs-11">100% Disahkan</span>
+              <span class="status-badge success fs-11" data-key="ops_proto_item1_status">100% Disahkan</span>
             </div>
             <div class="flex-between py-12 border-bottom-subtle">
               <div class="flex-center gap-10">
                 <span class="material-icons-round text-green fs-20">check_circle</span>
                 <div>
-                  <span class="fs-13 fw-700 text-title">Tekanan Tayar &amp; Tolok Kedalaman Bunga JPJ</span>
-                  <div class="fs-11 text-muted">Minimum 2.5mm kedalaman bunga tayar dipatuhi</div>
+                  <span class="fs-13 fw-700 text-title" data-key="ops_proto_item2_title">Tekanan Tayar &amp; Tolok Kedalaman Bunga JPJ</span>
+                  <div class="fs-11 text-muted" data-key="ops_proto_item2_sub">Minimum 2.5mm kedalaman bunga tayar dipatuhi</div>
                 </div>
               </div>
-              <span class="status-badge success fs-11">Lulus 08:00 AM</span>
+              <span class="status-badge success fs-11" data-key="ops_proto_item2_status">Lulus 08:00 AM</span>
             </div>
             <div class="flex-between py-12 border-bottom-subtle">
               <div class="flex-center gap-10">
                 <span class="material-icons-round text-green fs-20">check_circle</span>
                 <div>
-                  <span class="fs-13 fw-700 text-title">Diagnostik Sistem OBD-II &amp; Voltan Bateri 12V</span>
-                  <div class="fs-11 text-muted">Tiada kod ralat enjin (CEL) dikesan pada semua unit sedia</div>
+                  <span class="fs-13 fw-700 text-title" data-key="ops_proto_item3_title">Diagnostik Sistem OBD-II &amp; Voltan Bateri 12V</span>
+                  <div class="fs-11 text-muted" data-key="ops_proto_item3_sub">Tiada kod ralat enjin (CEL) dikesan pada semua unit sedia</div>
                 </div>
               </div>
-              <span class="status-badge success fs-11">Normal</span>
+              <span class="status-badge success fs-11" data-key="ops_proto_item3_status">Normal</span>
             </div>
             <div class="flex-between py-12 border-bottom-subtle">
               <div class="flex-center gap-10">
                 <span class="material-icons-round text-green fs-20">check_circle</span>
                 <div>
-                  <span class="fs-13 fw-700 text-title">Penentukuran Kunci Pintar RFID &amp; Kunci Sandaran</span>
-                  <div class="fs-11 text-muted">Penyelarasan kod transceiver kunci digital</div>
+                  <span class="fs-13 fw-700 text-title" data-key="ops_proto_item4_title">Penentukuran Kunci Pintar RFID &amp; Kunci Sandaran</span>
+                  <div class="fs-11 text-muted" data-key="ops_proto_item4_sub">Penyelarasan kod transceiver kunci digital</div>
                 </div>
               </div>
-              <span class="status-badge success fs-11">Aktif</span>
+              <span class="status-badge success fs-11" data-key="ops_proto_item4_status">Aktif</span>
             </div>
             <div class="flex-between py-12">
               <div class="flex-center gap-10">
                 <span class="material-icons-round text-primary-accent fs-20">autorenew</span>
                 <div>
-                  <span class="fs-13 fw-700 text-title">Pencucian &amp; Perincian Dalaman Unit Pulang</span>
-                  <div class="fs-11 text-muted">Proses pembersihan rapi sebelum dimasukkan ke inventori</div>
+                  <span class="fs-13 fw-700 text-title" data-key="ops_proto_item5_title">Pencucian &amp; Perincian Dalaman Unit Pulang</span>
+                  <div class="fs-11 text-muted" data-key="ops_proto_item5_sub">Proses pembersihan rapi sebelum dimasukkan ke inventori</div>
                 </div>
               </div>
-              <span class="status-badge pending fs-11" id="ops-cleaning-status">2 Dalam Giliran</span>
+              <span class="status-badge pending fs-11" id="ops-cleaning-status" data-key="ops_proto_item5_status">2 Dalam Giliran</span>
             </div>
           </div>
         </div>
@@ -228,15 +228,15 @@
         <div class="card-header flex-between flex-wrap gap-12">
           <div>
             <h3 class="m-0 fs-17 fw-700 flex-center gap-8">
-              <span class="material-icons-round text-primary-accent">pending_actions</span> Jadual Serahan &amp; Pulangan Hari Ini
+              <span class="material-icons-round text-primary-accent">pending_actions</span> <span data-key="ops_roster_title">Jadual Serahan &amp; Pulangan Hari Ini</span>
             </h3>
-            <p class="text-secondary fs-13 m-0 mt-4">Jadual pengesahan serahan kunci dan penerimaan kenderaan mengikut hab di Melaka.</p>
+            <p class="text-secondary fs-13 m-0 mt-4" data-key="ops_roster_subtitle">Jadual pengesahan serahan kunci dan penerimaan kenderaan mengikut hab di Melaka.</p>
           </div>
           <div class="flex-center gap-8">
-            <button class="btn-outline-sm" onclick="window.location.href='../booking/bookings.html'">
+            <button class="btn-outline-sm" onclick="window.location.href='../booking/bookings.html'" data-key="ops_btn_all_bookings">
               Semua Tempahan
             </button>
-            <button class="btn-primary-sm" onclick="window.location.href='../booking/active-bookings.html'">
+            <button class="btn-primary-sm" onclick="window.location.href='../booking/active-bookings.html'" data-key="ops_btn_active_bookings">
               Tempahan Aktif
             </button>
           </div>
@@ -245,14 +245,14 @@
           <table>
             <thead>
               <tr>
-                <th>ID Tempahan</th>
-                <th>Pelanggan</th>
-                <th>Kenderaan</th>
-                <th>Plat No.</th>
-                <th>Jenis Operasi</th>
-                <th>Masa &amp; Lokasi Hab</th>
-                <th>Status</th>
-                <th class="text-right">Tindakan</th>
+                <th data-key="ops_th_booking_id">ID Tempahan</th>
+                <th data-key="ops_th_customer">Pelanggan</th>
+                <th data-key="admin_th_vehicle">Kenderaan</th>
+                <th data-key="admin_th_plate">Plat No.</th>
+                <th data-key="ops_th_operation_type">Jenis Operasi</th>
+                <th data-key="ops_th_time_hub">Masa &amp; Lokasi Hab</th>
+                <th data-key="admin_th_status">Status</th>
+                <th class="text-right" data-key="admin_th_action">Tindakan</th>
               </tr>
             </thead>
             <tbody id="ops-table-tbody">
@@ -267,9 +267,11 @@
     </div>
   </main>
 
-  <script src="../../../shared/js/navbar-loader.js?v=5.5.0"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
-  <script src="../../../shared/js/main.js?v=5.2.8"></script>
+  <script src="../../../shared/lang/en.js?v=5.6.3"></script>
+  <script src="../../../shared/lang/ms.js?v=5.6.3"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=5.6.3"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=5.6.3"></script>
+  <script src="../../../shared/js/main.js?v=5.6.3"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
   <script src="../../../shared/js/api.js?v=5.2.3"></script>
@@ -278,83 +280,115 @@
   <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
 
   <script>
+    function isEnglish() {
+      var lang = localStorage.getItem('wedrive-lang') || 'en';
+      return lang === 'en';
+    }
+
     function updateClock() {
       var clockEl = document.getElementById('ops-live-clock');
       if (!clockEl) return;
       var now = new Date();
+      var locale = isEnglish() ? 'en-US' : 'ms-MY';
       clockEl.innerHTML = '<span class="material-icons-round fs-16 text-muted">schedule</span> ' + 
-        now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     }
     setInterval(updateClock, 1000);
     updateClock();
 
+    var _cachedOpsData = null;
+
+    function renderOpsUI(data) {
+      if (!data) return;
+      var isEn = isEnglish();
+      var cars = data.car || [];
+      var bookings = data.bookings || [];
+
+      var rentedCount = cars.filter(function (c) { return (c.status || '').toLowerCase() === 'rented'; }).length;
+      var availableCount = cars.filter(function (c) { return (c.status || '').toLowerCase() === 'available'; }).length;
+      var totalCount = cars.length || 1;
+      var utilRate = Math.round((rentedCount / totalCount) * 100);
+
+      var onRoadEl = document.getElementById('ops-on-road');
+      var readyEl = document.getElementById('ops-ready');
+      var returnsEl = document.getElementById('ops-returns-today');
+      var utilEl = document.getElementById('ops-utilization');
+
+      if (onRoadEl) onRoadEl.textContent = rentedCount;
+      if (readyEl) readyEl.textContent = availableCount;
+      if (returnsEl) returnsEl.textContent = Math.min(rentedCount, 3);
+      if (utilEl) utilEl.textContent = utilRate + '%';
+
+      // Depot splits
+      var mkz = Math.ceil(availableCount * 0.45);
+      var sentral = Math.ceil(availableCount * 0.35);
+      var jonker = Math.max(0, availableCount - mkz - sentral);
+      var dMkz = document.getElementById('ops-depot-mkz');
+      var dSentral = document.getElementById('ops-depot-sentral');
+      var dJonker = document.getElementById('ops-depot-jonker');
+      if (dMkz) dMkz.textContent = mkz;
+      if (dSentral) dSentral.textContent = sentral;
+      if (dJonker) dJonker.textContent = jonker;
+
+      var fMkz = document.getElementById('fill-depot-mkz');
+      var fSentral = document.getElementById('fill-depot-sentral');
+      var fJonker = document.getElementById('fill-depot-jonker');
+      if (fMkz) fMkz.style.width = Math.min(100, Math.round((mkz / 15) * 100)) + '%';
+      if (fSentral) fSentral.style.width = Math.min(100, Math.round((sentral / 12) * 100)) + '%';
+      if (fJonker) fJonker.style.width = Math.min(100, Math.round((jonker / 10) * 100)) + '%';
+
+      // Populate operations roster from actual bookings
+      var tbody = document.getElementById('ops-table-tbody');
+      if (!tbody) return;
+
+      var displayBookings = bookings.slice(0, 6);
+      if (displayBookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-24 text-muted">' + 
+          (isEn ? 'No active handover schedules today.' : 'Tiada jadual serahan aktif hari ini.') + 
+          '</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = displayBookings.map(function (b, idx) {
+        var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : 'BK-2026-0' + b.id) : 'BK-2026-0' + (idx + 80);
+        var cust = b.customer || b.customer_name || b.name || (isEn ? 'WeDRIVE Customer' : 'Pelanggan WeDRIVE');
+        var carName = b.car_name || b.car || (isEn ? 'Vehicle' : 'Kenderaan');
+        var plate = b.plate || 'VAB 4821';
+        var opType = idx % 2 === 0 
+          ? (isEn ? 'Key Handover (Pickup)' : 'Serahan Kunci (Ambil)') 
+          : (isEn ? 'Vehicle Return' : 'Pemulangan Kenderaan');
+        var hubName = idx % 2 === 0 
+          ? (isEn ? 'Melaka Sentral Hub' : 'Hab Melaka Sentral') 
+          : (isEn ? 'MKZ Airport Depot' : 'Depot MKZ Airport');
+        var locTime = (b.start_date || b.pickup_date || (isEn ? 'Today' : 'Hari Ini')) + ' • ' + hubName;
+        var statusBadge = (b.status || '').toLowerCase() === 'completed' ? 'success' : ((b.status || '').toLowerCase() === 'active' ? 'active' : 'pending');
+        var statusLabel = (b.status || '').toLowerCase() === 'completed' 
+          ? (isEn ? 'Completed' : 'Selesai') 
+          : ((b.status || '').toLowerCase() === 'active' ? (isEn ? 'Active' : 'Aktif') : (isEn ? 'Pending' : 'Menunggu'));
+        var manageBtnText = isEn ? 'Manage' : 'Urus';
+
+        return '<tr>' +
+          '<td><strong class="text-primary-accent tabular-nums">' + bId + '</strong></td>' +
+          '<td><strong>' + cust + '</strong></td>' +
+          '<td>' + carName + '</td>' +
+          '<td><span class="fs-12 fw-700 tabular-nums">' + plate + '</span></td>' +
+          '<td><span class="fw-600">' + opType + '</span></td>' +
+          '<td><span class="fs-12 text-muted tabular-nums">' + locTime + '</span></td>' +
+          '<td><span class="status-badge ' + statusBadge + '"><span class="dot"></span> ' + statusLabel + '</span></td>' +
+          '<td class="text-right">' +
+            '<button class="btn-outline-sm" onclick="window.location.href=\'../booking/active-bookings.html\'">' + manageBtnText + '</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
     function refreshOpsData() {
+      if (_cachedOpsData) renderOpsUI(_cachedOpsData);
+
       window.WeDriveAPI.getAdminData()
         .then(function (data) {
-          var cars = data.car || [];
-          var bookings = data.bookings || [];
-
-          var rentedCount = cars.filter(function (c) { return (c.status || '').toLowerCase() === 'rented'; }).length;
-          var availableCount = cars.filter(function (c) { return (c.status || '').toLowerCase() === 'available'; }).length;
-          var totalCount = cars.length || 1;
-          var utilRate = Math.round((rentedCount / totalCount) * 100);
-
-          document.getElementById('ops-on-road').textContent = rentedCount;
-          document.getElementById('ops-ready').textContent = availableCount;
-          document.getElementById('ops-returns-today').textContent = Math.min(rentedCount, 3);
-          document.getElementById('ops-utilization').textContent = utilRate + '%';
-
-          // Depot splits
-          var mkz = Math.ceil(availableCount * 0.45);
-          var sentral = Math.ceil(availableCount * 0.35);
-          var jonker = Math.max(0, availableCount - mkz - sentral);
-          var dMkz = document.getElementById('ops-depot-mkz');
-          var dSentral = document.getElementById('ops-depot-sentral');
-          var dJonker = document.getElementById('ops-depot-jonker');
-          if (dMkz) dMkz.textContent = mkz + ' Unit Sedia';
-          if (dSentral) dSentral.textContent = sentral + ' Unit Sedia';
-          if (dJonker) dJonker.textContent = jonker + ' Unit Sedia';
-
-          var fMkz = document.getElementById('fill-depot-mkz');
-          var fSentral = document.getElementById('fill-depot-sentral');
-          var fJonker = document.getElementById('fill-depot-jonker');
-          if (fMkz) fMkz.style.width = Math.min(100, Math.round((mkz / 15) * 100)) + '%';
-          if (fSentral) fSentral.style.width = Math.min(100, Math.round((sentral / 12) * 100)) + '%';
-          if (fJonker) fJonker.style.width = Math.min(100, Math.round((jonker / 10) * 100)) + '%';
-
-          // Populate operations roster from actual bookings
-          var tbody = document.getElementById('ops-table-tbody');
-          if (!tbody) return;
-
-          var displayBookings = bookings.slice(0, 6);
-          if (displayBookings.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-24 text-muted">Tiada jadual serahan aktif hari ini.</td></tr>';
-            return;
-          }
-
-          tbody.innerHTML = displayBookings.map(function (b, idx) {
-            var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : 'BK-2026-0' + b.id) : 'BK-2026-0' + (idx + 80);
-            var cust = b.customer || b.customer_name || b.name || 'Pelanggan WeDRIVE';
-            var carName = b.car_name || b.car || 'Kenderaan';
-            var plate = b.plate || 'VAB 4821';
-            var opType = idx % 2 === 0 ? 'Serahan Kunci (Pickup)' : 'Pulangan Kenderaan (Return)';
-            var locTime = (b.start_date || b.pickup_date || 'Hari Ini') + ' • ' + (idx % 2 === 0 ? 'Hab Melaka Sentral' : 'Depot MKZ Airport');
-            var statusBadge = (b.status || '').toLowerCase() === 'completed' ? 'success' : ((b.status || '').toLowerCase() === 'active' ? 'active' : 'pending');
-            var statusLabel = (b.status || '').toLowerCase() === 'completed' ? 'Selesai' : ((b.status || '').toLowerCase() === 'active' ? 'Aktif' : 'Menunggu');
-
-            return '<tr>' +
-              '<td><strong class="text-primary-accent tabular-nums">' + bId + '</strong></td>' +
-              '<td><strong>' + cust + '</strong></td>' +
-              '<td>' + carName + '</td>' +
-              '<td><span class="fs-12 fw-700 tabular-nums">' + plate + '</span></td>' +
-              '<td><span class="fw-600">' + opType + '</span></td>' +
-              '<td><span class="fs-12 text-muted tabular-nums">' + locTime + '</span></td>' +
-              '<td><span class="status-badge ' + statusBadge + '"><span class="dot"></span> ' + statusLabel + '</span></td>' +
-              '<td class="text-right">' +
-                '<button class="btn-outline-sm" onclick="window.location.href=\'../booking/active-bookings.html\'">Urus</button>' +
-              '</td>' +
-            '</tr>';
-          }).join('');
+          _cachedOpsData = data;
+          renderOpsUI(data);
         })
         .catch(function (err) {
           console.error('Operations data load error:', err);
@@ -362,6 +396,11 @@
     }
 
     document.addEventListener('DOMContentLoaded', refreshOpsData);
+    document.addEventListener('wedrive:language-applied', function () {
+      if (_cachedOpsData) renderOpsUI(_cachedOpsData);
+      else refreshOpsData();
+      updateClock();
+    });
   </script>
 </body>
 
