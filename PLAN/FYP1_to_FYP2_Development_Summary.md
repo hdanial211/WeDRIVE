@@ -3369,3 +3369,37 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.5 Balanced single-line date range filter layout in bookings management`
   - Tag Versi: `5.7.5`
+
+---
+
+### 161. Pemansuhan Kotak Bersarang & Penyeragaman Tipografi Apple Calendar (v5.7.6)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REFINEMENT & APPLE HIG]`
+- **Modul Terlibat**:
+  - `admin/pages/calendar/calendar.html`
+  - `shared/css/wedrive.css`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan rungutan visual pengguna (*"ni pon sama buruk dalam card ada card"*) pada palang alat kalendar operasi (`calendar.html`).
+  - Dropdown pemilih bulan dan tahun sebelum ini (`select.cal-dropdown`) mewarisi gaya borang generik (`select.form-control`) dengan kotak sempadan berketebalan 1.5px dan latar belakang kelabu gelap, menjadikannya kelihatan seperti kad mini berkotak yang terperangkap di dalam kad kalendar utama.
+  - Tambahan pula, cache penyemak imbas lama bagi fail CSS menyebabkan reka letak pil bersarang lama masih kelihatan pada sesetengah peranti.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Penyingkiran Pemilih dari Gaya Borang Generik**:
+     - Mengasingkan `select.cal-dropdown` daripada senarai gaya borang tegar `select.form-control` di `shared/css/wedrive.css` bagi menghentikan sempadan kotak `1.5px solid var(--border-subtle)` dan latar belakang tebal secara paksa.
+  2. **Evolusi Tipografi Tulen Apple Calendar (Zero Nested Card Borders)**:
+     - Menaik taraf `.cal-dropdown` dan `select.cal-dropdown` kepada gaya tipografi bersih ala macOS Sonoma/Tahoe Calendar: `background: transparent !important; border: none !important; box-shadow: none !important; font-size: 16px !important; font-weight: 700 !important;`.
+     - Menyediakan ikon anak panah ke bawah (*chevron*) yang sangat halus dan minimalis berasaskan vektor SVG dengan kedudukan padat.
+     - Menyediakan kesan sorotan lembut semasa tetikus berada di atas elemen (`:hover { background-color: var(--bg-surface-2); color: var(--primary); }`).
+  3. **Penyatuan Latar Belakang Palang Alat Kalendar**:
+     - Menetapkan `.cal-toolbar-header` kepada `background: transparent !important;` supaya menyatu secara harmoni dengan kad Bento utama tanpa lapisan warna yang terputus, sama ada dalam Mod Siang mahupun Mod Malam.
+  4. **Kemas Kini Versi Anti-Cache (Cache Busting)**:
+     - Mengemaskini tag pautan fail CSS dan skrip JS pada `calendar.html` kepada `wedrive.css?v=5.7.6` dan `calendar.js?v=5.7.6` bagi memastikan pengguna sentiasa menerima reka bentuk terkini serta-merta tanpa isu cache.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Chrome DevTools & Visual Snapshot**: Mengesahkan `border: 0px none`, `background: rgba(0, 0, 0, 0)` pada kumpulan navigasi dan dropdown bulan/tahun; tiada lagi kotak kad bersarang, menghasilkan tajuk kalendar yang sangat anggun dan profesional.
+  - **Ujian Automasi Playwright**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed dalam 1.5m).
+
+- **Maklumat Git**:
+  - Commit: `5.7.6 Clean borderless Apple calendar typography and eliminated nested dropdown cards`
+  - Tag Versi: `5.7.6`

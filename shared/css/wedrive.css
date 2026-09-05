@@ -5574,7 +5574,6 @@ select.form-input,
 select.filter-select,
 select.search-select,
 select.pf-select,
-select.cal-dropdown,
 select.phone-prefix-select,
 select.apple-picker {
   font-family: var(--font-sans) !important;
@@ -5604,7 +5603,6 @@ select.form-input:hover,
 select.filter-select:hover,
 select.search-select:hover,
 select.pf-select:hover,
-select.cal-dropdown:hover,
 select.apple-picker:hover {
   border-color: var(--border-medium) !important;
   background-color: var(--bg-surface) !important;
@@ -5615,7 +5613,6 @@ select.form-input:focus,
 select.filter-select:focus,
 select.search-select:focus,
 select.pf-select:focus,
-select.cal-dropdown:focus,
 select.apple-picker:focus {
   border-color: var(--primary) !important;
   box-shadow: 0 0 0 3.5px rgba(0, 113, 227, 0.22) !important;
@@ -9109,7 +9106,7 @@ body.page-is-leaving .page-container {
 
 .cal-toolbar-header {
   border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
-  background: var(--bg-surface-1, rgba(22, 22, 24, 0.5));
+  background: transparent !important;
 }
 
 /* Apple Weekday Caption Row */
@@ -16434,28 +16431,42 @@ body.day-mode .adm-cal-cell.empty {
   transform: scale(0.92);
 }
 
-.cal-dropdown {
-  padding: 8px 14px;
-  background: var(--bg-surface-2, rgba(255, 255, 255, 0.06)) !important;
-  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1)) !important;
-  border-radius: 12px !important;
-  color: var(--text-primary, #FFFFFF);
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.2s ease;
+.cal-dropdown,
+select.cal-dropdown {
+  background-color: transparent !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2386868B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 6px center !important;
+  background-size: 12px !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  color: var(--text-primary, #FFFFFF) !important;
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif) !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  padding: 6px 24px 6px 8px !important;
+  min-height: auto !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: background-color 0.2s var(--ease-apple), transform 0.15s ease !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
 
-.cal-dropdown:hover {
-  background: var(--bg-surface-3, rgba(255, 255, 255, 0.1)) !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
+.cal-dropdown:hover,
+select.cal-dropdown:hover {
+  background-color: var(--bg-surface-2, rgba(255, 255, 255, 0.08)) !important;
+  border: none !important;
+  color: var(--primary, #0071E3) !important;
 }
 
-.cal-dropdown:focus {
-  border-color: var(--primary, #0071E3) !important;
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25) !important;
+.cal-dropdown:focus,
+select.cal-dropdown:focus {
+  background-color: var(--bg-surface-2, rgba(255, 255, 255, 0.12)) !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .cal-filter-chip {
