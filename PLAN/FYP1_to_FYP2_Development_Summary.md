@@ -3225,3 +3225,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.1 Standardize authentic Malay terminology across admin system and eliminate depoh loanwords`
   - Tag Versi: `5.7.1`
+
+---
+
+### 157. Kad Pratonton Penuh (Full-Bleed Showcase) & Audit Menyeluruh Bahasa Melayu Tulen (v5.7.2)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REFINEMENT & LOCALIZATION]`
+- **Modul Terlibat**:
+  - `admin/pages/car/add-car.html`
+  - `admin/pages/car/car-detail/car-detail.html`
+  - `admin/pages/booking/new-booking.html`
+  - `admin/pages/booking/bookings.html`
+  - `admin/pages/customer/customers.html`
+  - `admin/pages/dashboard/admin.html`
+  - `customer/pages/car-details/booking/payment/payment.html`
+  - `shared/js/main.js`
+  - `shared/lang/ms.json`, `shared/lang/ms.js`
+  - `shared/lang/en.json`, `shared/lang/en.js`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan isu saiz gambar pratonton kad kenderaan pada halaman Tambah Kereta Baharu (`add-car.html`) yang sebelum ini kelihatan kecil dan mempunyai ruang kosong kelabu yang besar di bahagian sisi (*"ni pon kenapa gambar x full sahaja"*).
+  - Melakukan audit menyeluruh peringkat kedua terhadap istilah bukan Bahasa Melayu, memastikan tiada lagi perkataan "depot" atau "depoh" dalam nilai pilihan borang (`<option value="...">`), tajuk jadual, label penapis, dan rentetan sandaran (*fallback strings*) dalam `main.js`.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Kad Pameran Apple HIG Berdarah Penuh (*Full-Bleed Studio Showcase*)**:
+     - Membuang kontena lama berpadding (`.car-card-img-wrap`) dan menaik taraf kepada seni bina standard Apple Bento: `.apple-car-showcase-card`, `.apple-car-studio-canvas`, dan `.apple-car-studio-img`.
+     - Menetapkan gambar memenuhi ruang penuh tanpa bingkai sisi kosong (`aspect-ratio: 16/10; object-fit: cover !important; width: 100%; height: 100%;`).
+     - Mengintegrasikan fungsi interaktif `updateLivePreview()` dan `previewCarPhoto` yang mengemas kini nama model, nombor plat, transmisi, bahan api, kerusi, cawangan operasi, kadar harian, dan muat naik foto secara masa nyata.
+  2. **Audit Menyeluruh & Pembersihan Istilah Bahasa Melayu Tulen**:
+     - `main.js`: Memperbetulkan kamus sandaran dalaman (`FALLBACK_LANG`) untuk `ops_live_network` dan `ops_depot_mkz_name` daripada istilah "depot" kepada "cawangan" dan "pusat operasi".
+     - `new-booking.html` & `add-car.html`: Menyeragamkan nilai atribut `value` dalam elemen dropdown `<select>` agar sepadan dengan label Melayu tulen (contoh: `Pusat Servis Ayer Keroh`).
+     - `car-detail.html`: Menterjemahkan spesifikasi teknikal kenderaan, tajuk hari kalendar tempahan (`ISN, SEL, RAB, KHA, JUM, SAB, AHD`), status sewaan, jadual tempahan, dan modal pengesahan padam foto.
+     - `bookings.html`: Menyeragamkan cip penapis status, butang julat tarikh kalendar, dan jadual serahan pantas kenderaan hari ini.
+     - `customers.html`: Menyeragamkan tajuk senarai semakan audit lesen JPJ dan pengepala jadual pelanggan.
+     - `payment.html`: Memperbetulkan label pilihan tambahan kerusi kanak-kanak (`Kerusi Kanak-kanak`).
+     - Kamus Dwibahasa: Menambah kunci `admin_chip_*`, `pay_addon_child*`, dan `bk_f_*` dalam `ms.json`, `ms.js`, `en.json`, dan `en.js`.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Pelayar DevTools**: Mengesahkan kad pratonton di `add-car.html` kini terpapar anggun memenuhi sudut squircle (24px) dengan latar belakang telus, status terapung, dan butang kadar sewaan.
+  - **Ujian Playwright E2E**: Menjalankan keseluruhan suite 29 ujian automasi dengan kadar kelulusan 100% (29 passed).
+
+- **Maklumat Git**:
+  - Commit: `5.7.2 Full bleed live preview car card and comprehensive authentic Malay translation`
+  - Tag Versi: `5.7.2`

@@ -58,21 +58,21 @@
               <div class="cq-stat">
                 <span class="material-icons-round">airline_seat_recline_normal</span>
                 <div>
-                  <div class="cq-label">Seats</div>
+                  <div class="cq-label">Tempat Duduk</div>
                   <div class="cq-value" id="cd-seats">--</div>
                 </div>
               </div>
               <div class="cq-stat">
                 <span class="material-icons-round">settings</span>
                 <div>
-                  <div class="cq-label">Transmission</div>
+                  <div class="cq-label">Transmisi</div>
                   <div class="cq-value" id="cd-trans">--</div>
                 </div>
               </div>
               <div class="cq-stat">
                 <span class="material-icons-round">local_gas_station</span>
                 <div>
-                  <div class="cq-label">Fuel Type</div>
+                  <div class="cq-label">Bahan Api</div>
                   <div class="cq-value" id="cd-fuel">--</div>
                 </div>
               </div>
@@ -83,11 +83,11 @@
               <div class="flex-center gap-10 flex-wrap">
                 <button class="btn-outline-sm" onclick="updateStatus()">
                   <span class="material-icons-round fs-15">sync</span>
-                  <span>Update Status</span>
+                  <span>Kemas Kini Status</span>
                 </button>
                 <button class="btn-primary-sm" onclick="editDetails()">
                   <span class="material-icons-round fs-15">edit</span>
-                  <span>Edit Details</span>
+                  <span>Sunting Maklumat</span>
                 </button>
               </div>
             </div>
@@ -103,16 +103,16 @@
               <span class="material-icons-round fs-22 text-primary-accent">calendar_month</span>
               <span id="cal-month-label" class="fs-18 fw-700 text-primary">--</span>
             </div>
-            <button class="cal-today-pill" onclick="calendarToday()" title="Jump to Current Month">
-              Today
+            <button class="cal-today-pill" onclick="calendarToday()" title="Lompat ke Bulan Semasa">
+              Hari Ini
             </button>
           </div>
           <div class="flex-center gap-8">
             <div class="cal-nav-group">
-              <button class="cal-nav-btn" onclick="calendarPrev()" id="cal-prev-btn" title="Previous Month" aria-label="Previous Month">
+              <button class="cal-nav-btn" onclick="calendarPrev()" id="cal-prev-btn" title="Bulan Sebelumnya" aria-label="Bulan Sebelumnya">
                 <span class="material-icons-round fs-18">chevron_left</span>
               </button>
-              <button class="cal-nav-btn" onclick="calendarNext()" id="cal-next-btn" title="Next Month" aria-label="Next Month">
+              <button class="cal-nav-btn" onclick="calendarNext()" id="cal-next-btn" title="Bulan Seterusnya" aria-label="Bulan Seterusnya">
                 <span class="material-icons-round fs-18">chevron_right</span>
               </button>
             </div>
@@ -126,13 +126,13 @@
 
         <!-- Weekday headers -->
         <div class="cal-grid cal-header">
-          <div>MON</div>
-          <div>TUE</div>
-          <div>WED</div>
-          <div>THU</div>
-          <div>FRI</div>
-          <div>SAT</div>
-          <div>SUN</div>
+          <div>ISN</div>
+          <div>SEL</div>
+          <div>RAB</div>
+          <div>KHA</div>
+          <div>JUM</div>
+          <div>SAB</div>
+          <div>AHD</div>
         </div>
 
         <!-- Calendar days grid -->
@@ -140,10 +140,10 @@
 
         <!-- Legend -->
         <div class="cal-legend">
-          <div class="cal-legend-item"><span class="cal-dot available"></span> Available</div>
-          <div class="cal-legend-item"><span class="cal-dot booked"></span> Booked</div>
-          <div class="cal-legend-item"><span class="cal-dot pending"></span> Pending</div>
-          <div class="cal-legend-item"><span class="cal-dot past"></span> Past</div>
+          <div class="cal-legend-item"><span class="cal-dot available"></span> Tersedia</div>
+          <div class="cal-legend-item"><span class="cal-dot booked"></span> Ditempah</div>
+          <div class="cal-legend-item"><span class="cal-dot pending"></span> Menunggu</div>
+          <div class="cal-legend-item"><span class="cal-dot past"></span> Lepas</div>
         </div>
 
         <!-- Selected day info / Booking summary -->
@@ -155,19 +155,19 @@
         <div class="card-header cd-history-header border-bottom-subtle">
           <h3 class="flex-center gap-8 fs-17 fw-700 text-primary m-0">
             <span class="material-icons-round fs-20 text-primary-accent">history</span>
-            <span>Booking History</span>
+            <span>Sejarah Tempahan</span>
           </h3>
         </div>
         <div class="table-responsive">
           <table class="car-admin-table">
             <thead>
               <tr class="car-table-header-row">
-                <th class="car-th">Booking ID</th>
-                <th class="car-th">Customer</th>
-                <th class="car-th">Pick-up</th>
-                <th class="car-th">Return</th>
-                <th class="car-th">Days</th>
-                <th class="car-th">Total</th>
+                <th class="car-th">ID Tempahan</th>
+                <th class="car-th">Pelanggan</th>
+                <th class="car-th">Tarikh Ambil</th>
+                <th class="car-th">Tarikh Pulang</th>
+                <th class="car-th">Hari</th>
+                <th class="car-th">Jumlah</th>
                 <th class="car-th">Status</th>
               </tr>
             </thead>
@@ -320,13 +320,13 @@
     <div class="modal-container max-w-400" role="dialog" aria-modal="true">
       <div class="py-8-16">
         <span class="material-icons-round fs-48 text-danger block mb-12">delete_outline</span>
-        <h3 class="fs-18 fw-700 text-primary mb-8 m-0">Remove Photo?</h3>
-        <p class="fs-13 text-muted m-0">This photo will be removed from the vehicle. You can add new photos anytime.</p>
+        <h3 class="fs-18 fw-700 text-primary mb-8 m-0">Padam Foto Kenderaan?</h3>
+        <p class="fs-13 text-muted m-0">Foto ini akan dipadamkan daripada rekod kenderaan. Anda boleh menambah foto baharu pada bila-bila masa.</p>
       </div>
       <div class="flex-center gap-12 mt-12">
-        <button class="btn-outline-sm px-20" onclick="closeRemovePhotoModal()">Cancel</button>
+        <button class="btn-outline-sm px-20" onclick="closeRemovePhotoModal()">Batal</button>
         <button class="btn-primary-sm btn-remove-photo px-20" id="remove-photo-confirm-btn" onclick="confirmRemovePhoto()">
-          <span class="material-icons-round fs-14">delete</span> Remove
+          <span class="material-icons-round fs-14">delete</span> Padam
         </button>
       </div>
     </div>

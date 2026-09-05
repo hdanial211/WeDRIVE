@@ -140,7 +140,7 @@
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
-                <select id="car-fuel" class="form-input radius-14" required>
+                <select id="car-fuel" class="form-input radius-14" required onchange="updateLivePreview()">
                   <option value="Petrol" selected>Petrol (RON95/97)</option>
                   <option value="Hybrid">Hybrid (HEV)</option>
                   <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
@@ -181,11 +181,11 @@
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="car-location">Cawangan Penyerahan Utama</label>
-                <select id="car-location" class="form-input radius-14">
-                  <option value="Melaka Sentral Hub">Melaka Sentral Hub (Cawangan Utama)</option>
-                  <option value="Melaka Airport (MKZ)">Melaka Airport (MKZ)</option>
-                  <option value="Jonker Point">Jonker Point Kiosk</option>
-                  <option value="Ayer Keroh Depot">Pusat Servis Ayer Keroh</option>
+                <select id="car-location" class="form-input radius-14" onchange="updateLivePreview()">
+                  <option value="Cawangan Utama Melaka Sentral" selected>Cawangan Utama Melaka Sentral</option>
+                  <option value="Cawangan Lapangan Terbang Melaka (MKZ)">Cawangan Lapangan Terbang Melaka (MKZ)</option>
+                  <option value="Kiosk Jonker Point">Kiosk Jonker Point (Pusat Bandar)</option>
+                  <option value="Pusat Servis Ayer Keroh">Pusat Servis Ayer Keroh</option>
                 </select>
               </div>
             </div>
@@ -246,35 +246,53 @@
             <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
               <span class="material-icons-round text-emerald">preview</span> Pratonton Kad Kenderaan (Customer &amp; Admin View)
             </h3>
-            <span class="status-badge active"><span class="material-icons-round fs-12">visibility</span> Live Preview</span>
+            <span class="status-badge active"><span class="material-icons-round fs-12">visibility</span> Pratonton Langsung</span>
           </div>
-          <div class="grid-2 gap-24 items-center">
-            <div class="card p-20 radius-24 bg-surface-2">
-              <div class="car-card-img-wrap mb-14 radius-16 overflow-hidden bg-surface-3 p-12 text-center">
-                <img id="preview-display-img" src="../../../shared/images/cars/honda-crv-2024.png" alt="Pratonton Kenderaan" class="w-full obj-contain img-preview-140" onerror="this.src='../../../shared/images/cars/perodua-myvi-2023.png'" />
-              </div>
-              <div class="flex-between items-start mb-8">
-                <div>
-                  <h4 class="fs-17 fw-700 m-0 text-title" id="preview-display-name">Proton X50 1.5 TGDi Flagship</h4>
-                  <span class="fs-12 text-secondary" id="preview-display-specs">SUV • Automatik • 5 Tempat Duduk</span>
+          <div class="grid-2 gap-24 items-start">
+            <div class="apple-car-showcase-card shadow-sm" style="max-width: 440px; margin: 0 auto; width: 100%;">
+              <div class="apple-car-studio-canvas">
+                <div class="glass-status-pill">
+                  <span class="live-pulse-dot" style="background:#10B981"></span> Tersedia
                 </div>
-                <span class="status-badge fs-12 fw-700 tabular-nums px-8 py-4 radius-8" id="preview-display-plate">VAB 4821</span>
+                <img id="preview-display-img" src="../../../shared/images/cars/honda-crv-2024.png" alt="Pratonton Kenderaan" class="apple-car-studio-img" onerror="this.src='../../../shared/images/cars/perodua-myvi-2023.png'" />
               </div>
-              <div class="flex-between items-center border-top-subtle pt-12 mt-12">
-                <div>
-                  <div class="fs-11 text-muted">Kadar Rasmi Harian</div>
-                  <div class="fs-18 fw-800 text-primary tabular-nums" id="preview-display-rate">RM 180<span class="fs-11 text-secondary fw-500">/hari</span></div>
+              <div class="apple-car-card-body">
+                <div class="apple-car-meta-header">
+                  <span class="apple-category-pill" id="preview-display-cat">SUV</span>
+                  <span class="apple-plate-pill tabular-nums" id="preview-display-plate">VAB 4821</span>
                 </div>
-                <span class="status-badge available"><span class="material-icons-round fs-12">check_circle</span> Tersedia</span>
+                <h3 class="apple-car-title" id="preview-display-name">Proton X50 1.5 TGDi Flagship</h3>
+                <div class="apple-micro-specs">
+                  <span class="apple-spec-tag"><span class="material-icons-round">settings</span> <span id="preview-spec-trans">Automatik</span></span>
+                  <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> <span id="preview-spec-fuel">Petrol</span></span>
+                  <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> <span id="preview-spec-seats">5 Kerusi</span></span>
+                </div>
+                <div class="apple-rental-callout">
+                  <div class="apple-rental-row">
+                    <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Operasi</span>
+                    <span class="apple-rental-value" id="preview-display-loc">Cawangan Utama Melaka Sentral</span>
+                  </div>
+                  <div class="apple-rental-row">
+                    <span class="apple-rental-label"><span class="material-icons-round fs-15">verified</span> Kebersihan</span>
+                    <span class="apple-rental-value text-emerald fw-600">Sedia Bersih</span>
+                  </div>
+                </div>
+                <div class="apple-car-footer">
+                  <div>
+                    <div class="fs-11 text-muted">Kadar Rasmi Harian</div>
+                    <div class="apple-car-rate tabular-nums" id="preview-display-rate">RM 180 <span class="apple-car-rate-sub">/hari</span></div>
+                  </div>
+                  <span class="status-badge available"><span class="material-icons-round fs-12">check_circle</span> Tersedia</span>
+                </div>
               </div>
             </div>
-            <div>
+            <div class="card p-24 radius-24 bg-surface-2 border-subtle">
               <h4 class="fs-15 fw-700 text-title mb-8">Pengesahan Operasi Pendaftaran</h4>
               <p class="fs-13 text-secondary lh-16 m-0 mb-12">
                 Setiap kenderaan yang didaftarkan akan terus dikaitkan dengan pangkalan data inventori operasi WeDRIVE, membolehkan tempahan segera melalui kaunter atau portal pelanggan.
               </p>
               <ul class="fs-13 text-secondary p-0 m-0 pl-18 lh-18">
-                <li>Status awal kenderaan ditetapkan kepada <strong>Tersedia (Available)</strong>.</li>
+                <li>Status awal kenderaan ditetapkan kepada <strong>Tersedia</strong>.</li>
                 <li>Deposit keselamatan dipegang secara automatik bagi setiap kontrak sewaan.</li>
                 <li>Jadual berkala penyelenggaraan JPJ akan dimulakan dari tarikh pendaftaran ini.</li>
               </ul>
@@ -319,29 +337,53 @@
           selectedPhotoBase64 = e.target.result;
           var img = document.getElementById('photo-preview-img');
           var content = document.getElementById('photo-preview-content');
-          img.src = selectedPhotoBase64;
-          img.classList.remove('hidden');
-          content.classList.add('hidden');
+          if (img) {
+            img.src = selectedPhotoBase64;
+            img.classList.remove('hidden');
+          }
+          if (content) content.classList.add('hidden');
 
           var liveImg = document.getElementById('preview-display-img');
-          if (liveImg) liveImg.src = selectedPhotoBase64;
+          if (liveImg) {
+            liveImg.src = selectedPhotoBase64;
+            liveImg.style.objectFit = 'cover';
+            liveImg.style.width = '100%';
+            liveImg.style.height = '100%';
+          }
         };
         reader.readAsDataURL(input.files[0]);
       }
     }
+    var handlePhotoSelect = previewCarPhoto;
 
     function updateLivePreview() {
       var nameVal = document.getElementById('car-name').value.trim() || 'Proton X50 1.5 TGDi Flagship';
       var plateVal = document.getElementById('car-plate').value.trim().toUpperCase() || 'VAB 4821';
-      var typeVal = document.getElementById('car-type').value;
+      var typeVal = document.getElementById('car-type').value || 'SUV';
       var transVal = document.getElementById('car-transmission').value === 'Automatic' ? 'Automatik' : 'Manual';
-      var seatsVal = document.getElementById('car-seats').value + ' Tempat Duduk';
+      var fuelVal = document.getElementById('car-fuel') ? document.getElementById('car-fuel').value : 'Petrol';
+      var seatsVal = (document.getElementById('car-seats').value || 5) + ' Kerusi';
       var rateVal = document.getElementById('car-rate').value || '180';
+      var locSelect = document.getElementById('car-location');
+      var locVal = locSelect ? locSelect.options[locSelect.selectedIndex].text : 'Cawangan Utama Melaka Sentral';
 
-      document.getElementById('preview-display-name').textContent = nameVal;
-      document.getElementById('preview-display-plate').textContent = plateVal;
-      document.getElementById('preview-display-specs').textContent = typeVal + ' • ' + transVal + ' • ' + seatsVal;
-      document.getElementById('preview-display-rate').innerHTML = 'RM ' + rateVal + '<span class="fs-11 text-secondary fw-500">/hari</span>';
+      var elName = document.getElementById('preview-display-name');
+      var elPlate = document.getElementById('preview-display-plate');
+      var elCat = document.getElementById('preview-display-cat');
+      var elTrans = document.getElementById('preview-spec-trans');
+      var elFuel = document.getElementById('preview-spec-fuel');
+      var elSeats = document.getElementById('preview-spec-seats');
+      var elLoc = document.getElementById('preview-display-loc');
+      var elRate = document.getElementById('preview-display-rate');
+
+      if (elName) elName.textContent = nameVal;
+      if (elPlate) elPlate.textContent = plateVal;
+      if (elCat) elCat.textContent = typeVal;
+      if (elTrans) elTrans.textContent = transVal;
+      if (elFuel) elFuel.textContent = fuelVal;
+      if (elSeats) elSeats.textContent = seatsVal;
+      if (elLoc) elLoc.textContent = locVal;
+      if (elRate) elRate.innerHTML = 'RM ' + rateVal + ' <span class="apple-car-rate-sub">/hari</span>';
     }
 
     // Toggle chip active state on click

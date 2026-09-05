@@ -42,14 +42,14 @@
         </div>
         <div class="stat-card reveal-onload">
           <div class="stat-info">
-            <div class="label" data-key="bk_stat_pending">Pending</div>
+            <div class="label" data-key="bk_stat_pending">Menunggu</div>
             <div class="value" id="bk-pending">--</div>
           </div>
           <div class="stat-icon amber"><span class="material-icons-round">hourglass_top</span></div>
         </div>
         <div class="stat-card reveal-onload">
           <div class="stat-info">
-            <div class="label" data-key="bk_stat_revenue">Total Revenue</div>
+            <div class="label" data-key="bk_stat_revenue">Jumlah Pendapatan</div>
             <div class="value fs-24" id="bk-revenue">--</div>
           </div>
           <div class="stat-icon purple"><span class="material-icons-round">payments</span></div>
@@ -60,34 +60,34 @@
       <div class="card reveal-on-scroll mb-20 px-22 py-16">
         <div class="flex-between flex-wrap gap-12">
           <div class="apple-segmented-control" role="tablist" aria-label="Penapis Status Tempahan">
-            <button class="apple-segment-item active" onclick="filterBookings('all', this)" data-key="bk_filter_all">All</button>
-            <button class="apple-segment-item" onclick="filterBookings('Active', this)">Active</button>
-            <button class="apple-segment-item" onclick="filterBookings('Confirmed', this)" data-key="bk_f_confirmed">Confirmed</button>
-            <button class="apple-segment-item" onclick="filterBookings('Pending', this)" data-key="bk_f_pending">Pending</button>
-            <button class="apple-segment-item" onclick="filterBookings('Completed', this)" data-key="bk_f_completed">Completed</button>
-            <button class="apple-segment-item" onclick="filterBookings('Cancelled', this)">Cancelled</button>
+            <button class="apple-segment-item active" onclick="filterBookings('all', this)" data-key="bk_filter_all">Semua</button>
+            <button class="apple-segment-item" onclick="filterBookings('Active', this)" data-key="bk_f_active">Aktif</button>
+            <button class="apple-segment-item" onclick="filterBookings('Confirmed', this)" data-key="bk_f_confirmed">Disahkan</button>
+            <button class="apple-segment-item" onclick="filterBookings('Pending', this)" data-key="bk_f_pending">Menunggu</button>
+            <button class="apple-segment-item" onclick="filterBookings('Completed', this)" data-key="bk_f_completed">Selesai</button>
+            <button class="apple-segment-item" onclick="filterBookings('Cancelled', this)" data-key="bk_f_cancelled">Dibatalkan</button>
           </div>
           <div class="flex-center gap-8">
             <div class="input-wrap-sm">
               <span class="material-icons-round fs-18">search</span>
-              <input type="text" id="bk-search" placeholder="Search bookings..." oninput="searchBookings(this.value)" />
+              <input type="text" id="bk-search" placeholder="Cari tempahan..." oninput="searchBookings(this.value)" />
             </div>
           </div>
         </div>
         <!-- Date Range Filter (NOTA 10) -->
         <div class="mt-14 border-top-subtle pt-12 flex-between flex-wrap gap-12">
-          <div class="date-range-label fs-13 fw-600 text-secondary">Date Range (Pick-up Date):</div>
+          <div class="date-range-label fs-13 fw-600 text-secondary">Julat Tarikh (Tarikh Ambil):</div>
           <div class="apple-segmented-control" role="tablist" aria-label="Penapis Tarikh">
-            <button class="apple-segment-item apple-segment-date active" id="date-chip-all" onclick="filterByDate('all', this)">All Time</button>
-            <button class="apple-segment-item apple-segment-date" id="date-chip-month" onclick="filterByDate('month', this)">This Month</button>
-            <button class="apple-segment-item apple-segment-date" id="date-chip-year" onclick="filterByDate('year', this)">This Year</button>
-            <button class="apple-segment-item apple-segment-date" id="date-chip-custom" onclick="showCustomDateRow(this)">Custom Range</button>
+            <button class="apple-segment-item apple-segment-date active" id="date-chip-all" onclick="filterByDate('all', this)">Semua</button>
+            <button class="apple-segment-item apple-segment-date" id="date-chip-month" onclick="filterByDate('month', this)">Bulan Ini</button>
+            <button class="apple-segment-item apple-segment-date" id="date-chip-year" onclick="filterByDate('year', this)">Tahun Ini</button>
+            <button class="apple-segment-item apple-segment-date" id="date-chip-custom" onclick="showCustomDateRow(this)">Julat Khusus</button>
           </div>
           <div class="custom-date-row hidden" id="custom-date-row">
-            <input type="text" id="bk-date-from" class="date-picker" data-allow-past="true" placeholder="From Date" readonly />
-            <span class="fs-12 text-muted">to</span>
-            <input type="text" id="bk-date-to" class="date-picker" data-allow-past="true" placeholder="To Date" readonly />
-            <button class="apply-btn" onclick="applyCustomDate()">Apply</button>
+            <input type="text" id="bk-date-from" class="date-picker" data-allow-past="true" placeholder="Dari Tarikh" readonly />
+            <span class="fs-12 text-muted">hingga</span>
+            <input type="text" id="bk-date-to" class="date-picker" data-allow-past="true" placeholder="Hingga Tarikh" readonly />
+            <button class="apply-btn" onclick="applyCustomDate()">Guna</button>
           </div>
         </div>
       </div>
@@ -97,8 +97,8 @@
         <div class="card-header border-bottom-subtle pb-12 flex-between flex-wrap gap-10">
           <h3 class="flex-center gap-8 m-0">
             <span class="material-icons-round text-primary-accent">today</span>
-            <span>Today's Handovers & Pickups</span>
-            <span class="status-badge pending fs-11 px-8 py-2 ml-8" id="today-count-badge">0 pending</span>
+            <span>Serahan &amp; Pengambilan Hari Ini</span>
+            <span class="status-badge pending fs-11 px-8 py-2 ml-8" id="today-count-badge">0 menunggu</span>
           </h3>
           <span class="fs-12 fw-600 text-muted" id="today-date-display">--</span>
         </div>
@@ -106,19 +106,19 @@
           <table>
             <thead>
               <tr>
-                <th>Booking ID</th>
-                <th>Customer</th>
-                <th>Vehicle</th>
-                <th>Location</th>
-                <th>Total (RM)</th>
-                <th>Payment</th>
+                <th>ID Tempahan</th>
+                <th>Pelanggan</th>
+                <th>Kenderaan</th>
+                <th>Lokasi Cawangan</th>
+                <th>Jumlah (RM)</th>
+                <th>Bayaran</th>
                 <th>Status</th>
-                <th class="text-center">Quick Handover</th>
+                <th class="text-center">Serahan Pantas</th>
               </tr>
             </thead>
             <tbody id="today-pickups-tbody">
               <tr>
-                <td colspan="8" class="text-center text-muted p-24">No handovers scheduled for today.</td>
+                <td colspan="8" class="text-center text-muted p-24">Tiada serahan dijadualkan untuk hari ini.</td>
               </tr>
             </tbody>
           </table>
