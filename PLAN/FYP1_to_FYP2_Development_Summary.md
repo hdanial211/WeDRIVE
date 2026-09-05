@@ -3514,3 +3514,49 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.9 Modernized Apple HIG Obsidian Bento Customer Details modal with document inspection and sticky action bar`
   - Tag Versi: `5.7.9`
+
+---
+
+### 165. Penyingkiran Butang Tambah Kereta Lebihan & Pembaikan Suis Paparan Senarai Kenderaan (v5.8.0)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[BUG FIX & UI/UX REFINEMENT]`
+- **Modul Terlibat**:
+  - `admin/pages/car/cars.html`
+  - `admin/js/cars.js`
+  - `shared/css/wedrive.css`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan rungutan pengguna (*"tambah kereta tu buang ..lepastu paparan senarai tu x function"*):
+    1. Membuang butang pop-up `+ Tambah Kereta` yang redundant pada bar navigasi halaman kenderaan kerana sistem kini telah mempunyai halaman fizikal khusus `add-car.html` di bar sisi selaras dengan piawaian seni bina navigasi pentadbir (*Dedicated Sidebar Pages Architecture*).
+    2. Memperbetulkan isu suis `Paparan Senarai` (*List View Toggle*) yang gagal berfungsi akibat daripada deklarasi `display: grid !important` pada kelas `.car-grid` dalam fail CSS yang mengatasi penetapan `display: none` JavaScript, mengakibatkan grid kenderaan tidak boleh disembunyikan apabila mod senarai dipilih.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pembuangan Butang Tambah Kereta (`cars.html`)**:
+     - Membuang butang `btn-primary-sm` `+ Tambah Kereta` (`addNewCar()`) daripada bar carian dan penapis halaman `cars.html`.
+     - Mengubah butang suis paparan kepada gaya kapsul Apple HIG rasmi (`.apple-btn-capsule-secondary`) dengan label jelas `Paparan Senarai` / `Paparan Grid`.
+  2. **Pembaikan Aliran CSS & JavaScript Suis Paparan Grid/Senarai**:
+     - Membuang sekatan `!important` pada `.car-grid` dalam `shared/css/wedrive.css`:
+       ```css
+       .car-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+         gap: 20px;
+       }
+       .car-grid.hidden,
+       #car-grid.hidden,
+       #avail-grid.hidden,
+       #rented-grid.hidden,
+       .hidden {
+         display: none !important;
+       }
+       ```
+     - Mengemas kini fungsi `setCarViewMode(mode)` dalam `admin/js/cars.js` agar menyegerakkan penambahan/pembuangan kelas `.hidden` bersama penetapan `style.display` bagi `#car-grid` dan `#car-list-container`.
+     - Memastikan suis beroperasi secara dwi-arah dengan lancar antara Paparan Grid dan Paparan Senarai berserta animasi transisi fizik Apple (`pageTransitionIn`).
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Visual Chrome DevTools MCP**: Mengesahkan butang `+ Tambah Kereta` telah tiada, butang suis `Paparan Senarai` beroperasi 100% menukar paparan kepada jadual lejar kenderaan, dan menekan `Paparan Grid` mengembalikan paparan kad kenderaan tanpa sebarang ralat visual.
+  - **Ujian Automasi Playwright**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed dalam 1.5m).
+
+- **Maklumat Git**:
+  - Commit: `5.8.0 Removed redundant Add Car button and fixed List View toggle in car management`
+  - Tag Versi: `5.8.0`

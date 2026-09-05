@@ -47,23 +47,31 @@ function setCarViewMode(mode) {
   const isEn = lang === 'en';
 
   if (mode === 'list') {
-    if (gridEl) gridEl.style.display = 'none';
+    if (gridEl) {
+      gridEl.classList.add('hidden');
+      gridEl.style.display = 'none';
+    }
     if (listEl) {
+      listEl.classList.remove('hidden');
       listEl.style.display = 'block';
       listEl.style.animation = 'pageTransitionIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards';
     }
     if (toggleBtn) {
-      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">grid_view</span> ${isEn ? 'Grid View' : 'Paparan Grid'}`;
+      toggleBtn.innerHTML = `<span class="material-icons-round fs-16">grid_view</span> ${isEn ? 'Grid View' : 'Paparan Grid'}`;
       toggleBtn.title = isEn ? 'Switch to Grid View' : 'Tukar ke Paparan Grid';
     }
   } else {
-    if (listEl) listEl.style.display = 'none';
+    if (listEl) {
+      listEl.classList.add('hidden');
+      listEl.style.display = 'none';
+    }
     if (gridEl) {
+      gridEl.classList.remove('hidden');
       gridEl.style.display = 'grid';
       gridEl.style.animation = 'pageTransitionIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards';
     }
     if (toggleBtn) {
-      toggleBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px">view_list</span> ${isEn ? 'List View' : 'Paparan Senarai'}`;
+      toggleBtn.innerHTML = `<span class="material-icons-round fs-16">view_list</span> ${isEn ? 'List View' : 'Paparan Senarai'}`;
       toggleBtn.title = isEn ? 'Switch to List View' : 'Tukar ke Paparan Senarai';
     }
   }
