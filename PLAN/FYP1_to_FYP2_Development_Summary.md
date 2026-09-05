@@ -3149,3 +3149,31 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.9 Make admin car showcase card images full bleed without inset padding`
   - Tag Versi: `5.6.9`
+
+---
+
+### 155. Pembaikan Suis Kawalan Segmen Apple & Penghapusan Pepijat Berbilang Butang Aktif (v5.7.0)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[BUG FIX]` / `[INTERACTION LOGIC]`
+- **Modul Terlibat**:
+  - `admin/js/cars.js`
+  - `admin/pages/car/available-cars.html`
+
+- **Objektif & Latar Belakang**:
+  - Berdasarkan aduan dan tangkapan skrin pengguna (*"asal tiga2 boleh menyala"*), komponen kawalan segmen Apple (`.apple-segmented-control`) di halaman pengurusan kenderaan (`cars.html` dan `available-cars.html`) mengalami isu di mana ketiga-tiga butang (`All`, `Available`, `Rented`) atau kesemua kategori boleh berada dalam keadaan aktif (`.active`) secara serentak apabila diklik.
+  - Punca isu dikesan pada fungsi `filterCar()` dan `filterCategory()` yang mencari kelas lama `.apple-segment-btn` semasa membuang kelas `.active`, sedangkan butang dalam templat HTML menggunakan kelas `.apple-segment-item`. Ini menyebabkan penyingkiran kelas `.active` gagal dan butang sebelumnya kekal aktif.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Penyelarasan Selektor Pembersihan Kelas Aktif**:
+     - Mengemas kini fungsi `filterCar(status, btn)` di `admin/js/cars.js` untuk membersihkan kelas `.active` daripada `document.querySelectorAll('.apple-segment-item, .apple-segment-btn, .filter-chip')`.
+     - Mengemas kini fungsi `filterCategory(cat, btn)` di `admin/pages/car/available-cars.html` untuk memastikan penyingkiran kelas `.active` meliputi kedua-dua `.apple-segment-item` dan `.apple-segment-btn`.
+  2. **Penguatkuasaan Pilihan Tunggal Eksklusif (*Mutually Exclusive Single Selection*)**:
+     - Memastikan hanya satu butang segmen yang menerima kelas `.active` pada satu-satu masa mengikut standard Apple Human Interface Guidelines bagi Segmented Controls.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Interaksi DevTools**: Menguji peralihan klik antara `All (8)`, `Available (6)`, dan `Rented (2)` secara berturutan. Disahkan melalui DOM inspection dan tangkapan skrin bahawa hanya satu butang berstatus aktif pada satu masa, manakala butang lain kembali pudar/lutsinar secara tepat.
+  - **Ujian Playwright E2E**: Menjalankan suite ujian automasi penuh dengan kelulusan 100%.
+
+- **Maklumat Git**:
+  - Commit: `5.7.0 Fix segmented control active class toggle to ensure mutually exclusive single button selection`
+  - Tag Versi: `5.7.0`

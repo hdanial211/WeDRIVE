@@ -267,12 +267,14 @@
     }
 
     function filterCategory(cat, btn) {
-      currentCat = cat;
-      document.querySelectorAll('.apple-segment-btn').forEach(function (b) { b.classList.remove('active'); });
+      currentCat = cat || 'all';
+      document.querySelectorAll('.apple-segment-item, .apple-segment-btn').forEach(function (b) {
+        b.classList.remove('active');
+      });
       if (btn) {
         btn.classList.add('active');
       } else {
-        var defaultBtn = document.querySelector('.apple-segment-btn[data-cat="' + cat + '"]');
+        var defaultBtn = document.querySelector('.apple-segment-item[data-cat="' + cat + '"], .apple-segment-btn[data-cat="' + cat + '"]');
         if (defaultBtn) defaultBtn.classList.add('active');
       }
       renderAvailable();

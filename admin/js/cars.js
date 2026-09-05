@@ -214,12 +214,14 @@ function renderCarTable(car) {
 
 /* ── Filter ── */
 function filterCar(status, btn) {
-  currentFilter = status;
-  document.querySelectorAll('.apple-segment-btn, .filter-chip').forEach(c => c.classList.remove('active'));
+  currentFilter = status || 'all';
+  document.querySelectorAll('.apple-segment-item, .apple-segment-btn, .filter-chip').forEach(c => {
+    c.classList.remove('active');
+  });
   if (btn) {
     btn.classList.add('active');
   } else {
-    const target = document.querySelector(`.apple-segment-btn[data-status="${status}"]`);
+    const target = document.querySelector(`.apple-segment-item[data-status="${status}"], .apple-segment-btn[data-status="${status}"]`);
     if (target) target.classList.add('active');
   }
   applyFilters();
