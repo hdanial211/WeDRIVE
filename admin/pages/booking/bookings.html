@@ -59,7 +59,7 @@
       <!-- FILTER BAR -->
       <div class="card reveal-on-scroll mb-20 px-22 py-16">
         <div class="flex-between flex-wrap gap-12">
-          <div class="apple-segmented-control" role="tablist" aria-label="Penapis Status Tempahan">
+          <div class="apple-segmented-control" role="group" aria-label="Penapis Status Tempahan">
             <button class="apple-segment-item active" onclick="filterBookings('all', this)" data-key="bk_filter_all">Semua</button>
             <button class="apple-segment-item" onclick="filterBookings('Active', this)" data-key="bk_f_active">Aktif</button>
             <button class="apple-segment-item" onclick="filterBookings('Confirmed', this)" data-key="bk_f_confirmed">Disahkan</button>
@@ -78,7 +78,7 @@
         <div class="mt-14 border-top-subtle pt-12 flex-between flex-wrap gap-12 items-center">
           <div class="d-flex items-center gap-12 flex-wrap" id="date-presets-group">
             <div class="date-range-label fs-13 fw-600 text-secondary" data-key="bk_date_range_label">Julat Tarikh (Tarikh Ambil):</div>
-            <div class="apple-segmented-control" role="tablist" aria-label="Penapis Tarikh">
+            <div class="apple-segmented-control" role="group" aria-label="Penapis Tarikh">
               <button class="apple-segment-item apple-segment-date active" id="date-chip-all" onclick="filterByDate('all', this)" data-key="bk_date_all">Semua</button>
               <button class="apple-segment-item apple-segment-date" id="date-chip-month" onclick="filterByDate('month', this)" data-key="bk_date_month">Bulan Ini</button>
               <button class="apple-segment-item apple-segment-date" id="date-chip-year" onclick="filterByDate('year', this)" data-key="bk_date_year">Tahun Ini</button>

@@ -3560,3 +3560,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.8.0 Removed redundant Add Car button and fixed List View toggle in car management`
   - Tag Versi: `5.8.0`
+
+---
+
+## 🚀 [MINOR UPDATE] 166. Pembersihan Menyeluruh Isu Aksesibiliti ARIA, Awalan CSS Vendor, dan Pengalihan Gaya Sebaris ke CSS Master (v5.8.1)
+
+- **Punca Keperluan (Context & Audit Findings)**:
+  1. Audit statik mendapati elemen `.apple-segmented-control` pada halaman `admin/pages/booking/bookings.html`, `admin/pages/car/available-cars.html`, dan `admin/pages/car/cars.html` menggunakan `role="tablist"` tetapi mengandungi elemen `<button>` tanpa peranan `tab` yang sah di bawah piawaian W3C ARIA.
+  2. Fail induk `shared/css/wedrive.css` mengandungi beberapa isu sintaks dan keserasian pelayar:
+     - Keperluan awalan vendor `-webkit-user-select` dan `-ms-overflow-style`.
+     - Urutan deklarasi standard `backdrop-filter` di mana awalan `-webkit-backdrop-filter` perlu mendahului `backdrop-filter` standard.
+     - Penggunaan nilai tidak sah `min-height: auto` pada elemen select kalendar.
+  3. Halaman `add-car.html` dan `car-detail.html` mengandungi deklarasi `style` sebaris (*inline styles*) yang perlu dialihkan ke kelas CSS berpusat mengikut piawaian seni bina WeDRIVE.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Penyelarasan Aksesibiliti ARIA**:
+     - Mengemas kini `role="tablist"` kepada `role="group"` pada semua komponen `.apple-segmented-control` di `bookings.html`, `available-cars.html`, dan `cars.html` untuk mematuhi piawaian WAI-ARIA 1.2 tanpa merosakkan fungsi penapisan.
+  2. **Penyelarasan CSS Master (`shared/css/wedrive.css`)**:
+     - Menambah `-webkit-user-select: none;` pada kelas `.apple-segmented-control` dan `.cal-filter-chip`.
+     - Mengalihkan sekatan `scrollbar-width: none;` kepada pematuhan pelayar sejagat berasaskan `.apple-segmented-control::-webkit-scrollbar { display: none; }` bagi menghapuskan amaran ketidakserasian Safari/Chrome lama.
+     - Menyelaraskan urutan deklarasi `-webkit-backdrop-filter` sebelum `backdrop-filter` pada kelas `.glass-status-pill`, `.cal-stat-modal-overlay`, `.cal-day-modal-overlay`, `.cust-modal-overlay`, `.cust-doc-hover-overlay`, `.cust-modal-footer`, dan `.cust-lightbox-overlay`.
+     - Membetulkan penetapan `min-height: 0 !important;` pada `.cal-dropdown`.
+     - Mencipta kelas `.add-car-preview-card` untuk membungkus kad pratonton kenderaan tanpa gaya sebaris.
+  3. **Pembersihan Gaya Sebaris**:
+     - `add-car.html`: Menggantikan `style="max-width: 440px; margin: 0 auto; width: 100%;"` dengan kelas `.add-car-preview-card`, serta membuang `style="background:#10B981"` pada `.live-pulse-dot` kerana warna Apple green (#34C759) telah dikawal sepenuhnya oleh CSS master.
+     - `car-detail.html`: Menggantikan `style="display:none;"` pada `#cd-main-img` dengan kelas utiliti standard `.hidden`.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Automasi Playwright**: 29/29 ujian lulus penuh (100% Pass Rate).
+  - **Audit Statik**: Kesemua 18 isu dan amaran telah diselesaikan sepenuhnya tanpa sebarang regresi.
+
+- **Maklumat Git**:
+  - Commit: `5.8.1 Resolved ARIA role warnings, CSS vendor prefixes, backdrop-filter ordering, and inline styles`
+  - Tag Versi: `5.8.1`
