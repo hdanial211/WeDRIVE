@@ -19,6 +19,7 @@ test.describe('Admin Bookings Date Range Filter Tests', () => {
 
   test('Custom date range picker row is hidden by default and only toggles when Custom Range chip is clicked', async ({ page }) => {
     // 1. Open Admin Bookings Page
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('http://localhost:8088/admin/pages/booking/bookings.html');
     await page.waitForLoadState('networkidle');
 
@@ -36,6 +37,7 @@ test.describe('Admin Bookings Date Range Filter Tests', () => {
     await expect(chipCustom).toHaveClass(/active/);
     await expect(chipAll).not.toHaveClass(/active/);
     await expect(customDateRow).toBeVisible();
+    await page.screenshot({ path: '/Users/hakim/.gemini/antigravity-ide/brain/73ad9e13-3aba-46b0-95d2-de16ccb8eb70/bookings_date_range_balanced.png' });
 
     // 4. Click This Month -> Custom Date Row is hidden
     await chipMonth.click();

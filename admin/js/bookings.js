@@ -267,6 +267,7 @@ function filterByDate(period, btn) {
   if (row && period !== 'custom') {
     row.style.display = 'none';
     row.classList.remove('active');
+    row.classList.add('hidden');
   }
 
   applyFilters();
@@ -275,7 +276,7 @@ function filterByDate(period, btn) {
 function showCustomDateRow(btn) {
   var row = document.getElementById('custom-date-row');
   var customBtn = btn || document.getElementById('date-chip-custom');
-  var isCurrentlyVisible = row && (row.classList.contains('active') || (row.style.display !== 'none' && row.style.display !== ''));
+  var isCurrentlyVisible = row && !row.classList.contains('hidden') && (row.classList.contains('active') || (row.style.display !== 'none' && row.style.display !== ''));
 
   document.querySelectorAll('.date-chip, .apple-segment-date').forEach(c => c.classList.remove('active'));
 
@@ -284,6 +285,7 @@ function showCustomDateRow(btn) {
     if (row) {
       row.style.display = 'inline-flex';
       row.classList.add('active');
+      row.classList.remove('hidden');
     }
     currentDateFilter = 'custom';
   } else {
@@ -292,6 +294,7 @@ function showCustomDateRow(btn) {
     if (row) {
       row.style.display = 'none';
       row.classList.remove('active');
+      row.classList.add('hidden');
     }
     filterByDate('all', allBtn);
   }

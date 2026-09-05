@@ -3331,3 +3331,41 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.4 Unified single card calendar architecture and eliminated nested borders`
   - Tag Versi: `5.7.4`
+
+---
+
+### 160. Penyeragaman Garis Seimbang & Sekata Bagi Penapis Julat Tarikh Tempahan (v5.7.5)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REFINEMENT & APPLE HIG]`
+- **Modul Terlibat**:
+  - `admin/pages/booking/bookings.html`
+  - `admin/js/bookings.js`
+  - `shared/css/wedrive.css`
+  - `shared/lang/ms.json`, `shared/lang/ms.js`
+  - `shared/lang/en.json`, `shared/lang/en.js`
+  - `tests/e2e/06_bookings_filter.spec.js`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan masalah reka letak bahagian penapis julat tarikh (*Date Range Filter*) pada halaman Pengurusan Tempahan (`bookings.html`) yang sebelum ini tidak sekata dan herot (*"ni tolong buat dia sekata"*).
+  - Sebelum ini, label `JULAT TARIKH (TARIKH AMBIL)` berada di kiri baris 1, cip pratetap (*All Time, This Month, This Year, Custom Range*) ditolak ke kanan baris 1, manakala input tarikh khusus (*Dari Tarikh, Hingga Tarikh, Guna*) jatuh ke baris 2 di sebelah kiri dengan ruang kosong besar di sebelah kanan.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pengelompokan Simetri Dua Bahagian (*Two-Pillar Flex Row Layout*)**:
+     - Mengelompokkan label `Julat Tarikh (Tarikh Ambil):` dan kawalan bersegmen Apple (*Segmented Control*) di dalam pembungkus `#date-presets-group` di bahagian kiri baris.
+     - Meletakkan baris input julat tarikh tersuai (`#custom-date-row`) di sebelah kanan pada baris mendatar yang sama, menghasilkan jajaran satu baris yang seimbang dan sekata (*level baseline*).
+  2. **Penyeragaman Ketinggian & Geometri Apple HIG (36px Uniform Height)**:
+     - Menyeragamkan ketinggian kawalan bersegmen, input pemilih tarikh (`input.date-picker`), dan butang tindakan (`button.apply-btn`) kepada ketinggian seragam tepat 36px (`height: 36px !important;`).
+     - Mengubah kelebaran input pemilih tarikh kepada 112px dengan penjajaran teks tengah (`text-align: center`) dan sudut bulat pil penuh (`border-radius: 9999px`), menghapuskan sebarang lebihan margin atas (`margin-top: 0 !important`).
+     - Menghapuskan `margin-bottom: 8px` pada `.date-range-label` supaya sentiasa berpusat secara menegak dengan cip pilihan tarikh.
+  3. **Sokongan Dwibahasa Penuh (MS & EN)**:
+     - Menambah kunci kamus dwibahasa `bk_date_range_label`, `bk_date_all`, `bk_date_month`, `bk_date_year`, `bk_date_custom`, `bk_to`, dan `bk_apply` ke dalam kamus bahasa Inggeris dan Melayu (`en.json`, `en.js`, `ms.json`, `ms.js`).
+  4. **Pencegahan Regresi & Ujian Automasi E2E**:
+     - Mengemaskini ujian Playwright `e2e/06_bookings_filter.spec.js` dengan resolusi MacBook piawai 1440x900 untuk mengesahkan interaksi buka/tutup dan penjajaran visual secara langsung.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Chrome DevTools & Visual Snap**: Mengesahkan kedua-dua kumpulan elemen duduk tepat pada baris mendatar yang sama (`isSameRow: true`), ketinggian 36px seragam, dan input teks berpusat cantik.
+  - **Ujian Playwright E2E**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed dalam 1.4m).
+
+- **Maklumat Git**:
+  - Commit: `5.7.5 Balanced single-line date range filter layout in bookings management`
+  - Tag Versi: `5.7.5`

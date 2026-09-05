@@ -7503,9 +7503,9 @@ a.btn-sm {
 .custom-date-row {
   display: none;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0 !important;
+  flex-wrap: nowrap;
 }
 
 .custom-date-row.active {
@@ -7513,13 +7513,15 @@ a.btn-sm {
 }
 
 .custom-date-row input.date-picker {
-  height: 40px !important;
+  height: 36px !important;
+  width: 112px !important;
   border-radius: var(--radius-pill, 9999px) !important;
-  padding: 0 16px !important;
+  padding: 0 10px !important;
+  text-align: center !important;
   background: var(--bg-surface-2) !important;
-  border: 1.5px solid var(--border-medium) !important;
+  border: 1px solid var(--border-medium) !important;
   font-family: inherit !important;
-  font-size: 13px !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
   color: var(--text-primary) !important;
   outline: none !important;
@@ -7528,22 +7530,22 @@ a.btn-sm {
 
 .custom-date-row input.date-picker:focus {
   border-color: var(--primary) !important;
-  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.18) !important;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2) !important;
 }
 
 .custom-date-row button.apply-btn {
-  height: 40px !important;
+  height: 36px !important;
   border-radius: var(--radius-pill, 9999px) !important;
-  padding: 0 18px !important;
+  padding: 0 16px !important;
   background: var(--primary) !important;
   color: #FFFFFF !important;
   border: none !important;
   font-family: inherit !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
   cursor: pointer !important;
   transition: all 0.2s var(--ease-apple) !important;
-  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3) !important;
+  box-shadow: 0 3px 10px rgba(0, 113, 227, 0.3) !important;
 }
 
 .custom-date-row button.apply-btn:hover {
@@ -7552,7 +7554,16 @@ a.btn-sm {
 }
 
 .custom-date-row button.apply-btn:active {
-  transform: scale(0.97) !important;
+  transform: scale(0.96) !important;
+}
+
+@media (max-width: 900px) {
+  .custom-date-row {
+    margin-top: 8px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+  }
 }
 
 .booking-actions button,
@@ -10593,16 +10604,17 @@ th.sort-desc {
   box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
 }
 
+/* Legacy custom-date-row fallback mapped to global unified system */
 .custom-date-row {
   display: none;
   gap: 8px;
   align-items: center;
-  flex-wrap: wrap;
-  margin-top: 10px;
+  flex-wrap: nowrap;
+  margin-top: 0;
 }
 
 .custom-date-row.active {
-  display: flex !important;
+  display: inline-flex !important;
 }
 
 .custom-date-row input[type="date"] {
@@ -13844,7 +13856,7 @@ body.profile-page {
 .px-8 { padding-left: 8px !important; padding-right: 8px !important; }
 .py-2 { padding-top: 2px !important; padding-bottom: 2px !important; }
 .ml-8 { margin-left: 8px !important; }
-.date-range-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 8px; }
+.date-range-label { font-size: 11.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 0 !important; white-space: nowrap; display: inline-flex; align-items: center; }
 
 /* Calendar Helper Classes */
 .py-14 { padding-top: 14px !important; padding-bottom: 14px !important; }

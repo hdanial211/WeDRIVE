@@ -75,19 +75,21 @@
           </div>
         </div>
         <!-- Date Range Filter (NOTA 10) -->
-        <div class="mt-14 border-top-subtle pt-12 flex-between flex-wrap gap-12">
-          <div class="date-range-label fs-13 fw-600 text-secondary">Julat Tarikh (Tarikh Ambil):</div>
-          <div class="apple-segmented-control" role="tablist" aria-label="Penapis Tarikh">
-            <button class="apple-segment-item apple-segment-date active" id="date-chip-all" onclick="filterByDate('all', this)">Semua</button>
-            <button class="apple-segment-item apple-segment-date" id="date-chip-month" onclick="filterByDate('month', this)">Bulan Ini</button>
-            <button class="apple-segment-item apple-segment-date" id="date-chip-year" onclick="filterByDate('year', this)">Tahun Ini</button>
-            <button class="apple-segment-item apple-segment-date" id="date-chip-custom" onclick="showCustomDateRow(this)">Julat Khusus</button>
+        <div class="mt-14 border-top-subtle pt-12 flex-between flex-wrap gap-12 items-center">
+          <div class="d-flex items-center gap-12 flex-wrap" id="date-presets-group">
+            <div class="date-range-label fs-13 fw-600 text-secondary" data-key="bk_date_range_label">Julat Tarikh (Tarikh Ambil):</div>
+            <div class="apple-segmented-control" role="tablist" aria-label="Penapis Tarikh">
+              <button class="apple-segment-item apple-segment-date active" id="date-chip-all" onclick="filterByDate('all', this)" data-key="bk_date_all">Semua</button>
+              <button class="apple-segment-item apple-segment-date" id="date-chip-month" onclick="filterByDate('month', this)" data-key="bk_date_month">Bulan Ini</button>
+              <button class="apple-segment-item apple-segment-date" id="date-chip-year" onclick="filterByDate('year', this)" data-key="bk_date_year">Tahun Ini</button>
+              <button class="apple-segment-item apple-segment-date" id="date-chip-custom" onclick="showCustomDateRow(this)" data-key="bk_date_custom">Julat Khusus</button>
+            </div>
           </div>
-          <div class="custom-date-row hidden" id="custom-date-row">
+          <div class="custom-date-row hidden items-center gap-8" id="custom-date-row">
             <input type="text" id="bk-date-from" class="date-picker" data-allow-past="true" placeholder="Dari Tarikh" readonly />
-            <span class="fs-12 text-muted">hingga</span>
+            <span class="fs-12 text-muted" data-key="bk_to">hingga</span>
             <input type="text" id="bk-date-to" class="date-picker" data-allow-past="true" placeholder="Hingga Tarikh" readonly />
-            <button class="apply-btn" onclick="applyCustomDate()">Guna</button>
+            <button class="apply-btn" onclick="applyCustomDate()" data-key="bk_apply">Guna</button>
           </div>
         </div>
       </div>
@@ -176,7 +178,7 @@
   <script src="../../../shared/js/animate.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="../../../shared/js/calendar.js?v=5.2.40"></script>
-  <script src="../../js/bookings.js?v=5.2.78"></script>
+  <script src="../../js/bookings.js?v=5.7.5"></script>
   <script src="../../js/admin-idle-timeout.js?v=5.2.78"></script>
 </body>
 </html>
