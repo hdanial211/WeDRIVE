@@ -7468,6 +7468,38 @@ a.btn-sm {
   transform: scale(0.96);
 }
 
+/* Feature Equipment Chips Grid (2-Column Equal Width Apple Layout) */
+.feature-chips-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.feature-chips-grid .filter-chip {
+  width: 100% !important;
+  min-height: 42px !important;
+  height: auto !important;
+  padding: 8px 14px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  justify-content: flex-start !important;
+  box-sizing: border-box !important;
+  white-space: normal !important;
+  text-align: left !important;
+}
+
+.feature-chips-grid .filter-chip .chip-check-icon {
+  flex-shrink: 0 !important;
+}
+
+@media (max-width: 600px) {
+  .feature-chips-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 .custom-date-row {
   display: none;
   align-items: center;
@@ -13551,7 +13583,7 @@ body.profile-page {
 .d-flex { display: flex !important; }
 .d-inline-flex { display: inline-flex !important; }
 .flex-col { flex-direction: column !important; }
-.flex-wrap { flex-wrap: wrap !important; }
+.flex-wrap { display: flex !important; flex-wrap: wrap !important; }
 .items-center { align-items: center !important; }
 .justify-between { justify-content: space-between !important; }
 .justify-center { justify-content: center !important; }
@@ -13631,7 +13663,7 @@ body.profile-page {
 .text-primary-accent { color: var(--primary) !important; }
 .no-underline { text-decoration: none !important; }
 
-.flex-wrap { flex-wrap: wrap !important; }
+.flex-wrap { display: flex !important; flex-wrap: wrap !important; }
 .flex-between { display: flex !important; align-items: center !important; justify-content: space-between !important; }
 .flex-center { display: flex !important; align-items: center !important; justify-content: center !important; }
 .flex-start { display: flex !important; align-items: center !important; justify-content: flex-start !important; }

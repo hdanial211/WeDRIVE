@@ -3268,3 +3268,35 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.2 Full bleed live preview car card and comprehensive authentic Malay translation`
   - Tag Versi: `5.7.2`
+
+---
+
+### 158. Penyeragaman Grid 2-Kolum Sama Panjang Bagi Peralatan Standard Kereta (v5.7.3)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REFINEMENT & APPLE HIG]`
+- **Modul Terlibat**:
+  - `admin/pages/car/add-car.html`
+  - `admin/pages/setting/settings.html`
+  - `shared/css/wedrive.css`
+
+- **Objektif & Latar Belakang**:
+  - Mengubah susun atur cip pilihan peralatan standard kereta (`Peralatan Standard Kereta`) pada halaman Tambah Kereta Baharu (`add-car.html`) yang sebelum ini memanjang satu kolum atau tidak seimbang panjangnya.
+  - Memastikan susun atur menepati permintaan pengguna (*"pastikan sama panjang"*, *"jangan macam ni...panjang letak dua2"*): disusun secara grid simetri 2-kolum (dua-dua) dengan kelebaran sama panjang 100% per kolum (`repeat(2, 1fr)`).
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Kelas Grid Baharu `.feature-chips-grid`**:
+     - Dibina dalam `shared/css/wedrive.css` dengan `display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%;`.
+     - Setiap cip `.filter-chip` ditetapkan kelebaran 100% kolumnya, `min-height: 42px`, `padding: 8px 14px`, `font-size: 12px`, dan teks dijajarkan ke kiri bersama ikon pengesahan `check_circle` / `add_circle_outline`.
+     - Responsif Apple: Mengadaptasi secara dinamik kepada 1 kolum pada skrin peranti mudah alih (`max-width: 600px`).
+  2. **Penyelarasan 6 Pilihan Peralatan Standard Simetri 3x2**:
+     - Menambah pilihan ke-6 (`Sensor Parkir Depan & Belakang`) supaya menghasilkan grid simetri 3 baris x 2 kolum yang seimbang dan kemas tanpa ruang kosong di bahagian kanan.
+  3. **Penambahbaikan `.flex-wrap` Global**:
+     - Memastikan kelas utiliti `.flex-wrap` di `shared/css/wedrive.css` merangkumi `display: flex !important;` bagi mengelakkan keruntuhan flexbox pada mana-mana komponen sistem.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Chrome DevTools**: Mengesahkan setiap kolum mempunyai kelebaran tepat 237px dengan jurang seragam 10px, interaksi klik menukar ikon dan status aktif secara lancar.
+  - **Ujian Playwright E2E**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed).
+
+- **Maklumat Git**:
+  - Commit: `5.7.3 Symmetrical 2-column equal-width layout for car equipment chips`
+  - Tag Versi: `5.7.3`

@@ -199,28 +199,38 @@
               </h3>
             </div>
 
-            <div class="mb-16">
-              <label class="form-label fs-13 fw-600">Peralatan Standard Kereta</label>
-              <div class="flex-wrap gap-8">
+            <div class="mb-24">
+              <label class="form-label fs-13 fw-600 mb-10 d-block">Peralatan Standard Kereta</label>
+              <div class="feature-chips-grid">
                 <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-carplay" class="hidden" checked />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
                   <span>Apple CarPlay / Android Auto</span>
                 </label>
                 <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-dashcam" class="hidden" checked />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
                   <span>4K Dashcam Depan &amp; Belakang</span>
                 </label>
                 <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-keyless" class="hidden" checked />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
                   <span>Sistem Masuk Pintar Tanpa Kunci</span>
                 </label>
                 <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-reverse-cam" class="hidden" checked />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
                   <span>Kamera Undur 360 Berdefinisi Tinggi</span>
                 </label>
                 <label class="filter-chip cursor-pointer active">
                   <input type="checkbox" id="feat-tinted" class="hidden" checked />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
                   <span>Filem Penapis Haba Berdaftar JPJ</span>
+                </label>
+                <label class="filter-chip cursor-pointer active">
+                  <input type="checkbox" id="feat-sensor" class="hidden" checked />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
+                  <span>Sensor Parkir Depan &amp; Belakang</span>
                 </label>
               </div>
             </div>
@@ -389,15 +399,21 @@
     // Toggle chip active state on click
     document.querySelectorAll('.filter-chip.cursor-pointer').forEach(function (label) {
       var cb = label.querySelector('input[type="checkbox"]');
-      if (cb && cb.checked) label.classList.add('active');
+      var icon = label.querySelector('.chip-check-icon');
+      function syncChip() {
+        if (cb && cb.checked) {
+          label.classList.add('active');
+          if (icon) icon.textContent = 'check_circle';
+        } else {
+          label.classList.remove('active');
+          if (icon) icon.textContent = 'add_circle_outline';
+        }
+      }
+      if (cb) {
+        cb.addEventListener('change', syncChip);
+      }
       label.addEventListener('click', function () {
-        setTimeout(function () {
-          if (cb.checked) {
-            label.classList.add('active');
-          } else {
-            label.classList.remove('active');
-          }
-        }, 10);
+        setTimeout(syncChip, 15);
       });
     });
 
