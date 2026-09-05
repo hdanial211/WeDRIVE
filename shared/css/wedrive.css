@@ -9059,25 +9059,25 @@ body.page-is-leaving .page-container {
 .cal-nav-group {
   display: flex;
   align-items: center;
-  gap: 4px;
-  background: var(--bg-surface-2, rgba(255, 255, 255, 0.05));
-  padding: 4px;
-  border-radius: var(--radius-pill, 9999px);
-  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.1));
+  gap: 8px;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
 }
 
 .cal-nav-btn {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  min-height: 32px !important;
-  max-width: 32px !important;
-  max-height: 32px !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 50% !important;
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.06)) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1)) !important;
+  color: var(--text-primary, #FFFFFF) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9087,13 +9087,18 @@ body.page-is-leaving .page-container {
 }
 
 .cal-nav-btn:hover {
-  background: var(--bg-surface-3, rgba(255, 255, 255, 0.1));
-  color: var(--primary, #0071E3);
-  transform: scale(1.08);
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.12)) !important;
+  color: var(--primary, #0071E3) !important;
+  transform: scale(1.06);
 }
 
 .cal-nav-btn:active {
   transform: scale(0.92);
+}
+
+.cal-toolbar-header {
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: var(--bg-surface-1, rgba(22, 22, 24, 0.5));
 }
 
 /* Apple Weekday Caption Row */
@@ -16418,10 +16423,10 @@ body.day-mode .adm-cal-cell.empty {
 }
 
 .cal-dropdown {
-  padding: 7px 14px;
-  background: var(--surface-2, #1D1D20);
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
-  border-radius: 12px;
+  padding: 8px 14px;
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.06)) !important;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1)) !important;
+  border-radius: 12px !important;
   color: var(--text-primary, #FFFFFF);
   font-family: inherit;
   font-size: 13px;
@@ -16431,9 +16436,14 @@ body.day-mode .adm-cal-cell.empty {
   transition: all 0.2s ease;
 }
 
+.cal-dropdown:hover {
+  background: var(--bg-surface-3, rgba(255, 255, 255, 0.1)) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
 .cal-dropdown:focus {
-  border-color: var(--primary-accent, #0071E3);
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+  border-color: var(--primary, #0071E3) !important;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.25) !important;
 }
 
 .cal-filter-chip {

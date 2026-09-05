@@ -101,11 +101,12 @@
         </div>
       </div>
 
-      <!-- CALENDAR TOOLBAR: Controls + Filter Chips -->
-      <div class="card reveal-on-scroll cal-toolbar mb-20 px-22 py-14 radius-24">
-        <div class="cal-toolbar-inner flex-between flex-wrap gap-14">
+      <!-- MAIN UNIFIED CALENDAR CARD (Apple HIG Single Card Standard) -->
+      <div class="card reveal-on-scroll p-0 overflow-hidden radius-24 mb-24 border-subtle adm-cal-main-card">
+        <!-- Integrated Calendar Toolbar Header -->
+        <div class="cal-toolbar-header px-22 py-14 flex-between flex-wrap gap-14 border-bottom-subtle">
           <!-- LEFT: Navigation controls -->
-          <div class="cal-nav-group flex-center gap-10">
+          <div class="cal-nav-group flex-center gap-8">
             <button class="cal-nav-btn" id="cal-prev" title="Bulan Sebelumnya">
               <span class="material-icons-round">chevron_left</span>
             </button>
@@ -159,10 +160,7 @@
             </label>
           </div>
         </div>
-      </div>
 
-      <!-- CALENDAR GRID CARD -->
-      <div class="card reveal-on-scroll p-0 overflow-hidden radius-24 mb-24 border-subtle">
         <!-- Day headers -->
         <div class="adm-cal-header bg-surface-2">
           <div data-key="cal_sun">Ahad</div>

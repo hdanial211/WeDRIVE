@@ -3300,3 +3300,34 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.7.3 Symmetrical 2-column equal-width layout for car equipment chips`
   - Tag Versi: `5.7.3`
+
+---
+
+### 159. Penyatuan Kad Tunggal & Pemansuhan Sempadan Bersarang Navigasi Kalendar (v5.7.4)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[UI/UX REFINEMENT & APPLE HIG]`
+- **Modul Terlibat**:
+  - `admin/pages/calendar/calendar.html`
+  - `shared/css/wedrive.css`
+
+- **Objektif & Latar Belakang**:
+  - Menyelesaikan isu reka letak antaramuka kalendar yang mempunyai sempadan kad bertindan secara bersarang (*"ni buruk dalam card ada card lagi sepatutnya xyah satu sahaja"*).
+  - Menggabungkan kad palang alat kawalan (`.cal-toolbar`) yang sebelum ini terapung berasingan terus ke dalam kad utama kalendar (`.adm-cal-main-card`) sebagai satu kad tunggal yang kohesif.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Penyatuan Kad Tunggal (*Single Unified Bento Card*)**:
+     - Membuang elemen `<div class="card cal-toolbar">` yang terapung secara berasingan di atas kalendar.
+     - Mengintegrasikan palang alat kawalan kalendar (`.cal-toolbar-header`) terus ke bahagian atas kad kalendar utama di `calendar.html` yang dipisahkan oleh garis pembahagi halus `border-bottom-subtle`.
+  2. **Pemansuhan Kotak Pil Bersarang `.cal-nav-group`**:
+     - Mengubah `.cal-nav-group` di `shared/css/wedrive.css` menjadi `background: transparent; border: none; padding: 0;` bagi menghapuskan garisan sempadan kapsul kelabu yang memerangkap butang `< >` dan dropdown bulan/tahun.
+  3. **Penalaan Butang Navigasi & Dropdown Apple HIG**:
+     - Menaik taraf butang bulat `<` dan `>` (`.cal-nav-btn`) kepada saiz 36x36px dengan latar belakang kaca halus (`rgba(255, 255, 255, 0.06)`).
+     - Menyeragamkan dropdown pilihan bulan dan tahun (`.cal-dropdown`) dengan sudut bulat 12px dan sempadan halus tanpa bertindan.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Chrome DevTools**: Mengesahkan hanya wujud tepat 1 kad kalendar utama (`totalCards: 1`), tiada lagi garisan sempadan bersarang di sekeliling pemilih bulan, dan interaksi penukaran bulan berjalan sempurna.
+  - **Ujian Playwright E2E**: Kesemua 29 ujian automasi lulus penuh 100% (29 passed).
+
+- **Maklumat Git**:
+  - Commit: `5.7.4 Unified single card calendar architecture and eliminated nested borders`
+  - Tag Versi: `5.7.4`
