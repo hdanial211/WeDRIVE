@@ -26,28 +26,25 @@
 
     <div class="content">
       <!-- APPLE BENTO HERO HEADER -->
-      <div class="card bento-header-hero mb-24 reveal-onload">
+      <div class="bento-header-hero reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
-              <a href="../dashboard/dashboard.html">Admin</a>
-              <span class="material-icons-round">chevron_right</span>
+            <div class="bento-breadcrumbs">
               <a href="cars.html">Pengurusan Kereta</a>
               <span class="material-icons-round">chevron_right</span>
-              <span class="current">Sedang Disewa</span>
-            </nav>
-            <div class="flex-start gap-10 mb-8">
-              <span class="status-badge active"><span class="live-pulse-dot"></span> On-Road Rental Tracking</span>
-              <span class="fs-12 text-muted fw-600" id="rented-count-badge">Memuatkan data...</span>
+              <span>Kenderaan Sedang Disewa</span>
             </div>
-            <h1 class="bento-title-main m-0">Kenderaan Sedang Disewa</h1>
-            <p class="bento-subtitle-main m-0 mt-6">Pemantauan operasi masa nyata kenderaan di tangan penyewa berdaftar, jadual tarikh pemulangan, dan rekod serahan kunci.</p>
+            <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+              <h1 class="bento-title-main">Kenderaan Sedang Disewa</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span id="rented-count-badge">Memuatkan data...</span></span>
+            </div>
+            <p class="bento-subtitle-main">Pemantauan operasi masa nyata kenderaan di tangan penyewa berdaftar, jadual tarikh pemulangan, dan rekod serahan kunci.</p>
           </div>
           <div class="flex-center gap-10">
-            <button class="btn-secondary" onclick="window.location.href='cars.html'">
+            <button class="btn-outline-sm" onclick="window.location.href='cars.html'">
               <span class="material-icons-round fs-16">directions_car</span> Semua Kereta
             </button>
-            <button class="btn-primary" onclick="window.location.href='../booking/active-bookings.html'">
+            <button class="btn-primary-sm" onclick="window.location.href='../booking/active-bookings.html'">
               <span class="material-icons-round fs-16">receipt_long</span> Log Tempahan Aktif
             </button>
           </div>

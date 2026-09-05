@@ -27,28 +27,25 @@
 
     <div class="content">
       <!-- APPLE BENTO HERO HEADER -->
-      <div class="card bento-header-hero mb-24 reveal-onload">
+      <div class="bento-header-hero reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
-              <a href="../dashboard/dashboard.html">Admin</a>
-              <span class="material-icons-round">chevron_right</span>
+            <div class="bento-breadcrumbs">
               <a href="chatbot.html">AI Intelligence</a>
               <span class="material-icons-round">chevron_right</span>
-              <span class="current">Konfigurasi Pembantu Maya</span>
-            </nav>
-            <div class="flex-start gap-10 mb-8">
-              <span class="status-badge active"><span class="live-pulse-dot"></span> Pembantu Maya 24/7</span>
-              <span class="fs-12 text-muted fw-600">OpenRouter Gateway • Gemini 2.5 Flash</span>
+              <span>Konfigurasi Pembantu Maya</span>
             </div>
-            <h1 class="bento-title-main m-0">Konfigurasi Pembantu Khidmat Pelanggan</h1>
-            <p class="bento-subtitle-main m-0 mt-6">Urus kunci pintu masuk API, persona komunikasi, promosi semasa, dan pantau respons ejen secara langsung melalui konsol simulasi.</p>
+            <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+              <h1 class="bento-title-main">Konfigurasi Pembantu Khidmat Pelanggan</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Pembantu Maya 24/7 (AI)</span></span>
+            </div>
+            <p class="bento-subtitle-main">Urus kunci pintu masuk API, persona komunikasi, promosi semasa, dan pantau respons ejen secara langsung melalui konsol simulasi.</p>
           </div>
           <div class="flex-center gap-10">
-            <button class="btn-secondary" onclick="refreshLiveData()">
-              <span class="material-icons-round fs-16">refresh</span> Segarkan Data Kereta
+            <button class="btn-outline-sm" onclick="refreshLiveData()">
+              <span class="material-icons-round fs-16">refresh</span> Segarkan Data
             </button>
-            <button class="btn-primary" onclick="saveSettings()">
+            <button class="btn-primary-sm" onclick="saveSettings()">
               <span class="material-icons-round fs-16">save</span> Simpan Perubahan
             </button>
           </div>

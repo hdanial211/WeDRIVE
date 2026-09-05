@@ -27,28 +27,25 @@
 
     <div class="content">
       <!-- APPLE BENTO HERO HEADER -->
-      <div class="card bento-header-hero mb-24 reveal-onload">
+      <div class="bento-header-hero reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
-              <a href="../dashboard/dashboard.html">Admin</a>
-              <span class="material-icons-round">chevron_right</span>
+            <div class="bento-breadcrumbs">
               <a href="bookings.html">Pengurusan Tempahan</a>
               <span class="material-icons-round">chevron_right</span>
-              <span class="current">Tempahan Kaunter Baharu</span>
-            </nav>
-            <div class="flex-start gap-10 mb-8">
-              <span class="status-badge active"><span class="live-pulse-dot"></span> Pendaftaran Kaunter Rasmi</span>
-              <span class="fs-12 text-muted fw-600">Pengiraan Tarif Otomatik &amp; Pengesahan Deposit</span>
+              <span>Tempahan Kaunter Baharu</span>
             </div>
-            <h1 class="bento-title-main m-0" data-key="sidebar_add_booking">Cipta Tempahan Kaunter</h1>
-            <p class="bento-subtitle-main m-0 mt-6">Daftarkan kontrak sewaan baharu untuk walk-in atau pelanggan korporat dengan pengiraan kos harian automatik dan pengeluaran invois rasmi.</p>
+            <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+              <h1 class="bento-title-main" data-key="sidebar_add_booking">Cipta Tempahan Kaunter</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Pendaftaran Kaunter Rasmi</span></span>
+            </div>
+            <p class="bento-subtitle-main">Daftarkan kontrak sewaan baharu untuk walk-in atau pelanggan korporat dengan pengiraan kos harian automatik dan pengeluaran invois rasmi.</p>
           </div>
           <div class="flex-center gap-10">
-            <button type="button" class="btn-secondary" onclick="window.location.href='bookings.html'">
+            <button type="button" class="btn-outline-sm" onclick="window.location.href='bookings.html'">
               <span class="material-icons-round fs-16">arrow_back</span> Batal
             </button>
-            <button type="button" class="btn-primary" onclick="document.getElementById('new-booking-form').requestSubmit()">
+            <button type="button" class="btn-primary-sm" onclick="document.getElementById('new-booking-form').requestSubmit()">
               <span class="material-icons-round fs-16">check_circle</span> Sahkan Tempahan
             </button>
           </div>

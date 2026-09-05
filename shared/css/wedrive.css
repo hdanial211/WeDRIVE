@@ -14639,6 +14639,31 @@ body.pending-page {
   margin-bottom: 24px !important;
 }
 
+.bento-header-hero > .flex-between {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 20px !important;
+  flex-wrap: nowrap !important;
+}
+
+.bento-header-hero > .flex-between > div:first-child {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.bento-header-hero > .flex-between > div:last-child {
+  flex-shrink: 0 !important;
+  align-self: flex-start !important;
+  margin-top: 4px !important;
+}
+
+@media (max-width: 768px) {
+  .bento-header-hero > .flex-between {
+    flex-wrap: wrap !important;
+  }
+}
+
 .bento-header-hero > .flex-between > div:first-child .flex-center,
 .bento-header-hero .bento-title-row,
 .bento-header-hero .flex-start {

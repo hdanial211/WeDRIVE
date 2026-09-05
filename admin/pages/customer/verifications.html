@@ -26,28 +26,25 @@
 
     <div class="content">
       <!-- APPLE BENTO HERO HEADER -->
-      <div class="card bento-header-hero mb-24 reveal-onload">
+      <div class="bento-header-hero reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
-              <a href="../dashboard/dashboard.html">Admin</a>
-              <span class="material-icons-round">chevron_right</span>
+            <div class="bento-breadcrumbs">
               <a href="customers.html">Pengurusan Pelanggan</a>
               <span class="material-icons-round">chevron_right</span>
-              <span class="current">Pengesahan Lesen &amp; KYC</span>
-            </nav>
-            <div class="flex-start gap-10 mb-8">
-              <span class="status-badge active"><span class="live-pulse-dot"></span> Pematuhan JPJ &amp; Insurans</span>
-              <span class="fs-12 text-muted fw-600" id="vf-count-badge">Memuatkan rekod...</span>
+              <span>Pengesahan Lesen &amp; KYC</span>
             </div>
-            <h1 class="bento-title-main m-0" data-key="sidebar_pending_verifications">Pengesahan Dokumen Lesen &amp; MyKad</h1>
-            <p class="bento-subtitle-main m-0 mt-6">Audit rasmi dokumen pengenalan diri pelanggan bagi memenuhi piawaian Akta Pengangkutan Jalan 1987 dan kesahihan perlindungan liabiliti insurans komersil.</p>
+            <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+              <h1 class="bento-title-main" data-key="sidebar_pending_verifications">Pengesahan Dokumen Lesen &amp; MyKad</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span id="vf-count-badge">Memuatkan rekod...</span></span>
+            </div>
+            <p class="bento-subtitle-main">Audit rasmi dokumen pengenalan diri pelanggan bagi memenuhi piawaian Akta Pengangkutan Jalan 1987 dan kesahihan perlindungan liabiliti insurans komersil.</p>
           </div>
           <div class="flex-center gap-10">
-            <button class="btn-secondary" onclick="window.location.href='customers.html'">
+            <button class="btn-outline-sm" onclick="window.location.href='customers.html'">
               <span class="material-icons-round fs-16">people</span> Direktori Pelanggan
             </button>
-            <button class="btn-primary" onclick="approveAllPending()">
+            <button class="btn-primary-sm" onclick="approveAllPending()">
               <span class="material-icons-round fs-16">done_all</span> Luluskan Semua Sah
             </button>
           </div>

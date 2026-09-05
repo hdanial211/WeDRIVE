@@ -26,28 +26,25 @@
 
     <div class="content">
       <!-- APPLE BENTO HERO HEADER -->
-      <div class="card bento-header-hero mb-24 reveal-onload">
+      <div class="bento-header-hero reveal-onload">
         <div class="flex-between flex-wrap gap-16">
           <div>
-            <nav class="bento-breadcrumbs mb-8" aria-label="Breadcrumb">
-              <a href="../dashboard/dashboard.html">Admin</a>
-              <span class="material-icons-round">chevron_right</span>
+            <div class="bento-breadcrumbs">
               <a href="reports.html">Laporan &amp; Analitik</a>
               <span class="material-icons-round">chevron_right</span>
-              <span class="current">Pusat Eksport Data</span>
-            </nav>
-            <div class="flex-start gap-10 mb-8">
-              <span class="status-badge active"><span class="live-pulse-dot"></span> Arkib Data Audit Rasmi</span>
-              <span class="fs-12 text-muted fw-600">Eksport Mematuhi Piawaian Perakaunan &amp; PDPA</span>
+              <span>Pusat Eksport Data</span>
             </div>
-            <h1 class="bento-title-main m-0" data-key="sidebar_export_reports">Pusat Eksport &amp; Arkib Data</h1>
-            <p class="bento-subtitle-main m-0 mt-6">Jana dan muat turun fail laporan rasmi perniagaan dalam format CSV, hamparan kerja Excel, serta penyata arkib pengauditan syarikat.</p>
+            <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+              <h1 class="bento-title-main" data-key="sidebar_export_reports">Pusat Eksport &amp; Arkib Data</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Arkib Audit Rasmi (PDPA)</span></span>
+            </div>
+            <p class="bento-subtitle-main">Jana dan muat turun fail laporan rasmi perniagaan dalam format CSV, hamparan kerja Excel, serta penyata arkib pengauditan syarikat.</p>
           </div>
           <div class="flex-center gap-10">
-            <button class="btn-secondary" onclick="window.location.href='reports.html'">
+            <button class="btn-outline-sm" onclick="window.location.href='reports.html'">
               <span class="material-icons-round fs-16">bar_chart</span> Ringkasan Laporan
             </button>
-            <button class="btn-primary" onclick="exportFullArchive()">
+            <button class="btn-primary-sm" onclick="exportFullArchive()">
               <span class="material-icons-round fs-16">archive</span> Eksport Penuh Arkib
             </button>
           </div>

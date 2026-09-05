@@ -3011,3 +3011,54 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.6.6 Unify single row bento stat cards and fix 4-column grid styling`
   - Tag Versi: `5.6.6`
+
+---
+
+### 152. Penalaan Reka Bentuk Apple Bento Hero Header & Pengecilan Saiz Tajuk Sub-Halaman Pentadbir (v5.6.7)
+- **Tarikh**: 5 September 2026
+- **Kategori**: `[MINOR UPDATE]` / `[UI/UX REFINEMENT]`
+- **Modul Terlibat**:
+  - `shared/css/wedrive.css`
+  - `admin/pages/car/rented-cars.html`
+  - `admin/pages/booking/active-bookings.html`
+  - `admin/pages/customer/verifications.html`
+  - `admin/pages/report/export-reports.html`
+  - `admin/pages/booking/new-booking.html`
+  - `admin/pages/car/add-car.html`
+  - `admin/pages/calendar/calendar.html`
+  - `admin/pages/marketing/marketing.html`
+  - `admin/pages/chatbot/chatbot.html`
+
+- **Objektif & Latar Belakang**:
+  - Berdasarkan maklum balas pengguna (*"ni terlalu besar sangat kecil kan sikit... x lawa besar2"*), bahagian tajuk hero (`bento-header-hero`) pada sub-halaman pengurusan pentadbir sebelum ini kelihatan terlalu besar, bertingkat 5 baris di dalam kad putih yang tebal, butang tindakan terdorong ke bawah kiri tanpa keseimbangan visual, dan teks tajuk memakan ruang menegak yang berlebihan sehingga menenggelamkan kad statistik dan jadual utama.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pengecilan Saiz Tipografi & Penskalaan Apple HIG**:
+     - Menurunkan saiz fon `.bento-title-main` daripada `30px/32px` kepada `24px` (`font-weight: 700`, `letter-spacing: -0.025em`) agar sepadan dengan standard visual macOS/iOS.
+     - Menetapkan saiz `.bento-subtitle-main` kepada `13px` dengan `line-height: 1.5` dan `color: var(--text-secondary)`, serta mengehadkan lebar baris teks (`max-width: 680px`) untuk kebolehbacaan maksimum.
+     - Mengecilkan bujur lencana status (`.bento-title-row .status-badge`) kepada `11px` dengan padding `3px 8px` bersebelahan terus dengan tajuk utama.
+  2. **Penyelarasan Seni Bina Baris Mendatar (`.bento-header-hero`)**:
+     - Menghapuskan pembungkus kad putih tebal (`card`) dan beralih kepada reka bentuk terbuka (*borderless hero*) yang anggun dan bersih.
+     - Menyusun hirarki visual 3 baris yang teratur:
+       - **Baris 1**: Breadcrumbs navigasi (`bento-breadcrumbs`, 12px, font-weight: 600, uppercase).
+       - **Baris 2**: Baris tajuk kembar (`bento-title-row`) yang meletakkan Tajuk Halaman dan Lencana Status Langsung sebaris di kiri, manakala butang tindakan utama (`btn-outline-sm` & `btn-primary-sm`) kekal kemas di sudut atas kanan.
+       - **Baris 3**: Teks deskripsi ringkas fungsi operasi di bawah tajuk.
+     - Menetapkan peraturan CSS `flex-wrap: nowrap !important;` pada skrin desktop/komputer riba bagi mengelakkan butang tindakan terdorong ke baris kedua, dan mengaktifkan `flex-wrap: wrap` hanya pada peranti mudah alih ($\le 768\text{px}$).
+  3. **Penyeragaman Komprehensif Pada 9 Sub-Halaman Pentadbir**:
+     - `admin/pages/car/rented-cars.html` (Kenderaan Sedang Disewa)
+     - `admin/pages/booking/active-bookings.html` (Tempahan Sedang Aktif)
+     - `admin/pages/customer/verifications.html` (Pengesahan Dokumen Lesen & MyKad)
+     - `admin/pages/report/export-reports.html` (Pusat Eksport & Arkib Data)
+     - `admin/pages/booking/new-booking.html` (Cipta Tempahan Kaunter)
+     - `admin/pages/car/add-car.html` (Tambah Kenderaan Baharu)
+     - `admin/pages/calendar/calendar.html` (Kalendar Operasi & Tempahan)
+     - `admin/pages/marketing/marketing.html` (Pengurusan Promosi & Kempen Kereta)
+     - `admin/pages/chatbot/chatbot.html` (Konfigurasi Pembantu Khidmat Pelanggan)
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Visual DevTools**: Disahkan melalui tangkapan skrin pelayar sebenar merentas kesemua halaman yang terlibat. Susun atur kini sangat padat, mewah, seimbang, dan mengikut standard Apple Human Interface Guidelines tanpa sebarang teks bertindih atau ruang kosong yang janggal.
+  - **Ujian Playwright E2E**: Menjalankan keseluruhan suite ujian automasi terasing `tests/` dengan pencapaian **29/29 ujian lulus 100% (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `5.6.7 Refine and compact bento hero header styling across admin sub-pages`
+  - Tag Versi: `5.6.7`
