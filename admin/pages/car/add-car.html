@@ -75,6 +75,7 @@
               <div>
                 <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
                 <select id="car-brand" class="form-input radius-14" required onchange="updateLivePreview()">
+                  <option value="" disabled selected>Pilih Pengeluar (Jenama)</option>
                   <option value="Proton">Proton</option>
                   <option value="Perodua">Perodua</option>
                   <option value="Toyota">Toyota</option>
@@ -92,7 +93,7 @@
             <div class="grid-2 gap-14">
               <div>
                 <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan</label>
-                <input type="number" id="car-year" class="form-input radius-14 tabular-nums" value="2025" min="2018" max="2027" oninput="updateLivePreview()" />
+                <input type="number" id="car-year" class="form-input radius-14 tabular-nums" placeholder="cth: 2024" min="2018" max="2027" oninput="updateLivePreview()" />
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="car-color">Warna Rasmi Badan</label>
@@ -113,8 +114,9 @@
               <div>
                 <label class="form-label fs-13 fw-600" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
                 <select id="car-type" class="form-input radius-14" required onchange="updateLivePreview()">
+                  <option value="" disabled selected>Pilih Kategori Badan</option>
                   <option value="Sedan">Sedan</option>
-                  <option value="SUV" selected>SUV</option>
+                  <option value="SUV">SUV</option>
                   <option value="MPV">MPV</option>
                   <option value="Hatchback">Hatchback</option>
                 </select>
@@ -122,10 +124,11 @@
               <div>
                 <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
                 <select id="car-seats" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="5" selected>5 Tempat Duduk</option>
+                  <option value="" disabled selected>Pilih Bilangan Kerusi</option>
+                  <option value="4">4 Tempat Duduk</option>
+                  <option value="5">5 Tempat Duduk</option>
                   <option value="7">7 Tempat Duduk</option>
                   <option value="8">8 Tempat Duduk</option>
-                  <option value="4">4 Tempat Duduk</option>
                 </select>
               </div>
             </div>
@@ -134,14 +137,16 @@
               <div>
                 <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
                 <select id="car-transmission" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="Automatic" selected>Automatik (AT/CVT/DCT)</option>
+                  <option value="" disabled selected>Pilih Sistem Transmisi</option>
+                  <option value="Automatic">Automatik (AT/CVT/DCT)</option>
                   <option value="Manual">Manual (MT)</option>
                 </select>
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
                 <select id="car-fuel" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="Petrol" selected>Petrol (RON95/97)</option>
+                  <option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>
+                  <option value="Petrol">Petrol (RON95/97)</option>
                   <option value="Hybrid">Hybrid (HEV)</option>
                   <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
                   <option value="Diesel">Diesel Euro 5</option>
@@ -166,23 +171,24 @@
             <div class="grid-2 gap-14 mb-16">
               <div>
                 <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
-                <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="180" value="180" min="50" step="5" required oninput="updateLivePreview()" />
+                <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="cth: 180" min="50" step="5" required oninput="updateLivePreview()" />
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
-                <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" value="200" min="0" step="50" required oninput="updateLivePreview()" />
+                <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" placeholder="cth: 200" min="0" step="50" required oninput="updateLivePreview()" />
               </div>
             </div>
 
             <div class="grid-2 gap-14">
               <div>
                 <label class="form-label fs-13 fw-600" for="car-min-days">Tempoh Minimum (Hari)</label>
-                <input type="number" id="car-min-days" class="form-input radius-14 tabular-nums" value="1" min="1" max="30" />
+                <input type="number" id="car-min-days" class="form-input radius-14 tabular-nums" placeholder="cth: 1" min="1" max="30" />
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="car-location">Cawangan Penyerahan Utama</label>
                 <select id="car-location" class="form-input radius-14" onchange="updateLivePreview()">
-                  <option value="Cawangan Utama Melaka Sentral" selected>Cawangan Utama Melaka Sentral</option>
+                  <option value="" disabled selected>Pilih Cawangan Penyerahan</option>
+                  <option value="Cawangan Utama Melaka Sentral">Cawangan Utama Melaka Sentral</option>
                   <option value="Cawangan Lapangan Terbang Melaka (MKZ)">Cawangan Lapangan Terbang Melaka (MKZ)</option>
                   <option value="Kiosk Jonker Point">Kiosk Jonker Point (Pusat Bandar)</option>
                   <option value="Pusat Servis Ayer Keroh">Pusat Servis Ayer Keroh</option>
@@ -202,34 +208,34 @@
             <div class="mb-24">
               <label class="form-label fs-13 fw-600 mb-10 d-block">Peralatan Standard Kereta</label>
               <div class="feature-chips-grid">
-                <label class="filter-chip cursor-pointer active">
-                  <input type="checkbox" id="feat-carplay" class="hidden" checked />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-carplay" class="hidden" />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
                   <span>Apple CarPlay / Android Auto</span>
                 </label>
-                <label class="filter-chip cursor-pointer active">
-                  <input type="checkbox" id="feat-dashcam" class="hidden" checked />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-dashcam" class="hidden" />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
                   <span>4K Dashcam Depan &amp; Belakang</span>
                 </label>
-                <label class="filter-chip cursor-pointer active">
-                  <input type="checkbox" id="feat-keyless" class="hidden" checked />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-keyless" class="hidden" />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
                   <span>Sistem Masuk Pintar Tanpa Kunci</span>
                 </label>
-                <label class="filter-chip cursor-pointer active">
-                  <input type="checkbox" id="feat-reverse-cam" class="hidden" checked />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-reverse-cam" class="hidden" />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
                   <span>Kamera Undur 360 Berdefinisi Tinggi</span>
                 </label>
-                <label class="filter-chip cursor-pointer active">
-                  <input type="checkbox" id="feat-tinted" class="hidden" checked />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-tinted" class="hidden" />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
                   <span>Filem Penapis Haba Berdaftar JPJ</span>
                 </label>
-                <label class="filter-chip cursor-pointer active">
-                  <input type="checkbox" id="feat-sensor" class="hidden" checked />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">check_circle</span>
+                <label class="filter-chip cursor-pointer">
+                  <input type="checkbox" id="feat-sensor" class="hidden" />
+                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
                   <span>Sensor Parkir Depan &amp; Belakang</span>
                 </label>
               </div>
@@ -264,23 +270,27 @@
                 <div class="glass-status-pill">
                   <span class="live-pulse-dot"></span> Tersedia
                 </div>
-                <img id="preview-display-img" src="../../../shared/images/cars/honda-crv-2024.png" alt="Pratonton Kenderaan" class="apple-car-studio-img" onerror="this.src='../../../shared/images/cars/perodua-myvi-2023.png'" />
+                <div id="preview-img-empty" class="preview-img-placeholder flex-center flex-column">
+                  <span class="material-icons-round fs-48 text-muted mb-8">directions_car</span>
+                  <span class="fs-12 text-muted fw-500">Imej kenderaan akan dipaparkan di sini</span>
+                </div>
+                <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kenderaan" />
               </div>
               <div class="apple-car-card-body">
                 <div class="apple-car-meta-header">
-                  <span class="apple-category-pill" id="preview-display-cat">SUV</span>
-                  <span class="apple-plate-pill tabular-nums" id="preview-display-plate">VAB 4821</span>
+                  <span class="apple-category-pill" id="preview-display-cat">Kategori</span>
+                  <span class="apple-plate-pill tabular-nums" id="preview-display-plate">---</span>
                 </div>
-                <h3 class="apple-car-title" id="preview-display-name">Proton X50 1.5 TGDi Flagship</h3>
+                <h3 class="apple-car-title" id="preview-display-name">Nama Model Kenderaan</h3>
                 <div class="apple-micro-specs">
-                  <span class="apple-spec-tag"><span class="material-icons-round">settings</span> <span id="preview-spec-trans">Automatik</span></span>
-                  <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> <span id="preview-spec-fuel">Petrol</span></span>
-                  <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> <span id="preview-spec-seats">5 Kerusi</span></span>
+                  <span class="apple-spec-tag"><span class="material-icons-round">settings</span> <span id="preview-spec-trans">-</span></span>
+                  <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> <span id="preview-spec-fuel">-</span></span>
+                  <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> <span id="preview-spec-seats">-</span></span>
                 </div>
                 <div class="apple-rental-callout">
                   <div class="apple-rental-row">
                     <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Operasi</span>
-                    <span class="apple-rental-value" id="preview-display-loc">Cawangan Utama Melaka Sentral</span>
+                    <span class="apple-rental-value" id="preview-display-loc">Belum dipilih</span>
                   </div>
                   <div class="apple-rental-row">
                     <span class="apple-rental-label"><span class="material-icons-round fs-15">verified</span> Kebersihan</span>
@@ -290,7 +300,7 @@
                 <div class="apple-car-footer">
                   <div>
                     <div class="fs-11 text-muted">Kadar Rasmi Harian</div>
-                    <div class="apple-car-rate tabular-nums" id="preview-display-rate">RM 180 <span class="apple-car-rate-sub">/hari</span></div>
+                    <div class="apple-car-rate tabular-nums" id="preview-display-rate">RM 0 <span class="apple-car-rate-sub">/hari</span></div>
                   </div>
                   <span class="status-badge available"><span class="material-icons-round fs-12">check_circle</span> Tersedia</span>
                 </div>
@@ -354,12 +364,15 @@
           if (content) content.classList.add('hidden');
 
           var liveImg = document.getElementById('preview-display-img');
+          var emptyBox = document.getElementById('preview-img-empty');
           if (liveImg) {
             liveImg.src = selectedPhotoBase64;
+            liveImg.classList.remove('hidden');
             liveImg.style.objectFit = 'cover';
             liveImg.style.width = '100%';
             liveImg.style.height = '100%';
           }
+          if (emptyBox) emptyBox.classList.add('hidden');
         };
         reader.readAsDataURL(input.files[0]);
       }
@@ -367,15 +380,18 @@
     var handlePhotoSelect = previewCarPhoto;
 
     function updateLivePreview() {
-      var nameVal = document.getElementById('car-name').value.trim() || 'Proton X50 1.5 TGDi Flagship';
-      var plateVal = document.getElementById('car-plate').value.trim().toUpperCase() || 'VAB 4821';
-      var typeVal = document.getElementById('car-type').value || 'SUV';
-      var transVal = document.getElementById('car-transmission').value === 'Automatic' ? 'Automatik' : 'Manual';
-      var fuelVal = document.getElementById('car-fuel') ? document.getElementById('car-fuel').value : 'Petrol';
-      var seatsVal = (document.getElementById('car-seats').value || 5) + ' Kerusi';
-      var rateVal = document.getElementById('car-rate').value || '180';
+      var nameVal = document.getElementById('car-name').value.trim() || 'Nama Model Kenderaan';
+      var plateVal = document.getElementById('car-plate').value.trim().toUpperCase() || '---';
+      var typeVal = document.getElementById('car-type').value || 'Kategori';
+      var transEl = document.getElementById('car-transmission');
+      var transVal = transEl && transEl.value ? (transEl.value === 'Automatic' ? 'Automatik' : 'Manual') : '-';
+      var fuelEl = document.getElementById('car-fuel');
+      var fuelVal = fuelEl && fuelEl.value ? fuelEl.value : '-';
+      var seatsEl = document.getElementById('car-seats');
+      var seatsVal = seatsEl && seatsEl.value ? seatsEl.value + ' Kerusi' : '-';
+      var rateVal = document.getElementById('car-rate').value || '0';
       var locSelect = document.getElementById('car-location');
-      var locVal = locSelect ? locSelect.options[locSelect.selectedIndex].text : 'Cawangan Utama Melaka Sentral';
+      var locVal = locSelect && locSelect.value ? locSelect.options[locSelect.selectedIndex].text : 'Belum dipilih';
 
       var elName = document.getElementById('preview-display-name');
       var elPlate = document.getElementById('preview-display-plate');

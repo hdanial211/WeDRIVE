@@ -3593,3 +3593,41 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.8.1 Resolved ARIA role warnings, CSS vendor prefixes, backdrop-filter ordering, and inline styles`
   - Tag Versi: `5.8.1`
+
+---
+
+## 🚀 [MINOR UPDATE] 167. Pembersihan Nilai Pra-Isi (*Auto-Fill*) & Penetapan Keadaan Awal Bersih Pada Borang Tambah Kereta (v5.8.2)
+
+- **Punca Keperluan (Context & User Directives)**:
+  > *"http://localhost:8088/admin/pages/car/add-car.html kenapa page ni auto isi??? sepatutnya kosong biar saya yang isis"*
+  - Pengguna mendapati borang pendaftaran kenderaan baharu (`add-car.html`) mengandungi data dummy yang terisi secara automatik (nilai lalai pada jenama Proton, tahun 2025, SUV, 5 tempat duduk, transmisi automatik, kadar harian RM 180, deposit RM 200, tempoh 1 hari, cawangan Melaka Sentral, serta semua 6 cip kelengkapan bertanda 'checked').
+  - Pengguna mahukan borang bermula dengan keadaan bersih (*blank state*) supaya pentadbir mengisi maklumat kenderaan sebenar dari awal.
+
+- **Tindakan & Penambahbaikan Teknikal**:
+  1. **Pengosongan Input Borang (`add-car.html`)**:
+     - Membuang atribut `value="2025"` pada `#car-year`, menggantikannya dengan `placeholder="cth: 2024"`.
+     - Membuang atribut `value="180"` pada `#car-rate`, menggantikannya dengan `placeholder="cth: 180"`.
+     - Membuang atribut `value="200"` pada `#car-deposit`, menggantikannya dengan `placeholder="cth: 200"`.
+     - Membuang atribut `value="1"` pada `#car-min-days`, menggantikannya dengan `placeholder="cth: 1"`.
+  2. **Penambahan Opsyen Gesaan Lalai (*Disabled Selected Prompt Options*)**:
+     - `#car-brand`: Ditambah `<option value="" disabled selected>Pilih Pengeluar (Jenama)</option>`.
+     - `#car-type`: Ditambah `<option value="" disabled selected>Pilih Kategori Badan</option>`.
+     - `#car-seats`: Ditambah `<option value="" disabled selected>Pilih Bilangan Kerusi</option>`.
+     - `#car-transmission`: Ditambah `<option value="" disabled selected>Pilih Sistem Transmisi</option>`.
+     - `#car-fuel`: Ditambah `<option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>`.
+     - `#car-location`: Ditambah `<option value="" disabled selected>Pilih Cawangan Penyerahan</option>`.
+  3. **Penetapan Semula Cip Kelengkapan Standard**:
+     - Membuang atribut `checked` dan kelas `.active` daripada kesemua 6 cip peralatan (Apple CarPlay, Dashcam 4K, Keyless, Kamera 360, Tinted JPJ, Sensor Parkir).
+     - Menukar ikon awal cip kepada `add_circle_outline` sehingga dipilih oleh pengguna.
+  4. **Keadaan Awal Bersih Pratonton Studio Kad (*Live Preview Card*)**:
+     - Menggantikan imej awal Honda CR-V dengan kotak pemegang tempat kemas `.preview-img-placeholder` (`directions_car` + teks *"Imej kenderaan akan dipaparkan di sini"*).
+     - Menetapkan teks permulaan neutral: Tajuk *"Nama Model Kenderaan"*, Kategori *"Kategori"*, Plat *"---"*, Spesifikasi *"-"*, Lokasi *"Belum dipilih"*, dan Kadar *"RM 0 /hari"*.
+     - Mengemas kini fungsi `updateLivePreview()` dan `previewCarPhoto()` dalam JavaScript bagi mengendalikan peralihan antara keadaan kosong dan data yang ditaip oleh pengguna.
+
+- **Pengesahan & Ujian Automasi**:
+  - **Ujian Visual Chrome DevTools MCP**: Mengesahkan borang dimuatkan dengan 100% medan kosong, sifar cip aktif, dan kad pratonton berada dalam keadaan placeholder yang kemas.
+  - **Ujian Automasi Playwright**: Kesemua 29 ujian lulus penuh (100% Pass Rate).
+
+- **Maklumat Git**:
+  - Commit: `5.8.2 Reset add car form to pristine blank state with clean placeholder prompts`
+  - Tag Versi: `5.8.2`
