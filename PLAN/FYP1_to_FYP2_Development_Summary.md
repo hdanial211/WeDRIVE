@@ -3940,3 +3940,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.7 Overhaul index.html to 5 quality pillars with Apple skeleton shimmer and strict zero-oval geometry`
   - Tag Versi: `5.9.7`
+
+---
+
+## 🧹 [MINOR UPDATE] 176. Pembersihan Menyeluruh Amaran Linter Safari CSS & Penyingkiran Sifar Gaya Inline Pada Kad Rangka Shimmer (IDE Problems Resolution & Zero Inline Style Architecture) (v5.9.8)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  - Pengguna meminta agar kesemua masalah linter IDE (`@[current_problems]`) diselesaikan sebelum beralih ke halaman seterusnya:
+    > *"@[current_problems] fix ni sebelum kita proceed next page"*
+  - **Punca Masalah**:
+    1. Amaran Safari WebKit pada `shared/css/wedrive.css` (baris 1682): `'user-select' is not supported by Safari, Safari on iOS. Add '-webkit-user-select' to support Safari 3+, Safari on iOS 3+`.
+    2. Sebanyak 15 amaran gaya sebaris (*inline styles*) pada `index.html` (baris 182, 184–187, 191, 193–196, 200, 202–205): `CSS inline styles should not be used, move styles to an external CSS file`.
+
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Penyelarasan Awalan Vendor Safari (`shared/css/wedrive.css`)**:
+     - Menambah `-webkit-user-select: none;` tepat sebelum `user-select: none;` pada `.car-card.skeleton-card`.
+  2. **Penciptaan Kelas Komponen Rangka Shimmer Master (`shared/css/wedrive.css`)**:
+     - Membina kelas CSS khusus bagi menggantikan semua gaya inline:
+       - `.skeleton-img-box { width: 100%; height: 100%; }`
+       - `.skeleton-badge-box { width: 70px; height: 14px; margin-bottom: 12px; }`
+       - `.skeleton-title-box { width: 80%; height: 22px; margin-bottom: 14px; }`
+       - `.skeleton-specs-box { width: 100%; height: 38px; margin-bottom: 16px; }`
+       - `.skeleton-btn-box { width: 100%; height: 42px; border-radius: 9999px !important; }`
+  3. **Penghapusan Mutlak Gaya Inline (`index.html`)**:
+     - Menggantikan kesemua 15 atribut `style="..."` pada 3 kad `.car-card.skeleton-card` kepada kelas CSS modular di atas.
+     - Mengekalkan sifar gaya inline (0 inline styles) merentasi struktur kad pemuat.
+
+- **Keputusan Ujian & Pengesahan**:
+  - **IDE Problems**: Kesemua 16 isu linter berjaya dibersihkan 100% (0 errors, 0 warnings).
+  - **Playwright Automated Tests**: Suite ujian E2E lengkap dijalankan bagi memastikan tiada regresi (100% Pass Rate).
+
+- **Maklumat Git**:
+  - Commit: `5.9.8 Resolve Safari vendor prefix and eliminate inline styles on skeleton loader cards`
+  - Tag Versi: `5.9.8`
