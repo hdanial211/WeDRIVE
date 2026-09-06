@@ -3759,3 +3759,45 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.3 Removed 360 slider controls, added standalone 1:1 circular fullscreen button, and enforced strict circular geometry rules`
   - Tag Versi: `5.9.3`
+
+---
+
+## 🚀 [MINOR UPDATE] 172. Pemansuhan Paparan Kebersihan & Penyeragaman Spesifikasi Sebenar Kereta Pelanggan (v5.9.4)
+
+- **Punca Keperluan & Analisis Pelanggan**:
+  1. *Pemansuhan Paparan "Kebersihan: Sedia Bersih" & "Sanitasi"*:
+     - Selaras dengan maklum balas dan perspektif sebenar penyewa kereta, maklumat kebersihan adalah standard kebersihan asas (*basic hygiene factor*) yang tidak wajar dipaparkan sebagai spesifikasi kad kereta.
+     - Membuang teks "Kebersihan: Sedia Bersih" dan "Sanitasi & Kebersihan" daripada semua kad pratonton, bilik pameran kereta, dan halaman butiran kenderaan.
+  2. *Penyediaan Spesifikasi Sebenar Yang Diperlukan Pelanggan*:
+     - Sebagai pelanggan yang ingin menyewa kereta (contohnya SUV, Sedan, MPV, atau Hatchback), maklumat kritikal yang ingin diketahui adalah:
+       - **Kategori & Jenis Badan**: SUV, Sedan, MPV, Hatchback (dilengkapi penunjuk lencana segmen).
+       - **Kapasiti Tempat Duduk**: Bilangan kerusi (4, 5, 7, 8 Tempat Duduk).
+       - **Kapasiti Muatan Beg / Bagasi**: Bilangan beg kargo (`2 Beg Kompak` untuk Hatchback, `2-3 Beg` untuk Sedan, `3-4 Beg Besar` untuk SUV, `4-5 Beg Penuh` untuk MPV).
+       - **Sistem Transmisi & Bahan Api**: Automatik / Manual, Petrol / Hybrid / Elektrik.
+       - **Kapasiti Enjin & Kuasa**: Dinamik mengikut input model kenderaan (cth: `1.5L Turbocharged VVT-i`).
+       - **Polisi Had Jarak Perbatuan**: `Tanpa Had (Unlimited KM)` — memberikan keyakinan perjalanan jauh tanpa caj tersembunyi.
+       - **Pusat Serahan & Pulangan**: Diselaraskan seragam kepada `Pusat Operasi Utama WeDRIVE (HQ)`.
+
+- **Tindakan Teknikal Merentas Modul**:
+  1. **Borang Tambah Kereta (`admin/pages/car/add-car.html`)**:
+     - Menambah medan pilihan muatan bagasi (`#car-luggage`) yang bersinkronisasi secara automatik mengikut kategori kenderaan yang dipilih.
+     - Menghubungkan input enjin (`#car-engine`) dengan fungsi `updateLivePreview()`.
+     - Mengemas kini Kad 6 (Pratonton Kad Kereta) dengan 4 lencana mikro: Transmisi, Bahan Api, Kerusi, dan Beg Bagasi, serta blok perincian: Pusat Serahan & Pulangan, Enjin & Kuasa, dan Jarak Perbatuan Tanpa Had.
+     - Menyimpan data `engine` dan `luggage` ke dalam rekod pendaftaran kereta.
+  2. **Senarai Kereta Tersedia (`admin/pages/car/available-cars.html`)**:
+     - Menghapuskan baris `Kebersihan: Sedia Bersih`.
+     - Menambah tag beg bagasi mengikut jenis badan kenderaan dan menyelaraskan baris `Pusat Serahan & Pulangan (HQ)` serta `Jarak Perbatuan: Tanpa Had (Unlimited KM)`.
+  3. **Halaman Pengurusan Kereta (`admin/js/cars.js`)**:
+     - Menambah tag beg bagasi dinamik dan menyelaraskan alamat ke HQ Melaka.
+  4. **Halaman Perincian Kenderaan (`admin/pages/car/car-detail/car-detail.html`)**:
+     - Menggantikan baris `Sanitasi & Kebersihan` dengan `Had Jarak Perbatuan: Tanpa Had (Unlimited KM)`.
+  5. **Halaman Kereta Sedang Disewa (`admin/pages/car/rented-cars.html`)**:
+     - Menambah lencana muatan beg bagasi pada kad pameran kenderaan.
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Chrome DevTools MCP**: Disahkan secara visual bahawa kad pratonton langsung kenderaan SUV dan bilik pameran kini memaparkan spesifikasi kereta yang lengkap, elegan, dan mesra pelanggan tanpa sebarang teks kebersihan.
+  - **Playwright Automated Tests**: Kesemua **33 ujian automasi** lulus penuh (**100% Pass Rate**).
+
+- **Maklumat Git**:
+  - Commit: `5.9.4 Removed cleanliness labels and enriched car cards with genuine customer-focused vehicle specifications`
+  - Tag Versi: `5.9.4`

@@ -119,6 +119,7 @@ function renderCarCards(car) {
     const img0 = (c.images && c.images.length > 0) ? c.images[0] : null;
     const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
     const rateNum = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : '150';
+    const lugText = (c.type === 'MPV' || (c.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((c.type === 'SUV' || (c.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((c.type === 'Sedan' || (c.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
 
     return `
     <div class="apple-car-showcase-card reveal-on-scroll">
@@ -141,6 +142,7 @@ function renderCarCards(car) {
           <span class="apple-spec-tag"><span class="material-icons-round">settings</span> ${c.transmission || 'Auto'}</span>
           <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ${c.fuel || 'Petrol'}</span>
           <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ${c.seats || 5} Kerusi</span>
+          <span class="apple-spec-tag"><span class="material-icons-round">work</span> ${lugText}</span>
         </div>
 
         <div class="apple-rental-callout">
@@ -149,8 +151,8 @@ function renderCarCards(car) {
             <span class="apple-rental-value fw-600 ${isAvail ? 'text-emerald' : 'text-primary'}">${sc.label}</span>
           </div>
           <div class="apple-rental-row">
-            <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Operasi</span>
-            <span class="apple-rental-value">Cawangan Utama Melaka Sentral</span>
+            <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Serahan &amp; Pulangan</span>
+            <span class="apple-rental-value fw-600 text-emerald">Pusat Operasi Utama WeDRIVE (HQ)</span>
           </div>
         </div>
 

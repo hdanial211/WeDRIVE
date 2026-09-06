@@ -192,6 +192,7 @@
           var img0 = (car.images && car.images.length > 0) ? car.images[0] : '';
           var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
           var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
+          var luggageText = (car.type === 'MPV' || (car.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((car.type === 'SUV' || (car.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((car.type === 'Sedan' || (car.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
 
           return '<div class="apple-car-showcase-card reveal-onload">' +
             '<div class="apple-car-studio-canvas">' +
@@ -210,15 +211,16 @@
                 '<span class="apple-spec-tag"><span class="material-icons-round">settings</span> ' + (car.transmission || 'Auto') + '</span>' +
                 '<span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ' + (car.fuel || 'Petrol') + '</span>' +
                 '<span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ' + (car.seats || 5) + ' Kerusi</span>' +
+                '<span class="apple-spec-tag"><span class="material-icons-round">work</span> ' + luggageText + '</span>' +
               '</div>' +
               '<div class="apple-rental-callout">' +
                 '<div class="apple-rental-row">' +
-                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Operasi</span>' +
-                  '<span class="apple-rental-value">Cawangan Utama Melaka Sentral</span>' +
+                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Serahan &amp; Pulangan</span>' +
+                  '<span class="apple-rental-value fw-600 text-emerald">Pusat Operasi Utama WeDRIVE (HQ)</span>' +
                 '</div>' +
                 '<div class="apple-rental-row">' +
-                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">verified</span> Kebersihan</span>' +
-                  '<span class="apple-rental-value"><span class="status-badge success fs-10 py-2 px-6">Sedia Bersih</span></span>' +
+                  '<span class="apple-rental-label"><span class="material-icons-round fs-15">all_inclusive</span> Jarak Perbatuan</span>' +
+                  '<span class="apple-rental-value text-emerald fw-600">Tanpa Had (Unlimited KM)</span>' +
                 '</div>' +
               '</div>' +
               '<div class="apple-car-footer">' +

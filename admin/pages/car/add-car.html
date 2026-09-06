@@ -154,9 +154,20 @@
               </div>
             </div>
 
-            <div>
-              <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
-              <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 1.5L Turbocharged VVT-i" />
+            <div class="grid-2 gap-14">
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
+                <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 1.5L Turbocharged VVT-i" oninput="updateLivePreview()" />
+              </div>
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-luggage">Kapasiti Muatan Beg / Bagasi</label>
+                <select id="car-luggage" class="form-input radius-14" onchange="updateLivePreview()">
+                  <option value="2 Beg">2 Beg Kargo (Kompak)</option>
+                  <option value="2-3 Beg" selected>2-3 Beg Sederhana (Sedan)</option>
+                  <option value="3-4 Beg">3-4 Beg Besar (SUV/Crossover)</option>
+                  <option value="4-5 Beg">4-5 Beg Penuh (MPV/Van)</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -435,6 +446,7 @@
                   <span class="apple-spec-tag"><span class="material-icons-round">settings</span> <span id="preview-spec-trans">-</span></span>
                   <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> <span id="preview-spec-fuel">-</span></span>
                   <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> <span id="preview-spec-seats">-</span></span>
+                  <span class="apple-spec-tag"><span class="material-icons-round">work</span> <span id="preview-spec-luggage">2-3 Beg</span></span>
                 </div>
                 <div class="apple-rental-callout">
                   <div class="apple-rental-row">
@@ -442,8 +454,12 @@
                     <span class="apple-rental-value text-emerald fw-600" id="preview-display-loc">Pusat Operasi Utama WeDRIVE (HQ)</span>
                   </div>
                   <div class="apple-rental-row">
-                    <span class="apple-rental-label"><span class="material-icons-round fs-15">verified</span> Kebersihan</span>
-                    <span class="apple-rental-value text-emerald fw-600">Sedia Bersih</span>
+                    <span class="apple-rental-label"><span class="material-icons-round fs-15">speed</span> Enjin &amp; Kuasa</span>
+                    <span class="apple-rental-value fw-600 text-title" id="preview-display-engine">-</span>
+                  </div>
+                  <div class="apple-rental-row">
+                    <span class="apple-rental-label"><span class="material-icons-round fs-15">all_inclusive</span> Jarak Perbatuan</span>
+                    <span class="apple-rental-value text-emerald fw-600">Tanpa Had (Unlimited KM)</span>
                   </div>
                 </div>
                 <div class="apple-car-footer">
@@ -838,7 +854,11 @@
       var fuelEl = document.getElementById('car-fuel');
       var fuelVal = fuelEl && fuelEl.value ? fuelEl.value : '-';
       var seatsEl = document.getElementById('car-seats');
-      var seatsVal = seatsEl && seatsEl.value ? seatsEl.value + ' Kerusi' : '-';
+      var seatsVal = seatsEl && seatsEl.value ? seatsEl.value + ' Tempat Duduk' : '-';
+      var engineEl = document.getElementById('car-engine');
+      var engineVal = engineEl && engineEl.value.trim() ? engineEl.value.trim() : (typeVal !== 'Kategori' ? typeVal + ' Kuasa Standard' : '-');
+      var luggageEl = document.getElementById('car-luggage');
+      var luggageVal = luggageEl && luggageEl.value ? luggageEl.value : '2-3 Beg';
       var rateVal = document.getElementById('car-rate').value || '0';
 
       var elName = document.getElementById('preview-display-name');
@@ -847,6 +867,8 @@
       var elTrans = document.getElementById('preview-spec-trans');
       var elFuel = document.getElementById('preview-spec-fuel');
       var elSeats = document.getElementById('preview-spec-seats');
+      var elLuggage = document.getElementById('preview-spec-luggage');
+      var elEngine = document.getElementById('preview-display-engine');
       var elRate = document.getElementById('preview-display-rate');
 
       if (elName) elName.textContent = nameVal;
@@ -855,7 +877,24 @@
       if (elTrans) elTrans.textContent = transVal;
       if (elFuel) elFuel.textContent = fuelVal;
       if (elSeats) elSeats.textContent = seatsVal;
+      if (elLuggage) elLuggage.textContent = luggageVal;
+      if (elEngine) elEngine.textContent = engineVal;
       if (elRate) elRate.innerHTML = 'RM ' + rateVal + ' <span class="apple-car-rate-sub">/hari</span>';
+    }
+
+    // Auto sync suggested luggage capacity when body type changes
+    var typeSelect = document.getElementById('car-type');
+    if (typeSelect) {
+      typeSelect.addEventListener('change', function () {
+        var luggageSelect = document.getElementById('car-luggage');
+        if (luggageSelect) {
+          if (typeSelect.value === 'Hatchback') luggageSelect.value = '2 Beg';
+          else if (typeSelect.value === 'Sedan') luggageSelect.value = '2-3 Beg';
+          else if (typeSelect.value === 'SUV') luggageSelect.value = '3-4 Beg';
+          else if (typeSelect.value === 'MPV') luggageSelect.value = '4-5 Beg';
+        }
+        updateLivePreview();
+      });
     }
 
     // Toggle chip active state on click
@@ -892,6 +931,8 @@
         seats: parseInt(document.getElementById('car-seats').value) || 5,
         transmission: document.getElementById('car-transmission').value,
         fuel: document.getElementById('car-fuel').value,
+        engine: (document.getElementById('car-engine').value || '').trim() || '1.5L Standard',
+        luggage: document.getElementById('car-luggage') ? document.getElementById('car-luggage').value : '2-3 Beg',
         rate: 'RM ' + (document.getElementById('car-rate').value || 150) + '/hari',
         deposit: 'RM ' + (document.getElementById('car-deposit').value || 200),
         status: 'Available',
