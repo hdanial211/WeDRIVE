@@ -3978,8 +3978,8 @@ body.night-mode .segmented-control .segmented-glider,
   padding: 8px 18px;
   border-radius: var(--radius-pill);
   background: rgba(18, 18, 20, 0.78);
-  backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #FFFFFF;
   font-size: 13px;
@@ -17220,6 +17220,14 @@ body.day-mode .cal-agenda-item:hover {
   color: var(--text-secondary);
   max-width: 260px;
   margin: 0 auto;
+}
+
+#cal-today-btn {
+  flex: 1 1 140px;
+}
+
+#cal-new-booking-btn {
+  flex: 1 1 160px;
 }
 
 /* Calendar Toolbar & Filter Chips */

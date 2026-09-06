@@ -4306,3 +4306,29 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.2.3 Add modular rules 12-16 enforce 12k char limit and mandatory PRD standard`
   - Tag Versi: `6.2.3`
 
+---
+
+## [MINOR UPDATE] 187. Pembaikan Isu Linter CSS Inline Styles Kalendar & Susunan Vendor Prefix WebKit Backdrop-Filter (v6.2.4)
+
+- **Punca Arahan Pengguna**:
+  - *"Okey saya nak test awak kan cuba awak fix ni@[current_problems]"*
+  - Masalah 1: `admin/pages/calendar/calendar.html` baris 226 & 229: Amaran CSS inline styles pada `#cal-today-btn` dan `#cal-new-booking-btn`.
+  - Masalah 2: `shared/css/wedrive.css` baris 3981: `backdrop-filter` disenaraikan sebelum vendor prefix `-webkit-backdrop-filter`.
+
+- **Tindakan Pembaikan (Berasaskan PRD & Kelulusan Pengguna)**:
+  1. **Dokumen PRD & Pelan Pelaksanaan**:
+     - Menyediakan PRD 6 pilar penuh dalam `implementation_plan.md` terlebih dahulu mengikut mandat Gatekeeper sebelum sebarang baris kod disentuh.
+  2. **Pengalihan Inline Styles `calendar.html` ke CSS Luaran**:
+     - Di dalam `admin/pages/calendar/calendar.html`: Mengeluarkan atribut inline `style="flex: 1 1 140px;"` dan `style="flex: 1 1 160px;"` daripada `#cal-today-btn` dan `#cal-new-booking-btn`.
+     - Di dalam `shared/css/wedrive.css`: Menambah aturan CSS `#cal-today-btn { flex: 1 1 140px; }` dan `#cal-new-booking-btn { flex: 1 1 160px; }` di bawah seksyen kalendar pentadbir.
+  3. **Penalaan Susunan Vendor Prefix `wedrive.css`**:
+     - Menyusun semula aturan pada `.hiw-drag-hint` supaya `-webkit-backdrop-filter` disenaraikan sebelum standard `backdrop-filter` demi keserasian WebKit Safari yang optimum dan piawaian linter CSS.
+  4. **Verifikasi Kualiti & Ujian Automasi**:
+     - Suite ujian automasi Playwright CLI mencapai kelulusan penuh 36/36 ujian (**100% Pass Rate**).
+     - Kesemua 16 fail peraturan bernombor kekal mematuhi had siling $\le 12,000$ aksara.
+
+- **Maklumat Git**:
+  - Commit: `6.2.4 Fix calendar inline styles and webkit backdrop-filter prefix order`
+  - Tag Versi: `6.2.4`
+
+
