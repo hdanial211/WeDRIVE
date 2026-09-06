@@ -56,15 +56,15 @@
 
         <div class="guest-metrics">
           <div>
-            <strong id="guest-total-cars">8</strong>
+            <strong id="guest-total-cars" class="tabular-nums"><span class="guest-metric-skeleton"></span></strong>
             <span data-key="guest_metric_cars">Car choices</span>
           </div>
           <a href="guest/pages/pricing/pricing.html" class="guest-metric-card-link" title="Lihat Pakej Harga">
-            <strong id="guest-start-price">RM 95</strong>
+            <strong id="guest-start-price" class="tabular-nums"><span class="guest-metric-skeleton"></span></strong>
             <span data-key="guest_metric_from">Starting daily rate</span>
           </a>
           <div>
-            <strong id="guest-avg-rating">4.7</strong>
+            <strong id="guest-avg-rating" class="tabular-nums"><span class="guest-metric-skeleton"></span></strong>
             <span data-key="guest_metric_rating">Average rating</span>
           </div>
         </div>
@@ -177,7 +177,34 @@
       <span class="results-count" id="results-count" data-key="cust_showing">Showing cars available</span>
     </div>
     <div class="cars-grid guest-cars-grid" id="cars-grid">
-      <!-- Car cards injected by JS — Book btn redirects to login for guests -->
+      <!-- Apple HIG Skeleton Shimmer Cards (Seamlessly replaced once WeDriveAPI.getCars loads) -->
+      <div class="car-card skeleton-card">
+        <div class="car-img"><div class="skeleton-shimmer-box" style="width:100%;height:100%;"></div></div>
+        <div class="car-body">
+          <div class="skeleton-shimmer-box" style="width:70px;height:14px;margin-bottom:12px;"></div>
+          <div class="skeleton-shimmer-box" style="width:80%;height:22px;margin-bottom:14px;"></div>
+          <div class="skeleton-shimmer-box" style="width:100%;height:38px;margin-bottom:16px;"></div>
+          <div class="skeleton-shimmer-box" style="width:100%;height:42px;border-radius:9999px;"></div>
+        </div>
+      </div>
+      <div class="car-card skeleton-card">
+        <div class="car-img"><div class="skeleton-shimmer-box" style="width:100%;height:100%;"></div></div>
+        <div class="car-body">
+          <div class="skeleton-shimmer-box" style="width:70px;height:14px;margin-bottom:12px;"></div>
+          <div class="skeleton-shimmer-box" style="width:80%;height:22px;margin-bottom:14px;"></div>
+          <div class="skeleton-shimmer-box" style="width:100%;height:38px;margin-bottom:16px;"></div>
+          <div class="skeleton-shimmer-box" style="width:100%;height:42px;border-radius:9999px;"></div>
+        </div>
+      </div>
+      <div class="car-card skeleton-card">
+        <div class="car-img"><div class="skeleton-shimmer-box" style="width:100%;height:100%;"></div></div>
+        <div class="car-body">
+          <div class="skeleton-shimmer-box" style="width:70px;height:14px;margin-bottom:12px;"></div>
+          <div class="skeleton-shimmer-box" style="width:80%;height:22px;margin-bottom:14px;"></div>
+          <div class="skeleton-shimmer-box" style="width:100%;height:38px;margin-bottom:16px;"></div>
+          <div class="skeleton-shimmer-box" style="width:100%;height:42px;border-radius:9999px;"></div>
+        </div>
+      </div>
     </div>
   </main>
 

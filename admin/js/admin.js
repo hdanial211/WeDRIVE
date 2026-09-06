@@ -32,7 +32,7 @@ function updateStatsUI() {
   const vehiclesChangeEl = document.getElementById('stat-vehicles-change');
   if (vehiclesChangeEl) {
     const available = adminStats.available_vehicles !== undefined ? adminStats.available_vehicles : adminStats.total_vehicles;
-    const text = isMalay ? `${available} tersedia` : `${available} available`;
+    const text = isMalay ? `${available} unit sedia` : `${available} ready`;
     vehiclesChangeEl.innerHTML = `<span class="material-icons-round fs-14">check_circle</span> ${text}`;
   }
 
@@ -40,7 +40,7 @@ function updateStatsUI() {
   const rentalsChangeEl = document.getElementById('stat-rentals-change');
   if (rentalsChangeEl) {
     const active = adminStats.active_rentals || 0;
-    const text = isMalay ? `${active} aktif hari ini` : `${active} active today`;
+    const text = isMalay ? `${active} sedang disewa` : `${active} active on road`;
     rentalsChangeEl.innerHTML = `<span class="material-icons-round fs-14">arrow_upward</span> ${text}`;
   }
 
@@ -56,7 +56,7 @@ function updateStatsUI() {
   const customersChangeEl = document.getElementById('stat-customers-change');
   if (customersChangeEl) {
     const newCustMonth = adminStats.new_customers_this_month !== undefined ? adminStats.new_customers_this_month : adminStats.new_customers;
-    const text = isMalay ? `${newCustMonth} berdaftar bulan ini` : `${newCustMonth} registered this month`;
+    const text = isMalay ? `+${newCustMonth} baru bulan ini` : `+${newCustMonth} this month`;
     customersChangeEl.innerHTML = `<span class="material-icons-round fs-14">arrow_upward</span> ${text}`;
   }
 }
@@ -184,7 +184,8 @@ function renderCarTable() {
 
   tbody.innerHTML = filtered.map(v => {
     const st = getBilingualCarStatus(v.status, isMalay);
-    const trans = v.transmission === 'Automatic' ? (isMalay ? 'Automatik' : 'Automatic') : (isMalay ? 'Manual' : 'Manual');
+    const isAuto = !v.transmission || /auto/i.test(v.transmission);
+    const trans = isAuto ? (isMalay ? 'Automatik' : 'Automatic') : (isMalay ? 'Manual' : 'Manual');
     const seatsText = `${v.seats || 5} ${isMalay ? 'Tempat Duduk' : 'Seater'}`;
     const btnText = isMalay ? 'Urus' : 'Manage';
     return `

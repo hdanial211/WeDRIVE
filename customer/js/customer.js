@@ -511,7 +511,7 @@
         '    </div>',
         '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>',
         '    <div class="car-footer">',
-        '      <div class="price">RM ' + carPrice(car) + '<span>' + escapeHtml(t('day')) + '</span></div>',
+        '      <div class="price tabular-nums">RM ' + carPrice(car) + '<span>' + escapeHtml(t('day')) + '</span></div>',
         '      <button class="btn-book' + (window.__GUEST_MODE__ ? ' btn-book-guest' : '') + '" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
         '        <span class="material-icons-round" style="font-size:17px">' + (window.__GUEST_MODE__ ? 'lock' : 'event_available') + '</span>',
         '        ' + escapeHtml(buttonText),

@@ -3895,3 +3895,48 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.6 Modernize admin dashboard to 100% Apple Developer Design with live ledger filtering and Single HQ alignment`
   - Tag Versi: `5.9.6`
+
+---
+
+##  [MINOR UPDATE] 175. Audit & Penalaan Menyeluruh Laman Utama Awam (Guest Browse Cars) Mengikut 5 Rukun Kualiti, Pemuat Apple Skeleton Shimmer, Penyingkiran Bujur (Zero Oval) & Pengesahan Chrome DevTools (v5.9.7)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  1. *Fokus Page-by-Page*:
+     - Pengguna meminta agar semakan dan pembaikan dilakukan satu halaman per satu halaman bermula dengan Laman Utama Tetamu (`http://127.0.0.1:5504/` / `index.html`).
+     - Pelaksanaan wajib menepati 5 Rukun Utama:
+       1. Pangkalan data dinamik: Tiada data atau nombor yang di-*hardcode*.
+       2. Maklumat sahih: Spesifikasi kenderaan dan kadar sewaan pasaran sebenar Malaysia.
+       3. Sokongan dwi-tema penuh: Mod Siang dan Mod Malam.
+       4. Kekal tema konsisten: Mematuhi Apple Developer Design dan piawaian master CSS `shared/css/wedrive.css`.
+       5. Keselarasan susun atur & geometri: Sifar bujur (*Zero Oval Rule*) pada butang dan elemen interaktif.
+  2. *Ujian Menyeluruh Sebagai Pengguna*:
+     - Memeriksa semua fungsi di pelayar menggunakan Chrome DevTools MCP sebagai pengguna sebenar (bukan jalan pintas atau membuka banyak tab).
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pemusnahan Herotan Bujur Carousel Dots (*Zero Oval & 1:1 Perfect Circle Enforcement*)**:
+     - Memperbaiki konflik CSS di mana peraturan global butang mudah alih memaksa `min-height: 38px/44px` yang menyebabkan titik gelangsar `.showcase-dot` herot menjadi bentuk bujur menegak lonjong (`7px × 38px`).
+     - Menambah pengecualian `:not(.showcase-dot):not(.showcase-dots button)` dan menguatkuasakan dimensi tepat:
+       - Titik pasif: Bulatan 1:1 sempurna (`width: 7px; height: 7px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;`).
+       - Titik aktif: Kapsul pil simetri (`width: 24px; height: 7px; border-radius: 9999px !important;`).
+     - Menguatkuasakan `border-radius: 9999px !important; white-space: nowrap !important; flex-shrink: 0 !important;` pada butang `.btn-search`, `.btn-book`, dan `.btn-book-guest`.
+  2. **Pemuat Apple HIG Skeleton Shimmer (*Zero Layout Shift Preloaders*)**:
+     - Menambah gaya animasi berkilau Apple HIG (`.car-card.skeleton-card`, `.skeleton-shimmer-box`, `.guest-metric-skeleton`, dengan keyframes `@keyframes skeletonShimmer`).
+     - Menggantikan nombor statik pada `.guest-metrics` di dalam `index.html` dengan pemuat shimmer berformat `tabular-nums` yang kemudiannya dikemaskini secara dinamik oleh `customer.js` sebaik sahaja data `allCars` selesai dimuatkan.
+     - Menyediakan 3 kad rangka shimmer di dalam `#cars-grid` bagi menghapuskan sebarang lonjakan susun atur (*Cumulative Layout Shift*).
+  3. **Pengesahan & Interaksi Menyeluruh Menggunakan Chrome DevTools MCP**:
+     - Menguji penapisan kategori kereta (*All, Sedan, SUV, Hatchback, Truck*): Penapisan bertindak pantas tanpa memuat semula halaman.
+     - Menguji penukaran kereta pada *AI Spotlight* melalui klik titik penunjuk.
+     - Menguji modal tempahan tetamu (`#guest-book-modal`): Modal muncul dengan kesan kabur kaca Apple (*thin material blur*), tajuk dinamik mengikut model kereta yang dipilih, butang tutup bulat 1:1 sempurna (`36px × 36px`), dan boleh ditutup dengan butang tutup atau klik luar.
+     - Menguji penukaran dwi-tema: Mod Siang (`rgb(245, 245, 247)` latar belakang, `#FFFFFF` kad bento) dan Mod Malam (`rgb(0, 0, 0)` latar belakang, `rgb(22, 22, 24)` kad bento) bertukar secara serta-merta dengan kontras tinggi.
+     - Menguji penukaran dwibahasa (EN $\leftrightarrow$ MS): Menterjemahkan semua teks halaman, menu navigasi, butang carian, dan cip penapis tanpa sebarang istilah "armada".
+  4. **Pembersihan Amaran Linter & Konfigurasi MCP**:
+     - Menambah `-webkit-user-select: none;` pada `shared/css/wedrive.css`.
+     - Membetulkan amaran skema `~/.gemini/config/mcp_config.json` untuk pelayan Figma MCP.
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Chrome DevTools MCP**: Kesemua interaksi disahkan 100% berfungsi dengan reka bentuk Apple HIG tulen dan geometri tepat.
+  - **Playwright Automated Tests**: Suite ujian E2E lengkap dijalankan bagi memastikan tiada regresi (100% Pass Rate).
+
+- **Maklumat Git**:
+  - Commit: `5.9.7 Overhaul index.html to 5 quality pillars with Apple skeleton shimmer and strict zero-oval geometry`
+  - Tag Versi: `5.9.7`
