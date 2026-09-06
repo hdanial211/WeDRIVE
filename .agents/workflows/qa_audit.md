@@ -18,12 +18,15 @@ wc -m .agents/rules/*.md
 
 ---
 
-## Fasa 2: Semakan Geometri Butang & Antaramuka (Zero Oval & Apple HIG)
-Periksa bahawa:
-- Semua butang ikon mematuhi nisbah bulat tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`).
-- Dilarang sama sekali butang bulat menjadi lonjong/bujur/oval.
-- Semua butang berteks mengembang mendatar menjadi kapsul/pil simetri (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`).
-- Sifar lompang hitam terbuang (*Zero Dead Space*) pada susun atur Bento Grid.
+## Fasa 2: Pengesahan Pengguna 3-Peranti Apple Satu-Tab (MacBook, iPad, iPhone)
+Lakukan semakan interaksi pada **tab pelayar aktif yang sama** menggunakan `chrome-devtools-mcp`:
+1. **MacBook (`1440 × 900`)**: Semak Bento 3-kolum, susun atur squircle, dan sifar ruang mati (*Zero Dead Space*).
+2. **iPad (`820 × 1180`)**: Laraskan paparan melalui `resize_page`, semak responsif 2-kolum dan sasaran sentuhan ($\ge 44\text{px}$).
+3. **iPhone (`393 × 852`)**: Laraskan paparan melalui `resize_page`, semak menu mudah alih / dock terapung dan fon borang $\ge 16\text{px}$.
+4. **Semakan Geometri Tegas (Zero Oval Rule)**:
+   - Butang ikon bulat WAJIB 1:1 tepat (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`).
+   - Butang berteks WAJIB kapsul pil simetri (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`).
+   - DILARANG SAMA SEKALI butang bulat menjadi lonjong/bujur/oval pada mana-mana peranti.
 
 ---
 

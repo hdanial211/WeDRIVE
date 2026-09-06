@@ -29,3 +29,29 @@ Sistem WeDRIVE diwajibkan menyokong dan dioptimumkan sepenuhnya merentas semua s
 5. **Peralihan Fizik Apple:** Formula `cubic-bezier(0.16, 1, 0.3, 1)`.
 6. **Kebolehbacaan & Kebolehcapaian:** Kontras tinggi pada Mod Siang (*Day*) dan Mod Malam (*Dark Obsidian*), tiada teks bertindih.
 7. **Prinsip Bulat Sempurna 1:1 (Anti-Oval):** Sebarang elemen bulat atau butang ikon WAJIB bulatan tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`). DILARANG SAMA SEKALI menjadi bujur/oval.
+
+---
+
+## 3. Protokol Pengesahan Pengguna 3-Peranti Apple Satu-Tab (Single-Tab User Testing)
+
+Setiap kali selesai mengubah kod, AI **WAJIB** menjalankan pengesahan visual dan interaksi daripada perspektif pengguna sebenar (*Test As User*) merentas 3 peranti Apple:
+
+### A. Peraturan Mutlak Satu Tab Sedia Ada (Single Tab Strict Rule)
+- DILARANG SAMA SEKALI membuka tab-tab baharu bagi setiap peranti.
+- Pengujian WAJIB dijalankan pada **tab pelayar aktif yang sedia ada** menggunakan fungsi pelarasan saiz paparan (`resize_page`) daripada `chrome-devtools-mcp`.
+
+### B. Urutan Tiga Spektrum Peranti:
+1. **MacBook (Desktop Retina `1440 × 900`)**:
+   - Periksa paparan Bento 3-kolum penuh dan sifar ruang mati (*Zero Dead Space*).
+   - Sahkan bar navigasi atas mengecil secara dinamik (*Apple Shrink Navbar*) apabila diskrol.
+   - Sahkan sifar limpahan mendatar (*zero horizontal scroll*).
+2. **iPad (Tablet `820 × 1180`)**:
+   - Laraskan tab aktif ke saiz tablet menerusi `resize_page(width=820, height=1180)`.
+   - Sahkan susun atur kad Bento bertukar kemas ke 2-kolum responsif.
+   - Sahkan sasaran sentuhan butang dan elemen interaktif mencukupi ($\ge 44\text{px}$).
+3. **iPhone (Mobile Retina XDR `393 × 852`)**:
+   - Laraskan tab aktif ke saiz telefon menerusi `resize_page(width=393, height=852)`.
+   - Sahkan menu bar sisi bertukar ke menu hamburger atau *dock* terapung bawah.
+   - Sahkan pematuhan mutlak **Prinsip Sifar Bujur (Zero Oval Rule)** pada semua butang bulat (1:1 tepat) dan butang teks mengembang mendatar menjadi kapsul pil (`9999px`).
+   - Sahkan saiz fon input borang $\ge 16\text{px}$ bagi menghalang lonjakan *auto-zoom* iOS Safari.
+

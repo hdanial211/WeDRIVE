@@ -4520,6 +4520,48 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.4.0 Establish Rule 19 prompt engineering standards, prompt-polisher skill, and perfect_prompt workflow`
   - Tag Versi: `6.4.0`
 
+---
+
+### [PATCH UPDATE] 193. Penguatkuasaan Protokol Ujian Pengguna 3-Peranti Apple Satu-Tab (MacBook, iPad, iPhone) (v6.4.1)
+- **Tarikh**: 6 September 2026
+- **Versi**: `6.4.1` (Peningkatan Versi Patch: Penalaan peraturan dan alur kerja pengujian visual peranti Apple pada satu tab)
+- **Status**: SELESAI
+- **Fail Terlibat**:
+  - `.agents/rules/05_apple_device_support.md` (Penambahan Seksyen 3: Single-Tab 3-Device Protocol)
+  - `.agents/rules/01_core_rules.md` (Penalaan Gatekeeper item 3)
+  - `.agents/workflows/qa_audit.md` (Penalaan Fasa 2 QA Audit)
+  - `/Users/hakim/.gemini/config/rules/apple_device_testing.md` (Peraturan global IDE)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md` (Perekodan log 193)
+
+- **Objektif & Latar Belakang**:
+  - Menguatkuasakan pengesahan perspektif pengguna sebenar (*Test As User*) merentas spektrum 3 peranti Apple utama (MacBook, iPad, iPhone) selepas setiap kitaran pengekodan.
+  - Mematuhi secara mutlak peraturan pengguna: *Single Tab Strict Rule* (Dilarang sama sekali membuka banyak tab pelayar semasa ujian; gunakan `resize_page` pada tab sedia ada).
+  - Menjamin pematuhan 100% prinsip geometri sifar bujur (*Zero Oval Rule*), susun atur kad Bento squircle tanpa ruang mati (*Zero Dead Space*), dan pencegahan lonjakan *auto-zoom* iOS.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pengemaskinian [05_apple_device_support.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/05_apple_device_support.md)**:
+     - Menambah Seksyen 3 yang memperincikan 3 fasa ujian saiz paparan:
+       - *MacBook* (`1440 × 900`): Bento 3-kolum penuh, *Apple Shrink Navbar*, sifar limpahan mendatar.
+       - *iPad* (`820 × 1180`): Bento 2-kolum responsif, zon sentuhan butang $\ge 44\text{px}$.
+       - *iPhone* (`393 × 852`): Menu mudah alih/dock terapung, sifar bentuk bujur (1:1 tepat & 9999px pil), fon borang $\ge 16\text{px}$.
+  2. **Penyelarasan Gatekeeper [01_core_rules.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/01_core_rules.md)**:
+     - Mengukuhkan Syarat Mutlak 3 (Check Page As User First & Post-Test) merentas 3 peranti Apple pada satu tab.
+  3. **Penalaan Alur Kerja [qa_audit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/qa_audit.md)**:
+     - Memperluas Fasa 2 QA Audit untuk memasukkan semakan pelarasan saiz paparan pada tab aktif sedia ada.
+  4. **Pewujudan Peraturan Global Antigravity IDE (`~/.gemini/config/rules/apple_device_testing.md`)**:
+     - Mengukuhkan protokol ujian 3-peranti satu-tab merentas semua sesi dan perbualan masa hadapan.
+  5. **Audit Had Siling Aksara 12,000**:
+     - Disahkan kesemua 19 fail peraturan mematuhi had siling $\le 12,000$ aksara.
+
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **36/36 Ujian Lulus (100% Pass Rate)**.
+  - Graf pengetahuan Graphify dikemaskini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.4.1 Enforce Apple 3-device single-tab user testing protocol across rules and QA workflow`
+  - Tag Versi: `6.4.1`
+
+
 
 
 
