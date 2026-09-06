@@ -15,9 +15,9 @@ AI CAR RENTAL SYSTEM/
 |
 +-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk
 |   +-- DESIGN.md               # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–10)
-|   |   +-- 01_core_rules.md    # Peraturan Teras Projek, Senarai Hitam BM, Git, PRD
-|   |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3 (Asas & Corak)
+|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–11)
+|   |   +-- 01_core_rules.md    # Gatekeeper Protocol, Peraturan Teras Projek, Git, PRD
+|   |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3 (Asas, Bento & Corak)
 |   |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6 (Komponen & Input)
 |   |   +-- 04_navigation_and_ui.md        # Navigasi, Responsif & UI/UX
 |   |   +-- 05_apple_device_support.md     # Sokongan Ekosistem Peranti Apple
@@ -26,6 +26,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- 08_playwright_testing.md       # Ujian Automasi E2E Playwright
 |   |   +-- 09_security_and_audit.md       # Keselamatan Siber & Audit OWASP
 |   |   +-- 10_graphify.md                 # Token Optimization & Graf Pengetahuan
+|   |   +-- 11_language_standards.md       # Standard Bahasa Melayu Moden 2026 & Senarai Hitam
 |   +-- skills/                 # Alatan kemahiran automasi
 |   +-- workflows/              # Aliran kerja persistent
 |

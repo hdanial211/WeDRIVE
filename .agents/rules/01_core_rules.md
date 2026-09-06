@@ -4,6 +4,24 @@ trigger: always_on
 
 # WeDRIVE Core Project Rules
 
+## 0. Mandatory Pre-Coding & Gatekeeper Protocol (Syarat Mutlak Setiap Sesi & Pengekodan)
+
+Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematuhi protokol gatekeeper berikut secara berturutan sebelum menulis atau mengubah sebarang fail kod:
+
+1. **Wajib Baca Peraturan Ejen Terlebih Dahulu**: Sentiasa semak dan patuhi peraturan dalam `.agents/rules/` sebelum sebarang pengubahsuaian.
+2. **Wajib Temu Duga /grill-me Dahulu**: Sekiranya terdapat arahan baharu, ketidakpastian skop, atau pilihan seni bina, AI WAJIB menjalankan sesi temu duga menggunakan alatan `ask_question` untuk menyelaraskan kehendak bersama pengguna sebelum sebarang kod disentuh.
+3. **Wajib Semak Halaman Sebagai Pengguna Dahulu (Check Page As User First)**: Sebelum mengubah kod sesuatu halaman, AI WAJIB memeriksa rupa bentuk visual dan fungsi semasa pada tab pelayar aktif (menggunakan `chrome-devtools` snapshot/DOM) daripada perspektif pengguna sebenar tanpa membuka banyak tab.
+4. **Wajib Manfaatkan Ekosistem Alatan Pintar & MCP WeDRIVE**:
+   - **Playwright CLI**: Menguji setiap butang, borang, dan aliran aplikasi secara automatik di pelayar tanpa membazir masa berjam-jam melakukan ujian manual.
+   - **Supabase MCP**: Membina dan mengurus pangkalan data PostgreSQL, skema jadual, keselamatan RLS, dan pengesahan pengguna secara lancar tanpa beban backend manual.
+   - **Strix Security Audit**: Menjalankan simulasi ujian penembusan etika persis penggodam sebenar bagi memastikan tiada kebocoran data peribadi atau kelonggaran keselamatan.
+   - **Skill UI for Front-End**: Melakukan kejuruteraan terbalik (*reverse engineering*) daripada laman web rujukan kepada spesifikasi reka bentuk visual Apple HIG berkualiti tinggi.
+   - **Context7 MCP**: Membekalkan dokumentasi langsung dan versi pustaka paling terkini bagi menghapuskan halusinasi kod atau sintaks lapuk.
+   - **Stitch MCP, Composio, Graphify & Chrome DevTools**: Melengkapi penjanaan antaramuka berkualiti tinggi, automasi aliran kerja, pencarian kod tanpa pembaziran token, serta semakan visual halaman pengguna.
+5. **Wajib Patuhi Standard Bahasa Moden 2026**: Sentiasa rujuk [`.agents/rules/11_language_standards.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md) untuk semua teks, lencana, label butang, mesej ralat, dan perbualan AI.
+
+---
+
 ## 1. Theme & Design Consistency (Apple HIG Standard)
 
 - Semua reka bentuk UI, komponen, peralihan, kad, butang, modal, tipografi, dan susun atur WAJIB mematuhi piawaian rasmi **Apple Human Interface Guidelines (HIG)**:
@@ -13,33 +31,10 @@ trigger: always_on
   - **Tipografi & Fizik Apple:** SF Pro Display/Text, nombor `tabular-nums`, transisi `cubic-bezier(0.16, 1, 0.3, 1)`, sentuhan `scale(0.97)` pada `:active`, kaca Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
   - **Dwi-Tema:** Mod Siang (`#F5F5F7` / `#FFFFFF`) dan Mod Obsidian Malam (`#000000` True Black / `#161618` Bento).
 
-
-### 1D. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026 (Senarai Hitam Istilah Kuno/Kaku AI & Bahasa Asing)
-- **Standard Bahasa Melayu Moden Kontemporari (Era 2026)**:
-  - Sistem WeDRIVE WAJIB menggunakan 100% Bahasa Melayu moden Malaysia terkini seperti yang diguna pakai oleh aplikasi teknologi terkemuka di Malaysia (**Grab, Setel, TnG eWallet, Trevo, Wahdah, Carsome**).
-  - Tona bahasa mestilah **santai, segar, ringkas, mesra pengguna, dan terus kepada maksud sebenar** operasi sewaan kenderaan di Malaysia.
-  - **DILARANG SAMA SEKALI** bahasa Melayu kuno/buku teks klasik, istilah terjemahan harfiah Indonesia, atau bahasa terjemahan langsung robotik AI (*direct English-to-Malay literal translation*).
-
-- **SENARAI HITAM ISTILAH TERLARANG (STRICT BLACKLIST - DILARANG SAMA SEKALI GUNA DALAM KOD, UI & PERBUALAN AI)**:
-
-| ❌ Kata Terlarang (Blacklist) | Punca Larangan & Kesalahan Maksud | ✅ Istilah Rasmi Wajib Guna (BM Moden / EN) |
-| :--- | :--- | :--- |
-| **Armada** | Maksud sebenar ialah angkatan kapal perang laut (Sepanyol/Portugis/Kamus Dewan) atau pinjaman Indonesia. Rakyat Malaysia tidak menyewa "armada". | **Kereta** / **Pilihan Kereta** / **Katalog Kereta** |
-| **Fleet** | Istilah korporat Inggeris yang kaku dan asing bagi pelanggan harian. | **Kereta** (BM) / **Cars** (EN) |
-| **Wahana** / **Kenderaan Penggerak** | Istilah klasik/puitis yang tidak digunakan dalam aplikasi harian. | **Kereta** / **Model Kereta** |
-| **Kabin** / **Bilik Kemudi** / **Kokpit** | Istilah kapal terbang/kapal laut. Kereta mempunyai ruang dalaman biasa. | **Dalaman Kereta** / **Ruang Dalaman** (BM) / **Interior** (EN) |
-| **Prapapar** / **Peringkat Interaktif** | Terjemahan langsung "preview" dan "stage" yang janggal. | **Pratonton 360°** / **Lihat Kereta 360°** |
-| **Bilik Pameran** (dalam konteks list kereta) | Terjemahan langsung "showroom". | **Katalog Kereta** / **Pilihan Kereta** |
-| **Pelayaran Mobiliti** / **Mobiliti Pintar** | Frasa khayalan AI generik (*cheesy marketing*). | **Sewa Kereta** / **Perjalanan Anda** |
-| **Perisai Keselamatan** | Frasa hiperbola AI. | **Perlindungan Insurans** / **Insurans Penuh** |
-| **Gugusan Kereta** | Terjemahan kaku "vehicle cluster". | **Pilihan Kereta** / **Senarai Kereta** |
-
-- **Panduan Penggunaan Seragam Merentas Seluruh Sistem**:
-  - **Bar Sisi & Menu Admin**: `Pengurusan Kereta` $\rightarrow$ `Semua Kereta`, `Kereta Tersedia`, `Kereta Sedang Disewa`, `Studio 360° & Info Kereta`, `Tambah Kereta Baharu`.
-  - **Tindakan & Navigasi**: `Kembali ke Senarai Kereta` (BUKAN istilah lain).
-  - **Katalog & Pelanggan**: `Pilih Kereta`, `Cari Kereta`, `Sewa Sekarang`, `Tempah Sekarang`, `Lihat Kereta`.
-  - **Lencana Status**: `Tersedia`, `Sedang Disewa`, `Selesai`, `Dibatalkan` (dilarang campur aduk teks Inggeris semasa mod BM aktif).
-  - **Peraturan Komunikasi AI**: Ejen AI **DILARANG SAMA SEKALI** menyebut, mencadangkan, atau menulis perkataan dalam Senarai Hitam di atas semasa membalas mesej pengguna, membuat ringkasan, menjana fail, atau menulis kod.
+### 1B. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026
+- Seluruh antaramuka WeDRIVE tertakluk secara mutlak kepada [`.agents/rules/11_language_standards.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md).
+- **Standard BM Moden (Era 2026):** 100% BM moden santai, segar, ringkas (seperti Grab, Setel, TnG eWallet, Trevo, Wahdah, Carsome).
+- **Larangan Senarai Hitam (Zero Tolerance):** DILARANG SAMA SEKALI menggunakan kata terlarang (*Armada, Fleet, Wahana, Kabin, Kokpit, Prapapar, Perisai Keselamatan, Gugusan Kereta*) dalam kod, teks UI, mahupun perbualan AI.
 
 ---
 
@@ -110,28 +105,14 @@ trigger: always_on
 
 ---
 
-## 7. Rujukan Peraturan Modul Berkaitan
+## 7. Indeks & Rujukan Peraturan Modul Berkaitan
 
+- **Standard Bahasa Melayu Moden 2026 & Senarai Hitam:** [`.agents/rules/11_language_standards.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md)
+- **Reka Bentuk Apple HIG & Bento Grid:** [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md) & [`.agents/rules/03_apple_hig_components.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/03_apple_hig_components.md)
 - **Navigation, Responsif & UI/UX:** [`.agents/rules/04_navigation_and_ui.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)
-  - **Seni Bina Navigasi Admin:** Modul Admin WAJIB menggunakan **Topbar sebagai Main Navigation** (6 modul teras: Dashboard, Cars, Bookings, Customers, Reports, AI Intelligence) dan **Sidebar sebagai Sub-Main Navigation** (alatan kontekstual fizikal `.html` khusus).
 - **Kod, CSS & Backend Architecture:** [`.agents/rules/06_code_and_backend.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/06_code_and_backend.md)
 - **Apple Device Support:** [`.agents/rules/05_apple_device_support.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/05_apple_device_support.md)
+- **Stitch MCP & Penjanaan UI:** [`.agents/rules/07_stitch_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/07_stitch_design_system.md)
+- **Automated Testing (Playwright):** [`.agents/rules/08_playwright_testing.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/08_playwright_testing.md)
 - **Keselamatan Siber & Audit Kerentanan (Strix):** [`.agents/rules/09_security_and_audit.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/09_security_and_audit.md)
-
----
-
-## 8. Larangan Reka Bentuk 'Terlalu AI' & Standard Penjenamaan Korporat Sebenar
-
-- **Sistem Mesti Kelihatan Seperti Perisian Korporat Rasmi**: Portal Admin WeDRIVE WAJIB menyerupai sistem profesional bertaraf enterprise (Stripe Dashboard, Linear, Apple Developer), BUKAN templat AI generik.
-- **Tiada Elemen 'Cheesy AI'**:
-  - Dilarang mereka cipta istilah AI mengarut (*Quantum Neural Fleet*, *Supercharged Velocity*).
-  - Dilarang membuat graf atau nombor statistik statik palsu tanpa kaitan operasi.
-  - Setiap butang dan jadual WAJIB mempamerkan integriti perniagaan kereta sewa sebenar.
-
----
-
-## 9. Stitch MCP & Penjanaan UI Berkualiti Tinggi
-
-- Semua piawaian Stitch MCP, konfigurasi projek, model `GEMINI_3_1_PRO`, dan alur kerja penjanaan terkandung sepenuhnya dalam [`.agents/rules/07_stitch_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/07_stitch_design_system.md).
-- **Prinsip Teras:** *Lambat asal kualiti terbaik; pantang cepat tetapi kualiti sifar.*
-- **Alur Kerja Mandatori:** [`.agents/workflows/stitch_generation.md`](file:///Users/hakim/Library/Mobile%20Documents/com%7Eapple%7ECloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/stitch_generation.md).
+- **Graphify & Token Optimization:** [`.agents/rules/10_graphify.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/10_graphify.md)

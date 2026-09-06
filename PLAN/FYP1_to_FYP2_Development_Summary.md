@@ -4182,3 +4182,42 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.1.1 Enforce strict 12000 character limit per rule file in .agents/rules/`
   - Tag Versi: `6.1.1`
+
+---
+
+## [MAJOR UPDATE] 183. Pewujudan Fail Peraturan Dedikasi 11_language_standards.md & Protokol Gatekeeper Pra-Pengekodan (v6.2.0)
+
+- **Punca Arahan Pengguna**:
+  - *"setiap kali awak buat coding gunakan mcp /context7, stitch, composio, graphify ,/chrome-devtools n pastikan/grill-me saya dulu...syarat setiap kali prompt...n pastikan setiap kali buat coding baca arahan agent n setiap kali coding check dulu page tu as user baru ubah coding...masukkan dalam agent supaya x lupa...n saya nak rules untuk bahasa sahaja focus"*
+  - *"masukkan sekali mcp supabase"*
+  - *"Playwright CLI, Supabase plugin, Strix, Skill UI for Front-End, Context7... translate ke bahasa melayu"*
+  - *"pastikan letak dalam agent supaya benda ni berulang kali"*
+
+- **Tindakan Seni Bina Peraturan (Agent Rules Architecture)**:
+  1. **Fail Peraturan Ke-11 Dedikasi (`11_language_standards.md`)**:
+     - Memfokuskan 100% kepada Standard Bahasa Melayu Moden Kontemporari Malaysia Era 2026 (Grab, Setel, TnG eWallet, Trevo, Wahdah, Carsome).
+     - Jadual penuh Senarai Hitam Istilah Terlarang (*Strict Blacklist Table*): Pengharaman kata *Armada, Fleet, Wahana, Kabin, Kokpit, Prapapar, Bilik Pameran, Pelayaran Mobiliti, Perisai Keselamatan, Gugusan Kereta, Penstriman Tempahan*.
+     - Pemetaan dwibahasa dinamik (`shared/lang/en.json` & `ms.json`), panduan status badge, dan pencegahan campur aduk bahasa.
+     - Garis panduan komunikasi ketat bagi ejen AI (*Strict AI Guardrails*).
+     - Saiz fail: **5,864 aksara** (LULUS / <= 12,000 had maksimum).
+  2. **Seksyen 0 Gatekeeper Protocol dalam `01_core_rules.md`**:
+     - Diletakkan di kedudukan paling atas (aktif setiap kali prompt bermula) menggariskan 5 langkah mandatori berturutan:
+       1. **Wajib Baca Arahan Agent Terlebih Dahulu** sebelum sebarang pengubahsuaian kod.
+       2. **Wajib Temu Duga `/grill-me` Dahulu** menggunakan `ask_question` untuk menyelaraskan kehendak reka bentuk.
+       3. **Wajib Semak Halaman Sebagai Pengguna Dahulu (Check Page As User First)** pada tab aktif (menggunakan `chrome-devtools` snapshot/DOM) tanpa membuka banyak tab.
+       4. **Wajib Manfaatkan Ekosistem Alatan Pintar & MCP WeDRIVE**:
+          - **Playwright CLI**: Ujian automasi butang, borang, dan aliran penuh tanpa ujian manual berjam-jam.
+          - **Supabase MCP**: Pengurusan pangkalan data PostgreSQL, skema jadual, RLS, dan pengesahan pengguna.
+          - **Strix Security Audit**: Simulasi ujian penembusan etika persis penggodam sebenar untuk mencegah kebocoran data.
+          - **Skill UI for Front-End**: Kejuruteraan terbalik (*reverse engineering*) visual rujukan ke spesifikasi Apple HIG.
+          - **Context7 MCP**: Dokumentasi langsung & versi pustaka terkini tanpa halusinasi kod atau sintaks lapuk.
+          - **Stitch MCP, Composio, Graphify & Chrome DevTools**: Penjanaan UI Apple HIG, automasi luar, penjimatan token, dan semakan visual.
+       5. **Wajib Patuhi 11_language_standards.md** untuk semua teks, lencana, label butang, dan maklum balas AI.
+     - Saiz fail `01_core_rules.md`: **11,801 aksara** (LULUS / <= 12,000).
+  3. **Penyelarasan Dokumentasi Struktur Projek**:
+     - `docs/PROJECT_STRUCTURE.md`: Dikemas kini kepada 11 fail peraturan bernombor.
+     - `.agents/DESIGN.md`: Rujukan senarai hitam dikemas kini kepada `11_language_standards.md`.
+
+- **Maklumat Git**:
+  - Commit: `6.2.0 Add 11_language_standards.md and mandatory pre-coding gatekeeper protocol in 01_core_rules.md`
+  - Tag Versi: `6.2.0`
