@@ -8,8 +8,12 @@
   var progressBar = document.querySelector('[data-hiw-progress]');
   var parallaxNodes = document.querySelectorAll('[data-hiw-parallax]');
   var viewerRoot = document.querySelector('[data-vehicle-viewer]');
+  var dragHint = document.querySelector('[data-hiw-drag-hint]');
   var viewerApi = null;
-  var heroTicking = false;
+  var heroAutoplayActive = true;
+  var currentHeroFrame = 100;
+  var lastHeroTick = 0;
+  var HERO_FRAME_INTERVAL = 45; // ~22fps gentle continuous luxury turntable
 
   function frameSrc(frame) {
     var safeFrame = ((frame % FRAME_COUNT) + FRAME_COUNT) % FRAME_COUNT;
@@ -25,7 +29,7 @@
   }
 
   function initReveal() {
-    var nodes = document.querySelectorAll('.hiw-reveal, .hiw-step');
+    var nodes = document.querySelectorAll('.hiw-reveal, .hiw-step, .hiw-faq-item, .hiw-tip-card, .hiw-proof-card');
     if (!nodes.length) return;
 
     var observer = new IntersectionObserver(function (entries) {
@@ -35,10 +39,10 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.16 });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
 
     nodes.forEach(function (node, index) {
-      node.style.setProperty('--hiw-delay', Math.min(index * 34, 220) + 'ms');
+      node.style.setProperty('--hiw-delay', Math.min(index * 30, 200) + 'ms');
       observer.observe(node);
     });
   }
@@ -58,7 +62,7 @@
       targetY = event.clientY;
     }, { passive: true });
 
-    document.querySelectorAll('[data-hiw-cursor-target], .hiw-btn, .hiw-model-btn').forEach(function (node) {
+    document.querySelectorAll('[data-hiw-cursor-target], .hiw-btn, .hiw-model-btn, .hiw-view-btn, .hiw-faq-trigger').forEach(function (node) {
       node.addEventListener('mouseenter', function () { cursor.classList.add('is-hovering'); });
       node.addEventListener('mouseleave', function () { cursor.classList.remove('is-hovering'); });
     });
@@ -93,48 +97,117 @@
     update();
   }
 
-  function initHeroAndViewerSync() {
-    if (!heroFrame || !heroSection) return;
-    if (!viewerApi && window.WedriveVehicleViewer) {
-      viewerApi = window.WedriveVehicleViewer.get(viewerRoot) || window.WedriveVehicleViewer.get('[data-vehicle-viewer]');
+  /* =========================================================================
+     1. HERO TOP CAR: AUTOMATIC CONTINUOUS TURNTABLE ROTATION
+     Starts at frame 100 (beauty shot) and rotates continuously like a showroom.
+     Pauses when scrolled out of view to preserve CPU and battery.
+     ========================================================================= */
+  function tickHeroAutoplay(timestamp) {
+    if (!heroAutoplayActive) return;
+    if (!lastHeroTick) lastHeroTick = timestamp;
+    var delta = timestamp - lastHeroTick;
+
+    if (delta >= HERO_FRAME_INTERVAL) {
+      currentHeroFrame = (currentHeroFrame + 1) % FRAME_COUNT;
+      if (heroFrame) {
+        heroFrame.src = frameSrc(currentHeroFrame);
+      }
+      lastHeroTick = timestamp;
     }
 
-    function update() {
+    window.requestAnimationFrame(tickHeroAutoplay);
+  }
+
+  function initHeroAutoTurntable() {
+    if (!heroFrame || !heroSection) return;
+    heroFrame.src = frameSrc(100);
+
+    // Subtle parallax lift & scale on scroll
+    function updateHeroScroll() {
       var heroHeight = heroSection.offsetHeight || 1;
       var scrollPos = window.scrollY || 0;
       var progress = Math.min(scrollPos / heroHeight, 1);
-      var frame = Math.floor(progress * (FRAME_COUNT - 1));
-      var scale = 1 - progress * 0.12;
-      var lift = progress * -34;
-
-      heroFrame.src = frameSrc(frame);
+      var scale = 1 - progress * 0.08;
+      var lift = progress * -24;
       heroFrame.style.transform = 'translateY(' + lift + 'px) scale(' + scale.toFixed(3) + ')';
-
-      if (progress < 1 && viewerApi && viewerApi.setExteriorFrame) {
-        viewerApi.setExteriorFrame(frame, false);
-      }
     }
 
-    function requestUpdate() {
-      if (heroTicking) return;
-      heroTicking = true;
-      window.requestAnimationFrame(function () {
-        update();
-        heroTicking = false;
+    window.addEventListener('scroll', updateHeroScroll, { passive: true });
+
+    // Preload next batch of hero frames for seamless rotation
+    for (var i = 0; i < 20; i++) {
+      var img = new Image();
+      img.src = frameSrc(100 + i);
+    }
+
+    var heroObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          if (!heroAutoplayActive) {
+            heroAutoplayActive = true;
+            lastHeroTick = 0;
+            window.requestAnimationFrame(tickHeroAutoplay);
+          }
+        } else {
+          heroAutoplayActive = false;
+        }
       });
-    }
+    }, { threshold: 0.1 });
 
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    update();
+    heroObserver.observe(heroSection);
+    window.requestAnimationFrame(tickHeroAutoplay);
   }
 
-  function initViewerSharedModule() {
-    if (!window.WedriveVehicleViewer) return;
-    viewerApi = window.WedriveVehicleViewer.get(viewerRoot) || window.WedriveVehicleViewer.get('[data-vehicle-viewer]');
-    if (!viewerApi && window.WedriveVehicleViewer.init && viewerRoot) {
-      viewerApi = window.WedriveVehicleViewer.init(viewerRoot);
+  /* =========================================================================
+     2. BOTTOM INTERACTIVE SHOWROOM: MANUAL DRAG CONTROL ONLY
+     The user controls this viewer directly via drag/touch, with zero lag
+     due to our sparse keyframe preloader and nearest-neighbor fallback.
+     ========================================================================= */
+  function hideDragHint() {
+    if (dragHint) {
+      dragHint.classList.add('is-hidden');
     }
+  }
+
+  function initInteractiveShowroom() {
+    if (!viewerRoot) return;
+
+    // Direct user drag control only
+    viewerRoot.addEventListener('pointerdown', hideDragHint, { passive: true });
+    viewerRoot.addEventListener('touchstart', hideDragHint, { passive: true });
+
+    if (window.WedriveVehicleViewer) {
+      viewerApi = window.WedriveVehicleViewer.get(viewerRoot);
+      if (!viewerApi && window.WedriveVehicleViewer.init) {
+        viewerApi = window.WedriveVehicleViewer.init(viewerRoot, { defaultFrame: 100 });
+      }
+    }
+  }
+
+  /* =========================================================================
+     3. RENTAL FAQ ACCORDION (EXPANDABLE BENTO ITEMS)
+     ========================================================================= */
+  function initFaqAccordion() {
+    var triggers = document.querySelectorAll('.hiw-faq-trigger');
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var item = trigger.closest('.hiw-faq-item');
+        if (!item) return;
+        var isOpen = item.classList.contains('is-open');
+
+        // Close other items
+        document.querySelectorAll('.hiw-faq-item.is-open').forEach(function (other) {
+          if (other !== item) {
+            other.classList.remove('is-open');
+            var otherBtn = other.querySelector('.hiw-faq-trigger');
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        item.classList.toggle('is-open', !isOpen);
+        trigger.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+      });
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -142,7 +215,8 @@
     initReveal();
     initProgressAndParallax();
     initCursor();
-    initViewerSharedModule();
-    initHeroAndViewerSync();
+    initHeroAutoTurntable();
+    initInteractiveShowroom();
+    initFaqAccordion();
   });
 })();

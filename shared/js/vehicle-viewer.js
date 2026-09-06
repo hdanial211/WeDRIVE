@@ -369,8 +369,8 @@
       options: opts,
       modelKey: root.getAttribute('data-vehicle-default-model') || opts.defaultModel || 'bmw',
       viewMode: root.getAttribute('data-vehicle-default-view') || opts.defaultView || 'exterior',
-      currentFrame: 0,
-      lastExteriorFrame: 0,
+      currentFrame: parseInt(root.getAttribute('data-vehicle-default-frame') || opts.defaultFrame, 10) || 100,
+      lastExteriorFrame: parseInt(root.getAttribute('data-vehicle-default-frame') || opts.defaultFrame, 10) || 100,
       isReady: false,
       isDragging: false,
       isAnimating: false,
@@ -412,8 +412,85 @@
       dragStartYaw: 0,
       dragStartPitch: 0,
       registryUrl: root.getAttribute('data-vehicle-registry') || opts.registryUrl || DEFAULT_REGISTRY_URL,
-      modelRoot: root.getAttribute('data-vehicle-model-root') || opts.modelRoot || DEFAULT_MODEL_ROOT
+      modelRoot: root.getAttribute('data-vehicle-model-root') || opts.modelRoot || DEFAULT_MODEL_ROOT,
+      preloadedFrames: {},
+      sparseRingDone: false
     };
+
+    function markFrameLoaded(frameNum) {
+      state.preloadedFrames[frameNum] = true;
+    }
+
+    function findClosestLoadedFrame(targetFrame, frameCount) {
+      if (state.preloadedFrames[targetFrame]) return targetFrame;
+      var loadedList = Object.keys(state.preloadedFrames).map(Number);
+      if (!loadedList.length) return targetFrame;
+      var bestFrame = loadedList[0];
+      var minDiff = Math.abs(targetFrame - bestFrame);
+      for (var i = 1; i < loadedList.length; i++) {
+        var diff = Math.min(
+          Math.abs(targetFrame - loadedList[i]),
+          frameCount - Math.abs(targetFrame - loadedList[i])
+        );
+        if (diff < minDiff) {
+          minDiff = diff;
+          bestFrame = loadedList[i];
+        }
+      }
+      return bestFrame;
+    }
+
+    function preloadSparseRing() {
+      if (!state.manifest || state.sparseRingDone) return;
+      state.sparseRingDone = true;
+      var frameCount = getFrameCount(state.manifest);
+      var startFrame = state.lastExteriorFrame || 100;
+      markFrameLoaded(startFrame);
+
+      var step = Math.max(1, Math.floor(frameCount / 24));
+      var sparseFrames = [];
+      for (var f = 0; f < frameCount; f += step) {
+        sparseFrames.push(normalizeFrame(state.manifest, startFrame + f));
+      }
+
+      sparseFrames.forEach(function (fn) {
+        if (state.preloadedFrames[fn]) return;
+        var img = new Image();
+        img.onload = function () { markFrameLoaded(fn); };
+        img.src = frameUrlForState(fn);
+      });
+
+      scheduleFullBackgroundPreload(frameCount);
+    }
+
+    function scheduleFullBackgroundPreload(frameCount) {
+      var nextIdx = 0;
+      function preloadBatch() {
+        if (!state.manifest) return;
+        var batch = 6;
+        for (var b = 0; b < batch && nextIdx < frameCount; b++, nextIdx++) {
+          if (!state.preloadedFrames[nextIdx]) {
+            var img = new Image();
+            (function (idx) {
+              img.onload = function () { markFrameLoaded(idx); };
+            })(nextIdx);
+            img.src = frameUrlForState(nextIdx);
+          }
+        }
+        if (nextIdx < frameCount) {
+          if (window.requestIdleCallback) {
+            window.requestIdleCallback(preloadBatch, { timeout: 1500 });
+          } else {
+            setTimeout(preloadBatch, 120);
+          }
+        }
+      }
+      if (window.requestIdleCallback) {
+        window.requestIdleCallback(preloadBatch, { timeout: 2000 });
+      } else {
+        setTimeout(preloadBatch, 300);
+      }
+    }
 
     // Create Ambilight backdrop image element dynamically if not present
     if (state.exteriorImage && !root.querySelector('.vehicle-viewer-ambilight')) {
@@ -477,10 +554,27 @@
     function renderExteriorFrame(frame, force) {
       if (!state.exteriorImage || !state.manifest) return;
       var safeFrame = normalizeFrame(state.manifest, frame);
-      if (!force && state.currentFrame === safeFrame && state.viewMode === 'exterior' && state.exteriorImage.src) return;
-      state.currentFrame = safeFrame;
+      var frameCount = getFrameCount(state.manifest);
+      var displayFrame = safeFrame;
+
+      if (Object.keys(state.preloadedFrames).length > 0 && !state.preloadedFrames[safeFrame]) {
+        displayFrame = findClosestLoadedFrame(safeFrame, frameCount);
+        var reqImg = new Image();
+        reqImg.onload = function () {
+          markFrameLoaded(safeFrame);
+          if (state.currentFrame === displayFrame && state.viewMode === 'exterior') {
+            state.exteriorImage.src = frameUrlForState(safeFrame);
+          }
+        };
+        reqImg.src = frameUrlForState(safeFrame);
+      } else {
+        markFrameLoaded(safeFrame);
+      }
+
+      if (!force && state.currentFrame === displayFrame && state.viewMode === 'exterior' && state.exteriorImage.src) return;
+      state.currentFrame = displayFrame;
       state.lastExteriorFrame = safeFrame;
-      state.exteriorImage.src = frameUrlForState(safeFrame);
+      state.exteriorImage.src = frameUrlForState(displayFrame);
       state.exteriorImage.alt = (state.manifest.__displayLabel || state.manifest.model || state.modelKey) + ' exterior 360 view';
       if (state.ambilightImage) {
         state.ambilightImage.src = state.exteriorImage.src;
@@ -740,11 +834,15 @@
       state.currentManifestPromise = loadManifest(nextKey, state.options);
       return state.currentManifestPromise.then(function (manifest) {
         state.manifest = manifest;
+        state.preloadedFrames = {};
+        state.sparseRingDone = false;
         renderLabel();
         if (state.viewMode === 'interior') {
           applyInteriorFaces();
           updateStatus();
           scheduleInteriorRefresh();
+        } else {
+          preloadSparseRing();
         }
         return manifest;
       });
@@ -770,6 +868,8 @@
         function finishSwitch() {
           state.modelKey = nextKey;
           state.manifest = manifest;
+          state.preloadedFrames = {};
+          state.sparseRingDone = false;
           renderLabel();
           updateButtons();
           updateStatus();
@@ -777,6 +877,7 @@
             applyInteriorFaces();
             scheduleInteriorRefresh();
           } else {
+            preloadSparseRing();
             renderExteriorFrame(startFrame, true);
           }
           state.isAnimating = false;
@@ -976,6 +1077,42 @@
       setView: setView,
       loadModel: loadModel,
       getManifest: function () { return state.manifest; },
+      triggerIntroAutospin: function (callback) {
+        if (state.viewMode !== 'exterior' || state.isDragging || !state.manifest) return;
+        var startFrame = state.lastExteriorFrame || 100;
+        var frameCount = getFrameCount(state.manifest);
+        var duration = 2200;
+        var startTime = null;
+        var cancelled = false;
+
+        function cancelSpin() {
+          cancelled = true;
+          root.removeEventListener('pointerdown', cancelSpin);
+          root.removeEventListener('touchstart', cancelSpin);
+        }
+        root.addEventListener('pointerdown', cancelSpin, { once: true });
+        root.addEventListener('touchstart', cancelSpin, { once: true });
+
+        function step(timestamp) {
+          if (cancelled) return;
+          if (!startTime) startTime = timestamp;
+          var elapsed = timestamp - startTime;
+          var p = Math.min(elapsed / duration, 1);
+          var ease = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+          var targetFrame = normalizeFrame(state.manifest, startFrame + Math.round(ease * frameCount));
+          renderExteriorFrame(targetFrame, true);
+
+          if (p < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            root.removeEventListener('pointerdown', cancelSpin);
+            root.removeEventListener('touchstart', cancelSpin);
+            renderExteriorFrame(startFrame, true);
+            if (typeof callback === 'function') callback();
+          }
+        }
+        window.requestAnimationFrame(step);
+      },
       refresh: function () {
         updateViewUI();
         return api;

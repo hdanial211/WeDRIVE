@@ -4021,3 +4021,35 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.9 Overhaul Admin Calendar to Apple HIG 2-column Bento and unify datepickers`
   - Tag Versi: `5.9.9`
+
+---
+
+##  [MINOR UPDATE] 178. Penyelarasan Penuh Nisbah Aspek 16:9 & Penghapusan Sifar Ruang Kosong (Zero Gap) Penonton Kenderaan Interaktif 360° (v5.9.10)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  - *"https://wedrive.website/guest/pages/how-it-works/how-it-works.html..gambar ni awak buat full jangan ada gap atas n bawah tu"*
+  - Pengguna mendapati imej kenderaan 360° interaktif (*Mercedes-Benz GLA250 & BMW 320i*) pada halaman *How It Works* memaparkan ruang kosong/jurang gelap (*dark letterbox bars / gaps*) di bahagian atas dan bawah bingkai imej.
+
+- **Punca Masalah Teknikal**:
+  1. Bekas peringkat interaktif (`.hiw-interactive-stage`) ditetapkan dengan nisbah `aspect-ratio: 16 / 10;` (1.600).
+  2. Aset bingkai foto 360° kenderaan fizikal (`frame-100.jpg`, dsb.) mempunyai resolusi `3000px × 1688px`, iaitu nisbah sebenar **16 / 9** (~1.778).
+  3. Gaya `object-fit: contain;` menyebabkan imej mengecut secara menegak sebanyak ~10% daripada ketinggian kontena, menghasilkan jalur kosong di bahagian atas dan bawah.
+
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Penyelarasan Nisbah Aspek Penuh (`shared/css/wedrive.css`)**:
+     - Mengemas kini `.hiw-interactive-stage` daripada `aspect-ratio: 16 / 10;` kepada `aspect-ratio: 16 / 9;` tepat.
+     - Mengubah suai gaya bingkai imej `.hiw-interactive-stage img#hiwInteractiveFrame, .hiw-interactive-stage img[data-vehicle-exterior-frame]` kepada `width: 100%; height: 100%; object-fit: cover;`.
+     - Menghapuskan 100% sebarang jurang atas/bawah (*zero letterbox gap*) pada sebarang saiz skrin dan mod tema (Day/Night).
+  2. **Penyegaran Versi Cache Fail (`guest/pages/how-it-works/how-it-works.html`)**:
+     - Mengemas kini rujukan fail CSS kepada `shared/css/wedrive.css?v=5.2.1` bagi memastikan penyemak imbas memuatkan peraturan CSS terbaharu serta-merta tanpa cache lapuk.
+  3. **Penguatkuasaan Piawaian Geometri Apple HIG**:
+     - Memastikan kad bento, sudut squircle (`border-radius: 16px/24px`), dan lencana status pil simetri 9999px kekal konsisten dan sifar herotan bujur (*Zero Oval Rule*).
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Visual Playwright Verification**: Tangkapan skrin membuktikan kotak peringkat dan imej sejajar 100% pada saiz `667.76px × 375.61px` (nisbah tepat 16:9), tiada sebarang ruang bar kelabu/gelap di bahagian atas mahupun bawah.
+  - **Playwright Automated Test Suite**: Kesemua 36 ujian automasi merentasi modul lulus sepenuhnya (**100% Pass Rate**).
+  - **Pengesahan Pengguna**: Pengguna berpuas hati dan mengesahkan paparan adalah *"perfect"*.
+
+- **Maklumat Git**:
+  - Commit: `5.9.10 Set 360 interactive viewer to full 16:9 cover without top and bottom gaps`
+  - Tag Versi: `5.9.10`

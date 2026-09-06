@@ -425,6 +425,7 @@
   "how_new_view_status_real": "Real interior panorama",
   "how_new_view_status_reference": "Reference cabin panorama while the exact interior is being added",
   "how_new_interactive_drag": "Drag to rotate",
+  "how_drag_hint": "Drag to rotate 360°",
   "how_new_interactive_kicker": "Interactive 360",
   "how_new_interactive_title": "Inspect the real model before booking.",
   "how_new_interactive_copy": "Scroll the hero to rotate the car automatically, then use this panel for manual drag control, smooth interior panorama viewing, and fast model switching.",

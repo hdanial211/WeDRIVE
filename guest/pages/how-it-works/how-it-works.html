@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.0" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.2.1" />
 </head>
 
 <body class="how-premium-page" data-particles="6" data-cursor-glow>
@@ -80,7 +80,7 @@
           <strong>BMW 320i M Sport</strong>
         </div>
         <img id="hiwHeroFrame"
-          src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-000.jpg"
+          src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-100.jpg"
           alt="BMW 320i M Sport 360 exterior preview" draggable="false" />
       </div>
     </section>
@@ -208,7 +208,7 @@
       </div>
 
       <div class="hiw-interactive-grid" data-vehicle-viewer-shell>
-        <div class="hiw-interactive-card hiw-reveal" data-hiw-interactive data-vehicle-viewer data-vehicle-default-model="bmw" data-vehicle-default-view="exterior" data-hiw-cursor-target>
+        <div class="hiw-interactive-card hiw-reveal" data-hiw-interactive data-vehicle-viewer data-vehicle-default-model="bmw" data-vehicle-default-view="exterior" data-vehicle-default-frame="100" data-hiw-cursor-target>
           <div class="hiw-frame-toolbar">
             <span><span data-key="how_new_interactive_drag">Drag to rotate</span></span>
             <strong data-hiw-model-label data-vehicle-label>BMW 320i M Sport</strong>
@@ -216,7 +216,7 @@
           <div class="hiw-view-status" data-hiw-view-status data-vehicle-status data-key="how_new_view_status_exterior">Exterior 360 view</div>
           <div class="hiw-interactive-stage">
             <img id="hiwInteractiveFrame" data-vehicle-exterior-frame
-              src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-000.jpg"
+              src="../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-100.jpg"
               alt="Interactive 360 vehicle viewer" draggable="false" />
             <div class="hiw-interior-scene" id="hiwInteriorScene" data-vehicle-interior-scene aria-hidden="true">
               <div class="hiw-interior-cube" id="hiwInteriorCube" data-vehicle-interior-cube>
@@ -228,6 +228,10 @@
                 <img class="hiw-interior-face" data-hiw-interior-face="d" data-vehicle-interior-face="d" alt="" draggable="false" />
               </div>
               <div class="hiw-interior-glow" data-vehicle-interior-glow aria-hidden="true"></div>
+            </div>
+            <div class="hiw-drag-hint" data-hiw-drag-hint aria-hidden="true">
+              <span class="material-icons-round">touch_app</span>
+              <span data-key="how_drag_hint">Drag to rotate 360°</span>
             </div>
           </div>
           <div class="hiw-frame-shadow" aria-hidden="true"></div>
@@ -263,6 +267,41 @@
       </div>
     </section>
 
+    <!-- 3-CARD PREPARATION TIPS BENTO -->
+    <section class="hiw-section hiw-tips" id="tips">
+      <div class="hiw-section-head">
+        <span class="hiw-kicker hiw-reveal" data-key="how_tip_label">Before You Confirm</span>
+        <h2 class="hiw-title hiw-reveal" data-key="how_tip_title">A few details that keep the booking smooth</h2>
+        <p class="hiw-copy hiw-reveal" data-key="how_tip_sub">Prepare these early so payment, verification, and pickup move faster on the day.</p>
+      </div>
+
+      <div class="hiw-tips-grid">
+        <article class="hiw-tip-card hiw-reveal">
+          <div class="hiw-tip-icon">
+            <span class="material-icons-round">badge</span>
+          </div>
+          <h3 data-key="how_tip1_title">Use matching identity details</h3>
+          <p data-key="how_tip1_desc">Keep the name on your account, ID, and driving licence consistent to avoid manual checks.</p>
+        </article>
+
+        <article class="hiw-tip-card hiw-reveal">
+          <div class="hiw-tip-icon">
+            <span class="material-icons-round">credit_card</span>
+          </div>
+          <h3 data-key="how_tip2_title">Check payment readiness</h3>
+          <p data-key="how_tip2_desc">Have your preferred card or FPX banking access ready before locking the booking.</p>
+        </article>
+
+        <article class="hiw-tip-card hiw-reveal">
+          <div class="hiw-tip-icon">
+            <span class="material-icons-round">schedule</span>
+          </div>
+          <h3 data-key="how_tip3_title">Arrive on time for pickup</h3>
+          <p data-key="how_tip3_desc">A short, on-time handover helps you inspect the car and start your trip without delay.</p>
+        </article>
+      </div>
+    </section>
+
     <!-- PRIVACY & SECURITY BY DESIGN -->
     <section class="hiw-section hiw-privacy">
       <div class="hiw-section-head">
@@ -293,6 +332,77 @@
             <li data-key="how_new_after_payment_3">Final checklist before key collection</li>
           </ul>
         </article>
+      </div>
+    </section>
+
+    <!-- RENTAL FAQ BENTO ACCORDION -->
+    <section class="hiw-section hiw-faq" id="faq">
+      <div class="hiw-section-head">
+        <span class="hiw-kicker hiw-reveal" data-key="faq_cat_booking">Booking</span>
+        <h2 class="hiw-title hiw-reveal" data-key="faq_hero_title">Frequently Asked Questions</h2>
+        <p class="hiw-copy hiw-reveal" data-key="faq_hero_sub">Everything you need to know about renting with WeDRIVE</p>
+      </div>
+
+      <div class="hiw-faq-list">
+        <div class="hiw-faq-item is-open hiw-reveal">
+          <button class="hiw-faq-trigger" type="button" aria-expanded="true">
+            <span data-key="faq_q1">How do I book a car?</span>
+            <span class="hiw-faq-icon"><span class="material-icons-round">expand_more</span></span>
+          </button>
+          <div class="hiw-faq-body" data-key="faq_a1">
+            Browse available cars, select your dates, choose your car, and proceed to checkout. Pay securely online and get instant confirmation. Collect your physical car key at the pickup counter by showing your booking confirmation code.
+          </div>
+        </div>
+
+        <div class="hiw-faq-item hiw-reveal">
+          <button class="hiw-faq-trigger" type="button" aria-expanded="false">
+            <span data-key="faq_q3">What documents do I need?</span>
+            <span class="hiw-faq-icon"><span class="material-icons-round">expand_more</span></span>
+          </button>
+          <div class="hiw-faq-body" data-key="faq_a3">
+            Valid driving license, IC/passport, and a credit/debit card. International visitors need an International Driving Permit (IDP).
+          </div>
+        </div>
+
+        <div class="hiw-faq-item hiw-reveal">
+          <button class="hiw-faq-trigger" type="button" aria-expanded="false">
+            <span data-key="faq_q4">What payment methods do you accept?</span>
+            <span class="hiw-faq-icon"><span class="material-icons-round">expand_more</span></span>
+          </button>
+          <div class="hiw-faq-body" data-key="faq_a4">
+            Visa, Mastercard, FPX online banking, Touch n Go eWallet, and GrabPay.
+          </div>
+        </div>
+
+        <div class="hiw-faq-item hiw-reveal">
+          <button class="hiw-faq-trigger" type="button" aria-expanded="false">
+            <span data-key="faq_q6">Are there hidden fees?</span>
+            <span class="hiw-faq-icon"><span class="material-icons-round">expand_more</span></span>
+          </button>
+          <div class="hiw-faq-body" data-key="faq_a6">
+            No hidden fees. The price shown at checkout is what you pay. Security deposit is fully refundable.
+          </div>
+        </div>
+
+        <div class="hiw-faq-item hiw-reveal">
+          <button class="hiw-faq-trigger" type="button" aria-expanded="false">
+            <span data-key="faq_q7">Is insurance included?</span>
+            <span class="hiw-faq-icon"><span class="material-icons-round">expand_more</span></span>
+          </button>
+          <div class="hiw-faq-body" data-key="faq_a7">
+            Basic comprehensive insurance is included. Upgrade to full coverage (RM35/day) to reduce excess to RM0.
+          </div>
+        </div>
+
+        <div class="hiw-faq-item hiw-reveal">
+          <button class="hiw-faq-trigger" type="button" aria-expanded="false">
+            <span data-key="faq_q10">What is the cancellation policy?</span>
+            <span class="hiw-faq-icon"><span class="material-icons-round">expand_more</span></span>
+          </button>
+          <div class="hiw-faq-body" data-key="faq_a10">
+            48+ hours: Full refund. 24-48 hours: 50% refund. Less than 24 hours: No refund.
+          </div>
+        </div>
       </div>
     </section>
 
