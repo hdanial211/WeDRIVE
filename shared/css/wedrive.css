@@ -621,6 +621,25 @@ body.dark .nav-links:has(.nav-icon-link) {
   transform: scale(0.95);
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   STRICT 1:1 CIRCULAR GEOMETRY UTILITIES (ZERO OVAL / ANTI-BUJUR STANDARD)
+   ───────────────────────────────────────────────────────────────────────────── */
+.circle-btn,
+.btn-circle,
+.icon-circle-btn,
+.fab-circle,
+[data-shape="circle"] {
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
+}
+
 .utility-actions,
 .nav-actions {
   display: inline-flex;
@@ -7149,6 +7168,8 @@ a.btn-primary {
   box-shadow: 0 4px 14px rgba(0, 113, 227, 0.28);
   transition: all 0.2s var(--ease-apple);
   letter-spacing: -0.01em;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .btn-primary:hover,
@@ -7184,6 +7205,8 @@ a.btn-secondary {
   cursor: pointer;
   text-decoration: none;
   transition: all 0.2s var(--ease-apple);
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .btn-secondary:hover,
@@ -16122,6 +16145,8 @@ body.theme-dark .apple-segment-btn.active .apple-segment-count {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 [data-theme="dark"] .apple-category-pill {
   background: rgba(41, 151, 255, 0.15);
@@ -18470,72 +18495,6 @@ body.day-mode .cal-filter-chip.active {
   transform: scale(0.95);
 }
 
-.studio-controls-bar {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 20px;
-  background: rgba(22, 22, 24, 0.85);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-}
-
-.studio-auto-spin-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #FFFFFF;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s var(--ease-apple);
-  white-space: nowrap;
-}
-
-.studio-auto-spin-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.studio-auto-spin-btn.spinning {
-  background: #34C759;
-  border-color: #34C759;
-  color: #000000;
-}
-
-.studio-scrub-slider {
-  flex: 1;
-  height: 6px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.15);
-  outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: ew-resize;
-}
-
-.studio-scrub-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #BF5AF2;
-  box-shadow: 0 0 10px rgba(191, 90, 242, 0.6);
-  cursor: ew-resize;
-  border: 2px solid #FFFFFF;
-}
-
 /* 3. Interior 360 Virtual Cockpit Viewer */
 .interior-cockpit-viewer {
   position: relative;
@@ -18612,6 +18571,13 @@ body.day-mode .cal-filter-chip.active {
   margin-bottom: 28px;
 }
 
+/* Bento Grid Column Utilities */
+.col-span-12 { grid-column: span 12 / span 12; }
+.col-span-8  { grid-column: span 8 / span 8; }
+.col-span-6  { grid-column: span 6 / span 6; }
+.col-span-4  { grid-column: span 4 / span 4; }
+.col-span-3  { grid-column: span 3 / span 3; }
+
 .spec-bento-card {
   background: var(--bg-surface-1, #161618);
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
@@ -18630,6 +18596,7 @@ body.day-mode .cal-filter-chip.active {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   margin-bottom: 18px;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -18773,4 +18740,75 @@ body.day-mode .cal-filter-chip.active {
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   AI AUTO-DETECT SPECIFICATIONS PILL & GLOW (Apple HIG Standard)
+   ========================================================================== */
+.apple-ai-sparkle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.22) 0%, rgba(0, 113, 227, 0.18) 100%);
+  border: 1px solid rgba(175, 82, 222, 0.4);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  color: #F5F5F7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(88, 86, 214, 0.2);
+  transition: all 0.25s var(--ease-apple);
+  outline: none;
+}
+
+.apple-ai-sparkle-pill:hover {
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.35) 0%, rgba(0, 113, 227, 0.28) 100%);
+  border-color: rgba(175, 82, 222, 0.7);
+  box-shadow: 0 0 18px rgba(175, 82, 222, 0.45);
+  transform: scale(1.02);
+  color: #FFFFFF;
+}
+
+.apple-ai-sparkle-pill:active {
+  transform: scale(0.97);
+}
+
+.apple-ai-sparkle-pill .ai-sparkle-icon {
+  color: #BF5AF2;
+  font-size: 15px;
+  transition: transform 0.4s var(--ease-apple);
+}
+
+.apple-ai-sparkle-pill:hover .ai-sparkle-icon {
+  transform: rotate(15deg) scale(1.15);
+  color: #DA8FFF;
+}
+
+[data-theme="light"] .apple-ai-sparkle-pill {
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.12) 0%, rgba(0, 113, 227, 0.1) 100%);
+  border-color: rgba(88, 86, 214, 0.3);
+  color: #5856D6;
+  box-shadow: 0 2px 8px rgba(88, 86, 214, 0.12);
+}
+
+[data-theme="light"] .apple-ai-sparkle-pill:hover {
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.2) 0%, rgba(0, 113, 227, 0.16) 100%);
+  border-color: #5856D6;
+  color: #3634A3;
+}
+
+.ai-autofilled-glow {
+  border-color: #5856D6 !important;
+  box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.45), 0 0 14px rgba(88, 86, 214, 0.25) !important;
+  background-color: rgba(88, 86, 214, 0.06) !important;
+  transition: all 0.3s var(--ease-apple);
+}
+
 

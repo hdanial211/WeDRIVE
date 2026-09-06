@@ -24,15 +24,15 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1788652406.7570832,
-    "seen": 1788653435.683594,
-    "ast_hash": "f289bdf0fe5e7caf99d55bfc87d438ac",
+    "mtime": 1788664723.245714,
+    "seen": 1788665247.5749729,
+    "ast_hash": "1240e29cc7427499ca7fc82b8418ab91",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
-    "mtime": 1788622872.5056984,
-    "seen": 1788653435.683595,
-    "ast_hash": "9ef86aab16c89df3ce829b7b76c7ac6d",
+    "mtime": 1788665529.8981957,
+    "seen": 1788665722.6727612,
+    "ast_hash": "0dc05fdd679d6457883ba2aa4774a338",
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
@@ -186,9 +186,9 @@
     "semantic_hash": ""
   },
   "shared/js/sidebar-loader.js": {
-    "mtime": 1788652344.604838,
-    "seen": 1788653435.683637,
-    "ast_hash": "80b26f1cc5fc59ffd8afdf1dcbff6257",
+    "mtime": 1788664653.5672824,
+    "seen": 1788665247.574999,
+    "ast_hash": "94afd0cbe48172da1d346a54f5a45d0c",
     "semantic_hash": ""
   },
   "shared/js/supabase-config.js": {
@@ -210,27 +210,27 @@
     "semantic_hash": "854d79deba14cee1934248c66858e171"
   },
   "shared/lang/en.js": {
-    "mtime": 1788618762.4068131,
-    "seen": 1788620312.906516,
-    "ast_hash": "1e8b7cb251ecbbb7d49ea3fb3dfa4145",
+    "mtime": 1788664689.7444155,
+    "seen": 1788665247.5750022,
+    "ast_hash": "ad2333a205e37bf7e05d7ddc360e3f28",
     "semantic_hash": ""
   },
   "shared/lang/en.json": {
-    "mtime": 1788618745.4394627,
-    "seen": 1788620312.906517,
-    "ast_hash": "618ed433ab704638244d9c1fdfa38ae8",
+    "mtime": 1788664683.8377216,
+    "seen": 1788665247.575003,
+    "ast_hash": "7f36b4c7060f16987bd51740c520d1f9",
     "semantic_hash": ""
   },
   "shared/lang/ms.js": {
-    "mtime": 1788618721.582805,
-    "seen": 1788620312.906517,
-    "ast_hash": "d3d347311a3a02f7672ff985a700c2b5",
+    "mtime": 1788664671.591728,
+    "seen": 1788665247.5750039,
+    "ast_hash": "8f393f1dbcdb71495ebb4c161dcb1b38",
     "semantic_hash": ""
   },
   "shared/lang/ms.json": {
-    "mtime": 1788618698.3221772,
-    "seen": 1788620312.906518,
-    "ast_hash": "fad58cd15c636cb1315d68fb2b16bc64",
+    "mtime": 1788664659.9640677,
+    "seen": 1788665247.5750039,
+    "ast_hash": "8a5b0a7fe17c0230fb537711606fc622",
     "semantic_hash": ""
   },
   "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/source.json": {
@@ -360,15 +360,15 @@
     "semantic_hash": ""
   },
   ".agents/rules/apple_device_support.md": {
-    "mtime": 1787442645.3525693,
-    "seen": 1787898737.194606,
-    "ast_hash": "ce72eee37cacc7061ee9d2b89dee764f",
+    "mtime": 1788663844.285995,
+    "seen": 1788665247.575059,
+    "ast_hash": "1f5a651cced9bbf5c1c390b890577f39",
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_design_system.md": {
-    "mtime": 1788538373.6418607,
-    "seen": 1788538411.315053,
-    "ast_hash": "6b3c95388b55330d72bcf4ae85822629",
+    "mtime": 1788663825.5363915,
+    "seen": 1788665247.57506,
+    "ast_hash": "cae33c8d95f84420ac36b1cc6d2014e4",
     "semantic_hash": ""
   },
   ".agents/rules/code_and_backend.md": {
@@ -384,9 +384,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/navigation_and_ui.md": {
-    "mtime": 1788534634.8996482,
-    "seen": 1788535032.518593,
-    "ast_hash": "fca55bceb11e5341d72d97c5b87e798d",
+    "mtime": 1788664629.3169997,
+    "seen": 1788665247.575062,
+    "ast_hash": "c0f405917f33873ee0063476127bfeaa",
     "semantic_hash": ""
   },
   ".agents/rules/playwright_testing.md": {
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/ruleprompt.md": {
-    "mtime": 1788539632.4170804,
-    "seen": 1788539747.5331662,
-    "ast_hash": "16f672a1230ecaff2507a5900cbc33dd",
+    "mtime": 1788664618.2022824,
+    "seen": 1788665247.575063,
+    "ast_hash": "37f76d10a43834778a2606f97cb96e69",
     "semantic_hash": ""
   },
   ".agents/rules/security_and_audit.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788663510.7589664,
-    "seen": 1788663574.0626419,
-    "ast_hash": "80c9d032fd52219bf551af9d2f3551fd",
+    "mtime": 1788665642.389897,
+    "seen": 1788665722.673159,
+    "ast_hash": "0580cb3b581af0b9a232ffaea1562929",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -558,9 +558,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788652377.8528109,
-    "seen": 1788653435.683767,
-    "ast_hash": "03cca26c6587de0c783d5a3746bbe6cd",
+    "mtime": 1788665492.4805844,
+    "seen": 1788665722.673242,
+    "ast_hash": "1bb53f24c12bcb5269f01d3b058716d1",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
@@ -11214,21 +11214,21 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car.html": {
-    "mtime": 1788663353.6720386,
-    "seen": 1788663574.062658,
-    "ast_hash": "1b82d77717cd5d8e04325dbdf61bf55f",
+    "mtime": 1788665457.2165732,
+    "seen": 1788665722.6732411,
+    "ast_hash": "b0a0b4a5d6aabede51288639f7ad53b4",
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
-    "mtime": 1788645250.8873372,
-    "seen": 1788653435.6837661,
-    "ast_hash": "c8a1135b6cd50e29cbc2b28848154ee6",
+    "mtime": 1788665482.141784,
+    "seen": 1788665722.6732411,
+    "ast_hash": "1d824733cadf75ba88000efd760182da",
     "semantic_hash": ""
   },
   "admin/pages/car/rented-cars.html": {
-    "mtime": 1788621273.94248,
-    "seen": 1788621487.716728,
-    "ast_hash": "1c7c77dc64278337b18757749bc50d09",
+    "mtime": 1788665548.4571595,
+    "seen": 1788665722.673248,
+    "ast_hash": "afc4c7b7c7f8294a9cd8f374e64a0b23",
     "semantic_hash": ""
   },
   "admin/pages/customer/verifications.html": {
@@ -11262,9 +11262,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_components.md": {
-    "mtime": 1788538893.6755757,
-    "seen": 1788539038.340831,
-    "ast_hash": "6d7a8c08f7d4d55d949a603a2e76e703",
+    "mtime": 1788663836.4372618,
+    "seen": 1788665247.57506,
+    "ast_hash": "19f93deb510b167e203d4a1a074b7826",
     "semantic_hash": ""
   },
   ".agents/workflows/stitch_generation.md": {
@@ -11292,9 +11292,9 @@
     "semantic_hash": ""
   },
   "admin/pages/ai/api-keys.html": {
-    "mtime": 1788649752.9431164,
-    "seen": 1788653435.683754,
-    "ast_hash": "a636a5b187fcd1a98858e2d274e7ed1f",
+    "mtime": 1788664699.2914333,
+    "seen": 1788665247.575082,
+    "ast_hash": "294cf0e3345e7e5764d4407261155558",
     "semantic_hash": ""
   },
   "tests/add_car_360_card_verified.png": {

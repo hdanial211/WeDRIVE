@@ -63,8 +63,14 @@
             </div>
 
             <div class="mb-16">
-              <label class="form-label fs-13 fw-600" for="car-name">Nama &amp; Varian Model <span class="text-danger">*</span></label>
-              <input type="text" id="car-name" class="form-input radius-14" placeholder="cth: Proton X50 1.5 TGDi Flagship" required oninput="updateLivePreview()" />
+              <div class="flex-between items-center mb-6">
+                <label class="form-label fs-13 fw-600 m-0" for="car-name">Nama &amp; Varian Model <span class="text-danger">*</span></label>
+                <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill" onclick="triggerAiSpecAutofill()" title="Kesan spesifikasi teknikal, tarif dan kelengkapan secara automatik mengikut model kenderaan">
+                  <span class="material-icons-round fs-15 ai-sparkle-icon">auto_awesome</span>
+                  <span>Kesan Automatik AI</span>
+                </button>
+              </div>
+              <input type="text" id="car-name" class="form-input radius-14" placeholder="cth: Proton X50 1.5 TGDi / Honda Civic 1.5 RS / Toyota HiAce 2.5" required oninput="updateLivePreview()" />
             </div>
 
             <div class="grid-2 gap-14 mb-16">
@@ -83,9 +89,16 @@
                   <option value="Nissan">Nissan</option>
                   <option value="Mazda">Mazda</option>
                   <option value="Hyundai">Hyundai</option>
+                  <option value="Kia">Kia</option>
                   <option value="BYD">BYD</option>
+                  <option value="Tesla">Tesla</option>
                   <option value="BMW">BMW</option>
                   <option value="Mercedes-Benz">Mercedes-Benz</option>
+                  <option value="Chery">Chery</option>
+                  <option value="GWM">GWM / Haval / Ora</option>
+                  <option value="Mitsubishi">Mitsubishi</option>
+                  <option value="Ford">Ford</option>
+                  <option value="Lexus">Lexus</option>
                 </select>
               </div>
             </div>
@@ -119,16 +132,36 @@
                   <option value="SUV">SUV</option>
                   <option value="MPV">MPV</option>
                   <option value="Hatchback">Hatchback</option>
+                  <option value="Van">Van / Bas Komuter</option>
+                  <option value="Pickup">Pickup 4x4</option>
+                  <option value="Coupe">Coupe / Sukan</option>
+                  <option value="Luxury">Mewah / Luxury</option>
                 </select>
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
                 <select id="car-seats" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="" disabled selected>Pilih Bilangan Kerusi</option>
-                  <option value="4">4 Tempat Duduk</option>
-                  <option value="5">5 Tempat Duduk</option>
-                  <option value="7">7 Tempat Duduk</option>
-                  <option value="8">8 Tempat Duduk</option>
+                  <option value="" disabled selected>Pilih Bilangan Kerusi (1 - 20)</option>
+                  <option value="1">1 Tempat Duduk (Khas / Kargo)</option>
+                  <option value="2">2 Tempat Duduk (Kereta Sukan / Roadster)</option>
+                  <option value="3">3 Tempat Duduk</option>
+                  <option value="4">4 Tempat Duduk (Coupe / Kompak)</option>
+                  <option value="5" selected>5 Tempat Duduk (Sedan / Hatchback / SUV)</option>
+                  <option value="6">6 Tempat Duduk (Crossover 6-Seater)</option>
+                  <option value="7">7 Tempat Duduk (MPV / SUV 7-Seater)</option>
+                  <option value="8">8 Tempat Duduk (MPV Besar / 8-Seater)</option>
+                  <option value="9">9 Tempat Duduk</option>
+                  <option value="10">10 Tempat Duduk (Van Penumpang)</option>
+                  <option value="11">11 Tempat Duduk (Van Komuter / MPV 11-S)</option>
+                  <option value="12">12 Tempat Duduk (Van Komuter Standard)</option>
+                  <option value="13">13 Tempat Duduk</option>
+                  <option value="14">14 Tempat Duduk (Van Panjang)</option>
+                  <option value="15">15 Tempat Duduk (Van Eksekutif / Komuter)</option>
+                  <option value="16">16 Tempat Duduk (Bas Mini / Tour Van)</option>
+                  <option value="17">17 Tempat Duduk</option>
+                  <option value="18">18 Tempat Duduk (Bas Mini Pelancongan)</option>
+                  <option value="19">19 Tempat Duduk</option>
+                  <option value="20">20 Tempat Duduk (Bas Mini / Komuter Penuh)</option>
                 </select>
               </div>
             </div>
@@ -166,6 +199,7 @@
                   <option value="2-3 Beg" selected>2-3 Beg Sederhana (Sedan)</option>
                   <option value="3-4 Beg">3-4 Beg Besar (SUV/Crossover)</option>
                   <option value="4-5 Beg">4-5 Beg Penuh (MPV/Van)</option>
+                  <option value="6+ Beg">6+ Beg Muatan Besar (Van Penumpang / Bas Mini)</option>
                 </select>
               </div>
             </div>
@@ -845,6 +879,575 @@
       });
     })();
 
+    // =========================================================================
+    // APPLE TOAST NOTIFICATION HELPER
+    // =========================================================================
+    function showToast(msg, type) {
+      var toast = document.getElementById('we-apple-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'we-apple-toast';
+        toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(22,22,24,0.92);color:#FFFFFF;padding:12px 24px;border-radius:9999px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 12px 36px rgba(0,0,0,0.45);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.18);z-index:99999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.4s ease;opacity:0;pointer-events:none;max-width:90vw;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;';
+        document.body.appendChild(toast);
+      }
+      var icon = type === 'error' ? 'error' : (type === 'info' ? 'info' : 'check_circle');
+      var iconColor = type === 'error' ? '#FF453A' : (type === 'info' ? '#BF5AF2' : '#32D74B');
+      toast.innerHTML = '<span class="material-icons-round" style="color:' + iconColor + ';font-size:18px;vertical-align:middle;">' + icon + '</span><span>' + msg + '</span>';
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(function () {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(100px)';
+      }, 3500);
+    }
+    window.showToast = showToast;
+
+    // =========================================================================
+    // AI SPECIFICATION & TARIFF AUTO-DETECTION ENGINE
+    // =========================================================================
+    window.triggerAiSpecAutofill = async function () {
+      var nameInput = document.getElementById('car-name');
+      var carName = nameInput ? nameInput.value.trim() : '';
+      var btn = document.getElementById('btn-ai-autofill');
+
+      if (!carName || carName.length < 2) {
+        if (nameInput) {
+          nameInput.focus();
+          nameInput.classList.add('ai-autofilled-glow');
+          setTimeout(function () { nameInput.classList.remove('ai-autofilled-glow'); }, 1200);
+        }
+        showToast('Sila masukkan Nama & Varian Model terlebih dahulu (cth: Honda Civic, Perodua Bezza, Toyota HiAce).', 'info');
+        return;
+      }
+
+      var originalBtnHTML = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-icons-round fs-14 spin-pulse">sync</span> <span>Menganalisis...</span>';
+      }
+
+      try {
+        var detected = null;
+
+        // 1. Check AI Key Vault (Google Gemini / OpenRouter / Groq)
+        var aiKeys = {};
+        try {
+          aiKeys = JSON.parse(localStorage.getItem('wedrive_ai_keys') || '{}');
+        } catch (e) {}
+
+        var activeKey = (aiKeys.slot1 && aiKeys.slot1.key) || (aiKeys.slot3 && aiKeys.slot3.key) || null;
+        var provider = (aiKeys.slot1 && aiKeys.slot1.provider) || 'gemini';
+
+        if (activeKey && (activeKey.startsWith('AIzaSy') || provider === 'gemini')) {
+          try {
+            var endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(activeKey);
+            var promptText = 'Sebagai pakar automotif kereta sewa Malaysia pasaran Melaka, analisakan model kenderaan ini: "' + carName + '". ' +
+              'Balas HANYA satu objek JSON sah tanpa markdown backticks dengan skema: ' +
+              '{"brand":"Jenama","type":"Sedan/SUV/MPV/Hatchback/Van/Pickup/Coupe/Luxury","seats":5,"transmission":"Automatic/Manual","fuel":"Petrol/Diesel/Hybrid/Electric (EV)","engine":"Sesaran Enjin & Kuasa (cth: 1.5L VTEC Turbo 182PS)","luggage":"2 Beg/2-3 Beg/3-4 Beg/4-5 Beg/6+ Beg","rate":200,"deposit":200,"year":2024,"features":["carplay","dashcam","keyless","reverse_cam","tinted","sensor"]}';
+
+            var aiRes = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: promptText }] }],
+                generationConfig: { temperature: 0.1, maxOutputTokens: 300 }
+              })
+            });
+
+            if (aiRes.ok) {
+              var aiJson = await aiRes.json();
+              var rawText = (aiJson.candidates && aiJson.candidates[0] && aiJson.candidates[0].content && aiJson.candidates[0].content.parts && aiJson.candidates[0].content.parts[0].text) || '';
+              rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
+              detected = JSON.parse(rawText);
+            }
+          } catch (errAi) {
+            console.warn('[AI Auto-Detect] Online AI call bypassed/failed, engaging Malaysian Automotive Engine:', errAi);
+          }
+        }
+
+        // 2. High-Precision Local Automotive Knowledge Engine
+        if (!detected || !detected.type) {
+          detected = analyzeCarSpecsLocally(carName);
+        }
+
+        // 3. Populate form fields & trigger live preview
+        applyDetectedSpecs(detected, carName);
+
+      } catch (err) {
+        console.error('[AI Auto-Detect] Error:', err);
+        showToast('Ralat semasa menganalisis spesifikasi. Sila isi secara manual.', 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalBtnHTML;
+        }
+      }
+    };
+
+    function analyzeCarSpecsLocally(name) {
+      var s = (name || '').toLowerCase();
+      var res = {
+        brand: 'Proton',
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Dual VVT-i Standard',
+        luggage: '2-3 Beg',
+        rate: 180,
+        deposit: 200,
+        year: 2024,
+        features: ['carplay', 'dashcam', 'keyless', 'reverse_cam', 'tinted', 'sensor']
+      };
+
+      // Detect Brand
+      if (s.includes('perodua')) res.brand = 'Perodua';
+      else if (s.includes('proton')) res.brand = 'Proton';
+      else if (s.includes('toyota')) res.brand = 'Toyota';
+      else if (s.includes('honda')) res.brand = 'Honda';
+      else if (s.includes('nissan')) res.brand = 'Nissan';
+      else if (s.includes('mazda')) res.brand = 'Mazda';
+      else if (s.includes('hyundai')) res.brand = 'Hyundai';
+      else if (s.includes('kia')) res.brand = 'Kia';
+      else if (s.includes('byd')) res.brand = 'BYD';
+      else if (s.includes('tesla')) res.brand = 'Tesla';
+      else if (s.includes('bmw')) res.brand = 'BMW';
+      else if (s.includes('mercedes') || s.includes('benz') || s.includes('amg')) res.brand = 'Mercedes-Benz';
+      else if (s.includes('chery')) res.brand = 'Chery';
+      else if (s.includes('gwm') || s.includes('haval') || s.includes('ora')) res.brand = 'GWM';
+      else if (s.includes('mitsubishi')) res.brand = 'Mitsubishi';
+      else if (s.includes('ford')) res.brand = 'Ford';
+      else if (s.includes('lexus')) res.brand = 'Lexus';
+
+      // Specific Model Logic
+      if (s.includes('hiace') || s.includes('commuter') || s.includes('urvan') || s.includes('van') || s.includes('minibus') || s.includes('coaster') || s.includes('transit')) {
+        res.brand = s.includes('urvan') ? 'Nissan' : (s.includes('transit') ? 'Ford' : 'Toyota');
+        res.type = 'Van';
+        res.fuel = 'Diesel';
+        res.luggage = '6+ Beg';
+        res.transmission = s.includes('auto') ? 'Automatic' : 'Manual';
+        if (s.includes('coaster') || s.includes('20') || s.includes('tour')) {
+          res.seats = 20;
+          res.engine = '4.0L Turbo Diesel (136 PS)';
+          res.rate = 550;
+          res.deposit = 500;
+        } else if (s.includes('15') || s.includes('16')) {
+          res.seats = 16;
+          res.engine = '2.8L Turbo Diesel (177 PS)';
+          res.rate = 420;
+          res.deposit = 350;
+        } else if (s.includes('10') || s.includes('panel')) {
+          res.seats = 10;
+          res.engine = '2.5L Turbo Diesel (136 PS)';
+          res.rate = 320;
+          res.deposit = 250;
+        } else {
+          res.seats = 12;
+          res.engine = '2.5L Turbo Diesel Intercooler (136 PS)';
+          res.rate = 350;
+          res.deposit = 300;
+        }
+      } else if (s.includes('hilux') || s.includes('triton') || s.includes('navara') || s.includes('ranger') || s.includes('d-max')) {
+        res.brand = s.includes('triton') ? 'Mitsubishi' : (s.includes('navara') ? 'Nissan' : (s.includes('ranger') ? 'Ford' : 'Toyota'));
+        res.type = 'Pickup';
+        res.seats = 5;
+        res.fuel = 'Diesel';
+        res.engine = '2.4L / 2.8L Turbo Diesel 4x4 (204 PS)';
+        res.luggage = '4-5 Beg';
+        res.rate = 280;
+        res.deposit = 250;
+      } else if (s.includes('alphard') || s.includes('vellfire')) {
+        res.brand = 'Toyota';
+        res.type = 'MPV';
+        res.seats = 7;
+        res.fuel = 'Petrol';
+        res.engine = '2.5L Dual VVT-i Executive (182 PS)';
+        res.luggage = '4-5 Beg';
+        res.rate = 650;
+        res.deposit = 500;
+      } else if (s.includes('staria') || s.includes('carnival')) {
+        res.brand = s.includes('carnival') ? 'Kia' : 'Hyundai';
+        res.type = 'MPV';
+        res.seats = 10;
+        res.fuel = 'Diesel';
+        res.engine = '2.2L CRDi Turbo Diesel (177 PS)';
+        res.luggage = '4-5 Beg';
+        res.rate = 450;
+        res.deposit = 400;
+      } else if (s.includes('innova') || s.includes('zenix')) {
+        res.brand = 'Toyota';
+        res.type = 'MPV';
+        res.seats = 8;
+        res.fuel = s.includes('hybrid') ? 'Hybrid' : 'Petrol';
+        res.engine = '2.0L Dynamic Force (174 PS)';
+        res.luggage = '4-5 Beg';
+        res.rate = 320;
+        res.deposit = 250;
+      } else if (s.includes('alza')) {
+        res.brand = 'Perodua';
+        res.type = 'MPV';
+        res.seats = 7;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L Dual VVT-i D-CVT (106 PS)';
+        res.luggage = '4-5 Beg';
+        res.rate = 190;
+        res.deposit = 150;
+      } else if (s.includes('veloz') || s.includes('avanza')) {
+        res.brand = 'Toyota';
+        res.type = 'MPV';
+        res.seats = 7;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L Dual VVT-i D-CVT (106 PS)';
+        res.luggage = '4-5 Beg';
+        res.rate = 230;
+        res.deposit = 200;
+      } else if (s.includes('serena')) {
+        res.brand = 'Nissan';
+        res.type = 'MPV';
+        res.seats = 7;
+        res.fuel = 'Hybrid';
+        res.engine = '2.0L S-Hybrid MR20DD';
+        res.luggage = '4-5 Beg';
+        res.rate = 260;
+        res.deposit = 200;
+      } else if (s.includes('x90')) {
+        res.brand = 'Proton';
+        res.type = 'SUV';
+        res.seats = 7;
+        res.fuel = 'Hybrid';
+        res.engine = '1.5L TGDi MHEV (190 PS)';
+        res.luggage = '4-5 Beg';
+        res.rate = 350;
+        res.deposit = 300;
+      } else if (s.includes('aruz') || s.includes('rush')) {
+        res.brand = s.includes('rush') ? 'Toyota' : 'Perodua';
+        res.type = 'SUV';
+        res.seats = 7;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L Dual VVT-i (102 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 200;
+        res.deposit = 200;
+      } else if (s.includes('fortuner')) {
+        res.brand = 'Toyota';
+        res.type = 'SUV';
+        res.seats = 7;
+        res.fuel = 'Diesel';
+        res.engine = '2.8L VRZ Turbo Diesel (204 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 450;
+        res.deposit = 400;
+      } else if (s.includes('cr-v') || s.includes('crv')) {
+        res.brand = 'Honda';
+        res.type = 'SUV';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L VTEC Turbo (193 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 340;
+        res.deposit = 300;
+      } else if (s.includes('hr-v') || s.includes('hrv')) {
+        res.brand = 'Honda';
+        res.type = 'SUV';
+        res.seats = 5;
+        res.fuel = s.includes('hybrid') || s.includes('rs') ? 'Petrol' : 'Petrol';
+        res.engine = '1.5L VTEC Turbo (181 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 260;
+        res.deposit = 200;
+      } else if (s.includes('x50')) {
+        res.brand = 'Proton';
+        res.type = 'SUV';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L TGDi Turbocharged (177 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 220;
+        res.deposit = 200;
+      } else if (s.includes('x70')) {
+        res.brand = 'Proton';
+        res.type = 'SUV';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L TGDi Turbocharged (177 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 280;
+        res.deposit = 250;
+      } else if (s.includes('ativa')) {
+        res.brand = 'Perodua';
+        res.type = 'SUV';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.0L 1KR-VET Turbo (98 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 180;
+        res.deposit = 150;
+      } else if (s.includes('cx-5') || s.includes('cx5') || s.includes('cx-30') || s.includes('cx-3')) {
+        res.brand = 'Mazda';
+        res.type = 'SUV';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '2.0L / 2.5L SkyActiv-G (162 PS)';
+        res.luggage = '3-4 Beg';
+        res.rate = 300;
+        res.deposit = 250;
+      } else if (s.includes('bezza')) {
+        res.brand = 'Perodua';
+        res.type = 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.3L Dual VVT-i (94 hp)';
+        res.luggage = '2-3 Beg';
+        res.rate = 130;
+        res.deposit = 150;
+      } else if (s.includes('myvi')) {
+        res.brand = 'Perodua';
+        res.type = 'Hatchback';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L Dual VVT-i (102 hp)';
+        res.luggage = '2 Beg';
+        res.rate = 140;
+        res.deposit = 150;
+      } else if (s.includes('axia')) {
+        res.brand = 'Perodua';
+        res.type = 'Hatchback';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.0L VVT-i (67 hp)';
+        res.luggage = '2 Beg';
+        res.rate = 100;
+        res.deposit = 100;
+      } else if (s.includes('saga')) {
+        res.brand = 'Proton';
+        res.type = 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.3L VVT (95 PS)';
+        res.luggage = '2-3 Beg';
+        res.rate = 120;
+        res.deposit = 120;
+      } else if (s.includes('persona')) {
+        res.brand = 'Proton';
+        res.type = 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.6L VVT (109 PS)';
+        res.luggage = '2-3 Beg';
+        res.rate = 150;
+        res.deposit = 150;
+      } else if (s.includes('iriz')) {
+        res.brand = 'Proton';
+        res.type = 'Hatchback';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.6L VVT (109 PS)';
+        res.luggage = '2 Beg';
+        res.rate = 130;
+        res.deposit = 130;
+      } else if (s.includes('s70')) {
+        res.brand = 'Proton';
+        res.type = 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L Turbocharged (150 PS)';
+        res.luggage = '2-3 Beg';
+        res.rate = 190;
+        res.deposit = 200;
+      } else if (s.includes('civic')) {
+        res.brand = 'Honda';
+        res.type = 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L VTEC Turbo (182 PS)';
+        res.luggage = '2-3 Beg';
+        res.rate = 280;
+        res.deposit = 250;
+      } else if (s.includes('city')) {
+        res.brand = 'Honda';
+        res.type = s.includes('hatchback') ? 'Hatchback' : 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L DOHC i-VTEC (121 PS)';
+        res.luggage = s.includes('hatchback') ? '2 Beg' : '2-3 Beg';
+        res.rate = 180;
+        res.deposit = 200;
+      } else if (s.includes('vios')) {
+        res.brand = 'Toyota';
+        res.type = 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L Dual VVT-i (107 PS)';
+        res.luggage = '2-3 Beg';
+        res.rate = 180;
+        res.deposit = 200;
+      } else if (s.includes('yaris')) {
+        res.brand = 'Toyota';
+        res.type = 'Hatchback';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L Dual VVT-i (107 PS)';
+        res.luggage = '2 Beg';
+        res.rate = 170;
+        res.deposit = 180;
+      } else if (s.includes('camry') || s.includes('accord')) {
+        res.brand = s.includes('accord') ? 'Honda' : 'Toyota';
+        res.type = 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '2.5L Dynamic Force (209 PS)';
+        res.luggage = '2-3 Beg';
+        res.rate = 380;
+        res.deposit = 350;
+      } else if (s.includes('bmw')) {
+        res.brand = 'BMW';
+        res.type = s.includes('x') ? 'SUV' : 'Sedan';
+        res.seats = s.includes('x5') || s.includes('x7') ? 7 : 5;
+        res.fuel = 'Petrol';
+        res.engine = '2.0L TwinPower Turbo (184 PS)';
+        res.luggage = res.type === 'SUV' ? '3-4 Beg' : '2-3 Beg';
+        res.rate = 450;
+        res.deposit = 400;
+      } else if (s.includes('mercedes') || s.includes('c200') || s.includes('gla') || s.includes('e300') || s.includes('a200')) {
+        res.brand = 'Mercedes-Benz';
+        res.type = s.includes('gla') || s.includes('glc') ? 'SUV' : (s.includes('a200') ? 'Hatchback' : 'Sedan');
+        res.seats = 5;
+        res.fuel = 'Petrol';
+        res.engine = '1.5L / 2.0L Turbo (204 PS)';
+        res.luggage = res.type === 'SUV' ? '3-4 Beg' : '2-3 Beg';
+        res.rate = 480;
+        res.deposit = 400;
+      } else if (s.includes('tesla')) {
+        res.brand = 'Tesla';
+        res.type = s.includes('y') ? 'SUV' : 'Sedan';
+        res.seats = 5;
+        res.fuel = 'Electric (EV)';
+        res.engine = 'Dual Motor All-Wheel Drive (450 PS)';
+        res.luggage = res.type === 'SUV' ? '3-4 Beg' : '2-3 Beg';
+        res.rate = 480;
+        res.deposit = 400;
+      } else if (s.includes('atto') || s.includes('byd') || s.includes('seal') || s.includes('dolphin')) {
+        res.brand = 'BYD';
+        res.type = s.includes('dolphin') ? 'Hatchback' : (s.includes('seal') ? 'Sedan' : 'SUV');
+        res.seats = 5;
+        res.fuel = 'Electric (EV)';
+        res.engine = 'Blade Battery EV Motor (204 PS)';
+        res.luggage = res.type === 'Hatchback' ? '2 Beg' : '3-4 Beg';
+        res.rate = 260;
+        res.deposit = 200;
+      }
+
+      // Keyword modifiers
+      if (s.includes('hybrid') || s.includes('e:hev') || s.includes('hev') || s.includes('mhev')) res.fuel = 'Hybrid';
+      if (s.includes('electric') || s.includes('ev ') || s.endsWith(' ev')) res.fuel = 'Electric (EV)';
+      if (s.includes('diesel')) res.fuel = 'Diesel';
+      if (s.includes('manual') || s.includes('mt')) res.transmission = 'Manual';
+
+      return res;
+    }
+
+    function applyDetectedSpecs(data, carName) {
+      if (!data) return;
+
+      var brandEl = document.getElementById('car-brand');
+      var typeEl = document.getElementById('car-type');
+      var seatsEl = document.getElementById('car-seats');
+      var transEl = document.getElementById('car-transmission');
+      var fuelEl = document.getElementById('car-fuel');
+      var engineEl = document.getElementById('car-engine');
+      var luggageEl = document.getElementById('car-luggage');
+      var rateEl = document.getElementById('car-rate');
+      var depositEl = document.getElementById('car-deposit');
+      var yearEl = document.getElementById('car-year');
+
+      var animatedInputs = [];
+
+      if (brandEl && data.brand) {
+        brandEl.value = data.brand;
+        animatedInputs.push(brandEl);
+      }
+      if (typeEl && data.type) {
+        typeEl.value = data.type;
+        animatedInputs.push(typeEl);
+      }
+      if (seatsEl && data.seats) {
+        seatsEl.value = String(data.seats);
+        animatedInputs.push(seatsEl);
+      }
+      if (transEl && data.transmission) {
+        transEl.value = data.transmission;
+        animatedInputs.push(transEl);
+      }
+      if (fuelEl && data.fuel) {
+        fuelEl.value = data.fuel;
+        animatedInputs.push(fuelEl);
+      }
+      if (engineEl && data.engine) {
+        engineEl.value = data.engine;
+        animatedInputs.push(engineEl);
+      }
+      if (luggageEl && data.luggage) {
+        luggageEl.value = data.luggage;
+        animatedInputs.push(luggageEl);
+      }
+      if (rateEl && data.rate) {
+        rateEl.value = data.rate;
+        animatedInputs.push(rateEl);
+      }
+      if (depositEl && data.deposit) {
+        depositEl.value = data.deposit;
+        animatedInputs.push(depositEl);
+      }
+      if (yearEl && (!yearEl.value || yearEl.value === '')) {
+        yearEl.value = data.year || 2025;
+        animatedInputs.push(yearEl);
+      }
+
+      // Feature Checkboxes
+      var featMap = {
+        'carplay': document.getElementById('feat-carplay'),
+        'dashcam': document.getElementById('feat-dashcam'),
+        'keyless': document.getElementById('feat-keyless'),
+        'reverse_cam': document.getElementById('feat-reverse-cam'),
+        'tinted': document.getElementById('feat-tinted'),
+        'sensor': document.getElementById('feat-sensor')
+      };
+
+      var activeFeats = data.features || ['carplay', 'dashcam', 'keyless', 'reverse_cam', 'tinted', 'sensor'];
+      Object.keys(featMap).forEach(function (fKey) {
+        var cb = featMap[fKey];
+        if (cb) {
+          var shouldCheck = activeFeats.indexOf(fKey) !== -1;
+          cb.checked = shouldCheck;
+          var parentLabel = cb.closest('.filter-chip');
+          if (parentLabel) {
+            var icon = parentLabel.querySelector('.chip-check-icon');
+            if (shouldCheck) {
+              parentLabel.classList.add('active');
+              if (icon) icon.textContent = 'check_circle';
+            } else {
+              parentLabel.classList.remove('active');
+              if (icon) icon.textContent = 'add_circle_outline';
+            }
+          }
+        }
+      });
+
+      // Subtle Apple HIG glow animation
+      animatedInputs.forEach(function (el) {
+        el.classList.add('ai-autofilled-glow');
+        setTimeout(function () {
+          el.classList.remove('ai-autofilled-glow');
+        }, 2200);
+      });
+
+      // Update live preview card
+      updateLivePreview();
+
+      showToast('✨ AI berjaya mengesan spesifikasi & tarif untuk ' + carName + '. Anda bebas mengubah sebarang maklumat.', 'success');
+    }
+
     function updateLivePreview() {
       var nameVal = document.getElementById('car-name').value.trim() || 'Nama Model Kereta';
       var plateVal = document.getElementById('car-plate').value.trim().toUpperCase() || '---';
@@ -888,10 +1491,11 @@
       typeSelect.addEventListener('change', function () {
         var luggageSelect = document.getElementById('car-luggage');
         if (luggageSelect) {
-          if (typeSelect.value === 'Hatchback') luggageSelect.value = '2 Beg';
+          if (typeSelect.value === 'Hatchback' || typeSelect.value === 'Coupe') luggageSelect.value = '2 Beg';
           else if (typeSelect.value === 'Sedan') luggageSelect.value = '2-3 Beg';
-          else if (typeSelect.value === 'SUV') luggageSelect.value = '3-4 Beg';
+          else if (typeSelect.value === 'SUV' || typeSelect.value === 'Pickup') luggageSelect.value = '3-4 Beg';
           else if (typeSelect.value === 'MPV') luggageSelect.value = '4-5 Beg';
+          else if (typeSelect.value === 'Van') luggageSelect.value = '6+ Beg';
         }
         updateLivePreview();
       });

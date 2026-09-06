@@ -24,15 +24,15 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1788664723.245714,
-    "seen": 1788665247.5749729,
-    "ast_hash": "1240e29cc7427499ca7fc82b8418ab91",
+    "mtime": 1788670980.998148,
+    "seen": 1788671210.501667,
+    "ast_hash": "cd39392a64d6d8b09fdbbf7409d3a167",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
-    "mtime": 1788622872.5056984,
-    "seen": 1788653435.683595,
-    "ast_hash": "9ef86aab16c89df3ce829b7b76c7ac6d",
+    "mtime": 1788665529.8981957,
+    "seen": 1788665722.6727612,
+    "ast_hash": "0dc05fdd679d6457883ba2aa4774a338",
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788665209.7258503,
-    "seen": 1788665247.575069,
-    "ast_hash": "f7de03d52260bb74a392ea4536c860f5",
+    "mtime": 1788671125.0901227,
+    "seen": 1788671210.501726,
+    "ast_hash": "d013002f61279480e991d5dd6231284a",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -558,9 +558,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788665091.3850458,
-    "seen": 1788665247.575178,
-    "ast_hash": "134ad85d55314f715b5cf35bbe1031a4",
+    "mtime": 1788665492.4805844,
+    "seen": 1788665722.673242,
+    "ast_hash": "1bb53f24c12bcb5269f01d3b058716d1",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
@@ -11214,21 +11214,21 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car.html": {
-    "mtime": 1788665080.5984185,
-    "seen": 1788665247.575129,
-    "ast_hash": "f8d9301ceaa845a6495d0326a321766b",
+    "mtime": 1788669862.44773,
+    "seen": 1788671210.501745,
+    "ast_hash": "bb100ca3169f00abf9bd981b03d54855",
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
-    "mtime": 1788645250.8873372,
-    "seen": 1788653435.6837661,
-    "ast_hash": "c8a1135b6cd50e29cbc2b28848154ee6",
+    "mtime": 1788665482.141784,
+    "seen": 1788665722.6732411,
+    "ast_hash": "1d824733cadf75ba88000efd760182da",
     "semantic_hash": ""
   },
   "admin/pages/car/rented-cars.html": {
-    "mtime": 1788621273.94248,
-    "seen": 1788621487.716728,
-    "ast_hash": "1c7c77dc64278337b18757749bc50d09",
+    "mtime": 1788665548.4571595,
+    "seen": 1788665722.673248,
+    "ast_hash": "afc4c7b7c7f8294a9cd8f374e64a0b23",
     "semantic_hash": ""
   },
   "admin/pages/customer/verifications.html": {

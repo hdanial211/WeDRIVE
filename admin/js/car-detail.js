@@ -214,8 +214,6 @@ function setText(id, text) {
 function setupExterior360(car) {
   const stageImg = document.getElementById('studio-canvas-stage');
   const fallbackIcon = document.getElementById('studio-fallback-icon');
-  const slider = document.getElementById('studio-scrub-slider');
-
   exteriorFrames = [];
   currentFrameIndex = 0;
 
@@ -259,11 +257,6 @@ function setupExterior360(car) {
     stageImg.src = resolveImgSrc(exteriorFrames[0]);
     currentFrameIndex = 0;
     updateAnglePill(0);
-
-    if (slider) {
-      slider.max = exteriorFrames.length - 1;
-      slider.value = 0;
-    }
   } else {
     stageImg.style.display = 'none';
     if (fallbackIcon) fallbackIcon.classList.remove('hidden');
@@ -280,7 +273,7 @@ function bind360DragEvents() {
 
   // Mouse Drag
   stage.addEventListener('mousedown', (e) => {
-    if (e.target.closest('.studio-controls-bar') || e.target.closest('.studio-angle-indicator')) return;
+    if (e.target.closest('.studio-fullscreen-btn') || e.target.closest('.studio-controls-bar') || e.target.closest('.studio-angle-indicator')) return;
     isDragging360 = true;
     startDragX = e.clientX;
     startFrameOnDrag = currentFrameIndex;
@@ -305,7 +298,7 @@ function bind360DragEvents() {
 
   // Touch Swipe
   stage.addEventListener('touchstart', (e) => {
-    if (e.target.closest('.studio-controls-bar')) return;
+    if (e.target.closest('.studio-fullscreen-btn') || e.target.closest('.studio-controls-bar')) return;
     isDragging360 = true;
     startDragX = e.touches[0].clientX;
     startFrameOnDrag = currentFrameIndex;
@@ -338,18 +331,7 @@ function set360Frame(index) {
     stageImg.src = resolveImgSrc(exteriorFrames[index]);
   }
 
-  const slider = document.getElementById('studio-scrub-slider');
-  if (slider && !isDragging360) {
-    slider.value = index;
-  }
-
   updateAnglePill(index);
-}
-
-function handleScrubInput(val) {
-  if (isAutoSpinning) toggleAutoSpin();
-  const index = parseInt(val);
-  set360Frame(index);
 }
 
 function updateAnglePill(index) {

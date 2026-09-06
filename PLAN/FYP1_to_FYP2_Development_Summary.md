@@ -3801,3 +3801,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.4 Removed cleanliness labels and enriched car cards with genuine customer-focused vehicle specifications`
   - Tag Versi: `5.9.4`
+
+---
+
+## 🔘 [MINOR UPDATE] 173. Pemansuhan Bar Kawalan Gelangsar Studio 360, Butang Skrin Penuh Bulat Sempurna 1:1 & Penguatkuasaan Peraturan Sifar Bentuk Bujur (Zero Oval Rule) (v5.9.5)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  1. *Pemansuhan Bar Kawalan Gelangsar 360*:
+     - Pengguna meminta agar bar kawalan di bahagian bawah Studio 360 (termasuk butang `Auto-Putar`, penunjuk sudut darjah `0°` / `360°`, dan gelangsar *scrub*) dibuang sepenuhnya, dan hanya butang *fullscreen* sahaja yang ditinggalkan:
+       > *"ni buang tinggalkan untuk fullscreen sahaja..."*
+  2. *Standard Geometri Bulat Sempurna 1:1 (Larangan Keras Bentuk Bujur/Oval)*:
+     - Pengguna menegaskan semula standard geometri mandatori sistem: sebarang elemen atau butang bulat **WAJIB berbentuk bulat sempurna (nisbah tepat 1:1)** dan **DILARANG SAMA SEKALI menjadi bujur/lonjong**:
+       > *"...n kan saya cakap minimum bulat jangan bujur..berapa kali saya nak cakap .awak tambah dekat agent supaya x terlupa"*
+  3. *Penguatkuasaan Kekal Dalam Fail Peraturan Ejen (`.agents/rules/`)*:
+     - Memasukkan peraturan geometri ini secara kekal ke dalam semua fail peraturan sistem ejen agar tidak dilupakan pada masa akan datang.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pengemaskinian Studio 360 (`admin/pages/car/car-detail/car-detail.html`)**:
+     - Membuang keseluruhan bekas `.studio-controls-bar` yang mengandungi butang `#studio-spin-btn`, input `#studio-scrub-slider`, dan teks darjah.
+     - Menggantikannya dengan butang terapung skrin penuh mandiri:
+       `<button type="button" class="studio-fullscreen-btn" onclick="toggleFullscreenStudio()" title="Skrin Penuh" aria-label="Skrin Penuh">`.
+  2. **Penggayaan Geometri Apple HIG (`shared/css/wedrive.css`)**:
+     - Mereka bentuk `.studio-fullscreen-btn` dengan nisbah bulat tepat 1:1:
+       `width: 44px; height: 44px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important;`.
+     - Menggunakan bahan kaca Apple *Obsidian Frosted Glass* (`rgba(22, 22, 24, 0.85)` dengan `-webkit-backdrop-filter: blur(20px)`), sempadan halus 1px spekular, dan maklum balas sentuhan taktil `scale(0.95)` pada `:active`.
+     - Menambah perlindungan `white-space: nowrap !important; flex-shrink: 0 !important;` pada semua kapsul pil seperti `.apple-category-pill` untuk menghalang lipatan teks menjadi bentuk telur bujur.
+  3. **Pengendalian Logik & Seretan Interaktif (`admin/js/car-detail.js`)**:
+     - Menambah pengesanan `e.target.closest('.studio-fullscreen-btn')` pada *event listener* `mousedown` dan `touchstart` supaya klik butang skrin penuh tidak memicu seretan putaran kereta 360°.
+  4. **Pengemaskinian Menyeluruh Peraturan Ejen (`.agents/rules/`)**:
+     - Mengemas kini 5 dokumen peraturan dan kemahiran dengan seksyen mandatori:
+       - `.agents/rules/ruleprompt.md` (Seksyen 1B: Prinsip Mandatori Geometri Bulat: Strict 1:1 Perfect Circle — DILARANG SAMA SEKALI BUJUR / OVAL).
+       - `.agents/rules/apple_hig_design_system.md` (Pilar 4: Komponen & Geometri Bulat Sempurna 1:1).
+       - `.agents/rules/apple_hig_components.md` (Pilar 5: Butang Ikon Bulat 1:1 Sempurna vs Kapsul Pil Mengembang Mendatar).
+       - `.agents/rules/apple_device_support.md` (Prinsip 7: Prinsip Bulat Sempurna 1:1 Anti-Oval).
+       - `.agents/rules/navigation_and_ui.md` (Seksyen 4: Prinsip Geometri Butang: Bulat 1:1 Sempurna vs Kapsul Pil).
+       - `.agents/skills/frontend-ui/SKILL.md` (Seksyen 2: Piawaian Geometri & Tipografi).
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Chrome DevTools MCP**: Pengesahan visual Studio 360 pada `car-detail.html` membuktikan bar gelangsar berjaya disingkirkan, dan butang skrin penuh terapung di sudut kanan bawah sebagai bulatan sempurna 1:1 tanpa herotan bujur.
+  - **Playwright Automated Tests**: Kesemua **33 ujian automasi** lulus penuh (**100% Pass Rate**).
+
+- **Maklumat Git**:
+  - Commit: `5.9.5 Removed 360 slider controls, added standalone 1:1 circular fullscreen button, and permanently enforced strict Zero Oval geometry rules`
+  - Tag Versi: `5.9.5`
