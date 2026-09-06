@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788701197.7620966,
-    "seen": 1788701207.6142368,
-    "ast_hash": "f23afa5a79e0f3e3a81036b8a9303cc5",
+    "mtime": 1788701632.2251377,
+    "seen": 1788701735.57854,
+    "ast_hash": "ea2155245243fef0ff5217f686aff368",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -660,9 +660,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788700567.7413974,
-    "seen": 1788700962.3703291,
-    "ast_hash": "12d52657542489fd116a847efd70167a",
+    "mtime": 1788701572.4112413,
+    "seen": 1788701735.578592,
+    "ast_hash": "f99a85b63cd3a77f93b121a682801b7c",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11262,9 +11262,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/01_core_rules.md": {
-    "mtime": 1788700534.4227903,
-    "seen": 1788700962.370272,
-    "ast_hash": "ee59101d6da543309eccb8ec665c7431",
+    "mtime": 1788701531.8596988,
+    "seen": 1788701735.57849,
+    "ast_hash": "286a7748ae62a8664482d76f5dfc9ce7",
     "semantic_hash": ""
   },
   ".agents/rules/02_apple_hig_design_system.md": {
@@ -11328,9 +11328,9 @@
     "semantic_hash": ""
   },
   ".agents/PROJECT_STRUCTURE.md": {
-    "mtime": 1788700552.0500257,
-    "seen": 1788700962.370271,
-    "ast_hash": "1e1fa6fed45171cfda98adfe24c6783e",
+    "mtime": 1788701564.2548623,
+    "seen": 1788701735.578489,
+    "ast_hash": "1c4100899bd5fd6f36c850cbe99c13ee",
     "semantic_hash": ""
   },
   ".agents/rules/12_max_content_limit.md": {
@@ -11406,9 +11406,27 @@
     "semantic_hash": ""
   },
   ".agents/rules/18_skills_and_workflows_protocol.md": {
-    "mtime": 1788700451.8212533,
-    "seen": 1788700962.370285,
-    "ast_hash": "333cc17cc2337bf473172594fa5fa123",
+    "mtime": 1788701598.0169048,
+    "seen": 1788701735.5785248,
+    "ast_hash": "c2146e85caed08437dec7e7023ce473f",
+    "semantic_hash": ""
+  },
+  ".agents/rules/19_prompt_engineering_standard.md": {
+    "mtime": 1788701510.2131805,
+    "seen": 1788701735.578526,
+    "ast_hash": "38733badeec5d259d3126c2e8e3024c6",
+    "semantic_hash": ""
+  },
+  ".agents/skills/prompt-polisher/SKILL.md": {
+    "mtime": 1788701489.9480927,
+    "seen": 1788701735.5785291,
+    "ast_hash": "e1c0956ea385ebbd3c129878d880ebcf",
+    "semantic_hash": ""
+  },
+  ".agents/workflows/perfect_prompt.md": {
+    "mtime": 1788701496.4574747,
+    "seen": 1788701735.578534,
+    "ast_hash": "eedc3d0fcae3db02e62d1a6c57f439d4",
     "semantic_hash": ""
   }
 }

@@ -2,30 +2,33 @@
 
 ## 1. Mandatori Pemakaian Instrumen Pintar (Mandatory Active Usage)
 
-Bagi menjamin kualiti kejuruteraan perisian bertaraf Apple Developer dan kejayaan penilaian Tesis FYP 2, ejen AI **WAJIB MEMAKAI DAN MENGAKTIFKAN** 5 Kemahiran (*Skills*) dan 5 Alur Kerja (*Workflows*) mengikut fasa kitaran hidup pembangunan:
+Bagi menjamin kualiti kejuruteraan perisian bertaraf Apple Developer dan kejayaan penilaian Tesis FYP 2, ejen AI **WAJIB MEMAKAI DAN MENGAKTIFKAN** 6 Kemahiran (*Skills*) dan 6 Alur Kerja (*Workflows*) mengikut fasa kitaran hidup pembangunan:
 
 ```text
-[Permintaan Pengguna] ──► FASA 1: Perancangan & PRD (/prd_creator)
-                                  │
-                                  ▼
+[Permintaan Pengguna] ──► FASA 0: Penyelarasan Prompt & Kehendak (prompt-polisher & /perfect_prompt)
+                                   │
+                                   ▼
+                          FASA 1: Perancangan & PRD (/prd_creator)
+                                   │
+                                   ▼
                           FASA 2: Reka Bentuk & Antaramuka (frontend-ui)
-                                  │
-                                  ▼
+                                   │
+                                   ▼
                           FASA 3: Pangkalan Data & API (supabase-ops & context7)
-                                  │
-                                  ▼
+                                   │
+                                   ▼
                           FASA 4: Pemeriksaan Kualiti & Ujian (/qa_audit & playwright-testing)
-                                  │
-                                  ▼
+                                   │
+                                   ▼
                           FASA 5: Audit Keselamatan Siber (strix-security-audit)
-                                  │
-                                  ▼
+                                   │
+                                   ▼
                           FASA 6: Pelepasan Versi & Git (/release_push SemVer X.Y.Z)
 ```
 
 ---
 
-## 2. Matriks Pemakaian 5 Kemahiran Teras WeDRIVE (.agents/skills/)
+## 2. Matriks Pemakaian 6 Kemahiran Teras WeDRIVE (.agents/skills/)
 
 ### A. Kemahiran `frontend-ui` (Kejuruteraan Reka Bentuk Apple HIG)
 - **Bila Digunakan:** Setiap kali membina atau mengubah fail HTML, CSS, dan reka letak antaramuka.
@@ -61,20 +64,28 @@ Bagi menjamin kualiti kejuruteraan perisian bertaraf Apple Developer dan kejayaa
   - Jalankan pengimbasan kelemahan OWASP Top 10 (XSS, SQLi, perlindungan PII, tamat masa sesi 10 minit pentadbir).
   - Sediakan jadual laporan audit keselamatan empirikal untuk Bab 4 & Bab 5 Laporan FYP 2.
 
+### F. Kemahiran `prompt-polisher` (Penalaan Idea Kasar ke Spesifikasi 4D)
+- **Bila Digunakan:** Apabila pengguna mengemukakan hasrat umum atau idea kasar yang memerlukan penalaan pantas mengikut formula emas WeDRIVE.
+- **Peraturan Mandatori:**
+  - Petakan idea kasar ke dalam 4 dimensi teknikal: Apple HIG UI, Supabase Data, Playwright QA, dan Bahasa Melayu Moden 2026.
+  - Elakkan soalan bertubi-tubi yang membebankan pengguna; terus sediakan cadangan prompt siap guna.
+
 ---
 
-## 3. Matriks Pelaksanaan 5 Alur Kerja Pintar (.agents/workflows/)
+## 3. Matriks Pelaksanaan 6 Alur Kerja Pintar (.agents/workflows/)
 
-1. **`/prd_creator` (Penjanaan PRD 6 Pilar Mandatori):**
+1. **`/perfect_prompt` (Penyelarasan Kehendak & Formula Emas 3 Baris):**
+   - Mengaktifkan temuduga pantas `/grill-me` dan merumuskan formula emas: 1. Sasaran Fail `@target_file`, 2. Tindakan/Matlamat, 3. Aliran Visual/Interaksi.
+2. **`/prd_creator` (Penjanaan PRD 6 Pilar Mandatori):**
    - Wajib dimulakan sebelum sebarang baris kod ditulis.
    - Kod hanya boleh disentuh setelah dokumen PRD di `implementation_plan.md` diluluskan oleh pengguna.
-2. **`/qa_audit` (Audit Kualiti Pra-Commit):**
+3. **`/qa_audit` (Audit Kualiti Pra-Commit):**
    - Menjalankan semakan had siling aksara 12,000 (`wc -m .agents/rules/*.md`), semakan amaran linter, dan ujian Playwright 100% lulus.
-3. **`/release_push` (Pelepasan Versi SemVer):**
+4. **`/release_push` (Pelepasan Versi SemVer):**
    - Menemui versi terkini menerusi `git describe --tags --abbrev=0`, mengira nombor versi `X.Y.Z`, mencipta tag sepadan, dan menolak ke GitHub.
-4. **`/graphify` (Pengemaskinian Graf Pengetahuan):**
+5. **`/graphify` (Pengemaskinian Graf Pengetahuan):**
    - Menjalankan `graphify update .` bagi memetakan nod sistem terkini tanpa pembaziran kuota token AI.
-5. **`/stitch_generation` (Penjanaan UI Gemini 3.8 UHQ):**
+6. **`/stitch_generation` (Penjanaan UI Gemini 3.8 UHQ):**
    - Membina skrin antaramuka baharu menggunakan Google Stitch MCP mengikut panduan reka bentuk WeDRIVE.
 
 ---

@@ -12,7 +12,7 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 .agents/
 +-- PROJECT_STRUCTURE.md        # Dokumen Struktur Projek Utama (Fail ini)
 +-- DESIGN.md                   # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-+-- rules/                      # 18 Fail Peraturan Bernombor (Strict Max 12,000 chars - Bebas Kembang Hingga 20-30 Fail):
++-- rules/                      # 19 Fail Peraturan Bernombor (Strict Max 12,000 chars - Bebas Kembang Hingga 20-30 Fail):
 |   +-- 01_core_rules.md        # Gatekeeper Protocol, Protokol Alatan Pintar & MCP, Git, PRD
 |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3: Asas, Bento Grid & Corak Interaksi
 |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6: Komponen, Input Borang & Senarai Semak
@@ -31,18 +31,21 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 |   +-- 16_ai_tooling_and_mcps.md      # Protokol Ekosistem 9 Alatan Pintar & Pelayan MCP WeDRIVE
 |   +-- 17_git_versioning_standard.md  # Piawaian Penemuan Versi Git, Formula SemVer X.Y.Z & Protokol Push
 |   +-- 18_skills_and_workflows_protocol.md # Protokol Mandatori Pemakaian 5 Kemahiran & 5 Alur Kerja Pintar
-+-- skills/                     # 5 Kemahiran Automasi Khusus:
+|   +-- 19_prompt_engineering_standard.md # Piawaian Kejuruteraan Prompt Emas, Peringatan Proaktif & Penalaan Prompt
++-- skills/                     # 6 Kemahiran Automasi Khusus:
 |   +-- context7/               # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
 |   +-- frontend-ui/            # Rekaan Antaramuka Apple HIG & Bento Grid
 |   +-- playwright-testing/     # Ujian Automasi E2E Playwright CLI (100% Pass Rate)
 |   +-- supabase-ops/           # Operasi Pangkalan Data Supabase PostgreSQL & Dasar RLS
 |   +-- strix-security-audit/   # Simulasi Audit Keselamatan Siber & Bukti Tesis FYP 2
-+-- workflows/                  # 5 Aliran Kerja Automasi (Slash Commands):
+|   +-- prompt-polisher/        # Penalaan Idea Kasar kepada Spesifikasi Teknikal 4D WeDRIVE
++-- workflows/                  # 6 Aliran Kerja Automasi (Slash Commands):
 |   +-- graphify.md             # Penjanaan & Pengemaskinian Graf Pengetahuan (/graphify)
 |   +-- stitch_generation.md    # Penjanaan Antaramuka Gemini 3.8 UHQ (/stitch_generation)
 |   +-- release_push.md         # Pelepasan Versi Git SemVer, Tag & Push (/release_push)
 |   +-- qa_audit.md             # Audit Kualiti Menyeluruh Pra-Commit (/qa_audit)
 |   +-- prd_creator.md          # Penjanaan PRD 6 Pilar Mandatori (/prd_creator)
+|   +-- perfect_prompt.md       # Penyelarasan Kehendak & Kejuruteraan Prompt Pantas (/perfect_prompt)
 ```
 
 ---

@@ -4466,6 +4466,61 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.3.2 Configure Figma MCP server with authenticated personal access token`
   - Tag Versi: `6.3.2`
 
+---
+
+### [MINOR UPDATE] 192. Pewujudan Peraturan 19 (Piawaian Kejuruteraan Prompt Emas), Kemahiran prompt-polisher & Alur Kerja /perfect_prompt (v6.4.0)
+- **Tarikh**: 6 September 2026
+- **Versi**: `6.4.0` (Peningkatan Versi Minor: Penambahan instrumen pintar prompt engineering, kemahiran, alur kerja dan peraturan modular baharu)
+- **Status**: SELESAI
+- **Fail Terlibat**:
+  - `.agents/rules/19_prompt_engineering_standard.md` (BARU)
+  - `/Users/hakim/.gemini/config/rules/prompt_engineering_standard.md` (BARU)
+  - `.agents/skills/prompt-polisher/SKILL.md` (BARU)
+  - `.agents/workflows/perfect_prompt.md` (BARU)
+  - `.agents/rules/01_core_rules.md` (Kemas kini indeks)
+  - `.agents/rules/18_skills_and_workflows_protocol.md` (Kemas kini 6 Kemahiran & 6 Alur Kerja)
+  - `.agents/PROJECT_STRUCTURE.md` (Kemas kini struktur teras)
+  - `docs/PROJECT_STRUCTURE.md` (Kemas kini dokumentasi struktur)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md` (Perekodan log 192)
+
+- **Objektif & Latar Belakang**:
+  - Menyediakan penyelesaian komprehensif bagi mengoptimumkan interaksi arahan pengguna mengikut standard WeDRIVE.
+  - Menguatkuasakan **Formula Prompt Emas 3 Baris WeDRIVE** (`@target_file`, matlamat tindakan, dan aliran visual Apple HIG).
+  - Melantik AI sebagai pembantu proaktif (*Proactive Assistant Duty*) untuk mengingatkan dan melengkapkan arahan pengguna sekiranya prompt yang diterima terlalu ringkas.
+  - Memastikan sifar duplikasi (*Zero Duplication*) merentas peraturan, kemahiran, dan aliran kerja dengan memelihara had siling 12,000 aksara per fail.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pewujudan Rule 19 (`.agents/rules/19_prompt_engineering_standard.md`)**:
+     - Menetapkan garis panduan format prompt 3 baris standard WeDRIVE.
+     - Menguatkuasakan tugas AI memberi peringatan proaktif dan penalaan automatik secara santai tanpa membebankan pengguna.
+     - Mengintegrasikan dialog pantas aneka pilihan `/grill-me` menerusi alatan `ask_question`.
+  2. **Penyelarasan Peraturan Global Antigravity IDE (`~/.gemini/config/rules/prompt_engineering_standard.md`)**:
+     - Mengukuhkan protokol kejuruteraan prompt merentas semua sesi dan perbualan IDE.
+  3. **Pewujudan Kemahiran Pintar `prompt-polisher` (`.agents/skills/prompt-polisher/SKILL.md`)**:
+     - Menala input idea kasar pengguna kepada spesifikasi teknikal 4 Dimensi:
+       - *Dimensi UI & Apple HIG*: Bento grid, sifar bujur (1:1 ikon, kapsul teks), bahan kaca Thin Material.
+       - *Dimensi Pangkalan Data*: Skema jadual Supabase, RLS, dan sifar data palsu.
+       - *Dimensi QA*: Senario ujian Playwright CLI (100% Pass Rate).
+       - *Dimensi Bahasa Melayu Moden 2026*: Kosa kata kontemporari segar, penapisan senarai hitam.
+  4. **Pewujudan Alur Kerja `/perfect_prompt` (`.agents/workflows/perfect_prompt.md`)**:
+     - Menyediakan jalan pantas memproses arahan ringkas ke format spesifikasi sedia guna sebelum dialirkan ke `/prd_creator`.
+  5. **Penyelarasan Dokumen Seni Bina & Struktur Repositori**:
+     - Mengemas kini `.agents/rules/01_core_rules.md` untuk menyertakan pautan rujukan Rule 19.
+     - Mengemas kini `.agents/rules/18_skills_and_workflows_protocol.md` kepada matriks 6 Kemahiran dan 6 Alur Kerja Pintar.
+     - Menyelaraskan hierarki sistem dalam `.agents/PROJECT_STRUCTURE.md` dan `docs/PROJECT_STRUCTURE.md`.
+  6. **Pematuhan Ketat Sifar Duplikasi & Had Aksara 12,000**:
+     - Pengesahan menyeluruh menggunakan `wc -m .agents/rules/*.md` mengesahkan kesemua 19 fail kekal di bawah 12,000 aksara.
+     - Setiap fail mengekalkan fungsi pengkhususan modular yang tersendiri tanpa pertindihan teks (*Single Source of Truth*).
+
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **36/36 Ujian Lulus (100% Pass Rate)**.
+  - Graf pengetahuan Graphify dikemaskini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.4.0 Establish Rule 19 prompt engineering standards, prompt-polisher skill, and perfect_prompt workflow`
+  - Tag Versi: `6.4.0`
+
+
 
 
 
