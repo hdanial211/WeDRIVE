@@ -129,9 +129,11 @@ function loadCarProfile(car) {
 
   const statusEl = document.getElementById('cd-status');
   if (statusEl) {
+    const isEn = localStorage.getItem('wedrive_lang') === 'en';
     const isAvail = (car.status || 'Available').toLowerCase() === 'available';
+    const statusLabel = isAvail ? (isEn ? 'Available' : 'Tersedia') : (isEn ? 'Rented' : 'Sedang Disewa');
     statusEl.className = `status-badge ${isAvail ? 'available' : 'rented'}`;
-    statusEl.innerHTML = `<span class="dot"></span> ${car.status || 'Available'}`;
+    statusEl.innerHTML = `<span class="dot"></span> ${statusLabel}`;
   }
 
   // Commercial rate & deposit
@@ -391,15 +393,22 @@ function toggleAutoSpin() {
 }
 
 function toggleFullscreenStudio() {
-  const stage = document.getElementById('studio-exterior-stage');
+  const stage = document.getElementById('studio-exterior-stage') || document.getElementById('cd-studio-hero');
   if (!stage) return;
 
   if (!document.fullscreenElement) {
     stage.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
   } else {
-    document.exitFullscreen();
+    document.exitFullscreen().catch(err => console.log('Exit fullscreen error:', err));
   }
 }
+
+document.addEventListener('fullscreenchange', () => {
+  const icon = document.querySelector('.studio-fullscreen-btn .material-icons-round');
+  if (icon) {
+    icon.textContent = document.fullscreenElement ? 'fullscreen_exit' : 'fullscreen';
+  }
+});
 
 /* ─────────────────────────────────────────────────────────────────────────────
    4. STUDIO 360° INTERIOR VIRTUAL COCKPIT ENGINE

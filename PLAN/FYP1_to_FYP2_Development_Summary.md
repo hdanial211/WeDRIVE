@@ -3729,3 +3729,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.2 Cleaned up accessibility form labels, inline CSS styles, and vendor prefix compatibility`
   - Tag Versi: `5.9.2`
+
+---
+
+## 🚀 [MINOR UPDATE] 171. Penyingkiran Gelangsar 360, Butang Skrin Penuh Bulat Sempurna 1:1 & Penguatkuasaan Peraturan Anti-Bujur (v5.9.3)
+
+- **Punca Keperluan & Tindakan**:
+  1. *Penyingkiran Bar Kawalan Bawah Studio 360 (`car-detail.html` & `car-detail.js`)*:
+     - Membuang bar kawalan bawah (`.studio-controls-bar`) yang mengandungi butang "Auto-Putar", label darjah `0°` / `360°`, dan gelangsar *scrub slider*.
+     - Meninggalkan HANYA butang Skrin Penuh (*Fullscreen*) terapung di penjuru kanan bawah peringkat studio 360°.
+     - Menambah semakan selamat (*null guards*) dalam `car-detail.js` bagi memastikan interaksi putaran (drag-to-rotate), pintasan kekunci, dan pertukaran mod luaran/dalaman berjalan lancar tanpa ralat konsol.
+  2. *Standard Geometri Bulat Sempurna 1:1 (Strict 1:1 Circle / Zero-Oval Rule)*:
+     - Mengubah suai butang skrin penuh `.studio-fullscreen-fab` menjadi bulatan sempurna 1:1 (`width: 44px; height: 44px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; display: flex; align-items: center; justify-content: center;`).
+     - Menghapuskan sama sekali herotan bujur (*oval/elliptical distortion*).
+  3. *Penguatkuasaan Peraturan Kekal Agen (`.agents/rules/`)*:
+     - Mengemas kini 5 fail peraturan agen rasmi:
+       - `.agents/rules/ruleprompt.md` (Seksyen 1B: Prinsip Mandatori Geometri Bulat: Strict 1:1 Perfect Circle — DILARANG SAMA SEKALI BUJUR / OVAL).
+       - `.agents/rules/apple_hig_design_system.md` (Seksyen 2.6: Prinsip Bulat Sempurna 1:1).
+       - `.agents/rules/apple_hig_components.md` (Pilar 4.3: Perbezaan Ketara Elemen Bulat vs Butang Kapsul Berteks).
+       - `.agents/rules/apple_device_support.md` (Prinsip 7: Prinsip Bulat Sempurna 1:1 Anti-Oval).
+       - `.agents/rules/navigation_and_ui.md` (Seksyen 4: Prinsip Geometri Butang: Bulat 1:1 Sempurna vs Kapsul Pil).
+  4. *Penyelarasan Bahasa Melayu (Kereta vs Kenderaan)*:
+     - Mengemas kini entri bar sisi dan kamus bahasa `sidebar_all_cars` ("Semua Kereta"), `sidebar_available_cars` ("Kereta Tersedia"), `sidebar_rented_cars` ("Kereta Sedang Disewa") dalam `ms.json`, `ms.js`, `en.json`, `en.js`, dan `sidebar-loader.js`.
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Chrome DevTools MCP**: Pengesahan visual Studio 360 pada `car-detail.html` membuktikan bar gelangsar berjaya disingkirkan, dan butang skrin penuh terpapar sebagai bulatan sempurna 1:1.
+  - **Playwright Automated Tests**: Kesemua **33 ujian automasi** lulus penuh (**100% Pass Rate**).
+
+- **Maklumat Git**:
+  - Commit: `5.9.3 Removed 360 slider controls, added standalone 1:1 circular fullscreen button, and enforced strict circular geometry rules`
+  - Tag Versi: `5.9.3`

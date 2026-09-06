@@ -14,6 +14,30 @@ trigger: always_on
   - **Mod Siang & Malam:** Day Mode (`#F5F5F7` / `#FFFFFF`) dan Night Mode (`#000000` True Black / `#161618` Bento).
   - **Bahan Kaca:** Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
 
+### 1B. Prinsip Mandatori Geometri Bulat (Strict 1:1 Perfect Circle — DILARANG SAMA SEKALI BUJUR / OVAL)
+- **Larangan Keras Bentuk Bujur (Zero Oval / Anti-Elliptical Rule):** Sebarang butang, avatar, lencana ikon, FAB, atau penunjuk interaktif yang direka bentuk untuk berbentuk BULAT WAJIB mempunyai nisbah aspek tepat **1:1** (`width == height`, `aspect-ratio: 1 / 1 !important;`, `border-radius: 50% !important;`, `padding: 0 !important;`, `display: flex; align-items: center; justify-content: center;`, `box-sizing: border-box;`).
+- **DILARANG SAMA SEKALI** elemen bulat menjadi bujur / lonjong (*oval / ellipse*) akibat pemberian padding melintang, flexing `align-self: stretch`, atau perbezaan antara nilai lebar dan tinggi.
+- **Kapsul/Pill Mengembang Mendatar Sahaja (Anti-Lipat Teks Bujur):** Sekiranya elemen mengandungi teks, ia WAJIB mengembang secara mendatar menjadi kapsul/pil simetri (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`). DILARANG SAMA SEKALI teks terlipat ke baris kedua yang menyebabkan bentuk kapsul herot menjadi telur bujur (*squashed oval*).
+
+### 1C. Standard Reka Bentuk Apple Developer Bento Grid (developer.apple.com/design)
+- **Kemas, Teratur & Berfungsi Penuh:** Setiap susun atur halaman WAJIB berpandukan hierarki dan ketelitian reka bentuk **Apple Developer Design** (`https://developer.apple.com/design/`).
+- **Zero Dead Space (Tiada Ruang Kosong Terbuang):** Setiap kad Bento WAJIB diseimbangkan ketinggiannya. DILARANG SAMA SEKALI wujud lompang hitam/ruang kosong gergasi di bahagian bawah kad atau kolum yang dibiarkan kosong tanpa kandungan.
+- **Ritma Spacing 24px Konsisten:**
+  - Jarak grid antara kad: `gap: 24px;`
+  - Margin bawah kad: `margin-bottom: 24px;`
+  - Padding dalam kad: `padding: 24px;`
+  - Sudut squircle kad utama: `border-radius: 24px;`
+  - Sudut kotak input dan sub-elemen: `border-radius: 14px;`
+
+### 1D. Penyeragaman Penuh Bahasa Melayu Piawai Malaysia (Pemansuhan Mutlak Istilah 'Armada')
+- **Bahasa Melayu Sebenar (Bukan Bahasa Indonesia):** Sistem WeDRIVE WAJIB menggunakan 100% Bahasa Melayu piawai Malaysia yang asli, elegan, dan profesional.
+- **DILARANG SAMA SEKALI Penggunaan Istilah 'Armada':** Mansuhkan semua penggunaan perkataan 'Armada' (istilah pinjaman/terjemahan harfiah *Fleet* ala Indonesia).
+- **Gunakan Istilah 'Kereta' Secara Seragam:**
+  - Bar Sisi: `Pengurusan Kereta` -> `Semua Kereta`, `Kereta Tersedia`, `Kereta Sedang Disewa`, `Studio 360° & Info Kereta`, `Tambah Kereta Baharu`.
+  - Tindakan & Navigasi: `Kembali ke Senarai Kereta` (bukan "Kembali ke Armada").
+  - Tajuk & Penerangan: `Maklumat Teknikal Kereta`, `Inventori Kereta`.
+  - Lencana Status: `Tersedia` / `Sedang Disewa` (dilarang campur aduk teks Inggeris "Available" semasa mod BM aktif).
+
 ---
 
 ## 2. Git Version Control

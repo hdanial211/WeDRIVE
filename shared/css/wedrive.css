@@ -15306,6 +15306,16 @@ html.night-mode .bento-ghost-icon,
   align-items: stretch;
 }
 
+.col-span-2 {
+  grid-column: span 2;
+}
+
+@media (max-width: 900px) {
+  .col-span-2 {
+    grid-column: span 1;
+  }
+}
+
 /* AI Spotlight Luxury Bento Card */
 .ai-spotlight-bento {
   position: relative;
@@ -15771,18 +15781,24 @@ html.night-mode .bento-ghost-icon,
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: var(--radius-pill);
   font-size: 11.5px;
   font-weight: 700;
   text-transform: capitalize;
   letter-spacing: 0.02em;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .status-badge .dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  min-width: 6px;
+  min-height: 6px;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  flex-shrink: 0 !important;
 }
 
 .status-badge.available,
@@ -18142,12 +18158,17 @@ body.day-mode .cal-filter-chip.active {
   color: #AF52DE;
   border: 1px solid rgba(175, 82, 222, 0.35);
   letter-spacing: 0.02em;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 /* Add Car 360 Studio Semantic Classes */
 .badge-360-muted {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .interior-thumb-preview {
@@ -18347,8 +18368,8 @@ body.day-mode .cal-filter-chip.active {
   width: 100%;
   height: 520px;
   border-radius: 22px;
-  background: radial-gradient(circle at center, #1C1C1E 0%, #0A0A0C 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(circle at center, #FFFFFF 50%, #F2F2F7 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -18363,12 +18384,13 @@ body.day-mode .cal-filter-chip.active {
 }
 
 .studio-canvas-stage {
-  max-width: 90%;
-  max-height: 85%;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   pointer-events: none;
   transition: opacity 0.15s ease;
-  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.65));
 }
 
 .studio-watermark-360 {
@@ -18408,6 +18430,44 @@ body.day-mode .cal-filter-chip.active {
   font-size: 12px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+}
+
+.studio-fullscreen-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 44px;
+  max-height: 44px;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  background: rgba(22, 22, 24, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: all 0.2s var(--ease-apple);
+  z-index: 10;
+}
+
+.studio-fullscreen-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.06);
+}
+
+.studio-fullscreen-btn:active {
+  transform: scale(0.95);
 }
 
 .studio-controls-bar {
@@ -18519,15 +18579,22 @@ body.day-mode .cal-filter-chip.active {
 }
 
 .cockpit-hud-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
   cursor: pointer;
   transition: all 0.15s ease;
 }

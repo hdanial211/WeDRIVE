@@ -16,6 +16,10 @@ Standard Rujukan Mandatori Bahagian 1 untuk pembangunan UI/UX WeDRIVE.
    - Dilarang reka bentuk murahan bertemplat AI atau istilah fiksyen (*Quantum AI*, *Supercharged Fleet*, sanitasi hospital).
    - Gunakan istilah operasi automotif tulen: Kenderaan/Cars, Penyewa Berdaftar, Deposit Keselamatan Escrow, Cukai JPJ, Invois Cukai.
    - Semua butang dan data WAJIB disambung ke punca data operasi sebenar (`window.WeDriveAPI`).
+6. **Prinsip Geometri Bulat Sempurna 1:1 (Strict 1:1 Perfect Circle — Strictly No Oval/Bujur)**:
+   - Sebarang butang atau elemen berbentuk bulat WAJIB mempunyai nisbah aspek tepat **1:1** (`width == height`, `aspect-ratio: 1 / 1 !important;`, `border-radius: 50% !important;`, `padding: 0 !important;`, `display: flex; align-items: center; justify-content: center;`).
+   - **DILARANG SAMA SEKALI** herot menjadi bujur/oval/lonjong akibat padding melintang atau fleksing layout.
+   - Elemen dengan teks mengembang secara mendatar menjadi kapsul (`border-radius: 9999px;`), manakala elemen ikon sahaja kekal bulatan 1:1 sempurna.
 
 ---
 

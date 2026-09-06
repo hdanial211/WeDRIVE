@@ -48,6 +48,13 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
 
 - **Airbnb (airbnb.com):** Rujukan utama untuk *booking flow* yang lancar, carian tarikh (calendar), peta interaktif, dan *clean UI*.
 - **Stripe (stripe.com):** Rujukan untuk *glassmorphism*, animasi *micro-interactions* yang sangat lancar, borang pembayaran (payment form) yang kemas, dan tipografi yang jelas.
-- **Apple (apple.com):** Rujukan untuk *scrollytelling*, paparan produk 3D/premium, ruang putih (*whitespace*), dan tipografi berkelas tinggi.
+- **Apple Developer (developer.apple.com/design):** Rujukan utama untuk kad Bento kemas, teratur, hierarki simetri, ketiadaan ruang kosong terbuang (*Zero Dead Space*), dan tipografi berkelas tinggi.
 - **Linear (linear.app):** Rujukan untuk *dark mode* yang sempurna, *glowing borders*, dan *keyboard-first navigation* untuk Admin Dashboard.
 - **Vercel (vercel.com):** Rujukan untuk kelajuan antaramuka (speed), *minimalist dashboard*, dan komponen yang responsif.
+
+---
+
+## 4. Prinsip Geometri Butang: Bulat 1:1 Sempurna vs Kapsul Pil
+
+- **Bulat Sempurna 1:1 (Strict 1:1 Circle — DILARANG SAMA SEKALI BUJUR / OVAL):** Elemen bulat atau butang ikon sahaja WAJIB mempunyai nisbah tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height; display: flex !important; align-items: center !important; justify-content: center !important; box-sizing: border-box !important;`). DILARANG SAMA SEKALI herot menjadi bujur atau lonjong.
+- **Kapsul Pil Berteks (Capsule Pill):** Sebarang butang yang mengandungi teks mengembang secara mendatar dengan bucu bulat penuh simetri (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`). DILARANG SAMA SEKALI teks terlipat ke baris bawah yang menghasilkan bentuk telur bujur.

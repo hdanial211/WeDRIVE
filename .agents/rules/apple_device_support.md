@@ -28,3 +28,4 @@ Sistem WeDRIVE diwajibkan menyokong dan dioptimumkan sepenuhnya merentas semua s
 4. **Butang Taktil:** Saiz bucu `14px`, animasi sentuhan lembut `scale(0.97)`.
 5. **Peralihan Fizik Apple:** Formula `cubic-bezier(0.16, 1, 0.3, 1)`.
 6. **Kebolehbacaan & Kebolehcapaian:** Kontras tinggi pada Mod Siang (*Day*) dan Mod Malam (*Dark Obsidian*), tiada teks bertindih.
+7. **Prinsip Bulat Sempurna 1:1 (Anti-Oval):** Sebarang elemen bulat atau butang ikon WAJIB bulatan tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`). DILARANG SAMA SEKALI menjadi bujur/oval.

@@ -14,9 +14,10 @@ Standard Rujukan Mandatori Bahagian 2 untuk komponen dan ciri sistem WeDRIVE.
    - **Primary**: Kapsul warna penuh (`border-radius: 9999px`) dengan teks tebal.
    - **Secondary**: Squircle kelabu/biru lut sinar (`border-radius: 12px` – `14px`).
    - **Destructive**: Merah Apple (`#FF3B30`) dengan pengesahan tindakan.
-4. **Prinsip Geometri Bulat 1:1 Sempurna & Pengembangan Kapsul**:
-   - **Elemen Ikon Tunggal (Tanpa Teks)**: WAJIB bulatan 1:1 sempurna (`aspect-ratio: 1/1 !important; border-radius: 50% !important; width == height`, cth. 36px × 36px). DILARANG lonjong/bujur (*oval*).
-   - **Elemen Berkandungan Teks**: Mengembang mendatar menjadi kapsul/pil simetri (`border-radius: 9999px !important;`).
+4. **Prinsip Geometri Bulat 1:1 Sempurna & Pengembangan Kapsul (MANDATORI / ANTI-BUJUR)**:
+   - **Elemen Ikon Tunggal / Bulatan (Tanpa Teks)**: WAJIB bulatan 1:1 sempurna (`width == height`, `aspect-ratio: 1 / 1 !important;`, `border-radius: 50% !important;`, `padding: 0 !important;`, `display: flex !important; align-items: center !important; justify-content: center !important;`, `box-sizing: border-box !important;`, cth. 44px × 44px atau 36px × 36px).
+   - **LARANGAN KERAS BENTUK BUJUR**: DILARANG SAMA SEKALI berbentuk bujur / lonjong / bujur telur (*oval/ellipse*) akibat kesan padding sebaris, saiz tidak sekata, atau peregangan flexbox.
+   - **Elemen Berkandungan Teks**: Mengembang mendatar secara simetri menjadi kapsul/pil (`border-radius: 9999px !important;`).
 5. **Lencana Status & Penunjuk Kapsul**:
    - Lencana status (Tersedia, Aktif, Selesai) berbentuk kapsul pil huruf besar berkod warna.
    - Penunjuk karusel: Titik pasif `7px × 7px` $\to$ Kapsul aktif melebar `22px × 7px`.

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Studio 360° & Profil Kenderaan | WeDRIVE</title>
+  <title>Studio 360° & Profil Kereta | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
@@ -23,15 +23,15 @@
     <div class="content">
 
       <!-- TOP BAR & ACTIONS -->
-      <div class="flex-between flex-wrap gap-16 mb-20">
+      <div class="flex-between flex-wrap gap-16 mb-24">
         <div class="flex-center gap-12">
           <button class="btn-back" onclick="window.location.href='../cars.html'" data-navigate="../cars.html">
             <span class="material-icons-round">arrow_back</span>
-            <span>Kembali ke Armada</span>
+            <span>Kembali ke Senarai Kereta</span>
           </button>
           <div>
-            <h1 class="fs-22 fw-800 text-primary m-0" id="cd-top-title">Studio 360° & Profil Kenderaan</h1>
-            <p class="fs-12 text-secondary m-0">Pemeriksaan Interaktif 360°, Telemetri Kesihatan, dan Maklumat Teknikal Armada</p>
+            <h1 class="fs-22 fw-800 text-primary m-0" id="cd-top-title">Studio 360° & Profil Kereta</h1>
+            <p class="fs-12 text-secondary m-0">Pemeriksaan Interaktif 360°, Telemetri Kesihatan, dan Maklumat Teknikal Kereta</p>
           </div>
         </div>
 
@@ -98,22 +98,10 @@
           <img id="studio-canvas-stage" class="studio-canvas-stage" src="" alt="360 Exterior View" />
           <span id="studio-fallback-icon" class="material-icons-round fs-72 text-muted hidden">directions_car</span>
 
-          <!-- Controls Bar (Auto Spin + Scrub Slider) -->
-          <div class="studio-controls-bar">
-            <button class="studio-auto-spin-btn" id="studio-spin-btn" onclick="toggleAutoSpin()">
-              <span class="material-icons-round fs-16" id="studio-spin-icon">play_arrow</span>
-              <span id="studio-spin-text">Auto-Putar</span>
-            </button>
-
-            <span class="fs-11 fw-700 text-secondary tabular-nums">0°</span>
-            <input type="range" min="0" max="100" value="0" class="studio-scrub-slider" id="studio-scrub-slider"
-              oninput="handleScrubInput(this.value)" aria-label="Sudut Putaran 360 Darjah" />
-            <span class="fs-11 fw-700 text-secondary tabular-nums">360°</span>
-
-            <button class="cockpit-hud-btn" onclick="toggleFullscreenStudio()" title="Skrin Penuh" aria-label="Skrin Penuh">
-              <span class="material-icons-round fs-16">fullscreen</span>
-            </button>
-          </div>
+          <!-- Floating Fullscreen Action Button (Strict 1:1 Apple Circle) -->
+          <button type="button" class="studio-fullscreen-btn" onclick="toggleFullscreenStudio()" title="Skrin Penuh" aria-label="Skrin Penuh">
+            <span class="material-icons-round fs-20">fullscreen</span>
+          </button>
         </div>
 
         <!-- STAGE 2: INTERIOR 360 COCKPIT -->
@@ -245,7 +233,7 @@
               <span class="spec-metric-val" id="spec-boot">480 Liter (Power Boot)</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">scale</span> Berat Kerb Kenderaan</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">scale</span> Berat Kerb Kereta</span>
               <span class="spec-metric-val" id="spec-weight">1,570 kg</span>
             </div>
             <div class="spec-metric-row">
@@ -317,7 +305,7 @@
           <div class="spec-card-header">
             <h3 class="spec-card-title">
               <span class="material-icons-round text-primary-accent">sensors</span>
-              <span>Telemetri Kenderaan</span>
+              <span>Telemetri Kereta</span>
             </h3>
             <span class="hq-badge-pill">Masa Nyata</span>
           </div>
@@ -424,7 +412,7 @@
       <div class="modal-body pt-20">
         <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
           <div class="form-group">
-            <label for="edit-name">Nama Model Kenderaan</label>
+            <label for="edit-name">Nama Model Kereta</label>
             <input type="text" id="edit-name" placeholder="cth: 2023 BMW 320i M Sport 2.0" required />
           </div>
           <div class="form-group">
@@ -467,7 +455,7 @@
             <input type="number" id="edit-rate" min="50" max="5000" required />
           </div>
           <div class="form-group">
-            <label for="edit-status">Status Kenderaan</label>
+            <label for="edit-status">Status Kereta</label>
             <select id="edit-status">
               <option value="Available">Available (Tersedia)</option>
               <option value="Rented">Rented (Sedang Disewa)</option>
@@ -489,7 +477,7 @@
       <div class="modal-header border-bottom-subtle pb-16">
         <h3 class="flex-center gap-8 text-primary fs-18 fw-700 m-0">
           <span class="material-icons-round fs-22 text-primary-accent">sync</span>
-          <span>Tukar Status Kenderaan</span>
+          <span>Tukar Status Kereta</span>
         </h3>
         <button class="modal-close-btn" onclick="closeStatusRedirectModal()">
           <span class="material-icons-round">close</span>
@@ -547,7 +535,7 @@
             <span class="tabular-nums fw-700 fs-12 text-primary">1-800-88-DRIVE</span>
           </div>
         </div>
-        <p class="fs-12 text-secondary m-0 mb-16">Kenderaan ini dilindungi sepenuhnya terhadap kerosakan kemalangan, kecurian, kebakaran, dan liabiliti pihak ketiga bagi semua operasi WeDRIVE Melaka.</p>
+        <p class="fs-12 text-secondary m-0 mb-16">Kereta ini dilindungi sepenuhnya terhadap kerosakan kemalangan, kecurian, kebakaran, dan liabiliti pihak ketiga bagi semua operasi WeDRIVE Melaka.</p>
         <div class="flex-end">
           <button class="btn-primary-sm px-20 radius-9999" onclick="closeInsuranceModal()">Tutup</button>
         </div>

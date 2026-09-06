@@ -24,15 +24,15 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1788602253.810736,
-    "seen": 1788616440.271041,
-    "ast_hash": "6af2d161f7fecec07aa59a165f97d37d",
+    "mtime": 1788652406.7570832,
+    "seen": 1788653435.683594,
+    "ast_hash": "f289bdf0fe5e7caf99d55bfc87d438ac",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
-    "mtime": 1788614339.5601902,
-    "seen": 1788616440.271043,
-    "ast_hash": "b5633b1ffe8eb28d7cf027cdeb90c625",
+    "mtime": 1788622872.5056984,
+    "seen": 1788653435.683595,
+    "ast_hash": "9ef86aab16c89df3ce829b7b76c7ac6d",
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
@@ -42,9 +42,9 @@
     "semantic_hash": "293e4ebfbb04a88f64c9e847beb10779"
   },
   "admin/js/customers.js": {
-    "mtime": 1788530038.2172706,
-    "seen": 1788530927.4013472,
-    "ast_hash": "4bc69f337d19afdc8ac79af04db1cb10",
+    "mtime": 1788621952.7882388,
+    "seen": 1788653435.683599,
+    "ast_hash": "015b5b703d972180c26a24204ac1755e",
     "semantic_hash": ""
   },
   "admin/js/marketing-ai.js": {
@@ -66,10 +66,10 @@
     "semantic_hash": ""
   },
   "admin/js/settings.js": {
-    "mtime": 1781896366.5819957,
-    "seen": 1787436189.091383,
-    "ast_hash": "dd2943dd57557f1dda559f4454995791",
-    "semantic_hash": "dd2943dd57557f1dda559f4454995791"
+    "mtime": 1788649808.6190982,
+    "seen": 1788653435.683608,
+    "ast_hash": "1348b01cd5cb7940b60917378062f077",
+    "semantic_hash": ""
   },
   "bin/ai-insights.js": {
     "mtime": 1779164495.9366698,
@@ -96,9 +96,9 @@
     "semantic_hash": "7c5d5241cc243593ca7fadcbac3ba264"
   },
   "customer/js/customer.js": {
-    "mtime": 1788207684.270341,
-    "seen": 1788210346.3127968,
-    "ast_hash": "639e66c473fc6482d3e982ef57bb3bee",
+    "mtime": 1788652842.6624453,
+    "seen": 1788653435.683615,
+    "ast_hash": "507dd8aed90095cb89936c4bb3906fd0",
     "semantic_hash": ""
   },
   "customer/js/sidebar-loader.js": {
@@ -186,9 +186,9 @@
     "semantic_hash": ""
   },
   "shared/js/sidebar-loader.js": {
-    "mtime": 1788534441.1211982,
-    "seen": 1788535032.518569,
-    "ast_hash": "8b9243a04d51f8555acbb9a6cfd204f7",
+    "mtime": 1788652344.604838,
+    "seen": 1788653435.683637,
+    "ast_hash": "80b26f1cc5fc59ffd8afdf1dcbff6257",
     "semantic_hash": ""
   },
   "shared/js/supabase-config.js": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788621461.5605302,
-    "seen": 1788621487.7167091,
-    "ast_hash": "10ca12e01a77bf224a3d9679794d70f0",
+    "mtime": 1788663510.7589664,
+    "seen": 1788663574.0626419,
+    "ast_hash": "80c9d032fd52219bf551af9d2f3551fd",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -546,9 +546,9 @@
     "semantic_hash": ""
   },
   "admin/pages/booking/bookings.html": {
-    "mtime": 1788618833.169188,
-    "seen": 1788620312.906587,
-    "ast_hash": "643aa59a1b3cee9f0438f77c8f5cb5d8",
+    "mtime": 1788645245.368681,
+    "seen": 1788653435.6837602,
+    "ast_hash": "62954e074b57b1425fa1235f786ae384",
     "semantic_hash": ""
   },
   "admin/pages/calendar/calendar.html": {
@@ -558,15 +558,15 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788615752.9831715,
-    "seen": 1788616440.271322,
-    "ast_hash": "dcba27509233c62f265de05bfee2925c",
+    "mtime": 1788652377.8528109,
+    "seen": 1788653435.683767,
+    "ast_hash": "03cca26c6587de0c783d5a3746bbe6cd",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
-    "mtime": 1788613881.13082,
-    "seen": 1788616440.271332,
-    "ast_hash": "34ab8e1868184931a504c0091d18043b",
+    "mtime": 1788645257.336886,
+    "seen": 1788653435.683768,
+    "ast_hash": "a254f8cb8d91f036ff956286eff39841",
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {
@@ -576,9 +576,9 @@
     "semantic_hash": ""
   },
   "admin/pages/customer/customers.html": {
-    "mtime": 1788615768.3375626,
-    "seen": 1788616440.271337,
-    "ast_hash": "eb86a60fe70c7ea821cc11a8411c0422",
+    "mtime": 1788621969.243604,
+    "seen": 1788653435.683774,
+    "ast_hash": "eb87d7a0a25c2532787b5cf685d8c5d3",
     "semantic_hash": ""
   },
   "admin/pages/dashboard/admin.html": {
@@ -600,9 +600,9 @@
     "semantic_hash": ""
   },
   "admin/pages/setting/settings.html": {
-    "mtime": 1788616785.8832908,
-    "seen": 1788620312.906604,
-    "ast_hash": "9bc87323a3b760336e4090819d139171",
+    "mtime": 1788649796.1372297,
+    "seen": 1788653435.6837828,
+    "ast_hash": "f2eb6eaec4a0800a87eaa0e713fb2fb6",
     "semantic_hash": ""
   },
   "bin/ai-insights.html": {
@@ -630,9 +630,9 @@
     "semantic_hash": ""
   },
   "customer/pages/browse-cars/browse-cars.html": {
-    "mtime": 1788454116.8659196,
-    "seen": 1788455589.59082,
-    "ast_hash": "bbdc7ee64e8a5ca3eb1751db07619c33",
+    "mtime": 1788652726.9731205,
+    "seen": 1788653435.6837912,
+    "ast_hash": "ec4e984db365942ecd5fbdc473bb4555",
     "semantic_hash": ""
   },
   "customer/pages/car-details/booking/booking.html": {
@@ -654,15 +654,15 @@
     "semantic_hash": ""
   },
   "customer/pages/car-details/car-details.html": {
-    "mtime": 1788454128.8268976,
-    "seen": 1788455589.590824,
-    "ast_hash": "b4ff6b6354e9759d0fd5bd88e702c4a7",
+    "mtime": 1788652713.3356924,
+    "seen": 1788653435.683797,
+    "ast_hash": "fc1eb90d84cbe81648dab3d97fbde1e1",
     "semantic_hash": ""
   },
   "customer/pages/dashboard/customer.html": {
-    "mtime": 1788454101.3446069,
-    "seen": 1788455589.590824,
-    "ast_hash": "684ba77f04676eadf02eb8789f553071",
+    "mtime": 1788652719.8853884,
+    "seen": 1788653435.683798,
+    "ast_hash": "32a561360a919512ca9af91893a8b8a9",
     "semantic_hash": ""
   },
   "customer/pages/my-bookings/my-bookings.html": {
@@ -708,9 +708,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788537326.4278483,
-    "seen": 1788537360.685736,
-    "ast_hash": "988212b5f3dbf41c443887c0b5096e60",
+    "mtime": 1788650530.3445404,
+    "seen": 1788653435.683809,
+    "ast_hash": "534ec21342ae40f6843522d25e4f85be",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11214,15 +11214,15 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car.html": {
-    "mtime": 1788617070.4532955,
-    "seen": 1788620312.906589,
-    "ast_hash": "71addcb25d1f9580e91812a6f943d705",
+    "mtime": 1788663353.6720386,
+    "seen": 1788663574.062658,
+    "ast_hash": "1b82d77717cd5d8e04325dbdf61bf55f",
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
-    "mtime": 1788621304.8454845,
-    "seen": 1788621487.716726,
-    "ast_hash": "af9644b86f307d0ec0f77912b21c608c",
+    "mtime": 1788645250.8873372,
+    "seen": 1788653435.6837661,
+    "ast_hash": "c8a1135b6cd50e29cbc2b28848154ee6",
     "semantic_hash": ""
   },
   "admin/pages/car/rented-cars.html": {
@@ -11277,6 +11277,42 @@
     "mtime": 1788614475.8576558,
     "seen": 1788616440.2712011,
     "ast_hash": "3476086547fb721b6a5f22e1407e5d2a",
+    "semantic_hash": ""
+  },
+  "admin/js/api-keys.js": {
+    "mtime": 1788649769.092383,
+    "seen": 1788653435.683588,
+    "ast_hash": "59029a4cf90d3d6b4da782f356ce07cd",
+    "semantic_hash": ""
+  },
+  "tests/e2e/14_ai_key_vault_and_location.spec.js": {
+    "mtime": 1788653244.0769994,
+    "seen": 1788653435.683696,
+    "ast_hash": "521b8af8e400b55ac8c93411fe29656f",
+    "semantic_hash": ""
+  },
+  "admin/pages/ai/api-keys.html": {
+    "mtime": 1788649752.9431164,
+    "seen": 1788653435.683754,
+    "ast_hash": "a636a5b187fcd1a98858e2d274e7ed1f",
+    "semantic_hash": ""
+  },
+  "tests/add_car_360_card_verified.png": {
+    "mtime": 1788663473.6191592,
+    "seen": 1788663574.063808,
+    "ast_hash": "91492fea833644a4cdea95b587e52447",
+    "semantic_hash": ""
+  },
+  "tests/add_car_clean_verified.png": {
+    "mtime": 1788663463.6469429,
+    "seen": 1788663574.063809,
+    "ast_hash": "2b2a4e193eba394900f262a6d7818ade",
+    "semantic_hash": ""
+  },
+  "tests/add_car_live_preview_verified.png": {
+    "mtime": 1788663485.0037029,
+    "seen": 1788663574.06381,
+    "ast_hash": "8b89c113aa49fde6d106e4e3560084ab",
     "semantic_hash": ""
   }
 }
