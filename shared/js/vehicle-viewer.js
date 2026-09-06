@@ -213,11 +213,11 @@
   }
 
   function buildPlaceholderInteriorSvg(label, faceKey, faceLabel) {
-    var safeLabel = escapeHtml(label || 'Reference cabin');
-    var safeFace = escapeHtml(faceLabel || 'Reference cabin');
+    var safeLabel = escapeHtml(label || 'Reference interior');
+    var safeFace = escapeHtml(faceLabel || 'Reference interior');
     var safeView = escapeHtml(faceKey || 'reference');
     var title = isMalay() ? 'PANDANGAN RUJUKAN' : 'REFERENCE INTERIOR';
-    var caption = isMalay() ? 'Panorama kabin rujukan' : 'Reference cabin panorama';
+    var caption = isMalay() ? 'Panorama dalaman kereta rujukan' : 'Reference interior panorama';
     var svg = [
       '<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-label="',
       safeLabel,
@@ -288,12 +288,12 @@
     var hasRealPattern = !!interior.full_res_pattern;
     var faces = {};
     var order = FACE_ORDER.slice();
-    var label = manifest.__displayLabel || manifest.model || 'Reference cabin';
+    var label = manifest.__displayLabel || manifest.model || 'Reference interior';
     var sourceFaces = interior.faces || {};
     var faceLabelMap = {
       b: 'Back seat',
       d: 'Floor view',
-      f: 'Front cabin',
+      f: 'Front interior',
       l: 'Left side',
       r: 'Right side',
       u: 'Roofline'
@@ -310,7 +310,7 @@
       } else if (sourceFaces[faceKey]) {
         facePath = buildPatternUrl(sourceFaces[faceKey], manifest.__sourceBase, { face: faceKey });
       } else {
-        facePath = buildPlaceholderInteriorSvg(label, faceKey, faceLabelMap[faceKey] || 'Reference cabin');
+        facePath = buildPlaceholderInteriorSvg(label, faceKey, faceLabelMap[faceKey] || 'Reference interior');
       }
 
       faces[faceKey] = {

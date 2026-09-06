@@ -108,9 +108,9 @@
     "semantic_hash": ""
   },
   "guest/js/how-it-works.js": {
-    "mtime": 1787632824.9153678,
-    "seen": 1787898737.194585,
-    "ast_hash": "de11d664fb3b25e64084ebc5df12da96",
+    "mtime": 1788690636.3831942,
+    "seen": 1788694329.994421,
+    "ast_hash": "e365804e9cf9d750f88d48244f870108",
     "semantic_hash": ""
   },
   "guest/js/promo-banner.js": {
@@ -204,10 +204,10 @@
     "semantic_hash": "d260508bf9d4fe24282e65e2c8db42fc"
   },
   "shared/js/vehicle-viewer.js": {
-    "mtime": 1787632837.7183752,
-    "seen": 1787898737.194593,
-    "ast_hash": "854d79deba14cee1934248c66858e171",
-    "semantic_hash": "854d79deba14cee1934248c66858e171"
+    "mtime": 1788690497.9622753,
+    "seen": 1788694329.9944499,
+    "ast_hash": "35cda2e954fa8f0a4e362d3230a7f083",
+    "semantic_hash": ""
   },
   "shared/lang/en.js": {
     "mtime": 1788673899.3172882,
@@ -216,21 +216,21 @@
     "semantic_hash": ""
   },
   "shared/lang/en.json": {
-    "mtime": 1788689151.298629,
-    "seen": 1788689569.738039,
-    "ast_hash": "3347ca5435517fc9a59b5c9bdb4f36b0",
+    "mtime": 1788690570.154891,
+    "seen": 1788694329.994452,
+    "ast_hash": "0e285a38b9a4a60354b5de08b94d6b31",
     "semantic_hash": ""
   },
   "shared/lang/ms.js": {
-    "mtime": 1788673910.4589965,
-    "seen": 1788686364.0620658,
-    "ast_hash": "df314c58d69428cf30544df1af53af83",
+    "mtime": 1788693669.7202852,
+    "seen": 1788694329.994453,
+    "ast_hash": "3e6e35a20ba78f5b01d3ef15874ffbc2",
     "semantic_hash": ""
   },
   "shared/lang/ms.json": {
-    "mtime": 1788689143.1300848,
-    "seen": 1788689569.73804,
-    "ast_hash": "a72cab43f756739cce492cc410cc7b60",
+    "mtime": 1788693664.1852179,
+    "seen": 1788694329.994455,
+    "ast_hash": "07663815f402d7e6dd441e77c6471e4d",
     "semantic_hash": ""
   },
   "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/source.json": {
@@ -366,9 +366,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_design_system.md": {
-    "mtime": 1788671952.5600357,
-    "seen": 1788673670.882883,
-    "ast_hash": "79f7f752453c8a9fc6e16a5d08340708",
+    "mtime": 1788693624.4000201,
+    "seen": 1788694329.994588,
+    "ast_hash": "de0a2a39893266545003934c9f48b721",
     "semantic_hash": ""
   },
   ".agents/rules/code_and_backend.md": {
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/ruleprompt.md": {
-    "mtime": 1788672709.6689403,
-    "seen": 1788673670.882891,
-    "ast_hash": "0e0a29d7628e25e159219384162f2cb9",
+    "mtime": 1788694256.323427,
+    "seen": 1788694329.994595,
+    "ast_hash": "8e9ae20558703d73b1359e3095b63b2e",
     "semantic_hash": ""
   },
   ".agents/rules/security_and_audit.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788688120.7685463,
-    "seen": 1788688140.374259,
-    "ast_hash": "81a98c3084023da30c11b79af5227cc3",
+    "mtime": 1788694289.305642,
+    "seen": 1788694329.994605,
+    "ast_hash": "e90195b7fe125f059266c1ad7e08fc0f",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "REPORT/chapters/01_Abstract.md": {
-    "mtime": 1787834017.3028195,
-    "seen": 1787898737.194614,
-    "ast_hash": "6e9858853ac8c42ded4bb9025a013b4f",
+    "mtime": 1788693989.9985313,
+    "seen": 1788694329.994615,
+    "ast_hash": "2cbfd157141b30c5d7e265567f3f2a3a",
     "semantic_hash": ""
   },
   "REPORT/chapters/02_Table_of_Contents.md": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "docs/APPLE_HIG_COMPLIANCE_AUDIT.md": {
-    "mtime": 1787651857.2509885,
-    "seen": 1787898737.1946309,
-    "ast_hash": "1517342deb9cbe352ed7e2f62b404ba3",
+    "mtime": 1788693984.5168345,
+    "seen": 1788694329.994762,
+    "ast_hash": "47a5d2393aee759bd72e20d60ce40db4",
     "semantic_hash": ""
   },
   "docs/FULL_SYSTEM_FLOWCHART.html": {
@@ -828,9 +828,9 @@
     "semantic_hash": ""
   },
   "guest/pages/how-it-works/how-it-works.html": {
-    "mtime": 1788209423.5537262,
-    "seen": 1788210346.313092,
-    "ast_hash": "de8381adf2087ce3587f478e07d3a874",
+    "mtime": 1788692584.2999983,
+    "seen": 1788694329.994794,
+    "ast_hash": "e8f8b170bcd308d6fcb58bb7abf377b3",
     "semantic_hash": ""
   },
   "guest/pages/pricing/pricing.html": {
@@ -11256,9 +11256,9 @@
     "semantic_hash": ""
   },
   ".agents/DESIGN.md": {
-    "mtime": 1788672085.2415798,
-    "seen": 1788673670.88288,
-    "ast_hash": "5c98a9f7c20a0baa9707c88298c0046f",
+    "mtime": 1788694263.1027887,
+    "seen": 1788694329.9945788,
+    "ast_hash": "aefe9bd962e0eb1b3503c30783cb550b",
     "semantic_hash": ""
   },
   ".agents/rules/apple_hig_components.md": {
@@ -11268,9 +11268,9 @@
     "semantic_hash": ""
   },
   ".agents/workflows/stitch_generation.md": {
-    "mtime": 1788539606.9534457,
-    "seen": 1788539747.5331788,
-    "ast_hash": "4e7999f1c5d6be0f314804dbbb960fb8",
+    "mtime": 1788693637.443484,
+    "seen": 1788694329.994604,
+    "ast_hash": "f511dd5322b7aaed46bb30acef3cfc7e",
     "semantic_hash": ""
   },
   "tests/e2e/11_operations_lang.spec.js": {

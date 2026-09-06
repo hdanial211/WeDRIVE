@@ -36,11 +36,11 @@ Dokumen ini merekodkan arkitektur reka bentuk, standard kualiti, dan status pema
 | :--- | :--- | :---: | :--- | :--- |
 | **Papan Pemuka Admin** | `admin/pages/dashboard/dashboard.html` | ⭐⭐⭐⭐⭐ **97%** | Kad Bento analitik, penunjuk trend peratusan, carta jualan bercahaya halus, jadual tempahan terkini. | Eksport pantas carta visual. |
 | **Pengurusan Tempahan** | `admin/pages/booking/bookings.html` | ⭐⭐⭐⭐⭐ **96%** | Cip penapis pantas, penapis julat tarikh tersuai, modal tempahan baharu dengan penguncian tarikh seragam. | Pratonton butiran pelanggan popover (*Popover hover*). |
-| **Pengurusan Kenderaan** | `admin/pages/car/cars.html` | ⭐⭐⭐⭐☆ **95%** | Penukar paparan grid/jadual, kad armada kereta dengan lencana ketersediaan, modal tambah kenderaan. | Muat naik gambar seret-dan-lepas (*Drag & Drop*). |
+| **Pengurusan Kenderaan** | `admin/pages/car/cars.html` | ⭐⭐⭐⭐☆ **95%** | Penukar paparan grid/jadual, kad katalog kereta dengan lencana ketersediaan, modal tambah kenderaan. | Muat naik gambar seret-dan-lepas (*Drag & Drop*). |
 | **Pengurusan Pelanggan** | `admin/pages/customer/customer.html` | ⭐⭐⭐⭐☆ **94%** | Jadual senarai pelanggan dengan status verifikasi, carian masa nyata dengan maklum balas taktil. | Tindakan pantas secara kelompok (*Batch actions*). |
 | **Laporan & Analitik** | `admin/pages/report/report.html` | ⭐⭐⭐⭐☆ **94%** | Carta kewangan visual, kad ringkasan pendapatan, pemilih julat masa. | Penapis perbandingan bulan-ke-bulan. |
 | **Pemasaran & Promosi** | `admin/pages/marketing/marketing.html` | ⭐⭐⭐⭐☆ **95%** | Kad kod promosi, pemilih tarikh berpasangan untuk sepanduk promosi dan pelarasan harga bermusim. | Pratonton langsung sepanduk dalam telefon maya. |
-| **Kalendar Armada** | `admin/pages/calendar/calendar.html` | ⭐⭐⭐⭐⭐ **96%** | Grid kalendar bulanan visual dengan reben tempahan mengikut kereta. | Penukaran paparan minggu/hari (*Gantt timeline*). |
+| **Kalendar Kereta** | `admin/pages/calendar/calendar.html` | ⭐⭐⭐⭐⭐ **96%** | Grid kalendar bulanan visual dengan reben tempahan mengikut kereta. | Penukaran paparan minggu/hari (*Gantt timeline*). |
 | **Tetapan Sistem** | `admin/pages/setting/settings.html` | ⭐⭐⭐⭐☆ **93%** | Seksyen tetapan berkumpulan gaya Tetapan iOS, suis togol bulat (*Apple Toggle Switches*). | Pengurusan profil admin berlapis. |
 
 ---

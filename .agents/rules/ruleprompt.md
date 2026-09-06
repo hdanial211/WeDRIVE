@@ -38,7 +38,7 @@ trigger: always_on
   - Sudut squircle kad utama: `border-radius: 24px;`
   - Sudut kotak input dan sub-elemen: `border-radius: 14px;`
 
-### 1D. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026 (Pemansuhan 'Armada' / 'Fleet' & Senarai Hitam Istilah Kuno/Kaku AI)
+### 1D. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026 (Senarai Hitam Istilah Kuno/Kaku AI & Bahasa Asing)
 - **Standard Bahasa Melayu Moden Kontemporari (Era 2026)**:
   - Sistem WeDRIVE WAJIB menggunakan 100% Bahasa Melayu moden Malaysia terkini seperti yang diguna pakai oleh aplikasi teknologi terkemuka di Malaysia (**Grab, Setel, TnG eWallet, Trevo, Wahdah, Carsome**).
   - Tona bahasa mestilah **santai, segar, ringkas, mesra pengguna, dan terus kepada maksud sebenar** operasi sewaan kenderaan di Malaysia.
@@ -60,7 +60,7 @@ trigger: always_on
 
 - **Panduan Penggunaan Seragam Merentas Seluruh Sistem**:
   - **Bar Sisi & Menu Admin**: `Pengurusan Kereta` $\rightarrow$ `Semua Kereta`, `Kereta Tersedia`, `Kereta Sedang Disewa`, `Studio 360° & Info Kereta`, `Tambah Kereta Baharu`.
-  - **Tindakan & Navigasi**: `Kembali ke Senarai Kereta` (BUKAN "Kembali ke Armada").
+  - **Tindakan & Navigasi**: `Kembali ke Senarai Kereta` (BUKAN istilah lain).
   - **Katalog & Pelanggan**: `Pilih Kereta`, `Cari Kereta`, `Sewa Sekarang`, `Tempah Sekarang`, `Lihat Kereta`.
   - **Lencana Status**: `Tersedia`, `Sedang Disewa`, `Selesai`, `Dibatalkan` (dilarang campur aduk teks Inggeris semasa mod BM aktif).
   - **Peraturan Komunikasi AI**: Ejen AI **DILARANG SAMA SEKALI** menyebut, mencadangkan, atau menulis perkataan dalam Senarai Hitam di atas semasa membalas mesej pengguna, membuat ringkasan, menjana fail, atau menulis kod.

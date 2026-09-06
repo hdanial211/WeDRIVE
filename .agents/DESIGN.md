@@ -131,8 +131,8 @@ spacing:
 # WeDRIVE Lumina & Apple Human Interface Guidelines (HIG) Design System
 
 ## 1. Brand Philosophy & Aesthetics
-- **Bukan Templat AI Murahan**: Dilarang meletakkan visual murah atau istilah cereka seperti 'Quantum Neural Fleet' atau protokol hospital palsu. Semua teks dan metrik mewakili operasi mobiliti sebenar: Pilihan Kereta, Penyewa Berdaftar, Deposit Keselamatan, Cukai JPJ, dan Invois Cukai.
-- **Bahasa Melayu Moden Kontemporari (Era 2026)**: Menggunakan laras bahasa aplikasi teknologi Malaysia terkini (Grab, Setel, Trevo, Wahdah) yang santai, segar, dan mesra pengguna. Mematuhi senarai hitam istilah (DILARANG: Armada, Fleet, Kabin, Wahana, Prapapar, Peringkat).
+- **Bukan Templat AI Murahan**: Dilarang meletakkan visual murah atau istilah cereka seperti sains fiksyen atau protokol hospital palsu. Semua teks dan metrik mewakili operasi mobiliti sebenar: Pilihan Kereta, Penyewa Berdaftar, Deposit Keselamatan, Cukai JPJ, dan Invois Cukai.
+- **Bahasa Melayu Moden Kontemporari (Era 2026)**: Menggunakan laras bahasa aplikasi teknologi Malaysia terkini (Grab, Setel, Trevo, Wahdah) yang santai, segar, dan mesra pengguna. Mematuhi senarai hitam istilah bahasa Melayu moden yang digariskan dalam `.agents/rules/ruleprompt.md`.
 - **Kedalaman Kaca & Sempadan Sub-Piksel**: Menggunakan bahan nipis Apple Glassmorphism (`backdrop-filter: blur(20px) saturate(180%)`), bayang-bayang lembut (`box-shadow: 0 4px 24px rgba(0,0,0,0.04)`), dan sempadan sub-piksel `rgba(0,0,0,0.06)` (Day) atau `rgba(255,255,255,0.08)` (Night).
 
 ## 2. Geometri & Susun Atur Bento
