@@ -36,9 +36,18 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- 14_supabase_database.md        # Supabase PostgreSQL, Skema Mobiliti & Dasar RLS
 |   |   +-- 15_strix_security_audit.md     # Simulasi Ujian Penembusan Etika Strix & Keselamatan PII
 |   |   +-- 16_ai_tooling_and_mcps.md      # Protokol Ekosistem 9 Alatan Pintar & Pelayan MCP
-|   |   +-- 17_git_versioning_standard.md  # Piawaian Penemuan Versi Git, Formula SemVer X.Y.Z & Protokol Push
-|   +-- skills/                 # Alatan kemahiran automasi
-|   +-- workflows/              # Aliran kerja persistent
+|   +-- skills/                 # 5 Kemahiran Automasi Khusus:
+|   |   +-- context7/           # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
+|   |   +-- frontend-ui/        # Rekaan Antaramuka Apple HIG & Bento Grid
+|   |   +-- playwright-testing/ # Ujian Automasi E2E Playwright CLI (100% Pass)
+|   |   +-- supabase-ops/       # Operasi Pangkalan Data Supabase PostgreSQL & RLS
+|   |   +-- strix-security-audit/ # Simulasi Audit Keselamatan Siber & Bukti Tesis
+|   +-- workflows/              # 5 Aliran Kerja Automasi (Slash Commands):
+|   |   +-- graphify.md         # Penjanaan Graf Pengetahuan (/graphify)
+|   |   +-- stitch_generation.md# Penjanaan UI Gemini 3.8 UHQ (/stitch_generation)
+|   |   +-- release_push.md     # Pelepasan Versi Git SemVer, Tag & Push (/release_push)
+|   |   +-- qa_audit.md         # Audit Kualiti Menyeluruh Pra-Commit (/qa_audit)
+|   |   +-- prd_creator.md      # Penjanaan PRD 6 Pilar Mandatori (/prd_creator)
 |
 +-- vercel.json                # Vercel deployment config
 |

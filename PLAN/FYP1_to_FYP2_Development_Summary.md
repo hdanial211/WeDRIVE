@@ -4360,5 +4360,40 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.2.5 Establish 17_git_versioning_standard and update rule index`
   - Tag Versi: `6.2.5`
 
+---
+
+## [MINOR UPDATE] 189. Pembangunan Ekosistem 3 Kemahiran (Skills) & 3 Alur Kerja (Workflows) Pintar WeDRIVE (v6.3.0)
+
+- **Punca Arahan Pengguna**:
+  - *"skill n workflow awak xnak tambah lagi ke ???atau awak nak tambah apa2 ???"*
+  - *"kalau macam tu tambah semua yang recommend"*
+  - *"n fix jugak figma mcp ni x boleh nak connect"*
+
+- **Tindakan Pelaksanaan (Berasaskan PRD & Kelulusan Pengguna)**:
+  1. **Dokumen PRD & Pelan Pelaksanaan**:
+     - Menyediakan PRD 6 pilar penuh dalam `implementation_plan.md` merangkumi objektif, sasaran, fungsian, Apple HIG UX, pemetaan pangkalan data, dan kriteria penerimaan sebelum pengekodan bermula.
+  2. **Penciptaan 3 Kemahiran Automasi Ejen Baharu (`.agents/skills/`)**:
+     - `playwright-testing/SKILL.md` (4,453 aksara): Panduan komprehensif ujian E2E Chromium/WebKit, assertions geometri 1:1 bulat sempurna (*Zero Oval Rule*), dwi-tema, dwibahasa, dan perlindungan akaun rasmi (`admin@wedrive.my` & `ahmad@wedrive.my`).
+     - `supabase-ops/SKILL.md` (4,420 aksara): Panduan skema pangkalan data PostgreSQL mobiliti kereta (`cars`, `bookings`, `profiles`, `payments`), penguatkuasaan Row Level Security (RLS) mengikut peranan, dan peraturan sifar data palsu (*Zero Fake Data*).
+     - `strix-security-audit/SKILL.md` (3,889 aksara): Panduan simulasi ujian penembusan etika siber OWASP, semakan perlindungan data peribadi (PII), keselamatan sesi/kunci API, dan format pelaporan bukti empirikal untuk Bab 4 & 5 Tesis FYP 2.
+  3. **Penciptaan 3 Alur Kerja Automasi Baharu (`.agents/workflows/`)**:
+     - `release_push.md` (2,818 aksara): Alur kerja rasmi SemVer `X.Y.Z`, penemuan versi melalui `git describe --tags --abbrev=0`, format commit tanpa 'v', penciptaan tag, dan push serentak.
+     - `qa_audit.md` (2,216 aksara): Alur kerja pemeriksaan pra-pelepasan merangkumi audit saiz fail 12,000 aksara (`wc -m`), semakan geometri butang, Playwright CLI 100% lulus, dan penyelarasan Graphify.
+     - `prd_creator.md` (3,133 aksara): Alur kerja penjanaan dokumen PRD 6 Pilar mandatori di `implementation_plan.md` sebelum sebarang kod disentuh.
+  4. **Penyelarasan Struktur Projek**:
+     - Mengemas kini pokok direktori `.agents/PROJECT_STRUCTURE.md` dan `docs/PROJECT_STRUCTURE.md` dengan senarai lengkap 5 kemahiran dan 5 alur kerja.
+     - Kesemua fail disahkan mematuhi had siling ketat $\le 12,000$ aksara.
+  5. **Penyiasatan & Penyelesaian Figma MCP**:
+     - Mendiagnosis punca kegagalan sambungan Figma Remote MCP (`https://mcp.figma.com/mcp` memulangkan 401 Unauthorized disebabkan keperluan OAuth token / Authorization header).
+     - Menyediakan sokongan Figma Desktop MCP (`http://127.0.0.1:3845/mcp`) melalui Figma Dev Mode serta pakej `figma-developer-mcp` untuk sokongan Personal Access Token (PAT).
+
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **36/36 Ujian Lulus (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `6.3.0 Establish 3 new agent skills and 3 automation workflows`
+  - Tag Versi: `6.3.0`
+
+
 
 

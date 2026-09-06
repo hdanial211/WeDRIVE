@@ -29,9 +29,18 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 |   +-- 14_supabase_database.md        # Pangkalan Data Supabase, Skema Mobiliti & Dasar Keselamatan RLS
 |   +-- 15_strix_security_audit.md     # Audit Keselamatan Siber Strix & Ujian Penembusan Etika
 |   +-- 16_ai_tooling_and_mcps.md      # Protokol Ekosistem 9 Alatan Pintar & Pelayan MCP WeDRIVE
-|   +-- 17_git_versioning_standard.md  # Piawaian Penemuan Versi Git, Formula SemVer X.Y.Z & Protokol Push
-+-- skills/                     # Kemahiran automasi khusus (context7, frontend-ui, dsb.)
-+-- workflows/                  # Aliran kerja persistent (/graphify, /stitch_generation)
++-- skills/                     # 5 Kemahiran Automasi Khusus:
+|   +-- context7/               # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
+|   +-- frontend-ui/            # Rekaan Antaramuka Apple HIG & Bento Grid
+|   +-- playwright-testing/     # Ujian Automasi E2E Playwright CLI (100% Pass Rate)
+|   +-- supabase-ops/           # Operasi Pangkalan Data Supabase PostgreSQL & Dasar RLS
+|   +-- strix-security-audit/   # Simulasi Audit Keselamatan Siber & Bukti Tesis FYP 2
++-- workflows/                  # 5 Aliran Kerja Automasi (Slash Commands):
+|   +-- graphify.md             # Penjanaan & Pengemaskinian Graf Pengetahuan (/graphify)
+|   +-- stitch_generation.md    # Penjanaan Antaramuka Gemini 3.8 UHQ (/stitch_generation)
+|   +-- release_push.md         # Pelepasan Versi Git SemVer, Tag & Push (/release_push)
+|   +-- qa_audit.md             # Audit Kualiti Menyeluruh Pra-Commit (/qa_audit)
+|   +-- prd_creator.md          # Penjanaan PRD 6 Pilar Mandatori (/prd_creator)
 ```
 
 ---
