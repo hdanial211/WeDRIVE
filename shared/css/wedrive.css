@@ -15529,24 +15529,33 @@ html.night-mode .bento-ghost-icon,
 }
 
 .btn-ai-details {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 14px;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  max-height: 40px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #FFFFFF;
   cursor: pointer;
   transition: all 0.2s var(--ease-apple);
 }
 
 .btn-ai-details:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.04);
 }
 
 .btn-ai-details:active {
-  transform: scale(0.97);
+  transform: scale(0.96) !important;
 }
 
 /* Executive Command Center Bento Card */
@@ -15684,19 +15693,41 @@ html.night-mode .bento-ghost-icon,
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  font-size: 11.5px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill, 9999px);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  font-size: 12px;
   font-weight: 600;
   background: var(--bg-surface-2);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.ledger-chip:hover {
+  background: var(--bg-surface-3);
+  color: var(--text-primary);
+  border-color: rgba(0, 113, 227, 0.25);
+  transform: translateY(-1px);
+}
+
+.ledger-chip:active {
+  transform: scale(0.97);
 }
 
 .ledger-chip.active {
   background: var(--primary-light);
   border-color: var(--primary-border);
   color: var(--primary);
+}
+
+.ledger-chip-count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+  margin-left: 2px;
 }
 
 .ledger-chip-dot {

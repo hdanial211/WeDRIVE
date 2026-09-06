@@ -155,4 +155,29 @@ Sistem WeDRIVE memancarkan aura kecekapan korporat bertaraf antarabangsa setandi
   - `projectId`: `1862124494843018493`
   - `designSystem`: `assets/d66115a696e44b2381ec5f5d829e8a88` / `assets/40090a9886c4444abca795c82673f4c8` / `assets/518f31ad774f458da15c7fc5ff999bbf`
   - `modelId`: **`GEMINI_3_1_PRO`** (Piawaian Gemini 3.8 Ultra High-Quality Tier; model `GEMINI_3_PRO` telah ditamatkan/deprecated)
-- Semua gaya CSS fizikal disatukan 100% ke dalam `shared/css/wedrive.css`.
+- **Penyelarasan Kod Fizikal & Integriti Data**:
+  - Semua kod CSS yang dijana daripada Stitch WAJIB diselaraskan secara berpusat ke dalam `shared/css/wedrive.css`.
+  - Semua medan dan butang tindakan WAJIB disambung terus ke punca data operasi sebenar (`window.WeDriveAPI` / Supabase).
+
+## 6. Laman Rujukan Rasmi Apple Developer Design & Sumber Figma MCP
+Setiap perincian sistem reka bentuk WeDRIVE berpaksikan sumber rasmi Apple:
+1. **Apple Developer Design Portal**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
+2. **Human Interface Guidelines (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
+3. **Apple Design Resources & Official Figma Kits**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
+4. **Apple Icon Composer**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
+5. **SF Symbols Library**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
+6. **Apple Pass Designer**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
+7. **What's New in Design**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
+8. **Figma MCP Server (`https://mcp.figma.com/mcp`)**:
+   Konfigurasi pelayan MCP Figma untuk alatan `#get_design_context`:
+   ```json
+   {
+     "servers": {
+       "Figma": {
+         "type": "http",
+         "url": "https://mcp.figma.com/mcp"
+       }
+     }
+   }
+   ```
+

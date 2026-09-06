@@ -15,7 +15,7 @@
   <script src="../../../shared/js/auth-guard.js?v=5.6.0" data-role="admin"></script>
 </head>
 
-<body data-particles="6" data-cursor-glow>
+<body data-cursor-glow>
   <!-- SIDEBAR - loaded from shared/components/sidebar-admin.html -->
   <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="admin">
   </div>
@@ -40,7 +40,7 @@
         <div class="admin-header-actions">
           <div class="admin-depot-status-pill">
             <span class="material-icons-round fs-16 text-emerald">wifi_tethering</span>
-            <span data-key="admin_depots_synced">3 Cawangan Beroperasi</span>
+            <span data-key="admin_depots_synced">Pusat Operasi Utama (HQ Melaka) Beroperasi</span>
           </div>
           <button class="btn-executive-ghost" data-navigate="../report/export-reports.html">
             <span class="material-icons-round fs-18">ios_share</span>
@@ -55,11 +55,11 @@
 
       <!-- 2. EXECUTIVE BENTO METRICS GRID (4 CARDS) -->
       <div class="stats-grid">
-        <!-- Card 1: Total Vehicles -->
+        <!-- Card 1: Total Cars -->
         <div class="stat-card reveal-onload">
           <span class="material-icons-round bento-ghost-icon">directions_car</span>
           <div class="stat-header-row">
-            <div class="label" data-key="admin_stat_vehicles">Total Vehicles</div>
+            <div class="label" data-key="admin_stat_vehicles">Total Cars</div>
             <div class="stat-icon blue"><span class="material-icons-round">directions_car</span></div>
           </div>
           <div class="stat-info">
@@ -148,8 +148,8 @@
           <div>
             <div class="ai-meter-box">
               <div class="ai-meter-label-row">
-                <span>PROJECTED CAR UTILIZATION</span>
-                <span class="ai-meter-score">85% Optimal</span>
+                <span data-key="admin_ai_util_label">PROJECTED CAR UTILIZATION</span>
+                <span class="ai-meter-score" data-key="admin_ai_optimal">85% Optimal</span>
               </div>
               <div class="ai-meter-track">
                 <div class="ai-meter-fill"></div>
@@ -158,7 +158,7 @@
             <div class="ai-bento-actions">
               <button class="btn-ai-rebalance" data-navigate="../car/cars.html">
                 <span class="material-icons-round fs-16">auto_fix_high</span>
-                <span>Rebalance Car Allocation</span>
+                <span data-key="admin_ai_rebalance">Rebalance Car Allocation</span>
               </button>
               <button class="btn-ai-details" data-navigate="../ai-analytics/ai-analytics.html" aria-label="AI Analytics Details">
                 <span class="material-icons-round fs-18">trending_up</span>
@@ -172,7 +172,7 @@
           <div class="command-header-row">
             <div class="command-title-group">
               <h3 data-key="admin_quick_title">Quick Actions</h3>
-              <p>Direct operational access to car workflows</p>
+              <p data-key="admin_quick_desc">Direct operational access to car workflows</p>
             </div>
             <span class="material-icons-round text-secondary fs-20">grid_view</span>
           </div>
@@ -223,10 +223,10 @@
           <div class="ledger-title-group">
             <h3 data-key="admin_car_title">Current Car Status</h3>
             <div class="ledger-chips-wrap mt-6">
-              <span class="ledger-chip active"><span class="ledger-chip-dot green"></span> <span data-key="admin_chip_all">Semua Unit (8)</span></span>
-              <span class="ledger-chip"><span class="ledger-chip-dot blue"></span> <span data-key="admin_chip_rented">Sedang Disewa (3)</span></span>
-              <span class="ledger-chip"><span class="ledger-chip-dot green"></span> <span data-key="admin_chip_available">Tersedia (4)</span></span>
-              <span class="ledger-chip"><span class="ledger-chip-dot amber"></span> <span data-key="admin_chip_maintenance">Penyelenggaraan (1)</span></span>
+              <button type="button" class="ledger-chip active" id="chip-all" onclick="filterCarLedger('all', this)"><span class="ledger-chip-dot green"></span> <span id="chip-all-text" data-key="admin_chip_all">Semua Unit</span> <span class="ledger-chip-count" id="count-all"></span></button>
+              <button type="button" class="ledger-chip" id="chip-rented" onclick="filterCarLedger('rented', this)"><span class="ledger-chip-dot blue"></span> <span id="chip-rented-text" data-key="admin_chip_rented">Sedang Disewa</span> <span class="ledger-chip-count" id="count-rented"></span></button>
+              <button type="button" class="ledger-chip" id="chip-available" onclick="filterCarLedger('available', this)"><span class="ledger-chip-dot green"></span> <span id="chip-available-text" data-key="admin_chip_available">Tersedia</span> <span class="ledger-chip-count" id="count-available"></span></button>
+              <button type="button" class="ledger-chip" id="chip-maintenance" onclick="filterCarLedger('maintenance', this)"><span class="ledger-chip-dot amber"></span> <span id="chip-maintenance-text" data-key="admin_chip_maintenance">Penyelenggaraan</span> <span class="ledger-chip-count" id="count-maintenance"></span></button>
             </div>
           </div>
           <button class="btn-executive-ghost" data-navigate="../car/cars.html">
@@ -238,7 +238,7 @@
           <table class="ledger-table">
             <thead>
               <tr>
-                <th data-key="admin_th_vehicle">Vehicle</th>
+                <th data-key="admin_th_vehicle">Car</th>
                 <th data-key="admin_th_plate">Plate No.</th>
                 <th data-key="admin_th_type">Type</th>
                 <th data-key="admin_th_status">Status</th>
@@ -267,7 +267,7 @@
   <script src="../../../shared/js/api.js?v=5.2.3"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js?v=5.2.3"></script>
-  <script src="../../js/admin.js?v=5.6.0"></script>
+  <script src="../../js/admin.js?v=5.9.6"></script>
   <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
 </body>
 

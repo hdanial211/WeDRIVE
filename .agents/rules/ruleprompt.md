@@ -21,6 +21,15 @@ trigger: always_on
 
 ### 1C. Standard Reka Bentuk Apple Developer Bento Grid (developer.apple.com/design)
 - **Kemas, Teratur & Berfungsi Penuh:** Setiap susun atur halaman WAJIB berpandukan hierarki dan ketelitian reka bentuk **Apple Developer Design** (`https://developer.apple.com/design/`).
+- **Laman Rujukan Rasmi Apple Developer Design & Sumber Figma MCP**:
+  1. **Portal Utama Reka Bentuk Apple**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
+  2. **Garis Panduan Antaramuka Manusia (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
+  3. **Sumber Reka Bentuk Rasmi & Kit Figma (Apple Design Resources)**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
+  4. **Pencipta Ikon Apple (Icon Composer)**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
+  5. **Pustaka Simbol Sistem (SF Symbols)**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
+  6. **Pereka Pas Dompet (Pass Designer)**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
+  7. **Perkembangan Terkini Reka Bentuk Apple (What's New in Design)**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
+  8. **Integrasi MCP Figma Rasmi**: `https://mcp.figma.com/mcp` (`#get_design_context`)
 - **Zero Dead Space (Tiada Ruang Kosong Terbuang):** Setiap kad Bento WAJIB diseimbangkan ketinggiannya. DILARANG SAMA SEKALI wujud lompang hitam/ruang kosong gergasi di bahagian bawah kad atau kolum yang dibiarkan kosong tanpa kandungan.
 - **Ritma Spacing 24px Konsisten:**
   - Jarak grid antara kad: `gap: 24px;`
@@ -137,11 +146,33 @@ trigger: always_on
   - **Projek Rujukan Stitch:** `1862124494843018493` (*AI-Powered Car Rental Management*).
   - **Sistem Reka Bentuk (*Design System*):** `assets/40090a9886c4444abca795c82673f4c8` atau `assets/518f31ad774f458da15c7fc5ff999bbf` (*Precision & Clarity / WeDRIVE Lumina*).
   - **Tahap Kualiti Model (*Ultra High-Quality Model Tier*):** Sentiasa gunakan piawaian model penaakulan tertinggi **Gemini 3.8** (pemetaan parameter Stitch MCP `modelId: GEMINI_3_1_PRO`; model `GEMINI_3_PRO` telah ditamatkan/deprecated) bagi memastikan kualiti susun atur Apple HIG, squircle 24px/28px, tipografi `tabular-nums`, dan tiada templat murahan.
-  - **Konsistensi `DESIGN.md`:** Setiap token warna, saiz sudut squircle, dan tipografi WAJIB berpandukan fail rujukan punca [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md).
+  - **Konsistensi `DESIGN.md`:** Setiap token warna, saiz sudut squircle, dan tipografi WAJIB berpandukan fail rujukan punca [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com%7Eapple%7ECloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md).
 - **Penyelarasan Kod Fizikal & Integriti Data**:
   - Semua kod CSS yang dijana daripada Stitch WAJIB diselaraskan secara berpusat ke dalam `shared/css/wedrive.css`.
   - Semua medan dan butang tindakan WAJIB disambung terus ke punca data operasi sebenar (`window.WeDriveAPI` / Supabase).
-- **Panduan Alur Kerja Mandatori**: Semua proses penjanaan dan penyepaduan skrin WAJIB mematuhi langkah alur kerja rasmi di [`.agents/workflows/stitch_generation.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/stitch_generation.md).
+- **Panduan Alur Kerja Mandatori**: Semua proses penjanaan dan penyepaduan skrin WAJIB mematuhi langkah alur kerja rasmi di [`.agents/workflows/stitch_generation.md`](file:///Users/hakim/Library/Mobile%20Documents/com%7Eapple%7ECloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/stitch_generation.md).
 
+---
 
+## 10. Ekosistem Reka Bentuk Apple Developer Design & Figma MCP Integration
 
+Semua pembangunan visual, susun atur Bento, kad, modal, dan tipografi WeDRIVE WAJIB merujuk kepada sumber rasmi Apple Developer Design:
+1. **Portal Utama Reka Bentuk Apple**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
+2. **Garis Panduan Antaramuka Manusia (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
+3. **Sumber Reka Bentuk Rasmi & Kit Figma (Apple Design Resources)**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
+4. **Pencipta Ikon Apple (Icon Composer)**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
+5. **Pustaka Simbol Sistem (SF Symbols)**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
+6. **Pereka Pas Dompet (Pass Designer)**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
+7. **Perkembangan Terkini Reka Bentuk Apple (What's New in Design)**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
+8. **Integrasi MCP Figma Rasmi**:
+   ```json
+   {
+     "servers": {
+       "Figma": {
+         "type": "http",
+         "url": "https://mcp.figma.com/mcp"
+       }
+     }
+   }
+   ```
+   Gunakan `#get_design_context` melalui Figma MCP untuk mendapatkan token, komponen, dan spesifikasi rasmi kit reka bentuk Apple.

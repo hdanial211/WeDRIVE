@@ -3844,3 +3844,54 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.5 Removed 360 slider controls, added standalone 1:1 circular fullscreen button, and permanently enforced strict Zero Oval geometry rules`
   - Tag Versi: `5.9.5`
+
+---
+
+##  [MAJOR UPDATE] 174. Pemodenan Menyeluruh Papan Pemuka Pentadbir (Admin Dashboard) Mengikut Piawaian Apple Developer Design, Penyeragaman Hab Tunggal HQ Melaka, Penapis Lejar Interaktif & Panduan Figma MCP (v5.9.6)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  1. *Fokus Satu Halaman Pada Satu Masa*:
+     - Pengguna meminta agar penambahbaikan dilakukan satu halaman per satu halaman bermula dengan Papan Pemuka Pentadbir (`admin/pages/dashboard/admin.html`):
+       > *"Saya rasa saya nak buat satu page per satu page lahh..kalau buat sekaligus semua awak x follow the agent... start dari ni dulu http://localhost:8088/admin/pages/dashboard/admin.html cuba awak tengok page ni adakah follow 100% dalam agent tu??? adakah follow https://developer.apple.com/design/ ni /grill-me"*
+  2. *Audit Mendalam Apple Developer Design & HIG*:
+     - Meneliti secara visual laman rasmi Apple Developer Design (`https://developer.apple.com/design/`) menggunakan pelayar bagi mengekstrak corak reka bentuk: Squircle 24–28px, bekas ikon bulat 1:1 sempurna, kapsul pil mendatar, tipografi SF Pro dengan nombor tabular (`tabular-nums`), zon sentuhan minimum 44px, dan bahan kaca kabur Apple (*Obsidian Frosted Glass*).
+  3. *Pengemaskinian Kekal Rujukan Garis Panduan Apple & Integrasi Figma MCP*:
+     - Memasukkan senarai 7 pautan web rasmi Apple Developer Design ke dalam `.agents/` dan mengkonfigurasi pelayan MCP Figma (`https://mcp.figma.com/mcp` / `#get_design_context`):
+       - `https://developer.apple.com/design/`
+       - `https://developer.apple.com/design/human-interface-guidelines/`
+       - `https://developer.apple.com/design/resources/`
+       - `https://developer.apple.com/icon-composer/`
+       - `https://developer.apple.com/sf-symbols/`
+       - `https://developer.apple.com/pass-designer/`
+       - `https://developer.apple.com/design/whats-new/`
+  4. *Resolusi Penuh 4 Cabang Soalan `/grill-me`*:
+     - Peningkatan menyeluruh data operasi dan susun atur Apple Bento Grid.
+     - Asimetrik Apple Bento Grid (Sorotan AI di sebelah kiri, Tindakan Pantas di sebelah kanan).
+     - Lejar Status Kereta interaktif dengan cip penapis masa nyata (*All, Rented, Available, Maintenance*).
+     - Kaca Kabur Tulen Apple (*Pure Obsidian Glass*) tanpa zarah latar belakang tiruan.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pengemaskinian Papan Pemuka (`admin/pages/dashboard/admin.html`)**:
+     - Membuang zarah terapung `data-particles="6"` daripada `<body>` demi mengekalkan estetika perisian korporat rasmi Apple Developer.
+     - Mengemas kini pil status pengepala daripada `"3 Cawangan Beroperasi"` kepada `"Pusat Operasi Utama (HQ Melaka) Beroperasi • 100% Aktif"` selaras dengan penyatuan Hab Tunggal HQ Melaka (`v5.9.0`).
+     - Menyeragamkan istilah: Menggantikan `"Vehicles"` / `"Kenderaan"` kepada `"Kereta"` / `"Cars"` pada kad metrik dan lajur lejar (`admin_stat_vehicles`, `admin_th_vehicle`).
+     - Menyambungkan acara klik interaktif pada kesemua 4 cip penapis status lejar kereta: `onclick="filterCarLedger('all', this)"`, `onclick="filterCarLedger('rented', this)"`, `onclick="filterCarLedger('available', this)"`, dan `onclick="filterCarLedger('maintenance', this)"`.
+  2. **Pengukuhan Logik Interaktif (`admin/js/admin.js`)**:
+     - Membina fungsi penapisan masa nyata `filterCarLedger(status, el)` yang menapis baris jadual lejar tanpa memuat semula halaman.
+     - Mengemas kini `populateCar(carList)` agar memaparkan lencana status dwibahasa dinamik (`Tersedia` / `Sedang Disewa` / `Penyelenggaraan` dalam mod MS; `Available` / `Rented` / `Maintenance` dalam mod EN).
+     - Menambah keadaan kosong (*empty state*) yang kemas sekiranya tiada kenderaan dalam kategori yang dipilih.
+  3. **Pengemaskinian Kamus Dwibahasa (`shared/lang/en.json`, `en.js`, `ms.json`, `ms.js`)**:
+     - Menambah terjemahan dwibahasa tepat bagi Hab Tunggal HQ Melaka (`admin_depots_synced`), jumlah kereta (`admin_stat_vehicles`), lajur jadual (`admin_th_vehicle`), cip penapis, dan butang tindakan urus.
+  4. **Penyempurnaan Gaya Geometri CSS Master (`shared/css/wedrive.css`)**:
+     - Memastikan semua bekas ikon pada butang tindakan pantas dan kad metrik mematuhi nisbah tepat bulat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height; display: flex !important; align-items: center !important; justify-content: center !important;`).
+     - Menguatkuasakan bentuk kapsul pil berteks mengembang mendatar (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`).
+  5. **Pengemaskinian Fail Peraturan Ejen (`.agents/`)**:
+     - Mengemas kini `.agents/rules/apple_hig_design_system.md`, `.agents/rules/navigation_and_ui.md`, `.agents/rules/ruleprompt.md`, dan `.agents/DESIGN.md` dengan pautan rasmi Apple Developer Design dan arahan penggunaan pelayan MCP Figma.
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Chrome DevTools MCP**: Pengesahan visual pada pelayar membuktikan hab operasi HQ Melaka beroperasi 100%, cip penapis lejar berfungsi dengan lancar memaparkan status bertapis (*All 8, Rented 2, Available 6, Maintenance 0*), dan sokongan dwibahasa EN/MS beroperasi tanpa sebarang ralat.
+  - **Playwright Automated Tests**: Kesemua ujian automasi dijalankan bagi memastikan tiada regresi (100% Pass Rate).
+
+- **Maklumat Git**:
+  - Commit: `5.9.6 Modernize admin dashboard to 100% Apple Developer Design with live ledger filtering and Single HQ alignment`
+  - Tag Versi: `5.9.6`

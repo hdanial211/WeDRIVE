@@ -1,29 +1,34 @@
 /**
  * WeDRIVE - Admin Module JS
- * Data fetched from shared/dummy/data.json
- * Switch to real API endpoint when backend is ready.
+ * High-Density Apple Developer Design Dashboard
+ * Data fetched from window.WeDriveAPI / Supabase
  */
+
+// ─── STATE MANAGEMENT ────────────────────────────────────────────────────────
+let adminStats = null;
+let allCars = [];
+let currentLedgerFilter = 'all';
 
 // ─── FETCH & INITIALISE ───────────────────────────────────────────────────────
 window.WeDriveAPI.getAdminData()
   .then(data => {
     populateStats(data.stats);
-    populateCar(data.car);
+    allCars = data.car || [];
+    updateLedgerChipCounts();
+    renderCarTable();
   })
   .catch(err => {
-    console.error('Admin data load error:', err);
+    console.error('[WeDRIVE Admin] Data load error:', err);
   });
 
-// ─── STATS ────────────────────────────────────────────────────────────────────
-let adminStats = null;
-
+// ─── STATS UI ─────────────────────────────────────────────────────────────────
 function updateStatsUI() {
   if (!adminStats) return;
 
   const lang = localStorage.getItem('wedrive-lang') || 'en';
   const isMalay = lang === 'ms';
 
-  // 1. Total Vehicles Sub-label
+  // 1. Total Cars Sub-label
   const vehiclesChangeEl = document.getElementById('stat-vehicles-change');
   if (vehiclesChangeEl) {
     const available = adminStats.available_vehicles !== undefined ? adminStats.available_vehicles : adminStats.total_vehicles;
@@ -71,22 +76,135 @@ function populateStats(stats) {
   updateStatsUI();
 }
 
-document.addEventListener('wedrive:language-applied', updateStatsUI);
+// ─── CAR STATUS LEDGER FILTERING & COUNTS ────────────────────────────────────
+function updateLedgerChipCounts() {
+  const total = allCars.length;
+  const rented = allCars.filter(c => {
+    const s = (c.status || '').toLowerCase();
+    return s === 'rented' || s === 'sedang disewa' || s === 'disewa';
+  }).length;
+  const available = allCars.filter(c => {
+    const s = (c.status || '').toLowerCase();
+    return s === 'available' || s === 'tersedia';
+  }).length;
+  const maintenance = allCars.filter(c => {
+    const s = (c.status || '').toLowerCase();
+    return s === 'maintenance' || s === 'penyelenggaraan';
+  }).length;
 
-// ─── CAR TABLE ──────────────────────────────────────────────────────────────
-function populateCar(car) {
+  const countAllEl = document.getElementById('count-all');
+  if (countAllEl) countAllEl.textContent = `(${total})`;
+
+  const countRentedEl = document.getElementById('count-rented');
+  if (countRentedEl) countRentedEl.textContent = `(${rented})`;
+
+  const countAvailableEl = document.getElementById('count-available');
+  if (countAvailableEl) countAvailableEl.textContent = `(${available})`;
+
+  const countMaintenanceEl = document.getElementById('count-maintenance');
+  if (countMaintenanceEl) countMaintenanceEl.textContent = `(${maintenance})`;
+}
+
+function updateChipCounters() {
+  updateLedgerChipCounts();
+}
+
+document.addEventListener('wedrive:language-applied', () => {
+  renderCarTable();
+  updateChipCounters();
+});
+
+window.filterCarLedger = function(status, el) {
+  currentLedgerFilter = status;
+  document.querySelectorAll('.ledger-chip').forEach(chip => chip.classList.remove('active'));
+  if (el) {
+    el.classList.add('active');
+  } else {
+    const target = document.getElementById(`chip-${status}`);
+    if (target) target.classList.add('active');
+  }
+  renderCarTable();
+};
+
+function isCurrentMalay() {
+  const lang = localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || document.documentElement.lang || 'en';
+  return lang === 'ms';
+}
+
+function getBilingualCarStatus(status, isMalay) {
+  const s = (status || '').toLowerCase();
+  if (s === 'available' || s === 'tersedia') {
+    return { cssClass: 'available', label: isMalay ? 'Tersedia' : 'Available' };
+  } else if (s === 'rented' || s === 'sedang disewa' || s === 'disewa') {
+    return { cssClass: 'rented', label: isMalay ? 'Sedang Disewa' : 'Rented' };
+  } else if (s === 'maintenance' || s === 'penyelenggaraan') {
+    return { cssClass: 'maintenance', label: isMalay ? 'Penyelenggaraan' : 'Maintenance' };
+  }
+  return { cssClass: s, label: status || 'Unknown' };
+}
+
+function renderCarTable() {
   const tbody = document.getElementById('car-tbody');
   if (!tbody) return;
-  tbody.innerHTML = car.map(v => `
-    <tr>
-      <td><strong>${v.name}</strong></td>
-      <td><span class="jpj-plate-badge">${v.plate}</span></td>
-      <td>${v.label || v.type}</td>
-      <td><span class="status-badge ${v.status.toLowerCase()}"><span class="dot"></span> ${v.status}</span></td>
-      <td><span class="font-tabular fw-700">${v.rate}</span></td>
-      <td>${v.seats || 5} Seater</td>
-      <td>${v.transmission}</td>
-      <td><button class="btn-primary-sm" data-navigate="../car/car-detail/car-detail.html?id=${v.id}">Manage</button></td>
-    </tr>
-  `).join('');
+
+  const isMalay = isCurrentMalay();
+
+  let filtered = allCars;
+  if (currentLedgerFilter === 'rented') {
+    filtered = allCars.filter(c => {
+      const s = (c.status || '').toLowerCase();
+      return s === 'rented' || s === 'sedang disewa' || s === 'disewa';
+    });
+  } else if (currentLedgerFilter === 'available') {
+    filtered = allCars.filter(c => {
+      const s = (c.status || '').toLowerCase();
+      return s === 'available' || s === 'tersedia';
+    });
+  } else if (currentLedgerFilter === 'maintenance') {
+    filtered = allCars.filter(c => {
+      const s = (c.status || '').toLowerCase();
+      return s === 'maintenance' || s === 'penyelenggaraan';
+    });
+  }
+
+  if (filtered.length === 0) {
+    const emptyMsg = isMalay
+      ? 'Tiada unit kereta dijumpai untuk penapis status ini.'
+      : 'No cars found matching this status filter.';
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align: center; padding: 48px 16px; color: var(--text-secondary);">
+          <span class="material-icons-round fs-32 opacity-50 mb-8" style="display: block; margin: 0 auto 8px;">directions_car</span>
+          <span style="font-size: 14px; font-weight: 500;">${emptyMsg}</span>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(v => {
+    const st = getBilingualCarStatus(v.status, isMalay);
+    const trans = v.transmission === 'Automatic' ? (isMalay ? 'Automatik' : 'Automatic') : (isMalay ? 'Manual' : 'Manual');
+    const seatsText = `${v.seats || 5} ${isMalay ? 'Tempat Duduk' : 'Seater'}`;
+    const btnText = isMalay ? 'Urus' : 'Manage';
+    return `
+      <tr>
+        <td><strong>${v.name}</strong></td>
+        <td><span class="jpj-plate-badge">${v.plate}</span></td>
+        <td>${v.label || v.type}</td>
+        <td><span class="status-badge ${st.cssClass}"><span class="dot"></span> ${st.label}</span></td>
+        <td><span class="font-tabular fw-700">${v.rate}</span></td>
+        <td>${seatsText}</td>
+        <td>${trans}</td>
+        <td><button class="btn-primary-sm" data-navigate="../car/car-detail/car-detail.html?id=${v.id}">${btnText}</button></td>
+      </tr>
+    `;
+  }).join('');
 }
+
+// ─── LANGUAGE EVENT LISTENER ─────────────────────────────────────────────────
+document.addEventListener('wedrive:language-applied', () => {
+  updateStatsUI();
+  updateLedgerChipCounts();
+  renderCarTable();
+});

@@ -75,3 +75,27 @@ After creating or modifying any front-end component:
    cd tests && npx playwright test
    ```
 3. Ensure 100% test pass rate before committing changes.
+
+---
+
+## 6. Official Apple Developer Design Resources & Figma MCP
+All UI engineering must reference Apple's primary design resources:
+1. **Apple Developer Design Portal**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
+2. **Human Interface Guidelines (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
+3. **Apple Design Resources & Official Figma Kits**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
+4. **Apple Icon Composer**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
+5. **SF Symbols Library**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
+6. **Apple Pass Designer**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
+7. **What's New in Design**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
+8. **Figma MCP Integration**:
+   ```json
+   {
+     "servers": {
+       "Figma": {
+         "type": "http",
+         "url": "https://mcp.figma.com/mcp"
+       }
+     }
+   }
+   ```
+   Query design context via `#get_design_context` from Apple Figma libraries.

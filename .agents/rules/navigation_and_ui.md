@@ -46,9 +46,28 @@ trigger: always_on
 
 Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standard berikut:
 
+- **Apple Developer Ecosystem (developer.apple.com/design):** Rujukan utama untuk kad Bento kemas, teratur, hierarki simetri, ketiadaan ruang kosong terbuang (*Zero Dead Space*), dan tipografi berkelas tinggi:
+  1. **Portal Utama Reka Bentuk Apple**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
+  2. **Garis Panduan Antaramuka Manusia (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
+  3. **Sumber Reka Bentuk Rasmi & Kit Figma (Apple Design Resources)**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
+  4. **Pencipta Ikon Apple (Icon Composer)**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
+  5. **Pustaka Simbol Sistem (SF Symbols)**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
+  6. **Pereka Pas Dompet (Pass Designer)**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
+  7. **Perkembangan Terkini Reka Bentuk Apple (What's New in Design)**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
+  8. **Integrasi MCP Figma Rasmi**:
+     ```json
+     {
+       "servers": {
+         "Figma": {
+           "type": "http",
+           "url": "https://mcp.figma.com/mcp"
+         }
+       }
+     }
+     ```
+     Gunakan alatan `#get_design_context` untuk mendapatkan token reka bentuk dan konteks daripada kit Apple Figma.
 - **Airbnb (airbnb.com):** Rujukan utama untuk *booking flow* yang lancar, carian tarikh (calendar), peta interaktif, dan *clean UI*.
 - **Stripe (stripe.com):** Rujukan untuk *glassmorphism*, animasi *micro-interactions* yang sangat lancar, borang pembayaran (payment form) yang kemas, dan tipografi yang jelas.
-- **Apple Developer (developer.apple.com/design):** Rujukan utama untuk kad Bento kemas, teratur, hierarki simetri, ketiadaan ruang kosong terbuang (*Zero Dead Space*), dan tipografi berkelas tinggi.
 - **Linear (linear.app):** Rujukan untuk *dark mode* yang sempurna, *glowing borders*, dan *keyboard-first navigation* untuk Admin Dashboard.
 - **Vercel (vercel.com):** Rujukan untuk kelajuan antaramuka (speed), *minimalist dashboard*, dan komponen yang responsif.
 

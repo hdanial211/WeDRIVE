@@ -6,6 +6,19 @@ Standard Rujukan Mandatori Bahagian 1 untuk pembangunan UI/UX WeDRIVE.
 
 ---
 
+## 🌐 LAMAN RUJUKAN RASMI APPLE DEVELOPER DESIGN & SUMBER FIGMA
+Semua pembangunan antaramuka WeDRIVE berpandukan secara mutlak kepada ekosistem Apple Developer Design rasmi:
+1. **Portal Utama Reka Bentuk Apple**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
+2. **Garis Panduan Antaramuka Manusia (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
+3. **Sumber Reka Bentuk Rasmi & Kit Figma (Apple Design Resources)**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
+4. **Pencipta Ikon Apple (Icon Composer)**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
+5. **Pustaka Simbol Sistem (SF Symbols)**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
+6. **Pereka Pas Dompet (Pass Designer)**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
+7. **Perkembangan Terkini Reka Bentuk Apple (What's New in Design)**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
+8. **Integrasi MCP Figma Rasmi**: Menggunakan pelayan Figma MCP (`https://mcp.figma.com/mcp` / alat `#get_design_context`) untuk mengekstrak token dan konteks reka bentuk langsung daripada kit rasmi Apple.
+
+---
+
 ## 🏛️ PILAR 1: GETTING STARTED & CORE PRINCIPLES
 
 1. **Kejelasan (Clarity)**: Tipografi tajam, ikonografi SF Symbols/Material Icons Round bermakna, sifar elemen grafik mengelirukan.

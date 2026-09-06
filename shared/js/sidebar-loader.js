@@ -18,7 +18,7 @@
       sectionLabel: 'Papan Pemuka',
       items: [
         { page: 'admin', href: 'dashboard/admin.html', icon: 'dashboard', key: 'sidebar_overview', label: 'Ringkasan Utama' },
-        { page: 'operations', href: 'dashboard/operations.html', icon: 'speed', key: 'admin_stat_active', label: 'Status Operasi' }
+        { page: 'operations', href: 'dashboard/operations.html', icon: 'speed', key: 'sidebar_operations', label: 'Status Operasi' }
       ]
     },
     car: {
