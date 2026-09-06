@@ -213,7 +213,7 @@ function renderCarTable(car) {
       <td style="padding:14px 20px; font-weight:700; color:var(--primary); font-size:14px;">RM ${rateNum}/hari</td>
       <td style="padding:14px 20px;">
         <span style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; background:${sc.bg}; color:${sc.text};">
-          <span style="width:6px; height:6px; border-radius:50%; background:${sc.dot};"></span> ${sc.label}
+          <span class="live-pulse-dot" style="width:6px !important; height:6px !important; aspect-ratio:1/1 !important; border-radius:50% !important; background:${sc.dot} !important; flex-shrink:0 !important; display:inline-block !important;"></span> ${sc.label}
         </span>
       </td>
       <td style="padding:14px 20px; text-align:right;">

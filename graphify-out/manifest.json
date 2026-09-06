@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
-    "mtime": 1788665529.8981957,
-    "seen": 1788665722.6727612,
-    "ast_hash": "0dc05fdd679d6457883ba2aa4774a338",
+    "mtime": 1788704865.2446887,
+    "seen": 1788705278.097961,
+    "ast_hash": "0f51ed6af99538e713e4d89c0f0899d4",
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
@@ -510,15 +510,15 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788665492.4805844,
-    "seen": 1788665722.673242,
-    "ast_hash": "1bb53f24c12bcb5269f01d3b058716d1",
+    "mtime": 1788704767.9250102,
+    "seen": 1788705278.098052,
+    "ast_hash": "a9f1c51d4327bbc441f4b0055f9b6731",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
-    "mtime": 1788645257.336886,
-    "seen": 1788653435.683768,
-    "ast_hash": "a254f8cb8d91f036ff956286eff39841",
+    "mtime": 1788704994.7836478,
+    "seen": 1788705278.0980532,
+    "ast_hash": "c524c819afaf0364a6c75789738b6033",
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {

@@ -4619,6 +4619,47 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.0 Establish 5 specialized WeDRIVE subagents and resolve cross-device mobile responsive issues`
   - Tag Versi: `6.5.0`
 
+---
+
+### [PATCH UPDATE] 195. Penalaan Mutlak Modul Pentadbir (Admin): Standard BM Moden 2026 & Pengukuhan Geometri Sifar Bujur (Zero Oval Rule) (v6.5.1)
+- **Tarikh**: 6 September 2026
+- **Versi**: `6.5.1` (Peningkatan Versi Patch: Pembetulan kosa kata terlarang 360 Studio dan penguncian geometri bulat 1:1 sempurna pada peranti mudah alih)
+- **Status**: SELESAI
+- **Fail Terlibat**:
+  - `admin/pages/car/car-detail/car-detail.html` (Pembersihan istilah 'Kokpit' $\to$ 'Dalaman Kereta' & 'Ruang Dalaman Maya 360°')
+  - `shared/css/wedrive.css` (Penguncian 1:1 circle dan flex-shrink protection pada `.btn-ai-details`, `.apple-cal-day`, `.live-pulse-dot`, `.status-pulse-dot`, `.ai-pulse-dot`, `.ai-pulse-dot-cyan`, `.kicker-pulse-dot`)
+  - `admin/js/cars.js` (Perlindungan titik status operasi jadual kereta dengan kelas `.live-pulse-dot` dan parameter cache v=6.5.1)
+  - `admin/pages/car/cars.html` (Penyegaran parameter pemecah cache `cars.js?v=6.5.1`)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md` (Perekodan log 195)
+
+- **Objektif & Latar Belakang**:
+  - Menyempurnakan modul Admin ke tahap 100% Zero-Defect susulan audit komprehensif oleh skuad subagen pintar WeDRIVE.
+  - Membasmi istilah senarai hitam terlarang *"Kokpit"* dalam [Peraturan 11](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md) yang ditemui pada halaman Studio 360°.
+  - Mengunci pematuhan mutlak **Prinsip Geometri Sifar Bujur (Zero Oval Rule)** pada resolusi telefon mudah alih (iPhone 393px) untuk butang analitik AI, butang hari kalendar Apple, dan semua titik status telemetri (*pulse dots*).
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Purifikasi Bahasa Melayu Moden 2026 (Audit `bm_language_police`)**:
+     - Mengubah label butang tab studio 360° daripada `360° Dalaman (Kokpit)` kepada **`360° Dalaman Kereta`**.
+     - Mengubah penanda air studio daripada `KOKPIT MAYA 360°` kepada **`RUANG DALAMAN MAYA 360°`**.
+     - Mengemas kini teks `alt` imej kepada `360 Interior View`.
+  2. **Pengukuhan Geometri Sifar Bujur (Audit `wedrive_ui_auditor`)**:
+     - `.btn-ai-details`: Dimensi dikunci tepat $44 \times 44\text{px}$ dengan `aspect-ratio: 1 / 1 !important; border-radius: 50% !important; flex-shrink: 0 !important; align-self: center !important;`. Menghapuskan herotan 40x44px akibat regangan flexbox.
+     - `.apple-cal-day`: Dimensi dikunci tepat $44 \times 44\text{px}$ dengan `min-width: 44px !important; min-height: 44px !important; max-width: 44px !important; max-height: 44px !important; aspect-ratio: 1 / 1 !important;`. Menghapuskan herotan 42x44px akibat konflik `min-height: 44px`.
+     - Titik status telemetri (*Pulse Dots*): Menambah `aspect-ratio: 1 / 1 !important; flex-shrink: 0 !important; display: inline-block !important; box-sizing: border-box !important;` merentas semua kelas dot (`.live-pulse-dot`, `.status-pulse-dot`, `.ai-pulse-dot`, `.ai-pulse-dot-cyan`, `.kicker-pulse-dot`) dan titik status jadual kereta dalam `admin/js/cars.js`.
+  3. **Penyelarasan Cache Script**:
+     - Memperbaharui parameter cache `cars.js?v=6.5.1` di `cars.html` bagi memastikan pelayar memuat turun fungsi jadual terkini tanpa cache lapuk.
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **36/36 Ujian Lulus (100% Pass Rate)**.
+  - Pengesahan DOM di pelayar membuktikan **0 perkataan senarai hitam** dan **0 elemen bujur/oval** merentas MacBook (1440px), iPad (820px), dan iPhone (393px).
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+  - Audit siling aksara `wc -m` mengesahkan kesemua 19 fail peraturan mematuhi had $\le 12,000$ aksara.
+
+- **Maklumat Git**:
+  - Commit: `6.5.1 Enforce Modern Malay 2026 standards and lock strict 1:1 circle geometry across Admin module`
+  - Tag Versi: `6.5.1`
+
+
 
 
 
