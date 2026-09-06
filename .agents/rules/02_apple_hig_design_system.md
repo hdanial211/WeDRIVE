@@ -86,3 +86,8 @@ border: 1px solid var(--border-glass);
    - Terbuka automatik sebaik Tarikh Ambil dipilih; tiada sekatan tarikh lampau untuk tempahan baharu.
    - Jambatan julat: Kapsul permulaan biru, jambatan lut sinar, kapsul penamat biru.
 5. **Maklum Balas Ralat**: Goncangan bentuk pil (*pill shake* `border-radius: 9999px`) dan denyutan pada medan sasaran.
+6. **Standard Reka Bentuk Apple Developer Bento Grid & Sifar Ruang Kosong (Zero Dead Space)**:
+   - **Kemas, Teratur & Berfungsi Penuh:** Setiap susun atur halaman WAJIB berpandukan hierarki dan ketelitian reka bentuk Apple Developer Design.
+   - **Zero Dead Space (Tiada Ruang Kosong Terbuang):** Setiap kad Bento WAJIB diseimbangkan ketinggiannya. DILARANG SAMA SEKALI wujud lompang hitam atau ruang kosong gergasi.
+   - **Ritma Spacing 24px Konsisten:** `gap: 24px`, `padding: 24px`, kad squircle `border-radius: 24px` (atau `28px` untuk modal/kad hero), input `border-radius: 14px`.
+

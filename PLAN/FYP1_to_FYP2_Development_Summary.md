@@ -4149,3 +4149,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.1.0 Systematic numbering and cross-reference alignment for .agents/rules/`
   - Tag Versi: `6.1.0`
+
+---
+
+## [MINOR UPDATE] 182. Pematuhan Had Saiz Kandungan Maksimum 12,000 Aksara Setiap Fail .agents/rules/ (v6.1.1)
+
+- **Punca Arahan Pengguna**:
+  - *"lupa nak cakap max content adalah 12000 sahaja so mana yang terlebih tu awak jangan buat letak tempat lain buat file baharu ke masuk file yang ada ke tapi max 12000 sahaja"*
+
+- **Tindakan Audit & Penyelarasan Saiz Aksara**:
+  1. **Audit Penuh Saiz Aksara**: Semua 10 fail `.agents/rules/` diimbas menggunakan `wc -m`.
+  2. **Pengurangan Saiz `01_core_rules.md`**:
+     - Saiz asal melebihi had (13,375 aksara).
+     - Seksyen 1 dipadatkan dengan rumusan teras manakala spesifikasi terperinci Bento Grid dan Zero Dead Space dialihkan dengan kemas ke `02_apple_hig_design_system.md` (Pilar 3: Corak Interaksi & Struktur, Butiran 6).
+     - Saiz akhir `01_core_rules.md`: **11,659 aksara** (LULUS / <= 12,000).
+  3. **Penempatan Kandungan ke `02_apple_hig_design_system.md`**:
+     - Kandungan Bento Grid, sifar ruang kosong (Zero Dead Space), dan ritma spacing 24px ditempatkan di Pilar 3.
+     - Saiz akhir `02_apple_hig_design_system.md`: **6,789 aksara** (LULUS / <= 12,000).
+  4. **Status Akhir Keseluruhan 10 Fail Peraturan**:
+     - `01_core_rules.md`: 11,659 aksara (OK)
+     - `02_apple_hig_design_system.md`: 6,789 aksara (OK)
+     - `03_apple_hig_components.md`: 4,571 aksara (OK)
+     - `04_navigation_and_ui.md`: 5,591 aksara (OK)
+     - `05_apple_device_support.md`: 2,270 aksara (OK)
+     - `06_code_and_backend.md`: 2,045 aksara (OK)
+     - `07_stitch_design_system.md`: 6,068 aksara (OK)
+     - `08_playwright_testing.md`: 1,761 aksara (OK)
+     - `09_security_and_audit.md`: 1,369 aksara (OK)
+     - `10_graphify.md`: 978 aksara (OK)
+     - **Semua 10 fail kini 100% di bawah had 12,000 aksara tanpa kehilangan sebarang peraturan atau garis panduan.**
+
+- **Maklumat Git**:
+  - Commit: `6.1.1 Enforce strict 12000 character limit per rule file in .agents/rules/`
+  - Tag Versi: `6.1.1`
