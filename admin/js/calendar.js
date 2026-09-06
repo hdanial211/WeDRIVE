@@ -52,24 +52,26 @@ window.addEventListener('DOMContentLoaded', async () => {
   updateStats();
 
   // Navigation buttons
-  document.getElementById('cal-prev').addEventListener('click', () => { changeMonth(-1); });
-  document.getElementById('cal-next').addEventListener('click', () => { changeMonth(1); });
+  const prevBtn = document.getElementById('cal-prev');
+  if (prevBtn) prevBtn.addEventListener('click', () => { changeMonth(-1); });
+  const nextBtn = document.getElementById('cal-next');
+  if (nextBtn) nextBtn.addEventListener('click', () => { changeMonth(1); });
 
-  // Detail close button + click outside
-  document.getElementById('cal-detail-close').addEventListener('click', () => {
-    const p = document.getElementById('cal-detail-panel');
-    p.classList.add('hidden');
-    p.style.display = 'none';
-    clearSelected();
-  });
-  document.getElementById('cal-detail-panel').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) {
-      const p = document.getElementById('cal-detail-panel');
-      p.classList.add('hidden');
-      p.style.display = 'none';
-      clearSelected();
-    }
-  });
+  // Today button
+  const todayBtn = document.getElementById('cal-today-btn');
+  if (todayBtn) {
+    todayBtn.addEventListener('click', () => {
+      const now = new Date();
+      CAL_YEAR = now.getFullYear();
+      CAL_MONTH = now.getMonth();
+      syncDropdowns();
+      const todayStr = new Date().toISOString().slice(0, 10);
+      SELECTED_DATE = todayStr;
+      renderCalendar();
+      updateStats();
+      showDayDetail(todayStr);
+    });
+  }
 
   // Stat modal close
   document.getElementById('cal-stat-modal-close').addEventListener('click', closeStatModal);
@@ -101,11 +103,13 @@ function initDropdowns() {
   // Listen for changes
   monthSelect.addEventListener('change', () => {
     CAL_MONTH = parseInt(monthSelect.value);
+    SELECTED_DATE = null;
     renderCalendar();
     updateStats();
   });
   yearSelect.addEventListener('change', () => {
     CAL_YEAR = parseInt(yearSelect.value);
+    SELECTED_DATE = null;
     renderCalendar();
     updateStats();
   });
@@ -148,25 +152,19 @@ function initFilters() {
 }
 
 function applyFilters() {
-  // Toggle visibility of calendar indicators based on filter state
-  document.querySelectorAll('.adm-cal-dot.booking').forEach(el => {
+  // Toggle visibility of calendar dots based on filter state
+  document.querySelectorAll('.apple-cal-dot.booking').forEach(el => {
     el.classList.toggle('hidden', !CAL_FILTERS.booking);
   });
-  document.querySelectorAll('.adm-cal-dot.event').forEach(el => {
+  document.querySelectorAll('.apple-cal-dot.event').forEach(el => {
     el.classList.toggle('hidden', !CAL_FILTERS.event);
   });
-  document.querySelectorAll('.adm-cal-dot.seasonal').forEach(el => {
+  document.querySelectorAll('.apple-cal-dot.seasonal').forEach(el => {
     el.classList.toggle('hidden', !CAL_FILTERS.seasonal);
   });
-  document.querySelectorAll('.adm-cal-seasonal').forEach(el => {
-    el.classList.toggle('hidden', !CAL_FILTERS.seasonal);
-  });
-  document.querySelectorAll('.adm-cal-cars.rented').forEach(el => {
-    el.classList.toggle('hidden', !CAL_FILTERS.booking);
-  });
-  document.querySelectorAll('.adm-cal-cars.available').forEach(el => {
-    el.classList.toggle('hidden', !CAL_FILTERS.available);
-  });
+  if (SELECTED_DATE) {
+    showDayDetail(SELECTED_DATE);
+  }
 }
 
 // ── Change Month ──────────────────────────────────────────────────────────────
@@ -175,6 +173,7 @@ function changeMonth(dir) {
   if (CAL_MONTH < 0) { CAL_MONTH = 11; CAL_YEAR--; }
   if (CAL_MONTH > 11) { CAL_MONTH = 0; CAL_YEAR++; }
   syncDropdowns();
+  SELECTED_DATE = null;
   renderCalendar();
   updateStats();
 }
@@ -223,14 +222,14 @@ function getPromosForDate(ds) {
 // ── Selected cell helpers ─────────────────────────────────────────────────────
 function clearSelected() {
   SELECTED_DATE = null;
-  document.querySelectorAll('.adm-cal-cell.selected').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.apple-cal-day.selected, .adm-cal-cell.selected').forEach(c => c.classList.remove('selected'));
 }
 
 function setSelected(ds) {
   clearSelected();
   SELECTED_DATE = ds;
-  const cell = document.querySelector(`.adm-cal-cell[data-date="${ds}"]`);
-  if (cell) cell.classList.add('selected');
+  const dayBtn = document.querySelector(`.apple-cal-day[data-date="${ds}"]`);
+  if (dayBtn) dayBtn.classList.add('selected');
 }
 
 // ── Update Stats ──────────────────────────────────────────────────────────────
@@ -258,8 +257,10 @@ function updateStats() {
 }
 
 // ── Render Calendar ───────────────────────────────────────────────────────────
+// ── Render Calendar (Apple HIG Inline Grid Standard) ──────────────────────────
 function renderCalendar() {
   const grid = document.getElementById('cal-grid');
+  if (!grid) return;
 
   // Update month dropdown labels for current language
   updateMonthDropdownLabels();
@@ -267,13 +268,12 @@ function renderCalendar() {
   const firstDay = new Date(CAL_YEAR, CAL_MONTH, 1).getDay(); // 0=Sun
   const daysInMonth = new Date(CAL_YEAR, CAL_MONTH + 1, 0).getDate();
   const todayStr = new Date().toISOString().slice(0, 10);
-  const totalCars = CAL_DATA.car.length || 6;
 
   let html = '';
 
-  // Empty cells before first day
+  // Empty cells before first day of month
   for (let i = 0; i < firstDay; i++) {
-    html += '<div class="adm-cal-cell empty"></div>';
+    html += '<div class="apple-cal-cell-wrap empty"></div>';
   }
 
   for (let d = 1; d <= daysInMonth; d++) {
@@ -285,63 +285,49 @@ function renderCalendar() {
     const isPast = ds < todayStr;
     const isToday = ds === todayStr;
     const isSelected = ds === SELECTED_DATE;
-    const carsRented = bookings.length;
-    const carsAvailable = Math.max(0, totalCars - carsRented);
 
-    let cls = 'adm-cal-cell';
-    if (isPast) cls += ' past';
-    if (isToday) cls += ' today';
-    if (isSelected) cls += ' selected';
+    let dayCls = 'apple-cal-day';
+    if (isPast) dayCls += ' past';
+    if (isToday) dayCls += ' today';
+    if (isSelected) dayCls += ' selected';
 
-    // Indicators
-    let indicators = '';
+    // Micro-dots beneath day number (Apple HIG standard)
+    let dots = '';
     if (bookings.length > 0) {
-      indicators += `<span class="adm-cal-dot booking ${CAL_FILTERS.booking ? '' : 'hidden'}"></span>`;
+      dots += `<span class="apple-cal-dot booking ${CAL_FILTERS.booking ? '' : 'hidden'}" title="${bookings.length} Tempahan"></span>`;
     }
     if (inspections.length > 0) {
-      indicators += `<span class="adm-cal-dot inspection" style="background:#eab308"></span>`;
+      dots += `<span class="apple-cal-dot inspection" title="${inspections.length} Pemeriksaan"></span>`;
     }
-    if (banners.length > 0 || seasonals.length > 0) {
-      indicators += `<span class="adm-cal-dot event ${CAL_FILTERS.event ? '' : 'hidden'}"></span>`;
+    if (banners.length > 0) {
+      dots += `<span class="apple-cal-dot event ${CAL_FILTERS.event ? '' : 'hidden'}" title="Promosi"></span>`;
     }
     if (seasonals.length > 0) {
-      indicators += `<span class="adm-cal-dot seasonal ${CAL_FILTERS.seasonal ? '' : 'hidden'}"></span>`;
+      dots += `<span class="apple-cal-dot seasonal ${CAL_FILTERS.seasonal ? '' : 'hidden'}" title="Harga Bermusim"></span>`;
     }
-
-    // Seasonal badge
-    let seasonalBadge = '';
-    if (seasonals.length > 0) {
-      const s = seasonals[0];
-      const sign = s.direction === 'increase' ? '+' : '-';
-      seasonalBadge = `<div class="adm-cal-seasonal ${CAL_FILTERS.seasonal ? '' : 'hidden'}">${sign}${s.adjustment_value}%</div>`;
-    }
-
-    // Car count
-    let carInfo = '';
-    if (!isPast) {
-      if (carsRented > 0) {
-        carInfo = `<div class="adm-cal-cars rented ${CAL_FILTERS.booking ? '' : 'hidden'}">${carsRented} <span class="material-icons-round" style="font-size:11px">directions_car</span></div>`;
-      } else {
-        carInfo = `<div class="adm-cal-cars available ${CAL_FILTERS.available ? '' : 'hidden'}">${carsAvailable} <span class="material-icons-round" style="font-size:11px">check_circle</span></div>`;
-      }
-      if (inspections.length > 0) {
-        carInfo += `<div class="adm-cal-cars inspection" style="background:rgba(234,179,8,0.12);color:#d97706;border:1px solid rgba(234,179,8,0.2);margin-top:2px;">${inspections.length} <span class="material-icons-round" style="font-size:11px">build</span></div>`;
-      }
-    }
-
-    // Determine day number class
-    const dayNumCls = isToday ? 'today-num' : '';
 
     html += `
-    <div class="${cls}" data-date="${ds}" onclick="showDayDetail('${ds}')">
-      <div class="adm-cal-day-num ${dayNumCls}">${d}</div>
-      <div class="adm-cal-indicators">${indicators}</div>
-      ${seasonalBadge}
-      ${carInfo}
+    <div class="apple-cal-cell-wrap">
+      <button type="button" class="${dayCls}" data-date="${ds}" onclick="showDayDetail('${ds}')" aria-label="${ds}">
+        ${d}
+      </button>
+      <div class="apple-cal-dots">${dots}</div>
     </div>`;
   }
 
   grid.innerHTML = html;
+
+  // Determine initial selected date
+  if (!SELECTED_DATE) {
+    const currentMonthToday = (new Date().getFullYear() === CAL_YEAR && new Date().getMonth() === CAL_MONTH);
+    const defaultDate = currentMonthToday ? todayStr : dateStr(CAL_YEAR, CAL_MONTH, 1);
+    showDayDetail(defaultDate);
+  } else {
+    // Re-highlight if cell exists in currently rendered month
+    const activeBtn = grid.querySelector(`.apple-cal-day[data-date="${SELECTED_DATE}"]`);
+    if (activeBtn) activeBtn.classList.add('selected');
+    showDayDetail(SELECTED_DATE);
+  }
 
   // Apply language
   if (typeof setLanguage === 'function') {
@@ -349,25 +335,32 @@ function renderCalendar() {
   }
 }
 
-// ── Show Day Detail ───────────────────────────────────────────────────────────
+// ── Show Day Detail (Apple HIG Operations Agenda Panel) ────────────────────────
 window.showDayDetail = function (ds) {
   // Highlight selected date
   setSelected(ds);
 
-  const panel = document.getElementById('cal-detail-panel');
-  const body = document.getElementById('cal-detail-body');
-  const titleEl = document.getElementById('cal-detail-title');
-  const subtitleEl = document.getElementById('cal-detail-subtitle');
-  const dayNumEl = document.getElementById('cal-detail-day-num');
+  const titleEl = document.getElementById('cal-agenda-title');
+  const subtitleEl = document.getElementById('cal-agenda-subtitle');
+  const badgeTextEl = document.getElementById('cal-agenda-badge-text');
+  const availEl = document.getElementById('agenda-stat-avail');
+  const rentedEl = document.getElementById('agenda-stat-rented');
+  const inspectEl = document.getElementById('agenda-stat-inspect');
+  const listEl = document.getElementById('cal-agenda-list');
 
   const date = new Date(ds + 'T00:00:00');
   const lang = localStorage.getItem('wedrive-lang') || 'en';
   const locale = lang === 'ms' ? 'ms-MY' : 'en-MY';
+  const todayStr = new Date().toISOString().slice(0, 10);
 
-  // Header content
-  dayNumEl.textContent = date.getDate();
-  titleEl.textContent = date.toLocaleDateString(locale, { weekday: 'long' });
-  subtitleEl.textContent = date.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
+  const weekdayName = date.toLocaleDateString(locale, { weekday: 'long' });
+  const formattedFullDate = date.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
+
+  if (titleEl) titleEl.textContent = weekdayName;
+  if (subtitleEl) subtitleEl.textContent = formattedFullDate;
+  if (badgeTextEl) {
+    badgeTextEl.textContent = ds === todayStr ? (lang === 'ms' ? 'Hari Ini' : 'Today') : date.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
+  }
 
   const bookings = getBookingsForDate(ds);
   const inspections = getInspectionsForDate(ds);
@@ -377,122 +370,72 @@ window.showDayDetail = function (ds) {
   const carsRented = bookings.length;
   const carsAvailable = Math.max(0, totalCars - carsRented);
 
+  if (availEl) availEl.textContent = carsAvailable;
+  if (rentedEl) rentedEl.textContent = carsRented;
+  if (inspectEl) inspectEl.textContent = inspections.length;
+
+  if (!listEl) return;
+
   let html = '';
 
-  // Summary chips
-  html += '<div class="cal-day-summary">';
-  html += `<div class="cal-day-chip available-chip">
-    <span class="material-icons-round">check_circle</span>
-    <div class="cal-day-chip-info">
-      <span class="cal-day-chip-val tabular-nums">${carsAvailable}</span>
-      <span class="cal-day-chip-lbl">${lang === 'ms' ? 'Tersedia' : 'Available'}</span>
-    </div>
-  </div>`;
-  html += `<div class="cal-day-chip rented-chip">
-    <span class="material-icons-round">directions_car</span>
-    <div class="cal-day-chip-info">
-      <span class="cal-day-chip-val tabular-nums">${carsRented}</span>
-      <span class="cal-day-chip-lbl">${lang === 'ms' ? 'Disewa' : 'Rented'}</span>
-    </div>
-  </div>`;
-  if (inspections.length > 0) {
-    html += `<div class="cal-day-chip inspection-chip">
-      <span class="material-icons-round">build</span>
-      <div class="cal-day-chip-info">
-        <span class="cal-day-chip-val tabular-nums">${inspections.length}</span>
-        <span class="cal-day-chip-lbl">${lang === 'ms' ? 'Pemeriksaan' : 'Inspections'}</span>
-      </div>
-    </div>`;
-  }
-  if (seasonals.length > 0) {
-    const s = seasonals[0];
-    const sign = s.direction === 'increase' ? '+' : '-';
-    html += `<div class="cal-day-chip seasonal-chip">
-      <span class="material-icons-round">${s.direction === 'increase' ? 'trending_up' : 'trending_down'}</span>
-      <div class="cal-day-chip-info">
-        <span class="cal-day-chip-val tabular-nums">${sign}${s.adjustment_value}%</span>
-        <span class="cal-day-chip-lbl">${s.name}</span>
-      </div>
-    </div>`;
-  }
-  html += '</div>';
-
-  // Bookings as cards
-  if (bookings.length > 0) {
-    html += `<div class="cal-day-section-title">
-      <span class="material-icons-round cal-sec-icon">event_available</span>
-      <span>${lang === 'ms' ? 'Tempahan Kenderaan' : 'Car Bookings'}</span>
-      <span class="cal-sec-count tabular-nums">${bookings.length}</span>
-    </div>`;
-    bookings.forEach(b => {
-      const sc = b.status === 'Confirmed' ? 'confirmed' : (b.status === 'Pending' ? 'pending' : 'completed');
-      const statusLabel = lang === 'ms' ? ({
-        'Confirmed': 'Disahkan',
-        'Pending': 'Menunggu',
-        'Completed': 'Selesai',
-        'Active': 'Aktif',
-        'Cancelled': 'Dibatalkan'
-      }[b.status] || b.status) : b.status;
-      html += `<div class="cal-booking-card">
-        <div class="cal-booking-card-icon booking-icon">
-          <span class="material-icons-round">directions_car</span>
-        </div>
-        <div class="cal-booking-card-body">
-          <div class="cal-booking-car-name">${b.car}</div>
-          <div class="cal-booking-customer-meta">
-            <span class="material-icons-round fs-14">person</span>
-            <span>${b.customer}</span>
-            <span class="dot-sep">•</span>
-            <span class="cal-booking-id">#${b.id}</span>
+  // 1. Seasonal Pricing banner in agenda if active
+  if (seasonals.length > 0 && CAL_FILTERS.seasonal) {
+    seasonals.forEach(s => {
+      const sign = s.direction === 'increase' ? '+' : '-';
+      const dirColor = s.direction === 'increase' ? '#FF453A' : '#30D158';
+      const dirIcon = s.direction === 'increase' ? 'trending_up' : 'trending_down';
+      html += `
+      <div class="cal-agenda-item" style="border-left: 3px solid #FF9500;">
+        <div class="cal-agenda-item-left">
+          <div class="cal-agenda-car-icon" style="background: rgba(255, 149, 0, 0.12); color: #FF9500;">
+            <span class="material-icons-round">${dirIcon}</span>
           </div>
-          <div class="cal-booking-dates">
-            <span class="material-icons-round fs-14">date_range</span>
-            <span class="tabular-nums">${b.pickup}</span>
-            <span class="date-arrow">→</span>
-            <span class="tabular-nums">${b.return}</span>
+          <div>
+            <div class="cal-agenda-car-name">${s.name}</div>
+            <div class="cal-agenda-cust-name">${lang === 'ms' ? 'Pelarasan Harga Bermusim' : 'Seasonal Pricing'}</div>
           </div>
         </div>
-        <div class="cal-booking-card-aside">
-          <div class="cal-booking-amount tabular-nums">RM ${Number(b.total || 0).toLocaleString()}</div>
-          <span class="status-badge ${sc}">
-            <span class="dot"></span>
-            <span>${statusLabel}</span>
-          </span>
+        <div class="cal-agenda-item-right">
+          <span class="cal-booking-amount tabular-nums" style="color: ${dirColor}; font-weight: 700;">${sign}${s.adjustment_value}%</span>
         </div>
       </div>`;
     });
-  } else if (inspections.length === 0) {
-    html += `<div class="cal-day-empty">
-      <span class="material-icons-round">event_busy</span>
-      <div class="cal-day-empty-title">${lang === 'ms' ? 'Tiada aktiviti tempahan pada hari ini' : 'No booking activities scheduled for this day'}</div>
-    </div>`;
   }
 
-  // Inspections as cards
+  // 2. Marketing Banners in agenda
+  if (banners.length > 0 && CAL_FILTERS.event) {
+    banners.forEach(b => {
+      html += `
+      <div class="cal-agenda-item" style="border-left: 3px solid ${b.color || '#AF52DE'};">
+        <div class="cal-agenda-item-left">
+          <div class="cal-agenda-car-icon" style="background: rgba(175, 82, 222, 0.12); color: #AF52DE;">
+            <span class="material-icons-round">campaign</span>
+          </div>
+          <div>
+            <div class="cal-agenda-car-name">${b.title}</div>
+            <div class="cal-agenda-cust-name">${b.message || (lang === 'ms' ? 'Kempen Aktif' : 'Active Campaign')}</div>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+
+  // 3. Inspections
   if (inspections.length > 0) {
-    html += `<div class="cal-day-section-title">
-      <span class="material-icons-round cal-sec-icon" style="color:#FF9F0A">build</span>
-      <span>${lang === 'ms' ? 'Buffer Pemeriksaan & Penyelenggaraan' : 'Inspection & Buffer Block'}</span>
-      <span class="cal-sec-count tabular-nums">${inspections.length}</span>
-    </div>`;
     inspections.forEach(b => {
-      html += `<div class="cal-booking-card inspection-card">
-        <div class="cal-booking-card-icon inspection-icon">
-          <span class="material-icons-round">build</span>
-        </div>
-        <div class="cal-booking-card-body">
-          <div class="cal-booking-car-name">${b.car}</div>
-          <div class="cal-inspection-meta">
-            <span class="cal-inspection-badge">${lang === 'ms' ? 'Pemeriksaan Selepas Tempahan' : 'Post-Rental Inspection'}</span>
-            <span class="cal-booking-id">#${b.id}</span>
+      html += `
+      <div class="cal-agenda-item" style="border-left: 3px solid #EAB308;">
+        <div class="cal-agenda-item-left">
+          <div class="cal-agenda-car-icon" style="background: rgba(234, 179, 8, 0.12); color: #EAB308;">
+            <span class="material-icons-round">build</span>
           </div>
-          <div class="cal-booking-customer-meta" style="margin-top:5px">
-            <span class="material-icons-round fs-14">person</span>
-            <span>${lang === 'ms' ? 'Penyewa Terdahulu:' : 'Previous Renter:'} ${b.customer}</span>
+          <div>
+            <div class="cal-agenda-car-name">${b.car}</div>
+            <div class="cal-agenda-cust-name">${lang === 'ms' ? 'Pemeriksaan Selepas Sewaan' : 'Post-Rental Inspection'} (#${b.id})</div>
           </div>
         </div>
-        <div class="cal-booking-card-aside">
-          <span class="status-badge warning">
+        <div class="cal-agenda-item-right">
+          <span class="status-badge warning" style="padding: 2px 8px; font-size: 11px;">
             <span class="dot"></span>
             <span>${lang === 'ms' ? 'Wajib' : 'Required'}</span>
           </span>
@@ -501,67 +444,61 @@ window.showDayDetail = function (ds) {
     });
   }
 
-  // Active banners
-  if (banners.length > 0) {
-    html += `<div class="cal-day-section-title">
-      <span class="material-icons-round cal-sec-icon" style="color:#AF52DE">campaign</span>
-      <span>${lang === 'ms' ? 'Promosi & Kempen Aktif' : 'Active Promotions'}</span>
-      <span class="cal-sec-count tabular-nums">${banners.length}</span>
-    </div>`;
-    banners.forEach(b => {
-      html += `<div class="cal-booking-card" style="border-left:3px solid ${b.color || '#AF52DE'}">
-        <div class="cal-booking-card-icon event-icon">
-          <span class="material-icons-round">campaign</span>
-        </div>
-        <div class="cal-booking-card-body">
-          <div class="cal-booking-car-name">${b.title}</div>
-          <div class="cal-booking-customer-meta">${b.message}</div>
-          <div class="cal-booking-dates">
-            <span class="material-icons-round fs-14">date_range</span>
-            <span class="tabular-nums">${b.start_date}</span>
-            <span class="date-arrow">→</span>
-            <span class="tabular-nums">${b.end_date}</span>
+  // 4. Bookings
+  if (bookings.length > 0 && CAL_FILTERS.booking) {
+    bookings.forEach(b => {
+      const sc = b.status === 'Confirmed' ? 'confirmed' : (b.status === 'Pending' ? 'pending' : (b.status === 'Active' ? 'active' : 'completed'));
+      const statusLabel = lang === 'ms' ? ({
+        'Confirmed': 'Disahkan',
+        'Pending': 'Menunggu',
+        'Completed': 'Selesai',
+        'Active': 'Aktif',
+        'Cancelled': 'Dibatalkan'
+      }[b.status] || b.status) : b.status;
+
+      html += `
+      <div class="cal-agenda-item cursor-pointer" onclick="window.location.href='../booking/bookings.html?search=${encodeURIComponent(b.id)}'">
+        <div class="cal-agenda-item-left">
+          <div class="cal-agenda-car-icon">
+            <span class="material-icons-round">directions_car</span>
           </div>
+          <div>
+            <div class="cal-agenda-car-name">${b.car}</div>
+            <div class="cal-agenda-cust-name flex-center gap-4">
+              <span class="material-icons-round fs-12">person</span>
+              <span>${b.customer}</span>
+              <span class="dot-sep">•</span>
+              <span class="tabular-nums">#${b.id}</span>
+            </div>
+          </div>
+        </div>
+        <div class="cal-agenda-item-right">
+          <span class="status-badge ${sc}" style="padding: 2px 8px; font-size: 11px;">
+            <span class="dot"></span>
+            <span>${statusLabel}</span>
+          </span>
+          <span class="cal-agenda-time-pill tabular-nums">RM ${Number(b.total || 0).toLocaleString()}</span>
         </div>
       </div>`;
     });
   }
 
-  // Seasonal pricing
-  if (seasonals.length > 0) {
-    html += `<div class="cal-day-section-title">
-      <span class="material-icons-round cal-sec-icon" style="color:#FF9F0A">event</span>
-      <span>${lang === 'ms' ? 'Kadar Harga Bermusim' : 'Seasonal Pricing'}</span>
-      <span class="cal-sec-count tabular-nums">${seasonals.length}</span>
+  // Empty state if nothing for this date
+  if (!html) {
+    html = `
+    <div class="cal-agenda-empty">
+      <span class="material-icons-round">event_available</span>
+      <div class="cal-agenda-empty-title">${lang === 'ms' ? 'Tiada Operasi Berjadual' : 'No Scheduled Operations'}</div>
+      <div class="fs-12 text-secondary">${lang === 'ms' ? 'Semua unit kereta tersedia untuk tempahan segera.' : 'All car units are available for immediate booking.'}</div>
     </div>`;
-    seasonals.forEach(s => {
-      const sign = s.direction === 'increase' ? '+' : '-';
-      const dirColor = s.direction === 'increase' ? '#FF453A' : '#30D158';
-      const dirIcon = s.direction === 'increase' ? 'trending_up' : 'trending_down';
-      html += `<div class="cal-booking-card">
-        <div class="cal-booking-card-icon seasonal-icon">
-          <span class="material-icons-round">${dirIcon}</span>
-        </div>
-        <div class="cal-booking-card-body">
-          <div class="cal-booking-car-name">${s.name}</div>
-          <div class="cal-booking-customer-meta">${s.adjustment_type}</div>
-          <div class="cal-booking-dates">
-            <span class="material-icons-round fs-14">date_range</span>
-            <span class="tabular-nums">${s.start_date}</span>
-            <span class="date-arrow">→</span>
-            <span class="tabular-nums">${s.end_date}</span>
-          </div>
-        </div>
-        <div class="cal-booking-card-aside">
-          <div class="cal-booking-amount tabular-nums" style="color:${dirColor}">${sign}${s.adjustment_value}%</div>
-        </div>
-      </div>`;
-    });
   }
 
-  body.innerHTML = html;
-  panel.classList.remove('hidden');
-  panel.style.display = 'flex';
+  listEl.innerHTML = html;
+};
+
+window.goToNewBookingForDate = function () {
+  const ds = SELECTED_DATE || new Date().toISOString().slice(0, 10);
+  window.location.href = `../booking/new-booking.html?pickup=${ds}`;
 };
 
 // ── Stat Card Popup ───────────────────────────────────────────────────────────

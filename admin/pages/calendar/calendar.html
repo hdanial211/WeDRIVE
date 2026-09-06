@@ -101,96 +101,135 @@
         </div>
       </div>
 
-      <!-- MAIN UNIFIED CALENDAR CARD (Apple HIG Single Card Standard) -->
-      <div class="card reveal-on-scroll p-0 overflow-hidden radius-24 mb-24 border-subtle adm-cal-main-card">
-        <!-- Integrated Calendar Toolbar Header -->
-        <div class="cal-toolbar-header px-22 py-14 flex-between flex-wrap gap-14 border-bottom-subtle">
-          <!-- LEFT: Navigation controls -->
-          <div class="cal-nav-group flex-center gap-8">
-            <button class="cal-nav-btn" id="cal-prev" title="Bulan Sebelumnya">
-              <span class="material-icons-round">chevron_left</span>
-            </button>
-            <button class="cal-nav-btn" id="cal-next" title="Bulan Seterusnya">
-              <span class="material-icons-round">chevron_right</span>
-            </button>
-            
-            <!-- Month & Year Dropdowns -->
-            <div class="cal-selector-group flex-center gap-8">
-              <select id="cal-month-select" class="cal-dropdown radius-12" title="Pilih Bulan" aria-label="Pilih Bulan">
-                <option value="0">Januari</option>
-                <option value="1">Februari</option>
-                <option value="2">Mac</option>
-                <option value="3">April</option>
-                <option value="4">Mei</option>
-                <option value="5">Jun</option>
-                <option value="6">Julai</option>
-                <option value="7">Ogos</option>
-                <option value="8">September</option>
-                <option value="9">Oktober</option>
-                <option value="10">November</option>
-                <option value="11">Disember</option>
-              </select>
-              <select id="cal-year-select" class="cal-dropdown radius-12" title="Pilih Tahun" aria-label="Pilih Tahun">
-                <!-- Populated by JS -->
-              </select>
-            </div>
-          </div>
-
-          <!-- RIGHT: Legend filter checkboxes -->
-          <div class="cal-legend-filters flex-center gap-8 flex-wrap">
-            <label class="cal-filter-chip active cursor-pointer" data-filter="booking">
-              <input type="checkbox" checked id="filter-booking" class="hidden" />
-              <span class="cal-chip-dot booking-dot"></span>
-              <span data-key="cal_legend_booking">Tempahan Aktif</span>
-            </label>
-            <label class="cal-filter-chip active cursor-pointer" data-filter="event">
-              <input type="checkbox" checked id="filter-event" class="hidden" />
-              <span class="cal-chip-dot event-dot"></span>
-              <span data-key="cal_legend_event">Acara / Promosi</span>
-            </label>
-            <label class="cal-filter-chip active cursor-pointer" data-filter="seasonal">
-              <input type="checkbox" checked id="filter-seasonal" class="hidden" />
-              <span class="cal-chip-dot seasonal-dot"></span>
-              <span data-key="cal_legend_seasonal">Harga Bermusim</span>
-            </label>
-            <label class="cal-filter-chip active cursor-pointer" data-filter="available">
-              <input type="checkbox" checked id="filter-available" class="hidden" />
-              <span class="cal-chip-dot available-dot"></span>
-              <span data-key="cal_legend_available">Tersedia</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Day headers -->
-        <div class="adm-cal-header bg-surface-2">
-          <div data-key="cal_sun">Ahad</div>
-          <div data-key="cal_mon">Isnin</div>
-          <div data-key="cal_tue">Selasa</div>
-          <div data-key="cal_wed">Rabu</div>
-          <div data-key="cal_thu">Khamis</div>
-          <div data-key="cal_fri">Jumaat</div>
-          <div data-key="cal_sat">Sabtu</div>
-        </div>
-        <!-- Calendar cells rendered by JS -->
-        <div class="adm-cal-grid" id="cal-grid"></div>
-      </div>
-
-      <!-- DAY DETAIL MODAL (Apple HIG Sheet Dialog) -->
-      <div class="cal-day-modal-overlay hidden" id="cal-detail-panel">
-        <div class="cal-day-modal radius-24">
-          <div class="cal-day-modal-header" id="cal-detail-header">
-            <div class="cal-day-modal-header-content">
-              <div class="cal-day-modal-date tabular-nums" id="cal-detail-day-num"></div>
-              <div>
-                <h3 id="cal-detail-title" class="cal-detail-title m-0 text-title"></h3>
-                <div id="cal-detail-subtitle" class="cal-detail-subtitle fs-13 text-secondary mt-2"></div>
+      <!-- 2-COLUMN APPLE HIG BENTO CALENDAR & AGENDA -->
+      <div class="cal-bento-layout reveal-on-scroll">
+        <!-- 1. LEFT COLUMN: Apple HIG Inline Calendar Picker -->
+        <div class="cal-picker-card">
+          <!-- Integrated Calendar Toolbar Header -->
+          <div class="cal-toolbar-header">
+            <!-- Navigation controls -->
+            <div class="cal-nav-group">
+              <button class="cal-nav-btn" id="cal-prev" title="Bulan Sebelumnya" aria-label="Bulan Sebelumnya">
+                <span class="material-icons-round">chevron_left</span>
+              </button>
+              <button class="cal-nav-btn" id="cal-next" title="Bulan Seterusnya" aria-label="Bulan Seterusnya">
+                <span class="material-icons-round">chevron_right</span>
+              </button>
+              
+              <!-- Month & Year Selectors -->
+              <div class="cal-selector-group">
+                <select id="cal-month-select" class="cal-dropdown radius-12" title="Pilih Bulan" aria-label="Pilih Bulan">
+                  <option value="0">Januari</option>
+                  <option value="1">Februari</option>
+                  <option value="2">Mac</option>
+                  <option value="3">April</option>
+                  <option value="4">Mei</option>
+                  <option value="5">Jun</option>
+                  <option value="6">Julai</option>
+                  <option value="7">Ogos</option>
+                  <option value="8">September</option>
+                  <option value="9">Oktober</option>
+                  <option value="10">November</option>
+                  <option value="11">Disember</option>
+                </select>
+                <select id="cal-year-select" class="cal-dropdown radius-12" title="Pilih Tahun" aria-label="Pilih Tahun">
+                  <!-- Populated by JS -->
+                </select>
               </div>
             </div>
-            <button class="cal-day-modal-close modal-close-btn" id="cal-detail-close">
-              <span class="material-icons-round">close</span>
+
+            <!-- Legend filter chips -->
+            <div class="cal-legend-filters flex-center gap-8 flex-wrap">
+              <label class="cal-filter-chip active cursor-pointer" data-filter="booking">
+                <input type="checkbox" checked id="filter-booking" class="hidden" />
+                <span class="cal-chip-dot booking-dot"></span>
+                <span data-key="cal_legend_booking">Tempahan</span>
+              </label>
+              <label class="cal-filter-chip active cursor-pointer" data-filter="event">
+                <input type="checkbox" checked id="filter-event" class="hidden" />
+                <span class="cal-chip-dot event-dot"></span>
+                <span data-key="cal_legend_event">Promosi</span>
+              </label>
+              <label class="cal-filter-chip active cursor-pointer" data-filter="seasonal">
+                <input type="checkbox" checked id="filter-seasonal" class="hidden" />
+                <span class="cal-chip-dot seasonal-dot"></span>
+                <span data-key="cal_legend_seasonal">Bermusim</span>
+              </label>
+              <label class="cal-filter-chip active cursor-pointer" data-filter="available">
+                <input type="checkbox" checked id="filter-available" class="hidden" />
+                <span class="cal-chip-dot available-dot"></span>
+                <span data-key="cal_legend_available">Tersedia</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Weekday Headers -->
+          <div class="apple-cal-weekdays">
+            <div data-key="cal_sun">AHAD</div>
+            <div data-key="cal_mon">ISNIN</div>
+            <div data-key="cal_tue">SELASA</div>
+            <div data-key="cal_wed">RABU</div>
+            <div data-key="cal_thu">KHAMIS</div>
+            <div data-key="cal_fri">JUMAAT</div>
+            <div data-key="cal_sat">SABTU</div>
+          </div>
+
+          <!-- Calendar Days Grid rendered by JS -->
+          <div class="apple-cal-grid" id="cal-grid"></div>
+        </div>
+
+        <!-- 2. RIGHT COLUMN: Day Schedule & Operations Agenda Panel -->
+        <div class="cal-agenda-card" id="cal-agenda-panel">
+          <div class="cal-agenda-header">
+            <div>
+              <h3 class="cal-agenda-title" id="cal-agenda-title">Jadual Harian</h3>
+              <div class="cal-agenda-subtitle" id="cal-agenda-subtitle">Pilih tarikh untuk memaparkan operasi</div>
+            </div>
+            <span class="cal-agenda-date-badge tabular-nums" id="cal-agenda-badge">
+              <span class="material-icons-round fs-14">event</span>
+              <span id="cal-agenda-badge-text">Pilih Tarikh</span>
+            </span>
+          </div>
+
+          <!-- Daily Quick Metrics -->
+          <div class="cal-agenda-stats">
+            <div class="cal-agenda-stat-box">
+              <span class="material-icons-round text-primary-accent">check_circle</span>
+              <div>
+                <div class="cal-agenda-stat-val text-primary-accent" id="agenda-stat-avail">0</div>
+                <div class="cal-agenda-stat-lbl">Tersedia</div>
+              </div>
+            </div>
+            <div class="cal-agenda-stat-box">
+              <span class="material-icons-round text-blue">directions_car</span>
+              <div>
+                <div class="cal-agenda-stat-val text-blue" id="agenda-stat-rented">0</div>
+                <div class="cal-agenda-stat-lbl">Disewa</div>
+              </div>
+            </div>
+            <div class="cal-agenda-stat-box">
+              <span class="material-icons-round text-amber">build</span>
+              <div>
+                <div class="cal-agenda-stat-val text-amber" id="agenda-stat-inspect">0</div>
+                <div class="cal-agenda-stat-lbl">Servis</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Schedule / Activity List -->
+          <div class="cal-agenda-list" id="cal-agenda-list">
+            <!-- Populated dynamically by JS -->
+          </div>
+
+          <!-- Quick Action Footer Buttons -->
+          <div class="pt-14 border-top-subtle flex-between gap-12 flex-wrap">
+            <button class="btn-secondary-sm flex-center gap-6 radius-pill" id="cal-today-btn" type="button" style="flex: 1 1 140px;">
+              <span class="material-icons-round fs-16">today</span> <span data-key="cal_btn_today">Hari Ini</span>
+            </button>
+            <button class="btn-primary-sm flex-center gap-6 radius-pill" id="cal-new-booking-btn" type="button" onclick="goToNewBookingForDate()" style="flex: 1 1 160px;">
+              <span class="material-icons-round fs-16">add</span> <span data-key="cal_btn_book_date">Tempah Tarikh Ini</span>
             </button>
           </div>
-          <div id="cal-detail-body" class="cal-day-modal-body"></div>
         </div>
       </div>
 

@@ -3973,3 +3973,51 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.8 Resolve Safari vendor prefix and eliminate inline styles on skeleton loader cards`
   - Tag Versi: `5.9.8`
+
+---
+
+##  [MAJOR UPDATE] 177. Penyeragaman Mutlak Semua Kalendar & Pemilih Tarikh Mengikut Piawaian Apple HIG, Penstrukturan Semula Kalendar Pentadbir 2-Kolum Bento & Agenda Operasi, Sifar Bentuk Bujur (Zero Oval Rule) & Integrasi Penuh Sistem Tempahan (v5.9.9)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  1. *Penyelarasan Kalendar Global*:
+     - Pengguna mengarahkan agar semua kalendar dan pemilih tarikh dalam sistem WeDRIVE diseragamkan sepenuhnya mengikut reka bentuk Apple HIG seperti di `index.html` (Flatpickr popup dengan tarikh bulat 1:1, latar belakang julat halus, squircle obsidian gelap, sifar herotan bujur).
+     - Sebarang implementasi lapuk atau fail pendua kalendar perlu dibuang selepas perbincangan (`/grill-me`).
+  2. *Penstrukturan Semula Halaman Kalendar Pentadbir (`admin/pages/calendar/calendar.html`)*:
+     - Dikekalkan untuk tujuan pengawasan operasi harian kenderaan, tetapi dirombak sepenuhnya daripada grid jadual lama kepada susun atur **Apple HIG 2-Column Bento Calendar & Operations Agenda Panel**.
+     - Kolum Kiri: Apple HIG Inline Calendar Picker (pilihan bulan/tahun, penapis cip kapsul, pengepala hari, dan butang tarikh bulatan 1:1 sempurna 42px × 42px dengan mikro-titik penunjuk tempahan, servis, dan harga bermusim).
+     - Kolum Kanan: Sticky Operations Agenda Card (lencana tarikh hari ini/terpilih, 3 kotak statistik ringkas: Tersedia, Disewa, Servis, senarai kad tempahan & pemeriksaan, serta butang kapsul "Hari Ini" dan "Tempah Tarikh Ini").
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pembersihan Fail Usang & Pendua (*Codebase Sanitization*)**:
+     - Memadamkan fail eksperimen lama `bin/test-calendar-data.js` dan arkib CSS `bin/css_archive_v3/calendar.css`.
+  2. **Penyatuan Pemilih Tarikh `new-booking.html`**:
+     - Menyingkirkan skrip Flatpickr pendua sebaris.
+     - Menyambungkan `shared/js/calendar.js?v=5.9.9` menggunakan `window.WeDriveCalendar.initPairedPickers('nb-date-pickup', 'nb-date-return', ...)`.
+     - Menyokong parameter URL `?pickup=YYYY-MM-DD` secara automatik supaya klik butang "Tempah Tarikh Ini" dari Kalendar Pentadbir mengisi tarikh secara lancar.
+  3. **Pengemaskinian CSS Master Global (`shared/css/wedrive.css`)**:
+     - Menambah kelas susun atur `.cal-bento-layout`, `.cal-picker-card`, `.apple-cal-weekdays`, `.apple-cal-grid`, `.apple-cal-day`, `.apple-cal-dots`, `.apple-cal-dot`, dan `.cal-agenda-card`.
+     - Menguatkuasakan prinsip bulatan tepat 1:1 (*Zero Oval Rule*):
+       - Butang tarikh: `width: 42px !important; height: 42px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;`.
+       - Butang navigasi: `width: 36px !important; height: 36px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`.
+       - Mikro-titik: `width: 5px !important; height: 5px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`.
+       - Butang tindakan: Kapsul pil simetri `border-radius: 9999px !important; white-space: nowrap !important;`.
+  4. **Logik Interaktif Pentadbir (`admin/js/calendar.js`)**:
+     - Mengemas kini `renderCalendar()` untuk menjana struktur grid moden dan menetapkan tarikh hari ini sebagai pilihan lalai.
+     - Mengemas kini `showDayDetail(ds)` untuk mengemaskini kad agenda kanan secara reaktif tanpa sebarang modal dialog bertindih.
+     - Menyediakan fungsi `goToNewBookingForDate()` untuk navigasi pantas ke borang pendaftaran tempahan.
+  5. **Sokongan Dwibahasa & Tema Penuh**:
+     - Menambah kekunci terjemahan dwibahasa baharu di `shared/lang/ms.json` dan `shared/lang/en.json` (`cal_title`, `cal_subtitle`, `cal_stat_*`, `cal_legend_*`, `cal_sun` - `cal_sat`, `cal_btn_today`, `cal_btn_book_date`).
+     - Menyokong Mod Siang (latar belakang putih Apple, sempadan halus) dan Mod Malam (latar belakang True Black `#000000`, Bento Surface `#161618`).
+  6. **Penambahan Suite Ujian Automasi Playwright (`tests/e2e/15_apple_calendar.spec.js`)**:
+     - Ujian 1: Pengesahan susun atur Bento 2-kolum dan nisbah aspek 1:1 tepat tanpa herotan bujur.
+     - Ujian 2: Pengesahan kemas kini reaktif kad agenda apabila tarikh diklik dan fungsi butang "Hari Ini".
+     - Ujian 3: Pengesahan pemilih tarikh berpasangan pada `new-booking.html` mematuhi bulatan 1:1 sempurna.
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Chrome DevTools MCP**: Disahkan 100% pada pelayar langsung dalam Mod Siang dan Mod Malam.
+  - **Playwright Automated Tests**: Kesemua 36 ujian merentasi 13 fail ujian lulus (**100% Pass Rate**).
+  - **Knowledge Graph**: Dikemas kini dengan `graphify update .` (2,705 nod, 5,196 tepi).
+
+- **Maklumat Git**:
+  - Commit: `5.9.9 Overhaul Admin Calendar to Apple HIG 2-column Bento and unify datepickers`
+  - Tag Versi: `5.9.9`

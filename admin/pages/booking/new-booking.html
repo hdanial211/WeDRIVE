@@ -250,6 +250,7 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js?v=5.2.3"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="../../../shared/js/calendar.js?v=5.9.9"></script>
   <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
 
   <script>
@@ -257,31 +258,31 @@
     var currentRate = 180;
     var rentalDays = 1;
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var today = new Date();
-      var tomorrow = new Date();
+    function initNewBookingPage() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var urlDate = urlParams.get('pickup') || urlParams.get('date');
+      var today = urlDate ? new Date(urlDate + 'T00:00:00') : new Date();
+      var tomorrow = new Date(today);
       tomorrow.setDate(today.getDate() + 1);
 
-      fpPickup = flatpickr('#nb-date-pickup', {
-        minDate: 'today',
-        defaultDate: today,
-        dateFormat: 'Y-m-d',
-        onChange: function (selectedDates, dateStr) {
-          handlePickupChange(dateStr);
+      if (window.WeDriveCalendar) {
+        var pickers = window.WeDriveCalendar.initPairedPickers(
+          'nb-date-pickup',
+          'nb-date-return',
+          function () { calculateBookingTotal(); },
+          [],
+          { dateFormat: 'Y-m-d' }
+        );
+        if (pickers) {
+          fpPickup = pickers.pickup;
+          fpReturn = pickers.return;
+          if (fpPickup && !fpPickup.selectedDates.length) fpPickup.setDate(today, true);
+          if (fpReturn && !fpReturn.selectedDates.length) fpReturn.setDate(tomorrow, true);
         }
-      });
-
-      fpReturn = flatpickr('#nb-date-return', {
-        minDate: tomorrow,
-        defaultDate: tomorrow,
-        dateFormat: 'Y-m-d',
-        onChange: function () {
-          calculateBookingTotal();
-        }
-      });
+      }
 
       // Check if car param is supplied in URL
-      var urlCar = new URLSearchParams(window.location.search).get('car');
+      var urlCar = urlParams.get('car');
       if (urlCar) {
         var sel = document.getElementById('nb-car-select');
         for (var i = 0; i < sel.options.length; i++) {
@@ -293,7 +294,13 @@
       }
 
       updateVehicleDetails();
-    });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initNewBookingPage);
+    } else {
+      initNewBookingPage();
+    }
 
     function handlePickupChange(dateStr) {
       if (!dateStr) return;
