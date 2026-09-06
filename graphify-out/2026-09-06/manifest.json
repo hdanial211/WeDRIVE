@@ -204,9 +204,9 @@
     "semantic_hash": "d260508bf9d4fe24282e65e2c8db42fc"
   },
   "shared/js/vehicle-viewer.js": {
-    "mtime": 1788694499.6534872,
-    "seen": 1788695698.3674061,
-    "ast_hash": "04b1ee8a9b1695884a51e4cb965e3e6c",
+    "mtime": 1788690497.9622753,
+    "seen": 1788694329.9944499,
+    "ast_hash": "35cda2e954fa8f0a4e362d3230a7f083",
     "semantic_hash": ""
   },
   "shared/lang/en.js": {
@@ -359,6 +359,54 @@
     "ast_hash": "77a7babef735fc27626949f13375b78e",
     "semantic_hash": ""
   },
+  ".agents/rules/apple_device_support.md": {
+    "mtime": 1788663844.285995,
+    "seen": 1788665247.575059,
+    "ast_hash": "1f5a651cced9bbf5c1c390b890577f39",
+    "semantic_hash": ""
+  },
+  ".agents/rules/apple_hig_design_system.md": {
+    "mtime": 1788693624.4000201,
+    "seen": 1788694329.994588,
+    "ast_hash": "de0a2a39893266545003934c9f48b721",
+    "semantic_hash": ""
+  },
+  ".agents/rules/code_and_backend.md": {
+    "mtime": 1787888915.7159357,
+    "seen": 1787898737.194607,
+    "ast_hash": "d9a67c13d8466f217d80bd56ef13ee8e",
+    "semantic_hash": ""
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1787437238.21859,
+    "seen": 1787898737.1946082,
+    "ast_hash": "175f136d421998eaca58f82df583fce1",
+    "semantic_hash": ""
+  },
+  ".agents/rules/navigation_and_ui.md": {
+    "mtime": 1788672044.750213,
+    "seen": 1788673670.882889,
+    "ast_hash": "d2d59222d4586714b2a3fa5599680334",
+    "semantic_hash": ""
+  },
+  ".agents/rules/playwright_testing.md": {
+    "mtime": 1787888922.5652504,
+    "seen": 1787898737.1946082,
+    "ast_hash": "02859eb98ca2fe912e8787bd55ef35b4",
+    "semantic_hash": ""
+  },
+  ".agents/rules/ruleprompt.md": {
+    "mtime": 1788694256.323427,
+    "seen": 1788694329.994595,
+    "ast_hash": "8e9ae20558703d73b1359e3095b63b2e",
+    "semantic_hash": ""
+  },
+  ".agents/rules/security_and_audit.md": {
+    "mtime": 1787889149.330184,
+    "seen": 1787898737.194609,
+    "ast_hash": "57201370a8167da66410b231323a2098",
+    "semantic_hash": ""
+  },
   ".agents/skills/context7/SKILL.md": {
     "mtime": 1787889582.8602455,
     "seen": 1787898737.1946099,
@@ -378,9 +426,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788695634.3365963,
-    "seen": 1788695698.367682,
-    "ast_hash": "0edfce5404b765a89668d9a7fd03686d",
+    "mtime": 1788694289.305642,
+    "seen": 1788694329.994605,
+    "ast_hash": "e90195b7fe125f059266c1ad7e08fc0f",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -660,9 +708,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788695605.869489,
-    "seen": 1788695698.367747,
-    "ast_hash": "72f2dfb4b8cf6c5fd8f85098c48963c6",
+    "mtime": 1788650530.3445404,
+    "seen": 1788653435.683809,
+    "ast_hash": "534ec21342ae40f6843522d25e4f85be",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11201,10 +11249,22 @@
     "ast_hash": "8cb67d9806d1ebb9d963de39beed1731",
     "semantic_hash": ""
   },
+  ".agents/rules/stitch_design_system.md": {
+    "mtime": 1788539621.8690145,
+    "seen": 1788539747.53317,
+    "ast_hash": "4779379a311b50852fc82f5fd9097fc3",
+    "semantic_hash": ""
+  },
   ".agents/DESIGN.md": {
-    "mtime": 1788695588.153519,
-    "seen": 1788695698.367585,
-    "ast_hash": "10cc890f14fb58f5da26ee18c79cbcd7",
+    "mtime": 1788694263.1027887,
+    "seen": 1788694329.9945788,
+    "ast_hash": "aefe9bd962e0eb1b3503c30783cb550b",
+    "semantic_hash": ""
+  },
+  ".agents/rules/apple_hig_components.md": {
+    "mtime": 1788663836.4372618,
+    "seen": 1788665247.57506,
+    "ast_hash": "19f93deb510b167e203d4a1a074b7826",
     "semantic_hash": ""
   },
   ".agents/workflows/stitch_generation.md": {
@@ -11259,66 +11319,6 @@
     "mtime": 1788689449.4227085,
     "seen": 1788689569.738067,
     "ast_hash": "6a71ad31a522d49afae076b43c8b06af",
-    "semantic_hash": ""
-  },
-  ".agents/rules/01_core_rules.md": {
-    "mtime": 1788695395.6137567,
-    "seen": 1788695698.3675861,
-    "ast_hash": "6ba3329d86d33a155f9d3eee5391dd15",
-    "semantic_hash": ""
-  },
-  ".agents/rules/02_apple_hig_design_system.md": {
-    "mtime": 1788695493.8870807,
-    "seen": 1788695698.367587,
-    "ast_hash": "4ec73441859e5826d83346a644fd320e",
-    "semantic_hash": ""
-  },
-  ".agents/rules/03_apple_hig_components.md": {
-    "mtime": 1788695496.1380918,
-    "seen": 1788695698.367588,
-    "ast_hash": "f52901ecab5c0a31feb55924b0b9f6a2",
-    "semantic_hash": ""
-  },
-  ".agents/rules/04_navigation_and_ui.md": {
-    "mtime": 1788695507.5741014,
-    "seen": 1788695698.367597,
-    "ast_hash": "d2d59222d4586714b2a3fa5599680334",
-    "semantic_hash": ""
-  },
-  ".agents/rules/05_apple_device_support.md": {
-    "mtime": 1788695507.580002,
-    "seen": 1788695698.367598,
-    "ast_hash": "1f5a651cced9bbf5c1c390b890577f39",
-    "semantic_hash": ""
-  },
-  ".agents/rules/06_code_and_backend.md": {
-    "mtime": 1788695507.5845191,
-    "seen": 1788695698.367598,
-    "ast_hash": "d9a67c13d8466f217d80bd56ef13ee8e",
-    "semantic_hash": ""
-  },
-  ".agents/rules/07_stitch_design_system.md": {
-    "mtime": 1788695566.4353406,
-    "seen": 1788695698.367599,
-    "ast_hash": "f446ddd5760d10734d326be5c25c2027",
-    "semantic_hash": ""
-  },
-  ".agents/rules/08_playwright_testing.md": {
-    "mtime": 1788695507.5881968,
-    "seen": 1788695698.3676002,
-    "ast_hash": "02859eb98ca2fe912e8787bd55ef35b4",
-    "semantic_hash": ""
-  },
-  ".agents/rules/09_security_and_audit.md": {
-    "mtime": 1788695507.5917718,
-    "seen": 1788695698.367635,
-    "ast_hash": "57201370a8167da66410b231323a2098",
-    "semantic_hash": ""
-  },
-  ".agents/rules/10_graphify.md": {
-    "mtime": 1788695507.5960972,
-    "seen": 1788695698.367636,
-    "ast_hash": "175f136d421998eaca58f82df583fce1",
     "semantic_hash": ""
   }
 }

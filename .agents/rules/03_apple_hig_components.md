@@ -2,11 +2,11 @@
 ## WeDRIVE Master Specification — Bahagian 2: Komponen, Interaksi & Teknologi (Pilar 4 – 6)
 
 Standard Rujukan Mandatori Bahagian 2 untuk komponen dan ciri sistem WeDRIVE.
-*Nota: Asas & Corak Interaksi (Pilar 1–3) terkandung dalam [`.agents/rules/apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_design_system.md).*
+*Nota: Asas & Corak Interaksi (Pilar 1–3) terkandung dalam [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md).*
 
 ---
 
-## 🎛️ PILAR 4: COMPONENTS (KOMPONEN ANTARA MUKA)
+## PILAR 4: COMPONENTS (KOMPONEN ANTARA MUKA)
 
 1. **Kawalan Bersegmen (*Segmented Controls*)**: Kapsul kelabu cerah/gelap dengan gelangsar pil aktif putih/biru beralih lancar (*fluid sliding tab*).
 2. **Kad Bento Grid (*Apple Bento Cards*)**: Susun atur modular berkad dengan bucu squircle `20px – 28px`, bayang lembut, dan pencahayaan aksen halus.
@@ -25,7 +25,7 @@ Standard Rujukan Mandatori Bahagian 2 untuk komponen dan ciri sistem WeDRIVE.
 
 ---
 
-## 🖱️ PILAR 5: INPUTS & INTERACTIONS (INTERAKSI & INPUT)
+## PILAR 5: INPUTS & INTERACTIONS (INTERAKSI & INPUT)
 
 1. **Kursor**: `cursor: pointer` pada semua elemen boleh klik; `cursor: not-allowed` pada elemen terkunci.
 2. **Cincin Fokus Apple (*Focus Halo*)**: Medan input aktif menerima lingkaran cahaya biru: `box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.18); border-color: var(--primary); outline: none;`.
@@ -33,10 +33,10 @@ Standard Rujukan Mandatori Bahagian 2 untuk komponen dan ciri sistem WeDRIVE.
 
 ---
 
-## 🤖 PILAR 6: TECHNOLOGIES (TEKNOLOGI & CIRI KHUSUS)
+## PILAR 6: TECHNOLOGIES (TEKNOLOGI & CIRI KHUSUS)
 
 1. **Pembantu AI Terapung**: Butang kapsul terapung kecerunan ungu/indigo Apple AI dan lencana status interaktif.
-2. **Pelihat Kenderaan 360°**: Kanvas interaktif 360° dengan kawalan seretan sentuh dan butang sudut pandangan.
+2. **Pelihat Kereta 360°**: Kanvas interaktif 360° dengan kawalan seretan sentuh dan butang sudut pandangan.
 3. **Sistem Dwibahasa Lancar**: Penukaran bahasa segera (EN/MS) dengan efek *skeleton shimmer cross-fade* tanpa segar semula halaman.
 4. **Penyelarasan Stitch MCP Ultra High-Quality Standard**:
    - **Prinsip Teras**: *Lambat asal kualiti terbaik; pantang cepat tapi kualiti sifar (zero quality)*.
@@ -46,7 +46,7 @@ Standard Rujukan Mandatori Bahagian 2 untuk komponen dan ciri sistem WeDRIVE.
 
 ---
 
-## 📋 SENARAI SEMAK AUDIT & RUJUKAN SEBELUM SIAP
+## SENARAI SEMAK AUDIT & RUJUKAN SEBELUM SIAP
 
 - [ ] Tipografi menggunakan San Francisco dengan `tabular-nums` untuk harga?
 - [ ] Warna Day Mode (`#F5F5F7`/`#FFFFFF`) dan Night Mode (`#000000`/`#161618`) mematuhi token Apple?

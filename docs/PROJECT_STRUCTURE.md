@@ -15,7 +15,17 @@ AI CAR RENTAL SYSTEM/
 |
 +-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk
 |   +-- DESIGN.md               # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-|   +-- rules/                  # Peraturan Pembangunan, Apple HIG, Stitch MCP & Keselamatan
+|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–10)
+|   |   +-- 01_core_rules.md    # Peraturan Teras Projek, Senarai Hitam BM, Git, PRD
+|   |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3 (Asas & Corak)
+|   |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6 (Komponen & Input)
+|   |   +-- 04_navigation_and_ui.md        # Navigasi, Responsif & UI/UX
+|   |   +-- 05_apple_device_support.md     # Sokongan Ekosistem Peranti Apple
+|   |   +-- 06_code_and_backend.md         # Seni Bina Kod, CSS & Backend
+|   |   +-- 07_stitch_design_system.md     # Stitch MCP & Gemini 3.8 UHQ
+|   |   +-- 08_playwright_testing.md       # Ujian Automasi E2E Playwright
+|   |   +-- 09_security_and_audit.md       # Keselamatan Siber & Audit OWASP
+|   |   +-- 10_graphify.md                 # Token Optimization & Graf Pengetahuan
 |   +-- skills/                 # Alatan kemahiran automasi
 |   +-- workflows/              # Aliran kerja persistent
 |

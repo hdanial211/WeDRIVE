@@ -7,7 +7,7 @@ trigger: always_on
 ## 1. Theme & Design Consistency (Apple HIG Standard)
 
 - Semua reka bentuk UI, komponen, peralihan, kad, butang, modal, tipografi, dan susun atur WAJIB mematuhi piawaian rasmi **Apple Human Interface Guidelines (HIG)**:
-  - **Rujukan Utama:** [`.agents/rules/apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_design_system.md) (Pilar 1–3: Asas & Corak) & [`.agents/rules/apple_hig_components.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_components.md) (Pilar 4–6: Komponen, Input & Teknologi).
+  - **Rujukan Utama:** [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md) (Pilar 1–3: Asas & Corak) & [`.agents/rules/03_apple_hig_components.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/03_apple_hig_components.md) (Pilar 4–6: Komponen, Input & Teknologi).
   - **Tipografi:** SF Pro Display / SF Pro Text (`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`).
   - **Geometri Asas:** Elemen bulat minimum nisbah 1:1 (`aspect-ratio: 1 / 1; border-radius: 50%`), Butang/Pill kapsul mengembang mendatar (`border-radius: 9999px`), Kad Bento Squircle (`border-radius: 24px/28px`), Input (`border-radius: 12px/14px`).
   - **Peralihan & Transisi Fizik Apple:** `cubic-bezier(0.16, 1, 0.3, 1)` dengan maklum balas sentuhan `transform: scale(0.97)` pada `:active`.
@@ -117,7 +117,7 @@ trigger: always_on
 
 ## 5. Automated Testing & Playwright CLI Protocol
 
-- **Isolasi Folder Ujian:** Semua skrip ujian dan dependensi disimpan di dalam folder terasing `tests/` (Rujuk [`.agents/rules/playwright_testing.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/playwright_testing.md)).
+- **Isolasi Folder Ujian:** Semua skrip ujian dan dependensi disimpan di dalam folder terasing `tests/` (Rujuk [`.agents/rules/08_playwright_testing.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/08_playwright_testing.md)).
 - **Mandatory Post-Task Test Run:** Setiap kali selesai sesuatu tugas pembangunan, jalankan:
   ```bash
   cd tests && npx playwright test
@@ -136,11 +136,11 @@ trigger: always_on
 
 ## 7. Rujukan Peraturan Modul Berkaitan
 
-- **Navigation, Responsif & UI/UX:** [`.agents/rules/navigation_and_ui.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/navigation_and_ui.md)
+- **Navigation, Responsif & UI/UX:** [`.agents/rules/04_navigation_and_ui.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)
   - **Seni Bina Navigasi Admin:** Modul Admin WAJIB menggunakan **Topbar sebagai Main Navigation** (6 modul teras: Dashboard, Cars, Bookings, Customers, Reports, AI Intelligence) dan **Sidebar sebagai Sub-Main Navigation** (alatan kontekstual fizikal `.html` khusus).
-- **Kod, CSS & Backend Architecture:** [`.agents/rules/code_and_backend.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/code_and_backend.md)
-- **Apple Device Support:** [`.agents/rules/apple_device_support.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_device_support.md)
-- **Keselamatan Siber & Audit Kerentanan (Strix):** [`.agents/rules/security_and_audit.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/security_and_audit.md)
+- **Kod, CSS & Backend Architecture:** [`.agents/rules/06_code_and_backend.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/06_code_and_backend.md)
+- **Apple Device Support:** [`.agents/rules/05_apple_device_support.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/05_apple_device_support.md)
+- **Keselamatan Siber & Audit Kerentanan (Strix):** [`.agents/rules/09_security_and_audit.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/09_security_and_audit.md)
 
 ---
 

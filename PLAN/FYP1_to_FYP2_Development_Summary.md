@@ -4125,3 +4125,27 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.0.1 Eradicate 100% residual blacklisted terms across docs, code, and graphify knowledge base`
   - Tag Versi: `6.0.1`
+---
+
+## [MINOR UPDATE] 181. Penyusunan & Penomboran Sistematik Folder .agents/rules/ (v6.1.0)
+
+- **Punca Arahan Pengguna (/grill-me struktur .agents/rules/)**:
+  - *"dekat agent ni dh x terurus dh ..cuba kita susun letak nombor dekat depan kan senang"*
+  - *"bukan sekadar namakan sahaja ..isi dalam tu kena perhatikan jugak"*
+
+- **Tindakan Penyusunan & Penyelarasan Rujukan Silang**:
+  1. **Penomboran Berhierarki 01–10**: Kesemua 10 fail peraturan dalam `.agents/rules/` telah dinamakan semula dengan awalan nombor mengikut keutamaan:
+     - `01_core_rules.md` (teras projek) hingga `10_graphify.md` (pengoptimuman token).
+  2. **Kemas Kini Rujukan Silang Dalaman (01, 02, 03, 07)**:
+     - `01_core_rules.md`: 6 rujukan silang dikemas kini (02_, 03_, 04_, 05_, 06_, 08_, 09_).
+     - `02_apple_hig_design_system.md`: Rujukan kepada `03_apple_hig_components.md`.
+     - `03_apple_hig_components.md`: Rujukan kepada `02_apple_hig_design_system.md`.
+     - `07_stitch_design_system.md`: Rujukan kepada `stitch_generation.md` (workflow, tidak berubah).
+  3. **Kemas Kini Rujukan Luar**:
+     - `.agents/DESIGN.md`: Rujukan `ruleprompt.md` → `01_core_rules.md`.
+     - `docs/PROJECT_STRUCTURE.md`: Senarai fail `.agents/rules/` dikemas kini sepenuhnya.
+  4. **Penghapusan Fail Asal**: 10 fail lama tanpa nombor awalan dipadam selepas fail baharu disahkan.
+
+- **Maklumat Git**:
+  - Commit: `6.1.0 Systematic numbering and cross-reference alignment for .agents/rules/`
+  - Tag Versi: `6.1.0`

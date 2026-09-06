@@ -4,7 +4,7 @@ Dokumen ini menggariskan piawaian mandatori bagi penggunaan **Stitch MCP** untuk
 
 ---
 
-## 💎 PRINSIP TERAS: KUALITI MENYELURUH MENGATASI KEPANTASAN (QUALITY OVER SPEED)
+## PRINSIP TERAS: KUALITI MENYELURUH MENGATASI KEPANTASAN (QUALITY OVER SPEED)
 
 > **"Lambat asal kualiti terbaik; pantang cepat tetapi kualiti sifar (zero quality)."**
 
@@ -22,7 +22,7 @@ Dokumen ini menggariskan piawaian mandatori bagi penggunaan **Stitch MCP** untuk
 
 ---
 
-## 🏛️ 1. Konfigurasi Projek & Rujukan Stitch MCP
+## 1. Konfigurasi Projek & Rujukan Stitch MCP
 
 Setiap kali alatan Stitch MCP digunakan untuk mereka bentuk skrin atau mengemas kini sistem reka bentuk:
 
@@ -36,7 +36,7 @@ Setiap kali alatan Stitch MCP digunakan untuk mereka bentuk skrin atau mengemas 
 
 ---
 
-## ⚙️ 2. Protokol Masa & Kesabaran Alatan (Patience & Polling Protocol)
+## 2. Protokol Masa & Kesabaran Alatan (Patience & Polling Protocol)
 
 Penjanaan antaramuka menggunakan piawaian penaakulan tinggi Gemini 3.8 (`GEMINI_3_1_PRO`) memproses reka letak kompleks, hierarki warna sub-piksel, dan token Apple HIG secara mendalam. Proses ini mengambil masa beberapa minit.
 
@@ -48,9 +48,9 @@ Penjanaan antaramuka menggunakan piawaian penaakulan tinggi Gemini 3.8 (`GEMINI_
 
 ---
 
-## 🛠️ 3. Alur Kerja Penjanaan Antaramuka Stitch (Step-by-Step Workflow)
+## 3. Alur Kerja Penjanaan Antaramuka Stitch (Step-by-Step Workflow)
 
-> 📖 **Panduan Alur Kerja Penuh:** Rujuk fail alur kerja rasmi di [`.agents/workflows/stitch_generation.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/stitch_generation.md).
+> **Panduan Alur Kerja Penuh:** Rujuk fail alur kerja rasmi di [`.agents/workflows/stitch_generation.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/workflows/stitch_generation.md).
 
 1. **Pastikan Konsistensi `DESIGN.md`**:
    - Semak fail [`DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md) di direktori `.agents/`.
@@ -74,7 +74,7 @@ Penjanaan antaramuka menggunakan piawaian penaakulan tinggi Gemini 3.8 (`GEMINI_
 
 ---
 
-## 📋 4. Senarai Alatan Stitch MCP Rasmi
+## 4. Senarai Alatan Stitch MCP Rasmi
 
 - `list_projects`: Semak projek aktif WeDRIVE.
 - `get_project`: Periksa skrin sedia ada dan tema reka bentuk.

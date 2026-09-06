@@ -2,11 +2,11 @@
 ## WeDRIVE Master Specification — Bahagian 1: Asas & Corak Interaksi (Pilar 1 – 3)
 
 Standard Rujukan Mandatori Bahagian 1 untuk pembangunan UI/UX WeDRIVE.
-*Nota: Komponen (Pilar 4–6) & Senarai Semak terkandung dalam [`.agents/rules/apple_hig_components.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/apple_hig_components.md).*
+*Nota: Komponen (Pilar 4–6) & Senarai Semak terkandung dalam [`.agents/rules/03_apple_hig_components.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/03_apple_hig_components.md).*
 
 ---
 
-## 🌐 LAMAN RUJUKAN RASMI APPLE DEVELOPER DESIGN & SUMBER FIGMA
+## LAMAN RUJUKAN RASMI APPLE DEVELOPER DESIGN & SUMBER FIGMA
 Semua pembangunan antaramuka WeDRIVE berpandukan secara mutlak kepada ekosistem Apple Developer Design rasmi:
 1. **Portal Utama Reka Bentuk Apple**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
 2. **Garis Panduan Antaramuka Manusia (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
@@ -19,7 +19,7 @@ Semua pembangunan antaramuka WeDRIVE berpandukan secara mutlak kepada ekosistem 
 
 ---
 
-## 🏛️ PILAR 1: GETTING STARTED & CORE PRINCIPLES
+## PILAR 1: GETTING STARTED & CORE PRINCIPLES
 
 1. **Kejelasan (Clarity)**: Tipografi tajam, ikonografi SF Symbols/Material Icons Round bermakna, sifar elemen grafik mengelirukan.
 2. **Keutamaan Kandungan (Deference)**: Antara muka menyokong kandungan teras (katalog kereta, status sewaan, analitik). Ruang bernafas (*whitespace*) dan bahan kaca lut sinar (*translucent materials*).
@@ -27,7 +27,7 @@ Semua pembangunan antaramuka WeDRIVE berpandukan secara mutlak kepada ekosistem 
 4. **Sasaran Sentuhan Minimum**: Minimum **44px × 44px** untuk semua butang dan zon interaktif.
 5. **Standard Korporat Sebenar (Anti-AI Clichés)**:
    - Dilarang reka bentuk murahan bertemplat AI atau istilah fiksyen (*Quantum AI*, *Supercharged Fleet*, sanitasi hospital).
-   - Gunakan istilah operasi automotif tulen: Kenderaan/Cars, Penyewa Berdaftar, Deposit Keselamatan Escrow, Cukai JPJ, Invois Cukai.
+   - Gunakan istilah operasi automotif tulen: Kereta/Cars, Penyewa Berdaftar, Deposit Keselamatan Escrow, Cukai JPJ, Invois Cukai.
    - Semua butang dan data WAJIB disambung ke punca data operasi sebenar (`window.WeDriveAPI`).
 6. **Prinsip Geometri Bulat Sempurna 1:1 (Strict 1:1 Perfect Circle — Strictly No Oval/Bujur)**:
    - Sebarang butang atau elemen berbentuk bulat WAJIB mempunyai nisbah aspek tepat **1:1** (`width == height`, `aspect-ratio: 1 / 1 !important;`, `border-radius: 50% !important;`, `padding: 0 !important;`, `display: flex; align-items: center; justify-content: center;`).
@@ -36,7 +36,7 @@ Semua pembangunan antaramuka WeDRIVE berpandukan secara mutlak kepada ekosistem 
 
 ---
 
-## 🎨 PILAR 2: FOUNDATIONS (ASAS REKA BENTUK)
+## PILAR 2: FOUNDATIONS (ASAS REKA BENTUK)
 
 ### 1. Tipografi Apple San Francisco
 ```css
@@ -76,7 +76,7 @@ border: 1px solid var(--border-glass);
 
 ---
 
-## 🧩 PILAR 3: PATTERNS (CORAK INTERAKSI & STRUKTUR)
+## PILAR 3: PATTERNS (CORAK INTERAKSI & STRUKTUR)
 
 1. **Seni Bina Navigasi**: Topbar mengawal 6 modul utama; Sidebar mengawal sub-alatan kontekstual. Item aktif berlatar belakang pil biru lembut.
 2. **Modal & Lembaran (Sheets)**: Desktop: Modal terapung bertingkat (radius 24px/28px). Mobile: Bottom Sheet Drawer dengan drag handle `36px × 5px` (radius 28px 28px 0 0).
