@@ -18092,7 +18092,6 @@ body.day-mode .cal-filter-chip.active {
   overflow-x: auto;
   padding: 10px 0;
   margin-top: 12px;
-  scrollbar-width: thin;
 }
 
 .reel-thumb {
@@ -18115,11 +18114,13 @@ body.day-mode .cal-filter-chip.active {
   background: rgba(255, 255, 255, 0.1);
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
   cursor: ew-resize;
 }
 
 .scrub-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -18141,6 +18142,38 @@ body.day-mode .cal-filter-chip.active {
   color: #AF52DE;
   border: 1px solid rgba(175, 82, 222, 0.35);
   letter-spacing: 0.02em;
+}
+
+/* Add Car 360 Studio Semantic Classes */
+.badge-360-muted {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+
+.interior-thumb-preview {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.studio-canvas-interactive {
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: grab;
+}
+
+.studio-canvas-interactive:active {
+  cursor: grabbing;
+}
+
+.preview-interior-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.preview-interior-img {
+  object-fit: cover;
 }
 
 /* Single HQ Location Card (Settings & Add Car) */
@@ -18176,8 +18209,6 @@ body.day-mode .cal-filter-chip.active {
   overflow-x: auto;
   padding: 6px 4px 16px 4px;
   margin-bottom: 24px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
 }
 
 .fleet-selector-bar::-webkit-scrollbar {
@@ -18323,8 +18354,8 @@ body.day-mode .cal-filter-chip.active {
   align-items: center;
   justify-content: center;
   cursor: grab;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 }
 
 .studio-stage-wrapper:active {
@@ -18429,11 +18460,13 @@ body.day-mode .cal-filter-chip.active {
   background: rgba(255, 255, 255, 0.15);
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
   cursor: ew-resize;
 }
 
 .studio-scrub-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
   width: 18px;
   height: 18px;
   border-radius: 50%;

@@ -3703,3 +3703,29 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.1 Customer 360 badge distinction, car detail 360 viewer, and 33-test Playwright suite`
   - Tag Versi: `5.9.1`
+
+---
+
+## 🚀 [MINOR UPDATE] 170. Pembersihan 100% Isu Accessibility & Keserasian CSS Vendor Prefix (v5.9.2)
+
+- **Punca Keperluan & Tindakan**:
+  1. *Kebolehcapaian Input Borang (`add-car.html`)*: Menambah atribut `title` dan `aria-label` yang jelas pada kesemua 5 input fail tersembunyi dan gelangsar julat putaran 360° (`#exterior-folder-input`, `#exterior-files-input`, `#exterior-scrub`, `#interior-file-input`, `#interior-folder-input`), menepati standard WCAG/W3C.
+  2. *Penyingkiran Gaya Sebaris (Zero Inline CSS)*: Memindahkan 5 elemen bergaya inline ke kelas CSS semantik berpusat di dalam `shared/css/wedrive.css`:
+     - `.badge-360-muted`: Lencana status neutral pada Card 5.
+     - `.interior-thumb-preview`: Imej lakaran kecil panorama dalaman.
+     - `.studio-canvas-interactive`: Kanvas interaktif dengan kursor tarik (*grab/grabbing*).
+     - `.preview-interior-layer`: Lapisan kanvas lapisan dalaman.
+     - `.preview-interior-img`: Pemformatan imej panorama berskala kemas.
+  3. *Penyeragaman CSS Vendor Prefixes (`shared/css/wedrive.css`)*:
+     - Menambah sifat standard `appearance: none;` bersebelahan `-webkit-appearance: none;` pada `.scrub-slider`, `.scrub-slider::-webkit-slider-thumb`, `.studio-scrub-slider`, dan `.studio-scrub-slider::-webkit-slider-thumb`.
+     - Membetulkan susunan `-webkit-user-select: none;` mendahului `user-select: none;` pada `.studio-stage-wrapper`.
+     - Menyingkirkan amaran bar tatal lapuk (`scrollbar-width` / `-webkit-overflow-scrolling`) pada `.reel-preview-strip` dan `.fleet-selector-bar`.
+
+- **Keputusan Ujian & Pengesahan**:
+  - **IDE Linter**: 100% daripada 16 isu `[current_problems]` selesai tanpa sebarang ralat atau amaran berbaki.
+  - **Chrome DevTools MCP**: Pengesahan visual Studio 360° dan Kad Pratonton Langsung kenderaan kekal sempurna dan responsif.
+  - **Playwright Automated Tests**: Kesemua **33 ujian automasi** lulus penuh (**100% Pass Rate**).
+
+- **Maklumat Git**:
+  - Commit: `5.9.2 Cleaned up accessibility form labels, inline CSS styles, and vendor prefix compatibility`
+  - Tag Versi: `5.9.2`

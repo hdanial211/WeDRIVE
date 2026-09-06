@@ -265,7 +265,7 @@
                   Jika dimuat naik, pelanggan boleh memutar kenderaan 360° luaran dan melihat ruang dalaman. Jika tiada, pelanggan hanya melihat galeri foto biasa.
                 </p>
               </div>
-              <span id="badge-360-status" class="status-badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+              <span id="badge-360-status" class="status-badge badge-360-muted">
                 <span>Tiada 360° (Foto Biasa)</span>
               </span>
             </div>
@@ -314,8 +314,8 @@
                   </button>
                 </div>
 
-                <input type="file" id="exterior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" onchange="handleExteriorFolder(this)" />
-                <input type="file" id="exterior-files-input" class="hidden" multiple accept="image/*" onchange="handleExteriorFiles(this)" />
+                <input type="file" id="exterior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder bingkai 360 luaran" aria-label="Pilih folder bingkai 360 luaran" onchange="handleExteriorFolder(this)" />
+                <input type="file" id="exterior-files-input" class="hidden" multiple accept="image/*" title="Pilih pelbagai fail bingkai 360 luaran" aria-label="Pilih pelbagai fail bingkai 360 luaran" onchange="handleExteriorFiles(this)" />
 
                 <!-- STRIP REEL & SCRUB SLIDER -->
                 <div id="exterior-preview-zone" class="hidden mt-12">
@@ -323,7 +323,7 @@
                     <span>Pratonton Putaran (Scrub to Rotate):</span>
                     <span id="scrub-degree" class="text-primary tabular-nums">0°</span>
                   </div>
-                  <input type="range" id="exterior-scrub" class="scrub-slider" min="0" max="35" value="0" oninput="handleScrub360(this.value)" />
+                  <input type="range" id="exterior-scrub" class="scrub-slider" min="0" max="35" value="0" title="Gelangsar sudut putaran 360" aria-label="Gelangsar sudut putaran 360" oninput="handleScrub360(this.value)" />
                   <div class="reel-preview-strip" id="exterior-thumb-strip"></div>
                 </div>
               </div>
@@ -351,12 +351,12 @@
                   </button>
                 </div>
 
-                <input type="file" id="interior-file-input" class="hidden" accept="image/*" onchange="handleInteriorUpload(this, 'file')" />
-                <input type="file" id="interior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" onchange="handleInteriorUpload(this, 'folder')" />
+                <input type="file" id="interior-file-input" class="hidden" accept="image/*" title="Muat naik fail panorama 360 dalaman" aria-label="Muat naik fail panorama 360 dalaman" onchange="handleInteriorUpload(this, 'file')" />
+                <input type="file" id="interior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder kubus panorama 360 dalaman" aria-label="Pilih folder kubus panorama 360 dalaman" onchange="handleInteriorUpload(this, 'folder')" />
 
                 <div id="interior-preview-zone" class="hidden mt-12 card p-10 bg-surface-1 border-subtle">
                   <div class="flex-start gap-10 items-center">
-                    <img id="interior-thumb-img" class="radius-8" style="width: 60px; height: 40px; object-fit: cover;" alt="Pratonton Dalaman" />
+                    <img id="interior-thumb-img" class="radius-8 interior-thumb-preview" alt="Pratonton Dalaman" />
                     <div>
                       <div class="fs-12 fw-600 text-title" id="interior-type-label">Panorama 360° Dikesan</div>
                       <div class="fs-11 text-muted">Sedia untuk paparan interaktif dalaman.</div>
@@ -393,7 +393,7 @@
                 </button>
               </div>
 
-              <div class="apple-car-studio-canvas" id="preview-canvas-wrap" style="position: relative; user-select: none; cursor: grab;">
+              <div class="apple-car-studio-canvas studio-canvas-interactive" id="preview-canvas-wrap">
                 <div class="glass-status-pill" id="preview-status-pill">
                   <span class="live-pulse-dot"></span> Tersedia
                 </div>
@@ -410,8 +410,8 @@
                 <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" />
 
                 <!-- 360 INTERIOR PANORAMA DISPLAY -->
-                <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center" style="position: absolute; inset: 0;">
-                  <img id="preview-interior-img" class="radius-16 w-100 h-100" style="object-fit: cover;" alt="Pratonton Dalaman" />
+                <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center preview-interior-layer">
+                  <img id="preview-interior-img" class="radius-16 w-100 h-100 preview-interior-img" alt="Pratonton Dalaman" />
                 </div>
               </div>
 
