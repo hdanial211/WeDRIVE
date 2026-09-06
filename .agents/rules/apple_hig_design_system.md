@@ -22,7 +22,7 @@ Semua pembangunan antaramuka WeDRIVE berpandukan secara mutlak kepada ekosistem 
 ## 🏛️ PILAR 1: GETTING STARTED & CORE PRINCIPLES
 
 1. **Kejelasan (Clarity)**: Tipografi tajam, ikonografi SF Symbols/Material Icons Round bermakna, sifar elemen grafik mengelirukan.
-2. **Keutamaan Kandungan (Deference)**: Antara muka menyokong kandungan teras (armada, status sewaan, analitik). Ruang bernafas (*whitespace*) dan bahan kaca lut sinar (*translucent materials*).
+2. **Keutamaan Kandungan (Deference)**: Antara muka menyokong kandungan teras (katalog kereta, status sewaan, analitik). Ruang bernafas (*whitespace*) dan bahan kaca lut sinar (*translucent materials*).
 3. **Kedalaman Berlapis (Depth)**: Z-axis elevation berlapis, bayang lembut (*soft shadows*), dan sempadan sub-piksel.
 4. **Sasaran Sentuhan Minimum**: Minimum **44px × 44px** untuk semua butang dan zon interaktif.
 5. **Standard Korporat Sebenar (Anti-AI Clichés)**:

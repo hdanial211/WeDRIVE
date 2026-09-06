@@ -67,7 +67,7 @@ Selepas kod antaramuka dijana oleh Stitch, lakukan saringan mandatori sebelum me
 
 1. **Singkirkan Istilah Khayalan AI**:
    - Padam istilah seperti: *"Quantum Fleet"*, *"Neural Velocity"*, *"Sanitasi Hospital"*, *"Cyber Turbo"*.
-   - Gantikan dengan istilah industri sah: *"Armada Tersedia"*, *"Pemeriksaan Pra-Serahan"*, *"Invois Cukai Rasmi"*.
+   - Gantikan dengan istilah industri sah: *"Kereta Tersedia"*, *"Pemeriksaan Kereta"*, *"Invois Cukai Rasmi"*.
 2. **Singkirkan Graf / Nombor Statik Palsu**:
    - Jangan kekalkan graf hiasan yang tiada kaitan dengan data operasi WeDRIVE.
 3. **Periksa Integriti Elemen Interaktif**:

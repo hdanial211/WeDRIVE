@@ -423,7 +423,7 @@ window.wedrive_lang_ms = {
   "how_new_view_inside": "Lihat dalam",
   "how_new_view_status_exterior": "Paparan luaran 360",
   "how_new_view_status_real": "Panorama dalaman sebenar",
-  "how_new_view_status_reference": "Panorama kabin rujukan sementara interior sebenar ditambah",
+  "how_new_view_status_reference": "Panorama dalaman kereta rujukan sementara interior sebenar ditambah",
   "how_new_interactive_drag": "Seret untuk putar",
   "how_new_interactive_kicker": "360 interaktif",
   "how_new_interactive_title": "Lihat model sebenar sebelum booking.",

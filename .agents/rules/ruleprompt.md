@@ -38,14 +38,32 @@ trigger: always_on
   - Sudut squircle kad utama: `border-radius: 24px;`
   - Sudut kotak input dan sub-elemen: `border-radius: 14px;`
 
-### 1D. Penyeragaman Penuh Bahasa Melayu Piawai Malaysia (Pemansuhan Mutlak Istilah 'Armada')
-- **Bahasa Melayu Sebenar (Bukan Bahasa Indonesia):** Sistem WeDRIVE WAJIB menggunakan 100% Bahasa Melayu piawai Malaysia yang asli, elegan, dan profesional.
-- **DILARANG SAMA SEKALI Penggunaan Istilah 'Armada':** Mansuhkan semua penggunaan perkataan 'Armada' (istilah pinjaman/terjemahan harfiah *Fleet* ala Indonesia).
-- **Gunakan Istilah 'Kereta' Secara Seragam:**
-  - Bar Sisi: `Pengurusan Kereta` -> `Semua Kereta`, `Kereta Tersedia`, `Kereta Sedang Disewa`, `Studio 360° & Info Kereta`, `Tambah Kereta Baharu`.
-  - Tindakan & Navigasi: `Kembali ke Senarai Kereta` (bukan "Kembali ke Armada").
-  - Tajuk & Penerangan: `Maklumat Teknikal Kereta`, `Inventori Kereta`.
-  - Lencana Status: `Tersedia` / `Sedang Disewa` (dilarang campur aduk teks Inggeris "Available" semasa mod BM aktif).
+### 1D. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026 (Pemansuhan 'Armada' / 'Fleet' & Senarai Hitam Istilah Kuno/Kaku AI)
+- **Standard Bahasa Melayu Moden Kontemporari (Era 2026)**:
+  - Sistem WeDRIVE WAJIB menggunakan 100% Bahasa Melayu moden Malaysia terkini seperti yang diguna pakai oleh aplikasi teknologi terkemuka di Malaysia (**Grab, Setel, TnG eWallet, Trevo, Wahdah, Carsome**).
+  - Tona bahasa mestilah **santai, segar, ringkas, mesra pengguna, dan terus kepada maksud sebenar** operasi sewaan kenderaan di Malaysia.
+  - **DILARANG SAMA SEKALI** bahasa Melayu kuno/buku teks klasik, istilah terjemahan harfiah Indonesia, atau bahasa terjemahan langsung robotik AI (*direct English-to-Malay literal translation*).
+
+- **SENARAI HITAM ISTILAH TERLARANG (STRICT BLACKLIST - DILARANG SAMA SEKALI GUNA DALAM KOD, UI & PERBUALAN AI)**:
+
+| ❌ Kata Terlarang (Blacklist) | Punca Larangan & Kesalahan Maksud | ✅ Istilah Rasmi Wajib Guna (BM Moden / EN) |
+| :--- | :--- | :--- |
+| **Armada** | Maksud sebenar ialah angkatan kapal perang laut (Sepanyol/Portugis/Kamus Dewan) atau pinjaman Indonesia. Rakyat Malaysia tidak menyewa "armada". | **Kereta** / **Pilihan Kereta** / **Katalog Kereta** |
+| **Fleet** | Istilah korporat Inggeris yang kaku dan asing bagi pelanggan harian. | **Kereta** (BM) / **Cars** (EN) |
+| **Wahana** / **Kenderaan Penggerak** | Istilah klasik/puitis yang tidak digunakan dalam aplikasi harian. | **Kereta** / **Model Kereta** |
+| **Kabin** / **Bilik Kemudi** / **Kokpit** | Istilah kapal terbang/kapal laut. Kereta mempunyai ruang dalaman biasa. | **Dalaman Kereta** / **Ruang Dalaman** (BM) / **Interior** (EN) |
+| **Prapapar** / **Peringkat Interaktif** | Terjemahan langsung "preview" dan "stage" yang janggal. | **Pratonton 360°** / **Lihat Kereta 360°** |
+| **Bilik Pameran** (dalam konteks list kereta) | Terjemahan langsung "showroom". | **Katalog Kereta** / **Pilihan Kereta** |
+| **Pelayaran Mobiliti** / **Mobiliti Pintar** | Frasa khayalan AI generik (*cheesy marketing*). | **Sewa Kereta** / **Perjalanan Anda** |
+| **Perisai Keselamatan** | Frasa hiperbola AI. | **Perlindungan Insurans** / **Insurans Penuh** |
+| **Gugusan Kereta** | Terjemahan kaku "vehicle cluster". | **Pilihan Kereta** / **Senarai Kereta** |
+
+- **Panduan Penggunaan Seragam Merentas Seluruh Sistem**:
+  - **Bar Sisi & Menu Admin**: `Pengurusan Kereta` $\rightarrow$ `Semua Kereta`, `Kereta Tersedia`, `Kereta Sedang Disewa`, `Studio 360° & Info Kereta`, `Tambah Kereta Baharu`.
+  - **Tindakan & Navigasi**: `Kembali ke Senarai Kereta` (BUKAN "Kembali ke Armada").
+  - **Katalog & Pelanggan**: `Pilih Kereta`, `Cari Kereta`, `Sewa Sekarang`, `Tempah Sekarang`, `Lihat Kereta`.
+  - **Lencana Status**: `Tersedia`, `Sedang Disewa`, `Selesai`, `Dibatalkan` (dilarang campur aduk teks Inggeris semasa mod BM aktif).
+  - **Peraturan Komunikasi AI**: Ejen AI **DILARANG SAMA SEKALI** menyebut, mencadangkan, atau menulis perkataan dalam Senarai Hitam di atas semasa membalas mesej pengguna, membuat ringkasan, menjana fail, atau menulis kod.
 
 ---
 

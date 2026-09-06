@@ -11,7 +11,7 @@
 ## 📌 1. Pengenalan & Matlamat Projek
 
 **WeDRIVE** merupakan sebuah platform sewaan kenderaan pintar generasi baharu yang direka khas untuk operasi di Melaka. Matlamat utama sistem ini adalah untuk menyelesaikan kelemahan sistem konvensional melalui integrasi:
-1. **Pengurusan Armada & Tempahan Automatik**: Aliran tempahan tanpa kunci (*keyless/instant pickup*), penjejakan kenderaan masa nyata, dan pengurusan pulangan kenderaan pintar.
+1. **Pengurusan Kereta & Tempahan Automatik**: Aliran tempahan tanpa kunci (*keyless/instant pickup*), penjejakan kenderaan masa nyata, dan pengurusan pulangan kenderaan pintar.
 2. **Kecerdasan Buatan (AI Engine)**: Cadangan kenderaan pintar mengikut bajet/destinasi pelancongan Melaka dan pembantu maya AI (*AI Concierge Chatbot*).
 3. **Piawaian Reka Bentuk Apple HIG**: Pengalaman visual premium bertaraf dunia menggunakan prinsip *Bento Grid Layout*, *Glassmorphism*, dwi-tema (*Dark/Light Mode per-device*), dan dwi-bahasa (*BM/EN*).
 4. **Seni Bina Pangkalan Data Relasional Tanpa Kos**: Dikuasakan sepenuhnya oleh **Supabase (PostgreSQL Cloud + Supabase Auth)**.
@@ -34,7 +34,7 @@ Dalam fasa FYP 1, fokus utama adalah pada kajian literatur, analisis keperluan p
   ```text
   AI CAR RENTAL SYSTEM/
   ├── account/        # Log masuk, Daftar, Pemulihan Kata Laluan
-  ├── admin/          # Panel Pentadbir (Dashboard, Fleet, Bookings, Marketing, Analytics)
+  ├── admin/          # Panel Pentadbir (Dashboard, Cars, Bookings, Marketing, Analytics)
   ├── customer/       # Portal Pelanggan (Dashboard, Browse, Booking, My Bookings, Profile)
   ├── guest/          # Halaman Pelawat (Explore Melaka, How It Works, Pricing)
   ├── shared/         # Komponen Modular (CSS, JS, Navbar, Footer, Sidebar, API)
@@ -4053,3 +4053,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.10 Set 360 interactive viewer to full 16:9 cover without top and bottom gaps`
   - Tag Versi: `5.9.10`
+
+---
+
+##  [MAJOR UPDATE] 179. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026 (Piawaian Grab, Setel, Trevo & Carsome), Pemansuhan 100% Istilah 'Armada' & 'Fleet', serta Penguatkuasaan Senarai Hitam Istilah Kuno/Kaku AI (v6.0.0)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives via /grill-me)**:
+  - *"perkataan yang x masuk akal macam armada n lain2 saya pon pening mana awak dapat perkataan semua tuu..macam fleet saya dh pantang dh jangan guna tukar kepada car ...penat banyak kali pesan saya nak awak guna perkataan yang masuk akal!!!"*
+  - *"n satu lagi tambah..guna bahasa modern yang skrg ni guna"*
+  - *"nombor satu n tulis dekat agent supaya x buat kesilapan berulang lagi"*
+  - Pengguna menegur penggunaan perkataan yang tidak masuk akal seperti **'Armada'** (yang bermaksud angkatan kapal tentera laut menurut etimologi Sepanyol/Portugis dan Kamus Dewan) serta istilah terjemahan langsung AI yang kaku (*kabin*, *bilik kemudi*, *peringkat*, *wahana*). Pengguna mengarahkan agar sistem menggunakan 100% **Bahasa Melayu Moden Kontemporari Malaysia Era 2026** (seperti yang digunakan oleh Grab, Setel, Trevo, Wahdah, Carsome) dan menguatkuasakan senarai hitam kata terlarang (*Blacklist Terms*) secara kekal dalam peraturan ejen AI `.agents/`.
+
+- **Tindakan Pembaikan Menyeluruh (Implementation)**:
+  1. **Penguatkuasaan Senarai Hitam & Peraturan Bahasa Moden (`.agents/rules/ruleprompt.md`)**:
+     - Membina semula Seksyen 1D dengan tajuk **"1D. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026"**.
+     - Memasukkan jadual rasmi **SENARAI HITAM ISTILAH TERLARANG (STRICT BLACKLIST)** merangkumi:
+       - ❌ *Armada* $\rightarrow$ ✅ **Kereta** / **Pilihan Kereta** / **Katalog Kereta**
+       - ❌ *Fleet* $\rightarrow$ ✅ **Kereta** (BM) / **Cars** (EN)
+       - ❌ *Wahana / Kenderaan Penggerak* $\rightarrow$ ✅ **Kereta** / **Model Kereta**
+       - ❌ *Kabin / Bilik Kemudi / Kokpit* $\rightarrow$ ✅ **Dalaman Kereta** / **Ruang Dalaman** (BM) / **Interior** (EN)
+       - ❌ *Prapapar / Peringkat Interaktif* $\rightarrow$ ✅ **Pratonton 360°** / **Lihat Kereta 360°**
+       - ❌ *Bilik Pameran* $\rightarrow$ ✅ **Katalog Kereta** / **Pilihan Kereta**
+       - ❌ *Pelayaran Mobiliti / Mobiliti Pintar* $\rightarrow$ ✅ **Sewa Kereta** / **Perjalanan Anda**
+       - ❌ *Perisai Keselamatan* $\rightarrow$ ✅ **Perlindungan Insurans** / **Insurans Penuh**
+       - ❌ *Gugusan Kereta* $\rightarrow$ ✅ **Pilihan Kereta** / **Senarai Kereta**
+     - Menetapkan larangan mutlak kepada mana-mana ejen AI daripada menyebut atau mencadangkan istilah senarai hitam ini dalam sebarang percakapan atau kod.
+  2. **Pembersihan Panduan Reka Bentuk Master (`.agents/DESIGN.md`)**:
+     - Memadam sebutan "Armada Kereta" dan menggantikannya dengan "Pilihan Kereta".
+     - Menambah klausa rasmi Bahasa Melayu Moden Kontemporari (Era 2026).
+  3. **Penyelarasan Fail Rujukan Apple HIG & Stitch (`.agents/rules/apple_hig_design_system.md` & `.agents/workflows/stitch_generation.md`)**:
+     - Memadam perkataan "armada" dalam teks pilar deference dan menggantikannya dengan "katalog kereta".
+     - Mengemas kini Fasa 3 Stitch daripada "Armada Tersedia" kepada "Kereta Tersedia".
+  4. **Pembersihan Kamus Terjemahan Sistem (`shared/lang/ms.json` & `shared/lang/ms.js`)**:
+     - Mengemas kini `how_new_view_status_reference` daripada *"Panorama kabin rujukan"* kepada *"Panorama dalaman kereta rujukan"*.
+  5. **Pembersihan Dokumentasi Sejarah (`PLAN/FYP1_to_FYP2_Development_Summary.md`)**:
+     - Menyelaraskan teks pengenalan fasa awal daripada "Pengurusan Armada" kepada "Pengurusan Kereta".
+
+- **Keputusan Ujian & Pengesahan**:
+  - **Audit Teks & Kod**: Sifar perkataan 'Armada' dan 'Fleet' dalam fail operasi dan konfigurasi aktif.
+  - **Playwright Automated Test Suite**: Kesemua 36 ujian automasi merentasi modul lulus sepenuhnya (**100% Pass Rate**).
+
+- **Maklumat Git**:
+  - Commit: `6.0.0 Enforce 2026 contemporary modern Malay language standard and strictly blacklist Armada and Fleet terms`
+  - Tag Versi: `6.0.0`
