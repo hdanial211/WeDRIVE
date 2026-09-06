@@ -46,26 +46,7 @@ trigger: always_on
 
 Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standard berikut:
 
-- **Apple Developer Ecosystem (developer.apple.com/design):** Rujukan utama untuk kad Bento kemas, teratur, hierarki simetri, ketiadaan ruang kosong terbuang (*Zero Dead Space*), dan tipografi berkelas tinggi:
-  1. **Portal Utama Reka Bentuk Apple**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
-  2. **Garis Panduan Antaramuka Manusia (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
-  3. **Sumber Reka Bentuk Rasmi & Kit Figma (Apple Design Resources)**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
-  4. **Pencipta Ikon Apple (Icon Composer)**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
-  5. **Pustaka Simbol Sistem (SF Symbols)**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
-  6. **Pereka Pas Dompet (Pass Designer)**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
-  7. **Perkembangan Terkini Reka Bentuk Apple (What's New in Design)**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
-  8. **Integrasi MCP Figma Rasmi**:
-     ```json
-     {
-       "servers": {
-         "Figma": {
-           "type": "http",
-           "url": "https://mcp.figma.com/mcp"
-         }
-       }
-     }
-     ```
-     Gunakan alatan `#get_design_context` untuk mendapatkan token reka bentuk dan konteks daripada kit Apple Figma.
+- **Apple Developer Ecosystem:** Rujukan utama untuk Bento Grid kemas, teratur, hierarki simetri, sifar ruang kosong terbuang (*Zero Dead Space*), dan tipografi berkelas tinggi. Senarai lengkap 8 portal Apple Developer rasmi dan konfigurasi pelayan Figma MCP terkandung sepenuhnya dalam [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md).
 - **Airbnb (airbnb.com):** Rujukan utama untuk *booking flow* yang lancar, carian tarikh (calendar), peta interaktif, dan *clean UI*.
 - **Stripe (stripe.com):** Rujukan untuk *glassmorphism*, animasi *micro-interactions* yang sangat lancar, borang pembayaran (payment form) yang kemas, dan tipografi yang jelas.
 - **Linear (linear.app):** Rujukan untuk *dark mode* yang sempurna, *glowing borders*, dan *keyboard-first navigation* untuk Admin Dashboard.
@@ -75,5 +56,5 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
 
 ## 4. Prinsip Geometri Butang: Bulat 1:1 Sempurna vs Kapsul Pil
 
-- **Bulat Sempurna 1:1 (Strict 1:1 Circle — DILARANG SAMA SEKALI BUJUR / OVAL):** Elemen bulat atau butang ikon sahaja WAJIB mempunyai nisbah tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height; display: flex !important; align-items: center !important; justify-content: center !important; box-sizing: border-box !important;`). DILARANG SAMA SEKALI herot menjadi bujur atau lonjong.
-- **Kapsul Pil Berteks (Capsule Pill):** Sebarang butang yang mengandungi teks mengembang secara mendatar dengan bucu bulat penuh simetri (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`). DILARANG SAMA SEKALI teks terlipat ke baris bawah yang menghasilkan bentuk telur bujur.
+- Piawaian mandatori nisbah bulat tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`) dan larangan keras bentuk bujur/oval dikawal secara berpusat dalam [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md) (Pilar 1, Butiran 6).
+- Butang berteks WAJIB mengembang mendatar menjadi kapsul/pil simetri (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`).

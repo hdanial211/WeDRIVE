@@ -4241,3 +4241,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.2.1 Establish .agents/PROJECT_STRUCTURE.md as master single source of truth`
   - Tag Versi: `6.2.1`
+
+---
+
+## [MINOR UPDATE] 185. Naik Taraf Kemahiran context7 & frontend-ui Serta Deduplikasi Kandungan .agents/ (v6.2.2)
+
+- **Punca Arahan Pengguna**:
+  - *".agents/skills/context7 n .agents/skills/frontend-ui x update"*
+  - *"n saya tengok content2 dalam agent ni ada yang duplicate cuba awak tengok"*
+  - *"buka website context7 n study apa yang ada dalam tu ...saya nak awak gunakan maximum skill"*
+  - *"yang ni awak buka website apple n study semua bentuk pattern cara susun anything yang saya bagi link website untuk belajar cara2 apple buat sesuatu"*
+
+- **Tindakan Naik Taraf & Deduplikasi**:
+  1. **Naik Taraf `.agents/skills/context7/SKILL.md`**:
+     - Ditambah alur kerja 2-langkah rasmi Context7 MCP: `resolve-library-id` $\rightarrow$ `query-docs`.
+     - Pemetaan perpustakaan teras WeDRIVE: `@supabase/supabase-js` (`/supabase/supabase`), `flatpickr` (`/chmln/flatpickr`), `@playwright/test` (`/microsoft/playwright`), `animejs` (`/juliangarnier/anime`), `three.js` (`/mrdoob/three.js`).
+     - Contoh kod pertanyaan sebenar untuk RLS, filter, dan paired date range lock.
+     - Panduan penghapusan sintaks lapuk (*zero deprecated syntax*).
+  2. **Naik Taraf `.agents/skills/frontend-ui/SKILL.md`**:
+     - Dibina berpandukan kajian mendalam Apple HIG & sistem reka bentuk moden:
+       - Bento Grid responsif (ritma jarak 24px seimbang, sifar ruang kosong / *Zero Dead Space*).
+       - Apple Thin Materials / Glassmorphism dengan *specular top highlight* dan bayang lembut.
+       - Ketepatan geometri bulat 1:1 sempurna vs kapsul berteks 9999px.
+       - Fizik pergerakan spring (`cubic-bezier(0.16, 1, 0.3, 1)`) dan *Segmented Glider*.
+       - Jajaran angka tabular (`tabular-nums`) dan zon sentuhan minimum 44px.
+  3. **Pembersihan Kandungan Duplikat (Deduplication / SSOT)**:
+     - Ditetapkan punca tunggal (*Single Source of Truth*): `02_apple_hig_design_system.md` memiliki senarai pautan Apple Developer & pelayan Figma MCP secara eksklusif.
+     - `.agents/rules/04_navigation_and_ui.md`: Seksyen 3 & 4 digantikan dengan rujukan silang SSOT yang kemas (saiz berkurang dari 5,591 ke 4,460 aksara).
+     - `.agents/DESIGN.md`: Seksyen 5 (Stitch MCP) dan Seksyen 6 (Apple Developer) digantikan dengan rujukan silang SSOT ke `07_stitch_design_system.md` dan `02_apple_hig_design_system.md`.
+     - `.agents/skills/frontend-ui/SKILL.md`: Blok pautan dan JSON Figma dikeluarkan dan diganti dengan rujukan SSOT ke `02_apple_hig_design_system.md`.
+
+- **Maklumat Git**:
+  - Commit: `6.2.2 Upgrade context7 & frontend-ui skills and deduplicate .agents rules`
+  - Tag Versi: `6.2.2`

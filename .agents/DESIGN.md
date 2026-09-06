@@ -147,37 +147,10 @@ spacing:
 - Transisi: `cubic-bezier(0.16, 1, 0.3, 1)`.
 - Maklum balas taktil: `:active { transform: scale(0.97); }`.
 
-## 5. Integrasi Stitch MCP & Ultra High-Quality Tier (Piawaian Gemini 3.8)
-- **Prinsip Teras: Kualiti Menyeluruh Mengatasi Kepantasan (*Quality Over Speed*)**:
-  - *Lambat asal kualiti terbaik; pantang cepat tetapi kualiti sifar (zero quality)*.
-  - Dilarang menggunakan model ringan/Flash untuk penjanaan antaramuka.
-- **Konfigurasi Stitch MCP**:
-  - `projectId`: `1862124494843018493`
-  - `designSystem`: `assets/d66115a696e44b2381ec5f5d829e8a88` / `assets/40090a9886c4444abca795c82673f4c8` / `assets/518f31ad774f458da15c7fc5ff999bbf`
-  - `modelId`: **`GEMINI_3_1_PRO`** (Piawaian Gemini 3.8 Ultra High-Quality Tier; model `GEMINI_3_PRO` telah ditamatkan/deprecated)
-- **Penyelarasan Kod Fizikal & Integriti Data**:
-  - Semua kod CSS yang dijana daripada Stitch WAJIB diselaraskan secara berpusat ke dalam `shared/css/wedrive.css`.
-  - Semua medan dan butang tindakan WAJIB disambung terus ke punca data operasi sebenar (`window.WeDriveAPI` / Supabase).
+## 5. Integrasi Stitch MCP & Reka Bentuk Gemini 3.8 UHQ
+- Semua perincian integrasi Stitch MCP, konfigurasi projek (`projectId: 1862124494843018493`), model `GEMINI_3_1_PRO`, dan alur kerja penjanaan antaramuka terkandung sepenuhnya dalam dokumen autoriti tunggal di [`.agents/rules/07_stitch_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/07_stitch_design_system.md).
 
 ## 6. Laman Rujukan Rasmi Apple Developer Design & Sumber Figma MCP
-Setiap perincian sistem reka bentuk WeDRIVE berpaksikan sumber rasmi Apple:
-1. **Apple Developer Design Portal**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
-2. **Human Interface Guidelines (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
-3. **Apple Design Resources & Official Figma Kits**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
-4. **Apple Icon Composer**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
-5. **SF Symbols Library**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
-6. **Apple Pass Designer**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
-7. **What's New in Design**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
-8. **Figma MCP Server (`https://mcp.figma.com/mcp`)**:
-   Konfigurasi pelayan MCP Figma untuk alatan `#get_design_context`:
-   ```json
-   {
-     "servers": {
-       "Figma": {
-         "type": "http",
-         "url": "https://mcp.figma.com/mcp"
-       }
-     }
-   }
-   ```
+- Senarai lengkap 8 portal Apple Developer rasmi dan konfigurasi pelayan Figma MCP (`https://mcp.figma.com/mcp`) terkandung secara berpusat dalam [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md).
+
 

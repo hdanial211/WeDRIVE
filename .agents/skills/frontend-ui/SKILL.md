@@ -3,99 +3,192 @@ name: frontend-ui
 description: Comprehensive frontend UI design, craft, Apple HIG styling, Bento grid layouts, micro-interactions, responsive ergonomics, and glassmorphism standards for modern web development.
 ---
 
-# Front-End UI Craft & Engineering Skill
+# Front-End UI Craft & Apple HIG Engineering Skill (WeDRIVE)
 
-This skill guides the construction, refinement, and auditing of world-class, premium front-end user interfaces for WeDRIVE.
+Kemahiran ini membimbing pembangunan, reka bentuk, dan penalaan antaramuka bertaraf dunia berasaskan piawaian **Apple Human Interface Guidelines (HIG)** dan estetika moden perisian enterprise.
 
----
-
-## 1. Core Principles of Premium UI Craft
-
-1. **Editorial Visual Hierarchy & Depth**:
-   - Avoid plain, flat, or generic AI-template layouts.
-   - Use curated color palettes (Obsidian `#000000`/`#161618`, Crisp Day `#F5F5F7`/`#FFFFFF`, Apple Accent `#0071E3`/`#2997FF`).
-   - Employ specular top-edge highlights (`border-top: 1px solid rgba(255, 255, 255, 0.12)`), multi-layered soft drop shadows, and high-saturation blur (`backdrop-filter: blur(24px) saturate(180%)`).
-
-2. **Geometrical Precision (The Minimum Circle & Pill Expansion Rule)**:
-   - **Compact Icon-Only Elements**: Strictly maintain a 1:1 perfect circular ratio (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`). Never allow awkward oval squishing.
-   - **Labelled / Text Elements**: Expand horizontally from the circular diameter into full capsule pills (`border-radius: var(--radius-pill, 9999px) !important;`).
-   - **Bento Content Cards**: Symmetrical continuous squircle corners (`border-radius: 22px` to `28px`).
-
-3. **Typography Excellence**:
-   - Use Apple SF Pro stack: `-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`.
-   - Dynamic tracking (`letter-spacing: -0.02em` on titles, `+0.04em` on uppercase kickers).
-   - Use `font-variant-numeric: tabular-nums;` for counters, timers, pricing, and countdown digits.
+*Nota SSOT: Untuk senarai portal rasmi Apple Developer Design dan konfigurasi Figma MCP, rujuk punca kebenaran tunggal di [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md).*
 
 ---
 
-## 2. Micro-Interactions, Motion & Spring Physics
+## 1. Seni Bina Bento Grid & Sifar Ruang Kosong (Zero Dead Space)
 
-1. **Apple Fluid Transition Curves**:
-   - Motion: `cubic-bezier(0.16, 1, 0.3, 1)` for entrances, expanding cards, and popovers.
-   - Snappy Actions: `cubic-bezier(0.32, 0.72, 0, 1)` (0.2s - 0.35s).
+Apple Bento Grid mengutamakan keseimbangan visual, susun atur kad berkadaran simetri, dan ketiadaan lompang kosong yang terbuang:
 
-2. **Physical Gliders & Segmented Controls**:
-   - Free-floating physical glider layer (`z-index: 1`) sliding behind transparent text pills (`z-index: 2`).
-   - Seamless width morphing and horizontal translation with spring feedback on active touch (`transform: scale(0.96)`).
+```css
+/* Container Bento Grid WeDRIVE */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  padding: 24px;
+  align-items: stretch;
+}
 
-3. **State Feedback & Loading Ergonomics**:
-   - **Error Feedback**: Pill-shaped shake animation (`@keyframes appleDateErrorShake`) with soft red halo glow.
-   - **Guidance Pulse**: Pulsing blue border focus halo (`@keyframes applePickupPulse`).
-   - **Skeleton Reveal**: Shimmer placeholder skeleton (`lang-skeleton-active` -> `lang-skeleton-reveal`).
+/* Kad Bento Squircle Apple HIG */
+.bento-card {
+  background: var(--bg-card);
+  border-radius: 24px;
+  border: 1px solid var(--border-subtle);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+```
+
+- **Peraturan Ketinggian Seimbang:** Kad dalam baris yang sama WAJIB diseimbangkan ketinggiannya (`align-items: stretch`). DILARANG wujud bahagian bawah kad yang tergantung kosong.
 
 ---
 
-## 3. Component Craft Reference Checklist
+## 2. Bahan Kaca Apple (Apple Materials & Glassmorphism)
 
-- [ ] **Navbar / Floating Island**: Frosted glass island with 22px radius, aligned symmetrically with content cards.
-- [ ] **Search Pills**: 48px height, 9999px radius, centered icons, adequate left padding (min 48px), focus halo rings.
-- [ ] **Bento Metric Tiles**: Rounded icon container with subtle pastel background, clear typography, and soft hover lift (`translateY(-4px)`).
-- [ ] **Modal Dialogs**: Backdrop blur sheet (`blur(20px)`), centered positioning, escape key support, and 38px aligned action buttons.
-- [ ] **Chatbot & Floating Anchors**: Clean viewport-fixed anchoring with `auto_awesome` sparkles branding.
+Mewujudkan ilusi kedalaman optik (*depth*) yang berinteraksi secara organik dengan latar belakang di bawahnya:
+
+```css
+/* Apple Thin Material (Glass) */
+.apple-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8); /* Specular top highlight */
+}
+
+/* Obsidian Dark Mode Glass */
+[data-theme="night"] .apple-glass {
+  background: rgba(22, 22, 24, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12); /* Subtle rim light */
+}
+```
 
 ---
 
-## 4. Responsive Mobile Ergonomics
+## 3. Ketepatan Geometri: Bulat Sempurna 1:1 vs Kapsul Pil
 
-1. **Touch Targets**: All interactive elements (buttons, links, chips, toggles) MUST have minimum `44px x 44px` touch bounding boxes.
-2. **Breakpoints**:
-   - `Desktop`: $\ge 1101\text{px}$ (Multi-column Bento grid)
-   - `Tablet`: $769\text{px} - 1100\text{px}$ (2-column adaptive layout)
-   - `Mobile`: $\le 768\text{px}$ (Single-column stack, auto-collapsing sidebar)
-3. **Viewport Meta**: Always ensure `<meta name="viewport" content="width=device-width, initial-scale=1.0"/>`.
+Ketepatan geometri adalah teras identiti Apple:
+
+```css
+/* 1. Butang Ikon Bulat Tepat (Strict 1:1 Zero Oval) */
+.btn-icon-circle {
+  width: 44px !important;
+  height: 44px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+}
+
+/* 2. Butang & Lencana Berteks (Capsule Pill) */
+.btn-pill, .badge-pill {
+  border-radius: 9999px !important;
+  padding: 10px 20px;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+```
+
+- **Zero Oval Rule:** Dilarang butang bulat herot menjadi bujur atau lonjong akibat penambahan padding melintang.
+- **Anti-Lipatan Teks:** Butang teks dilarang melipat teks ke baris kedua yang merosakkan bentuk kapsul simetri.
 
 ---
 
-## 5. UI Verification Protocol
+## 4. Fizik Pergerakan & Glider Segmen (Spring Physics)
 
-After creating or modifying any front-end component:
-1. **Live Visual Audit (DevTools MCP)**: Verify dark/light contrast, typography descenders, hover states, and alignment.
-2. **Automated E2E Verification (Playwright CLI)**:
+```css
+/* Fizik Pergerakan Universal Apple */
+:root {
+  --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --apple-duration: 0.25s;
+}
+
+/* Maklum Balas Sentuhan Taktil */
+button:active, .btn-pill:active, .bento-card:active {
+  transform: scale(0.97);
+  transition: transform 0.1s var(--apple-ease);
+}
+
+/* Glider Gelangsar Suis Apple (Segmented Control) */
+.segmented-control {
+  position: relative;
+  background: var(--bg-muted);
+  border-radius: 9999px;
+  padding: 4px;
+  display: inline-flex;
+}
+
+.segmented-glider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  background: var(--bg-surface);
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s var(--apple-ease);
+  z-index: 1;
+}
+
+.segmented-btn {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+```
+
+---
+
+## 5. Tipografi Angka & Kebolehcapaian Responsif
+
+1. **Jajaran Angka Tabular (Zero Jitter)**:
+   - Semua paparan nombor pendaftaran kenderaan, harga harian (RM), peratusan, dan kiraan tarikh WAJIB mengandungi:
+     ```css
+     font-variant-numeric: tabular-nums;
+     ```
+2. **Sasaran Sentuhan Minimum (Touch Targets)**:
+   - Minimum **44px × 44px** bagi semua elemen sentuh di skrin telefon dan tablet.
+3. **Breakpoints Responsif Rasmi WeDRIVE**:
+   - `Desktop`: $\ge 1101\text{px}$ (12-kolum Bento penuh)
+   - `Tablet Landscape`: $901\text{px} - 1100\text{px}$ (Kompak 6-kolum)
+   - `Tablet Portrait`: $769\text{px} - 900\text{px}$ (2-kolum seimbang)
+   - `Mobile`: $\le 768\text{px}$ (1-kolum bertindan, menu hamburger automatik)
+
+---
+
+## 6. Protokol Pengesahan Visual (Check Page As User First)
+
+Sebelum mengubah mana-mana komponen atau halaman:
+1. Semak rupa bentuk dan fungsi semasa pada tab pelayar aktif menggunakan `chrome-devtools` (`take_snapshot` atau `take_screenshot`).
+2. Pastikan tiada herotan elemen bulat menjadi bujur.
+3. Sahkan kontras tema Mod Siang (`#F5F5F7` / `#FFFFFF`) dan Mod Obsidian Malam (`#000000` / `#161618`).
+4. Jalankan suite ujian Playwright untuk mengesahkan interaksi bebas regresi:
    ```bash
    cd tests && npx playwright test
    ```
-3. Ensure 100% test pass rate before committing changes.
-
----
-
-## 6. Official Apple Developer Design Resources & Figma MCP
-All UI engineering must reference Apple's primary design resources:
-1. **Apple Developer Design Portal**: [https://developer.apple.com/design/](https://developer.apple.com/design/)
-2. **Human Interface Guidelines (HIG)**: [https://developer.apple.com/design/human-interface-guidelines/](https://developer.apple.com/design/human-interface-guidelines/)
-3. **Apple Design Resources & Official Figma Kits**: [https://developer.apple.com/design/resources/](https://developer.apple.com/design/resources/)
-4. **Apple Icon Composer**: [https://developer.apple.com/icon-composer/](https://developer.apple.com/icon-composer/)
-5. **SF Symbols Library**: [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/)
-6. **Apple Pass Designer**: [https://developer.apple.com/pass-designer/](https://developer.apple.com/pass-designer/)
-7. **What's New in Design**: [https://developer.apple.com/design/whats-new/](https://developer.apple.com/design/whats-new/)
-8. **Figma MCP Integration**:
-   ```json
-   {
-     "servers": {
-       "Figma": {
-         "type": "http",
-         "url": "https://mcp.figma.com/mcp"
-       }
-     }
-   }
-   ```
-   Query design context via `#get_design_context` from Apple Figma libraries.
