@@ -31,7 +31,7 @@
           </button>
           <div>
             <h1 class="fs-22 fw-800 text-primary m-0" id="cd-top-title">Studio 360° & Profil Kereta</h1>
-            <p class="fs-12 text-secondary m-0">Pemeriksaan Interaktif 360°, Telemetri Kesihatan, dan Maklumat Teknikal Kereta</p>
+            <p class="fs-12 text-secondary m-0">Pemeriksaan Visual 360° dan Maklumat Spesifikasi Sewaan Kereta</p>
           </div>
         </div>
 
@@ -49,11 +49,6 @@
             <span>Cetak Spesifikasi</span>
           </button>
         </div>
-      </div>
-
-      <!-- 1. FLEET SELECTOR BAR -->
-      <div class="fleet-selector-bar" id="cd-fleet-selector">
-        <!-- Injected via JavaScript with all fleet cars -->
       </div>
 
       <!-- 2. STUDIO 360 HERO VIEWPORT CARD -->
@@ -145,114 +140,15 @@
         </div>
       </div>
 
-      <!-- 3. TECHNICAL SPECIFICATIONS BENTO GRID (Zero Bookings) -->
+      <!-- 3. ESSENTIAL RENTAL SPECIFICATIONS BENTO GRID (4-CARD BALANCED HIG) -->
       <div class="specs-bento-grid reveal-on-scroll">
 
-        <!-- CARD 1: POWERTRAIN & PERFORMANCE -->
-        <div class="spec-bento-card col-span-6">
-          <div class="spec-card-header">
-            <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">speed</span>
-              <span>Enjin & Kuasa Pacuan</span>
-            </h3>
-            <span class="apple-category-pill" id="spec-engine-badge">2.0L Turbo</span>
-          </div>
-          <div class="spec-metrics-rows">
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">memory</span> Konfigurasi Enjin</span>
-              <span class="spec-metric-val" id="spec-engine-cfg">4-Silinder Sebaris TwinPower Turbo</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">straighten</span> Sesaran Enjin</span>
-              <span class="spec-metric-val" id="spec-displacement">1,998 cc</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">bolt</span> Kuasa Maksimum</span>
-              <span class="spec-metric-val" id="spec-hp">184 hp @ 5,000 rpm</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">autorenew</span> Tork Maksimum</span>
-              <span class="spec-metric-val" id="spec-torque">300 Nm @ 1,350 - 4,000 rpm</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">timelapse</span> Pecutan (0-100 km/j)</span>
-              <span class="spec-metric-val" id="spec-accel">7.1 Saat</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 2: TRANSMISSION & FUEL -->
-        <div class="spec-bento-card col-span-6">
-          <div class="spec-card-header">
-            <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">settings</span>
-              <span>Transmisi & Kecekapan Bahan Api</span>
-            </h3>
-            <span class="apple-category-pill" id="spec-trans-badge">Automatik</span>
-          </div>
-          <div class="spec-metrics-rows">
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">tune</span> Sistem Transmisi</span>
-              <span class="spec-metric-val" id="spec-trans-type">8-Kelajuan Steptronic Sport</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">alt_route</span> Sistem Pacuan Roda</span>
-              <span class="spec-metric-val" id="spec-drivetrain">Rear-Wheel Drive (RWD)</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">local_gas_station</span> Jenis Bahan Api</span>
-              <span class="spec-metric-val" id="spec-fuel-type">Petrol (RON 97 / RON 95)</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">opacity</span> Kapasiti Tangki</span>
-              <span class="spec-metric-val" id="spec-tank">59 Liter</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">eco</span> Penggunaan Purata</span>
-              <span class="spec-metric-val" id="spec-consumption">6.4 L / 100 km</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 3: DIMENSIONS & CAPACITIES -->
-        <div class="spec-bento-card col-span-6">
-          <div class="spec-card-header">
-            <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">aspect_ratio</span>
-              <span>Dimensi, Berat & Ruang Kargo</span>
-            </h3>
-            <span class="apple-category-pill" id="spec-seats-badge">5 Tempat Duduk</span>
-          </div>
-          <div class="spec-metrics-rows">
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">airline_seat_recline_normal</span> Bilangan Kerusi</span>
-              <span class="spec-metric-val" id="spec-seats-count">5 Tempat Duduk (Kulit Vernasca)</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">luggage</span> Ruang But / Kargo</span>
-              <span class="spec-metric-val" id="spec-boot">480 Liter (Power Boot)</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">scale</span> Berat Kerb Kereta</span>
-              <span class="spec-metric-val" id="spec-weight">1,570 kg</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">straighten</span> Panjang × Lebar × Tinggi</span>
-              <span class="spec-metric-val" id="spec-dims">4,709 × 1,827 × 1,435 mm</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">sync_alt</span> Jarak Antara Roda</span>
-              <span class="spec-metric-val" id="spec-wheelbase">2,851 mm</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 4: COMMERCIAL PRICING & LOGISTICS -->
+        <!-- CARD 1: COMMERCIAL PRICING & HQ LOGISTICS -->
         <div class="spec-bento-card col-span-6">
           <div class="spec-card-header">
             <h3 class="spec-card-title">
               <span class="material-icons-round text-primary-accent">payments</span>
-              <span>Kadar Komersial & Pangkalan HQ</span>
+              <span>Kadar Sewaan & Pangkalan HQ</span>
             </h3>
             <span class="apple-category-pill text-green" id="spec-rate-badge">RM 450/hari</span>
           </div>
@@ -274,119 +170,89 @@
               <span class="spec-metric-val" id="spec-hq-location">Pusat Operasi Utama WeDRIVE (HQ Melaka)</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">verified</span> Status Pendaftaran</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">verified</span> Status Ketersediaan</span>
               <span class="spec-metric-val text-green" id="spec-active-badge">Aktif & Sah Disewa</span>
             </div>
           </div>
         </div>
 
-      </div>
-
-      <!-- 4. EQUIPMENT & SAFETY MATRIX -->
-      <div class="card p-24 radius-24 border-subtle mb-28 reveal-on-scroll">
-        <div class="flex-between flex-wrap gap-12 pb-16 mb-16 border-bottom-subtle">
-          <h3 class="fs-17 fw-700 text-primary m-0 flex-center gap-8">
-            <span class="material-icons-round text-primary-accent">verified</span>
-            <span>Matriks Kelengkapan & Keselamatan Aktif</span>
-          </h3>
-          <span class="apple-category-pill">Standard Audit WeDRIVE Melaka</span>
-        </div>
-
-        <div class="equip-matrix-grid" id="cd-equipment-matrix">
-          <!-- Injected via JavaScript based on car equipment -->
-        </div>
-      </div>
-
-      <!-- 5. VEHICLE TELEMETRY & HEALTH DESK (NO BOOKINGS!) -->
-      <div class="specs-bento-grid reveal-on-scroll">
-
-        <!-- TELEMETRY METRICS -->
-        <div class="spec-bento-card col-span-4">
+        <!-- CARD 2: DIMENSIONS & PASSENGER CAPACITIES -->
+        <div class="spec-bento-card col-span-6">
           <div class="spec-card-header">
             <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">sensors</span>
-              <span>Telemetri Kereta</span>
+              <span class="material-icons-round text-primary-accent">aspect_ratio</span>
+              <span>Dimensi & Kapasiti Penumpang</span>
             </h3>
-            <span class="hq-badge-pill">Masa Nyata</span>
+            <span class="apple-category-pill" id="spec-seats-badge">5 Tempat Duduk</span>
           </div>
-
           <div class="spec-metrics-rows">
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">speed</span> Odometer Semasa</span>
-              <span class="spec-metric-val text-primary fw-800" id="telemetry-odometer">34,250 km</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">airline_seat_recline_normal</span> Bilangan Tempat Duduk</span>
+              <span class="spec-metric-val" id="spec-seats-count">5 Tempat Duduk (Kulit Vernasca)</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">local_gas_station</span> Paras Bahan Api</span>
-              <span class="spec-metric-val text-green" id="telemetry-fuel">85% Penuh</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">luggage</span> Ruang But / Kargo</span>
+              <span class="spec-metric-val" id="spec-boot">480 Liter (Power Boot)</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">battery_charging_full</span> Kesihatan Bateri</span>
-              <span class="spec-metric-val text-green" id="telemetry-battery">12.6V (98%)</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">scale</span> Berat Kerb Kereta</span>
+              <span class="spec-metric-val" id="spec-weight">1,570 kg</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">lock</span> Kunci Pintu & But</span>
-              <span class="spec-metric-val text-primary" id="telemetry-doors">Semua Selamat</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">straighten</span> Panjang × Lebar × Tinggi</span>
+              <span class="spec-metric-val" id="spec-dims">4,709 × 1,827 × 1,435 mm</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">sync_alt</span> Jarak Antara Roda</span>
+              <span class="spec-metric-val" id="spec-wheelbase">2,851 mm</span>
             </div>
           </div>
         </div>
 
-        <!-- 4-WHEEL TPMS CARD -->
-        <div class="spec-bento-card col-span-4">
+        <!-- CARD 3: POWERTRAIN, TRANSMISSION & FUEL -->
+        <div class="spec-bento-card col-span-6">
           <div class="spec-card-header">
             <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">tire_repair</span>
-              <span>Tekanan Tayar (TPMS)</span>
+              <span class="material-icons-round text-primary-accent">speed</span>
+              <span>Prestasi, Enjin & Bahan Api</span>
             </h3>
-            <span class="hq-badge-pill">Normal</span>
+            <span class="apple-category-pill" id="spec-engine-badge">2.0L Turbo</span>
           </div>
-
-          <div class="telemetry-tpms-grid">
-            <div class="tpms-tire-card healthy">
-              <div class="tpms-tire-label">Depan Kiri (FL)</div>
-              <div class="tpms-psi-num">32 <span class="fs-12 fw-500">psi</span></div>
-            </div>
-            <div class="tpms-tire-card healthy">
-              <div class="tpms-tire-label">Depan Kanan (FR)</div>
-              <div class="tpms-psi-num">32 <span class="fs-12 fw-500">psi</span></div>
-            </div>
-            <div class="tpms-tire-card healthy">
-              <div class="tpms-tire-label">Belakang Kiri (RL)</div>
-              <div class="tpms-psi-num">35 <span class="fs-12 fw-500">psi</span></div>
-            </div>
-            <div class="tpms-tire-card healthy">
-              <div class="tpms-tire-label">Belakang Kanan (RR)</div>
-              <div class="tpms-psi-num">35 <span class="fs-12 fw-500">psi</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- COMPLIANCE & LEGAL CERTIFICATE -->
-        <div class="spec-bento-card col-span-4">
-          <div class="spec-card-header">
-            <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">policy</span>
-              <span>Dokumen & Pematuhan</span>
-            </h3>
-            <button class="btn-outline-sm py-4 px-10 fs-11" onclick="viewInsurance()">Lihat Polisi</button>
-          </div>
-
           <div class="spec-metrics-rows">
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">verified_user</span> Cukai Jalan (Roadtax)</span>
-              <span class="spec-metric-val text-green" id="telemetry-roadtax">15 Nov 2026</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">memory</span> Konfigurasi Enjin</span>
+              <span class="spec-metric-val" id="spec-engine-cfg">4-Silinder Sebaris TwinPower Turbo</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">shield</span> Perlindungan Insurans</span>
-              <span class="spec-metric-val" id="telemetry-insurance">Etiqa Takaful 2026</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">tune</span> Sistem Transmisi</span>
+              <span class="spec-metric-val" id="spec-trans-type">8-Kelajuan Steptronic Sport</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">fact_check</span> Perakuan Puspakom</span>
-              <span class="spec-metric-val text-green" id="telemetry-puspakom">Lulus (B5/B7)</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">local_gas_station</span> Jenis Bahan Api</span>
+              <span class="spec-metric-val" id="spec-fuel-type">Petrol (RON 97 / RON 95)</span>
             </div>
             <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">all_inclusive</span> Had Jarak Perbatuan</span>
-              <span class="spec-metric-val text-green" id="telemetry-mileage">Tanpa Had (Unlimited KM)</span>
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">opacity</span> Kapasiti Tangki</span>
+              <span class="spec-metric-val" id="spec-tank">59 Liter</span>
             </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">all_inclusive</span> Polisi Perbatuan</span>
+              <span class="spec-metric-val text-green">Tanpa Had (Unlimited KM)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4: EQUIPMENT MATRIX & ACTIVE SAFETY -->
+        <div class="spec-bento-card col-span-6">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">verified</span>
+              <span>Kelengkapan & Keselamatan Aktif</span>
+            </h3>
+            <span class="apple-category-pill">Standard Audit WeDRIVE Melaka</span>
+          </div>
+          <div class="equip-matrix-grid" id="cd-equipment-matrix">
+            <!-- Injected via JavaScript based on car equipment -->
           </div>
         </div>
 

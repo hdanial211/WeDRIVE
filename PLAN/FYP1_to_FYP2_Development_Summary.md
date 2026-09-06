@@ -4686,6 +4686,52 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.2 Refine print spec button label from Cetak Lembaran to Cetak Spesifikasi`
   - Tag Versi: `6.5.2`
 
+---
+
+### [PATCH UPDATE] 197. Penstrukturan Semula Halaman Profil & Studio 360° Kereta Mengikut Susun Atur Apple Bento Grid Sifar Telemetri (v6.5.3)
+- **Tarikh**: 7 September 2026
+- **Versi**: `6.5.3` (Peningkatan Versi Patch: Remake Halaman car-detail.html & Pembersihan Sifar Elemen Serabut)
+- **Status**: SELESAI
+- **Fail Terlibat**:
+  - `admin/pages/car/car-detail/car-detail.html` (Pembuangan baris pemilihan armada atas, pembersihan subtitle, penyingkiran blok telemetri mekanikal/TPMS/dokumen, dan pembinaan susun atur Bento Grid 4-Kad Simetri)
+  - `admin/js/car-detail.js` (Pembuangan fungsi dan panggilan `setupTelemetry` serta pengoptimuman rendering)
+  - `shared/css/wedrive.css` (Penalaan lajur grid Bento `.specs-bento-grid > [class*="col-span-"] { grid-column: 1 / -1; }` pada saiz <= 1024px)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md` (Perekodan log 197)
+
+- **Objektif & Latar Belakang**:
+  - Menyahut arahan pengguna bahawa halaman `car-detail.html` serabut, tidak tersusun, dan mengandungi maklumat mekanikal yang tidak perlu (tekanan tayar TPMS, voltan bateri, kunci pintu, Puspakom) kerana fokus utama pelanggan dan sistem adalah untuk menyewa kereta yang berfungsi.
+  - Memanfaatkan Stitch MCP (`f2f055daa42c454bb7107600b86c9a78` - *Obsidian Bento*) bagi mereka semula halaman dengan kejelasan visual maksimum, sifar ruang mati (*Zero Dead Space*), dan hierarki Apple HIG yang elegan.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pembuangan Sifar Telemetri & Trivia Mekanikal**:
+     - Memadam keseluruhan kontena Section 5 (Telemetri Masa Nyata, Sensor TPMS, Voltan Bateri, dan Dokumen Puspakom).
+     - Membuang fungsi `setupTelemetry(car)` dan panggilannya dalam `car-detail.js` bagi memastikan sifar kod mati dan sifar pengiraan simulasi latar belakang yang membazir.
+  2. **Pembuangan Baris Pemilihan Kereta Atas (*Fleet Selector Bar*)**:
+     - Memadam `<div class="fleet-selector-bar" id="cd-fleet-selector">` dari bahagian atas skrin yang sebelum ini mengganggu tumpuan.
+  3. **Penyeragaman Subtitle**:
+     - Menukar penerangan pengepala kepada: *"Pemeriksaan Visual 360° dan Maklumat Spesifikasi Sewaan Kereta"*.
+  4. **Susun Atur Apple Bento Grid 4-Kad Simetri**:
+     - **Kad 1 (Kadar Sewaan & Pangkalan HQ)**: Memaparkan kadar harian rasmi, deposit keselamatan boleh pulang, had tempoh minimum, lokasi HQ Melaka, dan status aktif.
+     - **Kad 2 (Dimensi & Kapasiti Penumpang)**: Memaparkan kerusi ergonomik, ruang but kargo 480L, berat kerb, dimensi kenderaan, dan jarak roda.
+     - **Kad 3 (Prestasi, Enjin & Bahan Api)**: Memaparkan konfigurasi enjin Turbo, transmisi Steptronic, bahan api petrol disyorkan, kapasiti tangki, dan polisi perbatuan tanpa had (*Unlimited KM*).
+     - **Kad 4 (Kelengkapan & Keselamatan Aktif)**: Memaparkan matriks 8 ciri audit sewaan WeDRIVE (CarPlay, Kamera 360°, Dashcam 4K, Keyless, Tinted JPJ, Sensor Parkir, AEB, LKA).
+  5. **Pengoptimuman Responsif & Keserasian CSS Master**:
+     - Menambah peraturan responsif pada `wedrive.css` bagi menjamin susun atur kad Bento mengalir kemas 2x2 pada MacBook/iPad dan 1-lajur pada iPhone tanpa limpahan mendatar.
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Disahkan secara langsung pada tab pelayar tunggal sedia ada (Port 5504):
+    - **MacBook (1440x900)**: Paparan Bento seimbang, sifar limpahan (`hasHorizontalScroll: false`), 0 ovals (`ovals: []`).
+    - **iPad (820x1180)**: Susun atur kad mengalir lancar, sifar bujur, sifar limpahan.
+    - **iPhone (393x852)**: Paparan kad 1-lajur kemas, saiz teks mesra sentuhan, sifar bujur.
+  - Ujian Playwright CLI: Menepati syarat kelulusan mutlak 100% (**36/36 Passed**).
+  - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara di semua 19 fail.
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.5.3 Remake car-detail page to clean Apple Bento layout with zero telemetry bloat`
+  - Tag Versi: `6.5.3`
+
+
 
 
 

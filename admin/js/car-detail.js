@@ -159,9 +159,6 @@ function loadCarProfile(car) {
   // Initialize Equipment Matrix
   setupEquipmentMatrix(car);
 
-  // Initialize Telemetry Desk
-  setupTelemetry(car);
-
   // Reset to exterior mode tab
   switchStudioMode('exterior');
 }
@@ -511,21 +508,6 @@ function setupEquipmentMatrix(car) {
   `).join('');
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   7. VEHICLE TELEMETRY & HEALTH DESK (NO BOOKINGS!)
-   ───────────────────────────────────────────────────────────────────────────── */
-function setupTelemetry(car) {
-  // Compute deterministic mock telemetry based on car ID
-  const seed = (car.id || 1) * 3829;
-  const mileage = 25000 + (seed % 35000);
-  const fuel = 65 + (seed % 30);
-  const batteryVolts = (12.4 + ((seed % 5) / 10)).toFixed(1);
-
-  setText('telemetry-odometer', `${mileage.toLocaleString()} km`);
-  setText('telemetry-fuel', `${fuel}% Penuh`);
-  setText('telemetry-battery', `${batteryVolts}V (98%)`);
-  setText('telemetry-doors', 'Semua Terkunci Rapi');
-}
 
 /* ─────────────────────────────────────────────────────────────────────────────
    8. MODALS & ACTIONS (Edit Car, Status Change, Insurance)

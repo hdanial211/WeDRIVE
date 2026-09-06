@@ -19587,6 +19587,9 @@ body.day-mode .cal-filter-chip.active {
   .specs-bento-grid {
     grid-template-columns: 1fr;
   }
+  .specs-bento-grid > [class*="col-span-"] {
+    grid-column: 1 / -1;
+  }
   .studio-stage-wrapper, .interior-cockpit-viewer {
     height: 400px;
   }
