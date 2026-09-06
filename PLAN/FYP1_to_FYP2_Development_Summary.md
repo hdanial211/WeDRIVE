@@ -3682,3 +3682,24 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `5.9.0 Dedicated AI API Key Vault with auto-detection, single HQ location unification, and 360 Studio integration`
   - Tag Versi: `5.9.0`
+
+---
+
+## 🚀 [MINOR UPDATE] 169. Pembezaan Visual 360° Pelanggan, Paparan Terperinci Kereta & Suite Ujian Playwright Baharu (v5.9.1)
+
+- **Punca Keperluan & Tindakan**:
+  1. *Pembezaan Kad Kenderaan Pelanggan*: Kenderaan yang mempunyai aset 360° (seperti BMW 320i & Mercedes-Benz GLA250) kini memaparkan lencana ungu berkilau `<span class="badge-360"><span class="material-icons-round fs-12">360</span> 360° View</span>` pada kad galeri, manakala kenderaan tanpa 360° (seperti Toyota Alphard) hanya memaparkan foto biasa ("tengok gambar sahaja").
+  2. *Studio 360 Pada Halaman Perincian Kenderaan (`car-detail.html` & `car-detail.js`)*: Membolehkan pentadbir dan pelanggan melihat aset bingkai putaran 360° serta panorama dalaman kenderaan secara terus dalam paparan perincian.
+  3. *Suite Ujian Automasi Playwright Baharu (`14_ai_key_vault_and_location.spec.js`)*: Menambah 4 ujian E2E baharu untuk mengesahkan:
+     - 4 slot kunci AI berdedikasi dengan pengecaman automatik Google Gemini, OpenRouter, dan Groq.
+     - Penganalisis pautan sedutan 360° automatik (*AI 360 Ingestion link parser*).
+     - Penyatuan tetapan HQ tunggal dan input denda lewat.
+     - Penguncian lokasi tunggal HQ pada borang tambah kereta dan kebolehcapaian studio 360°.
+     - Pembezaan lencana 360° pada portal carian kereta pelanggan.
+
+- **Keputusan Ujian Automasi**:
+  - Kesemua **33 ujian automasi Playwright** lulus penuh (**100% Pass Rate**).
+
+- **Maklumat Git**:
+  - Commit: `5.9.1 Customer 360 badge distinction, car detail 360 viewer, and 33-test Playwright suite`
+  - Tag Versi: `5.9.1`

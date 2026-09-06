@@ -1125,9 +1125,11 @@
 
 (function () {
   'use strict';
+  console.log('[WeDRIVE] Car details IIFE starting, path:', window.location.pathname);
 
   // Only run on car-details page
   if (!window.location.pathname.includes('/car-details/')) return;
+  console.log('[WeDRIVE] Car details pathname matched!');
 
   /* -- GALLERY INTERACTION ---------------------------------------- */
   var thumbs = document.querySelectorAll('.gallery-thumbs .thumb');
@@ -1201,33 +1203,48 @@
     stickyObs.observe(bookBtn);
   }
 
-  /* -- LOAD CAR DATA FROM data.json ------------------------------- */
   function loadCarData() {
     var params = new URLSearchParams(window.location.search);
     var carId = params.get('id');
-    if (!carId || !window.WeDriveAPI) return;
+    if (!carId) return;
 
-    window.WeDriveAPI.getCars().then(function(cars) {
-      var car = cars.find(function(c) { return c.id === carId; });
+    function renderCar(car) {
       if (!car) return;
-
       var title = document.getElementById('car-title');
       var subtitle = document.getElementById('car-subtitle');
       var price = document.getElementById('car-price');
       var year = document.getElementById('car-year');
       var bcName = document.getElementById('bc-car-name');
 
+      var dailyRate = car.price || car.pricePerDay || (car.rate ? parseInt(String(car.rate).replace(/[^0-9]/g, '')) : 0) || 0;
+
       if (title) title.textContent = car.name || 'Car';
-      if (subtitle) subtitle.textContent = (car.category || '') + ' -- ' + (car.year || '') + ' Edition';
-      if (price) price.textContent = 'RM ' + (car.pricePerDay || 0);
+      if (subtitle) subtitle.textContent = (car.label || car.category || '') + ' • ' + (car.year || '') + ' Edition';
+      if (price) price.textContent = 'RM ' + dailyRate;
       if (year) year.textContent = (car.year || '') + ' Model';
       if (bcName) bcName.textContent = car.name || 'Car';
       document.title = (car.name || 'Car') + ' | WeDRIVE';
 
       var sp = document.querySelector('.sticky-price strong');
-      if (sp) sp.textContent = 'RM ' + (car.pricePerDay || 0);
+      if (sp) sp.textContent = 'RM ' + dailyRate;
 
-      if (car.image && heroImg) heroImg.src = car.image;
+      var heroImg = document.getElementById('hero-img');
+      var images = car.images || (car.image ? [car.image] : []);
+      if (images.length > 0) {
+        var firstImg = (images[0].startsWith('http') || images[0].startsWith('/')) ? images[0] : ('../../../shared/model/' + images[0]);
+        if (heroImg) heroImg.src = firstImg;
+
+        var imgThumbs = document.querySelectorAll('.gallery-thumbs img.thumb');
+        imgThumbs.forEach(function(imgEl, idx) {
+          if (images[idx]) {
+            var src = (images[idx].startsWith('http') || images[idx].startsWith('/')) ? images[idx] : ('../../../shared/model/' + images[idx]);
+            imgEl.src = src;
+            imgEl.style.display = 'block';
+          } else if (idx > 0 && images.length === 1) {
+            imgEl.style.display = 'none';
+          }
+        });
+      }
 
       var has360 = Boolean(car.has_360 || car.has360 || car.exterior_360);
       var thumb360 = document.querySelector('.thumb-360');
@@ -1243,12 +1260,23 @@
       if (btn) btn.onclick = function() { window.location = 'booking/booking.html?id=' + carId; };
       var stickyBtn = document.querySelector('.sticky-cta button');
       if (stickyBtn) stickyBtn.onclick = function() { window.location = 'booking/booking.html?id=' + carId; };
-    });
+    }
+
+    if (window.WeDriveAPI && window.WeDriveAPI.getCars) {
+      window.WeDriveAPI.getCars().then(function(cars) {
+        var car = cars.find(function(c) { return String(c.id) === String(carId); });
+        renderCar(car);
+      }).catch(function(err) {
+        console.error('[WeDRIVE] Error loading car details:', err);
+      });
+    } else {
+      setTimeout(loadCarData, 200);
+    }
   }
 
-  if (window.WeDriveAPI) {
-    loadCarData();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadCarData);
   } else {
-    window.addEventListener('load', function() { setTimeout(loadCarData, 200); });
+    loadCarData();
   }
 })();

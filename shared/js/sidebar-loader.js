@@ -28,6 +28,7 @@
         { page: 'car-all', href: 'car/cars.html', icon: 'directions_car', key: 'sidebar_all_cars', label: 'Semua Kenderaan' },
         { page: 'car-available', href: 'car/available-cars.html', icon: 'check_circle', key: 'sidebar_available_cars', label: 'Kenderaan Tersedia' },
         { page: 'car-rented', href: 'car/rented-cars.html', icon: 'car_rental', key: 'sidebar_rented_cars', label: 'Sedang Disewa' },
+        { page: 'car-detail', href: 'car/car-detail/car-detail.html', icon: '360', key: 'sidebar_car_showcase', label: 'Studio & Info 360°' },
         { page: 'car-add', href: 'car/add-car.html', icon: 'add_circle', key: 'sidebar_add_car', label: 'Tambah Kereta Baharu' }
       ]
     },

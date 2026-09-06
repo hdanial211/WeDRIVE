@@ -18163,3 +18163,514 @@ body.day-mode .cal-filter-chip.active {
   color: #34C759;
   border: 1px solid rgba(52, 199, 89, 0.25);
 }
+
+/* ==============================================================================
+   ADMIN VEHICLE 360° STUDIO & FLEET INTELLIGENCE HUB (Apple HIG Obsidian Bento)
+   ============================================================================== */
+
+/* 1. Fleet Selector Bar */
+.fleet-selector-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 6px 4px 16px 4px;
+  margin-bottom: 24px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.fleet-selector-bar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.fleet-selector-bar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 3px;
+}
+
+.fleet-selector-bar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 3px;
+}
+
+.fleet-car-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 8px;
+  border-radius: 18px;
+  background: var(--bg-surface-1, #161618);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  cursor: pointer;
+  transition: all 0.25s var(--ease-apple);
+  flex-shrink: 0;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.fleet-car-chip:hover {
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.08));
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.fleet-car-chip.active {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.18) 0%, rgba(191, 90, 242, 0.14) 100%);
+  border-color: rgba(0, 113, 227, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 113, 227, 0.18);
+}
+
+.fleet-chip-thumb {
+  width: 44px;
+  height: 36px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: block;
+}
+
+.fleet-chip-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.fleet-chip-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.fleet-chip-meta {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 2. Studio 360 Hero Viewport */
+.car-studio-hero {
+  background: var(--bg-surface-1, #161618);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 28px;
+  padding: 24px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.studio-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.studio-mode-tabs {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.studio-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.studio-tab-btn.active {
+  background: #0071E3;
+  color: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(0, 113, 227, 0.4);
+}
+
+.studio-tab-btn:hover:not(.active) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.studio-stage-wrapper {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  border-radius: 22px;
+  background: radial-gradient(circle at center, #1C1C1E 0%, #0A0A0C 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.studio-stage-wrapper:active {
+  cursor: grabbing;
+}
+
+.studio-canvas-stage {
+  max-width: 90%;
+  max-height: 85%;
+  object-fit: contain;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.65));
+}
+
+.studio-watermark-360 {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(22, 22, 24, 0.75);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-radius: 9999px;
+  border: 1px solid rgba(191, 90, 242, 0.3);
+  color: #BF5AF2;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.studio-angle-indicator {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(22, 22, 24, 0.75);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.studio-controls-bar {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: rgba(22, 22, 24, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.studio-auto-spin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+  white-space: nowrap;
+}
+
+.studio-auto-spin-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.studio-auto-spin-btn.spinning {
+  background: #34C759;
+  border-color: #34C759;
+  color: #000000;
+}
+
+.studio-scrub-slider {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+  -webkit-appearance: none;
+  cursor: ew-resize;
+}
+
+.studio-scrub-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #BF5AF2;
+  box-shadow: 0 0 10px rgba(191, 90, 242, 0.6);
+  cursor: ew-resize;
+  border: 2px solid #FFFFFF;
+}
+
+/* 3. Interior 360 Virtual Cockpit Viewer */
+.interior-cockpit-viewer {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  border-radius: 22px;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cockpit-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease-out;
+  cursor: grab;
+}
+
+.cockpit-canvas:active {
+  cursor: grabbing;
+}
+
+.cockpit-overlay-hud {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  background: rgba(22, 22, 24, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.cockpit-hud-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cockpit-hud-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* 4. Specifications Bento Grid */
+.specs-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.spec-bento-card {
+  background: var(--bg-surface-1, #161618);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 24px;
+  padding: 24px;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.spec-bento-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.spec-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.spec-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.spec-metrics-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.spec-metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.spec-metric-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.spec-metric-val {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 5. Equipment Matrix */
+.equip-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.equip-item-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.equip-item-card.equipped {
+  background: rgba(52, 199, 89, 0.06);
+  border-color: rgba(52, 199, 89, 0.2);
+}
+
+.equip-item-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+}
+
+.equip-item-card.equipped .equip-item-icon {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34C759;
+}
+
+.equip-item-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* 6. Vehicle Telemetry & Health Desk (NO Bookings!) */
+.telemetry-tpms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.tpms-tire-card {
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.tpms-tire-card.healthy {
+  border-color: rgba(52, 199, 89, 0.25);
+  background: rgba(52, 199, 89, 0.05);
+}
+
+.tpms-psi-num {
+  font-size: 20px;
+  font-weight: 800;
+  color: #34C759;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+
+.tpms-tire-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 1024px) {
+  .specs-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .studio-stage-wrapper, .interior-cockpit-viewer {
+    height: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .studio-stage-wrapper, .interior-cockpit-viewer {
+    height: 300px;
+  }
+  .studio-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+

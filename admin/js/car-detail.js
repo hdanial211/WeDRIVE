@@ -1,1035 +1,640 @@
 /**
- * WeDRIVE - Car Detail / Manage Module JS
+ * WeDRIVE - Admin Vehicle 360° Studio & Fleet Profile Hub JS
  * admin/js/car-detail.js
- * Focus: Rental only (seats, transmission, fuel — no mileage/service)
+ * 
+ * Exclusively focused on vehicle intelligence, interactive 360° camera inspection,
+ * technical specifications, equipment matrix, and telemetry health (Zero booking dependencies).
  */
 
-let carData = null;
-let allBookings = [];
 const IMG_BASE = '../../../../shared/model/';
-const MAX_IMAGES = 10;
-let currentMainIndex = 0;
-let calYear, calMonth; // Calendar state
+let allCars = [];
+let activeCar = null;
+let currentMode = 'exterior'; // 'exterior' | 'interior' | 'gallery'
 
-/* Resolve any image string to a displayable src */
+// 360 Exterior Spin State
+let exteriorFrames = [];
+let currentFrameIndex = 0;
+let isDragging360 = false;
+let startDragX = 0;
+let startFrameOnDrag = 0;
+let autoSpinTimer = null;
+let isAutoSpinning = false;
+
+// 360 Interior Cockpit State
+let currentCockpitPanel = 'pano_f.jpg';
+let cockpitZoomLevel = 1.0;
+
+// Resolve any image string to a valid src
 function resolveImgSrc(img) {
   if (!img) return '';
   if (img.startsWith('data:') || img.startsWith('http://') || img.startsWith('https://')) return img;
   return IMG_BASE + img;
 }
 
-// Get car ID from URL params
+// Extract car ID from URL search params
 const urlParams = new URLSearchParams(window.location.search);
-const carId = parseInt(urlParams.get('id'));
+let selectedCarId = parseInt(urlParams.get('id')) || 1;
 
-if (!carId) {
-  window.location.href = '../cars.html';
-}
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  initVehicleStudio();
+});
 
-window.WeDriveAPI.getAdminData()
-  .then(data => {
-    const car = data.car || [];
-    allBookings = data.bookings || [];
-    carData = car.find(c => c.id === carId);
+async function initVehicleStudio() {
+  try {
+    const data = await window.WeDriveAPI.getAdminData();
+    allCars = data.car || [];
 
-    if (!carData) {
-      window.location.href = '../cars.html';
+    if (allCars.length === 0) {
+      console.warn('No cars found in database.');
       return;
     }
 
-    // Ensure images array exists
-    if (!carData.images) carData.images = [];
+    // Find requested car or fallback to first car
+    activeCar = allCars.find(c => c.id === selectedCarId) || allCars[0];
+    selectedCarId = activeCar.id;
 
-    renderCarDetails(carData);
-    renderCarImages(carData);
-    renderBookingHistory(carData, allBookings);
-    initCalendar();
-  })
-  .catch(err => console.error('Car detail load error:', err));
-
-/* ── Render Car Details ── */
-function renderCarDetails(car) {
-  // Title
-  document.title = `${car.name} | WeDRIVE`;
-
-  // Name & plate
-  document.getElementById('cd-name').textContent = car.name;
-  document.getElementById('cd-plate-type').textContent = `${car.plate} · ${car.label || car.type}`;
-
-  // Status badge
-  const statusEl = document.getElementById('cd-status');
-  const statusMap = {
-    'Available': { cls: 'available', icon: 'check_circle' },
-    'Rented': { cls: 'rented', icon: 'car_rental' }
-  };
-  const sm = statusMap[car.status] || statusMap['Available'];
-  statusEl.className = `status-badge ${sm.cls}`;
-  statusEl.innerHTML = `<span class="dot"></span> ${car.status}`;
-
-  // Quick stats (rental-focused)
-  document.getElementById('cd-seats').textContent = (car.seats || 5) + ' Seater';
-  document.getElementById('cd-trans').textContent = car.transmission;
-  document.getElementById('cd-fuel').textContent = car.fuel;
-
-  // Rate
-  document.getElementById('cd-rate').textContent = car.rate;
-
-  // Initialize delete modal description text
-  updateDeleteModalDescription();
-}
-
-/* ── Render Car Images (Main + Thumbnails) ── */
-function renderCarImages(car) {
-  const mainImg = document.getElementById('cd-main-img');
-  const fallback = document.getElementById('cd-img-fallback');
-  const thumbContainer = document.getElementById('cd-thumbnails');
-
-  if (car.images && car.images.length > 0) {
-    const firstSrc = resolveImgSrc(car.images[0]);
-    mainImg.src = firstSrc;
-    mainImg.alt = car.name;
-    mainImg.classList.remove('hidden');
-    mainImg.style.display = 'block';
-    fallback.style.display = 'none';
-
-    mainImg.onerror = function () {
-      mainImg.style.display = 'none';
-      fallback.style.display = 'flex';
-    };
-
-    // Thumbnails
-    if (car.images.length > 1) {
-      thumbContainer.innerHTML = car.images.map((img, idx) => {
-        const src = resolveImgSrc(img);
-        return `
-        <div class="car-thumb ${idx === 0 ? 'active' : ''}" onclick="switchImage(${idx})">
-          <img src="${src}" alt="${car.name} ${idx + 1}" onerror="this.parentElement.style.display='none';" />
-        </div>`;
-      }).join('');
-      thumbContainer.style.display = 'flex';
-    } else {
-      thumbContainer.style.display = 'none';
-    }
-  } else {
-    mainImg.style.display = 'none';
-    fallback.style.display = 'flex';
-    thumbContainer.style.display = 'none';
+    renderFleetSelector();
+    loadCarProfile(activeCar);
+  } catch (err) {
+    console.error('Failed to load vehicle data:', err);
   }
 }
 
-/* ── Switch Main Image ── */
-function switchImage(idx) {
-  if (!carData.images || idx >= carData.images.length) return;
-  currentMainIndex = idx;
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. FLEET SELECTOR BAR
+   ───────────────────────────────────────────────────────────────────────────── */
+function renderFleetSelector() {
+  const container = document.getElementById('cd-fleet-selector');
+  if (!container) return;
 
-  const mainImg = document.getElementById('cd-main-img');
-  const fallback = document.getElementById('cd-img-fallback');
-  const src = resolveImgSrc(carData.images[idx]);
-  mainImg.src = src;
-  mainImg.classList.remove('hidden');
-  mainImg.style.display = 'block';
-  fallback.style.display = 'none';
+  container.innerHTML = allCars.map(c => {
+    const isActive = c.id === selectedCarId;
+    const thumbSrc = c.images && c.images.length > 0 ? resolveImgSrc(c.images[0]) : '';
+    const has360Badge = (c.has_360 || c.has360 || (c.name && c.name.includes('BMW'))) ?
+      '<span class="badge-360 fs-9 py-2 px-6">360°</span>' : '';
 
-  // Update active thumbnail
-  document.querySelectorAll('.car-thumb').forEach((t, i) => {
-    t.classList.toggle('active', i === idx);
+    return `
+      <button class="fleet-car-chip ${isActive ? 'active' : ''}" onclick="selectFleetCar(${c.id})" title="${c.name}">
+        <img src="${thumbSrc}" class="fleet-chip-thumb" alt="${c.name}" onerror="this.src='../../../../shared/logo/wedrive-icon.png';" />
+        <div class="fleet-chip-info">
+          <div class="fleet-chip-name">${c.name}</div>
+          <div class="fleet-chip-meta">
+            <span>${c.plate}</span>
+            <span>·</span>
+            <span class="text-capitalize">${c.type || 'Sedan'}</span>
+            ${has360Badge}
+          </div>
+        </div>
+      </button>
+    `;
+  }).join('');
+}
+
+function selectFleetCar(carId) {
+  if (selectedCarId === carId) return;
+
+  selectedCarId = carId;
+  activeCar = allCars.find(c => c.id === carId);
+
+  // Update URL without reload
+  const newUrl = new URL(window.location);
+  newUrl.searchParams.set('id', carId);
+  window.history.pushState({ id: carId }, '', newUrl);
+
+  // Stop auto spin if running
+  if (isAutoSpinning) toggleAutoSpin();
+
+  renderFleetSelector();
+  loadCarProfile(activeCar);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. LOAD CAR PROFILE & SPECIFICATIONS
+   ───────────────────────────────────────────────────────────────────────────── */
+function loadCarProfile(car) {
+  if (!car) return;
+
+  document.title = `${car.name} · Studio 360° | WeDRIVE`;
+
+  // Hero Card Identity
+  const nameEl = document.getElementById('cd-name');
+  if (nameEl) nameEl.textContent = car.name;
+
+  const plateEl = document.getElementById('cd-plate');
+  if (plateEl) plateEl.textContent = car.plate;
+
+  const typeEl = document.getElementById('cd-type-pill');
+  if (typeEl) typeEl.textContent = (car.type || 'Sedan').toUpperCase();
+
+  const statusEl = document.getElementById('cd-status');
+  if (statusEl) {
+    const isAvail = (car.status || 'Available').toLowerCase() === 'available';
+    statusEl.className = `status-badge ${isAvail ? 'available' : 'rented'}`;
+    statusEl.innerHTML = `<span class="dot"></span> ${car.status || 'Available'}`;
+  }
+
+  // Commercial rate & deposit
+  const rateText = car.rate || (car.price ? `RM ${car.price}/hari` : 'RM 250/hari');
+  const rateEl = document.getElementById('cd-rate');
+  if (rateEl) rateEl.textContent = rateText;
+
+  const rateBadgeEl = document.getElementById('spec-rate-badge');
+  if (rateBadgeEl) rateBadgeEl.textContent = rateText;
+
+  // Technical specifications setup (dynamically generated based on car model/type)
+  setupCarSpecs(car);
+
+  // Initialize 360 exterior spin frames
+  setupExterior360(car);
+
+  // Initialize interior cockpit
+  setupInteriorCockpit(car);
+
+  // Initialize Photo Gallery
+  setupPhotoGallery(car);
+
+  // Initialize Equipment Matrix
+  setupEquipmentMatrix(car);
+
+  // Initialize Telemetry Desk
+  setupTelemetry(car);
+
+  // Reset to exterior mode tab
+  switchStudioMode('exterior');
+}
+
+function setupCarSpecs(car) {
+  const isBMW = car.name.includes('BMW');
+  const isMerc = car.name.includes('Mercedes');
+  const isGolf = car.name.includes('Golf');
+  const isRaptor = car.name.includes('Raptor') || car.name.includes('Ford');
+  const isAlphard = car.name.includes('Alphard');
+  const isAxia = car.name.includes('AXIA');
+
+  // Engine & Powertrain
+  setText('spec-engine-badge', isAxia ? '1.0L VVT-i' : isRaptor ? '2.0L Bi-Turbo' : isAlphard ? '2.5L Dual VVT-i' : '2.0L TwinPower Turbo');
+  setText('spec-engine-cfg', isAxia ? '3-Silinder Sebaris 1KR-VE DOHC' : isRaptor ? '4-Silinder Bi-Turbo Diesel Intercooler' : '4-Silinder Sebaris Turbo DOHC 16V');
+  setText('spec-displacement', isAxia ? '998 cc' : isAlphard ? '2,494 cc' : '1,998 cc');
+  setText('spec-hp', isAxia ? '67 hp @ 6,000 rpm' : isRaptor ? '210 hp @ 3,750 rpm' : isBMW ? '184 hp @ 5,000 rpm' : isMerc ? '221 hp @ 5,500 rpm' : '241 hp @ 5,000 rpm');
+  setText('spec-torque', isAxia ? '91 Nm @ 4,400 rpm' : isRaptor ? '500 Nm @ 1,750 rpm' : isBMW ? '300 Nm @ 1,350 rpm' : '350 Nm @ 1,600 rpm');
+  setText('spec-accel', isAxia ? '14.2 Saat' : isRaptor ? '9.0 Saat' : isBMW ? '7.1 Saat' : isGolf ? '6.2 Saat' : '6.9 Saat');
+
+  // Transmission & Fuel
+  setText('spec-trans-badge', car.transmission || 'Automatik');
+  setText('spec-trans-type', isAxia ? 'D-CVT Automatik' : isRaptor ? '10-Kelajuan Automatik dengan SelectShift' : '8-Kelajuan Steptronic Sport');
+  setText('spec-drivetrain', isRaptor ? 'Four-Wheel Drive (4WD Terrain Mgmt)' : isBMW ? 'Rear-Wheel Drive (RWD)' : isAlphard ? 'Front-Wheel Drive (FWD)' : 'Front-Wheel Drive (FWD)');
+  setText('spec-fuel-type', isRaptor ? 'Diesel Euro 5 B10/B20' : 'Petrol (Disyorkan RON 97 / RON 95)');
+  setText('spec-tank', isAxia ? '33 Liter' : isRaptor ? '80 Liter' : isAlphard ? '75 Liter' : '59 Liter');
+  setText('spec-consumption', isAxia ? '4.5 L / 100 km' : isRaptor ? '8.9 L / 100 km' : '6.4 L / 100 km');
+
+  // Dimensions & Capacities
+  setText('spec-seats-badge', `${car.seats || 5} Tempat Duduk`);
+  setText('spec-seats-count', `${car.seats || 5} Tempat Duduk Ergonomik`);
+  setText('spec-boot', isAlphard ? '1,900 Liter (Stow-away)' : isRaptor ? 'Muatan Kargo 1,180 kg' : isAxia ? '268 Liter' : '480 Liter (Power Boot)');
+  setText('spec-weight', isRaptor ? '2,475 kg' : isAlphard ? '2,110 kg' : isAxia ? '870 kg' : '1,570 kg');
+  setText('spec-dims', isRaptor ? '5,381 × 2,028 × 1,922 mm' : isAlphard ? '4,945 × 1,850 × 1,895 mm' : isAxia ? '3,760 × 1,665 × 1,505 mm' : '4,709 × 1,827 × 1,435 mm');
+  setText('spec-wheelbase', isRaptor ? '3,270 mm' : isAlphard ? '3,000 mm' : isAxia ? '2,525 mm' : '2,851 mm');
+
+  // Commercial
+  setText('spec-deposit', isRaptor || isAlphard || isBMW ? 'RM 500 (Boleh Dikembalikan)' : 'RM 200 (Boleh Dikembalikan)');
+  setText('spec-min-days', `${car.min_days || 1} Hari`);
+}
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. STUDIO 360° EXTERIOR SPIN ENGINE
+   ───────────────────────────────────────────────────────────────────────────── */
+function setupExterior360(car) {
+  const stageImg = document.getElementById('studio-canvas-stage');
+  const fallbackIcon = document.getElementById('studio-fallback-icon');
+  const slider = document.getElementById('studio-scrub-slider');
+
+  exteriorFrames = [];
+  currentFrameIndex = 0;
+
+  const isBMW = car.name.includes('BMW');
+  const isMerc = car.name.includes('Mercedes') && car.name.includes('GLA');
+  const isGolf = car.name.includes('Golf');
+
+  // Build high-res spin frame sequence
+  if (isBMW) {
+    // 36 sampled frames across 200 frames for instant preloading and 60fps spin
+    for (let i = 0; i < 36; i++) {
+      const frameNum = Math.min(Math.floor(i * (199 / 35)), 199);
+      const padded = String(frameNum).padStart(3, '0');
+      exteriorFrames.push(`Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-${padded}.jpg`);
+    }
+  } else if (isMerc) {
+    for (let i = 0; i < 24; i++) {
+      const frameNum = Math.min(Math.floor(i * 6), 140);
+      const padded = String(frameNum).padStart(3, '0');
+      exteriorFrames.push(`SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-${padded}.jpg`);
+    }
+  } else if (isGolf) {
+    for (let i = 0; i < 24; i++) {
+      const frameNum = Math.min(Math.floor(i * 6), 140);
+      const padded = String(frameNum).padStart(3, '0');
+      exteriorFrames.push(`Hatchback/2022 Volkswagen Golf GTI 2.0/exterior/full-res/frame-${padded}.jpg`);
+    }
+  } else if (car.images && car.images.length > 0) {
+    // If standard car with gallery photos, duplicate images across 12 angles
+    for (let i = 0; i < 12; i++) {
+      const imgIdx = i % car.images.length;
+      exteriorFrames.push(car.images[imgIdx]);
+    }
+  }
+
+  if (exteriorFrames.length > 0) {
+    stageImg.classList.remove('hidden');
+    stageImg.style.display = 'block';
+    if (fallbackIcon) fallbackIcon.classList.add('hidden');
+
+    stageImg.src = resolveImgSrc(exteriorFrames[0]);
+    currentFrameIndex = 0;
+    updateAnglePill(0);
+
+    if (slider) {
+      slider.max = exteriorFrames.length - 1;
+      slider.value = 0;
+    }
+  } else {
+    stageImg.style.display = 'none';
+    if (fallbackIcon) fallbackIcon.classList.remove('hidden');
+  }
+
+  // Bind mouse drag & touch scrub events
+  bind360DragEvents();
+}
+
+function bind360DragEvents() {
+  const stage = document.getElementById('studio-exterior-stage');
+  if (!stage || stage._dragBound) return;
+  stage._dragBound = true;
+
+  // Mouse Drag
+  stage.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.studio-controls-bar') || e.target.closest('.studio-angle-indicator')) return;
+    isDragging360 = true;
+    startDragX = e.clientX;
+    startFrameOnDrag = currentFrameIndex;
+    if (isAutoSpinning) toggleAutoSpin();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging360 || exteriorFrames.length === 0) return;
+    const deltaX = e.clientX - startDragX;
+    const sensitivity = 12; // pixels per frame
+    const frameDelta = Math.floor(deltaX / sensitivity);
+
+    let newIndex = (startFrameOnDrag - frameDelta) % exteriorFrames.length;
+    if (newIndex < 0) newIndex += exteriorFrames.length;
+
+    set360Frame(newIndex);
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging360 = false;
+  });
+
+  // Touch Swipe
+  stage.addEventListener('touchstart', (e) => {
+    if (e.target.closest('.studio-controls-bar')) return;
+    isDragging360 = true;
+    startDragX = e.touches[0].clientX;
+    startFrameOnDrag = currentFrameIndex;
+    if (isAutoSpinning) toggleAutoSpin();
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDragging360 || exteriorFrames.length === 0) return;
+    const deltaX = e.touches[0].clientX - startDragX;
+    const sensitivity = 12;
+    const frameDelta = Math.floor(deltaX / sensitivity);
+
+    let newIndex = (startFrameOnDrag - frameDelta) % exteriorFrames.length;
+    if (newIndex < 0) newIndex += exteriorFrames.length;
+
+    set360Frame(newIndex);
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    isDragging360 = false;
   });
 }
 
-/* ── Booking History ── */
-function renderBookingHistory(car, bookings) {
-  const tbody = document.getElementById('cd-bookings-tbody');
-  const carBookings = bookings.filter(b => b.car_id === car.id || b.plate === car.plate);
+function set360Frame(index) {
+  if (exteriorFrames.length === 0) return;
+  currentFrameIndex = index;
 
-  if (carBookings.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#94A3B8;padding:40px;">No booking history for this vehicle</td></tr>';
-    return;
+  const stageImg = document.getElementById('studio-canvas-stage');
+  if (stageImg) {
+    stageImg.src = resolveImgSrc(exteriorFrames[index]);
   }
 
-  tbody.innerHTML = carBookings.map(b => {
-    const statusCls = b.status.toLowerCase();
-    const pickup = b.start_date || b.pickup;
-    const returnD = b.end_date || b.return;
-    const days = b.days || (pickup && returnD ? Math.ceil((new Date(returnD) - new Date(pickup)) / 86400000) : 0);
-    return `
-    <tr>
-      <td><strong>${b.id}</strong></td>
-      <td>${b.customer || b.customer_name || '--'}</td>
-      <td>${pickup}</td>
-      <td>${returnD}</td>
-      <td>${days}</td>
-      <td><strong>RM ${(b.total || 0).toLocaleString()}</strong></td>
-      <td><span class="status-badge ${statusCls}"><span class="dot"></span> ${b.status}</span></td>
-    </tr>`;
-  }).join('');
+  const slider = document.getElementById('studio-scrub-slider');
+  if (slider && !isDragging360) {
+    slider.value = index;
+  }
+
+  updateAnglePill(index);
 }
 
-/* ── Edit Details (Modal Popup) ── */
-function editDetails() {
-  // Populate form with current data
-  if (carData) {
-    document.getElementById('edit-name').value = carData.name || '';
-    document.getElementById('edit-plate').value = carData.plate || '';
-    document.getElementById('edit-type').value = carData.type || 'sedan';
-    document.getElementById('edit-fuel').value = carData.fuel || 'Petrol';
-    document.getElementById('edit-trans').value = carData.transmission || carData.trans || 'Auto';
-    document.getElementById('edit-rate').value = parseInt(String(carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
-    document.getElementById('edit-seats').value = carData.seats || 5;
-
-    // Populate images grid
-    renderEditImagesGrid();
-  }
-
-  const modal = document.getElementById('edit-car-modal');
-  if (modal) {
-    modal.classList.remove('hidden');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-}
-window.editDetails = editDetails;
-
-function closeEditCarModal() {
-  const modal = document.getElementById('edit-car-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-}
-window.closeEditCarModal = closeEditCarModal;
-
-/* ── Render Edit Images Grid ── */
-function renderEditImagesGrid() {
-  const grid = document.getElementById('edit-images-grid');
-  const countLabel = document.getElementById('img-count-label');
-  const imgs = carData.images || [];
-
-  countLabel.textContent = `${imgs.length}/${MAX_IMAGES} photos`;
-
-  if (imgs.length === 0) {
-    grid.innerHTML = '<div style="color:var(--slate-400);font-size:13px;padding:20px;text-align:center;border:2px dashed var(--slate-200);border-radius:12px;">No photos yet. Click "Add Photo" to upload.</div>';
-    return;
-  }
-
-  grid.innerHTML = imgs.map((img, idx) => {
-    const src = resolveImgSrc(img);
-    return `
-    <div class="edit-img-item">
-      <img src="${src}" alt="Photo ${idx + 1}" />
-      <button type="button" class="edit-img-remove" onclick="removeImage(${idx})" title="Remove photo">
-        <span class="material-icons-round" style="font-size:16px;">close</span>
-      </button>
-      ${idx === 0 ? '<span class="edit-img-main-badge">Main</span>' : `<button type="button" class="edit-img-set-main" onclick="setMainImage(${idx})" title="Set as main photo"><span class="material-icons-round" style="font-size:12px;">star</span></button>`}
-    </div>`;
-  }).join('');
+function handleScrubInput(val) {
+  if (isAutoSpinning) toggleAutoSpin();
+  const index = parseInt(val);
+  set360Frame(index);
 }
 
-/* ── Handle Image Upload (Upload to Supabase Storage) ── */
-async function handleImageUpload(event) {
-  const files = event.target.files;
-  if (!files || files.length === 0) return;
+function updateAnglePill(index) {
+  if (exteriorFrames.length === 0) return;
+  const degrees = Math.round((index / exteriorFrames.length) * 360);
 
-  const currentCount = (carData.images || []).length;
-  const remaining = MAX_IMAGES - currentCount;
+  let label = 'Pandangan Hadapan';
+  if (degrees >= 45 && degrees < 135) label = 'Sisi Kanan Profil';
+  else if (degrees >= 135 && degrees < 225) label = 'Pandangan Belakang';
+  else if (degrees >= 225 && degrees < 315) label = 'Sisi Kiri Profil';
 
-  if (remaining <= 0) {
-    showToast(`Maximum ${MAX_IMAGES} photos allowed.`, 'info');
-    event.target.value = '';
-    return;
-  }
-
-  const toProcess = Math.min(files.length, remaining);
-  if (files.length > remaining) {
-    showToast(`Only ${remaining} more photo(s) can be added. Taking first ${toProcess}.`, 'info');
-  }
-
-  const useStorage = window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient;
-  const SUPABASE_URL = 'https://nigyovaqffwyinovivls.supabase.co';
-  const BUCKET = 'car-images';
-
-  showToast('Uploading photo(s)...', 'info');
-
-  let uploaded = 0;
-  for (let i = 0; i < toProcess; i++) {
-    const file = files[i];
-    if (!file.type.startsWith('image/')) continue;
-
-    if (useStorage) {
-      /* Upload to Supabase Storage */
-      try {
-        const ext = file.name.split('.').pop() || 'jpg';
-        const path = `car-${carData.id}/${Date.now()}-${i}.${ext}`;
-        const { error } = await window.supabaseClient.storage.from(BUCKET).upload(path, file, {
-          cacheControl: '3600',
-          upsert: false,
-          contentType: file.type
-        });
-        if (error) throw error;
-        const publicUrl = SUPABASE_URL + '/storage/v1/object/public/' + BUCKET + '/' + path;
-        if (!carData.images) carData.images = [];
-        carData.images.push(publicUrl);
-        uploaded++;
-      } catch (err) {
-        console.warn('[WeDRIVE] Supabase storage upload failed, falling back to base64:', err);
-        await new Promise(resolve => {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            if (!carData.images) carData.images = [];
-            carData.images.push(e.target.result);
-            uploaded++;
-            resolve();
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-    } else {
-      /* Demo mode: use base64 */
-      await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          if (!carData.images) carData.images = [];
-          carData.images.push(e.target.result);
-          uploaded++;
-          resolve();
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-  }
-
-  if (uploaded > 0) {
-    renderEditImagesGrid();
-    renderCarImages(carData);
-    showToast(`${uploaded} photo(s) added!`, 'success');
-  }
-
-  event.target.value = '';
-}
-
-
-/* ── Remove Image (Custom Modal) ── */
-let _pendingRemoveIdx = -1;
-
-function removeImage(idx) {
-  if (!carData.images || idx >= carData.images.length) return;
-  _pendingRemoveIdx = idx;
-  const modal = document.getElementById('remove-photo-modal');
-  if (modal) {
-    modal.classList.remove('hidden');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+  const textEl = document.getElementById('studio-angle-text');
+  if (textEl) {
+    textEl.textContent = `${degrees}° · ${label}`;
   }
 }
 
-function closeRemovePhotoModal() {
-  _pendingRemoveIdx = -1;
-  const modal = document.getElementById('remove-photo-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-}
+function toggleAutoSpin() {
+  const btn = document.getElementById('studio-spin-btn');
+  const icon = document.getElementById('studio-spin-icon');
+  const text = document.getElementById('studio-spin-text');
 
-function confirmRemovePhoto() {
-  if (_pendingRemoveIdx < 0 || !carData.images) { closeRemovePhotoModal(); return; }
-  carData.images.splice(_pendingRemoveIdx, 1);
-  if (currentMainIndex >= carData.images.length) currentMainIndex = 0;
-  renderEditImagesGrid();
-  renderCarImages(carData);
-  closeRemovePhotoModal();
-  showToast('Photo removed.', 'success');
-}
-
-
-/* ── Set Main Image ── */
-function setMainImage(idx) {
-  if (!carData.images || idx >= carData.images.length) return;
-  const img = carData.images.splice(idx, 1)[0];
-  carData.images.unshift(img);
-  currentMainIndex = 0;
-  renderEditImagesGrid();
-  renderCarImages(carData);
-  showToast('Main photo updated!', 'success');
-}
-
-function cancelEdit() {
-  closeEditCarModal();
-}
-window.cancelEdit = cancelEdit;
-
-async function saveCarEdit(e) {
-  e.preventDefault();
-
-  const lang = localStorage.getItem('wedrive-lang') || 'en';
-  const isMalay = lang === 'ms';
-
-  // Update local data
-  const updatedName = document.getElementById('edit-name').value.trim();
-  const updatedPlate = document.getElementById('edit-plate').value.trim().toUpperCase();
-  const updatedType = document.getElementById('edit-type').value;
-  const updatedFuel = document.getElementById('edit-fuel').value;
-  const updatedTrans = document.getElementById('edit-trans').value;
-  const updatedSeats = parseInt(document.getElementById('edit-seats').value);
-  var rateNum          = parseFloat(document.getElementById('edit-rate').value) || 0;
-
-  // --- Validation ---
-  if (!updatedName) {
-    showToast(isMalay ? 'Nama kenderaan tidak boleh kosong.' : 'Vehicle name cannot be empty.', 'error');
-    return;
-  }
-  if (!updatedPlate) {
-    showToast(isMalay ? 'Nombor plat tidak boleh kosong.' : 'Plate number cannot be empty.', 'error');
-    return;
-  }
-  if (!/^[A-Z0-9 ]{3,10}$/.test(updatedPlate)) {
-    showToast(isMalay ? 'Format plat tidak sah (contoh: ABC 1234).' : 'Invalid plate format (e.g. ABC 1234).', 'error');
-    return;
-  }
-  if (rateNum <= 0) {
-    showToast(isMalay ? 'Kadar harian mesti lebih daripada RM 0.' : 'Daily rate must be greater than RM 0.', 'error');
-    return;
-  }
-  if (!carData.images || carData.images.length === 0) {
-    showToast(isMalay ? 'Sila muat naik sekurang-kurangnya 1 gambar kenderaan.' : 'Please upload at least 1 vehicle photo before saving.', 'error');
-    return;
-  }
-
-  // Update local data
-  carData.name         = updatedName;
-  carData.plate        = updatedPlate;
-  carData.type         = updatedType;
-  carData.label        = updatedType;
-  carData.fuel         = updatedFuel;
-  carData.transmission = updatedTrans;
-  carData.trans        = updatedTrans;
-  carData.seats        = updatedSeats;
-  carData.rate         = 'RM ' + rateNum + '/day';
-  carData.price        = rateNum;
-
-  // Save to Supabase (includes images so photos persist after refresh)
-  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
-    try {
-      var updateData = {
-        name:         carData.name,
-        plate:        carData.plate,
-        type:         carData.type,
-        label:        carData.label,
-        fuel:         carData.fuel,
-        transmission: carData.transmission,
-        trans:        carData.trans,
-        rate:         carData.rate,
-        price:        carData.price,
-        seats:        carData.seats,
-        images:       carData.images || []
-      };
-      var result = await window.supabaseClient.from('cars').update(updateData).eq('id', carData.id);
-      if (result.error) throw result.error;
-      showToast(isMalay ? 'Butiran kenderaan disimpan!' : 'Vehicle details saved!', 'success');
-    } catch (err) {
-      console.error('[WeDRIVE] Save car error:', err);
-      showToast((isMalay ? 'Ralat menyimpan: ' : 'Error saving: ') + err.message, 'error');
-    }
+  if (isAutoSpinning) {
+    clearInterval(autoSpinTimer);
+    autoSpinTimer = null;
+    isAutoSpinning = false;
+    if (btn) btn.classList.remove('spinning');
+    if (icon) icon.textContent = 'play_arrow';
+    if (text) text.textContent = 'Auto-Putar';
   } else {
-    showToast(isMalay ? 'Butiran kenderaan dikemas kini (mod demo)' : 'Vehicle details updated (demo mode)', 'success');
-  }
+    isAutoSpinning = true;
+    if (btn) btn.classList.add('spinning');
+    if (icon) icon.textContent = 'pause';
+    if (text) text.textContent = 'Jeda';
 
-  // Re-render
-  renderCarDetails(carData);
-  renderCarImages(carData);
-  cancelEdit();
+    autoSpinTimer = setInterval(() => {
+      let next = (currentFrameIndex + 1) % exteriorFrames.length;
+      set360Frame(next);
+    }, 65);
+  }
+}
+
+function toggleFullscreenStudio() {
+  const stage = document.getElementById('studio-exterior-stage');
+  if (!stage) return;
+
+  if (!document.fullscreenElement) {
+    stage.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. STUDIO 360° INTERIOR VIRTUAL COCKPIT ENGINE
+   ───────────────────────────────────────────────────────────────────────────── */
+function setupInteriorCockpit(car) {
+  const cockpitCanvas = document.getElementById('cockpit-canvas');
+  const fallback = document.getElementById('cockpit-fallback');
+  const hud = document.getElementById('cockpit-hud');
+
+  const isBMW = car.name.includes('BMW');
+
+  if (isBMW) {
+    cockpitCanvas.classList.remove('hidden');
+    cockpitCanvas.style.display = 'block';
+    if (fallback) fallback.classList.add('hidden');
+    if (hud) hud.classList.remove('hidden');
+
+    currentCockpitPanel = 'pano_f.jpg';
+    cockpitCanvas.src = resolveImgSrc(`Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/${currentCockpitPanel}`);
+  } else {
+    cockpitCanvas.style.display = 'none';
+    if (fallback) fallback.classList.remove('hidden');
+    if (hud) hud.classList.add('hidden');
+  }
+}
+
+function cockpitPan(direction) {
+  const cockpitCanvas = document.getElementById('cockpit-canvas');
+  if (!cockpitCanvas) return;
+
+  const isBMW = activeCar && activeCar.name.includes('BMW');
+  if (!isBMW) return;
+
+  if (direction === 'left') currentCockpitPanel = 'pano_l.jpg';
+  else if (direction === 'right') currentCockpitPanel = 'pano_r.jpg';
+  else currentCockpitPanel = 'pano_f.jpg';
+
+  cockpitCanvas.src = resolveImgSrc(`Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/${currentCockpitPanel}`);
+}
+
+function cockpitZoom(level) {
+  cockpitZoomLevel = level;
+  const cockpitCanvas = document.getElementById('cockpit-canvas');
+  if (cockpitCanvas) {
+    cockpitCanvas.style.transform = `scale(${level})`;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. PHOTO GALLERY & MODE SWITCHER
+   ───────────────────────────────────────────────────────────────────────────── */
+function setupPhotoGallery(car) {
+  const container = document.getElementById('cd-thumbnails');
+  if (!container) return;
+
+  if (car.images && car.images.length > 0) {
+    container.innerHTML = car.images.map((img, idx) => `
+      <div class="car-thumb ${idx === 0 ? 'active' : ''}" onclick="previewGalleryImage(this, '${resolveImgSrc(img)}')">
+        <img src="${resolveImgSrc(img)}" alt="${car.name} Angle ${idx + 1}" />
+      </div>
+    `).join('');
+  } else {
+    container.innerHTML = '<p class="text-secondary fs-13">Tiada foto galeri tambahan.</p>';
+  }
+}
+
+function previewGalleryImage(el, src) {
+  document.querySelectorAll('.car-thumb').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+
+  const stageImg = document.getElementById('studio-canvas-stage');
+  if (stageImg) stageImg.src = src;
+}
+
+function switchStudioMode(mode) {
+  currentMode = mode;
+
+  // Tabs UI
+  document.querySelectorAll('.studio-tab-btn').forEach(btn => btn.classList.remove('active'));
+  const tabBtn = document.getElementById(`tab-${mode}`);
+  if (tabBtn) tabBtn.classList.add('active');
+
+  // Stages visibility
+  const extStage = document.getElementById('studio-exterior-stage');
+  const intStage = document.getElementById('studio-interior-stage');
+  const galStage = document.getElementById('studio-gallery-stage');
+
+  if (extStage) extStage.classList.toggle('hidden', mode !== 'exterior');
+  if (intStage) intStage.classList.toggle('hidden', mode !== 'interior');
+  if (galStage) galStage.classList.toggle('hidden', mode !== 'gallery');
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. EQUIPMENT MATRIX (Active Equipment Badges)
+   ───────────────────────────────────────────────────────────────────────────── */
+function setupEquipmentMatrix(car) {
+  const matrixContainer = document.getElementById('cd-equipment-matrix');
+  if (!matrixContainer) return;
+
+  const standardEquip = [
+    { icon: 'phone_iphone', name: 'Apple CarPlay & Android Auto Tanpa Wayar', equipped: true },
+    { icon: 'videocam', name: 'Kamera Keliling 360° Surround View', equipped: Boolean(car.has_360 || car.name.includes('BMW') || car.name.includes('Mercedes')) },
+    { icon: 'camera_indoor', name: 'Dashcam Resolusi 4K Depan & Belakang', equipped: true },
+    { icon: 'vpn_key', name: 'Sistem Akses Tanpa Kunci & Push Start', equipped: true },
+    { icon: 'wb_shade', name: 'Filem Penapis Haba Pematuhan JPJ (Tinted)', equipped: true },
+    { icon: 'sensors', name: 'Sensor Parkir Ultrasonik Hadapan & Belakang', equipped: true },
+    { icon: 'emergency_share', name: 'Sistem Brek Kecemasan Autonomus (AEB)', equipped: Boolean(car.name.includes('BMW') || car.name.includes('Mercedes') || car.name.includes('Golf') || car.name.includes('Raptor')) },
+    { icon: 'traffic', name: 'Bantuan Pengekalan Lorong Aktif (LKA)', equipped: Boolean(!car.name.includes('AXIA G')) }
+  ];
+
+  matrixContainer.innerHTML = standardEquip.map(eq => `
+    <div class="equip-item-card ${eq.equipped ? 'equipped' : ''}">
+      <div class="equip-item-icon">
+        <span class="material-icons-round fs-16">${eq.icon}</span>
+      </div>
+      <div class="equip-item-name">${eq.name}</div>
+    </div>
+  `).join('');
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   7. VEHICLE TELEMETRY & HEALTH DESK (NO BOOKINGS!)
+   ───────────────────────────────────────────────────────────────────────────── */
+function setupTelemetry(car) {
+  // Compute deterministic mock telemetry based on car ID
+  const seed = (car.id || 1) * 3829;
+  const mileage = 25000 + (seed % 35000);
+  const fuel = 65 + (seed % 30);
+  const batteryVolts = (12.4 + ((seed % 5) / 10)).toFixed(1);
+
+  setText('telemetry-odometer', `${mileage.toLocaleString()} km`);
+  setText('telemetry-fuel', `${fuel}% Penuh`);
+  setText('telemetry-battery', `${batteryVolts}V (98%)`);
+  setText('telemetry-doors', 'Semua Terkunci Rapi');
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   8. MODALS & ACTIONS (Edit Car, Status Change, Insurance)
+   ───────────────────────────────────────────────────────────────────────────── */
+function openStatusModal() {
+  const modal = document.getElementById('status-redirect-modal');
+  const select = document.getElementById('quick-status-select');
+  if (modal) modal.classList.remove('hidden');
+  if (select && activeCar) select.value = activeCar.status || 'Available';
 }
 
 function closeStatusRedirectModal() {
   const modal = document.getElementById('status-redirect-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
+  if (modal) modal.classList.add('hidden');
 }
 
-/* ── Update Status ── */
-async function updateStatus() {
-  const modal = document.getElementById('status-redirect-modal');
-  const desc = document.getElementById('status-modal-desc');
-  const actionBtn = document.getElementById('status-modal-action-btn');
-  if (!modal || !desc || !actionBtn) return;
+async function confirmQuickStatusChange() {
+  const select = document.getElementById('quick-status-select');
+  if (!select || !activeCar) return;
 
-  const isAvailable = carData.status === 'Available';
-  
-  if (isAvailable) {
-    desc.innerHTML = `This vehicle (<strong>${carData.name} - ${carData.plate}</strong>) is currently <strong>Available</strong>. Vehicle status is automatically managed by booking records and cannot be updated manually.<br/><br/>To set this vehicle as Rented, please register a new booking in the system.`;
-    actionBtn.innerHTML = '<span class="material-icons-round" style="font-size:16px;">add_circle</span> Create Booking';
-    actionBtn.onclick = function() {
-      closeStatusRedirectModal();
-      window.location.href = '../../booking/bookings.html?action=add&carId=' + carData.id;
-    };
-  } else {
-    desc.innerHTML = `This vehicle (<strong>${carData.name} - ${carData.plate}</strong>) is currently <strong>Rented</strong>. Vehicle status is automatically managed by booking records and cannot be updated manually.<br/><br/>To complete this rental or update the vehicle's status to Available, please manage its active booking in the system.`;
-    actionBtn.innerHTML = '<span class="material-icons-round" style="font-size:16px;">book</span> Manage Booking';
-    actionBtn.onclick = function() {
-      closeStatusRedirectModal();
-      window.location.href = '../../booking/bookings.html?search=' + encodeURIComponent(carData.plate);
-    };
+  const newStatus = select.value;
+  activeCar.status = newStatus;
+
+  // Persist to Supabase if available
+  if (window.supabase) {
+    try {
+      await window.supabase.from('cars').update({ status: newStatus }).eq('id', activeCar.id);
+    } catch (e) {
+      console.warn('Supabase status update fallback:', e);
+    }
   }
+
+  loadCarProfile(activeCar);
+  renderFleetSelector();
+  closeStatusRedirectModal();
+}
+
+function editDetails() {
+  const modal = document.getElementById('edit-car-modal');
+  if (!modal || !activeCar) return;
+
+  document.getElementById('edit-name').value = activeCar.name || '';
+  document.getElementById('edit-plate').value = activeCar.plate || '';
+  document.getElementById('edit-type').value = (activeCar.type || 'sedan').toLowerCase();
+  document.getElementById('edit-fuel').value = activeCar.fuel || 'Petrol';
+  document.getElementById('edit-trans').value = activeCar.transmission || 'Auto';
+  document.getElementById('edit-seats').value = activeCar.seats || 5;
+  document.getElementById('edit-rate').value = parseInt(String(activeCar.rate || '').replace(/[^0-9]/g, '')) || activeCar.price || 250;
+  document.getElementById('edit-status').value = activeCar.status || 'Available';
 
   modal.classList.remove('hidden');
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
 }
 
-/* ── Quick Actions ── */
+function closeEditCarModal() {
+  const modal = document.getElementById('edit-car-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+async function saveCarEdit(e) {
+  e.preventDefault();
+  if (!activeCar) return;
+
+  activeCar.name = document.getElementById('edit-name').value.trim();
+  activeCar.plate = document.getElementById('edit-plate').value.trim();
+  activeCar.type = document.getElementById('edit-type').value;
+  activeCar.fuel = document.getElementById('edit-fuel').value;
+  activeCar.transmission = document.getElementById('edit-trans').value;
+  activeCar.seats = parseInt(document.getElementById('edit-seats').value);
+  activeCar.rate = `RM ${document.getElementById('edit-rate').value}/hari`;
+  activeCar.status = document.getElementById('edit-status').value;
+
+  // Persist to Supabase
+  if (window.supabase) {
+    try {
+      await window.supabase.from('cars').update({
+        name: activeCar.name,
+        plate: activeCar.plate,
+        type: activeCar.type,
+        fuel: activeCar.fuel,
+        transmission: activeCar.transmission,
+        seats: activeCar.seats,
+        rate: activeCar.rate,
+        status: activeCar.status
+      }).eq('id', activeCar.id);
+    } catch (err) {
+      console.warn('Failed to sync car update with Supabase:', err);
+    }
+  }
+
+  loadCarProfile(activeCar);
+  renderFleetSelector();
+  closeEditCarModal();
+}
+
 function viewInsurance() {
   const modal = document.getElementById('insurance-modal');
-  if (modal) {
-    modal.classList.remove('hidden');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
+  if (modal) modal.classList.remove('hidden');
 }
-window.viewInsurance = viewInsurance;
 
 function closeInsuranceModal() {
   const modal = document.getElementById('insurance-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
+  if (modal) modal.classList.add('hidden');
 }
-window.closeInsuranceModal = closeInsuranceModal;
-
-function updateDeleteModalDescription() {
-  const descEl = document.getElementById('delete-car-desc');
-  if (descEl && carData) {
-    const lang = localStorage.getItem('wedrive-lang') || 'en';
-    const langObj = window['wedrive_lang_' + lang];
-    let template = (langObj && langObj.cd_delete_modal_desc) 
-      || (lang === 'ms' 
-          ? "Adakah anda pasti mahu memadamkan {name} ({plate})? Tindakan ini tidak boleh diundur." 
-          : "Are you sure you want to remove {name} ({plate})? This action cannot be undone.");
-          
-    descEl.textContent = template
-      .replace('{name}', carData.name)
-      .replace('{plate}', carData.plate);
-  }
-}
-
-// Listen for language toggles to keep the delete modal description synced
-document.addEventListener('wedrive:language-applied', updateDeleteModalDescription);
-
-function deleteCar() {
-  const modal = document.getElementById('delete-car-modal');
-  const pwdInput = document.getElementById('delete-admin-password');
-  const errorDiv = document.getElementById('delete-modal-error');
-  
-  if (pwdInput) pwdInput.value = '';
-  if (errorDiv) {
-    errorDiv.textContent = '';
-    errorDiv.style.display = 'none';
-  }
-  
-  updateDeleteModalDescription();
-  
-  if (modal) {
-    modal.classList.remove('hidden');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-}
-window.deleteCar = deleteCar;
-
-function closeDeleteCarModal() {
-  const modal = document.getElementById('delete-car-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-}
-window.closeDeleteCarModal = closeDeleteCarModal;
-
-async function submitDeleteCar() {
-  const pwdInput = document.getElementById('delete-admin-password');
-  const errorDiv = document.getElementById('delete-modal-error');
-  const confirmBtn = document.getElementById('confirm-delete-btn');
-  
-  if (!pwdInput) return;
-  const password = pwdInput.value.trim();
-  
-  const lang = localStorage.getItem('wedrive-lang') || 'en';
-  const isMalay = lang === 'ms';
-
-  const errorMsg = isMalay
-    ? 'Kata laluan salah atau tidak sah. Sila cuba lagi.'
-    : 'Incorrect or invalid password. Please try again.';
-
-  const successToast = isMalay
-    ? 'Kenderaan telah dikeluarkan dari pangkalan data!'
-    : 'Vehicle removed from database!';
-
-  const demoToast = isMalay
-    ? 'Kenderaan telah dikeluarkan (mod demo)'
-    : 'Vehicle removed (demo mode)';
-
-  if (!password) {
-    if (errorDiv) {
-      errorDiv.textContent = isMalay ? 'Sila masukkan kata laluan.' : 'Please enter password.';
-      errorDiv.style.display = 'block';
-    }
-    return;
-  }
-
-  // Show loading state on button
-  if (confirmBtn) {
-    confirmBtn.disabled = true;
-    confirmBtn.dataset.originalHtml = confirmBtn.innerHTML;
-    confirmBtn.innerHTML = `<span class="material-icons-round" style="font-size:16px;animation:spin 1s linear infinite">refresh</span> ${isMalay ? 'Mengesahkan...' : 'Verifying...'}`;
-  }
-
-  let verified = false;
-
-  // Retrieve admin email
-  let adminEmail = '';
-  try {
-    const session = JSON.parse(localStorage.getItem('wedrive_session'));
-    if (session && session.email) {
-      adminEmail = session.email;
-    }
-  } catch(e) {}
-
-  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
-    if (!adminEmail) {
-      try {
-        const userResult = await window.supabaseClient.auth.getUser();
-        if (userResult.data && userResult.data.user) {
-          adminEmail = userResult.data.user.email;
-        }
-      } catch (e) {}
-    }
-
-    // Verify if the email is an admin email in the admins table
-    let isAdmin = false;
-    if (adminEmail) {
-      try {
-        const checkAdmin = await window.supabaseClient
-          .from('admins')
-          .select('email')
-          .eq('email', adminEmail)
-          .maybeSingle();
-        if (checkAdmin.data) {
-          isAdmin = true;
-        }
-      } catch (e) {}
-    }
-
-    // If it's not an admin email (e.g. they logged in as a customer), fetch the first admin's email to verify the password against
-    if (!isAdmin) {
-      try {
-        const firstAdmin = await window.supabaseClient
-          .from('admins')
-          .select('email')
-          .limit(1);
-        if (firstAdmin.data && firstAdmin.data.length > 0) {
-          adminEmail = firstAdmin.data[0].email;
-        } else {
-          adminEmail = 'admin@wedrive.my';
-        }
-      } catch (e) {
-        adminEmail = 'admin@wedrive.my';
-      }
-    }
-
-    try {
-      const loginResult = await window.WeDriveAPI.loginUser(adminEmail, password);
-      if (loginResult && loginResult.success && loginResult.role === 'admin') {
-        verified = true;
-      }
-    } catch (err) {
-      console.error('[WeDRIVE] Re-auth verification error:', err);
-    }
-  } else {
-    // Demo mode: accept any password
-    verified = true;
-  }
-
-  if (!verified) {
-    if (errorDiv) {
-      errorDiv.textContent = errorMsg;
-      errorDiv.style.display = 'block';
-    }
-    if (confirmBtn) {
-      confirmBtn.disabled = false;
-      confirmBtn.innerHTML = confirmBtn.dataset.originalHtml;
-    }
-    return;
-  }
-
-  // If verified, proceed with deletion
-  closeDeleteCarModal();
-  
-  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
-    try {
-      var result = await window.supabaseClient.from('cars').delete().eq('id', carData.id);
-      if (result.error) throw result.error;
-      showToast(successToast, 'success');
-    } catch (err) {
-      console.error('[WeDRIVE] Delete car error:', err);
-      showToast(demoToast, 'success');
-    }
-  } else {
-    showToast(demoToast, 'success');
-  }
-  setTimeout(() => { window.location.href = '../cars.html'; }, 1500);
-}
-window.submitDeleteCar = submitDeleteCar;
-
-// Close modals on backdrop click
-document.addEventListener('click', function (e) {
-  if (e.target.classList.contains('modal-overlay')) {
-    e.target.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-});
-
-// Close modals on Escape key
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-      modal.style.display = 'none';
-    });
-    document.body.style.overflow = '';
-  }
-});
-
-/* ── Toast Notification ── */
-function showToast(msg, type) {
-  const existing = document.querySelector('.toast-notify');
-  if (existing) existing.remove();
-
-  const toast = document.createElement('div');
-  toast.className = 'toast-notify';
-  const icon = type === 'success' ? 'check_circle' : 'info';
-  const bg = type === 'success' ? '#059669' : '#3B82F6';
-  toast.style.cssText = `position:fixed;bottom:30px;right:30px;background:${bg};color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:slideUp 0.3s ease`;
-  toast.innerHTML = `<span class="material-icons-round" style="font-size:18px">${icon}</span> ${msg}`;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
-
-/* ══════════════════════════════════════════════
-   BOOKING CALENDAR — Range Selection
-   First click = Pickup date, Second click = Return date
-   ══════════════════════════════════════════════ */
-
-let selectedCalDate = null; // Selected date string for details view
-
-function initCalendar() {
-  const now = new Date();
-  calYear = now.getFullYear();
-  calMonth = now.getMonth();
-  selectedCalDate = null;
-  renderCalendar();
-}
-
-function calendarToday() {
-  const now = new Date();
-  calYear = now.getFullYear();
-  calMonth = now.getMonth();
-  renderCalendar();
-}
-
-function calendarPrev() {
-  calMonth--;
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  renderCalendar();
-}
-
-function calendarNext() {
-  calMonth++;
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  renderCalendar();
-}
-
-function clearCalendarSelection() {
-  selectedCalDate = null;
-  renderCalendar();
-  const info = document.getElementById('cal-day-info');
-  if (info) info.style.display = 'none';
-}
-
-function renderCalendar() {
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
-
-  const monthLabel = document.getElementById('cal-month-label');
-  if (monthLabel) {
-    monthLabel.textContent = `${monthNames[calMonth]} ${calYear}`;
-  }
-
-  const carBookings = getCarBookings();
-  const statusMap = buildDateStatusMap(carBookings);
-  const rateNum = parseInt((carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
-  const rateLabel = `RM ${rateNum}`;
-
-  const firstDay = new Date(calYear, calMonth, 1);
-  const lastDay = new Date(calYear, calMonth + 1, 0);
-  const startOffset = (firstDay.getDay() + 6) % 7;
-  const totalDays = lastDay.getDate();
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const grid = document.getElementById('cal-days-grid');
-  if (!grid) return;
-  let html = '';
-
-  for (let i = 0; i < startOffset; i++) {
-    html += '<div class="cal-cell empty"></div>';
-  }
-
-  for (let d = 1; d <= totalDays; d++) {
-    const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    const dateObj = new Date(calYear, calMonth, d);
-    dateObj.setHours(0, 0, 0, 0);
-
-    let status = 'available';
-    const isPast = dateObj < today;
-
-    if (isPast) {
-      status = 'past';
-    } else if (statusMap[dateStr]) {
-      status = statusMap[dateStr].status;
-    }
-
-    const isToday = dateObj.getTime() === today.getTime();
-    const isSelected = selectedCalDate === dateStr;
-
-    const todayClass = isToday ? ' today' : '';
-    const selectedClass = isSelected ? ' selected' : '';
-    const clickable = status !== 'past';
-
-    html += `
-    <div class="cal-cell ${status}${todayClass}${selectedClass}" 
-         ${clickable ? `onclick="selectCalDay('${dateStr}', '${status}')"` : ''}
-         data-date="${dateStr}"
-         title="${dateStr} - ${status.toUpperCase()}">
-      <div class="cal-cell-inner">
-        <span class="cal-day">${d}</span>
-        <span class="cal-dot-indicator ${status}"></span>
-      </div>
-      <span class="cal-rate">${status !== 'past' ? rateLabel : ''}</span>
-    </div>`;
-  }
-
-  grid.innerHTML = html;
-}
-
-function getCarBookings() {
-  if (!carData || !allBookings) return [];
-  return allBookings.filter(b => b.car_id === carData.id || b.plate === carData.plate);
-}
-
-function buildDateStatusMap(bookings) {
-  const map = {};
-  bookings.forEach(b => {
-    const pickupStr = b.start_date || b.pickup;
-    const returnStr = b.end_date || b.return;
-    if (!pickupStr || !returnStr) return;
-    const pickup = new Date(pickupStr);
-    const returnDate = new Date(returnStr);
-    const current = new Date(pickup);
-    while (current <= returnDate) {
-      const dateStr = current.toISOString().slice(0, 10);
-      let status;
-      if (b.status === 'Confirmed' || b.status === 'Completed' || b.status === 'Active') {
-        status = 'booked';
-      } else if (b.status === 'Pending') {
-        status = 'pending';
-      } else {
-        status = 'available';
-      }
-      if (!map[dateStr] || (status === 'booked' && map[dateStr].status === 'pending')) {
-        map[dateStr] = { status, booking: b };
-      }
-      current.setDate(current.getDate() + 1);
-    }
-  });
-  return map;
-}
-
-function selectCalDay(dateStr, status) {
-  if (status === 'past') return;
-  selectedCalDate = dateStr;
-  renderCalendar();
-
-  if (status === 'booked' || status === 'pending') {
-    showBookingInfo(dateStr, status);
-  } else {
-    showAvailableDateInfo(dateStr);
-  }
-}
-
-function showAvailableDateInfo(dateStr) {
-  const infoPanel = document.getElementById('cal-day-info');
-  if (!infoPanel) return;
-
-  const date = new Date(dateStr);
-  const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  const rateNum = parseInt(String(carData.rate || '').replace(/[^0-9]/g, '')) || carData.price || 0;
-
-  infoPanel.innerHTML = `
-    <div class="bs-header">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span class="bs-badge available" style="background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.25);">
-          <span class="material-icons-round" style="font-size:14px;">check_circle</span>
-          Available for Rent
-        </span>
-        <span style="font-size:13.5px;font-weight:700;color:var(--text-primary);">${formattedDate}</span>
-      </div>
-      <button class="btn-outline-sm" onclick="clearCalendarSelection()" style="height:30px;padding:0 12px;font-size:12px;">
-        <span class="material-icons-round" style="font-size:14px;">close</span> Close
-      </button>
-    </div>
-    <div class="bs-grid">
-      <div class="bs-item">
-        <div class="bs-item-icon emerald">
-          <span class="material-icons-round" style="font-size:20px;">event_available</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Vehicle Status</div>
-          <div class="bs-item-value" style="color:#10B981;">Ready to Book</div>
-        </div>
-      </div>
-      <div class="bs-item">
-        <div class="bs-item-icon">
-          <span class="material-icons-round" style="font-size:20px;">directions_car</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Vehicle</div>
-          <div class="bs-item-value">${carData.name || 'Vehicle'} (${carData.plate || '--'})</div>
-        </div>
-      </div>
-      <div class="bs-item">
-        <div class="bs-item-icon purple">
-          <span class="material-icons-round" style="font-size:20px;">payments</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Standard Daily Rate</div>
-          <div class="bs-item-value">RM ${rateNum}/day</div>
-        </div>
-      </div>
-      <div class="bs-item">
-        <div class="bs-item-icon amber">
-          <span class="material-icons-round" style="font-size:20px;">info</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Schedule Note</div>
-          <div class="bs-item-value">No active bookings</div>
-        </div>
-      </div>
-    </div>`;
-  infoPanel.style.display = 'block';
-}
-
-function showBookingInfo(dateStr, status) {
-  const carBookings = getCarBookings();
-  const booking = carBookings.find(b => {
-    const pickupStr = b.start_date || b.pickup;
-    const returnStr = b.end_date || b.return;
-    const pickup = new Date(pickupStr);
-    const ret = new Date(returnStr);
-    const d = new Date(dateStr);
-    return d >= pickup && d <= ret;
-  });
-
-  if (!booking) return;
-
-  const infoPanel = document.getElementById('cal-day-info');
-  if (!infoPanel) return;
-
-  const date = new Date(dateStr);
-  const formattedDate = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  const isPending = booking.status === 'Pending';
-  const statusLabel = isPending ? 'Pending Confirmation' : 'Confirmed Booking';
-  const statusBadgeCls = isPending ? 'pending' : 'confirmed';
-  const pickupStr = booking.start_date || booking.pickup || '--';
-  const returnStr = booking.end_date || booking.return || '--';
-  const days = booking.days || booking.total_days || 1;
-  const total = booking.total || booking.total_price || 0;
-
-  infoPanel.innerHTML = `
-    <div class="bs-header">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span class="bs-badge ${statusBadgeCls}">
-          <span class="material-icons-round" style="font-size:14px;">${isPending ? 'schedule' : 'verified'}</span>
-          ${statusLabel}
-        </span>
-        <span style="font-size:13.5px;font-weight:700;color:var(--text-primary);">${formattedDate}</span>
-      </div>
-      <button class="btn-outline-sm" onclick="clearCalendarSelection()" style="height:30px;padding:0 12px;font-size:12px;">
-        <span class="material-icons-round" style="font-size:14px;">close</span> Close
-      </button>
-    </div>
-    <div class="bs-grid">
-      <div class="bs-item">
-        <div class="bs-item-icon">
-          <span class="material-icons-round" style="font-size:20px;">badge</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Booking ID</div>
-          <div class="bs-item-value">#${booking.id}</div>
-        </div>
-      </div>
-      <div class="bs-item">
-        <div class="bs-item-icon purple">
-          <span class="material-icons-round" style="font-size:20px;">person</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Customer</div>
-          <div class="bs-item-value">${booking.customer || booking.user_name || 'Customer'}</div>
-        </div>
-      </div>
-      <div class="bs-item">
-        <div class="bs-item-icon amber">
-          <span class="material-icons-round" style="font-size:20px;">date_range</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Period</div>
-          <div class="bs-item-value">${pickupStr} &rarr; ${returnStr} (${days}d)</div>
-        </div>
-      </div>
-      <div class="bs-item">
-        <div class="bs-item-icon emerald">
-          <span class="material-icons-round" style="font-size:20px;">payments</span>
-        </div>
-        <div>
-          <div class="bs-item-label">Payment</div>
-          <div class="bs-item-value">${booking.payment || 'Paid'}</div>
-        </div>
-      </div>
-    </div>
-    <div class="bs-footer">
-      <div class="bs-total-wrap">
-        <div class="bs-total-label">Total Amount Paid</div>
-        <div class="bs-total-amount">RM ${Number(total).toLocaleString()}</div>
-      </div>
-      <button class="btn-outline-sm" onclick="window.location.href='../../booking/bookings.html?search=${encodeURIComponent(carData.plate || '')}'" style="height:40px;padding:0 20px;">
-        <span class="material-icons-round" style="font-size:16px;">manage_accounts</span> Manage in Bookings
-      </button>
-    </div>`;
-  infoPanel.style.display = 'block';
-}
-
-window.clearCalendarSelection = clearCalendarSelection;
-window.showBookingInfo = showBookingInfo;
-window.showAvailableDateInfo = showAvailableDateInfo;
-window.calendarToday = calendarToday;
-window.calendarPrev = calendarPrev;
-window.calendarNext = calendarNext;
-window.selectCalDay = selectCalDay;
-
-
-

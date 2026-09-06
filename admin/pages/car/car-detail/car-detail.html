@@ -4,194 +4,404 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vehicle Details | WeDRIVE</title>
+  <title>Studio 360° & Profil Kenderaan | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link rel="stylesheet" href="../../../../shared/css/wedrive.css" />
   <script src="../../../../shared/js/auth-guard.js" data-role="admin"></script>
 </head>
 
 <body data-particles="6" data-cursor-glow>
-  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car"></div>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-context="car"></div>
 
   <main class="main">
     <div id="navbar-placeholder" data-module="admin"></div>
 
     <div class="content">
 
-      <!-- BACK BUTTON -->
-      <div class="mb-20">
-        <button class="btn-back" onclick="window.location.href='../cars.html'" data-navigate="../cars.html">
-          <span class="material-icons-round">arrow_back</span>
-          <span data-key="cd_back">Back to Cars</span>
-        </button>
-      </div>
-
-      <!-- CAR HERO -->
-      <div class="card car-hero reveal-onload">
-        <div class="car-hero-grid">
-          <!-- Car Image Gallery -->
+      <!-- TOP BAR & ACTIONS -->
+      <div class="flex-between flex-wrap gap-16 mb-20">
+        <div class="flex-center gap-12">
+          <button class="btn-back" onclick="window.location.href='../cars.html'" data-navigate="../cars.html">
+            <span class="material-icons-round">arrow_back</span>
+            <span>Kembali ke Armada</span>
+          </button>
           <div>
-            <div class="car-hero-image" id="cd-image">
-              <!-- Main Image -->
-              <img id="cd-main-img"
-                src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg"
-                alt="Car Preview" class="hidden" />
-              <span id="cd-img-fallback" class="material-icons-round cd-img-fallback-icon">directions_car</span>
-            </div>
-            <!-- Thumbnail Strip -->
-            <div id="cd-thumbnails" class="car-thumbnails"></div>
+            <h1 class="fs-22 fw-800 text-primary m-0" id="cd-top-title">Studio 360° & Profil Kenderaan</h1>
+            <p class="fs-12 text-secondary m-0">Pemeriksaan Interaktif 360°, Telemetri Kesihatan, dan Maklumat Teknikal Armada</p>
           </div>
+        </div>
 
-          <!-- Car Overview -->
-          <div class="car-hero-info">
-            <div class="flex-center gap-12 mb-8 flex-wrap">
-              <h1 id="cd-name" class="fs-26 fw-700 text-primary m-0">--</h1>
-              <span class="status-badge" id="cd-status">--</span>
-            </div>
-            <p class="cd-plate-type" id="cd-plate-type">--</p>
-
-            <div class="car-quick-stats">
-              <div class="cq-stat">
-                <span class="material-icons-round">airline_seat_recline_normal</span>
-                <div>
-                  <div class="cq-label">Tempat Duduk</div>
-                  <div class="cq-value" id="cd-seats">--</div>
-                </div>
-              </div>
-              <div class="cq-stat">
-                <span class="material-icons-round">settings</span>
-                <div>
-                  <div class="cq-label">Transmisi</div>
-                  <div class="cq-value" id="cd-trans">--</div>
-                </div>
-              </div>
-              <div class="cq-stat">
-                <span class="material-icons-round">local_gas_station</span>
-                <div>
-                  <div class="cq-label">Bahan Api</div>
-                  <div class="cq-value" id="cd-fuel">--</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="cd-rate-row border-top-subtle">
-              <div class="fs-26 fw-800 text-primary-accent" id="cd-rate">--</div>
-              <div class="flex-center gap-10 flex-wrap">
-                <button class="btn-outline-sm" onclick="updateStatus()">
-                  <span class="material-icons-round fs-15">sync</span>
-                  <span>Kemas Kini Status</span>
-                </button>
-                <button class="btn-primary-sm" onclick="editDetails()">
-                  <span class="material-icons-round fs-15">edit</span>
-                  <span>Sunting Maklumat</span>
-                </button>
-              </div>
-            </div>
-          </div>
+        <div class="flex-center gap-10 flex-wrap">
+          <button class="btn-outline-sm" onclick="openStatusModal()">
+            <span class="material-icons-round fs-15">sync</span>
+            <span>Kemas Kini Status</span>
+          </button>
+          <button class="btn-primary-sm" onclick="editDetails()">
+            <span class="material-icons-round fs-15">edit</span>
+            <span>Sunting Maklumat</span>
+          </button>
+          <button class="btn-outline-sm" onclick="window.print()" title="Cetak Lembaran Spesifikasi">
+            <span class="material-icons-round fs-15">print</span>
+            <span>Cetak Lembaran</span>
+          </button>
         </div>
       </div>
 
-      <!-- BOOKING CALENDAR (Apple HIG Graphical Date Picker) -->
-      <div class="card reveal-on-scroll cd-cal-card">
-        <div class="cal-apple-header">
-          <div class="flex-center gap-12">
-            <div class="flex-center gap-8">
-              <span class="material-icons-round fs-22 text-primary-accent">calendar_month</span>
-              <span id="cal-month-label" class="fs-18 fw-700 text-primary">--</span>
-            </div>
-            <button class="cal-today-pill" onclick="calendarToday()" title="Lompat ke Bulan Semasa">
-              Hari Ini
+      <!-- 1. FLEET SELECTOR BAR -->
+      <div class="fleet-selector-bar" id="cd-fleet-selector">
+        <!-- Injected via JavaScript with all fleet cars -->
+      </div>
+
+      <!-- 2. STUDIO 360 HERO VIEWPORT CARD -->
+      <div class="car-studio-hero reveal-onload" id="cd-studio-hero">
+        <div class="studio-top-bar">
+          <div class="flex-center gap-12 flex-wrap">
+            <h2 class="fs-22 fw-800 text-primary m-0" id="cd-name">--</h2>
+            <span class="status-badge" id="cd-status">--</span>
+            <span class="apple-category-pill" id="cd-plate">--</span>
+            <span class="apple-category-pill" id="cd-type-pill">--</span>
+          </div>
+
+          <div class="studio-mode-tabs">
+            <button class="studio-tab-btn active" id="tab-exterior" onclick="switchStudioMode('exterior')">
+              <span class="material-icons-round fs-16">360</span>
+              <span>360° Luaran</span>
+            </button>
+            <button class="studio-tab-btn" id="tab-interior" onclick="switchStudioMode('interior')">
+              <span class="material-icons-round fs-16">airline_seat_recline_extra</span>
+              <span>360° Dalaman (Kokpit)</span>
+            </button>
+            <button class="studio-tab-btn" id="tab-gallery" onclick="switchStudioMode('gallery')">
+              <span class="material-icons-round fs-16">photo_library</span>
+              <span>Galeri Foto</span>
             </button>
           </div>
-          <div class="flex-center gap-8">
-            <div class="cal-nav-group">
-              <button class="cal-nav-btn" onclick="calendarPrev()" id="cal-prev-btn" title="Bulan Sebelumnya" aria-label="Bulan Sebelumnya">
-                <span class="material-icons-round fs-18">chevron_left</span>
-              </button>
-              <button class="cal-nav-btn" onclick="calendarNext()" id="cal-next-btn" title="Bulan Seterusnya" aria-label="Bulan Seterusnya">
-                <span class="material-icons-round fs-18">chevron_right</span>
-              </button>
+        </div>
+
+        <!-- STAGE 1: EXTERIOR 360 SPIN -->
+        <div class="studio-stage-wrapper" id="studio-exterior-stage">
+          <div class="studio-watermark-360">
+            <span class="material-icons-round fs-16">360</span>
+            <span>STUDIO 360° INTERAKTIF</span>
+          </div>
+
+          <div class="studio-angle-indicator" id="studio-angle-pill">
+            <span class="material-icons-round fs-14 text-purple">explore</span>
+            <span id="studio-angle-text">0° · Pandangan Hadapan</span>
+          </div>
+
+          <!-- Main 360 Frame Image -->
+          <img id="studio-canvas-stage" class="studio-canvas-stage" src="" alt="360 Exterior View" />
+          <span id="studio-fallback-icon" class="material-icons-round fs-72 text-muted hidden">directions_car</span>
+
+          <!-- Controls Bar (Auto Spin + Scrub Slider) -->
+          <div class="studio-controls-bar">
+            <button class="studio-auto-spin-btn" id="studio-spin-btn" onclick="toggleAutoSpin()">
+              <span class="material-icons-round fs-16" id="studio-spin-icon">play_arrow</span>
+              <span id="studio-spin-text">Auto-Putar</span>
+            </button>
+
+            <span class="fs-11 fw-700 text-secondary tabular-nums">0°</span>
+            <input type="range" min="0" max="100" value="0" class="studio-scrub-slider" id="studio-scrub-slider"
+              oninput="handleScrubInput(this.value)" aria-label="Sudut Putaran 360 Darjah" />
+            <span class="fs-11 fw-700 text-secondary tabular-nums">360°</span>
+
+            <button class="cockpit-hud-btn" onclick="toggleFullscreenStudio()" title="Skrin Penuh" aria-label="Skrin Penuh">
+              <span class="material-icons-round fs-16">fullscreen</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STAGE 2: INTERIOR 360 COCKPIT -->
+        <div class="interior-cockpit-viewer hidden" id="studio-interior-stage">
+          <div class="studio-watermark-360">
+            <span class="material-icons-round fs-16">airline_seat_recline_extra</span>
+            <span>KOKPIT MAYA 360°</span>
+          </div>
+
+          <img id="cockpit-canvas" class="cockpit-canvas" src="" alt="360 Interior Cockpit" />
+          <div id="cockpit-fallback" class="flex-center flex-column gap-8 text-center p-24 hidden">
+            <span class="material-icons-round fs-48 text-purple">videocam_off</span>
+            <span class="fs-14 fw-600 text-primary">Aset 360° Dalaman Belum Dimuat Naik</span>
+            <span class="fs-12 text-secondary">Anda boleh memuat naik foto panorama dalaman di menu Tambah Kereta.</span>
+          </div>
+
+          <!-- Virtual Cockpit HUD Controls -->
+          <div class="cockpit-overlay-hud" id="cockpit-hud">
+            <button class="cockpit-hud-btn" onclick="cockpitPan('left')" title="Pusing Kiri" aria-label="Pusing Kiri">
+              <span class="material-icons-round fs-18">arrow_back</span>
+            </button>
+            <button class="cockpit-hud-btn" onclick="cockpitPan('center')" title="Pandangan Tengah" aria-label="Pandangan Tengah">
+              <span class="material-icons-round fs-18">center_focus_strong</span>
+            </button>
+            <button class="cockpit-hud-btn" onclick="cockpitPan('right')" title="Pusing Kanan" aria-label="Pusing Kanan">
+              <span class="material-icons-round fs-18">arrow_forward</span>
+            </button>
+            <div class="border-left-subtle h-20 mx-4"></div>
+            <button class="cockpit-hud-btn" onclick="cockpitZoom(1.2)" title="Dekatkan (Zoom In)" aria-label="Dekatkan">
+              <span class="material-icons-round fs-18">zoom_in</span>
+            </button>
+            <button class="cockpit-hud-btn" onclick="cockpitZoom(1.0)" title="Set Semula Saiz" aria-label="Set Semula">
+              <span class="material-icons-round fs-18">zoom_out_map</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STAGE 3: PHOTO GALLERY -->
+        <div class="hidden p-20" id="studio-gallery-stage">
+          <div class="car-thumbnails" id="cd-thumbnails"></div>
+        </div>
+      </div>
+
+      <!-- 3. TECHNICAL SPECIFICATIONS BENTO GRID (Zero Bookings) -->
+      <div class="specs-bento-grid reveal-on-scroll">
+
+        <!-- CARD 1: POWERTRAIN & PERFORMANCE -->
+        <div class="spec-bento-card col-span-6">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">speed</span>
+              <span>Enjin & Kuasa Pacuan</span>
+            </h3>
+            <span class="apple-category-pill" id="spec-engine-badge">2.0L Turbo</span>
+          </div>
+          <div class="spec-metrics-rows">
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">memory</span> Konfigurasi Enjin</span>
+              <span class="spec-metric-val" id="spec-engine-cfg">4-Silinder Sebaris TwinPower Turbo</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">straighten</span> Sesaran Enjin</span>
+              <span class="spec-metric-val" id="spec-displacement">1,998 cc</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">bolt</span> Kuasa Maksimum</span>
+              <span class="spec-metric-val" id="spec-hp">184 hp @ 5,000 rpm</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">autorenew</span> Tork Maksimum</span>
+              <span class="spec-metric-val" id="spec-torque">300 Nm @ 1,350 - 4,000 rpm</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">timelapse</span> Pecutan (0-100 km/j)</span>
+              <span class="spec-metric-val" id="spec-accel">7.1 Saat</span>
             </div>
           </div>
         </div>
 
-        <p class="cd-cal-hint">
-          <span class="material-icons-round fs-16 text-primary-accent">info</span>
-          Pilih mana-mana tarikh pada kalendar untuk melihat maklumat ketersediaan atau butiran tempahan.
-        </p>
-
-        <!-- Weekday headers -->
-        <div class="cal-grid cal-header">
-          <div>ISN</div>
-          <div>SEL</div>
-          <div>RAB</div>
-          <div>KHA</div>
-          <div>JUM</div>
-          <div>SAB</div>
-          <div>AHD</div>
+        <!-- CARD 2: TRANSMISSION & FUEL -->
+        <div class="spec-bento-card col-span-6">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">settings</span>
+              <span>Transmisi & Kecekapan Bahan Api</span>
+            </h3>
+            <span class="apple-category-pill" id="spec-trans-badge">Automatik</span>
+          </div>
+          <div class="spec-metrics-rows">
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">tune</span> Sistem Transmisi</span>
+              <span class="spec-metric-val" id="spec-trans-type">8-Kelajuan Steptronic Sport</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">alt_route</span> Sistem Pacuan Roda</span>
+              <span class="spec-metric-val" id="spec-drivetrain">Rear-Wheel Drive (RWD)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">local_gas_station</span> Jenis Bahan Api</span>
+              <span class="spec-metric-val" id="spec-fuel-type">Petrol (RON 97 / RON 95)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">opacity</span> Kapasiti Tangki</span>
+              <span class="spec-metric-val" id="spec-tank">59 Liter</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">eco</span> Penggunaan Purata</span>
+              <span class="spec-metric-val" id="spec-consumption">6.4 L / 100 km</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Calendar days grid -->
-        <div class="cal-grid" id="cal-days-grid"></div>
-
-        <!-- Legend -->
-        <div class="cal-legend">
-          <div class="cal-legend-item"><span class="cal-dot available"></span> Tersedia</div>
-          <div class="cal-legend-item"><span class="cal-dot booked"></span> Ditempah</div>
-          <div class="cal-legend-item"><span class="cal-dot pending"></span> Menunggu</div>
-          <div class="cal-legend-item"><span class="cal-dot past"></span> Lepas</div>
+        <!-- CARD 3: DIMENSIONS & CAPACITIES -->
+        <div class="spec-bento-card col-span-6">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">aspect_ratio</span>
+              <span>Dimensi, Berat & Ruang Kargo</span>
+            </h3>
+            <span class="apple-category-pill" id="spec-seats-badge">5 Tempat Duduk</span>
+          </div>
+          <div class="spec-metrics-rows">
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">airline_seat_recline_normal</span> Bilangan Kerusi</span>
+              <span class="spec-metric-val" id="spec-seats-count">5 Tempat Duduk (Kulit Vernasca)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">luggage</span> Ruang But / Kargo</span>
+              <span class="spec-metric-val" id="spec-boot">480 Liter (Power Boot)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">scale</span> Berat Kerb Kenderaan</span>
+              <span class="spec-metric-val" id="spec-weight">1,570 kg</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">straighten</span> Panjang × Lebar × Tinggi</span>
+              <span class="spec-metric-val" id="spec-dims">4,709 × 1,827 × 1,435 mm</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">sync_alt</span> Jarak Antara Roda</span>
+              <span class="spec-metric-val" id="spec-wheelbase">2,851 mm</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Selected day info / Booking summary -->
-        <div id="cal-day-info" class="cal-day-info hidden"></div>
+        <!-- CARD 4: COMMERCIAL PRICING & LOGISTICS -->
+        <div class="spec-bento-card col-span-6">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">payments</span>
+              <span>Kadar Komersial & Pangkalan HQ</span>
+            </h3>
+            <span class="apple-category-pill text-green" id="spec-rate-badge">RM 450/hari</span>
+          </div>
+          <div class="spec-metrics-rows">
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">price_check</span> Kadar Sewa Harian Rasmi</span>
+              <span class="spec-metric-val text-primary-accent fw-800 fs-16" id="cd-rate">RM 450/hari</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">security</span> Deposit Keselamatan</span>
+              <span class="spec-metric-val" id="spec-deposit">RM 500 (Boleh Dikembalikan)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">date_range</span> Had Tempoh Minimum</span>
+              <span class="spec-metric-val" id="spec-min-days">1 Hari</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">place</span> Lokasi Penyerahan & Pulangan</span>
+              <span class="spec-metric-val" id="spec-hq-location">Pusat Operasi Utama WeDRIVE (HQ Melaka)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">verified</span> Status Pendaftaran</span>
+              <span class="spec-metric-val text-green" id="spec-active-badge">Aktif & Sah Disewa</span>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- BOOKING HISTORY -->
-      <div class="card reveal-on-scroll cd-history-card">
-        <div class="card-header cd-history-header border-bottom-subtle">
-          <h3 class="flex-center gap-8 fs-17 fw-700 text-primary m-0">
-            <span class="material-icons-round fs-20 text-primary-accent">history</span>
-            <span>Sejarah Tempahan</span>
+      <!-- 4. EQUIPMENT & SAFETY MATRIX -->
+      <div class="card p-24 radius-24 border-subtle mb-28 reveal-on-scroll">
+        <div class="flex-between flex-wrap gap-12 pb-16 mb-16 border-bottom-subtle">
+          <h3 class="fs-17 fw-700 text-primary m-0 flex-center gap-8">
+            <span class="material-icons-round text-primary-accent">verified</span>
+            <span>Matriks Kelengkapan & Keselamatan Aktif</span>
           </h3>
+          <span class="apple-category-pill">Standard Audit WeDRIVE Melaka</span>
         </div>
-        <div class="table-responsive">
-          <table class="car-admin-table">
-            <thead>
-              <tr class="car-table-header-row">
-                <th class="car-th">ID Tempahan</th>
-                <th class="car-th">Pelanggan</th>
-                <th class="car-th">Tarikh Ambil</th>
-                <th class="car-th">Tarikh Pulang</th>
-                <th class="car-th">Hari</th>
-                <th class="car-th">Jumlah</th>
-                <th class="car-th">Status</th>
-              </tr>
-            </thead>
-            <tbody id="cd-bookings-tbody"></tbody>
-          </table>
+
+        <div class="equip-matrix-grid" id="cd-equipment-matrix">
+          <!-- Injected via JavaScript based on car equipment -->
         </div>
       </div>
 
-      <!-- QUICK ACTIONS -->
-      <div class="stats-grid reveal-on-scroll grid-2col mt-24 gap-20">
-        <div class="card cd-action-card" onclick="viewInsurance()">
-          <div class="cd-icon-circle blue">
-            <span class="material-icons-round fs-26">verified_user</span>
+      <!-- 5. VEHICLE TELEMETRY & HEALTH DESK (NO BOOKINGS!) -->
+      <div class="specs-bento-grid reveal-on-scroll">
+
+        <!-- TELEMETRY METRICS -->
+        <div class="spec-bento-card col-span-4">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">sensors</span>
+              <span>Telemetri Kenderaan</span>
+            </h3>
+            <span class="hq-badge-pill">Masa Nyata</span>
           </div>
-          <h4 class="fs-15 fw-700 text-primary mb-4 m-0">Insurance Info</h4>
-          <p class="fs-12 text-muted m-0">View coverage & policy details</p>
-        </div>
-        <div class="card cd-action-card" onclick="deleteCar()">
-          <div class="cd-icon-circle red">
-            <span class="material-icons-round fs-26">delete_forever</span>
+
+          <div class="spec-metrics-rows">
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">speed</span> Odometer Semasa</span>
+              <span class="spec-metric-val text-primary fw-800" id="telemetry-odometer">34,250 km</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">local_gas_station</span> Paras Bahan Api</span>
+              <span class="spec-metric-val text-green" id="telemetry-fuel">85% Penuh</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">battery_charging_full</span> Kesihatan Bateri</span>
+              <span class="spec-metric-val text-green" id="telemetry-battery">12.6V (98%)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">lock</span> Kunci Pintu & But</span>
+              <span class="spec-metric-val text-primary" id="telemetry-doors">Semua Selamat</span>
+            </div>
           </div>
-          <h4 class="fs-15 fw-700 text-danger mb-4 m-0">Remove Vehicle</h4>
-          <p class="fs-12 text-muted m-0">Decommission car from system</p>
         </div>
+
+        <!-- 4-WHEEL TPMS CARD -->
+        <div class="spec-bento-card col-span-4">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">tire_repair</span>
+              <span>Tekanan Tayar (TPMS)</span>
+            </h3>
+            <span class="hq-badge-pill">Normal</span>
+          </div>
+
+          <div class="telemetry-tpms-grid">
+            <div class="tpms-tire-card healthy">
+              <div class="tpms-tire-label">Depan Kiri (FL)</div>
+              <div class="tpms-psi-num">32 <span class="fs-12 fw-500">psi</span></div>
+            </div>
+            <div class="tpms-tire-card healthy">
+              <div class="tpms-tire-label">Depan Kanan (FR)</div>
+              <div class="tpms-psi-num">32 <span class="fs-12 fw-500">psi</span></div>
+            </div>
+            <div class="tpms-tire-card healthy">
+              <div class="tpms-tire-label">Belakang Kiri (RL)</div>
+              <div class="tpms-psi-num">35 <span class="fs-12 fw-500">psi</span></div>
+            </div>
+            <div class="tpms-tire-card healthy">
+              <div class="tpms-tire-label">Belakang Kanan (RR)</div>
+              <div class="tpms-psi-num">35 <span class="fs-12 fw-500">psi</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPLIANCE & LEGAL CERTIFICATE -->
+        <div class="spec-bento-card col-span-4">
+          <div class="spec-card-header">
+            <h3 class="spec-card-title">
+              <span class="material-icons-round text-primary-accent">policy</span>
+              <span>Dokumen & Pematuhan</span>
+            </h3>
+            <button class="btn-outline-sm py-4 px-10 fs-11" onclick="viewInsurance()">Lihat Polisi</button>
+          </div>
+
+          <div class="spec-metrics-rows">
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">verified_user</span> Cukai Jalan (Roadtax)</span>
+              <span class="spec-metric-val text-green" id="telemetry-roadtax">15 Nov 2026</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">shield</span> Perlindungan Insurans</span>
+              <span class="spec-metric-val" id="telemetry-insurance">Etiqa Takaful 2026</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">fact_check</span> Perakuan Puspakom</span>
+              <span class="spec-metric-val text-green" id="telemetry-puspakom">Lulus (B5/B7)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">cleaning_services</span> Sanitasi & Kebersihan</span>
+              <span class="spec-metric-val text-green" id="telemetry-clean">Telah Disanitasi</span>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- FOOTER -->
@@ -214,16 +424,16 @@
       <div class="modal-body pt-20">
         <form id="car-edit-form" class="form-grid" onsubmit="saveCarEdit(event)">
           <div class="form-group">
-            <label for="edit-name" data-key="cd_edit_name">Vehicle Name</label>
-            <input type="text" id="edit-name" placeholder="Vehicle Name" title="Vehicle Name" required />
+            <label for="edit-name">Nama Model Kenderaan</label>
+            <input type="text" id="edit-name" placeholder="cth: 2023 BMW 320i M Sport 2.0" required />
           </div>
           <div class="form-group">
-            <label for="edit-plate" data-key="cd_edit_plate">Plate Number</label>
-            <input type="text" id="edit-plate" placeholder="Plate Number" title="Plate Number" required />
+            <label for="edit-plate">Nombor Pendaftaran (Plat)</label>
+            <input type="text" id="edit-plate" placeholder="cth: WDR 3388" required />
           </div>
           <div class="form-group">
-            <label for="edit-type" data-key="cd_edit_type">Vehicle Type</label>
-            <select id="edit-type" title="Vehicle Type" aria-label="Vehicle Type">
+            <label for="edit-type">Kategori Badan</label>
+            <select id="edit-type">
               <option value="sedan">Sedan</option>
               <option value="suv">SUV</option>
               <option value="hatchback">Hatchback</option>
@@ -233,8 +443,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="edit-fuel" data-key="cd_edit_fuel">Fuel Type</label>
-            <select id="edit-fuel" title="Fuel Type" aria-label="Fuel Type">
+            <label for="edit-fuel">Punca Kuasa (Bahan Api)</label>
+            <select id="edit-fuel">
               <option value="Petrol">Petrol</option>
               <option value="Diesel">Diesel</option>
               <option value="Hybrid">Hybrid</option>
@@ -242,135 +452,63 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="edit-trans" data-key="cd_edit_trans">Transmission</label>
-            <select id="edit-trans" title="Transmission" aria-label="Transmission">
+            <label for="edit-trans">Sistem Transmisi</label>
+            <select id="edit-trans">
               <option value="Auto">Auto</option>
               <option value="Manual">Manual</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="edit-rate" data-key="cd_edit_rate">Daily Rate (RM)</label>
-            <input type="number" id="edit-rate" placeholder="Daily Rate" title="Daily Rate (RM)" required />
+            <label for="edit-seats">Bilangan Kerusi</label>
+            <input type="number" id="edit-seats" min="2" max="12" value="5" required />
           </div>
-          <div class="form-group col-span-full">
-            <label for="edit-seats" data-key="cd_edit_seats">Seats</label>
-            <select id="edit-seats" title="Seats" aria-label="Seats">
-              <option value="2">2 Seats</option>
-              <option value="4">4 Seats</option>
-              <option value="5">5 Seats</option>
-              <option value="7">7 Seats</option>
-              <option value="8">8 Seats</option>
-              <option value="12">12 Seats</option>
+          <div class="form-group">
+            <label for="edit-rate">Kadar Sewa Harian (RM)</label>
+            <input type="number" id="edit-rate" min="50" max="5000" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-status">Status Kenderaan</label>
+            <select id="edit-status">
+              <option value="Available">Available (Tersedia)</option>
+              <option value="Rented">Rented (Sedang Disewa)</option>
+              <option value="Maintenance">Maintenance (Penyelenggaraan)</option>
             </select>
           </div>
-          <!-- Image Management -->
-          <div class="col-span-full mt-4">
-            <label class="edit-photos-label">
-              Vehicle Photos (max 10)
-            </label>
-            <div id="edit-images-grid" class="edit-images-grid"></div>
-            <div class="mt-12 flex-center gap-10">
-              <label for="edit-image-upload" class="btn-outline-sm cursor-pointer flex-center gap-6">
-                <span class="material-icons-round fs-16">add_photo_alternate</span>
-                Add Photo
-              </label>
-              <input type="file" id="edit-image-upload" accept="image/*" multiple class="hidden"
-                onchange="handleImageUpload(event)" />
-              <span class="fs-12 text-muted" id="img-count-label">0/10 photos</span>
-            </div>
-          </div>
-
-          <div class="col-span-full flex-end gap-12 mt-16 pt-18 border-top-subtle">
-            <button type="button" class="btn-outline-sm" onclick="closeEditCarModal()">Cancel</button>
-            <button type="submit" class="btn-primary-sm px-24">
-              <span class="material-icons-round fs-14">save</span> Save Changes
-            </button>
+          <div class="flex-end gap-12 pt-16 border-top-subtle col-span-full">
+            <button type="button" class="btn-outline-sm" onclick="closeEditCarModal()">Batal</button>
+            <button type="submit" class="btn-primary-sm">Simpan Perubahan</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- SYSTEM STATUS MODAL -->
-  <div class="modal-overlay hidden" id="status-redirect-modal">
-    <div class="modal-container max-w-480">
-      <div class="modal-header border-bottom-subtle pb-14">
-        <h3 class="flex-center gap-8 text-primary">
-          <span class="material-icons-round fs-22 text-amber">warning</span>
-          <span>System Managed Status</span>
+  <!-- STATUS CHANGE MODAL -->
+  <div class="modal-overlay hidden" id="status-redirect-modal" onclick="if(event.target===this)closeStatusRedirectModal()">
+    <div class="modal-container max-w-440 radius-24" role="dialog" aria-modal="true">
+      <div class="modal-header border-bottom-subtle pb-16">
+        <h3 class="flex-center gap-8 text-primary fs-18 fw-700 m-0">
+          <span class="material-icons-round fs-22 text-primary-accent">sync</span>
+          <span>Tukar Status Kenderaan</span>
         </h3>
         <button class="modal-close-btn" onclick="closeStatusRedirectModal()">
           <span class="material-icons-round">close</span>
         </button>
       </div>
       <div class="modal-body pt-20">
-        <p id="status-modal-desc" class="status-modal-desc">
-          Vehicle status is automatically managed by booking records and cannot be updated manually.
-        </p>
+        <div class="form-group mb-16">
+          <label for="quick-status-select" class="fs-13 text-secondary mb-6 block">Pilih Status Baharu:</label>
+          <select id="quick-status-select" class="w-100 p-12 radius-12 bg-surface-2 border-subtle text-primary fs-14">
+            <option value="Available">Available (Tersedia Untuk Sewaan)</option>
+            <option value="Rented">Rented (Sedang Digunakan / Atas Jalan)</option>
+            <option value="Maintenance">Maintenance (Dalam Pemeriksaan / Servis)</option>
+          </select>
+        </div>
         <div class="flex-end gap-12">
-          <button class="btn-outline-sm" onclick="closeStatusRedirectModal()">Cancel</button>
-          <button class="btn-primary-sm" id="status-modal-action-btn" title="Manage Status" aria-label="Manage Status">Manage</button>
+          <button class="btn-outline-sm" onclick="closeStatusRedirectModal()">Batal</button>
+          <button class="btn-primary-sm" onclick="confirmQuickStatusChange()">Kemas Kini</button>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- REMOVE PHOTO CONFIRMATION MODAL -->
-  <div class="modal-overlay hidden" id="remove-photo-modal" onclick="if(event.target===this)closeRemovePhotoModal()">
-    <div class="modal-container max-w-400" role="dialog" aria-modal="true">
-      <div class="py-8-16">
-        <span class="material-icons-round fs-48 text-danger block mb-12">delete_outline</span>
-        <h3 class="fs-18 fw-700 text-primary mb-8 m-0">Padam Foto Kenderaan?</h3>
-        <p class="fs-13 text-muted m-0">Foto ini akan dipadamkan daripada rekod kenderaan. Anda boleh menambah foto baharu pada bila-bila masa.</p>
-      </div>
-      <div class="flex-center gap-12 mt-12">
-        <button class="btn-outline-sm px-20" onclick="closeRemovePhotoModal()">Batal</button>
-        <button class="btn-primary-sm btn-remove-photo px-20" id="remove-photo-confirm-btn" onclick="confirmRemovePhoto()">
-          <span class="material-icons-round fs-14">delete</span> Padam
-        </button>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal-overlay delete-modal-overlay hidden" id="delete-car-modal">
-    <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
-      <!-- Header Icon (Red Warning) -->
-      <div class="delete-modal-icon-container">
-        <span class="material-icons-round">warning</span>
-      </div>
-      
-      <!-- Title & Description -->
-      <div class="delete-modal-header-text">
-        <h2 id="delete-modal-title" data-key="cd_delete_modal_title">Remove Vehicle</h2>
-        <div class="delete-modal-desc-container">
-          <p id="delete-car-desc" data-key="cd_delete_modal_desc">Are you sure you want to remove this vehicle? This action cannot be undone.</p>
-        </div>
-      </div>
-      
-      <!-- Form Area -->
-      <form class="delete-modal-form" onsubmit="event.preventDefault(); submitDeleteCar();">
-        <!-- Input Group -->
-        <div class="delete-modal-input-group">
-          <label for="delete-admin-password" data-key="cd_delete_modal_pwd">Admin Password</label>
-          <div class="delete-modal-input-wrap">
-            <span class="material-icons-round">lock</span>
-            <input type="password" id="delete-admin-password" data-key-ph="cd_delete_modal_pwd_ph" placeholder="Enter password to confirm" required />
-          </div>
-          <div id="delete-modal-error" class="delete-modal-error hidden"></div>
-        </div>
-        
-        <!-- Actions Row -->
-        <div class="delete-modal-actions">
-          <!-- Cancel Button -->
-          <button class="delete-modal-btn-cancel" type="button" onclick="closeDeleteCarModal()" data-key="cd_delete_modal_cancel">Cancel</button>
-          <!-- Confirm Delete Button -->
-          <button class="delete-modal-btn-confirm" type="submit" id="confirm-delete-btn">
-            <span class="material-icons-round">delete_forever</span>
-            <span data-key="cd_delete_modal_confirm">Confirm Delete</span>
-          </button>
-        </div>
-      </form>
     </div>
   </div>
 
@@ -409,7 +547,7 @@
             <span class="tabular-nums fw-700 fs-12 text-primary">1-800-88-DRIVE</span>
           </div>
         </div>
-        <p class="fs-12 text-secondary m-0 mb-16">Kenderaan ini dilindungi sepenuhnya terhadap kerosakan kemalangan, kecurian, kebakaran, dan liabiliti pihak ketiga bagi semua sewaan aktif WeDRIVE.</p>
+        <p class="fs-12 text-secondary m-0 mb-16">Kenderaan ini dilindungi sepenuhnya terhadap kerosakan kemalangan, kecurian, kebakaran, dan liabiliti pihak ketiga bagi semua operasi WeDRIVE Melaka.</p>
         <div class="flex-end">
           <button class="btn-primary-sm px-20 radius-9999" onclick="closeInsuranceModal()">Tutup</button>
         </div>
@@ -425,7 +563,7 @@
   <script src="../../../../shared/js/api.js"></script>
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
-  <script src="../../../js/car-detail.js?v=5.3.0"></script>
+  <script src="../../../js/car-detail.js?v=6.0.0"></script>
 </body>
 
 </html>
