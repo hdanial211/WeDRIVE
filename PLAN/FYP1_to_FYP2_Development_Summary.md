@@ -4221,3 +4221,23 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.2.0 Add 11_language_standards.md and mandatory pre-coding gatekeeper protocol in 01_core_rules.md`
   - Tag Versi: `6.2.0`
+
+---
+
+## [MINOR UPDATE] 184. Pewujudan .agents/PROJECT_STRUCTURE.md Sebagai Punca Kebenaran Tunggal Master (v6.2.1)
+
+- **Punca Arahan Pengguna**:
+  - *"boleh awak tambah dekat project structure tapi saya nak awak tambah dalam ni .agents yang utama"*
+
+- **Tindakan Penyusunan Struktur Projek**:
+  1. **Pewujudan Master Structure Document (`.agents/PROJECT_STRUCTURE.md`)**:
+     - Dicipta terus di dalam folder `.agents/` sebagai dokumen rujukan seni bina dan pokok direktori utama sistem WeDRIVE.
+     - Menonjolkan ekosistem pintar WeDRIVE di bahagian teratas: 11 fail peraturan bernombor, alatan kemahiran (`skills/`), aliran kerja berterusan (`workflows/`), dan spesifikasi reka bentuk master (`DESIGN.md`).
+     - Menyediakan pemetaan terperinci bagi semua modul: `admin/`, `customer/`, `guest/`, `account/`, `shared/`, `supabase/`, `tests/`, `graphify-out/`, `PLAN/`, dan `REPORT/`.
+  2. **Penyelarasan Rujukan Silang**:
+     - `docs/PROJECT_STRUCTURE.md`: Ditambah kotak amaran penting di bahagian atas yang menegaskan `.agents/PROJECT_STRUCTURE.md` adalah dokumen autoriti utama (*Single Source of Truth*). Pokok direktori turut mengandungi `.agents/PROJECT_STRUCTURE.md`.
+     - `.agents/rules/06_code_and_backend.md`: Garis panduan fail dan folder dikemas kini untuk merujuk `.agents/PROJECT_STRUCTURE.md` (Master).
+
+- **Maklumat Git**:
+  - Commit: `6.2.1 Establish .agents/PROJECT_STRUCTURE.md as master single source of truth`
+  - Tag Versi: `6.2.1`

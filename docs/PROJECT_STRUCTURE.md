@@ -1,5 +1,8 @@
 # WeDRIVE Project Structure & Database Integration Guide
 
+> [!IMPORTANT]
+> **Dokumen Master Utama:** Fail struktur projek yang paling terkini dan menjadi punca kebenaran tunggal (*Single Source of Truth*) kini terletak di [`.agents/PROJECT_STRUCTURE.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/PROJECT_STRUCTURE.md). Fail ini di bawah `docs/` diselaraskan sebagai panduan sekunder.
+
 Fail ini disediakan untuk memudahkan anda (dan pembangun lain) memahami struktur fail WeDRIVE, bagaimana komponen diselaraskan (sync), dan bagaimana untuk memasukkan database sebenar pada masa hadapan.
 
 ---
@@ -13,7 +16,8 @@ AI CAR RENTAL SYSTEM/
 |
 +-- index.html                  # Landing Page / Browse Cars (Entry Point)
 |
-+-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk
++-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk (Master Hub)
+|   +-- PROJECT_STRUCTURE.md    # Dokumen Struktur Projek Utama (Master Authority)
 |   +-- DESIGN.md               # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
 |   +-- rules/                  # Peraturan Pembangunan Bernombor (01–11)
 |   |   +-- 01_core_rules.md    # Gatekeeper Protocol, Peraturan Teras Projek, Git, PRD
