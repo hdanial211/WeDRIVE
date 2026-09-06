@@ -4777,6 +4777,64 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.4 Enhance 360 studio stage to edge-to-edge view, enable interior drag rotation, upgrade HD gallery, and consolidate to 2 uncrowded bento cards`
   - Tag Versi: `6.5.4`
 
+---
+
+### 199. [MINOR UPDATE] Versi 6.5.5: Penyingkiran Maklumat Berulang & Paparan Eksklusif Data Pangkalan Data Kenderaan (Zero Repetition & 100% Database-Backed Vehicle Specs)
+- **Tarikh**: 7 September 2026
+- **Modul Terlibat**:
+  - `admin/pages/car/car-detail/car-detail.html`
+  - `admin/js/car-detail.js`
+  - `implementation_plan.md`
+  - `walkthrough.md`
+
+- **Objektif & Masalah Dikenal Pasti**:
+  1. Pengguna secara tegas menegur maklumat umum dan berulang di halaman `car-detail.html`:
+     - *"ni kan dh tunjuk kat atas lepas tu tunjuk lagi ... Kadar Sewa Harian Rasmi ... boleh x tunjuk info tu dalam satu page jangan berulang(ingat tu)"*
+     - *"security Deposit Keselamatan ... star Penarafan Pelanggan ... dua info ni saya xnak jugak benda ..benda ni dapat dari mana??? saya nak info dari database"*
+     - *"info kereta sahaja sebab saya nak focus macam tunjuk pasal kereta yang kita isi dalam database"*
+  2. Kadar sewa harian dipaparkan berulang kali pada lencana pengepala kad dan dalam baris senarai di bawahnya.
+  3. Maklumat polisi umum sewaan seperti had sewa minimum (1 hari), polisi perbatuan (tanpa had), dan lokasi HQ Melaka merupakan maklumat basi yang tidak perlu diulang pada spesifikasi kenderaan.
+  4. Medan `Deposit Keselamatan` dan `Penarafan Pelanggan` bukan spesifikasi fizikal kenderaan yang diisi oleh pentadbir ke dalam pangkalan data.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Penyingkiran Penuh Maklumat Berulang & Bukan Pangkalan Data**:
+     - Membuang baris kadar harga berulang daripada senarai (kini hanya wujud pada lencana pengepala kad `#spec-rate-badge`).
+     - Membuang baris `Deposit Keselamatan` dan `Penarafan Pelanggan` sepenuhnya daripada DOM.
+     - Membuang maklumat umum polisi (`Had Tempoh Minimum`, `Polisi Perbatuan`, `Lokasi HQ`, dan `Status Ketersediaan`).
+  2. **Paparan Eksklusif 6 Data Tulen Pangkalan Data Supabase (`cars` table)**:
+     - Kad 1 Bento kini memaparkan secara eksklusif data kenderaan yang diisi ke dalam pangkalan data:
+       1. **ID Inventori Sistem**: `#spec-id` (kolum `cars.id`, dipaparkan dengan fon mono `#CAR-001`).
+       2. **Tahun Pembuatan Kenderaan**: `#spec-year` (kolum `cars.year`, cth: `2023`).
+       3. **Warna Luaran Rasmi**: `#spec-color` (kolum `cars.color`, cth: `Alpine White`).
+       4. **Sistem Transmisi Pemanduan**: `#spec-trans` (kolum `cars.transmission`, cth: `Automatik (Auto)`).
+       5. **Punca Kuasa (Bahan Api)**: `#spec-fuel` (kolum `cars.fuel`, cth: `Petrol`).
+       6. **Kapasiti Tempat Duduk**: `#spec-seats` (kolum `cars.seats`, cth: `5 Tempat Duduk`).
+  3. **Penyelarasan Enjin Dinamik `setupCarSpecs(car)` (`car-detail.js`)**:
+     - Mengaitkan kesemua 6 elemen DOM secara reaktif kepada atribut kenderaan aktif daripada pangkalan data Supabase tanpa sebarang data palsu atau rekaan.
+  4. **Pematuhan Sifar Pengulangan (*Zero Repetition Principle*)**:
+     - Setiap atribut dipaparkan tepat HANYA SEKALI merentas keseluruhan halaman:
+       - Nama Kenderaan (`name`) $\to$ Bar wira atas `#cd-name`
+       - Status Kenderaan (`status`) $\to$ Lencana wira atas `#cd-status`
+       - Plat Pendaftaran (`plate`) $\to$ Kapsul wira atas `#cd-plate`
+       - Kategori Badan (`type`) $\to$ Kapsul wira atas `#cd-type-pill`
+       - Kadar Sewaan (`rate`) $\to$ Lencana pengepala Kad 1 `#spec-rate-badge`
+       - 6 Spesifikasi Kenderaan $\to$ Baris metrik Kad 1 `#spec-id`, `#spec-year`, `#spec-color`, `#spec-trans`, `#spec-fuel`, `#spec-seats`
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Disahkan secara langsung pada tab pelayar tunggal sedia ada (Port 5504):
+    - **MacBook (1440x900)**: Kad 1 Bento simetri seimbang dengan Kad Kelengkapan Pintar, sifar limpahan (`hasHorizontalScroll: false`), 0 ovals (`ovals: []`).
+    - **iPad (820x1180)**: Susun atur kad mengalir responsif, teks nilai berformat `tabular-nums` kemas, sifar bujur.
+    - **iPhone (393x852)**: Paparan kad bertindan menegak kemas, saiz fon input $\ge 16$px, sifar limpahan mendatar.
+  - Pengesahan Dwi-Tema: Berfungsi sempurna dengan kontras tinggi pada Mod Siang dan Mod Obsidian Gelap.
+  - Ujian Playwright CLI: Menepati syarat kelulusan mutlak 100% (**36/36 Passed**).
+  - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara di semua 19 fail.
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.5.5 Eliminate duplicate and non-database fields in car-detail with authentic database vehicle specs`
+  - Tag Versi: `6.5.5`
+
+
 
 
 

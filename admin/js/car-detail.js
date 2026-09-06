@@ -176,30 +176,26 @@ function loadCarProfile(car) {
 }
 
 function setupCarSpecs(car) {
-  const isBMW = car.name.includes('BMW');
-  const isMerc = car.name.includes('Mercedes');
-  const isGolf = car.name.includes('Golf');
-  const isRaptor = car.name.includes('Raptor') || car.name.includes('Ford');
-  const isAlphard = car.name.includes('Alphard');
-  const isAxia = car.name.includes('AXIA');
+  // 1. ID Inventori Sistem (Primary Key Database)
+  const carIdFormatted = car.id ? `#CAR-${String(car.id).padStart(3, '0')}` : '#CAR-001';
+  setText('spec-id', carIdFormatted);
 
-  // Commercial & Rental Essentials
-  setText('spec-deposit', isRaptor || isAlphard || isBMW ? 'RM 500 (Boleh Dikembalikan)' : 'RM 200 (Boleh Dikembalikan)');
-  setText('spec-min-days', `${car.min_days || 1} Hari`);
-  setText('spec-hq-location', 'Pusat Operasi Utama (HQ Melaka)');
-  setText('spec-active-badge', (car.status || 'Available').toLowerCase() === 'available' ? 'Aktif & Sah Disewa' : 'Sedang Disewa');
+  // 2. Tahun Pembuatan (Kolum: year)
+  setText('spec-year', `${car.year || 2023}`);
 
-  // Practical core specs (Uncrowded, user-friendly)
-  const transText = isAxia ? 'D-CVT Automatik' : isRaptor ? '10-Kelajuan Automatik (4WD)' : isBMW ? '8-Kelajuan Steptronic Sport' : `${car.transmission || 'Automatik'}`;
-  setText('spec-trans', transText);
+  // 3. Warna Luaran Rasmi (Kolum: color)
+  setText('spec-color', car.color || 'Alpine White');
 
-  const fuelText = isRaptor ? 'Diesel Euro 5 (B10/B20)' : 'Petrol (Disyorkan RON 97 / RON 95)';
-  setText('spec-fuel', fuelText);
+  // 4. Sistem Transmisi (Kolum: transmission / trans)
+  const rawTrans = (car.transmission || car.trans || 'Auto').trim();
+  const transLabel = rawTrans.toLowerCase().includes('auto') ? 'Automatik (Auto)' : rawTrans.toLowerCase().includes('manual') ? 'Manual (MT)' : rawTrans;
+  setText('spec-trans', transLabel);
 
-  const bootSize = isAlphard ? '1,900 Liter (Stow-away)' : isRaptor ? 'Muatan Kargo 1,180 kg' : isAxia ? '268 Liter' : '480 Liter (Power Boot)';
-  setText('spec-capacity', `${car.seats || 5} Tempat Duduk · ${bootSize}`);
+  // 5. Punca Kuasa / Bahan Api (Kolum: fuel)
+  setText('spec-fuel', car.fuel || 'Petrol');
 
-  setText('spec-mileage', 'Tanpa Had (Unlimited KM)');
+  // 6. Kapasiti Tempat Duduk (Kolum: seats)
+  setText('spec-seats', `${car.seats || 5} Tempat Duduk`);
 }
 
 function setText(id, text) {
