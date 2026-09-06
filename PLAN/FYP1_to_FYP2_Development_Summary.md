@@ -4659,6 +4659,34 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.1 Enforce Modern Malay 2026 standards and lock strict 1:1 circle geometry across Admin module`
   - Tag Versi: `6.5.1`
 
+---
+
+### [PATCH UPDATE] 196. Penyeragaman Kosa Kata 'Cetak Spesifikasi' Mengikut Piawaian BM Moden 2026 (v6.5.2)
+- **Tarikh**: 7 September 2026
+- **Versi**: `6.5.2` (Peningkatan Versi Patch: Pemurnian terjemahan harfiah 'Cetak Lembaran' $\to$ 'Cetak Spesifikasi')
+- **Status**: SELESAI
+- **Fail Terlibat**:
+  - `admin/pages/car/car-detail/car-detail.html` (Pengemaskinian label butang cetakan `Cetak Lembaran` $\to$ `Cetak Spesifikasi` dan tooltip `title="Cetak Spesifikasi Kereta"`)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md` (Perekodan log 196)
+
+- **Objektif & Latar Belakang**:
+  - Menghapuskan istilah terjemahan langsung robotik (*literal translation*) "Cetak Lembaran" yang berasal daripada "Print Spec Sheet" pada halaman Studio 360° & Profil Kereta.
+  - Memastikan istilah yang digunakan jelas, profesional, dan menepati piawaian [11_language_standards.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md) (Standard BM Moden 2026).
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  - Mengubah label butang cetakan dokumen dalam `car-detail.html` daripada `Cetak Lembaran` kepada **`Cetak Spesifikasi`**.
+  - Mengemas kini tooltip penunjuk daripada `Cetak Lembaran Spesifikasi` kepada `Cetak Spesifikasi Kereta`.
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Disahkan secara visual di pelayar Chrome DevTools MCP pada port 5504 (`aspect-ratio`, sifar bujur, sifar limpahan).
+  - Ujian Playwright CLI: Kesemua 36 ujian lulus penuh (**100% Pass Rate**).
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.5.2 Refine print spec button label from Cetak Lembaran to Cetak Spesifikasi`
+  - Tag Versi: `6.5.2`
+
+
 
 
 
