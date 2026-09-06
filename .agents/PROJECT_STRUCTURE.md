@@ -12,7 +12,7 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 .agents/
 +-- PROJECT_STRUCTURE.md        # Dokumen Struktur Projek Utama (Fail ini)
 +-- DESIGN.md                   # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-+-- rules/                      # 17 Fail Peraturan Bernombor (Strict Max 12,000 chars - Bebas Kembang Hingga 20-30 Fail):
++-- rules/                      # 18 Fail Peraturan Bernombor (Strict Max 12,000 chars - Bebas Kembang Hingga 20-30 Fail):
 |   +-- 01_core_rules.md        # Gatekeeper Protocol, Protokol Alatan Pintar & MCP, Git, PRD
 |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3: Asas, Bento Grid & Corak Interaksi
 |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6: Komponen, Input Borang & Senarai Semak
@@ -29,6 +29,8 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 |   +-- 14_supabase_database.md        # Pangkalan Data Supabase, Skema Mobiliti & Dasar Keselamatan RLS
 |   +-- 15_strix_security_audit.md     # Audit Keselamatan Siber Strix & Ujian Penembusan Etika
 |   +-- 16_ai_tooling_and_mcps.md      # Protokol Ekosistem 9 Alatan Pintar & Pelayan MCP WeDRIVE
+|   +-- 17_git_versioning_standard.md  # Piawaian Penemuan Versi Git, Formula SemVer X.Y.Z & Protokol Push
+|   +-- 18_skills_and_workflows_protocol.md # Protokol Mandatori Pemakaian 5 Kemahiran & 5 Alur Kerja Pintar
 +-- skills/                     # 5 Kemahiran Automasi Khusus:
 |   +-- context7/               # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
 |   +-- frontend-ui/            # Rekaan Antaramuka Apple HIG & Bento Grid

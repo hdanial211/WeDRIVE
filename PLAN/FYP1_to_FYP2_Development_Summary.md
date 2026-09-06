@@ -4394,6 +4394,36 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.3.0 Establish 3 new agent skills and 3 automation workflows`
   - Tag Versi: `6.3.0`
 
+---
+
+## [MINOR UPDATE] 190. Penguatkuasaan Mandatori Protokol Pemakaian 5 Kemahiran & 5 Alur Kerja Pintar WeDRIVE (Rule 18) (v6.3.1)
+
+- **Punca Arahan Pengguna**:
+  - *"Kalau macam tu tambah sekali dalam agent supaya pakai"*
+
+- **Tindakan Pelaksanaan (Berasaskan PRD & Kelulusan Pengguna)**:
+  1. **Dokumen PRD & Pelan Pelaksanaan**:
+     - Menyediakan PRD 6 pilar penuh dalam `implementation_plan.md` merangkumi objektif penguatkuasaan aktif, matriks pemakaian fasa kitaran hidup pembangunan, kriteria penerimaan, dan diluluskan secara rasmi oleh pengguna.
+  2. **Penguatkuasaan Peraturan Global (Global Customizations Root)**:
+     - Dicipta fail peraturan global di `/Users/hakim/.gemini/config/rules/skills_and_workflows_protocol.md` yang menetapkan protokol pemakaian aktif instrumen pintar WeDRIVE mengikut fasa (Fasa 1: PRD $\to$ Fasa 2: Frontend UI $\to$ Fasa 3: Supabase Ops & Context7 $\to$ Fasa 4: QA Audit & Playwright $\to$ Fasa 5: Strix Security $\to$ Fasa 6: SemVer Release Push).
+  3. **Penciptaan Fail Peraturan Modular Workspace 18 ([`.agents/rules/18_skills_and_workflows_protocol.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/18_skills_and_workflows_protocol.md))**:
+     - Kandungan fail (5,541 aksara $\le 12,000$) merangkumi:
+       - Matriks pemakaian terperinci bagi 5 kemahiran (`frontend-ui`, `context7`, `supabase-ops`, `playwright-testing`, `strix-security-audit`).
+       - Matriks pelaksanaan bagi 5 alur kerja (`/prd_creator`, `/qa_audit`, `/release_push`, `/graphify`, `/stitch_generation`).
+       - Polisi Sifar Pengabaian (*Zero Abandonment Policy*) yang mengikat ejen AI supaya tidak mengambil jalan pintas.
+  4. **Penyelarasan Indeks & Audit Had Siling 12,000 Aksara**:
+     - `01_core_rules.md`: Dikemas kini Seksyen 7 (Indeks 18 Peraturan) dan diringkaskan teks Seksyen 0–6 bagi menjamin had saiz fail kekal selamat pada 11,066 aksara ($\le 12,000$).
+     - `.agents/PROJECT_STRUCTURE.md` & `docs/PROJECT_STRUCTURE.md`: Dikemas kini pokok direktori kepada 18 fail peraturan bernombor.
+     - **Audit Saiz Pukal**: Kesemua 18 fail peraturan bernombor disahkan mematuhi had siling ketat $\le 12,000$ aksara (100% LULUS).
+
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **36/36 Ujian Lulus (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `6.3.1 Enforce Rule 18 mandatory skills and workflows active usage protocol`
+  - Tag Versi: `6.3.1`
+
+
 
 
 
