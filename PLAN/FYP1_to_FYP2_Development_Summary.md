@@ -4423,6 +4423,50 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.3.1 Enforce Rule 18 mandatory skills and workflows active usage protocol`
   - Tag Versi: `6.3.1`
 
+---
+
+## 🎨 [MINOR UPDATE] 191. Konfigurasi Pelayan Figma MCP & Pengesahan Token Akses Rasmi (v6.3.2)
+
+- **Punca Arahan Pengguna**:
+  - *"n fix jugak figma mcp ni x boleh nak connect"*
+  - *"skrg ni mcp figma x bolehj"*
+  - Pengguna membekalkan Figma Personal Access Token (disimpan dengan selamat di `~/.env` & `mcp_config.json`).
+
+- **Tindakan Penyelesaian & Konfigurasi (Implementation & Authentication)**:
+  1. **Pengesahan Integriti Token Melalui REST API**:
+     - Panggilan pengesahan dijalankan terhadap endpoint `https://api.figma.com/v1/me`.
+     - **Hasil Pengesahan**: Profil akaun pengguna disahkan secara langsung: **Danial Hakim** (`hdanial211@gmail.com`, User ID: `1599674639074043356`).
+  2. **Penyelarasan Pelayan Figma MCP (`~/.gemini/config/mcp_config.json`)**:
+     - Menggantikan konfigurasi URL remote sedia ada yang memulangkan 401 Unauthorized kepada pelayan rasmi `figma-developer-mcp` berasaskan pengangkutan `stdio`:
+       ```json
+       "Figma": {
+         "command": "npx",
+         "args": [
+           "-y",
+           "figma-developer-mcp",
+           "--stdio"
+         ],
+         "env": {
+           "FIGMA_API_KEY": "[SECURED_IN_LOCAL_CONFIG]",
+           "FRAMELINK_TELEMETRY": "off"
+         }
+       }
+       ```
+  3. **Penyimpanan Selamat Token (`~/.env`)**:
+     - Token disimpan secara selamat di bawah `FIGMA_API_KEY` di fail persekitaran pengguna `~/.env` mengikut *Safe Credentials Protocol*.
+  4. **Pengesahan Alatan MCP (*Tools Verification*)**:
+     - Mengesahkan ketersediaan alatan:
+       - `get_figma_data`: Mengambil data susun atur, teks, komponen, dan maklumat visual fail reka bentuk Figma.
+       - `download_figma_images`: Muat turun imej SVG dan PNG secara terus daripada nod Figma ke dalam aset projek.
+
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **36/36 Ujian Lulus (100% Pass Rate)**.
+
+- **Maklumat Git**:
+  - Commit: `6.3.2 Configure Figma MCP server with authenticated personal access token`
+  - Tag Versi: `6.3.2`
+
+
 
 
 
