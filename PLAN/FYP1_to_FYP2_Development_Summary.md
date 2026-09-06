@@ -4561,6 +4561,65 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.4.1 Enforce Apple 3-device single-tab user testing protocol across rules and QA workflow`
   - Tag Versi: `6.4.1`
 
+---
+
+### [MAJOR UPDATE] 194. Pembinaan Sistem 5 Subagent Khas WeDRIVE & Pembaikan Responsif Rentas Peranti Apple (v6.5.0)
+- **Tarikh**: 6 September 2026
+- **Versi**: `6.5.0` (Peningkatan Versi Minor: Penambahan sistem subagents pintar baharu dan pembaikan responsif laman sesawang langsung)
+- **Status**: SELESAI
+- **Fail Terlibat**:
+  - `.agents/plugins/wedrive/plugin.json` (Fail konfigurasi plugin WeDRIVE)
+  - `.agents/plugins/wedrive/agents/wedrive_ui_auditor.md` (Subagent Pakar Apple HIG & Responsif 3-Peranti)
+  - `.agents/plugins/wedrive/agents/playwright_sentinel.md` (Subagent Pakar Ujian E2E Automatik 100% Pass)
+  - `.agents/plugins/wedrive/agents/strix_security_guardian.md` (Subagent Pakar Penembusan Etika & Audit PII Tesis FYP 2)
+  - `.agents/plugins/wedrive/agents/supabase_dba_agent.md` (Subagent Pakar PostgreSQL Supabase & RLS)
+  - `.agents/plugins/wedrive/agents/bm_language_police.md` (Subagent Pakar BM Moden 2026 & Penapis Kata Terlarang)
+  - `/Users/hakim/.gemini/config/plugins/wedrive/*` (Penyegerakan plugin runtime global)
+  - `shared/css/wedrive.css` (Pelarasan FAB chatbot terapung di atas dock, ruang padding bawah, drawer sidebar admin off-canvas, skrol jadual cukai, dan sifar limpahan mendatar)
+  - `shared/js/main.js` (Pengecualian apple-bottom-dock pada portal account & admin, penanda has-apple-dock)
+  - `shared/js/chatbot.js` (Pengecualian chatbot pada account pages, pencegahan ralat 400 token lapuk pelawat awam)
+  - `.agents/PROJECT_STRUCTURE.md` & `docs/PROJECT_STRUCTURE.md` (Pendaftaran direktori plugin & subagents)
+  - `PLAN/FYP1_to_FYP2_Development_Summary.md` (Perekodan log 194)
+
+- **Objektif & Latar Belakang**:
+  - Menyediakan skuad subagent pintar khusus (*Specialized Subagents*) dalam ekosistem plugin Antigravity untuk membantu pembangunan berfokus tanpa beban kognitif umum.
+  - Membaiki 5 isu visual dan responsif pelayar yang dikesan semasa pengauditan langsung di `https://wedrive.website`:
+    1. Perlanggaran butang terapung Pembantu AI (`.chatbot-fab`) dengan Dok Bawah (`.apple-bottom-dock`) pada skrin iPhone.
+    2. Dok Bawah menutupi kandungan carian dan kad kereta semasa diskrol (ketiadaan ruang bawah).
+    3. Bar sisi admin melimpah pada skrin telefon dan butang togol hamburger menutupi 'Log Keluar'.
+    4. Suntikan dok bawah dan chatbot terapung yang tidak diingini pada halaman akaun/log masuk yang sepatutnya berstatus *Standalone* (Rule 04).
+    5. Keratan teks tajuk dan ketiadaan skrol mendatar pada jadual akaun Invois Cukai Rasmi (`receipt.html`), serta sisa sempadan biru sidebar tersembunyi.
+    6. Amaran konsol 400 Bad Request Supabase stale auth token semasa lawatan awam/guest.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pembinaan Plugin & Skuad 5 Subagent WeDRIVE**:
+     - Membina dan mengaktifkan 5 subagent dengan frontmatter standard Antigravity (`name`, `description`, `mainAgent`, `subagent`, `commandExecutionPolicy: auto`) serta panduan persona yang mendalam.
+  2. **Pelarasan Kedudukan Chatbot FAB & Dok Bawah**:
+     - Menaikkan kedudukan FAB ke `bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important` pada media query 768px, menghasilkan jurang selamat 17px di atas Dok Bawah tanpa sebarang perlanggaran.
+     - Menambah kelas `has-apple-dock` pada `body` dengan `padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px))` bagi mengelakkan dok menutupi butang atau kad kereta.
+  3. **Pengasingan Halaman Akaun & Admin (Rule 04)**:
+     - `initAppleDock()` dan `initChatbot()` kini mengecualikan laluan `/account/` dan `/admin/` secara automatik.
+  4. **Bar Sisi Admin Off-Canvas pada Skrin Telefon**:
+     - Mengubah `.sidebar#admin-sidebar` kepada `transform: translateX(-105%) !important; visibility: hidden;` pada `@media (max-width: 900px)` dengan togol laci bulat 1:1 sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`) dan lapisan gelap `.sidebar-overlay`.
+  5. **Penalaan Invois Cukai & Skrol Jadual Cecair**:
+     - Menetapkan saiz fon tajuk secara cecair `clamp(1.15rem, 4.5vw, 1.5rem)` dan menyokong kontena skrol mendatar `.receipt-tax-table-wrap` (`overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 580px;`).
+     - Menetapkan `visibility: hidden` pada bar sisi yang ditutup bagi membasmi 100% kesan garis biru di sempadan kiri skrin Safari/iPhone.
+  6. **Pembersihan Konsol 400 Bad Request Supabase**:
+     - Melindungi fungsi `fetchChatUserData()` dengan semakan `localStorage.getItem('wedrive_session')` supaya pelawat awam tidak memicu cubaan segar semula token yang telah luput.
+  7. **Sifar Limpahan Mendatar (*Zero Horizontal Scroll*)**:
+     - Menetapkan `overflow-x: hidden; max-width: 100vw;` pada elemen `html` dan merampingkan `.navbar` serta `.nav-actions` untuk skrin 393px.
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **36/36 Ujian Lulus (100% Pass Rate)**.
+  - Pengesahan perspektif pengguna pada satu tab melalui Chrome DevTools MCP merentas MacBook (`1440px`), iPad (`820px`), dan iPhone (`393px`) mengesahkan sifar limpahan mendatar, sifar perlanggaran FAB/Dock, dan peralihan laci bar sisi yang sempurna.
+  - Audit siling aksara `wc -m` mengesahkan kesemua 19 fail peraturan dan 5 fail subagent mematuhi had $\le 12,000$ aksara.
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.5.0 Establish 5 specialized WeDRIVE subagents and resolve cross-device mobile responsive issues`
+  - Tag Versi: `6.5.0`
+
+
 
 
 

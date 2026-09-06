@@ -153,6 +153,10 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   background-color: var(--bg-body);
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body, button, input, select, textarea, optgroup, table, th, td {
@@ -8164,14 +8168,17 @@ body.dark aside.sidebar {
 @media (max-width: 900px) {
   .sidebar-toggle {
     display: flex !important;
-    align-items: center;
-    justify-content: center;
+    align-items: center !important;
+    justify-content: center !important;
     position: fixed;
-    bottom: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     left: 20px;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-pill);
+    width: 44px !important;
+    height: 44px !important;
+    aspect-ratio: 1 / 1 !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    box-sizing: border-box !important;
     background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.9));
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
@@ -8179,7 +8186,7 @@ body.dark aside.sidebar {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     color: var(--text-primary);
     cursor: pointer;
-    z-index: 1002;
+    z-index: 10002;
     transition: transform 0.2s var(--ease-apple), background 0.2s;
   }
 
@@ -8192,6 +8199,27 @@ body.dark aside.sidebar {
 
   .sidebar-toggle:active {
     transform: scale(0.92);
+  }
+
+  .sidebar#admin-sidebar {
+    transform: translateX(-105%) !important;
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s !important;
+    z-index: 10001 !important;
+  }
+
+  .sidebar#admin-sidebar.open {
+    transform: translateX(0) !important;
+    visibility: visible !important;
+  }
+
+  main.main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  main.main .content {
+    padding: 16px !important;
   }
 }
 
@@ -8554,16 +8582,22 @@ table tr:hover td {
     align-items: center;
     justify-content: center;
   }
-  .customer-sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s var(--ease-apple);
+  .customer-sidebar,
+  .sidebar#customer-sidebar {
+    transform: translateX(-105%) !important;
+    visibility: hidden;
+    transition: transform 0.3s var(--ease-apple), visibility 0.3s !important;
+    z-index: 10001 !important;
   }
-  .customer-sidebar.open {
-    transform: translateX(0);
+  .customer-sidebar.open,
+  .sidebar#customer-sidebar.open {
+    transform: translateX(0) !important;
+    visibility: visible !important;
   }
   .customer-main {
-    margin-left: 0;
-    padding: 24px 20px 60px;
+    margin-left: 0 !important;
+    padding: 20px 16px calc(84px + env(safe-area-inset-bottom, 16px)) !important;
+    width: 100% !important;
   }
   .sidebar-overlay {
     position: fixed;
@@ -8633,11 +8667,26 @@ table tr:hover td {
     padding: 32px 16px;
   }
   .navbar {
-    padding: 0 16px;
+    padding: 0 12px;
     height: 56px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100vw;
   }
   .nav-links {
     display: none;
+  }
+  .nav-actions {
+    gap: 6px !important;
+  }
+  .nav-actions .btn-primary {
+    padding: 0 10px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+  }
+  .nav-brand-text .brand-sub,
+  .nav-brand .brand-badge {
+    display: none !important;
   }
   .hero.guest-hero {
     padding: 32px 18px 24px;
@@ -8707,6 +8756,23 @@ table tr:hover td {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+  }
+
+  /* Mobile Clearance for Dock & Elevated AI Chatbot */
+  body.has-apple-dock {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 16px)) !important;
+  }
+
+  .chatbot-fab {
+    bottom: calc(88px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 18px !important;
+  }
+
+  .chatbot-panel {
+    bottom: calc(146px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+    width: calc(100vw - 28px) !important;
+    max-width: 380px !important;
   }
 }
 
@@ -12818,13 +12884,17 @@ body.dark .receipt-tax-table-title-bar {
   border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
+.receipt-tax-table-wrap,
+.receipt-tax-table-wrapper,
 .receipt-table-scroll-container {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .receipt-tax-table {
   width: 100%;
+  min-width: 580px;
   border-collapse: collapse;
   font-size: 13px;
   text-align: left;
@@ -13268,6 +13338,64 @@ body.dark .receipt-action-btn.btn-secondary:hover {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Responsive Styles for Official Tax Invoice on Tablet & Mobile */
+@media (max-width: 768px) {
+  .receipt-container {
+    padding: 12px 12px 100px 12px !important;
+  }
+  .receipt-hero-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 18px !important;
+    padding: 20px 16px !important;
+  }
+  .receipt-meta-right {
+    align-items: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+  .receipt-inv-title-main {
+    font-size: clamp(1.15rem, 4.5vw, 1.5rem) !important;
+    word-break: break-word !important;
+  }
+  .receipt-inv-meta-grid {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  .receipt-content-body {
+    padding: 20px 14px 28px !important;
+    gap: 20px !important;
+  }
+  .receipt-parties-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .receipt-manifest-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .receipt-route-flex {
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+  .receipt-authenticity-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 18px !important;
+  }
+  .receipt-actions-dock {
+    flex-wrap: wrap !important;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+    width: calc(100% - 28px) !important;
+    padding: 8px 12px !important;
+    justify-content: center !important;
+  }
+  .receipt-action-btn {
+    flex: 1 1 130px !important;
+    justify-content: center !important;
+  }
 }
 
 /* Print Optimization for Formal A4 Output */

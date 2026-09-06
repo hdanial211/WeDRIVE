@@ -88,6 +88,9 @@
   function initChatbot() {
     if (document.getElementById('chatbot-fab')) return;
 
+    // Per Rule 04: Account (login, signup, forgot-pw) is Standalone without floating chatbot
+    if (window.location.pathname.indexOf('/account/') !== -1) return;
+
     var placeholder = document.getElementById('chatbot-placeholder');
     if (!placeholder) {
       if (document.body) {
@@ -155,9 +158,19 @@ async function fetchChatUserData() {
       return null;
     }
 
-    // Get current auth session
-    var sessionResult = await window.supabaseClient.auth.getSession();
-    if (!sessionResult.data.session) return null;
+    var localSession = localStorage.getItem('wedrive_session');
+    if (!localSession) {
+      // Guest user: avoid querying Supabase session to prevent stale token 400 Bad Request
+      return null;
+    }
+
+    if (!window.supabaseClient || !window.supabaseClient.auth) return null;
+
+    // Get current auth session safely
+    var sessionResult = await window.supabaseClient.auth.getSession().catch(function () {
+      return { data: {} };
+    });
+    if (!sessionResult || !sessionResult.data || !sessionResult.data.session) return null;
 
     var user = sessionResult.data.session.user;
     var authUid = user.id;

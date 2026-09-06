@@ -1332,6 +1332,9 @@
     if (document.getElementById('apple-bottom-dock')) return;
 
     var path = window.location.pathname;
+    // Standalone account and admin portals do not use customer bottom dock (Rule 04)
+    if (path.indexOf('/account/') !== -1 || path.indexOf('/admin/') !== -1) return;
+
     var isHome = path.endsWith('index.html') || path === '/' || path.endsWith('/AI%20CAR%20RENTAL%20SYSTEM/') || path.endsWith('/AI CAR RENTAL SYSTEM/');
     var isPricing = path.indexOf('pricing.html') !== -1;
     var isMelaka = path.indexOf('explore-melaka.html') !== -1;
@@ -1377,6 +1380,7 @@
       '</a>'
     ].join('');
 
+    document.body.classList.add('has-apple-dock');
     document.body.appendChild(dock);
   }
 
