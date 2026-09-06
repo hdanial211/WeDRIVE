@@ -4731,6 +4731,52 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.3 Remake car-detail page to clean Apple Bento layout with zero telemetry bloat`
   - Tag Versi: `6.5.3`
 
+---
+
+### 198. [MINOR UPDATE] Versi 6.5.4: Pembaikan Studio 360° Luaran & Dalaman, Galeri Foto HD, dan Penstrukturan Semula 2-Kad Bento Lapang Bebas Kesesakan (Uncrowded HIG Layout)
+- **Tarikh**: 7 September 2026
+- **Modul Terlibat**:
+  - `admin/pages/car/car-detail/car-detail.html`
+  - `admin/js/car-detail.js`
+  - `shared/css/wedrive.css`
+  - `implementation_plan.md`
+
+- **Objektif & Masalah Dikenal Pasti**:
+  1. Pengguna meminta ruang kosong putih/kelabu di sisi foto 360° luaran dihapuskan dan diisi penuh dari hujung ke hujung.
+  2. Jajaran baris lokasi penyerahan & pulangan sebelum ini terputus ke dua baris dengan jajaran kiri yang kurang kemas.
+  3. Putaran 360° ruang dalaman tidak boleh diseret (*drag/swipe*) dan kekurangan sudut putaran berterusan.
+  4. Paparan galeri foto sebelum ini terlalu kecil (thumbnail 80px) dan tiada pentas pameran foto HD utama.
+  5. Pengguna secara khusus meminta halaman ini tidak sesak (*uncrowded*) dan mesra pengguna (*user-friendly*), menyingkirkan trivia kejuruteraan yang tidak relevan dengan sewaan.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Pentas 360° Luaran Penuh Hujung ke Hujung (*Edge-to-Edge View*)**:
+     - Menetapkan `.studio-canvas-stage` kepada `object-fit: cover !important; width: 100%; height: 100%;` dan latar kontena kepada Obsidian Black `#0c0c0e`, menghapuskan sebarang ruang kosong di sisi kenderaan.
+  2. **Penstrukturan Semula Bento 4 Kad $\to$ 2 Kad Lapang Praktikal (*Uncrowded 2-Bento Architecture*)**:
+     - Membuang 2 kad kejuruteraan mekanikal yang sarat dan remeh (berat kerb, jarak roda, dimensi mm kenderaan, susunan silinder enjin, liter tangki bahan api).
+     - Memusatkan perhatian kepada **2 Kad Bento Simetri Lapang**:
+       - **Kad 1 (Ringkasan Sewaan & Spesifikasi Asas)**: 9 baris metrik sewaan praktikal (Kadar sewa rasmi, deposit keselamatan, had sewa minimum, transmisi, jenis bahan api, kapasiti tempat duduk & ruang but, polisi perbatuan tanpa had, lokasi HQ Melaka, status ketersediaan aktif).
+       - **Kad 2 (Ciri Keselesaan & Keselamatan Pintar)**: Matriks 8 lencana Apple berkilat untuk kelengkapan penting audit WeDRIVE (CarPlay/Android Auto, Kamera 360°, Dashcam 4K, Keyless Push Start, Tinted JPJ, Sensor Ultrasonik, Brek AEB, Bantuan Lorong LKA).
+     - Menyelaraskan latar kad menggunakan `--bg-surface` dan `--border-subtle` bagi memastikan kontras teks sempurna pada Mod Siang dan Mod Obsidian Malam.
+  3. **Enjin Putaran 360° Ruang Dalaman Maya Interaktif (*Interactive 360° Drag & Pan Engine*)**:
+     - Mengintegrasikan putaran berterusan 4 sudut mendatar (`pano_f.jpg` 0° $\leftrightarrow$ `pano_r.jpg` 90° $\leftrightarrow$ `pano_b.jpg` 180° $\leftrightarrow$ `pano_l.jpg` 270°) berserta sudut menegak bumbung & konsol.
+     - Melaksanakan pengendali seretan tetikus (*mouse drag*) dan leretan sentuh (*touch swipe*) pada `#studio-interior-stage`.
+     - Menyediakan bar HUD terapung minimalis dengan butang pusing kiri/kanan, fokus hadapan, bumbung, konsol, dan pelarasan saiz (*zoom*).
+  4. **Pentas Galeri Foto HD Penuh 520px (*Expansive HD Showcase*)**:
+     - Menggantikan thumbnail kecil dengan pentas foto HD utama setinggi 520px (`#gallery-hero-wrapper`), dilengkapi lencana foto dinamik (`#gallery-photo-badge`), butang anak panah navigasi bulat 1:1 sempurna, butang skrin penuh, dan jalur thumbnail aktif di bawahnya.
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Disahkan secara langsung pada tab pelayar tunggal sedia ada (Port 5504):
+    - **MacBook (1440x900)**: Studio 360° terisi kemas dari hujung ke hujung, 2 kad Bento simetri seimbang, sifar limpahan (`hasHorizontalScroll: false`), 0 ovals (`ovals: []`).
+    - **iPad (820x1180)**: Susun atur kad Bento mengalir lancar, zon sentuh HUD selesa, sifar limpahan.
+    - **iPhone (393x852)**: Paparan kad 1-lajur responsif, saiz fon input $\ge 16$px, pentas studio mengecil dinamik (300px), sifar bujur.
+  - Ujian Playwright CLI: Menepati syarat kelulusan mutlak 100% (**36/36 Passed**).
+  - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara di semua 19 fail.
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.5.4 Enhance 360 studio stage to edge-to-edge view, enable interior drag rotation, upgrade HD gallery, and consolidate to 2 uncrowded bento cards`
+  - Tag Versi: `6.5.4`
+
 
 
 

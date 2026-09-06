@@ -106,6 +106,11 @@
             <span>RUANG DALAMAN MAYA 360°</span>
           </div>
 
+          <div class="studio-angle-indicator" id="cockpit-angle-pill">
+            <span class="material-icons-round fs-14 text-purple">explore</span>
+            <span id="cockpit-angle-text">0° · Pandangan Hadapan</span>
+          </div>
+
           <img id="cockpit-canvas" class="cockpit-canvas" src="" alt="360 Interior View" />
           <div id="cockpit-fallback" class="flex-center flex-column gap-8 text-center p-24 hidden">
             <span class="material-icons-round fs-48 text-purple">videocam_off</span>
@@ -115,14 +120,21 @@
 
           <!-- Virtual Cockpit HUD Controls -->
           <div class="cockpit-overlay-hud" id="cockpit-hud">
-            <button class="cockpit-hud-btn" onclick="cockpitPan('left')" title="Pusing Kiri" aria-label="Pusing Kiri">
+            <button class="cockpit-hud-btn" onclick="cockpitPanStep(-1)" title="Pusing Kiri" aria-label="Pusing Kiri">
               <span class="material-icons-round fs-18">arrow_back</span>
             </button>
-            <button class="cockpit-hud-btn" onclick="cockpitPan('center')" title="Pandangan Tengah" aria-label="Pandangan Tengah">
+            <button class="cockpit-hud-btn" onclick="cockpitSetView('front')" title="Pandangan Hadapan (0°)" aria-label="Pandangan Hadapan">
               <span class="material-icons-round fs-18">center_focus_strong</span>
             </button>
-            <button class="cockpit-hud-btn" onclick="cockpitPan('right')" title="Pusing Kanan" aria-label="Pusing Kanan">
+            <button class="cockpit-hud-btn" onclick="cockpitPanStep(1)" title="Pusing Kanan" aria-label="Pusing Kanan">
               <span class="material-icons-round fs-18">arrow_forward</span>
+            </button>
+            <div class="border-left-subtle h-20 mx-4"></div>
+            <button class="cockpit-hud-btn" onclick="cockpitSetView('up')" title="Bumbung & Sunroof" aria-label="Bumbung">
+              <span class="material-icons-round fs-18">vertical_align_top</span>
+            </button>
+            <button class="cockpit-hud-btn" onclick="cockpitSetView('down')" title="Konsol Tengah" aria-label="Konsol">
+              <span class="material-icons-round fs-18">vertical_align_bottom</span>
             </button>
             <div class="border-left-subtle h-20 mx-4"></div>
             <button class="cockpit-hud-btn" onclick="cockpitZoom(1.2)" title="Dekatkan (Zoom In)" aria-label="Dekatkan">
@@ -134,21 +146,37 @@
           </div>
         </div>
 
-        <!-- STAGE 3: PHOTO GALLERY -->
-        <div class="hidden p-20" id="studio-gallery-stage">
-          <div class="car-thumbnails" id="cd-thumbnails"></div>
+        <!-- STAGE 3: PHOTO GALLERY (EXPANSIVE HD SHOWCASE) -->
+        <div class="studio-gallery-stage-wrapper hidden" id="studio-gallery-stage">
+          <div class="gallery-hero-wrapper" id="gallery-hero-stage">
+            <img id="gallery-hero-img" class="gallery-hero-img" src="" alt="Foto Kereta WeDRIVE" />
+            <div class="studio-watermark-360">
+              <span class="material-icons-round fs-16">photo_library</span>
+              <span id="gallery-photo-badge">FOTO 1 / 4</span>
+            </div>
+            <button type="button" class="gallery-nav-btn prev" onclick="navigateGallery(-1)" title="Foto Sebelumnya" aria-label="Foto Sebelumnya">
+              <span class="material-icons-round">chevron_left</span>
+            </button>
+            <button type="button" class="gallery-nav-btn next" onclick="navigateGallery(1)" title="Foto Seterusnya" aria-label="Foto Seterusnya">
+              <span class="material-icons-round">chevron_right</span>
+            </button>
+            <button type="button" class="studio-fullscreen-btn" onclick="toggleFullscreenGallery()" title="Skrin Penuh" aria-label="Skrin Penuh">
+              <span class="material-icons-round fs-20">fullscreen</span>
+            </button>
+          </div>
+          <div class="gallery-thumbnails-strip" id="cd-thumbnails"></div>
         </div>
       </div>
 
-      <!-- 3. ESSENTIAL RENTAL SPECIFICATIONS BENTO GRID (4-CARD BALANCED HIG) -->
+      <!-- 3. ESSENTIAL RENTAL SPECIFICATIONS BENTO GRID (2-CARD SPACIOUS HIG) -->
       <div class="specs-bento-grid reveal-on-scroll">
 
-        <!-- CARD 1: COMMERCIAL PRICING & HQ LOGISTICS -->
+        <!-- KAD 1: RINGKASAN SEWAAN & SPESIFIKASI ASAS -->
         <div class="spec-bento-card col-span-6">
           <div class="spec-card-header">
             <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">payments</span>
-              <span>Kadar Sewaan & Pangkalan HQ</span>
+              <span class="material-icons-round text-primary-accent">receipt_long</span>
+              <span>Ringkasan Sewaan & Spesifikasi Asas</span>
             </h3>
             <span class="apple-category-pill text-green" id="spec-rate-badge">RM 450/hari</span>
           </div>
@@ -166,8 +194,24 @@
               <span class="spec-metric-val" id="spec-min-days">1 Hari</span>
             </div>
             <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">tune</span> Transmisi & Pemanduan</span>
+              <span class="spec-metric-val" id="spec-trans">8-Kelajuan Steptronic Sport</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">local_gas_station</span> Jenis Bahan Api</span>
+              <span class="spec-metric-val" id="spec-fuel">Petrol (Disyorkan RON 97 / RON 95)</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">airline_seat_recline_normal</span> Kapasiti Penumpang & Beg</span>
+              <span class="spec-metric-val" id="spec-capacity">5 Tempat Duduk · 480 Liter But</span>
+            </div>
+            <div class="spec-metric-row">
+              <span class="spec-metric-label"><span class="material-icons-round fs-16">all_inclusive</span> Polisi Perbatuan</span>
+              <span class="spec-metric-val text-green" id="spec-mileage">Tanpa Had (Unlimited KM)</span>
+            </div>
+            <div class="spec-metric-row">
               <span class="spec-metric-label"><span class="material-icons-round fs-16">place</span> Lokasi Penyerahan & Pulangan</span>
-              <span class="spec-metric-val" id="spec-hq-location">Pusat Operasi Utama WeDRIVE (HQ Melaka)</span>
+              <span class="spec-metric-val" id="spec-hq-location">Pusat Operasi Utama (HQ Melaka)</span>
             </div>
             <div class="spec-metric-row">
               <span class="spec-metric-label"><span class="material-icons-round fs-16">verified</span> Status Ketersediaan</span>
@@ -176,78 +220,12 @@
           </div>
         </div>
 
-        <!-- CARD 2: DIMENSIONS & PASSENGER CAPACITIES -->
+        <!-- KAD 2: CIRI KESELESAAN & KESELAMATAN PINTAR -->
         <div class="spec-bento-card col-span-6">
           <div class="spec-card-header">
             <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">aspect_ratio</span>
-              <span>Dimensi & Kapasiti Penumpang</span>
-            </h3>
-            <span class="apple-category-pill" id="spec-seats-badge">5 Tempat Duduk</span>
-          </div>
-          <div class="spec-metrics-rows">
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">airline_seat_recline_normal</span> Bilangan Tempat Duduk</span>
-              <span class="spec-metric-val" id="spec-seats-count">5 Tempat Duduk (Kulit Vernasca)</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">luggage</span> Ruang But / Kargo</span>
-              <span class="spec-metric-val" id="spec-boot">480 Liter (Power Boot)</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">scale</span> Berat Kerb Kereta</span>
-              <span class="spec-metric-val" id="spec-weight">1,570 kg</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">straighten</span> Panjang × Lebar × Tinggi</span>
-              <span class="spec-metric-val" id="spec-dims">4,709 × 1,827 × 1,435 mm</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">sync_alt</span> Jarak Antara Roda</span>
-              <span class="spec-metric-val" id="spec-wheelbase">2,851 mm</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 3: POWERTRAIN, TRANSMISSION & FUEL -->
-        <div class="spec-bento-card col-span-6">
-          <div class="spec-card-header">
-            <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">speed</span>
-              <span>Prestasi, Enjin & Bahan Api</span>
-            </h3>
-            <span class="apple-category-pill" id="spec-engine-badge">2.0L Turbo</span>
-          </div>
-          <div class="spec-metrics-rows">
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">memory</span> Konfigurasi Enjin</span>
-              <span class="spec-metric-val" id="spec-engine-cfg">4-Silinder Sebaris TwinPower Turbo</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">tune</span> Sistem Transmisi</span>
-              <span class="spec-metric-val" id="spec-trans-type">8-Kelajuan Steptronic Sport</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">local_gas_station</span> Jenis Bahan Api</span>
-              <span class="spec-metric-val" id="spec-fuel-type">Petrol (RON 97 / RON 95)</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">opacity</span> Kapasiti Tangki</span>
-              <span class="spec-metric-val" id="spec-tank">59 Liter</span>
-            </div>
-            <div class="spec-metric-row">
-              <span class="spec-metric-label"><span class="material-icons-round fs-16">all_inclusive</span> Polisi Perbatuan</span>
-              <span class="spec-metric-val text-green">Tanpa Had (Unlimited KM)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 4: EQUIPMENT MATRIX & ACTIVE SAFETY -->
-        <div class="spec-bento-card col-span-6">
-          <div class="spec-card-header">
-            <h3 class="spec-card-title">
-              <span class="material-icons-round text-primary-accent">verified</span>
-              <span>Kelengkapan & Keselamatan Aktif</span>
+              <span class="material-icons-round text-primary-accent">verified_user</span>
+              <span>Ciri Keselesaan & Keselamatan Pintar</span>
             </h3>
             <span class="apple-category-pill">Standard Audit WeDRIVE Melaka</span>
           </div>

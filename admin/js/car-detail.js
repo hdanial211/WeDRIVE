@@ -21,8 +21,20 @@ let autoSpinTimer = null;
 let isAutoSpinning = false;
 
 // 360 Interior Cockpit State
-let currentCockpitPanel = 'pano_f.jpg';
+const cockpitHorizontalPanels = [
+  { file: 'pano_f.jpg', angle: '0° · Pandangan Hadapan' },
+  { file: 'pano_r.jpg', angle: '90° · Sisi Kanan / Pemandu' },
+  { file: 'pano_b.jpg', angle: '180° · Pandangan Belakang' },
+  { file: 'pano_l.jpg', angle: '270° · Sisi Kiri / Penumpang' }
+];
+let currentCockpitIndex = 0;
+let isDraggingCockpit = false;
+let startCockpitX = 0;
 let cockpitZoomLevel = 1.0;
+
+// Photo Gallery State
+let galleryImages = [];
+let currentGalleryIndex = 0;
 
 // Resolve any image string to a valid src
 function resolveImgSrc(img) {
@@ -171,33 +183,23 @@ function setupCarSpecs(car) {
   const isAlphard = car.name.includes('Alphard');
   const isAxia = car.name.includes('AXIA');
 
-  // Engine & Powertrain
-  setText('spec-engine-badge', isAxia ? '1.0L VVT-i' : isRaptor ? '2.0L Bi-Turbo' : isAlphard ? '2.5L Dual VVT-i' : '2.0L TwinPower Turbo');
-  setText('spec-engine-cfg', isAxia ? '3-Silinder Sebaris 1KR-VE DOHC' : isRaptor ? '4-Silinder Bi-Turbo Diesel Intercooler' : '4-Silinder Sebaris Turbo DOHC 16V');
-  setText('spec-displacement', isAxia ? '998 cc' : isAlphard ? '2,494 cc' : '1,998 cc');
-  setText('spec-hp', isAxia ? '67 hp @ 6,000 rpm' : isRaptor ? '210 hp @ 3,750 rpm' : isBMW ? '184 hp @ 5,000 rpm' : isMerc ? '221 hp @ 5,500 rpm' : '241 hp @ 5,000 rpm');
-  setText('spec-torque', isAxia ? '91 Nm @ 4,400 rpm' : isRaptor ? '500 Nm @ 1,750 rpm' : isBMW ? '300 Nm @ 1,350 rpm' : '350 Nm @ 1,600 rpm');
-  setText('spec-accel', isAxia ? '14.2 Saat' : isRaptor ? '9.0 Saat' : isBMW ? '7.1 Saat' : isGolf ? '6.2 Saat' : '6.9 Saat');
-
-  // Transmission & Fuel
-  setText('spec-trans-badge', car.transmission || 'Automatik');
-  setText('spec-trans-type', isAxia ? 'D-CVT Automatik' : isRaptor ? '10-Kelajuan Automatik dengan SelectShift' : '8-Kelajuan Steptronic Sport');
-  setText('spec-drivetrain', isRaptor ? 'Four-Wheel Drive (4WD Terrain Mgmt)' : isBMW ? 'Rear-Wheel Drive (RWD)' : isAlphard ? 'Front-Wheel Drive (FWD)' : 'Front-Wheel Drive (FWD)');
-  setText('spec-fuel-type', isRaptor ? 'Diesel Euro 5 B10/B20' : 'Petrol (Disyorkan RON 97 / RON 95)');
-  setText('spec-tank', isAxia ? '33 Liter' : isRaptor ? '80 Liter' : isAlphard ? '75 Liter' : '59 Liter');
-  setText('spec-consumption', isAxia ? '4.5 L / 100 km' : isRaptor ? '8.9 L / 100 km' : '6.4 L / 100 km');
-
-  // Dimensions & Capacities
-  setText('spec-seats-badge', `${car.seats || 5} Tempat Duduk`);
-  setText('spec-seats-count', `${car.seats || 5} Tempat Duduk Ergonomik`);
-  setText('spec-boot', isAlphard ? '1,900 Liter (Stow-away)' : isRaptor ? 'Muatan Kargo 1,180 kg' : isAxia ? '268 Liter' : '480 Liter (Power Boot)');
-  setText('spec-weight', isRaptor ? '2,475 kg' : isAlphard ? '2,110 kg' : isAxia ? '870 kg' : '1,570 kg');
-  setText('spec-dims', isRaptor ? '5,381 × 2,028 × 1,922 mm' : isAlphard ? '4,945 × 1,850 × 1,895 mm' : isAxia ? '3,760 × 1,665 × 1,505 mm' : '4,709 × 1,827 × 1,435 mm');
-  setText('spec-wheelbase', isRaptor ? '3,270 mm' : isAlphard ? '3,000 mm' : isAxia ? '2,525 mm' : '2,851 mm');
-
-  // Commercial
+  // Commercial & Rental Essentials
   setText('spec-deposit', isRaptor || isAlphard || isBMW ? 'RM 500 (Boleh Dikembalikan)' : 'RM 200 (Boleh Dikembalikan)');
   setText('spec-min-days', `${car.min_days || 1} Hari`);
+  setText('spec-hq-location', 'Pusat Operasi Utama (HQ Melaka)');
+  setText('spec-active-badge', (car.status || 'Available').toLowerCase() === 'available' ? 'Aktif & Sah Disewa' : 'Sedang Disewa');
+
+  // Practical core specs (Uncrowded, user-friendly)
+  const transText = isAxia ? 'D-CVT Automatik' : isRaptor ? '10-Kelajuan Automatik (4WD)' : isBMW ? '8-Kelajuan Steptronic Sport' : `${car.transmission || 'Automatik'}`;
+  setText('spec-trans', transText);
+
+  const fuelText = isRaptor ? 'Diesel Euro 5 (B10/B20)' : 'Petrol (Disyorkan RON 97 / RON 95)';
+  setText('spec-fuel', fuelText);
+
+  const bootSize = isAlphard ? '1,900 Liter (Stow-away)' : isRaptor ? 'Muatan Kargo 1,180 kg' : isAxia ? '268 Liter' : '480 Liter (Power Boot)';
+  setText('spec-capacity', `${car.seats || 5} Tempat Duduk · ${bootSize}`);
+
+  setText('spec-mileage', 'Tanpa Had (Unlimited KM)');
 }
 
 function setText(id, text) {
@@ -390,7 +392,7 @@ document.addEventListener('fullscreenchange', () => {
 });
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   4. STUDIO 360° INTERIOR VIRTUAL COCKPIT ENGINE
+   4. STUDIO 360° INTERIOR VIRTUAL COCKPIT ENGINE (DRAG & ROTATE)
    ───────────────────────────────────────────────────────────────────────────── */
 function setupInteriorCockpit(car) {
   const cockpitCanvas = document.getElementById('cockpit-canvas');
@@ -405,8 +407,9 @@ function setupInteriorCockpit(car) {
     if (fallback) fallback.classList.add('hidden');
     if (hud) hud.classList.remove('hidden');
 
-    currentCockpitPanel = 'pano_f.jpg';
-    cockpitCanvas.src = resolveImgSrc(`Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/${currentCockpitPanel}`);
+    currentCockpitIndex = 0;
+    renderCockpitFrame();
+    bindCockpitDragEvents();
   } else {
     cockpitCanvas.style.display = 'none';
     if (fallback) fallback.classList.remove('hidden');
@@ -414,18 +417,38 @@ function setupInteriorCockpit(car) {
   }
 }
 
-function cockpitPan(direction) {
+function renderCockpitFrame() {
   const cockpitCanvas = document.getElementById('cockpit-canvas');
+  const angleText = document.getElementById('cockpit-angle-text');
   if (!cockpitCanvas) return;
 
-  const isBMW = activeCar && activeCar.name.includes('BMW');
-  if (!isBMW) return;
+  const panel = cockpitHorizontalPanels[currentCockpitIndex];
+  cockpitCanvas.src = resolveImgSrc(`Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/${panel.file}`);
+  if (angleText) {
+    angleText.textContent = panel.angle;
+  }
+}
 
-  if (direction === 'left') currentCockpitPanel = 'pano_l.jpg';
-  else if (direction === 'right') currentCockpitPanel = 'pano_r.jpg';
-  else currentCockpitPanel = 'pano_f.jpg';
+function cockpitPanStep(step) {
+  currentCockpitIndex = (currentCockpitIndex + step + 4) % 4;
+  renderCockpitFrame();
+}
 
-  cockpitCanvas.src = resolveImgSrc(`Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/${currentCockpitPanel}`);
+function cockpitSetView(view) {
+  const cockpitCanvas = document.getElementById('cockpit-canvas');
+  const angleText = document.getElementById('cockpit-angle-text');
+  if (!cockpitCanvas) return;
+
+  if (view === 'up') {
+    cockpitCanvas.src = resolveImgSrc('Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/pano_u.jpg');
+    if (angleText) angleText.textContent = 'Pandangan Bumbung & Sunroof';
+  } else if (view === 'down') {
+    cockpitCanvas.src = resolveImgSrc('Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/pano_d.jpg');
+    if (angleText) angleText.textContent = 'Konsol Tengah & Tuil Gear';
+  } else {
+    currentCockpitIndex = 0;
+    renderCockpitFrame();
+  }
 }
 
 function cockpitZoom(level) {
@@ -436,30 +459,123 @@ function cockpitZoom(level) {
   }
 }
 
+function bindCockpitDragEvents() {
+  const stage = document.getElementById('studio-interior-stage');
+  if (!stage || stage._cockpitDragBound) return;
+  stage._cockpitDragBound = true;
+
+  // Mouse Drag
+  stage.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.cockpit-overlay-hud') || e.target.closest('.studio-watermark-360') || e.target.closest('.studio-angle-indicator')) return;
+    isDraggingCockpit = true;
+    startCockpitX = e.clientX;
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDraggingCockpit) return;
+    const deltaX = e.clientX - startCockpitX;
+    const threshold = 60; // Pixels threshold for smooth step
+    if (Math.abs(deltaX) > threshold) {
+      const step = deltaX > 0 ? -1 : 1;
+      cockpitPanStep(step);
+      startCockpitX = e.clientX;
+    }
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDraggingCockpit = false;
+  });
+
+  // Touch Swipe
+  stage.addEventListener('touchstart', (e) => {
+    if (e.target.closest('.cockpit-overlay-hud')) return;
+    isDraggingCockpit = true;
+    startCockpitX = e.touches[0].clientX;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!isDraggingCockpit) return;
+    const deltaX = e.touches[0].clientX - startCockpitX;
+    const threshold = 55;
+    if (Math.abs(deltaX) > threshold) {
+      const step = deltaX > 0 ? -1 : 1;
+      cockpitPanStep(step);
+      startCockpitX = e.touches[0].clientX;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    isDraggingCockpit = false;
+  });
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
-   5. PHOTO GALLERY & MODE SWITCHER
+   5. EXPANSIVE HD PHOTO GALLERY & MODE SWITCHER
    ───────────────────────────────────────────────────────────────────────────── */
 function setupPhotoGallery(car) {
-  const container = document.getElementById('cd-thumbnails');
-  if (!container) return;
+  const strip = document.getElementById('cd-thumbnails');
+  const heroImg = document.getElementById('gallery-hero-img');
+  const badge = document.getElementById('gallery-photo-badge');
 
-  if (car.images && car.images.length > 0) {
-    container.innerHTML = car.images.map((img, idx) => `
-      <div class="car-thumb ${idx === 0 ? 'active' : ''}" onclick="previewGalleryImage(this, '${resolveImgSrc(img)}')">
-        <img src="${resolveImgSrc(img)}" alt="${car.name} Angle ${idx + 1}" />
-      </div>
-    `).join('');
+  galleryImages = car.images && car.images.length > 0 ? car.images : [];
+  currentGalleryIndex = 0;
+
+  if (galleryImages.length > 0) {
+    if (heroImg) heroImg.src = resolveImgSrc(galleryImages[0]);
+    if (badge) badge.textContent = `FOTO 1 / ${galleryImages.length}`;
+
+    if (strip) {
+      strip.innerHTML = galleryImages.map((img, idx) => `
+        <div class="gallery-thumb-item ${idx === 0 ? 'active' : ''}" onclick="selectGalleryPhoto(${idx})" title="Foto ${idx + 1}">
+          <img src="${resolveImgSrc(img)}" alt="${car.name} Foto ${idx + 1}" />
+        </div>
+      `).join('');
+    }
   } else {
-    container.innerHTML = '<p class="text-secondary fs-13">Tiada foto galeri tambahan.</p>';
+    if (heroImg) heroImg.src = '../../../../shared/logo/wedrive-icon.png';
+    if (strip) strip.innerHTML = '<p class="text-secondary fs-13">Tiada foto galeri tambahan.</p>';
   }
 }
 
-function previewGalleryImage(el, src) {
-  document.querySelectorAll('.car-thumb').forEach(t => t.classList.remove('active'));
-  if (el) el.classList.add('active');
+function selectGalleryPhoto(index) {
+  if (!galleryImages || galleryImages.length === 0) return;
+  currentGalleryIndex = index;
 
-  const stageImg = document.getElementById('studio-canvas-stage');
-  if (stageImg) stageImg.src = src;
+  const heroImg = document.getElementById('gallery-hero-img');
+  const badge = document.getElementById('gallery-photo-badge');
+
+  if (heroImg) {
+    heroImg.style.opacity = '0.3';
+    setTimeout(() => {
+      heroImg.src = resolveImgSrc(galleryImages[index]);
+      heroImg.style.opacity = '1';
+    }, 120);
+  }
+
+  if (badge) {
+    badge.textContent = `FOTO ${index + 1} / ${galleryImages.length}`;
+  }
+
+  document.querySelectorAll('.gallery-thumb-item').forEach((item, idx) => {
+    item.classList.toggle('active', idx === index);
+  });
+}
+
+function navigateGallery(dir) {
+  if (!galleryImages || galleryImages.length === 0) return;
+  const nextIdx = (currentGalleryIndex + dir + galleryImages.length) % galleryImages.length;
+  selectGalleryPhoto(nextIdx);
+}
+
+function toggleFullscreenGallery() {
+  const heroStage = document.getElementById('gallery-hero-stage') || document.getElementById('studio-gallery-stage');
+  if (!heroStage) return;
+
+  if (!document.fullscreenElement) {
+    heroStage.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
+  } else {
+    document.exitFullscreen().catch(err => console.log('Exit fullscreen error:', err));
+  }
 }
 
 function switchStudioMode(mode) {
@@ -478,6 +594,10 @@ function switchStudioMode(mode) {
   if (extStage) extStage.classList.toggle('hidden', mode !== 'exterior');
   if (intStage) intStage.classList.toggle('hidden', mode !== 'interior');
   if (galStage) galStage.classList.toggle('hidden', mode !== 'gallery');
+
+  if (mode === 'gallery' && galleryImages.length > 0) {
+    selectGalleryPhoto(currentGalleryIndex);
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

@@ -24,9 +24,9 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1788670980.998148,
-    "seen": 1788671210.501667,
-    "ast_hash": "cd39392a64d6d8b09fdbbf7409d3a167",
+    "mtime": 1788714012.3922198,
+    "seen": 1788714250.560299,
+    "ast_hash": "7de2b71fd56106a7c3ea37c0a023857c",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
@@ -510,9 +510,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788713256.4788287,
-    "seen": 1788713338.9394891,
-    "ast_hash": "a7b3bccf36a1706cb447204ca8aedaae",
+    "mtime": 1788713927.022247,
+    "seen": 1788714250.5603971,
+    "ast_hash": "8127612e4d7506b306b972140e910bbb",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {

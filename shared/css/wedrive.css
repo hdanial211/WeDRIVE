@@ -19254,7 +19254,7 @@ body.day-mode .cal-filter-chip.active {
   width: 100%;
   height: 520px;
   border-radius: 22px;
-  background: radial-gradient(circle at center, #FFFFFF 50%, #F2F2F7 100%);
+  background: #0c0c0e;
   border: 1px solid rgba(255, 255, 255, 0.12);
   overflow: hidden;
   display: flex;
@@ -19274,7 +19274,7 @@ body.day-mode .cal-filter-chip.active {
   height: 100%;
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
+  object-fit: cover !important;
   pointer-events: none;
   transition: opacity 0.15s ease;
 }
@@ -19368,18 +19368,21 @@ body.day-mode .cal-filter-chip.active {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.interior-cockpit-viewer:active {
+  cursor: grabbing;
 }
 
 .cockpit-canvas {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.2s ease-out;
-  cursor: grab;
-}
-
-.cockpit-canvas:active {
-  cursor: grabbing;
+  object-fit: cover !important;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  pointer-events: none;
 }
 
 .cockpit-overlay-hud {
@@ -19396,6 +19399,7 @@ body.day-mode .cal-filter-chip.active {
   backdrop-filter: blur(20px);
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.14);
+  z-index: 10;
 }
 
 .cockpit-hud-btn {
@@ -19424,6 +19428,114 @@ body.day-mode .cal-filter-chip.active {
   transform: scale(1.05);
 }
 
+/* 3B. Studio Photo Gallery Showcase Stage */
+.studio-gallery-stage-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gallery-hero-wrapper {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #0c0c0e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  transition: opacity 0.25s ease-out;
+}
+
+.gallery-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 44px;
+  max-height: 44px;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  background: rgba(22, 22, 24, 0.75);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-apple);
+  z-index: 5;
+}
+
+.gallery-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.gallery-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.gallery-nav-btn.prev { left: 20px; }
+.gallery-nav-btn.next { right: 20px; }
+
+.gallery-thumbnails-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px;
+}
+
+.gallery-thumb-item {
+  width: 100px;
+  height: 64px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.65;
+  background: #161618;
+  flex-shrink: 0;
+}
+
+.gallery-thumb-item:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+.gallery-thumb-item.active {
+  border-color: var(--apple-blue, #0071E3);
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+}
+
+.gallery-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+}
+
 /* 4. Specifications Bento Grid */
 .specs-bento-grid {
   display: grid;
@@ -19440,16 +19552,17 @@ body.day-mode .cal-filter-chip.active {
 .col-span-3  { grid-column: span 3 / span 3; }
 
 .spec-bento-card {
-  background: var(--bg-surface-1, #161618);
-  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 24px;
   padding: 24px;
   position: relative;
   transition: transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .spec-bento-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: var(--border-hover, rgba(0, 113, 227, 0.3));
   transform: translateY(-2px);
 }
 
@@ -19460,7 +19573,7 @@ body.day-mode .cal-filter-chip.active {
   gap: 12px;
   margin-bottom: 18px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .spec-card-title {
@@ -19483,7 +19596,8 @@ body.day-mode .cal-filter-chip.active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 0;
+  gap: 16px;
+  padding: 7px 0;
 }
 
 .spec-metric-label {
@@ -19492,6 +19606,7 @@ body.day-mode .cal-filter-chip.active {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .spec-metric-val {
@@ -19499,29 +19614,31 @@ body.day-mode .cal-filter-chip.active {
   font-weight: 600;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
+  text-align: right;
+  word-break: break-word;
 }
 
 /* 5. Equipment Matrix */
 .equip-matrix-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
 }
 
 .equip-item-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 12px;
+  padding: 13px 16px;
+  border-radius: 16px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
   transition: all 0.2s ease;
 }
 
 .equip-item-card.equipped {
-  background: rgba(52, 199, 89, 0.06);
-  border-color: rgba(52, 199, 89, 0.2);
+  background: rgba(52, 199, 89, 0.08);
+  border-color: rgba(52, 199, 89, 0.25);
 }
 
 .equip-item-icon {
@@ -19531,7 +19648,7 @@ body.day-mode .cal-filter-chip.active {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--bg-surface-3);
   color: var(--text-secondary);
 }
 
@@ -19590,13 +19707,16 @@ body.day-mode .cal-filter-chip.active {
   .specs-bento-grid > [class*="col-span-"] {
     grid-column: 1 / -1;
   }
-  .studio-stage-wrapper, .interior-cockpit-viewer {
+  .studio-stage-wrapper, .interior-cockpit-viewer, .gallery-hero-wrapper {
     height: 400px;
   }
 }
 
 @media (max-width: 640px) {
-  .studio-stage-wrapper, .interior-cockpit-viewer {
+  .equip-matrix-grid {
+    grid-template-columns: 1fr;
+  }
+  .studio-stage-wrapper, .interior-cockpit-viewer, .gallery-hero-wrapper {
     height: 300px;
   }
   .studio-top-bar {
