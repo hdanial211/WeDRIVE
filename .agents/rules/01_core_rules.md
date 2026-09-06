@@ -38,62 +38,52 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 
 ---
 
-## 2. Git Version Control
+## 2. Git Version Control & SemVer (X.Y.Z)
 
-- Setiap perubahan WAJIB ditujah (push) ke GitHub.
-- Format commit message: `X.X.X Description of changes` (Wajib bermula dengan nombor versi tanpa huruf `v`).
-- **Penomboran Versi FYP 2:**
-  - FYP 2 disambung secara berturutan bermula dari versi **`3.0.0`** (selepas FYP 1 versi `2.9.9`).
-- **Struktur Versi Semantik:** Major (`3.0.0` - rombakan modul), Minor (`3.1.0` - penambahan ciri), Patch (`3.0.1` - pembetulan bug/UI).
+- Tertakluk kepada [17_git_versioning_standard.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/17_git_versioning_standard.md).
+- **Semakan Versi Terdahulu:** Semak versi terkini sebelum commit menggunakan `git describe --tags --abbrev=0` atau log `PLAN/`.
+- **Format Mesej Commit:** Wajib bermula dengan nombor versi tanpa huruf 'v' (`X.Y.Z Description`).
+- **Tag & Push:** Wajib cipta tag sepadan dan tolak serentak (`git tag X.Y.Z && git push origin main --tags`).
+- **Pecahan SemVer:** Major (X - rombakan seni bina), Minor (Y - penambahan ciri/modul baharu), Patch (Z - pembaikan bug/linter/CSS).
 
 ---
 
 ## 3. Mandatory Development Summary Logging (PLAN)
 
-- Setiap kali sebarang perubahan kod, pembaikan isu, atau penambahan ciri baharu dilakukan, pembangun/AI WAJIB mengemas kini fail:
-  `PLAN/FYP1_to_FYP2_Development_Summary.md`
-- Labelkan setiap catatan perkembangan dengan jelas:
-  - **`[MAJOR UPDATE]`**: Modul baharu, rombakan arkitektur, atau integrasi ciri berskala besar.
-  - **`[MINOR UPDATE]`**: Pembaikan pepijat, penyeragaman komponen/CSS, atau penalaan UI.
+- Setiap kali sebarang perubahan kod atau penambahan ciri, AI WAJIB merekodkan entri di `PLAN/FYP1_to_FYP2_Development_Summary.md` bertanda `[MAJOR UPDATE]` atau `[MINOR UPDATE]`.
 
 ---
 
 ## 3B. Mandatori Penyediaan Dokumen Keperluan Produk (PRD) Sebelum Pembangunan
 
-- Sebelum memulakan sebarang tugasan pembangunan baharu, AI **WAJIB menyediakan seksyen PRD** di dalam `implementation_plan.md` merangkumi 6 komponen mandatori yang diperincikan secara berpusat dalam [13_prd_standard.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/13_prd_standard.md).
-- Pembangunan kod DILARANG bermula selagi seksyen PRD tidak dilengkapkan dan diluluskan oleh pengguna.
-
+- Sebelum sebarang pengekodan bermula, AI **WAJIB menyediakan seksyen PRD** di dalam `implementation_plan.md` merangkumi 6 komponen mandatori dalam [13_prd_standard.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/13_prd_standard.md).
+- Pembangunan kod DILARANG bermula selagi seksyen PRD belum diluluskan oleh pengguna.
 
 ---
 
 ## 4. Logo, Branding & Emoji Rules
 
-- **Logo:** Ikon di kiri, teks di kanan, latar belakang telus (transparent), dan favicon WAJIB ada di setiap page.
-- **Terminology:** Gunakan perkataan **"Car / Cars"** untuk semua elemen antaramuka pelanggan (jangan guna istilah "Fleet").
-- **No Emoji:** JANGAN gunakan emoji dalam kod sumber, nama fail, atau teks antaramuka.
+- **Logo:** Ikon di kiri, teks di kanan, latar belakang telus, dan favicon WAJIB ada di setiap page.
+- **Terminology:** Gunakan "Car / Cars" untuk pelanggan (dilarang istilah "Fleet").
+- **No Emoji:** DILARANG menggunakan emoji dalam kod sumber, nama fail, atau teks antaramuka.
 
 ---
 
 ## 5. Automated Testing & Playwright CLI Protocol
 
-- **Isolasi Folder Ujian:** Semua skrip ujian dan dependensi disimpan di dalam folder terasing `tests/` (Rujuk [08_playwright_testing.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/08_playwright_testing.md)).
-- **Mandatory Post-Task Test Run:** Setiap kali selesai sesuatu tugas pembangunan, jalankan:
-  ```bash
-  cd tests && npx playwright test
-  ```
-- Pastikan semua ujian mencapai **100% Pass Rate** sebelum commit.
+- Folder terasing `tests/` (Rujuk [08_playwright_testing.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/08_playwright_testing.md)).
+- Jalankan ujian mandatori: `cd tests && npx playwright test` (Wajib 100% Pass Rate sebelum commit).
 
 ---
 
 ## 6. Graphify & Token Optimization (MANDATORY)
 
-- **Jimat Kuota AI (Token Saver):**
-  - Setiap kali membuka sesi baharu, **JANGAN baca (*load/read*) fail secara pukal**.
-  - **WAJIB gunakan MCP Graphify** (`query_graph`, `get_node`, `shortest_path`) atau periksa `graphify-out/graph.json` untuk mencari fail dan hubung kait kod secara terus.
+- Rujuk [10_graphify.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/10_graphify.md).
+- Jimat token: JANGAN baca fail pukal. Gunakan alatan Graphify MCP atau `graphify-out/graph.json`.
 
 ---
 
-## 7. Indeks & Rujukan 16 Peraturan Modul Berkaitan
+## 7. Indeks & Rujukan 17 Peraturan Modul Berkaitan
 - **Standard BM Moden 2026:** [11_language_standards.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md)
 - **Apple HIG Design System:** [02_apple_hig_design_system.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md) & [03_apple_hig_components.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/03_apple_hig_components.md)
 - **Navigation & UI/UX:** [04_navigation_and_ui.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)
@@ -107,6 +97,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 - **Piawaian PRD 6 Pilar:** [13_prd_standard.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/13_prd_standard.md)
 - **Supabase Database & RLS:** [14_supabase_database.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/14_supabase_database.md)
 - **Alatan Pintar & MCP Ecosystem:** [16_ai_tooling_and_mcps.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/16_ai_tooling_and_mcps.md)
+- **Kawalan Versi Git & SemVer:** [17_git_versioning_standard.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/17_git_versioning_standard.md)
 
 ---
 

@@ -4331,4 +4331,34 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.2.4 Fix calendar inline styles and webkit backdrop-filter prefix order`
   - Tag Versi: `6.2.4`
 
+---
+
+## [MINOR UPDATE] 188. Pewujudan Peraturan Khusus 17_git_versioning_standard.md & Protokol Penemuan Versi Git SemVer (v6.2.5)
+
+- **Punca Arahan Pengguna**:
+  - *"okey now saya nak tanya github tu kan macam mana agent push github lepas buat ?? jap bukan tu tapi saya tanya dekat agent tu macam mana proses untuk awak push github macam mana awak nak tahu git sebelum tu...awak nak guna nombor x.x.x kalau yang ni apa.yang ni apa.yang ni apa"*
+  - *"pastikan saya nak consisten benda ni awak tambah dalam agent supaya x terlupa"*
+
+- **Tindakan Pelaksanaan**:
+  1. **Penguatkuasaan Peraturan Global (Global Customizations Root)**:
+     - Dicipta fail peraturan global di `/Users/hakim/.gemini/config/rules/git_versioning_standard.md` bagi menguatkuasakan protokol penemuan versi Git sebelum sebarang commit, formula SemVer `X.Y.Z`, format mesej commit tanpa awalan 'v', dan senarai semak pra-push merentas semua sesi ejen AI.
+  2. **Penciptaan Fail Peraturan Modular 17 ([`.agents/rules/17_git_versioning_standard.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/17_git_versioning_standard.md))**:
+     - Kandungan fail (4,628 aksara $\le 12,000$) merangkumi:
+       - 3 Kaedah Penemuan Versi Aktif (`git describe --tags --abbrev=0`, `git log -1 --oneline`, dan semakan entri bawah fail `PLAN/`).
+       - Formula & Hierarki SemVer `X.Y.Z` (Major = Rombakan Seni Bina / Fasa Baharu, Minor = Penambahan Ciri / Modul Baharu, Patch = Pembaikan Pepijat / CSS / Peraturan).
+       - Peraturan Format Commit Mandatori (`X.Y.Z Description of changes` tanpa awalan 'v').
+       - Protokol Langkah Demi Langkah (Step-by-Step) Push Git (Ujian Playwright $\to$ Graphify Update $\to$ `git add` $\to$ `git commit` $\to$ `git tag` $\to$ `git push origin main --tags`).
+  3. **Penyelarasan Indeks & Struktur Dokumen Projek**:
+     - `01_core_rules.md`: Diperbaharui Seksyen 2 untuk memautkan terus ke `17_git_versioning_standard.md`, serta dikemas kini Seksyen 7 (Indeks 17 Peraturan).
+     - `.agents/PROJECT_STRUCTURE.md` & `docs/PROJECT_STRUCTURE.md`: Dikemas kini senarai peraturan kepada 17 fail bernombor.
+     - Kesemua 17 fail peraturan disahkan mematuhi had siling $\le 12,000$ aksara melalui audit `wc -m`.
+
+- **Pengesahan Ujian Automatik**:
+  - Pelaksanaan `cd tests && npx playwright test` mengesahkan **100% Pass Rate**.
+
+- **Maklumat Git**:
+  - Commit: `6.2.5 Establish 17_git_versioning_standard and update rule index`
+  - Tag Versi: `6.2.5`
+
+
 

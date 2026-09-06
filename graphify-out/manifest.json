@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788698398.7625341,
-    "seen": 1788698453.807411,
-    "ast_hash": "d2b686fe75c010daee1b9a62d0c51c95",
+    "mtime": 1788699208.3578472,
+    "seen": 1788699317.086114,
+    "ast_hash": "84da6125401c122be448f51a8e8cad2d",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -660,9 +660,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788698322.248139,
-    "seen": 1788698453.8074508,
-    "ast_hash": "abf864750ca5659f5b5f7db7ddddc69b",
+    "mtime": 1788699194.7056754,
+    "seen": 1788699317.08615,
+    "ast_hash": "9024239e1dac41e0f3429ddd16a49740",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11262,9 +11262,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/01_core_rules.md": {
-    "mtime": 1788698292.3795233,
-    "seen": 1788698453.807393,
-    "ast_hash": "30264d78247b306341c06f3b4e9aef00",
+    "mtime": 1788699159.1748562,
+    "seen": 1788699317.086097,
+    "ast_hash": "67438da366e113eb0de346007a0f0357",
     "semantic_hash": ""
   },
   ".agents/rules/02_apple_hig_design_system.md": {
@@ -11328,9 +11328,9 @@
     "semantic_hash": ""
   },
   ".agents/PROJECT_STRUCTURE.md": {
-    "mtime": 1788698311.686277,
-    "seen": 1788698453.807392,
-    "ast_hash": "bed991f578f05b002afb933af5f3fc4e",
+    "mtime": 1788699186.438372,
+    "seen": 1788699317.0860958,
+    "ast_hash": "66663e19ca79fdfc0d7dcb87dd5bc8c0",
     "semantic_hash": ""
   },
   ".agents/rules/12_max_content_limit.md": {
@@ -11361,6 +11361,12 @@
     "mtime": 1788698227.6994383,
     "seen": 1788698453.807408,
     "ast_hash": "8ee1e7afcd7458b1920dd0568c7baf6b",
+    "semantic_hash": ""
+  },
+  ".agents/rules/17_git_versioning_standard.md": {
+    "mtime": 1788699105.5667834,
+    "seen": 1788699317.0861099,
+    "ast_hash": "dccef0d53957f03bd09c1824a19ac653",
     "semantic_hash": ""
   }
 }

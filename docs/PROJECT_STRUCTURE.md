@@ -19,7 +19,7 @@ AI CAR RENTAL SYSTEM/
 +-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk (Master Hub)
 |   +-- PROJECT_STRUCTURE.md    # Dokumen Struktur Projek Utama (Master Authority)
 |   +-- DESIGN.md               # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–16, Strict Max 12k chars)
+|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–17, Strict Max 12k chars)
 |   |   +-- 01_core_rules.md    # Gatekeeper Protocol, Peraturan Teras Projek, Git, PRD
 |   |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3 (Asas, Bento & Corak)
 |   |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6 (Komponen & Input)
@@ -36,6 +36,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- 14_supabase_database.md        # Supabase PostgreSQL, Skema Mobiliti & Dasar RLS
 |   |   +-- 15_strix_security_audit.md     # Simulasi Ujian Penembusan Etika Strix & Keselamatan PII
 |   |   +-- 16_ai_tooling_and_mcps.md      # Protokol Ekosistem 9 Alatan Pintar & Pelayan MCP
+|   |   +-- 17_git_versioning_standard.md  # Piawaian Penemuan Versi Git, Formula SemVer X.Y.Z & Protokol Push
 |   +-- skills/                 # Alatan kemahiran automasi
 |   +-- workflows/              # Aliran kerja persistent
 |
