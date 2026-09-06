@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788697767.6002693,
-    "seen": 1788697851.445023,
-    "ast_hash": "8cc7b93fcc6b82e4e66a785a33159e69",
+    "mtime": 1788698398.7625341,
+    "seen": 1788698453.807411,
+    "ast_hash": "d2b686fe75c010daee1b9a62d0c51c95",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -660,9 +660,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788697233.4619663,
-    "seen": 1788697345.5519202,
-    "ast_hash": "b1a4f3ef3638dd549208c28c3dcd3f37",
+    "mtime": 1788698322.248139,
+    "seen": 1788698453.8074508,
+    "ast_hash": "abf864750ca5659f5b5f7db7ddddc69b",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11202,9 +11202,9 @@
     "semantic_hash": ""
   },
   ".agents/DESIGN.md": {
-    "mtime": 1788697742.1402793,
-    "seen": 1788697851.445,
-    "ast_hash": "4fb1d6d2abf3189fbb8f4a282d09820a",
+    "mtime": 1788698330.6566663,
+    "seen": 1788698453.80739,
+    "ast_hash": "b4f60433981a558af976efe28e304efe",
     "semantic_hash": ""
   },
   ".agents/workflows/stitch_generation.md": {
@@ -11262,9 +11262,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/01_core_rules.md": {
-    "mtime": 1788696843.3460639,
-    "seen": 1788696974.264087,
-    "ast_hash": "8d65050732612e6b04849a3cfe5afb8c",
+    "mtime": 1788698292.3795233,
+    "seen": 1788698453.807393,
+    "ast_hash": "30264d78247b306341c06f3b4e9aef00",
     "semantic_hash": ""
   },
   ".agents/rules/02_apple_hig_design_system.md": {
@@ -11292,9 +11292,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/06_code_and_backend.md": {
-    "mtime": 1788697242.4347544,
-    "seen": 1788697345.5518641,
-    "ast_hash": "8c95b57bf7bc67a294f50595411b8652",
+    "mtime": 1788698301.7002437,
+    "seen": 1788698453.8073971,
+    "ast_hash": "b2ddcd21c490759358e7d81d85a53ff5",
     "semantic_hash": ""
   },
   ".agents/rules/07_stitch_design_system.md": {
@@ -11328,9 +11328,39 @@
     "semantic_hash": ""
   },
   ".agents/PROJECT_STRUCTURE.md": {
-    "mtime": 1788697222.0555003,
-    "seen": 1788697345.5518599,
-    "ast_hash": "6cab5cb545750b04a64b2bf768903515",
+    "mtime": 1788698311.686277,
+    "seen": 1788698453.807392,
+    "ast_hash": "bed991f578f05b002afb933af5f3fc4e",
+    "semantic_hash": ""
+  },
+  ".agents/rules/12_max_content_limit.md": {
+    "mtime": 1788698190.6233454,
+    "seen": 1788698453.807402,
+    "ast_hash": "2296b38b3642a4c80428f73027cc469c",
+    "semantic_hash": ""
+  },
+  ".agents/rules/13_prd_standard.md": {
+    "mtime": 1788698204.2521088,
+    "seen": 1788698453.8074062,
+    "ast_hash": "e1e4c2394ca0ef1e39d24bb1063cb82e",
+    "semantic_hash": ""
+  },
+  ".agents/rules/14_supabase_database.md": {
+    "mtime": 1788698211.8126101,
+    "seen": 1788698453.8074071,
+    "ast_hash": "835e57198812b0bdf1f484a7729b8ca8",
+    "semantic_hash": ""
+  },
+  ".agents/rules/15_strix_security_audit.md": {
+    "mtime": 1788698218.8495975,
+    "seen": 1788698453.8074071,
+    "ast_hash": "d9c35b53a8d5f0ba8080938259bb15d4",
+    "semantic_hash": ""
+  },
+  ".agents/rules/16_ai_tooling_and_mcps.md": {
+    "mtime": 1788698227.6994383,
+    "seen": 1788698453.807408,
+    "ast_hash": "8ee1e7afcd7458b1920dd0568c7baf6b",
     "semantic_hash": ""
   }
 }

@@ -151,6 +151,10 @@ spacing:
 - Semua perincian integrasi Stitch MCP, konfigurasi projek (`projectId: 1862124494843018493`), model `GEMINI_3_1_PRO`, dan alur kerja penjanaan antaramuka terkandung sepenuhnya dalam dokumen autoriti tunggal di [`.agents/rules/07_stitch_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/07_stitch_design_system.md).
 
 ## 6. Laman Rujukan Rasmi Apple Developer Design & Sumber Figma MCP
-- Senarai lengkap 8 portal Apple Developer rasmi dan konfigurasi pelayan Figma MCP (`https://mcp.figma.com/mcp`) terkandung secara berpusat dalam [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md).
+- Senarai lengkap 8 portal Apple Developer rasmi dan konfigurasi pelayan Figma MCP (`https://mcp.figma.com/mcp`) terkandung secara berpusat dalam [02_apple_hig_design_system.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md).
+
+## 7. Had Kandungan Fail Mandatori (Strict Max 12,000 Characters Limit)
+- Semua fail peraturan (`.agents/rules/*.md`), panduan kemahiran (`skills/*`), dan dokumen seni bina sistem WAJIB dihadkan kepada maksimum **12,000 aksara** per fail. Bebas mengembangkan sehingga 20–30 fail peraturan modular demi pemahaman AI yang mendalam dan sifar pemotongan konteks (Rujuk [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md)).
+
 
 

@@ -4274,3 +4274,35 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.2.2 Upgrade context7 & frontend-ui skills and deduplicate .agents rules`
   - Tag Versi: `6.2.2`
+
+---
+
+## [MAJOR UPDATE] 186. Pewujudan 5 Fail Peraturan Baharu (12–16), Had Siling 12,000 Aksara, Modular Rules Architecture & Mandatori PRD Standard (v6.2.3)
+
+- **Punca Arahan Pengguna**:
+  - *"tambah dekat mana2 tempat max 12000 sahaja takut nnti lupa content max"*
+  - *"rules ni tambah sikit x kesah nak create sampai 20 ke 30 ke janji ai ni faham"*
+  - *"haa saya lupa nak cakap jangan lupa setiap kali buat mesti kena buat prd baru saya faham n jelas"*
+
+- **Tindakan Pelaksanaan**:
+  1. **Penguatkuasaan Peraturan Global (Global Customizations Root)**:
+     - Dicipta fail peraturan global di `/Users/hakim/.gemini/config/rules/max_content_limit.md` bagi menguatkuasakan had saiz fail $\le 12,000$ aksara.
+     - Dicipta fail peraturan global di `/Users/hakim/.gemini/config/rules/prd_mandatory_standard.md` bagi memastikan setiap pembangunan kod dimulakan dengan PRD 6 pilar mandatori.
+  2. **Pengembangan Ekosistem Peraturan Modular (.agents/rules/ 01–16)**:
+     - Menambah 5 fail peraturan khusus baharu tanpa beban teks bertindih:
+       - `12_max_content_limit.md`: Had Siling 12,000 Aksara, Pengesahan `wc -m`, Pemisahan Kandungan & Modular Rule Expansion (sehingga 20–30 fail).
+       - `13_prd_standard.md`: Standard Dokumen Keperluan Produk (PRD) 6 Pilar Mandatori Sebelum Pengekodan.
+       - `14_supabase_database.md`: Pangkalan Data PostgreSQL Supabase, Model Skema Mobiliti & Dasar RLS.
+       - `15_strix_security_audit.md`: Simulasi Ujian Penembusan Etika Strix & Keselamatan PII untuk Bab Tesis FYP 2.
+       - `16_ai_tooling_and_mcps.md`: Protokol Operasi Ekosistem 9 Alatan Pintar & Pelayan MCP WeDRIVE.
+  3. **Penyelarasan Indeks & Audit Had Siling 12,000 Aksara**:
+     - `01_core_rules.md`: Ditambah item 6 pada Gatekeeper Protocol, diperbaharui Seksyen 3B (PRD SSOT), Seksyen 7 (indeks 16 peraturan), dan Seksyen 8 (had 12,000 aksara).
+     - `06_code_and_backend.md`: Ditambah peraturan had siling fail panduan $\le 12,000$ aksara.
+     - `.agents/PROJECT_STRUCTURE.md` & `docs/PROJECT_STRUCTURE.md`: Dikemas kini pokok direktori kepada 16 fail peraturan bernombor.
+     - `.agents/DESIGN.md`: Ditambah Seksyen 7 bagi penguatkuasaan had kandungan.
+     - **Audit Saiz Pukal**: Kesemua 16 fail peraturan bernombor disahkan mematuhi had $\le 12,000$ aksara (100% LULUS).
+
+- **Maklumat Git**:
+  - Commit: `6.2.3 Add modular rules 12-16 enforce 12k char limit and mandatory PRD standard`
+  - Tag Versi: `6.2.3`
+

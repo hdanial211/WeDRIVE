@@ -12,7 +12,7 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 .agents/
 +-- PROJECT_STRUCTURE.md        # Dokumen Struktur Projek Utama (Fail ini)
 +-- DESIGN.md                   # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-+-- rules/                      # 11 Fail Peraturan Pembangunan Bernombor (Strict <= 12,000 chars):
++-- rules/                      # 16 Fail Peraturan Bernombor (Strict Max 12,000 chars - Bebas Kembang Hingga 20-30 Fail):
 |   +-- 01_core_rules.md        # Gatekeeper Protocol, Protokol Alatan Pintar & MCP, Git, PRD
 |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3: Asas, Bento Grid & Corak Interaksi
 |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6: Komponen, Input Borang & Senarai Semak
@@ -24,6 +24,11 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 |   +-- 09_security_and_audit.md       # Keselamatan Siber, Strix Security Audit & Perlindungan Data
 |   +-- 10_graphify.md                 # Penjimatan Kuota Token AI & Navigasi Graf Pengetahuan
 |   +-- 11_language_standards.md       # Standard Bahasa Melayu Moden 2026, Senarai Hitam & Dwibahasa
+|   +-- 12_max_content_limit.md        # Had Siling 12,000 Aksara, Pengesahan wc -m & Modular Expansion
+|   +-- 13_prd_standard.md             # Standard Dokumen Keperluan Produk (PRD) 6 Pilar Mandatori
+|   +-- 14_supabase_database.md        # Pangkalan Data Supabase, Skema Mobiliti & Dasar Keselamatan RLS
+|   +-- 15_strix_security_audit.md     # Audit Keselamatan Siber Strix & Ujian Penembusan Etika
+|   +-- 16_ai_tooling_and_mcps.md      # Protokol Ekosistem 9 Alatan Pintar & Pelayan MCP WeDRIVE
 +-- skills/                     # Kemahiran automasi khusus (context7, frontend-ui, dsb.)
 +-- workflows/                  # Aliran kerja persistent (/graphify, /stitch_generation)
 ```
