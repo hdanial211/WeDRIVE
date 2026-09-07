@@ -1,11 +1,11 @@
 # Graph Report - AI CAR RENTAL SYSTEM  (2026-09-07)
 
 ## Corpus Check
-- 130 files · ~21,036,682 words
+- 130 files · ~21,036,707 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2988 nodes · 5478 edges · 211 communities (135 shown, 76 thin omitted)
+- 2988 nodes · 5478 edges · 211 communities (134 shown, 77 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 291 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
@@ -100,7 +100,7 @@
 - Apple Human Interface Guidelines (HIG) Standard
 - copy
 - DESIGN.md
-- .subVectors
+- on
 - marketing-ai.js
 - 🚀 [MINOR UPDATE] 153. Penyeragaman Kad Statistik Sebaris Bento Pentadbir & Pembaikan Grid 4-Kolum (v5.6.6)
 - lang.js
@@ -243,7 +243,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (211 total, 76 thin omitted)
+## Communities (211 total, 77 thin omitted)
 
 ### Community 0 - "three.min.js"
 Cohesion: 0.02
@@ -258,8 +258,8 @@ Cohesion: 0.08
 Nodes (65): bootstrap(), buildPatternUrl(), buildPlaceholderInteriorSvg(), currentLang(), dispatchLanguageApplied(), escapeHtml(), fetchJson(), findControlsScope() (+57 more)
 
 ### Community 4 - "ve"
-Cohesion: 0.08
-Nodes (6): clampPoint(), expandByPoint(), intersect(), makeEmpty(), union(), ve()
+Cohesion: 0.06
+Nodes (11): clampPoint(), expandByPoint(), expandByScalar(), getCenter(), getSize(), intersect(), isEmpty(), makeEmpty() (+3 more)
 
 ### Community 5 - "2. Matriks Pemakaian 6 Kemahiran Teras WeDRIVE (.agents/skills/)"
 Cohesion: 0.17
@@ -334,8 +334,8 @@ Cohesion: 0.18
 Nodes (3): equals(), fc(), l()
 
 ### Community 33 - ".multiplyScalar"
-Cohesion: 0.07
-Nodes (7): add(), bl, Nl, a(), setDirection(), setFromCamera(), setFromCenterAndSize()
+Cohesion: 0.08
+Nodes (5): add(), bl, setDirection(), setFromCamera(), setFromCenterAndSize()
 
 ### Community 35 - "cars.js"
 Cohesion: 0.15
@@ -386,8 +386,8 @@ Cohesion: 0.17
 Nodes (11): 1. Core Principles & Design Rules, 1. MacBook (Desktop Retina `1440 × 900`), 2. Apple 3-Device Single-Tab Verification Protocol, 2. iPad (Tablet `820 × 1180`), 3. Dual-Theme & Accessibility Check, 3. iPhone (Mobile Retina XDR `393 × 852`), 4. Pelan Tindakan Audit (Audit Step-by-Step), A. The Zero Oval Rule (Strict 1:1 Circle vs Capsule Pill) (+3 more)
 
 ### Community 49 - "sl"
-Cohesion: 0.09
-Nodes (4): li, sl, Xi, Zo
+Cohesion: 0.12
+Nodes (3): li, sl, Xi
 
 ### Community 51 - "search-popup.js"
 Cohesion: 0.32
@@ -482,16 +482,12 @@ Cohesion: 0.29
 Nodes (6): Apple Human Interface Guidelines (HIG) Standard, PILAR 4: COMPONENTS (KOMPONEN ANTARA MUKA), PILAR 5: INPUTS & INTERACTIONS (INTERAKSI & INPUT), PILAR 6: TECHNOLOGIES (TEKNOLOGI & CIRI KHUSUS), SENARAI SEMAK AUDIT & RUJUKAN SEBELUM SIAP, WeDRIVE Master Specification — Bahagian 2: Komponen, Interaksi & Teknologi (Pilar 4 – 6)
 
 ### Community 87 - "copy"
-Cohesion: 0.07
-Nodes (10): copy(), ih, ka(), i(), mo, qi, ra(), translate() (+2 more)
+Cohesion: 0.06
+Nodes (12): copy(), ih, ka(), i(), mo, Nl, a(), qi (+4 more)
 
 ### Community 88 - "DESIGN.md"
 Cohesion: 0.15
 Nodes (12): AI Chatbot Interface, Brand & Style, Buttons & Controls, Car Cards, Colors, Components, Dashboard Metrics, Elevation & Depth (+4 more)
-
-### Community 89 - ".subVectors"
-Cohesion: 0.09
-Nodes (7): expandByScalar(), getCenter(), getSize(), isEmpty(), nn(), on, setFromPoints()
 
 ### Community 90 - "marketing-ai.js"
 Cohesion: 0.38
@@ -666,8 +662,8 @@ Cohesion: 0.20
 Nodes (3): clone(), yi, Za
 
 ### Community 166 - ".dot"
-Cohesion: 0.10
-Nodes (7): al(), at(), closestPointToPoint(), closestPointToPointParameter(), delta(), fn, te()
+Cohesion: 0.09
+Nodes (8): al(), at(), closestPointToPoint(), closestPointToPointParameter(), delta(), fn, nn(), te()
 
 ### Community 167 - "_deactivateAction"
 Cohesion: 0.10
@@ -744,12 +740,12 @@ Nodes (5): _c, Do, Ga, r(), toJSON()
 ## Knowledge Gaps
 - **538 isolated node(s):** `allCars`, `allBookings`, `allCars`, `CAL_DATA`, `CAL_FILTERS` (+533 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **76 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **77 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `copy()` connect `copy` to `three.min.js`, `Be`, `ve`, `ai`, `i`, `dc`, `dr`, `bc`, `dispose`, `.toArray`, `constructor`, `tr`, `da`, `lr`, `equals`, `.multiplyScalar`, `clone`, `.dot`, `El`, `.fromJSON`, `gi`, `.constructor`, `.constructor`, `ie`, `sl`, `.fromArray`, `ll`, `.setValues`, `.setAttribute`, `ec`, `cl`, `Il`, `Uo`, `update`, `ph`, `.updateMatrix`, `mc`, `wc`, `tl`, `toJSON`, `ah`, `fh`, `Ch`, `mh`, `Ro`, `Oh`, `updateMatrixWorld`, `.subVectors`, `vo`, `fa`, `s`, `vl`?**
+- **Why does `copy()` connect `copy` to `three.min.js`, `Be`, `ve`, `ai`, `i`, `dc`, `dr`, `bc`, `dispose`, `.toArray`, `constructor`, `tr`, `da`, `lr`, `equals`, `.multiplyScalar`, `clone`, `.dot`, `El`, `.fromJSON`, `gi`, `.constructor`, `.constructor`, `ie`, `sl`, `.fromArray`, `ll`, `.setValues`, `.setAttribute`, `ec`, `cl`, `Il`, `Uo`, `update`, `ph`, `.updateMatrix`, `mc`, `wc`, `tl`, `toJSON`, `ah`, `fh`, `Ch`, `mh`, `Ro`, `Oh`, `updateMatrixWorld`, `on`, `vo`, `fa`, `s`, `vl`?**
   _High betweenness centrality (0.034) - this node is a cross-community bridge._
 - **Why does `gn` connect `gn` to `three.min.js`, `clone`, `.updateMatrix`, `.dot`, `.fromJSON`, `i`, `.constructor`, `.constructor`, `toJSON`, `he`, `.fromArray`, `remove`, `copy`, `constructor`, `updateMatrixWorld`, `.length`?**
   _High betweenness centrality (0.028) - this node is a cross-community bridge._

@@ -1135,19 +1135,6 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_nl",
-      "label": "Nl",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": ".multiplyScalar",
-      "file_type": "code",
-      "norm_label": "nl",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
       "id": "shared_js_three_min_jc",
       "label": "Jc",
       "_callable": true,
@@ -1352,19 +1339,6 @@
       "community_name": "sl",
       "file_type": "code",
       "norm_label": "xi",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_zo",
-      "label": "Zo",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "sl",
-      "file_type": "code",
-      "norm_label": "zo",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -1655,6 +1629,19 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_nl",
+      "label": "Nl",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": "nl",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_qi",
       "label": "qi",
       "_callable": true,
@@ -1681,13 +1668,26 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_zo",
+      "label": "Zo",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": "zo",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_on",
       "label": "on",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": "on",
       "source_file": "shared/js/three.min.js",
@@ -7553,6 +7553,18 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_be_setfromunitvectors",
+      "label": ".setFromUnitVectors()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 166,
+      "community_name": ".dot",
+      "file_type": "code",
+      "norm_label": ".setfromunitvectors()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_ce_angleto",
       "label": ".angleTo()",
       "_callable": true,
@@ -7657,18 +7669,6 @@
       "community_name": ".dot",
       "file_type": "code",
       "norm_label": ".distancesqtopoint()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_fn_distancesqtosegment",
-      "label": ".distanceSqToSegment()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 166,
-      "community_name": ".dot",
-      "file_type": "code",
-      "norm_label": ".distancesqtosegment()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -7825,6 +7825,18 @@
       "community_name": ".dot",
       "file_type": "code",
       "norm_label": ".intersectline()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_nn",
+      "label": "nn()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 166,
+      "community_name": ".dot",
+      "file_type": "code",
+      "norm_label": "nn()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -16205,18 +16217,6 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_be_setfromunitvectors",
-      "label": ".setFromUnitVectors()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": ".multiplyScalar",
-      "file_type": "code",
-      "norm_label": ".setfromunitvectors()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
       "id": "shared_js_three_min_bl_constructor",
       "label": ".constructor()",
       "_callable": true,
@@ -16313,6 +16313,18 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_fn_distancesqtosegment",
+      "label": ".distanceSqToSegment()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 33,
+      "community_name": ".multiplyScalar",
+      "file_type": "code",
+      "norm_label": ".distancesqtosegment()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_fn_lookat",
       "label": ".lookAt()",
       "_callable": true,
@@ -16337,14 +16349,14 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_ih_lerp",
-      "label": ".lerp()",
+      "id": "shared_js_three_min_ih_add",
+      "label": ".add()",
       "_callable": true,
       "_origin": "ast",
       "community": 33,
       "community_name": ".multiplyScalar",
       "file_type": "code",
-      "norm_label": ".lerp()",
+      "norm_label": ".add()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -16381,18 +16393,6 @@
       "community_name": ".multiplyScalar",
       "file_type": "code",
       "norm_label": ".constructor()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_nl_constructor_a",
-      "label": "a()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": ".multiplyScalar",
-      "file_type": "code",
-      "norm_label": "a()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -16441,30 +16441,6 @@
       "community_name": ".multiplyScalar",
       "file_type": "code",
       "norm_label": "o()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_nl_copy",
-      "label": ".copy()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": ".multiplyScalar",
-      "file_type": "code",
-      "norm_label": ".copy()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_nl_fromjson",
-      "label": ".fromJSON()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 33,
-      "community_name": ".multiplyScalar",
-      "file_type": "code",
-      "norm_label": ".fromjson()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -17429,6 +17405,18 @@
       "source_location": "L236"
     },
     {
+      "id": "shared_js_three_min_cl_constructor",
+      "label": ".constructor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".constructor()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_clamppoint",
       "label": "clampPoint()",
       "_callable": true,
@@ -17453,6 +17441,42 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_expandbyscalar",
+      "label": "expandByScalar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": "expandbyscalar()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_getcenter",
+      "label": "getCenter()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": "getcenter()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_getsize",
+      "label": "getSize()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": "getsize()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_intersect",
       "label": "intersect()",
       "_callable": true,
@@ -17461,6 +17485,18 @@
       "community_name": "ve",
       "file_type": "code",
       "norm_label": "intersect()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_isempty",
+      "label": "isEmpty()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": "isempty()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -17477,6 +17513,66 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_on_expandbypoint",
+      "label": ".expandByPoint()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".expandbypoint()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_on_getboundingbox",
+      "label": ".getBoundingBox()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".getboundingbox()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_on_setfrompoints",
+      "label": ".setFromPoints()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".setfrompoints()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_on_union",
+      "label": ".union()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".union()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_qn_intersectsbox",
+      "label": ".intersectsBox()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".intersectsbox()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_rr_constructor",
       "label": ".constructor()",
       "_callable": true,
@@ -17489,6 +17585,18 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_setfrompoints",
+      "label": "setFromPoints()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": "setfrompoints()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_union",
       "label": "union()",
       "_callable": true,
@@ -17497,6 +17605,18 @@
       "community_name": "ve",
       "file_type": "code",
       "norm_label": "union()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_ve_applymatrix4",
+      "label": ".applyMatrix4()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".applymatrix4()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -17633,6 +17753,18 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_ve_getboundingsphere",
+      "label": ".getBoundingSphere()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".getboundingsphere()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_ve_getparameter",
       "label": ".getParameter()",
       "_callable": true,
@@ -17641,6 +17773,18 @@
       "community_name": "ve",
       "file_type": "code",
       "norm_label": ".getparameter()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_ve_getsize",
+      "label": ".getSize()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".getsize()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -17689,6 +17833,18 @@
       "community_name": "ve",
       "file_type": "code",
       "norm_label": ".intersectssphere()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_ve_intersectstriangle",
+      "label": ".intersectsTriangle()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".intersectstriangle()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -17809,6 +17965,18 @@
       "community_name": "ve",
       "file_type": "code",
       "norm_label": ".clamp()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_ze_subvectors",
+      "label": ".subVectors()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "ve",
+      "file_type": "code",
+      "norm_label": ".subvectors()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -19589,18 +19757,6 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_zo_computelinedistances",
-      "label": ".computeLineDistances()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "sl",
-      "file_type": "code",
-      "norm_label": ".computelinedistances()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
       "id": "shared_js_three_min_zo_constructor",
       "label": ".constructor()",
       "_callable": true,
@@ -19609,30 +19765,6 @@
       "community_name": "sl",
       "file_type": "code",
       "norm_label": ".constructor()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_zo_copy",
-      "label": ".copy()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "sl",
-      "file_type": "code",
-      "norm_label": ".copy()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_zo_updatemorphtargets",
-      "label": ".updateMorphTargets()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "sl",
-      "file_type": "code",
-      "norm_label": ".updatemorphtargets()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -24761,18 +24893,6 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_ai_center",
-      "label": ".center()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "copy",
-      "file_type": "code",
-      "norm_label": ".center()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
       "id": "shared_js_three_min_ai_getrgb",
       "label": ".getRGB()",
       "_callable": true,
@@ -24829,18 +24949,6 @@
       "community_name": "copy",
       "file_type": "code",
       "norm_label": ".getworldposition()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ih_add",
-      "label": ".add()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "copy",
-      "file_type": "code",
-      "norm_label": ".add()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -24929,6 +25037,18 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_ih_lerp",
+      "label": ".lerp()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": ".lerp()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_ih_set",
       "label": ".set()",
       "_callable": true,
@@ -25013,6 +25133,42 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_nl_constructor_a",
+      "label": "a()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": "a()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_nl_copy",
+      "label": ".copy()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": ".copy()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_nl_fromjson",
+      "label": ".fromJSON()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": ".fromjson()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_qi_clone",
       "label": ".clone()",
       "_callable": true,
@@ -25093,18 +25249,6 @@
       "community_name": "copy",
       "file_type": "code",
       "norm_label": "ra()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_translate",
-      "label": "translate()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "copy",
-      "file_type": "code",
-      "norm_label": "translate()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -25229,6 +25373,30 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_zo_computelinedistances",
+      "label": ".computeLineDistances()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": ".computelinedistances()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_zo_copy",
+      "label": ".copy()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": ".copy()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_zo_raycast",
       "label": ".raycast()",
       "_callable": true,
@@ -25241,62 +25409,26 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_zo_updatemorphtargets",
+      "label": ".updateMorphTargets()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "copy",
+      "file_type": "code",
+      "norm_label": ".updatemorphtargets()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_ce_distanceto",
       "label": ".distanceTo()",
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".distanceto()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_cl_constructor",
-      "label": ".constructor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".constructor()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_expandbyscalar",
-      "label": "expandByScalar()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": "expandbyscalar()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_getcenter",
-      "label": "getCenter()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": "getcenter()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_getsize",
-      "label": "getSize()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": "getsize()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -25306,33 +25438,9 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".getpoint()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_isempty",
-      "label": "isEmpty()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": "isempty()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_nn",
-      "label": "nn()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": "nn()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -25342,7 +25450,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".clone()",
       "source_file": "shared/js/three.min.js",
@@ -25354,7 +25462,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".constructor()",
       "source_file": "shared/js/three.min.js",
@@ -25366,7 +25474,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".containspoint()",
       "source_file": "shared/js/three.min.js",
@@ -25378,33 +25486,21 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".copy()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_on_expandbypoint",
-      "label": ".expandByPoint()",
+      "id": "shared_js_three_min_on_distancetopoint",
+      "label": ".distanceToPoint()",
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
-      "norm_label": ".expandbypoint()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_on_getboundingbox",
-      "label": ".getBoundingBox()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".getboundingbox()",
+      "norm_label": ".distancetopoint()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -25414,7 +25510,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".intersectsbox()",
       "source_file": "shared/js/three.min.js",
@@ -25426,7 +25522,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".intersectssphere()",
       "source_file": "shared/js/three.min.js",
@@ -25438,7 +25534,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".isempty()",
       "source_file": "shared/js/three.min.js",
@@ -25450,7 +25546,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".makeempty()",
       "source_file": "shared/js/three.min.js",
@@ -25462,21 +25558,9 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".set()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_on_setfrompoints",
-      "label": ".setFromPoints()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".setfrompoints()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -25486,93 +25570,33 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".translate()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_on_union",
-      "label": ".union()",
+      "id": "shared_js_three_min_vo_update",
+      "label": ".update()",
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
-      "norm_label": ".union()",
+      "norm_label": ".update()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_qn_intersectsbox",
-      "label": ".intersectsBox()",
+      "id": "shared_js_three_min_ze_distanceto",
+      "label": ".distanceTo()",
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
-      "norm_label": ".intersectsbox()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_setfrompoints",
-      "label": "setFromPoints()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": "setfrompoints()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ve_applymatrix4",
-      "label": ".applyMatrix4()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".applymatrix4()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ve_getboundingsphere",
-      "label": ".getBoundingSphere()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".getboundingsphere()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ve_getsize",
-      "label": ".getSize()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".getsize()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ve_intersectstriangle",
-      "label": ".intersectsTriangle()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".intersectstriangle()",
+      "norm_label": ".distanceto()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -25582,21 +25606,9 @@
       "_callable": true,
       "_origin": "ast",
       "community": 89,
-      "community_name": ".subVectors",
+      "community_name": "on",
       "file_type": "code",
       "norm_label": ".distancetosquared()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ze_subvectors",
-      "label": ".subVectors()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 89,
-      "community_name": ".subVectors",
-      "file_type": "code",
-      "norm_label": ".subvectors()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -26381,14 +26393,14 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_on_distancetopoint",
-      "label": ".distanceToPoint()",
+      "id": "shared_js_three_min_ai_center",
+      "label": ".center()",
       "_callable": true,
       "_origin": "ast",
       "community": 94,
       "community_name": "vo",
       "file_type": "code",
-      "norm_label": ".distancetopoint()",
+      "norm_label": ".center()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -26401,6 +26413,18 @@
       "community_name": "vo",
       "file_type": "code",
       "norm_label": ".raycast()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_translate",
+      "label": "translate()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 94,
+      "community_name": "vo",
+      "file_type": "code",
+      "norm_label": "translate()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -26525,18 +26549,6 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_vo_update",
-      "label": ".update()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 94,
-      "community_name": "vo",
-      "file_type": "code",
-      "norm_label": ".update()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
       "id": "shared_js_three_min_vo_updatemorphtargets",
       "label": ".updateMorphTargets()",
       "_callable": true,
@@ -26545,18 +26557,6 @@
       "community_name": "vo",
       "file_type": "code",
       "norm_label": ".updatemorphtargets()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ze_distanceto",
-      "label": ".distanceTo()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 94,
-      "community_name": "vo",
-      "file_type": "code",
-      "norm_label": ".distanceto()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -31827,14 +31827,14 @@
       "source_location": "L5224"
     },
     {
-      "id": "plan_fyp1_to_fyp2_development_summary_patch_update_208_penyelarasan_pasangan_sifat_css_text_size_adjust_mengikut_piawaian_pelayar_moden_v6_7_4",
-      "label": "\ud83c\udfa8 [PATCH UPDATE] 208. Penyelarasan Pasangan Sifat CSS `text-size-adjust` Mengikut Piawaian Pelayar Moden (v6.7.4)",
+      "id": "plan_fyp1_to_fyp2_development_summary_patch_update_208_penyingkiran_sifat_css_text_size_adjust_pembasmian_sifar_amaran_linter_pelayar_v6_7_4",
+      "label": "\ud83c\udfa8 [PATCH UPDATE] 208. Penyingkiran Sifat CSS `text-size-adjust` & Pembasmian Sifar Amaran Linter Pelayar (v6.7.4)",
       "_origin": "ast",
       "community": 29,
       "community_name": "\ud83d\ude97 WeDRIVE: Ringkasan Penuh Pembangunan Sistem (FYP 1 hingga FYP 2)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "\ud83c\udfa8 [patch update] 208. penyelarasan pasangan sifat css `text-size-adjust` mengikut piawaian pelayar moden (v6.7.4)",
+      "norm_label": "\ud83c\udfa8 [patch update] 208. penyingkiran sifat css `text-size-adjust` & pembasmian sifar amaran linter pelayar (v6.7.4)",
       "source_file": "PLAN/FYP1_to_FYP2_Development_Summary.md",
       "source_location": "L5270"
     },
@@ -73170,7 +73170,7 @@
     },
     {
       "source": "plan_fyp1_to_fyp2_development_summary_wedrive_ringkasan_penuh_pembangunan_sistem_fyp_1_hingga_fyp_2",
-      "target": "plan_fyp1_to_fyp2_development_summary_patch_update_208_penyelarasan_pasangan_sifat_css_text_size_adjust_mengikut_piawaian_pelayar_moden_v6_7_4",
+      "target": "plan_fyp1_to_fyp2_development_summary_patch_update_208_penyingkiran_sifat_css_text_size_adjust_pembasmian_sifar_amaran_linter_pelayar_v6_7_4",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",

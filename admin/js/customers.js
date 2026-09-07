@@ -79,15 +79,19 @@ function renderPendingCustomers(customers) {
   card.style.display = 'block';
   tbody.innerHTML = pendings.map(c => {
     var joinedFmt = formatDate(c._joined);
+    var safeName = window.escapeHtml ? window.escapeHtml(c._name) : c._name;
+    var safeEmail = window.escapeHtml ? window.escapeHtml(c._email) : c._email;
+    var safePhone = window.escapeHtml ? window.escapeHtml(c._phone) : c._phone;
+    var safeLicense = window.escapeHtml ? window.escapeHtml(c._license) : c._license;
     return `
     <tr>
-      <td><strong>${c._name}</strong></td>
-      <td>${c._email}</td>
-      <td>${c._phone}</td>
-      <td>${c._license}</td>
+      <td><strong>${safeName}</strong></td>
+      <td>${safeEmail}</td>
+      <td>${safePhone}</td>
+      <td>${safeLicense}</td>
       <td>${joinedFmt}</td>
       <td style="white-space:nowrap;">
-        <button class="btn-primary-sm" onclick="viewCustomer(${c.id})" style="font-size:12px;padding:6px 10px;background:#D97706;border:none;color:#fff;">
+        <button class="btn-primary-sm" onclick="viewCustomer(${c.id})" style="font-size:12px;padding:6px 14px;border-radius:var(--radius-pill, 9999px);background:#D97706;border:none;color:#fff;display:inline-flex;align-items:center;gap:6px;">
           <span class="material-icons-round" style="font-size:14px">visibility</span> Review
         </button>
       </td>
@@ -119,22 +123,26 @@ function renderCustomers(customers) {
       statusHtml = `<span class="status-badge ${statusClass}"><span class="dot"></span> ${c._status}</span>`;
     }
 
+    var safeName = window.escapeHtml ? window.escapeHtml(c._name) : c._name;
+    var safeEmail = window.escapeHtml ? window.escapeHtml(c._email) : c._email;
+    var safePhone = window.escapeHtml ? window.escapeHtml(c._phone) : c._phone;
+    var safeLicense = window.escapeHtml ? window.escapeHtml(c._license) : c._license;
     return `
     <tr>
-      <td><strong>${c._name}</strong></td>
-      <td>${c._email}</td>
-      <td>${c._phone}</td>
-      <td>${c._license}</td>
+      <td><strong>${safeName}</strong></td>
+      <td>${safeEmail}</td>
+      <td>${safePhone}</td>
+      <td>${safeLicense}</td>
       <td style="text-align:center">${c._total_bookings}</td>
       <td><strong>RM ${(c._total_spent || 0).toLocaleString()}</strong></td>
       <td>${statusHtml}</td>
       <td>${joinedFmt}</td>
       <td style="white-space:nowrap;">
-        <button class="btn-primary-sm" onclick="viewCustomer(${c.id})" style="font-size:12px;padding:6px 10px">
-          <span class="material-icons-round" style="font-size:14px">visibility</span>
+        <button class="action-btn-circle" onclick="viewCustomer(${c.id})" title="Lihat Perincian" style="width:32px;height:32px;min-width:32px;min-height:32px;aspect-ratio:1/1;border-radius:50%;padding:0;background:var(--primary);color:#fff;border:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;margin-right:6px;">
+          <span class="material-icons-round" style="font-size:15px">visibility</span>
         </button>
-        <button class="btn-outline-sm" onclick="toggleCustomerStatus(${c.id})" style="font-size:12px;padding:6px 10px" title="Toggle status">
-          <span class="material-icons-round" style="font-size:14px">sync</span>
+        <button class="action-btn-circle" onclick="toggleCustomerStatus(${c.id})" title="Tukar Status" style="width:32px;height:32px;min-width:32px;min-height:32px;aspect-ratio:1/1;border-radius:50%;padding:0;background:transparent;color:var(--text-secondary);border:1px solid var(--border-medium);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;">
+          <span class="material-icons-round" style="font-size:15px">sync</span>
         </button>
       </td>
     </tr>`;

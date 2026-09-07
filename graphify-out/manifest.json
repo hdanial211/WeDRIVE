@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "admin/js/bookings.js": {
-    "mtime": 1788618628.3220491,
-    "seen": 1788620312.9064882,
-    "ast_hash": "97bdcbf562a4475332e72847a585a5e1",
+    "mtime": 1788778149.8404455,
+    "seen": 1788778407.246937,
+    "ast_hash": "e6c3160c794aebfde88f6830f8d4b3a4",
     "semantic_hash": ""
   },
   "admin/js/calendar.js": {
@@ -36,15 +36,15 @@
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
-    "mtime": 1782180108.4069285,
-    "seen": 1787436189.0913742,
-    "ast_hash": "293e4ebfbb04a88f64c9e847beb10779",
-    "semantic_hash": "293e4ebfbb04a88f64c9e847beb10779"
+    "mtime": 1788778137.122439,
+    "seen": 1788778407.246942,
+    "ast_hash": "2ab5b8708fabe7c3f9da01ecabf5823e",
+    "semantic_hash": ""
   },
   "admin/js/customers.js": {
-    "mtime": 1788621952.7882388,
-    "seen": 1788653435.683599,
-    "ast_hash": "015b5b703d972180c26a24204ac1755e",
+    "mtime": 1788778123.9385614,
+    "seen": 1788778407.246943,
+    "ast_hash": "dba851cfea9a5d34dad4c1f7c8babab6",
     "semantic_hash": ""
   },
   "admin/js/marketing-ai.js": {
@@ -162,9 +162,9 @@
     "semantic_hash": "4262c00b6b6578148773cf312d101cec"
   },
   "shared/js/main.js": {
-    "mtime": 1788776416.569622,
-    "seen": 1788776869.00093,
-    "ast_hash": "6b78de4fa4043f8dc37f13d6166685c3",
+    "mtime": 1788778016.1811981,
+    "seen": 1788778407.2469602,
+    "ast_hash": "9beaa55ec57344990892f763b9315044",
     "semantic_hash": ""
   },
   "shared/js/navbar-loader.js": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788777199.4684224,
-    "seen": 1788777217.390862,
-    "ast_hash": "76b2cc6e6dbbaede8c7f604669437aec",
+    "mtime": 1788778398.1506095,
+    "seen": 1788778407.247029,
+    "ast_hash": "d7fe9dd559e69b7558e3fe16bd921792",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -498,9 +498,9 @@
     "semantic_hash": ""
   },
   "admin/pages/booking/bookings.html": {
-    "mtime": 1788645245.368681,
-    "seen": 1788653435.6837602,
-    "ast_hash": "62954e074b57b1425fa1235f786ae384",
+    "mtime": 1788778314.3626273,
+    "seen": 1788778407.247044,
+    "ast_hash": "18bc8af8e224878f4c7717701286d4d0",
     "semantic_hash": ""
   },
   "admin/pages/calendar/calendar.html": {
@@ -510,9 +510,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788776038.83773,
-    "seen": 1788776869.001099,
-    "ast_hash": "73c982dfc23d695a3fbe6c56e4dcbd5d",
+    "mtime": 1788778102.1920648,
+    "seen": 1788778407.2470489,
+    "ast_hash": "acc8a43f94e682169db242ca30efb1c8",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
@@ -528,9 +528,9 @@
     "semantic_hash": ""
   },
   "admin/pages/customer/customers.html": {
-    "mtime": 1788621969.243604,
-    "seen": 1788653435.683774,
-    "ast_hash": "eb87d7a0a25c2532787b5cf685d8c5d3",
+    "mtime": 1788778070.030036,
+    "seen": 1788778407.247051,
+    "ast_hash": "7879e8d1be346de388c91b095232bd70",
     "semantic_hash": ""
   },
   "admin/pages/dashboard/admin.html": {
@@ -546,15 +546,15 @@
     "semantic_hash": ""
   },
   "admin/pages/report/reports.html": {
-    "mtime": 1788611119.0221105,
-    "seen": 1788616440.2713559,
-    "ast_hash": "30e2c6bd41d55a46923802a8a063cfaf",
+    "mtime": 1788778092.252063,
+    "seen": 1788778407.2470558,
+    "ast_hash": "af9e9b83fa4b01e9ff17be3866668641",
     "semantic_hash": ""
   },
   "admin/pages/setting/settings.html": {
-    "mtime": 1788772741.141159,
-    "seen": 1788773519.9021702,
-    "ast_hash": "fa270a4ed1313c049692542cdfd2bb41",
+    "mtime": 1788778084.677853,
+    "seen": 1788778407.247057,
+    "ast_hash": "3ab33630ca0ccbcca21824142a4265df",
     "semantic_hash": ""
   },
   "bin/ai-insights.html": {
@@ -11142,9 +11142,9 @@
     "semantic_hash": ""
   },
   "admin/pages/analytics/analytics.html": {
-    "mtime": 1788611228.3537164,
-    "seen": 1788616440.271292,
-    "ast_hash": "6095b40673e20aba6d66324b8cbda348",
+    "mtime": 1788778096.1844463,
+    "seen": 1788778407.2470431,
+    "ast_hash": "4d08523956ac607050b852547f3b7550",
     "semantic_hash": ""
   },
   "tests/e2e/10_admin_sidebar_pages.spec.js": {
@@ -11160,9 +11160,9 @@
     "semantic_hash": ""
   },
   "admin/pages/booking/new-booking.html": {
-    "mtime": 1788772664.7976024,
-    "seen": 1788773519.90216,
-    "ast_hash": "8d179fe842d1d6e4fb1cf277d3329fce",
+    "mtime": 1788778162.611463,
+    "seen": 1788778407.247045,
+    "ast_hash": "20166d81bd81db9392949c07b234c083",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car.html": {
@@ -11184,9 +11184,9 @@
     "semantic_hash": ""
   },
   "admin/pages/customer/verifications.html": {
-    "mtime": 1788772675.3392916,
-    "seen": 1788773519.9021661,
-    "ast_hash": "3458c029f2c02c408c826f6028128f4c",
+    "mtime": 1788778132.019458,
+    "seen": 1788778407.2470531,
+    "ast_hash": "1b6f1c97190f5f33ad26bfca4f012457",
     "semantic_hash": ""
   },
   "admin/pages/dashboard/operations.html": {
@@ -11232,9 +11232,9 @@
     "semantic_hash": ""
   },
   "admin/pages/ai/api-keys.html": {
-    "mtime": 1788772752.70055,
-    "seen": 1788773519.902155,
-    "ast_hash": "03c637ea46e8d274b2d47db26bef00b5",
+    "mtime": 1788778064.4672973,
+    "seen": 1788778407.247042,
+    "ast_hash": "916e7b60e4072dc2a774b3a817bde8f3",
     "semantic_hash": ""
   },
   "tests/add_car_360_card_verified.png": {
@@ -11472,9 +11472,9 @@
     "semantic_hash": ""
   },
   "admin/js/add-car.js": {
-    "mtime": 1788776027.521342,
-    "seen": 1788776869.0008872,
-    "ast_hash": "4bbde72b7ef89ec371094eaa3c5a7fbb",
+    "mtime": 1788778156.5195923,
+    "seen": 1788778407.246926,
+    "ast_hash": "756a5f29a4440ddd39273651047b8e53",
     "semantic_hash": ""
   },
   "tests/e2e/17_add_car_stepper_and_carlist.spec.js": {

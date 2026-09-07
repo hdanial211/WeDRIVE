@@ -5301,6 +5301,49 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.4 Refine guest terminology, resolve payment button language parity, and enforce 100% full-system bilingual tests`
   - Tag Versi: `6.7.4`
 
+---
+
+## 🛡️ [PATCH UPDATE] 209. Audit Multi-Agent Menyeluruh 20 Halaman Pentadbir, Pematuhan Geometri Sifar Bujur (Zero Oval), Pengukuhan Keselamatan XSS & Sesi Idle Timeout 10-Minit (v6.7.5)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna meminta audit penuh di semua halaman pentadbir (Admin) menggunakan pendekatan Multi-Agent:
+     > `check dekat semua admin page pulak guna multi agent`
+  2. Menggerakkan 3 sub-ejen khusus secara serentak merentasi kesemua 20 halaman pentadbir:
+     - `strix_security_guardian`: Audit kerentanan keselamatan siber (OWASP Top 10, sanitasi XSS, pengesanan sesi, muat naik fail).
+     - `bm_language_police`: Audit linguistik & terminologi Bahasa Melayu Moden 2026, sifar perkataan senarai hitam (*armada, fleet, wahana, kabin, kokpit*), dan pariti kamus dwibahasa `shared/lang/`.
+     - `wedrive_ui_auditor`: Audit Apple HIG, Bento Grid squircle, prinsip geometri butang sifar bujur (Zero Oval 1:1), Single Source of Action, dan kontras dwi-tema.
+
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Penguatkuasaan Universal Sesi Idle Timeout 10-Minit (`admin-idle-timeout.js`)**:
+     - Menyisipkan skrip `admin-idle-timeout.js` ke dalam 6 halaman pentadbir yang belum memilikinya (`api-keys.html`, `customers.html`, `settings.html`, `reports.html`, `analytics.html`, dan `car-detail.html`), melengkapkan liputan auto-logout keselamatan 100% pada kesemua 20 halaman pentadbir.
+  2. **Pembersihan Kerentanan Stored XSS & Sanitasi HTML Global (`shared/js/main.js`)**:
+     - Membina fungsi utiliti sanitasi global `window.escapeHtml` di bahagian atas `shared/js/main.js`.
+     - Mengemas kini penjanaan baris jadual pelanggan dalam `admin/js/customers.js` dan `admin/pages/customer/verifications.html` agar meng-escape input pengguna (`_name`, `_email`, `_phone`, `_license`, `ic`, dll.) sebelum dimasukkan ke dalam DOM.
+     - Memperketat penghurai Markdown di `admin/js/chatbot-admin.js` dengan sanitasi teks awalan dan sekatan protokol URL (hanya membenarkan `http`, `https`, atau laluan relatif bagi menyekat suntikan `javascript:` URI).
+  3. **Keselamatan Muat Naik Fail Kenderaan (`admin/js/add-car.js`)**:
+     - Menambah validasi had saiz fail maksimum 10MB (`file.size <= 10MB`) dan menyekat format berbahaya SVG (`image/svg+xml`) pada fungsi muat naik foto kenderaan `previewCarPhoto`.
+  4. **Pematuhan Geometri Sifar Bujur (Zero Oval Rule) & Apple HIG (`shared/css/wedrive.css`)**:
+     - Memasukkan kelas butang ikon `.action-btn-circle`, `.ai-eye-btn`, `.cust-modal-close-btn`, dan `.chat-send` ke dalam peraturan Master Bulatan 1:1 Apple HIG (`width: 36px !important; height: 36px !important; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;`).
+     - Membaiki butang mata kata laluan `.ai-eye-btn` kepada bulatan tepat 1:1 32x32px.
+     - Membaiki butang tindakan baris tempahan (`bookings.js`) dan pelanggan (`customers.js`) daripada kapsul bujur (36x38px) kepada butang bulatan 1:1 tepat `.action-btn-circle`.
+     - Mengecualikan kelas butang bulat daripada sekatan `min-height: 44px !important` pada paparan mudah alih (mobile) bagi menghalang butang bulat menjadi lonjong/oval 36x44px pada iPhone.
+     - Memulihkan radius kad Bento `.stat-card` daripada 16px kepada standard Apple HIG squircle `var(--radius-bento, 24px) !important`.
+     - Menambah pemilih nilai statistik (`.stat-info .value`, `.stat-number`, `.metric-val`, `.kpi-val`) ke dalam peraturan `font-variant-numeric: tabular-nums lining-nums !important;`.
+     - Menetapkan saiz fon `.chat-input` kepada `16px !important` pada peranti mudah alih bagi menghalang lonjakan auto-zoom iOS Safari.
+  5. **Prinsip Sifar Tindakan Bertindan (Single Source of Action)**:
+     - Menyingkirkan butang serahan borang pendua pada bar roti atas `admin/pages/booking/new-booking.html`, mengekalkan satu butang tindakan muktamad tunggal di bahagian bawah borang.
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - Pelaksanaan Ujian Automasi Playwright CLI: **48/48 Ujian Lulus (100% Pass Rate)** merangkumi kesemua 18 suite ujian.
+  - Pengesahan 3-Peranti Apple (Single-Tab DevTools): Diuji pada MacBook (`1440x900`), iPad (`820x1180`), dan iPhone (`393x852`) membuktikan nisbah butang bulat kekal tepat 1.00 (1:1) tanpa sebarang herotan bujur.
+  - Pematuhan Had Aksara Peraturan `.agents/rules/*.md`: Semua 19 fail disahkan $\le 12,000$ aksara (`wc -m`).
+  - Graf Pengetahuan Graphify dikemas kini (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.7.5 Comprehensive multi-agent admin audit, zero oval geometry enforcement, XSS sanitization, and universal idle timeout`
+  - Tag Versi: `6.7.5`
+
+
 
 
 

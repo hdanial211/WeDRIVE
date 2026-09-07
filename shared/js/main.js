@@ -37,6 +37,19 @@
  */
 
 /* =====================================================
+   GLOBAL SECURITY UTILITIES: XSS SANITIZATION
+   ===================================================== */
+window.escapeHtml = function (str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
+
+/* =====================================================
    SECTION 0: UNIVERSAL GUEST & AUTH ROUTE GUARD
    Guarantees that unauthenticated guests NEVER access
    protected customer or admin pages, regardless of navigation loop.

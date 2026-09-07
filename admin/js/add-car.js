@@ -1257,6 +1257,17 @@
   // Photo Upload & Preview
   function previewCarPhoto(input) {
     if (input.files && input.files[0]) {
+      var file = input.files[0];
+      if (file.size > 10 * 1024 * 1024) {
+        if (typeof showToast === 'function') showToast('Saiz fail melebihi had 10MB.', 'error');
+        input.value = '';
+        return;
+      }
+      if (file.type === 'image/svg+xml' || !file.type.startsWith('image/')) {
+        if (typeof showToast === 'function') showToast('Format imej tidak sah. Sila gunakan PNG, JPG atau WebP.', 'error');
+        input.value = '';
+        return;
+      }
       var reader = new FileReader();
       reader.onload = function (e) {
         selectedPhotoBase64 = e.target.result;

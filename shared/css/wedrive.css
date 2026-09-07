@@ -5487,15 +5487,19 @@ body:has(.right-panel) {
 }
 
 .chat-send {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-pill);
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
   background: var(--primary);
   color: #FFFFFF;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   cursor: pointer;
   flex-shrink: 0;
   box-shadow: 0 3px 10px rgba(0, 113, 227, 0.35);
@@ -5509,6 +5513,12 @@ body:has(.right-panel) {
 
 .chat-send .material-icons-round {
   font-size: 19px;
+}
+
+@media (max-width: 768px) {
+  .chat-input {
+    font-size: 16px !important;
+  }
 }
 
 /* ==============================================================================
@@ -10426,7 +10436,12 @@ button:active,
 .countdown-digits,
 .table-num,
 .pricing-val,
-.currency-amount {
+.currency-amount,
+.stat-info .value,
+.stat-number,
+.stat-value,
+.metric-val,
+.kpi-val {
   font-variant-numeric: tabular-nums lining-nums !important;
   font-feature-settings: "tnum" 1, "lnum" 1 !important;
 }
@@ -10517,7 +10532,7 @@ table.custom-table tr:hover td,
 }
 
 /* ── 6. Minimum Touch Target (44px Rule) ─────────────────────────────────── */
-button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button),
+button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.action-btn-circle):not(.ai-eye-btn):not(.chat-send):not(.cust-modal-close-btn):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button),
 a.btn,
 .filter-chip,
 .date-chip,
@@ -10527,7 +10542,7 @@ a.btn,
 }
 
 @media (max-width: 768px) {
-  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button):not(.cockpit-hud-btn),
+  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.action-btn-circle):not(.ai-eye-btn):not(.chat-send):not(.cust-modal-close-btn):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button):not(.cockpit-hud-btn),
   a.btn,
   .filter-chip,
   .date-chip,
@@ -10557,6 +10572,10 @@ a.btn,
 .close-btn,
 .btn-close,
 .icon-btn-circle,
+.action-btn-circle,
+.cust-modal-close-btn,
+.chat-send,
+.ai-eye-btn,
 .cockpit-hud-btn {
   width: 36px !important;
   height: 36px !important;
@@ -15667,7 +15686,7 @@ html.night-mode .admin-depot-badge,
   position: relative;
   background: var(--bg-surface);
   border: 1px solid var(--border-medium);
-  border-radius: 16px;
+  border-radius: var(--radius-bento, 24px) !important;
   padding: 13px 18px;
   box-shadow: var(--shadow-sm);
   display: flex;
@@ -16044,7 +16063,7 @@ html.night-mode .bento-ghost-icon,
   padding: 10px 18px;
   background: #3B82F6;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  border-radius: var(--radius-pill, 9999px) !important;
   color: #FFFFFF;
   font-size: 13px;
   font-weight: 600;
@@ -18909,9 +18928,20 @@ body.day-mode .cal-filter-chip.active {
   border: none;
   color: var(--text-secondary, #86868B);
   cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  max-width: 32px !important;
+  max-height: 32px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s var(--ease-apple);
 }
 
 .ai-eye-btn:hover {

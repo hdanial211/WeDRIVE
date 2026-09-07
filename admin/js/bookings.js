@@ -91,19 +91,22 @@ function renderBookings(bookings) {
   tbody.innerHTML = pageItems.map(b => {
     var statusClass = b.status ? b.status.toLowerCase() : 'pending';
     var paymentClass = b.payment === 'Paid' ? 'available' : 'maintenance';
+    var safeCustomer = window.escapeHtml ? window.escapeHtml(b._customer) : b._customer;
+    var safeCarName = window.escapeHtml ? window.escapeHtml(b._car_name) : b._car_name;
+    var safeCarPlate = window.escapeHtml ? window.escapeHtml(b._car_plate) : b._car_plate;
     return `
     <tr>
       <td><strong style="font-variant-numeric: tabular-nums;">#${b.id}</strong></td>
-      <td><strong>${b._customer}</strong></td>
-      <td>${b._car_name}<br><small style="color:var(--text-muted);font-variant-numeric: tabular-nums;">${b._car_plate}</small></td>
+      <td><strong>${safeCustomer}</strong></td>
+      <td>${safeCarName}<br><small style="color:var(--text-muted);font-variant-numeric: tabular-nums;">${safeCarPlate}</small></td>
       <td style="font-variant-numeric: tabular-nums;">${formatDate(b._pickup)}</td>
       <td style="font-variant-numeric: tabular-nums;">${formatDate(b._return)}</td>
       <td><strong style="font-variant-numeric: tabular-nums; color:var(--primary);">RM ${(b._total || 0).toLocaleString()}</strong></td>
       <td><span class="status-badge ${paymentClass}"><span class="dot"></span> ${b.payment || 'Unpaid'}</span></td>
       <td><span class="status-badge ${statusClass}"><span class="dot"></span> ${b.status || 'Pending'}</span></td>
       <td>
-        <button class="btn-primary-sm" onclick="viewBooking(${b.id})" title="Lihat Perincian" style="font-size:12px;padding:6px 10px;border-radius:var(--radius-pill);">
-          <span class="material-icons-round" style="font-size:14px">visibility</span>
+        <button class="action-btn-circle" onclick="viewBooking(${b.id})" title="Lihat Perincian" style="width:32px;height:32px;min-width:32px;min-height:32px;aspect-ratio:1/1;border-radius:50%;padding:0;background:var(--primary);color:#fff;border:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;">
+          <span class="material-icons-round" style="font-size:15px">visibility</span>
         </button>
       </td>
     </tr>`;

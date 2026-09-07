@@ -493,9 +493,12 @@ function appendMsg(text, who, showCar = null) {
     `).join('');
   }
 
-  // Parse markdown bold and newlines, then parse markdown links
-  var processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-  processedText = processedText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  // Sanitize text first to prevent HTML injection
+  var escText = (window.escapeHtml ? window.escapeHtml(text) : String(text || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+  // Parse markdown bold and newlines
+  var processedText = escText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  // Safe markdown links: only allow http://, https://, or relative paths (prevents javascript: URIs)
+  processedText = processedText.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/|\.\.\/)[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
 
   div.innerHTML = `<div>${processedText}</div>` + carHtml;
   container.appendChild(div);

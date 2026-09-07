@@ -273,19 +273,27 @@
         var badgeClass = isVerified ? 'status-badge available' : (isPending ? 'status-badge pending' : 'status-badge danger');
         var badgeText = isVerified ? 'Disahkan JPJ' : (isPending ? 'Menunggu Audit' : 'Ditolak');
 
+        var esc = window.escapeHtml || function(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); };
+        var safeName = esc(c.name);
+        var safeEmail = esc(c.email);
+        var safeIc = esc(c.ic);
+        var safeLicense = esc(c.license);
+        var safeExpiry = esc(c.expiry);
+        var safeSubmitted = esc(c.submitted);
+
         return '<tr>' +
           '<td>' +
-            '<strong class="text-title">' + c.name + '</strong>' +
-            '<div class="fs-12 text-secondary">' + c.email + '</div>' +
+            '<strong class="text-title">' + safeName + '</strong>' +
+            '<div class="fs-12 text-secondary">' + safeEmail + '</div>' +
           '</td>' +
-          '<td><span class="fs-13 fw-600 tabular-nums">' + c.ic + '</span></td>' +
-          '<td><span class="fs-13 tabular-nums">' + c.license + '</span></td>' +
-          '<td><span class="fs-13 tabular-nums">' + c.expiry + '</span></td>' +
-          '<td><span class="fs-13 text-secondary tabular-nums">' + c.submitted + '</span></td>' +
+          '<td><span class="fs-13 fw-600 tabular-nums">' + safeIc + '</span></td>' +
+          '<td><span class="fs-13 tabular-nums">' + safeLicense + '</span></td>' +
+          '<td><span class="fs-13 tabular-nums">' + safeExpiry + '</span></td>' +
+          '<td><span class="fs-13 text-secondary tabular-nums">' + safeSubmitted + '</span></td>' +
           '<td><span class="' + badgeClass + '"><span class="material-icons-round fs-12">' + (isVerified ? 'check_circle' : (isPending ? 'hourglass_top' : 'cancel')) + '</span> ' + badgeText + '</span></td>' +
           '<td class="text-right">' +
-            '<button class="btn-secondary mr-6" style="height:32px; padding:0 10px; font-size:11px;" onclick="openKycModal(\'' + c.id + '\')"><span class="material-icons-round fs-14">visibility</span> Periksa</button>' +
-            (isPending ? '<button class="btn-primary" style="height:32px; padding:0 10px; font-size:11px;" onclick="quickApprove(\'' + c.id + '\')"><span class="material-icons-round fs-14">check</span> Sahkan</button>' : '') +
+            '<button class="btn-secondary mr-6" style="height:32px; padding:0 12px; font-size:11px; border-radius:var(--radius-pill, 9999px);" onclick="openKycModal(\'' + c.id + '\')"><span class="material-icons-round fs-14">visibility</span> Periksa</button>' +
+            (isPending ? '<button class="btn-primary" style="height:32px; padding:0 12px; font-size:11px; border-radius:var(--radius-pill, 9999px);" onclick="quickApprove(\'' + c.id + '\')"><span class="material-icons-round fs-14">check</span> Sahkan</button>' : '') +
           '</td>' +
         '</tr>';
       }).join('');
