@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788768518.6026208,
-    "seen": 1788768808.852494,
-    "ast_hash": "093a6bd7ff6fc371b0250c38b44c5801",
+    "mtime": 1788770459.4603393,
+    "seen": 1788770518.304897,
+    "ast_hash": "a0433d93b1bc41a8d3a542a385d81d54",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -11166,9 +11166,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car.html": {
-    "mtime": 1788768708.1109927,
-    "seen": 1788768808.852511,
-    "ast_hash": "d245431cc62c2ee51dffbf8df939fe8c",
+    "mtime": 1788769966.5903528,
+    "seen": 1788770385.404344,
+    "ast_hash": "2f593b6d0d2d9e6da436beab56c061a2",
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
@@ -11226,9 +11226,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/14_ai_key_vault_and_location.spec.js": {
-    "mtime": 1788768053.5173838,
-    "seen": 1788768491.435145,
-    "ast_hash": "5c51b7e05119915762675fe2ad8688db",
+    "mtime": 1788770046.093357,
+    "seen": 1788770385.4042938,
+    "ast_hash": "b4478edfc445a91e062b56a441f1e91a",
     "semantic_hash": ""
   },
   "admin/pages/ai/api-keys.html": {
@@ -11472,9 +11472,15 @@
     "semantic_hash": ""
   },
   "admin/js/add-car.js": {
-    "mtime": 1788768740.4341447,
-    "seen": 1788768808.852405,
-    "ast_hash": "b155b1a119315ff1c7e4c30de31700d9",
+    "mtime": 1788770146.4246976,
+    "seen": 1788770385.404246,
+    "ast_hash": "12f8e00e7af0e1e70e759553c93305d6",
+    "semantic_hash": ""
+  },
+  "tests/e2e/17_add_car_stepper_and_carlist.spec.js": {
+    "mtime": 1788770057.6612663,
+    "seen": 1788770385.4042969,
+    "ast_hash": "505c0d08fd81f56ed0b5c2a592e95ca6",
     "semantic_hash": ""
   }
 }

@@ -628,16 +628,18 @@
       else if (b.includes('porsche')) marketPrice = 650000;
     }
 
-    // 2. Body Type Multiplier
+    // 2. Body Type Multiplier (ala Carlist.my & Mudah.my)
     var bodyMultiplier = 1.0;
     if (t === 'hatchback') bodyMultiplier = 0.95;
     else if (t === 'sedan') bodyMultiplier = 1.0;
+    else if (t === 'crossover') bodyMultiplier = 1.15;
     else if (t === 'suv') bodyMultiplier = 1.25;
+    else if (t === 'pickup' || t.includes('pickup')) bodyMultiplier = 1.20;
     else if (t === 'mpv') bodyMultiplier = 1.30;
-    else if (t === 'pickup') bodyMultiplier = 1.20;
+    else if (t === 'wagon') bodyMultiplier = 1.20;
     else if (t === 'van') bodyMultiplier = 1.35;
     else if (t === 'coupe') bodyMultiplier = 1.50;
-    else if (t === 'luxury') bodyMultiplier = 1.70;
+    else if (t === 'convertible') bodyMultiplier = 1.65;
 
     // 3. Seats Multiplier
     var seatMultiplier = 1.0;
@@ -705,14 +707,11 @@
 
     if (customWrap) customWrap.classList.add('hidden');
 
-    // Auto-select first model if available
-    if (CARLIST_DATABASE[brand] && Object.keys(CARLIST_DATABASE[brand]).length > 0) {
-      modelEl.selectedIndex = 1;
-      window.onModelChange();
-    } else {
-      clearVariants();
-    }
+    // Keep placeholder selected (Do not auto-select first model)
+    modelEl.selectedIndex = 0;
+    resetVariantsPlaceholder();
 
+    updateFullCarName();
     triggerDraftSave();
     window.updateLivePreview();
   };
@@ -737,6 +736,11 @@
     if (customWrap) customWrap.classList.add('hidden');
     if (!variantEl) return;
 
+    if (!model) {
+      resetVariantsPlaceholder();
+      return;
+    }
+
     variantEl.innerHTML = '<option value="" disabled selected>Pilih Varian &amp; Enjin</option>';
 
     var modelData = (CARLIST_DATABASE[brand] && CARLIST_DATABASE[brand][model]) || null;
@@ -755,16 +759,41 @@
       customVar.textContent = '[+ Taip Varian Sendiri]';
       variantEl.appendChild(customVar);
 
-      // Auto-select first variant
-      variantEl.selectedIndex = 1;
-      window.onVariantChange();
+      // Keep placeholder selected (Do not auto-select first variant)
+      variantEl.selectedIndex = 0;
+
+      // Auto-fill base specs from model so user has smart defaults once model is picked
+      if (modelData.type) setSelectValue('car-type', modelData.type);
+      if (modelData.seats) setSelectValue('car-seats', String(modelData.seats));
+      if (modelData.transmission) setSelectValue('car-transmission', modelData.transmission);
+      if (modelData.fuel) setSelectValue('car-fuel', modelData.fuel);
+      if (modelData.engine) {
+        var engInput = document.getElementById('car-engine');
+        if (engInput) engInput.value = modelData.engine;
+      }
+
+      // Automatically calculate baseline rental rate and deposit from model data
+      var yearVal = document.getElementById('car-year')?.value || '2024';
+      var basePricing = calculateRentalFromFormula(brand, modelData.type || 'Sedan', modelData.seats || 5, yearVal, modelData.basePrice || 90000);
+      var rateInput = document.getElementById('car-rate');
+      var depositInput = document.getElementById('car-deposit');
+      if (rateInput) rateInput.value = basePricing.rate;
+      if (depositInput) depositInput.value = basePricing.deposit;
     } else {
       clearVariants();
     }
 
+    updateFullCarName();
     triggerDraftSave();
     window.updateLivePreview();
   };
+
+  function resetVariantsPlaceholder() {
+    var variantEl = document.getElementById('car-variant');
+    if (variantEl) {
+      variantEl.innerHTML = '<option value="" disabled selected>Pilih Model Dahulu</option>';
+    }
+  }
 
   function clearVariants() {
     var variantEl = document.getElementById('car-variant');
@@ -834,7 +863,7 @@
 
   // Construct full name: [Year] [Brand] [Model] [Variant]
   function updateFullCarName() {
-    var year = document.getElementById('car-year')?.value || '2024';
+    var year = document.getElementById('car-year')?.value || '';
     var brand = document.getElementById('car-brand')?.value || '';
     var modelEl = document.getElementById('car-model');
     var model = modelEl ? modelEl.value : '';
@@ -843,16 +872,18 @@
 
     var fullName = '';
     if (model === '__custom__' && customName) {
-      fullName = year + ' ' + (brand ? brand + ' ' : '') + customName;
+      fullName = (year ? year + ' ' : '') + (brand ? brand + ' ' : '') + customName;
     } else if (brand && model) {
       var varStr = (variant && variant !== 'Standard' && variant !== '__custom_variant__') ? ' ' + variant : '';
-      fullName = year + ' ' + brand + ' ' + model + varStr;
+      fullName = (year ? year + ' ' : '') + brand + ' ' + model + varStr;
+    } else if (brand) {
+      fullName = (year ? year + ' ' : '') + brand;
     } else {
-      fullName = '2023 BMW 320i M Sport 2.0';
+      fullName = '';
     }
 
     var hiddenName = document.getElementById('car-name');
-    if (hiddenName) hiddenName.value = fullName;
+    if (hiddenName) hiddenName.value = fullName || '';
     return fullName;
   }
 
@@ -991,14 +1022,6 @@
     }
   };
 
-  window.handleHeaderSaveClick = function () {
-    if (currentStep === 1) {
-      window.goToStep(2);
-    } else {
-      document.getElementById('add-car-form')?.requestSubmit();
-    }
-  };
-
   /**
    * =========================================================================
    * 5. AUTO-SAVE & DRAFT RESUME CONTROLLER
@@ -1044,12 +1067,6 @@
       console.warn('Draft save error:', e);
     }
   }
-
-  window.manualSaveDraft = function () {
-    isFormDirty = true;
-    saveCarDraft();
-    window.showToast('💾 Draf kenderaan berjaya disimpan!', 'success');
-  };
 
   function checkExistingDraft() {
     try {
@@ -1575,21 +1592,25 @@
    * =========================================================================
    */
   window.updateLivePreview = function () {
-    var nameVal = updateFullCarName();
-    var colorVal = (document.getElementById('car-color')?.value || '').trim() || 'Putih (Solid / Pearl White)';
-    var typeVal = (document.getElementById('car-type')?.value || 'Sedan').toUpperCase();
+    var nameVal = updateFullCarName() || 'Nama & Model Kenderaan';
+    var colorVal = (document.getElementById('car-color')?.value || '').trim();
+    var colorDisplay = colorVal || 'Belum Dipilih';
+
+    var typeEl = document.getElementById('car-type');
+    var typeVal = (typeEl && typeEl.value ? typeEl.value : 'KATEGORI').toUpperCase();
 
     var transEl = document.getElementById('car-transmission');
-    var transVal = transEl && transEl.value ? (transEl.value === 'Automatic' ? 'Auto' : 'Manual') : 'Auto';
+    var transVal = transEl && transEl.value ? (transEl.value === 'Automatic' ? 'Auto' : 'Manual') : '-';
 
     var fuelEl = document.getElementById('car-fuel');
-    var fuelVal = fuelEl && fuelEl.value ? fuelEl.value : 'Petrol';
+    var fuelVal = fuelEl && fuelEl.value ? fuelEl.value : '-';
 
     var seatsEl = document.getElementById('car-seats');
-    var seatsNum = seatsEl && seatsEl.value ? seatsEl.value : '5';
-    var seatsVal = seatsNum + ' Seats';
+    var seatsNum = seatsEl && seatsEl.value ? seatsEl.value : '';
+    var seatsVal = seatsNum ? seatsNum + ' Seats' : '- Seats';
 
-    var rateVal = document.getElementById('car-rate')?.value || '450';
+    var rateInput = document.getElementById('car-rate');
+    var rateVal = (rateInput && rateInput.value) ? rateInput.value : '--';
 
     var elName = document.getElementById('preview-display-name');
     var elCat = document.getElementById('preview-display-cat');
@@ -1602,7 +1623,7 @@
 
     if (elName) elName.textContent = nameVal;
     if (elCat) elCat.textContent = typeVal;
-    if (elColor) elColor.textContent = 'Color: ' + colorVal;
+    if (elColor) elColor.textContent = 'Warna: ' + colorDisplay;
     if (elTrans) elTrans.textContent = transVal;
     if (elFuel) elFuel.textContent = fuelVal;
     if (elSeats) elSeats.textContent = seatsVal;
@@ -1618,7 +1639,7 @@
       } else if (fuelVal.includes('Electric') || fuelVal.includes('Hybrid')) {
         elAiChip.textContent = 'Eco Smart Choice';
       } else {
-        elAiChip.textContent = 'Best Value Choice';
+        elAiChip.textContent = 'Pilihan Kenderaan';
       }
     }
   };
@@ -1707,12 +1728,8 @@
     // Check for Existing Auto-Save Draft
     checkExistingDraft();
 
-    // Default selection: BMW -> 3 Series
-    var brandEl = document.getElementById('car-brand');
-    if (brandEl && !brandEl.value) {
-      brandEl.value = 'BMW';
-      window.onBrandChange();
-    }
+    // Reset placeholders cleanly if not restoring draft
+    resetVariantsPlaceholder();
 
     // Preview canvas drag rotation
     var canvasWrap = document.getElementById('preview-canvas-wrap');

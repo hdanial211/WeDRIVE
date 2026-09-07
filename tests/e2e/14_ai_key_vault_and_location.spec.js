@@ -97,6 +97,8 @@ test.describe('WeDRIVE AI Key Vault & Unified HQ Location Tests', () => {
     // Verify 2-Step Stepper Navigation to Step 2 (360 Studio)
     const step2Btn = page.locator('#step-btn-2');
     if (await step2Btn.isVisible()) {
+      await page.selectOption('#car-brand', 'Toyota');
+      await page.selectOption('#car-model', 'Vios');
       await page.fill('#car-plate', 'VAB 4821');
       await step2Btn.click();
     }

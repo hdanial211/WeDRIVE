@@ -58,3 +58,19 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
 
 - Piawaian mandatori nisbah bulat tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`) dan larangan keras bentuk bujur/oval dikawal secara berpusat dalam [`.agents/rules/02_apple_hig_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md) (Pilar 1, Butiran 6).
 - Butang berteks WAJIB mengembang mendatar menjadi kapsul/pil simetri (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`).
+
+---
+
+## 5. Prinsip Sifar Tindakan Bertindan & Antaramuka Bebas Kesesakan (Strict Zero Duplicate Actions & Anti-Crowding Rule)
+
+- **Larangan Keras Butang/Fungsi Berulang:**
+  - Dalam satu halaman, **DILARANG SAMA SEKALI mempunyai 2 atau 3 elemen, butang, atau pautan yang melakukan perkara yang sama atau fungsi pendua** (contoh: Butang *Simpan Draf* manual sedangkan draf telah disimpan automatik; atau Butang *Simpan Kereta* di bar tajuk atas dan ada butang simpan lagi di bawah borang).
+  - Kehadiran pelbagai butang serupa menyebabkan antaramuka kelihatan sesak (*crowded*), mengelirukan pengguna, dan mencemarkan estetika minimalis Apple HIG.
+- **Satu Fungsi = Satu Butang Tindakan Tunggal:**
+  - Setiap fungsi atau tindakan pengguna WAJIB mempunyai **SATU butang tindakan rasmi sahaja** (*Single Source of Action*).
+- **Hierarki Kontekstual Aliran Wizard (Multi-Step Stepper):**
+  - Pada aliran berperingkat, butang tindakan mestilah kontekstual mengikut fasa aktif:
+    - **Langkah 1 (Spesifikasi):** Cukup butang `← Batal` di bar atas dan butang `Seterusnya: Studio Visual →` di bahagian bawah kad. DILARANG meletakkan butang *Simpan Kereta* di Langkah 1 kerana data visual belum lengkap.
+    - **Langkah 2 (Visual & Muktamad):** Butang `← Kembali ke Langkah 1` dan butang muktamad tunggal `Daftar Kenderaan Baharu`.
+- **Pengurusan Auto-Save Draf:**
+  - Sekiranya sesuatu sistem telah mempunyai mekanisme penyimpanan automatik di latar belakang (*Auto-Save Draft*), **JANGAN cipta butang manual 'Simpan Draf'** yang memenuhkan ruang pengepala. Pengguna cukup sekadar dimaklumkan melalui sepanduk pulihkan draf atau notifikasi status halus.

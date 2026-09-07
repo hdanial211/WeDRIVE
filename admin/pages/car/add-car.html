@@ -44,12 +44,6 @@
             <button type="button" class="btn-outline-sm" onclick="triggerExitConfirm('cars.html')">
               <span class="material-icons-round fs-16">arrow_back</span> Batal
             </button>
-            <button type="button" class="btn-secondary-sm" onclick="manualSaveDraft()">
-              <span class="material-icons-round fs-16">bookmark_border</span> Simpan Draf
-            </button>
-            <button type="button" id="header-btn-save" class="btn-primary-sm" onclick="handleHeaderSaveClick()">
-              <span class="material-icons-round fs-16">save</span> Simpan Kereta
-            </button>
           </div>
         </div>
       </div>
@@ -227,9 +221,10 @@
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">calendar_today</span>
                   <select id="car-year" class="form-input radius-14 tabular-nums" required onchange="onYearChange()">
+                    <option value="" disabled selected>Pilih Tahun Pengilangan</option>
                     <option value="2026">2026</option>
                     <option value="2025">2025</option>
-                    <option value="2024" selected>2024</option>
+                    <option value="2024">2024</option>
                     <option value="2023">2023</option>
                     <option value="2022">2022</option>
                     <option value="2021">2021</option>
@@ -256,8 +251,8 @@
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">palette</span>
                   <select id="car-color-select" class="form-input radius-14" required onchange="onColorSelectChange()">
-                    <option value="" disabled>Pilih Warna Rasmi</option>
-                    <option value="Putih (Solid / Pearl White)" selected>Putih (Solid / Pearl White)</option>
+                    <option value="" disabled selected>Pilih Warna Rasmi Badan</option>
+                    <option value="Putih (Solid / Pearl White)">Putih (Solid / Pearl White)</option>
                     <option value="Hitam (Midnight / Metallic Black)">Hitam (Midnight / Metallic Black)</option>
                     <option value="Kelabu (Space Grey / Graphite Grey)">Kelabu (Space Grey / Graphite Grey)</option>
                     <option value="Perak (Silver Metallic)">Perak (Silver Metallic)</option>
@@ -304,13 +299,15 @@
                 <select id="car-type" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
                   <option value="" disabled selected>Pilih Kategori Badan</option>
                   <option value="Sedan">Sedan</option>
+                  <option value="Hatchback">Hatchback</option>
                   <option value="SUV">SUV</option>
                   <option value="MPV">MPV</option>
-                  <option value="Hatchback">Hatchback</option>
-                  <option value="Van">Van / Bas Komuter</option>
-                  <option value="Pickup">Pickup 4x4</option>
-                  <option value="Coupe">Coupe / Sukan</option>
-                  <option value="Luxury">Mewah / Luxury</option>
+                  <option value="Crossover">Crossover</option>
+                  <option value="Pickup">Pickup (4x4)</option>
+                  <option value="Coupe">Coupe</option>
+                  <option value="Wagon">Wagon</option>
+                  <option value="Convertible">Convertible</option>
+                  <option value="Van">Van</option>
                 </select>
               </div>
               <div>
@@ -321,7 +318,7 @@
                   <option value="2">2 Tempat Duduk</option>
                   <option value="3">3 Tempat Duduk</option>
                   <option value="4">4 Tempat Duduk</option>
-                  <option value="5" selected>5 Tempat Duduk</option>
+                  <option value="5">5 Tempat Duduk</option>
                   <option value="6">6 Tempat Duduk</option>
                   <option value="7">7 Tempat Duduk</option>
                   <option value="8">8 Tempat Duduk</option>
@@ -346,7 +343,7 @@
                 <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
                 <select id="car-transmission" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
                   <option value="" disabled selected>Pilih Sistem Transmisi</option>
-                  <option value="Automatic" selected>Automatik (AT/CVT/DCT)</option>
+                  <option value="Automatic">Automatik (AT/CVT/DCT)</option>
                   <option value="Manual">Manual (MT)</option>
                 </select>
               </div>
@@ -354,7 +351,7 @@
                 <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
                 <select id="car-fuel" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
                   <option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>
-                  <option value="Petrol" selected>Petrol (RON95/97)</option>
+                  <option value="Petrol">Petrol (RON95/97)</option>
                   <option value="Hybrid">Hybrid (HEV)</option>
                   <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
                   <option value="Diesel">Diesel Euro 5</option>

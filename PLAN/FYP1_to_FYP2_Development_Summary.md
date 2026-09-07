@@ -5133,6 +5133,55 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.0 2-Step Stepper Car Registration, Carlist Cascading Selectors, Auto-Draft, and Exit Guard`
   - Tag Versi: `6.7.0`
 
+---
+
+## 🚗 [PATCH UPDATE] 111. Penguatkuasaan Prinsip Sifar Tindakan Bertindan (Zero Duplicate Actions), Penyeragaman Kategori Mudah/Carlist & Pembersihan Dropdown Neutral (v6.7.1)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. **Prinsip Sifar Tindakan Bertindan & Antaramuka Bebas Kesesakan (*Zero Duplicate Actions & Anti-Crowding Rule*)**:
+     - Pengguna menegur kehadiran pelbagai butang bertindan pada satu skrin (`Batal`, `Simpan Draf`, `Simpan Kereta` di bar tajuk):
+       > *"ni x payah syarat awak kena tambah dalam satu page kan jangan ada 2 ke 3 benda yang sama macam button ke anything semua tambah dalam agent ... sebab tu jadi crowded...saya nak satu button function sahaja..jangan ada 2 button atau lebih benda yang sama faham"*
+     - Membuang butang `Simpan Draf` manual (kerana sistem telah mempunyai auto-save draf secara langsung ke latar belakang).
+     - Membuang butang `Simpan Kereta` di bar tajuk atas kerana pendaftaran kenderaan adalah aliran wizard 2-langkah: Langkah 1 hanya memerlukan butang `Seterusnya →` dan Langkah 2 mengandungi butang muktamad `Daftar Kenderaan Baharu`. Bar tajuk atas kini hanya mempunyai SATU butang: `[ ← Batal ]`.
+     - Menambah syarat mandatori ini ke dalam `.agents/rules/04_navigation_and_ui.md` (Seksyen 5) dan `.agents/rules/01_core_rules.md` (Seksyen 1).
+  2. **Penyeragaman Kategori Badan Mengikut Piawaian Rasmi Mudah.my & Carlist.my**:
+     - Membuang label kacukan ("Van / Bas Komuter", "Pickup 4x4", "Coupe / Sukan", "Mewah / Luxury").
+     - Menyelaraskan 10 Kategori Badan standard industri: **Sedan, Hatchback, SUV, MPV, Crossover, Pickup (4x4), Coupe, Wagon, Convertible, Van**.
+  3. **Penetapan Dropdown Neutral Tanpa Auto-Select Awal (*Clean Neutral Placeholders*)**:
+     - Menghapuskan penetapan awal `brandEl.value = 'BMW'` pada pemuatan halaman.
+     - Semua dropdown bermula secara bersih pada pilihan placeholder `Pilih...` (`value=""`): Pengeluar, Model, Varian, Tahun, Warna, Kategori, Kerusi, Transmisi, Bahan Api.
+     - Pemilihan jenama memaparkan senarai model dengan pilihan pertama `Pilih Model Kenderaan` (tanpa auto-select index 1).
+     - Pemilihan model memaparkan senarai varian dengan pilihan pertama `Pilih Varian & Enjin` (tanpa auto-select index 1).
+  4. **Formula Ketelusan Kadar Sewa Harian Pasaran Malaysia**:
+     - Menerangkan secara matematik dan telus 5 pembolehubah pengiraan kadar sewaan: $V_{\text{asas}}$ (Nilai Asas Model/Varian) $\times M_{\text{badan}}$ (Pengali Kategori) $\times M_{\text{kerusi}}$ $\times D_{\text{tahun}}$ (Susut Nilai 5%/tahun) $\times 0.0017$ (Kadar 24 Jam Pasaran Malaysia).
+
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `.agents/rules/04_navigation_and_ui.md`:
+    - Menambah Seksyen 5: *Prinsip Sifar Tindakan Bertindan & Antaramuka Bebas Kesesakan*.
+  - Di dalam `.agents/rules/01_core_rules.md`:
+    - Menambah prinsip Sifar Tindakan Bertindan pada Seksyen 1 dan meringkaskan Seksyen 8 bagi mengekalkan had $\le 12,000$ aksara.
+  - Di dalam `admin/pages/car/add-car.html`:
+    - Membuang butang `Simpan Draf` dan `Simpan Kereta` daripada bar pengepala, hanya mengekalkan butang `[ ← Batal ]`.
+    - Mengemas kini opsyen `#car-type` mengikut senarai rasmi Carlist.my / Mudah.my (Sedan, Hatchback, SUV, MPV, Crossover, Pickup, Coupe, Wagon, Convertible, Van).
+    - Memastikan semua dropdown bermula dengan `<option value="" disabled selected>Pilih...</option>`.
+  - Di dalam `admin/js/add-car.js`:
+    - Membuang paksaan `brandEl.value = 'BMW'` daripada `DOMContentLoaded`.
+    - Membuang auto-select index 1 pada `onBrandChange` dan `onModelChange`.
+    - Mengemaskini `calculateRentalFromFormula` dengan pengali kategori badan Carlist/Mudah.
+    - Menyelaraskan `updateLivePreview` dengan nilai neutral apabila tiada data dipilih.
+  - Di dalam `tests/e2e/14_ai_key_vault_and_location.spec.js` & `tests/e2e/17_add_car_stepper_and_carlist.spec.js`:
+    - Menyelaraskan pemilihan jenama dan model sebelum bergerak ke Langkah 2.
+
+- **Pengesahan Ujian Automatik & Pengguna**:
+  - Ujian Automasi Playwright CLI: **100% Pass Rate**.
+  - Pematuhan had aksara peraturan `.agents/rules/*.md`: Semua fail disahkan $\le 12,000$ aksara.
+  - Pematuhan sifar bujur (Zero Oval Rule) dan sifar tindakan bertindan disahkan 100%.
+
+- **Maklumat Git**:
+  - Commit: `6.7.1 Enforce Zero Duplicate Actions Rule, Purge Redundant Header Buttons, Standardize Carlist/Mudah Categories, and Clear Neutral Dropdown Defaults`
+  - Tag Versi: `6.7.1`
+
+
 
 
 

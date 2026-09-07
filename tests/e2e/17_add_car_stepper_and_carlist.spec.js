@@ -66,7 +66,9 @@ test.describe('WeDRIVE Add Car 2-Step Stepper & Carlist Cascading Selectors', ()
     await page.goto('/admin/pages/car/add-car.html');
     await page.waitForLoadState('networkidle');
 
-    // Fill required plate number
+    // Select brand, model, and plate number
+    await page.selectOption('#car-brand', 'Perodua');
+    await page.selectOption('#car-model', 'Myvi');
     await page.fill('#car-plate', 'WXY 8899');
 
     // Click Next to Step 2

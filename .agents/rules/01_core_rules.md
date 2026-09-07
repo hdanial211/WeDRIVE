@@ -24,6 +24,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 - Semua reka bentuk UI, komponen, peralihan, kad Bento, butang, modal, dan susun atur WAJIB mematuhi piawaian rasmi **Apple HIG**:
   - **Rujukan Utama:** [02_apple_hig_design_system.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md) & [03_apple_hig_components.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/03_apple_hig_components.md).
   - **Prinsip Geometri Bulat (Strict 1:1 Circle — Zero Oval):** Elemen bulat WAJIB bulat tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`). DILARANG SAMA SEKALI bentuk bujur/lonjong. Butang berteks WAJIB kapsul pil (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`).
+  - **Prinsip Sifar Tindakan Bertindan (Strict Zero Duplicate Actions):** DILARANG SAMA SEKALI menyediakan 2 atau 3 elemen/butang yang menjalankan fungsi sama dalam satu halaman. Setiap fungsi WAJIB mempunyai SATU butang tindakan tunggal sahaja (Rujuk [04_navigation_and_ui.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)).
   - **Bento Grid & Bahan Kaca:** Susun atur kad Bento squircle (`border-radius: 24px/28px`), sifar ruang mati (*Zero Dead Space*), nombor `tabular-nums`, fizik sentuhan `scale(0.97)`, dan Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
   - **Dwi-Tema:** Mod Siang (`#F5F5F7` / `#FFFFFF`) dan Mod Obsidian Malam (`#000000` True Black / `#161618` Bento).
 
@@ -73,9 +74,5 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 
 ---
 
-## 8. Had Kandungan Maksimum 12,000 Aksara (Strict 12,000 Characters Limit)
-
-- Tertakluk secara mutlak kepada [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md).
-- Semua fail peraturan (`.agents/rules/*.md`), panduan kemahiran, dan dokumen seni bina WAJIB dihadkan kepada maksimum **12,000 aksara** per fail. Bebas menambah sehingga 20–30 fail modular bagi mendalami peraturan.
-- Sebelum selesai tugas, semak aksara menggunakan `wc -m` bagi menjamin had $\le 12,000$ dipatuhi 100%.
-
+## 8. Had Kandungan Maksimum 12,000 Aksara
+- Rujuk [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md). Semua fail peraturan `.agents/rules/*.md` WAJIB kekal $\le 12,000$ aksara (`wc -m`). Bebas menambah fail modular bernombor baharu mengikut keperluan.
