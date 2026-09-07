@@ -3,6 +3,17 @@ const { test, expect } = require('@playwright/test');
 test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
   test('Car Details page toggles between English and Malay seamlessly', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'cust-test-101',
+        email: 'ahmad@wedrive.my',
+        role: 'customer',
+        username: 'Ahmad Ali',
+        name: 'Ahmad bin Ali',
+        timestamp: Date.now()
+      }));
+    });
+
     await page.goto('/customer/pages/car-details/car-details.html?id=bmw-320i-2023');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
@@ -12,12 +23,16 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
     // Ensure MS mode
     await page.evaluate(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
       localStorage.setItem('wedrive_language', 'ms');
-      if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
+      if (window.setLanguage) {
+        window.setLanguage('ms');
+      } else if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
         window.WeDriveLang.applyLanguage('ms');
       }
     });
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const specTitle = page.locator('[data-key="cd_tech_specs"]');
     await expect(specTitle).toHaveText('Spesifikasi Teknikal');
@@ -34,6 +49,17 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
   });
 
   test('Booking wizard page toggles between English and Malay', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'cust-test-101',
+        email: 'ahmad@wedrive.my',
+        role: 'customer',
+        username: 'Ahmad Ali',
+        name: 'Ahmad bin Ali',
+        timestamp: Date.now()
+      }));
+    });
+
     await page.goto('/customer/pages/car-details/booking/booking.html?id=bmw-320i-2023');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
@@ -43,12 +69,16 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
     // Switch to MS
     await page.evaluate(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
       localStorage.setItem('wedrive_language', 'ms');
-      if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
+      if (window.setLanguage) {
+        window.setLanguage('ms');
+      } else if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
         window.WeDriveLang.applyLanguage('ms');
       }
     });
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const stepDates = page.locator('[data-key="book_step_dates"]');
     await expect(stepDates).toHaveText('Tarikh & Lokasi');
@@ -65,6 +95,17 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
   });
 
   test('Payment page toggles between English and Malay', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'cust-test-101',
+        email: 'ahmad@wedrive.my',
+        role: 'customer',
+        username: 'Ahmad Ali',
+        name: 'Ahmad bin Ali',
+        timestamp: Date.now()
+      }));
+    });
+
     await page.goto('/customer/pages/car-details/booking/payment/payment.html');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
@@ -74,12 +115,16 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
     // Set MS
     await page.evaluate(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
       localStorage.setItem('wedrive_language', 'ms');
-      if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
+      if (window.setLanguage) {
+        window.setLanguage('ms');
+      } else if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
         window.WeDriveLang.applyLanguage('ms');
       }
     });
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const payTitle = page.locator('[data-key="cust_pay_title"]');
     await expect(payTitle).toHaveText('Pembayaran & Pengesahan');
@@ -96,6 +141,17 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
   });
 
   test('Booking Confirmed page toggles between English and Malay', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'cust-test-101',
+        email: 'ahmad@wedrive.my',
+        role: 'customer',
+        username: 'Ahmad Ali',
+        name: 'Ahmad bin Ali',
+        timestamp: Date.now()
+      }));
+    });
+
     await page.goto('/customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
@@ -105,12 +161,16 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
     // Set MS
     await page.evaluate(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
       localStorage.setItem('wedrive_language', 'ms');
-      if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
+      if (window.setLanguage) {
+        window.setLanguage('ms');
+      } else if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
         window.WeDriveLang.applyLanguage('ms');
       }
     });
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const confTitle = page.locator('[data-key="cust_conf_title"]');
     await expect(confTitle).toHaveText('Tempahan Disahkan!');
@@ -127,6 +187,27 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
   });
 
   test('Receipt page toggles between English and Malay', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'cust-test-101',
+        email: 'ahmad@wedrive.my',
+        role: 'customer',
+        username: 'Ahmad Ali',
+        name: 'Ahmad bin Ali',
+        timestamp: Date.now()
+      }));
+      sessionStorage.setItem('receipt_booking', JSON.stringify({
+        id: '101',
+        booking_id: 'BK-2026-9281',
+        car: '2026 Honda Civic 1.5 VTEC Turbo',
+        category: 'Premium Sedan (5 Seats • Automatic)',
+        pickup_date: '2026-09-10',
+        return_date: '2026-09-12',
+        total_price: '1636.20',
+        payment_status: 'PAID'
+      }));
+    });
+
     await page.goto('/customer/pages/my-bookings/receipt/receipt.html');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
@@ -136,12 +217,16 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
     // Set MS
     await page.evaluate(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
       localStorage.setItem('wedrive_language', 'ms');
-      if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
+      if (window.setLanguage) {
+        window.setLanguage('ms');
+      } else if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
         window.WeDriveLang.applyLanguage('ms');
       }
     });
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const receiptTitle = page.locator('[data-key="cust_rcpt_title"]');
     await expect(receiptTitle).toHaveText('Resit Pembayaran Rasmi');
@@ -154,6 +239,17 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
   });
 
   test('Admin Add Car page toggles between English and Malay', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'admin-test-id',
+        email: 'admin@wedrive.my',
+        role: 'admin',
+        username: 'Admin Test',
+        name: 'Admin Test',
+        timestamp: Date.now()
+      }));
+    });
+
     await page.goto('/admin/pages/car/add-car.html');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
@@ -163,12 +259,16 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
     // Set MS
     await page.evaluate(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
       localStorage.setItem('wedrive_language', 'ms');
-      if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
+      if (window.setLanguage) {
+        window.setLanguage('ms');
+      } else if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
         window.WeDriveLang.applyLanguage('ms');
       }
     });
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const stepSpec = page.locator('[data-key="ac_step1_title"]');
     await expect(stepSpec).toHaveText('Spesifikasi Kenderaan');
@@ -190,12 +290,16 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
 
     // Set MS
     await page.evaluate(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
       localStorage.setItem('wedrive_language', 'ms');
-      if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
+      if (window.setLanguage) {
+        window.setLanguage('ms');
+      } else if (window.WeDriveLang && window.WeDriveLang.applyLanguage) {
         window.WeDriveLang.applyLanguage('ms');
       }
     });
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(400);
 
     const errTitle = page.locator('[data-key="err_404_title"]');
     await expect(errTitle).toHaveText('Nampaknya anda tersilap simpang!');

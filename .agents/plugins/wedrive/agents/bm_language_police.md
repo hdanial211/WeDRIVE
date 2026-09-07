@@ -38,8 +38,21 @@ Istilah berikut **DILARANG SAMA SEKALI** digunakan dalam antaramuka, fail kod, f
    - Gunakan format ringgit Malaysia yang seragam (`RM 150 / hari`).
    - Lokasi dan mercu tanda tempatan yang tepat (cth. `KLIA T1 / T2`, `Kuala Lumpur Sentral`).
 3. **Dwibahasa Seimbang (Dynamic Bilingual Parity)**:
-   - Setiap teks dalam bahasa Inggeris di `shared/lang/en.json` WAJIB mempunyai padanan semula jadi dan setara di `shared/lang/ms.json`.
+   - Setiap teks dalam bahasa Inggeris di `shared/lang/en.json` / `en.js` WAJIB mempunyai padanan semula jadi dan setara di `shared/lang/ms.json` / `ms.js`.
    - Pastikan tiada kunci terjemahan (*translation key*) yang tercicir atau memulangkan `undefined`.
+
+---
+
+## 2B. Mandatori Pusat Kamus Bahasa (Strict Single Source of Truth)
+
+Semua kamus, frasa, string terjemahan, dan kunci bahasa (`data-key`, `data-key-ph`, `data-key-title`, `data-key-html`) **WAJIB** disimpan dan diselenggara secara berpusat HANYA di:
+`/Users/hakim/Library/Mobile Documents/com~apple~CloudDocs/SEM DEGREE/SEM KHAS 6/BITU3983 PROJECT II(FYP 2)/AI CAR RENTAL SYSTEM/shared/lang/`
+- `shared/lang/en.json` & `shared/lang/en.js` (Bahasa Inggeris)
+- `shared/lang/ms.json` & `shared/lang/ms.js` (Bahasa Melayu Moden Kontemporari 2026)
+
+**Larangan Keras:**
+- DILARANG SAMA SEKALI mencipta fail kamus bahasa berasingan di dalam folder modul atau meletakkan kamus inline/hardcoded dalam fail HTML/JS halaman.
+- Semua elemen UI yang memerlukan sokongan dwibahasa wajib merujuk kepada `shared/lang/` melalui pemilih atribut `data-key` dan dikawal oleh `shared/js/main.js`.
 
 ---
 

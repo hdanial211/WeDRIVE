@@ -50,12 +50,12 @@
 
       <!-- WIZARD STEPPER HEADER -->
       <div class="wizard-stepper-wrap" role="tablist">
-        <button type="button" id="step-btn-1" class="wizard-step-btn active" onclick="goToStep(1)">
+        <button type="button" role="tab" aria-selected="true" id="step-btn-1" class="wizard-step-btn active" onclick="goToStep(1)">
           <span class="wizard-step-badge">1</span>
           <span data-key="addcar_step1_tab">1. Spesifikasi &amp; Struktur Tarif</span>
         </button>
-        <div class="wizard-step-divider"></div>
-        <button type="button" id="step-btn-2" class="wizard-step-btn" onclick="goToStep(2)">
+        <div class="wizard-step-divider" role="presentation"></div>
+        <button type="button" role="tab" aria-selected="false" id="step-btn-2" class="wizard-step-btn" onclick="goToStep(2)">
           <span class="wizard-step-badge">2</span>
           <span data-key="addcar_step2_tab">2. Studio Visual &amp; Pratonton 360°</span>
         </button>
@@ -102,8 +102,8 @@
                 <span class="material-icons-round text-primary">directions_car</span> <span data-key="addcar_card1_title">Maklumat Asas Kenderaan</span>
               </h3>
               <div class="flex-center gap-8">
-                <span class="badge-360 fs-11" style="background: rgba(88,86,214,0.12); color: var(--primary);">
-                  Langkah 1: Spesifikasi
+                <span class="badge-360 fs-11 badge-step-spec" data-key="ac_step1_title">
+                  Spesifikasi Kenderaan
                 </span>
                 <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill flex-shrink-0" onclick="triggerAiSpecAutofill()" title="Gunakan AI untuk mengesan spesifikasi teknikal, enjin, kadar sewaan dan deposit berdasarkan pasaran Malaysia">
                   <span class="material-icons-round fs-16 ai-sparkle-icon">auto_awesome</span>
@@ -288,7 +288,7 @@
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
                 <span class="material-icons-round text-primary">tune</span> <span data-key="addcar_card2_title">Spesifikasi Teknikal &amp; Struktur Tarif</span>
               </h3>
-              <span class="badge-360 fs-11" style="background: rgba(50,215,75,0.12); color: #32D74B;">
+              <span class="badge-360 fs-11 badge-ai-auto">
                 Auto-Dikesan oleh AI
               </span>
             </div>
@@ -571,14 +571,14 @@
                 </div>
 
                 <!-- EXACT WEDRIVE OFFICIAL CAR-CARD (MATCHING INDEX.HTML & CUSTOMER.HTML) -->
-                <div class="car-card cursor-default" style="margin: 0; box-shadow: none;">
+                <div class="car-card cursor-default m-0 shadow-none">
                   <div class="car-img" id="preview-canvas-wrap">
                     <!-- FLOATING BADGES (MATCHING SCREENSHOT 1 & 2) -->
                     <div class="car-badges">
                       <span class="status-pill available" id="preview-status-pill">Available</span>
                       <span class="rating-pill">⭐ 4.9</span>
-                      <span class="badge-360" id="preview-badge-360" style="display: none;">
-                        <span class="material-icons-round" style="font-size: 12px">360</span> 360° View
+                      <span class="badge-360 hidden" id="preview-badge-360">
+                        <span class="material-icons-round fs-12">360</span> 360° View
                       </span>
                     </div>
 
@@ -589,14 +589,14 @@
                     </div>
 
                     <!-- MAIN PHOTO IMAGE -->
-                    <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kereta" style="width: 100%; height: 100%; object-fit: cover;" />
+                    <img id="preview-display-img" class="apple-car-studio-img hidden w-100 h-100 object-cover" alt="Pratonton Kereta" />
 
                     <!-- 360 EXTERIOR FRAME DISPLAY -->
-                    <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" style="width: 100%; height: 100%; object-fit: cover;" />
+                    <img id="preview-360-frame" class="apple-car-studio-img hidden w-100 h-100 object-cover" alt="Pratonton 360 Luaran" draggable="false" />
 
                     <!-- 360 INTERIOR PANORAMA DISPLAY -->
                     <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center preview-interior-layer">
-                      <img id="preview-interior-img" class="w-100 h-100" alt="Pratonton Dalaman" style="object-fit: cover;" />
+                      <img id="preview-interior-img" class="w-100 h-100 object-cover" alt="Pratonton Dalaman" />
                     </div>
                   </div>
 
@@ -606,7 +606,7 @@
                       <span class="rating-pill"><span class="material-icons-round">reviews</span> 128 reviews</span>
                     </div>
 
-                    <h3 id="preview-display-name" style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">2023 BMW 320i M Sport 2.0</h3>
+                    <h3 id="preview-display-name" class="fs-18 fw-700 mb-4">2023 BMW 320i M Sport 2.0</h3>
                     <p class="fs-12 text-secondary m-0 mb-10" id="preview-display-color">Color: Alpine White</p>
 
                     <div class="car-specs">
@@ -629,7 +629,7 @@
                     </div>
 
                     <div class="ai-chip" id="preview-ai-chip">
-                      <span class="material-icons-round" style="font-size: 12px">psychology</span>
+                      <span class="material-icons-round fs-12">psychology</span>
                       <span id="preview-ai-chip-text">Executive Choice</span>
                     </div>
 
@@ -638,7 +638,7 @@
                         RM <span id="preview-display-rate" class="tabular-nums">450</span><span>/day</span>
                       </div>
                       <button type="button" class="btn-book" onclick="document.getElementById('add-car-form').requestSubmit()">
-                        <span class="material-icons-round" style="font-size: 17px">check_circle</span>
+                        <span class="material-icons-round fs-17">check_circle</span>
                         <span>Daftar Kereta</span>
                       </button>
                     </div>

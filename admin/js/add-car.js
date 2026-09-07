@@ -995,9 +995,11 @@
       if (b1) {
         b1.classList.remove('active');
         b1.classList.add('completed');
+        b1.setAttribute('aria-selected', 'false');
       }
       if (b2) {
         b2.classList.add('active');
+        b2.setAttribute('aria-selected', 'true');
       }
 
       window.updateLivePreview();
@@ -1013,9 +1015,11 @@
       var btn2 = document.getElementById('step-btn-2');
       if (btn1) {
         btn1.classList.add('active');
+        btn1.setAttribute('aria-selected', 'true');
       }
       if (btn2) {
         btn2.classList.remove('active');
+        btn2.setAttribute('aria-selected', 'false');
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -5218,3 +5218,50 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.7.2 Enforce centralized shared/lang localization governance in agent rules and achieve full system bilingual parity`
   - Tag Versi: `6.7.2`
+
+---
+
+## 🧹 [PATCH UPDATE] 207. Penyelesaian Amaran Linter IDE (current_problems), Pengukuhan Aksesibiliti ARIA & Penyingkiran Gaya Inline ke Master CSS (v6.7.3)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna memohon untuk menyelesaikan semua isu dan amaran yang dikesan di dalam senarai masalah IDE:
+     > `@[current_problems] fix`
+  2. Pengguna meminta tindakan diteruskan untuk memuktamadkan penambahbaikan:
+     > `Continue`
+  3. Mengukuhkan peraturan ejen bagi subejen `bm_language_police` agar mematuhi pemusatan mutlak fail bahasa di `shared/lang/`.
+
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Pengukuhan Aksesibiliti ARIA (`admin/pages/car/add-car.html` & `admin/js/add-car.js`)**:
+     - Memperbetulkan amaran hierarki ARIA pada elemen dengan `role="tablist"`:
+       - Menambah atribut `role="tab"` dan `aria-selected` dinamik pada butang Langkah 1 (`#step-btn-1`) dan Langkah 2 (`#step-btn-2`).
+       - Menambah atribut `role="presentation"` pada elemen pembahagi langkah visual (`.wizard-step-divider`).
+       - Menyelaras fungsi `goToStep(step)` di dalam `admin/js/add-car.js` supaya mengemas kini `aria-selected="true"/"false"` secara reaktif semasa penukaran langkah.
+  2. **Penyingkiran Menyeluruh Gaya Inline (`style="..."`) ke Master CSS (`shared/css/wedrive.css`)**:
+     - `admin/pages/car/add-car.html`:
+       - Menyingkirkan semua atribut `style="..."` sebaris (termasuk pada lencana, divider, scene 3D, dan tinjauan langsung).
+       - Menggantikannya dengan kelas utiliti standard WeDRIVE: `.badge-step-spec`, `.badge-ai-auto`, `.m-0`, `.shadow-none`, `.hidden`, `.fs-12`, `.fs-17`, `.fs-18`, `.w-100`, `.h-100`, `.object-cover`.
+     - `admin/pages/car/car-detail/car-detail.html`:
+       - Menyingkirkan `style="display: flex;"` pada `#cdInteriorScene`, menggantikannya dengan kelas `.d-flex`.
+     - `customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html`:
+       - Memindahkan penggayaan inline bar atas kepada kelas `.utility-bar.utility-bar-end`.
+     - `shared/pages/error/404.html`:
+       - Menyingkirkan inline styles daripada header, logo jenama, gambar ilustrasi, dan alat set semula ke kelas `.reset-tools` dan styling master CSS.
+  3. **Pembersihan Amaran CSS Validator (`shared/css/wedrive.css`)**:
+     - Menyingkirkan sifat tidak disokong `text-size-adjust: 100%;` (mengekalkan `-webkit-text-size-adjust: 100%;` yang sah).
+     - Menyingkirkan sifat lapuk `-webkit-overflow-scrolling: touch;` pada jadual invois.
+     - Menambah kelas utiliti seragam: `.fs-17`, `.shadow-none`, `.object-cover`, `.badge-step-spec`, `.badge-ai-auto`, `.utility-bar-end`, `.reset-tools`.
+  4. **Pengekalan Elemen Dinamik Butang Pembayaran & Penyelarasan Multi-Key Lang**:
+     - Di dalam `customer/pages/car-details/booking/payment/payment.html`: Memelihara struktur `<span data-key="cust_pay_btn">` semasa fungsi `recalcFromCheckboxes()` mengubah teks jumlah harga secara langsung, menghalang teks hilang sewaktu pertukaran dwibahasa.
+     - Di dalam `shared/js/main.js`: Membaca dan menulis secara selari merentasi ketiga-tiga kunci storan (`wedrive-lang`, `wedrive_lang`, `wedrive_language`) dan mendedahkan API global `window.WeDriveLang`.
+  5. **Pengemaskinian Subejen `bm_language_police`**:
+     - Memasukkan arahan mandatori `shared/lang/` Single Source of Truth ke dalam `.agents/plugins/wedrive/agents/bm_language_police.md`.
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - Pelaksanaan Ujian Automasi Playwright CLI: **48/48 Ujian Lulus (100% Pass Rate)** merentas semua fail spesifikasi.
+  - Pematuhan had aksara peraturan `.agents/rules/*.md`: Semua fail disahkan $\le 12,000$ aksara (`wc -m`).
+  - Sifar ralat ARIA dan sifar amaran linter yang menghalang.
+
+- **Maklumat Git**:
+  - Commit: `6.7.3 Resolve IDE linter warnings, enforce ARIA tab accessibility, eliminate inline styles, and achieve 100% Playwright bilingual parity`
+  - Tag Versi: `6.7.3`
+

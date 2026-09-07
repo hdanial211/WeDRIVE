@@ -25,7 +25,7 @@ Setiap dokumen PRD di dalam `implementation_plan.md` WAJIB merangkumi 6 komponen
 - Menentukan peranan pengguna yang terlibat:
   - **Pelanggan (Customer):** Carian kereta, tempahan pintar, bayaran deposit, semakan pas digital QR.
   - **Pentadbir (Admin):** Pemantauan operasi depot, kelulusan verifikasi dokumen OCR, semakan inventori kereta.
-  - **Pelawat (Guest):** Penerokaan kadar harga dan armada kereta tanpa akaun.
+  - **Pelawat (Guest):** Penerokaan kadar harga dan pilihan kereta tanpa akaun.
 - Aliran langkah demi langkah (*step-by-step user journey*) dari permulaan hingga selesai.
 
 ### 3. Keperluan Fungsian Terperinci (*Functional Requirements*)

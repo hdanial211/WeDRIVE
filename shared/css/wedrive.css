@@ -156,7 +156,6 @@ html {
   overflow-x: hidden;
   max-width: 100vw;
   -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
 }
 
 body, button, input, select, textarea, optgroup, table, th, td {
@@ -12908,7 +12907,6 @@ body.dark .receipt-tax-table-title-bar {
 .receipt-table-scroll-container {
   width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .receipt-tax-table {
@@ -14205,6 +14203,13 @@ body.profile-page {
 
 .table-responsive { overflow-x: auto !important; }
 .w-full { width: 100% !important; }
+.fs-17 { font-size: 17px !important; }
+.shadow-none { box-shadow: none !important; }
+.object-cover { object-fit: cover !important; }
+.badge-step-spec { background: rgba(88, 86, 214, 0.12) !important; color: var(--primary) !important; }
+.badge-ai-auto { background: rgba(50, 215, 75, 0.12) !important; color: #32D74B !important; }
+.utility-bar-end { justify-content: flex-end !important; padding: 12px 24px !important; margin-bottom: 8px !important; }
+.reset-tools { display: flex; align-items: center; gap: 8px; }
 .border-top-subtle { border-top: 1px solid var(--border-subtle) !important; }
 .border-bottom-subtle { border-bottom: 1px solid var(--border-subtle) !important; }
 

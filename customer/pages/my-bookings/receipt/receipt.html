@@ -18,19 +18,22 @@
   <main class="customer-main receipt-main" id="customer-main">
     <div class="receipt-container reveal-onload">
       
-      <!-- Apple Breadcrumb Navigation -->
-      <nav class="receipt-breadcrumb-nav" aria-label="Breadcrumb">
-        <a href="../../dashboard/customer.html" class="receipt-breadcrumb-link">
-          <span class="material-icons-round fs-16">dashboard</span>
-          <span data-i18n="nav_dashboard">Dashboard</span>
-        </a>
-        <span class="material-icons-round receipt-breadcrumb-sep">chevron_right</span>
-        <a href="../my-bookings.html" class="receipt-breadcrumb-link">
-          <span data-i18n="receipt_breadcrumb_my_bookings">My Bookings</span>
-        </a>
-        <span class="material-icons-round receipt-breadcrumb-sep">chevron_right</span>
-        <span class="receipt-breadcrumb-current" data-i18n="receipt_breadcrumb_current">Official Tax Invoice</span>
-      </nav>
+      <!-- Apple Breadcrumb Navigation & Top Utility Controls -->
+      <div class="flex-between items-center mb-16 wrap gap-12">
+        <nav class="receipt-breadcrumb-nav" aria-label="Breadcrumb">
+          <a href="../../dashboard/customer.html" class="receipt-breadcrumb-link">
+            <span class="material-icons-round fs-16">dashboard</span>
+            <span data-i18n="nav_dashboard">Dashboard</span>
+          </a>
+          <span class="material-icons-round receipt-breadcrumb-sep">chevron_right</span>
+          <a href="../my-bookings.html" class="receipt-breadcrumb-link">
+            <span data-i18n="receipt_breadcrumb_my_bookings">My Bookings</span>
+          </a>
+          <span class="material-icons-round receipt-breadcrumb-sep">chevron_right</span>
+          <span class="receipt-breadcrumb-current" data-i18n="receipt_breadcrumb_current">Official Tax Invoice</span>
+        </nav>
+        <div class="utility-actions"></div>
+      </div>
 
       <!-- Master Official Corporate Tax Invoice Document Card -->
       <div class="receipt-bento-card" id="receipt-printable-card">
@@ -52,7 +55,7 @@
           </div>
 
           <div class="receipt-meta-right">
-            <div class="receipt-inv-title-main" data-i18n="receipt_title">Official Tax Invoice</div>
+            <div class="receipt-inv-title-main" data-i18n="receipt_title" data-key="cust_rcpt_title">Official Tax Invoice</div>
             
             <div class="receipt-status-badge-wrap">
               <div class="receipt-verified-seal" id="receipt-verified-badge">

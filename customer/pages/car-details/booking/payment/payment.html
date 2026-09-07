@@ -25,7 +25,7 @@
         </a>
         <div class="checkout-title-row">
           <div>
-            <p class="checkout-eyebrow" data-key="cust_pay_title">Secure checkout</p>
+            <p class="checkout-eyebrow" data-key="cust_pay_title">Payment &amp; Confirmation</p>
             <h1 data-key="cust_bk_title">Complete your booking</h1>
             <p data-key="cust_pay_subtitle">Review the driver details and continue payment. Demo mode accepts any valid-looking details.</p>
           </div>
@@ -300,7 +300,7 @@
 
           <button type="button" class="btn-pay" id="btn-pay" onclick="completePayment()">
             <span class="material-icons-round">lock</span>
-            Pay RM 0.00
+            <span data-key="cust_pay_btn">Pay Deposit &amp; Confirm</span>
           </button>
           <div class="pay-secure"><span class="material-icons-round">verified_user</span> Demo checkout will approve any filled payment method</div>
         </aside>
@@ -594,7 +594,9 @@
 
       var btnPay = document.getElementById('btn-pay');
       if (btnPay) {
-        btnPay.innerHTML = '<span class="material-icons-round">lock</span> Pay ' + currency + ' ' + amountDue.toFixed(2);
+        var isMs = (localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || 'en') === 'ms';
+        var payActionText = isMs ? 'Bayar Deposit & Sahkan Tempahan' : 'Pay Deposit & Confirm';
+        btnPay.innerHTML = '<span class="material-icons-round">lock</span> <span data-key="cust_pay_btn">' + payActionText + '</span>';
       }
     }
 

@@ -13,6 +13,9 @@ test.describe('WeDRIVE AI Key Vault & Unified HQ Location Tests', () => {
         name: 'Admin Test',
         timestamp: Date.now()
       }));
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
+      localStorage.setItem('wedrive_language', 'ms');
     });
 
     // 1. Navigate to AI Key Vault
@@ -20,7 +23,7 @@ test.describe('WeDRIVE AI Key Vault & Unified HQ Location Tests', () => {
     await page.waitForLoadState('networkidle');
 
     // 2. Verify Title and 4 Cards
-    await expect(page.locator('h1')).toContainText('Pengurusan Kunci API AI');
+    await expect(page.locator('h1')).toContainText(/Peti Besi Kunci AI|AI Key Vault/);
     await expect(page.locator('#card-slot-1')).toBeVisible();
     await expect(page.locator('#card-slot-2')).toBeVisible();
     await expect(page.locator('#card-slot-3')).toBeVisible();

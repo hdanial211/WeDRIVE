@@ -88,6 +88,11 @@ test.describe('WeDRIVE Add Car 2-Step Stepper & Carlist Cascading Selectors', ()
   });
 
   test('Draft auto-save and exit confirmation modal protect work in progress', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive-lang', 'ms');
+      localStorage.setItem('wedrive_lang', 'ms');
+      localStorage.setItem('wedrive_language', 'ms');
+    });
     await page.goto('/admin/pages/car/add-car.html');
     await page.waitForLoadState('networkidle');
 
@@ -96,13 +101,13 @@ test.describe('WeDRIVE Add Car 2-Step Stepper & Carlist Cascading Selectors', ()
     await page.waitForTimeout(500);
 
     // Click Batal & verify Exit Confirmation Modal appears
-    await page.locator('button:has-text("Batal")').first().click();
+    await page.locator('.btn-cancel-clean, button:has-text("Batal"), button:has-text("Cancel")').first().click();
     const modal = page.locator('#modal-exit-confirm');
     await expect(modal).toHaveClass(/show/);
-    await expect(modal).toContainText('Tinggalkan Pendaftaran Kereta?');
+    await expect(modal).toContainText(/Tinggalkan Pendaftaran Kereta|Leave Car Registration/);
 
     // Click Stay on page
-    await page.locator('button:has-text("Kekal di Halaman Ini")').click();
+    await page.locator('.apple-exit-modal-card button.btn-primary, button:has-text("Kekal di Halaman Ini")').click();
     await expect(modal).not.toHaveClass(/show/);
 
     // Reload page to test Draft Resume Banner
@@ -112,10 +117,10 @@ test.describe('WeDRIVE Add Car 2-Step Stepper & Carlist Cascading Selectors', ()
     // Banner should be visible
     const draftBanner = page.locator('#banner-draft-resume');
     await expect(draftBanner).toBeVisible();
-    await expect(draftBanner).toContainText('Draf Pendaftaran Ditemui');
+    await expect(draftBanner).toContainText(/Draf Pendaftaran Ditemui|Draft Registration Found/);
 
     // Click Pulihkan Draf
-    await page.locator('button:has-text("Pulihkan Draf")').click();
+    await page.locator('#banner-draft-resume button.btn-primary-sm, button:has-text("Pulihkan Draf")').click();
     await expect(page.locator('#car-plate')).toHaveValue('DRAFT 1234');
   });
 

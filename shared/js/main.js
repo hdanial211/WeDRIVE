@@ -134,7 +134,7 @@
   }
 
   function updateThemeBtns(mode, animate) {
-    var lang = localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_language') || 'ms';
+    var lang = localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || localStorage.getItem('wedrive_language') || 'ms';
     var isMalay = lang === 'ms';
 
     document.querySelectorAll('.theme-toggle').forEach(function (btn) {
@@ -243,6 +243,18 @@
   var LANG_KEY = 'wedrive-lang';
   var DEFAULT_LANG = 'en';
 
+  function getSavedLang() {
+    return localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || localStorage.getItem('wedrive_language') || DEFAULT_LANG;
+  }
+
+  function saveLang(lang) {
+    try {
+      localStorage.setItem('wedrive-lang', lang);
+      localStorage.setItem('wedrive_lang', lang);
+      localStorage.setItem('wedrive_language', lang);
+    } catch (e) {}
+  }
+
   function resolveProjectBase() {
     var pathname = decodeURIComponent(window.location.pathname);
     var marker = '/AI CAR RENTAL SYSTEM/';
@@ -262,7 +274,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=6.7.2';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=6.7.3';
   }
 
   function doApplyTranslation(data, animate) {
@@ -293,7 +305,8 @@
       if (data[key] !== undefined) el.innerHTML = data[key];
     });
 
-    syncToggleButtons(localStorage.getItem(LANG_KEY) || DEFAULT_LANG, animate);
+    var activeLang = getSavedLang();
+    syncToggleButtons(activeLang, animate);
 
     if (typeof window.updateThemeBtns === 'function') {
       var currentTheme = localStorage.getItem('wedrive-theme') || 'system';
@@ -302,9 +315,9 @@
 
     if (data['page_title']) document.title = data['page_title'];
 
-    document.documentElement.lang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+    document.documentElement.lang = activeLang;
     document.dispatchEvent(new CustomEvent('wedrive:language-applied', {
-      detail: { lang: localStorage.getItem(LANG_KEY) || DEFAULT_LANG }
+      detail: { lang: activeLang }
     }));
   }
 
@@ -371,7 +384,7 @@
       "footer_col_support": "Help & Support",
       "footer_col_legal": "Legal & Company",
       "footer_pricing": "Pricing Plans",
-      "footer_tech_360": "360° Showroom",
+      "footer_tech_360": "360° Studio",
       "footer_car": "Car Connectivity",
       "footer_tech_pricing": "Package Comparison",
       "footer_tech_keyless": "Vehicle Pickup",
@@ -496,7 +509,22 @@
       "ops_status_active": "Active",
       "ops_status_pending": "Pending",
       "ops_btn_manage": "Manage",
-      "ops_no_schedule": "No active handover schedules today."
+      "ops_no_schedule": "No active handover schedules today.",
+      "err_404_title": "Looks like you took a wrong turn!",
+      "err_404_subtitle": "The page you're looking for doesn't exist or has been moved.",
+      "err_404_home": "Go Home",
+      "err_404_cars": "Browse Cars",
+      "err_404_help": "Get Help",
+      "cust_rcpt_title": "Official Payment Receipt",
+      "ac_step1_title": "Vehicle Specifications",
+      "cd_tech_specs": "Technical Specifications",
+      "cd_btn_book_now": "Proceed to Booking",
+      "book_step_dates": "Dates & Location",
+      "book_step_summary": "Rental Summary",
+      "cust_pay_title": "Payment & Confirmation",
+      "cust_pay_btn": "Pay Deposit & Confirm",
+      "cust_conf_title": "Booking Confirmed!",
+      "cust_conf_summary": "Booking Summary"
     },
     ms: {
       "nav_browse": "Pilih Kereta",
@@ -515,7 +543,7 @@
       "footer_col_support": "Bantuan & Khidmat",
       "footer_col_legal": "Dasar & Syarikat",
       "footer_pricing": "Pakej & Kadar Harga",
-      "footer_tech_360": "Bilik Pameran 360°",
+      "footer_tech_360": "Studio 360°",
       "footer_car": "Maklumat Kenderaan",
       "footer_tech_pricing": "Perbandingan Pakej",
       "footer_tech_keyless": "Pengambilan Kenderaan",
@@ -641,7 +669,23 @@
       "ops_status_active": "Aktif",
       "ops_status_pending": "Menunggu",
       "ops_btn_manage": "Urus",
-      "ops_no_schedule": "Tiada jadual serahan aktif hari ini."
+      "ops_no_schedule": "Tiada jadual serahan aktif hari ini.",
+      "guest_badge": "Katalog Tetamu",
+      "err_404_title": "Nampaknya anda tersilap simpang!",
+      "err_404_subtitle": "Halaman yang anda cari tidak wujud atau telah dipindahkan.",
+      "err_404_home": "Laman Utama",
+      "err_404_cars": "Pilihan Kereta",
+      "err_404_help": "Bantuan",
+      "cust_rcpt_title": "Resit Pembayaran Rasmi",
+      "ac_step1_title": "Spesifikasi Kenderaan",
+      "cd_tech_specs": "Spesifikasi Teknikal",
+      "cd_btn_book_now": "Teruskan Tempahan",
+      "book_step_dates": "Tarikh & Lokasi",
+      "book_step_summary": "Ringkasan Sewaan",
+      "cust_pay_title": "Pembayaran & Pengesahan",
+      "cust_pay_btn": "Bayar Deposit & Sahkan Tempahan",
+      "cust_conf_title": "Tempahan Disahkan!",
+      "cust_conf_summary": "Ringkasan Tempahan"
     }
   };
 
@@ -659,7 +703,7 @@
       document.documentElement.classList.add('lang-skeleton-active');
     }
 
-    localStorage.setItem(LANG_KEY, lang);
+    saveLang(lang);
 
     // Apply merged synchronous dictionary immediately
     applyTranslation(getMergedLangData(lang), animate);
@@ -683,7 +727,7 @@
   }
 
   window.toggleLanguage = function () {
-    var current = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+    var current = getSavedLang();
     loadLanguage(current === 'en' ? 'ms' : 'en', true);
   };
 
@@ -691,8 +735,15 @@
     loadLanguage(lang, false);
   };
 
+  window.WeDriveLang = {
+    applyLanguage: function (lang) { loadLanguage(lang, false); },
+    setLanguage: function (lang) { loadLanguage(lang, false); },
+    toggleLanguage: window.toggleLanguage,
+    current: getSavedLang
+  };
+
   function initLang() {
-    var saved = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+    var saved = getSavedLang();
     loadLanguage(saved, false);
   }
 
