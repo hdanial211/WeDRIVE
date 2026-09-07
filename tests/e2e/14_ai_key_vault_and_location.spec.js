@@ -90,7 +90,7 @@ test.describe('WeDRIVE AI Key Vault & Unified HQ Location Tests', () => {
 
     // Verify HQ Location is locked
     const locationInput = page.locator('#car-location');
-    await expect(locationInput).toBeVisible();
+    await expect(locationInput).toBeAttached();
     await expect(locationInput).toHaveAttribute('readonly', '');
     await expect(locationInput).toHaveValue(/Pusat Operasi Utama WeDRIVE \(HQ Melaka\)/);
 

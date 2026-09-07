@@ -26,7 +26,7 @@
 
     <div class="content">
       <!-- APPLE BENTO HERO HEADER -->
-      <div class="bento-header-hero reveal-onload">
+      <div class="bento-header-hero reveal-onload mb-24">
         <div class="flex-between flex-wrap gap-16">
           <div>
             <div class="bento-breadcrumbs">
@@ -38,7 +38,7 @@
               <h1 class="bento-title-main">Tambah Kereta Baharu</h1>
               <span class="status-badge active"><span class="material-icons-round fs-14">add_circle</span> <span>Pendaftaran Kereta</span></span>
             </div>
-            <p class="bento-subtitle-main">Daftarkan kenderaan baharu ke dalam inventori WeDRIVE dengan pembantu pintar AI, studio 360°, dan pratonton kad langsung.</p>
+            <p class="bento-subtitle-main">Daftarkan kenderaan baharu ke dalam inventori WeDRIVE dengan pengesanan pintar spesifikasi automotif AI dan pratonton kad langsung rasmi.</p>
           </div>
           <div class="flex-center gap-10">
             <button type="button" class="btn-outline-sm" onclick="window.location.href='cars.html'">
@@ -51,63 +51,45 @@
         </div>
       </div>
 
-      <!-- ADD CAR FORM -->
+      <!-- ADD CAR FORM (2-COLUMN BENTO) -->
       <form id="add-car-form" onsubmit="handleCarSubmit(event)">
 
-        <!-- AI HERO ASSISTANT CARD -->
-        <div class="ai-hero-assistant-card mb-24 reveal-onload">
-          <div class="flex-between flex-wrap gap-12 mb-14 items-center">
-            <div class="flex-start items-center gap-10">
-              <div class="p-8 radius-12 flex-center" style="background: linear-gradient(135deg, rgba(175, 82, 222, 0.25), rgba(88, 86, 214, 0.25)); border: 1px solid rgba(175, 82, 222, 0.35);">
-                <span class="material-icons-round text-primary fs-20 ai-sparkle-icon">auto_awesome</span>
-              </div>
-              <div>
-                <div class="fs-15 fw-700 text-title flex-center gap-8">
-                  <span>Penolong Pendaftaran Kereta Pintar AI</span>
-                  <span class="badge-360 fs-10" style="background: rgba(175, 82, 222, 0.2); color: #BF5AF2; border: 1px solid rgba(175, 82, 222, 0.3);">Apple HIG AI Engine</span>
-                </div>
-                <div class="fs-12 text-secondary mt-2">Pilih model kenderaan popular di bawah atau taip nama model untuk mengisi semua spesifikasi teknikal, kadar harian dan kelengkapan secara automatik.</div>
-              </div>
-            </div>
-          </div>
+        <!-- Hidden HQ Location (Unified headquarters) -->
+        <input type="hidden" id="car-location" value="Pusat Operasi Utama WeDRIVE (HQ Melaka)" readonly />
 
-          <!-- 1-CLICK QUICK PRESET CHIPS -->
-          <div class="ai-preset-chips mb-14">
-            <span class="fs-11 fw-700 text-secondary mr-4 flex-center gap-4"><span class="material-icons-round fs-14">touch_app</span> Model Pantas 1-Klik:</span>
-            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Proton X50 1.5 TGDi')">🚗 Proton X50 1.5 TGDi</button>
-            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Honda Civic 1.5 RS')">🏎️ Honda Civic 1.5 RS</button>
-            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Perodua Alza 1.5 AV')">🚙 Perodua Alza 1.5 AV</button>
-            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('BMW 320i M Sport')">✨ BMW 320i M Sport</button>
-            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Toyota HiAce 2.5 Commuter')">🚐 Toyota HiAce 2.5</button>
-            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Tesla Model 3 Long Range')">⚡ Tesla Model 3</button>
-            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Toyota Alphard 2.4 Turbo')">👑 Toyota Alphard 2.4</button>
-          </div>
-
-          <!-- MODEL SEARCH INPUT & AI AUTOFILL BUTTON -->
-          <div class="flex-start gap-10 items-center">
-            <div class="we-input-prefix-box flex-1">
-              <span class="material-icons-round we-input-prefix-icon text-muted">directions_car</span>
-              <input type="text" id="car-name" class="form-input radius-14 fs-14 fw-600" placeholder="cth: Proton X50 1.5 TGDi / Honda Civic 1.5 RS / Toyota HiAce 2.5" required oninput="updateLivePreview()" />
-            </div>
-            <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill flex-shrink-0" onclick="triggerAiSpecAutofill()" title="Kesan spesifikasi teknikal, tarif dan kelengkapan secara automatik mengikut model kenderaan">
-              <span class="material-icons-round fs-16 ai-sparkle-icon">auto_awesome</span>
-              <span>Kesan Automatik AI</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 2-COLUMN BENTO LAYOUT (LEFT: FORM CARDS, RIGHT: STICKY LIVE PREVIEW) -->
         <div class="add-car-bento-grid">
 
-          <!-- LEFT COLUMN: STRUCTURED FORM SECTIONS -->
+          <!-- LEFT COLUMN: STRUCTURED FORM CARDS -->
           <div class="flex flex-column gap-24">
 
-            <!-- CARD 1: MAKLUMAT ASAS & IDENTITI JPJ -->
+            <!-- KAD 1: MAKLUMAT ASAS & IDENTITI JPJ -->
             <div class="card p-24 radius-24 reveal-onload">
-              <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
                 <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
                   <span class="material-icons-round text-primary">directions_car</span> Maklumat Asas &amp; Identiti JPJ
                 </h3>
+                <span class="badge-360 fs-11" style="background: rgba(88,86,214,0.12); color: var(--primary);">
+                  Langkah 1: Maklumat Asas
+                </span>
+              </div>
+
+              <!-- MODEL NAME & INTEGRATED AI AUTOFILL BUTTON -->
+              <div class="mb-16">
+                <label class="form-label fs-13 fw-600 mb-6 d-block" for="car-name">Nama &amp; Varian Model Kenderaan <span class="text-danger">*</span></label>
+                <div class="flex-start gap-10 items-center">
+                  <div class="we-input-prefix-box flex-1">
+                    <span class="material-icons-round we-input-prefix-icon text-muted">directions_car</span>
+                    <input type="text" id="car-name" class="form-input radius-14 fs-14 fw-600" placeholder="cth: 2023 BMW 320i M Sport 2.0 / Proton X50 1.5 TGDi / Honda Civic 1.5 RS" required oninput="updateLivePreview()" />
+                  </div>
+                  <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill flex-shrink-0" onclick="triggerAiSpecAutofill()" title="Gunakan AI untuk mengesan spesifikasi teknikal, jenis badan, enjin, kadar sewaan dan deposit berdasarkan pasaran Malaysia">
+                    <span class="material-icons-round fs-16 ai-sparkle-icon">auto_awesome</span>
+                    <span>Kesan Automatik AI</span>
+                  </button>
+                </div>
+                <div class="fs-11 text-muted mt-6 flex-start items-center gap-4">
+                  <span class="material-icons-round fs-14 text-primary">lightbulb</span>
+                  <span>Isi nama model di atas dan tekan butang <strong>Kesan Automatik AI</strong> untuk menjana spesifikasi dan struktur tarif pasaran secara pintar.</span>
+                </div>
               </div>
 
               <div class="grid-2 gap-14 mb-16">
@@ -119,54 +101,84 @@
                   <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
                   <select id="car-brand" class="form-input radius-14" required onchange="updateLivePreview()">
                     <option value="" disabled selected>Pilih Pengeluar (Jenama)</option>
-                    <option value="Proton">Proton</option>
-                    <option value="Perodua">Perodua</option>
-                    <option value="Toyota">Toyota</option>
-                    <option value="Honda">Honda</option>
-                    <option value="Nissan">Nissan</option>
-                    <option value="Mazda">Mazda</option>
-                    <option value="Hyundai">Hyundai</option>
-                    <option value="Kia">Kia</option>
-                    <option value="BYD">BYD</option>
-                    <option value="Tesla">Tesla</option>
-                    <option value="BMW">BMW</option>
-                    <option value="Mercedes-Benz">Mercedes-Benz</option>
-                    <option value="Chery">Chery</option>
-                    <option value="GWM">GWM / Haval / Ora</option>
-                    <option value="Mitsubishi">Mitsubishi</option>
-                    <option value="Ford">Ford</option>
-                    <option value="Lexus">Lexus</option>
+                    <optgroup label="Jenama Nasional Malaysia">
+                      <option value="Perodua">Perodua</option>
+                      <option value="Proton">Proton</option>
+                    </optgroup>
+                    <optgroup label="Semua Jenama di Malaysia (A - Z)">
+                      <option value="Aston Martin">Aston Martin</option>
+                      <option value="Audi">Audi</option>
+                      <option value="Bentley">Bentley</option>
+                      <option value="BMW">BMW</option>
+                      <option value="BYD">BYD</option>
+                      <option value="Chery">Chery</option>
+                      <option value="Chevrolet">Chevrolet</option>
+                      <option value="Citroen">Citroen</option>
+                      <option value="DS Automobiles">DS Automobiles</option>
+                      <option value="Ferrari">Ferrari</option>
+                      <option value="Ford">Ford</option>
+                      <option value="Geely">Geely</option>
+                      <option value="GWM">GWM (Haval / Ora / Tank)</option>
+                      <option value="Honda">Honda</option>
+                      <option value="Hyundai">Hyundai</option>
+                      <option value="Infiniti">Infiniti</option>
+                      <option value="Isuzu">Isuzu</option>
+                      <option value="Jaecoo">Jaecoo</option>
+                      <option value="Jaguar">Jaguar</option>
+                      <option value="Jeep">Jeep</option>
+                      <option value="Kia">Kia</option>
+                      <option value="Lamborghini">Lamborghini</option>
+                      <option value="Land Rover">Land Rover</option>
+                      <option value="Lexus">Lexus</option>
+                      <option value="Lotus">Lotus</option>
+                      <option value="Maserati">Maserati</option>
+                      <option value="Maxus">Maxus</option>
+                      <option value="Mazda">Mazda</option>
+                      <option value="McLaren">McLaren</option>
+                      <option value="Mercedes-Benz">Mercedes-Benz</option>
+                      <option value="MG">MG (Morris Garages)</option>
+                      <option value="MINI">MINI</option>
+                      <option value="Mitsubishi">Mitsubishi</option>
+                      <option value="Neta">Neta</option>
+                      <option value="Nissan">Nissan</option>
+                      <option value="Omoda">Omoda</option>
+                      <option value="Peugeot">Peugeot</option>
+                      <option value="Porsche">Porsche</option>
+                      <option value="Renault">Renault</option>
+                      <option value="Rolls-Royce">Rolls-Royce</option>
+                      <option value="smart">smart</option>
+                      <option value="Subaru">Subaru</option>
+                      <option value="Suzuki">Suzuki</option>
+                      <option value="Tesla">Tesla</option>
+                      <option value="Toyota">Toyota</option>
+                      <option value="Volkswagen">Volkswagen</option>
+                      <option value="Volvo">Volvo</option>
+                    </optgroup>
                   </select>
                 </div>
               </div>
 
-              <div class="grid-2 gap-14 mb-16">
+              <div class="grid-2 gap-14">
                 <div>
                   <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan</label>
-                  <input type="number" id="car-year" class="form-input radius-14 tabular-nums" placeholder="cth: 2025" min="2018" max="2027" oninput="updateLivePreview()" />
+                  <input type="number" id="car-year" class="form-input radius-14 tabular-nums" placeholder="cth: 2024" min="2015" max="2027" oninput="updateLivePreview()" />
                 </div>
                 <div>
                   <label class="form-label fs-13 fw-600" for="car-color">Warna Rasmi Badan</label>
-                  <input type="text" id="car-color" class="form-input radius-14" placeholder="cth: Space Grey / Snow White" />
+                  <input type="text" id="car-color" class="form-input radius-14" placeholder="cth: Alpine White / Space Grey" oninput="updateLivePreview()" />
                 </div>
-              </div>
-
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-location">Pusat Serahan &amp; Pulangan Rasmi (HQ)</label>
-                <div class="we-input-prefix-box">
-                  <span class="material-icons-round we-input-prefix-icon text-emerald">verified</span>
-                  <input type="text" id="car-location" class="form-input radius-14 fw-600" value="Pusat Operasi Utama WeDRIVE (HQ Melaka)" readonly />
-                </div>
-                <div class="fs-11 text-muted mt-4">Diselaraskan dengan alamat ibu pejabat WeDRIVE di Tetapan.</div>
               </div>
             </div>
 
-            <!-- CARD 2: SPESIFIKASI TEKNIKAL & STRUKTUR TARIF -->
+            <!-- KAD 2: SPESIFIKASI TEKNIKAL & STRUKTUR TARIF -->
             <div class="card p-24 radius-24 reveal-on-scroll">
-              <div class="card-header border-bottom-subtle pb-12 mb-18">
+              <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
                 <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
                   <span class="material-icons-round text-primary">tune</span> Spesifikasi Teknikal &amp; Struktur Tarif
                 </h3>
+                <span class="badge-360 fs-11" style="background: rgba(50,215,75,0.12); color: #32D74B;">
+                  Langkah 2: Auto / Manual
+                </span>
               </div>
 
               <div class="grid-2 gap-14 mb-16">
@@ -187,27 +199,27 @@
                 <div>
                   <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
                   <select id="car-seats" class="form-input radius-14" required onchange="updateLivePreview()">
-                    <option value="" disabled selected>Pilih Bilangan Kerusi (1 - 20)</option>
-                    <option value="1">1 Tempat Duduk (Khas / Kargo)</option>
-                    <option value="2">2 Tempat Duduk (Kereta Sukan / Roadster)</option>
+                    <option value="" disabled selected>Pilih Kapasiti Tempat Duduk</option>
+                    <option value="1">1 Tempat Duduk</option>
+                    <option value="2">2 Tempat Duduk</option>
                     <option value="3">3 Tempat Duduk</option>
-                    <option value="4">4 Tempat Duduk (Coupe / Kompak)</option>
-                    <option value="5" selected>5 Tempat Duduk (Sedan / Hatchback / SUV)</option>
-                    <option value="6">6 Tempat Duduk (Crossover 6-Seater)</option>
-                    <option value="7">7 Tempat Duduk (MPV / SUV 7-Seater)</option>
-                    <option value="8">8 Tempat Duduk (MPV Besar / 8-Seater)</option>
+                    <option value="4">4 Tempat Duduk</option>
+                    <option value="5">5 Tempat Duduk</option>
+                    <option value="6">6 Tempat Duduk</option>
+                    <option value="7">7 Tempat Duduk</option>
+                    <option value="8">8 Tempat Duduk</option>
                     <option value="9">9 Tempat Duduk</option>
-                    <option value="10">10 Tempat Duduk (Van Penumpang)</option>
-                    <option value="11">11 Tempat Duduk (Van Komuter / MPV 11-S)</option>
-                    <option value="12">12 Tempat Duduk (Van Komuter Standard)</option>
+                    <option value="10">10 Tempat Duduk</option>
+                    <option value="11">11 Tempat Duduk</option>
+                    <option value="12">12 Tempat Duduk</option>
                     <option value="13">13 Tempat Duduk</option>
-                    <option value="14">14 Tempat Duduk (Van Panjang)</option>
-                    <option value="15">15 Tempat Duduk (Van Eksekutif / Komuter)</option>
-                    <option value="16">16 Tempat Duduk (Bas Mini / Tour Van)</option>
+                    <option value="14">14 Tempat Duduk</option>
+                    <option value="15">15 Tempat Duduk</option>
+                    <option value="16">16 Tempat Duduk</option>
                     <option value="17">17 Tempat Duduk</option>
-                    <option value="18">18 Tempat Duduk (Bas Mini Pelancongan)</option>
+                    <option value="18">18 Tempat Duduk</option>
                     <option value="19">19 Tempat Duduk</option>
-                    <option value="20">20 Tempat Duduk (Bas Mini / Komuter Penuh)</option>
+                    <option value="20">20 Tempat Duduk</option>
                   </select>
                 </div>
               </div>
@@ -233,41 +245,26 @@
                 </div>
               </div>
 
-              <div class="grid-2 gap-14 mb-16">
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
-                  <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 1.5L Turbocharged VVT-i" oninput="updateLivePreview()" />
-                </div>
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-luggage">Kapasiti Muatan Beg / Bagasi</label>
-                  <select id="car-luggage" class="form-input radius-14" onchange="updateLivePreview()">
-                    <option value="2 Beg">2 Beg Kargo (Kompak)</option>
-                    <option value="2-3 Beg" selected>2-3 Beg Sederhana (Sedan)</option>
-                    <option value="3-4 Beg">3-4 Beg Besar (SUV/Crossover)</option>
-                    <option value="4-5 Beg">4-5 Beg Penuh (MPV/Van)</option>
-                    <option value="6+ Beg">6+ Beg Muatan Besar (Van Penumpang / Bas Mini)</option>
-                  </select>
-                </div>
+              <div class="mb-16">
+                <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
+                <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 2.0L BMW TwinPower Turbo (184 PS)" oninput="updateLivePreview()" />
               </div>
 
-              <div class="grid-2 gap-14 mb-16">
+              <div class="grid-2 gap-14 mb-20">
                 <div>
                   <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
-                  <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="cth: 180" min="50" step="5" required oninput="updateLivePreview()" />
+                  <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="cth: 450" min="50" step="5" required oninput="updateLivePreview()" />
+                  <div class="fs-11 text-muted mt-4">Kadar rasmi untuk 24 jam.</div>
                 </div>
                 <div>
                   <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
-                  <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" placeholder="cth: 200" min="0" step="50" required oninput="updateLivePreview()" />
+                  <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" placeholder="cth: 400" min="0" step="50" required oninput="updateLivePreview()" />
+                  <div class="fs-11 text-muted mt-4">Dipulangkan selepas sewaan selesai.</div>
                 </div>
               </div>
 
-              <div class="mb-20">
-                <label class="form-label fs-13 fw-600" for="car-min-days">Tempoh Minimum Sewaan (Hari)</label>
-                <input type="number" id="car-min-days" class="form-input radius-14 tabular-nums" placeholder="cth: 1" min="1" max="30" />
-              </div>
-
               <div class="border-top-subtle pt-16">
-                <label class="form-label fs-13 fw-600 mb-10 d-block">Peralatan Standard Kereta</label>
+                <label class="form-label fs-13 fw-600 mb-10 d-block">Kelengkapan Standard Kereta</label>
                 <div class="feature-chips-grid">
                   <label class="filter-chip cursor-pointer">
                     <input type="checkbox" id="feat-carplay" class="hidden" />
@@ -303,7 +300,7 @@
               </div>
             </div>
 
-            <!-- CARD 3: STUDIO ASET 360° & FOTO KATALOG -->
+            <!-- KAD 3: STUDIO ASET 360° & FOTO KATALOG -->
             <div class="card p-24 radius-24 reveal-on-scroll" id="card-360-studio">
               <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
                 <div>
@@ -327,7 +324,7 @@
                   <div id="photo-preview-content">
                     <span class="material-icons-round fs-36 text-primary mb-8">cloud_upload</span>
                     <div class="fs-14 fw-600 text-title">Klik atau Seret Foto ke Sini</div>
-                    <div class="fs-11 text-muted mt-4">Format disokong: PNG, JPG, WEBP (Latar belakang telus digalakkan)</div>
+                    <div class="fs-11 text-muted mt-4">Format disokong: PNG, JPG, WEBP (Latar belakang studio digalakkan)</div>
                   </div>
                   <img id="photo-preview-img" class="doc-preview-img img-preview-140 hidden" alt="Pratonton Kereta" />
                 </div>
@@ -363,7 +360,7 @@
                     </span>
                     <span class="frames-counter-pill" id="exterior-frames-count">0 Bingkai</span>
                   </div>
-                  <p class="fs-12 text-secondary mb-12">Pilih folder bingkai imej putaran luaran (24, 36, atau 200 bingkai) atau pelbagai fail serentak.</p>
+                  <p class="fs-12 text-secondary mb-12">Pilih folder bingkai imej putaran luaran atau pelbagai fail serentak.</p>
 
                   <div class="upload-360-dropzone" onclick="document.getElementById('exterior-folder-input').click()">
                     <span class="material-icons-round fs-32 text-primary mb-6">folder_open</span>
@@ -399,7 +396,7 @@
                     </span>
                     <span class="badge-360 fs-10" id="interior-badge-status">Menunggu</span>
                   </div>
-                  <p class="fs-12 text-secondary mb-12">Muat naik imej panorama sfera equirectangular ATAU folder 6 muka kubus (pano_f, pano_r, pano_b, ...).</p>
+                  <p class="fs-12 text-secondary mb-12">Muat naik imej panorama sfera equirectangular ATAU folder 6 muka kubus.</p>
 
                   <div class="upload-360-dropzone" onclick="document.getElementById('interior-file-input').click()">
                     <span class="material-icons-round fs-32 text-emerald mb-6">panorama</span>
@@ -431,7 +428,7 @@
 
             <!-- ACTION BAR (BOTTOM OF FORM) -->
             <div class="flex-between p-20 card radius-24">
-              <span class="fs-13 text-muted">Pastikan butiran nombor plat, tarif sewaan, dan aset foto disemak sebelum pendaftaran.</span>
+              <span class="fs-13 text-muted">Pastikan butiran pendaftaran nombor plat, tarif sewaan, dan aset foto disemak sebelum simpan.</span>
               <div class="flex-center gap-10">
                 <button type="button" class="btn-secondary" onclick="window.location.href='cars.html'">Batal</button>
                 <button type="submit" class="btn-primary">
@@ -443,100 +440,116 @@
 
           </div>
 
-          <!-- RIGHT COLUMN: STICKY REAL-TIME LIVE PREVIEW CARD -->
+          <!-- RIGHT COLUMN: STICKY OFFICIAL WEDRIVE CAR-CARD PREVIEW -->
           <div class="add-car-sticky-preview">
-            <div class="card p-20 radius-24 shadow-sm">
-              <div class="card-header border-bottom-subtle pb-12 mb-14 flex-between">
-                <h3 class="m-0 fs-15 fw-700 flex-center gap-8 text-title">
-                  <span class="material-icons-round text-emerald">preview</span>
-                  <span>Pratonton Kad Masa Nyata</span>
+            <div class="card p-16 radius-24 shadow-sm">
+              <div class="card-header border-bottom-subtle pb-10 mb-12 flex-between">
+                <h3 class="m-0 fs-14 fw-700 flex-center gap-8 text-title">
+                  <span class="material-icons-round text-primary fs-18">visibility</span>
+                  <span>Pratonton Kad Rasmi WeDRIVE</span>
                 </h3>
                 <span class="status-badge active"><span class="live-pulse-dot"></span> Langsung</span>
               </div>
 
-              <!-- PREVIEW SHOWCASE CARD -->
-              <div class="apple-car-showcase-card shadow-sm add-car-preview-card mb-16">
-                <!-- PREVIEW MODE SWITCHER -->
-                <div class="preview-360-toolbar flex-center gap-6 mb-12">
-                  <button type="button" class="btn-outline-sm py-4 px-12 fs-11 active" id="tab-prev-photo" onclick="switchPreviewMode('photo')">
-                    <span class="material-icons-round fs-13">photo</span> Foto Utama
-                  </button>
-                  <button type="button" class="btn-outline-sm py-4 px-12 fs-11" id="tab-prev-exterior" onclick="switchPreviewMode('exterior')">
-                    <span class="material-icons-round fs-13">360</span> 360° Luaran
-                  </button>
-                  <button type="button" class="btn-outline-sm py-4 px-12 fs-11" id="tab-prev-interior" onclick="switchPreviewMode('interior')">
-                    <span class="material-icons-round fs-13">airline_seat_recline_extra</span> 360° Dalaman
-                  </button>
-                </div>
+              <!-- PREVIEW MODE SWITCHER TOOLBAR -->
+              <div class="preview-360-toolbar flex-center gap-6 mb-12">
+                <button type="button" class="btn-outline-sm py-4 px-10 fs-11 active" id="tab-prev-photo" onclick="switchPreviewMode('photo')">
+                  <span class="material-icons-round fs-13">photo</span> Foto Utama
+                </button>
+                <button type="button" class="btn-outline-sm py-4 px-10 fs-11" id="tab-prev-exterior" onclick="switchPreviewMode('exterior')">
+                  <span class="material-icons-round fs-13">360</span> 360° Luaran
+                </button>
+                <button type="button" class="btn-outline-sm py-4 px-10 fs-11" id="tab-prev-interior" onclick="switchPreviewMode('interior')">
+                  <span class="material-icons-round fs-13">airline_seat_recline_extra</span> 360° Dalaman
+                </button>
+              </div>
 
-                <!-- CANVAS / PHOTO DISPLAY WRAPPER -->
-                <div class="apple-car-studio-canvas studio-canvas-interactive" id="preview-canvas-wrap">
-                  <div class="glass-status-pill" id="preview-status-pill">
-                    <span class="live-pulse-dot"></span> Tersedia
+              <!-- EXACT WEDRIVE OFFICIAL CAR-CARD (MATCHING INDEX.HTML & CUSTOMER.HTML) -->
+              <div class="car-card cursor-default" style="margin: 0; box-shadow: none;">
+                <div class="car-img" id="preview-canvas-wrap">
+                  <!-- FLOATING BADGES (MATCHING SCREENSHOT 1 & 2) -->
+                  <div class="car-badges">
+                    <span class="status-pill available" id="preview-status-pill">Available</span>
+                    <span class="rating-pill">⭐ 4.9</span>
+                    <span class="badge-360" id="preview-badge-360" style="display: none;">
+                      <span class="material-icons-round" style="font-size: 12px">360</span> 360° View
+                    </span>
                   </div>
 
+                  <!-- PHOTO PLACEHOLDER / CANVAS DISPLAY -->
                   <div id="preview-img-empty" class="preview-img-placeholder flex-center flex-column">
                     <span class="material-icons-round fs-48 text-muted mb-8">directions_car</span>
                     <span class="fs-12 text-muted fw-500">Foto kereta akan dipaparkan di sini</span>
                   </div>
 
-                  <!-- MAIN PHOTO -->
-                  <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kereta" />
+                  <!-- MAIN PHOTO IMAGE -->
+                  <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kereta" style="width: 100%; height: 100%; object-fit: cover;" />
 
                   <!-- 360 EXTERIOR FRAME DISPLAY -->
-                  <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" />
+                  <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" style="width: 100%; height: 100%; object-fit: cover;" />
 
                   <!-- 360 INTERIOR PANORAMA DISPLAY -->
                   <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center preview-interior-layer">
-                    <img id="preview-interior-img" class="radius-16 w-100 h-100 preview-interior-img" alt="Pratonton Dalaman" />
+                    <img id="preview-interior-img" class="w-100 h-100" alt="Pratonton Dalaman" style="object-fit: cover;" />
                   </div>
                 </div>
 
-                <!-- CARD SPECS BODY -->
-                <div class="apple-car-card-body">
-                  <div class="apple-car-meta-header">
-                    <span class="apple-category-pill" id="preview-display-cat">Kategori</span>
-                    <span class="apple-plate-pill tabular-nums" id="preview-display-plate">---</span>
+                <div class="car-body">
+                  <div class="car-topline">
+                    <p class="car-type" id="preview-display-cat">SEDAN</p>
+                    <span class="rating-pill"><span class="material-icons-round">reviews</span> 128 reviews</span>
                   </div>
-                  <h3 class="apple-car-title" id="preview-display-name">Nama Model Kereta</h3>
-                  <div class="apple-micro-specs">
-                    <span class="apple-spec-tag"><span class="material-icons-round">settings</span> <span id="preview-spec-trans">-</span></span>
-                    <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> <span id="preview-spec-fuel">-</span></span>
-                    <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> <span id="preview-spec-seats">-</span></span>
-                    <span class="apple-spec-tag"><span class="material-icons-round">work</span> <span id="preview-spec-luggage">2-3 Beg</span></span>
+
+                  <h3 id="preview-display-name" style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">2023 BMW 320i M Sport 2.0</h3>
+                  <p class="fs-12 text-secondary m-0 mb-10" id="preview-display-color">Color: Alpine White</p>
+
+                  <div class="car-specs">
+                    <div class="spec">
+                      <span class="material-icons-round">local_gas_station</span>
+                      <span id="preview-spec-fuel">Petrol</span>
+                    </div>
+                    <div class="spec">
+                      <span class="material-icons-round">event_seat</span>
+                      <span id="preview-spec-seats">5 Seats</span>
+                    </div>
+                    <div class="spec">
+                      <span class="material-icons-round">settings</span>
+                      <span id="preview-spec-trans">Auto</span>
+                    </div>
+                    <div class="spec">
+                      <span class="material-icons-round">verified</span>
+                      <span id="preview-spec-status">Available</span>
+                    </div>
                   </div>
-                  <div class="apple-rental-callout">
-                    <div class="apple-rental-row">
-                      <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Serahan &amp; Pulangan</span>
-                      <span class="apple-rental-value text-emerald fw-600" id="preview-display-loc">Pusat Operasi Utama WeDRIVE (HQ)</span>
-                    </div>
-                    <div class="apple-rental-row">
-                      <span class="apple-rental-label"><span class="material-icons-round fs-15">speed</span> Enjin &amp; Kuasa</span>
-                      <span class="apple-rental-value fw-600 text-title" id="preview-display-engine">-</span>
-                    </div>
-                    <div class="apple-rental-row">
-                      <span class="apple-rental-label"><span class="material-icons-round fs-15">all_inclusive</span> Jarak Perbatuan</span>
-                      <span class="apple-rental-value text-emerald fw-600">Tanpa Had (Unlimited KM)</span>
-                    </div>
+
+                  <div class="ai-chip" id="preview-ai-chip">
+                    <span class="material-icons-round" style="font-size: 12px">psychology</span>
+                    <span id="preview-ai-chip-text">Executive Choice</span>
                   </div>
-                  <div class="apple-car-footer">
-                    <div>
-                      <div class="fs-11 text-muted">Kadar Rasmi Harian</div>
-                      <div class="apple-car-rate tabular-nums" id="preview-display-rate">RM 0 <span class="apple-car-rate-sub">/hari</span></div>
+
+                  <div class="car-footer">
+                    <div class="price">
+                      RM <span id="preview-display-rate" class="tabular-nums">450</span><span>/day</span>
                     </div>
-                    <span class="status-badge available"><span class="material-icons-round fs-12">check_circle</span> Tersedia</span>
+                    <button type="button" class="btn-book" onclick="document.getElementById('add-car-form').requestSubmit()">
+                      <span class="material-icons-round" style="font-size: 17px">check_circle</span>
+                      <span>Daftar Kereta</span>
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <!-- STICKY SUBMIT ACTION BUTTONS -->
-              <button type="submit" class="btn-primary w-100 py-12 radius-16 fs-14 fw-600 mb-8 flex-center gap-8">
-                <span class="material-icons-round fs-18">check_circle</span>
-                <span>Daftar Kereta Baharu</span>
-              </button>
-              <button type="button" class="btn-outline-sm w-100 py-8 radius-14 fs-12 text-center" onclick="window.location.href='cars.html'">
-                Batal &amp; Kembali ke Senarai
-              </button>
+              <!-- STICKY ACTION BUTTONS -->
+              <div class="mt-14">
+                <button type="submit" class="btn-primary w-100 py-11 radius-16 fs-14 fw-600 mb-8 flex-center gap-8">
+                  <span class="material-icons-round fs-18">check_circle</span>
+                  <span>Daftar Kereta Baharu</span>
+                </button>
+                <button type="button" class="btn-outline-sm w-100 py-8 radius-14 fs-12 text-center" onclick="window.location.href='cars.html'">
+                  Batal &amp; Kembali ke Senarai
+                </button>
+              </div>
+
             </div>
           </div>
 
@@ -558,7 +571,7 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
-  <script src="../../js/add-car.js?v=6.6.0"></script>
+  <script src="../../js/add-car.js?v=6.6.1"></script>
 </body>
 
 </html>

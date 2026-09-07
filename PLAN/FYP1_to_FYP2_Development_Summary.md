@@ -4998,6 +4998,59 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.6.0 Redesign add-car page with Apple HIG 2-column Bento and AI Hero Assistant`
   - Tag Versi: `6.6.0`
 
+---
+
+## 🚗 [PATCH UPDATE] 108. Penalaan Semula Halaman Tambah Kereta (add-car.html): Butang Kesan AI Sebaris, Kad Pratonton Rasmi WeDRIVE, 48 Jenama Pasaran Malaysia, Pembersihan Elemen Borang & Formula Kadar Sewaan Pintar (v6.6.1)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mahu kad penolong pendaftaran AI berasingan di bahagian atas dibuang dan digantikan dengan butang sebaris di sebelah nama model:
+     > *"Penolong Pendaftaran Kereta Pintar AI ni sepatutnya x payah ...once saya dh isi Maklumat Asas & Identiti JPJ nii ..dia ada satu button untuk guna api ai detect kereta tu untuk isi Spesifikasi Teknikal & Struktur Tarif lepas cari info"*
+  2. Pembuangan elemen perbatuan (`all_inclusive Jarak Perbatuan`), muatan bagasi, tempoh minimum sewaan, dan pemusatan lokasi HQ:
+     > *"Jarak Perbatuan ni xpayah sebab semua kereta mmg sama jek unlimited"*
+     > *"Pusat Serahan & Pulangan Rasmi (HQ) ni pon xyah tunjuk memang dekat situ"*
+     > *"Kapasiti Muatan Beg / Bagasi ni pon sama xyah"*
+     > *"n Tempoh Minimum Sewaan (Hari) pon buang"*
+  3. Kad pratonton masa nyata diselaraskan 100% mengikut kad rasmi WeDRIVE:
+     > *"Pratonton Kad Masa Nyata ni buruk...awak ikut http://localhost:5504/index.html ni(gambar nombor 1) n http://127.0.0.1:5504/customer/pages/dashboard/customer.html(gambar nombor 2) ..saya nak card untuk preview kereta tu satu sahaja xnak campur2"*
+  4. Pembersihan senarai kerusi dan peluasan jenama:
+     > *"yang info kereta dalam kurungan tu xyah (sedan/hatchback) (gmbr 3)"*
+     > *"gmbr nombor 4 tu isi semua jenama yang ada dekat dalam malaysia ni ..."*
+     > *"default nya adalah pilih... bukanya 5"*
+  5. Formula kadar sewaan AI berpandukan pelbagai pemboleh ubah automotif Malaysia:
+     > *"formula untuk ai kiraan kadar sewaan suggestion adalah jenama , jenis body kereta,berapa seat, harga kereta tu skrg, anything berkaitan"*
+
+- **Tindakan Pembaikan (Implementation)**:
+  - **Penyelarasan Borang `admin/pages/car/add-car.html`**:
+    - Membuang hero assistant card; meletakkan butang `✨ Kesan Automatik AI` (`#btn-ai-autofill`) sebaris tepat di sebelah input `#car-name` di Kad 1.
+    - Menambah 48+ pengeluar kenderaan sah pasaran Malaysia di dalam dropdown `#car-brand` (Perodua, Proton, Honda, Toyota, BMW, Mercedes-Benz, BYD, Chery, Jaecoo, GWM, Tesla, dll.).
+    - Membersihkan pilihan `#car-seats` dari 1 hingga 20 kerusi tanpa teks kurungan, dan menetapkan teks pemegang tempat lalai `Pilih Kapasiti Tempat Duduk` (`value="" disabled selected`).
+    - Menyembunyikan `#car-location` sebagai `type="hidden"` untuk mengekalkan integriti penghantaran data HQ Melaka tanpa membebankan pandangan pengguna.
+    - Membuang medan `#car-luggage`, `#car-mileage`, dan `#car-min-days`.
+  - **Penyelarasan Kad Pratonton Rasmi WeDRIVE**:
+    - Mereka bentuk semula kad sisi kanan mengikut kelas `.car-card` rasmi (sepadan tepat dengan paparan tetamu `index.html` dan pelanggan `customer.html`): lencana status (*Available*), penarafan (⭐ 4.9), lencana 360°, tajuk kategori (*SEDAN/SUV*), jumlah ulasan, nama model tebal, warna badan, grid spesifikasi 2x2 (*Petrol/EV, Seats, Transmission, Status*), cip pengesyoran AI (*Family Choice, Executive Choice, dsb.*), dan paparan kadar harian `RM X /day`.
+  - **Formula Kadar Sewaan Pintar Automotif Malaysia (`admin/js/add-car.js`)**:
+    - Membina fungsi `calculateRentalFromFormula(brand, bodyType, seats, year, name)` yang mengira harga pasaran semasa kenderaan (RM) berasaskan 5 pemboleh ubah:
+      1. Kategori & Nilai Asas Jenama (Nasional, Jepun, Asia Baharu, Eropah Premium, Supercar).
+      2. Pengali Jenis Badan (Hatchback 0.95, Sedan 1.0, SUV 1.25, MPV 1.30, Pickup 1.20, Van 1.35, Coupe 1.5, Luxury 1.7).
+      3. Pengali Bilangan Kerusi (1-2 kerusi 1.1x, 5 kerusi 1.0x, 7 kerusi 1.2x, 10-14 kerusi 1.35x, 15-20 kerusi 1.8x).
+      4. Faktor Susut Nilai Mengikut Tahun Keluaran (susut nilai 5% setahun).
+      5. Kadar Sewaan Harian (~0.17% nilai pasaran kenderaan semasa) dan deposit keselamatan seimbang.
+  - **Pengemaskinian Ujian Playwright (`tests/e2e/14_ai_key_vault_and_location.spec.js`)**:
+    - Menyelaraskan pengesahan `locationInput` kepada `toBeAttached()` memandangkan medan kini tersembunyi seperti yang diminta pengguna.
+
+- **Pengesahan Ujian Automatik & Pengguna**:
+  - Diuji secara interaktif pada tab tunggal sedia ada (Port 5504) menggunakan Chrome DevTools MCP.
+  - Spektrum responsif Apple 3-Peranti: Disahkan sempurna pada MacBook (1440x900), iPad (820x1180), dan iPhone (393x852).
+  - Pematuhan mutlak **Prinsip Sifar Bujur (Zero Oval Rule)**.
+  - Ujian Playwright: **100% Pass Rate (38/38 ujian lulus)**.
+  - Had aksara peraturan `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - Graf pengetahuan Graphify dikemas kini (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.6.1 Streamline add-car page with inline AI detect button, official car-card preview, and Malaysian automotive pricing formula`
+  - Tag Versi: `6.6.1`
+
+
 
 
 
