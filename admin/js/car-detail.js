@@ -216,23 +216,28 @@ function setupExterior360(car) {
   const isMerc = car.name.includes('Mercedes') && car.name.includes('GLA');
   const isGolf = car.name.includes('Golf');
 
-  // Build high-res spin frame sequence
+  // Build high-res spin frame sequence (Carsome 200-frame standardized turntable)
+  // frame-125 is true front (0°), frame-175 is right profile (90°),
+  // frame-025 is rear (180°), frame-075 is left profile (270°).
+  const frontOffset = 125;
+  const sampleCount = 36;
+  const totalFrames = 200;
+
   if (isBMW) {
-    // 36 sampled frames across 200 frames for instant preloading and 60fps spin
-    for (let i = 0; i < 36; i++) {
-      const frameNum = Math.min(Math.floor(i * (199 / 35)), 199);
+    for (let i = 0; i < sampleCount; i++) {
+      const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
       const padded = String(frameNum).padStart(3, '0');
       exteriorFrames.push(`Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-${padded}.jpg`);
     }
   } else if (isMerc) {
-    for (let i = 0; i < 24; i++) {
-      const frameNum = Math.min(Math.floor(i * 6), 140);
+    for (let i = 0; i < sampleCount; i++) {
+      const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
       const padded = String(frameNum).padStart(3, '0');
       exteriorFrames.push(`SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-${padded}.jpg`);
     }
   } else if (isGolf) {
-    for (let i = 0; i < 24; i++) {
-      const frameNum = Math.min(Math.floor(i * 6), 140);
+    for (let i = 0; i < sampleCount; i++) {
+      const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
       const padded = String(frameNum).padStart(3, '0');
       exteriorFrames.push(`Hatchback/2022 Volkswagen Golf GTI 2.0/exterior/full-res/frame-${padded}.jpg`);
     }
@@ -331,12 +336,17 @@ function set360Frame(index) {
 
 function updateAnglePill(index) {
   if (exteriorFrames.length === 0) return;
-  const degrees = Math.round((index / exteriorFrames.length) * 360);
+  const rawDegrees = Math.round((index / exteriorFrames.length) * 360);
+  const degrees = rawDegrees >= 360 ? 0 : rawDegrees;
 
   let label = 'Pandangan Hadapan';
-  if (degrees >= 45 && degrees < 135) label = 'Sisi Kanan Profil';
-  else if (degrees >= 135 && degrees < 225) label = 'Pandangan Belakang';
-  else if (degrees >= 225 && degrees < 315) label = 'Sisi Kiri Profil';
+  if (degrees >= 45 && degrees < 135) {
+    label = 'Sisi Kanan Profil';
+  } else if (degrees >= 135 && degrees < 225) {
+    label = 'Pandangan Belakang';
+  } else if (degrees >= 225 && degrees < 315) {
+    label = 'Sisi Kiri Profil';
+  }
 
   const textEl = document.getElementById('studio-angle-text');
   if (textEl) {

@@ -1,16 +1,16 @@
 # Graph Report - AI CAR RENTAL SYSTEM  (2026-09-07)
 
 ## Corpus Check
-- 126 files · ~21,022,656 words
+- 126 files · ~21,022,709 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2950 nodes · 5441 edges · 203 communities (133 shown, 70 thin omitted)
+- 2950 nodes · 5441 edges · 202 communities (132 shown, 70 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 290 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c195fed3`
+- Built from commit: `c2e9cb7f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -37,7 +37,6 @@
 - he
 - customer.js
 - ll
-- t
 - i
 - tr
 - hu
@@ -236,7 +235,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (203 total, 70 thin omitted)
+## Communities (202 total, 70 thin omitted)
 
 ### Community 0 - "three.min.js"
 Cohesion: 0.02
@@ -285,10 +284,6 @@ Nodes (39): applyStagger(), applyTheme(), applyTranslation(), checkAndMountChatb
 ### Community 20 - "customer.js"
 Cohesion: 0.17
 Nodes (35): applyFilters(), bindControls(), buildSpotlightCars(), carPrice(), closeGuestPrompt(), escapeHtml(), fallbackImagePath(), imagePath() (+27 more)
-
-### Community 22 - "t"
-Cohesion: 0.31
-Nodes (7): t(), a(), c(), l(), o(), l(), g()
 
 ### Community 23 - "i"
 Cohesion: 0.13
@@ -427,8 +422,8 @@ Cohesion: 0.18
 Nodes (10): 1. Tipografi Apple San Francisco, 2. Palet Warna & Mod Gelap Adaptif (Apple System Colors), 3. Bahan Kaca (Apple Materials), 4. Fizik Pergerakan (Motion Physics), Apple Human Interface Guidelines (HIG) Standard, LAMAN RUJUKAN RASMI APPLE DEVELOPER DESIGN & SUMBER FIGMA, PILAR 1: GETTING STARTED & CORE PRINCIPLES, PILAR 2: FOUNDATIONS (ASAS REKA BENTUK) (+2 more)
 
 ### Community 71 - "yr"
-Cohesion: 0.09
-Nodes (16): de(), dispose(), getParameter(), Hr(), i(), qr(), C(), Sr() (+8 more)
+Cohesion: 0.07
+Nodes (23): t(), de(), dispose(), getParameter(), Hr(), i(), a(), c() (+15 more)
 
 ### Community 72 - "WeDRIVE Navigation, Responsive & UI/UX Standards"
 Cohesion: 0.25
@@ -738,7 +733,7 @@ Nodes (6): Do, Ga, r(), Oh, tl, toJSON()
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `gn` connect `gn` to `three.min.js`, `.length`, `copy`, `.fromJSON`, `toJSON`, `updateMatrixWorld`, `.dot`, `he`, `.updateMatrix`, `remove`, `t`, `i`, `.normalize`, `.fromArray`, `.constructor`, `.constructor`, `applyMatrix4`?**
+- **Why does `gn` connect `gn` to `three.min.js`, `.length`, `copy`, `yr`, `.fromJSON`, `toJSON`, `updateMatrixWorld`, `.dot`, `he`, `.updateMatrix`, `remove`, `i`, `.normalize`, `.fromArray`, `.constructor`, `.constructor`, `applyMatrix4`?**
   _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **Why does `copy()` connect `copy` to `three.min.js`, `Be`, `ve`, `ai`, `kc`, `dc`, `ih`, `.dot`, `he`, `ll`, `i`, `tr`, `hu`, `.constructor`, `na`, `lr`, `isEmpty`, `.multiplyScalar`, `ec`, `.fromJSON`, `gi`, `mc`, `ie`, `sl`, `.dispatchEvent`, `Rl`, `.updateMatrix`, `.setValues`, `.fromArray`, `.normalize`, `ph`, `Qn`, `.constructor`, `cl`, `bl`, `clone`, `equals`, `Il`, `.raycast`, `Nl`, `yr`, `wc`, `toJSON`, `fh`, `Ml`, `on`, `applyMatrix4`, `updateMatrixWorld`, `fn`, `bc`, `wl`, `vl`?**
   _High betweenness centrality (0.033) - this node is a cross-community bridge._

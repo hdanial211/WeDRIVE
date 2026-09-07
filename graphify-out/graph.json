@@ -6566,7 +6566,7 @@
       "file_type": "code",
       "norm_label": "bind360dragevents()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L264"
+      "source_location": "L269"
     },
     {
       "id": "admin_js_car_detail_bindcockpitdragevents",
@@ -6578,7 +6578,7 @@
       "file_type": "code",
       "norm_label": "bindcockpitdragevents()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L458"
+      "source_location": "L468"
     },
     {
       "id": "admin_js_car_detail_closeeditcarmodal",
@@ -6590,7 +6590,7 @@
       "file_type": "code",
       "norm_label": "closeeditcarmodal()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L680"
+      "source_location": "L690"
     },
     {
       "id": "admin_js_car_detail_closeinsurancemodal",
@@ -6602,7 +6602,7 @@
       "file_type": "code",
       "norm_label": "closeinsurancemodal()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L726"
+      "source_location": "L736"
     },
     {
       "id": "admin_js_car_detail_closestatusredirectmodal",
@@ -6614,7 +6614,7 @@
       "file_type": "code",
       "norm_label": "closestatusredirectmodal()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L638"
+      "source_location": "L648"
     },
     {
       "id": "admin_js_car_detail_cockpitpanstep",
@@ -6626,7 +6626,7 @@
       "file_type": "code",
       "norm_label": "cockpitpanstep()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L428"
+      "source_location": "L438"
     },
     {
       "id": "admin_js_car_detail_cockpitsetview",
@@ -6638,7 +6638,7 @@
       "file_type": "code",
       "norm_label": "cockpitsetview()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L433"
+      "source_location": "L443"
     },
     {
       "id": "admin_js_car_detail_cockpitzoom",
@@ -6650,7 +6650,7 @@
       "file_type": "code",
       "norm_label": "cockpitzoom()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L450"
+      "source_location": "L460"
     },
     {
       "id": "admin_js_car_detail_confirmquickstatuschange",
@@ -6662,7 +6662,7 @@
       "file_type": "code",
       "norm_label": "confirmquickstatuschange()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L643"
+      "source_location": "L653"
     },
     {
       "id": "admin_js_car_detail_editdetails",
@@ -6674,7 +6674,7 @@
       "file_type": "code",
       "norm_label": "editdetails()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L664"
+      "source_location": "L674"
     },
     {
       "id": "admin_js_car_detail_initvehiclestudio",
@@ -6710,7 +6710,7 @@
       "file_type": "code",
       "norm_label": "navigategallery()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L560"
+      "source_location": "L570"
     },
     {
       "id": "admin_js_car_detail_openstatusmodal",
@@ -6722,7 +6722,7 @@
       "file_type": "code",
       "norm_label": "openstatusmodal()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L631"
+      "source_location": "L641"
     },
     {
       "id": "admin_js_car_detail_rendercockpitframe",
@@ -6734,7 +6734,7 @@
       "file_type": "code",
       "norm_label": "rendercockpitframe()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L416"
+      "source_location": "L426"
     },
     {
       "id": "admin_js_car_detail_renderfleetselector",
@@ -6770,7 +6770,7 @@
       "file_type": "code",
       "norm_label": "savecaredit()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L685"
+      "source_location": "L695"
     },
     {
       "id": "admin_js_car_detail_selectfleetcar",
@@ -6794,7 +6794,7 @@
       "file_type": "code",
       "norm_label": "selectgalleryphoto()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L536"
+      "source_location": "L546"
     },
     {
       "id": "admin_js_car_detail_set360frame",
@@ -6806,7 +6806,7 @@
       "file_type": "code",
       "norm_label": "set360frame()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L320"
+      "source_location": "L325"
     },
     {
       "id": "admin_js_car_detail_settext",
@@ -6842,7 +6842,7 @@
       "file_type": "code",
       "norm_label": "setupequipmentmatrix()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L602"
+      "source_location": "L612"
     },
     {
       "id": "admin_js_car_detail_setupexterior360",
@@ -6866,7 +6866,7 @@
       "file_type": "code",
       "norm_label": "setupinteriorcockpit()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L393"
+      "source_location": "L403"
     },
     {
       "id": "admin_js_car_detail_setupphotogallery",
@@ -6878,7 +6878,7 @@
       "file_type": "code",
       "norm_label": "setupphotogallery()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L511"
+      "source_location": "L521"
     },
     {
       "id": "admin_js_car_detail_switchstudiomode",
@@ -6890,7 +6890,7 @@
       "file_type": "code",
       "norm_label": "switchstudiomode()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L577"
+      "source_location": "L587"
     },
     {
       "id": "admin_js_car_detail_toggleautospin",
@@ -6902,7 +6902,7 @@
       "file_type": "code",
       "norm_label": "toggleautospin()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L347"
+      "source_location": "L357"
     },
     {
       "id": "admin_js_car_detail_togglefullscreengallery",
@@ -6914,7 +6914,7 @@
       "file_type": "code",
       "norm_label": "togglefullscreengallery()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L566"
+      "source_location": "L576"
     },
     {
       "id": "admin_js_car_detail_togglefullscreenstudio",
@@ -6926,7 +6926,7 @@
       "file_type": "code",
       "norm_label": "togglefullscreenstudio()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L372"
+      "source_location": "L382"
     },
     {
       "id": "admin_js_car_detail_updateanglepill",
@@ -6938,7 +6938,7 @@
       "file_type": "code",
       "norm_label": "updateanglepill()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L332"
+      "source_location": "L337"
     },
     {
       "id": "admin_js_car_detail_viewinsurance",
@@ -6950,7 +6950,7 @@
       "file_type": "code",
       "norm_label": "viewinsurance()",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L721"
+      "source_location": "L731"
     },
     {
       "id": "shared_js_three_min_qc_getsettings",
@@ -13081,114 +13081,6 @@
       "community_name": "ll",
       "file_type": "code",
       "norm_label": ".updatearclengths()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ai_tononindexed_t",
-      "label": "t()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": "t()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_gn_traversevisible",
-      "label": ".traverseVisible()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": ".traversevisible()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_load_a",
-      "label": "a()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": "a()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_mh_load",
-      "label": ".load()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": ".load()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_mh_load_c",
-      "label": "c()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": "c()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_mh_load_l",
-      "label": "l()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": "l()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_mh_load_o",
-      "label": "o()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": "o()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_parseobject_l",
-      "label": "l()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": "l()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_yr_g",
-      "label": "g()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "t",
-      "file_type": "code",
-      "norm_label": "g()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -23333,6 +23225,18 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_ai_tononindexed_t",
+      "label": "t()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": "t()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_de_clone",
       "label": ".clone()",
       "_callable": true,
@@ -23429,6 +23333,18 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_gn_traversevisible",
+      "label": ".traverseVisible()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": ".traversevisible()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_hr",
       "label": "Hr()",
       "_callable": true,
@@ -23449,6 +23365,78 @@
       "community_name": "yr",
       "file_type": "code",
       "norm_label": "i()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_load_a",
+      "label": "a()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": "a()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_mh_load",
+      "label": ".load()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": ".load()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_mh_load_c",
+      "label": "c()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": "c()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_mh_load_l",
+      "label": "l()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": "l()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_mh_load_o",
+      "label": "o()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": "o()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_parseobject_l",
+      "label": "l()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": "l()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -23581,6 +23569,18 @@
       "community_name": "yr",
       "file_type": "code",
       "norm_label": "yr()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_yr_g",
+      "label": "g()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 71,
+      "community_name": "yr",
+      "file_type": "code",
+      "norm_label": "g()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -36311,7 +36311,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L275",
+      "source_location": "L280",
       "weight": 1.0
     },
     {
@@ -36323,7 +36323,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L287",
+      "source_location": "L292",
       "weight": 1.0
     },
     {
@@ -36335,7 +36335,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L476",
+      "source_location": "L486",
       "weight": 1.0
     },
     {
@@ -36347,7 +36347,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L430",
+      "source_location": "L440",
       "weight": 1.0
     },
     {
@@ -36359,7 +36359,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L439",
+      "source_location": "L449",
       "weight": 1.0
     },
     {
@@ -36371,7 +36371,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L446",
+      "source_location": "L456",
       "weight": 1.0
     },
     {
@@ -36383,7 +36383,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L659",
+      "source_location": "L669",
       "weight": 1.0
     },
     {
@@ -36395,7 +36395,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L660",
+      "source_location": "L670",
       "weight": 1.0
     },
     {
@@ -36407,7 +36407,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L661",
+      "source_location": "L671",
       "weight": 1.0
     },
     {
@@ -36515,7 +36515,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L563",
+      "source_location": "L573",
       "weight": 1.0
     },
     {
@@ -36527,7 +36527,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L422",
+      "source_location": "L432",
       "weight": 1.0
     },
     {
@@ -36551,7 +36551,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L716",
+      "source_location": "L726",
       "weight": 1.0
     },
     {
@@ -36563,7 +36563,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L717",
+      "source_location": "L727",
       "weight": 1.0
     },
     {
@@ -36575,7 +36575,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L718",
+      "source_location": "L728",
       "weight": 1.0
     },
     {
@@ -36623,7 +36623,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L546",
+      "source_location": "L556",
       "weight": 1.0
     },
     {
@@ -36635,7 +36635,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L326",
+      "source_location": "L331",
       "weight": 1.0
     },
     {
@@ -36647,7 +36647,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L329",
+      "source_location": "L334",
       "weight": 1.0
     },
     {
@@ -36671,7 +36671,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L252",
+      "source_location": "L257",
       "weight": 1.0
     },
     {
@@ -36683,7 +36683,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L254",
+      "source_location": "L259",
       "weight": 1.0
     },
     {
@@ -36695,7 +36695,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L261",
+      "source_location": "L266",
       "weight": 1.0
     },
     {
@@ -36707,7 +36707,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L407",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -36719,7 +36719,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L408",
+      "source_location": "L418",
       "weight": 1.0
     },
     {
@@ -36731,7 +36731,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L520",
+      "source_location": "L530",
       "weight": 1.0
     },
     {
@@ -36743,7 +36743,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L595",
+      "source_location": "L605",
       "weight": 1.0
     },
     {
@@ -36755,7 +36755,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L367",
+      "source_location": "L377",
       "weight": 1.0
     },
     {
@@ -65583,7 +65583,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L264",
+      "source_location": "L269",
       "weight": 1.0
     },
     {
@@ -65594,7 +65594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L320",
+      "source_location": "L325",
       "weight": 1.0
     },
     {
@@ -65605,7 +65605,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L332",
+      "source_location": "L337",
       "weight": 1.0
     },
     {
@@ -65616,7 +65616,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L347",
+      "source_location": "L357",
       "weight": 1.0
     },
     {
@@ -65638,18 +65638,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L372",
-      "weight": 1.0
-    },
-    {
-      "source": "admin_js_car_detail",
-      "target": "admin_js_car_detail_setupinteriorcockpit",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "admin/js/car-detail.js",
-      "source_location": "L393",
+      "source_location": "L382",
       "weight": 1.0
     },
     {
@@ -65665,13 +65654,24 @@
     },
     {
       "source": "admin_js_car_detail",
+      "target": "admin_js_car_detail_setupinteriorcockpit",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "admin/js/car-detail.js",
+      "source_location": "L403",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_js_car_detail",
       "target": "admin_js_car_detail_rendercockpitframe",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L416",
+      "source_location": "L426",
       "weight": 1.0
     },
     {
@@ -65682,7 +65682,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L428",
+      "source_location": "L438",
       "weight": 1.0
     },
     {
@@ -65693,7 +65693,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L433",
+      "source_location": "L443",
       "weight": 1.0
     },
     {
@@ -65704,7 +65704,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L450",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -65715,7 +65715,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L458",
+      "source_location": "L468",
       "weight": 1.0
     },
     {
@@ -65737,7 +65737,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L511",
+      "source_location": "L521",
       "weight": 1.0
     },
     {
@@ -65748,7 +65748,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L536",
+      "source_location": "L546",
       "weight": 1.0
     },
     {
@@ -65770,7 +65770,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L560",
+      "source_location": "L570",
       "weight": 1.0
     },
     {
@@ -65781,7 +65781,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L566",
+      "source_location": "L576",
       "weight": 1.0
     },
     {
@@ -65792,7 +65792,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L577",
+      "source_location": "L587",
       "weight": 1.0
     },
     {
@@ -65803,7 +65803,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L602",
+      "source_location": "L612",
       "weight": 1.0
     },
     {
@@ -65814,7 +65814,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L631",
+      "source_location": "L641",
       "weight": 1.0
     },
     {
@@ -65825,7 +65825,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L638",
+      "source_location": "L648",
       "weight": 1.0
     },
     {
@@ -65836,7 +65836,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L643",
+      "source_location": "L653",
       "weight": 1.0
     },
     {
@@ -65847,7 +65847,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L664",
+      "source_location": "L674",
       "weight": 1.0
     },
     {
@@ -65858,7 +65858,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L680",
+      "source_location": "L690",
       "weight": 1.0
     },
     {
@@ -65869,7 +65869,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L685",
+      "source_location": "L695",
       "weight": 1.0
     },
     {
@@ -65880,7 +65880,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L721",
+      "source_location": "L731",
       "weight": 1.0
     },
     {
@@ -65891,7 +65891,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/js/car-detail.js",
-      "source_location": "L726",
+      "source_location": "L736",
       "weight": 1.0
     },
     {
@@ -98119,5 +98119,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c195fed3db2d83995ddc7bee4d29a0090889d8f5"
+  "built_at_commit": "c2e9cb7f40a80f820f98ccd9ad3793a52cf6cfb0"
 }

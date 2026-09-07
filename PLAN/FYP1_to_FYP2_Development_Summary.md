@@ -4834,6 +4834,50 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.5 Eliminate duplicate and non-database fields in car-detail with authentic database vehicle specs`
   - Tag Versi: `6.5.5`
 
+##  [PATCH UPDATE] 200. Penyelarasan Ketepatan Sudut Studio 360° & Orientasi Pandangan Kereta Berasaskan 200 Bingkai Turntable Carsome, Penyingkiran Salah Label Hadapan/Belakang & Pengesahan Spektrum 3-Peranti Apple (v6.5.6)
+
+- **Punca Keperluan & Teguran Pengguna**:
+  - Pengguna menegur ketidaktepatan visual pada Studio 360° interaktif di `car-detail.html`: *"yang ni info salah...ni padangan depan"* berserta tangkap layar di mana kereta BMW 320i jelas sedang menghadap terus ke hadapan (dead-center front view), tetapi lencana orientasi sudut di penjuru kanan atas memaparkan teks bercanggah: `220° · Pandangan Belakang`.
+
+- **Punca Masalah (Root Cause Diagnosis)**:
+  - Fotografi studio 360° Carsome menggunakan meja putar piawai 200-bingkai (`frame-000.jpg` hingga `frame-199.jpg`).
+  - `frame-000.jpg` sebenarnya merupakan pandangan suku belakang-kanan kenderaan (~135°).
+  - Pandangan hadapan tepat (*dead-center front view*) terletak pada `frame-125.jpg`.
+  - Kod terdahulu dalam `admin/js/car-detail.js` membina sampel 36 bingkai bermula dari `frame-000.jpg` sebagai indeks 0 (0°).
+  - Akibatnya, semasa muatan awal kereta dipaparkan pada sudut belakang-kanan tetapi dilabelkan sebagai `0° · Pandangan Hadapan`. Sebaliknya apabila pengguna memutar kenderaan sehingga bahagian hadapan menghadap ke skrin (`frame-125`), indeks berada pada ~22 yang menghasilkan sudut `220°` dan dilabelkan secara salah sebagai `Pandangan Belakang`.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Penyelarasan Ofset Bingkai Permulaan Hadapan (*Front-Aligned Frame Offset*)**:
+     - Menyelaraskan bingkai permulaan indeks 0 terus kepada `frontOffset = 125` (`frame-125.jpg`).
+     - Mengira 36 bingkai berkala merentas keseluruhan 200 bingkai studio berkualiti tinggi:
+       $$\text{frameNum} = (125 + \text{round}(i \times \frac{200}{36})) \pmod{200}$$
+     - Menghapuskan had sampel sekerat terdahulu pada model Mercedes GLA250 dan VW Golf GTI (sebelum ini terhad kepada 140 bingkai), kini ketiga-tiga model kenderaan (BMW 320i, Mercedes GLA250, Golf GTI) memanfaatkan kesemua 200 bingkai secara seragam dan lancar.
+  2. **Penalaan Ketepatan 4 Paksi Kardinal & Label Orientasi (`updateAnglePill`)**:
+     - Menormalkan sudut agar membungkus kemas pada 360° $\to$ 0°:
+       - **0° (Indeks 0 / `frame-125.jpg`)**: Hadapan Tepat $\to$ `0° · Pandangan Hadapan`
+       - **90° (Indeks 9 / `frame-175.jpg`)**: Sisi Kanan / Pemandu $\to$ `90° · Sisi Kanan Profil`
+       - **180° (Indeks 18 / `frame-025.jpg`)**: Belakang Tepat $\to$ `180° · Pandangan Belakang`
+       - **270° (Indeks 27 / `frame-075.jpg`)**: Sisi Kiri / Penumpang $\to$ `270° · Sisi Kiri Profil`
+     - Mengelaskan zon sudut secara tepat:
+       - `degrees < 45 || degrees >= 315` $\to$ `Pandangan Hadapan`
+       - `degrees >= 45 && degrees < 135` $\to$ `Sisi Kanan Profil`
+       - `degrees >= 135 && degrees < 225` $\to$ `Pandangan Belakang`
+       - `degrees >= 225 && degrees < 315` $\to$ `Sisi Kiri Profil`
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Pengesahan visual dan fungsi secara langsung pada tab pelayar aktif tunggal (Port 5504):
+    - **MacBook (1440x900)**: Bingkai permulaan disahkan `frame-125.jpg` dengan label `0° · Pandangan Hadapan`. Putaran 360° disahkan sepadan tepat pada setiap suku putaran. Sifar limpahan mendatar (`hasHorizontalScroll: false`), pematuhan Zero Oval Rule (`ovals: []`).
+    - **iPad (820x1180)**: Orientasi bingkai kekal stabil dan lancar, kad Bento responsif 2-kolum, sasaran sentuhan $\ge 44$px.
+    - **iPhone (393x852)**: Paparan 1-kolum responsif, imej skala lancar tanpa limpahan mendatar (`hasHorizontalScroll: false`), saiz input fon $\ge 16$px.
+  - Ujian Automasi Playwright CLI: **100% Pass Rate (36/36 tests passed)** di bawah direktori `tests/`.
+  - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara di semua 19 fail peraturan.
+  - Graf pengetahuan Graphify dikemas kini menerusi `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.5.6 Align 360 studio frame sequence to true front frame 125 and ensure angle indicator accuracy`
+  - Tag Versi: `6.5.6`
+
+
 
 
 
