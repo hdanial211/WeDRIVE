@@ -30,22 +30,22 @@
         <div class="flex-between flex-wrap gap-16">
           <div>
             <div class="bento-breadcrumbs">
-              <a href="customers.html">Pengurusan Pelanggan</a>
+              <a href="customers.html" data-key="sidebar_customers">Pengurusan Pelanggan</a>
               <span class="material-icons-round">chevron_right</span>
-              <span>Pengesahan Lesen &amp; KYC</span>
+              <span data-key="verif_title">Pengesahan Lesen &amp; KYC</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main" data-key="sidebar_pending_verifications">Pengesahan Dokumen Lesen &amp; MyKad</h1>
+              <h1 class="bento-title-main" data-key="verif_title">Pengesahan Dokumen Lesen &amp; MyKad</h1>
               <span class="status-badge active"><span class="live-pulse-dot"></span> <span id="vf-count-badge">Memuatkan rekod...</span></span>
             </div>
-            <p class="bento-subtitle-main">Audit rasmi dokumen pengenalan diri pelanggan bagi memenuhi piawaian Akta Pengangkutan Jalan 1987 dan kesahihan perlindungan liabiliti insurans komersil.</p>
+            <p class="bento-subtitle-main" data-key="verif_subtitle">Audit rasmi dokumen pengenalan diri pelanggan bagi memenuhi piawaian Akta Pengangkutan Jalan 1987 dan kesahihan perlindungan liabiliti insurans komersil.</p>
           </div>
           <div class="flex-center gap-10">
             <button class="btn-outline-sm" onclick="window.location.href='customers.html'">
-              <span class="material-icons-round fs-16">people</span> Direktori Pelanggan
+              <span class="material-icons-round fs-16">people</span> <span data-key="sidebar_customers">Direktori Pelanggan</span>
             </button>
             <button class="btn-primary-sm" onclick="approveAllPending()">
-              <span class="material-icons-round fs-16">done_all</span> Luluskan Semua Sah
+              <span class="material-icons-round fs-16">done_all</span> <span data-key="verif_btn_approve">Luluskan Semua Sah</span>
             </button>
           </div>
         </div>
@@ -55,7 +55,7 @@
       <div class="stats-grid mb-24 reveal-onload">
         <div class="stat-card">
           <div class="stat-info">
-            <div class="label">Menunggu Semakan</div>
+            <div class="label" data-key="verif_status_pending">Menunggu Semakan</div>
             <div class="value text-amber tabular-nums" id="vf-stat-pending">--</div>
             <div class="change"><span class="material-icons-round fs-14">hourglass_top</span> Perlu audit pegawai</div>
           </div>

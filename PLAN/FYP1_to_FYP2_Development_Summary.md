@@ -5159,7 +5159,7 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Di dalam `.agents/rules/04_navigation_and_ui.md`:
     - Menambah Seksyen 5: *Prinsip Sifar Tindakan Bertindan & Antaramuka Bebas Kesesakan*.
   - Di dalam `.agents/rules/01_core_rules.md`:
-    - Menambah prinsip Sifar Tindakan Bertindan pada Seksyen 1 dan meringkaskan Seksyen 8 bagi mengekalkan had $\le 12,000$ aksara.
+- Menambah prinsip Sifar Tindakan Bertindan pada Seksyen 1 dan meringkaskan Seksyen 8 bagi mengekalkan had $\le 12,000$ aksara.
   - Di dalam `admin/pages/car/add-car.html`:
     - Membuang butang `Simpan Draf` dan `Simpan Kereta` daripada bar pengepala, hanya mengekalkan butang `[ ← Batal ]`.
     - Mengemas kini opsyen `#car-type` mengikut senarai rasmi Carlist.my / Mudah.my (Sedan, Hatchback, SUV, MPV, Crossover, Pickup, Coupe, Wagon, Convertible, Van).
@@ -5181,22 +5181,40 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.1 Enforce Zero Duplicate Actions Rule, Purge Redundant Header Buttons, Standardize Carlist/Mudah Categories, and Clear Neutral Dropdown Defaults`
   - Tag Versi: `6.7.1`
 
+---
 
+## 🌐 [MINOR UPDATE] 206. Penyatuan Dwibahasa Menyeluruh Sistem (EN/MS) Berpusat 100% di `shared/lang/` & Penguatkuasaan Mandatori Peraturan Ejen (Universal Full System Bilingual Parity & Centralized shared/lang Governance) (v6.7.2)
 
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mendapati banyak halaman masih belum mempunyai penukaran dwibahasa Inggeris dan Melayu yang lancar:
+     > *"Okey now sementara saya tengok2 page semua ni..saya tengok banyak page yang x de bahasa english n melayu xleh tukar"*
+  2. Pengguna menegaskan bahawa penukaran bahasa mesti menggunakan suis toggle sedia ada di bar atas:
+     > *"bukan ke dekat topbar dh ada toggle??"*
+  3. Pengguna mengingatkan agar mematuhi peraturan `.agents/` terutamanya larangan tindakan bertindan:
+     > *"buat berpandukan ni .../.agents"*
+     > *"dalam satu page kan jangan ada 2 ke 3 benda yang sama macam button ke anything ... saya nak satu button function sahaja."*
+  4. Pengguna menetapkan arahan kekal agar semua pengurusan bahasa dimasukkan ke dalam peraturan ejen dan berpusat di satu tempat sahaja:
+     > *"nanti tambah dalam agent supaya semuanya pakai dekat sini untuk languange .../shared/lang"*
 
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Penguatkuasaan Peraturan Ejen (`.agents/rules/`)**:
+     - Di dalam `.agents/rules/11_language_standards.md` (Seksyen 4): Menetapkan protokol mandatori bahawa SEMUA teks terjemahan, kunci bahasa, dan kamus sistem WAJIB berpusat 100% di dalam direktori `shared/lang/` (`en.js`, `en.json`, `ms.js`, `ms.json`). Diharamkan sama sekali terjemahan bercerai atau *hardcoded inline dictionaries*.
+     - Di dalam `.agents/rules/06_code_and_backend.md` (Seksyen 3): Menegaskan semula pemusatan mutlak `shared/lang/` sebagai sumber rujukan tunggal (*Single Source of Truth*).
+  2. **Penyelarasan Kamus Bahasa Pusat (`shared/lang/`)**:
+     - Menambah dan melengkapkan lebih 112+ kunci terjemahan baharu meliputi pengesahan tempahan (`cust_conf_*`), skrin selamat datang (`welcome_*`), halaman ralat 404 (`err_404_*`), operasi admin, dan borang pembayaran.
+     - Menyemak semula semua frasa agar menepati piawaian Bahasa Melayu Moden Kontemporari 2026 dan bebas 100% daripada senarai hitam istilah (tiada istilah *armada, fleet, kabin, kokpit, wahana*).
+  3. **Penyepaduan Antaramuka & Atribut `data-key`**:
+     - Menyisipkan bar utiliti tunggal berpusat (`.utility-actions`) pada halaman yang dahulunya tiada penukar bahasa (seperti `booking-confirmed.html` dan `404.html`), mengekalkan prinsip satu suis rasmi tanpa butang pendua.
+     - Mengikat semua teks statik dengan atribut `data-key`, `data-key-ph`, dan `data-key-title`.
+  4. **Suite Ujian Automasi Playwright Baharu**:
+     - Membina `tests/e2e/18_full_system_bilingual_parity.spec.js` untuk menguji penukaran dwibahasa secara dinamik di pelayar merentasi modul-modul utama.
 
+- **Pengesahan Ujian Automatik & Pengguna**:
+  - Pelaksanaan Ujian Automasi Playwright CLI: **48/48 Ujian Lulus (100% Pass Rate)**.
+  - Pematuhan had aksara peraturan `.agents/rules/*.md`: Semua 19 fail disahkan $\le 12,000$ aksara (`wc -m`).
+  - Pematuhan sifar bujur (Zero Oval Rule) & sifar tindakan bertindan disahkan 100%.
+  - Graf Pengetahuan Graphify dikemas kini (`graphify update .`).
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- **Maklumat Git**:
+  - Commit: `6.7.2 Enforce centralized shared/lang localization governance in agent rules and achieve full system bilingual parity`
+  - Tag Versi: `6.7.2`

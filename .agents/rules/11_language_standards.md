@@ -61,16 +61,34 @@ Semua lencana status WAJIB memaparkan terjemahan rasmi selaras dengan mod bahasa
 
 ---
 
-## 4. Seni Bina Dwibahasa Dinamik (Bilingual Architecture)
+## 4. Seni Bina Dwibahasa Dinamik & Pemusatan Mutlak `shared/lang/` (Strict Single Source of Truth)
 
-- **Penyimpanan Kunci Terjemahan**:
-  - Semua teks dwibahasa disimpan dalam kamus berstruktur `shared/lang/en.json` dan `shared/lang/ms.json`.
-  - Penukaran bahasa dikendalikan secara reaktif melalui `shared/js/main.js` tanpa memerlukan muat semula halaman penuh (*zero page reload*).
+- **Pemusatan Mutlak Bahasa (Strict Centralized Localization Protocol)**:
+  - **SEMUA** teks antaramuka, rentetan terjemahan, label borang, mesej ralat, placeholder, tajuk tooltip, dan butang WAJIB berpusat 100% di dalam direktori `shared/lang/`:
+    - `shared/lang/en.js` & `shared/lang/en.json` (Kamus Bahasa Inggeris)
+    - `shared/lang/ms.js` & `shared/lang/ms.json` (Kamus Bahasa Melayu Moden 2026)
+  - **LARANGAN KERAS TERJEMAHAN BERCERAI / INLINE (Zero Fragmented Translations)**:
+    - **DILARANG SAMA SEKALI** meletakkan teks terjemahan secara *hardcoded* di dalam fail JavaScript modul individu (contoh: `admin/*.js`, `customer/*.js`, dsb.) atau mentakrifkan objek kamus tempatan/tersendiri.
+    - Sebarang penambahan teks atau kunci baharu **WAJIB didaftarkan ke dalam fail kamus pusat di `shared/lang/`** terlebih dahulu.
+  - Penukaran bahasa dikendalikan secara reaktif melalui pengurus bahasa WeDRIVE dalam `shared/js/main.js` tanpa memerlukan muat semula halaman penuh (*zero page reload*).
+
 - **Atribut HTML Mandatori**:
-  - Setiap elemen teks yang menyokong dwibahasa WAJIB mempunyai atribut:
+  - Setiap elemen antaramuka yang memerlukan penukaran dwibahasa WAJIB menggunakan atribut piawai:
+    - `data-key="nama_kunci"`: Untuk menggantikan teks dalaman elemen (`element.textContent`).
+    - `data-key-ph="nama_kunci"`: Untuk menggantikan teks `placeholder` pada medan input.
+    - `data-key-title="nama_kunci"`: Untuk menggantikan atribut `title` atau tooltip.
+    - `data-key-html="nama_kunci"`: Untuk elemen yang mengandungi struktur HTML berformat.
+    - `data-i18n="nama_kunci"`: Disokong untuk keserasian legasi.
+  - Contoh Penggunaan:
     ```html
-    <span data-i18n="cars.available">Kereta Tersedia</span>
+    <h2 data-key="cars_title">Pilihan Kereta</h2>
+    <input type="text" data-key-ph="cars_search_ph" placeholder="Cari kereta..." />
     ```
+
+- **Satu Suis Bahasa Rasmi Sahaja (Single Official Language Toggle)**:
+  - Penukaran bahasa hanya dikawal oleh suis rasmi `toggleLanguage()` pada bar utiliti atas (*topbar utility action*).
+  - Mengikut **Prinsip Sifar Tindakan Bertindan (Strict Zero Duplicate Actions)**, DILARANG SAMA SEKALI menambah suis penukar bahasa pendua dalam satu halaman.
+
 - **Kelarasan Teks**: DILARANG mencampuradukkan bahasa Inggeris dan Melayu dalam satu ayat (contoh salah: *"Sila return kereta at HQ"* $\rightarrow$ contoh betul: *"Sila pulangkan kereta di HQ"*).
 
 ---

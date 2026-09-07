@@ -29,12 +29,15 @@ Setiap modul ada SATU fail CSS utama sahaja:
 - Fail `shared/css/` hanya untuk komponen GLOBAL: theme, navbar, footer, chatbot, animation, sidebar.
 - Pastikan theme (Day/Night mode) konsisten di semua page.
 
-## 3. Multilingual & Theme Support
+## 3. Multilingual & Theme Support (Strict Single Source of Truth)
 
-Projek ini menyokong dwibahasa dan dwi-tema penuh:
-- **Theme:** Night mode & Day mode (toggle)
-- **Bahasa:** English & Melayu (dynamic language switching)
-- Kedua-dua ciri ini WAJIB berfungsi di semua page melalui `shared/lang/` dan `shared/js/main.js`.
+Projek ini menyokong dwibahasa (EN/MS) dan dwi-tema (Day/Night) penuh di semua halaman:
+- **Theme:** Night mode & Day mode (toggle dikawal oleh `shared/js/main.js`).
+- **Pusat Mutlak Terjemahan Bahasa (`shared/lang/`):**
+  - **SEMUA** teks antaramuka, label, butang, placeholder, dan mesej ralat WAJIB disimpan secara berpusat dalam `shared/lang/` (`en.js`, `en.json`, `ms.js`, `ms.json`).
+  - **DILARANG SAMA SEKALI** meletakkan kamus bahasa atau teks terjemahan bertaburan di dalam skrip modul atau inline HTML.
+  - Setiap elemen WAJIB dibinding menggunakan atribut `data-key`, `data-key-ph`, `data-key-title`, `data-key-html` atau `data-i18n`.
+  - Tertakluk secara mutlak kepada piawaian Bahasa Melayu Moden 2026 dalam [11_language_standards.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II%28FYP%202%29/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md).
 
 ## 4. Dummy Data & Database Sync
 

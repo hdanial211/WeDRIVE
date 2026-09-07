@@ -31,22 +31,22 @@
         <div class="flex-between flex-wrap gap-16">
           <div>
             <div class="bento-breadcrumbs">
-              <a href="bookings.html">Pengurusan Tempahan</a>
+              <a href="bookings.html" data-key="sidebar_bookings">Pengurusan Tempahan</a>
               <span class="material-icons-round">chevron_right</span>
-              <span>Tempahan Kaunter Baharu</span>
+              <span data-key="bk_new_title">Tempahan Kaunter Baharu</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main" data-key="sidebar_add_booking">Cipta Tempahan Kaunter</h1>
+              <h1 class="bento-title-main" data-key="bk_new_title">Cipta Tempahan Kaunter</h1>
               <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Pendaftaran Kaunter Rasmi</span></span>
             </div>
-            <p class="bento-subtitle-main">Daftarkan kontrak sewaan baharu untuk walk-in atau pelanggan korporat dengan pengiraan kos harian automatik dan pengeluaran invois rasmi.</p>
+            <p class="bento-subtitle-main" data-key="bk_new_subtitle">Daftarkan kontrak sewaan baharu untuk walk-in atau pelanggan korporat dengan pengiraan kos harian automatik dan pengeluaran invois rasmi.</p>
           </div>
           <div class="flex-center gap-10">
             <button type="button" class="btn-outline-sm" onclick="window.location.href='bookings.html'">
-              <span class="material-icons-round fs-16">arrow_back</span> Batal
+              <span class="material-icons-round fs-16">arrow_back</span> <span data-key="addcar_btn_cancel">Batal</span>
             </button>
             <button type="button" class="btn-primary-sm" onclick="document.getElementById('new-booking-form').requestSubmit()">
-              <span class="material-icons-round fs-16">check_circle</span> Sahkan Tempahan
+              <span class="material-icons-round fs-16">check_circle</span> <span data-key="bk_btn_submit">Sahkan Tempahan</span>
             </button>
           </div>
         </div>

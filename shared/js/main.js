@@ -262,7 +262,7 @@
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=5.6.3';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=6.7.2';
   }
 
   function doApplyTranslation(data, animate) {

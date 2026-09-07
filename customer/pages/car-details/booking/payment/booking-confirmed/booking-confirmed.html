@@ -45,6 +45,9 @@
   <div class="confetti-container" id="confetti"></div>
 
   <main class="customer-main confirmed-main" id="customer-main">
+    <header class="utility-bar" style="display: flex; justify-content: flex-end; padding: 12px 24px; margin-bottom: 8px;">
+      <div class="utility-actions"></div>
+    </header>
   <div class="confirmed-wrapper">
     <section class="confirmed-card">
       <!-- Header -->
@@ -52,15 +55,15 @@
         <div class="check-circle">
           <span class="material-icons-round">check_circle</span>
         </div>
-        <h1>Your Car is Ready!</h1>
-        <p class="booking-ref">Booking Reference: <span>WD-9842-AX</span></p>
+        <h1 data-key="cust_conf_title">Your Car is Ready!</h1>
+        <p class="booking-ref"><span data-key="cust_conf_ref_lbl">Booking Reference</span>: <span id="conf-ref-display">WD-9842-AX</span></p>
       </div>
 
       <!-- Content -->
       <div class="confirmed-content">
         <!-- Summary -->
         <div class="confirmed-summary-container">
-          <div class="summary-label">Booking Summary</div>
+          <div class="summary-label" data-key="cust_conf_summary">Booking Summary</div>
           <div class="car-summary">
             <div class="car-summary-img">
               <img src="../../../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg" alt="BMW 320i M Sport" />
@@ -88,27 +91,27 @@
 
         <!-- Pickup Reminder & Actions -->
         <div class="ai-insight-container">
-          <div class="summary-label">Next Steps</div>
+          <div class="summary-label" data-key="cust_conf_next_steps">Next Steps</div>
           <div class="ai-insight-card">
             <div class="ai-glow"></div>
             <div class="ai-badge">
               <span class="material-icons-round">key</span>
             </div>
             <div class="ai-insight-text">
-              <h4><span class="material-icons-round">auto_awesome</span> Key Pickup Reminder</h4>
-              <p>Scan your QR code at the terminal kiosk to retrieve your physical key card instantly upon arrival.</p>
+              <h4><span class="material-icons-round">auto_awesome</span> <span data-key="cust_conf_key_reminder">Key Pickup Reminder</span></h4>
+              <p data-key="cust_conf_key_reminder_sub">Scan your QR code at the terminal kiosk to retrieve your physical key card instantly upon arrival.</p>
             </div>
           </div>
 
           <!-- Actions Sidebar Stack -->
           <div class="confirmed-actions-sidebar">
             <button class="btn-primary-action" type="button" onclick="window.location='../../../../my-bookings/my-bookings.html'">
-              <span class="material-icons-round">list_alt</span> View My Bookings
+              <span class="material-icons-round">list_alt</span> <span data-key="cust_conf_btn_bookings">View My Bookings</span>
             </button>
 
             <div class="cal-picker-wrapper">
               <button class="btn-outline cal-trigger-btn" type="button" id="cal-trigger-btn" onclick="toggleCalPicker(event)">
-                <span class="material-icons-round fs-18">calendar_today</span> Add to Calendar
+                <span class="material-icons-round fs-18">calendar_today</span> <span data-key="cust_conf_add_calendar">Add to Calendar</span>
                 <span class="material-icons-round fs-16 ml-4" id="cal-chevron">expand_more</span>
               </button>
               <div class="cal-dropdown" id="cal-dropdown">
@@ -150,8 +153,8 @@
               <span class="material-icons-round">bolt</span>
             </div>
             <div class="route-text">
-              <h4><span class="material-icons-round">auto_awesome</span> AI Route Insight</h4>
-              <p>Your car is pre-loaded with your destination and the most efficient route from Melaka Central.</p>
+              <h4><span class="material-icons-round">auto_awesome</span> <span data-key="cust_conf_route_insight">AI Route Insight</span></h4>
+              <p data-key="cust_conf_route_insight_sub">Your car is pre-loaded with your destination and the most efficient route from Melaka Central.</p>
             </div>
           </div>
         </div>

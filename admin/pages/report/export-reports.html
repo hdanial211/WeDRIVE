@@ -30,22 +30,22 @@
         <div class="flex-between flex-wrap gap-16">
           <div>
             <div class="bento-breadcrumbs">
-              <a href="reports.html">Laporan &amp; Analitik</a>
+              <a href="reports.html" data-key="sidebar_reports">Laporan &amp; Analitik</a>
               <span class="material-icons-round">chevron_right</span>
-              <span>Pusat Eksport Data</span>
+              <span data-key="rep_export_title">Pusat Eksport Data</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main" data-key="sidebar_export_reports">Pusat Eksport &amp; Arkib Data</h1>
+              <h1 class="bento-title-main" data-key="rep_export_title">Pusat Eksport &amp; Arkib Data</h1>
               <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Arkib Audit Rasmi (PDPA)</span></span>
             </div>
-            <p class="bento-subtitle-main">Jana dan muat turun fail laporan rasmi perniagaan dalam format CSV, hamparan kerja Excel, serta penyata arkib pengauditan syarikat.</p>
+            <p class="bento-subtitle-main" data-key="rep_export_subtitle">Jana dan muat turun fail laporan rasmi perniagaan dalam format CSV, hamparan kerja Excel, serta penyata arkib pengauditan syarikat.</p>
           </div>
           <div class="flex-center gap-10">
             <button class="btn-outline-sm" onclick="window.location.href='reports.html'">
-              <span class="material-icons-round fs-16">bar_chart</span> Ringkasan Laporan
+              <span class="material-icons-round fs-16">bar_chart</span> <span data-key="sidebar_reports">Ringkasan Laporan</span>
             </button>
             <button class="btn-primary-sm" onclick="exportFullArchive()">
-              <span class="material-icons-round fs-16">archive</span> Eksport Penuh Arkib
+              <span class="material-icons-round fs-16">archive</span> <span>Eksport Penuh Arkib</span>
             </button>
           </div>
         </div>

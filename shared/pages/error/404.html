@@ -12,15 +12,30 @@
   <link rel="stylesheet" href="../../../shared/css/wedrive.css" />
 </head>
 <body>
+  <header class="reset-shell-header" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;">
+    <a href="../../../index.html" class="reset-brand" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; font-weight: 700;">
+      <img src="../../logo/wedrive-icon.png" alt="WeDRIVE" style="width: 28px; height: 28px;" />
+      <span>WeDRIVE</span>
+    </a>
+    <div class="reset-tools" style="display: flex; align-items: center; gap: 8px;">
+      <button class="lang-toggle" type="button" onclick="toggleLanguage()" aria-label="Switch language">
+        <span class="lang-text">EN</span>
+      </button>
+      <button class="theme-toggle" onclick="window.toggleTheme && window.toggleTheme()" aria-label="Toggle theme">
+        <span class="material-icons-round">dark_mode</span>
+      </button>
+    </div>
+  </header>
+
   <div class="error-wrapper">
     <div>
       <div class="error-code">404</div>
-      <h2>Looks like you took a wrong turn!</h2>
-      <p>The page you're looking for doesn't exist or has been moved.</p>
+      <h2 data-key="err_404_title">Looks like you took a wrong turn!</h2>
+      <p data-key="err_404_subtitle">The page you're looking for doesn't exist or has been moved.</p>
       <div class="error-links">
-        <a class="error-link primary" href="../../../index.html"><span class="material-icons-round">home</span> Go Home</a>
-        <a class="error-link" href="../../../index.html"><span class="material-icons-round">directions_car</span> Browse Cars</a>
-        <a class="error-link" href="../../../guest/pages/contact/contact.html"><span class="material-icons-round">support_agent</span> Get Help</a>
+        <a class="error-link primary" href="../../../index.html"><span class="material-icons-round">home</span> <span data-key="err_404_home">Go Home</span></a>
+        <a class="error-link" href="../../../index.html"><span class="material-icons-round">directions_car</span> <span data-key="err_404_cars">Browse Cars</span></a>
+        <a class="error-link" href="../../../guest/pages/pricing/pricing.html"><span class="material-icons-round">support_agent</span> <span data-key="err_404_help">Get Help</span></a>
       </div>
     </div>
   </div>

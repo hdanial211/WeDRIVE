@@ -30,19 +30,19 @@
         <div class="flex-between flex-wrap gap-16">
           <div>
             <div class="bento-breadcrumbs">
-              <a href="cars.html">Pengurusan Kereta</a>
+              <a href="cars.html" data-key="addcar_bc_mgmt">Pengurusan Kereta</a>
               <span class="material-icons-round">chevron_right</span>
-              <span>Pendaftaran Baharu</span>
+              <span data-key="addcar_bc_new">Pendaftaran Baharu</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main">Tambah Kereta Baharu</h1>
-              <span class="status-badge active"><span class="material-icons-round fs-14">add_circle</span> <span>Pendaftaran Kereta</span></span>
+              <h1 class="bento-title-main" data-key="addcar_title">Tambah Kereta Baharu</h1>
+              <span class="status-badge active"><span class="material-icons-round fs-14">add_circle</span> <span data-key="addcar_badge">Pendaftaran Kereta</span></span>
             </div>
-            <p class="bento-subtitle-main">Daftarkan kenderaan baharu ke dalam inventori WeDRIVE dengan pengesanan pintar spesifikasi automotif AI dan pratonton kad langsung rasmi.</p>
+            <p class="bento-subtitle-main" data-key="addcar_subtitle">Daftarkan kenderaan baharu ke dalam inventori WeDRIVE dengan pengesanan pintar spesifikasi automotif AI dan pratonton kad langsung rasmi.</p>
           </div>
           <div class="flex-center gap-10">
             <button type="button" class="btn-outline-sm" onclick="triggerExitConfirm('cars.html')">
-              <span class="material-icons-round fs-16">arrow_back</span> Batal
+              <span class="material-icons-round fs-16">arrow_back</span> <span data-key="addcar_btn_cancel">Batal</span>
             </button>
           </div>
         </div>
@@ -52,12 +52,12 @@
       <div class="wizard-stepper-wrap" role="tablist">
         <button type="button" id="step-btn-1" class="wizard-step-btn active" onclick="goToStep(1)">
           <span class="wizard-step-badge">1</span>
-          <span>Spesifikasi &amp; Struktur Tarif</span>
+          <span data-key="addcar_step1_tab">1. Spesifikasi &amp; Struktur Tarif</span>
         </button>
         <div class="wizard-step-divider"></div>
         <button type="button" id="step-btn-2" class="wizard-step-btn" onclick="goToStep(2)">
           <span class="wizard-step-badge">2</span>
-          <span>Studio Visual &amp; Pratonton 360°</span>
+          <span data-key="addcar_step2_tab">2. Studio Visual &amp; Pratonton 360°</span>
         </button>
       </div>
 
@@ -99,7 +99,7 @@
           <div class="card p-24 radius-24 reveal-onload">
             <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">directions_car</span> Maklumat Asas Kenderaan
+                <span class="material-icons-round text-primary">directions_car</span> <span data-key="addcar_card1_title">Maklumat Asas Kenderaan</span>
               </h3>
               <div class="flex-center gap-8">
                 <span class="badge-360 fs-11" style="background: rgba(88,86,214,0.12); color: var(--primary);">
@@ -115,7 +115,7 @@
             <!-- CASCADING SELECTORS: JENAMA & MODEL -->
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-brand"><span data-key="addcar_lbl_brand">Pengeluar (Jenama)</span> <span class="text-danger">*</span></label>
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">factory</span>
                   <select id="car-brand" class="form-input radius-14 fs-14 fw-600" required onchange="onBrandChange()">
@@ -185,7 +185,7 @@
               </div>
 
               <div>
-                <label class="form-label fs-13 fw-600" for="car-model">Model Kenderaan <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-model"><span data-key="addcar_lbl_model">Model Kenderaan</span> <span class="text-danger">*</span></label>
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">directions_car</span>
                   <select id="car-model" class="form-input radius-14 fs-14 fw-600" required onchange="onModelChange()">
@@ -197,7 +197,7 @@
 
             <!-- CUSTOM MODEL NAME INPUT (Hanya jika pilih [+ Taip Model Sendiri]) -->
             <div id="car-custom-name-wrap" class="hidden mb-16">
-              <label class="form-label fs-13 fw-600" for="car-custom-name">Taip Nama &amp; Model Penuh <span class="text-danger">*</span></label>
+              <label class="form-label fs-13 fw-600" for="car-custom-name"><span data-key="addcar_lbl_model">Taip Nama &amp; Model Penuh</span> <span class="text-danger">*</span></label>
               <div class="we-input-prefix-box">
                 <span class="material-icons-round we-input-prefix-icon">edit</span>
                 <input type="text" id="car-custom-name" class="form-input radius-14 fs-14" placeholder="cth: 2024 Jaecoo J7 All-Wheel Drive" oninput="onCustomNameInput()" />
@@ -207,7 +207,7 @@
             <!-- CASCADING SELECTORS: VARIAN & TAHUN -->
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label fs-13 fw-600" for="car-variant">Varian &amp; Sesaran Enjin (CC) <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-variant"><span data-key="addcar_lbl_variant">Varian &amp; Sesaran Enjin (CC)</span> <span class="text-danger">*</span></label>
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">speed</span>
                   <select id="car-variant" class="form-input radius-14 fs-14" required onchange="onVariantChange()">
@@ -217,7 +217,7 @@
               </div>
 
               <div>
-                <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-year"><span data-key="addcar_lbl_year">Tahun Pengilangan</span> <span class="text-danger">*</span></label>
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">calendar_today</span>
                   <select id="car-year" class="form-input radius-14 tabular-nums" required onchange="onYearChange()">
@@ -239,7 +239,7 @@
             <!-- PLAT PENDAFTARAN & WARNA RASMI -->
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label fs-13 fw-600" for="car-plate">No. Pendaftaran (Plat) <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-plate"><span data-key="addcar_lbl_plate">No. Pendaftaran (Plat)</span> <span class="text-danger">*</span></label>
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">badge</span>
                   <input type="text" id="car-plate" class="form-input radius-14 tabular-nums fs-14 fw-600" placeholder="cth: VAB 4821" required oninput="this.value = this.value.toUpperCase(); triggerDraftSave(); updateLivePreview();" />
@@ -247,7 +247,7 @@
               </div>
 
               <div>
-                <label class="form-label fs-13 fw-600" for="car-color-select">Warna Rasmi Badan <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-color-select"><span data-key="addcar_lbl_color">Warna Rasmi Badan</span> <span class="text-danger">*</span></label>
                 <div class="we-input-prefix-box">
                   <span class="material-icons-round we-input-prefix-icon">palette</span>
                   <select id="car-color-select" class="form-input radius-14" required onchange="onColorSelectChange()">
@@ -286,7 +286,7 @@
           <div class="card p-24 radius-24 reveal-on-scroll">
             <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">tune</span> Spesifikasi Teknikal &amp; Struktur Tarif
+                <span class="material-icons-round text-primary">tune</span> <span data-key="addcar_card2_title">Spesifikasi Teknikal &amp; Struktur Tarif</span>
               </h3>
               <span class="badge-360 fs-11" style="background: rgba(50,215,75,0.12); color: #32D74B;">
                 Auto-Dikesan oleh AI
@@ -295,7 +295,7 @@
 
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label fs-13 fw-600" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-type"><span data-key="addcar_lbl_category">Kategori Badan</span> <span class="text-danger">*</span></label>
                 <select id="car-type" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
                   <option value="" disabled selected>Pilih Kategori Badan</option>
                   <option value="Sedan">Sedan</option>
@@ -311,7 +311,7 @@
                 </select>
               </div>
               <div>
-                <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-seats"><span data-key="addcar_lbl_seats">Kapasiti Tempat Duduk</span> <span class="text-danger">*</span></label>
                 <select id="car-seats" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
                   <option value="" disabled selected>Pilih Kapasiti Tempat Duduk</option>
                   <option value="1">1 Tempat Duduk</option>
@@ -340,7 +340,7 @@
 
             <div class="grid-2 gap-14 mb-16">
               <div>
-                <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-transmission"><span data-key="addcar_lbl_transmission">Sistem Transmisi</span> <span class="text-danger">*</span></label>
                 <select id="car-transmission" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
                   <option value="" disabled selected>Pilih Sistem Transmisi</option>
                   <option value="Automatic">Automatik (AT/CVT/DCT)</option>
@@ -348,7 +348,7 @@
                 </select>
               </div>
               <div>
-                <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-fuel"><span data-key="addcar_lbl_fuel">Punca Kuasa (Bahan Api)</span> <span class="text-danger">*</span></label>
                 <select id="car-fuel" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
                   <option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>
                   <option value="Petrol">Petrol (RON95/97)</option>
@@ -360,18 +360,18 @@
             </div>
 
             <div class="mb-16">
-              <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
+              <label class="form-label fs-13 fw-600" for="car-engine"><span data-key="addcar_lbl_engine">Kapasiti / Sesaran Enjin</span></label>
               <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 2.0L BMW TwinPower Turbo (184 PS)" oninput="triggerDraftSave(); updateLivePreview();" />
             </div>
 
             <div class="grid-2 gap-14">
               <div>
-                <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-rate"><span data-key="addcar_lbl_rate">Kadar Sewaan Harian (RM)</span> <span class="text-danger">*</span></label>
                 <input type="number" id="car-rate" class="form-input radius-14 tabular-nums fs-16 fw-700" placeholder="cth: 450" min="50" step="5" required oninput="triggerDraftSave(); updateLivePreview();" />
                 <div class="fs-11 text-muted mt-4">Kadar rasmi untuk 24 jam.</div>
               </div>
               <div>
-                <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
+                <label class="form-label fs-13 fw-600" for="car-deposit"><span data-key="addcar_lbl_deposit">Deposit Keselamatan (RM)</span> <span class="text-danger">*</span></label>
                 <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums fs-16 fw-700" placeholder="cth: 400" min="0" step="50" required oninput="triggerDraftSave(); updateLivePreview();" />
                 <div class="fs-11 text-muted mt-4">Dipulangkan selepas sewaan selesai.</div>
               </div>
@@ -381,14 +381,11 @@
           <!-- STEP 1 BOTTOM ACTION BAR -->
           <div class="flex-between p-20 card radius-24 flex-wrap gap-12">
             <button type="button" class="btn-outline-sm py-10 px-18 radius-14 fs-13" onclick="triggerExitConfirm('cars.html')">
-              <span class="material-icons-round fs-16">arrow_back</span> Batal &amp; Kembali
+              <span class="material-icons-round fs-16">arrow_back</span> <span data-key="addcar_btn_cancel">Batal &amp; Kembali</span>
             </button>
             <div class="flex-center gap-10">
-              <button type="button" class="btn-secondary py-10 px-18 radius-14 fs-13" onclick="manualSaveDraft()">
-                <span class="material-icons-round fs-16">bookmark_border</span> Simpan Draf
-              </button>
               <button type="button" id="btn-next-step" class="btn-primary py-10 px-24 radius-14 fs-14 fw-600" onclick="goToStep(2)">
-                <span>Seterusnya: Studio Visual &amp; 360°</span>
+                <span data-key="addcar_btn_next_step">Seterusnya: Studio Visual &amp; 360° →</span>
                 <span class="material-icons-round fs-18">arrow_forward</span>
               </button>
             </div>
@@ -652,10 +649,10 @@
                 <div class="mt-14">
                   <button type="submit" class="btn-primary w-100 py-11 radius-16 fs-14 fw-600 mb-8 flex-center gap-8">
                     <span class="material-icons-round fs-18">check_circle</span>
-                    <span>Daftar Kereta Baharu</span>
+                    <span data-key="addcar_btn_register">Daftar Kereta Baharu</span>
                   </button>
                   <button type="button" class="btn-outline-sm w-100 py-8 radius-14 fs-12 text-center" onclick="triggerExitConfirm('cars.html')">
-                    Batal &amp; Kembali ke Senarai
+                    <span data-key="addcar_btn_cancel">Batal &amp; Kembali ke Senarai</span>
                   </button>
                 </div>
 
@@ -673,16 +670,16 @@
           <div class="apple-exit-icon-circle">
             <span class="material-icons-round fs-28">warning_amber</span>
           </div>
-          <h3 id="exit-modal-title" class="fs-18 fw-700 text-title mb-8">Tinggalkan Pendaftaran Kereta?</h3>
-          <p class="fs-13 text-secondary mb-20">
+          <h3 id="exit-modal-title" class="fs-18 fw-700 text-title mb-8" data-key="addcar_exit_title">Tinggalkan Pendaftaran Kereta?</h3>
+          <p class="fs-13 text-secondary mb-20" data-key="addcar_exit_desc">
             Anda mempunyai maklumat pendaftaran kenderaan yang sedang diisi. Draf anda telah disimpan secara automatik dalam peranti ini. Adakah anda pasti mahu keluar?
           </p>
           <div class="flex flex-column gap-10">
             <button type="button" class="btn-primary w-100 py-12 radius-14 fs-14 fw-600" onclick="closeExitModal()">
-              Kekal di Halaman Ini
+              <span data-key="addcar_exit_stay">Kekal di Halaman Ini</span>
             </button>
             <button type="button" class="btn-secondary w-100 py-10 radius-14 fs-13 text-danger" onclick="proceedExit()">
-              Tinggalkan Halaman
+              <span data-key="addcar_exit_leave">Tinggalkan Halaman</span>
             </button>
           </div>
         </div>

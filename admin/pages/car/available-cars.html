@@ -30,22 +30,22 @@
         <div class="flex-between flex-wrap gap-16">
           <div>
             <div class="bento-breadcrumbs">
-              <a href="cars.html">Pengurusan Kereta</a>
+              <a href="cars.html" data-key="addcar_bc_mgmt">Pengurusan Kereta</a>
               <span class="material-icons-round">chevron_right</span>
-              <span>Kenderaan Tersedia</span>
+              <span data-key="cars_avail_title">Kenderaan Tersedia</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main">Inventori Kenderaan Sedia Disewa</h1>
+              <h1 class="bento-title-main" data-key="cars_avail_title">Inventori Kenderaan Sedia Disewa</h1>
               <span class="status-badge success"><span class="dot"></span> <span id="avail-count-badge">-- unit sedia</span></span>
             </div>
-            <p class="bento-subtitle-main">Pemeriksaan fizikal berkala lulus, cukai jalan JPJ aktif, dan sedia untuk tempahan pelanggan kaunter serta portal dalam talian.</p>
+            <p class="bento-subtitle-main" data-key="cars_avail_subtitle">Pemeriksaan fizikal berkala lulus, cukai jalan JPJ aktif, dan sedia untuk tempahan pelanggan kaunter serta portal dalam talian.</p>
           </div>
           <div class="flex-center gap-10">
             <button class="btn-outline-sm" onclick="window.location.href='cars.html'">
-              <span class="material-icons-round fs-16">directions_car</span> Semua Kereta
+              <span class="material-icons-round fs-16">directions_car</span> <span data-key="fl_filter_all">Semua Kereta</span>
             </button>
             <button class="btn-primary-sm" onclick="window.location.href='add-car.html'">
-              <span class="material-icons-round fs-16">add</span> Tambah Kereta
+              <span class="material-icons-round fs-16">add</span> <span data-key="cars_btn_add">Tambah Kereta</span>
             </button>
           </div>
         </div>
@@ -56,7 +56,7 @@
         <div class="flex-between gap-12 flex-wrap">
           <div class="apple-segmented-control" role="group" aria-label="Tapisan Kategori Kereta">
             <button class="apple-segment-item active" data-cat="all" onclick="filterCategory('all', this)">
-              Semua (<span id="count-all" class="tabular-nums">0</span>)
+              <span data-key="fl_filter_all">Semua</span> (<span id="count-all" class="tabular-nums">0</span>)
             </button>
             <button class="apple-segment-item" data-cat="sedan" onclick="filterCategory('sedan', this)">
               Sedan (<span id="count-sedan" class="tabular-nums">0</span>)
@@ -74,10 +74,10 @@
           <div class="flex-center gap-10">
             <div class="input-wrap-sm input-search-fixed">
               <span class="material-icons-round fs-18">search</span>
-              <input type="text" id="avail-search" placeholder="Cari model atau plat nombor..." oninput="searchAvailable(this.value)" />
+              <input type="text" id="avail-search" placeholder="Cari model atau plat nombor..." data-key-ph="cars_search_ph" oninput="searchAvailable(this.value)" />
             </div>
             <button class="btn-outline-sm" id="avail-view-toggle" onclick="toggleAvailableView()" title="Tukar paparan Grid / Senarai">
-              <span class="material-icons-round fs-16">view_list</span> Senarai
+              <span class="material-icons-round fs-16">view_list</span> <span id="avail-view-label" data-key="fl_view_list">Senarai</span>
             </button>
           </div>
         </div>

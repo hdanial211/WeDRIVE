@@ -21,17 +21,22 @@
       <header class="checkout-header">
         <a class="checkout-back-link" href="../booking.html">
           <span class="material-icons-round">arrow_back</span>
-          Back to booking details
+          <span data-key="addcar_btn_cancel">Back to booking details</span>
         </a>
         <div class="checkout-title-row">
           <div>
-            <p class="checkout-eyebrow">Secure checkout</p>
-            <h1>Complete your booking</h1>
-            <p>Review the driver details and continue payment. Demo mode accepts any valid-looking details.</p>
+            <p class="checkout-eyebrow" data-key="cust_pay_title">Secure checkout</p>
+            <h1 data-key="cust_bk_title">Complete your booking</h1>
+            <p data-key="cust_pay_subtitle">Review the driver details and continue payment. Demo mode accepts any valid-looking details.</p>
           </div>
-          <div class="checkout-secure-pill">
-            <span class="material-icons-round">lock</span>
-            Protected payment
+          <div class="flex-center gap-10">
+            <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Switch Language">
+              <span class="lang-text">MS</span>
+            </button>
+            <div class="checkout-secure-pill">
+              <span class="material-icons-round">lock</span>
+              <span>Protected payment</span>
+            </div>
           </div>
         </div>
       </header>
