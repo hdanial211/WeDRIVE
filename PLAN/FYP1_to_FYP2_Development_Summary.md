@@ -5382,6 +5382,40 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.6 Enforce Apple HIG button geometry, resolve oversized AI button, and audit 397 admin buttons across 20 pages`
   - Tag Versi: `6.7.6`
 
+---
+
+## 🧭 [PATCH UPDATE] 211. Pembaikan Akar Umbi Bar Navigasi Tetamu Statik / Hilang Semasa Skrol (Fix Sticky & Floating Guest Navbar via overflow-x: clip) (v6.7.7)
+
+- **Punca Isu & Maklum Balas Pengguna (Root Cause Analysis)**:
+  - Pengguna mendapati bar navigasi atas di portal Tetamu (*Guest*) tidak mengikut skrin apabila halaman diskrol:
+    > `kenapa topbar dekat guest ni x ikut screen?? dia static`
+  - **Diagnosis Teknikal**:
+    - Pada `shared/css/wedrive.css`, pemilih `html`, `body`, dan `.how-premium-page` mentakrifkan `overflow-x: hidden;`.
+    - Mengikut spesifikasi CSS W3C, menetapkan `overflow-x: hidden` pada `body` memaksa `overflow-y` dikira sebagai `auto` (menghasilkan konteks bekas skrol berasingan).
+    - Keadaan ini mematikan serta membatalkan fungsi `position: sticky; top: 0;` dan kelas `.navbar-floating` pada elemen `#wedrive-navbar`.
+    - Akibatnya, apabila pengguna skrol ke bawah melepasi bahagian atas, bar navigasi tidak melekat pada skrin dan tidak mengecil menjadi kapsul kaca terapung Apple—sebaliknya ia tertinggal di atas persis elemen `position: static` dan hilang daripada pandangan.
+
+- **Tindakan Pembaikan (Implementation)**:
+  - **1. Penggunaan Sifat Moden `overflow-x: clip` (`shared/css/wedrive.css`)**:
+    - Menggantikan `overflow-x: hidden;` dengan `overflow-x: clip;` pada pemilih `html` (baris 156), `body` (baris 175), dan `.how-premium-page` (baris 3150).
+    - Sifat `overflow-x: clip;` menghalang limpahan mendatar (*zero horizontal scrollbar*) secara sempurna tanpa mencipta konteks bekas skrol baharu, membolehkan `position: sticky` berfungsi sepenuhnya.
+  - **2. Pemulihan Penuh Interaksi Apple Dynamic Shrink & Floating Pill**:
+    - Pada kedudukan rehat atas (`scrollY <= 20px`), bar navigasi berada kemas merentasi lebar skrin penuh di bawah sepanduk notifikasi.
+    - Sebaik sahaja pengguna skrol (`scrollY > 20px`), bar navigasi mengecil secara automatik dan terapung di `top: 14px` sebagai kapsul kaca Apple (*Floating Glass Capsule*, `max-width: 1360px`, `border-radius: 9999px`, `backdrop-filter: blur(28px)`), sentiasa mengikut skrin pengguna dengan lancar.
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - **Playwright Test Suite**: Pelaksanaan `cd tests && npx playwright test` mengesahkan **48/48 Ujian Lulus (100% Pass Rate)** merangkumi kesemua 18 fail spesifikasi ujian.
+  - **Pengesahan Chrome DevTools MCP**:
+    - Disahkan pada `http://localhost:8088/index.html` bahawa `getBoundingClientRect().top` kekal pada `14px` semasa skrol (`scrollY: 500px` hingga `3500px+`) dengan kelas `navbar motion-nav-scrolled navbar-compact navbar-floating`.
+    - Disahkan pada MacBook (`1440x900`), iPad (`820x1180`), dan iPhone (`393x852`).
+  - **Pematuhan Had Aksara Peraturan `.agents/rules/*.md`**: Semua 19 fail disahkan $\le 12,000$ aksara (`wc -m`).
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.7.7 Fix guest sticky and floating navbar by transitioning body overflow-x to clip`
+  - Tag Versi: `6.7.7`
+
+
 
 
 
