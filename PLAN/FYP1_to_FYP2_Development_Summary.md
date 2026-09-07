@@ -4962,6 +4962,43 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.8 Refine 3D interior cockpit orientation labels and remove overlay HUD for clean immersive viewing`
   - Tag Versi: `6.5.8`
 
+---
+
+## 🚗 [MINOR UPDATE] 203. Rombakan Bento 2-Kolum Halaman Tambah Kereta Baharu & Integrasi Penolong Pintar Pendaftaran AI (v6.6.0)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  - Pengguna mendapati halaman pendaftaran kereta lama (`admin/pages/car/add-car.html`) terlalu panjang, mengelirukan, dan kurang mesra pengguna:
+    > *"perfect next dekat add car pulak http://127.0.0.1:5504/admin/pages/car/add-car.html page ni macam x user friendly pening sikit..so awak buat balik page ni"*
+  - Pengguna turut menegaskan kedudukan butang `✨ Kesan Automatik AI` agar mudah dicapai dan menjadi fokus utama alur kerja.
+- **Tindakan Teknikal & Reka Bentuk Apple HIG**:
+  1. **Seni Bina Susun Atur Bento 2-Kolum (*2-Column Apple HIG Bento Layout*)**:
+     - Membina susun atur grid moden `.add-car-bento-grid`:
+       - **Kolum Kiri**: 3 kad teratur yang membahagikan borang kepada domain yang jelas:
+         1. *Maklumat Asas & Identiti JPJ* (Nombor Plat berformat besar, Pengeluar, Tahun, Warna, Lokasi Pusat Operasi HQ berkunci).
+         2. *Spesifikasi Teknikal & Struktur Tarif* (Kategori, Bilangan Kerusi 1-20, Transmisi, Bahan Api, Enjin, Muatan Beg, Kadar Harian RM, Deposit Keselamatan RM, Tempoh Minimum, serta Cip Kelengkapan Pintar).
+         3. *Studio Aset 360° & Foto Katalog* (Zon muat naik foto utama, penyedut pautan AI 360, serta sub-kad luaran dan dalaman).
+       - **Kolum Kanan**: Kad Pratonton Langsung Melekat (*Sticky Real-Time Live Preview Card*) yang sentiasa terapung di pandangan mata pengguna semasa borang diskrol.
+  2. **Penolong Pendaftaran Kereta Pintar AI (*AI Hero Assistant*)**:
+     - Diletakkan di bahagian paling atas halaman sebelum grid borang bermula (`.ai-hero-assistant-card`).
+     - Dilengkapi input carian model pantas berserta butang berkilau `✨ Kesan Automatik AI` (`#btn-ai-autofill`).
+     - Menyediakan 7 cip model popular 1-klik (`Proton X50 1.5 TGDi`, `Honda Civic 1.5 RS`, `Perodua Alza 1.5 AV`, `BMW 320i M Sport`, `Toyota HiAce 2.5`, `Tesla Model 3`, `Toyota Alphard 2.4`).
+     - Menekan mana-mana cip mengisi semua spesifikasi, tarif, deposit, dan muatan secara serta-merta dengan animasi seri Apple (`.ai-autofilled-glow`) dan mengemaskini pratonton kad secara reaktif.
+  3. **Pemisahan Kod Bersih & Pengawal Modular (`admin/js/add-car.js`)**:
+     - Mengasingkan lebih 1,000 baris skrip sebaris (*inline script*) daripada fail HTML ke fail skrip luaran modular `admin/js/add-car.js`.
+     - Menguruskan penukaran mod pratonton (Foto Utama, 360° Luaran, 360° Dalaman), kawalan gelangsar sudut bingkai (*scrub slider*), dan integrasi API WeDrive / simpanan sandaran `localStorage`.
+  4. **Pematuhan Ketat Peraturan UI & Apple Device Support**:
+     - Disahkan merentas MacBook Desktop (1440x900), iPad Tablet (820x1180), dan iPhone Mobile (393x852).
+     - Mematuhi piawaian **Prinsip Sifar Bujur (Zero Oval Rule)**: Butang ikon bulat 1:1 sempurna (`width == height`, `border-radius: 50%`) dan butang berteks kapsul simetri (`border-radius: 9999px`).
+- **Pengesahan Ujian Automatik & Pengguna**:
+  - Diuji secara langsung pada tab tunggal sedia ada (Port 5504) tanpa pembukaan tab baharu.
+  - Ujian Playwright CLI: Menepati syarat kelulusan 100% Pass Rate di bawah folder `tests/`.
+  - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - Graf pengetahuan Graphify dikemas kini menerusi `graphify update .`.
+- **Maklumat Git**:
+  - Commit: `6.6.0 Redesign add-car page with Apple HIG 2-column Bento and AI Hero Assistant`
+  - Tag Versi: `6.6.0`
+
+
 
 
 

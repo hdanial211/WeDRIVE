@@ -19811,4 +19811,114 @@ body.day-mode .cal-filter-chip.active {
   transition: all 0.3s var(--ease-apple);
 }
 
+/* ==========================================================================
+   ADD CAR 2-COLUMN BENTO & AI HERO ASSISTANT
+   ========================================================================== */
+.add-car-bento-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(360px, 0.82fr);
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .add-car-bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ai-hero-assistant-card {
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.14) 0%, rgba(22, 22, 24, 0.92) 100%);
+  border: 1px solid rgba(175, 82, 222, 0.32);
+  border-radius: 24px;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+[data-theme="light"] .ai-hero-assistant-card {
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.08) 0%, rgba(255, 255, 255, 0.96) 100%);
+  border: 1px solid rgba(88, 86, 214, 0.25);
+  box-shadow: 0 8px 30px rgba(88, 86, 214, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.ai-preset-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ai-preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  cursor: pointer;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  transition: all 0.2s var(--ease-apple);
+}
+
+.ai-preset-chip:hover {
+  background: rgba(175, 82, 222, 0.18);
+  border-color: rgba(175, 82, 222, 0.4);
+  color: #BF5AF2;
+  transform: translateY(-1px);
+}
+
+[data-theme="light"] .ai-preset-chip {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #4B5563;
+}
+
+[data-theme="light"] .ai-preset-chip:hover {
+  background: rgba(88, 86, 214, 0.1);
+  border-color: rgba(88, 86, 214, 0.3);
+  color: #5856D6;
+}
+
+.add-car-sticky-preview {
+  position: sticky;
+  top: 88px;
+}
+
+.we-input-prefix-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.we-input-prefix-box .we-input-prefix-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 18px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.we-input-prefix-box input {
+  padding-left: 42px !important;
+  width: 100%;
+}
+
+
 

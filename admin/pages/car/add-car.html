@@ -38,7 +38,7 @@
               <h1 class="bento-title-main">Tambah Kereta Baharu</h1>
               <span class="status-badge active"><span class="material-icons-round fs-14">add_circle</span> <span>Pendaftaran Kereta</span></span>
             </div>
-            <p class="bento-subtitle-main">Daftarkan model kereta baharu ke dalam repositori inventori rasmi WeDRIVE dengan rekod spesifikasi, kadar harian dan deposit keselamatan.</p>
+            <p class="bento-subtitle-main">Daftarkan kenderaan baharu ke dalam inventori WeDRIVE dengan pembantu pintar AI, studio 360°, dan pratonton kad langsung.</p>
           </div>
           <div class="flex-center gap-10">
             <button type="button" class="btn-outline-sm" onclick="window.location.href='cars.html'">
@@ -51,490 +51,497 @@
         </div>
       </div>
 
-      <!-- ADD CAR FORM BENTO -->
+      <!-- ADD CAR FORM -->
       <form id="add-car-form" onsubmit="handleCarSubmit(event)">
-        <div class="grid-2 gap-24">
-          <!-- CARD 1: MAKLUMAT ASAS -->
-          <div class="card p-24 radius-24 reveal-onload">
-            <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">directions_car</span> Maklumat Asas &amp; Identiti JPJ
-              </h3>
-            </div>
 
-            <div class="mb-16">
-              <div class="flex-between items-center mb-6">
-                <label class="form-label fs-13 fw-600 m-0" for="car-name">Nama &amp; Varian Model <span class="text-danger">*</span></label>
-                <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill" onclick="triggerAiSpecAutofill()" title="Kesan spesifikasi teknikal, tarif dan kelengkapan secara automatik mengikut model kenderaan">
-                  <span class="material-icons-round fs-15 ai-sparkle-icon">auto_awesome</span>
-                  <span>Kesan Automatik AI</span>
-                </button>
-              </div>
-              <input type="text" id="car-name" class="form-input radius-14" placeholder="cth: Proton X50 1.5 TGDi / Honda Civic 1.5 RS / Toyota HiAce 2.5" required oninput="updateLivePreview()" />
-            </div>
-
-            <div class="grid-2 gap-14 mb-16">
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-plate">No. Pendaftaran (Plat) <span class="text-danger">*</span></label>
-                <input type="text" id="car-plate" class="form-input radius-14 tabular-nums" placeholder="cth: VAB 4821" required oninput="this.value = this.value.toUpperCase(); updateLivePreview();" />
+        <!-- AI HERO ASSISTANT CARD -->
+        <div class="ai-hero-assistant-card mb-24 reveal-onload">
+          <div class="flex-between flex-wrap gap-12 mb-14 items-center">
+            <div class="flex-start items-center gap-10">
+              <div class="p-8 radius-12 flex-center" style="background: linear-gradient(135deg, rgba(175, 82, 222, 0.25), rgba(88, 86, 214, 0.25)); border: 1px solid rgba(175, 82, 222, 0.35);">
+                <span class="material-icons-round text-primary fs-20 ai-sparkle-icon">auto_awesome</span>
               </div>
               <div>
-                <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
-                <select id="car-brand" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="" disabled selected>Pilih Pengeluar (Jenama)</option>
-                  <option value="Proton">Proton</option>
-                  <option value="Perodua">Perodua</option>
-                  <option value="Toyota">Toyota</option>
-                  <option value="Honda">Honda</option>
-                  <option value="Nissan">Nissan</option>
-                  <option value="Mazda">Mazda</option>
-                  <option value="Hyundai">Hyundai</option>
-                  <option value="Kia">Kia</option>
-                  <option value="BYD">BYD</option>
-                  <option value="Tesla">Tesla</option>
-                  <option value="BMW">BMW</option>
-                  <option value="Mercedes-Benz">Mercedes-Benz</option>
-                  <option value="Chery">Chery</option>
-                  <option value="GWM">GWM / Haval / Ora</option>
-                  <option value="Mitsubishi">Mitsubishi</option>
-                  <option value="Ford">Ford</option>
-                  <option value="Lexus">Lexus</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid-2 gap-14">
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan</label>
-                <input type="number" id="car-year" class="form-input radius-14 tabular-nums" placeholder="cth: 2024" min="2018" max="2027" oninput="updateLivePreview()" />
-              </div>
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-color">Warna Rasmi Badan</label>
-                <input type="text" id="car-color" class="form-input radius-14" placeholder="cth: Space Grey / Snow White" />
+                <div class="fs-15 fw-700 text-title flex-center gap-8">
+                  <span>Penolong Pendaftaran Kereta Pintar AI</span>
+                  <span class="badge-360 fs-10" style="background: rgba(175, 82, 222, 0.2); color: #BF5AF2; border: 1px solid rgba(175, 82, 222, 0.3);">Apple HIG AI Engine</span>
+                </div>
+                <div class="fs-12 text-secondary mt-2">Pilih model kenderaan popular di bawah atau taip nama model untuk mengisi semua spesifikasi teknikal, kadar harian dan kelengkapan secara automatik.</div>
               </div>
             </div>
           </div>
 
-          <!-- CARD 2: SPESIFIKASI & KAPASITI -->
-          <div class="card p-24 radius-24 reveal-onload">
-            <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">tune</span> Klasifikasi &amp; Konfigurasi Teknikal
-              </h3>
-            </div>
-
-            <div class="grid-2 gap-14 mb-16">
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
-                <select id="car-type" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="" disabled selected>Pilih Kategori Badan</option>
-                  <option value="Sedan">Sedan</option>
-                  <option value="SUV">SUV</option>
-                  <option value="MPV">MPV</option>
-                  <option value="Hatchback">Hatchback</option>
-                  <option value="Van">Van / Bas Komuter</option>
-                  <option value="Pickup">Pickup 4x4</option>
-                  <option value="Coupe">Coupe / Sukan</option>
-                  <option value="Luxury">Mewah / Luxury</option>
-                </select>
-              </div>
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
-                <select id="car-seats" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="" disabled selected>Pilih Bilangan Kerusi (1 - 20)</option>
-                  <option value="1">1 Tempat Duduk (Khas / Kargo)</option>
-                  <option value="2">2 Tempat Duduk (Kereta Sukan / Roadster)</option>
-                  <option value="3">3 Tempat Duduk</option>
-                  <option value="4">4 Tempat Duduk (Coupe / Kompak)</option>
-                  <option value="5" selected>5 Tempat Duduk (Sedan / Hatchback / SUV)</option>
-                  <option value="6">6 Tempat Duduk (Crossover 6-Seater)</option>
-                  <option value="7">7 Tempat Duduk (MPV / SUV 7-Seater)</option>
-                  <option value="8">8 Tempat Duduk (MPV Besar / 8-Seater)</option>
-                  <option value="9">9 Tempat Duduk</option>
-                  <option value="10">10 Tempat Duduk (Van Penumpang)</option>
-                  <option value="11">11 Tempat Duduk (Van Komuter / MPV 11-S)</option>
-                  <option value="12">12 Tempat Duduk (Van Komuter Standard)</option>
-                  <option value="13">13 Tempat Duduk</option>
-                  <option value="14">14 Tempat Duduk (Van Panjang)</option>
-                  <option value="15">15 Tempat Duduk (Van Eksekutif / Komuter)</option>
-                  <option value="16">16 Tempat Duduk (Bas Mini / Tour Van)</option>
-                  <option value="17">17 Tempat Duduk</option>
-                  <option value="18">18 Tempat Duduk (Bas Mini Pelancongan)</option>
-                  <option value="19">19 Tempat Duduk</option>
-                  <option value="20">20 Tempat Duduk (Bas Mini / Komuter Penuh)</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid-2 gap-14 mb-16">
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
-                <select id="car-transmission" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="" disabled selected>Pilih Sistem Transmisi</option>
-                  <option value="Automatic">Automatik (AT/CVT/DCT)</option>
-                  <option value="Manual">Manual (MT)</option>
-                </select>
-              </div>
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
-                <select id="car-fuel" class="form-input radius-14" required onchange="updateLivePreview()">
-                  <option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>
-                  <option value="Petrol">Petrol (RON95/97)</option>
-                  <option value="Hybrid">Hybrid (HEV)</option>
-                  <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
-                  <option value="Diesel">Diesel Euro 5</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid-2 gap-14">
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
-                <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 1.5L Turbocharged VVT-i" oninput="updateLivePreview()" />
-              </div>
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-luggage">Kapasiti Muatan Beg / Bagasi</label>
-                <select id="car-luggage" class="form-input radius-14" onchange="updateLivePreview()">
-                  <option value="2 Beg">2 Beg Kargo (Kompak)</option>
-                  <option value="2-3 Beg" selected>2-3 Beg Sederhana (Sedan)</option>
-                  <option value="3-4 Beg">3-4 Beg Besar (SUV/Crossover)</option>
-                  <option value="4-5 Beg">4-5 Beg Penuh (MPV/Van)</option>
-                  <option value="6+ Beg">6+ Beg Muatan Besar (Van Penumpang / Bas Mini)</option>
-                </select>
-              </div>
-            </div>
+          <!-- 1-CLICK QUICK PRESET CHIPS -->
+          <div class="ai-preset-chips mb-14">
+            <span class="fs-11 fw-700 text-secondary mr-4 flex-center gap-4"><span class="material-icons-round fs-14">touch_app</span> Model Pantas 1-Klik:</span>
+            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Proton X50 1.5 TGDi')">🚗 Proton X50 1.5 TGDi</button>
+            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Honda Civic 1.5 RS')">🏎️ Honda Civic 1.5 RS</button>
+            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Perodua Alza 1.5 AV')">🚙 Perodua Alza 1.5 AV</button>
+            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('BMW 320i M Sport')">✨ BMW 320i M Sport</button>
+            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Toyota HiAce 2.5 Commuter')">🚐 Toyota HiAce 2.5</button>
+            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Tesla Model 3 Long Range')">⚡ Tesla Model 3</button>
+            <button type="button" class="ai-preset-chip" onclick="selectModelPreset('Toyota Alphard 2.4 Turbo')">👑 Toyota Alphard 2.4</button>
           </div>
 
-          <!-- CARD 3: KADAR HARGA & KELENGKAPAN -->
-          <div class="card p-24 radius-24 reveal-on-scroll">
-            <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">payments</span> Struktur Tarif &amp; Kelengkapan Standard
-              </h3>
+          <!-- MODEL SEARCH INPUT & AI AUTOFILL BUTTON -->
+          <div class="flex-start gap-10 items-center">
+            <div class="we-input-prefix-box flex-1">
+              <span class="material-icons-round we-input-prefix-icon text-muted">directions_car</span>
+              <input type="text" id="car-name" class="form-input radius-14 fs-14 fw-600" placeholder="cth: Proton X50 1.5 TGDi / Honda Civic 1.5 RS / Toyota HiAce 2.5" required oninput="updateLivePreview()" />
             </div>
+            <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill flex-shrink-0" onclick="triggerAiSpecAutofill()" title="Kesan spesifikasi teknikal, tarif dan kelengkapan secara automatik mengikut model kenderaan">
+              <span class="material-icons-round fs-16 ai-sparkle-icon">auto_awesome</span>
+              <span>Kesan Automatik AI</span>
+            </button>
+          </div>
+        </div>
 
-            <div class="grid-2 gap-14 mb-16">
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
-                <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="cth: 180" min="50" step="5" required oninput="updateLivePreview()" />
-              </div>
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
-                <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" placeholder="cth: 200" min="0" step="50" required oninput="updateLivePreview()" />
-              </div>
-            </div>
+        <!-- 2-COLUMN BENTO LAYOUT (LEFT: FORM CARDS, RIGHT: STICKY LIVE PREVIEW) -->
+        <div class="add-car-bento-grid">
 
-            <div class="grid-2 gap-14 mb-20">
-              <div>
-                <label class="form-label fs-13 fw-600" for="car-min-days">Tempoh Minimum (Hari)</label>
-                <input type="number" id="car-min-days" class="form-input radius-14 tabular-nums" placeholder="cth: 1" min="1" max="30" />
+          <!-- LEFT COLUMN: STRUCTURED FORM SECTIONS -->
+          <div class="flex flex-column gap-24">
+
+            <!-- CARD 1: MAKLUMAT ASAS & IDENTITI JPJ -->
+            <div class="card p-24 radius-24 reveal-onload">
+              <div class="card-header border-bottom-subtle pb-12 mb-18">
+                <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                  <span class="material-icons-round text-primary">directions_car</span> Maklumat Asas &amp; Identiti JPJ
+                </h3>
               </div>
+
+              <div class="grid-2 gap-14 mb-16">
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-plate">No. Pendaftaran (Plat) <span class="text-danger">*</span></label>
+                  <input type="text" id="car-plate" class="form-input radius-14 tabular-nums" placeholder="cth: VAB 4821" required oninput="this.value = this.value.toUpperCase(); updateLivePreview();" />
+                </div>
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
+                  <select id="car-brand" class="form-input radius-14" required onchange="updateLivePreview()">
+                    <option value="" disabled selected>Pilih Pengeluar (Jenama)</option>
+                    <option value="Proton">Proton</option>
+                    <option value="Perodua">Perodua</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Kia">Kia</option>
+                    <option value="BYD">BYD</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                    <option value="Chery">Chery</option>
+                    <option value="GWM">GWM / Haval / Ora</option>
+                    <option value="Mitsubishi">Mitsubishi</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Lexus">Lexus</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2 gap-14 mb-16">
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan</label>
+                  <input type="number" id="car-year" class="form-input radius-14 tabular-nums" placeholder="cth: 2025" min="2018" max="2027" oninput="updateLivePreview()" />
+                </div>
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-color">Warna Rasmi Badan</label>
+                  <input type="text" id="car-color" class="form-input radius-14" placeholder="cth: Space Grey / Snow White" />
+                </div>
+              </div>
+
               <div>
                 <label class="form-label fs-13 fw-600" for="car-location">Pusat Serahan &amp; Pulangan Rasmi (HQ)</label>
-                <div class="position-relative">
-                  <input type="text" id="car-location" class="form-input radius-14 pl-36 fw-600" value="Pusat Operasi Utama WeDRIVE (HQ Melaka)" readonly />
-                  <span class="material-icons-round position-absolute top-50 translate-middle-y left-12 text-emerald fs-18">verified</span>
+                <div class="we-input-prefix-box">
+                  <span class="material-icons-round we-input-prefix-icon text-emerald">verified</span>
+                  <input type="text" id="car-location" class="form-input radius-14 fw-600" value="Pusat Operasi Utama WeDRIVE (HQ Melaka)" readonly />
                 </div>
                 <div class="fs-11 text-muted mt-4">Diselaraskan dengan alamat ibu pejabat WeDRIVE di Tetapan.</div>
               </div>
             </div>
 
-            <div class="border-top-subtle pt-16">
-              <label class="form-label fs-13 fw-600 mb-10 d-block">Peralatan Standard Kereta</label>
-              <div class="feature-chips-grid">
-                <label class="filter-chip cursor-pointer">
-                  <input type="checkbox" id="feat-carplay" class="hidden" />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
-                  <span>Apple CarPlay / Android Auto</span>
-                </label>
-                <label class="filter-chip cursor-pointer">
-                  <input type="checkbox" id="feat-dashcam" class="hidden" />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
-                  <span>4K Dashcam Depan &amp; Belakang</span>
-                </label>
-                <label class="filter-chip cursor-pointer">
-                  <input type="checkbox" id="feat-keyless" class="hidden" />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
-                  <span>Sistem Masuk Pintar Tanpa Kunci</span>
-                </label>
-                <label class="filter-chip cursor-pointer">
-                  <input type="checkbox" id="feat-reverse-cam" class="hidden" />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
-                  <span>Kamera Undur 360 Berdefinisi Tinggi</span>
-                </label>
-                <label class="filter-chip cursor-pointer">
-                  <input type="checkbox" id="feat-tinted" class="hidden" />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
-                  <span>Filem Penapis Haba Berdaftar JPJ</span>
-                </label>
-                <label class="filter-chip cursor-pointer">
-                  <input type="checkbox" id="feat-sensor" class="hidden" />
-                  <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
-                  <span>Sensor Parkir Depan &amp; Belakang</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- CARD 4: FOTO UTAMA KERETA -->
-          <div class="card p-24 radius-24 reveal-on-scroll">
-            <div class="card-header border-bottom-subtle pb-12 mb-18">
-              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">photo_camera</span> Foto Utama Kereta (Katalog)
-              </h3>
-            </div>
-
-            <div class="mb-16">
-              <label class="form-label fs-13 fw-600">Muat Naik Foto Utama Kereta</label>
-              <div class="doc-preview-box cursor-pointer p-20 text-center radius-16 border-dashed" onclick="document.getElementById('car-photo-input').click()">
-                <div id="photo-preview-content">
-                  <span class="material-icons-round fs-36 text-primary mb-8">cloud_upload</span>
-                  <div class="fs-14 fw-600 text-title">Klik atau Seret Foto ke Sini</div>
-                  <div class="fs-11 text-muted mt-4">Format disokong: PNG, JPG, WEBP (Latar belakang telus digalakkan)</div>
-                </div>
-                <img id="photo-preview-img" class="doc-preview-img img-preview-140 hidden" alt="Pratonton Kereta" />
-              </div>
-              <input type="file" id="car-photo-input" class="hidden" accept="image/*" title="Muat naik foto kereta" aria-label="Muat naik foto kereta" onchange="previewCarPhoto(this)" />
-            </div>
-
-            <div class="card p-14 radius-16 bg-surface-1 border-subtle">
-              <div class="flex-start gap-10">
-                <span class="material-icons-round text-primary fs-20 flex-shrink-0">lightbulb</span>
-                <div>
-                  <div class="fs-12 fw-700 text-title mb-2">Panduan Fotografi Rasmi WeDRIVE</div>
-                  <div class="fs-11 text-secondary lh-16">Gunakan gambar sudut tiga suku (3/4 angle) hadapan dengan pencahayaan studio yang jelas untuk memastikan pratonton katalog kelihatan premium.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- CARD 5: STUDIO PENGALAMAN 360° INTERAKTIF (EXTERIOR & INSIDE 360) -->
-          <div class="card p-24 radius-24 reveal-on-scroll col-span-2" id="card-360-studio">
-            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
-              <div>
+            <!-- CARD 2: SPESIFIKASI TEKNIKAL & STRUKTUR TARIF -->
+            <div class="card p-24 radius-24 reveal-on-scroll">
+              <div class="card-header border-bottom-subtle pb-12 mb-18">
                 <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                  <span class="material-icons-round text-primary-accent">360</span>
-                  <span>Studio Pengalaman 360° Interaktif (Pilihan)</span>
+                  <span class="material-icons-round text-primary">tune</span> Spesifikasi Teknikal &amp; Struktur Tarif
                 </h3>
-                <p class="fs-12 text-secondary m-0 mt-4">
-                  Jika dimuat naik, pelanggan boleh memutar kereta 360° luaran dan melihat ruang dalaman. Jika tiada, sistem menggunakan foto utama biasa.
-                </p>
               </div>
-              <span id="badge-360-status" class="status-badge badge-360-muted">
-                <span>Tiada 360° (Foto Biasa)</span>
-              </span>
+
+              <div class="grid-2 gap-14 mb-16">
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
+                  <select id="car-type" class="form-input radius-14" required onchange="updateLivePreview()">
+                    <option value="" disabled selected>Pilih Kategori Badan</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="SUV">SUV</option>
+                    <option value="MPV">MPV</option>
+                    <option value="Hatchback">Hatchback</option>
+                    <option value="Van">Van / Bas Komuter</option>
+                    <option value="Pickup">Pickup 4x4</option>
+                    <option value="Coupe">Coupe / Sukan</option>
+                    <option value="Luxury">Mewah / Luxury</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
+                  <select id="car-seats" class="form-input radius-14" required onchange="updateLivePreview()">
+                    <option value="" disabled selected>Pilih Bilangan Kerusi (1 - 20)</option>
+                    <option value="1">1 Tempat Duduk (Khas / Kargo)</option>
+                    <option value="2">2 Tempat Duduk (Kereta Sukan / Roadster)</option>
+                    <option value="3">3 Tempat Duduk</option>
+                    <option value="4">4 Tempat Duduk (Coupe / Kompak)</option>
+                    <option value="5" selected>5 Tempat Duduk (Sedan / Hatchback / SUV)</option>
+                    <option value="6">6 Tempat Duduk (Crossover 6-Seater)</option>
+                    <option value="7">7 Tempat Duduk (MPV / SUV 7-Seater)</option>
+                    <option value="8">8 Tempat Duduk (MPV Besar / 8-Seater)</option>
+                    <option value="9">9 Tempat Duduk</option>
+                    <option value="10">10 Tempat Duduk (Van Penumpang)</option>
+                    <option value="11">11 Tempat Duduk (Van Komuter / MPV 11-S)</option>
+                    <option value="12">12 Tempat Duduk (Van Komuter Standard)</option>
+                    <option value="13">13 Tempat Duduk</option>
+                    <option value="14">14 Tempat Duduk (Van Panjang)</option>
+                    <option value="15">15 Tempat Duduk (Van Eksekutif / Komuter)</option>
+                    <option value="16">16 Tempat Duduk (Bas Mini / Tour Van)</option>
+                    <option value="17">17 Tempat Duduk</option>
+                    <option value="18">18 Tempat Duduk (Bas Mini Pelancongan)</option>
+                    <option value="19">19 Tempat Duduk</option>
+                    <option value="20">20 Tempat Duduk (Bas Mini / Komuter Penuh)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2 gap-14 mb-16">
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
+                  <select id="car-transmission" class="form-input radius-14" required onchange="updateLivePreview()">
+                    <option value="" disabled selected>Pilih Sistem Transmisi</option>
+                    <option value="Automatic">Automatik (AT/CVT/DCT)</option>
+                    <option value="Manual">Manual (MT)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
+                  <select id="car-fuel" class="form-input radius-14" required onchange="updateLivePreview()">
+                    <option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>
+                    <option value="Petrol">Petrol (RON95/97)</option>
+                    <option value="Hybrid">Hybrid (HEV)</option>
+                    <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
+                    <option value="Diesel">Diesel Euro 5</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2 gap-14 mb-16">
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
+                  <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 1.5L Turbocharged VVT-i" oninput="updateLivePreview()" />
+                </div>
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-luggage">Kapasiti Muatan Beg / Bagasi</label>
+                  <select id="car-luggage" class="form-input radius-14" onchange="updateLivePreview()">
+                    <option value="2 Beg">2 Beg Kargo (Kompak)</option>
+                    <option value="2-3 Beg" selected>2-3 Beg Sederhana (Sedan)</option>
+                    <option value="3-4 Beg">3-4 Beg Besar (SUV/Crossover)</option>
+                    <option value="4-5 Beg">4-5 Beg Penuh (MPV/Van)</option>
+                    <option value="6+ Beg">6+ Beg Muatan Besar (Van Penumpang / Bas Mini)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2 gap-14 mb-16">
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
+                  <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="cth: 180" min="50" step="5" required oninput="updateLivePreview()" />
+                </div>
+                <div>
+                  <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
+                  <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" placeholder="cth: 200" min="0" step="50" required oninput="updateLivePreview()" />
+                </div>
+              </div>
+
+              <div class="mb-20">
+                <label class="form-label fs-13 fw-600" for="car-min-days">Tempoh Minimum Sewaan (Hari)</label>
+                <input type="number" id="car-min-days" class="form-input radius-14 tabular-nums" placeholder="cth: 1" min="1" max="30" />
+              </div>
+
+              <div class="border-top-subtle pt-16">
+                <label class="form-label fs-13 fw-600 mb-10 d-block">Peralatan Standard Kereta</label>
+                <div class="feature-chips-grid">
+                  <label class="filter-chip cursor-pointer">
+                    <input type="checkbox" id="feat-carplay" class="hidden" />
+                    <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
+                    <span>Apple CarPlay / Android Auto</span>
+                  </label>
+                  <label class="filter-chip cursor-pointer">
+                    <input type="checkbox" id="feat-dashcam" class="hidden" />
+                    <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
+                    <span>4K Dashcam Depan &amp; Belakang</span>
+                  </label>
+                  <label class="filter-chip cursor-pointer">
+                    <input type="checkbox" id="feat-keyless" class="hidden" />
+                    <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
+                    <span>Sistem Masuk Pintar Tanpa Kunci</span>
+                  </label>
+                  <label class="filter-chip cursor-pointer">
+                    <input type="checkbox" id="feat-reverse-cam" class="hidden" />
+                    <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
+                    <span>Kamera Undur 360 Berdefinisi Tinggi</span>
+                  </label>
+                  <label class="filter-chip cursor-pointer">
+                    <input type="checkbox" id="feat-tinted" class="hidden" />
+                    <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
+                    <span>Filem Penapis Haba Berdaftar JPJ</span>
+                  </label>
+                  <label class="filter-chip cursor-pointer">
+                    <input type="checkbox" id="feat-sensor" class="hidden" />
+                    <span class="material-icons-round fs-16 mr-6 chip-check-icon">add_circle_outline</span>
+                    <span>Sensor Parkir Depan &amp; Belakang</span>
+                  </label>
+                </div>
+              </div>
             </div>
 
-            <!-- KOTAK SEDUT PAUTAN 360 (AI 360 AUTO-DOWNLOADER) -->
-            <div class="ai-360-tester mb-18">
-              <div class="flex-between align-center mb-6">
-                <span class="fs-12 fw-700 text-title flex-center gap-6">
-                  <span class="material-icons-round fs-16 text-primary">auto_fix_high</span>
-                  <span>Pilihan Pantas: Sedut Pautan 360 Menggunakan AI</span>
+            <!-- CARD 3: STUDIO ASET 360° & FOTO KATALOG -->
+            <div class="card p-24 radius-24 reveal-on-scroll" id="card-360-studio">
+              <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+                <div>
+                  <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                    <span class="material-icons-round text-primary-accent">360</span>
+                    <span>Studio Pengalaman 360° &amp; Foto Katalog</span>
+                  </h3>
+                  <p class="fs-12 text-secondary m-0 mt-4">
+                    Muat naik foto utama dan aset 360° interaktif untuk pengalaman sewaan gred Apple.
+                  </p>
+                </div>
+                <span id="badge-360-status" class="status-badge badge-360-muted">
+                  <span>Tiada 360° (Foto Biasa)</span>
                 </span>
-                <span class="badge-360 fs-10">AI 360 Downloader</span>
               </div>
-              <div class="flex-start gap-10">
-                <input type="url" id="ai-360-link-input" class="form-input radius-12 fs-12 flex-1" placeholder="Tampal pautan 360 cth: https://cdn.impel.io/spincar-static/... atau Carsome 360 viewer" />
-                <button type="button" class="btn-secondary py-8 px-14 fs-12 flex-shrink-0" onclick="ingest360FromUrl()">
-                  <span class="material-icons-round fs-15">download</span> Sedut Aset 360
-                </button>
-              </div>
-              <div id="ai-360-link-feedback" class="fs-11 mt-6 text-muted"></div>
-            </div>
 
-            <!-- BENTO 2-KOLUM: EXTERIOR VS INTERIOR -->
-            <div class="bento-360-grid">
-
-              <!-- SUB-KAD 1: 360° LUARAN (EXTERIOR SPIN FRAMES) -->
-              <div class="bento-360-card">
-                <div class="flex-between align-center mb-10">
-                  <span class="fs-13 fw-700 text-title flex-center gap-6">
-                    <span class="material-icons-round text-primary fs-16">rotate_right</span>
-                    <span>360° Luaran (Exterior Spin)</span>
-                  </span>
-                  <span class="frames-counter-pill" id="exterior-frames-count">0 Bingkai</span>
-                </div>
-                <p class="fs-12 text-secondary mb-12">Pilih folder bingkai imej putaran luaran (24, 36, atau 200 bingkai) atau pelbagai fail serentak.</p>
-
-                <div class="upload-360-dropzone" onclick="document.getElementById('exterior-folder-input').click()">
-                  <span class="material-icons-round fs-32 text-primary mb-6">folder_open</span>
-                  <div class="fs-13 fw-600 text-title">Muat Naik Folder Bingkai 360°</div>
-                  <div class="fs-11 text-muted mt-2">Klik untuk pilih folder bingkai berurutan (cth: frame-000.jpg ... frame-199.jpg)</div>
-                </div>
-
-                <div class="flex-center gap-10 mt-10">
-                  <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('exterior-files-input').click()">
-                    <span class="material-icons-round fs-14">collections</span> Pilih Pelbagai Fail Imej
-                  </button>
-                </div>
-
-                <input type="file" id="exterior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder bingkai 360 luaran" aria-label="Pilih folder bingkai 360 luaran" onchange="handleExteriorFolder(this)" />
-                <input type="file" id="exterior-files-input" class="hidden" multiple accept="image/*" title="Pilih pelbagai fail bingkai 360 luaran" aria-label="Pilih pelbagai fail bingkai 360 luaran" onchange="handleExteriorFiles(this)" />
-
-                <!-- STRIP REEL & SCRUB SLIDER -->
-                <div id="exterior-preview-zone" class="hidden mt-12">
-                  <div class="fs-11 fw-600 text-secondary mb-4 flex-between">
-                    <span>Pratonton Putaran (Scrub to Rotate):</span>
-                    <span id="scrub-degree" class="text-primary tabular-nums">0°</span>
+              <!-- FOTO UTAMA DROPZONE -->
+              <div class="mb-20">
+                <label class="form-label fs-13 fw-600 mb-8 d-block">Foto Utama Kereta (Katalog)</label>
+                <div class="doc-preview-box cursor-pointer p-20 text-center radius-16 border-dashed" onclick="document.getElementById('car-photo-input').click()">
+                  <div id="photo-preview-content">
+                    <span class="material-icons-round fs-36 text-primary mb-8">cloud_upload</span>
+                    <div class="fs-14 fw-600 text-title">Klik atau Seret Foto ke Sini</div>
+                    <div class="fs-11 text-muted mt-4">Format disokong: PNG, JPG, WEBP (Latar belakang telus digalakkan)</div>
                   </div>
-                  <input type="range" id="exterior-scrub" class="scrub-slider" min="0" max="35" value="0" title="Gelangsar sudut putaran 360" aria-label="Gelangsar sudut putaran 360" oninput="handleScrub360(this.value)" />
-                  <div class="reel-preview-strip" id="exterior-thumb-strip"></div>
+                  <img id="photo-preview-img" class="doc-preview-img img-preview-140 hidden" alt="Pratonton Kereta" />
                 </div>
+                <input type="file" id="car-photo-input" class="hidden" accept="image/*" title="Muat naik foto kereta" aria-label="Muat naik foto kereta" onchange="previewCarPhoto(this)" />
               </div>
 
-              <!-- SUB-KAD 2: 360° DALAMAN (INSIDE PANORAMA) -->
-              <div class="bento-360-card">
-                <div class="flex-between align-center mb-10">
-                  <span class="fs-13 fw-700 text-title flex-center gap-6">
-                    <span class="material-icons-round text-emerald fs-16">airline_seat_recline_extra</span>
-                    <span>360° Dalaman (Inside View)</span>
+              <!-- AI 360 LINK INGESTOR -->
+              <div class="ai-360-tester mb-20">
+                <div class="flex-between align-center mb-6">
+                  <span class="fs-12 fw-700 text-title flex-center gap-6">
+                    <span class="material-icons-round fs-16 text-primary">auto_fix_high</span>
+                    <span>Pilihan Pantas: Sedut Pautan 360 Menggunakan AI</span>
                   </span>
-                  <span class="badge-360 fs-10" id="interior-badge-status">Menunggu</span>
+                  <span class="badge-360 fs-10">AI 360 Downloader</span>
                 </div>
-                <p class="fs-12 text-secondary mb-12">Muat naik imej panorama sfera equirectangular ATAU folder 6 muka kubus (pano_f, pano_r, pano_b, ...).</p>
-
-                <div class="upload-360-dropzone" onclick="document.getElementById('interior-file-input').click()">
-                  <span class="material-icons-round fs-32 text-emerald mb-6">panorama</span>
-                  <div class="fs-13 fw-600 text-title">Muat Naik Imej Panorama Sfera / Kubus</div>
-                  <div class="fs-11 text-muted mt-2">Sokongan: Equirectangular 360° JPG / Folder 6 Muka Kubus</div>
-                </div>
-
-                <div class="flex-center gap-10 mt-10">
-                  <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('interior-folder-input').click()">
-                    <span class="material-icons-round fs-14">view_in_ar</span> Pilih Folder 6 Muka Kubus
+                <div class="flex-start gap-10">
+                  <input type="url" id="ai-360-link-input" class="form-input radius-12 fs-12 flex-1" placeholder="Tampal pautan 360 cth: https://cdn.impel.io/spincar-static/... atau Carsome 360 viewer" />
+                  <button type="button" class="btn-secondary py-8 px-14 fs-12 flex-shrink-0" onclick="ingest360FromUrl()">
+                    <span class="material-icons-round fs-15">download</span> Sedut Aset 360
                   </button>
                 </div>
+                <div id="ai-360-link-feedback" class="fs-11 mt-6 text-muted"></div>
+              </div>
 
-                <input type="file" id="interior-file-input" class="hidden" accept="image/*" title="Muat naik fail panorama 360 dalaman" aria-label="Muat naik fail panorama 360 dalaman" onchange="handleInteriorUpload(this, 'file')" />
-                <input type="file" id="interior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder kubus panorama 360 dalaman" aria-label="Pilih folder kubus panorama 360 dalaman" onchange="handleInteriorUpload(this, 'folder')" />
+              <!-- BENTO 2-KOLUM: EXTERIOR VS INTERIOR 360 -->
+              <div class="bento-360-grid">
+                <!-- 360 LUARAN -->
+                <div class="bento-360-card">
+                  <div class="flex-between align-center mb-10">
+                    <span class="fs-13 fw-700 text-title flex-center gap-6">
+                      <span class="material-icons-round text-primary fs-16">rotate_right</span>
+                      <span>360° Luaran (Exterior Spin)</span>
+                    </span>
+                    <span class="frames-counter-pill" id="exterior-frames-count">0 Bingkai</span>
+                  </div>
+                  <p class="fs-12 text-secondary mb-12">Pilih folder bingkai imej putaran luaran (24, 36, atau 200 bingkai) atau pelbagai fail serentak.</p>
 
-                <div id="interior-preview-zone" class="hidden mt-12 card p-10 bg-surface-1 border-subtle">
-                  <div class="flex-start gap-10 items-center">
-                    <img id="interior-thumb-img" class="radius-8 interior-thumb-preview" alt="Pratonton Dalaman" />
-                    <div>
-                      <div class="fs-12 fw-600 text-title" id="interior-type-label">Panorama 360° Dikesan</div>
-                      <div class="fs-11 text-muted">Sedia untuk paparan interaktif dalaman.</div>
+                  <div class="upload-360-dropzone" onclick="document.getElementById('exterior-folder-input').click()">
+                    <span class="material-icons-round fs-32 text-primary mb-6">folder_open</span>
+                    <div class="fs-13 fw-600 text-title">Muat Naik Folder Bingkai 360°</div>
+                    <div class="fs-11 text-muted mt-2">Klik untuk pilih folder bingkai berurutan</div>
+                  </div>
+
+                  <div class="flex-center gap-10 mt-10">
+                    <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('exterior-files-input').click()">
+                      <span class="material-icons-round fs-14">collections</span> Pilih Pelbagai Fail Imej
+                    </button>
+                  </div>
+
+                  <input type="file" id="exterior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder bingkai 360 luaran" aria-label="Pilih folder bingkai 360 luaran" onchange="handleExteriorFolder(this)" />
+                  <input type="file" id="exterior-files-input" class="hidden" multiple accept="image/*" title="Pilih pelbagai fail bingkai 360 luaran" aria-label="Pilih pelbagai fail bingkai 360 luaran" onchange="handleExteriorFiles(this)" />
+
+                  <div id="exterior-preview-zone" class="hidden mt-12">
+                    <div class="fs-11 fw-600 text-secondary mb-4 flex-between">
+                      <span>Pratonton Putaran (Scrub to Rotate):</span>
+                      <span id="scrub-degree" class="text-primary tabular-nums">0°</span>
+                    </div>
+                    <input type="range" id="exterior-scrub" class="scrub-slider" min="0" max="35" value="0" title="Gelangsar sudut putaran 360" aria-label="Gelangsar sudut putaran 360" oninput="handleScrub360(this.value)" />
+                    <div class="reel-preview-strip" id="exterior-thumb-strip"></div>
+                  </div>
+                </div>
+
+                <!-- 360 DALAMAN -->
+                <div class="bento-360-card">
+                  <div class="flex-between align-center mb-10">
+                    <span class="fs-13 fw-700 text-title flex-center gap-6">
+                      <span class="material-icons-round text-emerald fs-16">airline_seat_recline_extra</span>
+                      <span>360° Dalaman (Inside View)</span>
+                    </span>
+                    <span class="badge-360 fs-10" id="interior-badge-status">Menunggu</span>
+                  </div>
+                  <p class="fs-12 text-secondary mb-12">Muat naik imej panorama sfera equirectangular ATAU folder 6 muka kubus (pano_f, pano_r, pano_b, ...).</p>
+
+                  <div class="upload-360-dropzone" onclick="document.getElementById('interior-file-input').click()">
+                    <span class="material-icons-round fs-32 text-emerald mb-6">panorama</span>
+                    <div class="fs-13 fw-600 text-title">Muat Naik Panorama Sfera / Kubus</div>
+                    <div class="fs-11 text-muted mt-2">Sokongan: Equirectangular JPG / Folder 6 Muka Kubus</div>
+                  </div>
+
+                  <div class="flex-center gap-10 mt-10">
+                    <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('interior-folder-input').click()">
+                      <span class="material-icons-round fs-14">view_in_ar</span> Pilih Folder 6 Muka Kubus
+                    </button>
+                  </div>
+
+                  <input type="file" id="interior-file-input" class="hidden" accept="image/*" title="Muat naik fail panorama 360 dalaman" aria-label="Muat naik fail panorama 360 dalaman" onchange="handleInteriorUpload(this, 'file')" />
+                  <input type="file" id="interior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder kubus panorama 360 dalaman" aria-label="Pilih folder kubus panorama 360 dalaman" onchange="handleInteriorUpload(this, 'folder')" />
+
+                  <div id="interior-preview-zone" class="hidden mt-12 card p-10 bg-surface-1 border-subtle">
+                    <div class="flex-start gap-10 items-center">
+                      <img id="interior-thumb-img" class="radius-8 interior-thumb-preview" alt="Pratonton Dalaman" />
+                      <div>
+                        <div class="fs-12 fw-600 text-title" id="interior-type-label">Panorama 360° Dikesan</div>
+                        <div class="fs-11 text-muted">Sedia untuk paparan interaktif dalaman.</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
-          </div>
-        </div>
 
-        <!-- REAL-TIME LIVE PREVIEW BENTO CARD -->
-        <div class="card p-24 radius-24 mt-24 reveal-on-scroll">
-          <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
-            <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-              <span class="material-icons-round text-emerald">preview</span> Pratonton Kad Kereta (Paparan Pelanggan &amp; Pentadbir)
-            </h3>
-            <span class="status-badge active"><span class="material-icons-round fs-12">visibility</span> Pratonton Langsung</span>
-          </div>
-          <div class="grid-2 gap-24 items-start">
-            <div class="apple-car-showcase-card shadow-sm add-car-preview-card">
-              
-              <!-- PREVIEW MODE SWITCHER -->
-              <div class="preview-360-toolbar flex-center gap-6 mb-12">
-                <button type="button" class="btn-outline-sm py-4 px-12 fs-11 active" id="tab-prev-photo" onclick="switchPreviewMode('photo')">
-                  <span class="material-icons-round fs-13">photo</span> Foto Utama
+            <!-- ACTION BAR (BOTTOM OF FORM) -->
+            <div class="flex-between p-20 card radius-24">
+              <span class="fs-13 text-muted">Pastikan butiran nombor plat, tarif sewaan, dan aset foto disemak sebelum pendaftaran.</span>
+              <div class="flex-center gap-10">
+                <button type="button" class="btn-secondary" onclick="window.location.href='cars.html'">Batal</button>
+                <button type="submit" class="btn-primary">
+                  <span class="material-icons-round fs-18">check</span>
+                  <span>Daftar Kereta Baharu</span>
                 </button>
-                <button type="button" class="btn-outline-sm py-4 px-12 fs-11" id="tab-prev-exterior" onclick="switchPreviewMode('exterior')">
-                  <span class="material-icons-round fs-13">360</span> 360° Luaran
-                </button>
-                <button type="button" class="btn-outline-sm py-4 px-12 fs-11" id="tab-prev-interior" onclick="switchPreviewMode('interior')">
-                  <span class="material-icons-round fs-13">airline_seat_recline_extra</span> 360° Dalaman
-                </button>
-              </div>
-
-              <div class="apple-car-studio-canvas studio-canvas-interactive" id="preview-canvas-wrap">
-                <div class="glass-status-pill" id="preview-status-pill">
-                  <span class="live-pulse-dot"></span> Tersedia
-                </div>
-
-                <div id="preview-img-empty" class="preview-img-placeholder flex-center flex-column">
-                  <span class="material-icons-round fs-48 text-muted mb-8">directions_car</span>
-                  <span class="fs-12 text-muted fw-500">Foto kereta akan dipaparkan di sini</span>
-                </div>
-
-                <!-- MAIN PHOTO -->
-                <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kereta" />
-
-                <!-- 360 EXTERIOR FRAME DISPLAY -->
-                <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" />
-
-                <!-- 360 INTERIOR PANORAMA DISPLAY -->
-                <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center preview-interior-layer">
-                  <img id="preview-interior-img" class="radius-16 w-100 h-100 preview-interior-img" alt="Pratonton Dalaman" />
-                </div>
-              </div>
-
-              <div class="apple-car-card-body">
-                <div class="apple-car-meta-header">
-                  <span class="apple-category-pill" id="preview-display-cat">Kategori</span>
-                  <span class="apple-plate-pill tabular-nums" id="preview-display-plate">---</span>
-                </div>
-                <h3 class="apple-car-title" id="preview-display-name">Nama Model Kereta</h3>
-                <div class="apple-micro-specs">
-                  <span class="apple-spec-tag"><span class="material-icons-round">settings</span> <span id="preview-spec-trans">-</span></span>
-                  <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> <span id="preview-spec-fuel">-</span></span>
-                  <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> <span id="preview-spec-seats">-</span></span>
-                  <span class="apple-spec-tag"><span class="material-icons-round">work</span> <span id="preview-spec-luggage">2-3 Beg</span></span>
-                </div>
-                <div class="apple-rental-callout">
-                  <div class="apple-rental-row">
-                    <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Serahan &amp; Pulangan</span>
-                    <span class="apple-rental-value text-emerald fw-600" id="preview-display-loc">Pusat Operasi Utama WeDRIVE (HQ)</span>
-                  </div>
-                  <div class="apple-rental-row">
-                    <span class="apple-rental-label"><span class="material-icons-round fs-15">speed</span> Enjin &amp; Kuasa</span>
-                    <span class="apple-rental-value fw-600 text-title" id="preview-display-engine">-</span>
-                  </div>
-                  <div class="apple-rental-row">
-                    <span class="apple-rental-label"><span class="material-icons-round fs-15">all_inclusive</span> Jarak Perbatuan</span>
-                    <span class="apple-rental-value text-emerald fw-600">Tanpa Had (Unlimited KM)</span>
-                  </div>
-                </div>
-                <div class="apple-car-footer">
-                  <div>
-                    <div class="fs-11 text-muted">Kadar Rasmi Harian</div>
-                    <div class="apple-car-rate tabular-nums" id="preview-display-rate">RM 0 <span class="apple-car-rate-sub">/hari</span></div>
-                  </div>
-                  <span class="status-badge available"><span class="material-icons-round fs-12">check_circle</span> Tersedia</span>
-                </div>
               </div>
             </div>
 
-            <div class="card p-24 radius-24 bg-surface-2 border-subtle">
-              <h4 class="fs-15 fw-700 text-title mb-8">Pengesahan Operasi Pendaftaran</h4>
-              <p class="fs-13 text-secondary lh-16 m-0 mb-12">
-                Setiap kereta yang didaftarkan akan terus dikaitkan dengan pangkalan data inventori operasi WeDRIVE, membolehkan tempahan segera melalui kaunter atau portal pelanggan.
-              </p>
-              <ul class="fs-13 text-secondary p-0 m-0 pl-18 lh-18 mb-16">
-                <li>Status awal kereta ditetapkan kepada <strong>Tersedia</strong>.</li>
-                <li>Pengambilan dan pemulangan diselaraskan di <strong>Pusat Operasi Utama WeDRIVE (HQ)</strong>.</li>
-                <li>Ciri interaktif 360° akan memaparkan lencana eksklusif di portal pelanggan jika dimuat naik.</li>
-              </ul>
-              <div class="card p-14 radius-16 bg-surface-1 border-subtle fs-12 text-secondary flex-start gap-10">
-                <span class="material-icons-round text-primary fs-20 flex-shrink-0">info</span>
-                <div>Jika anda tidak memuat naik aset 360°, kereta ini hanya akan memaparkan galeri foto biasa sahaja kepada pelanggan.</div>
+          </div>
+
+          <!-- RIGHT COLUMN: STICKY REAL-TIME LIVE PREVIEW CARD -->
+          <div class="add-car-sticky-preview">
+            <div class="card p-20 radius-24 shadow-sm">
+              <div class="card-header border-bottom-subtle pb-12 mb-14 flex-between">
+                <h3 class="m-0 fs-15 fw-700 flex-center gap-8 text-title">
+                  <span class="material-icons-round text-emerald">preview</span>
+                  <span>Pratonton Kad Masa Nyata</span>
+                </h3>
+                <span class="status-badge active"><span class="live-pulse-dot"></span> Langsung</span>
               </div>
+
+              <!-- PREVIEW SHOWCASE CARD -->
+              <div class="apple-car-showcase-card shadow-sm add-car-preview-card mb-16">
+                <!-- PREVIEW MODE SWITCHER -->
+                <div class="preview-360-toolbar flex-center gap-6 mb-12">
+                  <button type="button" class="btn-outline-sm py-4 px-12 fs-11 active" id="tab-prev-photo" onclick="switchPreviewMode('photo')">
+                    <span class="material-icons-round fs-13">photo</span> Foto Utama
+                  </button>
+                  <button type="button" class="btn-outline-sm py-4 px-12 fs-11" id="tab-prev-exterior" onclick="switchPreviewMode('exterior')">
+                    <span class="material-icons-round fs-13">360</span> 360° Luaran
+                  </button>
+                  <button type="button" class="btn-outline-sm py-4 px-12 fs-11" id="tab-prev-interior" onclick="switchPreviewMode('interior')">
+                    <span class="material-icons-round fs-13">airline_seat_recline_extra</span> 360° Dalaman
+                  </button>
+                </div>
+
+                <!-- CANVAS / PHOTO DISPLAY WRAPPER -->
+                <div class="apple-car-studio-canvas studio-canvas-interactive" id="preview-canvas-wrap">
+                  <div class="glass-status-pill" id="preview-status-pill">
+                    <span class="live-pulse-dot"></span> Tersedia
+                  </div>
+
+                  <div id="preview-img-empty" class="preview-img-placeholder flex-center flex-column">
+                    <span class="material-icons-round fs-48 text-muted mb-8">directions_car</span>
+                    <span class="fs-12 text-muted fw-500">Foto kereta akan dipaparkan di sini</span>
+                  </div>
+
+                  <!-- MAIN PHOTO -->
+                  <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kereta" />
+
+                  <!-- 360 EXTERIOR FRAME DISPLAY -->
+                  <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" />
+
+                  <!-- 360 INTERIOR PANORAMA DISPLAY -->
+                  <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center preview-interior-layer">
+                    <img id="preview-interior-img" class="radius-16 w-100 h-100 preview-interior-img" alt="Pratonton Dalaman" />
+                  </div>
+                </div>
+
+                <!-- CARD SPECS BODY -->
+                <div class="apple-car-card-body">
+                  <div class="apple-car-meta-header">
+                    <span class="apple-category-pill" id="preview-display-cat">Kategori</span>
+                    <span class="apple-plate-pill tabular-nums" id="preview-display-plate">---</span>
+                  </div>
+                  <h3 class="apple-car-title" id="preview-display-name">Nama Model Kereta</h3>
+                  <div class="apple-micro-specs">
+                    <span class="apple-spec-tag"><span class="material-icons-round">settings</span> <span id="preview-spec-trans">-</span></span>
+                    <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> <span id="preview-spec-fuel">-</span></span>
+                    <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> <span id="preview-spec-seats">-</span></span>
+                    <span class="apple-spec-tag"><span class="material-icons-round">work</span> <span id="preview-spec-luggage">2-3 Beg</span></span>
+                  </div>
+                  <div class="apple-rental-callout">
+                    <div class="apple-rental-row">
+                      <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Serahan &amp; Pulangan</span>
+                      <span class="apple-rental-value text-emerald fw-600" id="preview-display-loc">Pusat Operasi Utama WeDRIVE (HQ)</span>
+                    </div>
+                    <div class="apple-rental-row">
+                      <span class="apple-rental-label"><span class="material-icons-round fs-15">speed</span> Enjin &amp; Kuasa</span>
+                      <span class="apple-rental-value fw-600 text-title" id="preview-display-engine">-</span>
+                    </div>
+                    <div class="apple-rental-row">
+                      <span class="apple-rental-label"><span class="material-icons-round fs-15">all_inclusive</span> Jarak Perbatuan</span>
+                      <span class="apple-rental-value text-emerald fw-600">Tanpa Had (Unlimited KM)</span>
+                    </div>
+                  </div>
+                  <div class="apple-car-footer">
+                    <div>
+                      <div class="fs-11 text-muted">Kadar Rasmi Harian</div>
+                      <div class="apple-car-rate tabular-nums" id="preview-display-rate">RM 0 <span class="apple-car-rate-sub">/hari</span></div>
+                    </div>
+                    <span class="status-badge available"><span class="material-icons-round fs-12">check_circle</span> Tersedia</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STICKY SUBMIT ACTION BUTTONS -->
+              <button type="submit" class="btn-primary w-100 py-12 radius-16 fs-14 fw-600 mb-8 flex-center gap-8">
+                <span class="material-icons-round fs-18">check_circle</span>
+                <span>Daftar Kereta Baharu</span>
+              </button>
+              <button type="button" class="btn-outline-sm w-100 py-8 radius-14 fs-12 text-center" onclick="window.location.href='cars.html'">
+                Batal &amp; Kembali ke Senarai
+              </button>
             </div>
           </div>
+
         </div>
 
-        <!-- ACTION BAR -->
-        <div class="flex-between mt-24 p-20 card radius-24">
-          <span class="fs-13 text-muted">Pastikan butiran pendaftaran nombor plat, kadar harian, dan aset 360 disemak dengan teliti sebelum simpan.</span>
-          <div class="flex-center gap-10">
-            <button type="button" class="btn-secondary" onclick="window.location.href='cars.html'">Batal</button>
-            <button type="submit" class="btn-primary">
-              <span class="material-icons-round fs-18">check</span>
-              <span>Daftar Kereta Baharu</span>
-            </button>
-          </div>
-        </div>
       </form>
 
       <!-- FOOTER -->
@@ -551,1034 +558,7 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
   <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
-
-  <script>
-    var selectedPhotoBase64 = null;
-    window.__360Data = {
-      has360: false,
-      exteriorFrames: [],
-      currentFrameIndex: 0,
-      interiorAsset: null
-    };
-
-    function previewCarPhoto(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          selectedPhotoBase64 = e.target.result;
-          var img = document.getElementById('photo-preview-img');
-          var content = document.getElementById('photo-preview-content');
-          if (img) {
-            img.src = selectedPhotoBase64;
-            img.classList.remove('hidden');
-          }
-          if (content) content.classList.add('hidden');
-
-          var liveImg = document.getElementById('preview-display-img');
-          var emptyBox = document.getElementById('preview-img-empty');
-          if (liveImg) {
-            liveImg.src = selectedPhotoBase64;
-            liveImg.classList.remove('hidden');
-            liveImg.style.objectFit = 'cover';
-            liveImg.style.width = '100%';
-            liveImg.style.height = '100%';
-          }
-          if (emptyBox) emptyBox.classList.add('hidden');
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-    var handlePhotoSelect = previewCarPhoto;
-
-    // 360 EXTERIOR FOLDER / FILES HANDLERS
-    function handleExteriorFolder(input) {
-      if (!input.files || !input.files.length) return;
-      processExteriorFiles(Array.from(input.files));
-    }
-
-    function handleExteriorFiles(input) {
-      if (!input.files || !input.files.length) return;
-      processExteriorFiles(Array.from(input.files));
-    }
-
-    function processExteriorFiles(files) {
-      var imageFiles = files.filter(function (f) {
-        return f.type.startsWith('image/') || /\.(jpe?g|png|webp)$/i.test(f.name);
-      });
-
-      if (!imageFiles.length) {
-        alert('Tiada fail imej sah dikesan dalam folder yang dipilih.');
-        return;
-      }
-
-      // Sort files naturally by filename (e.g. frame-000, frame-001)
-      imageFiles.sort(function (a, b) {
-        return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
-      });
-
-      var countEl = document.getElementById('exterior-frames-count');
-      if (countEl) countEl.textContent = imageFiles.length + ' Bingkai';
-
-      var scrubSlider = document.getElementById('exterior-scrub');
-      if (scrubSlider) {
-        scrubSlider.max = imageFiles.length - 1;
-        scrubSlider.value = 0;
-      }
-
-      window.__360Data.has360 = true;
-      window.__360Data.exteriorFrames = [];
-
-      var loaded = 0;
-      var strip = document.getElementById('exterior-thumb-strip');
-      if (strip) strip.innerHTML = '';
-
-      var previewZone = document.getElementById('exterior-preview-zone');
-      if (previewZone) previewZone.classList.remove('hidden');
-
-      update360StatusBadge();
-
-      // Read files as data URLs
-      imageFiles.forEach(function (file, idx) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          window.__360Data.exteriorFrames[idx] = e.target.result;
-          loaded++;
-
-          // Build thumbnail preview for key angles (every Nth frame or up to 6 thumbs)
-          if (strip && (idx === 0 || idx % Math.max(1, Math.floor(imageFiles.length / 5)) === 0)) {
-            var thumb = document.createElement('img');
-            thumb.className = 'reel-thumb';
-            thumb.src = e.target.result;
-            thumb.alt = 'Bingkai ' + idx;
-            strip.appendChild(thumb);
-          }
-
-          if (idx === 0) {
-            show360Frame(0);
-          }
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function handleScrub360(val) {
-      var idx = parseInt(val) || 0;
-      show360Frame(idx);
-    }
-
-    function show360Frame(idx) {
-      if (!window.__360Data.exteriorFrames.length) return;
-      var total = window.__360Data.exteriorFrames.length;
-      idx = Math.max(0, Math.min(idx, total - 1));
-      window.__360Data.currentFrameIndex = idx;
-
-      var frameImg = document.getElementById('preview-360-frame');
-      if (frameImg && window.__360Data.exteriorFrames[idx]) {
-        frameImg.src = window.__360Data.exteriorFrames[idx];
-        frameImg.classList.remove('hidden');
-      }
-
-      var degEl = document.getElementById('scrub-degree');
-      if (degEl) {
-        var deg = Math.round((idx / Math.max(1, total - 1)) * 360);
-        degEl.textContent = deg + '°';
-      }
-    }
-
-    // 360 INTERIOR HANDLER
-    function handleInteriorUpload(input, type) {
-      if (!input.files || !input.files.length) return;
-      var files = Array.from(input.files).filter(function (f) {
-        return f.type.startsWith('image/') || /\.(jpe?g|png|webp)$/i.test(f.name);
-      });
-
-      if (!files.length) return;
-
-      var isCube = files.length >= 6;
-      var badge = document.getElementById('interior-badge-status');
-      var label = document.getElementById('interior-type-label');
-      var zone = document.getElementById('interior-preview-zone');
-      var thumb = document.getElementById('interior-thumb-img');
-
-      if (badge) badge.textContent = isCube ? '6 Muka Kubus' : 'Panorama Sfera';
-      if (label) label.textContent = isCube ? '6 Muka Kubus Panorama Dikesan' : 'Imej Panorama Sfera Dikesan';
-
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        if (thumb) thumb.src = e.target.result;
-        if (zone) zone.classList.remove('hidden');
-
-        window.__360Data.has360 = true;
-        window.__360Data.interiorAsset = {
-          type: isCube ? 'cube-map' : 'equirectangular',
-          preview: e.target.result
-        };
-
-        var interiorImg = document.getElementById('preview-interior-img');
-        if (interiorImg) interiorImg.src = e.target.result;
-
-        update360StatusBadge();
-      };
-      reader.readAsDataURL(files[0]);
-    }
-
-    // AI 360 LINK INGESTION
-    function ingest360FromUrl() {
-      var input = document.getElementById('ai-360-link-input');
-      var feedback = document.getElementById('ai-360-link-feedback');
-      if (!input || !feedback) return;
-
-      var url = input.value.trim();
-      if (!url) {
-        feedback.innerHTML = '<span class="text-danger">Sila masukkan URL pautan 360 terlebih dahulu.</span>';
-        return;
-      }
-
-      feedback.innerHTML = '<span class="text-primary"><span class="material-icons-round fs-12 spin-pulse">sync</span> AI sedang menganalisis pautan 360 dan menyedut bingkai...</span>';
-
-      setTimeout(function () {
-        // Mocked real ingestion from WeDRIVE repository demo model (BMW/Alphard high-res frames)
-        var sampleFrames = [];
-        for (var i = 0; i < 36; i++) {
-          var pad = (i * 5).toString().padStart(3, '0');
-          sampleFrames.push('../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-' + pad + '.jpg');
-        }
-
-        window.__360Data.has360 = true;
-        window.__360Data.exteriorFrames = sampleFrames;
-        window.__360Data.interiorAsset = {
-          type: 'cube-map',
-          preview: '../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/pano_f.jpg'
-        };
-
-        var countEl = document.getElementById('exterior-frames-count');
-        if (countEl) countEl.textContent = '36 Bingkai (AI Synced)';
-
-        var scrubSlider = document.getElementById('exterior-scrub');
-        if (scrubSlider) {
-          scrubSlider.max = 35;
-          scrubSlider.value = 0;
-        }
-
-        var previewZone = document.getElementById('exterior-preview-zone');
-        if (previewZone) previewZone.classList.remove('hidden');
-
-        var intZone = document.getElementById('interior-preview-zone');
-        if (intZone) intZone.classList.remove('hidden');
-        var intThumb = document.getElementById('interior-thumb-img');
-        if (intThumb) intThumb.src = window.__360Data.interiorAsset.preview;
-
-        update360StatusBadge();
-        show360Frame(0);
-        switchPreviewMode('exterior');
-
-        feedback.innerHTML = '<span class="text-success fw-600"><span class="material-icons-round fs-14">check_circle</span> Berjaya! 36 bingkai luaran dan panorama dalaman berjaya disedut secara automatik.</span>';
-      }, 1000);
-    }
-
-    function update360StatusBadge() {
-      var badge = document.getElementById('badge-360-status');
-      if (!badge) return;
-      if (window.__360Data.has360) {
-        badge.style.background = 'linear-gradient(135deg, rgba(88,86,214,0.2) 0%, rgba(0,113,227,0.2) 100%)';
-        badge.style.color = '#AF52DE';
-        badge.innerHTML = '<span class="material-icons-round fs-12">360</span> 360° Studio Aktif';
-      } else {
-        badge.style.background = 'rgba(255,255,255,0.05)';
-        badge.style.color = 'var(--text-secondary)';
-        badge.innerHTML = 'Tiada 360° (Foto Biasa)';
-      }
-    }
-
-    // PREVIEW SWITCHER
-    window.switchPreviewMode = function (mode) {
-      var tabPhoto = document.getElementById('tab-prev-photo');
-      var tabExt = document.getElementById('tab-prev-exterior');
-      var tabInt = document.getElementById('tab-prev-interior');
-
-      if (tabPhoto) tabPhoto.classList.toggle('active', mode === 'photo');
-      if (tabExt) tabExt.classList.toggle('active', mode === 'exterior');
-      if (tabInt) tabInt.classList.toggle('active', mode === 'interior');
-
-      var photoImg = document.getElementById('preview-display-img');
-      var extImg = document.getElementById('preview-360-frame');
-      var intWrap = document.getElementById('preview-interior-wrap');
-      var emptyBox = document.getElementById('preview-img-empty');
-
-      if (mode === 'photo') {
-        if (extImg) extImg.classList.add('hidden');
-        if (intWrap) intWrap.classList.add('hidden');
-        if (selectedPhotoBase64 && photoImg) {
-          photoImg.classList.remove('hidden');
-          if (emptyBox) emptyBox.classList.add('hidden');
-        } else if (emptyBox) {
-          emptyBox.classList.remove('hidden');
-        }
-      } else if (mode === 'exterior') {
-        if (photoImg) photoImg.classList.add('hidden');
-        if (intWrap) intWrap.classList.add('hidden');
-        if (window.__360Data.exteriorFrames.length) {
-          if (emptyBox) emptyBox.classList.add('hidden');
-          show360Frame(window.__360Data.currentFrameIndex || 0);
-        } else {
-          if (emptyBox) {
-            emptyBox.classList.remove('hidden');
-            emptyBox.querySelector('span:last-child').textContent = 'Belum ada bingkai 360° dimuat naik';
-          }
-        }
-      } else if (mode === 'interior') {
-        if (photoImg) photoImg.classList.add('hidden');
-        if (extImg) extImg.classList.add('hidden');
-        if (window.__360Data.interiorAsset) {
-          if (emptyBox) emptyBox.classList.add('hidden');
-          if (intWrap) intWrap.classList.remove('hidden');
-        } else {
-          if (emptyBox) {
-            emptyBox.classList.remove('hidden');
-            emptyBox.querySelector('span:last-child').textContent = 'Belum ada ruang dalaman 360° dimuat naik';
-          }
-        }
-      }
-    };
-
-    // DRAG TO ROTATE ON PREVIEW CANVAS
-    (function initDragRotation() {
-      var canvas = document.getElementById('preview-canvas-wrap');
-      if (!canvas) return;
-      var isDragging = false;
-      var startX = 0;
-
-      canvas.addEventListener('mousedown', function (e) {
-        if (!window.__360Data.exteriorFrames.length) return;
-        isDragging = true;
-        startX = e.clientX;
-        canvas.style.cursor = 'grabbing';
-      });
-
-      window.addEventListener('mousemove', function (e) {
-        if (!isDragging || !window.__360Data.exteriorFrames.length) return;
-        var diff = e.clientX - startX;
-        if (Math.abs(diff) > 15) {
-          var step = diff > 0 ? 1 : -1;
-          var nextIdx = window.__360Data.currentFrameIndex + step;
-          var total = window.__360Data.exteriorFrames.length;
-          if (nextIdx < 0) nextIdx = total - 1;
-          if (nextIdx >= total) nextIdx = 0;
-          show360Frame(nextIdx);
-          var slider = document.getElementById('exterior-scrub');
-          if (slider) slider.value = nextIdx;
-          startX = e.clientX;
-        }
-      });
-
-      window.addEventListener('mouseup', function () {
-        if (isDragging) {
-          isDragging = false;
-          if (canvas) canvas.style.cursor = 'grab';
-        }
-      });
-    })();
-
-    // =========================================================================
-    // APPLE TOAST NOTIFICATION HELPER
-    // =========================================================================
-    function showToast(msg, type) {
-      var toast = document.getElementById('we-apple-toast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'we-apple-toast';
-        toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(22,22,24,0.92);color:#FFFFFF;padding:12px 24px;border-radius:9999px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 12px 36px rgba(0,0,0,0.45);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.18);z-index:99999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.4s ease;opacity:0;pointer-events:none;max-width:90vw;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;';
-        document.body.appendChild(toast);
-      }
-      var icon = type === 'error' ? 'error' : (type === 'info' ? 'info' : 'check_circle');
-      var iconColor = type === 'error' ? '#FF453A' : (type === 'info' ? '#BF5AF2' : '#32D74B');
-      toast.innerHTML = '<span class="material-icons-round" style="color:' + iconColor + ';font-size:18px;vertical-align:middle;">' + icon + '</span><span>' + msg + '</span>';
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateX(-50%) translateY(0)';
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(function () {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(-50%) translateY(100px)';
-      }, 3500);
-    }
-    window.showToast = showToast;
-
-    // =========================================================================
-    // AI SPECIFICATION & TARIFF AUTO-DETECTION ENGINE
-    // =========================================================================
-    window.triggerAiSpecAutofill = async function () {
-      var nameInput = document.getElementById('car-name');
-      var carName = nameInput ? nameInput.value.trim() : '';
-      var btn = document.getElementById('btn-ai-autofill');
-
-      if (!carName || carName.length < 2) {
-        if (nameInput) {
-          nameInput.focus();
-          nameInput.classList.add('ai-autofilled-glow');
-          setTimeout(function () { nameInput.classList.remove('ai-autofilled-glow'); }, 1200);
-        }
-        showToast('Sila masukkan Nama & Varian Model terlebih dahulu (cth: Honda Civic, Perodua Bezza, Toyota HiAce).', 'info');
-        return;
-      }
-
-      var originalBtnHTML = btn ? btn.innerHTML : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<span class="material-icons-round fs-14 spin-pulse">sync</span> <span>Menganalisis...</span>';
-      }
-
-      try {
-        var detected = null;
-
-        // 1. Check AI Key Vault (Google Gemini / OpenRouter / Groq)
-        var aiKeys = {};
-        try {
-          aiKeys = JSON.parse(localStorage.getItem('wedrive_ai_keys') || '{}');
-        } catch (e) {}
-
-        var activeKey = (aiKeys.slot1 && aiKeys.slot1.key) || (aiKeys.slot3 && aiKeys.slot3.key) || null;
-        var provider = (aiKeys.slot1 && aiKeys.slot1.provider) || 'gemini';
-
-        if (activeKey && (activeKey.startsWith('AIzaSy') || provider === 'gemini')) {
-          try {
-            var endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(activeKey);
-            var promptText = 'Sebagai pakar automotif kereta sewa Malaysia pasaran Melaka, analisakan model kenderaan ini: "' + carName + '". ' +
-              'Balas HANYA satu objek JSON sah tanpa markdown backticks dengan skema: ' +
-              '{"brand":"Jenama","type":"Sedan/SUV/MPV/Hatchback/Van/Pickup/Coupe/Luxury","seats":5,"transmission":"Automatic/Manual","fuel":"Petrol/Diesel/Hybrid/Electric (EV)","engine":"Sesaran Enjin & Kuasa (cth: 1.5L VTEC Turbo 182PS)","luggage":"2 Beg/2-3 Beg/3-4 Beg/4-5 Beg/6+ Beg","rate":200,"deposit":200,"year":2024,"features":["carplay","dashcam","keyless","reverse_cam","tinted","sensor"]}';
-
-            var aiRes = await fetch(endpoint, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                contents: [{ parts: [{ text: promptText }] }],
-                generationConfig: { temperature: 0.1, maxOutputTokens: 300 }
-              })
-            });
-
-            if (aiRes.ok) {
-              var aiJson = await aiRes.json();
-              var rawText = (aiJson.candidates && aiJson.candidates[0] && aiJson.candidates[0].content && aiJson.candidates[0].content.parts && aiJson.candidates[0].content.parts[0].text) || '';
-              rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-              detected = JSON.parse(rawText);
-            }
-          } catch (errAi) {
-            console.warn('[AI Auto-Detect] Online AI call bypassed/failed, engaging Malaysian Automotive Engine:', errAi);
-          }
-        }
-
-        // 2. High-Precision Local Automotive Knowledge Engine
-        if (!detected || !detected.type) {
-          detected = analyzeCarSpecsLocally(carName);
-        }
-
-        // 3. Populate form fields & trigger live preview
-        applyDetectedSpecs(detected, carName);
-
-      } catch (err) {
-        console.error('[AI Auto-Detect] Error:', err);
-        showToast('Ralat semasa menganalisis spesifikasi. Sila isi secara manual.', 'error');
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = originalBtnHTML;
-        }
-      }
-    };
-
-    function analyzeCarSpecsLocally(name) {
-      var s = (name || '').toLowerCase();
-      var res = {
-        brand: 'Proton',
-        type: 'Sedan',
-        seats: 5,
-        transmission: 'Automatic',
-        fuel: 'Petrol',
-        engine: '1.5L Dual VVT-i Standard',
-        luggage: '2-3 Beg',
-        rate: 180,
-        deposit: 200,
-        year: 2024,
-        features: ['carplay', 'dashcam', 'keyless', 'reverse_cam', 'tinted', 'sensor']
-      };
-
-      // Detect Brand
-      if (s.includes('perodua')) res.brand = 'Perodua';
-      else if (s.includes('proton')) res.brand = 'Proton';
-      else if (s.includes('toyota')) res.brand = 'Toyota';
-      else if (s.includes('honda')) res.brand = 'Honda';
-      else if (s.includes('nissan')) res.brand = 'Nissan';
-      else if (s.includes('mazda')) res.brand = 'Mazda';
-      else if (s.includes('hyundai')) res.brand = 'Hyundai';
-      else if (s.includes('kia')) res.brand = 'Kia';
-      else if (s.includes('byd')) res.brand = 'BYD';
-      else if (s.includes('tesla')) res.brand = 'Tesla';
-      else if (s.includes('bmw')) res.brand = 'BMW';
-      else if (s.includes('mercedes') || s.includes('benz') || s.includes('amg')) res.brand = 'Mercedes-Benz';
-      else if (s.includes('chery')) res.brand = 'Chery';
-      else if (s.includes('gwm') || s.includes('haval') || s.includes('ora')) res.brand = 'GWM';
-      else if (s.includes('mitsubishi')) res.brand = 'Mitsubishi';
-      else if (s.includes('ford')) res.brand = 'Ford';
-      else if (s.includes('lexus')) res.brand = 'Lexus';
-
-      // Specific Model Logic
-      if (s.includes('hiace') || s.includes('commuter') || s.includes('urvan') || s.includes('van') || s.includes('minibus') || s.includes('coaster') || s.includes('transit')) {
-        res.brand = s.includes('urvan') ? 'Nissan' : (s.includes('transit') ? 'Ford' : 'Toyota');
-        res.type = 'Van';
-        res.fuel = 'Diesel';
-        res.luggage = '6+ Beg';
-        res.transmission = s.includes('auto') ? 'Automatic' : 'Manual';
-        if (s.includes('coaster') || s.includes('20') || s.includes('tour')) {
-          res.seats = 20;
-          res.engine = '4.0L Turbo Diesel (136 PS)';
-          res.rate = 550;
-          res.deposit = 500;
-        } else if (s.includes('15') || s.includes('16')) {
-          res.seats = 16;
-          res.engine = '2.8L Turbo Diesel (177 PS)';
-          res.rate = 420;
-          res.deposit = 350;
-        } else if (s.includes('10') || s.includes('panel')) {
-          res.seats = 10;
-          res.engine = '2.5L Turbo Diesel (136 PS)';
-          res.rate = 320;
-          res.deposit = 250;
-        } else {
-          res.seats = 12;
-          res.engine = '2.5L Turbo Diesel Intercooler (136 PS)';
-          res.rate = 350;
-          res.deposit = 300;
-        }
-      } else if (s.includes('hilux') || s.includes('triton') || s.includes('navara') || s.includes('ranger') || s.includes('d-max')) {
-        res.brand = s.includes('triton') ? 'Mitsubishi' : (s.includes('navara') ? 'Nissan' : (s.includes('ranger') ? 'Ford' : 'Toyota'));
-        res.type = 'Pickup';
-        res.seats = 5;
-        res.fuel = 'Diesel';
-        res.engine = '2.4L / 2.8L Turbo Diesel 4x4 (204 PS)';
-        res.luggage = '4-5 Beg';
-        res.rate = 280;
-        res.deposit = 250;
-      } else if (s.includes('alphard') || s.includes('vellfire')) {
-        res.brand = 'Toyota';
-        res.type = 'MPV';
-        res.seats = 7;
-        res.fuel = 'Petrol';
-        res.engine = '2.5L Dual VVT-i Executive (182 PS)';
-        res.luggage = '4-5 Beg';
-        res.rate = 650;
-        res.deposit = 500;
-      } else if (s.includes('staria') || s.includes('carnival')) {
-        res.brand = s.includes('carnival') ? 'Kia' : 'Hyundai';
-        res.type = 'MPV';
-        res.seats = 10;
-        res.fuel = 'Diesel';
-        res.engine = '2.2L CRDi Turbo Diesel (177 PS)';
-        res.luggage = '4-5 Beg';
-        res.rate = 450;
-        res.deposit = 400;
-      } else if (s.includes('innova') || s.includes('zenix')) {
-        res.brand = 'Toyota';
-        res.type = 'MPV';
-        res.seats = 8;
-        res.fuel = s.includes('hybrid') ? 'Hybrid' : 'Petrol';
-        res.engine = '2.0L Dynamic Force (174 PS)';
-        res.luggage = '4-5 Beg';
-        res.rate = 320;
-        res.deposit = 250;
-      } else if (s.includes('alza')) {
-        res.brand = 'Perodua';
-        res.type = 'MPV';
-        res.seats = 7;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L Dual VVT-i D-CVT (106 PS)';
-        res.luggage = '4-5 Beg';
-        res.rate = 190;
-        res.deposit = 150;
-      } else if (s.includes('veloz') || s.includes('avanza')) {
-        res.brand = 'Toyota';
-        res.type = 'MPV';
-        res.seats = 7;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L Dual VVT-i D-CVT (106 PS)';
-        res.luggage = '4-5 Beg';
-        res.rate = 230;
-        res.deposit = 200;
-      } else if (s.includes('serena')) {
-        res.brand = 'Nissan';
-        res.type = 'MPV';
-        res.seats = 7;
-        res.fuel = 'Hybrid';
-        res.engine = '2.0L S-Hybrid MR20DD';
-        res.luggage = '4-5 Beg';
-        res.rate = 260;
-        res.deposit = 200;
-      } else if (s.includes('x90')) {
-        res.brand = 'Proton';
-        res.type = 'SUV';
-        res.seats = 7;
-        res.fuel = 'Hybrid';
-        res.engine = '1.5L TGDi MHEV (190 PS)';
-        res.luggage = '4-5 Beg';
-        res.rate = 350;
-        res.deposit = 300;
-      } else if (s.includes('aruz') || s.includes('rush')) {
-        res.brand = s.includes('rush') ? 'Toyota' : 'Perodua';
-        res.type = 'SUV';
-        res.seats = 7;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L Dual VVT-i (102 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 200;
-        res.deposit = 200;
-      } else if (s.includes('fortuner')) {
-        res.brand = 'Toyota';
-        res.type = 'SUV';
-        res.seats = 7;
-        res.fuel = 'Diesel';
-        res.engine = '2.8L VRZ Turbo Diesel (204 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 450;
-        res.deposit = 400;
-      } else if (s.includes('cr-v') || s.includes('crv')) {
-        res.brand = 'Honda';
-        res.type = 'SUV';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L VTEC Turbo (193 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 340;
-        res.deposit = 300;
-      } else if (s.includes('hr-v') || s.includes('hrv')) {
-        res.brand = 'Honda';
-        res.type = 'SUV';
-        res.seats = 5;
-        res.fuel = s.includes('hybrid') || s.includes('rs') ? 'Petrol' : 'Petrol';
-        res.engine = '1.5L VTEC Turbo (181 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 260;
-        res.deposit = 200;
-      } else if (s.includes('x50')) {
-        res.brand = 'Proton';
-        res.type = 'SUV';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L TGDi Turbocharged (177 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 220;
-        res.deposit = 200;
-      } else if (s.includes('x70')) {
-        res.brand = 'Proton';
-        res.type = 'SUV';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L TGDi Turbocharged (177 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 280;
-        res.deposit = 250;
-      } else if (s.includes('ativa')) {
-        res.brand = 'Perodua';
-        res.type = 'SUV';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.0L 1KR-VET Turbo (98 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 180;
-        res.deposit = 150;
-      } else if (s.includes('cx-5') || s.includes('cx5') || s.includes('cx-30') || s.includes('cx-3')) {
-        res.brand = 'Mazda';
-        res.type = 'SUV';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '2.0L / 2.5L SkyActiv-G (162 PS)';
-        res.luggage = '3-4 Beg';
-        res.rate = 300;
-        res.deposit = 250;
-      } else if (s.includes('bezza')) {
-        res.brand = 'Perodua';
-        res.type = 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.3L Dual VVT-i (94 hp)';
-        res.luggage = '2-3 Beg';
-        res.rate = 130;
-        res.deposit = 150;
-      } else if (s.includes('myvi')) {
-        res.brand = 'Perodua';
-        res.type = 'Hatchback';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L Dual VVT-i (102 hp)';
-        res.luggage = '2 Beg';
-        res.rate = 140;
-        res.deposit = 150;
-      } else if (s.includes('axia')) {
-        res.brand = 'Perodua';
-        res.type = 'Hatchback';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.0L VVT-i (67 hp)';
-        res.luggage = '2 Beg';
-        res.rate = 100;
-        res.deposit = 100;
-      } else if (s.includes('saga')) {
-        res.brand = 'Proton';
-        res.type = 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.3L VVT (95 PS)';
-        res.luggage = '2-3 Beg';
-        res.rate = 120;
-        res.deposit = 120;
-      } else if (s.includes('persona')) {
-        res.brand = 'Proton';
-        res.type = 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.6L VVT (109 PS)';
-        res.luggage = '2-3 Beg';
-        res.rate = 150;
-        res.deposit = 150;
-      } else if (s.includes('iriz')) {
-        res.brand = 'Proton';
-        res.type = 'Hatchback';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.6L VVT (109 PS)';
-        res.luggage = '2 Beg';
-        res.rate = 130;
-        res.deposit = 130;
-      } else if (s.includes('s70')) {
-        res.brand = 'Proton';
-        res.type = 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L Turbocharged (150 PS)';
-        res.luggage = '2-3 Beg';
-        res.rate = 190;
-        res.deposit = 200;
-      } else if (s.includes('civic')) {
-        res.brand = 'Honda';
-        res.type = 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L VTEC Turbo (182 PS)';
-        res.luggage = '2-3 Beg';
-        res.rate = 280;
-        res.deposit = 250;
-      } else if (s.includes('city')) {
-        res.brand = 'Honda';
-        res.type = s.includes('hatchback') ? 'Hatchback' : 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L DOHC i-VTEC (121 PS)';
-        res.luggage = s.includes('hatchback') ? '2 Beg' : '2-3 Beg';
-        res.rate = 180;
-        res.deposit = 200;
-      } else if (s.includes('vios')) {
-        res.brand = 'Toyota';
-        res.type = 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L Dual VVT-i (107 PS)';
-        res.luggage = '2-3 Beg';
-        res.rate = 180;
-        res.deposit = 200;
-      } else if (s.includes('yaris')) {
-        res.brand = 'Toyota';
-        res.type = 'Hatchback';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L Dual VVT-i (107 PS)';
-        res.luggage = '2 Beg';
-        res.rate = 170;
-        res.deposit = 180;
-      } else if (s.includes('camry') || s.includes('accord')) {
-        res.brand = s.includes('accord') ? 'Honda' : 'Toyota';
-        res.type = 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '2.5L Dynamic Force (209 PS)';
-        res.luggage = '2-3 Beg';
-        res.rate = 380;
-        res.deposit = 350;
-      } else if (s.includes('bmw')) {
-        res.brand = 'BMW';
-        res.type = s.includes('x') ? 'SUV' : 'Sedan';
-        res.seats = s.includes('x5') || s.includes('x7') ? 7 : 5;
-        res.fuel = 'Petrol';
-        res.engine = '2.0L TwinPower Turbo (184 PS)';
-        res.luggage = res.type === 'SUV' ? '3-4 Beg' : '2-3 Beg';
-        res.rate = 450;
-        res.deposit = 400;
-      } else if (s.includes('mercedes') || s.includes('c200') || s.includes('gla') || s.includes('e300') || s.includes('a200')) {
-        res.brand = 'Mercedes-Benz';
-        res.type = s.includes('gla') || s.includes('glc') ? 'SUV' : (s.includes('a200') ? 'Hatchback' : 'Sedan');
-        res.seats = 5;
-        res.fuel = 'Petrol';
-        res.engine = '1.5L / 2.0L Turbo (204 PS)';
-        res.luggage = res.type === 'SUV' ? '3-4 Beg' : '2-3 Beg';
-        res.rate = 480;
-        res.deposit = 400;
-      } else if (s.includes('tesla')) {
-        res.brand = 'Tesla';
-        res.type = s.includes('y') ? 'SUV' : 'Sedan';
-        res.seats = 5;
-        res.fuel = 'Electric (EV)';
-        res.engine = 'Dual Motor All-Wheel Drive (450 PS)';
-        res.luggage = res.type === 'SUV' ? '3-4 Beg' : '2-3 Beg';
-        res.rate = 480;
-        res.deposit = 400;
-      } else if (s.includes('atto') || s.includes('byd') || s.includes('seal') || s.includes('dolphin')) {
-        res.brand = 'BYD';
-        res.type = s.includes('dolphin') ? 'Hatchback' : (s.includes('seal') ? 'Sedan' : 'SUV');
-        res.seats = 5;
-        res.fuel = 'Electric (EV)';
-        res.engine = 'Blade Battery EV Motor (204 PS)';
-        res.luggage = res.type === 'Hatchback' ? '2 Beg' : '3-4 Beg';
-        res.rate = 260;
-        res.deposit = 200;
-      }
-
-      // Keyword modifiers
-      if (s.includes('hybrid') || s.includes('e:hev') || s.includes('hev') || s.includes('mhev')) res.fuel = 'Hybrid';
-      if (s.includes('electric') || s.includes('ev ') || s.endsWith(' ev')) res.fuel = 'Electric (EV)';
-      if (s.includes('diesel')) res.fuel = 'Diesel';
-      if (s.includes('manual') || s.includes('mt')) res.transmission = 'Manual';
-
-      return res;
-    }
-
-    function applyDetectedSpecs(data, carName) {
-      if (!data) return;
-
-      var brandEl = document.getElementById('car-brand');
-      var typeEl = document.getElementById('car-type');
-      var seatsEl = document.getElementById('car-seats');
-      var transEl = document.getElementById('car-transmission');
-      var fuelEl = document.getElementById('car-fuel');
-      var engineEl = document.getElementById('car-engine');
-      var luggageEl = document.getElementById('car-luggage');
-      var rateEl = document.getElementById('car-rate');
-      var depositEl = document.getElementById('car-deposit');
-      var yearEl = document.getElementById('car-year');
-
-      var animatedInputs = [];
-
-      if (brandEl && data.brand) {
-        brandEl.value = data.brand;
-        animatedInputs.push(brandEl);
-      }
-      if (typeEl && data.type) {
-        typeEl.value = data.type;
-        animatedInputs.push(typeEl);
-      }
-      if (seatsEl && data.seats) {
-        seatsEl.value = String(data.seats);
-        animatedInputs.push(seatsEl);
-      }
-      if (transEl && data.transmission) {
-        transEl.value = data.transmission;
-        animatedInputs.push(transEl);
-      }
-      if (fuelEl && data.fuel) {
-        fuelEl.value = data.fuel;
-        animatedInputs.push(fuelEl);
-      }
-      if (engineEl && data.engine) {
-        engineEl.value = data.engine;
-        animatedInputs.push(engineEl);
-      }
-      if (luggageEl && data.luggage) {
-        luggageEl.value = data.luggage;
-        animatedInputs.push(luggageEl);
-      }
-      if (rateEl && data.rate) {
-        rateEl.value = data.rate;
-        animatedInputs.push(rateEl);
-      }
-      if (depositEl && data.deposit) {
-        depositEl.value = data.deposit;
-        animatedInputs.push(depositEl);
-      }
-      if (yearEl && (!yearEl.value || yearEl.value === '')) {
-        yearEl.value = data.year || 2025;
-        animatedInputs.push(yearEl);
-      }
-
-      // Feature Checkboxes
-      var featMap = {
-        'carplay': document.getElementById('feat-carplay'),
-        'dashcam': document.getElementById('feat-dashcam'),
-        'keyless': document.getElementById('feat-keyless'),
-        'reverse_cam': document.getElementById('feat-reverse-cam'),
-        'tinted': document.getElementById('feat-tinted'),
-        'sensor': document.getElementById('feat-sensor')
-      };
-
-      var activeFeats = data.features || ['carplay', 'dashcam', 'keyless', 'reverse_cam', 'tinted', 'sensor'];
-      Object.keys(featMap).forEach(function (fKey) {
-        var cb = featMap[fKey];
-        if (cb) {
-          var shouldCheck = activeFeats.indexOf(fKey) !== -1;
-          cb.checked = shouldCheck;
-          var parentLabel = cb.closest('.filter-chip');
-          if (parentLabel) {
-            var icon = parentLabel.querySelector('.chip-check-icon');
-            if (shouldCheck) {
-              parentLabel.classList.add('active');
-              if (icon) icon.textContent = 'check_circle';
-            } else {
-              parentLabel.classList.remove('active');
-              if (icon) icon.textContent = 'add_circle_outline';
-            }
-          }
-        }
-      });
-
-      // Subtle Apple HIG glow animation
-      animatedInputs.forEach(function (el) {
-        el.classList.add('ai-autofilled-glow');
-        setTimeout(function () {
-          el.classList.remove('ai-autofilled-glow');
-        }, 2200);
-      });
-
-      // Update live preview card
-      updateLivePreview();
-
-      showToast('✨ AI berjaya mengesan spesifikasi & tarif untuk ' + carName + '. Anda bebas mengubah sebarang maklumat.', 'success');
-    }
-
-    function updateLivePreview() {
-      var nameVal = document.getElementById('car-name').value.trim() || 'Nama Model Kereta';
-      var plateVal = document.getElementById('car-plate').value.trim().toUpperCase() || '---';
-      var typeVal = document.getElementById('car-type').value || 'Kategori';
-      var transEl = document.getElementById('car-transmission');
-      var transVal = transEl && transEl.value ? (transEl.value === 'Automatic' ? 'Automatik' : 'Manual') : '-';
-      var fuelEl = document.getElementById('car-fuel');
-      var fuelVal = fuelEl && fuelEl.value ? fuelEl.value : '-';
-      var seatsEl = document.getElementById('car-seats');
-      var seatsVal = seatsEl && seatsEl.value ? seatsEl.value + ' Tempat Duduk' : '-';
-      var engineEl = document.getElementById('car-engine');
-      var engineVal = engineEl && engineEl.value.trim() ? engineEl.value.trim() : (typeVal !== 'Kategori' ? typeVal + ' Kuasa Standard' : '-');
-      var luggageEl = document.getElementById('car-luggage');
-      var luggageVal = luggageEl && luggageEl.value ? luggageEl.value : '2-3 Beg';
-      var rateVal = document.getElementById('car-rate').value || '0';
-
-      var elName = document.getElementById('preview-display-name');
-      var elPlate = document.getElementById('preview-display-plate');
-      var elCat = document.getElementById('preview-display-cat');
-      var elTrans = document.getElementById('preview-spec-trans');
-      var elFuel = document.getElementById('preview-spec-fuel');
-      var elSeats = document.getElementById('preview-spec-seats');
-      var elLuggage = document.getElementById('preview-spec-luggage');
-      var elEngine = document.getElementById('preview-display-engine');
-      var elRate = document.getElementById('preview-display-rate');
-
-      if (elName) elName.textContent = nameVal;
-      if (elPlate) elPlate.textContent = plateVal;
-      if (elCat) elCat.textContent = typeVal;
-      if (elTrans) elTrans.textContent = transVal;
-      if (elFuel) elFuel.textContent = fuelVal;
-      if (elSeats) elSeats.textContent = seatsVal;
-      if (elLuggage) elLuggage.textContent = luggageVal;
-      if (elEngine) elEngine.textContent = engineVal;
-      if (elRate) elRate.innerHTML = 'RM ' + rateVal + ' <span class="apple-car-rate-sub">/hari</span>';
-    }
-
-    // Auto sync suggested luggage capacity when body type changes
-    var typeSelect = document.getElementById('car-type');
-    if (typeSelect) {
-      typeSelect.addEventListener('change', function () {
-        var luggageSelect = document.getElementById('car-luggage');
-        if (luggageSelect) {
-          if (typeSelect.value === 'Hatchback' || typeSelect.value === 'Coupe') luggageSelect.value = '2 Beg';
-          else if (typeSelect.value === 'Sedan') luggageSelect.value = '2-3 Beg';
-          else if (typeSelect.value === 'SUV' || typeSelect.value === 'Pickup') luggageSelect.value = '3-4 Beg';
-          else if (typeSelect.value === 'MPV') luggageSelect.value = '4-5 Beg';
-          else if (typeSelect.value === 'Van') luggageSelect.value = '6+ Beg';
-        }
-        updateLivePreview();
-      });
-    }
-
-    // Toggle chip active state on click
-    document.querySelectorAll('.filter-chip.cursor-pointer').forEach(function (label) {
-      var cb = label.querySelector('input[type="checkbox"]');
-      var icon = label.querySelector('.chip-check-icon');
-      function syncChip() {
-        if (cb && cb.checked) {
-          label.classList.add('active');
-          if (icon) icon.textContent = 'check_circle';
-        } else {
-          label.classList.remove('active');
-          if (icon) icon.textContent = 'add_circle_outline';
-        }
-      }
-      if (cb) {
-        cb.addEventListener('change', syncChip);
-      }
-      label.addEventListener('click', function () {
-        setTimeout(syncChip, 15);
-      });
-    });
-
-    function handleCarSubmit(e) {
-      e.preventDefault();
-
-      var newCar = {
-        name: document.getElementById('car-name').value.trim(),
-        plate: document.getElementById('car-plate').value.trim().toUpperCase(),
-        brand: document.getElementById('car-brand').value,
-        year: parseInt(document.getElementById('car-year').value) || 2025,
-        color: document.getElementById('car-color').value.trim(),
-        type: document.getElementById('car-type').value,
-        seats: parseInt(document.getElementById('car-seats').value) || 5,
-        transmission: document.getElementById('car-transmission').value,
-        fuel: document.getElementById('car-fuel').value,
-        engine: (document.getElementById('car-engine').value || '').trim() || '1.5L Standard',
-        luggage: document.getElementById('car-luggage') ? document.getElementById('car-luggage').value : '2-3 Beg',
-        rate: 'RM ' + (document.getElementById('car-rate').value || 150) + '/hari',
-        deposit: 'RM ' + (document.getElementById('car-deposit').value || 200),
-        status: 'Available',
-        location: 'Pusat Operasi Utama WeDRIVE (HQ Melaka)',
-        has_360: Boolean(window.__360Data && window.__360Data.has360),
-        exterior_360: (window.__360Data && window.__360Data.exteriorFrames.length) ? {
-          frame_count: window.__360Data.exteriorFrames.length,
-          preview_frame: window.__360Data.exteriorFrames[0]
-        } : null,
-        interior_360: (window.__360Data && window.__360Data.interiorAsset) ? window.__360Data.interiorAsset : null,
-        images: selectedPhotoBase64 ? [selectedPhotoBase64] : ['../../../shared/images/cars/honda-crv-2024.png']
-      };
-
-      // Save via WeDriveAPI
-      if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
-        window.WeDriveAPI.createCar(newCar)
-          .then(function () {
-            if (window.showToast) window.showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
-            setTimeout(function () { window.location.href = 'cars.html'; }, 800);
-          })
-          .catch(function (err) {
-            console.error('Create car error:', err);
-            saveFallback(newCar);
-          });
-      } else {
-        saveFallback(newCar);
-      }
-    }
-
-    function saveFallback(car) {
-      try {
-        var existing = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-        car.id = 'CR-' + Date.now();
-        existing.unshift(car);
-        localStorage.setItem('wedrive_cars', JSON.stringify(existing));
-      } catch (err) {
-        console.warn('Local storage save:', err);
-      }
-      if (window.showToast) window.showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
-      setTimeout(function () { window.location.href = 'cars.html'; }, 800);
-    }
-  </script>
+  <script src="../../js/add-car.js?v=6.6.0"></script>
 </body>
 
 </html>
