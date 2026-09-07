@@ -5050,6 +5050,30 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.6.1 Streamline add-car page with inline AI detect button, official car-card preview, and Malaysian automotive pricing formula`
   - Tag Versi: `6.6.1`
 
+---
+
+## 🚗 [PATCH UPDATE] 109. Penyingkiran Seksyen Kelengkapan Standard Kereta pada Borang Tambah Kereta (add-car.html) untuk Antaramuka Minimalis & Kemas (v6.6.2)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna mahukan borang tambah kereta diringkaskan sepenuhnya tanpa bahagian kelengkapan berlebihan agar tumpuan kekal kepada spesifikasi asas kenderaan yang diperlukan oleh pelanggan:
+    > *"ni pon xpayah lahh saya nak simple sahaja supaya customer tahu basic kereta"*
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `admin/pages/car/add-car.html`:
+    - Membuang keseluruhan blok *Kelengkapan Standard Kereta* (`#feat-carplay`, `#feat-dashcam`, `#feat-keyless`, `#feat-reverse-cam`, `#feat-tinted`, `#feat-sensor`).
+    - Kad 2 (*Spesifikasi Teknikal & Struktur Tarif*) kini tampil sangat bersih dan memfokuskan sepenuhnya kepada 7 parameter teras: Kategori Badan, Kapasiti Tempat Duduk, Sistem Transmisi, Punca Kuasa (Bahan Api), Kapasiti Enjin, Kadar Sewaan Harian, dan Deposit Keselamatan.
+  - Di dalam `admin/js/add-car.js`:
+    - Mengeluarkan pemetaan dan pemprosesan *checkbox* `featMap` daripada fungsi `applyDetectedSpecs()`.
+    - Mengeluarkan pengendali acara `DOMContentLoaded` bagi pemilih cip kelengkapan.
+- **Pengesahan Ujian Automatik & Pengguna**:
+  - Pengesahan visual pada tab aktif sedia ada menerusi Chrome DevTools MCP.
+  - Ujian Playwright CLI: 10/10 lulus tanpa sebarang isu regresi.
+  - Pematuhan had aksara peraturan `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - Graf pengetahuan Graphify dikemas kini (`graphify update .`).
+- **Maklumat Git**:
+  - Commit: `6.6.2 Remove car features checklist to simplify add-car form to core automotive specs`
+  - Tag Versi: `6.6.2`
+
+
 
 
 

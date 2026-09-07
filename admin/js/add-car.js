@@ -811,36 +811,6 @@
       animatedInputs.push(yearEl);
     }
 
-    // Feature Checkboxes
-    var featMap = {
-      'carplay': document.getElementById('feat-carplay'),
-      'dashcam': document.getElementById('feat-dashcam'),
-      'keyless': document.getElementById('feat-keyless'),
-      'reverse_cam': document.getElementById('feat-reverse-cam'),
-      'tinted': document.getElementById('feat-tinted'),
-      'sensor': document.getElementById('feat-sensor')
-    };
-
-    var activeFeats = data.features || ['carplay', 'dashcam', 'keyless', 'reverse_cam', 'tinted', 'sensor'];
-    Object.keys(featMap).forEach(function (fKey) {
-      var cb = featMap[fKey];
-      if (cb) {
-        var shouldCheck = activeFeats.indexOf(fKey) !== -1;
-        cb.checked = shouldCheck;
-        var parentLabel = cb.closest('.filter-chip');
-        if (parentLabel) {
-          var icon = parentLabel.querySelector('.chip-check-icon');
-          if (shouldCheck) {
-            parentLabel.classList.add('active');
-            if (icon) icon.textContent = 'check_circle';
-          } else {
-            parentLabel.classList.remove('active');
-            if (icon) icon.textContent = 'add_circle_outline';
-          }
-        }
-      }
-    });
-
     // Subtle Apple glow animation
     animatedInputs.forEach(function (el) {
       el.classList.add('ai-autofilled-glow');
@@ -965,25 +935,6 @@
 
   // DOMContentLoaded Event Binding
   document.addEventListener('DOMContentLoaded', function () {
-    // Feature chips toggle
-    document.querySelectorAll('.filter-chip.cursor-pointer').forEach(function (label) {
-      var cb = label.querySelector('input[type="checkbox"]');
-      var icon = label.querySelector('.chip-check-icon');
-      function syncChip() {
-        if (cb && cb.checked) {
-          label.classList.add('active');
-          if (icon) icon.textContent = 'check_circle';
-        } else {
-          label.classList.remove('active');
-          if (icon) icon.textContent = 'add_circle_outline';
-        }
-      }
-      if (cb) cb.addEventListener('change', syncChip);
-      label.addEventListener('click', function () {
-        setTimeout(syncChip, 15);
-      });
-    });
-
     // Preview canvas drag rotation
     var canvasWrap = document.getElementById('preview-canvas-wrap');
     var isDragging = false;
