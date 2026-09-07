@@ -41,69 +41,101 @@
             <p class="bento-subtitle-main">Daftarkan kenderaan baharu ke dalam inventori WeDRIVE dengan pengesanan pintar spesifikasi automotif AI dan pratonton kad langsung rasmi.</p>
           </div>
           <div class="flex-center gap-10">
-            <button type="button" class="btn-outline-sm" onclick="window.location.href='cars.html'">
+            <button type="button" class="btn-outline-sm" onclick="triggerExitConfirm('cars.html')">
               <span class="material-icons-round fs-16">arrow_back</span> Batal
             </button>
-            <button type="button" class="btn-primary-sm" onclick="document.getElementById('add-car-form').requestSubmit()">
+            <button type="button" class="btn-secondary-sm" onclick="manualSaveDraft()">
+              <span class="material-icons-round fs-16">bookmark_border</span> Simpan Draf
+            </button>
+            <button type="button" id="header-btn-save" class="btn-primary-sm" onclick="handleHeaderSaveClick()">
               <span class="material-icons-round fs-16">save</span> Simpan Kereta
             </button>
           </div>
         </div>
       </div>
 
-      <!-- ADD CAR FORM (2-COLUMN BENTO) -->
+      <!-- WIZARD STEPPER HEADER -->
+      <div class="wizard-stepper-wrap" role="tablist">
+        <button type="button" id="step-btn-1" class="wizard-step-btn active" onclick="goToStep(1)">
+          <span class="wizard-step-badge">1</span>
+          <span>Spesifikasi &amp; Struktur Tarif</span>
+        </button>
+        <div class="wizard-step-divider"></div>
+        <button type="button" id="step-btn-2" class="wizard-step-btn" onclick="goToStep(2)">
+          <span class="wizard-step-badge">2</span>
+          <span>Studio Visual &amp; Pratonton 360°</span>
+        </button>
+      </div>
+
+      <!-- AUTO-SAVE DRAFT RESUME BANNER -->
+      <div id="banner-draft-resume" class="draft-resume-banner hidden">
+        <div class="flex-start items-center gap-12">
+          <span class="material-icons-round fs-24 text-primary">cloud_done</span>
+          <div>
+            <div class="fs-13 fw-700 text-title" id="draft-resume-title">Draf Pendaftaran Ditemui</div>
+            <div class="fs-12 text-muted" id="draft-resume-subtitle">Disimpan dalam simpanan selamat peranti anda. Teruskan atau mula baharu.</div>
+          </div>
+        </div>
+        <div class="flex-center gap-8">
+          <button type="button" class="btn-outline-sm py-6 px-12 fs-12" onclick="clearCarDraft(true)">
+            <span class="material-icons-round fs-14">delete_outline</span> Padam Draf
+          </button>
+          <button type="button" class="btn-primary-sm py-6 px-14 fs-12" onclick="applyCarDraft()">
+            <span class="material-icons-round fs-14">restore</span> Pulihkan Draf
+          </button>
+        </div>
+      </div>
+
+      <!-- ADD CAR FORM -->
       <form id="add-car-form" onsubmit="handleCarSubmit(event)">
 
-        <!-- Hidden HQ Location (Unified headquarters) -->
+        <!-- Hidden HQ Location (Unified headquarters - Preserved for Test 14) -->
         <input type="hidden" id="car-location" value="Pusat Operasi Utama WeDRIVE (HQ Melaka)" readonly />
+        <!-- Hidden Car Full Name (Unified for system sync) -->
+        <input type="hidden" id="car-name" value="2023 BMW 320i M Sport 2.0" />
+        <!-- Hidden Car Color Final Value -->
+        <input type="hidden" id="car-color" value="Alpine White" />
 
-        <div class="add-car-bento-grid">
+        <!-- ========================================================================= -->
+        <!-- STEP 1 CONTAINER: SPESIFIKASI & STRUKTUR TARIF -->
+        <!-- ========================================================================= -->
+        <div id="step-1-container" class="flex flex-column gap-24">
 
-          <!-- LEFT COLUMN: STRUCTURED FORM CARDS -->
-          <div class="flex flex-column gap-24">
-
-            <!-- KAD 1: MAKLUMAT ASAS & IDENTITI JPJ -->
-            <div class="card p-24 radius-24 reveal-onload">
-              <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
-                <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                  <span class="material-icons-round text-primary">directions_car</span> Maklumat Asas &amp; Identiti JPJ
-                </h3>
+          <!-- KAD 1: MAKLUMAT ASAS KENDERAAN -->
+          <div class="card p-24 radius-24 reveal-onload">
+            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">directions_car</span> Maklumat Asas Kenderaan
+              </h3>
+              <div class="flex-center gap-8">
                 <span class="badge-360 fs-11" style="background: rgba(88,86,214,0.12); color: var(--primary);">
-                  Langkah 1: Maklumat Asas
+                  Langkah 1: Spesifikasi
                 </span>
+                <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill flex-shrink-0" onclick="triggerAiSpecAutofill()" title="Gunakan AI untuk mengesan spesifikasi teknikal, enjin, kadar sewaan dan deposit berdasarkan pasaran Malaysia">
+                  <span class="material-icons-round fs-16 ai-sparkle-icon">auto_awesome</span>
+                  <span>Kesan Semula AI</span>
+                </button>
               </div>
+            </div>
 
-              <!-- MODEL NAME & INTEGRATED AI AUTOFILL BUTTON -->
-              <div class="mb-16">
-                <label class="form-label fs-13 fw-600 mb-6 d-block" for="car-name">Nama &amp; Varian Model Kenderaan <span class="text-danger">*</span></label>
-                <div class="flex-start gap-10 items-center">
-                  <div class="we-input-prefix-box flex-1">
-                    <span class="material-icons-round we-input-prefix-icon text-muted">directions_car</span>
-                    <input type="text" id="car-name" class="form-input radius-14 fs-14 fw-600" placeholder="cth: 2023 BMW 320i M Sport 2.0 / Proton X50 1.5 TGDi / Honda Civic 1.5 RS" required oninput="updateLivePreview()" />
-                  </div>
-                  <button type="button" id="btn-ai-autofill" class="apple-ai-sparkle-pill flex-shrink-0" onclick="triggerAiSpecAutofill()" title="Gunakan AI untuk mengesan spesifikasi teknikal, jenis badan, enjin, kadar sewaan dan deposit berdasarkan pasaran Malaysia">
-                    <span class="material-icons-round fs-16 ai-sparkle-icon">auto_awesome</span>
-                    <span>Kesan Automatik AI</span>
-                  </button>
-                </div>
-                <div class="fs-11 text-muted mt-6 flex-start items-center gap-4">
-                  <span class="material-icons-round fs-14 text-primary">lightbulb</span>
-                  <span>Isi nama model di atas dan tekan butang <strong>Kesan Automatik AI</strong> untuk menjana spesifikasi dan struktur tarif pasaran secara pintar.</span>
-                </div>
-              </div>
-
-              <div class="grid-2 gap-14 mb-16">
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-plate">No. Pendaftaran (Plat) <span class="text-danger">*</span></label>
-                  <input type="text" id="car-plate" class="form-input radius-14 tabular-nums" placeholder="cth: VAB 4821" required oninput="this.value = this.value.toUpperCase(); updateLivePreview();" />
-                </div>
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
-                  <select id="car-brand" class="form-input radius-14" required onchange="updateLivePreview()">
+            <!-- CASCADING SELECTORS: JENAMA & MODEL -->
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-brand">Pengeluar (Jenama) <span class="text-danger">*</span></label>
+                <div class="we-input-prefix-box">
+                  <span class="material-icons-round we-input-prefix-icon">factory</span>
+                  <select id="car-brand" class="form-input radius-14 fs-14 fw-600" required onchange="onBrandChange()">
                     <option value="" disabled selected>Pilih Pengeluar (Jenama)</option>
-                    <optgroup label="Jenama Nasional Malaysia">
+                    <optgroup label="Jenama Utama Malaysia">
                       <option value="Perodua">Perodua</option>
                       <option value="Proton">Proton</option>
+                      <option value="Toyota">Toyota</option>
+                      <option value="Honda">Honda</option>
+                      <option value="BMW">BMW</option>
+                      <option value="Mercedes-Benz">Mercedes-Benz</option>
+                      <option value="BYD">BYD</option>
+                      <option value="Chery">Chery</option>
+                      <option value="Tesla">Tesla</option>
                     </optgroup>
                     <optgroup label="Semua Jenama di Malaysia (A - Z)">
                       <option value="Aston Martin">Aston Martin</option>
@@ -158,368 +190,506 @@
                 </div>
               </div>
 
-              <div class="grid-2 gap-14">
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan</label>
-                  <input type="number" id="car-year" class="form-input radius-14 tabular-nums" placeholder="cth: 2024" min="2015" max="2027" oninput="updateLivePreview()" />
-                </div>
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-color">Warna Rasmi Badan</label>
-                  <input type="text" id="car-color" class="form-input radius-14" placeholder="cth: Alpine White / Space Grey" oninput="updateLivePreview()" />
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-model">Model Kenderaan <span class="text-danger">*</span></label>
+                <div class="we-input-prefix-box">
+                  <span class="material-icons-round we-input-prefix-icon">directions_car</span>
+                  <select id="car-model" class="form-input radius-14 fs-14 fw-600" required onchange="onModelChange()">
+                    <option value="" disabled selected>Pilih Jenama Dahulu</option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            <!-- KAD 2: SPESIFIKASI TEKNIKAL & STRUKTUR TARIF -->
-            <div class="card p-24 radius-24 reveal-on-scroll">
-              <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
-                <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                  <span class="material-icons-round text-primary">tune</span> Spesifikasi Teknikal &amp; Struktur Tarif
-                </h3>
-                <span class="badge-360 fs-11" style="background: rgba(50,215,75,0.12); color: #32D74B;">
-                  Langkah 2: Auto / Manual
-                </span>
+            <!-- CUSTOM MODEL NAME INPUT (Hanya jika pilih [+ Taip Model Sendiri]) -->
+            <div id="car-custom-name-wrap" class="hidden mb-16">
+              <label class="form-label fs-13 fw-600" for="car-custom-name">Taip Nama &amp; Model Penuh <span class="text-danger">*</span></label>
+              <div class="we-input-prefix-box">
+                <span class="material-icons-round we-input-prefix-icon">edit</span>
+                <input type="text" id="car-custom-name" class="form-input radius-14 fs-14" placeholder="cth: 2024 Jaecoo J7 All-Wheel Drive" oninput="onCustomNameInput()" />
               </div>
+            </div>
 
-              <div class="grid-2 gap-14 mb-16">
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
-                  <select id="car-type" class="form-input radius-14" required onchange="updateLivePreview()">
-                    <option value="" disabled selected>Pilih Kategori Badan</option>
-                    <option value="Sedan">Sedan</option>
-                    <option value="SUV">SUV</option>
-                    <option value="MPV">MPV</option>
-                    <option value="Hatchback">Hatchback</option>
-                    <option value="Van">Van / Bas Komuter</option>
-                    <option value="Pickup">Pickup 4x4</option>
-                    <option value="Coupe">Coupe / Sukan</option>
-                    <option value="Luxury">Mewah / Luxury</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
-                  <select id="car-seats" class="form-input radius-14" required onchange="updateLivePreview()">
-                    <option value="" disabled selected>Pilih Kapasiti Tempat Duduk</option>
-                    <option value="1">1 Tempat Duduk</option>
-                    <option value="2">2 Tempat Duduk</option>
-                    <option value="3">3 Tempat Duduk</option>
-                    <option value="4">4 Tempat Duduk</option>
-                    <option value="5">5 Tempat Duduk</option>
-                    <option value="6">6 Tempat Duduk</option>
-                    <option value="7">7 Tempat Duduk</option>
-                    <option value="8">8 Tempat Duduk</option>
-                    <option value="9">9 Tempat Duduk</option>
-                    <option value="10">10 Tempat Duduk</option>
-                    <option value="11">11 Tempat Duduk</option>
-                    <option value="12">12 Tempat Duduk</option>
-                    <option value="13">13 Tempat Duduk</option>
-                    <option value="14">14 Tempat Duduk</option>
-                    <option value="15">15 Tempat Duduk</option>
-                    <option value="16">16 Tempat Duduk</option>
-                    <option value="17">17 Tempat Duduk</option>
-                    <option value="18">18 Tempat Duduk</option>
-                    <option value="19">19 Tempat Duduk</option>
-                    <option value="20">20 Tempat Duduk</option>
+            <!-- CASCADING SELECTORS: VARIAN & TAHUN -->
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-variant">Varian &amp; Sesaran Enjin (CC) <span class="text-danger">*</span></label>
+                <div class="we-input-prefix-box">
+                  <span class="material-icons-round we-input-prefix-icon">speed</span>
+                  <select id="car-variant" class="form-input radius-14 fs-14" required onchange="onVariantChange()">
+                    <option value="" disabled selected>Pilih Model Dahulu</option>
                   </select>
                 </div>
               </div>
 
-              <div class="grid-2 gap-14 mb-16">
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
-                  <select id="car-transmission" class="form-input radius-14" required onchange="updateLivePreview()">
-                    <option value="" disabled selected>Pilih Sistem Transmisi</option>
-                    <option value="Automatic">Automatik (AT/CVT/DCT)</option>
-                    <option value="Manual">Manual (MT)</option>
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-year">Tahun Pengilangan <span class="text-danger">*</span></label>
+                <div class="we-input-prefix-box">
+                  <span class="material-icons-round we-input-prefix-icon">calendar_today</span>
+                  <select id="car-year" class="form-input radius-14 tabular-nums" required onchange="onYearChange()">
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024" selected>2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
                   </select>
-                </div>
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
-                  <select id="car-fuel" class="form-input radius-14" required onchange="updateLivePreview()">
-                    <option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>
-                    <option value="Petrol">Petrol (RON95/97)</option>
-                    <option value="Hybrid">Hybrid (HEV)</option>
-                    <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
-                    <option value="Diesel">Diesel Euro 5</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="mb-16">
-                <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
-                <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 2.0L BMW TwinPower Turbo (184 PS)" oninput="updateLivePreview()" />
-              </div>
-
-              <div class="grid-2 gap-14 mb-20">
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
-                  <input type="number" id="car-rate" class="form-input radius-14 tabular-nums" placeholder="cth: 450" min="50" step="5" required oninput="updateLivePreview()" />
-                  <div class="fs-11 text-muted mt-4">Kadar rasmi untuk 24 jam.</div>
-                </div>
-                <div>
-                  <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
-                  <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums" placeholder="cth: 400" min="0" step="50" required oninput="updateLivePreview()" />
-                  <div class="fs-11 text-muted mt-4">Dipulangkan selepas sewaan selesai.</div>
                 </div>
               </div>
             </div>
 
-            <!-- KAD 3: STUDIO ASET 360° & FOTO KATALOG -->
-            <div class="card p-24 radius-24 reveal-on-scroll" id="card-360-studio">
-              <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
-                <div>
-                  <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                    <span class="material-icons-round text-primary-accent">360</span>
-                    <span>Studio Pengalaman 360° &amp; Foto Katalog</span>
-                  </h3>
-                  <p class="fs-12 text-secondary m-0 mt-4">
-                    Muat naik foto utama dan aset 360° interaktif untuk pengalaman sewaan gred Apple.
-                  </p>
+            <!-- PLAT PENDAFTARAN & WARNA RASMI -->
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-plate">No. Pendaftaran (Plat) <span class="text-danger">*</span></label>
+                <div class="we-input-prefix-box">
+                  <span class="material-icons-round we-input-prefix-icon">badge</span>
+                  <input type="text" id="car-plate" class="form-input radius-14 tabular-nums fs-14 fw-600" placeholder="cth: VAB 4821" required oninput="this.value = this.value.toUpperCase(); triggerDraftSave(); updateLivePreview();" />
                 </div>
-                <span id="badge-360-status" class="status-badge badge-360-muted">
-                  <span>Tiada 360° (Foto Biasa)</span>
-                </span>
               </div>
 
-              <!-- FOTO UTAMA DROPZONE -->
-              <div class="mb-20">
-                <label class="form-label fs-13 fw-600 mb-8 d-block">Foto Utama Kereta (Katalog)</label>
-                <div class="doc-preview-box cursor-pointer p-20 text-center radius-16 border-dashed" onclick="document.getElementById('car-photo-input').click()">
-                  <div id="photo-preview-content">
-                    <span class="material-icons-round fs-36 text-primary mb-8">cloud_upload</span>
-                    <div class="fs-14 fw-600 text-title">Klik atau Seret Foto ke Sini</div>
-                    <div class="fs-11 text-muted mt-4">Format disokong: PNG, JPG, WEBP (Latar belakang studio digalakkan)</div>
-                  </div>
-                  <img id="photo-preview-img" class="doc-preview-img img-preview-140 hidden" alt="Pratonton Kereta" />
-                </div>
-                <input type="file" id="car-photo-input" class="hidden" accept="image/*" title="Muat naik foto kereta" aria-label="Muat naik foto kereta" onchange="previewCarPhoto(this)" />
-              </div>
-
-              <!-- AI 360 LINK INGESTOR -->
-              <div class="ai-360-tester mb-20">
-                <div class="flex-between align-center mb-6">
-                  <span class="fs-12 fw-700 text-title flex-center gap-6">
-                    <span class="material-icons-round fs-16 text-primary">auto_fix_high</span>
-                    <span>Pilihan Pantas: Sedut Pautan 360 Menggunakan AI</span>
-                  </span>
-                  <span class="badge-360 fs-10">AI 360 Downloader</span>
-                </div>
-                <div class="flex-start gap-10">
-                  <input type="url" id="ai-360-link-input" class="form-input radius-12 fs-12 flex-1" placeholder="Tampal pautan 360 cth: https://cdn.impel.io/spincar-static/... atau Carsome 360 viewer" />
-                  <button type="button" class="btn-secondary py-8 px-14 fs-12 flex-shrink-0" onclick="ingest360FromUrl()">
-                    <span class="material-icons-round fs-15">download</span> Sedut Aset 360
-                  </button>
-                </div>
-                <div id="ai-360-link-feedback" class="fs-11 mt-6 text-muted"></div>
-              </div>
-
-              <!-- BENTO 2-KOLUM: EXTERIOR VS INTERIOR 360 -->
-              <div class="bento-360-grid">
-                <!-- 360 LUARAN -->
-                <div class="bento-360-card">
-                  <div class="flex-between align-center mb-10">
-                    <span class="fs-13 fw-700 text-title flex-center gap-6">
-                      <span class="material-icons-round text-primary fs-16">rotate_right</span>
-                      <span>360° Luaran (Exterior Spin)</span>
-                    </span>
-                    <span class="frames-counter-pill" id="exterior-frames-count">0 Bingkai</span>
-                  </div>
-                  <p class="fs-12 text-secondary mb-12">Pilih folder bingkai imej putaran luaran atau pelbagai fail serentak.</p>
-
-                  <div class="upload-360-dropzone" onclick="document.getElementById('exterior-folder-input').click()">
-                    <span class="material-icons-round fs-32 text-primary mb-6">folder_open</span>
-                    <div class="fs-13 fw-600 text-title">Muat Naik Folder Bingkai 360°</div>
-                    <div class="fs-11 text-muted mt-2">Klik untuk pilih folder bingkai berurutan</div>
-                  </div>
-
-                  <div class="flex-center gap-10 mt-10">
-                    <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('exterior-files-input').click()">
-                      <span class="material-icons-round fs-14">collections</span> Pilih Pelbagai Fail Imej
-                    </button>
-                  </div>
-
-                  <input type="file" id="exterior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder bingkai 360 luaran" aria-label="Pilih folder bingkai 360 luaran" onchange="handleExteriorFolder(this)" />
-                  <input type="file" id="exterior-files-input" class="hidden" multiple accept="image/*" title="Pilih pelbagai fail bingkai 360 luaran" aria-label="Pilih pelbagai fail bingkai 360 luaran" onchange="handleExteriorFiles(this)" />
-
-                  <div id="exterior-preview-zone" class="hidden mt-12">
-                    <div class="fs-11 fw-600 text-secondary mb-4 flex-between">
-                      <span>Pratonton Putaran (Scrub to Rotate):</span>
-                      <span id="scrub-degree" class="text-primary tabular-nums">0°</span>
-                    </div>
-                    <input type="range" id="exterior-scrub" class="scrub-slider" min="0" max="35" value="0" title="Gelangsar sudut putaran 360" aria-label="Gelangsar sudut putaran 360" oninput="handleScrub360(this.value)" />
-                    <div class="reel-preview-strip" id="exterior-thumb-strip"></div>
-                  </div>
-                </div>
-
-                <!-- 360 DALAMAN -->
-                <div class="bento-360-card">
-                  <div class="flex-between align-center mb-10">
-                    <span class="fs-13 fw-700 text-title flex-center gap-6">
-                      <span class="material-icons-round text-emerald fs-16">airline_seat_recline_extra</span>
-                      <span>360° Dalaman (Inside View)</span>
-                    </span>
-                    <span class="badge-360 fs-10" id="interior-badge-status">Menunggu</span>
-                  </div>
-                  <p class="fs-12 text-secondary mb-12">Muat naik imej panorama sfera equirectangular ATAU folder 6 muka kubus.</p>
-
-                  <div class="upload-360-dropzone" onclick="document.getElementById('interior-file-input').click()">
-                    <span class="material-icons-round fs-32 text-emerald mb-6">panorama</span>
-                    <div class="fs-13 fw-600 text-title">Muat Naik Panorama Sfera / Kubus</div>
-                    <div class="fs-11 text-muted mt-2">Sokongan: Equirectangular JPG / Folder 6 Muka Kubus</div>
-                  </div>
-
-                  <div class="flex-center gap-10 mt-10">
-                    <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('interior-folder-input').click()">
-                      <span class="material-icons-round fs-14">view_in_ar</span> Pilih Folder 6 Muka Kubus
-                    </button>
-                  </div>
-
-                  <input type="file" id="interior-file-input" class="hidden" accept="image/*" title="Muat naik fail panorama 360 dalaman" aria-label="Muat naik fail panorama 360 dalaman" onchange="handleInteriorUpload(this, 'file')" />
-                  <input type="file" id="interior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder kubus panorama 360 dalaman" aria-label="Pilih folder kubus panorama 360 dalaman" onchange="handleInteriorUpload(this, 'folder')" />
-
-                  <div id="interior-preview-zone" class="hidden mt-12 card p-10 bg-surface-1 border-subtle">
-                    <div class="flex-start gap-10 items-center">
-                      <img id="interior-thumb-img" class="radius-8 interior-thumb-preview" alt="Pratonton Dalaman" />
-                      <div>
-                        <div class="fs-12 fw-600 text-title" id="interior-type-label">Panorama 360° Dikesan</div>
-                        <div class="fs-11 text-muted">Sedia untuk paparan interaktif dalaman.</div>
-                      </div>
-                    </div>
-                  </div>
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-color-select">Warna Rasmi Badan <span class="text-danger">*</span></label>
+                <div class="we-input-prefix-box">
+                  <span class="material-icons-round we-input-prefix-icon">palette</span>
+                  <select id="car-color-select" class="form-input radius-14" required onchange="onColorSelectChange()">
+                    <option value="" disabled>Pilih Warna Rasmi</option>
+                    <option value="Putih (Solid / Pearl White)" selected>Putih (Solid / Pearl White)</option>
+                    <option value="Hitam (Midnight / Metallic Black)">Hitam (Midnight / Metallic Black)</option>
+                    <option value="Kelabu (Space Grey / Graphite Grey)">Kelabu (Space Grey / Graphite Grey)</option>
+                    <option value="Perak (Silver Metallic)">Perak (Silver Metallic)</option>
+                    <option value="Merah (Soul Red / Crimson Red)">Merah (Soul Red / Crimson Red)</option>
+                    <option value="Biru (Deep Blue / Mineral Blue)">Biru (Deep Blue / Mineral Blue)</option>
+                    <option value="Hijau (Forest / Emerald Green)">Hijau (Forest / Emerald Green)</option>
+                    <option value="Emas / Coklat (Bronze / Gold)">Emas / Coklat (Bronze / Gold)</option>
+                    <option value="Kuning / Jingga (Solar Yellow / Orange)">Kuning / Jingga (Solar Yellow / Orange)</option>
+                    <option value="other">Lain-lain (Taip Warna Sendiri)</option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            <!-- ACTION BAR (BOTTOM OF FORM) -->
-            <div class="flex-between p-20 card radius-24">
-              <span class="fs-13 text-muted">Pastikan butiran pendaftaran nombor plat, tarif sewaan, dan aset foto disemak sebelum simpan.</span>
-              <div class="flex-center gap-10">
-                <button type="button" class="btn-secondary" onclick="window.location.href='cars.html'">Batal</button>
-                <button type="submit" class="btn-primary">
-                  <span class="material-icons-round fs-18">check</span>
-                  <span>Daftar Kereta Baharu</span>
-                </button>
+            <!-- CUSTOM COLOR INPUT (Hanya dipaparkan jika dan HANYA jika Lain-lain dipilih) -->
+            <div id="car-color-custom-wrap" class="hidden mb-12">
+              <label class="form-label fs-13 fw-600" for="car-color-custom">Taip Warna Badan Sendiri <span class="text-danger">*</span></label>
+              <div class="we-input-prefix-box">
+                <span class="material-icons-round we-input-prefix-icon">brush</span>
+                <input type="text" id="car-color-custom" class="form-input radius-14 fs-14" placeholder="cth: Nardo Grey / British Racing Green / Frozen Tanzanite Blue" oninput="onCustomColorInput()" />
               </div>
             </div>
 
+            <div class="fs-11 text-muted flex-start items-center gap-6 mt-4">
+              <span class="material-icons-round fs-15 text-primary">verified</span>
+              <span>Sistem mengesan spesifikasi teknikal, jenis badan, enjin, kadar sewaan dan deposit secara automatik berdasarkan model yang dipilih.</span>
+            </div>
           </div>
 
-          <!-- RIGHT COLUMN: STICKY OFFICIAL WEDRIVE CAR-CARD PREVIEW -->
-          <div class="add-car-sticky-preview">
-            <div class="card p-16 radius-24 shadow-sm">
-              <div class="card-header border-bottom-subtle pb-10 mb-12 flex-between">
-                <h3 class="m-0 fs-14 fw-700 flex-center gap-8 text-title">
-                  <span class="material-icons-round text-primary fs-18">visibility</span>
-                  <span>Pratonton Kad Rasmi WeDRIVE</span>
-                </h3>
-                <span class="status-badge active"><span class="live-pulse-dot"></span> Langsung</span>
+          <!-- KAD 2: SPESIFIKASI TEKNIKAL & STRUKTUR TARIF -->
+          <div class="card p-24 radius-24 reveal-on-scroll">
+            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+              <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                <span class="material-icons-round text-primary">tune</span> Spesifikasi Teknikal &amp; Struktur Tarif
+              </h3>
+              <span class="badge-360 fs-11" style="background: rgba(50,215,75,0.12); color: #32D74B;">
+                Auto-Dikesan oleh AI
+              </span>
+            </div>
+
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-type">Kategori Badan <span class="text-danger">*</span></label>
+                <select id="car-type" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
+                  <option value="" disabled selected>Pilih Kategori Badan</option>
+                  <option value="Sedan">Sedan</option>
+                  <option value="SUV">SUV</option>
+                  <option value="MPV">MPV</option>
+                  <option value="Hatchback">Hatchback</option>
+                  <option value="Van">Van / Bas Komuter</option>
+                  <option value="Pickup">Pickup 4x4</option>
+                  <option value="Coupe">Coupe / Sukan</option>
+                  <option value="Luxury">Mewah / Luxury</option>
+                </select>
               </div>
-
-              <!-- PREVIEW MODE SWITCHER TOOLBAR -->
-              <div class="preview-360-toolbar flex-center gap-6 mb-12">
-                <button type="button" class="btn-outline-sm py-4 px-10 fs-11 active" id="tab-prev-photo" onclick="switchPreviewMode('photo')">
-                  <span class="material-icons-round fs-13">photo</span> Foto Utama
-                </button>
-                <button type="button" class="btn-outline-sm py-4 px-10 fs-11" id="tab-prev-exterior" onclick="switchPreviewMode('exterior')">
-                  <span class="material-icons-round fs-13">360</span> 360° Luaran
-                </button>
-                <button type="button" class="btn-outline-sm py-4 px-10 fs-11" id="tab-prev-interior" onclick="switchPreviewMode('interior')">
-                  <span class="material-icons-round fs-13">airline_seat_recline_extra</span> 360° Dalaman
-                </button>
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-seats">Kapasiti Tempat Duduk <span class="text-danger">*</span></label>
+                <select id="car-seats" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
+                  <option value="" disabled selected>Pilih Kapasiti Tempat Duduk</option>
+                  <option value="1">1 Tempat Duduk</option>
+                  <option value="2">2 Tempat Duduk</option>
+                  <option value="3">3 Tempat Duduk</option>
+                  <option value="4">4 Tempat Duduk</option>
+                  <option value="5" selected>5 Tempat Duduk</option>
+                  <option value="6">6 Tempat Duduk</option>
+                  <option value="7">7 Tempat Duduk</option>
+                  <option value="8">8 Tempat Duduk</option>
+                  <option value="9">9 Tempat Duduk</option>
+                  <option value="10">10 Tempat Duduk</option>
+                  <option value="11">11 Tempat Duduk</option>
+                  <option value="12">12 Tempat Duduk</option>
+                  <option value="13">13 Tempat Duduk</option>
+                  <option value="14">14 Tempat Duduk</option>
+                  <option value="15">15 Tempat Duduk</option>
+                  <option value="16">16 Tempat Duduk</option>
+                  <option value="17">17 Tempat Duduk</option>
+                  <option value="18">18 Tempat Duduk</option>
+                  <option value="19">19 Tempat Duduk</option>
+                  <option value="20">20 Tempat Duduk</option>
+                </select>
               </div>
+            </div>
 
-              <!-- EXACT WEDRIVE OFFICIAL CAR-CARD (MATCHING INDEX.HTML & CUSTOMER.HTML) -->
-              <div class="car-card cursor-default" style="margin: 0; box-shadow: none;">
-                <div class="car-img" id="preview-canvas-wrap">
-                  <!-- FLOATING BADGES (MATCHING SCREENSHOT 1 & 2) -->
-                  <div class="car-badges">
-                    <span class="status-pill available" id="preview-status-pill">Available</span>
-                    <span class="rating-pill">⭐ 4.9</span>
-                    <span class="badge-360" id="preview-badge-360" style="display: none;">
-                      <span class="material-icons-round" style="font-size: 12px">360</span> 360° View
-                    </span>
-                  </div>
-
-                  <!-- PHOTO PLACEHOLDER / CANVAS DISPLAY -->
-                  <div id="preview-img-empty" class="preview-img-placeholder flex-center flex-column">
-                    <span class="material-icons-round fs-48 text-muted mb-8">directions_car</span>
-                    <span class="fs-12 text-muted fw-500">Foto kereta akan dipaparkan di sini</span>
-                  </div>
-
-                  <!-- MAIN PHOTO IMAGE -->
-                  <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kereta" style="width: 100%; height: 100%; object-fit: cover;" />
-
-                  <!-- 360 EXTERIOR FRAME DISPLAY -->
-                  <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" style="width: 100%; height: 100%; object-fit: cover;" />
-
-                  <!-- 360 INTERIOR PANORAMA DISPLAY -->
-                  <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center preview-interior-layer">
-                    <img id="preview-interior-img" class="w-100 h-100" alt="Pratonton Dalaman" style="object-fit: cover;" />
-                  </div>
-                </div>
-
-                <div class="car-body">
-                  <div class="car-topline">
-                    <p class="car-type" id="preview-display-cat">SEDAN</p>
-                    <span class="rating-pill"><span class="material-icons-round">reviews</span> 128 reviews</span>
-                  </div>
-
-                  <h3 id="preview-display-name" style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">2023 BMW 320i M Sport 2.0</h3>
-                  <p class="fs-12 text-secondary m-0 mb-10" id="preview-display-color">Color: Alpine White</p>
-
-                  <div class="car-specs">
-                    <div class="spec">
-                      <span class="material-icons-round">local_gas_station</span>
-                      <span id="preview-spec-fuel">Petrol</span>
-                    </div>
-                    <div class="spec">
-                      <span class="material-icons-round">event_seat</span>
-                      <span id="preview-spec-seats">5 Seats</span>
-                    </div>
-                    <div class="spec">
-                      <span class="material-icons-round">settings</span>
-                      <span id="preview-spec-trans">Auto</span>
-                    </div>
-                    <div class="spec">
-                      <span class="material-icons-round">verified</span>
-                      <span id="preview-spec-status">Available</span>
-                    </div>
-                  </div>
-
-                  <div class="ai-chip" id="preview-ai-chip">
-                    <span class="material-icons-round" style="font-size: 12px">psychology</span>
-                    <span id="preview-ai-chip-text">Executive Choice</span>
-                  </div>
-
-                  <div class="car-footer">
-                    <div class="price">
-                      RM <span id="preview-display-rate" class="tabular-nums">450</span><span>/day</span>
-                    </div>
-                    <button type="button" class="btn-book" onclick="document.getElementById('add-car-form').requestSubmit()">
-                      <span class="material-icons-round" style="font-size: 17px">check_circle</span>
-                      <span>Daftar Kereta</span>
-                    </button>
-                  </div>
-                </div>
+            <div class="grid-2 gap-14 mb-16">
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-transmission">Sistem Transmisi <span class="text-danger">*</span></label>
+                <select id="car-transmission" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
+                  <option value="" disabled selected>Pilih Sistem Transmisi</option>
+                  <option value="Automatic" selected>Automatik (AT/CVT/DCT)</option>
+                  <option value="Manual">Manual (MT)</option>
+                </select>
               </div>
-
-              <!-- STICKY ACTION BUTTONS -->
-              <div class="mt-14">
-                <button type="submit" class="btn-primary w-100 py-11 radius-16 fs-14 fw-600 mb-8 flex-center gap-8">
-                  <span class="material-icons-round fs-18">check_circle</span>
-                  <span>Daftar Kereta Baharu</span>
-                </button>
-                <button type="button" class="btn-outline-sm w-100 py-8 radius-14 fs-12 text-center" onclick="window.location.href='cars.html'">
-                  Batal &amp; Kembali ke Senarai
-                </button>
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-fuel">Punca Kuasa (Bahan Api) <span class="text-danger">*</span></label>
+                <select id="car-fuel" class="form-input radius-14" required onchange="triggerDraftSave(); updateLivePreview();">
+                  <option value="" disabled selected>Pilih Punca Kuasa (Bahan Api)</option>
+                  <option value="Petrol" selected>Petrol (RON95/97)</option>
+                  <option value="Hybrid">Hybrid (HEV)</option>
+                  <option value="Electric (EV)">Elektrik Penuh (BEV)</option>
+                  <option value="Diesel">Diesel Euro 5</option>
+                </select>
               </div>
+            </div>
 
+            <div class="mb-16">
+              <label class="form-label fs-13 fw-600" for="car-engine">Kapasiti / Sesaran Enjin</label>
+              <input type="text" id="car-engine" class="form-input radius-14" placeholder="cth: 2.0L BMW TwinPower Turbo (184 PS)" oninput="triggerDraftSave(); updateLivePreview();" />
+            </div>
+
+            <div class="grid-2 gap-14">
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-rate">Kadar Sewaan Harian (RM) <span class="text-danger">*</span></label>
+                <input type="number" id="car-rate" class="form-input radius-14 tabular-nums fs-16 fw-700" placeholder="cth: 450" min="50" step="5" required oninput="triggerDraftSave(); updateLivePreview();" />
+                <div class="fs-11 text-muted mt-4">Kadar rasmi untuk 24 jam.</div>
+              </div>
+              <div>
+                <label class="form-label fs-13 fw-600" for="car-deposit">Deposit Keselamatan (RM) <span class="text-danger">*</span></label>
+                <input type="number" id="car-deposit" class="form-input radius-14 tabular-nums fs-16 fw-700" placeholder="cth: 400" min="0" step="50" required oninput="triggerDraftSave(); updateLivePreview();" />
+                <div class="fs-11 text-muted mt-4">Dipulangkan selepas sewaan selesai.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 1 BOTTOM ACTION BAR -->
+          <div class="flex-between p-20 card radius-24 flex-wrap gap-12">
+            <button type="button" class="btn-outline-sm py-10 px-18 radius-14 fs-13" onclick="triggerExitConfirm('cars.html')">
+              <span class="material-icons-round fs-16">arrow_back</span> Batal &amp; Kembali
+            </button>
+            <div class="flex-center gap-10">
+              <button type="button" class="btn-secondary py-10 px-18 radius-14 fs-13" onclick="manualSaveDraft()">
+                <span class="material-icons-round fs-16">bookmark_border</span> Simpan Draf
+              </button>
+              <button type="button" id="btn-next-step" class="btn-primary py-10 px-24 radius-14 fs-14 fw-600" onclick="goToStep(2)">
+                <span>Seterusnya: Studio Visual &amp; 360°</span>
+                <span class="material-icons-round fs-18">arrow_forward</span>
+              </button>
             </div>
           </div>
 
         </div>
 
+        <!-- ========================================================================= -->
+        <!-- STEP 2 CONTAINER: STUDIO VISUAL & PRATONTON KAD 360 (BENTO 2-KOLUM) -->
+        <!-- ========================================================================= -->
+        <div id="step-2-container" class="hidden">
+          <div class="add-car-bento-grid">
+
+            <!-- LEFT COLUMN: STUDIO ASET 360° & FOTO KATALOG -->
+            <div class="flex flex-column gap-24">
+
+              <!-- KAD 3: STUDIO ASET 360° & FOTO KATALOG -->
+              <div class="card p-24 radius-24 reveal-onload" id="card-360-studio">
+                <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between">
+                  <div>
+                    <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
+                      <span class="material-icons-round text-primary-accent">360</span>
+                      <span>Studio Pengalaman 360° &amp; Foto Katalog</span>
+                    </h3>
+                    <p class="fs-12 text-secondary m-0 mt-4">
+                      Muat naik foto utama dan aset 360° interaktif untuk pengalaman sewaan gred Apple.
+                    </p>
+                  </div>
+                  <span id="badge-360-status" class="status-badge badge-360-muted">
+                    <span>Tiada 360° (Foto Biasa)</span>
+                  </span>
+                </div>
+
+                <!-- FOTO UTAMA DROPZONE -->
+                <div class="mb-20">
+                  <label class="form-label fs-13 fw-600 mb-8 d-block">Foto Utama Kereta (Katalog)</label>
+                  <div class="doc-preview-box cursor-pointer p-20 text-center radius-16 border-dashed" onclick="document.getElementById('car-photo-input').click()">
+                    <div id="photo-preview-content">
+                      <span class="material-icons-round fs-36 text-primary mb-8">cloud_upload</span>
+                      <div class="fs-14 fw-600 text-title">Klik atau Seret Foto ke Sini</div>
+                      <div class="fs-11 text-muted mt-4">Format disokong: PNG, JPG, WEBP (Latar belakang studio digalakkan)</div>
+                    </div>
+                    <img id="photo-preview-img" class="doc-preview-img img-preview-140 hidden" alt="Pratonton Kereta" />
+                  </div>
+                  <input type="file" id="car-photo-input" class="hidden" accept="image/*" title="Muat naik foto kereta" aria-label="Muat naik foto kereta" onchange="previewCarPhoto(this)" />
+                </div>
+
+                <!-- AI 360 LINK INGESTOR -->
+                <div class="ai-360-tester mb-20">
+                  <div class="flex-between align-center mb-6">
+                    <span class="fs-12 fw-700 text-title flex-center gap-6">
+                      <span class="material-icons-round fs-16 text-primary">auto_fix_high</span>
+                      <span>Pilihan Pantas: Sedut Pautan 360 Menggunakan AI</span>
+                    </span>
+                    <span class="badge-360 fs-10">AI 360 Downloader</span>
+                  </div>
+                  <div class="flex-start gap-10">
+                    <input type="url" id="ai-360-link-input" class="form-input radius-12 fs-12 flex-1" placeholder="Tampal pautan 360 cth: https://cdn.impel.io/spincar-static/... atau Carsome 360 viewer" />
+                    <button type="button" class="btn-secondary py-8 px-14 fs-12 flex-shrink-0" onclick="ingest360FromUrl()">
+                      <span class="material-icons-round fs-15">download</span> Sedut Aset 360
+                    </button>
+                  </div>
+                  <div id="ai-360-link-feedback" class="fs-11 mt-6 text-muted"></div>
+                </div>
+
+                <!-- BENTO 2-KOLUM: EXTERIOR VS INTERIOR 360 -->
+                <div class="bento-360-grid">
+                  <!-- 360 LUARAN -->
+                  <div class="bento-360-card">
+                    <div class="flex-between align-center mb-10">
+                      <span class="fs-13 fw-700 text-title flex-center gap-6">
+                        <span class="material-icons-round text-primary fs-16">rotate_right</span>
+                        <span>360° Luaran (Exterior Spin)</span>
+                      </span>
+                      <span class="frames-counter-pill" id="exterior-frames-count">0 Bingkai</span>
+                    </div>
+                    <p class="fs-12 text-secondary mb-12">Pilih folder bingkai imej putaran luaran atau pelbagai fail serentak.</p>
+
+                    <div class="upload-360-dropzone" onclick="document.getElementById('exterior-folder-input').click()">
+                      <span class="material-icons-round fs-32 text-primary mb-6">folder_open</span>
+                      <div class="fs-13 fw-600 text-title">Muat Naik Folder Bingkai 360°</div>
+                      <div class="fs-11 text-muted mt-2">Klik untuk pilih folder bingkai berurutan</div>
+                    </div>
+
+                    <div class="flex-center gap-10 mt-10">
+                      <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('exterior-files-input').click()">
+                        <span class="material-icons-round fs-14">collections</span> Pilih Pelbagai Fail Imej
+                      </button>
+                    </div>
+
+                    <input type="file" id="exterior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder bingkai 360 luaran" aria-label="Pilih folder bingkai 360 luaran" onchange="handleExteriorFolder(this)" />
+                    <input type="file" id="exterior-files-input" class="hidden" multiple accept="image/*" title="Pilih pelbagai fail bingkai 360 luaran" aria-label="Pilih pelbagai fail bingkai 360 luaran" onchange="handleExteriorFiles(this)" />
+
+                    <div id="exterior-preview-zone" class="hidden mt-12">
+                      <div class="fs-11 fw-600 text-secondary mb-4 flex-between">
+                        <span>Pratonton Putaran (Scrub to Rotate):</span>
+                        <span id="scrub-degree" class="text-primary tabular-nums">0°</span>
+                      </div>
+                      <input type="range" id="exterior-scrub" class="scrub-slider" min="0" max="35" value="0" title="Gelangsar sudut putaran 360" aria-label="Gelangsar sudut putaran 360" oninput="handleScrub360(this.value)" />
+                      <div class="reel-preview-strip" id="exterior-thumb-strip"></div>
+                    </div>
+                  </div>
+
+                  <!-- 360 DALAMAN -->
+                  <div class="bento-360-card">
+                    <div class="flex-between align-center mb-10">
+                      <span class="fs-13 fw-700 text-title flex-center gap-6">
+                        <span class="material-icons-round text-emerald fs-16">airline_seat_recline_extra</span>
+                        <span>360° Dalaman (Inside View)</span>
+                      </span>
+                      <span class="badge-360 fs-10" id="interior-badge-status">Menunggu</span>
+                    </div>
+                    <p class="fs-12 text-secondary mb-12">Muat naik imej panorama sfera equirectangular ATAU folder 6 muka kubus.</p>
+
+                    <div class="upload-360-dropzone" onclick="document.getElementById('interior-file-input').click()">
+                      <span class="material-icons-round fs-32 text-emerald mb-6">panorama</span>
+                      <div class="fs-13 fw-600 text-title">Muat Naik Panorama Sfera / Kubus</div>
+                      <div class="fs-11 text-muted mt-2">Sokongan: Equirectangular JPG / Folder 6 Muka Kubus</div>
+                    </div>
+
+                    <div class="flex-center gap-10 mt-10">
+                      <button type="button" class="btn-outline-sm py-6 px-12 fs-11 w-100" onclick="document.getElementById('interior-folder-input').click()">
+                        <span class="material-icons-round fs-14">view_in_ar</span> Pilih Folder 6 Muka Kubus
+                      </button>
+                    </div>
+
+                    <input type="file" id="interior-file-input" class="hidden" accept="image/*" title="Muat naik fail panorama 360 dalaman" aria-label="Muat naik fail panorama 360 dalaman" onchange="handleInteriorUpload(this, 'file')" />
+                    <input type="file" id="interior-folder-input" class="hidden" webkitdirectory directory multiple accept="image/*" title="Pilih folder kubus panorama 360 dalaman" aria-label="Pilih folder kubus panorama 360 dalaman" onchange="handleInteriorUpload(this, 'folder')" />
+
+                    <div id="interior-preview-zone" class="hidden mt-12 card p-10 bg-surface-1 border-subtle">
+                      <div class="flex-start gap-10 items-center">
+                        <img id="interior-thumb-img" class="radius-8 interior-thumb-preview" alt="Pratonton Dalaman" />
+                        <div>
+                          <div class="fs-12 fw-600 text-title" id="interior-type-label">Panorama 360° Dikesan</div>
+                          <div class="fs-11 text-muted">Sedia untuk paparan interaktif dalaman.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ACTION BAR (BOTTOM OF STEP 2) -->
+              <div class="flex-between p-20 card radius-24 flex-wrap gap-12">
+                <button type="button" class="btn-secondary py-10 px-18 radius-14 fs-13" onclick="goToStep(1)">
+                  <span class="material-icons-round fs-16">arrow_back</span> Kembali ke Spesifikasi
+                </button>
+                <div class="flex-center gap-10">
+                  <button type="button" class="btn-secondary py-10 px-18 radius-14 fs-13" onclick="manualSaveDraft()">
+                    <span class="material-icons-round fs-16">bookmark_border</span> Simpan Draf
+                  </button>
+                  <button type="submit" class="btn-primary py-10 px-24 radius-14 fs-14 fw-600">
+                    <span class="material-icons-round fs-18">check_circle</span>
+                    <span>Daftar Kereta Baharu</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: STICKY OFFICIAL WEDRIVE CAR-CARD PREVIEW -->
+            <div class="add-car-sticky-preview">
+              <div class="card p-16 radius-24 shadow-sm">
+                <div class="card-header border-bottom-subtle pb-10 mb-12 flex-between">
+                  <h3 class="m-0 fs-14 fw-700 flex-center gap-8 text-title">
+                    <span class="material-icons-round text-primary fs-18">visibility</span>
+                    <span>Pratonton Kad Rasmi WeDRIVE</span>
+                  </h3>
+                  <span class="status-badge active"><span class="live-pulse-dot"></span> Langsung</span>
+                </div>
+
+                <!-- PREVIEW MODE SWITCHER TOOLBAR -->
+                <div class="preview-360-toolbar flex-center gap-6 mb-12">
+                  <button type="button" class="btn-outline-sm py-4 px-10 fs-11 active" id="tab-prev-photo" onclick="switchPreviewMode('photo')">
+                    <span class="material-icons-round fs-13">photo</span> Foto Utama
+                  </button>
+                  <button type="button" class="btn-outline-sm py-4 px-10 fs-11" id="tab-prev-exterior" onclick="switchPreviewMode('exterior')">
+                    <span class="material-icons-round fs-13">360</span> 360° Luaran
+                  </button>
+                  <button type="button" class="btn-outline-sm py-4 px-10 fs-11" id="tab-prev-interior" onclick="switchPreviewMode('interior')">
+                    <span class="material-icons-round fs-13">airline_seat_recline_extra</span> 360° Dalaman
+                  </button>
+                </div>
+
+                <!-- EXACT WEDRIVE OFFICIAL CAR-CARD (MATCHING INDEX.HTML & CUSTOMER.HTML) -->
+                <div class="car-card cursor-default" style="margin: 0; box-shadow: none;">
+                  <div class="car-img" id="preview-canvas-wrap">
+                    <!-- FLOATING BADGES (MATCHING SCREENSHOT 1 & 2) -->
+                    <div class="car-badges">
+                      <span class="status-pill available" id="preview-status-pill">Available</span>
+                      <span class="rating-pill">⭐ 4.9</span>
+                      <span class="badge-360" id="preview-badge-360" style="display: none;">
+                        <span class="material-icons-round" style="font-size: 12px">360</span> 360° View
+                      </span>
+                    </div>
+
+                    <!-- PHOTO PLACEHOLDER / CANVAS DISPLAY -->
+                    <div id="preview-img-empty" class="preview-img-placeholder flex-center flex-column">
+                      <span class="material-icons-round fs-48 text-muted mb-8">directions_car</span>
+                      <span class="fs-12 text-muted fw-500">Foto kereta akan dipaparkan di sini</span>
+                    </div>
+
+                    <!-- MAIN PHOTO IMAGE -->
+                    <img id="preview-display-img" class="apple-car-studio-img hidden" alt="Pratonton Kereta" style="width: 100%; height: 100%; object-fit: cover;" />
+
+                    <!-- 360 EXTERIOR FRAME DISPLAY -->
+                    <img id="preview-360-frame" class="apple-car-studio-img hidden" alt="Pratonton 360 Luaran" draggable="false" style="width: 100%; height: 100%; object-fit: cover;" />
+
+                    <!-- 360 INTERIOR PANORAMA DISPLAY -->
+                    <div id="preview-interior-wrap" class="hidden w-100 h-100 flex-center preview-interior-layer">
+                      <img id="preview-interior-img" class="w-100 h-100" alt="Pratonton Dalaman" style="object-fit: cover;" />
+                    </div>
+                  </div>
+
+                  <div class="car-body">
+                    <div class="car-topline">
+                      <p class="car-type" id="preview-display-cat">SEDAN</p>
+                      <span class="rating-pill"><span class="material-icons-round">reviews</span> 128 reviews</span>
+                    </div>
+
+                    <h3 id="preview-display-name" style="font-size: 18px; font-weight: 700; margin-bottom: 4px;">2023 BMW 320i M Sport 2.0</h3>
+                    <p class="fs-12 text-secondary m-0 mb-10" id="preview-display-color">Color: Alpine White</p>
+
+                    <div class="car-specs">
+                      <div class="spec">
+                        <span class="material-icons-round">local_gas_station</span>
+                        <span id="preview-spec-fuel">Petrol</span>
+                      </div>
+                      <div class="spec">
+                        <span class="material-icons-round">event_seat</span>
+                        <span id="preview-spec-seats">5 Seats</span>
+                      </div>
+                      <div class="spec">
+                        <span class="material-icons-round">settings</span>
+                        <span id="preview-spec-trans">Auto</span>
+                      </div>
+                      <div class="spec">
+                        <span class="material-icons-round">verified</span>
+                        <span id="preview-spec-status">Available</span>
+                      </div>
+                    </div>
+
+                    <div class="ai-chip" id="preview-ai-chip">
+                      <span class="material-icons-round" style="font-size: 12px">psychology</span>
+                      <span id="preview-ai-chip-text">Executive Choice</span>
+                    </div>
+
+                    <div class="car-footer">
+                      <div class="price">
+                        RM <span id="preview-display-rate" class="tabular-nums">450</span><span>/day</span>
+                      </div>
+                      <button type="button" class="btn-book" onclick="document.getElementById('add-car-form').requestSubmit()">
+                        <span class="material-icons-round" style="font-size: 17px">check_circle</span>
+                        <span>Daftar Kereta</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- STICKY ACTION BUTTONS -->
+                <div class="mt-14">
+                  <button type="submit" class="btn-primary w-100 py-11 radius-16 fs-14 fw-600 mb-8 flex-center gap-8">
+                    <span class="material-icons-round fs-18">check_circle</span>
+                    <span>Daftar Kereta Baharu</span>
+                  </button>
+                  <button type="button" class="btn-outline-sm w-100 py-8 radius-14 fs-12 text-center" onclick="triggerExitConfirm('cars.html')">
+                    Batal &amp; Kembali ke Senarai
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </form>
+
+      <!-- APPLE HIG EXIT CONFIRMATION MODAL -->
+      <div id="modal-exit-confirm" class="apple-exit-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
+        <div class="apple-exit-modal-card">
+          <div class="apple-exit-icon-circle">
+            <span class="material-icons-round fs-28">warning_amber</span>
+          </div>
+          <h3 id="exit-modal-title" class="fs-18 fw-700 text-title mb-8">Tinggalkan Pendaftaran Kereta?</h3>
+          <p class="fs-13 text-secondary mb-20">
+            Anda mempunyai maklumat pendaftaran kenderaan yang sedang diisi. Draf anda telah disimpan secara automatik dalam peranti ini. Adakah anda pasti mahu keluar?
+          </p>
+          <div class="flex flex-column gap-10">
+            <button type="button" class="btn-primary w-100 py-12 radius-14 fs-14 fw-600" onclick="closeExitModal()">
+              Kekal di Halaman Ini
+            </button>
+            <button type="button" class="btn-secondary w-100 py-10 radius-14 fs-13 text-danger" onclick="proceedExit()">
+              Tinggalkan Halaman
+            </button>
+          </div>
+        </div>
+      </div>
 
       <!-- FOOTER -->
       <div id="footer-placeholder" class="mt-32"></div>

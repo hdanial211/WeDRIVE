@@ -19915,10 +19915,167 @@ body.day-mode .cal-filter-chip.active {
   z-index: 2;
 }
 
-.we-input-prefix-box input {
+.we-input-prefix-box input,
+.we-input-prefix-box select {
   padding-left: 42px !important;
   width: 100%;
 }
 
+/* ── APPLE HIG WIZARD STEPPER BAR ── */
+.wizard-stepper-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-surface-1, rgba(22, 22, 24, 0.7));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  padding: 8px 12px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
 
+[data-theme="light"] .wizard-stepper-wrap {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.08);
+}
 
+.wizard-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wizard-step-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.04));
+}
+
+.wizard-step-btn.active {
+  background: var(--primary, #0071e3);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+}
+
+.wizard-step-btn.completed {
+  color: #32d74b;
+  background: rgba(50, 215, 75, 0.1);
+  border-color: rgba(50, 215, 75, 0.2);
+}
+
+.wizard-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.12);
+  color: inherit;
+  flex-shrink: 0 !important;
+}
+
+.wizard-step-btn.active .wizard-step-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.wizard-step-divider {
+  flex: 1;
+  height: 2px;
+  background: var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 9999px;
+  min-width: 20px;
+}
+
+/* ── DRAFT RESUME BANNER ── */
+.draft-resume-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.12) 0%, rgba(22, 22, 24, 0.85) 100%);
+  border: 1px solid rgba(88, 86, 214, 0.3);
+  margin-bottom: 20px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  animation: fadeInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] .draft-resume-banner {
+  background: linear-gradient(135deg, rgba(88, 86, 214, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: rgba(88, 86, 214, 0.25);
+}
+
+/* ── EXIT CONFIRMATION MODAL (APPLE HIG SHEET) ── */
+.apple-exit-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-exit-modal-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.apple-exit-modal-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-surface-1, #161618);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.12));
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: center;
+}
+
+.apple-exit-modal-backdrop.show .apple-exit-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.apple-exit-icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  margin: 0 auto 16px;
+  background: rgba(255, 159, 10, 0.15);
+  color: #ff9f0a;
+}

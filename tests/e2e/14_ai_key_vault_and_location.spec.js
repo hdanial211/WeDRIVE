@@ -94,6 +94,13 @@ test.describe('WeDRIVE AI Key Vault & Unified HQ Location Tests', () => {
     await expect(locationInput).toHaveAttribute('readonly', '');
     await expect(locationInput).toHaveValue(/Pusat Operasi Utama WeDRIVE \(HQ Melaka\)/);
 
+    // Verify 2-Step Stepper Navigation to Step 2 (360 Studio)
+    const step2Btn = page.locator('#step-btn-2');
+    if (await step2Btn.isVisible()) {
+      await page.fill('#car-plate', 'VAB 4821');
+      await step2Btn.click();
+    }
+
     // Verify 360 Studio Section
     await expect(page.locator('#card-360-studio')).toBeVisible();
     await expect(page.locator('#exterior-files-input')).toBeAttached();

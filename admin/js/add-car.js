@@ -1,20 +1,1237 @@
 /**
  * WeDRIVE - Add Car Management Controller
- * Handles 2-Column Bento Form, AI Auto-Detect Engine, 360 Studio Asset Linking,
- * Official WeDRIVE Car-Card Live Preview, and Supabase / Local Storage Sync.
- * Version: 6.6.1
+ * Handles 2-Step Stepper Wizard, Cascading Selectors (ala Carlist.my), Auto-Save Draft & Resume,
+ * Exit Confirmation Modal, AI Auto-Detect Engine, 360 Studio, and Official WeDRIVE Car-Card Live Preview.
+ * Version: 6.7.0
  */
 
 (function () {
   'use strict';
 
   var selectedPhotoBase64 = null;
+  var currentStep = 1;
+  var isFormDirty = false;
+  var isInitializing = true;
+  var isRestoringDraft = false;
+  var draftTimer = null;
+  var pendingExitUrl = null;
+
   window.__360Data = {
     has360: false,
     exteriorFrames: [],
     currentFrameIndex: 0,
     interiorAsset: null
   };
+
+  /**
+   * =========================================================================
+   * 1. COMPREHENSIVE MALAYSIAN AUTOMOTIVE CARLIST DATABASE
+   * Maps Brand -> Models -> Variants with Default Specs & Market Pricing
+   * =========================================================================
+   */
+  var CARLIST_DATABASE = {
+    'Perodua': {
+      'Myvi': {
+        type: 'Hatchback',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Dual VVT-i (103 PS)',
+        basePrice: 58000,
+        variants: [
+          { name: '1.5 AV (High Spec)', engine: '1.5L Dual VVT-i D-CVT (103 PS)', price: 59900 },
+          { name: '1.5 H', engine: '1.5L Dual VVT-i D-CVT (103 PS)', price: 54900 },
+          { name: '1.5 X', engine: '1.5L Dual VVT-i D-CVT (103 PS)', price: 50900 },
+          { name: '1.3 G', engine: '1.3L Dual VVT-i D-CVT (95 PS)', price: 46500 }
+        ]
+      },
+      'Axia': {
+        type: 'Hatchback',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.0L VVT-i D-CVT (68 PS)',
+        basePrice: 44000,
+        variants: [
+          { name: '1.0 AV (Flagship)', engine: '1.0L 1KR-VE D-CVT (68 PS)', price: 49500 },
+          { name: '1.0 SE', engine: '1.0L 1KR-VE D-CVT (68 PS)', price: 44000 },
+          { name: '1.0 X', engine: '1.0L 1KR-VE D-CVT (68 PS)', price: 40000 },
+          { name: '1.0 G', engine: '1.0L 1KR-VE D-CVT (68 PS)', price: 38600 }
+        ]
+      },
+      'Bezza': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.3L Dual VVT-i (95 PS)',
+        basePrice: 50000,
+        variants: [
+          { name: '1.3 AV (Sedan Flagship)', engine: '1.3L 1NR-VE 4AT (95 PS)', price: 49980 },
+          { name: '1.3 X', engine: '1.3L 1NR-VE 4AT (95 PS)', price: 43980 },
+          { name: '1.0 G (Auto)', engine: '1.0L 1KR-VE 4AT (68 PS)', price: 36580 }
+        ]
+      },
+      'Ativa': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.0L Turbo D-CVT (98 PS)',
+        basePrice: 73000,
+        variants: [
+          { name: '1.0T AV Dual-Tone (Flagship)', engine: '1.0L Turbo 1KR-VET (98 PS)', price: 73400 },
+          { name: '1.0T H', engine: '1.0L Turbo 1KR-VET (98 PS)', price: 67300 },
+          { name: '1.0T X', engine: '1.0L Turbo 1KR-VET (98 PS)', price: 62500 }
+        ]
+      },
+      'Alza': {
+        type: 'MPV',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Dual VVT-i (106 PS)',
+        basePrice: 76000,
+        variants: [
+          { name: '1.5 AV (7-Seater Luxury)', engine: '1.5L 2NR-VE D-CVT (106 PS)', price: 75500 },
+          { name: '1.5 H', engine: '1.5L 2NR-VE D-CVT (106 PS)', price: 68000 },
+          { name: '1.5 X', engine: '1.5L 2NR-VE D-CVT (106 PS)', price: 62500 }
+        ]
+      },
+      'Aruz': {
+        type: 'SUV',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Dual VVT-i (102 PS)',
+        basePrice: 78000,
+        variants: [
+          { name: '1.5 AV 7-Seater', engine: '1.5L 2NR-VE 4AT (102 PS)', price: 77900 },
+          { name: '1.5 X', engine: '1.5L 2NR-VE 4AT (102 PS)', price: 72900 }
+        ]
+      }
+    },
+
+    'Proton': {
+      'S70': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Turbo 3-Cyl 7-DCT (150 PS)',
+        basePrice: 90000,
+        variants: [
+          { name: '1.5T Flagship X', engine: '1.5L Turbo 7-Speed Dual Clutch (150 PS)', price: 94800 },
+          { name: '1.5T Flagship', engine: '1.5L Turbo 7-Speed Dual Clutch (150 PS)', price: 89800 },
+          { name: '1.5T Premium', engine: '1.5L Turbo 7-Speed Dual Clutch (150 PS)', price: 79800 },
+          { name: '1.5T Executive', engine: '1.5L Turbo 7-Speed Dual Clutch (150 PS)', price: 73800 }
+        ]
+      },
+      'X50': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L TGDi Flagship (177 PS)',
+        basePrice: 102000,
+        variants: [
+          { name: '1.5 TGDi Flagship (177 PS)', engine: '1.5L Direct Injection Turbo (177 PS)', price: 113300 },
+          { name: '1.5T Premium', engine: '1.5L Turbo Multi-Point (150 PS)', price: 101800 },
+          { name: '1.5T Executive', engine: '1.5L Turbo Multi-Point (150 PS)', price: 93300 },
+          { name: '1.5T Standard', engine: '1.5L Turbo Multi-Point (150 PS)', price: 86300 }
+        ]
+      },
+      'X70': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L TGDi Premium AWD (177 PS)',
+        basePrice: 125000,
+        variants: [
+          { name: '1.5 TGDi Premium 2WD', engine: '1.5L Turbo Direct Injection (177 PS)', price: 123800 },
+          { name: '1.5 TGDi Executive AWD', engine: '1.5L Turbo Direct Injection (177 PS)', price: 116800 },
+          { name: '1.5 TGDi Standard', engine: '1.5L Turbo Direct Injection (177 PS)', price: 98800 }
+        ]
+      },
+      'X90': {
+        type: 'SUV',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Hybrid',
+        engine: '1.5L TGDi Mild Hybrid 48V (190 PS)',
+        basePrice: 145000,
+        variants: [
+          { name: '1.5T Flagship (6-Seater Captain Seats)', engine: '1.5L TGDi + 48V EMS (190 PS)', price: 152800 },
+          { name: '1.5T Premium (7-Seater)', engine: '1.5L TGDi + 48V EMS (190 PS)', price: 144800 },
+          { name: '1.5T Executive (7-Seater)', engine: '1.5L TGDi + 48V EMS (190 PS)', price: 130800 }
+        ]
+      },
+      'Saga': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.3L 4-Cyl VVT (95 PS)',
+        basePrice: 42000,
+        variants: [
+          { name: '1.3 Premium S (Auto)', engine: '1.3L VVT 4AT (95 PS)', price: 44800 },
+          { name: '1.3 Premium (Auto)', engine: '1.3L VVT 4AT (95 PS)', price: 41800 },
+          { name: '1.3 Standard (Auto)', engine: '1.3L VVT 4AT (95 PS)', price: 38800 },
+          { name: '1.3 Standard (Manual)', engine: '1.3L VVT 5MT (95 PS)', price: 34800 }
+        ]
+      },
+      'Persona': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.6L VVT CVT (109 PS)',
+        basePrice: 55000,
+        variants: [
+          { name: '1.6 Premium CVT', engine: '1.6L VVT CVT (109 PS)', price: 58300 },
+          { name: '1.6 Executive CVT', engine: '1.6L VVT CVT (109 PS)', price: 53300 },
+          { name: '1.6 Standard CVT', engine: '1.6L VVT CVT (109 PS)', price: 47800 }
+        ]
+      },
+      'Iriz': {
+        type: 'Hatchback',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.6L VVT Active (109 PS)',
+        basePrice: 54000,
+        variants: [
+          { name: '1.6 Active CVT', engine: '1.6L VVT Crossover (109 PS)', price: 57300 },
+          { name: '1.6 Executive CVT', engine: '1.6L VVT CVT (109 PS)', price: 50300 },
+          { name: '1.3 Standard CVT', engine: '1.3L VVT CVT (95 PS)', price: 42800 }
+        ]
+      }
+    },
+
+    'Toyota': {
+      'Vios': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Dual VVT-i CVT (106 PS)',
+        basePrice: 94000,
+        variants: [
+          { name: '1.5 G (High Spec)', engine: '1.5L 2NR-VE 7-Speed CVT (106 PS)', price: 95500 },
+          { name: '1.5 E', engine: '1.5L 2NR-VE 7-Speed CVT (106 PS)', price: 89600 }
+        ]
+      },
+      'Yaris': {
+        type: 'Hatchback',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Dual VVT-i (107 PS)',
+        basePrice: 88000,
+        variants: [
+          { name: '1.5 G', engine: '1.5L 2NR-FE CVT (107 PS)', price: 91600 },
+          { name: '1.5 E', engine: '1.5L 2NR-FE CVT (107 PS)', price: 88000 }
+        ]
+      },
+      'Corolla': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.8L Dual VVT-i (139 PS)',
+        basePrice: 145000,
+        variants: [
+          { name: '1.8 G', engine: '1.8L 2ZR-FE CVT (139 PS)', price: 147800 },
+          { name: '1.8 E', engine: '1.8L 2ZR-FE CVT (139 PS)', price: 139800 },
+          { name: 'GR Sport 1.8', engine: '1.8L Dual VVT-i Sport Tuned (139 PS)', price: 152800 }
+        ]
+      },
+      'Corolla Cross': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Hybrid',
+        engine: '1.8L Hybrid E-CVT (122 PS Total)',
+        basePrice: 142000,
+        variants: [
+          { name: '1.8 Hybrid (HEV)', engine: '1.8L 2ZR-FXE Hybrid (122 PS)', price: 143000 },
+          { name: '1.8 V', engine: '1.8L 2ZR-FE CVT (139 PS)', price: 137400 },
+          { name: 'GR Sport Hybrid', engine: '1.8L HEV Sport Edition (122 PS)', price: 148500 }
+        ]
+      },
+      'Camry': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.5L Dynamic Force Direct Shift (209 PS)',
+        basePrice: 220000,
+        variants: [
+          { name: '2.5 V Dynamic Force', engine: '2.5L A25A-FKS 8-Speed AT (209 PS)', price: 219800 }
+        ]
+      },
+      'Innova Zenix': {
+        type: 'MPV',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Hybrid',
+        engine: '2.0L Dynamic Force Hybrid (186 PS)',
+        basePrice: 180000,
+        variants: [
+          { name: '2.0 HEV (Hybrid 7-Seater)', engine: '2.0L M20A-FXS Hybrid (186 PS)', price: 202000 },
+          { name: '2.0 V (8-Seater Petrol)', engine: '2.0L M20A-FKS Direct Shift (174 PS)', price: 165000 }
+        ]
+      },
+      'Alphard': {
+        type: 'Luxury',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.4L Turbo Direct Injection (278 PS)',
+        basePrice: 538000,
+        variants: [
+          { name: '2.4T Executive Lounge (Luxury 7-Seater)', engine: '2.4L Turbo T24A-FTS Direct Shift 8AT (278 PS)', price: 538000 }
+        ]
+      },
+      'Vellfire': {
+        type: 'Luxury',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.5L Dual VVT-i CVT (182 PS)',
+        basePrice: 438000,
+        variants: [
+          { name: '2.5 Luxury 7-Seater', engine: '2.5L 2AR-FE Super CVT-i (182 PS)', price: 438000 }
+        ]
+      },
+      'Hilux': {
+        type: 'Pickup',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Diesel',
+        engine: '2.8L Turbo Diesel (204 PS)',
+        basePrice: 155000,
+        variants: [
+          { name: '2.8 GR Sport 4x4', engine: '2.8L 1GD-FTV Turbo Diesel 6AT (204 PS)', price: 169080 },
+          { name: '2.8 Rogue 4x4', engine: '2.8L 1GD-FTV Turbo Diesel 6AT (204 PS)', price: 158880 },
+          { name: '2.4 V 4x4', engine: '2.4L 2GD-FTV Turbo Diesel 6AT (150 PS)', price: 145880 }
+        ]
+      },
+      'Hiace': {
+        type: 'Van',
+        seats: 12,
+        transmission: 'Manual',
+        fuel: 'Diesel',
+        engine: '2.5L Turbo Diesel (102 PS)',
+        basePrice: 115000,
+        variants: [
+          { name: '2.5 D4D Panel / Window Van 10-12 Seater', engine: '2.5L 2KD-FTV Turbo Diesel (102 PS)', price: 118000 },
+          { name: 'Hiace Super Grandia Luxury (Import)', engine: '2.8L 1GD-FTV Turbo Diesel (176 PS)', price: 185000 }
+        ]
+      }
+    },
+
+    'Honda': {
+      'City': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L DOHC i-VTEC CVT (121 PS)',
+        basePrice: 90000,
+        variants: [
+          { name: '1.5 e:HEV RS (Hybrid)', engine: '1.5L i-MMD Two-Motor Hybrid (109 PS)', price: 111900 },
+          { name: '1.5 RS Petrol', engine: '1.5L DOHC i-VTEC CVT (121 PS)', price: 99900 },
+          { name: '1.5 V', engine: '1.5L DOHC i-VTEC CVT (121 PS)', price: 94900 },
+          { name: '1.5 E', engine: '1.5L DOHC i-VTEC CVT (121 PS)', price: 89900 }
+        ]
+      },
+      'City Hatchback': {
+        type: 'Hatchback',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L DOHC i-VTEC (121 PS)',
+        basePrice: 88000,
+        variants: [
+          { name: '1.5 e:HEV RS (Hybrid)', engine: '1.5L Dual Motor Hybrid (109 PS)', price: 112900 },
+          { name: '1.5 RS Petrol', engine: '1.5L DOHC i-VTEC CVT (121 PS)', price: 100900 },
+          { name: '1.5 V', engine: '1.5L DOHC i-VTEC CVT (121 PS)', price: 95900 }
+        ]
+      },
+      'Civic': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L VTEC Turbo (182 PS)',
+        basePrice: 145000,
+        variants: [
+          { name: '2.0 e:HEV RS (Hybrid Flagship)', engine: '2.0L i-MMD Dual Motor Hybrid (184 PS)', price: 167900 },
+          { name: '1.5 RS Turbo (Sporty)', engine: '1.5L VTEC Turbo 7-Speed CVT (182 PS)', price: 151900 },
+          { name: '1.5 V Turbo', engine: '1.5L VTEC Turbo (182 PS)', price: 144900 },
+          { name: '1.5 E Turbo', engine: '1.5L VTEC Turbo (182 PS)', price: 131900 }
+        ]
+      },
+      'HR-V': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L VTEC Turbo (181 PS)',
+        basePrice: 135000,
+        variants: [
+          { name: '1.5 e:HEV RS (Hybrid)', engine: '1.5L Dual-Motor Hybrid (131 PS)', price: 141900 },
+          { name: '1.5 Turbo V', engine: '1.5L VTEC Turbo (181 PS)', price: 135900 },
+          { name: '1.5 Turbo E', engine: '1.5L VTEC Turbo (181 PS)', price: 130900 },
+          { name: '1.5 S (NA)', engine: '1.5L DOHC i-VTEC (121 PS)', price: 115900 }
+        ]
+      },
+      'CR-V': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L VTEC Turbo (193 PS)',
+        basePrice: 175000,
+        variants: [
+          { name: '2.0 e:HEV RS (Hybrid)', engine: '2.0L Dual-Motor Hybrid (184 PS)', price: 195900 },
+          { name: '1.5 Turbo V AWD', engine: '1.5L VTEC Turbo AWD (193 PS)', price: 181900 },
+          { name: '1.5 Turbo E 2WD', engine: '1.5L VTEC Turbo (193 PS)', price: 169900 }
+        ]
+      }
+    },
+
+    'BMW': {
+      '3 Series': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.0L BMW TwinPower Turbo (184 PS)',
+        basePrice: 285000,
+        variants: [
+          { name: '320i M Sport 2.0L', engine: '2.0L BMW TwinPower Turbo 8-Speed Steptronic (184 PS)', price: 283800 },
+          { name: '330i M Sport 2.0L', engine: '2.0L BMW TwinPower Turbo 8-Speed Steptronic (258 PS)', price: 317800 },
+          { name: '330e M Sport (Hybrid) 2.0L', engine: '2.0L Plug-in Hybrid eDrive (292 PS)', price: 298800 },
+          { name: 'M340i xDrive 3.0L', engine: '3.0L BMW M TwinPower Turbo Inline-6 (387 PS)', price: 391800 }
+        ]
+      },
+      '5 Series': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Electric (EV)',
+        engine: 'BMW eDrive Full Electric (340 PS)',
+        basePrice: 399000,
+        variants: [
+          { name: 'i5 eDrive40 M Sport (EV)', engine: 'Electric Motor 81.2 kWh (340 PS)', price: 399800 },
+          { name: '530i M Sport 2.0L', engine: '2.0L TwinPower Turbo 8-Speed (252 PS)', price: 402800 },
+          { name: '530e M Sport (Hybrid)', engine: '2.0L Plug-In Hybrid (292 PS)', price: 358800 }
+        ]
+      },
+      'X1': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Turbo 7-DCT (156 PS)',
+        basePrice: 245000,
+        variants: [
+          { name: 'sDrive20i xLine', engine: '1.5L 3-Cyl TwinPower Turbo (156 PS)', price: 244800 },
+          { name: 'iX1 xDrive30 (EV)', engine: 'Dual Motor AWD 66.5 kWh (313 PS)', price: 272800 }
+        ]
+      },
+      'X3': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.0L TwinPower Turbo xDrive (245 PS)',
+        basePrice: 325000,
+        variants: [
+          { name: 'xDrive30i M Sport', engine: '2.0L TwinPower Turbo AWD (245 PS)', price: 357800 },
+          { name: 'iX3 M Sport (EV)', engine: 'Rear Electric Motor 80 kWh (286 PS)', price: 322800 },
+          { name: 'xDrive20i', engine: '2.0L TwinPower Turbo (184 PS)', price: 315800 }
+        ]
+      },
+      'X5': {
+        type: 'SUV',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Hybrid',
+        engine: '3.0L Inline-6 Plug-in Hybrid (489 PS)',
+        basePrice: 488000,
+        variants: [
+          { name: 'xDrive50e M Sport (PHEV)', engine: '3.0L Turbo + Electric eDrive (489 PS)', price: 486800 }
+        ]
+      }
+    },
+
+    'Mercedes-Benz': {
+      'C-Class': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Turbo Mild Hybrid 9G-TRONIC (204 PS)',
+        basePrice: 295000,
+        variants: [
+          { name: 'C200 Avantgarde 1.5L', engine: '1.5L Turbo EQ Boost 9G-TRONIC (204 PS)', price: 292888 },
+          { name: 'C300 AMG Line 2.0L', engine: '2.0L Turbo EQ Boost 9G-TRONIC (258 PS)', price: 333888 },
+          { name: 'C350e AMG Line (Hybrid)', engine: '2.0L Plug-in Hybrid (313 PS)', price: 355888 }
+        ]
+      },
+      'E-Class': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.0L Turbo 9G-TRONIC (197 PS)',
+        basePrice: 395000,
+        variants: [
+          { name: 'E200 Avantgarde 2.0L', engine: '2.0L Turbo 9G-TRONIC (197 PS)', price: 399888 },
+          { name: 'E300 AMG Line 2.0L', engine: '2.0L Turbo 9G-TRONIC (258 PS)', price: 440888 }
+        ]
+      },
+      'GLC': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.0L Turbo 4MATIC Mild Hybrid (258 PS)',
+        basePrice: 380000,
+        variants: [
+          { name: 'GLC 300 4MATIC AMG Line', engine: '2.0L Turbo 4MATIC 9G-TRONIC (258 PS)', price: 378888 },
+          { name: 'GLC 350e 4MATIC (PHEV)', engine: '2.0L Plug-In Hybrid 4MATIC (313 PS)', price: 398888 }
+        ]
+      }
+    },
+
+    'BYD': {
+      'Atto 3': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Electric (EV)',
+        engine: 'Electric Motor 60.48 kWh (204 PS / 310 Nm)',
+        basePrice: 149000,
+        variants: [
+          { name: 'Extended Range 60.5 kWh (480 km NEDC)', engine: 'Permanent Magnet Synchronous 150 kW (204 PS)', price: 149800 },
+          { name: 'Standard Range 49.9 kWh (410 km NEDC)', engine: 'Permanent Magnet Synchronous 150 kW (204 PS)', price: 139800 }
+        ]
+      },
+      'Dolphin': {
+        type: 'Hatchback',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Electric (EV)',
+        engine: 'Electric Motor Blade Battery (204 PS)',
+        basePrice: 110000,
+        variants: [
+          { name: 'Extended Range 60.5 kWh', engine: 'Electric Motor 150 kW (204 PS)', price: 125300 },
+          { name: 'Dynamic Standard 44.9 kWh', engine: 'Electric Motor 70 kW (95 PS)', price: 100530 }
+        ]
+      },
+      'Seal': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Electric (EV)',
+        engine: 'Dual Motor AWD 82.5 kWh (530 PS)',
+        basePrice: 180000,
+        variants: [
+          { name: 'Performance AWD (530 PS / 670 Nm)', engine: 'Dual Motor All-Wheel Drive 82.5 kWh (530 PS)', price: 199800 },
+          { name: 'Premium RWD (313 PS)', engine: 'Rear Wheel Drive 82.5 kWh (313 PS)', price: 179800 }
+        ]
+      }
+    },
+
+    'Chery': {
+      'Omoda 5': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '1.5L Turbo 9-CVT (156 PS)',
+        basePrice: 108000,
+        variants: [
+          { name: '1.5T H (High Spec)', engine: '1.5L Turbocharged 9-Speed CVT (156 PS)', price: 118800 },
+          { name: '1.5T C', engine: '1.5L Turbocharged 9-Speed CVT (156 PS)', price: 108800 }
+        ]
+      },
+      'Tiggo 8 Pro': {
+        type: 'SUV',
+        seats: 7,
+        transmission: 'Automatic',
+        fuel: 'Petrol',
+        engine: '2.0L TGDi 7-DCT (256 PS)',
+        basePrice: 159000,
+        variants: [
+          { name: '2.0T Flagship 7-Seater', engine: '2.0L Turbo Direct Injection 7-DCT (256 PS)', price: 159800 }
+        ]
+      }
+    },
+
+    'Tesla': {
+      'Model 3': {
+        type: 'Sedan',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Electric (EV)',
+        engine: 'Dual Motor AWD Long Range (498 PS)',
+        basePrice: 189000,
+        variants: [
+          { name: 'Standard RWD (513 km WLTP)', engine: 'Rear-Wheel Drive Electric Motor (283 PS)', price: 189000 },
+          { name: 'Long Range AWD (629 km WLTP)', engine: 'Dual Motor All-Wheel Drive (498 PS)', price: 218000 },
+          { name: 'Performance AWD (0-100 3.1s)', engine: 'High Performance Dual Motor (510 PS)', price: 242000 }
+        ]
+      },
+      'Model Y': {
+        type: 'SUV',
+        seats: 5,
+        transmission: 'Automatic',
+        fuel: 'Electric (EV)',
+        engine: 'Dual Motor AWD (450 PS)',
+        basePrice: 199000,
+        variants: [
+          { name: 'Standard RWD (455 km WLTP)', engine: 'Single Motor Rear-Wheel Drive (299 PS)', price: 199000 },
+          { name: 'Long Range AWD (533 km WLTP)', engine: 'Dual Motor All-Wheel Drive (450 PS)', price: 246000 }
+        ]
+      }
+    }
+  };
+
+  /**
+   * =========================================================================
+   * 2. MALAYSIAN AUTOMOTIVE RENTAL FORMULA ENGINE
+   * Calculates Daily Rental & Deposit considering:
+   * Brand, Body Type, Seats, Estimated Market Price, and Year Depreciation
+   * =========================================================================
+   */
+  function calculateRentalFromFormula(brand, bodyType, seats, year, approxMarketPrice) {
+    var b = (brand || '').toLowerCase();
+    var t = (bodyType || 'Sedan').toLowerCase();
+    var s = parseInt(seats, 10) || 5;
+    var y = parseInt(year, 10) || 2024;
+
+    // 1. Determine Market Price baseline
+    var marketPrice = approxMarketPrice;
+    if (!marketPrice) {
+      marketPrice = 90000;
+      if (b.includes('perodua')) marketPrice = 55000;
+      else if (b.includes('proton')) marketPrice = 72000;
+      else if (b.includes('toyota') || b.includes('honda') || b.includes('nissan') || b.includes('mazda') || b.includes('mitsubishi')) marketPrice = 120000;
+      else if (b.includes('byd') || b.includes('chery') || b.includes('hyundai') || b.includes('kia') || b.includes('tesla')) marketPrice = 160000;
+      else if (b.includes('bmw') || b.includes('mercedes') || b.includes('audi') || b.includes('volvo') || b.includes('lexus')) marketPrice = 310000;
+      else if (b.includes('porsche')) marketPrice = 650000;
+    }
+
+    // 2. Body Type Multiplier
+    var bodyMultiplier = 1.0;
+    if (t === 'hatchback') bodyMultiplier = 0.95;
+    else if (t === 'sedan') bodyMultiplier = 1.0;
+    else if (t === 'suv') bodyMultiplier = 1.25;
+    else if (t === 'mpv') bodyMultiplier = 1.30;
+    else if (t === 'pickup') bodyMultiplier = 1.20;
+    else if (t === 'van') bodyMultiplier = 1.35;
+    else if (t === 'coupe') bodyMultiplier = 1.50;
+    else if (t === 'luxury') bodyMultiplier = 1.70;
+
+    // 3. Seats Multiplier
+    var seatMultiplier = 1.0;
+    if (s <= 2) seatMultiplier = 1.1;
+    else if (s <= 5) seatMultiplier = 1.0;
+    else if (s <= 7) seatMultiplier = 1.2;
+    else if (s <= 10) seatMultiplier = 1.35;
+    else if (s <= 15) seatMultiplier = 1.55;
+    else seatMultiplier = 1.8;
+
+    // 4. Depreciation by Year (2026 baseline: -5% per year, minimum 0.65)
+    var currentYear = 2026;
+    var age = Math.max(0, currentYear - y);
+    var ageFactor = Math.max(0.65, 1 - (age * 0.05));
+
+    // Estimated current vehicle market price
+    var estimatedCurrentPrice = Math.round(marketPrice * bodyMultiplier * seatMultiplier * ageFactor);
+
+    // 5. Daily Rental Rate Calculation (~0.16% to 0.18% of market value)
+    var dailyRate = Math.round((estimatedCurrentPrice * 0.0017) / 10) * 10;
+    dailyRate = Math.max(100, dailyRate); // Floor RM100/day minimum
+
+    // 6. Security Deposit Calculation
+    var deposit = Math.round((dailyRate * 0.9) / 50) * 50;
+    deposit = Math.max(150, Math.min(2500, deposit));
+
+    return {
+      rate: dailyRate,
+      deposit: deposit,
+      marketPrice: estimatedCurrentPrice
+    };
+  }
+
+  /**
+   * =========================================================================
+   * 3. CASCADING SELECTION LOGIC (ALA CARLIST.MY)
+   * =========================================================================
+   */
+
+  // Brand Change -> Populates Models
+  window.onBrandChange = function () {
+    var brandEl = document.getElementById('car-brand');
+    var modelEl = document.getElementById('car-model');
+    var customWrap = document.getElementById('car-custom-name-wrap');
+    var brand = brandEl ? brandEl.value : '';
+
+    if (!modelEl) return;
+    modelEl.innerHTML = '<option value="" disabled selected>Pilih Model Kenderaan</option>';
+
+    if (CARLIST_DATABASE[brand]) {
+      var models = Object.keys(CARLIST_DATABASE[brand]);
+      models.forEach(function (m) {
+        var opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        modelEl.appendChild(opt);
+      });
+    }
+
+    // Always append Custom option
+    var customOpt = document.createElement('option');
+    customOpt.value = '__custom__';
+    customOpt.textContent = '[+ Taip Model & Varian Sendiri]';
+    modelEl.appendChild(customOpt);
+
+    if (customWrap) customWrap.classList.add('hidden');
+
+    // Auto-select first model if available
+    if (CARLIST_DATABASE[brand] && Object.keys(CARLIST_DATABASE[brand]).length > 0) {
+      modelEl.selectedIndex = 1;
+      window.onModelChange();
+    } else {
+      clearVariants();
+    }
+
+    triggerDraftSave();
+    window.updateLivePreview();
+  };
+
+  // Model Change -> Populates Variants or Shows Custom Input
+  window.onModelChange = function () {
+    var brandEl = document.getElementById('car-brand');
+    var modelEl = document.getElementById('car-model');
+    var variantEl = document.getElementById('car-variant');
+    var customWrap = document.getElementById('car-custom-name-wrap');
+    var brand = brandEl ? brandEl.value : '';
+    var model = modelEl ? modelEl.value : '';
+
+    if (model === '__custom__') {
+      if (customWrap) customWrap.classList.remove('hidden');
+      var customInput = document.getElementById('car-custom-name');
+      if (customInput) customInput.focus();
+      clearVariants();
+      return;
+    }
+
+    if (customWrap) customWrap.classList.add('hidden');
+    if (!variantEl) return;
+
+    variantEl.innerHTML = '<option value="" disabled selected>Pilih Varian &amp; Enjin</option>';
+
+    var modelData = (CARLIST_DATABASE[brand] && CARLIST_DATABASE[brand][model]) || null;
+    if (modelData && modelData.variants) {
+      modelData.variants.forEach(function (v) {
+        var opt = document.createElement('option');
+        opt.value = v.name;
+        opt.textContent = v.name;
+        opt.dataset.engine = v.engine || modelData.engine;
+        opt.dataset.price = v.price || modelData.basePrice;
+        variantEl.appendChild(opt);
+      });
+
+      var customVar = document.createElement('option');
+      customVar.value = '__custom_variant__';
+      customVar.textContent = '[+ Taip Varian Sendiri]';
+      variantEl.appendChild(customVar);
+
+      // Auto-select first variant
+      variantEl.selectedIndex = 1;
+      window.onVariantChange();
+    } else {
+      clearVariants();
+    }
+
+    triggerDraftSave();
+    window.updateLivePreview();
+  };
+
+  function clearVariants() {
+    var variantEl = document.getElementById('car-variant');
+    if (variantEl) {
+      variantEl.innerHTML = '<option value="Standard" selected>Standard Varian</option>';
+    }
+  }
+
+  // Variant Change -> Sets Technical Specs & Calculates Rental Formula
+  window.onVariantChange = function () {
+    var brandEl = document.getElementById('car-brand');
+    var modelEl = document.getElementById('car-model');
+    var variantEl = document.getElementById('car-variant');
+    var yearEl = document.getElementById('car-year');
+
+    var brand = brandEl ? brandEl.value : '';
+    var model = modelEl ? modelEl.value : '';
+    var variant = variantEl ? variantEl.value : '';
+    var year = yearEl ? yearEl.value : '2024';
+
+    var modelData = (CARLIST_DATABASE[brand] && CARLIST_DATABASE[brand][model]) || null;
+    var approxPrice = 90000;
+
+    if (modelData) {
+      // Set specs
+      if (modelData.type) setSelectValue('car-type', modelData.type);
+      if (modelData.seats) setSelectValue('car-seats', String(modelData.seats));
+      if (modelData.transmission) setSelectValue('car-transmission', modelData.transmission);
+      if (modelData.fuel) setSelectValue('car-fuel', modelData.fuel);
+
+      // Selected variant details
+      var selectedOpt = variantEl && variantEl.selectedOptions ? variantEl.selectedOptions[0] : null;
+      var engineStr = (selectedOpt && selectedOpt.dataset.engine) ? selectedOpt.dataset.engine : modelData.engine;
+      approxPrice = (selectedOpt && selectedOpt.dataset.price) ? parseInt(selectedOpt.dataset.price, 10) : modelData.basePrice;
+
+      var engineInput = document.getElementById('car-engine');
+      if (engineInput) engineInput.value = engineStr;
+    }
+
+    // Run Malaysian Rental & Deposit Formula
+    var bodyType = document.getElementById('car-type')?.value || (modelData && modelData.type) || 'Sedan';
+    var seats = document.getElementById('car-seats')?.value || (modelData && modelData.seats) || 5;
+
+    var formulaRes = calculateRentalFromFormula(brand, bodyType, seats, year, approxPrice);
+
+    var rateInput = document.getElementById('car-rate');
+    var depositInput = document.getElementById('car-deposit');
+    if (rateInput) rateInput.value = formulaRes.rate;
+    if (depositInput) depositInput.value = formulaRes.deposit;
+
+    // Update Full Vehicle Name for System
+    updateFullCarName();
+    triggerDraftSave();
+    window.updateLivePreview();
+  };
+
+  window.onYearChange = function () {
+    updateFullCarName();
+    window.onVariantChange();
+  };
+
+  window.onCustomNameInput = function () {
+    updateFullCarName();
+    triggerDraftSave();
+    window.updateLivePreview();
+  };
+
+  // Construct full name: [Year] [Brand] [Model] [Variant]
+  function updateFullCarName() {
+    var year = document.getElementById('car-year')?.value || '2024';
+    var brand = document.getElementById('car-brand')?.value || '';
+    var modelEl = document.getElementById('car-model');
+    var model = modelEl ? modelEl.value : '';
+    var customName = (document.getElementById('car-custom-name')?.value || '').trim();
+    var variant = document.getElementById('car-variant')?.value || '';
+
+    var fullName = '';
+    if (model === '__custom__' && customName) {
+      fullName = year + ' ' + (brand ? brand + ' ' : '') + customName;
+    } else if (brand && model) {
+      var varStr = (variant && variant !== 'Standard' && variant !== '__custom_variant__') ? ' ' + variant : '';
+      fullName = year + ' ' + brand + ' ' + model + varStr;
+    } else {
+      fullName = '2023 BMW 320i M Sport 2.0';
+    }
+
+    var hiddenName = document.getElementById('car-name');
+    if (hiddenName) hiddenName.value = fullName;
+    return fullName;
+  }
+
+  // Official Body Color Dropdown Handler
+  window.onColorSelectChange = function () {
+    var colorSelect = document.getElementById('car-color-select');
+    var customWrap = document.getElementById('car-color-custom-wrap');
+    var customInput = document.getElementById('car-color-custom');
+    var hiddenColor = document.getElementById('car-color');
+    var val = colorSelect ? colorSelect.value : '';
+
+    if (val === 'other') {
+      if (customWrap) customWrap.classList.remove('hidden');
+      if (customInput) {
+        customInput.focus();
+        if (hiddenColor) hiddenColor.value = customInput.value.trim() || 'Custom Color';
+      }
+    } else {
+      if (customWrap) customWrap.classList.add('hidden');
+      if (customInput) customInput.value = '';
+      if (hiddenColor) hiddenColor.value = val;
+    }
+
+    triggerDraftSave();
+    window.updateLivePreview();
+  };
+
+  window.onCustomColorInput = function () {
+    var customInput = document.getElementById('car-color-custom');
+    var hiddenColor = document.getElementById('car-color');
+    var text = (customInput?.value || '').trim();
+    if (hiddenColor) hiddenColor.value = text || 'Custom Color';
+    triggerDraftSave();
+    window.updateLivePreview();
+  };
+
+  function setSelectValue(id, val) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    for (var i = 0; i < el.options.length; i++) {
+      if (el.options[i].value === val) {
+        el.selectedIndex = i;
+        break;
+      }
+    }
+  }
+
+  // AI Re-Detect Button
+  window.triggerAiSpecAutofill = function () {
+    var brand = document.getElementById('car-brand')?.value;
+    var model = document.getElementById('car-model')?.value;
+
+    if (!brand || !model) {
+      window.showToast('Sila pilih Jenama dan Model kenderaan terlebih dahulu.', 'info');
+      return;
+    }
+
+    window.onVariantChange();
+    window.showToast('✨ AI berjaya mengira spesifikasi pasaran Malaysia terkini!', 'success');
+  };
+
+  /**
+   * =========================================================================
+   * 4. 2-STEP STEPPER WIZARD CONTROLLER
+   * =========================================================================
+   */
+  window.goToStep = function (step) {
+    if (step === 2) {
+      // Validate Step 1 fields
+      var brand = document.getElementById('car-brand')?.value;
+      var model = document.getElementById('car-model')?.value;
+      var plate = (document.getElementById('car-plate')?.value || '').trim();
+      var rate = document.getElementById('car-rate')?.value;
+      var deposit = document.getElementById('car-deposit')?.value;
+
+      if (!brand) {
+        window.showToast('Sila pilih Pengeluar (Jenama) kenderaan.', 'warning');
+        document.getElementById('car-brand')?.focus();
+        return;
+      }
+      if (!model) {
+        window.showToast('Sila pilih Model kenderaan.', 'warning');
+        document.getElementById('car-model')?.focus();
+        return;
+      }
+      if (!plate) {
+        window.showToast('Sila masukkan No. Pendaftaran (Plat) kenderaan.', 'warning');
+        document.getElementById('car-plate')?.focus();
+        return;
+      }
+      if (!rate || parseInt(rate, 10) < 50) {
+        window.showToast('Sila masukkan Kadar Sewaan Harian yang sah.', 'warning');
+        document.getElementById('car-rate')?.focus();
+        return;
+      }
+      if (!deposit) {
+        window.showToast('Sila masukkan Deposit Keselamatan.', 'warning');
+        document.getElementById('car-deposit')?.focus();
+        return;
+      }
+
+      // Transition to Step 2
+      currentStep = 2;
+      document.getElementById('step-1-container')?.classList.add('hidden');
+      document.getElementById('step-2-container')?.classList.remove('hidden');
+
+      var b1 = document.getElementById('step-btn-1');
+      var b2 = document.getElementById('step-btn-2');
+      if (b1) {
+        b1.classList.remove('active');
+        b1.classList.add('completed');
+      }
+      if (b2) {
+        b2.classList.add('active');
+      }
+
+      window.updateLivePreview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } else {
+      // Return to Step 1
+      currentStep = 1;
+      document.getElementById('step-2-container')?.classList.add('hidden');
+      document.getElementById('step-1-container')?.classList.remove('hidden');
+
+      var btn1 = document.getElementById('step-btn-1');
+      var btn2 = document.getElementById('step-btn-2');
+      if (btn1) {
+        btn1.classList.add('active');
+      }
+      if (btn2) {
+        btn2.classList.remove('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.handleHeaderSaveClick = function () {
+    if (currentStep === 1) {
+      window.goToStep(2);
+    } else {
+      document.getElementById('add-car-form')?.requestSubmit();
+    }
+  };
+
+  /**
+   * =========================================================================
+   * 5. AUTO-SAVE & DRAFT RESUME CONTROLLER
+   * =========================================================================
+   */
+  function triggerDraftSave() {
+    if (isInitializing || isRestoringDraft) return;
+    isFormDirty = true;
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(saveCarDraft, 400);
+  }
+  window.triggerDraftSave = triggerDraftSave;
+
+  function saveCarDraft() {
+    if (isInitializing || isRestoringDraft) return;
+    try {
+      var draft = {
+        brand: document.getElementById('car-brand')?.value || '',
+        model: document.getElementById('car-model')?.value || '',
+        customName: document.getElementById('car-custom-name')?.value || '',
+        variant: document.getElementById('car-variant')?.value || '',
+        year: document.getElementById('car-year')?.value || '2024',
+        plate: document.getElementById('car-plate')?.value || '',
+        colorSelect: document.getElementById('car-color-select')?.value || '',
+        customColor: document.getElementById('car-color-custom')?.value || '',
+        color: document.getElementById('car-color')?.value || '',
+        type: document.getElementById('car-type')?.value || 'Sedan',
+        seats: document.getElementById('car-seats')?.value || '5',
+        transmission: document.getElementById('car-transmission')?.value || 'Automatic',
+        fuel: document.getElementById('car-fuel')?.value || 'Petrol',
+        engine: document.getElementById('car-engine')?.value || '',
+        rate: document.getElementById('car-rate')?.value || '',
+        deposit: document.getElementById('car-deposit')?.value || '',
+        fullName: document.getElementById('car-name')?.value || '',
+        timestamp: Date.now()
+      };
+
+      // Only save if user has inputted something meaningful
+      if (draft.plate || draft.customName || isFormDirty) {
+        localStorage.setItem('wedrive_car_draft', JSON.stringify(draft));
+      }
+    } catch (e) {
+      console.warn('Draft save error:', e);
+    }
+  }
+
+  window.manualSaveDraft = function () {
+    isFormDirty = true;
+    saveCarDraft();
+    window.showToast('💾 Draf kenderaan berjaya disimpan!', 'success');
+  };
+
+  function checkExistingDraft() {
+    try {
+      var raw = localStorage.getItem('wedrive_car_draft');
+      if (!raw) return;
+      var draft = JSON.parse(raw);
+      if (!draft || (!draft.brand && !draft.plate && !draft.customName)) return;
+
+      var banner = document.getElementById('banner-draft-resume');
+      var subtitle = document.getElementById('draft-resume-subtitle');
+      if (banner) {
+        banner.classList.remove('hidden');
+        var dName = draft.fullName || (draft.brand + ' ' + draft.model);
+        if (subtitle) {
+          var dateStr = new Date(draft.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          subtitle.textContent = 'Draf bagi "' + (dName || 'Kenderaan Baharu') + '" disimpan pada jam ' + dateStr + '. Pulihkan untuk sambung mengisi.';
+        }
+      }
+    } catch (e) {
+      console.warn('Draft check error:', e);
+    }
+  }
+
+  window.applyCarDraft = function () {
+    isRestoringDraft = true;
+    try {
+      var raw = localStorage.getItem('wedrive_car_draft');
+      if (!raw) return;
+      var draft = JSON.parse(raw);
+
+      if (draft.brand) {
+        setSelectValue('car-brand', draft.brand);
+        window.onBrandChange();
+      }
+
+      if (draft.model) {
+        setSelectValue('car-model', draft.model);
+        window.onModelChange();
+      }
+
+      if (draft.customName) {
+        var cInput = document.getElementById('car-custom-name');
+        if (cInput) cInput.value = draft.customName;
+      }
+
+      if (draft.variant) {
+        setSelectValue('car-variant', draft.variant);
+        window.onVariantChange();
+      }
+
+      if (draft.year) {
+        setSelectValue('car-year', draft.year);
+        window.onYearChange();
+      }
+
+      if (draft.plate) {
+        var pInput = document.getElementById('car-plate');
+        if (pInput) pInput.value = draft.plate;
+      }
+
+      if (draft.colorSelect) {
+        setSelectValue('car-color-select', draft.colorSelect);
+        window.onColorSelectChange();
+        if (draft.colorSelect === 'other' && draft.customColor) {
+          var colCust = document.getElementById('car-color-custom');
+          if (colCust) colCust.value = draft.customColor;
+          window.onCustomColorInput();
+        }
+      }
+
+      if (draft.type) setSelectValue('car-type', draft.type);
+      if (draft.seats) setSelectValue('car-seats', draft.seats);
+      if (draft.transmission) setSelectValue('car-transmission', draft.transmission);
+      if (draft.fuel) setSelectValue('car-fuel', draft.fuel);
+
+      if (draft.engine) {
+        var engInput = document.getElementById('car-engine');
+        if (engInput) engInput.value = draft.engine;
+      }
+
+      if (draft.rate) {
+        var rateEl = document.getElementById('car-rate');
+        if (rateEl) rateEl.value = draft.rate;
+      }
+
+      if (draft.deposit) {
+        var depEl = document.getElementById('car-deposit');
+        if (depEl) depEl.value = draft.deposit;
+      }
+
+      updateFullCarName();
+      window.updateLivePreview();
+
+      document.getElementById('banner-draft-resume')?.classList.add('hidden');
+      window.showToast('✅ Draf berjaya dipulihkan sepenuhnya!', 'success');
+    } catch (e) {
+      console.warn('Draft apply error:', e);
+      window.showToast('Ralat memulihkan draf.', 'error');
+    } finally {
+      isRestoringDraft = false;
+      isFormDirty = true;
+    }
+  };
+
+  window.clearCarDraft = function (showToastNotice) {
+    try {
+      localStorage.removeItem('wedrive_car_draft');
+      document.getElementById('banner-draft-resume')?.classList.add('hidden');
+      if (showToastNotice) {
+        window.showToast('Draf telah dipadamkan.', 'info');
+      }
+    } catch (e) {
+      console.warn('Draft clear error:', e);
+    }
+  };
+
+  /**
+   * =========================================================================
+   * 6. EXIT CONFIRMATION MODAL & NAVIGATION INTERCEPTOR
+   * =========================================================================
+   */
+  window.triggerExitConfirm = function (url) {
+    var plate = (document.getElementById('car-plate')?.value || '').trim();
+    var brand = document.getElementById('car-brand')?.value;
+
+    // If form is dirty or has data
+    if (isFormDirty || plate || brand) {
+      pendingExitUrl = url || 'cars.html';
+      var modal = document.getElementById('modal-exit-confirm');
+      if (modal) modal.classList.add('show');
+    } else {
+      window.location.href = url || 'cars.html';
+    }
+  };
+
+  window.closeExitModal = function () {
+    var modal = document.getElementById('modal-exit-confirm');
+    if (modal) modal.classList.remove('show');
+    pendingExitUrl = null;
+  };
+
+  window.proceedExit = function () {
+    var target = pendingExitUrl || 'cars.html';
+    window.closeExitModal();
+    // Allow clean leave
+    isFormDirty = false;
+    window.location.href = target;
+  };
+
+  // Intercept Navigation Links on Page
+  function setupNavigationGuards() {
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
+
+      var plate = (document.getElementById('car-plate')?.value || '').trim();
+      var brand = document.getElementById('car-brand')?.value;
+
+      if (isFormDirty || plate || brand) {
+        e.preventDefault();
+        window.triggerExitConfirm(href);
+      }
+    });
+
+    // Browser close / tab reload warning
+    window.addEventListener('beforeunload', function (e) {
+      var plate = (document.getElementById('car-plate')?.value || '').trim();
+      var brand = document.getElementById('car-brand')?.value;
+      if (isFormDirty || plate || brand) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  }
+
+  /**
+   * =========================================================================
+   * 7. 360 STUDIO & PHOTO HANDLING (PRESERVED & EXPANDED)
+   * =========================================================================
+   */
 
   // Photo Upload & Preview
   function previewCarPhoto(input) {
@@ -68,7 +1285,6 @@
       return;
     }
 
-    // Natural sort by filename (e.g. frame-000, frame-001)
     imageFiles.sort(function (a, b) {
       return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
     });
@@ -98,7 +1314,6 @@
         window.__360Data.exteriorFrames[idx] = e.target.result;
         loadedCount++;
 
-        // Add mini thumbnail preview to the scrub strip
         if (strip && idx % step === 0 && strip.children.length < 12) {
           var thumb = document.createElement('img');
           thumb.src = e.target.result;
@@ -121,7 +1336,6 @@
     });
   }
 
-  // 360 Exterior Scrub Slider
   window.handleScrub360 = function (val) {
     var idx = parseInt(val, 10);
     show360Frame(idx);
@@ -150,7 +1364,7 @@
     }
   }
 
-  // 360 Interior Upload (Equirectangular or Cube Face)
+  // 360 Interior Upload
   window.handleInteriorUpload = function (input, mode) {
     if (!input.files || !input.files.length) return;
 
@@ -230,7 +1444,7 @@
     }
   };
 
-  // AI 360 Auto-Downloader from URL
+  // AI 360 Auto-Downloader
   window.ingest360FromUrl = function () {
     var urlInput = document.getElementById('ai-360-link-input');
     var feedback = document.getElementById('ai-360-link-feedback');
@@ -241,7 +1455,9 @@
       return;
     }
 
-    feedback.innerHTML = '<span class="text-primary"><span class="material-icons-round fs-12 spin-pulse">sync</span> AI sedang menganalisis pautan 360 dan menyedut bingkai...</span>';
+    if (feedback) {
+      feedback.innerHTML = '<span class="text-primary"><span class="material-icons-round fs-12 spin-pulse">sync</span> AI sedang menganalisis pautan 360 dan menyedut bingkai...</span>';
+    }
 
     setTimeout(function () {
       var sampleFrames = [];
@@ -252,13 +1468,9 @@
 
       window.__360Data.has360 = true;
       window.__360Data.exteriorFrames = sampleFrames;
-      window.__360Data.interiorAsset = {
-        type: 'cube-map',
-        preview: '../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/pano_f.jpg'
-      };
 
       var countEl = document.getElementById('exterior-frames-count');
-      if (countEl) countEl.textContent = '36 Bingkai (AI Synced)';
+      if (countEl) countEl.textContent = '36 Bingkai (AI Ingested)';
 
       var scrubSlider = document.getElementById('exterior-scrub');
       if (scrubSlider) {
@@ -269,572 +1481,114 @@
       var previewZone = document.getElementById('exterior-preview-zone');
       if (previewZone) previewZone.classList.remove('hidden');
 
-      var intZone = document.getElementById('interior-preview-zone');
-      if (intZone) intZone.classList.remove('hidden');
-      var intThumb = document.getElementById('interior-thumb-img');
-      if (intThumb) intThumb.src = window.__360Data.interiorAsset.preview;
+      var strip = document.getElementById('exterior-thumb-strip');
+      if (strip) {
+        strip.innerHTML = '';
+        for (var k = 0; k < 36; k += 3) {
+          var t = document.createElement('img');
+          t.src = sampleFrames[k];
+          t.className = 'thumb-reel-item';
+          t.alt = 'Thumb ' + k;
+          strip.appendChild(t);
+        }
+      }
 
       update360StatusBadge();
       show360Frame(0);
       window.switchPreviewMode('exterior');
 
-      feedback.innerHTML = '<span class="text-success fw-600"><span class="material-icons-round fs-14">check_circle</span> Berjaya! 36 bingkai luaran dan panorama dalaman berjaya disedut secara automatik.</span>';
+      if (feedback) {
+        feedback.innerHTML = '<span class="text-emerald fw-600"><span class="material-icons-round fs-14">check_circle</span> 36 Bingkai putaran berkualiti tinggi berjaya disedut dari pautan!</span>';
+      }
+      window.showToast('✨ Pautan 360° berjaya disedut dan diselaraskan!', 'success');
     }, 1000);
   };
 
   function update360StatusBadge() {
-    var badge = document.getElementById('badge-360-status');
-    var previewBadge = document.getElementById('preview-badge-360');
+    var b = document.getElementById('badge-360-status');
+    var pBadge = document.getElementById('preview-badge-360');
+    if (!b) return;
 
     if (window.__360Data.has360) {
-      if (badge) {
-        badge.style.background = 'linear-gradient(135deg, rgba(88,86,214,0.2) 0%, rgba(0,113,227,0.2) 100%)';
-        badge.style.color = '#AF52DE';
-        badge.innerHTML = '<span class="material-icons-round fs-12">360</span> 360° Studio Aktif';
-      }
-      if (previewBadge) {
-        previewBadge.style.display = 'inline-flex';
-      }
+      b.className = 'status-badge active';
+      b.innerHTML = '<span class="material-icons-round fs-14">360</span> <span>360° Studio Aktif</span>';
+      if (pBadge) pBadge.style.display = 'inline-flex';
     } else {
-      if (badge) {
-        badge.style.background = 'rgba(255,255,255,0.05)';
-        badge.style.color = 'var(--text-secondary)';
-        badge.innerHTML = 'Tiada 360° (Foto Biasa)';
-      }
-      if (previewBadge) {
-        previewBadge.style.display = 'none';
-      }
+      b.className = 'status-badge badge-360-muted';
+      b.innerHTML = '<span>Tiada 360° (Foto Biasa)</span>';
+      if (pBadge) pBadge.style.display = 'none';
     }
   }
 
-  // Preview Mode Switcher (Photo vs Exterior vs Interior)
+  // Preview Mode Switcher (Photo / Exterior / Interior)
   window.switchPreviewMode = function (mode) {
     var tabPhoto = document.getElementById('tab-prev-photo');
     var tabExt = document.getElementById('tab-prev-exterior');
     var tabInt = document.getElementById('tab-prev-interior');
 
-    if (tabPhoto) tabPhoto.classList.toggle('active', mode === 'photo');
-    if (tabExt) tabExt.classList.toggle('active', mode === 'exterior');
-    if (tabInt) tabInt.classList.toggle('active', mode === 'interior');
-
-    var photoImg = document.getElementById('preview-display-img');
-    var extImg = document.getElementById('preview-360-frame');
-    var intWrap = document.getElementById('preview-interior-wrap');
+    var imgPhoto = document.getElementById('preview-display-img');
+    var imgExt = document.getElementById('preview-360-frame');
+    var wrapInt = document.getElementById('preview-interior-wrap');
     var emptyBox = document.getElementById('preview-img-empty');
 
+    if (tabPhoto) tabPhoto.classList.remove('active');
+    if (tabExt) tabExt.classList.remove('active');
+    if (tabInt) tabInt.classList.remove('active');
+
+    if (imgPhoto) imgPhoto.classList.add('hidden');
+    if (imgExt) imgExt.classList.add('hidden');
+    if (wrapInt) wrapInt.classList.add('hidden');
+
     if (mode === 'photo') {
-      if (extImg) extImg.classList.add('hidden');
-      if (intWrap) intWrap.classList.add('hidden');
-      if (selectedPhotoBase64 && photoImg) {
-        photoImg.classList.remove('hidden');
+      if (tabPhoto) tabPhoto.classList.add('active');
+      if (selectedPhotoBase64 && imgPhoto) {
+        imgPhoto.classList.remove('hidden');
         if (emptyBox) emptyBox.classList.add('hidden');
       } else if (emptyBox) {
         emptyBox.classList.remove('hidden');
       }
     } else if (mode === 'exterior') {
-      if (photoImg) photoImg.classList.add('hidden');
-      if (intWrap) intWrap.classList.add('hidden');
-      if (window.__360Data.exteriorFrames.length) {
+      if (tabExt) tabExt.classList.add('active');
+      if (window.__360Data.has360 && window.__360Data.exteriorFrames.length && imgExt) {
+        imgExt.classList.remove('hidden');
         if (emptyBox) emptyBox.classList.add('hidden');
         show360Frame(window.__360Data.currentFrameIndex || 0);
       } else {
-        if (emptyBox) {
-          emptyBox.classList.remove('hidden');
-          var textSpan = emptyBox.querySelector('span:last-child');
-          if (textSpan) textSpan.textContent = 'Belum ada bingkai 360° dimuat naik';
-        }
+        window.showToast('Sila muat naik folder/fail bingkai 360° luaran terlebih dahulu.', 'info');
+        if (emptyBox) emptyBox.classList.remove('hidden');
       }
     } else if (mode === 'interior') {
-      if (photoImg) photoImg.classList.add('hidden');
-      if (extImg) extImg.classList.add('hidden');
-      if (window.__360Data.interiorAsset) {
+      if (tabInt) tabInt.classList.add('active');
+      if (window.__360Data.has360 && window.__360Data.interiorAsset && wrapInt) {
+        wrapInt.classList.remove('hidden');
         if (emptyBox) emptyBox.classList.add('hidden');
-        if (intWrap) intWrap.classList.remove('hidden');
       } else {
-        if (emptyBox) {
-          emptyBox.classList.remove('hidden');
-          var textSpan = emptyBox.querySelector('span:last-child');
-          if (textSpan) textSpan.textContent = 'Belum ada ruang dalaman 360° dimuat naik';
-        }
-      }
-    }
-  };
-
-  // Toast Notification Helper (Apple HIG Pill)
-  window.showToast = function (msg, type) {
-    var toast = document.getElementById('we-apple-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'we-apple-toast';
-      toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(22,22,24,0.92);color:#FFFFFF;padding:12px 24px;border-radius:9999px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 12px 36px rgba(0,0,0,0.45);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.18);z-index:99999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.4s ease;opacity:0;pointer-events:none;max-width:90vw;text-align:center;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;';
-      document.body.appendChild(toast);
-    }
-    var icon = type === 'error' ? 'error' : (type === 'info' ? 'info' : 'check_circle');
-    var iconColor = type === 'error' ? '#FF453A' : (type === 'info' ? '#BF5AF2' : '#32D74B');
-    toast.innerHTML = '<span class="material-icons-round" style="color:' + iconColor + ';font-size:18px;vertical-align:middle;">' + icon + '</span><span>' + msg + '</span>';
-    toast.style.opacity = '1';
-    toast.style.transform = 'translateX(-50%) translateY(0)';
-    clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(function () {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateX(-50%) translateY(100px)';
-    }, 3500);
-  };
-
-  // AI Specification & Tariff Auto-Detection Engine
-  window.triggerAiSpecAutofill = async function () {
-    var nameInput = document.getElementById('car-name');
-    var carName = nameInput ? nameInput.value.trim() : '';
-    var btn = document.getElementById('btn-ai-autofill');
-
-    if (!carName || carName.length < 2) {
-      if (nameInput) {
-        nameInput.focus();
-        nameInput.classList.add('ai-autofilled-glow');
-        setTimeout(function () { nameInput.classList.remove('ai-autofilled-glow'); }, 1200);
-      }
-      window.showToast('Sila masukkan Nama & Varian Model kenderaan terlebih dahulu.', 'info');
-      return;
-    }
-
-    var originalBtnHTML = btn ? btn.innerHTML : '';
-    if (btn) {
-      btn.disabled = true;
-      btn.innerHTML = '<span class="material-icons-round fs-14 spin-pulse">sync</span> <span>Menganalisis...</span>';
-    }
-
-    try {
-      var detected = null;
-
-      // Check online Gemini key in local storage
-      var aiKeys = {};
-      try {
-        aiKeys = JSON.parse(localStorage.getItem('wedrive_ai_keys') || '{}');
-      } catch (e) {}
-
-      var activeKey = (aiKeys.slot1 && aiKeys.slot1.key) || (aiKeys.slot3 && aiKeys.slot3.key) || null;
-      var provider = (aiKeys.slot1 && aiKeys.slot1.provider) || 'gemini';
-
-      if (activeKey && (activeKey.startsWith('AIzaSy') || provider === 'gemini')) {
-        try {
-          var endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(activeKey);
-          var promptText = 'Sebagai pakar automotif kereta sewa Malaysia pasaran Melaka, analisakan model kenderaan ini: "' + carName + '". ' +
-            'Kira cadangan kadar sewa harian (RM) dan deposit keselamatan berasaskan formula: jenama, jenis badan kereta (Sedan/SUV/MPV/Hatchback/Van/Pickup/Coupe/Luxury), bilangan tempat duduk (seats 1-20), dan anggaran harga pasaran kenderaan semasa di Malaysia. ' +
-            'Balas HANYA satu objek JSON sah tanpa markdown backticks: ' +
-            '{"brand":"Jenama","type":"Sedan/SUV/MPV/Hatchback/Van/Pickup/Coupe/Luxury","seats":5,"transmission":"Automatic/Manual","fuel":"Petrol/Diesel/Hybrid/Electric (EV)","engine":"Sesaran Enjin & Kuasa","rate":220,"deposit":200,"year":2024,"features":["carplay","dashcam","keyless","reverse_cam","tinted","sensor"]}';
-
-          var aiRes = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: promptText }] }],
-              generationConfig: { temperature: 0.1, maxOutputTokens: 300 }
-            })
-          });
-
-          if (aiRes.ok) {
-            var aiJson = await aiRes.json();
-            var rawText = (aiJson.candidates && aiJson.candidates[0] && aiJson.candidates[0].content && aiJson.candidates[0].content.parts && aiJson.candidates[0].content.parts[0].text) || '';
-            rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
-            detected = JSON.parse(rawText);
-          }
-        } catch (errAi) {
-          console.warn('[AI Auto-Detect] Online AI call failed, falling back to local automotive engine:', errAi);
-        }
-      }
-
-      // High-precision local automotive knowledge formula
-      if (!detected || !detected.type) {
-        var chosenBrand = document.getElementById('car-brand')?.value || '';
-        var chosenYear = parseInt(document.getElementById('car-year')?.value) || 2024;
-        detected = analyzeCarSpecsLocally(carName, chosenBrand, chosenYear);
-      }
-
-      applyDetectedSpecs(detected, carName);
-
-    } catch (err) {
-      console.error('[AI Auto-Detect] Error:', err);
-      window.showToast('Ralat semasa menganalisis spesifikasi. Sila isi secara manual.', 'error');
-    } finally {
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = originalBtnHTML;
+        window.showToast('Sila muat naik panorama 360° dalaman terlebih dahulu.', 'info');
+        if (emptyBox) emptyBox.classList.remove('hidden');
       }
     }
   };
 
   /**
-   * Comprehensive Malaysian Automotive Pricing Formula Engine
-   * Calculates rate and deposit considering:
-   * 1. Jenama (Brand tier & brand prestige)
-   * 2. Jenis Badan Kereta (Hatchback/Sedan/SUV/MPV/Pickup/Van/Coupe/Luxury)
-   * 3. Bilangan Tempat Duduk (Seats 1-20)
-   * 4. Anggaran Harga Pasaran Semasa Kenderaan (Market Price in RM)
-   * 5. Tahun Keluaran & Susut Nilai (Depreciation Factor)
+   * =========================================================================
+   * 8. OFFICIAL WEDRIVE CAR-CARD LIVE PREVIEW
+   * =========================================================================
    */
-  function calculateRentalFromFormula(brand, bodyType, seats, year, carName) {
-    var b = (brand || '').toLowerCase();
-    var t = (bodyType || 'Sedan').toLowerCase();
-    var s = parseInt(seats) || 5;
-    var y = parseInt(year) || 2024;
-
-    // 1. Estimated Brand Baseline Market Price in Malaysia (RM)
-    var baseMarketPrice = 85000;
-
-    if (b.includes('perodua')) {
-      baseMarketPrice = 52000;
-    } else if (b.includes('proton')) {
-      baseMarketPrice = 68000;
-    } else if (b.includes('toyota') || b.includes('honda') || b.includes('nissan') || b.includes('mazda') || b.includes('mitsubishi') || b.includes('isuzu') || b.includes('subaru') || b.includes('suzuki')) {
-      baseMarketPrice = 115000;
-    } else if (b.includes('hyundai') || b.includes('kia') || b.includes('ford') || b.includes('volkswagen') || b.includes('chery') || b.includes('gwm') || b.includes('omoda') || b.includes('jaecoo') || b.includes('byd') || b.includes('mg') || b.includes('neta') || b.includes('smart') || b.includes('geely') || b.includes('maxus')) {
-      baseMarketPrice = 138000;
-    } else if (b.includes('bmw') || b.includes('mercedes') || b.includes('audi') || b.includes('volvo') || b.includes('lexus') || b.includes('tesla') || b.includes('mini') || b.includes('infiniti') || b.includes('jaguar') || b.includes('land rover') || b.includes('jeep')) {
-      baseMarketPrice = 285000;
-    } else if (b.includes('porsche') || b.includes('maserati') || b.includes('lotus') || b.includes('alfa')) {
-      baseMarketPrice = 620000;
-    } else if (b.includes('ferrari') || b.includes('lamborghini') || b.includes('mclaren') || b.includes('rolls') || b.includes('bentley') || b.includes('aston')) {
-      baseMarketPrice = 1500000;
-    }
-
-    // 2. Body Type Multiplier
-    var bodyMultiplier = 1.0;
-    if (t === 'hatchback') bodyMultiplier = 0.95;
-    else if (t === 'sedan') bodyMultiplier = 1.0;
-    else if (t === 'suv') bodyMultiplier = 1.25;
-    else if (t === 'mpv') bodyMultiplier = 1.30;
-    else if (t === 'pickup') bodyMultiplier = 1.20;
-    else if (t === 'van') bodyMultiplier = 1.35;
-    else if (t === 'coupe') bodyMultiplier = 1.50;
-    else if (t === 'luxury') bodyMultiplier = 1.70;
-
-    // 3. Seats Multiplier
-    var seatMultiplier = 1.0;
-    if (s <= 2) seatMultiplier = 1.1; // Sport / Roadster coupe
-    else if (s <= 5) seatMultiplier = 1.0;
-    else if (s <= 7) seatMultiplier = 1.2;
-    else if (s <= 10) seatMultiplier = 1.35;
-    else if (s <= 15) seatMultiplier = 1.55;
-    else seatMultiplier = 1.8;
-
-    // 4. Depreciation by Year (Current Year 2026 baseline: -5% per year, min 0.65)
-    var currentYear = 2026;
-    var age = Math.max(0, currentYear - y);
-    var ageFactor = Math.max(0.65, 1 - (age * 0.05));
-
-    // Estimated current vehicle market price (RM)
-    var estimatedCurrentMarketPrice = Math.round(baseMarketPrice * bodyMultiplier * seatMultiplier * ageFactor);
-
-    // 5. Daily Rental Rate Calculation (~0.16% to 0.18% of market value)
-    var dailyRate = Math.round((estimatedCurrentMarketPrice * 0.0017) / 10) * 10;
-    dailyRate = Math.max(100, dailyRate); // Floor RM100/day minimum
-
-    // 6. Security Deposit Calculation
-    var deposit = Math.round((dailyRate * 0.9) / 50) * 50;
-    deposit = Math.max(150, Math.min(2500, deposit));
-
-    return {
-      rate: dailyRate,
-      deposit: deposit,
-      marketPrice: estimatedCurrentMarketPrice
-    };
-  }
-
-  /**
-   * Local Formula-Driven Malaysian Automotive Intelligence Engine
-   * Calculates rate and deposit considering: Brand, Body Type, Seats, Estimated Market Price, and Year.
-   */
-  function analyzeCarSpecsLocally(name, userBrand, userYear) {
-    var s = (name || '').toLowerCase();
-    var res = {
-      brand: userBrand || 'Proton',
-      type: 'Sedan',
-      seats: 5,
-      transmission: 'Automatic',
-      fuel: 'Petrol',
-      engine: '1.5L Dual VVT-i Standard',
-      rate: 180,
-      deposit: 200,
-      year: userYear || 2024,
-      features: ['carplay', 'dashcam', 'keyless', 'reverse_cam', 'tinted', 'sensor']
-    };
-
-    // 1. Detect Brand from Name if not already selected
-    if (s.includes('perodua')) res.brand = 'Perodua';
-    else if (s.includes('proton')) res.brand = 'Proton';
-    else if (s.includes('toyota')) res.brand = 'Toyota';
-    else if (s.includes('honda')) res.brand = 'Honda';
-    else if (s.includes('nissan')) res.brand = 'Nissan';
-    else if (s.includes('mazda')) res.brand = 'Mazda';
-    else if (s.includes('hyundai')) res.brand = 'Hyundai';
-    else if (s.includes('kia')) res.brand = 'Kia';
-    else if (s.includes('byd')) res.brand = 'BYD';
-    else if (s.includes('tesla')) res.brand = 'Tesla';
-    else if (s.includes('bmw')) res.brand = 'BMW';
-    else if (s.includes('mercedes') || s.includes('benz') || s.includes('amg')) res.brand = 'Mercedes-Benz';
-    else if (s.includes('audi')) res.brand = 'Audi';
-    else if (s.includes('porsche')) res.brand = 'Porsche';
-    else if (s.includes('volvo')) res.brand = 'Volvo';
-    else if (s.includes('lexus')) res.brand = 'Lexus';
-    else if (s.includes('chery') || s.includes('omoda')) res.brand = 'Chery';
-    else if (s.includes('gwm') || s.includes('haval') || s.includes('ora')) res.brand = 'GWM';
-    else if (s.includes('mitsubishi')) res.brand = 'Mitsubishi';
-    else if (s.includes('isuzu')) res.brand = 'Isuzu';
-    else if (s.includes('ford')) res.brand = 'Ford';
-    else if (s.includes('mini')) res.brand = 'MINI';
-    else if (s.includes('volkswagen') || s.includes('vw')) res.brand = 'Volkswagen';
-    else if (s.includes('land rover') || s.includes('range rover')) res.brand = 'Land Rover';
-
-    // 2. Specific Model Logic with Malaysian Market Pricing Formula
-    if (s.includes('hiace') || s.includes('commuter') || s.includes('urvan') || s.includes('van') || s.includes('minibus')) {
-      res.brand = s.includes('urvan') ? 'Nissan' : (res.brand === 'Proton' ? 'Toyota' : res.brand);
-      res.type = 'Van';
-      res.fuel = 'Diesel';
-      res.seats = 12;
-      res.engine = '2.5L Turbo Diesel (136 PS)';
-      res.rate = 350;
-      res.deposit = 300;
-    } else if (s.includes('alphard') || s.includes('vellfire')) {
-      res.brand = 'Toyota';
-      res.type = 'Luxury';
-      res.seats = 7;
-      res.engine = '2.4L Turbo Executive Lounge (278 PS)';
-      res.rate = 650;
-      res.deposit = 500;
-    } else if (s.includes('320i') || (s.includes('bmw') && s.includes('3 series'))) {
-      res.brand = 'BMW';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '2.0L BMW TwinPower Turbo (184 PS)';
-      res.rate = 450;
-      res.deposit = 400;
-    } else if (s.includes('520i') || s.includes('530i') || s.includes('5 series')) {
-      res.brand = 'BMW';
-      res.type = 'Luxury';
-      res.seats = 5;
-      res.engine = '2.0L BMW TwinPower Turbo (252 PS)';
-      res.rate = 550;
-      res.deposit = 500;
-    } else if (s.includes('c200') || s.includes('c300') || (s.includes('mercedes') && s.includes('c-class'))) {
-      res.brand = 'Mercedes-Benz';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '2.0L Turbo 9G-TRONIC (204 PS)';
-      res.rate = 460;
-      res.deposit = 400;
-    } else if (s.includes('e200') || s.includes('e300') || (s.includes('mercedes') && s.includes('e-class'))) {
-      res.brand = 'Mercedes-Benz';
-      res.type = 'Luxury';
-      res.seats = 5;
-      res.engine = '2.0L Turbo Mild Hybrid (258 PS)';
-      res.rate = 580;
-      res.deposit = 500;
-    } else if (s.includes('model 3') || s.includes('model y')) {
-      res.brand = 'Tesla';
-      res.type = s.includes('model y') ? 'SUV' : 'Sedan';
-      res.seats = 5;
-      res.fuel = 'Electric (EV)';
-      res.engine = 'Dual Motor All-Wheel Drive (450 PS)';
-      res.rate = 400;
-      res.deposit = 400;
-    } else if (s.includes('atto') || s.includes('seal') || s.includes('dolphin')) {
-      res.brand = 'BYD';
-      res.type = s.includes('atto') ? 'SUV' : (s.includes('dolphin') ? 'Hatchback' : 'Sedan');
-      res.seats = 5;
-      res.fuel = 'Electric (EV)';
-      res.engine = 'Permanent Magnet Synchronous Motor (204 PS)';
-      res.rate = 280;
-      res.deposit = 250;
-    } else if (s.includes('civic')) {
-      res.brand = 'Honda';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '1.5L VTEC Turbo RS (182 PS)';
-      res.rate = 280;
-      res.deposit = 250;
-    } else if (s.includes('city')) {
-      res.brand = 'Honda';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '1.5L DOHC i-VTEC (121 PS)';
-      res.rate = 160;
-      res.deposit = 150;
-    } else if (s.includes('cr-v') || s.includes('crv')) {
-      res.brand = 'Honda';
-      res.type = 'SUV';
-      res.seats = 5;
-      res.engine = '1.5L VTEC Turbo AWD (193 PS)';
-      res.rate = 300;
-      res.deposit = 250;
-    } else if (s.includes('vios')) {
-      res.brand = 'Toyota';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '1.5L Dual VVT-i (106 PS)';
-      res.rate = 160;
-      res.deposit = 150;
-    } else if (s.includes('corolla cross') || s.includes('cross')) {
-      res.brand = 'Toyota';
-      res.type = 'SUV';
-      res.seats = 5;
-      res.engine = '1.8L Dual VVT-i (139 PS)';
-      res.rate = 260;
-      res.deposit = 250;
-    } else if (s.includes('x50')) {
-      res.brand = 'Proton';
-      res.type = 'SUV';
-      res.seats = 5;
-      res.engine = '1.5L TGDi Turbo (177 PS)';
-      res.rate = 220;
-      res.deposit = 200;
-    } else if (s.includes('x70')) {
-      res.brand = 'Proton';
-      res.type = 'SUV';
-      res.seats = 5;
-      res.engine = '1.5L TGDi Premium (177 PS)';
-      res.rate = 250;
-      res.deposit = 200;
-    } else if (s.includes('s70')) {
-      res.brand = 'Proton';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '1.5L Turbo Dual VVT (150 PS)';
-      res.rate = 180;
-      res.deposit = 200;
-    } else if (s.includes('saga')) {
-      res.brand = 'Proton';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '1.3L 4-Cylinder DOHC (95 PS)';
-      res.rate = 110;
-      res.deposit = 150;
-    } else if (s.includes('alza')) {
-      res.brand = 'Perodua';
-      res.type = 'MPV';
-      res.seats = 7;
-      res.engine = '1.5L Dual VVT-i D-CVT (106 PS)';
-      res.rate = 190;
-      res.deposit = 200;
-    } else if (s.includes('myvi')) {
-      res.brand = 'Perodua';
-      res.type = 'Hatchback';
-      res.seats = 5;
-      res.engine = '1.5L Dual VVT-i AV (103 PS)';
-      res.rate = 130;
-      res.deposit = 150;
-    } else if (s.includes('bezza')) {
-      res.brand = 'Perodua';
-      res.type = 'Sedan';
-      res.seats = 5;
-      res.engine = '1.3L Dual VVT-i (95 PS)';
-      res.rate = 120;
-      res.deposit = 150;
-    } else if (s.includes('ativa')) {
-      res.brand = 'Perodua';
-      res.type = 'SUV';
-      res.seats = 5;
-      res.engine = '1.0L Turbo Dual VVT-i (98 PS)';
-      res.rate = 170;
-      res.deposit = 150;
-    } else if (s.includes('hilux') || s.includes('d-max') || s.includes('triton') || s.includes('ranger')) {
-      res.type = 'Pickup';
-      res.fuel = 'Diesel';
-      res.seats = 5;
-      res.engine = '2.4L / 2.8L Turbo Diesel 4x4 (150-204 PS)';
-      res.rate = 320;
-      res.deposit = 300;
-    } else if (s.includes('porsche') || s.includes('ferrari') || s.includes('lamborghini')) {
-      res.type = 'Coupe';
-      res.seats = s.includes('macan') || s.includes('cayenne') ? 5 : 2;
-      res.engine = '3.0L Twin-Turbo High Output (380+ PS)';
-      res.rate = 1200;
-      res.deposit = 1500;
-    } else {
-      // 3. Fallback Dynamic Multi-Variable Malaysian Automotive Calculation
-      var calculated = calculateRentalFromFormula(res.brand, res.type, res.seats, res.year, name);
-      res.rate = calculated.rate;
-      res.deposit = calculated.deposit;
-    }
-
-    return res;
-  }
-
-  function applyDetectedSpecs(data, carName) {
-    if (!data) return;
-
-    var brandEl = document.getElementById('car-brand');
-    var typeEl = document.getElementById('car-type');
-    var seatsEl = document.getElementById('car-seats');
-    var transEl = document.getElementById('car-transmission');
-    var fuelEl = document.getElementById('car-fuel');
-    var engineEl = document.getElementById('car-engine');
-    var rateEl = document.getElementById('car-rate');
-    var depositEl = document.getElementById('car-deposit');
-    var yearEl = document.getElementById('car-year');
-
-    var animatedInputs = [];
-
-    if (brandEl && data.brand) {
-      brandEl.value = data.brand;
-      animatedInputs.push(brandEl);
-    }
-    if (typeEl && data.type) {
-      typeEl.value = data.type;
-      animatedInputs.push(typeEl);
-    }
-    if (seatsEl && data.seats) {
-      seatsEl.value = String(data.seats);
-      animatedInputs.push(seatsEl);
-    }
-    if (transEl && data.transmission) {
-      transEl.value = data.transmission;
-      animatedInputs.push(transEl);
-    }
-    if (fuelEl && data.fuel) {
-      fuelEl.value = data.fuel;
-      animatedInputs.push(fuelEl);
-    }
-    if (engineEl && data.engine) {
-      engineEl.value = data.engine;
-      animatedInputs.push(engineEl);
-    }
-    if (rateEl && data.rate) {
-      rateEl.value = data.rate;
-      animatedInputs.push(rateEl);
-    }
-    if (depositEl && data.deposit) {
-      depositEl.value = data.deposit;
-      animatedInputs.push(depositEl);
-    }
-    if (yearEl && (!yearEl.value || yearEl.value === '')) {
-      yearEl.value = data.year || 2024;
-      animatedInputs.push(yearEl);
-    }
-
-    // Subtle Apple glow animation
-    animatedInputs.forEach(function (el) {
-      el.classList.add('ai-autofilled-glow');
-      setTimeout(function () {
-        el.classList.remove('ai-autofilled-glow');
-      }, 2200);
-    });
-
-    window.updateLivePreview();
-    window.showToast('✨ AI berjaya mengira spesifikasi pasaran untuk ' + carName + '!', 'success');
-  }
-
-  // Update Official WeDRIVE Car-Card Preview Reactively
   window.updateLivePreview = function () {
-    var nameVal = (document.getElementById('car-name')?.value || '').trim() || '2023 BMW 320i M Sport 2.0';
-    var colorVal = (document.getElementById('car-color')?.value || '').trim() || 'Alpine White';
+    var nameVal = updateFullCarName();
+    var colorVal = (document.getElementById('car-color')?.value || '').trim() || 'Putih (Solid / Pearl White)';
     var typeVal = (document.getElementById('car-type')?.value || 'Sedan').toUpperCase();
+
     var transEl = document.getElementById('car-transmission');
     var transVal = transEl && transEl.value ? (transEl.value === 'Automatic' ? 'Auto' : 'Manual') : 'Auto';
+
     var fuelEl = document.getElementById('car-fuel');
     var fuelVal = fuelEl && fuelEl.value ? fuelEl.value : 'Petrol';
+
     var seatsEl = document.getElementById('car-seats');
     var seatsNum = seatsEl && seatsEl.value ? seatsEl.value : '5';
     var seatsVal = seatsNum + ' Seats';
+
     var rateVal = document.getElementById('car-rate')?.value || '450';
 
     var elName = document.getElementById('preview-display-name');
@@ -869,12 +1623,16 @@
     }
   };
 
-  // Form Submission
+  /**
+   * =========================================================================
+   * 9. FORM SUBMISSION
+   * =========================================================================
+   */
   window.handleCarSubmit = function (e) {
     e.preventDefault();
 
-    var nameVal = document.getElementById('car-name').value.trim();
-    var plateVal = document.getElementById('car-plate').value.trim().toUpperCase();
+    var nameVal = updateFullCarName();
+    var plateVal = (document.getElementById('car-plate')?.value || '').trim().toUpperCase();
 
     if (!nameVal || !plateVal) {
       window.showToast('Sila lengkapkan nama model dan nombor plat kenderaan.', 'error');
@@ -884,16 +1642,16 @@
     var newCar = {
       name: nameVal,
       plate: plateVal,
-      brand: document.getElementById('car-brand').value,
-      year: parseInt(document.getElementById('car-year').value) || 2024,
-      color: (document.getElementById('car-color')?.value || '').trim() || 'Alpine White',
-      type: document.getElementById('car-type').value,
-      seats: parseInt(document.getElementById('car-seats').value) || 5,
-      transmission: document.getElementById('car-transmission').value,
-      fuel: document.getElementById('car-fuel').value,
+      brand: document.getElementById('car-brand')?.value || 'BMW',
+      year: parseInt(document.getElementById('car-year')?.value, 10) || 2024,
+      color: (document.getElementById('car-color')?.value || '').trim() || 'Putih',
+      type: document.getElementById('car-type')?.value || 'Sedan',
+      seats: parseInt(document.getElementById('car-seats')?.value, 10) || 5,
+      transmission: document.getElementById('car-transmission')?.value || 'Automatic',
+      fuel: document.getElementById('car-fuel')?.value || 'Petrol',
       engine: (document.getElementById('car-engine')?.value || '').trim() || '2.0L Turbo Standard',
-      rate: 'RM ' + (document.getElementById('car-rate').value || 200) + '/hari',
-      deposit: 'RM ' + (document.getElementById('car-deposit').value || 200),
+      rate: 'RM ' + (document.getElementById('car-rate')?.value || 450) + '/hari',
+      deposit: 'RM ' + (document.getElementById('car-deposit')?.value || 400),
       status: 'Available',
       location: 'Pusat Operasi Utama WeDRIVE (HQ Melaka)',
       has_360: Boolean(window.__360Data && window.__360Data.has360),
@@ -904,6 +1662,10 @@
       interior_360: (window.__360Data && window.__360Data.interiorAsset) ? window.__360Data.interiorAsset : null,
       images: selectedPhotoBase64 ? [selectedPhotoBase64] : ['../../../shared/images/cars/honda-crv-2024.png']
     };
+
+    // Clean up draft since registered successfully
+    window.clearCarDraft(false);
+    isFormDirty = false;
 
     if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
       window.WeDriveAPI.createCar(newCar)
@@ -933,8 +1695,25 @@
     setTimeout(function () { window.location.href = 'cars.html'; }, 800);
   }
 
-  // DOMContentLoaded Event Binding
+  /**
+   * =========================================================================
+   * 10. INITIALIZATION & DRAG INTERACTION
+   * =========================================================================
+   */
   document.addEventListener('DOMContentLoaded', function () {
+    // Setup Navigation Guards
+    setupNavigationGuards();
+
+    // Check for Existing Auto-Save Draft
+    checkExistingDraft();
+
+    // Default selection: BMW -> 3 Series
+    var brandEl = document.getElementById('car-brand');
+    if (brandEl && !brandEl.value) {
+      brandEl.value = 'BMW';
+      window.onBrandChange();
+    }
+
     // Preview canvas drag rotation
     var canvasWrap = document.getElementById('preview-canvas-wrap');
     var isDragging = false;
@@ -974,6 +1753,7 @@
     }
 
     window.updateLivePreview();
+    isInitializing = false;
   });
 
 })();

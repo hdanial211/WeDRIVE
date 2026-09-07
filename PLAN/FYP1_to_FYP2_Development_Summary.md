@@ -5073,6 +5073,67 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.6.2 Remove car features checklist to simplify add-car form to core automotive specs`
   - Tag Versi: `6.6.2`
 
+---
+
+## 🚗 [MINOR UPDATE] 110. Aliran Wizard Tambah Kereta 2-Langkah, Pemilih Bertingkat Automotif Malaysia ala Carlist.my, Auto-Save Draf, & Exit Guard (v6.7.0)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. **Aliran Wizard 2-Langkah (*2-Step Stepper Flow*)**:
+     - Pengguna meminta halaman tambah kereta diasingkan kepada 2 langkah tersusun:
+       - *Langkah 1*: Penetapan spesifikasi kenderaan (`Maklumat Asas Kenderaan` & `Spesifikasi Teknikal & Struktur Tarif`).
+       - *Langkah 2*: Studio visual (muat naik foto, preview gambar, pengalaman interaktif 360°, dan pratonton kad rasmi WeDRIVE).
+  2. **Pengesahan Keluar Halaman (*Exit Confirmation Guard*)**:
+     - Menghalang kehilangan kerja yang tidak disengajakan dengan dialog modal bertaraf Apple HIG apabila pengguna cuba keluar atau menavigasi ke halaman lain.
+  3. **Simpanan Draf Automatik (*Auto-Save Draft & Resume*)**:
+     - Semua data borang disimpan automatik ke `localStorage['wedrive_car_draft']` dan sepanduk pemberitahuan draf dipaparkan apabila halaman dibuka semula dengan pilihan pulihkan atau padam.
+  4. **Pilihan Bertingkat Automotif Malaysia (*Cascading Selectors ala Carlist.my*)**:
+     - Pengguna tidak perlu menaip teks panjang; hanya memilih secara berperingkat:
+       - `Pengeluar (Jenama)` $\to$ `Model Kenderaan` $\to$ `Varian & Enjin (CC)` $\to$ `Tahun Pengilangan` (2018–2026).
+       - Opsyen fleksibel `[+ Taip Model & Varian Sendiri]` sekiranya varian tiada dalam senarai.
+       - Pemilihan warna badan standard; jika `Lain-lain` dipilih, kotak teks input warna khusus dipaparkan.
+       - Auto-fill automatik bagi Kategori Badan, Kerusi, Transmisi, Bahan Api, Enjin, serta kadar sewaan harian dan deposit berdasarkan formula pasaran kenderaan Malaysia.
+  5. **Pembersihan Teks JPJ**:
+     - Menghapuskan semua perkataan atau rujukan JPJ pada antaramuka kenderaan.
+
+- **Tindakan Pembaikan (Implementation)**:
+  - Di dalam `shared/css/wedrive.css`:
+    - Menambah penggayaan `.wizard-stepper-wrap`, `.wizard-step-btn`, `.wizard-step-badge` (bulat tepat 1:1, Zero Oval Rule), `.wizard-step-line`, dan penunjuk status aktif/siap.
+    - Menambah penggayaan sepanduk pulihkan draf `.draft-resume-banner` dengan butang tindakan kapsul.
+    - Menambah penggayaan modal pengesahan keluar bertaraf Apple HIG (`.apple-exit-modal-backdrop`, `.apple-exit-modal-card`).
+  - Di dalam `admin/pages/car/add-car.html`:
+    - Menambah navigasi langkah stepper (`#step-btn-1`, `#step-btn-2`).
+    - Menambah sepanduk draf `#banner-draft-resume`.
+    - Mengasingkan kandungan borang ke dalam `#step-1-container` dan studio visual ke dalam `#step-2-container` (susun atur 2-kolum bento bersama kad pratonton kenderaan langsung `#preview-card-col`).
+    - Menggantikan medan input teks nama kereta kepada pemilih bertingkat `#car-brand`, `#car-model`, `#car-variant`, `#car-year`, dan pemilih warna pintar `#car-color-select` berserta input bersyarat `#car-color-custom-wrap`.
+    - Menambah modal keluar bertaraf Apple HIG `#modal-exit-confirm`.
+  - Di dalam `admin/js/add-car.js`:
+    - Membina kamus pangkalan data kenderaan komprehensif `CARLIST_DATABASE` (Perodua, Proton, Toyota, Honda, BMW, Mercedes-Benz, BYD, Chery, Hyundai, Mazda, Nissan, Tesla).
+    - Membina pengendali peristiwa bertingkat `onBrandChange()`, `onModelChange()`, `onVariantChange()`, `onYearChange()`, dan `onColorSelectChange()`.
+    - Membina formula pengiraan tarif pasaran Malaysia `calculateRentalFromFormula()` bagi kadar sewa harian dan deposit keselamatan.
+    - Melaksanakan sistem pengurusan langkah `goToStep(step)` dengan validasi borang pada Langkah 1 sebelum melangkah ke Langkah 2.
+    - Melaksanakan auto-save draf `saveCarDraft()` yang dilindungi bendera `isInitializing` dan `isRestoringDraft` bagi mengelakkan penindihan data draf sedia ada.
+    - Melaksanakan fungsi pemulihan draf `restoreCarDraft()` dan pemadaman draf `dismissDraftBanner()`.
+    - Melaksanakan pengawal navigasi keluar `triggerExitConfirm(proceedCallback)` bagi memintas pautan topbar, sidebar, butang batal, dan `beforeunload`.
+    - Menghubungkan kad pratonton langsung reaktif `updateLivePreview()` pada Langkah 2.
+  - Di dalam `tests/e2e/14_ai_key_vault_and_location.spec.js`:
+    - Mengemas kini aliran ujian agar menavigasi ke Langkah 2 stepper sebelum mengesahkan peti kunci AI.
+  - Di dalam `tests/e2e/17_add_car_stepper_and_carlist.spec.js`:
+    - Membina suite ujian komprehensif merangkumi pemilih bertingkat Carlist.my, stepper 2-langkah, auto-save draf, dan modal pengesahan keluar.
+
+- **Pengesahan Ujian Automatik & Pengguna**:
+  - **Ujian Automasi Playwright CLI**: 100% Pass Rate (**41/41 ujian lulus serentak tanpa regresi**).
+  - **Pengesahan Visual Perspektif Pengguna (Chrome DevTools MCP)**:
+    - Diuji pada tab tunggal sedia ada (Port 5504) tanpa membuka tab baharu.
+    - Spektrum responsif Apple 3-Peranti: Disahkan sempurna pada MacBook (1440x900), iPad (820x1180), dan iPhone (393x852).
+    - Pematuhan mutlak **Prinsip Sifar Bujur (Zero Oval Rule)** pada semua butang bulat (nisbah 1:1) dan butang kapsul (`9999px`).
+  - **Semakan Had Aksara 12,000 Aksara**: Kesemua 19 fail `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini sepenuhnya (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.7.0 2-Step Stepper Car Registration, Carlist Cascading Selectors, Auto-Draft, and Exit Guard`
+  - Tag Versi: `6.7.0`
+
+
 
 
 
