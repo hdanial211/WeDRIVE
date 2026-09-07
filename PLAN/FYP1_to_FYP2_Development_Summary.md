@@ -5343,6 +5343,45 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.5 Comprehensive multi-agent admin audit, zero oval geometry enforcement, XSS sanitization, and universal idle timeout`
   - Tag Versi: `6.7.5`
 
+---
+
+### Entri 210: Penyelarasan Mutlak Geometri Butang Apple HIG & Pembaikan Akar Umbi Butang "Jana Semula AI" Terlebih Besar (98px) Serta Audit Live 397 Butang Merentas 20 Halaman Pentadbir
+- **Tarikh**: 2026-09-07
+- **Fasa**: FYP 2 - Modul Pentadbir & Penalaan UI/UX Tahap Eksekutif (v6.7.6)
+- **Jenis Perubahan**: `[PATCH]`
+- **Matlamat**: Menyiasat dan memperbetulkan isu butang "Jana Semula AI" yang menjadi terlalu besar (98px tinggi) pada `analytics.html`, serta menjalankan audit live bounding box ke atas kesemua 397 butang di seluruh 20 halaman pentadbir bagi memastikan tiada butang yang oversized atau melanggar Peraturan Mandatori Sifar Bujur (Zero Oval Rule).
+
+- **Diagnosis Akar Umbi (Root Cause Analysis)**:
+  1. **Margin Bawaan Segmented Control**: Kelas `.pricing-toggle, .segmented-control` dalam `shared/css/wedrive.css:2253` mentakrifkan `margin: 0 auto 48px;`. Dalam `analytics.html`, elemen `#time-glider` menggunakan dwi-kelas `segmented-control ai-time-glider`. Akibatnya, kotak glider mengambil ketinggian fizikal $50\text{px} + 48\text{px} = 98\text{px}$.
+  2. **Regangan Silang Fleks (Flex Cross-Axis Stretch)**: Kontena induk bar alat dalam `analytics.html:41` ditulis sebagai `<div class="flex-row align-center gap-12 flex-wrap">`. Walau bagaimanapun, kelas utiliti `.align-center` tidak wujud dalam fail CSS teras, menyebabkan `align-items` jatuh ke nilai lalai CSS iaitu `stretch`. Oleh itu, butang bersebelahan `#btn-rerun-ai` dipaksa meregang menegak mengikut ketinggian glider sehingga mencapai **98px tinggi**.
+
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Pembaikan Khusus `analytics.html` & CSS Teras (`shared/css/wedrive.css`)**:
+     - Menambah kelas utiliti global `.align-center { align-items: center !important; }` pada seksyen utiliti fleks.
+     - Menetapkan `margin: 0 !important; align-items: center !important;` pada `.ai-time-glider` bagi membatalkan limpahan margin 48px.
+     - Menetapkan kekangan saiz tegas pada `#btn-rerun-ai`: `height: 38px !important; min-height: 38px !important; max-height: 38px !important; align-self: center !important;` dengan bucu kapsul pil simetri `border-radius: 9999px !important;`.
+  2. **Audit Live Bounding Box & Sizing ke atas 397 Butang Merentas 20 Halaman Admin**:
+     - Melancarkan subejen `wedrive_ui_auditor` dan skrip automasi Playwright untuk mengukur setiap butang interaktif pada viewport Desktop Retina `1440 × 900`.
+     - **`admin/pages/setting/settings.html`**: Butang pautan AI Key Vault yang oversized 47px (`py-12 radius-14`) diperbetulkan kepada saiz piawai 38-40px dengan kelas kapsul Apple HIG `radius-pill`.
+     - **`admin/pages/chatbot/chatbot.html`**: Butang ikon hantar `#send-btn` yang berbentuk bujur 46x40px diperbetulkan kepada bulatan 1:1 tepat 40x40px (`min-width: 40px !important; max-width: 40px !important; min-height: 40px !important; max-height: 40px !important; aspect-ratio: 1/1 !important; border-radius: 50% !important; padding: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important;`).
+     - **`admin/pages/marketing/marketing.html`**:
+       - 21 butang tindakan ikon kad (`.mkt-card-actions button`) yang sebelum ini lonjong 34x38px dengan bucu petak 10px diperbetulkan kepada bulatan 1:1 sempurna 34x34px (`border-radius: 50% !important; aspect-ratio: 1/1 !important; padding: 0 !important; display: inline-flex !important;`).
+       - Mengecualikan `.mkt-card-actions button` daripada sasaran sentuh global `min-height: 38px` dan `min-height: 44px` (mudah alih) bagi menghalang herotan lonjong.
+       - Menyelaraskan butang tambah banner `.mkt-add-btn` daripada kotak 55px kepada kapsul pil bergaris putus-putus 42px (`height: 42px !important; border-radius: var(--radius-pill, 9999px) !important; padding: 0 20px !important;`).
+     - **`admin/pages/calendar/calendar.html`**: Memastikan `#cal-today-btn` mempunyai bucu kapsul pil `border-radius: var(--radius-pill, 9999px) !important;`.
+     - **Pencegahan Risiko Regangan Fleks**: Menambah `align-items: center !important;` pada kontena fleks `.ai-bento-actions` dan `.chat-suggestions`.
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - Pelaksanaan Ujian Automasi Playwright CLI: **48/48 Ujian Lulus (100% Pass Rate)**.
+  - Pengesahan Automatik 20 Halaman: Sifar butang oversized, sifar butang bujur/oval yang tidak mematuhi nisbah 1:1.
+  - Pengesahan 3-Peranti Apple (Single-Tab DevTools): Diuji secara visual pada MacBook (`1440x900`), iPad (`820x1180`), dan iPhone (`393x852`) membuktikan susun atur responsif kemas tanpa sebarang limpahan mendatar.
+  - Pematuhan Had Aksara Peraturan `.agents/rules/*.md`: Kesemua 19 fail disahkan $\le 12,000$ aksara (`wc -m`).
+  - Graf Pengetahuan Graphify dikemas kini (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.7.6 Enforce Apple HIG button geometry, resolve oversized AI button, and audit 397 admin buttons across 20 pages`
+  - Tag Versi: `6.7.6`
+
 
 
 

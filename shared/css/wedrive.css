@@ -5345,6 +5345,7 @@ body:has(.right-panel) {
 .chat-suggestions {
   padding: 10px 16px;
   display: flex;
+  align-items: center;
   gap: 8px;
   overflow-x: auto;
   background: var(--bg-surface);
@@ -10532,7 +10533,7 @@ table.custom-table tr:hover td,
 }
 
 /* ── 6. Minimum Touch Target (44px Rule) ─────────────────────────────────── */
-button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.action-btn-circle):not(.ai-eye-btn):not(.chat-send):not(.cust-modal-close-btn):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button),
+button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.action-btn-circle):not(.ai-eye-btn):not(.chat-send):not(.cust-modal-close-btn):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button):not(.mkt-card-actions button),
 a.btn,
 .filter-chip,
 .date-chip,
@@ -10542,7 +10543,7 @@ a.btn,
 }
 
 @media (max-width: 768px) {
-  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.action-btn-circle):not(.ai-eye-btn):not(.chat-send):not(.cust-modal-close-btn):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button):not(.cockpit-hud-btn),
+  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.action-btn-circle):not(.ai-eye-btn):not(.chat-send):not(.cust-modal-close-btn):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button):not([class*="hud-btn"]):not(.mkt-card-actions button),
   a.btn,
   .filter-chip,
   .date-chip,
@@ -14218,6 +14219,9 @@ body.profile-page {
 .flex-center { display: flex !important; align-items: center !important; justify-content: center !important; }
 .flex-start { display: flex !important; align-items: center !important; justify-content: flex-start !important; }
 .flex-col { display: flex !important; flex-direction: column !important; }
+.align-center { align-items: center !important; }
+.align-start { align-items: flex-start !important; }
+.align-end { align-items: flex-end !important; }
 
 .table-responsive { overflow-x: auto !important; }
 .w-full { width: 100% !important; }
@@ -15052,7 +15056,16 @@ body.pending-page {
   border-radius: 9999px;
   padding: 4px;
   display: inline-flex;
+  align-items: center;
   border: 1px solid var(--border-subtle);
+  margin: 0 !important;
+}
+
+#btn-rerun-ai {
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  align-self: center !important;
 }
 
 .ai-demand-chart-wrap {
@@ -15481,7 +15494,16 @@ body.pending-page {
 .btn-icon-send {
   width: 40px !important;
   height: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
   aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
 }
 
 .btn-xs {
@@ -16049,6 +16071,7 @@ html.night-mode .bento-ghost-icon,
 
 .ai-bento-actions {
   display: flex;
+  align-items: center;
   gap: 10px;
   position: relative;
   z-index: 2;
@@ -16056,6 +16079,7 @@ html.night-mode .bento-ghost-icon,
 
 .btn-ai-rebalance {
   flex: 1;
+  align-self: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -17413,6 +17437,7 @@ body.day-mode .cal-agenda-item:hover {
 
 #cal-today-btn {
   flex: 1 1 140px;
+  border-radius: var(--radius-pill, 9999px) !important;
 }
 
 #cal-new-booking-btn {
@@ -17966,12 +17991,20 @@ body.day-mode .cal-filter-chip.active {
 }
 
 .mkt-card-actions button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
   background: var(--bg-surface-2, #1D1D20);
   color: var(--text-secondary, #A1A1A6);
@@ -18042,15 +18075,17 @@ body.day-mode .cal-filter-chip.active {
 
 .mkt-add-btn {
   width: 100%;
+  height: 42px !important;
+  max-height: 42px !important;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px;
+  padding: 0 20px !important;
   background: transparent;
   border: 1.5px dashed var(--border-subtle, rgba(255, 255, 255, 0.15));
   color: var(--text-secondary, #A1A1A6);
-  border-radius: 20px;
+  border-radius: var(--radius-pill, 9999px) !important;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
