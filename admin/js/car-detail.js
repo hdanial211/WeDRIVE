@@ -20,17 +20,9 @@ let startFrameOnDrag = 0;
 let autoSpinTimer = null;
 let isAutoSpinning = false;
 
-// 360 Interior Cockpit State
-const cockpitHorizontalPanels = [
-  { file: 'pano_f.jpg', angle: '0° · Pandangan Hadapan' },
-  { file: 'pano_r.jpg', angle: '90° · Sisi Kanan / Pemandu' },
-  { file: 'pano_b.jpg', angle: '180° · Pandangan Belakang' },
-  { file: 'pano_l.jpg', angle: '270° · Sisi Kiri / Penumpang' }
-];
-let currentCockpitIndex = 0;
-let isDraggingCockpit = false;
-let startCockpitX = 0;
-let cockpitZoomLevel = 1.0;
+// 360 Interior Cockpit State (Continuous 3D Panoramas)
+let interiorViewerApi = null;
+let isCockpitAutoDrift = false;
 
 // Photo Gallery State
 let galleryImages = [];
@@ -398,121 +390,153 @@ document.addEventListener('fullscreenchange', () => {
 });
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   4. STUDIO 360° INTERIOR VIRTUAL COCKPIT ENGINE (DRAG & ROTATE)
+   4. STUDIO 360° INTERIOR VIRTUAL COCKPIT ENGINE (CONTINUOUS 3D PANORAMA)
    ───────────────────────────────────────────────────────────────────────────── */
+function getCarModelKey(car) {
+  if (!car || !car.name) return 'bmw';
+  const n = car.name.toLowerCase();
+  if (n.includes('bmw')) return 'bmw';
+  if (n.includes('gla') || (n.includes('mercedes') && n.includes('gla'))) return 'gla';
+  if (n.includes('cls') || (n.includes('mercedes') && n.includes('cls'))) return 'cls350';
+  if (n.includes('alphard')) return 'alphard';
+  if (n.includes('golf')) return 'golf';
+  if (n.includes('ranger') || n.includes('raptor')) return 'ranger';
+  if (n.includes('axia av') || n.includes('2025')) return 'axiaAv';
+  if (n.includes('axia')) return 'axia';
+  return 'bmw';
+}
+
 function setupInteriorCockpit(car) {
-  const cockpitCanvas = document.getElementById('cockpit-canvas');
+  const stage = document.getElementById('studio-interior-stage');
   const fallback = document.getElementById('cockpit-fallback');
   const hud = document.getElementById('cockpit-hud');
+  const scene = document.getElementById('cdInteriorScene');
+  const dragHint = document.getElementById('cockpit-drag-hint');
 
-  const isBMW = car.name.includes('BMW');
+  if (!stage) return;
 
-  if (isBMW) {
-    cockpitCanvas.classList.remove('hidden');
-    cockpitCanvas.style.display = 'block';
+  const modelKey = getCarModelKey(car);
+  stage.setAttribute('data-vehicle-default-model', modelKey);
+
+  if (window.WedriveVehicleViewer) {
+    if (!interiorViewerApi) {
+      interiorViewerApi = window.WedriveVehicleViewer.get(stage) || window.WedriveVehicleViewer.init(stage, {
+        defaultModel: modelKey,
+        defaultView: 'interior',
+        autoDrift: false
+      });
+
+      stage.addEventListener('wedrive:interior-change', (e) => {
+        updateCockpitAngleIndicator(e.detail);
+      });
+
+      // Hide drag hint on first pointer/touch interaction
+      const hideHint = () => {
+        if (dragHint) dragHint.classList.add('is-hidden');
+      };
+      stage.addEventListener('pointerdown', hideHint, { passive: true });
+      stage.addEventListener('touchstart', hideHint, { passive: true });
+    }
+
+    if (interiorViewerApi) {
+      interiorViewerApi.setModel(modelKey);
+      interiorViewerApi.setInteriorOrientation(0, 0, true);
+    }
+
     if (fallback) fallback.classList.add('hidden');
+    if (scene) scene.style.display = 'flex';
     if (hud) hud.classList.remove('hidden');
 
-    currentCockpitIndex = 0;
-    renderCockpitFrame();
-    bindCockpitDragEvents();
+    updateCockpitAngleIndicator({ yaw: 0, pitch: 0 });
   } else {
-    cockpitCanvas.style.display = 'none';
     if (fallback) fallback.classList.remove('hidden');
+    if (scene) scene.style.display = 'none';
     if (hud) hud.classList.add('hidden');
   }
 }
 
-function renderCockpitFrame() {
-  const cockpitCanvas = document.getElementById('cockpit-canvas');
+function updateCockpitAngleIndicator(info) {
   const angleText = document.getElementById('cockpit-angle-text');
-  if (!cockpitCanvas) return;
+  if (!angleText || !info) return;
 
-  const panel = cockpitHorizontalPanels[currentCockpitIndex];
-  cockpitCanvas.src = resolveImgSrc(`Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/${panel.file}`);
-  if (angleText) {
-    angleText.textContent = panel.angle;
+  const rawYaw = (info.yaw || 0) % 360;
+  const normalizedYaw = Math.round((rawYaw + 360) % 360);
+  const pitch = Math.round(info.pitch || 0);
+
+  let label = '';
+  if (pitch >= 18) {
+    label = `+${pitch}° · Pandangan Bumbung & Sunroof`;
+  } else if (pitch <= -20) {
+    label = `${pitch}° · Konsol Tengah & Tuil Gear`;
+  } else if (normalizedYaw >= 315 || normalizedYaw < 45) {
+    label = `${normalizedYaw}° · Pandangan Hadapan`;
+  } else if (normalizedYaw >= 45 && normalizedYaw < 135) {
+    label = `${normalizedYaw}° · Sisi Kanan (Pemandu)`;
+  } else if (normalizedYaw >= 135 && normalizedYaw < 225) {
+    label = `${normalizedYaw}° · Pandangan Belakang`;
+  } else {
+    label = `${normalizedYaw}° · Sisi Kiri (Penumpang)`;
+  }
+
+  angleText.textContent = label;
+}
+
+function cockpitPanStep(deltaYaw) {
+  const dragHint = document.getElementById('cockpit-drag-hint');
+  if (dragHint) dragHint.classList.add('is-hidden');
+
+  if (interiorViewerApi && interiorViewerApi.stepInteriorYaw) {
+    interiorViewerApi.stepInteriorYaw(deltaYaw);
   }
 }
 
-function cockpitPanStep(step) {
-  currentCockpitIndex = (currentCockpitIndex + step + 4) % 4;
-  renderCockpitFrame();
-}
-
 function cockpitSetView(view) {
-  const cockpitCanvas = document.getElementById('cockpit-canvas');
-  const angleText = document.getElementById('cockpit-angle-text');
-  if (!cockpitCanvas) return;
+  const dragHint = document.getElementById('cockpit-drag-hint');
+  if (dragHint) dragHint.classList.add('is-hidden');
 
-  if (view === 'up') {
-    cockpitCanvas.src = resolveImgSrc('Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/pano_u.jpg');
-    if (angleText) angleText.textContent = 'Pandangan Bumbung & Sunroof';
+  if (!interiorViewerApi || !interiorViewerApi.setInteriorOrientation) return;
+
+  if (view === 'front') {
+    interiorViewerApi.setInteriorOrientation(0, 0);
+  } else if (view === 'up') {
+    interiorViewerApi.setInteriorOrientation(null, 24);
   } else if (view === 'down') {
-    cockpitCanvas.src = resolveImgSrc('Sedan/2023 BMW 320i M Sport 2.0/interior/full-res/pano_d.jpg');
-    if (angleText) angleText.textContent = 'Konsol Tengah & Tuil Gear';
-  } else {
-    currentCockpitIndex = 0;
-    renderCockpitFrame();
+    interiorViewerApi.setInteriorOrientation(null, -30);
+  } else if (view === 'rear') {
+    interiorViewerApi.setInteriorOrientation(180, 0);
   }
 }
 
 function cockpitZoom(level) {
-  cockpitZoomLevel = level;
-  const cockpitCanvas = document.getElementById('cockpit-canvas');
-  if (cockpitCanvas) {
-    cockpitCanvas.style.transform = `scale(${level})`;
+  if (interiorViewerApi && interiorViewerApi.setInteriorZoom) {
+    interiorViewerApi.setInteriorZoom(level);
   }
 }
 
-function bindCockpitDragEvents() {
+function toggleCockpitAutoDrift() {
+  if (!interiorViewerApi || !interiorViewerApi.toggleAutoDrift) return;
+  const isEnabled = interiorViewerApi.toggleAutoDrift();
+  isCockpitAutoDrift = isEnabled;
+  const btn = document.getElementById('cockpit-autospin-btn');
+  if (btn) {
+    btn.classList.toggle('active', isEnabled);
+    const icon = btn.querySelector('.material-icons-round');
+    if (icon) icon.textContent = isEnabled ? 'pause' : 'play_arrow';
+  }
+}
+
+function toggleFullscreenInterior() {
   const stage = document.getElementById('studio-interior-stage');
-  if (!stage || stage._cockpitDragBound) return;
-  stage._cockpitDragBound = true;
-
-  // Mouse Drag
-  stage.addEventListener('mousedown', (e) => {
-    if (e.target.closest('.cockpit-overlay-hud') || e.target.closest('.studio-watermark-360') || e.target.closest('.studio-angle-indicator')) return;
-    isDraggingCockpit = true;
-    startCockpitX = e.clientX;
-  });
-
-  window.addEventListener('mousemove', (e) => {
-    if (!isDraggingCockpit) return;
-    const deltaX = e.clientX - startCockpitX;
-    const threshold = 60; // Pixels threshold for smooth step
-    if (Math.abs(deltaX) > threshold) {
-      const step = deltaX > 0 ? -1 : 1;
-      cockpitPanStep(step);
-      startCockpitX = e.clientX;
+  if (!stage) return;
+  if (!document.fullscreenElement) {
+    if (stage.requestFullscreen) {
+      stage.requestFullscreen().catch(err => console.warn('Fullscreen error:', err));
     }
-  });
-
-  window.addEventListener('mouseup', () => {
-    isDraggingCockpit = false;
-  });
-
-  // Touch Swipe
-  stage.addEventListener('touchstart', (e) => {
-    if (e.target.closest('.cockpit-overlay-hud')) return;
-    isDraggingCockpit = true;
-    startCockpitX = e.touches[0].clientX;
-  }, { passive: true });
-
-  window.addEventListener('touchmove', (e) => {
-    if (!isDraggingCockpit) return;
-    const deltaX = e.touches[0].clientX - startCockpitX;
-    const threshold = 55;
-    if (Math.abs(deltaX) > threshold) {
-      const step = deltaX > 0 ? -1 : 1;
-      cockpitPanStep(step);
-      startCockpitX = e.touches[0].clientX;
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
     }
-  }, { passive: true });
-
-  window.addEventListener('touchend', () => {
-    isDraggingCockpit = false;
-  });
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -603,6 +627,8 @@ function switchStudioMode(mode) {
 
   if (mode === 'gallery' && galleryImages.length > 0) {
     selectGalleryPhoto(currentGalleryIndex);
+  } else if (mode === 'interior' && interiorViewerApi) {
+    interiorViewerApi.refresh();
   }
 }
 

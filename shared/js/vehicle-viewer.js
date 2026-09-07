@@ -414,7 +414,8 @@
       registryUrl: root.getAttribute('data-vehicle-registry') || opts.registryUrl || DEFAULT_REGISTRY_URL,
       modelRoot: root.getAttribute('data-vehicle-model-root') || opts.modelRoot || DEFAULT_MODEL_ROOT,
       preloadedFrames: {},
-      sparseRingDone: false
+      sparseRingDone: false,
+      autoDriftEnabled: opts.autoDrift !== undefined ? opts.autoDrift : true
     };
 
     function markFrameLoaded(frameNum) {
@@ -747,6 +748,24 @@
       }
     }
 
+    function notifyInteriorChange() {
+      if (typeof opts.onInteriorChange === 'function') {
+        opts.onInteriorChange({
+          yaw: state.interiorYaw,
+          pitch: state.interiorPitch,
+          zoom: state.interiorZoom
+        });
+      }
+      root.dispatchEvent(new CustomEvent('wedrive:interior-change', {
+        bubbles: true,
+        detail: {
+          yaw: state.interiorYaw,
+          pitch: state.interiorPitch,
+          zoom: state.interiorZoom
+        }
+      }));
+    }
+
     function tickInterior() {
       if (state.viewMode !== 'interior') {
         state.interiorRaf = 0;
@@ -765,7 +784,7 @@
           state.yawVelocity *= 0.92;
           state.pitchVelocity *= 0.92;
           state.lastInteriorMoveAt = now;
-        } else if (now - state.lastInteriorMoveAt > 900) {
+        } else if (state.autoDriftEnabled && (now - state.lastInteriorMoveAt > 900)) {
           state.targetYaw += 0.045;
         }
       }
@@ -774,6 +793,7 @@
       state.interiorPitch += pitchDiff * 0.12;
       state.interiorZoom += zoomDiff * 0.14;
       renderInteriorCube();
+      notifyInteriorChange();
 
       if (Math.abs(yawDiff) > 0.03 || Math.abs(pitchDiff) > 0.03 || Math.abs(zoomDiff) > 0.01 || state.viewMode === 'interior') {
         state.interiorRaf = window.requestAnimationFrame(tickInterior);
@@ -784,6 +804,7 @@
       state.interiorPitch = state.targetPitch;
       state.interiorZoom = state.targetZoom;
       renderInteriorCube();
+      notifyInteriorChange();
       state.interiorRaf = 0;
     }
 
@@ -1010,6 +1031,7 @@
         state.pitchVelocity = -movementY * 0.01;
         state.lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
         renderInteriorCube();
+        notifyInteriorChange();
       }
 
       state.lastPointerX = clientX;
@@ -1116,6 +1138,46 @@
       refresh: function () {
         updateViewUI();
         return api;
+      },
+      getInteriorOrientation: function () {
+        return {
+          yaw: state.interiorYaw,
+          pitch: state.interiorPitch,
+          zoom: state.interiorZoom
+        };
+      },
+      setInteriorOrientation: function (yaw, pitch, instant) {
+        if (typeof yaw === 'number') state.targetYaw = yaw;
+        if (typeof pitch === 'number') state.targetPitch = Math.min(24, Math.max(-34, pitch));
+        if (instant) {
+          state.interiorYaw = state.targetYaw;
+          state.interiorPitch = state.targetPitch;
+          renderInteriorCube();
+          notifyInteriorChange();
+        } else {
+          state.lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
+          queueInteriorAnimation();
+        }
+        return api;
+      },
+      stepInteriorYaw: function (deltaYaw) {
+        state.targetYaw += deltaYaw;
+        state.lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
+        queueInteriorAnimation();
+        return api;
+      },
+      setInteriorZoom: function (zoom) {
+        state.targetZoom = Math.min(1.08, Math.max(0.86, zoom));
+        state.lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
+        queueInteriorAnimation();
+        return api;
+      },
+      toggleAutoDrift: function (enabled) {
+        state.autoDriftEnabled = enabled !== undefined ? enabled : !state.autoDriftEnabled;
+        return state.autoDriftEnabled;
+      },
+      isAutoDriftEnabled: function () {
+        return state.autoDriftEnabled;
       }
     };
 

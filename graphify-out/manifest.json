@@ -24,9 +24,9 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1788751792.2095947,
-    "seen": 1788760314.5885708,
-    "ast_hash": "3a3c7d0429fe02e36c2e981e4abcc564",
+    "mtime": 1788763568.6748655,
+    "seen": 1788764152.770588,
+    "ast_hash": "0adc24d0d9a653b1b87d1ebc48ddd3cf",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
@@ -204,9 +204,9 @@
     "semantic_hash": "d260508bf9d4fe24282e65e2c8db42fc"
   },
   "shared/js/vehicle-viewer.js": {
-    "mtime": 1788694499.6534872,
-    "seen": 1788695698.3674061,
-    "ast_hash": "04b1ee8a9b1695884a51e4cb965e3e6c",
+    "mtime": 1788763273.281319,
+    "seen": 1788764152.7706082,
+    "ast_hash": "f76ac9c76fd6a8495206f8127abd8a8a",
     "semantic_hash": ""
   },
   "shared/lang/en.js": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788736461.2736077,
-    "seen": 1788736522.8425841,
-    "ast_hash": "a9278d8df4ac021fa5b8cdaa98ebceeb",
+    "mtime": 1788760408.4297526,
+    "seen": 1788764152.770661,
+    "ast_hash": "09014b792f4e3d145972627ffb4fba90",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -510,9 +510,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1788736311.2290652,
-    "seen": 1788736522.842603,
-    "ast_hash": "aa531ccb25c27e83d9f70d1a88e40de0",
+    "mtime": 1788763342.4220934,
+    "seen": 1788764152.770679,
+    "ast_hash": "6b7d53008a0a722a02f1a2d53205a36e",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
@@ -11463,6 +11463,12 @@
     "mtime": 1788703464.5815127,
     "seen": 1788704036.900629,
     "ast_hash": "908aea7a1df56f8e8287a6a1932083ba",
+    "semantic_hash": ""
+  },
+  "tests/e2e/16_car_detail_360_interior.spec.js": {
+    "mtime": 1788764015.0282881,
+    "seen": 1788764152.7706292,
+    "ast_hash": "a71620e94f2104ffc2b584e126227e3c",
     "semantic_hash": ""
   }
 }

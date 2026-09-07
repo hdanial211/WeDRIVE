@@ -10529,7 +10529,7 @@ a.btn,
 }
 
 @media (max-width: 768px) {
-  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button),
+  button:not(.theme-toggle):not(.btn-theme):not(.theme-toggle-btn):not(.icon-btn):not(.modal-close-btn):not(.add-car-modal-close-btn):not(.mybk-modal-close):not(.guest-modal-close):not(.booking-popup-close):not(.pf-dialog-close):not(.sp-close-btn):not(.mybk-search-clear):not(.cal-nav-btn):not(.cal-day-modal-close):not(.chat-close-btn):not(.login-tfa-close-btn):not(.promo-strip-dismiss):not(.drawer-close):not(.close-btn):not(.btn-close):not(.icon-btn-circle):not(.flatpickr-day):not(.flatpickr-prev-month):not(.flatpickr-next-month):not(.edit-img-remove):not(.edit-img-set-main):not(.showcase-dot):not(.showcase-dots button):not(.cockpit-hud-btn),
   a.btn,
   .filter-chip,
   .date-chip,
@@ -10558,7 +10558,8 @@ a.btn,
 .drawer-close,
 .close-btn,
 .btn-close,
-.icon-btn-circle {
+.icon-btn-circle,
+.cockpit-hud-btn {
   width: 36px !important;
   height: 36px !important;
   min-width: 36px !important;
@@ -10599,6 +10600,17 @@ a.btn,
     min-height: 44px !important;
     max-width: 44px !important;
     max-height: 44px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+  }
+
+  .cockpit-hud-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
     aspect-ratio: 1 / 1 !important;
     border-radius: 50% !important;
   }
@@ -19297,6 +19309,8 @@ body.day-mode .cal-filter-chip.active {
   font-weight: 700;
   letter-spacing: 0.04em;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  pointer-events: none;
 }
 
 .studio-angle-indicator {
@@ -19316,6 +19330,12 @@ body.day-mode .cal-filter-chip.active {
   font-size: 12px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#cockpit-drag-hint {
+  bottom: 76px;
 }
 
 .studio-fullscreen-btn {
@@ -19403,12 +19423,12 @@ body.day-mode .cal-filter-chip.active {
 }
 
 .cockpit-hud-btn {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  max-width: 36px;
-  max-height: 36px;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 50% !important;
   padding: 0 !important;

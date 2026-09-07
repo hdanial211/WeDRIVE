@@ -4877,6 +4877,59 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.5.6 Align 360 studio frame sequence to true front frame 125 and ensure angle indicator accuracy`
   - Tag Versi: `6.5.6`
 
+---
+
+### 201. [MINOR UPDATE] Versi 6.5.7: Integrasi Penuh Enjin Panorama 3D Maya 360° Dalaman Kereta (`car-detail.html`) (Continuous 3D Cockpit Panorama & Real-Time Angle Tracking)
+- **Tarikh**: 7 September 2026
+- **Modul Terlibat**:
+  - `admin/pages/car/car-detail/car-detail.html`
+  - `admin/js/car-detail.js`
+  - `shared/js/vehicle-viewer.js`
+  - `shared/css/wedrive.css`
+  - `tests/e2e/16_car_detail_360_interior.spec.js`
+  - `implementation_plan.md`
+  - `walkthrough.md`
+
+- **Objektif & Masalah Dikenal Pasti**:
+  1. Pengguna meminta paparan dalaman kenderaan dinaik taraf mengikut pelaksanaan interaktif di halaman `how-it-works.html`:
+     - *"perfect skrg ni dalaman tu fix kan buat macam tu jugak"*
+     - *"Kalau awak tengok macam mana coding nya awak boleh tengok dekat sini http://localhost:5504/guest/pages/how-it-works/how-it-works.html"*
+  2. Peringkat dalaman (`#studio-interior-stage`) sebelum ini hanya menggunakan imej statik rata `<img> #cockpit-canvas` yang bertukar antara 4 foto secara diskret melalui ambang seretan (`deltaX > 60px`), dan terhad secara kaku kepada BMW sahaja (`const isBMW = car.name.includes('BMW')`).
+  3. Di `how-it-works.html`, pemapar kenderaan dikuasakan oleh `shared/js/vehicle-viewer.js` dengan kubus 3D (`data-vehicle-interior-cube`) 6 wajah (`f`, `b`, `l`, `r`, `u`, `d`), Three.js WebGL (dengan sandaran CSS3D), putaran berterusan lancar 360° paksi yaw dan pitch, inersia kinetik, redaman momentum, dan kawalan zum.
+
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Peningkatan Enjin `shared/js/vehicle-viewer.js`**:
+     - Menambah kaedah pengaturcaraan pada objek `api`: `setInteriorOrientation(yaw, pitch, instant)`, `stepInteriorYaw(deltaYaw)`, `setInteriorZoom(zoom)`, `getInteriorOrientation()`, `toggleAutoDrift(enabled)`, dan `isAutoDriftEnabled()`.
+     - Melaksanakan pelepasan acara `wedrive:interior-change` pada elemen `root` setiap kali sudut yaw/pitch dikemas kini semasa animasi, seretan tetikus, atau leretan sentuh.
+     - Menyediakan sokongan pilihan `autoDrift` yang boleh dikawal secara dinamik.
+  2. **Penstrukturan Semula DOM `#studio-interior-stage` di `car-detail.html`**:
+     - Menggantikan elemen `<img>` statik dengan struktur kubus panorama 3D sebenar: `[data-vehicle-interior-scene]` dan `[data-vehicle-interior-cube]` dengan 6 imej muka resolusi tinggi (`pano_f.jpg`, `pano_b.jpg`, `pano_l.jpg`, `pano_r.jpg`, `pano_u.jpg`, `pano_d.jpg`).
+     - Menambah lencana pembayang seretan terapung kapsul pil (`#cockpit-drag-hint`).
+     - Menambah butang skrin penuh terapung 1:1 Apple circle (`.studio-fullscreen-btn`).
+     - Menyelaraskan bar kawalan HUD dengan butang ikon bulat 1:1 sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`).
+     - Memasukkan skrip `shared/js/vehicle-viewer.js?v=6.5.7` sebelum `car-detail.js`.
+  3. **Penyelarasan Dinamik `admin/js/car-detail.js`**:
+     - Fungsi pemetaan pintar `getCarModelKey(car)` bagi memilih kunci registry yang tepat (`bmw`, `gla`, `alphard`, `axia`, `golf`, `cls350`, `ranger`, `axiaAv`) merentas kesemua 8 model dalam inventori armada.
+     - Memulakan instance `WedriveVehicleViewer` pada `#studio-interior-stage` dan mengemas kini model secara dinamik apabila pengguna memilih kereta berlainan dari pemilih armada.
+     - Menghubungkan acara `wedrive:interior-change` dengan fungsi `updateCockpitAngleIndicator` untuk memaparkan darjah dan label arah pandangan secara langsung (`0° · Pandangan Hadapan`, `90° · Sisi Kanan (Pemandu)`, `180° · Pandangan Belakang`, `270° · Sisi Kiri (Penumpang)`, `+24° · Pandangan Bumbung & Sunroof`, `-30° · Konsol Tengah & Tuil Gear`).
+     - Menghubungkan butang HUD untuk tindakan pantas (Pusing Kiri/Kanan 90°, Fokus Hadapan, Pandang Bumbung, Pandang Konsol, Auto-Putar Play/Pause, Zum Masuk/Keluar).
+  4. **Pematuhan Mutlak Zero Oval Rule**:
+     - Menambah `.cockpit-hud-btn` ke dalam peraturan geometri induk Apple HIG di `shared/css/wedrive.css` dengan dimensi `36px !important` tepat bagi menghalang herotan ketinggian pada semua mod paparan.
+
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Disahkan secara langsung pada tab pelayar aktif tunggal sedia ada (Port 5504):
+    - **MacBook (1440x900)**: Kubus 3D panorama dalaman lancar, interaksi seretan 360° sempurna, lencana sudut mengemas kini darjah secara langsung, sifar limpahan mendatar (`hasHorizontalScroll: false`), 0 ovals (`ovals: []`).
+    - **iPad (820x1180)**: Susun atur stabil, sentuhan leretan lancar, sifar limpahan (`hasHorizontalScroll: false`), 0 ovals (`ovals: []`).
+    - **iPhone (393x852)**: Paparan 1-kolum responsif, butang HUD kekal bulat 1:1 sempurna (`width === height === 36px`), sifar limpahan (`hasHorizontalScroll: false`).
+  - Ujian Automasi Playwright CLI: Menepati syarat kelulusan mutlak 100% (**38/38 Passed**) merentas keseluruhan suite ujian termasuk fail ujian baharu `tests/e2e/16_car_detail_360_interior.spec.js`.
+  - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara di semua 19 fail.
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.5.7 Integrate vehicle-viewer 3D interior panorama engine into car-detail page with live angle tracking and HUD controls`
+  - Tag Versi: `6.5.7`
+
+
 
 
 

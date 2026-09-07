@@ -100,7 +100,7 @@
         </div>
 
         <!-- STAGE 2: INTERIOR 360 VIEW -->
-        <div class="interior-cockpit-viewer hidden" id="studio-interior-stage">
+        <div class="interior-cockpit-viewer hidden" id="studio-interior-stage" data-vehicle-viewer data-vehicle-default-view="interior">
           <div class="studio-watermark-360">
             <span class="material-icons-round fs-16">airline_seat_recline_extra</span>
             <span>RUANG DALAMAN MAYA 360°</span>
@@ -111,7 +111,25 @@
             <span id="cockpit-angle-text">0° · Pandangan Hadapan</span>
           </div>
 
-          <img id="cockpit-canvas" class="cockpit-canvas" src="" alt="360 Interior View" />
+          <!-- 3D Interior Cubemap / WebGL Scene -->
+          <div class="hiw-interior-scene" id="cdInteriorScene" data-vehicle-interior-scene style="display: flex;">
+            <div class="hiw-interior-cube" id="cdInteriorCube" data-vehicle-interior-cube>
+              <img class="hiw-interior-face" data-vehicle-interior-face="f" alt="Interior Front" draggable="false" />
+              <img class="hiw-interior-face" data-vehicle-interior-face="b" alt="Interior Back" draggable="false" />
+              <img class="hiw-interior-face" data-vehicle-interior-face="l" alt="Interior Left" draggable="false" />
+              <img class="hiw-interior-face" data-vehicle-interior-face="r" alt="Interior Right" draggable="false" />
+              <img class="hiw-interior-face" data-vehicle-interior-face="u" alt="Interior Top" draggable="false" />
+              <img class="hiw-interior-face" data-vehicle-interior-face="d" alt="Interior Down" draggable="false" />
+            </div>
+            <div class="hiw-interior-glow" data-vehicle-interior-glow aria-hidden="true"></div>
+          </div>
+
+          <!-- Drag Hint Pill Overlay -->
+          <div class="hiw-drag-hint" id="cockpit-drag-hint" aria-hidden="true">
+            <span class="material-icons-round">touch_app</span>
+            <span>Seret untuk pusing 360°</span>
+          </div>
+
           <div id="cockpit-fallback" class="flex-center flex-column gap-8 text-center p-24 hidden">
             <span class="material-icons-round fs-48 text-purple">videocam_off</span>
             <span class="fs-14 fw-600 text-primary">Aset 360° Dalaman Belum Dimuat Naik</span>
@@ -120,30 +138,38 @@
 
           <!-- Virtual Cockpit HUD Controls -->
           <div class="cockpit-overlay-hud" id="cockpit-hud">
-            <button class="cockpit-hud-btn" onclick="cockpitPanStep(-1)" title="Pusing Kiri" aria-label="Pusing Kiri">
+            <button type="button" class="cockpit-hud-btn" onclick="cockpitPanStep(-90)" title="Pusing Kiri (90°)" aria-label="Pusing Kiri">
               <span class="material-icons-round fs-18">arrow_back</span>
             </button>
-            <button class="cockpit-hud-btn" onclick="cockpitSetView('front')" title="Pandangan Hadapan (0°)" aria-label="Pandangan Hadapan">
+            <button type="button" class="cockpit-hud-btn" onclick="cockpitSetView('front')" title="Pandangan Hadapan (0°)" aria-label="Pandangan Hadapan">
               <span class="material-icons-round fs-18">center_focus_strong</span>
             </button>
-            <button class="cockpit-hud-btn" onclick="cockpitPanStep(1)" title="Pusing Kanan" aria-label="Pusing Kanan">
+            <button type="button" class="cockpit-hud-btn" onclick="cockpitPanStep(90)" title="Pusing Kanan (90°)" aria-label="Pusing Kanan">
               <span class="material-icons-round fs-18">arrow_forward</span>
             </button>
             <div class="border-left-subtle h-20 mx-4"></div>
-            <button class="cockpit-hud-btn" onclick="cockpitSetView('up')" title="Bumbung & Sunroof" aria-label="Bumbung">
+            <button type="button" class="cockpit-hud-btn" onclick="cockpitSetView('up')" title="Bumbung & Sunroof (+90°)" aria-label="Bumbung">
               <span class="material-icons-round fs-18">vertical_align_top</span>
             </button>
-            <button class="cockpit-hud-btn" onclick="cockpitSetView('down')" title="Konsol Tengah" aria-label="Konsol">
+            <button type="button" class="cockpit-hud-btn" onclick="cockpitSetView('down')" title="Konsol Tengah (-90°)" aria-label="Konsol">
               <span class="material-icons-round fs-18">vertical_align_bottom</span>
             </button>
             <div class="border-left-subtle h-20 mx-4"></div>
-            <button class="cockpit-hud-btn" onclick="cockpitZoom(1.2)" title="Dekatkan (Zoom In)" aria-label="Dekatkan">
+            <button type="button" class="cockpit-hud-btn" id="cockpit-autospin-btn" onclick="toggleCockpitAutoDrift()" title="Auto Putar" aria-label="Auto Putar">
+              <span class="material-icons-round fs-18">play_arrow</span>
+            </button>
+            <button type="button" class="cockpit-hud-btn" onclick="cockpitZoom(1.08)" title="Dekatkan (Zoom In)" aria-label="Dekatkan">
               <span class="material-icons-round fs-18">zoom_in</span>
             </button>
-            <button class="cockpit-hud-btn" onclick="cockpitZoom(1.0)" title="Set Semula Saiz" aria-label="Set Semula">
+            <button type="button" class="cockpit-hud-btn" onclick="cockpitZoom(0.98)" title="Set Semula Saiz" aria-label="Set Semula">
               <span class="material-icons-round fs-18">zoom_out_map</span>
             </button>
           </div>
+
+          <!-- Floating Fullscreen Action Button (Strict 1:1 Apple Circle) -->
+          <button type="button" class="studio-fullscreen-btn" onclick="toggleFullscreenInterior()" title="Skrin Penuh" aria-label="Skrin Penuh">
+            <span class="material-icons-round fs-20">fullscreen</span>
+          </button>
         </div>
 
         <!-- STAGE 3: PHOTO GALLERY (EXPANSIVE HD SHOWCASE) -->
@@ -383,7 +409,8 @@
   <script src="../../../../shared/js/api.js"></script>
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
-  <script src="../../../js/car-detail.js?v=6.0.0"></script>
+  <script src="../../../../shared/js/vehicle-viewer.js?v=6.5.7"></script>
+  <script src="../../../js/car-detail.js?v=6.5.7"></script>
 </body>
 
 </html>
