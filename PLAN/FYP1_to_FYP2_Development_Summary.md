@@ -5265,3 +5265,42 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.3 Resolve IDE linter warnings, enforce ARIA tab accessibility, eliminate inline styles, and achieve 100% Playwright bilingual parity`
   - Tag Versi: `6.7.3`
 
+---
+
+## 🌐 [PATCH UPDATE] 208. Pemurnian Bahasa Tetamu (Studio 360° & Katalog Tetamu), Penyingkiran Validator Warning CSS & Ujian Dwibahasa 100% Lulus (v6.7.4)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna meminta semakan penuh sebagai Tetamu (Guest) merangkumi fungsi butang dan ketepatan bahasa:
+     > `awak as guest check semua button`
+     > `check bahasa pulak as guest semua bahasa okey ke??`
+     > `Proceed`
+  2. Pengguna meminta pembersihan amaran validator CSS bagi `text-size-adjust` pada fail `shared/css/wedrive.css`.
+  3. Memastikan kepatuhan ketat terhadap Standard Bahasa Melayu Moden 2026 (`11_language_standards.md`), senarai hitam istilah (sifar istilah *armada*), dan keselarasan dwibahasa (EN/MS) 100%.
+
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Pemurnian Bahasa Antaramuka Tetamu (Modern Malay 2026 Standard)**:
+     - Mengubah istilah `"Bilik Pameran 360°"` kepada `"Studio 360°"` pada pautan footer (`shared/components/footer.html`), tajuk halaman butiran kereta (`shared/js/main.js`), serta kamus bahasa `shared/lang/` (`en.js`, `en.json`, `ms.js`, `ms.json`).
+     - Mengubah teks lencana tetamu `guest_badge` daripada `"SHOWROOM TETAMU"` kepada `"KATALOG TETAMU"` agar lebih kontemporari dan mesra pengguna.
+     - Menyingkirkan perkataan terlarang `"armada"` daripada fail peraturan `.agents/rules/13_prd_standard.md`, digantikan dengan frasa standard `"pilihan kereta"`.
+  2. **Penyelarasan Kamus Bahasa Pusat & `FALLBACK_LANG` (`shared/js/main.js`)**:
+     - Menambahkan kunci terjemahan mandatori ke dalam objek `FALLBACK_LANG` (`cd_tech_specs`, `cd_btn_book_now`, `book_step_dates`, `book_step_summary`, `cust_pay_title`, `cust_pay_btn`, `cust_conf_title`, `cust_conf_summary`, `cust_rcpt_title`, `ac_step1_title`, `err_404_title`) bagi menjamin paparan teks serta-merta tanpa flicker sebelum fail skrip luaran selesai dimuatkan.
+     - Menyelaraskan teks terjemahan dalam `shared/lang/ms.js` dan `ms.json` untuk `cust_pay_title` ("Pembayaran & Pengesahan"), `cust_pay_btn` ("Bayar Deposit & Sahkan Tempahan"), dan `cust_conf_title` ("Tempahan Disahkan!").
+  3. **Penyingkiran Sifat CSS `text-size-adjust` (`shared/css/wedrive.css`)**:
+     - Menyingkirkan sifat `text-size-adjust` dan `-webkit-text-size-adjust` daripada pemilih `html` kerana kawalan saiz fon `16px` telah mengendalikan kebolehbacaan dan menghalang auto-zoom iOS secara standard, sekali gus menghapuskan amaran validator antara enjin pelayar.
+  4. **Pengekalan Elemen Butang Pembayaran (`payment.html`)**:
+     - Menyesuaikan fungsi `renderSummary()` di dalam `customer/pages/car-details/booking/payment/payment.html` supaya memelihara elemen `<span data-key="cust_pay_btn">` tanpa memadamkan struktur DOM semasa mengemas kini jumlah harga.
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - Pelaksanaan Ujian Automasi Playwright CLI: **48/48 Ujian Lulus (100% Pass Rate)** merangkumi keseluruhan fail spesifikasi ujian (`01_` hingga `18_`).
+  - Pengesahan 3-Peranti Apple (Single-Tab DevTools): Paparan diuji pada MacBook (`1440x900`), iPad (`820x1180`), dan iPhone (`393x852`) tanpa limpahan mendatar (*zero horizontal scroll*).
+  - Pematuhan Prinsip Sifar Bujur (Zero Oval Rule): Semua butang ikon disahkan bulat tepat 1:1 dan butang teks mengembang mendatar menjadi kapsul pil (`border-radius: 9999px`).
+  - Pematuhan Had Aksara Peraturan `.agents/rules/*.md`: Semua 19 fail disahkan $\le 12,000$ aksara (`wc -m`).
+  - Graf Pengetahuan Graphify dikemas kini (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.7.4 Refine guest terminology, resolve payment button language parity, and enforce 100% full-system bilingual tests`
+  - Tag Versi: `6.7.4`
+
+
+
+

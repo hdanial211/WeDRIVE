@@ -155,7 +155,6 @@ html {
   background-color: var(--bg-body);
   overflow-x: hidden;
   max-width: 100vw;
-  -webkit-text-size-adjust: 100%;
 }
 
 body, button, input, select, textarea, optgroup, table, th, td {
