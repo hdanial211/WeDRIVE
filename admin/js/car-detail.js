@@ -440,14 +440,14 @@ function setupInteriorCockpit(car) {
 
     if (interiorViewerApi) {
       interiorViewerApi.setModel(modelKey);
-      interiorViewerApi.setInteriorOrientation(0, 0, true);
+      interiorViewerApi.setInteriorOrientation(180, 0, true);
     }
 
     if (fallback) fallback.classList.add('hidden');
     if (scene) scene.style.display = 'flex';
     if (hud) hud.classList.remove('hidden');
 
-    updateCockpitAngleIndicator({ yaw: 0, pitch: 0 });
+    updateCockpitAngleIndicator({ yaw: 180, pitch: 0 });
   } else {
     if (fallback) fallback.classList.remove('hidden');
     if (scene) scene.style.display = 'none';
@@ -469,11 +469,11 @@ function updateCockpitAngleIndicator(info) {
   } else if (pitch <= -20) {
     label = `${pitch}° · Konsol Tengah & Tuil Gear`;
   } else if (normalizedYaw >= 315 || normalizedYaw < 45) {
-    label = `${normalizedYaw}° · Pandangan Hadapan`;
+    label = `${normalizedYaw}° · Pandangan Belakang`;
   } else if (normalizedYaw >= 45 && normalizedYaw < 135) {
     label = `${normalizedYaw}° · Sisi Kanan (Pemandu)`;
   } else if (normalizedYaw >= 135 && normalizedYaw < 225) {
-    label = `${normalizedYaw}° · Pandangan Belakang`;
+    label = `${normalizedYaw}° · Pandangan Hadapan`;
   } else {
     label = `${normalizedYaw}° · Sisi Kiri (Penumpang)`;
   }
@@ -497,13 +497,13 @@ function cockpitSetView(view) {
   if (!interiorViewerApi || !interiorViewerApi.setInteriorOrientation) return;
 
   if (view === 'front') {
-    interiorViewerApi.setInteriorOrientation(0, 0);
+    interiorViewerApi.setInteriorOrientation(180, 0);
   } else if (view === 'up') {
     interiorViewerApi.setInteriorOrientation(null, 24);
   } else if (view === 'down') {
     interiorViewerApi.setInteriorOrientation(null, -30);
   } else if (view === 'rear') {
-    interiorViewerApi.setInteriorOrientation(180, 0);
+    interiorViewerApi.setInteriorOrientation(0, 0);
   }
 }
 

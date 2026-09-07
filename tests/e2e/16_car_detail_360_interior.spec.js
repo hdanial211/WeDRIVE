@@ -41,47 +41,24 @@ test.describe('WeDRIVE - Car Detail 360° Studio & 3D Interior Panorama', () => 
     const faces = page.locator('#cdInteriorCube [data-vehicle-interior-face]');
     await expect(faces).toHaveCount(6);
 
-    // Verify HUD controls are present
+    // Verify floating HUD bar is removed for clean immersive panorama viewing
     const hud = page.locator('#cockpit-hud');
-    await expect(hud).toBeVisible();
+    await expect(hud).toHaveCount(0);
 
-    // Test HUD Front snap
-    const btnFront = hud.locator('button[onclick*="front"]');
-    await btnFront.click();
+    // Verify Drag Hint pill is present
+    const dragHint = page.locator('#cockpit-drag-hint');
+    await expect(dragHint).toBeVisible();
+
+    // Verify interactive drag on stage
+    const box = await interiorStage.boundingBox();
+    expect(box).not.toBeNull();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width / 2 + 80, box.y + box.height / 2, { steps: 5 });
+    await page.mouse.up();
     await page.waitForTimeout(300);
-    await expect(angleText).toContainText('Pandangan Hadapan');
 
-    // Test HUD Look Up (Roof)
-    const btnUp = hud.locator('button[onclick*="up"]');
-    await btnUp.click();
-    await page.waitForTimeout(400);
-    await expect(angleText).toContainText('Bumbung');
-
-    // Test HUD Look Down (Console)
-    const btnDown = hud.locator('button[onclick*="down"]');
-    await btnDown.click();
-    await page.waitForTimeout(400);
-    await expect(angleText).toContainText('Konsol');
-
-    // Reset to Front
-    await btnFront.click();
-    await page.waitForTimeout(400);
-    await expect(angleText).toContainText('Pandangan Hadapan');
-
-    // Verify Zero Oval Rule on all HUD buttons
-    const hudButtons = page.locator('.cockpit-hud-btn');
-    const count = await hudButtons.count();
-    expect(count).toBeGreaterThan(0);
-
-    for (let i = 0; i < count; i++) {
-      const btn = hudButtons.nth(i);
-      const box = await btn.boundingBox();
-      expect(box).not.toBeNull();
-      // Expect strictly 1:1 aspect ratio within 0.5px tolerance
-      expect(Math.abs(box.width - box.height)).toBeLessThanOrEqual(0.5);
-    }
-
-    // Verify Fullscreen button is also strictly 1:1 circular
+    // Verify Fullscreen button is strictly 1:1 circular
     const fsBtn = interiorStage.locator('.studio-fullscreen-btn');
     await expect(fsBtn).toBeVisible();
     const fsBox = await fsBtn.boundingBox();

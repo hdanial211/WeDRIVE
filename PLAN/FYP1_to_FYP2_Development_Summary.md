@@ -4906,21 +4906,21 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
      - Menggantikan elemen `<img>` statik dengan struktur kubus panorama 3D sebenar: `[data-vehicle-interior-scene]` dan `[data-vehicle-interior-cube]` dengan 6 imej muka resolusi tinggi (`pano_f.jpg`, `pano_b.jpg`, `pano_l.jpg`, `pano_r.jpg`, `pano_u.jpg`, `pano_d.jpg`).
      - Menambah lencana pembayang seretan terapung kapsul pil (`#cockpit-drag-hint`).
      - Menambah butang skrin penuh terapung 1:1 Apple circle (`.studio-fullscreen-btn`).
-     - Menyelaraskan bar kawalan HUD dengan butang ikon bulat 1:1 sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`).
+     - Membuang bar kawalan HUD terapung bertindih (`#cockpit-hud`) bagi menghasilkan paparan imersif 360° yang bersih, lapang, dan moden persis halaman `how-it-works.html`.
      - Memasukkan skrip `shared/js/vehicle-viewer.js?v=6.5.7` sebelum `car-detail.js`.
-  3. **Penyelarasan Dinamik `admin/js/car-detail.js`**:
+  3. **Penyelarasan Dinamik & Pembetulan Sudut Hadapan/Belakang di `admin/js/car-detail.js`**:
      - Fungsi pemetaan pintar `getCarModelKey(car)` bagi memilih kunci registry yang tepat (`bmw`, `gla`, `alphard`, `axia`, `golf`, `cls350`, `ranger`, `axiaAv`) merentas kesemua 8 model dalam inventori armada.
      - Memulakan instance `WedriveVehicleViewer` pada `#studio-interior-stage` dan mengemas kini model secara dinamik apabila pengguna memilih kereta berlainan dari pemilih armada.
-     - Menghubungkan acara `wedrive:interior-change` dengan fungsi `updateCockpitAngleIndicator` untuk memaparkan darjah dan label arah pandangan secara langsung (`0° · Pandangan Hadapan`, `90° · Sisi Kanan (Pemandu)`, `180° · Pandangan Belakang`, `270° · Sisi Kiri (Penumpang)`, `+24° · Pandangan Bumbung & Sunroof`, `-30° · Konsol Tengah & Tuil Gear`).
-     - Menghubungkan butang HUD untuk tindakan pantas (Pusing Kiri/Kanan 90°, Fokus Hadapan, Pandang Bumbung, Pandang Konsol, Auto-Putar Play/Pause, Zum Masuk/Keluar).
-  4. **Pematuhan Mutlak Zero Oval Rule**:
-     - Menambah `.cockpit-hud-btn` ke dalam peraturan geometri induk Apple HIG di `shared/css/wedrive.css` dengan dimensi `36px !important` tepat bagi menghalang herotan ketinggian pada semua mod paparan.
+     - Menyelaraskan orientasi sudut yaw dan label arah pandangan: pandangan menghadap papan pemuka dan stereng hadapan diselaraskan sebagai `Pandangan Hadapan`, manakala pusingan ke tempat duduk belakang diselaraskan sebagai `Pandangan Belakang`.
+     - Menghubungkan acara `wedrive:interior-change` dengan fungsi `updateCockpitAngleIndicator` untuk memaparkan darjah dan label arah pandangan secara langsung (`180° · Pandangan Hadapan`, `90° · Sisi Kanan (Pemandu)`, `0° · Pandangan Belakang`, `270° · Sisi Kiri (Penumpang)`, `+24° · Pandangan Bumbung & Sunroof`, `-30° · Konsol Tengah & Tuil Gear`).
+  4. **Pematuhan Mutlak Zero Oval Rule & Estetik Apple**:
+     - Butang skrin penuh terapung menggunakan nisbah 1:1 bulat sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important;`).
 
 - **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
   - Disahkan secara langsung pada tab pelayar aktif tunggal sedia ada (Port 5504):
     - **MacBook (1440x900)**: Kubus 3D panorama dalaman lancar, interaksi seretan 360° sempurna, lencana sudut mengemas kini darjah secara langsung, sifar limpahan mendatar (`hasHorizontalScroll: false`), 0 ovals (`ovals: []`).
     - **iPad (820x1180)**: Susun atur stabil, sentuhan leretan lancar, sifar limpahan (`hasHorizontalScroll: false`), 0 ovals (`ovals: []`).
-    - **iPhone (393x852)**: Paparan 1-kolum responsif, butang HUD kekal bulat 1:1 sempurna (`width === height === 36px`), sifar limpahan (`hasHorizontalScroll: false`).
+    - **iPhone (393x852)**: Paparan responsif tanpa bar bertindih, sifar limpahan (`hasHorizontalScroll: false`).
   - Ujian Automasi Playwright CLI: Menepati syarat kelulusan mutlak 100% (**38/38 Passed**) merentas keseluruhan suite ujian termasuk fail ujian baharu `tests/e2e/16_car_detail_360_interior.spec.js`.
   - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara di semua 19 fail.
   - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
@@ -4928,6 +4928,39 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.5.7 Integrate vehicle-viewer 3D interior panorama engine into car-detail page with live angle tracking and HUD controls`
   - Tag Versi: `6.5.7`
+
+---
+
+## 🚗 [MINOR UPDATE] 202. Penyelarasan Sudut Hadapan/Belakang Ruang Maya 360° & Pembuangan Bar Kawalan HUD untuk Antaramuka Imersif Bersih (v6.5.8)
+
+- **Punca Keperluan & Arahan Pengguna (User Directives)**:
+  1. Pengguna meminta penukaran orientasi teks sudut bagi ruang dalaman:
+     > *"tukarkan perkataan depan ke belakang ,yang pandang belakang ke depan"*
+  2. Pengguna meminta bar kawalan HUD terapung dibuang sepenuhnya daripada antaramuka panorama dalaman:
+     > *"now buang ni pulak"* (beserta tangkapan skrin bar HUD).
+- **Tindakan Teknikal & Pembaikan Sistem**:
+  1. **Penyelarasan Arah Pandangan (Front vs Rear Orientation & Angle Labels)**:
+     - Di dalam `admin/js/car-detail.js`, membetulkan padanan sudut sektor:
+       - Sektor menghadap papan pemuka, infotainment, dan cermin hadapan (`yaw` sekitar 180° / 135°–225°) diklasifikasikan sebagai `Pandangan Hadapan`.
+       - Sektor menghadap barisan tempat duduk belakang (`yaw` sekitar 0° / 315°–45°) diklasifikasikan sebagai `Pandangan Belakang`.
+     - Memastikan orientasi permulaan bermula pada `yaw = 180°` (menghadap hadapan papan pemuka kenderaan).
+  2. **Pembuangan Bar Kawalan HUD Terapung (`#cockpit-hud`)**:
+     - Memadam elemen `#cockpit-hud` berserta semua butang anak daripada `admin/pages/car/car-detail/car-detail.html`.
+     - Mengembalikan kedudukan lencana pembayang seretan `#cockpit-drag-hint` ke `bottom: 20px` (menyelaraskan dengan piawaian reka bentuk `how-it-works.html`).
+     - Mengekalkan butang skrin penuh terapung 1:1 Apple circle (`.studio-fullscreen-btn`) yang kemas dan subtle di sudut kanan bawah.
+  3. **Penyelarasan Ujian Automasi**:
+     - Mengemaskini `tests/e2e/16_car_detail_360_interior.spec.js` untuk mengesahkan ketiadaan `#cockpit-hud`, keterlihatan pembayang seretan, dan kestabilan geometri butang skrin penuh.
+- **Pengesahan Ujian Automatik & Pengguna 3-Peranti Apple**:
+  - Disahkan secara langsung pada tab pelayar aktif tunggal sedia ada (Port 5504):
+    - **MacBook (1440x900)**: Antaramuka lapang, imersif, seretan panorama 360° lancar, teks sudut tepat (`Pandangan Hadapan` vs `Pandangan Belakang`), 0 ovals (`ovals: []`), sifar limpahan mendatar.
+    - **iPad (820x1180)**: Susun atur stabil, sifar limpahan mendatar.
+    - **iPhone (393x852)**: Paparan telefon kemas tanpa sebarang toolbar yang menghalang pandangan.
+  - Ujian Automasi Playwright CLI: Menepati syarat kelulusan mutlak 100% (**38/38 Passed**) dalam masa 1.8m.
+  - Pematuhan had siling aksara `wc -m .agents/rules/*.md` disahkan $\le 12,000$ aksara di semua 19 fail.
+  - Graf pengetahuan Graphify disegerakkan menerusi `graphify update .`.
+- **Maklumat Git**:
+  - Commit: `6.5.8 Refine 3D interior cockpit orientation labels and remove overlay HUD for clean immersive viewing`
+  - Tag Versi: `6.5.8`
 
 
 

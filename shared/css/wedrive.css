@@ -19334,10 +19334,6 @@ body.day-mode .cal-filter-chip.active {
   pointer-events: none;
 }
 
-#cockpit-drag-hint {
-  bottom: 76px;
-}
-
 .studio-fullscreen-btn {
   position: absolute;
   bottom: 20px;

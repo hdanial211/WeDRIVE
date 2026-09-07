@@ -108,7 +108,7 @@
 
           <div class="studio-angle-indicator" id="cockpit-angle-pill">
             <span class="material-icons-round fs-14 text-purple">explore</span>
-            <span id="cockpit-angle-text">0° · Pandangan Hadapan</span>
+            <span id="cockpit-angle-text">180° · Pandangan Hadapan</span>
           </div>
 
           <!-- 3D Interior Cubemap / WebGL Scene -->
@@ -134,36 +134,6 @@
             <span class="material-icons-round fs-48 text-purple">videocam_off</span>
             <span class="fs-14 fw-600 text-primary">Aset 360° Dalaman Belum Dimuat Naik</span>
             <span class="fs-12 text-secondary">Anda boleh memuat naik foto panorama dalaman di menu Tambah Kereta.</span>
-          </div>
-
-          <!-- Virtual Cockpit HUD Controls -->
-          <div class="cockpit-overlay-hud" id="cockpit-hud">
-            <button type="button" class="cockpit-hud-btn" onclick="cockpitPanStep(-90)" title="Pusing Kiri (90°)" aria-label="Pusing Kiri">
-              <span class="material-icons-round fs-18">arrow_back</span>
-            </button>
-            <button type="button" class="cockpit-hud-btn" onclick="cockpitSetView('front')" title="Pandangan Hadapan (0°)" aria-label="Pandangan Hadapan">
-              <span class="material-icons-round fs-18">center_focus_strong</span>
-            </button>
-            <button type="button" class="cockpit-hud-btn" onclick="cockpitPanStep(90)" title="Pusing Kanan (90°)" aria-label="Pusing Kanan">
-              <span class="material-icons-round fs-18">arrow_forward</span>
-            </button>
-            <div class="border-left-subtle h-20 mx-4"></div>
-            <button type="button" class="cockpit-hud-btn" onclick="cockpitSetView('up')" title="Bumbung & Sunroof (+90°)" aria-label="Bumbung">
-              <span class="material-icons-round fs-18">vertical_align_top</span>
-            </button>
-            <button type="button" class="cockpit-hud-btn" onclick="cockpitSetView('down')" title="Konsol Tengah (-90°)" aria-label="Konsol">
-              <span class="material-icons-round fs-18">vertical_align_bottom</span>
-            </button>
-            <div class="border-left-subtle h-20 mx-4"></div>
-            <button type="button" class="cockpit-hud-btn" id="cockpit-autospin-btn" onclick="toggleCockpitAutoDrift()" title="Auto Putar" aria-label="Auto Putar">
-              <span class="material-icons-round fs-18">play_arrow</span>
-            </button>
-            <button type="button" class="cockpit-hud-btn" onclick="cockpitZoom(1.08)" title="Dekatkan (Zoom In)" aria-label="Dekatkan">
-              <span class="material-icons-round fs-18">zoom_in</span>
-            </button>
-            <button type="button" class="cockpit-hud-btn" onclick="cockpitZoom(0.98)" title="Set Semula Saiz" aria-label="Set Semula">
-              <span class="material-icons-round fs-18">zoom_out_map</span>
-            </button>
           </div>
 
           <!-- Floating Fullscreen Action Button (Strict 1:1 Apple Circle) -->
