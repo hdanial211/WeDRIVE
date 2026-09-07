@@ -1440,29 +1440,18 @@
   }
 
   function initPageTransition() {
-    if (!window.anime || prefersReducedMotion) return;
+    // Safari BFCache & History Traversal Safeguard:
+    // Pastikan gaya sebaris opacity pada <body> tidak pernah terperangkap pada nilai 0 semasa sejarah dinavigasi kembali
+    function restoreBodyVisibility() {
+      if (document.body && (document.body.style.opacity === '0' || document.body.style.opacity === 0)) {
+        document.body.style.removeProperty('opacity');
+        document.body.style.removeProperty('pointer-events');
+      }
+    }
 
-    document.addEventListener('click', function (event) {
-      var link = event.target.closest('a[href]');
-      if (!link) return;
-
-      var href = link.getAttribute('href');
-      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http')) return;
-      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-      if (link.target && link.target !== '_self') return;
-
-      event.preventDefault();
-
-      window.anime({
-        targets: 'body',
-        opacity: [1, 0],
-        duration: 320,
-        easing: 'easeInQuad',
-        complete: function () {
-          window.location.href = href;
-        }
-      });
-    });
+    window.addEventListener('pageshow', restoreBodyVisibility);
+    window.addEventListener('pagehide', restoreBodyVisibility);
+    window.addEventListener('popstate', restoreBodyVisibility);
   }
 
   function runNavbarAnimation() {

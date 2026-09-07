@@ -5415,6 +5415,54 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.7 Fix guest sticky and floating navbar by transitioning body overflow-x to clip`
   - Tag Versi: `6.7.7`
 
+---
+
+## 🧭 [PATCH UPDATE] 212. Pembaikan Akar Umbi Skrin Hitam Butang Back Safari (BFCache Resilience) & Dokumentasi Peraturan 20 Peranan Pasukan Kejuruteraan (v6.7.8)
+
+- **Punca Isu & Maklum Balas Pengguna (Root Cause Analysis)**:
+  - Pengguna melaporkan masalah skrin hitam kosong (*blank black screen*) apabila menekan butang *Back* Safari (`< | >`):
+    > `kenapakan ada page yang saya x boleh back guna safari...dia macam blank hitam jek`
+  - Dan menambah arahan berkaitan pendokumentasian 5 domain peranan kejuruteraan perisian profesional ke dalam `.agents/`:
+    > `haa saya lupa nak cakap dekat dalam .agent tu as role macam...`
+  - **Diagnosis Teknikal Isu Skrin Hitam**:
+    1. **Konflik Skrip Navigasi & Animasi Berganda**: `shared/js/animate.js` mempunyai fungsi lapuk `initPageTransition()` yang memintas klik pautan serentak dengan `shared/js/main.js`. Fungsi ini menjalankan `window.anime({ targets: 'body', opacity: [1, 0] })` yang menetapkan gaya sebaris `<body style="opacity: 0;">` terus pada elemen `<body>`.
+    2. **Mekanisme Pembekuan BFCache WebKit Safari**: Safari membekukan memori DOM dan lapisan komposit GPU pada saat pengguna meninggalkan halaman. Kerana halaman dinyahmuat dengan `<body style="opacity: 0;">` dan kelas `page-is-leaving` (`animation: pageTransitionOut 0.22s ... forwards !important;`), Safari menyimpan snapshot halaman dalam keadaan gelap gelita sepenuhnya. `main.js` sebelum ini tidak membersihkannya sebelum pembekuan (`pagehide`), dan pendengar `pageshow` sedia ada tidak membuang gaya sebaris `style="opacity: 0;"`.
+    3. **Penyenaraian Halaman Percikan (`welcome.html`) dalam Sejarah**: `welcome.html` menggunakan `window.location.href = redirectUrl` dan bukannya `window.location.replace(redirectUrl)`. Apabila pengguna menekan *Back*, mereka terperangkap di skrin selamat datang yang telah selesai pudar ke hitam.
+
+- **Tindakan Pembaikan (Implementation)**:
+  - **1. Pemansuhan Pemintas Bertindan (`shared/js/animate.js`)**:
+    - Memadamkan pemintas klik bertindih dalam `initPageTransition()` dan menggantikannya dengan pendengar pemulihan keterlihatan Safari BFCache (`pageshow`, `pagehide`, `popstate`) yang menjamin `body.style.opacity` tidak pernah dibiarkan pada 0.
+  - **2. Pembersihan Sebelum Pembekuan BFCache & Pemulihan Segera (`shared/js/main.js`)**:
+    - Menambah pendengar `pagehide` yang serta-merta memanggil `resetPageExitState()` untuk membuang `page-is-leaving` dan gaya sebaris `opacity` sebelum Safari membekukan snapshot ke dalam BFCache.
+    - Menambah pendengar `pageshow` dan `popstate` dengan paksaan aliran semula (*forced layout reflow* via `void document.body.offsetHeight`) serta kelas sementara `page-is-restored`.
+  - **3. Perisai Perlindungan CSS (`shared/css/wedrive.css`)**:
+    - Menambah peraturan pemilih keselamatan `body:not(.page-is-leaving)` bagi memastikan semua kontena utama, cengkerang aplikasi, dan kad sentiasa kekal cerah (`opacity: 1; filter: none; pointer-events: auto;`).
+    - Menambah gaya pemulihan `body.page-is-restored` untuk membatalkan sebarang animasi pudar keluar.
+  - **4. Penggantian Sejarah Halaman Selamat Datang (`account/pages/welcome/welcome.html`)**:
+    - Menukar `window.location.href = redirectUrl;` kepada `window.location.replace(redirectUrl);` supaya skrin selamat datang digantikan terus oleh papan pemuka tanpa tersimpan dalam sejarah pelayar.
+    - Menambah pendengar `pageshow` dan `pagehide` pemulihan automatik.
+  - **5. Penciptaan Fail Peraturan Modular 20 (`.agents/rules/20_team_roles_and_responsibilities.md`)**:
+    - Mendokumentasikan 5 Domain Peranan Profesional Kejuruteraan Perisian WeDRIVE:
+      - 💼 Pengurusan Projek & Produk (Product Manager, Project Manager, Scrum Master/Agile Coach, Business Analyst)
+      - ⚙️ Pembangunan Backend & Data / "Tukang API" (Backend Developer, API Engineer/Integration Specialist, DBA, Data Engineer)
+      - 🎨 Pembangunan Frontend & Reka Bentuk UI/UX (Frontend Developer, UI/UX Designer, UX Writer)
+      - 🌐 Gabungan & Infrastruktur (Full-Stack Developer, DevOps Engineer, Cloud Architect/Engineer)
+      - 🛡️ Jaminan Kualiti & Keselamatan (QA Engineer/Tester, Application Security Engineer)
+    - Mengemas kini indeks Seksyen 7 dalam `01_core_rules.md`, `.agents/PROJECT_STRUCTURE.md`, dan `docs/PROJECT_STRUCTURE.md`.
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - **Playwright Test Suite**: Pelaksanaan `cd tests && npx playwright test` mengesahkan **48/48 Ujian Lulus (100% Pass Rate)**.
+  - **Simulasi Navigasi BFCache Chrome DevTools MCP**:
+    - Disahkan bahawa `afterPagehideLeaving === false`, `afterPagehideOpacity === ""`, dan `mainOpacity === "1"`.
+    - Ujian navigasi sebenar (index -> pricing -> browser back -> index) disahkan memaparkan halaman serta-merta tanpa skrin hitam.
+  - **Audit Had Aksara 12,000**: Kesemua 20 fail peraturan `.agents/rules/*.md` disahkan $\le 12,000$ aksara (`wc -m`).
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.7.8 Fix Safari BFCache blank screen navigation and define 5 software engineering team roles in rule 20`
+  - Tag Versi: `6.7.8`
+
+
 
 
 

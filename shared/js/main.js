@@ -1479,6 +1479,24 @@ window.escapeHtml = function (str) {
     return bar;
   }
 
+  // Centralized Page Exit & BFCache State Resetter
+  function resetPageExitState() {
+    if (document.body) {
+      document.body.classList.remove('page-is-leaving');
+      document.body.classList.remove('page-is-restored');
+      document.body.style.removeProperty('opacity');
+      document.body.style.removeProperty('pointer-events');
+    }
+    if (document.documentElement) {
+      document.documentElement.classList.remove('page-is-leaving');
+      document.documentElement.classList.remove('page-is-restored');
+      document.documentElement.style.removeProperty('opacity');
+      document.documentElement.style.removeProperty('pointer-events');
+    }
+    var bar = document.getElementById('wedrive-page-progress');
+    if (bar) bar.classList.remove('active');
+  }
+
   // Global programmatic page transition navigator
   window.navigateToPage = function (url, customDelay) {
     if (!url) return;
@@ -1492,16 +1510,31 @@ window.escapeHtml = function (str) {
     }, delay);
   };
 
-  // Ensure clean state upon arrival (including browser back/forward cache)
-  window.addEventListener('pageshow', function () {
+  // Safari WebKit BFCache Pre-Freeze Safeguard:
+  // Bersihkan kelas keluar sebelum halaman dibekukan ke dalam BFCache Safari
+  window.addEventListener('pagehide', function () {
+    resetPageExitState();
+  });
+
+  // Safari WebKit BFCache Post-Restore Safeguard:
+  // Pulihkan keterlihatan halaman serta-merta apabila pengguna klik butang Back (< | >)
+  window.addEventListener('pageshow', function (event) {
+    resetPageExitState();
     if (document.body) {
-      document.body.classList.remove('page-is-leaving');
+      // Force style recalculation / layout reflow so WebKit invalidates any frozen compositor frame
+      void document.body.offsetHeight;
+      if (event.persisted) {
+        document.body.classList.add('page-is-restored');
+        requestAnimationFrame(function () {
+          if (document.body) document.body.classList.remove('page-is-restored');
+        });
+      }
     }
-    if (document.documentElement) {
-      document.documentElement.classList.remove('page-is-leaving');
-    }
-    var bar = document.getElementById('wedrive-page-progress');
-    if (bar) bar.classList.remove('active');
+  });
+
+  // History traversal popstate safeguard
+  window.addEventListener('popstate', function () {
+    resetPageExitState();
   });
 
   // Universal click interceptor for seamless Page OUT transitions

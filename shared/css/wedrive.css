@@ -9053,6 +9053,58 @@ body.page-is-leaving .page-container {
   pointer-events: none !important;
 }
 
+/* Safari BFCache & History Traversal Visibility Safeguard:
+   Menjamin elemen utama serta-merta berkeadaan cerah (opacity 1) apabila page-is-leaving dinyahaktifkan */
+body:not(.page-is-leaving) main,
+body:not(.page-is-leaving) .content,
+body:not(.page-is-leaving) .customer-main,
+body:not(.page-is-leaving) .admin-main,
+body:not(.page-is-leaving) .guest-page,
+body:not(.page-is-leaving) .explore-page,
+body:not(.page-is-leaving) .pricing-page,
+body:not(.page-is-leaving) .how-it-works-page,
+body:not(.page-is-leaving) .auth-shell,
+body:not(.page-is-leaving) .auth-card,
+body:not(.page-is-leaving) .booking-shell,
+body:not(.page-is-leaving) .booking-container,
+body:not(.page-is-leaving) .booking-main,
+body:not(.page-is-leaving) .car-details-container,
+body:not(.page-is-leaving) .details-main,
+body:not(.page-is-leaving) .profile-page,
+body:not(.page-is-leaving) .profile-container,
+body:not(.page-is-leaving) .support-page,
+body:not(.page-is-leaving) .support-container,
+body:not(.page-is-leaving) .my-bookings-container,
+body:not(.page-is-leaving) .bookings-main,
+body:not(.page-is-leaving) .dashboard-container,
+body:not(.page-is-leaving) .admin-content,
+body:not(.page-is-leaving) .admin-layout,
+body:not(.page-is-leaving) .content-wrapper,
+body:not(.page-is-leaving) .lumina-center-stage,
+body:not(.page-is-leaving) .complete-profile-card,
+body:not(.page-is-leaving) .verification-card,
+body:not(.page-is-leaving) .pending-card,
+body:not(.page-is-leaving) .customer-shell,
+body:not(.page-is-leaving) .admin-shell,
+body:not(.page-is-leaving) .page-container {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+}
+
+body.page-is-restored main,
+body.page-is-restored .content,
+body.page-is-restored .customer-main,
+body.page-is-restored .admin-main,
+body.page-is-restored .guest-page,
+body.page-is-restored .page-container {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+}
+
 /* Modern View Transitions API Support */
 ::view-transition-old(root) {
   animation: 0.22s cubic-bezier(0.32, 0.72, 0, 1) both pageTransitionOut;

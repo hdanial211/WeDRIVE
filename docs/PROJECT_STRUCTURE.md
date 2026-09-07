@@ -39,6 +39,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- 17_git_versioning_standard.md  # Piawaian Penemuan Versi Git, Formula SemVer X.Y.Z & Protokol Push
 |   |   +-- 18_skills_and_workflows_protocol.md # Protokol Mandatori Pemakaian 5 Kemahiran & 5 Alur Kerja Pintar
 |   |   +-- 19_prompt_engineering_standard.md # Piawaian Kejuruteraan Prompt Emas, Peringatan Proaktif & Penalaan Prompt
+|   |   +-- 20_team_roles_and_responsibilities.md # 5 Domain Peranan Kejuruteraan Perisian Profesional WeDRIVE
 |   +-- skills/                 # 6 Kemahiran Automasi Khusus:
 |   |   +-- context7/           # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
 |   |   +-- frontend-ui/        # Rekaan Antaramuka Apple HIG & Bento Grid

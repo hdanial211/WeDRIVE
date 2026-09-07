@@ -436,11 +436,31 @@
         return;
       }
 
+      // Safari BFCache & History Traversal Safeguard:
+      // Sekiranya pengguna menavigasi kembali ke skrin selamat datang melalui butang Back Safari,
+      // pulihkan keterlihatan dan lencongkan ke destinasi papan pemuka serta-merta.
+      window.addEventListener('pageshow', function (e) {
+        if (document.body) {
+          document.body.classList.remove('page-is-leaving');
+          document.body.style.removeProperty('opacity');
+        }
+        if (e.persisted) {
+          window.location.replace(redirectUrl);
+        }
+      });
+
+      window.addEventListener('pagehide', function () {
+        if (document.body) {
+          document.body.classList.remove('page-is-leaving');
+          document.body.style.removeProperty('opacity');
+        }
+      });
+
       // Smooth cinematic Apple exit dissolve after 3.2s
       setTimeout(function () {
         document.body.classList.add('page-is-leaving');
         setTimeout(function () {
-          window.location.href = redirectUrl;
+          window.location.replace(redirectUrl);
         }, 320);
       }, 3200);
     });

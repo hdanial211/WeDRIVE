@@ -120,10 +120,10 @@
     "semantic_hash": ""
   },
   "shared/js/animate.js": {
-    "mtime": 1787459172.5392616,
-    "seen": 1787898737.194586,
-    "ast_hash": "33eb13fecd89a27ebf4d99b82436ffa5",
-    "semantic_hash": "33eb13fecd89a27ebf4d99b82436ffa5"
+    "mtime": 1788791886.9156463,
+    "seen": 1788792177.591878,
+    "ast_hash": "b755a3d512d29ab74de3e47720fee06a",
+    "semantic_hash": ""
   },
   "shared/js/anime.min.js": {
     "mtime": 1777464515.423152,
@@ -162,9 +162,9 @@
     "semantic_hash": "4262c00b6b6578148773cf312d101cec"
   },
   "shared/js/main.js": {
-    "mtime": 1788778016.1811981,
-    "seen": 1788778407.2469602,
-    "ast_hash": "9beaa55ec57344990892f763b9315044",
+    "mtime": 1788791902.120215,
+    "seen": 1788792177.591882,
+    "ast_hash": "b4f7cc854ef28eb65f1d2bc7060bee6a",
     "semantic_hash": ""
   },
   "shared/js/navbar-loader.js": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788790433.0727017,
-    "seen": 1788790450.7866082,
-    "ast_hash": "dda3b01ba4be41af89df9af3117bcefa",
+    "mtime": 1788792165.9982553,
+    "seen": 1788792177.591946,
+    "ast_hash": "cb70ce9c61dffdd96a9e0c40b2d76e98",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -486,9 +486,9 @@
     "semantic_hash": ""
   },
   "account/pages/welcome/welcome.html": {
-    "mtime": 1788428441.8097632,
-    "seen": 1788453207.259273,
-    "ast_hash": "aadd6432d065927bdc3919e6cac9bd56",
+    "mtime": 1788791928.1429582,
+    "seen": 1788792177.591957,
+    "ast_hash": "57694506136b6970d0e414604a41cc14",
     "semantic_hash": ""
   },
   "admin/components/sidebar/sidebar-admin.html": {
@@ -660,9 +660,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788703744.8633413,
-    "seen": 1788704036.90083,
-    "ast_hash": "c9b34a5514f4048a5c0fab4565d69b2a",
+    "mtime": 1788791875.4805396,
+    "seen": 1788792177.59198,
+    "ast_hash": "3b520afbdef5239c15b077b611d036cf",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11262,9 +11262,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/01_core_rules.md": {
-    "mtime": 1788771376.8818676,
-    "seen": 1788771778.918952,
-    "ast_hash": "fae44106490ee49e6fd93d60fa02043d",
+    "mtime": 1788791843.2958512,
+    "seen": 1788792177.591918,
+    "ast_hash": "888674533ed5b9ce18bdae68f00e41b7",
     "semantic_hash": ""
   },
   ".agents/rules/02_apple_hig_design_system.md": {
@@ -11328,9 +11328,9 @@
     "semantic_hash": ""
   },
   ".agents/PROJECT_STRUCTURE.md": {
-    "mtime": 1788703733.9886131,
-    "seen": 1788704036.900623,
-    "ast_hash": "ebeb905733db7b2a29065acfefce2c05",
+    "mtime": 1788791860.0549147,
+    "seen": 1788792177.591912,
+    "ast_hash": "2f0dcdfc4467705479b26bf14c67526d",
     "semantic_hash": ""
   },
   ".agents/rules/12_max_content_limit.md": {
@@ -11487,6 +11487,12 @@
     "mtime": 1788776915.5729496,
     "seen": 1788777102.040837,
     "ast_hash": "f35dfee76a5421cb38a3cefcbe99ff2b",
+    "semantic_hash": ""
+  },
+  ".agents/rules/20_team_roles_and_responsibilities.md": {
+    "mtime": 1788791769.6915689,
+    "seen": 1788792177.5919318,
+    "ast_hash": "02697d0af10fdb0b844c8ceaa7774245",
     "semantic_hash": ""
   }
 }
