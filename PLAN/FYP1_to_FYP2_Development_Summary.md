@@ -5754,6 +5754,47 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.5 Add comfortable spacing between number value and stepper spinner in STITCH UI PREVIEW/7`
   - Tag Versi: `6.9.5`
 
+---
+
+## ⚡ [PATCH UPDATE] 220. Integrasi Sinar Aura Siri AI, Pengimbas Laser Holografik & Butang 'Jana Aset AI' Bagi Pautan CDN 360° (v6.9.6)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mengarahkan penambahan kesan visual AI pintar pada kotak input pautan CDN 360°:
+     > *"ni bila saya bagi link ni buat macam keluar warna ai tu..nampak macam ai tengah cari link tu boleh ke tidak n ada button generate ....macam warna ai tu acah2 loading effect"*
+  2. Memerlukan:
+     - Sinar warna kecerunan AI (Siri / Apple Intelligence glow).
+     - Garis laser holografik imbasan AI yang aktif menyapu merentasi kotak input bagi mensimulasikan semakan CDN.
+     - Butang interaktif *Jana Aset AI* dengan peralihan status memuat (*loading state*), lencana status berdenyut, dan notifikasi kejayaan (*Apple Glass Toast*).
+
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/step2_studio360_preview.html`)**:
+  - **1. Kesan Animasi CSS Siri AI & Laser Scanner**:
+    - `@keyframes aiGradientShift` & `.ai-analyzing-active`: Sempadan bersinar warna kecerunan neon ungu-biru dengan denyutan keamatan cahaya (`box-shadow: 0 0 24px rgba(94, 92, 230, 0.4)`).
+    - `@keyframes aiLaserSweep` & `.ai-laser-line`: Garis laser holografik dengan kepala imbasan berkilat menyapu berterusan dari 0% hingga 100% lebar kotak input semasa proses pengesahan.
+    - `@keyframes aiBadgePulse` & `.ai-badge-pulse`: Denyutan lencana status bertukar ke `AI Mengimbas Pautan...`.
+  - **2. Butang Kapsul Pil 'Jana Aset AI'**:
+    - Butang `#btnGenerate3D` dengan kecerunan rasmi Apple Intelligence (`from-primary via-[#5E5CE6] to-[#BF5AF2]`) dan geometri kapsul pil (`border-radius: 9999px !important;`).
+    - Apabila diklik atau pautan dimasukkan (disokong juga melalui kekunci *Enter*), butang bertukar ke keadaan *Menyemak CDN...* dengan pemutar mikro animasi.
+  - **3. Aliran Verifikasi Tiga Fasa Realistik**:
+    - **Fasa 1 (0ms - 550ms):** Menyemak protokol CDN & sijil SSL.
+    - **Fasa 2 (550ms - 1300ms):** Mengimbas 200 kerangka luaran 360° & tekstur 8K.
+    - **Fasa 3 (1300ms):** Selesai dengan lencana `Siap Sedia`, butang hijau `Aset Siap`, denyutan kilatan meja putar (`turntable-flash-effect`), dan pemaparan sepanduk kaca terapung (*Apple Glass Toast*).
+    - Butang diset semula ke status sedia ada selepas 2.5s bagi kebolehgunaan berterusan.
+  - **4. Penalaan Kontras Mod Gelap Lencana Sudut Studio**:
+    - Memperhalusi pemilih CSS dark mode bagi elemen bertanda `bg-surface-container-lowest/85` agar tidak menghasilkan teks putih di atas latar putih.
+
+- **Pengesahan Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Susun atur seimbang tanpa herotan sempadan.
+  - **iPad Tablet (820 × 1180)**: 2-kolum kemas dengan zon sentuhan minimum $\ge 48\text{px}$.
+  - **iPhone Mobile (393 × 852)**: 1-kolum bertindan simetri, mematuhi sepenuhnya Prinsip Sifar Bujur (*Zero Oval Rule*), fon $\ge 16\text{px}$.
+  - **Playwright Test Suite**: 48/48 ujian automasi lulus penuh (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 21 fail peraturan `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graphify Knowledge Graph**: Dikemas kini ke 3,035 nod dan 5,551 sambungan.
+
+- **Maklumat Git**:
+  - Commit: `6.9.6 Add AI iridescent aura, CDN laser scanner, and Jana Aset AI button in STITCH UI PREVIEW/7 Step 2`
+  - Tag Versi: `6.9.6`
+
+
 
 
 

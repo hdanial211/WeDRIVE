@@ -120,10 +120,14 @@
             background-color: rgba(22, 22, 24, 0.85) !important;
             border-color: rgba(255, 255, 255, 0.08) !important;
         }
-        html.dark .bg-surface-container-lowest {
+        html.dark .bg-surface-container-lowest,
+        html.dark [class*="bg-surface-container-lowest"] {
             background-color: #161618 !important;
             border-color: rgba(255, 255, 255, 0.08) !important;
             box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4) !important;
+        }
+        html.dark [class*="bg-surface-container-lowest/"] {
+            background-color: rgba(22, 22, 24, 0.85) !important;
         }
         html.dark .bg-surface-container {
             background-color: #1D1D20 !important;
@@ -144,6 +148,90 @@
             background-color: #1D1D20 !important;
             border-color: rgba(255, 255, 255, 0.1) !important;
             color: #FFFFFF !important;
+        }
+
+        /* ==========================================================================
+           Apple Intelligence / Siri Iridescent Aura & CDN Scanner Animation
+           ========================================================================== */
+        @keyframes aiGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes aiLaserSweep {
+            0% { transform: translateX(-100%); opacity: 0; }
+            25% { opacity: 0.85; }
+            75% { opacity: 0.85; }
+            100% { transform: translateX(350%); opacity: 0; }
+        }
+
+        @keyframes aiPulseGlow {
+            0%, 100% { 
+                box-shadow: 0 0 16px rgba(94, 92, 230, 0.35), 0 0 32px rgba(191, 90, 242, 0.2); 
+            }
+            50% { 
+                box-shadow: 0 0 24px rgba(0, 113, 227, 0.55), 0 0 44px rgba(255, 55, 95, 0.35); 
+            }
+        }
+
+        @keyframes aiTurntableFlash {
+            0% { box-shadow: 0 0 0 0 rgba(94, 92, 230, 0); }
+            50% { box-shadow: 0 0 35px 6px rgba(0, 113, 227, 0.5); }
+            100% { box-shadow: 0 0 0 0 rgba(94, 92, 230, 0); }
+        }
+
+        /* Active Scanning Container Glowing Shimmer */
+        .ai-analyzing-active {
+            position: relative;
+            border-color: transparent !important;
+            animation: aiPulseGlow 2s infinite ease-in-out;
+        }
+
+        .ai-analyzing-active::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            padding: 2px;
+            background: linear-gradient(90deg, #0071E3, #5E5CE6, #BF5AF2, #FF375F, #00D2FF, #0071E3);
+            background-size: 300% 300%;
+            animation: aiGradientShift 2.2s infinite linear;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Laser Sweep Beam */
+        .ai-laser-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            background: linear-gradient(90deg, transparent, rgba(94, 92, 230, 0.25), rgba(0, 210, 255, 0.7), rgba(191, 90, 242, 0.5), transparent);
+            pointer-events: none;
+            z-index: 5;
+            animation: aiLaserSweep 1.3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Dynamic AI Status Badge */
+        .ai-badge-pulse {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.15), rgba(191, 90, 242, 0.2)) !important;
+            border: 1px solid rgba(94, 92, 230, 0.4) !important;
+            color: #5E5CE6 !important;
+            animation: aiPulseGlow 2s infinite ease-in-out;
+        }
+        html.dark .ai-badge-pulse {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.28), rgba(191, 90, 242, 0.32)) !important;
+            border-color: rgba(191, 90, 242, 0.5) !important;
+            color: #BF5AF2 !important;
+        }
+
+        .turntable-flash-effect {
+            animation: aiTurntableFlash 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
     </style>
 </head>
@@ -284,24 +372,34 @@
                 </div>
 
                 <!-- Bento Card B: Integrasi Aset Interaktif 360° -->
-                <div class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
+                <div id="bentoCard3D" class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)] transition-all duration-300">
                     <div class="flex flex-col gap-sm mb-lg">
                         <div class="flex justify-between items-start">
                             <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Integrasi Aset Interaktif 360°</h2>
-                            <div class="pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold">
-                                <span class="material-symbols-outlined text-[14px]">verified</span>
-                                <span>Siap Sedia</span>
+                            <div id="cdnStatusBadge" class="pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold transition-all">
+                                <span id="cdnStatusIcon" class="material-symbols-outlined text-[14px]">verified</span>
+                                <span id="cdnStatusText">Siap Sedia</span>
                             </div>
                         </div>
                         <p class="font-callout text-callout text-on-surface-variant">Pautkan URL CDN untuk muatan model 3D dan meja putar kenderaan.</p>
                     </div>
 
                     <div class="flex flex-col gap-md">
-                        <div class="relative">
-                            <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
-                            <input class="w-full bg-surface-container hairline border-border-day rounded-xl pl-10 pr-md py-sm font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-mono text-[13px]" placeholder="https://cdn.wedrive.app/assets/3d/..." value="https://cdn.wedrive.app/assets/3d/honda-civic-2024-360/" type="text"/>
+                        <!-- Input + Action Button Group -->
+                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch">
+                            <div id="cdnInputWrapper" class="relative flex-1 rounded-xl transition-all duration-300 overflow-hidden bg-surface-container hairline border-border-day">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant z-10 text-[20px]">link</span>
+                                <input id="cdnUrlInput" class="w-full bg-transparent border-none rounded-xl pl-10 pr-3 py-3 font-body text-body text-on-surface focus:outline-none transition-all font-mono text-[13px] relative z-10" placeholder="https://cdn.wedrive.app/assets/3d/..." value="https://cdn.wedrive.app/assets/3d/honda-civic-2024-360/" type="text"/>
+                                <div id="aiLaserScanner" class="hidden ai-laser-line"></div>
+                            </div>
+                            <button id="btnGenerate3D" type="button" class="pill-btn interactive-btn bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] hover:brightness-110 text-white font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97]" style="color: #FFFFFF !important;">
+                                <span id="btnGenIcon" class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <span id="btnGenText">Jana Aset AI</span>
+                            </button>
                         </div>
-                        <div class="flex flex-wrap gap-sm">
+
+                        <!-- Progressive Detection Tags -->
+                        <div id="cdnDetectionTags" class="flex flex-wrap gap-sm transition-all duration-300">
                             <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                                 <span class="material-symbols-outlined text-[14px] text-success">check</span>
                                 <span>200 Kerangka Luaran dikesan</span>
@@ -309,6 +407,10 @@
                             <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                                 <span class="material-symbols-outlined text-[14px] text-success">check</span>
                                 <span>Panorama Dalaman 8K</span>
+                            </span>
+                            <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
+                                <span class="material-symbols-outlined text-[14px] text-primary">speed</span>
+                                <span>Latensi CDN: 14ms</span>
                             </span>
                         </div>
                     </div>
@@ -329,7 +431,7 @@
                     </div>
 
                     <!-- Turntable Viewport -->
-                    <div class="relative flex-1 bg-surface-container rounded-2xl overflow-hidden min-h-[400px] flex items-center justify-center group cursor-ew-resize">
+                    <div id="turntableViewport" class="relative flex-1 bg-surface-container rounded-2xl overflow-hidden min-h-[400px] flex items-center justify-center group cursor-ew-resize transition-all duration-500">
                         <!-- Image Container with prompt_baru 360 render -->
                         <div class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXv-DH82fsjprfpGpSo2DHFgcMwOtUC3ZASUhwfjHsNXTMVzs6gH1edgnQoIeM5BQ-gN5Quk__-3fh0tRncgoo8CwqIDSi3SzWNMSkRhEVtIrkDJCfRZMRNF8lX8AGLWTdF0jPHpnI3HywwDZEwxcUlJtoQ00vlCiI82q9HzlrtRvGLMD32g63eHxTy-ErJMRcOfqLzUfqMKg1VUFyEgDi1wUjsql-khj5lNAkwmLnQc-ZUnXgxY4g-7VNBOZm1VN_eCh3ANLf-7Q')"></div>
 
@@ -379,6 +481,17 @@
         </a>
     </nav>
 
+    <!-- Floating Apple Glass Toast Notification -->
+    <div id="ai3dToast" class="fixed top-20 right-6 z-50 glass-panel border border-border-day rounded-2xl p-4 shadow-2xl flex items-center gap-3 transition-all duration-500 opacity-0 -translate-y-5 pointer-events-none max-w-md">
+        <div class="circle-1-1 w-9 h-9 bg-primary/15 text-primary flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <div class="flex flex-col min-w-0">
+            <div id="aiToastTitle" class="font-headline text-[14px] font-bold text-on-surface">Aset 360° Disahkan</div>
+            <div id="aiToastMsg" class="font-footnote text-[12px] text-on-surface-variant truncate">Pautan CDN aktif &amp; 200 kerangka berjaya dimuatkan ke studio.</div>
+        </div>
+    </div>
+
     <!-- Theme Controller Script -->
     <script>
         const themeBtn = document.getElementById('themeToggleBtn');
@@ -404,6 +517,195 @@
                 document.documentElement.classList.add('light');
                 if (themeIcon) themeIcon.textContent = 'dark_mode';
             }
+        }
+
+        // ==========================================================================
+        // AI 360 CDN Asset Scanner & Generator Controller
+        // ==========================================================================
+        const cdnUrlInput = document.getElementById('cdnUrlInput');
+        const cdnInputWrapper = document.getElementById('cdnInputWrapper');
+        const aiLaserScanner = document.getElementById('aiLaserScanner');
+        const btnGenerate3D = document.getElementById('btnGenerate3D');
+        const btnGenIcon = document.getElementById('btnGenIcon');
+        const btnGenText = document.getElementById('btnGenText');
+        const cdnStatusBadge = document.getElementById('cdnStatusBadge');
+        const cdnStatusIcon = document.getElementById('cdnStatusIcon');
+        const cdnStatusText = document.getElementById('cdnStatusText');
+        const cdnDetectionTags = document.getElementById('cdnDetectionTags');
+        const turntableViewport = document.getElementById('turntableViewport');
+        const ai3dToast = document.getElementById('ai3dToast');
+        const aiToastTitle = document.getElementById('aiToastTitle');
+        const aiToastMsg = document.getElementById('aiToastMsg');
+
+        let isAnalyzing = false;
+        let toastTimeout = null;
+
+        function showAiToast(title, message, isSuccess = true) {
+            if (!ai3dToast) return;
+            clearTimeout(toastTimeout);
+            aiToastTitle.textContent = title;
+            aiToastMsg.textContent = message;
+            
+            ai3dToast.classList.remove('opacity-0', '-translate-y-5', 'pointer-events-none');
+            ai3dToast.classList.add('opacity-100', 'translate-y-0');
+
+            toastTimeout = setTimeout(() => {
+                ai3dToast.classList.remove('opacity-100', 'translate-y-0');
+                ai3dToast.classList.add('opacity-0', '-translate-y-5', 'pointer-events-none');
+            }, 3500);
+        }
+
+        function triggerAiScan(isAuto = false) {
+            if (isAnalyzing) return;
+            const urlVal = cdnUrlInput ? cdnUrlInput.value.trim() : '';
+
+            if (!urlVal) {
+                if (cdnStatusBadge) {
+                    cdnStatusBadge.className = 'pill-btn bg-amber-500/15 text-amber-500 font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold';
+                    cdnStatusIcon.textContent = 'warning';
+                    cdnStatusText.textContent = 'Pautan Diperlukan';
+                }
+                if (cdnDetectionTags) {
+                    cdnDetectionTags.innerHTML = `
+                        <span class="pill-btn bg-amber-500/10 text-amber-500 font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-amber-500/20">
+                            <span class="material-symbols-outlined text-[14px]">info</span>
+                            <span>Sila masukkan URL CDN sah (cth: https://cdn.wedrive.app/assets/3d/...)</span>
+                        </span>
+                    `;
+                }
+                showAiToast('Pautan Diperlukan', 'Sila masukkan URL CDN kenderaan untuk memulakan imbasan AI.', false);
+                return;
+            }
+
+            isAnalyzing = true;
+            if (btnGenerate3D) btnGenerate3D.disabled = true;
+
+            // 1. Activate AI Iridescent Glow & Holographic Laser Scanner
+            if (cdnInputWrapper) cdnInputWrapper.classList.add('ai-analyzing-active');
+            if (aiLaserScanner) aiLaserScanner.classList.remove('hidden');
+
+            // 2. Button Analyzing State with Micro-Spinner
+            if (btnGenIcon) {
+                btnGenIcon.textContent = 'progress_activity';
+                btnGenIcon.classList.add('animate-spin');
+            }
+            if (btnGenText) btnGenText.textContent = 'Menyemak CDN...';
+
+            // 3. Status Badge AI Shimmering Pulse
+            if (cdnStatusBadge) {
+                cdnStatusBadge.className = 'pill-btn ai-badge-pulse font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold';
+                cdnStatusIcon.textContent = 'auto_awesome';
+                cdnStatusText.textContent = 'AI Mengimbas Pautan...';
+            }
+
+            // Phase 1: Checking Protocol & CDN Connectivity
+            if (cdnDetectionTags) {
+                cdnDetectionTags.innerHTML = `
+                    <span class="pill-btn bg-primary/10 text-primary font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-primary/20">
+                        <span class="material-symbols-outlined text-[14px] animate-spin">progress_activity</span>
+                        <span>Menyemak protokol CDN &amp; sijil SSL...</span>
+                    </span>
+                `;
+            }
+
+            // Phase 2: Resolving 3D Assets (after 500ms)
+            setTimeout(() => {
+                if (cdnDetectionTags && isAnalyzing) {
+                    cdnDetectionTags.innerHTML = `
+                        <span class="pill-btn bg-success/15 text-success font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-success/30">
+                            <span class="material-symbols-outlined text-[14px]">check</span>
+                            <span>Pelayan CDN Aktif (14ms)</span>
+                        </span>
+                        <span class="pill-btn bg-primary/10 text-primary font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-primary/20">
+                            <span class="material-symbols-outlined text-[14px] animate-spin">progress_activity</span>
+                            <span>Mengimbas 200 kerangka 360° &amp; tekstur 8K...</span>
+                        </span>
+                    `;
+                }
+            }, 550);
+
+            // Phase 3: Final Completion (after 1300ms)
+            setTimeout(() => {
+                // Remove glowing borders & hide laser
+                if (cdnInputWrapper) cdnInputWrapper.classList.remove('ai-analyzing-active');
+                if (aiLaserScanner) aiLaserScanner.classList.add('hidden');
+
+                // Status Badge back to Verified Ready
+                if (cdnStatusBadge) {
+                    cdnStatusBadge.className = 'pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold';
+                    cdnStatusIcon.textContent = 'verified';
+                    cdnStatusText.textContent = 'Siap Sedia';
+                }
+
+                // Display Final Verified Detection Tags
+                if (cdnDetectionTags) {
+                    cdnDetectionTags.innerHTML = `
+                        <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
+                            <span class="material-symbols-outlined text-[14px] text-success">check</span>
+                            <span>200 Kerangka Luaran dikesan</span>
+                        </span>
+                        <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
+                            <span class="material-symbols-outlined text-[14px] text-success">check</span>
+                            <span>Panorama Dalaman 8K</span>
+                        </span>
+                        <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
+                            <span class="material-symbols-outlined text-[14px] text-primary">speed</span>
+                            <span>Latensi: 14ms (Pantas)</span>
+                        </span>
+                    `;
+                }
+
+                // Button Success State
+                if (btnGenIcon) {
+                    btnGenIcon.classList.remove('animate-spin');
+                    btnGenIcon.textContent = 'check_circle';
+                }
+                if (btnGenText) btnGenText.textContent = 'Aset Siap';
+                if (btnGenerate3D) {
+                    btnGenerate3D.classList.remove('from-primary', 'via-[#5E5CE6]', 'to-[#BF5AF2]');
+                    btnGenerate3D.classList.add('bg-success');
+                }
+
+                // Turntable Viewport Highlight Pulse
+                if (turntableViewport) {
+                    turntableViewport.classList.add('turntable-flash-effect');
+                    setTimeout(() => turntableViewport.classList.remove('turntable-flash-effect'), 1200);
+                }
+
+                showAiToast('Aset 360° Berjaya Disahkan', 'Pautan CDN aktif & model 3D berjaya dihubungkan ke meja putar studio.');
+
+                // Gracefully reset button state after 2.5s
+                setTimeout(() => {
+                    if (btnGenIcon) btnGenIcon.textContent = 'auto_awesome';
+                    if (btnGenText) btnGenText.textContent = 'Jana Aset AI';
+                    if (btnGenerate3D) {
+                        btnGenerate3D.classList.remove('bg-success');
+                        btnGenerate3D.classList.add('from-primary', 'via-[#5E5CE6]', 'to-[#BF5AF2]');
+                        btnGenerate3D.disabled = false;
+                    }
+                    isAnalyzing = false;
+                }, 2500);
+
+            }, 1300);
+        }
+
+        if (btnGenerate3D) {
+            btnGenerate3D.addEventListener('click', () => triggerAiScan(false));
+        }
+
+        if (cdnUrlInput) {
+            // Trigger when pressing Enter
+            cdnUrlInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    triggerAiScan(false);
+                }
+            });
+
+            // Trigger when pasting a link
+            cdnUrlInput.addEventListener('paste', () => {
+                setTimeout(() => triggerAiScan(true), 250);
+            });
         }
     </script>
 </body>
