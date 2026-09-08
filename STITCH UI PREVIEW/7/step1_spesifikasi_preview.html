@@ -313,13 +313,23 @@
                     <!-- Row 1: Pengeluar -->
                     <div class="flex flex-col gap-sm">
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Pengeluar</label>
-                        <select class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                            <option value="">Pilih Pengeluar</option>
-                            <option value="Honda" selected>Honda</option>
-                            <option value="Toyota">Toyota</option>
-                            <option value="Perodua">Perodua</option>
-                            <option value="Proton">Proton</option>
-                        </select>
+                        <div class="relative">
+                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <option value="">Pilih Pengeluar</option>
+                                <option value="Honda" selected>Honda</option>
+                                <option value="Toyota">Toyota</option>
+                                <option value="Perodua">Perodua</option>
+                                <option value="Proton">Proton</option>
+                                <option value="BMW">BMW</option>
+                                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                <option value="Mazda">Mazda</option>
+                                <option value="Nissan">Nissan</option>
+                                <option value="Hyundai">Hyundai</option>
+                                <option value="BYD">BYD</option>
+                                <option value="Tesla">Tesla</option>
+                            </select>
+                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        </div>
                     </div>
 
                     <!-- Model -->
@@ -340,45 +350,99 @@
                         <input class="uppercase bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full tracking-wider font-semibold text-on-surface" placeholder="VBA 1234" value="VBA 1234" type="text"/>
                     </div>
 
-                    <!-- Row 2: Tahun Dibuat -->
+                    <!-- Row 2: Kategori Kenderaan (Pilihan macam yang lain - Standard Carlist/Mudah) -->
+                    <div class="flex flex-col gap-sm">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kategori Kenderaan</label>
+                        <div class="relative">
+                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <option value="" disabled>Pilih Kategori</option>
+                                <option value="Sedan" selected>Sedan</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="SUV">SUV</option>
+                                <option value="MPV">MPV</option>
+                                <option value="Crossover">Crossover</option>
+                                <option value="Pickup">Pickup (4x4)</option>
+                                <option value="Coupe">Coupe</option>
+                                <option value="Wagon">Wagon</option>
+                                <option value="Convertible">Convertible</option>
+                                <option value="Van">Van</option>
+                            </select>
+                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        </div>
+                    </div>
+
+                    <!-- Punca Kuasa / Bahan Api (+ petrol, hybrid, diesel, electric) -->
+                    <div class="flex flex-col gap-sm">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Punca Kuasa (Bahan Api)</label>
+                        <div class="relative">
+                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <option value="" disabled>Pilih Punca Kuasa</option>
+                                <option value="Petrol" selected>Petrol (RON95/97)</option>
+                                <option value="Hybrid">Hybrid (HEV)</option>
+                                <option value="Diesel">Diesel Euro 5</option>
+                                <option value="Electric">Elektrik Penuh (EV/BEV)</option>
+                            </select>
+                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        </div>
+                    </div>
+
+                    <!-- Sistem Transmisi -->
+                    <div class="flex flex-col gap-sm">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Sistem Transmisi</label>
+                        <div class="relative">
+                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <option value="" disabled>Pilih Transmisi</option>
+                                <option value="Automatic" selected>Automatik (AT / CVT / DCT)</option>
+                                <option value="Manual">Manual (MT)</option>
+                            </select>
+                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        </div>
+                    </div>
+
+                    <!-- Kapasiti Tempat Duduk -->
+                    <div class="flex flex-col gap-sm">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti Tempat Duduk</label>
+                        <div class="relative">
+                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <option value="" disabled>Pilih Tempat Duduk</option>
+                                <option value="2">2 Tempat Duduk</option>
+                                <option value="4">4 Tempat Duduk</option>
+                                <option value="5" selected>5 Tempat Duduk</option>
+                                <option value="7">7 Tempat Duduk</option>
+                                <option value="8">8 Tempat Duduk</option>
+                                <option value="10">10–12 Tempat Duduk</option>
+                            </select>
+                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Tahun Dibuat -->
                     <div class="flex flex-col gap-sm">
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Tahun Dibuat</label>
                         <input class="font-label-tabular text-label-tabular bg-surface-container border border-border-day rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="2024" value="2024" type="number"/>
                     </div>
 
-                    <!-- Kategori Kenderaan -->
-                    <div class="flex flex-col gap-sm col-span-1 lg:col-span-2">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kategori Kenderaan</label>
-                        <div class="flex flex-wrap gap-2">
-                            <label class="cursor-pointer">
-                                <input checked="" class="peer sr-only" name="category" type="radio" value="Sedan"/>
-                                <span class="pill-btn px-4 py-2 border border-border-day bg-surface-container text-on-surface-variant peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary font-footnote text-footnote transition-all block font-semibold shadow-xs">Sedan</span>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input class="peer sr-only" name="category" type="radio" value="SUV"/>
-                                <span class="pill-btn px-4 py-2 border border-border-day bg-surface-container text-on-surface-variant peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary font-footnote text-footnote transition-all block font-semibold">SUV</span>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input class="peer sr-only" name="category" type="radio" value="MPV"/>
-                                <span class="pill-btn px-4 py-2 border border-border-day bg-surface-container text-on-surface-variant peer-checked:bg-primary peer-checked:text-on-primary peer-checked:border-primary font-footnote text-footnote transition-all block font-semibold">MPV</span>
-                            </label>
-                        </div>
+                    <!-- Kapasiti / Sesaran Enjin -->
+                    <div class="flex flex-col gap-sm">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti / Sesaran Enjin</label>
+                        <input class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L VTEC Turbo" value="1.5L VTEC Turbo" type="text"/>
                     </div>
 
-                    <!-- Transmisi -->
+                    <!-- Warna Rasmi Kenderaan -->
                     <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Transmisi</label>
-                        <div class="flex bg-surface-container p-1 rounded-xl border border-border-day">
-                            <label class="flex-1 text-center cursor-pointer relative">
-                                <input checked="" class="peer sr-only" name="transmission" type="radio" value="Auto"/>
-                                <div class="py-2 font-footnote text-footnote text-on-surface-variant peer-checked:text-on-surface peer-checked:font-bold z-10 relative">Auto</div>
-                                <div class="absolute inset-0 bg-white dark:bg-[#161618] rounded-lg shadow-sm border border-border-day opacity-0 peer-checked:opacity-100 transition-opacity"></div>
-                            </label>
-                            <label class="flex-1 text-center cursor-pointer relative">
-                                <input class="peer sr-only" name="transmission" type="radio" value="Manual"/>
-                                <div class="py-2 font-footnote text-footnote text-on-surface-variant peer-checked:text-on-surface peer-checked:font-bold z-10 relative">Manual</div>
-                                <div class="absolute inset-0 bg-white dark:bg-[#161618] rounded-lg shadow-sm border border-border-day opacity-0 peer-checked:opacity-100 transition-opacity"></div>
-                            </label>
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Warna Kenderaan</label>
+                        <input class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Meteoroid Gray Metallic" value="Meteoroid Gray Metallic" type="text"/>
+                    </div>
+
+                    <!-- Status Operasi Kenderaan -->
+                    <div class="flex flex-col gap-sm">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Status Operasi Awal</label>
+                        <div class="relative">
+                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <option value="available" selected>Tersedia untuk Disewa</option>
+                                <option value="maintenance">Pemeriksaan / Depot</option>
+                            </select>
+                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
                         </div>
                     </div>
                 </div>

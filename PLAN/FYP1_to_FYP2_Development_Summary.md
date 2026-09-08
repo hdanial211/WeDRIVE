@@ -5628,6 +5628,55 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.2 Combine official WeDRIVE admin topbar modules with preview wizard header in STITCH UI PREVIEW/7`
   - Tag Versi: `6.9.2`
 
+---
+
+## 🚗 [PATCH UPDATE] 217. Penyeragaman Klasifikasi Spesifikasi Kenderaan (Carlist.my & Mudah.my Standard) & Pilihan Bahan Api Dropdown (v6.9.3)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna memohon agar pilihan `Kategori Kenderaan` (yang sebelum ini menggunakan 3 butang pil `[Sedan] [SUV] [MPV]`) ditukar kepada format dropdown pilihan seragam dengan medan borang yang lain:
+     > *"yang ni buat pilihan macam yang lain n + petrol,hybrid,diesel,electric n cuba tengok dekat carlist atau mudah.com diorg classkan kereta diorg macam mana??saya nak tahu basic sahaja ...macam miliage tu xyah sebab saya sewa kereta bukan jual kereta...info pasal kereta sahaja jenis apa semua"*
+  2. Mengkaji dan mematuhi klasifikasi badan kenderaan rasmi portal pasaran automotif Malaysia (**Carlist.my** & **Mudah.my**).
+  3. Menambah medan **Punca Kuasa / Bahan Api** dengan 4 pilihan asas: *Petrol, Hybrid, Diesel, Elektrik*.
+  4. Menetapkan spesifikasi asas yang relevan untuk **Sistem Sewaan Kereta (Car Rental)** sahaja dan menolak secara tegas parameter jualan kereta terpakai (*mileage / perbatuan*, sejarah kemalangan, rekod pemilik terdahulu, status cukai jalan, dsb.).
+
+- **Tindakan Pelaksanaan**:
+  - Di dalam `STITCH UI PREVIEW/7/step1_spesifikasi_preview.html`:
+    - **1. Penukaran Kategori Kenderaan kepada Dropdown Apple HIG**:
+      - Menggantikan radio pills terhad dengan elemen `<select>` Apple yang lengkap dengan ikon chevron `expand_more` taktil.
+      - Memuatkan 10 kategori badan kenderaan rasmi portal Carlist.my & Mudah.my:
+        1. `Sedan` (cth: Honda Civic, Toyota Vios, Perodua Bezza)
+        2. `Hatchback` (cth: Perodua Myvi, Axia, Honda City Hatchback)
+        3. `SUV` (cth: Proton X50/X70, Honda HR-V/CR-V, Perodua Ativa)
+        4. `MPV` (cth: Toyota Alphard, Vellfire, Perodua Alza)
+        5. `Crossover` (cth: Subaru XV, Toyota Corolla Cross)
+        6. `Pickup (4x4)` (cth: Toyota Hilux, Ford Ranger, Isuzu D-Max)
+        7. `Coupe` (cth: Ford Mustang, BMW 4 Series)
+        8. `Wagon` (cth: Subaru Levorg, Volvo V60)
+        9. `Convertible` (cth: Mazda MX-5 Miata)
+        10. `Van` (cth: Toyota Hiace, Nissan Urvan, Hyundai Staria)
+    - **2. Penambahan Medan Dropdown Punca Kuasa (Bahan Api)**:
+      - Menambah elemen `<select>` baharu dengan 4 pilihan utama mobiliti sewaan moden:
+        1. `Petrol (RON95/97)`
+        2. `Hybrid (HEV)`
+        3. `Diesel Euro 5`
+        4. `Elektrik Penuh (EV/BEV)`
+    - **3. Penyeragaman Grid Bento Spesifikasi Asas Sewaan (3 Baris × 4 Kolum)**:
+      - **Baris 1**: Pengeluar (`<select>`), Model (`<input>`), Varian (`<input>`), No. Pendaftaran (`<input>`).
+      - **Baris 2**: Kategori Kenderaan (`<select>`), Punca Kuasa / Bahan Api (`<select>`), Sistem Transmisi (`<select>`), Kapasiti Tempat Duduk (`<select>`).
+      - **Baris 3**: Tahun Dibuat (`<input>`), Kapasiti / Sesaran Enjin (`<input>`), Warna Kenderaan (`<input>`), Status Operasi Awal (`<select>`).
+    - **4. Pengecualian Menyeluruh Parameter Kereta Terpakai (Zero Used-Car Sales Clutter)**:
+      - Menolak sepenuhnya medan *Mileage / Perbatuan*, *Previous Owners*, *Accident Inspection*, *Roadtax Expiry*, atau *Warranty* kerana pelanggan menyewa kereta berasaskan keselesaan, kategori, tempat duduk, dan jenis bahan api dan bukan untuk pemilikan semula kenderaan.
+
+- **Pengesahan Ujian Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Susunan 4-kolum simetri dengan sifar ruang mati (*Zero Dead Space*), border-radius 12px/14px seragam pada semua kotak pilihan.
+  - **iPad Tablet (820 × 1180)**: Transformasi responsif automatik kepada susun atur 2-kolum kemas dengan zon sentuhan $\ge 48\text{px}$.
+  - **iPhone Mobile (393 × 852)**: Aliran borang 1-kolum menegak yang lancar tanpa limpahan mendatar (*zero horizontal scroll*), saiz fon kekal $\ge 16\text{px}$ menghalang lonjakan auto-zoom iOS Safari.
+
+- **Maklumat Git**:
+  - Commit: `6.9.3 Standardize Carlist and Mudah car categories and add fuel type dropdown in STITCH UI PREVIEW/7`
+  - Tag Versi: `6.9.3`
+
+
 
 
 
