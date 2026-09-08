@@ -5893,6 +5893,30 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.8 Implement interactive swapping draft state, simplified copy, terminology modernization, and auto 6-photo AI population`
   - Tag Versi: `6.9.8`
 
+---
+
+### [PATCH] v6.9.9 — Pemisahan Teks Label & Tindakan Butang AI Spesifikasi (AI Spec Label & Button Action Distinct Phrasing)
+
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna menegur pertindihan maksud antara label atas dan butang tindakan:
+    > *"bukan ke sama ayat ni cuba ubah sikit lain2"*
+  - Sebelum ini: Label `✨ Pengecaman Spesifikasi Pintar` bersebelahan dengan butang `✨ AI Auto Generate Spec [Jana Pintar ↓]`.
+
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/step1_spesifikasi_preview.html`)**:
+  - **Pilihan Terpilih Pengguna (Pilihan A)**:
+    - **Label Atas**: Ditukar kepada `✨ Cadangan Spesifikasi Pintar` (menerangkan konteks medan).
+    - **Teks Butang**: Ditukar kepada `✨ Isi Maklumat Mengikut Model` (menerangkan tindakan kata kerja yang jelas).
+    - **Lencana Butang**: Ditukar kepada `Jana AI ↓` (membezakan tindakan butang dengan lencana).
+    - Mengemaskini pemegang reset JavaScript fasa 4 dalam `runAiAutoGenerate()` agar mengekalkan teks `Isi Maklumat Mengikut Model` dan `Jana AI`.
+
+- **Pengesahan Visual**:
+  - Disahkan melalui Chrome DevTools pada resolusi MacBook (1440 × 900), iPad (820 × 1180), dan iPhone (393 × 852).
+  - Teks kini saling melengkapi secara harmoni tanpa sebarang pengulangan kosa kata.
+
+- **Maklumat Git**:
+  - Commit: `6.9.9 Refine AI spec label and button phrasing to eliminate textual redundancy`
+  - Tag Versi: `6.9.9`
+
 
 
 

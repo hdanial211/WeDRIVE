@@ -1,16 +1,16 @@
 # Graph Report - AI CAR RENTAL SYSTEM  (2026-09-09)
 
 ## Corpus Check
-- 133 files · ~21,137,987 words
+- 133 files · ~21,138,183 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3059 nodes · 5574 edges · 204 communities (141 shown, 63 thin omitted)
+- 3060 nodes · 5575 edges · 211 communities (139 shown, 72 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 292 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `21bcdc93`
+- Built from commit: `10ff9350`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -45,10 +45,10 @@
 - _a
 - dispose
 - 🚗 WeDRIVE: Ringkasan Penuh Pembangunan Sistem (FYP 1 hingga FYP 2)
-- Rl
-- distanceToPoint
-- .dot
-- bl
+- ll
+- lr
+- .multiplyScalar
+- .fromArray
 - qc
 - cars.js
 - customers.js
@@ -56,7 +56,7 @@
 - admin/js/calendar.js
 - WeDRIVE Playwright E2E Testing Skill
 - package.json
-- .fromArray
+- .fromJSON
 - gi
 - 🚀 5 Fasa Mandatori Kitaran Penjanaan & Integrasi UI (STITCH UI PREVIEW Protocol)
 - 2. Bedah Siasat 5 Alatan Lanjutan Stitch MCP
@@ -64,18 +64,19 @@
 - as
 - WeDRIVE UI Auditor Persona & Operating Guidelines
 - uu
-- .invert
+- wl
+- ya
 - search-popup.js
 - WeDRIVE Full System Flowchart
 - CHAPTER 2: LITERATURE REVIEW AND PROJECT METHODOLOGY
-- .constructor
+- da
 - iu
-- add
+- .setAttribute
 - 2. Lima Domain Peranan & Tanggungjawab Operasi
-- sl
+- add
 - how-it-works.js
 - CHAPTER 3: ANALYSIS
-- ui
+- setXYZ
 - cl
 - Spesifikasi Seni Bina: Alur Kerja 2 Fasa Cache-to-Database Studio Visual 360°
 - 2. Empat Dimensi Penalaan Prompt (4D Prompt Enrichment)
@@ -84,7 +85,7 @@
 - customer/js/sidebar-loader.js
 - .updateMatrix
 - Apple Human Interface Guidelines (HIG) Standard
-- xr
+- s
 - WeDRIVE Navigation, Responsive & UI/UX Standards
 - chatbot-admin.js
 - marketing.js
@@ -99,7 +100,7 @@
 - shared/js/sidebar-loader.js
 - updateMatrixWorld
 - Apple Human Interface Guidelines (HIG) Standard
-- ll
+- mc
 - DESIGN.md
 - on
 - marketing-ai.js
@@ -121,7 +122,7 @@
 - navbar-loader.js
 - shared/js/promo-banner.js
 - fa
-- .getAttribute
+- El
 - Dl
 - ir
 - Stitch MCP & Ultra High-Fidelity UI Generation Standards (WeDRIVE)
@@ -149,7 +150,7 @@
 - WeDRIVE Project Structure & Database Integration Guide
 - 01_core_rules.md
 - yc
-- .sub
+- fh
 - Context7 Live Documentation & API Skill (WeDRIVE)
 - 2. Enam Komponen Wajib PRD (*The 6 Mandatory PRD Pillars*)
 - .fromBufferAttribute
@@ -171,8 +172,8 @@
 - playwright.config.js
 - ae
 - 09_admin_ai_analytics.spec.js
-- remove
-- ul
+- .dispatchEvent
+- Do
 - copy
 - 2. Empat Domain Audit Keselamatan Utama
 - 🎨 [MINOR UPDATE] 191. Konfigurasi Pelayan Figma MCP & Pengesahan Token Akses Rasmi (v6.3.2)
@@ -184,31 +185,37 @@
 - Alur Kerja /qa_audit: Audit Kualiti Menyeluruh WeDRIVE
 - Alur Kerja /release_push: Pelepasan Versi Git & SemVer WeDRIVE
 - Playwright Sentinel Persona & Operating Guidelines
-- Uo
+- mh
 - ⚡ [PATCH UPDATE] 221. Pembersihan Mutlak Istilah Teknikal (Sifar Cache/Database/JPJ/Aset), Butang Skrin Penuh 1:1, Palang Kemajuan Dinamik & Animasi Siri Spesifikasi Pintar (v6.9.7)
 - 1. Empat Domain Audit Keselamatan Mandatori
 - 14_ai_key_vault_and_location.spec.js
 - 10_admin_sidebar_pages.spec.js
 - .setValues
 - Alur Kerja /prd_creator: Penjanaan PRD 6 Pilar Mandatori WeDRIVE
-- ei
+- Oh
 - 15_apple_calendar.spec.js
 - Supabase DBA Agent Persona & Operating Guidelines
-- setXYZ
+- .reset
+- bc
 - ba
 - $o
 - BM Language Police Persona & Operating Guidelines
+- ec
 -  [PATCH UPDATE] 200. Penyelarasan Ketepatan Sudut Studio 360° & Orientasi Pandangan Kereta Berasaskan 200 Bingkai Turntable Carsome, Penyingkiran Salah Label Hadapan/Belakang & Pengesahan Spektrum 3-Peranti Apple (v6.5.6)
-- n
+- Qn
 - add-car.js
 - Ml
+- Il
 - 17_add_car_stepper_and_carlist.spec.js
+- Nl
+- wc
 - 18_full_system_bilingual_parity.spec.js
 - toJSON
+- xc
+- .toJSON
 - kc
-- jh
 - ph
-- .getContext
+- .constructor
 
 ## God Nodes (most connected - your core abstractions)
 1. `copy()` - 143 edges
@@ -237,11 +244,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (204 total, 63 thin omitted)
+## Communities (211 total, 72 thin omitted)
 
 ### Community 0 - "three.min.js"
 Cohesion: 0.02
-Nodes (26): bs(), Co, fu(), getAverageFrequency(), getFrequencyData(), Gr(), gu(), hl (+18 more)
+Nodes (27): bs(), Co, fu(), getAverageFrequency(), getFrequencyData(), Gr(), gu(), hl (+19 more)
 
 ### Community 1 - "animate.js"
 Cohesion: 0.06
@@ -252,28 +259,28 @@ Cohesion: 0.08
 Nodes (65): bootstrap(), buildPatternUrl(), buildPlaceholderInteriorSvg(), currentLang(), dispatchLanguageApplied(), escapeHtml(), fetchJson(), findControlsScope() (+57 more)
 
 ### Community 4 - "ve"
-Cohesion: 0.07
-Nodes (11): clampPoint(), expandByPoint(), expandByScalar(), getCenter(), getSize(), intersect(), isEmpty(), makeEmpty() (+3 more)
+Cohesion: 0.06
+Nodes (13): clampPoint(), expandByPoint(), expandByScalar(), getCenter(), getSize(), intersect(), isEmpty(), makeEmpty() (+5 more)
 
 ### Community 5 - "2. Matriks Pemakaian 6 Kemahiran Teras WeDRIVE (.agents/skills/)"
 Cohesion: 0.15
 Nodes (12): 1. Mandatori Pemakaian Instrumen Pintar (Mandatory Active Usage), 2. Matriks Pemakaian 6 Kemahiran Teras WeDRIVE (.agents/skills/), 3. Matriks Pelaksanaan 6 Alur Kerja Pintar (.agents/workflows/), 4. Mandatori Penggunaan Aktif MCP & Skills (Strict Active Execution & Auto-Push), 5. Polisi Sifar Pengabaian & Had Aksara, A. Kemahiran `frontend-ui` (Kejuruteraan Reka Bentuk Apple HIG), B. Kemahiran `context7` (Dokumentasi Masa Nyata & Sifar Kod Lapuk), C. Kemahiran `supabase-ops` (Operasi Pangkalan Data PostgreSQL & RLS) (+4 more)
 
 ### Community 9 - "ai"
-Cohesion: 0.06
-Nodes (5): ai, ee(), ne(), si(), translate()
+Cohesion: 0.05
+Nodes (5): ai, dh, ee(), ne(), si()
 
 ### Community 10 - "anime.min.js"
 Cohesion: 0.13
 Nodes (37): a(), b(), c(), D(), E(), en(), B(), C() (+29 more)
 
 ### Community 11 - "i"
-Cohesion: 0.25
-Nodes (5): i(), hh, load(), a(), loadAsync()
+Cohesion: 0.10
+Nodes (16): t(), r(), ea(), i(), hh, load(), a(), c() (+8 more)
 
 ### Community 12 - "dc"
-Cohesion: 0.07
-Nodes (13): ac(), cc(), dc(), hc(), ic(), jl(), _l(), lc() (+5 more)
+Cohesion: 0.08
+Nodes (12): ac(), cc(), dc(), ic(), jl(), lc(), rc(), sc() (+4 more)
 
 ### Community 14 - "car-detail.js"
 Cohesion: 0.09
@@ -281,15 +288,15 @@ Nodes (31): allCars, bind360DragEvents(), carHas360(), closeEditCarModal(), clos
 
 ### Community 15 - "dr"
 Cohesion: 0.20
-Nodes (5): dr(), r(), Fr(), Or(), zr()
+Nodes (5): br(), dr(), Fr(), Or(), zr()
 
 ### Community 16 - "clone"
-Cohesion: 0.11
-Nodes (11): clone(), fo(), mo, mr, rr, Ua(), b(), S() (+3 more)
+Cohesion: 0.10
+Nodes (15): A(), clone(), jr(), v(), y(), qr(), rr, Ua() (+7 more)
 
 ### Community 17 - "$h"
-Cohesion: 0.08
-Nodes (6): connect(), disconnect(), getInput(), getOutput(), $h, A()
+Cohesion: 0.07
+Nodes (9): connect(), disconnect(), getInput(), getOutput(), $h, jh, qh(), A() (+1 more)
 
 ### Community 18 - "main.js"
 Cohesion: 0.08
@@ -300,15 +307,15 @@ Cohesion: 0.17
 Nodes (35): applyFilters(), bindControls(), buildSpotlightCars(), carPrice(), closeGuestPrompt(), escapeHtml(), fallbackImagePath(), imagePath() (+27 more)
 
 ### Community 21 - "_deactivateAction"
-Cohesion: 0.10
-Nodes (20): _activateAction(), _addInactiveAction(), _addInactiveBinding(), bind(), _bindAction(), clipAction(), _deactivateAction(), existingAction() (+12 more)
+Cohesion: 0.12
+Nodes (18): _activateAction(), _addInactiveAction(), _addInactiveBinding(), _bindAction(), clipAction(), _deactivateAction(), existingAction(), _isActiveAction() (+10 more)
 
 ### Community 22 - "na"
-Cohesion: 0.05
-Nodes (37): An, at(), s(), B(), F(), G(), H(), L() (+29 more)
+Cohesion: 0.27
+Nodes (14): at(), na(), B(), D(), et(), it(), j(), M() (+6 more)
 
 ### Community 23 - "constructor"
-Cohesion: 0.20
+Cohesion: 0.22
 Nodes (22): m(), v(), constructor(), a(), ji(), o(), me(), s() (+14 more)
 
 ### Community 26 - "bookings.js"
@@ -316,16 +323,24 @@ Cohesion: 0.14
 Nodes (27): allBookings, allCars, applyCustomDate(), applyFilters(), closeBookingDetailModal(), closeNewBookingModal(), closeStatusModal(), confirmStatusUpdate() (+19 more)
 
 ### Community 28 - "dispose"
-Cohesion: 0.09
-Nodes (15): t(), de(), dispose(), Hr(), i(), c(), l(), o() (+7 more)
+Cohesion: 0.08
+Nodes (18): de(), dispose(), getParameter(), Hr(), i(), x(), C(), Sr() (+10 more)
 
 ### Community 29 - "🚗 WeDRIVE: Ringkasan Penuh Pembangunan Sistem (FYP 1 hingga FYP 2)"
 Cohesion: 0.02
 Nodes (107): 📌 1. Pengenalan & Matlamat Projek, 📊 4. Perbandingan Status: FYP 1 vs FYP 2, 🏷️ 5. Maklumat Repositori & Kawalan Versi, 🛡️ [MAJOR UPDATE] 117. Sistem Pengurusan Sesi Ketidakaktifan Pentadbir & Log Keluar Automatik (Admin Session Inactivity Timeout Guardian) (v5.2.77), 🚗 [MAJOR UPDATE] 120. Pembangunan Menyeluruh Portal Pelanggan "My Bookings" Mengikut Piawaian Apple HIG (Customer My Bookings Portal Overhaul) (v5.2.80), 🧾 [MAJOR UPDATE] 122. Pembangunan Menyeluruh Halaman Invois Digital & Resit Tempahan Pelanggan Mengikut Piawaian Apple HIG (Customer Booking Receipt & Digital Invoice Overhaul) (v5.2.82), 🏛️ [MAJOR UPDATE] 139. Seni Bina Dwi-Navigasi Pentadbir (Topbar Main + Sidebar Sub-Main) & Pelaksanaan Penuh 8 Halaman Khusus Fizikal (v5.4.0), 🚀 [MAJOR UPDATE] 140. Transformasi Menyeluruh 11 Halaman Pentadbir Mengikut Stitch MCP & Apple HIG, Sistem Paginasi 10 Rekod, Penyeragaman DESIGN.md & Penyingkiran Corak AI Murahan (v5.5.0) (+99 more)
 
-### Community 32 - ".dot"
-Cohesion: 0.09
-Nodes (5): al(), closestPointToPoint(), closestPointToPointParameter(), delta(), lr
+### Community 31 - "lr"
+Cohesion: 0.10
+Nodes (3): distanceToPoint(), lr, ur
+
+### Community 32 - ".multiplyScalar"
+Cohesion: 0.08
+Nodes (7): bl, closestPointToPoint(), closestPointToPointParameter(), delta(), setDirection(), setFromCenterAndSize(), te()
+
+### Community 33 - ".fromArray"
+Cohesion: 0.10
+Nodes (3): gl, setColors(), vo
 
 ### Community 35 - "cars.js"
 Cohesion: 0.15
@@ -351,9 +366,9 @@ Nodes (15): 1. Pengenalan & Matlamat Operasi, 2. Kredensial Rasmi Ujian (Strict 
 Cohesion: 0.07
 Nodes (27): @playwright/test, author, bin, ai-car-rental-system, bugs, url, description, devDependencies (+19 more)
 
-### Community 41 - ".fromArray"
-Cohesion: 0.11
-Nodes (15): bindSkeletons(), _c, dh, nn(), parse(), parseAnimations(), parseAsync(), parseGeometries() (+7 more)
+### Community 41 - ".fromJSON"
+Cohesion: 0.10
+Nodes (15): ah(), bindSkeletons(), _c, parse(), parseAnimations(), parseAsync(), parseGeometries(), parseImages() (+7 more)
 
 ### Community 43 - "🚀 5 Fasa Mandatori Kitaran Penjanaan & Integrasi UI (STITCH UI PREVIEW Protocol)"
 Cohesion: 0.20
@@ -364,7 +379,7 @@ Cohesion: 0.18
 Nodes (11): 1. Falsafah Operasi Maksimum (Beyond Basic Generation), 2. Bedah Siasat 5 Alatan Lanjutan Stitch MCP, 3. Senarai Semak Pasca-Prompt (Post-Prompt Quality Gate Checklist), 4. Had Siling 12,000 Aksara, A. Alatan 1: `get_screen` (Pemeriksaan & Pengambilan Kod Penuh), B. Alatan 2: `edit_screens` (Penalaan Pembedahan Tanpa Buang Reka Bentuk), C. Alatan 3: `generate_variants` (Penerokaan Variasi Halus 'REFINE'), D. Alatan 4: `apply_design_system` (Penguatkuasaan Sistem Reka Bentuk) (+3 more)
 
 ### Community 45 - "Qt"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (4): ja, pr(), setUsage(), Qt()
 
 ### Community 46 - "as"
@@ -375,9 +390,9 @@ Nodes (17): as(), cs(), ds(), gs(), hs(), Is(), ks(), ls() (+9 more)
 Cohesion: 0.17
 Nodes (11): 1. Core Principles & Design Rules, 1. MacBook (Desktop Retina `1440 × 900`), 2. Apple 3-Device Single-Tab Verification Protocol, 2. iPad (Tablet `820 × 1180`), 3. Dual-Theme & Accessibility Check, 3. iPhone (Mobile Retina XDR `393 × 852`), 4. Pelan Tindakan Audit (Audit Step-by-Step), A. The Zero Oval Rule (Strict 1:1 Circle vs Capsule Pill) (+3 more)
 
-### Community 48 - "uu"
-Cohesion: 0.13
-Nodes (3): stopAllAction(), uu, Xt()
+### Community 49 - "wl"
+Cohesion: 0.12
+Nodes (5): hc(), _l(), nc(), uc(), wl
 
 ### Community 51 - "search-popup.js"
 Cohesion: 0.32
@@ -391,21 +406,21 @@ Nodes (25): 10. Admin Customers Flow, 11. Admin Reports Flow, 12. Admin Marketin
 Cohesion: 0.11
 Nodes (18): 2.1 Introduction, 2.2.1 SOCAR Malaysia, 2.2.2 GoCar Malaysia, 2.2.3 Moovby, 2.2 Literature Review on Domain (Existing Platforms), 2.3 Comparison and Analysis of Existing Systems, 2.4.1 360-Degree Interactive Inspection Viewer, 2.4.2 Serverless BaaS and Real-Time Sync (Supabase & PostgreSQL) (+10 more)
 
-### Community 55 - "iu"
-Cohesion: 0.13
-Nodes (3): eh, iu, Tu()
+### Community 54 - "da"
+Cohesion: 0.29
+Nodes (9): da(), j(), k(), V(), Y(), Z(), se(), setSize() (+1 more)
 
-### Community 56 - "add"
-Cohesion: 0.12
-Nodes (3): add(), a(), setDirection()
+### Community 56 - ".setAttribute"
+Cohesion: 0.10
+Nodes (3): mr, a(), ul()
 
 ### Community 57 - "2. Lima Domain Peranan & Tanggungjawab Operasi"
 Cohesion: 0.18
 Nodes (10): 1. Pengenalan & Falsafah Pasukan Kejuruteraan WeDRIVE, 2. Lima Domain Peranan & Tanggungjawab Operasi, 3. Matriks Kolaborasi Antara Peranan, 4. Pematuhan Had Siling 12,000 Aksara, 💼 Domain 1: Pengurusan Projek & Produk (Project Management & Product), ⚙️ Domain 2: Pembangunan Backend & Data ("Tukang API"), 🎨 Domain 3: Pembangunan Frontend & Reka Bentuk UI/UX, 🌐 Domain 4: Gabungan & Infrastruktur (Full-Stack, DevOps & Cloud) (+2 more)
 
-### Community 58 - "sl"
-Cohesion: 0.10
-Nodes (3): sl, Xi, Zo
+### Community 58 - "add"
+Cohesion: 0.09
+Nodes (4): add(), sl, Xi, Zo
 
 ### Community 59 - "how-it-works.js"
 Cohesion: 0.19
@@ -415,13 +430,13 @@ Nodes (7): frameSrc(), hideDragHint(), initCursor(), initHeroAutoTurntable(), in
 Cohesion: 0.11
 Nodes (18): 3.1 Introduction, 3.2.1 As-Is Workflow (Conventional Rental), 3.2.2 To-Be Workflow (WeDRIVE System), 3.2 Problem Analysis (Workflow Comparison), 3.3.1 Table: admins, 3.3.2 Table: customers, 3.3.3 Table: cars, 3.3.4 Table: bookings (+10 more)
 
-### Community 61 - "ui"
-Cohesion: 0.17
-Nodes (7): setW(), setX(), setXY(), setXYZW(), setY(), setZ(), ui()
+### Community 61 - "setXYZ"
+Cohesion: 0.15
+Nodes (7): setW(), setX(), setXY(), setXYZ(), setY(), setZ(), ui()
 
 ### Community 62 - "cl"
-Cohesion: 0.12
-Nodes (4): cl, lineTo(), moveTo(), Pl
+Cohesion: 0.16
+Nodes (3): cl, lineTo(), moveTo()
 
 ### Community 63 - "Spesifikasi Seni Bina: Alur Kerja 2 Fasa Cache-to-Database Studio Visual 360°"
 Cohesion: 0.14
@@ -447,9 +462,9 @@ Nodes (3): Ch, gh, n()
 Cohesion: 0.18
 Nodes (10): 1. Tipografi Apple San Francisco, 2. Palet Warna & Mod Gelap Adaptif (Apple System Colors), 3. Bahan Kaca (Apple Materials), 4. Fizik Pergerakan (Motion Physics), Apple Human Interface Guidelines (HIG) Standard, LAMAN RUJUKAN RASMI APPLE DEVELOPER DESIGN & SUMBER FIGMA, PILAR 1: GETTING STARTED & CORE PRINCIPLES, PILAR 2: FOUNDATIONS (ASAS REKA BENTUK) (+2 more)
 
-### Community 71 - "xr"
-Cohesion: 0.19
-Nodes (9): getParameter(), v(), x(), y(), Sr(), xr(), f(), g() (+1 more)
+### Community 71 - "s"
+Cohesion: 0.39
+Nodes (8): s(), B(), F(), G(), H(), O(), z(), re()
 
 ### Community 72 - "WeDRIVE Navigation, Responsive & UI/UX Standards"
 Cohesion: 0.15
@@ -487,13 +502,13 @@ Nodes (12): autoInit(), highlightRange(), initPairedPickers(), isPickupFilled(),
 Cohesion: 0.33
 Nodes (7): detectActiveModule(), detectActiveSubItem(), loadSidebar(), renderContextualNav(), resolveBasePath(), resolveLinks(), setupMobileToggle()
 
-### Community 84 - "updateMatrixWorld"
-Cohesion: 0.18
-Nodes (4): mh, nr, updateMatrixWorld(), wh
-
 ### Community 85 - "Apple Human Interface Guidelines (HIG) Standard"
 Cohesion: 0.29
 Nodes (6): Apple Human Interface Guidelines (HIG) Standard, PILAR 4: COMPONENTS (KOMPONEN ANTARA MUKA), PILAR 5: INPUTS & INTERACTIONS (INTERAKSI & INPUT), PILAR 6: TECHNOLOGIES (TEKNOLOGI & CIRI KHUSUS), SENARAI SEMAK AUDIT & RUJUKAN SEBELUM SIAP, WeDRIVE Master Specification — Bahagian 2: Komponen, Interaksi & Teknologi (Pilar 4 – 6)
+
+### Community 87 - "mc"
+Cohesion: 0.32
+Nodes (3): gc(), mc, l()
 
 ### Community 88 - "DESIGN.md"
 Cohesion: 0.15
@@ -516,8 +531,8 @@ Cohesion: 0.32
 Nodes (3): initChatbot(), resolveBase(), setupFabScrollCollapse()
 
 ### Community 94 - "applyMatrix4"
-Cohesion: 0.14
-Nodes (4): applyMatrix4(), setFromCamera(), vo, Yt()
+Cohesion: 0.15
+Nodes (6): al(), applyMatrix4(), c(), fo(), setFromCamera(), Yt()
 
 ### Community 95 - "admin-idle-timeout.js"
 Cohesion: 0.38
@@ -568,12 +583,8 @@ Cohesion: 0.83
 Nodes (3): dismiss(), getDismissed(), loadBanners()
 
 ### Community 109 - "fa"
-Cohesion: 0.22
-Nodes (6): aa(), ea(), fa(), ia(), ma(), sa()
-
-### Community 110 - ".getAttribute"
-Cohesion: 0.22
-Nodes (5): T(), jr(), S(), qr(), Bt()
+Cohesion: 0.20
+Nodes (6): aa(), fa(), ia(), la(), ma(), sa()
 
 ### Community 113 - "Stitch MCP & Ultra High-Fidelity UI Generation Standards (WeDRIVE)"
 Cohesion: 0.18
@@ -592,8 +603,8 @@ Cohesion: 0.18
 Nodes (10): 1. Pengenalan & Penggunaan Supabase MCP, 2. Struktur Skema Mobiliti Kereta Teras, 3. Penguatkuasaan Dasar Keselamatan Baris (Row Level Security - RLS), 4. Peraturan Sifar Data Palsu (Zero Fake Data Rule), A. Jadual `cars` (Inventori Kereta), B. Jadual `bookings` (Transaksi Tempahan), C. Jadual `profiles` / `customers` (Profil Pengguna), D. Jadual `payments` (Lejar Transaksi Kewangan) (+2 more)
 
 ### Community 127 - "vl"
-Cohesion: 0.12
-Nodes (3): El, tl, vl()
+Cohesion: 0.13
+Nodes (3): Pl, tl, vl()
 
 ### Community 128 - "APPENDICES"
 Cohesion: 0.22
@@ -676,12 +687,12 @@ Cohesion: 0.40
 Nodes (5): 🔤 [MINOR UPDATE] 124. Penyeragaman Penuh Pemuatan Webfont Apple SF Pro Display ke Seluruh Halaman Antara Muka Sistem (System-wide Apple SF Pro Webfont Deployment) (v5.2.84), Minor Update 125 (`v5.2.85`): Redesign Customer Receipt into Official Corporate Tax Invoice & Rental Statement (Apple & Stripe Luxury Standard), Minor Update 126 (`v5.2.86`): Fix Receipt Layout Alignment, Symmetrical Ledgers & Eliminate AI-Gimmick Aesthetic for Authentic Corporate Tax Invoice, Minor Update 127 (`v5.2.87`): Restore Customer My Bookings Toast Notification & Responsive Layout Styles, Minor Update 128 (`v5.2.88`): Apple HIG Redesign for Account Module, Zero Inline Styles, Universal Form Accessibility & Master CSS Section 18
 
 ### Community 157 - "setValue"
-Cohesion: 0.24
-Nodes (3): _s(), setValue(), ys()
+Cohesion: 0.16
+Nodes (5): bind(), getValue(), _s(), setValue(), ys()
 
 ### Community 168 - "copy"
-Cohesion: 0.06
-Nodes (11): bc, copy(), ec(), ih, Il, ka(), i(), Nl (+3 more)
+Cohesion: 0.08
+Nodes (8): copy(), ih, ka(), i(), mo, qi, ra(), translate()
 
 ### Community 169 - "2. Empat Domain Audit Keselamatan Utama"
 Cohesion: 0.20
@@ -696,8 +707,8 @@ Cohesion: 0.25
 Nodes (7): 1. Peranan Supabase dalam Ekosistem WeDRIVE, 2. Struktur Skema & Model Data Teras, 3. Dasar Keselamatan Baris (*Row Level Security - RLS*), 4. Peraturan Sifar Data Palsu & Sifar Hardcode Dummy (Zero Fake Data & Zero Hardcoded Dummy Rule), 5. Had Fail & Modulariti, Dasar Capaian Mengikut Peranan:, WeDRIVE Supabase Database & Backend Architecture Standards
 
 ### Community 173 - ".constructor"
-Cohesion: 0.13
-Nodes (7): A(), ha(), la(), va, E(), w(), Za
+Cohesion: 0.15
+Nodes (3): L(), ha(), va
 
 ### Community 176 - "Alur Kerja /qa_audit: Audit Kualiti Menyeluruh WeDRIVE"
 Cohesion: 0.29
@@ -711,21 +722,21 @@ Nodes (6): Alur Kerja /release_push: Pelepasan Versi Git & SemVer WeDRIVE, Langk
 Cohesion: 0.25
 Nodes (7): 1. Official Test Credentials & Rules, 2. Struktur Direktori & Persekitaran Ujian, 3. Protokol Pelaksanaan Ujian (Execution Protocol), 4. Protokol Diagnosis & Pembaikan Kegagalan, 5. Piawaian Menulis Ujian Baharu, Peraturan Kredensial:, Playwright Sentinel Persona & Operating Guidelines
 
+### Community 180 - "⚡ [PATCH UPDATE] 221. Pembersihan Mutlak Istilah Teknikal (Sifar Cache/Database/JPJ/Aset), Butang Skrin Penuh 1:1, Palang Kemajuan Dinamik & Animasi Siri Spesifikasi Pintar (v6.9.7)"
+Cohesion: 0.67
+Nodes (3): [MINOR UPDATE] v6.9.8 — Penggantian Status Draf Interaktif Swapping, Pemudahan Teks & Populasi Automatik 6 Sudut Foto AI (Interactive Swapping Draft State, Copy Simplification & Auto 6-Photo AI Population), ⚡ [PATCH UPDATE] 221. Pembersihan Mutlak Istilah Teknikal (Sifar Cache/Database/JPJ/Aset), Butang Skrin Penuh 1:1, Palang Kemajuan Dinamik & Animasi Siri Spesifikasi Pintar (v6.9.7), [PATCH] v6.9.9 — Pemisahan Teks Label & Tindakan Butang AI Spesifikasi (AI Spec Label & Button Action Distinct Phrasing)
+
 ### Community 181 - "1. Empat Domain Audit Keselamatan Mandatori"
 Cohesion: 0.25
 Nodes (7): 1. Empat Domain Audit Keselamatan Mandatori, 1. Pengesahan Kredensial & Pengurusan Sesi (Auth & Session Security), 2. Perlindungan Data Peribadi Pelanggan (PII & Data Privacy), 2. Protokol Tindakan & Penampalan Serta-Merta, 3. Sanitasi Input & Pertahanan Suntikan (XSS & SQL Injection), 4. Titik Akhir AI & Pembendungan Rahsia (AI Guardrails & Zero Secrets), Strix Security Guardian Persona & Operating Guidelines
 
 ### Community 184 - ".setValues"
-Cohesion: 0.07
-Nodes (8): ko, li, oc(), pa(), pc(), qa, uc(), zc
+Cohesion: 0.08
+Nodes (7): ko, li, oc(), pa(), pc(), qa, zc
 
 ### Community 185 - "Alur Kerja /prd_creator: Penjanaan PRD 6 Pilar Mandatori WeDRIVE"
 Cohesion: 0.40
 Nodes (4): Alur Kerja /prd_creator: Penjanaan PRD 6 Pilar Mandatori WeDRIVE, Langkah Seterusnya:, Prinsip Gatekeeper: Sifar Kod Sebelum PRD Diluluskan, Templat Standard PRD 6 Pilar WeDRIVE
-
-### Community 186 - "ei"
-Cohesion: 0.18
-Nodes (3): ei, n(), $t()
 
 ### Community 188 - "Supabase DBA Agent Persona & Operating Guidelines"
 Cohesion: 0.29
@@ -735,52 +746,40 @@ Nodes (6): 1. Teras Skema Pangkalan Data WeDRIVE, 2. Dasar Row Level Security (R
 Cohesion: 0.33
 Nodes (5): 1. Senarai Hitam Mutlak (Zero Tolerance Blacklist), 2. Prinsip Bahasa Melayu Moden Kontemporari 2026, 2B. Mandatori Pusat Kamus Bahasa (Strict Single Source of Truth), 3. Alur Kerja Pemeriksaan Linguistik, BM Language Police Persona & Operating Guidelines
 
-### Community 196 - "n"
-Cohesion: 0.19
-Nodes (6): c(), n(), Qn, te(), toShapes(), e()
-
 ### Community 197 - "add-car.js"
 Cohesion: 0.16
 Nodes (5): processExteriorFiles(), saveCarDraft(), show360Frame(), triggerDraftSave(), update360StatusBadge()
 
-### Community 198 - "Ml"
-Cohesion: 0.14
-Nodes (4): Ml, nc(), tc(), yl()
-
 ### Community 204 - "toJSON"
-Cohesion: 0.05
-Nodes (11): Do, fh, Ga, gl, r(), _i, Oh, setColors() (+3 more)
+Cohesion: 0.18
+Nodes (4): Ga, r(), _i, toJSON()
 
 ### Community 209 - "kc"
-Cohesion: 0.07
-Nodes (5): ah(), kc(), nh, sh, Vc()
+Cohesion: 0.09
+Nodes (3): kc(), sh, Vc()
 
-### Community 210 - "jh"
-Cohesion: 0.39
-Nodes (3): jh, qh(), jt()
-
-### Community 214 - ".getContext"
-Cohesion: 0.14
-Nodes (5): fe(), ge(), Vh, xa(), Ft()
+### Community 214 - ".constructor"
+Cohesion: 0.06
+Nodes (14): T(), ei, fe(), ge(), S(), Tu(), Vh, xa() (+6 more)
 
 ## Knowledge Gaps
-- **586 isolated node(s):** `allCars`, `allBookings`, `allCars`, `CAL_DATA`, `CAL_FILTERS` (+581 more)
+- **587 isolated node(s):** `allCars`, `allBookings`, `allCars`, `CAL_DATA`, `CAL_FILTERS` (+582 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **63 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **72 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `en()` connect `anime.min.js` to `.fromArray`, `n`?**
+- **Why does `en()` connect `anime.min.js` to `i`, `ve`?**
   _High betweenness centrality (0.033) - this node is a cross-community bridge._
-- **Why does `Ue` connect `Ue` to `three.min.js`, `.multiplyScalar`, `.fromBufferAttribute`?**
+- **Why does `Ue` connect `Ue` to `three.min.js`, `.multiplyScalar`, `.fromBufferAttribute`, `ze`?**
   _High betweenness centrality (0.030) - this node is a cross-community bridge._
-- **Why does `gn` connect `gn` to `three.min.js`, `.dot`, `.updateMatrix`, `remove`, `.fromArray`, `toJSON`, `.constructor`, `.multiplyScalar`, `.invert`, `Uo`, `he`, `updateMatrixWorld`, `.constructor`, `constructor`, `add`, `on`, `applyMatrix4`?**
+- **Why does `gn` connect `gn` to `three.min.js`, `.fromArray`, `.multiplyScalar`, `.updateMatrix`, `.dispatchEvent`, `ze`, `copy`, `.fromJSON`, `i`, `toJSON`, `.constructor`, `.getMaxScaleOnAxis`, `he`, `updateMatrixWorld`, `.constructor`, `constructor`, `add`, `applyMatrix4`?**
   _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **What connects `allCars`, `allBookings`, `allCars` to the rest of the system?**
-  _586 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _587 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `three.min.js` be split into smaller, more focused modules?**
-  _Cohesion score 0.023687423687423687 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.02314165497896213 - nodes in this community are weakly interconnected._
 - **Should `animate.js` be split into smaller, more focused modules?**
   _Cohesion score 0.0578386605783866 - nodes in this community are weakly interconnected._
 - **Should `init` be split into smaller, more focused modules?**

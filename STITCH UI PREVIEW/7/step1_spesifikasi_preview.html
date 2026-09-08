@@ -504,17 +504,17 @@
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
                             <label class="font-footnote text-footnote font-semibold flex items-center gap-1.5">
                                 <span class="material-symbols-outlined text-[16px] text-[#BF5AF2]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                                <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold">Pengecaman Spesifikasi Pintar</span>
+                                <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold">Cadangan Spesifikasi Pintar</span>
                             </label>
                             <input type="hidden" id="inputStatus" name="status" value="available"/>
                             <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="ai-container-bar interactive-btn group relative w-full h-[46px] py-0 px-4 rounded-xl flex items-center justify-between transition-all duration-300 active:scale-[0.98] cursor-pointer overflow-hidden">
                                 <div id="aiSpecLaserScanner" class="hidden ai-laser-line"></div>
                                 <div class="flex items-center gap-2 z-10">
                                     <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300" style="font-variation-settings: 'FILL' 1; color: #5E5CE6;">auto_awesome</span>
-                                    <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap">AI Auto Generate Spec</span>
+                                    <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap">Isi Maklumat Mengikut Model</span>
                                 </div>
                                 <span id="aiBtnBadge" class="ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0">
-                                    <span id="aiBtnBadgeText">Jana Pintar</span>
+                                    <span id="aiBtnBadgeText">Jana AI</span>
                                     <span id="aiBtnBadgeIcon" class="material-symbols-outlined text-[14px]">arrow_downward</span>
                                 </span>
                             </button>
@@ -1019,14 +1019,14 @@
                         btnIcon.style.color = '#5E5CE6';
                     }
                     if (btnText) {
-                        btnText.textContent = 'AI Auto Generate Spec';
+                        btnText.textContent = 'Isi Maklumat Mengikut Model';
                         btnText.className = 'font-headline text-[14px] md:text-[15px] font-bold text-on-surface tracking-tight';
                     }
                     if (btnBadge) {
                         btnBadge.className = 'ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
                         btnBadge.style.cssText = '';
                     }
-                    if (btnBadgeText) btnBadgeText.textContent = 'Jana Pintar';
+                    if (btnBadgeText) btnBadgeText.textContent = 'Jana AI';
                     if (btnBadgeIcon) btnBadgeIcon.textContent = 'arrow_downward';
 
                     isGeneratingSpec = false;
