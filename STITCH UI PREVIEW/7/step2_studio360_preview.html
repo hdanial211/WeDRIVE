@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script src="preview-i18n.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -95,6 +96,10 @@
             align-items: center !important;
             justify-content: center !important;
             box-sizing: border-box !important;
+        }
+        .circle-1-1.hidden,
+        .hidden {
+            display: none !important;
         }
         .pill-btn {
             border-radius: 9999px !important;
@@ -340,16 +345,16 @@
             <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all" style="box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35);" title="Kenderaan" aria-label="Kenderaan">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white" style="font-variation-settings: 'FILL' 1;">directions_car</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan" data-i18n-title="nav_bookings">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">receipt_long</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Pelanggan" aria-label="Pelanggan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Pelanggan" aria-label="Pelanggan" data-i18n-title="nav_customers">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">people</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Laporan" aria-label="Laporan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Laporan" aria-label="Laporan" data-i18n-title="nav_reports">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">bar_chart</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Kecerdasan AI" aria-label="Kecerdasan AI">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Kecerdasan AI" aria-label="Kecerdasan AI" data-i18n-title="nav_ai">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">auto_awesome</span>
             </a>
         </nav>
@@ -357,18 +362,18 @@
         <!-- Right: Bahasa + Tema + Batal (Gabungan Elemen Topbar Kita) -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0 z-10">
             <!-- Language Pill (from Topbar Kita) -->
-            <button type="button" class="pill-btn px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day text-[13px] font-bold interactive-btn" title="Bahasa (MS)">
-                MS
+            <button id="langToggleBtn" type="button" onclick="toggleLanguage()" class="pill-btn px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day text-[13px] font-bold interactive-btn cursor-pointer" title="Tukar Bahasa (MS / EN)" aria-label="Tukar Bahasa" data-i18n-title="lang_toggle_title">
+                <span id="langText">MS</span>
             </button>
 
             <!-- Theme Toggle Button (☀️ / 🌙) -->
-            <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm">
+            <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm" title="Tukar Tema Siang / Malam" data-i18n-title="theme_toggle_title">
                 <span id="themeIcon" class="material-symbols-outlined text-[20px]">dark_mode</span>
             </button>
 
             <!-- Batal Button -->
             <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day" style="text-decoration: none;">
-                Batal
+                <span data-i18n="nav_cancel">Batal</span>
             </a>
         </div>
     </header>
@@ -382,7 +387,7 @@
                 <!-- Step 1 Complete -->
                 <a href="step1_spesifikasi_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
                     <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium">Maklumat Asas</span>
+                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step1_pill">Maklumat Asas</span>
                 </a>
 
                 <div class="w-8 h-[1px] bg-border-day"></div>
@@ -390,7 +395,7 @@
                 <!-- Step 2 Active -->
                 <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
                     <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">2</span>
-                    <span class="font-label-tabular text-label-tabular font-bold">Studio Visual</span>
+                    <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step2_pill">Studio Visual</span>
                 </div>
 
                 <div class="w-8 h-[1px] bg-border-day"></div>
@@ -398,7 +403,7 @@
                 <!-- Step 3 Upcoming -->
                 <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                     <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
-                    <span class="font-callout text-callout font-medium">Semakan Akhir</span>
+                    <span class="font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
                 </a>
             </div>
         </div>
@@ -412,40 +417,40 @@
                 <!-- Bento Card A: Galeri Pemeriksaan Kenderaan -->
                 <div class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
                     <div class="flex flex-col gap-sm mb-lg">
-                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Galeri Pemeriksaan Kenderaan</h2>
-                        <p class="font-callout text-callout text-on-surface-variant">Muat naik 6 sudut kenderaan untuk rekod pemeriksaan visual syarikat.</p>
+                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="step2_sec_gallery_title">Galeri Pemeriksaan Kenderaan</h2>
+                        <p class="font-callout text-callout text-on-surface-variant" data-i18n="step2_sec_gallery_desc">Muat naik imej kenderaan untuk rekod pemeriksaan visual syarikat.</p>
                     </div>
 
                     <div id="photoUploadSlotsGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-md">
                         <!-- Upload Slot 1 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
+                        <button type="button" onclick="selectGalleryPhoto(0)" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn cursor-pointer">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
-                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Hadapan Penuh</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm" data-i18n="slot_front">Hadapan Penuh</span>
                         </button>
                         <!-- Upload Slot 2 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
+                        <button type="button" onclick="selectGalleryPhoto(1)" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn cursor-pointer">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
-                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Belakang Penuh</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm" data-i18n="slot_rear">Belakang Penuh</span>
                         </button>
                         <!-- Upload Slot 3 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
+                        <button type="button" onclick="selectGalleryPhoto(2)" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn cursor-pointer">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
-                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Sisi Kanan Profil</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm" data-i18n="slot_right">Sisi Kanan Profil</span>
                         </button>
                         <!-- Upload Slot 4 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
+                        <button type="button" onclick="selectGalleryPhoto(3)" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn cursor-pointer">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
-                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Sisi Kiri Profil</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm" data-i18n="slot_left">Sisi Kiri Profil</span>
                         </button>
                         <!-- Upload Slot 5 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
+                        <button type="button" onclick="selectGalleryPhoto(4)" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn cursor-pointer">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
-                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Ruang Pemandu &amp; Papan Pemuka</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm" data-i18n="slot_quarter_fl">Suku Hadapan Kiri</span>
                         </button>
                         <!-- Upload Slot 6 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
+                        <button type="button" onclick="selectGalleryPhoto(5)" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn cursor-pointer">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
-                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Tempat Duduk Belakang / Kargo</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm" data-i18n="slot_quarter_rr">Suku Belakang Kanan</span>
                         </button>
                     </div>
                 </div>
@@ -454,13 +459,13 @@
                 <div id="bentoCard3D" class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)] transition-all duration-300">
                     <div class="flex flex-col gap-sm mb-lg">
                         <div class="flex justify-between items-start">
-                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Integrasi Visual 360° &amp; Meja Putar</h2>
+                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="step2_sec_cdn_title">Pusat Pengurusan Aset Media &amp; CDN</h2>
                             <div id="cdnStatusBadge" class="pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold transition-all">
                                 <span id="cdnStatusIcon" class="material-symbols-outlined text-[14px]">verified</span>
-                                <span id="cdnStatusText">Siap Sedia</span>
+                                <span id="cdnStatusText" data-i18n="status_visual_ready">Siap Sedia</span>
                             </div>
                         </div>
-                        <p class="font-callout text-callout text-on-surface-variant">Pautkan URL CDN untuk muatan model 3D dan meja putar kenderaan.</p>
+                        <p class="font-callout text-callout text-on-surface-variant" data-i18n="step2_sec_cdn_desc">Pautkan URL CDN rasmi kenderaan untuk jana paparan 360° serta-merta.</p>
                     </div>
 
                     <div class="flex flex-col gap-md">
@@ -475,12 +480,12 @@
                                 <!-- 1. Jana AI Button (Generates 360 Preview) -->
                                 <button id="btnGenerate3D" type="button" class="ai-gradient-pill pill-btn interactive-btn font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97]" style="color: #FFFFFF !important;">
                                     <span id="btnGenIcon" class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                                    <span id="btnGenText">Jana AI</span>
+                                    <span id="btnGenText" data-i18n="cdn_btn_scan">Jana AI</span>
                                 </button>
                                 <!-- 2. Simpan Rekod Visual Button -->
                                 <button id="btnSaveToDb" type="button" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high hairline border-border-day text-on-surface-variant font-headline text-[13px] font-semibold px-4 py-2.5 flex items-center justify-center gap-2 shadow-xs shrink-0 transition-all active:scale-[0.97] opacity-60 cursor-not-allowed" disabled title="Jana pratonton AI dahulu untuk semak kenderaan sebelum simpan visual">
                                     <span id="btnSaveDbIcon" class="material-symbols-outlined text-[18px] text-primary">cloud_download</span>
-                                    <span id="btnSaveDbText">Simpan Visual</span>
+                                    <span id="btnSaveDbText" data-i18n="btn_save_visual">Simpan Visual</span>
                                 </button>
                             </div>
                         </div>
@@ -533,35 +538,46 @@
                     
                     <!-- Segmented Switch (Tunjuk galeri sahaja dulu, bila ada 360 baru kembang 360 & panorama) -->
                     <div id="segmentedSwitcher" class="bg-surface-container rounded-full p-xs flex gap-xs mb-lg w-full max-w-[130px] transition-all duration-500 mx-auto">
-                        <button id="tab360" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap">Pusingan 360°</button>
-                        <button id="tabPanorama" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap">Panorama</button>
-                        <button id="tabGallery" type="button" class="flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all whitespace-nowrap">Galeri</button>
+                        <button id="tab360" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap" data-i18n="tab_360">Pusingan 360°</button>
+                        <button id="tabPanorama" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap" data-i18n="tab_panorama">Panorama</button>
+                        <button id="tabGallery" type="button" class="flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all whitespace-nowrap" data-i18n="tab_gallery">Galeri</button>
                     </div>
 
                     <!-- Turntable Viewport -->
                     <div id="turntableViewport" class="relative flex-1 bg-surface-container rounded-2xl overflow-hidden min-h-[400px] flex items-center justify-center group cursor-ew-resize transition-all duration-500">
-                        <!-- Image Container (Initially shows Galeri front photo; when 360 activated, switches to 360 render) -->
-                        <div id="viewportRenderImage" class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-all duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtBDDlUrmJDNhDsS4aV1no7_ijMp3LDBIEuO8JFSLu1rhZtzRptizXrOOhrC4F9UM_GgVDGzcAxyDfse6ygFP8JmSGyjv71IIKEzYBhzmRw7hDm5v779sZUlzh9qAN7SOqsPGhcB_Czd7Yc7HZemwGIFVradMOJlXOSx87_TKIZzR5kuC3Lt7YEVxnlUdIvKA8fnQCkIEXAdlm7dA7MYzd0eNSvwggNzObheoeAcMgKy9b-GN11jAQiS1tJPCdGlY5skGa1MRHwGc');"></div>
+                        <!-- Image Container (Shows active gallery photo or 360 render) -->
+                        <div id="viewportRenderImage" class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-all duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85');"></div>
 
-                        <!-- Gallery Viewport Mode Pill -->
-                        <div id="viewportModePill" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 dark:bg-black/70 backdrop-blur-md px-4 py-1.5 rounded-full hairline border-border-day flex items-center gap-2 shadow-sm text-secondary font-footnote text-footnote font-medium transition-all">
-                            <span class="material-symbols-outlined text-[16px] text-primary">photo_library</span>
-                            <span id="viewportModeText">Pratonton Galeri: Hadapan Penuh</span>
-                        </div>
+                        <!-- Left Navigation Button (<) - Strict 1:1 Circle -->
+                        <button id="btnPrevImage" type="button" onclick="navigateGallery(-1)" class="circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
+                            <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                        </button>
+
+                        <!-- Right Navigation Button (>) - Strict 1:1 Circle -->
+                        <button id="btnNextImage" type="button" onclick="navigateGallery(1)" class="circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
+                            <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                        </button>
 
                         <!-- Drag Indicator Overlay (Hidden in Galeri mode, active in 360 mode) -->
                         <div id="dragIndicatorOverlay" class="hidden absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                             <div class="bg-black/60 backdrop-blur-md rounded-full px-md py-sm flex items-center gap-sm shadow-lg border border-white/10 text-white font-medium">
                                 <span class="material-symbols-outlined text-white text-[18px]">swipe_left</span>
-                                <span class="font-caption text-caption">Seret untuk Putar</span>
+                                <span class="font-caption text-caption" data-i18n="drag_to_rotate">Seret untuk Putar</span>
                                 <span class="material-symbols-outlined text-white text-[18px]">swipe_right</span>
                             </div>
                         </div>
 
-                        <!-- Fullscreen Toggle Button (Strict 1:1 Circle) -->
-                        <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh">
+                        <!-- Fullscreen Toggle Button (Strict 1:1 Circle - Stays Here) -->
+                        <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh" data-i18n-title="fullscreen_title">
                             <span id="iconFullscreen" class="material-symbols-outlined text-[20px]">fullscreen</span>
                         </button>
+                    </div>
+
+                    <!-- Gallery Thumbnails Slider Strip (Shows available photos: e.g. 5 if 5, 6 if 6) -->
+                    <div id="galleryThumbnailsContainer" class="mt-3 pt-1 flex flex-col gap-1">
+                        <div id="galleryThumbnailsStrip" class="flex items-center justify-center gap-2 overflow-x-auto p-1 hide-scrollbar w-full">
+                            <!-- Populated dynamically via renderGalleryThumbnails() -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -573,27 +589,27 @@
         <!-- Back to Step 1 -->
         <a href="step1_spesifikasi_preview.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
-            <span>Maklumat Asas</span>
+            <span data-i18n="dock_back_step1">Maklumat Asas</span>
         </a>
 
         <!-- Center Action & Status: Bertukar antara Butang Simpan Draf <-> Draf disimpan -->
         <div id="dockDraftWrapperStep2" class="hidden sm:flex items-center justify-center min-w-[140px] px-2">
             <!-- State 1: Butang Simpan Draf (Muncul apabila ada perubahan / sebelum ditekan) -->
-            <button id="btnSaveDraftStep2" type="button" onclick="manualSaveDraftStep2()" class="pill-btn interactive-btn flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high border border-border-day text-on-surface font-footnote text-[13px] font-semibold transition-all duration-300 active:scale-[0.97] cursor-pointer shadow-xs" title="Simpan visual kenderaan ke draf">
+            <button id="btnSaveDraftStep2" type="button" onclick="manualSaveDraftStep2()" class="pill-btn interactive-btn flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high border border-border-day text-on-surface font-footnote text-[13px] font-semibold transition-all duration-300 active:scale-[0.97] cursor-pointer shadow-xs" title="Simpan visual kenderaan ke draf" data-i18n-title="dock_btn_save_draft_step2_title">
                 <span class="material-symbols-outlined text-[16px] text-primary">bookmark</span>
-                <span>Simpan Draf</span>
+                <span id="btnSaveDraftStep2Text" data-i18n="dock_btn_save_draft">Simpan Draf</span>
             </button>
 
             <!-- State 2: Status Draf Disimpan (HANYA muncul apabila ditekan Simpan Draf) -->
             <div id="draftSavedStatusStep2" class="hidden items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300">
                 <span id="draftSavedIconStep2" class="material-symbols-outlined text-[20px] text-[#28C840]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
-                <span id="draftSavedTextStep2" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold">Draf disimpan</span>
+                <span id="draftSavedTextStep2" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold" data-i18n="dock_status_draft_saved">Draf disimpan</span>
             </div>
         </div>
 
         <!-- Seterusnya to Step 3 (Font from Gambar 1: Crisp Bold Pure White) -->
         <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;">Seterusnya: Semakan Akhir</span>
+            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="dock_next_step3">Seterusnya: Semakan Akhir</span>
             <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
         </a>
     </nav>
@@ -634,6 +650,115 @@
         }
 
         // ==========================================================================
+        // Inspection Photos Model & Interactive Gallery Carousel
+        // ==========================================================================
+        const INSPECTION_PHOTOS_AI = [
+            {
+                title: 'Hadapan Penuh',
+                titleEn: 'Full Front',
+                img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Belakang Penuh',
+                titleEn: 'Full Rear',
+                img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=85',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Sisi Kanan Profil',
+                titleEn: 'Right Side Profile',
+                img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Sisi Kiri Profil',
+                titleEn: 'Left Side Profile',
+                img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Suku Hadapan Kiri',
+                titleEn: 'Front Left Quarter',
+                img: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=85',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Suku Belakang Kanan',
+                titleEn: 'Rear Right Quarter',
+                img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=85',
+                badge: 'Diimbas AI'
+            }
+        ];
+
+        let currentGalleryPhotos = [...INSPECTION_PHOTOS_AI];
+        let currentGalleryPhotoIndex = 0;
+        window.currentGalleryPhotos = currentGalleryPhotos;
+        window.currentGalleryPhotoIndex = currentGalleryPhotoIndex;
+
+        function renderGalleryThumbnails() {
+            const strip = document.getElementById('galleryThumbnailsStrip');
+            if (!strip) return;
+            const photos = window.currentGalleryPhotos || currentGalleryPhotos;
+            if (!photos || photos.length === 0) {
+                strip.innerHTML = '';
+                return;
+            }
+
+            const isEn = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en');
+            strip.innerHTML = photos.map((photo, idx) => {
+                const isActive = (idx === currentGalleryPhotoIndex && activeVisualMode === 'gallery');
+                const title = isEn ? (photo.titleEn || photo.title) : photo.title;
+                return `
+                    <button type="button" onclick="selectGalleryPhoto(${idx})"
+                        class="gallery-thumb-btn relative rounded-xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300 ${isActive ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-md border-transparent' : 'opacity-60 hover:opacity-100 hover:scale-[1.03] border border-border-day bg-surface-container'}"
+                        style="width: 58px; height: 42px;"
+                        title="${title}" aria-label="${title}">
+                        <img src="${photo.img}" alt="${title}" class="w-full h-full object-cover" />
+                    </button>
+                `;
+            }).join('');
+        }
+        window.renderGalleryThumbnails = renderGalleryThumbnails;
+
+        function selectGalleryPhoto(index) {
+            const photos = window.currentGalleryPhotos || currentGalleryPhotos;
+            if (!photos || !photos[index]) return;
+            currentGalleryPhotoIndex = index;
+            window.currentGalleryPhotoIndex = index;
+            const photo = photos[index];
+
+            if (viewportRenderImage) {
+                viewportRenderImage.style.backgroundImage = `url('${photo.img}')`;
+            }
+
+            if (activeVisualMode !== 'gallery') {
+                setVisualTab('gallery');
+            } else {
+                renderGalleryThumbnails();
+            }
+
+            // Sync visual ring highlight on Bento Card A slots
+            const slots = document.querySelectorAll('#photoUploadSlotsGrid > *');
+            slots.forEach((s, idx) => {
+                if (idx === index) {
+                    s.classList.add('ring-2', 'ring-primary');
+                } else {
+                    s.classList.remove('ring-2', 'ring-primary');
+                }
+            });
+        }
+        window.selectGalleryPhoto = selectGalleryPhoto;
+
+        function navigateGallery(direction) {
+            const photos = window.currentGalleryPhotos || currentGalleryPhotos;
+            if (!photos || photos.length === 0) return;
+            currentGalleryPhotoIndex = (currentGalleryPhotoIndex + direction + photos.length) % photos.length;
+            selectGalleryPhoto(currentGalleryPhotoIndex);
+        }
+        window.navigateGallery = navigateGallery;
+
+        // ==========================================================================
         // Progressive Segmented Switch: Galeri Sahaja Dulu -> Kembang 360 & Panorama
         // ==========================================================================
         const segmentedSwitcher = document.getElementById('segmentedSwitcher');
@@ -641,11 +766,11 @@
         const tabPanorama = document.getElementById('tabPanorama');
         const tabGallery = document.getElementById('tabGallery');
         const viewportRenderImage = document.getElementById('viewportRenderImage');
-        const viewportModePill = document.getElementById('viewportModePill');
-        const viewportModeText = document.getElementById('viewportModeText');
+        const btnPrevImage = document.getElementById('btnPrevImage');
+        const btnNextImage = document.getElementById('btnNextImage');
         const dragIndicatorOverlay = document.getElementById('dragIndicatorOverlay');
+        const galleryThumbnailsContainer = document.getElementById('galleryThumbnailsContainer');
 
-        const ASSET_GALLERY_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtBDDlUrmJDNhDsS4aV1no7_ijMp3LDBIEuO8JFSLu1rhZtzRptizXrOOhrC4F9UM_GgVDGzcAxyDfse6ygFP8JmSGyjv71IIKEzYBhzmRw7hDm5v779sZUlzh9qAN7SOqsPGhcB_Czd7Yc7HZemwGIFVradMOJlXOSx87_TKIZzR5kuC3Lt7YEVxnlUdIvKA8fnQCkIEXAdlm7dA7MYzd0eNSvwggNzObheoeAcMgKy9b-GN11jAQiS1tJPCdGlY5skGa1MRHwGc';
         const ASSET_360_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXv-DH82fsjprfpGpSo2DHFgcMwOtUC3ZASUhwfjHsNXTMVzs6gH1edgnQoIeM5BQ-gN5Quk__-3fh0tRncgoo8CwqIDSi3SzWNMSkRhEVtIrkDJCfRZMRNF8lX8AGLWTdF0jPHpnI3HywwDZEwxcUlJtoQ00vlCiI82q9HzlrtRvGLMD32g63eHxTy-ErJMRcOfqLzUfqMKg1VUFyEgDi1wUjsql-khj5lNAkwmLnQc-ZUnXgxY4g-7VNBOZm1VN_eCh3ANLf-7Q';
         const ASSET_PANORAMA_IMG = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80';
 
@@ -663,25 +788,60 @@
                 if (tabGallery) tabGallery.className = inactiveStyle;
                 if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_360_IMG}')`;
                 if (dragIndicatorOverlay) dragIndicatorOverlay.classList.remove('hidden');
-                if (viewportModePill) viewportModePill.classList.add('hidden');
+                // Sembunyikan anak panah & jalur thumbnail (HANYA muncul bila tekan galeri sahaja)
+                if (btnPrevImage) {
+                    btnPrevImage.classList.add('hidden');
+                    btnPrevImage.style.setProperty('display', 'none', 'important');
+                }
+                if (btnNextImage) {
+                    btnNextImage.classList.add('hidden');
+                    btnNextImage.style.setProperty('display', 'none', 'important');
+                }
+                if (galleryThumbnailsContainer) {
+                    galleryThumbnailsContainer.classList.add('hidden');
+                    galleryThumbnailsContainer.style.setProperty('display', 'none', 'important');
+                }
             } else if (mode === 'panorama') {
                 if (tab360) tab360.className = inactiveStyle;
                 if (tabPanorama) tabPanorama.className = activeStyle;
                 if (tabGallery) tabGallery.className = inactiveStyle;
                 if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_PANORAMA_IMG}')`;
                 if (dragIndicatorOverlay) dragIndicatorOverlay.classList.remove('hidden');
-                if (viewportModePill) viewportModePill.classList.add('hidden');
+                // Sembunyikan anak panah & jalur thumbnail (HANYA muncul bila tekan galeri sahaja)
+                if (btnPrevImage) {
+                    btnPrevImage.classList.add('hidden');
+                    btnPrevImage.style.setProperty('display', 'none', 'important');
+                }
+                if (btnNextImage) {
+                    btnNextImage.classList.add('hidden');
+                    btnNextImage.style.setProperty('display', 'none', 'important');
+                }
+                if (galleryThumbnailsContainer) {
+                    galleryThumbnailsContainer.classList.add('hidden');
+                    galleryThumbnailsContainer.style.setProperty('display', 'none', 'important');
+                }
             } else {
-                // Gallery mode
+                // Gallery mode - HANYA MUNCUL BILA SAYA TEKAN GALERI SAHAJA
                 if (tab360) tab360.className = inactiveStyle;
                 if (tabPanorama) tabPanorama.className = inactiveStyle;
                 if (tabGallery) tabGallery.className = activeStyle;
-                if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_GALLERY_IMG}')`;
+                const photo = currentGalleryPhotos[currentGalleryPhotoIndex] || currentGalleryPhotos[0];
+                if (viewportRenderImage && photo) viewportRenderImage.style.backgroundImage = `url('${photo.img}')`;
                 if (dragIndicatorOverlay) dragIndicatorOverlay.classList.add('hidden');
-                if (viewportModePill) {
-                    viewportModePill.classList.remove('hidden');
-                    if (viewportModeText) viewportModeText.textContent = 'Pratonton Galeri: Hadapan Penuh';
+                // Paparkan anak panah < dan > serta jalur thumbnail
+                if (btnPrevImage) {
+                    btnPrevImage.classList.remove('hidden');
+                    btnPrevImage.style.removeProperty('display');
                 }
+                if (btnNextImage) {
+                    btnNextImage.classList.remove('hidden');
+                    btnNextImage.style.removeProperty('display');
+                }
+                if (galleryThumbnailsContainer) {
+                    galleryThumbnailsContainer.classList.remove('hidden');
+                    galleryThumbnailsContainer.style.removeProperty('display');
+                }
+                renderGalleryThumbnails();
             }
         }
 
@@ -752,7 +912,8 @@
             showDraftSavedStateStep2();
 
             if (showToast) {
-                showAiToast('✓ Draf visual kenderaan berjaya disimpan.', true, 'bookmark_added');
+                const toastMsg = (getCurrentLang() === 'en') ? '✓ Vehicle visual draft saved.' : '✓ Draf visual kenderaan berjaya disimpan.';
+                showAiToast(toastMsg, true, 'bookmark_added');
             }
         }
 
@@ -808,60 +969,38 @@
             }, 3200);
         }
 
-        const INSPECTION_PHOTOS_AI = [
-            {
-                title: 'Hadapan Penuh',
-                img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=600&q=80',
-                badge: 'Diimbas AI'
-            },
-            {
-                title: 'Belakang Penuh',
-                img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=600&q=80',
-                badge: 'Diimbas AI'
-            },
-            {
-                title: 'Sisi Kanan Profil',
-                img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
-                badge: 'Diimbas AI'
-            },
-            {
-                title: 'Sisi Kiri Profil',
-                img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
-                badge: 'Diimbas AI'
-            },
-            {
-                title: 'Ruang Pemandu & Papan Pemuka',
-                img: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80',
-                badge: 'Diimbas AI'
-            },
-            {
-                title: 'Tempat Duduk Belakang / Kargo',
-                img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80',
-                badge: 'Diimbas AI'
-            }
-        ];
-
         function populateAiInspectionPhotos() {
             const grid = document.getElementById('photoUploadSlotsGrid');
             if (!grid) return;
 
-            grid.innerHTML = INSPECTION_PHOTOS_AI.map((photo, i) => `
-                <div class="relative group rounded-xl h-32 overflow-hidden border border-border-day shadow-xs interactive-btn cursor-pointer transition-all duration-300 ai-field-wave">
-                    <img src="${photo.img}" alt="${photo.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            currentGalleryPhotos = [...INSPECTION_PHOTOS_AI];
+
+            const isEn = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en');
+
+            grid.innerHTML = currentGalleryPhotos.map((photo, i) => {
+                const title = isEn ? (photo.titleEn || photo.title) : photo.title;
+                const badge = isEn ? (photo.badgeEn || 'AI Scanned') : (photo.badge || 'Diimbas AI');
+                return `
+                <div onclick="selectGalleryPhoto(${i})" class="relative group rounded-xl h-32 overflow-hidden border border-border-day shadow-xs interactive-btn cursor-pointer transition-all duration-300 ai-field-wave ${i === currentGalleryPhotoIndex ? 'ring-2 ring-primary' : ''}">
+                    <img src="${photo.img}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-between p-2.5 pointer-events-none">
                         <div class="flex justify-end">
                             <span class="pill-btn bg-black/60 backdrop-blur-md text-white border border-white/20 text-[10px] px-2 py-0.5 font-semibold flex items-center gap-1 shadow-sm">
                                 <span class="material-symbols-outlined text-[12px] text-green-400" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                                <span>${photo.badge}</span>
+                                <span>${badge}</span>
                             </span>
                         </div>
                         <div class="flex items-center gap-1.5 text-white">
                             <span class="material-symbols-outlined text-[14px] text-white/80">photo_camera</span>
-                            <span class="font-footnote text-footnote font-semibold text-white truncate drop-shadow-sm">${photo.title}</span>
+                            <span class="font-footnote text-footnote font-semibold text-white truncate drop-shadow-sm">${title}</span>
                         </div>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
+
+            renderGalleryThumbnails();
+            selectGalleryPhoto(0);
 
             setTimeout(() => {
                 const cards = grid.querySelectorAll('.ai-field-wave');
@@ -979,7 +1118,7 @@
                         </span>
                         <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                             <span class="material-symbols-outlined text-[14px] text-success">check</span>
-                            <span>6 Sudut Foto Terjana</span>
+                            <span>Foto Galeri Terjana</span>
                         </span>
                         <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                             <span class="material-symbols-outlined text-[14px] text-success">check</span>
@@ -1018,7 +1157,7 @@
                     setTimeout(() => turntableViewport.classList.remove('turntable-flash-effect'), 1200);
                 }
 
-                showAiToast('✓ Visual 360° & 6 sudut foto berjaya dijana oleh AI!', true, 'auto_awesome');
+                showAiToast('✓ Visual 360° & galeri foto berjaya dijana oleh AI!', true, 'auto_awesome');
                 expand360Tabs();
 
                 // Gracefully reset button state after 2.5s
@@ -1308,6 +1447,15 @@
                 }
             }
         } catch(e) {}
+
+        // Initialize thumbnails on initial load
+        renderGalleryThumbnails();
+        selectGalleryPhoto(0);
+
+        // Update thumbnails tooltips when language switches
+        window.addEventListener('wedrive:language-applied', () => {
+            renderGalleryThumbnails();
+        });
     </script>
 </body>
 </html>

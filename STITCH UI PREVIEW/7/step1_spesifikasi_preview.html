@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script src="preview-i18n.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -363,16 +364,16 @@
             <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all" style="box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35);" title="Kenderaan" aria-label="Kenderaan">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white" style="font-variation-settings: 'FILL' 1;">directions_car</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan" data-i18n-title="nav_bookings">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">receipt_long</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Pelanggan" aria-label="Pelanggan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Pelanggan" aria-label="Pelanggan" data-i18n-title="nav_customers">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">people</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Laporan" aria-label="Laporan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Laporan" aria-label="Laporan" data-i18n-title="nav_reports">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">bar_chart</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Kecerdasan AI" aria-label="Kecerdasan AI">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Kecerdasan AI" aria-label="Kecerdasan AI" data-i18n-title="nav_ai">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">auto_awesome</span>
             </a>
         </nav>
@@ -380,18 +381,18 @@
         <!-- Right: Bahasa + Tema + Batal (Gabungan Elemen Topbar Kita) -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0 z-10">
             <!-- Language Pill (from Topbar Kita) -->
-            <button type="button" class="pill-btn px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day text-[13px] font-bold interactive-btn" title="Bahasa (MS)">
-                MS
+            <button id="langToggleBtn" type="button" onclick="toggleLanguage()" class="pill-btn px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day text-[13px] font-bold interactive-btn cursor-pointer" title="Tukar Bahasa (MS / EN)" aria-label="Tukar Bahasa" data-i18n-title="lang_toggle_title">
+                <span id="langText">MS</span>
             </button>
 
             <!-- Theme Toggle Button (☀️ / 🌙) -->
-            <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm">
+            <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm" title="Tukar Tema Siang / Malam" data-i18n-title="theme_toggle_title">
                 <span id="themeIcon" class="material-symbols-outlined text-[20px]">dark_mode</span>
             </button>
 
             <!-- Batal Button -->
             <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day" style="text-decoration: none;">
-                Batal
+                <span data-i18n="nav_cancel">Batal</span>
             </a>
         </div>
     </header>
@@ -405,7 +406,7 @@
                 <!-- Step 1 Active -->
                 <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
                     <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">1</span>
-                    <span class="font-label-tabular text-label-tabular font-bold">Maklumat Asas</span>
+                    <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step1_pill">Maklumat Asas</span>
                 </div>
                 
                 <div class="w-8 h-[1px] bg-border-day"></div>
@@ -413,7 +414,7 @@
                 <!-- Step 2 Link -->
                 <a href="step2_studio360_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                     <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">2</span>
-                    <span class="font-callout text-callout font-medium">Studio Visual</span>
+                    <span class="font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
                 </a>
                 
                 <div class="w-8 h-[1px] bg-border-day"></div>
@@ -421,13 +422,13 @@
                 <!-- Step 3 Link -->
                 <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                     <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
-                    <span class="font-callout text-callout font-medium">Semakan Akhir</span>
+                    <span class="font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
                 </a>
             </div>
         </div>
 
-        <h1 class="font-large-title text-large-title hidden md:block text-center mb-xl font-bold tracking-tight text-on-surface">Spesifikasi Kenderaan</h1>
-        <h1 class="font-large-title-mobile text-large-title-mobile md:hidden text-center mb-lg font-bold tracking-tight text-on-surface">Spesifikasi Kenderaan</h1>
+        <h1 class="font-large-title text-large-title hidden md:block text-center mb-xl font-bold tracking-tight text-on-surface" data-i18n="step1_title">Spesifikasi Kenderaan</h1>
+        <h1 class="font-large-title-mobile text-large-title-mobile md:hidden text-center mb-lg font-bold tracking-tight text-on-surface" data-i18n="step1_title">Spesifikasi Kenderaan</h1>
 
         <!-- Bento Form (Screenshot 6 Reference) -->
         <form class="grid grid-cols-1 md:grid-cols-12 gap-gutter" onsubmit="event.preventDefault();">
@@ -436,24 +437,24 @@
             <section class="bento-card col-span-1 md:col-span-12 p-container-padding">
                 <h2 class="font-title-3 text-title-3 mb-6 border-b border-border-day pb-4 flex items-center gap-2 text-on-surface font-bold">
                     <span class="material-symbols-outlined text-primary">directions_car</span>
-                    <span>Maklumat Kenderaan &amp; Spesifikasi</span>
+                    <span data-i18n="step1_sec1_title">Maklumat Kenderaan &amp; Spesifikasi</span>
                 </h2>
 
                 <!-- Bahagian Atas: Maklumat Asas Kenderaan -->
                 <div class="mb-8">
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-border-day/50">
                         <span class="material-symbols-outlined text-primary text-[20px]">badge</span>
-                        <h3 class="font-headline text-[15px] font-bold text-on-surface">Maklumat Asas</h3>
-                        <span class="font-footnote text-footnote text-secondary font-medium">(Identiti &amp; Pendaftaran Kenderaan)</span>
+                        <h3 class="font-headline text-[15px] font-bold text-on-surface" data-i18n="step1_sec1_sub1">Maklumat Asas</h3>
+                        <span class="font-footnote text-footnote text-secondary font-medium" data-i18n="step1_sec1_sub1_note">(Identiti &amp; Pendaftaran Kenderaan)</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
                         <!-- Pengeluar -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Pengeluar</label>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
                             <div class="relative">
                                 <select id="inputBrand" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                    <option value="">Pilih Pengeluar</option>
+                                    <option value="" data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
                                     <option value="Honda" selected>Honda</option>
                                     <option value="Toyota">Toyota</option>
                                     <option value="Perodua">Perodua</option>
@@ -472,49 +473,49 @@
 
                         <!-- Model -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Model</label>
-                            <input id="inputModel" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Civic" value="Civic" type="text"/>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_model">Model</label>
+                            <input id="inputModel" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Civic" data-i18n-ph="field_model_ph" value="Civic" type="text"/>
                         </div>
 
                         <!-- Varian -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Varian</label>
-                            <input id="inputVariant" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5 TC-P" value="1.5 TC-P" type="text"/>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_variant">Varian</label>
+                            <input id="inputVariant" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5 TC-P" data-i18n-ph="field_variant_ph" value="1.5 TC-P" type="text"/>
                         </div>
 
                         <!-- No Pendaftaran -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">No. Pendaftaran</label>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_plate">No. Pendaftaran</label>
                             <input id="inputPlate" class="uppercase bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full tracking-wider font-semibold text-on-surface" placeholder="VBA 1234" value="VBA 1234" type="text"/>
                         </div>
 
                         <!-- Tahun Dibuat -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Tahun Dibuat</label>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_year">Tahun Dibuat</label>
                             <input id="inputYear" class="font-label-tabular text-label-tabular bg-surface-container border border-border-day rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="2024" value="2024" type="number"/>
                         </div>
 
                         <!-- Warna Rasmi Kenderaan -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Warna Kenderaan</label>
-                            <input id="inputColor" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Meteoroid Gray Metallic" value="Meteoroid Gray Metallic" type="text"/>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_color">Warna Kenderaan</label>
+                            <input id="inputColor" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Meteoroid Gray Metallic" data-i18n-ph="field_color_ph" value="Meteoroid Gray Metallic" type="text"/>
                         </div>
 
                         <!-- AI Auto Generate Spesifikasi -->
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
                             <label class="font-footnote text-footnote font-semibold flex items-center gap-1.5">
                                 <span class="material-symbols-outlined text-[16px] text-[#BF5AF2]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                                <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold">Cadangan Spesifikasi Pintar</span>
+                                <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold" data-i18n="ai_suggestion_label">Cadangan Spesifikasi Pintar</span>
                             </label>
                             <input type="hidden" id="inputStatus" name="status" value="available"/>
                             <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="ai-container-bar interactive-btn group relative w-full h-[46px] py-0 px-4 rounded-xl flex items-center justify-between transition-all duration-300 active:scale-[0.98] cursor-pointer overflow-hidden">
                                 <div id="aiSpecLaserScanner" class="hidden ai-laser-line"></div>
                                 <div class="flex items-center gap-2 z-10">
                                     <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300" style="font-variation-settings: 'FILL' 1; color: #5E5CE6;">auto_awesome</span>
-                                    <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap">Isi Automatik</span>
+                                    <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap" data-i18n="ai_btn_autofill">Isi Automatik</span>
                                 </div>
                                 <span id="aiBtnBadge" class="ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0">
-                                    <span id="aiBtnBadgeText">Jana AI</span>
+                                    <span id="aiBtnBadgeText" data-i18n="ai_btn_generate">Jana AI</span>
                                     <span id="aiBtnBadgeIcon" class="material-symbols-outlined text-[14px]">arrow_downward</span>
                                 </span>
                             </button>
@@ -529,17 +530,17 @@
                 <div>
                     <div class="flex items-center gap-2 mb-4 pb-2 border-b border-border-day/50">
                         <span class="material-symbols-outlined text-primary text-[20px]">tune</span>
-                        <h3 class="font-headline text-[15px] font-bold text-on-surface">Spesifikasi Kenderaan</h3>
-                        <span class="font-footnote text-footnote text-secondary font-medium">(Klasifikasi &amp; Keupayaan Mekanikal)</span>
+                        <h3 class="font-headline text-[15px] font-bold text-on-surface" data-i18n="step1_sec1_sub2">Spesifikasi Kenderaan</h3>
+                        <span class="font-footnote text-footnote text-secondary font-medium" data-i18n="step1_sec1_sub2_note">(Klasifikasi &amp; Keupayaan Mekanikal)</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
                         <!-- Kategori Kenderaan -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kategori Kenderaan</label>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_category">Kategori Kenderaan</label>
                             <div class="relative">
                                 <select id="inputCategory" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                    <option value="" disabled>Pilih Kategori</option>
+                                    <option value="" disabled data-i18n-opt="field_category_select">Pilih Kategori</option>
                                     <option value="Sedan" selected>Sedan</option>
                                     <option value="Hatchback">Hatchback</option>
                                     <option value="SUV">SUV</option>
@@ -557,10 +558,10 @@
 
                         <!-- Punca Kuasa / Bahan Api -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Punca Kuasa (Bahan Api)</label>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_fuel">Punca Kuasa (Bahan Api)</label>
                             <div class="relative">
                                 <select id="inputFuel" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                    <option value="" disabled>Pilih Punca Kuasa</option>
+                                    <option value="" disabled data-i18n-opt="field_fuel_select">Pilih Punca Kuasa</option>
                                     <option value="Petrol" selected>Petrol (RON95/97)</option>
                                     <option value="Hybrid">Hybrid (HEV)</option>
                                     <option value="Diesel">Diesel Euro 5</option>
@@ -572,10 +573,10 @@
 
                         <!-- Sistem Transmisi -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Sistem Transmisi</label>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_transmission">Sistem Transmisi</label>
                             <div class="relative">
                                 <select id="inputTransmission" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                    <option value="" disabled>Pilih Transmisi</option>
+                                    <option value="" disabled data-i18n-opt="field_transmission_select">Pilih Transmisi</option>
                                     <option value="Automatic" selected>Automatik (AT / CVT / DCT)</option>
                                     <option value="Manual">Manual (MT)</option>
                                 </select>
@@ -585,16 +586,16 @@
 
                         <!-- Kapasiti Tempat Duduk -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti Tempat Duduk</label>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_seats">Kapasiti Tempat Duduk</label>
                             <div class="relative">
                                 <select id="inputSeats" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                    <option value="" disabled>Pilih Tempat Duduk</option>
-                                    <option value="2">2 Tempat Duduk</option>
-                                    <option value="4">4 Tempat Duduk</option>
-                                    <option value="5" selected>5 Tempat Duduk</option>
-                                    <option value="7">7 Tempat Duduk</option>
-                                    <option value="8">8 Tempat Duduk</option>
-                                    <option value="10">10–12 Tempat Duduk</option>
+                                    <option value="" disabled data-i18n-opt="field_seats_select">Pilih Tempat Duduk</option>
+                                    <option value="2" data-i18n-opt="seats_2">2 Tempat Duduk</option>
+                                    <option value="4" data-i18n-opt="seats_4">4 Tempat Duduk</option>
+                                    <option value="5" selected data-i18n-opt="seats_5">5 Tempat Duduk</option>
+                                    <option value="7" data-i18n-opt="seats_7">7 Tempat Duduk</option>
+                                    <option value="8" data-i18n-opt="seats_8">8 Tempat Duduk</option>
+                                    <option value="10" data-i18n-opt="seats_10">10–12 Tempat Duduk</option>
                                 </select>
                                 <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
                             </div>
@@ -602,8 +603,8 @@
 
                         <!-- Kapasiti / Sesaran Enjin -->
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-4">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti / Sesaran Enjin &amp; Kuasa</label>
-                            <input id="inputEngine" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" value="1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" type="text"/>
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_engine">Kapasiti / Sesaran Enjin &amp; Kuasa</label>
+                            <input id="inputEngine" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" data-i18n-ph="field_engine_ph" value="1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" type="text"/>
                         </div>
                     </div>
                 </div>
@@ -613,13 +614,13 @@
             <section class="bento-card col-span-1 md:col-span-12 p-container-padding">
                 <h2 class="font-title-3 text-title-3 mb-lg border-b border-border-day pb-4 flex items-center gap-2 text-on-surface font-bold">
                     <span class="material-symbols-outlined text-primary">payments</span>
-                    <span>Penetapan Harga Sewaan Pintar</span>
+                    <span data-i18n="step1_sec2_title">Penetapan Harga Sewaan Pintar</span>
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
                     <!-- Kadar Harian -->
                     <div class="bg-surface-container p-lg rounded-xl border border-border-day flex flex-col gap-2">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Harian</label>
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_daily_rate">Kadar Harian</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
                             <input id="inputDailyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="280.00" type="number" step="10"/>
@@ -628,7 +629,7 @@
 
                     <!-- Kadar Mingguan -->
                     <div class="bg-surface-container p-lg rounded-xl border border-border-day flex flex-col gap-2">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Mingguan</label>
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_weekly_rate">Kadar Mingguan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
                             <input id="inputWeeklyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="1680.00" type="number" step="50"/>
@@ -637,7 +638,7 @@
 
                     <!-- Kadar Bulanan -->
                     <div class="bg-surface-container p-lg rounded-xl border border-border-day flex flex-col gap-2">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Bulanan</label>
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_monthly_rate">Kadar Bulanan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
                             <input id="inputMonthlyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="4800.00" type="number" step="100"/>
@@ -653,27 +654,27 @@
         <!-- Left Action (Kembali / Batal) -->
         <a href="index.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
-            <span>Batal</span>
+            <span data-i18n="dock_back_cancel">Batal</span>
         </a>
 
         <!-- Center Action & Status: Bertukar antara Butang Simpan Draf <-> Draf disimpan -->
         <div id="dockDraftWrapper" class="hidden sm:flex items-center justify-center min-w-[140px] px-2">
             <!-- State 1: Butang Simpan Draf (Muncul apabila ada perubahan / sebelum ditekan) -->
-            <button id="btnSaveDraft" type="button" onclick="manualSaveDraft()" class="pill-btn interactive-btn flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high border border-border-day text-on-surface font-footnote text-[13px] font-semibold transition-all duration-300 active:scale-[0.97] cursor-pointer shadow-xs" title="Simpan perubahan spesifikasi ke draf">
+            <button id="btnSaveDraft" type="button" onclick="manualSaveDraft()" class="pill-btn interactive-btn flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high border border-border-day text-on-surface font-footnote text-[13px] font-semibold transition-all duration-300 active:scale-[0.97] cursor-pointer shadow-xs" title="Simpan perubahan spesifikasi ke draf" data-i18n-title="dock_btn_save_draft_title">
                 <span id="btnSaveDraftIcon" class="material-symbols-outlined text-[16px] text-primary">bookmark</span>
-                <span>Simpan Draf</span>
+                <span id="btnSaveDraftText" data-i18n="dock_btn_save_draft">Simpan Draf</span>
             </button>
 
             <!-- State 2: Status Draf Disimpan (HANYA muncul apabila ditekan Simpan Draf) -->
             <div id="draftSavedStatus" class="hidden items-center gap-2 text-on-surface-variant font-medium px-3 py-1.5 rounded-full transition-all duration-300">
                 <span id="draftSavedIcon" class="material-symbols-outlined text-[20px] text-[#28C840]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
-                <span id="draftSavedText" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold">Draf disimpan</span>
+                <span id="draftSavedText" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold" data-i18n="dock_status_draft_saved">Draf disimpan</span>
             </div>
         </div>
 
         <!-- Right Primary Action (Font from Gambar 1: Crisp Bold Pure White) -->
         <a href="step2_studio360_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;">Seterusnya: Studio Visual</span>
+            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
             <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
         </a>
     </footer>
@@ -914,6 +915,7 @@
             }
 
             isGeneratingSpec = true;
+            const dict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
 
             // Phase 1 (0ms): Activate Apple Siri Iridescent Aura, Laser Sweep, Spinner & Loading State
             if (btn) btn.classList.add('ai-analyzing-active', 'pointer-events-none');
@@ -925,12 +927,12 @@
                 btnIcon.style.color = '#BF5AF2';
             }
             if (btnText) {
-                btnText.textContent = 'Mengenal model...';
+                btnText.textContent = dict.ai_generating_step1 || 'Mengenal model...';
             }
             if (btnBadge) {
                 btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-primary/25 text-primary border border-primary/30 flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
             }
-            if (btnBadgeText) btnBadgeText.textContent = 'Imbas...';
+            if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Scanning...' : 'Imbas...';
             if (btnBadgeIcon) {
                 btnBadgeIcon.textContent = 'progress_activity';
                 btnBadgeIcon.classList.add('animate-spin');
@@ -939,7 +941,7 @@
             // Phase 2 (550ms): Match specs & start cascading ripple wave across the fields
             setTimeout(() => {
                 if (!isGeneratingSpec) return;
-                if (btnText) btnText.textContent = 'Memadankan data...';
+                if (btnText) btnText.textContent = dict.ai_generating_step2 || 'Memadankan data...';
 
                 const specs = detectCarSpecs();
                 if (specs) {
@@ -993,40 +995,44 @@
                     btnIcon.style.color = '#34C759';
                 }
                 if (btnText) {
-                    btnText.textContent = '✓ Spesifikasi Lengkap';
+                    btnText.textContent = (getCurrentLang() === 'en') ? '✓ Specs Complete' : '✓ Spesifikasi Lengkap';
                     btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-success tracking-tight';
                 }
                 if (btnBadge) {
                     btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-success text-white flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
                     btnBadge.style.cssText = 'color: #FFFFFF !important; background-color: #34C759 !important;';
                 }
-                if (btnBadgeText) btnBadgeText.textContent = 'Selesai';
+                if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Done' : 'Selesai';
                 if (btnBadgeIcon) {
                     btnBadgeIcon.classList.remove('animate-spin');
                     btnBadgeIcon.textContent = 'check';
                 }
 
                 const carTitle = [brand, model].filter(Boolean).join(' ');
-                showAiToast(`✓ Spesifikasi ${carTitle} berjaya dijana secara automatik!`, 'success');
+                const toastSuccessMsg = (getCurrentLang() === 'en') 
+                    ? `✓ ${carTitle} specifications auto-generated successfully!` 
+                    : `✓ Spesifikasi ${carTitle} berjaya dijana secara automatik!`;
+                showAiToast(toastSuccessMsg, 'success');
                 saveStep1Draft();
                 showDraftUnsavedState();
 
                 // Phase 4 (2800ms): Gracefully reset button state
                 setTimeout(() => {
+                    const currentDict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
                     if (btn) btn.classList.remove('pointer-events-none');
                     if (btnIcon) {
                         btnIcon.textContent = 'auto_awesome';
                         btnIcon.style.color = '#5E5CE6';
                     }
                     if (btnText) {
-                        btnText.textContent = 'Isi Automatik';
+                        btnText.textContent = currentDict.ai_btn_autofill || 'Isi Automatik';
                         btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight';
                     }
                     if (btnBadge) {
                         btnBadge.className = 'ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
                         btnBadge.style.cssText = '';
                     }
-                    if (btnBadgeText) btnBadgeText.textContent = 'Jana AI';
+                    if (btnBadgeText) btnBadgeText.textContent = currentDict.ai_btn_generate || 'Jana AI';
                     if (btnBadgeIcon) btnBadgeIcon.textContent = 'arrow_downward';
 
                     isGeneratingSpec = false;
@@ -1106,7 +1112,8 @@
             showDraftSavedState();
 
             if (showToast) {
-                showAiToast('✓ Draf spesifikasi kenderaan berjaya disimpan.', 'success');
+                const toastMsg = (getCurrentLang() === 'en') ? '✓ Specification draft saved successfully.' : '✓ Draf spesifikasi kenderaan berjaya disimpan.';
+                showAiToast(toastMsg, 'success');
             }
         }
 

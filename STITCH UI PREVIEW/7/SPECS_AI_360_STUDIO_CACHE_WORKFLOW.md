@@ -98,7 +98,7 @@ sequenceDiagram
   - Boleh ditutup dengan menekan butang semula atau kekunci `Escape`.
 
 ### D. Pembersihan Rujukan JPJ & Istilah
-- Bahagian Bento Card A kini dinamakan **`Galeri Pemeriksaan Kenderaan`** dengan keterangan: *"Muat naik 6 sudut kenderaan untuk rekod pemeriksaan visual syarikat."*
+- Bahagian Bento Card A kini dinamakan **`Galeri Pemeriksaan Kenderaan`** dengan keterangan: *"Muat naik imej kenderaan untuk rekod pemeriksaan visual syarikat."*
 - Sifar penggunaan istilah JPJ, geran, atau kata canggung "aset".
 
 ---

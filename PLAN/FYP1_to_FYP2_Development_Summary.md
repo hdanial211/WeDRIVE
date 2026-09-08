@@ -5966,6 +5966,48 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.10.0 Codify user verbal mandates into permanent Rule 22 User Feedback Golden Rules`
   - Tag Versi: `6.10.0`
 
+---
+
+### [MINOR UPDATE] v6.11.0 — Navigasi Karusel Galeri, Jalur Pratonton Gambar Kecil Dinamik & Kawalan Bersyarat Eksklusif Tab Galeri (Gallery Carousel Navigation, Dynamic Thumbnail Strips & Strict Gallery-Only Visibility)
+
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna mengarahkan penambahan butang anak panah navigasi kiri/kanan pada paparan gambar utama kenderaan:
+    > *"hanya muncul bila saya tekan galeri sahaja"*  
+    > *"buat sekali dengan page 3 macam tu"*
+  - Butang anak panah dan jalur thumbnail hanya boleh dipaparkan apabila pengguna sedang melihat tab "Galeri". Apabila menukar ke mod "Pusingan 360°" atau "Panorama Dalaman", elemen ini mesti disembunyikan sepenuhnya.
+  - Ciri ini diselaraskan secara sepadan pada Langkah 2 (`step2_studio360_preview.html`) dan Langkah 3 (`step3_pengesahan_preview.html`).
+  - Penamaan tab galeri dibersihkan menjadi "Galeri" (MS) / "Gallery" (EN) tanpa perkataan "6 Sudut".
+
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/` & Seni Bina Sistem)**:
+  - **1. Butang Navigasi Karusel Apple HIG Bulat Sempurna 1:1 (`#btnPrevImage`, `#btnNextImage`, `#step3BtnPrevImage`, `#step3BtnNextImage`)**:
+    - Membina sepasang butang terapung `<` (sebelumnya) dan `>` (seterusnya) di sisi kiri dan kanan gambar kenderaan.
+    - Menepati piawaian **Zero Oval Rule**: nisbah bulat tepat 1:1 (`aspect-ratio: 1/1 !important; border-radius: 50% !important; padding: 0 !important; width: 42px; height: 42px; display: inline-flex !important; align-items: center !important; justify-content: center !important;`).
+    - Menggunakan bahan kaca Apple (*Frosted Glassmorphism*) berserta bayang lembut dan maklum balas sentuhan `active:scale-95`.
+  - **2. Jalur Pratonton Gambar Kecil Dinamik (*Dynamic Thumbnail Preview Strip*)**:
+    - Membina bekas `#galleryThumbnailsContainer` (Langkah 2) dan `#step3GalleryThumbnailsContainer` (Langkah 3) di bawah imej utama.
+    - Jalur dijana secara dinamik mengikut senarai imej sebenar kenderaan (5 atau 6 imej) dengan lencana nama sudut ringkas (Hadapan, Belakang, Sisi Kanan, dsb.).
+    - Mempunyai gelung interaktif: menekan sebarang gambar kecil menukar imej utama serta-merta, manakala menekan butang anak panah mengemaskini penunjuk aktif jalur thumbnail secara segerak.
+  - **3. Kawalan Keterlihatan Eksklusif Tab Galeri (*Strict Gallery-Only Visibility*)**:
+    - Menyelaras fungsi `setVisualTab(mode)` pada Langkah 2 dan `setStep3Tab(mode)` pada Langkah 3:
+      - Semasa mod `360` atau `panorama`: Butang navigasi anak panah dan jalur thumbnail disembunyikan secara mutlak menggunakan `.setProperty('display', 'none', 'important')` dan penyingkiran kelas untuk mengelakkan percanggahan dengan `.circle-1-1`.
+      - Semasa mod `gallery`: Butang anak panah dan jalur thumbnail dipaparkan semula dengan lancar (`display: inline-flex` untuk butang 1:1 dan `display: flex` untuk kontena thumbnail).
+  - **4. Penyeragaman Dwibahasa & Pembersihan Label Tab (`preview-i18n.js` & `index.html`)**:
+    - Menambah enjin dwibahasa terasing `preview-i18n.js` dengan suis kapsul `BM` $\leftrightarrow$ `EN` pada `index.html`.
+    - Membuang semua perkataan "6 Sudut" / "6 angles" dan menyelaraskan label kepada `Galeri` (MS) dan `Gallery` (EN).
+  - **5. Penginstitusian Dalam Peraturan 22 (`22_user_feedback_golden_rules.md`)**:
+    - Menambah Seksyen 8 (Prinsip Keterlihatan Kawalan Visual Galeri Sahaja), Seksyen 9 (Penyeragaman Visual Merentas Langkah Pendaftaran), dan Seksyen 10 (Penjenamaan Bersih Tab Galeri).
+
+- **Pengesahan Visual & Kualiti (Apple 3-Device Protocol on Single Tab)**:
+  - **MacBook Retina (1440 × 900)**: Butang navigasi dan jalur thumbnail berfungsi responsif, bertukar foto dengan animasi peralihan imej yang lancar.
+  - **iPad Tablet (820 × 1180)**: Susun atur thumbnail 2-lajur responsif dengan zon sentuhan $\ge 44$px.
+  - **iPhone Mobile (393 × 852)**: Sifar limpahan mendatar (`hasHorizontalOverflow: false`), butang bulat kekal 1:1 sempurna tanpa sebarang lonjakan bujur/oval.
+  - **Ujian Mod Visual**: Bertukar antara 360°, Panorama, dan Galeri mengesahkan anak panah dan thumbnail hanya muncul pada mod Galeri sahaja.
+
+- **Maklumat Git**:
+  - Commit: `6.11.0 Implement gallery carousel arrows, dynamic thumbnail strips, and gallery-only visibility for Step 2 and Step 3`
+  - Tag Versi: `6.11.0`
+
+
 
 
 

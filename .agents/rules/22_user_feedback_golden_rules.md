@@ -88,5 +88,36 @@ Dokumen ini mengabadikan kesemua teguran, maklum balas, dan arahan langsung peng
 
 ---
 
-## 8. Had Kandungan Fail & Kawalan Siling 12,000 Aksara
+## 8. Prinsip Keterlihatan Kawalan Visual Galeri Sahaja (Gallery-Only Visual Controls)
+
+> *"hanya muncul bila saya tekan galeri sahaja"*
+
+### Peraturan Keterlihatan Bersyarat:
+- Butang anak panah terapung navigasi gambar (`<` dan `>`) berserta jalur gambar kecil (*thumbnail preview strip*) **WAJIB HANYA muncul apabila pengguna memilih tab "Galeri"**.
+- Apabila pengguna menukar tab ke mod **"Pusingan 360°"** atau **"Panorama Dalaman"**, kedua-dua butang navigasi anak panah dan jalur thumbnail WAJIB disembunyikan secara mutlak (`display: none !important;`).
+- Paparan mod 360° dan Panorama mesti kekal bersih dan fokus kepada putaran interaktif dan pemandangan luas tanpa gangguan anak panah imej statik.
+
+---
+
+## 9. Penyeragaman Visual Merentas Langkah Pendaftaran (Universal Stepper Parity: Step 2 & Step 3)
+
+> *"buat sekali dengan page 3 macam tu"*
+
+### Peraturan Kesinambungan Pengalaman Pengguna:
+- Sebarang keupayaan interaktif visual yang diperkenalkan pada Langkah 2 (Studio Visual 360°) **WAJIB diaplikasikan secara sepadan pada Langkah 3 (Semakan & Pengesahan)**.
+- Ini merangkumi:
+  1. Butang anak panah terapung 1:1 bulat sempurna (`aspect-ratio: 1/1 !important; border-radius: 50% !important;`).
+  2. Jalur dinamik gambar kecil (*thumbnail preview strip*) mengikut bilangan foto sebenar (5 jika 5 gambar, 6 jika 6 gambar).
+  3. Logik keterlihatan eksklusif: hanya muncul semasa tab "Galeri" aktif.
+
+---
+
+## 10. Penjenamaan Bersih Tab Galeri (Clean Tab Labeling - Zero Angle Clutter)
+
+- Label tab galeri WAJIB menggunakan perkataan ringkas dan profesional: **`Galeri`** (Bahasa Melayu) dan **`Gallery`** (Bahasa Inggeris).
+- **DILARANG SAMA SEKALI** meletakkan frasa terhad seperti *"6 Sudut"* atau *"6-Angle"* pada label tab kerana bilangan foto pemeriksaan boleh berbeza (cth: 5 atau 6 sudut) mengikut model kenderaan.
+
+---
+
+## 11. Had Kandungan Fail & Kawalan Siling 12,000 Aksara
 - Fail ini dikawal selia di bawah had siling **12,000 aksara** selaras dengan `12_max_content_limit.md`.

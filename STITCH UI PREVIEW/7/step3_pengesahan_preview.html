@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script src="preview-i18n.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -102,6 +103,10 @@
             justify-content: center !important;
             box-sizing: border-box !important;
         }
+        .circle-1-1.hidden,
+        .hidden {
+            display: none !important;
+        }
         .pill-btn {
             border-radius: 9999px !important;
             white-space: nowrap !important;
@@ -174,16 +179,16 @@
             <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all" style="box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35);" title="Kenderaan" aria-label="Kenderaan">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white" style="font-variation-settings: 'FILL' 1;">directions_car</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan" data-i18n-title="nav_bookings">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">receipt_long</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Pelanggan" aria-label="Pelanggan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Pelanggan" aria-label="Pelanggan" data-i18n-title="nav_customers">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">people</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Laporan" aria-label="Laporan">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Laporan" aria-label="Laporan" data-i18n-title="nav_reports">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">bar_chart</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Kecerdasan AI" aria-label="Kecerdasan AI">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Kecerdasan AI" aria-label="Kecerdasan AI" data-i18n-title="nav_ai">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">auto_awesome</span>
             </a>
         </nav>
@@ -191,18 +196,18 @@
         <!-- Right: Bahasa + Tema + Batal (Gabungan Elemen Topbar Kita) -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0 z-10">
             <!-- Language Pill (from Topbar Kita) -->
-            <button type="button" class="pill-btn px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day text-[13px] font-bold interactive-btn" title="Bahasa (MS)">
-                MS
+            <button id="langToggleBtn" type="button" onclick="toggleLanguage()" class="pill-btn px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day text-[13px] font-bold interactive-btn cursor-pointer" title="Tukar Bahasa (MS / EN)" aria-label="Tukar Bahasa" data-i18n-title="lang_toggle_title">
+                <span id="langText">MS</span>
             </button>
 
             <!-- Theme Toggle Button (☀️ / 🌙) -->
-            <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm">
+            <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm" title="Tukar Tema Siang / Malam" data-i18n-title="theme_toggle_title">
                 <span id="themeIcon" class="material-symbols-outlined text-[20px]">dark_mode</span>
             </button>
 
             <!-- Batal Button -->
             <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day" style="text-decoration: none;">
-                Batal
+                <span data-i18n="nav_cancel">Batal</span>
             </a>
         </div>
     </header>
@@ -216,7 +221,7 @@
                 <!-- Step 1 Complete -->
                 <a href="step1_spesifikasi_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
                     <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium">Maklumat Asas</span>
+                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step1_pill">Maklumat Asas</span>
                 </a>
 
                 <div class="w-8 h-[1px] bg-border-day"></div>
@@ -224,7 +229,7 @@
                 <!-- Step 2 Complete -->
                 <a href="step2_studio360_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
                     <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium">Studio Visual</span>
+                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step2_pill">Studio Visual</span>
                 </a>
 
                 <div class="w-8 h-[1px] bg-border-day"></div>
@@ -232,7 +237,7 @@
                 <!-- Step 3 Active -->
                 <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
                     <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">3</span>
-                    <span class="font-label-tabular text-label-tabular font-bold">Semakan Akhir</span>
+                    <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step3_pill">Semakan Akhir</span>
                 </div>
             </div>
         </div>
@@ -245,26 +250,43 @@
                 <div class="flex justify-between items-center z-10 relative">
                     <div class="pill-btn bg-surface-container/80 dark:bg-black/60 backdrop-blur-md px-3 py-1 hairline-border flex items-center gap-2">
                         <span class="material-symbols-outlined text-[14px] text-success">cloud_done</span>
-                        <span class="font-caption text-caption text-on-surface font-semibold">CDN Bersambung</span>
+                        <span class="font-caption text-caption text-on-surface font-semibold" data-i18n="step3_cdn_connected">CDN Bersambung</span>
                     </div>
                 </div>
 
                 <!-- 360 Studio Render Viewport -->
                 <div class="relative w-full h-[400px] rounded-2xl overflow-hidden bg-surface-container flex items-center justify-center cursor-ew-resize">
                     <div id="step3ViewportImage" class="absolute inset-0 bg-cover bg-center w-full h-full mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85')"></div>
+
+                    <!-- Left Navigation Button (<) - Strict 1:1 Circle -->
+                    <button id="step3BtnPrevImage" type="button" onclick="navigateStep3Gallery(-1)" class="circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline-border text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
+                        <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                    </button>
+
+                    <!-- Right Navigation Button (>) - Strict 1:1 Circle -->
+                    <button id="step3BtnNextImage" type="button" onclick="navigateStep3Gallery(1)" class="circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline-border text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
+                        <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                    </button>
                     
                     <!-- Swipe indicator pill -->
                     <div id="step3SwipeIndicator" class="hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 dark:bg-black/70 backdrop-blur-md px-4 py-2 rounded-full hairline-border flex items-center gap-2 shadow-md">
                         <span class="material-symbols-outlined text-[18px] text-secondary">swipe</span>
-                        <span id="step3IndicatorText" class="font-footnote text-footnote text-secondary font-medium">Leret untuk memutar</span>
+                        <span id="step3IndicatorText" class="font-footnote text-footnote text-secondary font-medium" data-i18n="step3_indicator_rotate">Leret untuk memutar</span>
+                    </div>
+                </div>
+
+                <!-- Gallery Thumbnails Slider Strip (Shows available photos: e.g. 5 if 5, 6 if 6) -->
+                <div id="step3GalleryThumbnailsContainer" class="mt-2 flex flex-col gap-1">
+                    <div id="step3GalleryThumbnailsStrip" class="flex items-center justify-center gap-2 overflow-x-auto p-1 hide-scrollbar w-full">
+                        <!-- Populated dynamically via renderStep3GalleryThumbnails() -->
                     </div>
                 </div>
 
                 <!-- Showcase Segmented Switch (Tunjuk galeri sahaja dulu, bila ada 360 baru kembang 360 & panorama) -->
                 <div id="step3SegmentedSwitcher" class="bg-surface-container rounded-full p-1 flex mt-auto relative z-10 hairline-border w-full max-w-[150px] mx-auto transition-all duration-500">
-                    <button id="step3Tab360" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap">Pusingan 360°</button>
-                    <button id="step3TabPanorama" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap">Panorama</button>
-                    <button id="step3TabGallery" type="button" class="flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap">Galeri</button>
+                    <button id="step3Tab360" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap" data-i18n="tab_360">Pusingan 360°</button>
+                    <button id="step3TabPanorama" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap" data-i18n="tab_panorama">Panorama</button>
+                    <button id="step3TabGallery" type="button" class="flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap" data-i18n="tab_gallery">Galeri</button>
                 </div>
             </div>
 
@@ -275,20 +297,20 @@
                         <div class="w-10 h-10 circle-1-1 bg-surface-container text-on-surface hairline-border">
                             <span class="material-symbols-outlined text-primary">payments</span>
                         </div>
-                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Ringkasan Harga</h2>
+                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="pricing_summary_title">Ringkasan Harga</h2>
                     </div>
 
                     <div class="flex flex-col gap-sm mt-2">
                         <div class="flex justify-between items-center py-2.5 border-b border-border-day">
-                            <span class="font-body text-body text-secondary">Harian</span>
+                            <span class="font-body text-body text-secondary" data-i18n="price_daily_label">Harian</span>
                             <span id="tarifDaily" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 280.00</span>
                         </div>
                         <div class="flex justify-between items-center py-2.5 border-b border-border-day">
-                            <span class="font-body text-body text-secondary">Mingguan</span>
+                            <span class="font-body text-body text-secondary" data-i18n="price_weekly_label">Mingguan</span>
                             <span id="tarifWeekly" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 1,680.00</span>
                         </div>
                         <div class="flex justify-between items-center py-2.5">
-                            <span class="font-body text-body text-secondary">Bulanan</span>
+                            <span class="font-body text-body text-secondary" data-i18n="price_monthly_label">Bulanan</span>
                             <span id="tarifMonthly" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 4,800.00</span>
                         </div>
                     </div>
@@ -303,56 +325,56 @@
                             <span class="material-symbols-outlined text-primary">directions_car</span>
                         </div>
                         <div>
-                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Spesifikasi Kenderaan</h2>
-                            <p class="font-caption text-caption text-secondary">Parameter teknikal &amp; pendaftaran kenderaan daripada Langkah 1</p>
+                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="step3_sec_specs_title">Spesifikasi Kenderaan</h2>
+                            <p class="font-caption text-caption text-secondary" data-i18n="step3_sec_specs_desc">Parameter teknikal &amp; pendaftaran kenderaan daripada Langkah 1</p>
                         </div>
                     </div>
                     <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 hairline-border hidden sm:flex items-center gap-1 font-semibold">
                         <span class="material-symbols-outlined text-success text-[14px]">check</span>
-                        <span>10 Butiran Lengkap</span>
+                        <span data-i18n="step3_details_complete">10 Butiran Lengkap</span>
                     </span>
                 </div>
 
                 <!-- 10 Spec Boxes in 5 Columns x 2 Rows -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-sm md:gap-md">
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">No. Pendaftaran</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="field_plate">No. Pendaftaran</span>
                         <span id="specPlate" class="font-callout text-callout text-on-surface font-semibold tracking-wider uppercase">VBA 1234</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Pengeluar</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="field_brand">Pengeluar</span>
                         <span id="specBrand" class="font-callout text-callout text-on-surface font-semibold">Honda</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Model &amp; Varian</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="field_variant">Model &amp; Varian</span>
                         <span id="specModelVariant" class="font-callout text-callout text-on-surface font-semibold truncate" title="Civic 1.5 TC-P">Civic 1.5 TC-P</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Kategori</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="spec_category">Kategori</span>
                         <span id="specCategory" class="font-callout text-callout text-on-surface font-semibold">Sedan</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Tahun Dibuat</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="field_year">Tahun Dibuat</span>
                         <span id="specYear" class="font-callout text-callout text-on-surface font-semibold">2024</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Warna Badan</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="spec_color">Warna Badan</span>
                         <span id="specColor" class="font-callout text-callout text-on-surface font-semibold truncate" title="Meteoroid Gray Metallic">Meteoroid Gray</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Enjin &amp; Kuasa</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="spec_engine_power">Enjin &amp; Kuasa</span>
                         <span id="specEngine" class="font-callout text-callout text-on-surface font-semibold truncate" title="1.5L VTEC Turbo (182 PS)">1.5L Turbo (182 PS)</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Punca Kuasa</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="spec_fuel">Punca Kuasa</span>
                         <span id="specFuel" class="font-callout text-callout text-on-surface font-semibold">Petrol RON95/97</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Transmisi</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="spec_transmission">Transmisi</span>
                         <span id="specTransmission" class="font-callout text-callout text-on-surface font-semibold">Automatik (CVT)</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Kapasiti Tempat Duduk</span>
+                        <span class="font-caption text-caption text-secondary" data-i18n="field_seats">Kapasiti Tempat Duduk</span>
                         <span id="specSeats" class="font-callout text-callout text-on-surface font-semibold">5 Tempat Duduk</span>
                     </div>
                 </div>
@@ -365,7 +387,7 @@
         <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
             <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
         </div>
-        <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">✓ Maklumat kenderaan lengkap &amp; sedia didaftarkan</span>
+        <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface" data-i18n="toast_step3_ready">✓ Maklumat kenderaan lengkap &amp; sedia didaftarkan</span>
     </div>
 
     <!-- Floating Bottom Action Dock (Standardized Apple HIG) -->
@@ -373,18 +395,18 @@
         <!-- Back to Studio Visual -->
         <a href="step2_studio360_preview.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
-            <span>Studio Visual</span>
+            <span data-i18n="step3_btn_back">Studio Visual</span>
         </a>
 
         <!-- Status Pill Reassurance (Center) -->
         <div class="hidden sm:flex items-center gap-2 text-success font-medium px-2">
             <span class="material-symbols-outlined text-[18px] text-success">check_circle</span>
-            <span class="font-footnote text-footnote font-semibold">Semua maklumat lengkap</span>
+            <span class="font-footnote text-footnote font-semibold" data-i18n="step3_all_complete">Semua maklumat lengkap</span>
         </div>
 
         <!-- Single Official Publish Button (Font from Gambar 1: Crisp Bold Pure White) -->
         <button id="publishBtn" type="button" onclick="confirmPublish()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;">Daftar Kenderaan Baharu</span>
+            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="step3_btn_publish">Daftar Kenderaan Baharu</span>
             <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">check</span>
         </button>
     </footer>
@@ -395,15 +417,15 @@
             <div class="w-16 h-16 circle-1-1 bg-success/15 text-success mx-auto mb-4">
                 <span class="material-symbols-outlined text-[36px]">check_circle</span>
             </div>
-            <h3 class="font-title-2 text-title-2 text-on-surface font-bold mb-2">Kenderaan Berjaya Didaftarkan!</h3>
+            <h3 class="font-title-2 text-title-2 text-on-surface font-bold mb-2" data-i18n="modal_success_title">Kenderaan Berjaya Didaftarkan!</h3>
             <p class="font-body text-body text-secondary mb-6">
                 Mercedes-Benz CLS 350 AMG Line (VDD 2573) telah diterbitkan ke inventori aktif sistem dengan integrasi Studio 360°.
             </p>
             <div class="space-y-3">
-                <a href="index.html" class="pill-btn block w-full py-3 bg-primary text-white font-semibold shadow-sm hover:bg-[#0077ED]">
+                <a href="index.html" class="pill-btn block w-full py-3 bg-primary text-white font-semibold shadow-sm hover:bg-[#0077ED]" data-i18n="modal_btn_menu">
                     Kembali ke Menu Utama
                 </a>
-                <button type="button" onclick="closeModal()" class="pill-btn block w-full py-2 bg-surface-container text-on-surface font-medium hover:bg-surface-container-high">
+                <button type="button" onclick="closeModal()" class="pill-btn block w-full py-2 bg-surface-container text-on-surface font-medium hover:bg-surface-container-high" data-i18n="modal_btn_close">
                     Tutup
                 </button>
             </div>
@@ -449,15 +471,112 @@
         const PANORAMA_URL = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85';
         const GALLERY_URL = 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85';
 
+        const INSPECTION_PHOTOS_STEP3 = [
+            {
+                title: 'Hadapan Penuh',
+                titleEn: 'Full Front',
+                img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85'
+            },
+            {
+                title: 'Belakang Penuh',
+                titleEn: 'Full Rear',
+                img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=85'
+            },
+            {
+                title: 'Sisi Kanan Profil',
+                titleEn: 'Right Side Profile',
+                img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85'
+            },
+            {
+                title: 'Sisi Kiri Profil',
+                titleEn: 'Left Side Profile',
+                img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85'
+            },
+            {
+                title: 'Suku Hadapan Kiri',
+                titleEn: 'Front Left Quarter',
+                img: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1200&q=85'
+            },
+            {
+                title: 'Suku Belakang Kanan',
+                titleEn: 'Rear Right Quarter',
+                img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=85'
+            }
+        ];
+
+        let currentStep3Photos = [...INSPECTION_PHOTOS_STEP3];
+        let currentStep3PhotoIndex = 0;
+        let activeStep3VisualMode = 'gallery';
         let hasStep3360 = false;
+        window.currentStep3Photos = currentStep3Photos;
+        window.currentStep3PhotoIndex = currentStep3PhotoIndex;
+
+        function renderStep3GalleryThumbnails() {
+            const strip = document.getElementById('step3GalleryThumbnailsStrip');
+            if (!strip) return;
+            const photos = window.currentStep3Photos || currentStep3Photos;
+            if (!photos || photos.length === 0) {
+                strip.innerHTML = '';
+                return;
+            }
+
+            const isEn = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en');
+            strip.innerHTML = photos.map((photo, idx) => {
+                const isActive = (idx === currentStep3PhotoIndex && activeStep3VisualMode === 'gallery');
+                const title = isEn ? (photo.titleEn || photo.title) : photo.title;
+                return `
+                    <button type="button" onclick="selectStep3GalleryPhoto(${idx})"
+                        class="gallery-thumb-btn relative rounded-xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300 ${isActive ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-md border-transparent' : 'opacity-60 hover:opacity-100 hover:scale-[1.03] border border-border-day bg-surface-container'}"
+                        style="width: 58px; height: 42px;"
+                        title="${title}" aria-label="${title}">
+                        <img src="${photo.img}" alt="${title}" class="w-full h-full object-cover" />
+                    </button>
+                `;
+            }).join('');
+        }
+        window.renderStep3GalleryThumbnails = renderStep3GalleryThumbnails;
+
+        function selectStep3GalleryPhoto(index) {
+            const photos = window.currentStep3Photos || currentStep3Photos;
+            if (!photos || !photos[index]) return;
+            currentStep3PhotoIndex = index;
+            window.currentStep3PhotoIndex = index;
+            const photo = photos[index];
+
+            const viewportImg = document.getElementById('step3ViewportImage');
+            if (viewportImg) {
+                viewportImg.style.backgroundImage = `url('${photo.img}')`;
+            }
+
+            if (activeStep3VisualMode !== 'gallery') {
+                setStep3Tab('gallery');
+            } else {
+                renderStep3GalleryThumbnails();
+            }
+        }
+        window.selectStep3GalleryPhoto = selectStep3GalleryPhoto;
+
+        function navigateStep3Gallery(direction) {
+            const photos = window.currentStep3Photos || currentStep3Photos;
+            if (!photos || photos.length === 0) return;
+            let nextIndex = currentStep3PhotoIndex + direction;
+            if (nextIndex < 0) nextIndex = photos.length - 1;
+            if (nextIndex >= photos.length) nextIndex = 0;
+            selectStep3GalleryPhoto(nextIndex);
+        }
+        window.navigateStep3Gallery = navigateStep3Gallery;
 
         function setStep3Tab(mode) {
+            activeStep3VisualMode = mode;
             const tab360 = document.getElementById('step3Tab360');
             const tabPano = document.getElementById('step3TabPanorama');
             const tabGal = document.getElementById('step3TabGallery');
             const viewportImg = document.getElementById('step3ViewportImage');
             const swipeIndicator = document.getElementById('step3SwipeIndicator');
             const indicatorText = document.getElementById('step3IndicatorText');
+            const btnPrev = document.getElementById('step3BtnPrevImage');
+            const btnNext = document.getElementById('step3BtnNextImage');
+            const thumbsContainer = document.getElementById('step3GalleryThumbnailsContainer');
 
             const activeStyle = 'flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap';
             const inactiveStyle = 'flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap';
@@ -468,20 +587,65 @@
                 if (tabGal) tabGal.className = inactiveStyle;
                 if (viewportImg) viewportImg.style.backgroundImage = `url('${RENDER_360_URL}')`;
                 if (swipeIndicator) swipeIndicator.classList.remove('hidden');
-                if (indicatorText) indicatorText.textContent = 'Leret untuk memutar 360°';
+                if (indicatorText) indicatorText.textContent = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en') ? 'Swipe to rotate 360°' : 'Leret untuk memutar 360°';
+
+                // HANYA MUNCUL BILA SAYA TEKAN GALERI SAHAJA -> Sembunyi bila 360
+                if (btnPrev) {
+                    btnPrev.classList.add('hidden');
+                    btnPrev.style.setProperty('display', 'none', 'important');
+                }
+                if (btnNext) {
+                    btnNext.classList.add('hidden');
+                    btnNext.style.setProperty('display', 'none', 'important');
+                }
+                if (thumbsContainer) {
+                    thumbsContainer.classList.add('hidden');
+                    thumbsContainer.style.setProperty('display', 'none', 'important');
+                }
             } else if (mode === 'panorama') {
                 if (tab360) tab360.className = inactiveStyle;
                 if (tabPano) tabPano.className = activeStyle;
                 if (tabGal) tabGal.className = inactiveStyle;
                 if (viewportImg) viewportImg.style.backgroundImage = `url('${PANORAMA_URL}')`;
                 if (swipeIndicator) swipeIndicator.classList.remove('hidden');
-                if (indicatorText) indicatorText.textContent = 'Seret untuk tinjauan panorama';
+                if (indicatorText) indicatorText.textContent = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en') ? 'Drag to explore panorama' : 'Seret untuk tinjauan panorama';
+
+                // HANYA MUNCUL BILA SAYA TEKAN GALERI SAHAJA -> Sembunyi bila panorama
+                if (btnPrev) {
+                    btnPrev.classList.add('hidden');
+                    btnPrev.style.setProperty('display', 'none', 'important');
+                }
+                if (btnNext) {
+                    btnNext.classList.add('hidden');
+                    btnNext.style.setProperty('display', 'none', 'important');
+                }
+                if (thumbsContainer) {
+                    thumbsContainer.classList.add('hidden');
+                    thumbsContainer.style.setProperty('display', 'none', 'important');
+                }
             } else {
+                // Gallery mode - HANYA MUNCUL BILA SAYA TEKAN GALERI SAHAJA
                 if (tab360) tab360.className = inactiveStyle + (hasStep3360 ? '' : ' hidden');
                 if (tabPano) tabPano.className = inactiveStyle + (hasStep3360 ? '' : ' hidden');
                 if (tabGal) tabGal.className = activeStyle;
-                if (viewportImg) viewportImg.style.backgroundImage = `url('${GALLERY_URL}')`;
+                const photo = (currentStep3Photos && currentStep3Photos[currentStep3PhotoIndex]) ? currentStep3Photos[currentStep3PhotoIndex] : currentStep3Photos[0];
+                if (viewportImg && photo) viewportImg.style.backgroundImage = `url('${photo.img}')`;
                 if (swipeIndicator) swipeIndicator.classList.add('hidden');
+
+                // Paparkan anak panah < dan > serta jalur thumbnail bila tekan galeri sahaja
+                if (btnPrev) {
+                    btnPrev.classList.remove('hidden');
+                    btnPrev.style.removeProperty('display');
+                }
+                if (btnNext) {
+                    btnNext.classList.remove('hidden');
+                    btnNext.style.removeProperty('display');
+                }
+                if (thumbsContainer) {
+                    thumbsContainer.classList.remove('hidden');
+                    thumbsContainer.style.removeProperty('display');
+                }
+                renderStep3GalleryThumbnails();
             }
         }
 
