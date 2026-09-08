@@ -119,30 +119,83 @@
             transform: scale(1.08);
         }
 
-        /* Spotlight Customer Card Spec */
+        /* Mode Biasa (Light Mode) */
+        :root {
+            --spotlight-card-bg: #FFFFFF;
+            --spotlight-card-border: rgba(0, 0, 0, 0.08);
+            --spotlight-card-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --spotlight-title: #1D1D1F;
+            --spotlight-subtitle: #6E6E73;
+            --spotlight-body-text: #1D1D1F;
+            --spotlight-spec-bg: #F5F5F7;
+            --spotlight-spec-border: rgba(0, 0, 0, 0.06);
+            --spotlight-spec-text: #1D1D1F;
+            --spotlight-gradient-fade: #FFFFFF;
+            --spotlight-divider: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Mod Gelap Obsidian (Dark Mode) */
+        html.dark {
+            --spotlight-card-bg: #16171A;
+            --spotlight-card-border: rgba(255, 255, 255, 0.12);
+            --spotlight-card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            --spotlight-title: #F5F5F7;
+            --spotlight-subtitle: #A1A1A6;
+            --spotlight-body-text: #E5E5EA;
+            --spotlight-spec-bg: rgba(255, 255, 255, 0.06);
+            --spotlight-spec-border: rgba(255, 255, 255, 0.1);
+            --spotlight-spec-text: #F5F5F7;
+            --spotlight-gradient-fade: #16171A;
+            --spotlight-divider: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Spotlight Customer Card Spec (Exact Match to WeDRIVE Production .car-card) */
         .spotlight-card {
-            background: #18181b;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 28px;
+            background-color: var(--spotlight-card-bg);
+            border: 1px solid var(--spotlight-card-border);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            box-shadow: var(--spotlight-card-shadow);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
         }
         .spotlight-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 30px 60px -15px rgba(0, 113, 227, 0.25), 0 0 0 1px rgba(0, 113, 227, 0.3);
         }
 
-        html.dark .spotlight-card {
-            background: #16171a;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+        /* Media glass pill: stays dark translucent glass with white text for maximum readability over automotive photos */
+        .media-glass-pill {
+            background: rgba(0, 0, 0, 0.52);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #FFFFFF;
         }
 
-        .glass-pill {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+        .media-bottom-gradient {
+            background: linear-gradient(to top, var(--spotlight-gradient-fade) 0%, rgba(0, 0, 0, 0) 100%);
+            transition: background 0.3s ease;
+        }
+
+        .card-spec-pill {
+            background-color: var(--spotlight-spec-bg);
+            border: 1px solid var(--spotlight-spec-border);
+            color: var(--spotlight-spec-text);
+            transition: all 0.25s ease;
+        }
+        .card-spec-pill:hover {
+            border-color: rgba(0, 113, 227, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .spotlight-title-text {
+            color: var(--spotlight-title);
+        }
+        .spotlight-subtitle-text {
+            color: var(--spotlight-subtitle);
+        }
+        .spotlight-divider {
+            border-color: var(--spotlight-divider);
         }
 
         .emerald-pulse {
@@ -361,38 +414,33 @@
             <!-- Right: Center Spotlight Car Card Canvas (8 cols on lg, 9 on xl) -->
             <section class="lg:col-span-8 xl:col-span-9 bento-card hairline-border p-4 sm:p-8 flex flex-col items-center justify-center min-h-[580px] bg-gradient-to-b from-surface-container/30 to-surface-container/80 dark:from-night-bento/50 dark:to-night-bento">
                 
-                <div class="w-full flex items-center justify-between max-w-[400px] mb-4 px-2">
+                <div class="w-full flex items-center justify-between max-w-[360px] mb-3 px-1">
                     <span class="text-xs font-semibold text-secondary uppercase tracking-wider">Kad Hasil Terbitan (Live Card)</span>
-                    <span class="pill-btn text-[11px] font-bold px-2 py-0.5 bg-success/15 text-success border border-success/30 flex items-center gap-1">
+                    <span class="pill-btn text-[11px] font-bold px-2.5 py-0.5 bg-success/15 text-success border border-success/30 flex items-center gap-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
                         <span>Aktif di Portal</span>
                     </span>
                 </div>
 
-                <!-- SPOTLIGHT CAR CARD (Stitch UHQ Masterpiece - 100% Real Input Data) -->
-                <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan_pelanggan_preview.html'" class="spotlight-card w-full max-w-[420px] sm:max-w-[440px] text-white cursor-pointer hover:scale-[1.01] transition-transform duration-300 shadow-2xl" title="Klik untuk lihat butiran dan tempahan">
+                <!-- SPOTLIGHT CAR CARD (Exact Match to WeDRIVE Production Size: max-w-[360px]) -->
+                <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan_pelanggan_preview.html'" class="spotlight-card w-full max-w-[360px] cursor-pointer hover:scale-[1.01] transition-transform duration-300 shadow-xl" title="Klik untuk lihat butiran dan tempahan">
                     
-                    <!-- Top Media Showcase -->
-                    <div class="relative w-full h-[230px] sm:h-[250px] bg-[#0e0e10] overflow-hidden group">
+                    <!-- Top Media Showcase (Exact Real Height: 220px) -->
+                    <div class="relative w-full h-[220px] bg-[#0e0e10] overflow-hidden group">
                         
-                        <!-- Floating Top Badges (100% Real Input Driven) -->
-                        <div class="absolute top-3 inset-x-3 flex items-center justify-between z-20 pointer-events-none">
-                            <!-- Left: Status Badge (Sedia Disewa - Emerald Pulse) -->
-                            <div class="glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto">
-                                <span class="w-2 h-2 rounded-full bg-[#34C759] emerald-pulse"></span>
-                                <span id="cardStatus" class="text-[11.5px] font-semibold text-white uppercase tracking-wider" data-i18n="step4_card_available">Sedia Disewa</span>
-                                <span class="material-symbols-outlined text-[15px] text-[#34C759]">check</span>
-                            </div>
-
-                            <!-- Center: Year Badge (Tahun 2023 - Real Input) -->
-                            <div class="glass-pill rounded-full px-3 py-1 pointer-events-auto">
-                                <span id="cardBadgeYear" class="text-[11.5px] font-bold text-white uppercase tracking-wider">Tahun 2023</span>
+                        <!-- Floating Top Badges (100% Real Input Driven - Zero Redundant Clutter) -->
+                        <div class="absolute top-3.5 inset-x-3.5 flex items-center justify-between z-20 pointer-events-none">
+                            <!-- Left: Status Badge (Tersedia / Disewa) -->
+                            <div id="cardStatusContainer" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto">
+                                <span id="cardStatusDot" class="w-2 h-2 rounded-full bg-[#34C759] emerald-pulse"></span>
+                                <span id="cardStatus" class="text-[11px] font-bold text-white uppercase tracking-wider" data-i18n="step4_card_available">Tersedia</span>
+                                <span id="cardStatusIcon" class="material-symbols-outlined text-[14px] text-[#34C759]">check</span>
                             </div>
 
                             <!-- Right: 360° View Badge (Real Step 2 Feature) -->
-                            <div id="cardBadge360" class="glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto text-[#abc7ff]">
+                            <div id="cardBadge360" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto text-[#abc7ff]">
                                 <span class="material-symbols-outlined text-[15px]">360</span>
-                                <span class="text-[11.5px] font-semibold text-white tracking-wider" data-i18n="step4_card_360">360° View</span>
+                                <span class="text-[11px] font-bold text-white tracking-wider" data-i18n="step4_card_360">360° View</span>
                             </div>
                         </div>
 
@@ -402,70 +450,70 @@
                              alt="Kenderaan WeDRIVE" 
                              class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
 
-                        <!-- Bottom Gradient for Seamless Blending -->
-                        <div class="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#16171a] to-transparent pointer-events-none"></div>
+                        <!-- Bottom Gradient for Seamless Blending in both Day & Night modes -->
+                        <div class="media-bottom-gradient absolute bottom-0 inset-x-0 h-16 pointer-events-none"></div>
                     </div>
 
-                    <!-- Card Body Details -->
-                    <div class="p-5 sm:p-6 flex flex-col gap-4 bg-[#16171a]">
+                    <!-- Card Body Details (Exact Real Padding: 20px) -->
+                    <div class="p-5 flex flex-col gap-3.5" style="background-color: var(--spotlight-card-bg);">
                         
                         <!-- Header: Kicker, Title & Color Dot -->
-                        <header class="flex flex-col gap-2">
-                            <!-- Category & Seats Kicker -->
+                        <header class="flex flex-col gap-1.5">
+                            <!-- Category & Engine Kicker -->
                             <div class="flex items-center gap-2">
-                                <span id="cardCategory" class="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em]">SEDAN</span>
-                                <span class="w-1 h-1 rounded-full bg-gray-500"></span>
-                                <span id="cardSeats" class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">5 TEMPAT DUDUK</span>
+                                <span id="cardCategory" class="text-[11px] font-extrabold spotlight-subtitle-text uppercase tracking-[0.18em]">SEDAN</span>
+                                <span class="w-1 h-1 rounded-full bg-gray-400/60"></span>
+                                <span id="cardEngine" class="text-[11px] font-bold spotlight-subtitle-text uppercase tracking-wider">ENJIN 2.0L TWINPOWER TURBO</span>
                             </div>
 
-                            <!-- Main Car Title -->
-                            <h3 id="cardTitle" class="font-headline text-[20px] sm:text-[22px] font-bold text-white tracking-tight leading-snug">
+                            <!-- Main Car Title (Real font size: 19px) -->
+                            <h3 id="cardTitle" class="font-headline text-[19px] font-bold spotlight-title-text tracking-tight leading-snug">
                                 2023 BMW 320i M Sport 2.0
                             </h3>
 
                             <!-- Color Dot & Name -->
-                            <div class="flex items-center gap-2">
-                                <div id="cardColorDot" class="w-3 h-3 rounded-full bg-white border border-white/20 shadow-sm"></div>
-                                <span id="cardColor" class="text-[13px] text-gray-300 font-medium">Alpine White</span>
+                            <div class="flex items-center gap-2 pt-0.5">
+                                <div id="cardColorDot" class="w-3 h-3 rounded-full bg-white border border-black/10 dark:border-white/20 shadow-sm"></div>
+                                <span id="cardColor" class="text-[13px] spotlight-subtitle-text font-medium">Alpine White</span>
                             </div>
                         </header>
 
-                        <!-- 2x2 Specs Grid in Glass Pills -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[12.5px] font-medium text-gray-200">
-                            <!-- Engine -->
-                            <div class="glass-pill rounded-xl p-2.5 flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px]">settings_applications</span>
-                                <span id="cardEngine" class="truncate">Enjin 2.0L TwinPower Turbo</span>
+                        <!-- 2x2 Clean Specs Grid (Sifar Kotak / Borderless persis Gambar 2 Rujukan Pengguna) -->
+                        <div class="grid grid-cols-2 gap-y-2.5 gap-x-4 py-2.5 border-t border-b spotlight-divider text-[13px] font-medium">
+                            <!-- 1. Bahan Api -->
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">local_gas_station</span>
+                                <span id="cardFuel" class="spotlight-subtitle-text truncate">Petrol</span>
                             </div>
-                            <!-- Transmission -->
-                            <div class="glass-pill rounded-xl p-2.5 flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px]">swap_vert</span>
-                                <span id="cardTransmission" class="truncate">Automatik Steptronic</span>
+                            <!-- 2. Kapasiti Tempat Duduk -->
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">airline_seat_recline_normal</span>
+                                <span id="cardSeatsPill" class="spotlight-subtitle-text truncate">5 Tempat Duduk</span>
                             </div>
-                            <!-- Fuel -->
-                            <div class="glass-pill rounded-xl p-2.5 flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px]">local_gas_station</span>
-                                <span id="cardFuel" class="truncate">Bahan Api Petrol</span>
+                            <!-- 3. Transmisi -->
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">settings</span>
+                                <span id="cardTransmission" class="spotlight-subtitle-text truncate">Automatik</span>
                             </div>
-                            <!-- Fixed Cyberjaya HQ Location -->
-                            <div class="glass-pill rounded-xl p-2.5 flex items-center gap-2.5">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px]">location_on</span>
-                                <span class="truncate" data-i18n="step4_card_hub_label">Hab HQ Cyberjaya (Ambil & Pulang)</span>
+                            <!-- 4. Jenis Kenderaan -->
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+                                <span id="cardCategoryPill" class="spotlight-subtitle-text truncate">Sedan</span>
                             </div>
                         </div>
 
                         <!-- Bottom Price & Book Now Row -->
-                        <div class="flex items-center justify-between pt-3 border-t border-white/10">
+                        <div class="flex items-center justify-between pt-1">
                             <!-- Price -->
                             <div class="flex items-baseline gap-1">
-                                <span id="cardPrice" class="font-extrabold text-[22px] sm:text-[24px] text-white tabular-nums">RM 450</span>
-                                <span class="text-[12px] text-gray-400 font-normal" data-i18n="step4_card_per_day">/hari</span>
+                                <span id="cardPrice" class="font-extrabold text-[20px] spotlight-title-text tabular-nums">RM 450</span>
+                                <span class="text-[12px] spotlight-subtitle-text font-normal" data-i18n="step4_card_per_day">/hari</span>
                             </div>
 
                             <!-- Book Now Button -->
-                            <a href="step5_tempahan_pelanggan_preview.html" id="btnCustomerBookNow" class="pill-btn interactive-btn bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-[13px] px-5 py-2.5 flex items-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-all" style="text-decoration: none;">
+                            <a href="step5_tempahan_pelanggan_preview.html" id="btnCustomerBookNow" class="pill-btn interactive-btn bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-[13px] px-5 py-2.5 flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition-all" style="text-decoration: none;">
                                 <span class="text-white" data-i18n="step4_card_book_now">Tempah Sekarang</span>
-                                <span class="material-symbols-outlined text-[18px] text-white">arrow_forward</span>
+                                <span class="material-symbols-outlined text-[16px] text-white">arrow_forward</span>
                             </a>
                         </div>
 
@@ -473,8 +521,8 @@
                 </div>
 
                 <!-- Simulation Footer Feedback -->
-                <p class="text-xs text-secondary mt-6 text-center max-w-sm">
-                    ✨ Kad ini dihasilkan secara dinamik daripada pangkalan data spesifikasi yang anda lengkapkan pada Langkah 1 &amp; 2.
+                <p class="text-xs text-secondary mt-5 text-center max-w-sm">
+                    Kad hasil penerbitan rasmi berdasarkan spesifikasi yang disahkan di Langkah 1 &amp; 2.
                 </p>
             </section>
 
@@ -582,6 +630,7 @@
                     transmission: 'Automatik Steptronic',
                     seats: '5',
                     dailyRate: '450',
+                    status: 'available',
                     image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=85',
                     has360: true
                 };
@@ -598,6 +647,7 @@
                     transmission: (draft && draft.transmission) || fallbackData.transmission,
                     seats: (draft && draft.seats) || fallbackData.seats,
                     dailyRate: (draft && draft.dailyRate) || fallbackData.dailyRate,
+                    status: (draft && draft.status) || fallbackData.status,
                     image: (draft && draft.photos && draft.photos[0] && draft.photos[0].img) || fallbackData.image,
                     has360: (draft && draft.cdnUrl && draft.cdnUrl.trim().length > 0) || fallbackData.has360
                 };
@@ -618,9 +668,36 @@
                     cardSeats.textContent = `${data.seats} TEMPAT DUDUK`;
                 }
 
-                const cardBadgeYear = document.getElementById('cardBadgeYear');
-                if (cardBadgeYear) {
-                    cardBadgeYear.textContent = `Tahun ${data.year}`;
+                // Status Badge Hydration (Tersedia / Disewa)
+                const cardStatus = document.getElementById('cardStatus');
+                const cardStatusDot = document.getElementById('cardStatusDot');
+                const cardStatusIcon = document.getElementById('cardStatusIcon');
+                const statusVal = data.status || 'available';
+                const isEn = (localStorage.getItem('wedrive_lang') === 'en');
+
+                if (cardStatus) {
+                    if (statusVal === 'rented') {
+                        cardStatus.textContent = isEn ? 'Rented' : 'Disewa';
+                        cardStatus.setAttribute('data-i18n', 'step4_card_rented');
+                        if (cardStatusDot) {
+                            cardStatusDot.className = 'w-2 h-2 rounded-full bg-amber-500';
+                            cardStatusDot.style.animation = 'none';
+                        }
+                        if (cardStatusIcon) {
+                            cardStatusIcon.textContent = 'schedule';
+                            cardStatusIcon.className = 'material-symbols-outlined text-[15px] text-amber-400';
+                        }
+                    } else {
+                        cardStatus.textContent = isEn ? 'Available' : 'Tersedia';
+                        cardStatus.setAttribute('data-i18n', 'step4_card_available');
+                        if (cardStatusDot) {
+                            cardStatusDot.className = 'w-2 h-2 rounded-full bg-[#34C759] emerald-pulse';
+                        }
+                        if (cardStatusIcon) {
+                            cardStatusIcon.textContent = 'check';
+                            cardStatusIcon.className = 'material-symbols-outlined text-[15px] text-[#34C759]';
+                        }
+                    }
                 }
 
                 const cardColor = document.getElementById('cardColor');
@@ -644,19 +721,37 @@
                     }
                 }
 
+                const cardCategory = document.getElementById('cardCategory');
+                if (cardCategory) {
+                    cardCategory.textContent = (data.category || 'SEDAN').toUpperCase();
+                }
+
                 const cardEngine = document.getElementById('cardEngine');
                 if (cardEngine) {
-                    cardEngine.textContent = data.engine.startsWith('Enjin') ? data.engine : `Enjin ${data.engine}`;
+                    const eng = (data.engine || '').trim();
+                    cardEngine.textContent = (eng.toLowerCase().startsWith('enjin') || eng.toLowerCase().startsWith('engine')) ? eng.toUpperCase() : `ENJIN ${eng.toUpperCase()}`;
+                }
+
+                const cardSeatsPill = document.getElementById('cardSeatsPill');
+                if (cardSeatsPill) {
+                    const isEn = (localStorage.getItem('wedrive_lang') === 'en');
+                    cardSeatsPill.textContent = `${data.seats} ${isEn ? 'Seats' : 'Tempat Duduk'}`;
                 }
 
                 const cardFuel = document.getElementById('cardFuel');
                 if (cardFuel) {
-                    cardFuel.textContent = data.fuel.startsWith('Bahan Api') ? data.fuel : `Bahan Api ${data.fuel}`;
+                    cardFuel.textContent = data.fuel || 'Petrol';
                 }
 
                 const cardTransmission = document.getElementById('cardTransmission');
                 if (cardTransmission) {
-                    cardTransmission.textContent = data.transmission.toLowerCase().includes('auto') ? 'Automatik Steptronic' : data.transmission;
+                    const isEn = (localStorage.getItem('wedrive_lang') === 'en');
+                    cardTransmission.textContent = data.transmission.toLowerCase().includes('auto') ? (isEn ? 'Automatic' : 'Automatik') : data.transmission;
+                }
+
+                const cardCategoryPill = document.getElementById('cardCategoryPill');
+                if (cardCategoryPill) {
+                    cardCategoryPill.textContent = data.category || 'Sedan';
                 }
 
                 const cardPrice = document.getElementById('cardPrice');

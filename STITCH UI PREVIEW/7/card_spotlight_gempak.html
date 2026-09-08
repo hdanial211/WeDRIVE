@@ -1,193 +1,388 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="ms"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BMW 320i M Sport Hero Spotlight</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="ms">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>WeDRIVE - Kad Sorotan Pelanggan (Stitch MCP Dual-Theme)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
-                        "primary-fixed": "#d7e2ff",
-                        "on-primary": "#002f66",
-                        "on-error": "#690005",
-                        "on-secondary-fixed-variant": "#46464b",
-                        "on-primary-fixed": "#001b3f",
-                        "on-secondary-container": "#b5b4ba",
-                        "primary-fixed-dim": "#abc7ff",
-                        "on-tertiary-fixed-variant": "#3631b4",
-                        "surface-container-low": "#1b1b1b",
-                        "surface-container-lowest": "#0e0e0e",
-                        "on-tertiary-container": "#fefaff",
-                        "surface-bright": "#1D1D20",
-                        "on-error-container": "#ffdad6",
-                        "primary": "#abc7ff",
-                        "inverse-surface": "#e2e2e2",
-                        "tertiary-fixed": "#e2dfff",
-                        "on-tertiary-fixed": "#0c006a",
-                        "on-secondary": "#2f3034",
-                        "outline-variant": "rgba(255, 255, 255, 0.06)",
-                        "inverse-on-surface": "#303030",
-                        "secondary": "#c7c6cb",
-                        "surface-container-high": "#1D1D20",
-                        "on-primary-container": "#fcfbff",
-                        "surface": "#131313",
-                        "secondary-container": "#46464b",
-                        "success": "#34C759",
-                        "on-primary-fixed-variant": "#00458f",
-                        "surface-container": "#161618",
-                        "on-tertiary": "#1c0b9f",
-                        "primary-container": "#0071e3",
-                        "surface-variant": "#353535",
-                        "secondary-fixed": "#e3e2e7",
-                        "surface-container-highest": "#262629",
-                        "outline": "rgba(255, 255, 255, 0.12)",
-                        "tertiary-container": "#6563e3",
-                        "error-container": "#93000a",
-                        "on-secondary-fixed": "#1a1b1f",
-                        "tertiary": "#c2c1ff",
-                        "surface-dim": "#0E0E10",
-                        "background": "#131313",
-                        "tertiary-fixed-dim": "#c2c1ff",
-                        "on-background": "#e2e2e2",
-                        "on-surface": "#e2e2e2",
-                        "warning": "#FF9500",
-                        "secondary-fixed-dim": "#c7c6cb",
-                        "error": "#FF3B30",
-                        "surface-tint": "#abc7ff",
-                        "on-surface-variant": "#c1c6d6",
-                        "inverse-primary": "#005cbb"
+                    colors: {
+                        "primary": "#0071e3",
+                        "primary-hover": "#0077ed",
+                        "success": "#34C759"
                     },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "bento-gap": "16px",
-                        "xs": "4px",
-                        "container-padding-mobile": "16px",
-                        "xl": "24px",
-                        "container-padding-desktop": "24px",
-                        "xxl": "32px",
-                        "sm": "8px",
-                        "lg": "20px",
-                        "md": "16px",
-                        "bottom-dock-clearance": "130px"
-                    },
-                    "fontFamily": {
-                        "title-1": ["Inter"],
-                        "body": ["Inter"],
-                        "title-3": ["Inter"],
-                        "large-title": ["Inter"],
-                        "footnote": ["Inter"],
-                        "tabular-label": ["Inter"],
-                        "callout": ["Inter"],
-                        "large-title-mobile": ["Inter"],
-                        "title-2": ["Inter"],
-                        "caption": ["Inter"],
-                        "headline": ["Inter"]
-                    },
-                    "fontSize": {
-                        "title-1": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.028em", "fontWeight": "800" }],
-                        "body": ["15px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
-                        "title-3": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600" }],
-                        "large-title": ["34px", { "lineHeight": "41px", "letterSpacing": "-0.035em", "fontWeight": "800" }],
-                        "footnote": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }],
-                        "tabular-label": ["14px", { "lineHeight": "16px", "fontWeight": "600" }],
-                        "callout": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }],
-                        "large-title-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
-                        "title-2": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.022em", "fontWeight": "700" }],
-                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
-                        "headline": ["17px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+                    fontFamily: {
+                        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"]
                     }
-                },
-            },
-        }
+                }
+            }
+        };
     </script>
-<style>
-        body { background-color: #0b0c0e; }
-        .hero-card { border-radius: 28px; background-color: #16171a; border: 1px solid rgba(255, 255, 255, 0.08); }
-        .glass-pill { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .emerald-pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); } 70% { box-shadow: 0 0 0 4px rgba(52, 199, 89, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); } }
+    <style>
+        /* Light Mode (Mode Biasa / Siang) */
+        :root {
+            --bg-page: #F5F5F7;
+            --bg-card: #FFFFFF;
+            --border-card: rgba(0, 0, 0, 0.08);
+            --shadow-card: 0 24px 48px -12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --title-color: #1D1D1F;
+            --subtitle-color: #6E6E73;
+            --body-text: #1D1D1F;
+            --spec-bg: #F5F5F7;
+            --spec-border: rgba(0, 0, 0, 0.06);
+            --spec-text: #1D1D1F;
+            --gradient-fade: #FFFFFF;
+            --divider-color: rgba(0, 0, 0, 0.08);
+            --toggle-bg: #FFFFFF;
+            --toggle-text: #1D1D1F;
+            --toggle-border: rgba(0, 0, 0, 0.12);
+        }
+
+        /* Dark Mode (Mod Gelap Obsidian) */
+        html.dark {
+            --bg-page: #0B0C0E;
+            --bg-card: #16171A;
+            --border-card: rgba(255, 255, 255, 0.08);
+            --shadow-card: 0 30px 60px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            --title-color: #F5F5F7;
+            --subtitle-color: #A1A1A6;
+            --body-text: #E2E2E2;
+            --spec-bg: rgba(255, 255, 255, 0.05);
+            --spec-border: rgba(255, 255, 255, 0.08);
+            --spec-text: #F5F5F7;
+            --gradient-fade: #16171A;
+            --divider-color: rgba(255, 255, 255, 0.1);
+            --toggle-bg: rgba(255, 255, 255, 0.1);
+            --toggle-text: #F5F5F7;
+            --toggle-border: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--body-text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+        }
+
+        .hero-card {
+            border-radius: 24px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .media-bottom-gradient {
+            background: linear-gradient(to top, var(--gradient-fade) 0%, rgba(0, 0, 0, 0) 100%);
+            transition: background 0.3s ease;
+        }
+
+        /* Top media image glass pills (dark translucent glass keeps badges 100% legible on any photo background) */
+        .media-glass-pill {
+            background: rgba(0, 0, 0, 0.52);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #FFFFFF;
+        }
+
+        /* Card body spec pills with dynamic theme */
+        .spec-pill {
+            background-color: var(--spec-bg);
+            border: 1px solid var(--spec-border);
+            color: var(--spec-text);
+            transition: all 0.25s ease;
+        }
+
+        .spec-pill:hover {
+            border-color: rgba(0, 113, 227, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .card-title-text {
+            color: var(--title-color);
+        }
+
+        .card-subtitle-text {
+            color: var(--subtitle-color);
+        }
+
+        .card-divider {
+            border-color: var(--divider-color);
+        }
+
+        .emerald-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.45); }
+            70% { box-shadow: 0 0 0 6px rgba(52, 199, 89, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+        }
+
+        .pill-btn {
+            border-radius: 9999px !important;
+            white-space: nowrap !important;
+        }
     </style>
 </head>
-<body class="text-on-surface font-body min-h-screen flex items-center justify-center p-container-padding-mobile md:p-container-padding-desktop">
-<main class="w-full max-w-2xl">
-<article class="hero-card overflow-hidden flex flex-col shadow-2xl">
-<!-- Media Showcase -->
-<div class="relative w-full h-72 md:h-96 group">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A highly detailed, ultra-premium studio photograph of a pristine 2023 BMW 320i M Sport in Alpine White. The luxury sedan is perfectly centered against a deep obsidian dark background, illuminated by subtle, high-end automotive lighting that highlights its aggressive aerodynamic lines and premium M Sport styling. The mood is authoritative, modern, and mathematically precise, aligning with a sophisticated high-end executive design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3h2iSgfdav5KMSNAsfC66NnfDWbAx-fBnF8oMVcGYV4tik3BzXdMN9pZNQ7uKPII-c3xEwZQ7jrVsQZfqVsSjlvBzoQNI5ENXH2gK7AT3DtNXlm7woDDM53x6Y9mFXnx_n6Ha08uRZxBu-snfUVg_xXMefAciznAL2aovf60xO8pvW9sYFCf8z_iHbDCstPITUseMBtEwGSvt7pJ2JV0gON3C6chAEske9mwXiFpWs_LEfIbTkEy1eVrYBJbdQmzLrjyWaXH01fA"/>
-<div class="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none">
-<div class="glass-pill rounded-full px-3 py-1.5 flex items-center gap-2 pointer-events-auto">
-<span class="w-2 h-2 rounded-full bg-success emerald-pulse"></span>
-<span class="font-caption text-caption text-on-surface uppercase tracking-wider">Sedia Disewa</span>
-<span class="material-symbols-outlined text-[16px] text-success">check</span>
-</div>
-<div class="glass-pill rounded-full px-3 py-1.5 pointer-events-auto">
-<span class="font-caption text-caption text-on-surface uppercase tracking-wider">Tahun 2023</span>
-</div>
-<div class="glass-pill rounded-full px-3 py-1.5 flex items-center gap-2 pointer-events-auto group/360 cursor-pointer hover:bg-white/10 transition-colors">
-<span class="font-caption text-caption text-on-surface uppercase tracking-wider">360° View</span>
-<span class="material-symbols-outlined text-[16px] text-tertiary-container group-hover/360:animate-spin">360</span>
-</div>
-</div>
-<!-- Bottom Gradient for blending -->
-<div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#16171a] to-transparent pointer-events-none"></div>
-</div>
-<!-- Card Body -->
-<div class="p-xl flex flex-col gap-xl">
-<header class="flex flex-col gap-sm">
-<div class="flex items-center gap-md">
-<span class="font-caption text-caption text-on-surface-variant uppercase tracking-[0.2em]">Sedan</span>
-<span class="w-1 h-1 rounded-full bg-on-surface-variant/50"></span>
-<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">5 Tempat Duduk</span>
-</div>
-<h1 class="font-title-1 text-title-1 text-on-surface">2023 BMW 320i M Sport 2.0</h1>
-<div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-white border border-outline-variant shadow-sm"></div>
-<span class="font-body text-body text-on-surface-variant">Alpine White</span>
-</div>
-</header>
-<!-- 4-Grid Specs -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
-<div class="glass-pill rounded-lg p-sm flex items-center gap-sm">
-<span class="material-symbols-outlined text-on-surface-variant">settings_applications</span>
-<span class="font-footnote text-footnote text-on-surface">Enjin 2.0L TwinPower Turbo</span>
-</div>
-<div class="glass-pill rounded-lg p-sm flex items-center gap-sm">
-<span class="material-symbols-outlined text-on-surface-variant">swap_vert</span>
-<span class="font-footnote text-footnote text-on-surface">Transmisi Automatik Steptronic</span>
-</div>
-<div class="glass-pill rounded-lg p-sm flex items-center gap-sm">
-<span class="material-symbols-outlined text-on-surface-variant">local_gas_station</span>
-<span class="font-footnote text-footnote text-on-surface">Bahan Api Petrol</span>
-</div>
-<div class="glass-pill rounded-lg p-sm flex items-center gap-sm">
-<span class="material-symbols-outlined text-on-surface-variant">location_on</span>
-<span class="font-footnote text-footnote text-on-surface">Hab HQ Cyberjaya (Ambil & Pulang)</span>
-</div>
-</div>
-<!-- Footer Row -->
-<div class="flex items-center justify-between pt-md border-t border-outline-variant">
-<div class="flex items-baseline gap-1">
-<span class="font-tabular-label text-title-2 text-on-surface">RM 450</span>
-<span class="font-footnote text-footnote text-on-surface-variant">/hari</span>
-</div>
-<button class="bg-primary-container text-on-primary-container rounded-full px-lg py-sm flex items-center gap-sm hover:scale-[0.97] active:scale-95 transition-transform duration-200 shadow-lg">
-<span class="font-tabular-label text-tabular-label">Tempah Sekarang</span>
-<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-</button>
-</div>
-</div>
-</article>
-</main>
-</body></html>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+
+    <!-- Top Floating Controls Toolbar (Exact Real Card Width Match: 360px) -->
+    <header class="w-full max-w-[360px] flex items-center justify-between gap-3 mb-6">
+        <a href="step4_pandangan_pelanggan_preview.html" class="pill-btn px-4 py-2 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm" style="background-color: var(--toggle-bg); color: var(--toggle-text); border: 1px solid var(--toggle-border);">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            <span>Kembali ke Langkah 4</span>
+        </a>
+
+        <!-- Dual-Theme Switcher Button -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" type="button" aria-label="Tukar Tema Siang atau Malam" class="pill-btn px-4 py-2 text-xs font-bold flex items-center gap-2 transition-all shadow-sm cursor-pointer hover:scale-105 active:scale-95" style="background-color: var(--toggle-bg); color: var(--toggle-text); border: 1px solid var(--toggle-border);">
+            <span id="themeIcon" class="material-symbols-outlined text-[18px] text-amber-400">light_mode</span>
+            <span id="themeText">Mod Siang (Biasa)</span>
+        </button>
+    </header>
+
+    <!-- Main Spotlight Card Showcase Container (Exact Real WeDRIVE Production Size: 360px) -->
+    <main class="w-full max-w-[360px]">
+        <article class="hero-card overflow-hidden flex flex-col">
+            
+            <!-- Media Showcase Area (Exact Real Height: 220px) -->
+            <div class="relative w-full h-[220px] group overflow-hidden bg-black">
+                <!-- Vehicle Studio Photo -->
+                <img id="spotlightCarImage" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="BMW 320i M Sport" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3h2iSgfdav5KMSNAsfC66NnfDWbAx-fBnF8oMVcGYV4tik3BzXdMN9pZNQ7uKPII-c3xEwZQ7jrVsQZfqVsSjlvBzoQNI5ENXH2gK7AT3DtNXlm7woDDM53x6Y9mFXnx_n6Ha08uRZxBu-snfUVg_xXMefAciznAL2aovf60xO8pvW9sYFCf8z_iHbDCstPITUseMBtEwGSvt7pJ2JV0gON3C6chAEske9mwXiFpWs_LEfIbTkEy1eVrYBJbdQmzLrjyWaXH01fA"/>
+                
+                <!-- Floating Top Badges (100% Real Input Data - Zero Redundant Clutter) -->
+                <div class="absolute top-3.5 left-3.5 right-3.5 flex justify-between items-start pointer-events-none z-20">
+                    <!-- Left: Status Badge (Tersedia / Disewa) -->
+                    <div id="statusBadgeContainer" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto">
+                        <span id="statusIndicatorDot" class="w-2 h-2 rounded-full bg-success emerald-pulse"></span>
+                        <span id="badgeStatus" class="text-[11px] font-bold uppercase tracking-wider text-white">Tersedia</span>
+                        <span id="statusCheckIcon" class="material-symbols-outlined text-[14px] text-success">check</span>
+                    </div>
+
+                    <!-- Right: Interactive 360 Feature Badge -->
+                    <div class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto group/360 cursor-pointer hover:bg-white/20 transition-colors">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-white">360° View</span>
+                        <span class="material-symbols-outlined text-[15px] text-blue-300 group-hover/360:animate-spin">360</span>
+                    </div>
+                </div>
+
+                <!-- Bottom Gradient for seamless blending to card body in both light & dark modes -->
+                <div class="media-bottom-gradient absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-10"></div>
+            </div>
+
+            <!-- Card Body Details (Exact Real Padding: 20px 22px) -->
+            <div class="p-5 flex flex-col gap-3.5">
+                
+                <!-- Header: Kicker, Car Title & Color Dot -->
+                <header class="flex flex-col gap-1.5">
+                    <div class="flex items-center gap-2">
+                        <span id="cardCategoryKicker" class="text-[11px] font-extrabold card-subtitle-text uppercase tracking-[0.18em]">SEDAN</span>
+                        <span class="w-1 h-1 rounded-full bg-gray-400/60"></span>
+                        <span id="cardSeatsKicker" class="text-[11px] font-bold card-subtitle-text uppercase tracking-wider">5 TEMPAT DUDUK</span>
+                    </div>
+
+                    <h1 id="cardMainTitle" class="text-[19px] font-bold card-title-text tracking-tight leading-snug">
+                        2023 BMW 320i M Sport 2.0
+                    </h1>
+
+                    <div class="flex items-center gap-2 pt-0.5">
+                        <div id="cardColorDot" class="w-3 h-3 rounded-full bg-white border border-gray-300 shadow-sm"></div>
+                        <span id="cardColorText" class="text-[13px] card-subtitle-text font-medium">Alpine White</span>
+                    </div>
+                </header>
+
+                <!-- 4-Grid Clean Specs (Apple Minimalist - Sifar Kotak persis Gambar 2 Rujukan Pengguna) -->
+                <div class="grid grid-cols-2 gap-y-2.5 gap-x-4 py-2.5 border-t border-b card-divider">
+                    <!-- 1. Bahan Api -->
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="material-symbols-outlined text-primary text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">local_gas_station</span>
+                        <span id="specFuel" class="text-[13px] font-medium card-subtitle-text truncate">Petrol</span>
+                    </div>
+
+                    <!-- 2. Kapasiti Tempat Duduk -->
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="material-symbols-outlined text-primary text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">airline_seat_recline_normal</span>
+                        <span id="specSeats" class="text-[13px] font-medium card-subtitle-text truncate">5 Tempat Duduk</span>
+                    </div>
+
+                    <!-- 3. Transmisi -->
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="material-symbols-outlined text-primary text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">settings</span>
+                        <span id="specTransmission" class="text-[13px] font-medium card-subtitle-text truncate">Automatik</span>
+                    </div>
+
+                    <!-- 4. Jenis Kenderaan -->
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="material-symbols-outlined text-primary text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+                        <span id="specCategory" class="text-[13px] font-medium card-subtitle-text truncate">Sedan</span>
+                    </div>
+                </div>
+
+                <!-- Footer Row: Price & Action Pill -->
+                <div class="flex items-center justify-between pt-1">
+                    <div class="flex items-baseline gap-1">
+                        <span id="specPrice" class="text-[20px] font-extrabold card-title-text tabular-nums">RM 450</span>
+                        <span class="text-xs card-subtitle-text font-normal">/hari</span>
+                    </div>
+
+                    <a href="step5_tempahan_pelanggan_preview.html" class="pill-btn bg-primary hover:bg-primary-hover text-white px-5 py-2.5 flex items-center gap-1.5 text-[13px] font-bold shadow-md shadow-blue-500/20 active:scale-95 transition-all" style="text-decoration: none;">
+                        <span>Tempah Sekarang</span>
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                    </a>
+                </div>
+
+            </div>
+        </article>
+
+        <!-- Interactive Simulator (Untuk Uji Status Tersedia/Disewa & Kategori Kenderaan) -->
+        <section class="mt-6 p-4 rounded-2xl border card-divider flex flex-col gap-3 text-xs w-full max-w-[360px] mx-auto" style="background-color: var(--bg-card);">
+            <!-- Status Simulator -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2 card-subtitle-text font-semibold">
+                    <span class="material-symbols-outlined text-[16px] text-primary">toggle_on</span>
+                    <span>Status Kenderaan:</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="btnStatusAvailable" type="button" onclick="setStatus('available')" class="pill-btn px-3 py-1.5 font-bold border transition-all text-emerald-600 dark:text-emerald-400 border-emerald-500/40 bg-emerald-500/10 flex items-center gap-1.5 cursor-pointer">
+                        <span class="w-2 h-2 rounded-full bg-success"></span>
+                        <span>Tersedia (Available)</span>
+                    </button>
+                    <button id="btnStatusRented" type="button" onclick="setStatus('rented')" class="pill-btn px-3 py-1.5 font-semibold border transition-all card-subtitle-text border-gray-300 hover:border-amber-500 flex items-center gap-1.5 cursor-pointer">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <span>Disewa (Rented)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Category Simulator -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t card-divider">
+                <div class="flex items-center gap-2 card-subtitle-text font-semibold">
+                    <span class="material-symbols-outlined text-[16px] text-primary">tune</span>
+                    <span>Uji Tukar Jenis Kenderaan:</span>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button type="button" onclick="setCategory('Sedan')" class="pill-btn px-3 py-1.5 font-bold border transition-all text-primary border-primary/40 bg-primary/10 cursor-pointer">
+                        Sedan
+                    </button>
+                    <button type="button" onclick="setCategory('SUV')" class="pill-btn px-3 py-1.5 font-semibold border transition-all card-subtitle-text border-gray-300 hover:border-primary cursor-pointer">
+                        SUV
+                    </button>
+                    <button type="button" onclick="setCategory('MPV')" class="pill-btn px-3 py-1.5 font-semibold border transition-all card-subtitle-text border-gray-300 hover:border-primary cursor-pointer">
+                        MPV
+                    </button>
+                    <button type="button" onclick="setCategory('Hatchback')" class="pill-btn px-3 py-1.5 font-semibold border transition-all card-subtitle-text border-gray-300 hover:border-primary cursor-pointer">
+                        Hatchback
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Dual-Theme Switcher Logic
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            const themeText = document.getElementById('themeText');
+            const themeIcon = document.getElementById('themeIcon');
+
+            if (isDark) {
+                // Switch to Light Mode (Mode Biasa)
+                html.classList.remove('dark');
+                localStorage.setItem('wedrive_theme', 'light');
+                themeText.textContent = 'Mod Gelap (Malam)';
+                themeIcon.textContent = 'dark_mode';
+                themeIcon.className = 'material-symbols-outlined text-[18px] text-indigo-500';
+            } else {
+                // Switch to Dark Mode (Obsidian)
+                html.classList.add('dark');
+                localStorage.setItem('wedrive_theme', 'dark');
+                themeText.textContent = 'Mod Siang (Biasa)';
+                themeIcon.textContent = 'light_mode';
+                themeIcon.className = 'material-symbols-outlined text-[18px] text-amber-400';
+            }
+        }
+
+        // Initialize Theme from localStorage
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('wedrive_theme');
+            const html = document.documentElement;
+            const themeText = document.getElementById('themeText');
+            const themeIcon = document.getElementById('themeIcon');
+
+            if (savedTheme === 'light') {
+                html.classList.remove('dark');
+                if (themeText) themeText.textContent = 'Mod Gelap (Malam)';
+                if (themeIcon) {
+                    themeIcon.textContent = 'dark_mode';
+                    themeIcon.className = 'material-symbols-outlined text-[18px] text-indigo-500';
+                }
+            } else {
+                html.classList.add('dark');
+                if (themeText) themeText.textContent = 'Mod Siang (Biasa)';
+                if (themeIcon) {
+                    themeIcon.textContent = 'light_mode';
+                    themeIcon.className = 'material-symbols-outlined text-[18px] text-amber-400';
+                }
+            }
+        })();
+
+        // Status Switcher Function (Tersedia vs Disewa)
+        function setStatus(status) {
+            const badgeStatus = document.getElementById('badgeStatus');
+            const dot = document.getElementById('statusIndicatorDot');
+            const icon = document.getElementById('statusCheckIcon');
+            const btnAvail = document.getElementById('btnStatusAvailable');
+            const btnRent = document.getElementById('btnStatusRented');
+
+            if (status === 'rented') {
+                if (badgeStatus) badgeStatus.textContent = 'Disewa';
+                if (dot) {
+                    dot.className = 'w-2 h-2 rounded-full bg-amber-500';
+                    dot.style.boxShadow = 'none';
+                }
+                if (icon) {
+                    icon.textContent = 'schedule';
+                    icon.className = 'material-symbols-outlined text-[15px] text-amber-400';
+                }
+                if (btnRent) {
+                    btnRent.className = 'pill-btn px-3 py-1.5 font-bold border transition-all text-amber-600 dark:text-amber-400 border-amber-500/40 bg-amber-500/10 flex items-center gap-1.5 cursor-pointer';
+                }
+                if (btnAvail) {
+                    btnAvail.className = 'pill-btn px-3 py-1.5 font-semibold border transition-all card-subtitle-text border-gray-300 hover:border-emerald-500 flex items-center gap-1.5 cursor-pointer';
+                }
+            } else {
+                if (badgeStatus) badgeStatus.textContent = 'Tersedia';
+                if (dot) {
+                    dot.className = 'w-2 h-2 rounded-full bg-success emerald-pulse';
+                }
+                if (icon) {
+                    icon.textContent = 'check';
+                    icon.className = 'material-symbols-outlined text-[15px] text-success';
+                }
+                if (btnAvail) {
+                    btnAvail.className = 'pill-btn px-3 py-1.5 font-bold border transition-all text-emerald-600 dark:text-emerald-400 border-emerald-500/40 bg-emerald-500/10 flex items-center gap-1.5 cursor-pointer';
+                }
+                if (btnRent) {
+                    btnRent.className = 'pill-btn px-3 py-1.5 font-semibold border transition-all card-subtitle-text border-gray-300 hover:border-amber-500 flex items-center gap-1.5 cursor-pointer';
+                }
+            }
+        }
+
+        // Category Switcher Function for Live Demonstration
+        function setCategory(cat) {
+            const kicker = document.getElementById('cardCategoryKicker');
+            const spec = document.getElementById('specCategory');
+            if (kicker) kicker.textContent = cat.toUpperCase();
+            if (spec) spec.textContent = cat;
+        }
+    </script>
+</body>
+</html>

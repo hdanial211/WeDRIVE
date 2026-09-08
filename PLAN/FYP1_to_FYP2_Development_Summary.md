@@ -6135,5 +6135,47 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.14.0 Overhaul customer spotlight card via Stitch MCP with real input data and zero fake reviews`
   - Tag Versi: `6.14.0`
 
+---
+
+### [PATCH UPDATE] v6.14.1 — Penyelarasan Saiz Kad Sebenar WeDRIVE, Spesifikasi Tanpa Kotak & Penapisan Teks (Real Card Dimensions, Borderless Specs & Clean Category)
+
+- **Latar Belakang & Arahan Pengguna**:
+  1. *"tahun 2024 tu buang sebab nama dia dah ada dekat depan tahun tu"* — Menyingkirkan lencana tahun terapung di tengah imej kerana tahun telah dipaparkan pada awal tajuk kereta.
+  2. *"sedia disewa tukar kepada tersedia/disewa atau rented/available"* — Mengemas kini terminologi status ketersediaan kenderaan.
+  3. *"yang ni kan boleh x awak jangan tulis setiap tulisan dalam kotak2...awak ubah macam gambar ke 2 tu"* — Membuang bingkai/kotak pelindung keliling setiap spesifikasi dan menggantikannya dengan grid 2x2 bersih berikon biru padu (`#0071e3`) tanpa sebarang kotak.
+  4. *"Kategori Sedan > Sedan sahaja"* — Membuang perkataan lewah "Kategori" supaya hanya nama segmen (contoh: *Sedan*) dipaparkan.
+  5. *"pastikan size card ni sama dengan yang sedia ada supaya nnti senang nak manage ...means sama dengan real punya bentuk size"* — Menyelaraskan dimensi dan geometri kad sorotan supaya sepadan tepat dengan kad pengeluaran sebenar WeDRIVE (`.car-card`).
+
+- **Perincian Perubahan & Seni Bina Komponen**:
+  - **1. Penyelarasan Dimensi Kad Fizikal Sebenar (`.car-card`)**:
+    - Lebar kad diselaraskan tepat kepada `max-w-[360px]` (mengikut lajur `minmax(340px, 1fr)` grid katalog pelanggan WeDRIVE).
+    - Ketinggian kontena imej media ditetapkan tepat `h-[220px]` (sepadan dengan standard `.car-img`).
+    - Sudut squircle diselaraskan ke `border-radius: 24px` (`var(--radius-bento)`).
+    - Padding dalaman dilaraskan kepada `20px` (menghapuskan ruang kosong berlebihan).
+    - Tipografi tajuk diselaraskan ke `19px font-bold`, harga ke `20px font-extrabold tabular-nums`, dan butang kapsul ke `13px`.
+  - **2. Spesifikasi Bersih Sifar Kotak (Apple Minimalist - Borderless 2×2 Grid)**:
+    - Menghapuskan kelas `.spec-pill` dan sempadan kotak individu bagi setiap spesifikasi:
+      - `[local_gas_station] Petrol`
+      - `[airline_seat_recline_normal] 5 Tempat Duduk`
+      - `[settings] Automatik`
+      - `[directions_car] Sedan` (tanpa perkataan "Kategori")
+    - Enjin diletakkan dengan kemas pada baris penunjuk atas (*top kicker*): `SEDAN • ENJIN 2.0L TWINPOWER TURBO`.
+  - **3. Penyeragaman Lencana Imej & Status Ketersediaan**:
+    - Memadam lencana tahun daripada lapisan imej kenderaan, meninggalkan 2 lencana seimbang (Kiri: Status `● Tersedia ✓` / `● Disewa ⏱`, Kanan: `360° View`).
+    - Mengemas kini kamus dwibahasa di `preview-i18n.js` (`step4_card_available`: "Tersedia" / "Available", `step4_card_rented`: "Disewa" / "Rented").
+
+- **Pengesahan Ujian & Kepatuhan Protokol**:
+  - **Ujian Automasi Playwright CLI**: 48/48 ujian lulus (**100% Pass Rate**).
+  - **Pemeriksaan DevTools MCP 3-Peranti Apple**:
+    - **MacBook (1440 × 900)**: Kad sorotan bersaiz padat 360px x 220px imej berpusat kemas dalam kanvas pameran.
+    - **iPad (820 × 1180)**: Susun atur responsif tanpa herotan atau ruang terbuang.
+    - **iPhone (393 × 852)**: Kad muat skrin telefon dengan nisbah pil 9999px simetri sempurna (mematuhi Zero Oval Rule).
+  - **Audit Aksara Peraturan**: Kesemua 22 fail peraturan `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.14.1 Align spotlight card to real WeDRIVE production card dimensions and borderless specs`
+  - Tag Versi: `6.14.1`
+
 
 
