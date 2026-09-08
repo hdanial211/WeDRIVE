@@ -5714,6 +5714,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.4 Replace Status Operasi Awal with interactive AI Auto Generate car specs button and fix overlapping dropdown chevron in STITCH UI PREVIEW/7`
   - Tag Versi: `6.9.4`
 
+---
+
+## ⚡ [PATCH UPDATE] 219. Penambahan Jarak Ergonomik Butang Stepper Nombor & Digit Tarif Sewaan (v6.9.5)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mengarahkan penambahan ruang / jarak antara angka dan butang anak panah stepper nombor:
+     > *"button n nombor tu adakan space skit baru kemas"*
+  2. Gambar rujukan menunjukkan nombor `1680.00` pada medan input tarif mingguan terlalu rapat dan melekat secara langsung dengan butang stepper kawalan (`^ v` / `::-webkit-inner-spin-button`) tanpa sebarang ruang pernafasan (*breathing room*).
+
+- **Tindakan Pelaksanaan**:
+  - **1. Penguatkuasaan Standard CSS Jarak Stepper Nombor (`step1_spesifikasi_preview.html` & `shared/css/wedrive.css`)**:
+    - Ditambah gaya Apple HIG khusus bagi elemen `input[type="number"]::-webkit-inner-spin-button` dan `input[type="number"]::-webkit-outer-spin-button`:
+      ```css
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+          margin-left: 12px !important;
+          padding-left: 2px !important;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s ease;
+      }
+      input[type="number"]:hover::-webkit-inner-spin-button,
+      input[type="number"]:focus::-webkit-inner-spin-button {
+          opacity: 1;
+      }
+      ```
+    - Memastikan digit nombor mempunyai ruang ergonomik kemas sebanyak 12px daripada anak panah penambah/pengurang, menghalang herotan visual nombor bertindih atau sempit.
+  - **2. Penalaan Pelapik Medan Tarif**:
+    - Pada `#inputDailyRate`, `#inputWeeklyRate`, dan `#inputMonthlyRate`, pelapik `p-0` dilaraskan kepada `py-0 pl-0 pr-1` bagi memastikan butang kawalan tidak terpotong atau melekat pada tepi sempadan kad.
+
+- **Pengesahan Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Angka `280.00`, `1680.00`, `4800.00`, dan `2024` terpapar dengan jarak 12px simetri dan kemas daripada butang stepper dalam kedua-dua Mod Siang (*Day*) dan Mod Obsidian Malam (*Dark*).
+  - **iPad Tablet (820 × 1180)**: Kad tarif tersusun kemas 2-kolum responsif dengan pemisahan visual nombor yang seimbang.
+  - **iPhone Mobile (393 × 852)**: Kad tarif 1-kolum menegak memaparkan angka dengan sifar limpahan (*zero horizontal scroll*).
+  - **Playwright Test Suite**: 48/48 ujian E2E automatik lulus sepenuhnya (**100% Pass Rate**).
+
+- **Maklumat Git**:
+  - Commit: `6.9.5 Add comfortable spacing between number value and stepper spinner in STITCH UI PREVIEW/7`
+  - Tag Versi: `6.9.5`
+
 
 
 

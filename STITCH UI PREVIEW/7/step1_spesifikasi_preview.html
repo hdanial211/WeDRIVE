@@ -212,6 +212,19 @@
             -moz-appearance: none !important;
             appearance: none !important;
         }
+        /* Jarak Ergonomik Butang Stepper Nombor (Apple HIG Number Stepper Spacing) */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            margin-left: 12px !important;
+            padding-left: 2px !important;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        input[type="number"]:hover::-webkit-inner-spin-button,
+        input[type="number"]:focus::-webkit-inner-spin-button {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-background text-on-background min-h-screen font-body text-body selection:bg-primary-fixed selection:text-on-primary-fixed pb-[120px] transition-colors duration-300">
@@ -498,7 +511,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Harian</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input id="inputDailyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="280.00" type="number" step="10"/>
+                            <input id="inputDailyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="280.00" type="number" step="10"/>
                         </div>
                     </div>
 
@@ -507,7 +520,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Mingguan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input id="inputWeeklyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="1680.00" type="number" step="50"/>
+                            <input id="inputWeeklyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="1680.00" type="number" step="50"/>
                         </div>
                     </div>
 
@@ -516,7 +529,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Bulanan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input id="inputMonthlyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="4800.00" type="number" step="100"/>
+                            <input id="inputMonthlyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="4800.00" type="number" step="100"/>
                         </div>
                     </div>
                 </div>
