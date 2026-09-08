@@ -5917,6 +5917,28 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.9 Refine AI spec label and button phrasing to eliminate textual redundancy`
   - Tag Versi: `6.9.9`
 
+---
+
+### [PATCH] v6.9.10 — Pemadatan Teks Butang AI Spesifikasi Mengelakkan Pemotongan Elipsis (AI Button Microcopy Compacting - Zero Ellipsis Rule)
+
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna mendapati teks panjang berisiko terpotong atau meletakkan tanda kurung siku/elipsis (`...`):
+    > *"Ayat tu saya rasa kene muatkan kiranya simple kan ayat untuk muat dalam kotak kalau x dia akan letak (...)"*
+
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/step1_spesifikasi_preview.html`)**:
+  - **Pemadatan Teks Ekstrem (Ultra-Compact Microcopy)**:
+    - **Keadaan Sedia (Idle)**: `Isi Automatik` (13 aksara) berserta lencana `Jana AI ↓` (lebar teks hanya 79–85px, sifar risiko pemotongan atau `...`).
+    - **Fasa 1 & 2 (Imbasan)**: Ditukar kepada `Mengenal model...` dan `Memadankan data...` (17–18 aksara).
+    - **Fasa 3 (Selesai)**: Ditukar kepada `✓ Spesifikasi Lengkap` dan lencana `Selesai` (21 aksara).
+    - **Fasa 4 (Reset)**: Kembali ke `Isi Automatik` dengan lencana `Jana AI`.
+
+- **Pengesahan Responsif**:
+  - Diuji di Chrome DevTools merentas MacBook (1440px), iPad (820px), dan iPhone (393px): `isOverflowing: false` dengan ruang lega mencukupi.
+
+- **Maklumat Git**:
+  - Commit: `6.9.10 Compact AI spec button microcopy to prevent ellipsis and overflow`
+  - Tag Versi: `6.9.10`
+
 
 
 

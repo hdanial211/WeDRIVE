@@ -511,7 +511,7 @@
                                 <div id="aiSpecLaserScanner" class="hidden ai-laser-line"></div>
                                 <div class="flex items-center gap-2 z-10">
                                     <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300" style="font-variation-settings: 'FILL' 1; color: #5E5CE6;">auto_awesome</span>
-                                    <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap">Isi Maklumat Mengikut Model</span>
+                                    <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap">Isi Automatik</span>
                                 </div>
                                 <span id="aiBtnBadge" class="ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0">
                                     <span id="aiBtnBadgeText">Jana AI</span>
@@ -925,12 +925,12 @@
                 btnIcon.style.color = '#BF5AF2';
             }
             if (btnText) {
-                btnText.textContent = 'Mengenal pasti model kenderaan...';
+                btnText.textContent = 'Mengenal model...';
             }
             if (btnBadge) {
                 btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-primary/25 text-primary border border-primary/30 flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
             }
-            if (btnBadgeText) btnBadgeText.textContent = 'Menganalisis...';
+            if (btnBadgeText) btnBadgeText.textContent = 'Imbas...';
             if (btnBadgeIcon) {
                 btnBadgeIcon.textContent = 'progress_activity';
                 btnBadgeIcon.classList.add('animate-spin');
@@ -939,7 +939,7 @@
             // Phase 2 (550ms): Match specs & start cascading ripple wave across the fields
             setTimeout(() => {
                 if (!isGeneratingSpec) return;
-                if (btnText) btnText.textContent = 'Memadankan 8 spesifikasi teknikal & kadar...';
+                if (btnText) btnText.textContent = 'Memadankan data...';
 
                 const specs = detectCarSpecs();
                 if (specs) {
@@ -993,14 +993,14 @@
                     btnIcon.style.color = '#34C759';
                 }
                 if (btnText) {
-                    btnText.textContent = '✓ 8 Spesifikasi Dikenal Pasti Sempurna';
-                    btnText.className = 'font-headline text-[14px] md:text-[15px] font-bold text-success tracking-tight';
+                    btnText.textContent = '✓ Spesifikasi Lengkap';
+                    btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-success tracking-tight';
                 }
                 if (btnBadge) {
                     btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-success text-white flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
                     btnBadge.style.cssText = 'color: #FFFFFF !important; background-color: #34C759 !important;';
                 }
-                if (btnBadgeText) btnBadgeText.textContent = 'Selesai 100%';
+                if (btnBadgeText) btnBadgeText.textContent = 'Selesai';
                 if (btnBadgeIcon) {
                     btnBadgeIcon.classList.remove('animate-spin');
                     btnBadgeIcon.textContent = 'check';
@@ -1019,8 +1019,8 @@
                         btnIcon.style.color = '#5E5CE6';
                     }
                     if (btnText) {
-                        btnText.textContent = 'Isi Maklumat Mengikut Model';
-                        btnText.className = 'font-headline text-[14px] md:text-[15px] font-bold text-on-surface tracking-tight';
+                        btnText.textContent = 'Isi Automatik';
+                        btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight';
                     }
                     if (btnBadge) {
                         btnBadge.className = 'ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
