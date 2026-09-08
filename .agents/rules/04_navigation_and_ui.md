@@ -127,4 +127,4 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
 - **Sifar Lencana Gimik AI ("Ayat Ni Xyah Kot Nampak Macam AI Buat Page Ni"):**
   - DILARANG SAMA SEKALI meletakkan lencana pelekat cereka seperti *"✨ Kualiti AI Terjamin"*, *"Dikuasakan AI"*, atau seumpamanya pada paparan kenderaan.
   - Kehadiran lencana seperti ini merendahkan kredibiliti profesional sistem dan menampakkan reka bentuk seperti projek mainan generatif amatur.
-  - Kekalkan penunjuk status korporat sebenar Apple HIG (contoh: *"CDN Bersambung"*, *"10 Butiran Disahkan"*, *"Siap Sedia"*).
+  - Kekalkan penunjuk status korporat sebenar Apple HIG (contoh: *"Visual Sedia"*, *"10 Butiran Disahkan"*, *"Siap Sedia"*).

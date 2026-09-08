@@ -6007,18 +6007,133 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.11.0 Implement gallery carousel arrows, dynamic thumbnail strips, and gallery-only visibility for Step 2 and Step 3`
   - Tag Versi: `6.11.0`
 
+---
 
+### [MINOR UPDATE] v6.12.0 — Langkah 4: Pandangan Pelanggan & Kad Bento Sorotan Spotlight Bersama Bar Sisi Pratonton Simulasi Pelanggan (Step 4 Customer View Spotlight Bento Card with Customer Sidebar Simulation Preview)
 
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna mengarahkan penambahan halaman ke-4 dalam aliran pendaftaran/wizard kenderaan:
+    > *"saya rasa saya nak buat page ke 4 lahh ...view as customer bentuk card macam dalam gambar lepas saya tekan view as customer ada side bar tapi untuk preview sahaja"*
+  - Rujukan imej membekalkan susun atur kad sorotan spotlight pelanggan yang terperinci:
+    - Kad Bento squircle hitam Obsidian (`border-radius: 28px`, `#18181b`) dengan gambar kenderaan fokus.
+    - Tiga lencana terapung di atas gambar: Kiri `Available` (hijau), Tengah `4.9` (kaca gelap), Kanan `360° View` (ungu beranimasi).
+    - Badan kad: Kategori (`SEDAN`) dan kapsul ulasan `128 reviews`, nama kenderaan tebal (`2023 BMW 320i M Sport 2.0`), warna (`Color: Alpine White`), grid spesifikasi 2x2 berikon biru lembut (Petrol, 5 Tempat Duduk, Auto, Sedia), tag kapsul pilihan utama (`📍 Executive favourite`), dan baris harga tebal (`RM 450 /day`) berserta butang kapsul `Book Now`.
+  - Akses melalui butang tindakan baharu `Lihat Sebagai Pelanggan →` di Langkah 3 (Semakan & Pengesahan).
+  - Bar sisi pelanggan di sebelah kiri bertindak sebagai simulasi antaramuka pelanggan bertanda `Pratonton Sahaja` (*Preview Only*).
 
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/` & Seni Bina Sistem)**:
+  - **1. Penciptaan Halaman Langkah 4 Baharu (`step4_pandangan_pelanggan_preview.html`)**:
+    - Stepper 4 langkah Apple HIG penuh: `1. Spesifikasi & Harga` $\to$ `2. Studio Visual & 360°` $\to$ `3. Semakan & Pengesahan` $\to$ `4. Pandangan Pelanggan`.
+    - Pengepala status simulasi pratonton dengan lencana kuning berseri `SIMULASI PANDANGAN PELANGGAN` / `CUSTOMER VIEW SIMULATION`.
+    - Susun atur dwi-panel: Bar sisi pratonton pelanggan di sebelah kiri (`#customerSidebarPreview`) dengan lencana `Pratonton Sahaja`, profil pelanggan contoh, dan navigasi (Laman Utama, Tempahan Saya, Teroka Kereta, Tetapan).
+    - Kad Spotlight Pelanggan berpusat (`#customerSpotlightCard`) menepati 100% rujukan imej dengan lencana 1:1 dan kapsul pil simetri tanpa bujur/oval.
+    - Dok tindakan terapung bawah (`#customerViewBottomDock`) dengan butang kapsul `← Kembali ke Langkah 3: Pengesahan` dan `Daftar Kenderaan Baharu`.
+  - **2. Integrasi Aliran Wizard & Butang 'Lihat Sebagai Pelanggan →' di Langkah 3 (`step3_pengesahan_preview.html`)**:
+    - Mengemaskini stepper Langkah 3 untuk memaparkan fasa ke-4 `4. Pandangan Pelanggan`.
+    - Menambah butang kapsul `Lihat Sebagai Pelanggan →` (`#btnViewAsCustomer`) di dok tindakan terapung bawah Langkah 3 yang menghala terus ke `step4_pandangan_pelanggan_preview.html`.
+  - **3. Penyelarasan Stepper Langkah 1 & Langkah 2 (`step1_spesifikasi_preview.html`, `step2_studio360_preview.html`)**:
+    - Mengemaskini penunjuk stepper di kedua-dua langkah untuk memaparkan fasa ke-4 `4. Pandangan Pelanggan` secara seragam.
+  - **4. Integrasi Aliran Paip Data Sebenar Dinamik (*Dynamic Real Draft Hydration Pipeline*)**:
+    - Membina fungsi `hydrateCustomerCard()` yang membaca draf `localStorage.getItem('wedrive_new_car_draft')` secara dinamik.
+    - Memetakan model kenderaan, kategori, warna, transmisi, bahan api, kapasiti tempat duduk, harga harian, dan gambar utama daripada draf aktif pengguna. Sekiranya draf belum wujud, jatuh semula secara anggun kepada data rujukan BMW 320i.
+  - **5. Sinkronisasi Enjin Dwibahasa & Menu Pratonton (`preview-i18n.js`, `index.html`)**:
+    - Menambah kunci terjemahan dwibahasa penuh (MS/EN) bagi Langkah 4 dan butang navigasi berkaitan.
+    - Menambah kad ke-4 berwarna amber pada portal pendaratan pratonton `STITCH UI PREVIEW/7/index.html`.
 
+- **Pengesahan Visual & Kualiti (Apple 3-Device Protocol on Single Tab)**:
+  - **MacBook Retina (1440 × 900)**: Paparan dwi-panel seimbang (bar sisi simulasi 280px + kad spotlight 440px berpusat), sifar ruang mati (*Zero Dead Space*).
+  - **iPad Tablet (820 × 1180)**: Susun atur adaptif dengan bar sisi padat dan kad spotlight mengambil ruang optimum, zon sentuhan $\ge 44$px.
+  - **iPhone Mobile (393 × 852)**: Bar sisi bertukar kemas atau terlipat, kad spotlight berskala responsif 100% tanpa limpahan mendatar (`hasOverflow: false`), butang bulat 1:1 sempurna dan teks kekal kapsul simetri 9999px.
+  - **Dwibahasa & Dwi-Tema**: Togol tema mod siang dan obsidian malam serta penukaran BM $\leftrightarrow$ EN berfungsi 100% lancar.
 
+- **Maklumat Git**:
+  - Commit: `6.12.0 Implement Step 4 Customer View spotlight bento card and preview sidebar`
+  - Tag Versi: `6.12.0`
 
+---
 
+### [MINOR UPDATE] v6.13.0 — Langkah 5: Butiran & Tempahan Pelanggan Berdasarkan Penjanaan Tulen Stitch MCP (Step 5 Customer Vehicle Details & In-Page Date Booking Preview)
 
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna mengarahkan penambahan halaman ke-5 dalam aliran pendaftaran/wizard kenderaan yang dipaparkan apabila pengguna menekan kad sorotan pelanggan atau butang "Book Now" di Langkah 4:
+    > *"Saya nak satu page lagi untuk bila saya tekan card tu sepatutnya keluar macam ni kan ...saya nak ubah jadi preview 360 page . galeri page n kat bawah tu tempat kiranya saya nak awak create satu page yang lebih kurang macam page 3 tapi saya nak view as customer page dekat bawah sekali tu akan tulis untuk tempahan macam gambar 2 tu"*
+    > *"saya nak 100% dari stitch jangan ubah apa2 nnti kita baru edit satu per satu kalau salah"*
+  - Reka bentuk dijana secara rasmi melalui Stitch MCP (`generate_screen_from_text`) menggunakan sistem reka bentuk Apple HIG WeDRIVE (`projectId: 1862124494843018493`, `modelId: GEMINI_3_8_FLASH`, `deviceType: DESKTOP`) dan disimpan tulen 100% sebagai `STITCH UI PREVIEW/7/step5_tempahan_pelanggan_preview.html`.
 
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/` & Seni Bina Sistem)**:
+  - **1. Penjanaan & Pemeliharaan Kod Tulen Stitch MCP (`step5_tempahan_pelanggan_preview.html`)**:
+    - Mematuhi mandat mutlak pengguna: kod mentah dijana terus dari pelayan Stitch MCP tanpa sebarang manipulasi manual pramatang.
+    - Struktur halaman merangkumi:
+      - **Topbar Apple HIG**: Logo LUXE, navigasi katalog, suis dwibahasa `EN/MS`, togol tema mod siang/malam, serta penunjuk langkah (stepper) 5 fasa aktif pada `5. Butiran & Tempahan`.
+      - **Bar Sisi Pelanggan (Sidebar Simulation)**: Profil pelanggan Ahmad Zikri dengan lencana amaran `Pratonton Sahaja`, menu Papan Utama, Teroka Kereta (aktif), Dokumen, Transaksi, dan butang kapsul Log Keluar di bahagian bawah.
+      - **Kad Studio Visual Interaktif**: Suis bersegmen (Galeri, Pusingan 360°, Panorama Dalaman), lencana status `Available`, skor ulasan `4.9 (128 reviews)`, butang lencana `360° View`, butang navigasi karusel anak panah bulat 1:1, dan jalur gambar kecil (thumbnails) di bahagian bawah.
+      - **Kad Spesifikasi Bento Squircle**: Kategori SEDAN, nama `2023 BMW 320i M Sport 2.0`, warna Alpine White, kadar sewaan `RM 450/day`, dan 6 petak spesifikasi teknikal berikon (Enjin 2.0L Turbo, Auto Steptronic, 5 Tempat Duduk, Petrol, Perbatuan Tanpa Had, HQ Cyberjaya).
+      - **Kad Enjin Tempahan Tarikh Sebelah Kanan (*In-Page Date Booking Widget*)**:
+        - Pengepala: `Select Your Dates / Pilih Tarikh` berserta ikon kalendar.
+        - Medan Tarikh Pengambilan (*Pick-up Date*): `12 Nov 2023, 10:00 AM`.
+        - Medan Tarikh Pemulangan (*Return Date*): `15 Nov 2023, 10:00 AM`.
+        - Ringkasan Tempoh: `3 hari`.
+        - Anggaran Harga: `RM 1,350` (RM 450 × 3 hari) tabular-nums.
+        - Butang Tindakan Kapsul Utama: `Teruskan ke Tempahan →` dengan maklum balas taktil `scale-97 active:scale-90`.
+      - **Dok Tindakan Mudah Alih (Mobile Floating Dock)**: Bar terapung di bahagian bawah skrin peranti telefon dengan butang `Kembali` dan butang utama `Daftar Ini`.
+  - **2. Pautan Aliran Navigasi Interaktif dari Langkah 4 (`step4_pandangan_pelanggan_preview.html`)**:
+    - Menghubungkan klik kad pelanggan `#customerSpotlightCard` dan butang `#btnCustomerBookNow` untuk membuka `step5_tempahan_pelanggan_preview.html`.
+    - Menambah butang navigasi `Seterusnya: Butiran & Tempahan →` pada dok terapung Langkah 4.
+  - **3. Penyelarasan Stepper 5 Fasa Penuh (Langkah 1, 2, 3, 4, 5)**:
+    - Menyeragamkan kapsul stepper di bahagian atas merentasi kesemua fail pratonton:
+      `1. Spesifikasi` $\to$ `2. Studio Visual` $\to$ `3. Semakan Akhir` $\to$ `4. Pandangan Pelanggan` $\to$ `5. Butiran & Tempahan`.
+  - **4. Penyelarasan Enjin Dwibahasa & Kad Pratonton Indeks (`preview-i18n.js`, `index.html`)**:
+    - Menambah kunci kamus dwibahasa `step5_*` (MS & EN) di dalam `preview-i18n.js`.
+    - Menambah kad ke-5 (Kuning/Emas) pada menu utama `STITCH UI PREVIEW/7/index.html` berserta butang pratonton iframe dan pautan tab penuh.
 
+- **Pengesahan Visual & Protokol Apple 3-Peranti (Single Tab DevTools MCP)**:
+  - **MacBook Desktop (1440 × 900)**: Susun atur 2-lajur sempurna (Galeri & Spesifikasi 8 kolum di kiri, Kad Tempahan Tarikh 4 kolum di kanan), sifar ruang mati (*Zero Dead Space*).
+  - **iPad Tablet (820 × 1180)**: Reka letak bertukar secara responsif kepada susun atur bertingkat 1-kolum kemas dengan zon sentuhan $\ge 44$px.
+  - **iPhone Mobile (393 × 852)**: Bar sisi terlipat kemas, dok terapung bawah dengan butang bujur/oval sifar (100% mematuhi Zero Oval Rule), fon input $\ge 16$px.
 
+- **Maklumat Git**:
+  - Commit: `6.13.0 Implement Step 5 customer vehicle details and booking preview from Stitch`
+  - Tag Versi: `6.13.0`
 
+---
+
+### [MINOR UPDATE] v6.14.0 — Penjanaan Kad Sorotan Pelanggan Ultra-Gempak Melalui Stitch MCP & Penyingkiran Skor Ulasan Palsu (Customer Spotlight Bento Card Overhaul via Stitch MCP)
+
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna mengarahkan penjanaan semula kad sorotan pelanggan (*Customer Spotlight Card*) secara terus daripada pelayan Stitch MCP untuk menghasilkan reka bentuk yang paling canggih, memukau (*"paling gempak punya"*), dan berasaskan data input sebenar:
+    > *"cuba suruh stitch buatkan card tu sahaj paling gempak punya"*
+    > *"buang ni CDN Bersambung bende ayat ni semua user x faham benda tu"*
+    > *"Sorotan tu ai akan buat untuk semua kereta ke atau dapat dari mana...n ulasan tu semua buang sebab xde input untuk masukkan ulasan ...sebab saya rasa kan saya nak 3 data tu guna data yang boleh ada input awak rasa apa dia??? cuba bagi suggestion"*
+  - Reka bentuk kad dihasilkan secara tulen 100% oleh Stitch MCP (`screenId: 781b215f94284d09b9234b91195e98b3`, `modelId: GEMINI_3_8_FLASH`, `deviceType: DESKTOP`) dan dimuat turun sebagai halaman kendiri [`STITCH UI PREVIEW/7/card_spotlight_gempak.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/STITCH%20UI%20PREVIEW/7/card_spotlight_gempak.html) serta diintegrasikan ke Langkah 4 ([`step4_pandangan_pelanggan_preview.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/STITCH%20UI%20PREVIEW/7/step4_pandangan_pelanggan_preview.html)).
+
+- **Ciri-Ciri Utama & Seni Bina Baharu Kad Sorotan Pelanggan**:
+  - **1. Pemansuhan Mutlak Penilaian Palsu (*Zero Fake Reviews & Ratings*)**:
+    - Memadam sepenuhnya lencana `128 ulasan` dan skor `★ 4.9` kerana kereta baharu yang didaftarkan belum mempunyai sebarang ulasan pelanggan.
+  - **2. Tiga Kapsul Kaca Sebenar di Atas Imej (*Real Input Data Glass Pills*)**:
+    - **Status Ketersediaan**: Kapsul kaca dengan lampu denyutan zamrud (`emerald-pulse`) dan tanda semak (`● Sedia Disewa ✓` / `● Available ✓`) yang membaca input `#inputStatus`.
+    - **Tahun Buatan**: Kapsul kaca telus (`Tahun 2023` / `Year 2023`) yang membaca input `#inputYear`.
+    - **Keupayaan Studio 360°**: Kapsul interaktif dengan ikon 360 (`360° View`) yang terdedah apabila aset pusingan 360° wujud di Langkah 2.
+  - **3. Pengepala & Titik Warna Fizikal (*Dynamic Kicker & Color Dot*)**:
+    - Baris *Kicker*: `SEDAN • 5 TEMPAT DUDUK` (responsif daripada pilihan kategori dan kapasiti tempat duduk).
+    - Tajuk Utama: `2023 BMW 320i M Sport 2.0` (dihidratkan daripada data draf sesi / Supabase).
+    - Titik Warna: Penunjuk bulat warna kereta fizikal (cth: putih untuk Alpine White, hitam untuk Black Sapphire, dsb.) berserta nama warna.
+  - **4. Grid Spesifikasi 2×2 Apple Bento Glass Pills**:
+    - Enjin: `Enjin 2.0L TwinPower Turbo` (membaca `#inputEngine`).
+    - Transmisi: `Automatik Steptronic` (membaca `#inputTransmission`).
+    - Bahan Api: `Bahan Api Petrol` (membaca `#inputFuel`).
+    - Lokasi Depot: `Hab HQ Cyberjaya (Ambil & Pulang)` mematuhi Rule 04 Polisi Lokasi Tunggal WeDRIVE.
+  - **5. Baris Harga & Butang Tempah Sekarang Apple Electric Blue**:
+    - Angka kadar harian tabular `RM 450 /hari` berserta butang kapsul pil `Tempah Sekarang →` (`border-radius: 9999px`) yang memaut ke Langkah 5 ([`step5_tempahan_pelanggan_preview.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/STITCH%20UI%20PREVIEW/7/step5_tempahan_pelanggan_preview.html)).
+
+- **Pengesahan Visual & Protokol Apple 3-Peranti**:
+  - Diuji secara langsung melalui Chrome DevTools MCP pada satu tab aktif:
+    - **MacBook (1440 × 900)**: Susun atur Bento squircle kemas berlatarbelakangkan Obsidian True Black.
+    - **iPad (820 × 1180)**: Pelarasan responsif 1-kolum kemas dengan zon sentuhan selesa.
+    - **iPhone (393 × 852)**: Kad muat skrin telefon tanpa sebarang limpahan mendatar (*zero horizontal scroll*) dan mematuhi Zero Oval Rule.
+
+- **Maklumat Git**:
+  - Commit: `6.14.0 Overhaul customer spotlight card via Stitch MCP with real input data and zero fake reviews`
+  - Tag Versi: `6.14.0`
 
 
 

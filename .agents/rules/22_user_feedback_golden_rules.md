@@ -119,5 +119,25 @@ Dokumen ini mengabadikan kesemua teguran, maklum balas, dan arahan langsung peng
 
 ---
 
-## 11. Had Kandungan Fail & Kawalan Siling 12,000 Aksara
+## 11. Pembuangan Mutlak Istilah CDN & Jargon Rangkaian dalam UI (Zero CDN & Network Jargon Rule)
+
+> *"buang ni CDN Bersambung bende ayat ni semua user x faham benda tu"*
+
+### Peraturan Pembuangan Jargon Rangkaian:
+1. **Larangan Keras Terma "CDN"**:
+   - DILARANG SAMA SEKALI memaparkan akronim atau perkataan `"CDN"`, `"CDN Bersambung"`, `"Latensi CDN"`, atau istilah rangkaian pelayan teknikal yang lain pada antaramuka pengguna (UI).
+   - Pengguna awam, pelanggan sewaan, mahupun kakitangan operasi pentadbir tidak memahami istilah pengaturcaraan/rangkaian tersebut, dan kehadirannya merosakkan pengalaman pengguna (UX) yang mesra dan intuitif.
+2. **Penyingkiran Lencana Lewah**:
+   - Sebarang lencana atau kad kecil yang hanya berfungsi untuk memaklumkan status sambungan teknikal (seperti lencana "CDN Bersambung" di atas paparan gambar kenderaan) WAJIB dibuang sepenuhnya kerana ia tidak memberikan sebarang nilai operasi kepada pengguna.
+3. **Penggantian Istilah Mesra Pengguna**:
+   - Sekiranya sesuatu seksyen memerlukan rujukan kepada aset visual, gunakan terma berorientasikan pengguna:
+     - `"Pusat Pengurusan Aset Media & CDN"` $\to$ **`Pusat Pengurusan Aset Visual`**
+     - `"Pautkan URL CDN rasmi kenderaan..."` $\to$ **`Pautkan pautan visual rasmi kenderaan...`**
+     - `"URL CDN / Pelayan Visual Kenderaan"` $\to$ **`Pautan Visual / Studio 360° Kenderaan`**
+     - `"Latensi CDN: 14ms"` $\to$ **`Kelajuan Respons: Pantas (14ms)`**
+
+---
+
+## 12. Had Kandungan Fail & Kawalan Siling 12,000 Aksara
 - Fail ini dikawal selia di bawah had siling **12,000 aksara** selaras dengan `12_max_content_limit.md`.
+

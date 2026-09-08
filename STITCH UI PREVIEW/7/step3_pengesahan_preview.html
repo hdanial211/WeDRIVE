@@ -239,6 +239,22 @@
                     <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">3</span>
                     <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step3_pill">Semakan Akhir</span>
                 </div>
+
+                <div class="w-8 h-[1px] bg-border-day"></div>
+
+                <!-- Step 4 Pandangan Pelanggan -->
+                <a href="step4_pandangan_pelanggan_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                    <span class="circle-1-1 w-5 h-5 bg-surface-container-high text-secondary text-[11px] font-bold">4</span>
+                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
+                </a>
+
+                <div class="w-8 h-[1px] bg-border-day"></div>
+
+                <!-- Step 5 Butiran & Tempahan -->
+                <a href="step5_tempahan_pelanggan_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                    <span class="circle-1-1 w-5 h-5 bg-surface-container-high text-secondary text-[11px] font-bold">5</span>
+                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
+                </a>
             </div>
         </div>
 
@@ -247,13 +263,6 @@
             
             <!-- Showcase Card (Left, 8 cols) -->
             <div class="md:col-span-8 bento-card hairline-border p-md flex flex-col gap-md relative overflow-hidden group">
-                <div class="flex justify-between items-center z-10 relative">
-                    <div class="pill-btn bg-surface-container/80 dark:bg-black/60 backdrop-blur-md px-3 py-1 hairline-border flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[14px] text-success">cloud_done</span>
-                        <span class="font-caption text-caption text-on-surface font-semibold" data-i18n="step3_cdn_connected">CDN Bersambung</span>
-                    </div>
-                </div>
-
                 <!-- 360 Studio Render Viewport -->
                 <div class="relative w-full h-[400px] rounded-2xl overflow-hidden bg-surface-container flex items-center justify-center cursor-ew-resize">
                     <div id="step3ViewportImage" class="absolute inset-0 bg-cover bg-center w-full h-full mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85')"></div>
@@ -398,11 +407,11 @@
             <span data-i18n="step3_btn_back">Studio Visual</span>
         </a>
 
-        <!-- Status Pill Reassurance (Center) -->
-        <div class="hidden sm:flex items-center gap-2 text-success font-medium px-2">
-            <span class="material-symbols-outlined text-[18px] text-success">check_circle</span>
-            <span class="font-footnote text-footnote font-semibold" data-i18n="step3_all_complete">Semua maklumat lengkap</span>
-        </div>
+        <!-- View as Customer Button (Step 4 Preview) -->
+        <a href="step4_pandangan_pelanggan_preview.html" id="btnViewAsCustomer" class="pill-btn interactive-btn bg-primary/10 hover:bg-primary/20 text-primary border border-primary/25 font-headline text-[14px] font-bold px-4 py-2.5 flex items-center gap-1.5 transition-colors">
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+            <span data-i18n="step3_btn_view_as_customer">Lihat Sebagai Pelanggan →</span>
+        </a>
 
         <!-- Single Official Publish Button (Font from Gambar 1: Crisp Bold Pure White) -->
         <button id="publishBtn" type="button" onclick="confirmPublish()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">

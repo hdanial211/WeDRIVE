@@ -131,17 +131,21 @@
         Menggabungkan 100% skrin pilihan anda dari Stitch: Langkah 1 (Civic & Harga), Langkah 2 (Studio Visual & 360), dan Langkah 3 (Semakan Akhir) dengan kawalan dwitema (☀️ Siang / 🌙 Malam) dan fizik sentuhan Apple.
       </p>
 
-      <!-- Launch Full Wizard Flow Button -->
-      <div class="mt-6">
+      <!-- Launch Action Buttons -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
         <a href="step1_spesifikasi_preview.html" class="pill-btn px-8 py-3.5 bg-[#0071E3] hover:bg-[#0077ED] text-white font-bold text-[15px] shadow-lg hover:shadow-[#0071E3]/40">
           <span data-i18n="index_btn_launch_wizard">Mulakan Aliran Wizard Lengkap (Langkah 1 → 2 → 3)</span>
           <span class="material-symbols-outlined text-[18px] ml-2">play_arrow</span>
         </a>
+        <a href="card_spotlight_gempak.html" target="_blank" class="pill-btn px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-[15px] border border-white/15 shadow-lg flex items-center">
+          <span class="material-symbols-outlined text-[18px] mr-2 text-[#abc7ff]">stars</span>
+          <span>Kad Spotlight Gempak (Stitch)</span>
+        </a>
       </div>
     </header>
 
-    <!-- 3-Step Wizard Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+    <!-- 5-Step Wizard Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mb-12">
       
       <!-- Step 1 Card -->
       <div class="bento-card">
@@ -158,7 +162,7 @@
             <span data-i18n="index_open_new_tab">Buka Skrin Penuh</span>
             <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
           </a>
-          <button type="button" onclick="loadPreview('step1_spesifikasi_preview.html', 'Langkah 1: Spesifikasi & Harga')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
+          <button type="button" onclick="loadPreview('step1_spesifikasi_preview.html', 'Langkah 1: Spesifikasi')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
             <span data-i18n="index_btn_open_screen">Buka Skrin Ini</span>
           </button>
         </div>
@@ -167,15 +171,15 @@
       <!-- Step 2 Card -->
       <div class="bento-card">
         <div class="flex items-center justify-between mb-4">
-          <span class="w-10 h-10 circle-1-1 bg-[#5856D6]/20 text-[#8E8CFF] border border-[#5856D6]/30 font-bold text-[16px]">2</span>
+          <span class="w-10 h-10 circle-1-1 bg-[#BF5AF2]/20 text-[#BF5AF2] border border-[#BF5AF2]/30 font-bold text-[16px]">2</span>
           <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Langkah 2</span>
         </div>
         <h3 class="text-xl font-bold mb-2" data-i18n="index_step2_card_title">Langkah 2: Studio Visual 360°</h3>
         <p class="text-[13px] text-[var(--text-muted)] leading-relaxed mb-6 flex-1" data-i18n="index_step2_card_desc">
-          Pengurusan imej pemeriksaan galeri, pengimbasan aset CDN kenderaan, dan pemain visual interaktif 360 darjah.
+          Pengurusan imej pemeriksaan galeri, pengimbasan aset visual kenderaan, dan pemain interaktif 360 darjah.
         </p>
         <div class="space-y-2 pt-4 border-t border-white/10">
-          <a href="step2_studio360_preview.html" target="_blank" class="w-full pill-btn py-2.5 bg-[#5856D6] hover:bg-[#6866E6] text-white text-[13px] font-bold shadow-md">
+          <a href="step2_studio360_preview.html" target="_blank" class="w-full pill-btn py-2.5 bg-[#BF5AF2] hover:bg-[#af46e5] text-white text-[13px] font-bold shadow-md">
             <span data-i18n="index_open_new_tab">Buka Skrin Penuh</span>
             <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
           </a>
@@ -201,6 +205,48 @@
             <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
           </a>
           <button type="button" onclick="loadPreview('step3_pengesahan_preview.html', 'Langkah 3: Semakan Akhir')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
+            <span data-i18n="index_btn_open_screen">Buka Skrin Ini</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4 Card -->
+      <div class="bento-card">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-10 h-10 circle-1-1 bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold text-[16px]">4</span>
+          <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">Langkah 4</span>
+        </div>
+        <h3 class="text-xl font-bold mb-2" data-i18n="step4_title">Pandangan Pelanggan</h3>
+        <p class="text-[13px] text-[var(--text-muted)] leading-relaxed mb-6 flex-1" data-i18n="step4_preview_desc">
+          Paparan langsung bagaimana kad kenderaan ini dipamerkan di portal carian kenderaan pelanggan WeDRIVE.
+        </p>
+        <div class="space-y-2 pt-4 border-t border-white/10">
+          <a href="step4_pandangan_pelanggan_preview.html" target="_blank" class="w-full pill-btn py-2.5 bg-amber-500 hover:bg-amber-600 text-black text-[13px] font-bold shadow-md">
+            <span data-i18n="index_open_new_tab">Buka Skrin Penuh</span>
+            <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
+          </a>
+          <button type="button" onclick="loadPreview('step4_pandangan_pelanggan_preview.html', 'Langkah 4: Pandangan Pelanggan')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
+            <span data-i18n="index_btn_open_screen">Buka Skrin Ini</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 5 Card -->
+      <div class="bento-card">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-10 h-10 circle-1-1 bg-primary/20 text-primary border border-primary/30 font-bold text-[16px]">5</span>
+          <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">Langkah 5</span>
+        </div>
+        <h3 class="text-xl font-bold mb-2" data-i18n="step5_title">Butiran &amp; Tempahan</h3>
+        <p class="text-[13px] text-[var(--text-muted)] leading-relaxed mb-6 flex-1" data-i18n="step5_preview_desc">
+          Paparan langsung bagaimana pelanggan meneroka 360°, galeri foto, dan memilih tarikh tempahan kenderaan ini.
+        </p>
+        <div class="space-y-2 pt-4 border-t border-white/10">
+          <a href="step5_tempahan_pelanggan_preview.html" target="_blank" class="w-full pill-btn py-2.5 bg-primary hover:bg-[#0077ED] text-white text-[13px] font-bold shadow-md">
+            <span data-i18n="index_open_new_tab">Buka Skrin Penuh</span>
+            <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
+          </a>
+          <button type="button" onclick="loadPreview('step5_tempahan_pelanggan_preview.html', 'Langkah 5: Butiran & Tempahan')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
             <span data-i18n="index_btn_open_screen">Buka Skrin Ini</span>
           </button>
         </div>
