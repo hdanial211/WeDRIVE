@@ -5538,6 +5538,98 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.0 Master finishing Add Car wizard in STITCH UI PREVIEW/7 combining user selected Stitch screens with dual theme and Apple micro-animations`
   - Tag Versi: `6.9.0`
 
+---
+
+## 🧭 [MINOR UPDATE] 215. Penyeragaman Reka Bentuk Kapsul Stepper Apple HIG Merentas Semua Halaman Wizard (v6.9.1)
+
+- **Punca Keperluan (Context & User Directive)**:
+  - Pengguna memuat naik tangkapan skrin rasmi komponen Stepper fasa aktif (Langkah 2: Studio Visual) dan mengarahkan penyeragaman mutlak merentas semua skrin wizard:
+    > *"ni gunakan ini untuk semua"*
+  - Reka bentuk rujukan rasmi:
+    - Bekas kapsul pil terapung Apple HIG (`rounded-full`, kaca lut sinar, sempadan kelabu lembut, bayang mikro `shadow-sm`).
+    - Penyeragaman nama langkah (*Strict Single Source of Naming*):
+      - Langkah 1: `Maklumat Asas`
+      - Langkah 2: `Studio Visual`
+      - Langkah 3: `Pengesahan`
+    - Fasa Selesai (*Completed*): Ikon tanda semak hijau `<span class="material-symbols-outlined text-success text-[18px]">check_circle</span>` berserta latar belakang pil kelabu lembut `bg-surface-container/50`.
+    - Fasa Aktif (*Active*): Latar belakang pil biru lembut `bg-primary/15 text-primary` dengan lencana bulat 1:1 biru pekat (`circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold`) dan tipografi tebal `font-label-tabular font-bold`.
+    - Fasa Mendatang (*Upcoming*): Lencana bulat 1:1 kelabu neutral (`circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold`) berserta teks neutral `text-on-surface-variant`.
+    - Garis pembahagi mendatar Apple: `w-8 h-[1px] bg-border-day`.
+
+- **Tindakan Pelaksanaan**:
+  - **1. Langkah 1 (`STITCH UI PREVIEW/7/step1_spesifikasi_preview.html`)**:
+    - Menyelaraskan reka bentuk kapsul Stepper: Langkah 1 aktif (`[ 1 Maklumat Asas ]` dalam pil biru lembut `bg-primary/15`), disambung ke pautan Langkah 2 (`(2) Studio Visual`) dan Langkah 3 (`(3) Pengesahan`).
+    - Memastikan saiz sentuhan mencukupi (`px-md py-sm rounded-full`) dan sifar herotan geometri bulat (Zero Oval Rule).
+  - **2. Langkah 2 (`STITCH UI PREVIEW/7/step2_studio360_preview.html`)**:
+    - Menyelaraskan teks label Stepper agar sentiasa kelihatan dengan jelas mengikut tangkapan skrin rujukan pengguna (`[ ✓ Maklumat Asas ] ── [ 2 Studio Visual ] ── (3) Pengesahan`).
+    - Menyelaraskan label butang navigasi bar bawah agar sepadan dengan Stepper: `← Maklumat Asas` dan `Seterusnya: Pengesahan →`.
+  - **3. Langkah 3 (`STITCH UI PREVIEW/7/step3_pengesahan_preview.html`)**:
+    - Menggantikan Stepper lama (`Info Asas`, `Visual Studio`, `Semakan & Pengesahan`) dengan Stepper standard rasmi:
+      - Langkah 1: Selesai dengan lencana `[ ✓ ] Maklumat Asas` (pautan ke Langkah 1).
+      - Langkah 2: Selesai dengan lencana `[ ✓ ] Studio Visual` (pautan ke Langkah 2).
+      - Langkah 3: Aktif dengan pil biru lembut `[ 3 Pengesahan ]` (`bg-primary/15 text-primary font-bold`).
+    - Menyelaraskan pautan navigasi bawah: `← Kembali ke Studio Visual` dan `Daftar Kenderaan Baharu`.
+
+- **Pengesahan Ujian Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Stepper terapung di tengah kanvas secara simetri dan seimbang.
+  - **iPad Tablet (820 × 1180)**: Stepper kapsul pil terlaras kemas tanpa sebarang herotan.
+  - **iPhone Mobile (393 × 852)**: Stepper kekal dalam lingkungan skrin telefon tanpa sebarang limpahan mendatar (*zero horizontal scroll*), geometri bulat 1:1 sempurna.
+  - **Ujian Dwi-Tema**: Mod Siang (kaca putih bersih) dan Mod Obsidian Malam (kaca gelap dengan sempadan halus) disahkan berfungsi dengan kontras tinggi.
+  - **Automasi Playwright CLI**: 48/48 lulus (100% Pass Rate).
+
+- **Maklumat Git**:
+  - Commit: `6.9.1 Standardize Apple HIG stepper capsule across all wizard steps in STITCH UI PREVIEW/7`
+  - Tag Versi: `6.9.1`
+
+---
+
+## 🧭 [PATCH UPDATE] 216. Integrasi Visual "Topbar Kita" Pentadbir WeDRIVE ke dalam Skrin Wizard STITCH UI PREVIEW/7 (v6.9.2)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna memohon untuk menggabungkan reka bentuk bar atas pada pratonton wizard `STITCH UI PREVIEW/7/` dengan bar navigasi sistem rasmi ("Topbar Kita"), dengan syarat tegas bahawa fungsi aktif pautan/router belum dihidupkan:
+     > *"yang ni cuba combinekan dengan topbar kita tapi jangan letak function dulu"*
+     (Berserta tangkapan skrin bar atas yang memaparkan penjenamaan WeDRIVE, tajuk langkah wizard, suis tema, dan butang Batal).
+
+- **Tindakan Pelaksanaan**:
+  - **1. Penyatuan Struktur AppBar**:
+    - Mengintegrasikan reka bentuk AppBar Apple HIG merentas ketiga-tiga skrin:
+      - `STITCH UI PREVIEW/7/step1_spesifikasi_preview.html`
+      - `STITCH UI PREVIEW/7/step2_studio360_preview.html`
+      - `STITCH UI PREVIEW/7/step3_pengesahan_preview.html`
+  - **2. Komponen Kiri (Penjenamaan & Tajuk Kontekstual)**:
+    - Mempamerkan logo ikon kenderaan berserta teks dwiton rasmi `<span class="text-primary font-black">We</span><span class="text-on-surface font-black">DRIVE</span>`.
+    - Menambah pembahagi nipis dan tajuk kontekstual yang dioptimumkan secara responsif (`hidden xl:inline`) bagi mengelakkan pertembungan teks pada peranti tablet (iPad):
+      - Langkah 1: `Pendaftaran Kenderaan Baharu — Maklumat Asas`
+      - Langkah 2: `Pendaftaran Kenderaan Baharu — Studio Visual 360°`
+      - Langkah 3: `Pendaftaran Kenderaan Baharu — Pengesahan`
+  - **3. Komponen Tengah (6 Modul Utama Topbar Pentadbir WeDRIVE)**:
+    - Menempatkan 6 modul ikon pentadbir di tengah secara simetri (`absolute left-1/2 -translate-x-1/2`):
+      1. Papan Pemuka (`dashboard`)
+      2. Kenderaan (`directions_car`) — **Aktif** dengan bulatan biru WeDRIVE (`#0071e3`), ikon putih, dan bayang taktil `0 3px 12px rgba(0, 113, 227, 0.35)`.
+      3. Tempahan (`receipt_long`)
+      4. Pelanggan (`people`)
+      5. Laporan (`bar_chart`)
+      6. Kecerdasan AI (`auto_awesome`)
+    - **Sifar Fungsi Buat Masa Ini (Strict No Functions Yet)**: Mengikut arahan pengguna, setiap ikon modul disetkan sebagai representasi visual tulen (`href="javascript:void(0)"` beserta tajuk/tooltip) tanpa pautan router aktif.
+    - Sembunyi secara kemas pada paparan telefon (`hidden md:flex`) bagi menghalang kesesakan bar atas.
+  - **4. Komponen Kanan (Bahasa, Suis Tema & Butang Batal)**:
+    - Menambah butang kapsul bahasa `MS` dari Topbar Kita.
+    - Mengekalkan butang bulat 1:1 suis tema (`☀️ / 🌙`) yang berfungsi sepenuhnya untuk pertukaran dwi-tema (Mod Siang / Mod Obsidian Malam).
+    - Mengekalkan butang kapsul `Batal` ke halaman indeks.
+
+- **Pengesahan Ujian Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Paparan penuh 3-bahagian (Kiri, Tengah, Kanan) terapung seimbang dengan sifar limpahan mendatar.
+  - **iPad Tablet (820 × 1180)**: Tajuk kontekstual disembunyikan secara bijak (`hidden xl:inline`), memberikan ruang lega 120px+ kepada 6 modul ikon tengah tanpa pertembungan visual.
+  - **iPhone Mobile (393 × 852)**: Bar ikon tengah disembunyikan secara bersih (`hidden md:flex`), meninggalkan jenama di kiri dan butang tindakan di kanan.
+  - **Ujian Dwi-Tema**: Mod Siang dan Mod Obsidian Malam disahkan mempunyai kontras tinggi dan visual tajam.
+  - **Prinsip Geometri Bulat 1:1 (Zero Oval Rule)**: Disahkan 100% mematuhi nisbah aspek 1:1 pada semua butang ikon bulat.
+
+- **Maklumat Git**:
+  - Commit: `6.9.2 Combine official WeDRIVE admin topbar modules with preview wizard header in STITCH UI PREVIEW/7`
+  - Tag Versi: `6.9.2`
+
+
+
 
 
 

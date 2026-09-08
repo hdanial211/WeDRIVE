@@ -107,6 +107,15 @@
             white-space: nowrap !important;
             flex-shrink: 0 !important;
         }
+        .nav-icon-link {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
+        }
+        .nav-icon-link:hover {
+            transform: scale(1.08);
+        }
+        .nav-icon-link:active {
+            transform: scale(0.95);
+        }
 
         /* DARK THEME STYLING (Apple Obsidian) */
         html.dark body {
@@ -141,25 +150,58 @@
 </head>
 <body class="bg-background text-on-surface min-h-screen font-body text-body selection:bg-primary selection:text-white pb-[140px] transition-colors duration-300">
 
-    <!-- Top AppBar -->
-    <header class="fixed top-0 w-full z-50 glass-panel border-b border-border-day flex items-center justify-between px-gutter h-16 shadow-sm">
-        <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">directions_car</span>
-            <span class="font-headline text-headline text-primary font-bold tracking-tight">WeDRIVE</span>
+    <!-- Top AppBar (Gabungan Topbar Kita & Pratonton Wizard) -->
+    <header class="fixed top-0 w-full z-50 glass-panel border-b border-border-day flex items-center justify-between px-4 sm:px-6 h-16 shadow-sm relative transition-colors duration-300">
+        <!-- Left: WeDRIVE Brand + Context Title -->
+        <div class="flex items-center gap-3 min-w-0 z-10">
+            <a href="index.html" class="flex items-center gap-2 shrink-0 interactive-btn" style="text-decoration: none;">
+                <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+                <span class="font-headline text-headline font-extrabold tracking-tight">
+                    <span class="text-primary font-black">We</span><span class="text-on-surface font-black">DRIVE</span>
+                </span>
+            </a>
+            <div class="h-4 w-[1px] bg-border-day hidden xl:block shrink-0"></div>
+            <span class="hidden xl:inline font-headline text-[14px] text-on-surface font-semibold truncate">
+                Pendaftaran Kenderaan Baharu <span class="text-secondary font-normal">— Pengesahan</span>
+            </span>
         </div>
 
-        <div class="hidden md:block font-headline text-headline text-on-surface font-semibold">
-            Pendaftaran Kenderaan Baharu — Pengesahan
-        </div>
+        <!-- Center: 6 WeDRIVE Navigation Modules (Visual Representation from Topbar Kita, Sifar Fungsi Buat Masa Ini) -->
+        <nav class="hidden md:flex items-center gap-3 lg:gap-6 absolute left-1/2 -translate-x-1/2 z-10 pointer-events-auto" aria-label="Navigasi Utama Pentadbir">
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Papan Pemuka" aria-label="Papan Pemuka">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px]">dashboard</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all" style="box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35);" title="Kenderaan" aria-label="Kenderaan">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px]">receipt_long</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Pelanggan" aria-label="Pelanggan">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px]">people</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Laporan" aria-label="Laporan">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px]">bar_chart</span>
+            </a>
+            <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Kecerdasan AI" aria-label="Kecerdasan AI">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px]">auto_awesome</span>
+            </a>
+        </nav>
 
-        <div class="flex items-center gap-3">
+        <!-- Right: Bahasa + Tema + Batal (Gabungan Elemen Topbar Kita) -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0 z-10">
+            <!-- Language Pill (from Topbar Kita) -->
+            <button type="button" class="pill-btn px-3 py-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day text-[13px] font-bold interactive-btn" title="Bahasa (MS)">
+                MS
+            </button>
+
             <!-- Theme Toggle Button (☀️ / 🌙) -->
             <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm">
                 <span id="themeIcon" class="material-symbols-outlined text-[20px]">dark_mode</span>
             </button>
 
             <!-- Batal Button -->
-            <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day">
+            <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day" style="text-decoration: none;">
                 Batal
             </a>
         </div>
@@ -168,35 +210,29 @@
     <!-- Main Content Canvas -->
     <main class="pt-[96px] px-gutter md:px-container-padding max-w-7xl mx-auto space-y-xl relative">
         
-        <!-- Stepper Dock (Screenshot 2 Reference: [✓] Info Asas ── [✓] Visual Studio ── [3 (Glowing Blue)] Semakan & Pengesahan) -->
-        <div class="flex justify-center mb-xl">
-            <div class="glass-panel hairline-border rounded-full px-4 py-2 flex items-center gap-3 shadow-sm">
+        <!-- Floating Stepper Capsule (Standardized Apple HIG) -->
+        <div class="flex justify-center w-full mb-xl">
+            <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-xs flex items-center gap-xs max-w-full overflow-x-auto hide-scrollbar">
                 <!-- Step 1 Complete -->
-                <a href="step1_spesifikasi_preview.html" class="pill-btn interactive-btn flex items-center gap-2 text-on-surface hover:text-primary font-callout text-callout font-medium">
-                    <span class="circle-1-1 w-6 h-6 bg-success/15 text-success">
-                        <span class="material-symbols-outlined text-[16px]">check</span>
-                    </span>
-                    <span class="hidden sm:inline">Info Asas</span>
+                <a href="step1_spesifikasi_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                    <span class="font-callout text-callout text-on-surface font-medium">Maklumat Asas</span>
                 </a>
 
-                <div class="h-[1px] w-8 bg-border-day"></div>
+                <div class="w-8 h-[1px] bg-border-day"></div>
 
                 <!-- Step 2 Complete -->
-                <a href="step2_studio360_preview.html" class="pill-btn interactive-btn flex items-center gap-2 text-on-surface hover:text-primary font-callout text-callout font-medium">
-                    <span class="circle-1-1 w-6 h-6 bg-success/15 text-success">
-                        <span class="material-symbols-outlined text-[16px]">check</span>
-                    </span>
-                    <span class="hidden sm:inline">Visual Studio</span>
+                <a href="step2_studio360_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                    <span class="font-callout text-callout text-on-surface font-medium">Studio Visual</span>
                 </a>
 
-                <div class="h-[1px] w-8 bg-border-day"></div>
+                <div class="w-8 h-[1px] bg-border-day"></div>
 
-                <!-- Step 3 Active with glowing blue circle -->
-                <div class="pill-btn flex items-center gap-2 text-primary font-callout text-callout font-bold">
-                    <span class="circle-1-1 w-6 h-6 bg-primary text-white shadow-[0_0_12px_rgba(0,113,227,0.5)]">
-                        <span class="text-[12px] font-bold">3</span>
-                    </span>
-                    <span>Semakan &amp; Pengesahan</span>
+                <!-- Step 3 Active -->
+                <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
+                    <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">3</span>
+                    <span class="font-label-tabular text-label-tabular font-bold">Pengesahan</span>
                 </div>
             </div>
         </div>
@@ -313,27 +349,25 @@
         </div>
     </main>
 
-    <!-- Sticky Bottom Action Bar (Screenshot 1 Reference: ← Kembali ke Studio Visual | [shield] Semua data telah disahkan dan sedia diterbitkan | Daftar Kenderaan Baharu ✓) -->
-    <footer class="fixed bottom-0 left-0 w-full z-50 glass-panel hairline-border border-t shadow-[0px_-4px_24px_rgba(0,0,0,0.06)]">
-        <div class="max-w-7xl mx-auto px-gutter md:px-container-padding h-20 flex justify-between items-center gap-4">
-            <!-- Back to Studio Visual -->
-            <a href="step2_studio360_preview.html" class="pill-btn interactive-btn flex items-center gap-2 bg-surface-container text-on-surface px-6 py-3 hairline-border font-callout text-callout hover:bg-surface-container-high font-medium">
-                <span class="material-symbols-outlined text-[18px]">arrow_back</span>
-                <span>Kembali ke Studio Visual</span>
-            </a>
+    <!-- Floating Bottom Action Dock (Standardized Apple HIG) -->
+    <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2 z-50 transition-all duration-300">
+        <!-- Back to Studio Visual -->
+        <a href="step2_studio360_preview.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            <span>Studio Visual</span>
+        </a>
 
-            <!-- Status Pill Reassurance (Center) -->
-            <div class="hidden md:flex items-center gap-2 pill-btn bg-success/10 border border-success/20 px-4 py-2 text-success font-footnote text-footnote font-semibold">
-                <span class="material-symbols-outlined text-[18px] text-success">verified_user</span>
-                <span>Semua data telah disahkan dan sedia diterbitkan</span>
-            </div>
-
-            <!-- Single Official Publish Button -->
-            <button id="publishBtn" type="button" onclick="confirmPublish()" class="pill-btn interactive-btn flex items-center gap-2 bg-primary hover:bg-[#0077ED] text-white px-8 py-3 font-callout text-callout font-bold shadow-md">
-                <span>Daftar Kenderaan Baharu</span>
-                <span class="material-symbols-outlined text-[18px]">check</span>
-            </button>
+        <!-- Status Pill Reassurance (Center) -->
+        <div class="hidden sm:flex items-center gap-2 text-success font-medium px-2">
+            <span class="material-symbols-outlined text-[18px] text-success">verified_user</span>
+            <span class="font-footnote text-footnote font-semibold">Semua data telah disahkan</span>
         </div>
+
+        <!-- Single Official Publish Button (Font from Gambar 1: Crisp Bold Pure White) -->
+        <button id="publishBtn" type="button" onclick="confirmPublish()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
+            <span class="text-white" style="color: #FFFFFF !important;">Daftar Kenderaan Baharu</span>
+            <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">check</span>
+        </button>
     </footer>
 
     <!-- Success Modal Dialog -->
