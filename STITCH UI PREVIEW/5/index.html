@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeDRIVE — Folder 5: Perbandingan 3.8 Flash vs 3.1 Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #090A0F;
+      --card-bg: rgba(22, 24, 34, 0.8);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent: #3B82F6;
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 40px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60A5FA;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .card-model {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .card-model.flash {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 16px 36px rgba(16, 185, 129, 0.1);
+    }
+    .card-model.pro {
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 16px 36px rgba(139, 92, 246, 0.1);
+    }
+    .model-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .model-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 8px;
+    }
+    .model-tag.flash {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34D399;
+    }
+    .model-tag.pro {
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: #A78BFA;
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .status-badge.active { background: #10B981; color: #064E3B; }
+    .status-badge.dep { background: #EF4444; color: #FFFFFF; }
+    .model-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .model-desc { color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+    .img-preview {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #000;
+    }
+    .btn-open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #0071E3;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 14px 20px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: auto;
+    }
+    .btn-open:hover {
+      background: #0077ED;
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
+    }
+    .back-nav {
+      text-align: center;
+      margin-top: 32px;
+    }
+    .back-nav a {
+      color: #60A5FA;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge"><i class="fa-solid fa-code-compare"></i> HEAD-TO-HEAD MODEL BENCHMARK</div>
+      <h1>Folder 5: GEMINI_3_8_FLASH vs GEMINI_3_1_PRO</h1>
+      <p class="subtitle">Perbandingan langsung hasil penjanaan skrin "Langkah 1: Spesifikasi & Tarif" menggunakan prompt dan design system yang sama.</p>
+    </header>
+
+    <div class="grid">
+      <!-- 3.8 FLASH -->
+      <div class="card-model flash">
+        <div class="model-header">
+          <span class="model-tag flash">GEMINI_3_8_FLASH</span>
+          <span class="status-badge active">🟢 AKTIF (TERKINI)</span>
+        </div>
+        <h2 class="model-title">Gemini 3.8 Flash (Terkini & Tertinggi)</h2>
+        <p class="model-desc">Model generasi 3.8 terbaharu rasmi Google Stitch MCP. Reka letak Bento Grid yang sangat teratur, tipografi SF Pro seimbang, dan responsif AGNOSTIC penuh.</p>
+        <img class="img-preview" src="3.8flash/step1_spesifikasi_screenshot.png" alt="3.8 Flash Preview">
+        <a class="btn-open" href="3.8flash/step1_spesifikasi_preview.html">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Pratonton 3.8 Flash
+        </a>
+      </div>
+
+      <!-- 3.1 PRO -->
+      <div class="card-model pro">
+        <div class="model-header">
+          <span class="model-tag pro">GEMINI_3_1_PRO</span>
+          <span class="status-badge dep">🔴 DEPRECATED (LAPUK)</span>
+        </div>
+        <h2 class="model-title">Gemini 3.1 Pro (Model Terdahulu)</h2>
+        <p class="model-desc">Model penaakulan legasi Stitch MCP yang kini telah digantikan oleh Google dengan generasi 3.8. Boleh dinilai perbezaan kepadatan komponennya.</p>
+        <img class="img-preview" src="3.1pro/step1_spesifikasi_screenshot.png" alt="3.1 Pro Preview">
+        <a class="btn-open" style="background:#5856D6;" href="3.1pro/step1_spesifikasi_preview.html">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Pratonton 3.1 Pro
+        </a>
+      </div>
+    </div>
+
+    <div class="back-nav">
+      <a href="../index.html">← Kembali ke Arkib Galeri Utama (Hub)</a>
+    </div>
+  </div>
+</body>
+</html>

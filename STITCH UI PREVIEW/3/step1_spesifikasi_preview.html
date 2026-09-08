@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WeDRIVE - Pendaftaran Kenderaan Baharu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "surface-variant": "#e2e2e4",
+                "on-tertiary-fixed": "#0c006a",
+                "tertiary-fixed-dim": "#c2c1ff",
+                "on-error": "#ffffff",
+                "error-container": "#ffdad6",
+                "surface-bright": "#FFFFFF",
+                "on-secondary-container": "#626267",
+                "border-night": "rgba(255, 255, 255, 0.08)",
+                "on-primary": "#ffffff",
+                "error": "#FF3B30",
+                "on-surface": "#1D1D1F",
+                "primary-fixed-dim": "#abc7ff",
+                "on-background": "#1a1c1d",
+                "outline-variant": "#c1c6d6",
+                "on-tertiary-container": "#fefaff",
+                "surface-dim": "#E5E5EA",
+                "outline": "#717785",
+                "surface": "#f9f9fb",
+                "on-tertiary-fixed-variant": "#3631b4",
+                "night-bento": "#161618",
+                "surface-container": "#F2F2F7",
+                "surface-container-high": "#e8e8ea",
+                "border-day": "rgba(0, 0, 0, 0.06)",
+                "inverse-surface": "#000000",
+                "on-surface-variant": "#414753",
+                "on-primary-container": "#fcfbff",
+                "warning": "#FF9500",
+                "tertiary-fixed": "#e2dfff",
+                "success": "#34C759",
+                "primary-fixed": "#d7e2ff",
+                "tertiary": "#4b49c9",
+                "on-tertiary": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-highest": "#e2e2e4",
+                "night-surface": "#000000",
+                "inverse-on-surface": "#f0f0f2",
+                "on-primary-fixed": "#001b3f",
+                "background": "#f9f9fb",
+                "secondary": "#5e5e63",
+                "tertiary-container": "#6563e3",
+                "on-secondary": "#ffffff",
+                "surface-container-low": "#f3f3f5",
+                "secondary-fixed": "#e3e2e7",
+                "on-primary-fixed-variant": "#00458f",
+                "on-error-container": "#93000a",
+                "on-secondary-fixed-variant": "#46464b",
+                "inverse-primary": "#abc7ff",
+                "surface-tint": "#005cbb",
+                "secondary-container": "#e0dfe4",
+                "primary": "#0059b5",
+                "secondary-fixed-dim": "#c7c6cb",
+                "primary-container": "#0071e3",
+                "on-secondary-fixed": "#1a1b1f",
+                "night-bento-subtle": "#1D1D20"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "xl": "24px",
+                "gutter": "16px",
+                "container-padding": "24px",
+                "xs": "4px",
+                "xxl": "32px",
+                "sm": "8px",
+                "md": "16px",
+                "lg": "20px",
+                "unit": "4px"
+              },
+              "fontFamily": {
+                "footnote": ["Inter"],
+                "caption": ["Inter"],
+                "label-tabular": ["Inter"],
+                "title-1": ["Inter"],
+                "title-2": ["Inter"],
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "title-3": ["Inter"],
+                "large-title-mobile": ["Inter"],
+                "large-title": ["Inter"],
+                "callout": ["Inter"]
+              },
+              "fontSize": {
+                "footnote": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                "label-tabular": ["14px", { "lineHeight": "16px", "fontWeight": "600" }],
+                "title-1": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.028em", "fontWeight": "800" }],
+                "title-2": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.022em", "fontWeight": "700" }],
+                "headline": ["17px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+                "body": ["15px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+                "title-3": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600" }],
+                "large-title-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                "large-title": ["34px", { "lineHeight": "41px", "letterSpacing": "-0.035em", "fontWeight": "800" }],
+                "callout": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }]
+              }
+            }
+          }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen pt-24 pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/80 dark:bg-night-surface/80 backdrop-blur-xl border-b border-border-day dark:border-border-night shadow-sm flex justify-between items-center h-16 px-gutter max-w-full">
+<div class="font-title-3 text-title-3 font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">WeDRIVE</div>
+<div class="absolute left-1/2 -translate-x-1/2 font-headline text-headline text-on-surface tracking-tight hidden md:block">
+            Pendaftaran Kenderaan Baharu
+        </div>
+<button class="font-headline text-headline text-primary dark:text-primary-container hover:opacity-80 transition-opacity active:scale-95 duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] px-4 py-2 rounded-full border border-border-day bg-surface-container-lowest text-sm">
+            Cancel
+        </button>
+</header>
+<main class="max-w-4xl mx-auto px-4 md:px-0 w-full space-y-8">
+<!-- 3-Step Symmetric Stepper -->
+<div class="flex items-center justify-between bg-surface-container-lowest rounded-full border border-border-day p-2 md:px-4 shadow-[0px_4px_24px_rgba(0,0,0,0.04)] max-w-2xl mx-auto">
+<div class="flex items-center gap-2 text-primary-container font-semibold font-callout text-callout bg-primary-container/10 px-4 py-2 rounded-full">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-xs font-bold">1</span>
+<span class="hidden md:inline">Spesifikasi &amp; Tarif</span>
+</div>
+<div class="h-[1px] flex-1 bg-border-day mx-2 md:mx-4"></div>
+<div class="flex items-center gap-2 text-secondary font-medium font-callout text-callout px-4 py-2">
+<span class="w-6 h-6 rounded-full bg-surface-container text-secondary flex items-center justify-center text-xs font-bold">2</span>
+<span class="hidden md:inline">Studio Visual</span>
+</div>
+<div class="h-[1px] flex-1 bg-border-day mx-2 md:mx-4"></div>
+<div class="flex items-center gap-2 text-secondary font-medium font-callout text-callout px-4 py-2">
+<span class="w-6 h-6 rounded-full bg-surface-container text-secondary flex items-center justify-center text-xs font-bold">3</span>
+<span class="hidden md:inline">Semakan</span>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Bento Card A (Core Specs) -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-border-day p-6 md:p-8 shadow-[0px_4px_24px_rgba(0,0,0,0.04)]">
+<h2 class="font-title-3 text-title-3 mb-6">Spesifikasi Teras</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Manufacturer -->
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Pengeluar (Manufacturer)</label>
+<input class="w-full bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all" placeholder="Cth: Toyota, Honda..." type="text"/>
+</div>
+<!-- Model & Variant -->
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Model &amp; Varian</label>
+<input class="w-full bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all" placeholder="Cth: Camry 2.5V" type="text"/>
+</div>
+<!-- License Plate -->
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">No. Pendaftaran</label>
+<input class="w-full bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all uppercase" placeholder="Cth: VWE 1234" type="text"/>
+</div>
+<!-- Year -->
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Tahun Dibuat</label>
+<input class="w-full bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-label-tabular tabular-nums" placeholder="2024" type="number"/>
+</div>
+<!-- Category Chips -->
+<div class="space-y-3 md:col-span-2 pt-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Kategori Kenderaan</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full border border-primary-container bg-primary-container text-on-primary text-callout font-medium transition-colors">Sedan</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface-container-lowest text-secondary text-callout font-medium hover:bg-surface-container transition-colors">SUV</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface-container-lowest text-secondary text-callout font-medium hover:bg-surface-container transition-colors">MPV</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface-container-lowest text-secondary text-callout font-medium hover:bg-surface-container transition-colors">Hatchback</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface-container-lowest text-secondary text-callout font-medium hover:bg-surface-container transition-colors">Truck</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface-container-lowest text-secondary text-callout font-medium hover:bg-surface-container transition-colors">Coupe</button>
+</div>
+</div>
+<!-- Transmission Toggle -->
+<div class="space-y-3 pt-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Transmisi</label>
+<div class="flex bg-surface-container p-1 rounded-xl">
+<button class="flex-1 bg-surface-container-lowest shadow-sm rounded-lg py-2 text-callout font-medium text-on-surface transition-all">Auto</button>
+<button class="flex-1 rounded-lg py-2 text-callout font-medium text-secondary hover:text-on-surface transition-all">Manual</button>
+</div>
+</div>
+<!-- Fuel -->
+<div class="space-y-2 pt-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Jenis Bahan Api</label>
+<select class="w-full bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all appearance-none">
+<option>Petrol</option>
+<option>Diesel</option>
+<option>Hybrid</option>
+<option>EV</option>
+</select>
+</div>
+<!-- Seating -->
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Kapasiti Tempat Duduk</label>
+<div class="relative">
+<input class="w-full bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-label-tabular tabular-nums" placeholder="5" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary font-callout">Pax</span>
+</div>
+</div>
+<!-- Engine -->
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Kapasiti Enjin</label>
+<div class="relative">
+<input class="w-full bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-label-tabular tabular-nums" placeholder="1998" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary font-callout">cc/kW</span>
+</div>
+</div>
+<!-- Color -->
+<div class="space-y-2 md:col-span-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Warna</label>
+<div class="flex items-center gap-4">
+<input class="flex-1 bg-surface-container border border-border-day rounded-xl px-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all" placeholder="Cth: Pearl White" type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Card B (Tariffs) -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-border-day p-6 md:p-8 shadow-[0px_4px_24px_rgba(0,0,0,0.04)]">
+<h2 class="font-title-3 text-title-3 mb-6">Tarif &amp; Harga</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Kadar Harian</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-secondary font-callout">RM</span>
+<input class="w-full bg-surface-container border border-border-day rounded-xl pl-12 pr-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-label-tabular tabular-nums" placeholder="150" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary font-callout">/day</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Kadar Mingguan</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-secondary font-callout">RM</span>
+<input class="w-full bg-surface-container border border-border-day rounded-xl pl-12 pr-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-label-tabular tabular-nums" placeholder="900" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary font-callout">/week</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-caption text-caption text-secondary uppercase tracking-wider block">Deposit Keselamatan</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-secondary font-callout">RM</span>
+<input class="w-full bg-surface-container border border-border-day rounded-xl pl-12 pr-4 py-3 text-body font-body text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-label-tabular tabular-nums" placeholder="500" type="number"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar -->
+<div class="fixed bottom-0 left-0 md:left-1/2 md:-translate-x-1/2 w-full md:max-w-4xl z-50 pb-safe border-t border-border-day dark:border-border-night shadow-[0px_-4px_24px_rgba(0,0,0,0.04)] bg-surface-container-lowest/90 dark:bg-night-bento/90 backdrop-blur-2xl rounded-t-3xl border-x flex justify-between items-center h-20 px-6 md:px-xl">
+<div class="flex items-center gap-2 text-success dark:text-success font-medium font-callout text-callout">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Draft saved
+        </div>
+<button class="bg-primary dark:bg-primary-container text-on-primary dark:text-on-primary-container rounded-full px-6 py-2.5 font-semibold flex items-center gap-2 font-callout text-callout hover:brightness-110 transition-all active:scale-[0.97] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]">
+            Next
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</body></html>

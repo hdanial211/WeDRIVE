@@ -24,9 +24,9 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1788764817.1821208,
-    "seen": 1788765449.8960829,
-    "ast_hash": "782a04e9870edc9d923c74b57c9ea9c6",
+    "mtime": 1788855892.544958,
+    "seen": 1788877023.444834,
+    "ast_hash": "26eb8c128227325ff12eb1dafcc406a9",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788792165.9982553,
-    "seen": 1788792177.591946,
-    "ast_hash": "cb70ce9c61dffdd96a9e0c40b2d76e98",
+    "mtime": 1788878796.6076508,
+    "seen": 1788878805.603689,
+    "ast_hash": "393e638d22639333d175beedfda354c9",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -660,9 +660,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788791875.4805396,
-    "seen": 1788792177.59198,
-    "ast_hash": "3b520afbdef5239c15b077b611d036cf",
+    "mtime": 1788878351.0849717,
+    "seen": 1788878384.962487,
+    "ast_hash": "935724be715ee2a3e564b24bf60726b8",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11202,15 +11202,15 @@
     "semantic_hash": ""
   },
   ".agents/DESIGN.md": {
-    "mtime": 1788698330.6566663,
-    "seen": 1788698453.80739,
-    "ast_hash": "b4f60433981a558af976efe28e304efe",
+    "mtime": 1788877432.6066082,
+    "seen": 1788877644.665771,
+    "ast_hash": "33b019b8864b8cc137e83da0b0a2e6b7",
     "semantic_hash": ""
   },
   ".agents/workflows/stitch_generation.md": {
-    "mtime": 1788693637.443484,
-    "seen": 1788694329.994604,
-    "ast_hash": "f511dd5322b7aaed46bb30acef3cfc7e",
+    "mtime": 1788878161.8469477,
+    "seen": 1788878384.962425,
+    "ast_hash": "8fbc9011ddc55f9c340a59687e0e6bb1",
     "semantic_hash": ""
   },
   "tests/e2e/11_operations_lang.spec.js": {
@@ -11262,9 +11262,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/01_core_rules.md": {
-    "mtime": 1788791843.2958512,
-    "seen": 1788792177.591918,
-    "ast_hash": "888674533ed5b9ce18bdae68f00e41b7",
+    "mtime": 1788878760.1216335,
+    "seen": 1788878805.603633,
+    "ast_hash": "98340428546f3020edaa16d67648929b",
     "semantic_hash": ""
   },
   ".agents/rules/02_apple_hig_design_system.md": {
@@ -11274,9 +11274,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/03_apple_hig_components.md": {
-    "mtime": 1788695496.1380918,
-    "seen": 1788695698.367588,
-    "ast_hash": "f52901ecab5c0a31feb55924b0b9f6a2",
+    "mtime": 1788878145.2573435,
+    "seen": 1788878384.962398,
+    "ast_hash": "4b72c8428c04f71f3af7e492bc40ecd2",
     "semantic_hash": ""
   },
   ".agents/rules/04_navigation_and_ui.md": {
@@ -11298,9 +11298,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/07_stitch_design_system.md": {
-    "mtime": 1788695566.4353406,
-    "seen": 1788695698.367599,
-    "ast_hash": "f446ddd5760d10734d326be5c25c2027",
+    "mtime": 1788878154.3005514,
+    "seen": 1788878384.962401,
+    "ast_hash": "bd40c76c881e087810ea14c8d9e50120",
     "semantic_hash": ""
   },
   ".agents/rules/08_playwright_testing.md": {
@@ -11328,9 +11328,9 @@
     "semantic_hash": ""
   },
   ".agents/PROJECT_STRUCTURE.md": {
-    "mtime": 1788791860.0549147,
-    "seen": 1788792177.591912,
-    "ast_hash": "2f0dcdfc4467705479b26bf14c67526d",
+    "mtime": 1788878345.4309616,
+    "seen": 1788878384.96238,
+    "ast_hash": "ed4fc89cd1a746c6547988c6fe5a297a",
     "semantic_hash": ""
   },
   ".agents/rules/12_max_content_limit.md": {
@@ -11406,15 +11406,15 @@
     "semantic_hash": ""
   },
   ".agents/rules/18_skills_and_workflows_protocol.md": {
-    "mtime": 1788701598.0169048,
-    "seen": 1788701735.5785248,
-    "ast_hash": "c2146e85caed08437dec7e7023ce473f",
+    "mtime": 1788878767.0280623,
+    "seen": 1788878805.603658,
+    "ast_hash": "3adea5344532fba555ad6e28f529eeba",
     "semantic_hash": ""
   },
   ".agents/rules/19_prompt_engineering_standard.md": {
-    "mtime": 1788701510.2131805,
-    "seen": 1788701735.578526,
-    "ast_hash": "38733badeec5d259d3126c2e8e3024c6",
+    "mtime": 1788878272.2089193,
+    "seen": 1788878384.962413,
+    "ast_hash": "f28417e0d86130066962edbae4b09608",
     "semantic_hash": ""
   },
   ".agents/skills/prompt-polisher/SKILL.md": {
@@ -11493,6 +11493,276 @@
     "mtime": 1788791769.6915689,
     "seen": 1788792177.5919318,
     "ast_hash": "02697d0af10fdb0b844c8ceaa7774245",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/1/step1_spesifikasi_preview.html": {
+    "mtime": 1788873915.2008085,
+    "seen": 1788877023.4449532,
+    "ast_hash": "50c89bed8e4c0c203c39ca68ebf24743",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/1/step2_studio360_preview.html": {
+    "mtime": 1788873915.2032545,
+    "seen": 1788877023.4449532,
+    "ast_hash": "7b2020ae915cea42789887b8f45f93b8",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/1/step3_pengesahan_preview.html": {
+    "mtime": 1788873915.2020745,
+    "seen": 1788877023.4449542,
+    "ast_hash": "b5efda985684d506cd3bad3643296d51",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/2/step1_spesifikasi_preview.html": {
+    "mtime": 1788873915.2104478,
+    "seen": 1788877023.4449542,
+    "ast_hash": "e8d839145d1bccbd00d8f008c5a7263b",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/2/step2_studio360_preview.html": {
+    "mtime": 1788873915.2129292,
+    "seen": 1788877023.4449549,
+    "ast_hash": "2371b4bfbb278eb758ff7ebbe04cef59",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/2/step3_pengesahan_preview.html": {
+    "mtime": 1788873915.2120397,
+    "seen": 1788877023.4449558,
+    "ast_hash": "5171361a547c176b1ad67bd450b82f1f",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/3/step1_spesifikasi_preview.html": {
+    "mtime": 1788873915.2076497,
+    "seen": 1788877023.4449558,
+    "ast_hash": "75d3d1cd07581218b086913946949c8a",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/3/step2_studio360_preview.html": {
+    "mtime": 1788873915.209559,
+    "seen": 1788877023.444957,
+    "ast_hash": "7da4668503f6e8cf3be560c559141ae1",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/3/step3_pengesahan_preview.html": {
+    "mtime": 1788873915.2085483,
+    "seen": 1788877023.444957,
+    "ast_hash": "78914ebf9005186709918a131cf262e6",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/4/index.html": {
+    "mtime": 1788873928.973216,
+    "seen": 1788877023.444958,
+    "ast_hash": "dcaaef0ebdf44caca4ef25cec3273f59",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/4/step1_spesifikasi_preview.html": {
+    "mtime": 1788873915.2045448,
+    "seen": 1788877023.444958,
+    "ast_hash": "e8d839145d1bccbd00d8f008c5a7263b",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/4/step2_studio360_preview.html": {
+    "mtime": 1788873915.2065198,
+    "seen": 1788877023.444959,
+    "ast_hash": "2371b4bfbb278eb758ff7ebbe04cef59",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/4/step3_pengesahan_preview.html": {
+    "mtime": 1788873915.2055724,
+    "seen": 1788877023.444959,
+    "ast_hash": "5171361a547c176b1ad67bd450b82f1f",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/5/3.1pro/step1_spesifikasi_preview.html": {
+    "mtime": 1788873915.084828,
+    "seen": 1788877023.444959,
+    "ast_hash": "eacee3e56445703872c2bcdbbaff68c1",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/5/3.8flash/step1_spesifikasi_preview.html": {
+    "mtime": 1788873914.6483123,
+    "seen": 1788877023.44496,
+    "ast_hash": "f147757263c62402dcfbb0823dbb4021",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/5/index.html": {
+    "mtime": 1788873928.9737601,
+    "seen": 1788877023.44496,
+    "ast_hash": "4cfc0bccbb225e445151f3876887f8fa",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/index.html": {
+    "mtime": 1788875605.6401427,
+    "seen": 1788877023.444961,
+    "ast_hash": "f71df53adcec917d053e0662440634f8",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_baru/step1_spesifikasi_preview.html": {
+    "mtime": 1788875301.0715237,
+    "seen": 1788877023.444961,
+    "ast_hash": "8235d03ec1c6bb8cc26b234fa169be41",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_baru/step2_studio360_preview.html": {
+    "mtime": 1788875587.086624,
+    "seen": 1788877023.444962,
+    "ast_hash": "76a85835dc8468935eb6b2deb6707868",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_baru/step3_pengesahan_preview.html": {
+    "mtime": 1788875864.2204108,
+    "seen": 1788877023.444962,
+    "ast_hash": "433817eadde42e392a22ff83ccf11279",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_lama/step1_spesifikasi_preview.html": {
+    "mtime": 1788875112.4874291,
+    "seen": 1788877023.444963,
+    "ast_hash": "f147757263c62402dcfbb0823dbb4021",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_lama/step2_studio360_preview.html": {
+    "mtime": 1788875416.2439742,
+    "seen": 1788877023.444972,
+    "ast_hash": "7da4668503f6e8cf3be560c559141ae1",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_lama/step3_pengesahan_preview.html": {
+    "mtime": 1788875710.5227754,
+    "seen": 1788877023.444972,
+    "ast_hash": "78914ebf9005186709918a131cf262e6",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/index.html": {
+    "mtime": 1788875341.4700513,
+    "seen": 1788877023.444973,
+    "ast_hash": "257f66fa429f3472996cba7ab5c3285e",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/1/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788871071.409871,
+    "seen": 1788877023.445034,
+    "ast_hash": "f3226815e634cf05ecec5a78607a09bb",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/1/step2_studio360_screenshot.png": {
+    "mtime": 1788871053.6118488,
+    "seen": 1788877023.445035,
+    "ast_hash": "83c67d1335c270631f19227b4ce5c518",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/1/step3_pengesahan_screenshot.png": {
+    "mtime": 1788871054.4584274,
+    "seen": 1788877023.445035,
+    "ast_hash": "c72b9d888a2d322f2e22b3683f15ad8b",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/2/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788871043.1701171,
+    "seen": 1788877023.445036,
+    "ast_hash": "43ee5b652136b864589d096d976c9206",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/2/step2_studio360_screenshot.png": {
+    "mtime": 1788871043.1749527,
+    "seen": 1788877023.4450371,
+    "ast_hash": "9d23170bb511f4ab60a4bd5da54aeec6",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/2/step3_pengesahan_screenshot.png": {
+    "mtime": 1788871043.177436,
+    "seen": 1788877023.4450371,
+    "ast_hash": "c72b9d888a2d322f2e22b3683f15ad8b",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/3/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788871401.2725437,
+    "seen": 1788877023.445038,
+    "ast_hash": "33ade4e55276f6ace2b1fe88daa49d64",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/3/step2_studio360_screenshot.png": {
+    "mtime": 1788871539.1935441,
+    "seen": 1788877023.445038,
+    "ast_hash": "2d7bae3b63e8b372c45784fe2792682d",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/3/step3_pengesahan_screenshot.png": {
+    "mtime": 1788871655.4400854,
+    "seen": 1788877023.445039,
+    "ast_hash": "a09d893b237e7af798702186a6a66b1e",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/4/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788870591.2739542,
+    "seen": 1788877023.445039,
+    "ast_hash": "43ee5b652136b864589d096d976c9206",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/4/step2_studio360_screenshot.png": {
+    "mtime": 1788870761.615264,
+    "seen": 1788877023.4450402,
+    "ast_hash": "9d23170bb511f4ab60a4bd5da54aeec6",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/4/step3_pengesahan_screenshot.png": {
+    "mtime": 1788869127.6751401,
+    "seen": 1788877023.4450402,
+    "ast_hash": "c72b9d888a2d322f2e22b3683f15ad8b",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/5/3.1pro/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788873602.590218,
+    "seen": 1788877023.445041,
+    "ast_hash": "d92579664810298eb956180f2b161574",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/5/3.8flash/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788873474.3871186,
+    "seen": 1788877023.445041,
+    "ast_hash": "dff6e184e123e7ec741a1169efcb2248",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_baru/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788875301.8852582,
+    "seen": 1788877023.445042,
+    "ast_hash": "b928d3b95e6938ae8e5dc5853e20280a",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_baru/step2_studio360_screenshot.png": {
+    "mtime": 1788875587.9905493,
+    "seen": 1788877023.445049,
+    "ast_hash": "2e47fdabcd201d528ebfa2ecdc10ea0c",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_baru/step3_pengesahan_screenshot.png": {
+    "mtime": 1788875865.1401885,
+    "seen": 1788877023.445049,
+    "ast_hash": "91623669544cc09852c163e1319aef92",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_lama/step1_spesifikasi_screenshot.png": {
+    "mtime": 1788875112.4899156,
+    "seen": 1788877023.44505,
+    "ast_hash": "dff6e184e123e7ec741a1169efcb2248",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_lama/step2_studio360_screenshot.png": {
+    "mtime": 1788875416.247337,
+    "seen": 1788877023.44505,
+    "ast_hash": "2d7bae3b63e8b372c45784fe2792682d",
+    "semantic_hash": ""
+  },
+  "STITCH UI PREVIEW/6/prompt_lama/step3_pengesahan_screenshot.png": {
+    "mtime": 1788875710.52707,
+    "seen": 1788877023.445051,
+    "ast_hash": "a09d893b237e7af798702186a6a66b1e",
+    "semantic_hash": ""
+  },
+  ".agents/rules/21_stitch_mcp_advanced_operations.md": {
+    "mtime": 1788877549.8776505,
+    "seen": 1788877644.665793,
+    "ast_hash": "53392116e200c825a226cbe2fb59e50a",
     "semantic_hash": ""
   }
 }

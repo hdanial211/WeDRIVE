@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pendaftaran Kereta Baharu - WeDRIVE Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .bento-card {
+            background-color: theme('colors.surface-container-lowest');
+            border-radius: 24px;
+            border: 1px solid theme('colors.border-day');
+            padding: theme('spacing.xl');
+        }
+
+        .input-field {
+            background-color: theme('colors.surface-container');
+            border: 1px solid theme('colors.border-day');
+            border-radius: 12px;
+            padding: 12px 16px;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: theme('colors.primary');
+            box-shadow: 0 0 0 2px theme('colors.primary-fixed');
+        }
+
+        .btn-primary {
+            background-color: theme('colors.primary-container');
+            color: theme('colors.on-primary-container');
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            background-color: theme('colors.surface-container');
+            color: theme('colors.on-surface');
+            border: 1px solid theme('colors.border-day');
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.97);
+        }
+
+        body {
+            background-color: #F5F5F7;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "inverse-surface": "#2f3132",
+                "success": "#34C759",
+                "on-tertiary-fixed": "#0c006a",
+                "surface-bright": "#FFFFFF",
+                "surface-container-high": "#E5E5EA",
+                "night-surface": "#000000",
+                "tertiary": "#4b49c9",
+                "outline": "#717785",
+                "on-error": "#ffffff",
+                "surface-container-low": "#FBFBFD",
+                "on-primary": "#ffffff",
+                "on-error-container": "#93000a",
+                "surface-container": "#eeeef0",
+                "error-container": "#ffdad6",
+                "tertiary-fixed": "#e2dfff",
+                "warning": "#FF9500",
+                "on-surface-variant": "#6E6E73",
+                "secondary-fixed-dim": "#c7c6cb",
+                "surface-dim": "#d9dadc",
+                "primary-fixed-dim": "#abc7ff",
+                "outline-variant": "#c1c6d6",
+                "on-secondary": "#ffffff",
+                "inverse-on-surface": "#f0f0f2",
+                "night-bento-subtle": "#1D1D20",
+                "secondary-container": "#e0dfe4",
+                "on-tertiary": "#ffffff",
+                "on-surface": "#1a1c1d",
+                "on-secondary-fixed-variant": "#46464b",
+                "surface": "#f9f9fb",
+                "background": "#f9f9fb",
+                "surface-container-highest": "#e2e2e4",
+                "surface-tint": "#005cbb",
+                "primary-fixed": "#d7e2ff",
+                "night-bento": "#161618",
+                "primary-container": "#0071e3",
+                "primary": "#0059b5",
+                "surface-container-lowest": "#ffffff",
+                "on-primary-container": "#ffffff",
+                "border-day": "rgba(0, 0, 0, 0.06)",
+                "secondary-fixed": "#e3e2e7",
+                "on-tertiary-fixed-variant": "#3631b4",
+                "on-background": "#1a1c1d",
+                "tertiary-container": "#6563e3",
+                "surface-variant": "#e2e2e4",
+                "tertiary-fixed-dim": "#c2c1ff",
+                "on-secondary-container": "#626267",
+                "error": "#FF3B30",
+                "secondary": "#5e5e63",
+                "on-tertiary-container": "#fefaff",
+                "on-primary-fixed-variant": "#00458f",
+                "on-secondary-fixed": "#1a1b1f",
+                "on-primary-fixed": "#001b3f",
+                "border-night": "rgba(255, 255, 255, 0.08)",
+                "inverse-primary": "#abc7ff"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "unit": "4px",
+                "sm": "8px",
+                "md": "16px",
+                "lg": "20px",
+                "xl": "24px",
+                "xs": "4px",
+                "gutter": "16px",
+                "xxl": "32px",
+                "container-padding": "24px"
+              },
+              "fontFamily": {
+                "caption": ["Inter"],
+                "title-2": ["Inter"],
+                "title-3": ["Inter"],
+                "large-title": ["Inter"],
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label-tabular": ["Inter"],
+                "callout": ["Inter"],
+                "large-title-mobile": ["Inter"],
+                "footnote": ["Inter"],
+                "title-1": ["Inter"]
+              },
+              "fontSize": {
+                "caption": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                "title-2": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.022em", "fontWeight": "700"}],
+                "title-3": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600"}],
+                "large-title": ["34px", {"lineHeight": "41px", "letterSpacing": "-0.035em", "fontWeight": "800"}],
+                "headline": ["17px", {"lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+                "body": ["15px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400"}],
+                "label-tabular": ["14px", {"lineHeight": "16px", "fontWeight": "600"}],
+                "callout": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500"}],
+                "large-title-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+                "footnote": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                "title-1": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.028em", "fontWeight": "800"}]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="font-body text-body text-on-surface antialiased min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="bg-surface/80 backdrop-blur-[20px] saturate-[1.8] sticky top-0 z-50 border-b border-border-day">
+<div class="max-w-7xl mx-auto px-lg py-md flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary font-bold text-[28px]">directions_car</span>
+<span class="font-title-2 text-title-2 font-bold text-on-surface">WeDRIVE</span>
+</div>
+<h1 class="font-headline text-headline text-on-surface hidden md:block">Pendaftaran Kereta Baharu</h1>
+<button class="btn-secondary flex items-center gap-xs text-sm">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Batal &amp; Kembali</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col w-full max-w-5xl mx-auto px-container-padding py-xl gap-gutter">
+<!-- Stepper -->
+<div class="flex items-center justify-center py-md mb-md">
+<div class="flex items-center gap-sm">
+<div class="flex items-center gap-xs">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-caption text-caption">1</div>
+<span class="font-headline text-headline text-primary-container">Spesifikasi &amp; Tarif</span>
+</div>
+<div class="w-12 h-[1px] bg-border-day"></div>
+<div class="flex items-center gap-xs opacity-50">
+<div class="w-6 h-6 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-caption text-caption">2</div>
+<span class="font-headline text-headline text-on-surface">Studio Visual &amp; Galeri Foto</span>
+</div>
+<div class="w-12 h-[1px] bg-border-day"></div>
+<div class="flex items-center gap-xs opacity-50">
+<div class="w-6 h-6 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-caption text-caption">3</div>
+<span class="font-headline text-headline text-on-surface">Semakan &amp; Pengesahan</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Card 1: Maklumat Asas -->
+<section class="bento-card md:col-span-12">
+<h2 class="font-title-3 text-title-3 mb-md">Maklumat Asas</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Pengeluar</label>
+<select class="input-field font-body text-body">
+<option>Perodua</option>
+<option>Proton</option>
+<option>Toyota</option>
+<option>Honda</option>
+<option>BMW</option>
+<option>Mercedes-Benz</option>
+</select>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Model &amp; Varian</label>
+<input class="input-field font-body text-body" placeholder="Cth: Myvi 1.5 AV" type="text"/>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Nombor Plat JPJ</label>
+<input class="input-field font-body text-body" placeholder="Cth: ABC 1234" type="text"/>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Tahun Buatan</label>
+<input class="input-field font-body text-body" placeholder="Cth: 2023" type="number"/>
+</div>
+<div class="md:col-span-2">
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Kategori Kenderaan</label>
+<select class="input-field font-body text-body">
+<option>Sedan</option>
+<option>SUV</option>
+<option>MPV</option>
+<option>Hatchback</option>
+<option>Truck</option>
+<option>Coupe</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Card 2: Trenkuasa & Keselesaan -->
+<section class="bento-card md:col-span-12">
+<h2 class="font-title-3 text-title-3 mb-md">Trenkuasa &amp; Keselesaan</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Transmisi</label>
+<select class="input-field font-body text-body">
+<option>Auto</option>
+<option>Manual</option>
+</select>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Jenis Bahan Api</label>
+<select class="input-field font-body text-body">
+<option>Petrol</option>
+<option>Diesel</option>
+<option>Hybrid</option>
+<option>EV</option>
+</select>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Kapasiti Penumpang</label>
+<input class="input-field font-body text-body" placeholder="Cth: 5" type="number"/>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Saiz Enjin / Kuasa (cc/hp)</label>
+<input class="input-field font-body text-body" placeholder="Cth: 1500cc" type="text"/>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Warna Pilihan</label>
+<input class="input-field font-body text-body" placeholder="Cth: Granite Grey" type="text"/>
+</div>
+</div>
+</section>
+<!-- Card 3: Struktur Tarif & Deposit -->
+<section class="bento-card md:col-span-12 mb-xxl">
+<h2 class="font-title-3 text-title-3 mb-md">Struktur Tarif &amp; Deposit</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Kadar Harian (RM/hari)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-on-surface-variant font-label-tabular text-label-tabular">RM</span>
+<input class="input-field pl-10 font-label-tabular text-label-tabular" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Kadar Mingguan (RM/minggu)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-on-surface-variant font-label-tabular text-label-tabular">RM</span>
+<input class="input-field pl-10 font-label-tabular text-label-tabular" placeholder="0.00" type="number"/>
+</div>
+</div>
+<div>
+<label class="block font-caption text-caption text-on-surface-variant mb-xs">Deposit Keselamatan (RM)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-on-surface-variant font-label-tabular text-label-tabular">RM</span>
+<input class="input-field pl-10 font-label-tabular text-label-tabular" placeholder="0.00" type="number"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Sticky Action Footer -->
+<footer class="bg-surface/90 backdrop-blur-[20px] border-t border-border-day sticky bottom-0 z-50 p-md pb-safe">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-md">
+<button class="btn-secondary w-full sm:w-auto">
+                Batal
+            </button>
+<span class="font-footnote text-footnote text-on-surface-variant text-center">
+                Draf disimpan secara automatik
+            </span>
+<button class="btn-primary w-full sm:w-auto flex items-center justify-center gap-xs">
+<span>Seterusnya: Studio Visual &amp; Galeri</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</footer>
+</body></html>

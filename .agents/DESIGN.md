@@ -1,46 +1,48 @@
 ---
-name: WeDRIVE Lumina & Apple HIG Precision
+name: WeDRIVE Apple HIG & Obsidian Precision
 colors:
-  surface: '#F5F5F7'
-  surface-dim: '#E5E5EA'
-  surface-bright: '#FFFFFF'
-  surface-container-lowest: '#FFFFFF'
-  surface-container-low: '#FBFBFD'
-  surface-container: '#F2F2F7'
-  surface-container-high: '#E5E5EA'
-  surface-container-highest: '#D1D1D6'
-  on-surface: '#1D1D1F'
-  on-surface-variant: '#6E6E73'
-  inverse-surface: '#000000'
-  inverse-on-surface: '#F5F5F7'
-  outline: 'rgba(0, 0, 0, 0.08)'
-  outline-variant: 'rgba(0, 0, 0, 0.04)'
-  surface-tint: '#0071E3'
   primary: '#0071E3'
   on-primary: '#FFFFFF'
-  primary-container: '#E1F0FF'
-  on-primary-container: '#004085'
+  primary-container: '#0071E3'
+  on-primary-container: '#FFFFFF'
   inverse-primary: '#2997FF'
   secondary: '#86868B'
   on-secondary: '#FFFFFF'
-  secondary-container: '#E8E8ED'
-  on-secondary-container: '#1D1D1F'
+  secondary-container: '#1D1D20'
+  on-secondary-container: '#F5F5F7'
   tertiary: '#5856D6'
   on-tertiary: '#FFFFFF'
-  tertiary-container: '#EFEBFF'
-  on-tertiary-container: '#2C2A85'
+  tertiary-container: '#2C2A85'
+  on-tertiary-container: '#EFEBFF'
+  surface: '#000000'
+  surface-dim: '#0E0E10'
+  surface-bright: '#1D1D20'
+  surface-container-lowest: '#000000'
+  surface-container-low: '#0E0E10'
+  surface-container: '#161618'
+  surface-container-high: '#1D1D20'
+  surface-container-highest: '#262629'
+  on-surface: '#FFFFFF'
+  on-surface-variant: '#A1A1A6'
+  inverse-surface: '#F5F5F7'
+  inverse-on-surface: '#1D1D1F'
+  outline: 'rgba(255, 255, 255, 0.12)'
+  outline-variant: 'rgba(255, 255, 255, 0.06)'
+  surface-tint: '#0071E3'
   error: '#FF3B30'
   on-error: '#FFFFFF'
-  error-container: '#FFECEB'
-  on-error-container: '#991B1B'
+  error-container: '#991B1B'
+  on-error-container: '#FFECEB'
   success: '#34C759'
   warning: '#FF9500'
-  muted-surface: '#F2F2F7'
-  border-hairline: 'rgba(0, 0, 0, 0.06)'
-  night-surface: '#000000'
+  obsidian-base: '#000000'
   night-bento: '#161618'
   night-bento-subtle: '#1D1D20'
   night-border: 'rgba(255, 255, 255, 0.08)'
+  electric-blue: '#0071E3'
+  status-success-glow: 'rgba(52, 199, 89, 0.15)'
+  status-warning-glow: 'rgba(255, 149, 0, 0.15)'
+  status-error-glow: 'rgba(255, 59, 48, 0.15)'
 typography:
   large-title:
     fontFamily: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif
@@ -124,37 +126,44 @@ spacing:
   lg: 20px
   xl: 24px
   xxl: 32px
-  container-padding: 24px
+  container-padding-desktop: 24px
+  container-padding-mobile: 16px
   gutter: 16px
+  bento-gap: 16px
 ---
 
-# WeDRIVE Lumina & Apple Human Interface Guidelines (HIG) Design System
+# WeDRIVE Apple HIG & Dark Obsidian Design System
 
-## 1. Brand Philosophy & Aesthetics
-- **Bukan Templat AI Murahan**: Dilarang meletakkan visual murah atau istilah cereka seperti sains fiksyen atau protokol hospital palsu. Semua teks dan metrik mewakili operasi mobiliti sebenar: Pilihan Kereta, Penyewa Berdaftar, Deposit Keselamatan, Cukai JPJ, dan Invois Cukai.
-- **Bahasa Melayu Moden Kontemporari (Era 2026)**: Menggunakan laras bahasa aplikasi teknologi Malaysia terkini (Grab, Setel, Trevo, Wahdah) yang santai, segar, dan mesra pengguna. Mematuhi senarai hitam istilah bahasa Melayu moden yang digariskan dalam [`.agents/rules/11_language_standards.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md).
-- **Kedalaman Kaca & Sempadan Sub-Piksel**: Menggunakan bahan nipis Apple Glassmorphism (`backdrop-filter: blur(20px) saturate(180%)`), bayang-bayang lembut (`box-shadow: 0 4px 24px rgba(0,0,0,0.04)`), dan sempadan sub-piksel `rgba(0,0,0,0.06)` (Day) atau `rgba(255,255,255,0.08)` (Night).
+## 1. Overview & Brand Identity
+WeDRIVE is an ultra-premium, AI-orchestrated mobility and luxury vehicle rental platform. Its aesthetic merges **Apple Human Interface Guidelines (HIG) Precision** with **Dark Obsidian Executive Minimalism** (inspired by Apple Developer, Linear, and Stripe).
+- **Core Mood:** Authoritative, calm, clutter-free, spatial elegance, precision-engineered.
+- **Language Standard:** Contemporary Malaysian Modern Malay (Standard BM 2026). Strictly ban obsolete/archaic words (*Armada, Fleet, Wahana, Kabin, Kokpit, Prapapar*). Use natural enterprise automotive terms (*Kenderaan, Spesifikasi, Tarif, Ruang Pemandu, Studio Visual, Pengesahan Rasmi*).
 
-## 2. Geometri & Susun Atur Bento
-1. **Kad Squircle 24px/28px**: Semua bekas kad bento utama menggunakan radius `24px` (kad skrin) dan `28px` (modal / lembaran helaian).
-2. **Kapsul & Pil 9999px**: Butang tindakan utama, suis filter chip, dan lencana status menggunakan kapsul penuh `9999px`.
-3. **Butang Ikon Bulat 1:1 Sempurna**: Butang tanpa teks (cth: butang suis tema, butang pangkah modal) WAJIB berbentuk bulatan 1:1 sempurna (`aspect-ratio: 1/1; border-radius: 50%`).
+## 2. Colors & Surface Depth Hierarchy
+- **Canvas Base (`#000000` / `#0E0E10`):** OLED-optimized pure dark environment.
+- **Bento Card Surfaces (`#161618` & `#1D1D20`):** Modular containers with hairline borders (`rgba(255, 255, 255, 0.08)`).
+- **Primary Accent (`#0071E3` Apple Blue):** Reserved strictly for primary intent actions, active stepper badges, and focused borders.
+- **Restrained Glassmorphism:** Translucent materials (`backdrop-filter: blur(20px) saturate(180%)`) are strictly reserved for floating top headers, floating stepper capsules, and bottom action docks. Main content cards remain opaque to guarantee 100% legibility.
 
-## 3. Tipografi Tabular & Angka
-- Semua nombor harga (RM), tarikh, plat pendaftaran, dan kiraan masa WAJIB menggunakan `font-variant-numeric: tabular-nums` agar sejajar secara menegak tanpa goyangan visual (*jitter*).
+## 3. Strict Geometry Standard (Zero Oval Rule)
+1. **Circular Icon-Only Buttons:** MUST have a strict 1:1 aspect ratio (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height; display: flex; align-items: center; justify-content: center;`). Never allow horizontal stretch into ovals.
+2. **Text Buttons:** MUST expand symmetrically into 9999px pills (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important; padding: 12px 24px;`).
+3. **Bento Cards:** Strict `24px` squircle corners for content cards; `28px` for modals and visual overlay sheets.
+4. **Input Fields:** `12px` to `14px` squircle corners with 1px border and 2px ambient focus glow.
 
-## 4. Fizik Pergerakan Apple
-- Transisi: `cubic-bezier(0.16, 1, 0.3, 1)`.
-- Maklum balas taktil: `:active { transform: scale(0.97); }`.
+## 4. Typography & Tabular Standard
+- **Primary Typefaces:** Apple San Francisco (`-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif`).
+- **Tabular Figures:** All prices (RM), dates, counters, durations, and vehicle plate numbers MUST use `font-variant-numeric: tabular-nums` to eliminate horizontal jitter during live updates.
 
-## 5. Integrasi Stitch MCP & Reka Bentuk Gemini 3.8 UHQ
-- Semua perincian integrasi Stitch MCP, konfigurasi projek (`projectId: 1862124494843018493`), model `GEMINI_3_1_PRO`, dan alur kerja penjanaan antaramuka terkandung sepenuhnya dalam dokumen autoriti tunggal di [`.agents/rules/07_stitch_design_system.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/07_stitch_design_system.md).
+## 5. Interaction & Apple Physical Easing
+- **Scale Feedback:** Soft haptic button depression on press (`transform: scale(0.97)`).
+- **Apple Physical Curve:** `cubic-bezier(0.16, 1, 0.3, 1)` with `0.25s` duration.
+- **Single Source of Action:** Exactly ONE official primary action dock. Never place duplicate save, draft, or next buttons in the same view.
 
-## 6. Laman Rujukan Rasmi Apple Developer Design & Sumber Figma MCP
-- Senarai lengkap 8 portal Apple Developer rasmi dan konfigurasi pelayan Figma MCP (`https://mcp.figma.com/mcp`) terkandung secara berpusat dalam [02_apple_hig_design_system.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md).
-
-## 7. Had Kandungan Fail Mandatori (Strict Max 12,000 Characters Limit)
-- Semua fail peraturan (`.agents/rules/*.md`), panduan kemahiran (`skills/*`), dan dokumen seni bina sistem WAJIB dihadkan kepada maksimum **12,000 aksara** per fail. Bebas mengembangkan sehingga 20–30 fail peraturan modular demi pemahaman AI yang mendalam dan sifar pemotongan konteks (Rujuk [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md)).
-
-
-
+## 6. Do's and Don'ts
+- **DO** use `tabular-nums` for all numbers, monetary values, and time counters.
+- **DO** maintain a minimum `44px x 44px` touch target for all interactive elements on mobile viewports.
+- **DO** keep body bottom padding (`padding-bottom: 130px`) so fixed bottom docks never obscure content.
+- **DON'T** ever allow oval or stretched circular buttons.
+- **DON'T** provide duplicate action buttons ("Simpan" at the top header AND "Simpan" at the bottom).
+- **DON'T** use plain generic colors (e.g. raw saturated red/blue); always use curated Apple HSL tokens.

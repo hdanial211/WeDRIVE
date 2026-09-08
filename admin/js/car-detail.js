@@ -11,6 +11,9 @@ let allCars = [];
 let activeCar = null;
 let currentMode = 'exterior'; // 'exterior' | 'interior' | 'gallery'
 
+// Dynamic Model Registry (loaded from registry.json — Zero Hardcode)
+let modelRegistry = null;
+
 // 360 Exterior Spin State
 let exteriorFrames = [];
 let currentFrameIndex = 0;
@@ -27,6 +30,61 @@ let isCockpitAutoDrift = false;
 // Photo Gallery State
 let galleryImages = [];
 let currentGalleryIndex = 0;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   0. DYNAMIC MODEL REGISTRY ENGINE (Zero Hardcode — Auto-Detect)
+   ───────────────────────────────────────────────────────────────────────────── */
+async function loadModelRegistry() {
+  if (modelRegistry) return modelRegistry;
+  try {
+    const res = await fetch(IMG_BASE + 'registry.json');
+    modelRegistry = await res.json();
+    return modelRegistry;
+  } catch (err) {
+    console.warn('[360° Registry] Could not load registry.json:', err);
+    modelRegistry = {};
+    return modelRegistry;
+  }
+}
+
+/**
+ * Smart-match a car record to its registry entry by scoring word overlap.
+ * Returns { key, entry } or null if no match found (minimum 2 matching words).
+ */
+function findRegistryEntry(car) {
+  if (!modelRegistry || !car || !car.name) return null;
+
+  const carWords = car.name.toLowerCase().split(/[\s\-]+/);
+  let bestKey = null;
+  let bestEntry = null;
+  let bestScore = 0;
+
+  for (const [key, entry] of Object.entries(modelRegistry)) {
+    // Exact label match — instant return
+    if (car.name === entry.label) return { key, entry };
+
+    const labelWords = entry.label.toLowerCase().split(/[\s\-]+/);
+    let score = 0;
+    for (const cw of carWords) {
+      if (labelWords.includes(cw)) score++;
+    }
+
+    if (score > bestScore && score >= 2) {
+      bestScore = score;
+      bestKey = key;
+      bestEntry = entry;
+    }
+  }
+
+  return bestEntry ? { key: bestKey, entry: bestEntry } : null;
+}
+
+/**
+ * Check if a car has 360° turntable assets via registry.
+ */
+function carHas360(car) {
+  return findRegistryEntry(car) !== null;
+}
 
 // Resolve any image string to a valid src
 function resolveImgSrc(img) {
@@ -46,7 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initVehicleStudio() {
   try {
-    const data = await window.WeDriveAPI.getAdminData();
+    // Load model registry and car data in parallel (Zero Hardcode)
+    const [, data] = await Promise.all([
+      loadModelRegistry(),
+      window.WeDriveAPI.getAdminData()
+    ]);
     allCars = data.car || [];
 
     if (allCars.length === 0) {
@@ -75,7 +137,7 @@ function renderFleetSelector() {
   container.innerHTML = allCars.map(c => {
     const isActive = c.id === selectedCarId;
     const thumbSrc = c.images && c.images.length > 0 ? resolveImgSrc(c.images[0]) : '';
-    const has360Badge = (c.has_360 || c.has360 || (c.name && c.name.includes('BMW'))) ?
+    const has360Badge = carHas360(c) ?
       '<span class="badge-360 fs-9 py-2 px-6">360°</span>' : '';
 
     return `
@@ -196,7 +258,7 @@ function setText(id, text) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   3. STUDIO 360° EXTERIOR SPIN ENGINE
+   3. STUDIO 360° EXTERIOR SPIN ENGINE (FULLY DYNAMIC — ZERO HARDCODE)
    ───────────────────────────────────────────────────────────────────────────── */
 function setupExterior360(car) {
   const stageImg = document.getElementById('studio-canvas-stage');
@@ -204,37 +266,27 @@ function setupExterior360(car) {
   exteriorFrames = [];
   currentFrameIndex = 0;
 
-  const isBMW = car.name.includes('BMW');
-  const isMerc = car.name.includes('Mercedes') && car.name.includes('GLA');
-  const isGolf = car.name.includes('Golf');
+  // Dynamic lookup from registry.json — no hardcoded car names
+  const match = findRegistryEntry(car);
 
-  // Build high-res spin frame sequence (Carsome 200-frame standardized turntable)
-  // frame-125 is true front (0°), frame-175 is right profile (90°),
-  // frame-025 is rear (180°), frame-075 is left profile (270°).
-  const frontOffset = 125;
-  const sampleCount = 36;
-  const totalFrames = 200;
+  if (match) {
+    // Derive base model folder from sourceJson (e.g. "Sedan/2023 BMW 320i M Sport 2.0")
+    const basePath = match.entry.sourceJson.replace(/\/source\.json$/i, '');
 
-  if (isBMW) {
+    // Standard Carsome 200-frame turntable parameters:
+    // frame-125 = true front (0°), frame-175 = right (90°),
+    // frame-025 = rear (180°), frame-075 = left (270°).
+    const frontOffset = 125;
+    const sampleCount = 36;
+    const totalFrames = 200;
+
     for (let i = 0; i < sampleCount; i++) {
       const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
       const padded = String(frameNum).padStart(3, '0');
-      exteriorFrames.push(`Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-${padded}.jpg`);
-    }
-  } else if (isMerc) {
-    for (let i = 0; i < sampleCount; i++) {
-      const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
-      const padded = String(frameNum).padStart(3, '0');
-      exteriorFrames.push(`SUV/2023 Mercedes-Benz GLA250 AMG Line 2.0/exterior/full-res/frame-${padded}.jpg`);
-    }
-  } else if (isGolf) {
-    for (let i = 0; i < sampleCount; i++) {
-      const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
-      const padded = String(frameNum).padStart(3, '0');
-      exteriorFrames.push(`Hatchback/2022 Volkswagen Golf GTI 2.0/exterior/full-res/frame-${padded}.jpg`);
+      exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
     }
   } else if (car.images && car.images.length > 0) {
-    // If standard car with gallery photos, duplicate images across 12 angles
+    // Fallback for cars without 360° turntable assets: cycle gallery images
     for (let i = 0; i < 12; i++) {
       const imgIdx = i % car.images.length;
       exteriorFrames.push(car.images[imgIdx]);
@@ -393,16 +445,15 @@ document.addEventListener('fullscreenchange', () => {
    4. STUDIO 360° INTERIOR VIRTUAL COCKPIT ENGINE (CONTINUOUS 3D PANORAMA)
    ───────────────────────────────────────────────────────────────────────────── */
 function getCarModelKey(car) {
-  if (!car || !car.name) return 'bmw';
-  const n = car.name.toLowerCase();
-  if (n.includes('bmw')) return 'bmw';
-  if (n.includes('gla') || (n.includes('mercedes') && n.includes('gla'))) return 'gla';
-  if (n.includes('cls') || (n.includes('mercedes') && n.includes('cls'))) return 'cls350';
-  if (n.includes('alphard')) return 'alphard';
-  if (n.includes('golf')) return 'golf';
-  if (n.includes('ranger') || n.includes('raptor')) return 'ranger';
-  if (n.includes('axia av') || n.includes('2025')) return 'axiaAv';
-  if (n.includes('axia')) return 'axia';
+  // Dynamic lookup from registry — Zero Hardcode
+  const match = findRegistryEntry(car);
+  if (match) return match.key;
+
+  // Ultimate fallback: first key in registry or 'bmw'
+  if (modelRegistry) {
+    const keys = Object.keys(modelRegistry);
+    return keys.length > 0 ? keys[0] : 'bmw';
+  }
   return 'bmw';
 }
 

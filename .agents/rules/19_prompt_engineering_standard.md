@@ -43,5 +43,11 @@ Baris 3: [Aliran Interaksi Visual]
 
 ---
 
+## 5B. Piawaian Master Prompt Stitch MCP (Google Gemini 3.8 Flash)
+- Setiap kali AI menjana antaramuka melalui Google Stitch MCP, AI **WAJIB** menggunakan Master Parameter Payload (`modelId: "GEMINI_3_8_FLASH"`, `deviceType: "AGNOSTIC"`, `projectId: "1862124494843018493"`, `designSystem: "assets/e051cb5fe5c44d05bd007cde43ddad8e"`) dan Master Prompt Architecture 7-Blok rasmi.
+- Rujukan terperinci: [07_stitch_design_system.md](07_stitch_design_system.md) (Seksyen 1B) dan [.agents/workflows/stitch_generation.md](.agents/workflows/stitch_generation.md).
+
+---
+
 ## 6. Had Kandungan & Sifat Modular
 - Fail ini tertakluk kepada had siling **maksimum 12,000 aksara** seperti yang termaktub dalam [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md).

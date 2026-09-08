@@ -5462,6 +5462,44 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.7.8 Fix Safari BFCache blank screen navigation and define 5 software engineering team roles in rule 20`
   - Tag Versi: `6.7.8`
 
+---
+
+## 🚀 [MINOR UPDATE] 213. Audit Menyeluruh Hab Ejen Pintar, Peraturan 21 Stitch MCP Lanjutan, Mandatori Penggunaan Aktif MCP & Segerak GitHub Automatik (v6.8.0)
+
+- **Punca Keperluan & Arahan Pengguna**:
+  - Pengguna meminta semakan komprehensif ke atas semua fail ejen pintar bagi memastikan semuanya terkini tanpa sebarang pertindihan:
+    > *"saya nak awak audit semua file agents pastikan semua up to date ...jangan ada duplicate"*
+  - Pengguna turut menegur dan mengarahkan supaya alatan MCP dan Skills digunakan sepenuhnya secara aktif semasa pengkodan serta penyegerakan ke GitHub dijalankan setiap kali tugasan selesai:
+    > *"so skrg ni setiap kali ubah atau buat coding wajib gunakan kan fully skills n mcp n tools ...supaya kerja teratur rapi n kemas saya nak awak igt sampai bila2 setiap kali lepas saya prompt n update jugak github for the latest jangan lupa ..kalau awak nak tulis dalam agent pon boleh"*
+
+- **Tindakan Pembaikan & Penyelarasan**:
+  - **1. Penciptaan Peraturan 21 Stitch MCP Lanjutan (`.agents/rules/21_stitch_mcp_advanced_operations.md`)**:
+    - Mendokumentasikan protokol kualiti pasca-prompt (*Post-Prompt Generation Lifecycle*) melangkaui penjanaan asas:
+      - `get_screen`: Muat turun kod HTML dan tangkapan skrin rasmi ke sandbox `STITCH UI PREVIEW/`.
+      - `edit_screens`: Pembedahan AI pantas bagi membaiki herotan bujur (Zero Oval) dan membuang butang bertindan tanpa menjana semula keseluruhan skrin.
+      - `generate_variants`: Penerokaan variasi reka bentuk halus mod `REFINE` terhad kepada susun atur kad Bento.
+      - `apply_design_system`: Penguatkuasaan aset rasmi WeDRIVE (`assets/e051cb5fe5c44d05bd007cde43ddad8e`).
+  - **2. Penyeragaman Model Generasi Rasmi `GEMINI_3_8_FLASH`**:
+    - Memadamkan sebarang rujukan lapuk (`GEMINI_3_1_PRO`, `GEMINI_3_PRO`, `GEMINI_3_FLASH`) merentas semua fail peraturan, alur kerja, dan master prompt payload.
+    - Mengunci model tunggal pengeluaran kepada `GEMINI_3_8_FLASH` dengan `deviceType: "AGNOSTIC"` merentas ekosistem Apple 3-Peranti.
+  - **3. Audit Penuh & Pembetulan Hash Aset Stitch (`assets/e051cb5fe5c44d05bd007cde43ddad8e`)**:
+    - Mengemas kini baki hash lapuk dalam `19_prompt_engineering_standard.md` (Baris 47) kepada aset aktif terkini.
+    - Menyelaraskan indeks fail peraturan kepada 21 fail di dalam `01_core_rules.md`, `.agents/PROJECT_STRUCTURE.md`, dan `docs/PROJECT_STRUCTURE.md`.
+  - **4. Penguatkuasaan Mutlak Mandatori Pemakaian Aktif MCP & Skills**:
+    - Meminda Seksyen 0 Peraturan 01 (`01_core_rules.md`) dan Seksyen 4 Peraturan 18 (`18_skills_and_workflows_protocol.md`) bagi mewajibkan pemanggilan aktif alatan MCP (Context7, Stitch, Chrome DevTools, Playwright, Graphify).
+    - Menetapkan kewajipan penyegerakan automatik ke GitHub melalui alur kerja `/release_push` setiap kali arahan pengguna selesai dilaksanakan dan diuji.
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - **Ujian Automasi Playwright CLI**: Pelaksanaan `cd tests && npx playwright test` mengesahkan **48/48 Ujian Lulus (100% Pass Rate)** dalam masa 1.8 minit.
+  - **Audit Had Siling Aksara 12,000**: Kesemua 21 fail peraturan `.agents/rules/*.md` disahkan $\le 12,000$ aksara (`wc -m .agents/rules/*.md` mencatat jumlah 103,151 aksara).
+  - **Penyelarasan Graf Pengetahuan Graphify**: Berjaya dibina semula menerusi `graphify update .` (3,027 nod, 5,543 sambungan, 208 komuniti).
+  - **Panggilan Langsung Context7 MCP**: Disahkan berfungsi dengan resolusi pantas `/supabase/supabase` dan pertanyaan dokumentasi rasmi.
+
+- **Maklumat Git**:
+  - Commit: `6.8.0 Comprehensive agent audit, advanced Stitch MCP operations in rule 21, and mandatory active MCP GitHub sync`
+  - Tag Versi: `6.8.0`
+
+
 
 
 

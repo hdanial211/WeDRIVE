@@ -90,6 +90,21 @@ Bagi menjamin kualiti kejuruteraan perisian bertaraf Apple Developer dan kejayaa
 
 ---
 
-## 4. Polisi Sifar Pengabaian & Penguatkuasaan Sesi
-- Ejen AI tertakluk secara mutlak kepada protokol ini. Sebarang kegagalan mematuhi aliran instrumen di atas dianggap sebagai pelanggaran protokol integriti sistem.
+## 4. Mandatori Penggunaan Aktif MCP & Skills (Strict Active Execution & Auto-Push)
+
+- **Sifar Kebergantungan Pasif (Zero Passive Coding):**
+  - Ejen AI **DILARANG SAMA SEKALI** menulis atau mengubah kod berdasarkan andaian atau tekaan memori dalaman apabila alatan MCP dan instrumen telah disediakan.
+  - **Context7 MCP:** WAJIB dipanggil (`resolve-library-id` $\to$ `query-docs`) untuk sebarang persoalan sintaks pustaka luaran (Supabase JS, Flatpickr, Three.js, Playwright, Anime.js).
+  - **Stitch MCP:** WAJIB digunakan mengikut kitaran 5-Fasa Sandbox `STITCH UI PREVIEW/` sebelum menyentuh kod pengeluaran.
+  - **Chrome DevTools MCP:** WAJIB digunakan untuk memeriksa keadaan visual pengguna sebenar pada tab aktif (MacBook, iPad, iPhone) sebelum dan selepas ubah kod.
+  - **Playwright CLI:** WAJIB dijalankan selepas sebarang pengkodan (`cd tests && npx playwright test`) dengan kadar kelulusan mutlak 100%.
+
+- **Penyegerakan GitHub Mandatori (Mandatory GitHub Auto-Sync):**
+  - Setiap kali sesuatu tugasan atau arahan pengguna selesai dilaksanakan, disahkan, dan lulus ujian automasi, AI **WAJIB** menjalankan alur kerja `/release_push` untuk menolak (*push*) versi terkini ke repositori GitHub `hdanial211/WeDRIVE`.
+  - Langkah ini menjamin cawangan `main` di GitHub sentiasa berada pada versi paling mutakhir (*always up-to-date*) bersama nombor Git Tag SemVer (X.Y.Z) yang sah untuk semakan penilai FYP 2.
+
+---
+
+## 5. Polisi Sifar Pengabaian & Had Aksara
+- Ejen AI tertakluk secara mutlak kepada protokol ini. Sebarang pengabaian alatan dianggap sebagai pelanggaran protokol integriti sistem.
 - Fail ini tertakluk kepada had siling **maksimum 12,000 aksara** seperti yang digariskan dalam [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md).

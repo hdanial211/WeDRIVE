@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeDRIVE — Galeri Perbandingan Reka Bentuk Stitch UI (Preview Hub)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #090A0F;
+      --card-bg: rgba(22, 24, 34, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(59, 130, 246, 0.4);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent: #3B82F6;
+      --accent-glow: rgba(59, 130, 246, 0.2);
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .container { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    header { text-align: center; margin-bottom: 48px; }
+    .badge-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60A5FA;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .card-version {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .card-version:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -15px var(--accent-glow);
+    }
+    .card-version.benchmark {
+      border-color: rgba(16, 185, 129, 0.5);
+      background: linear-gradient(180deg, rgba(6, 78, 59, 0.25) 0%, rgba(15, 23, 42, 0.8) 100%);
+      grid-column: 1 / -1;
+    }
+    .card-version.recommended {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .folder-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #93C5FD;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+    .folder-tag.green {
+      color: #34D399;
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .status-badge.rec { background: #10B981; color: #064E3B; }
+    .status-badge.bench { background: #3B82F6; color: #FFFFFF; }
+    .status-badge.archive { background: rgba(148, 163, 184, 0.15); color: #94A3B8; }
+    .card-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .card-desc { color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
+    .links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .links-grid.three {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 8px;
+      color: #F1F5F9;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .btn-step span.step-num {
+      font-size: 10px;
+      color: #94A3B8;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .btn-step:hover {
+      background: rgba(59, 130, 246, 0.25);
+      border-color: rgba(59, 130, 246, 0.5);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+    .btn-benchmark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      background: #10B981;
+      color: #064E3B;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .btn-benchmark:hover {
+      background: #34D399;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-hub"><i class="fa-solid fa-shapes"></i> STITCH UI PREVIEW ARCHIVE HUB</div>
+      <h1>Perbandingan Reka Bentuk Add Car Wizard</h1>
+      <p class="subtitle">Arkib perbandingan berfolder berasaskan reka bentuk Gemini Stitch MCP. Buka mana-mana folder untuk menilai visual dan keupayaan model secara langsung di pelayar anda.</p>
+    </header>
+
+    <div class="grid">
+      <!-- FOLDER 6: PROMPT BENCHMARK HEAD-TO-HEAD -->
+      <div class="card-version benchmark" style="border-color: rgba(59, 130, 246, 0.6); background: linear-gradient(180deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.85) 100%);">
+        <div class="card-header">
+          <span class="folder-tag" style="color: #60A5FA; background: rgba(59, 130, 246, 0.2); border-color: rgba(59, 130, 246, 0.4);">FOLDER 6/ (TERKINI)</span>
+          <span class="status-badge" style="background: #0071E3; color: #FFFFFF;">⚡ PROMPT ENGINEERING BENCHMARK</span>
+        </div>
+        <h2 class="card-title">Perbandingan Prompt: Asal vs Baharu (Gemini 3.8 Flash)</h2>
+        <p class="card-desc">Ujian perbandingan 100% kod mentah Stitch MCP menggunakan model GEMINI_3_8_FLASH yang sama untuk menguji impak 5 Precision Patches (Grid Tarif Seimbang 2x2, Bottom Clearance 120px, Kaca Terkawal, Fluid Scaling).</p>
+        <div class="links-grid">
+          <a class="btn-step" style="border-color: rgba(148, 163, 184, 0.4); background: rgba(148, 163, 184, 0.1);" href="6/prompt_lama/step1_spesifikasi_preview.html">
+            <span class="step-num" style="color:#94A3B8;">PROMPT ASAL (BASELINE)</span>
+            Buka Prompt Asal
+          </a>
+          <a class="btn-step" style="border-color: rgba(16, 185, 129, 0.5); background: rgba(16, 185, 129, 0.15);" href="6/prompt_baru/step1_spesifikasi_preview.html">
+            <span class="step-num" style="color:#34D399;">🟢 PROMPT BAHARU (5 PATCHES)</span>
+            Buka Prompt Baharu
+          </a>
+        </div>
+      </div>
+
+      <!-- FOLDER 5: BENCHMARK HEAD-TO-HEAD -->
+      <div class="card-version benchmark">
+        <div class="card-header">
+          <span class="folder-tag green">FOLDER 5/</span>
+          <span class="status-badge bench">🔥 BENCHMARK MODEL HEAD-TO-HEAD</span>
+        </div>
+        <h2 class="card-title">Perbandingan Model: GEMINI_3_8_FLASH vs GEMINI_3_1_PRO</h2>
+        <p class="card-desc">Ujian rasmi perbandingan reka bentuk skrin "Langkah 1: Spesifikasi & Tarif" dengan prompt dan design system yang sama untuk menilai kualiti model Google Stitch MCP.</p>
+        <div class="links-grid">
+          <a class="btn-step" style="border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.1);" href="5/3.8flash/step1_spesifikasi_preview.html">
+            <span class="step-num" style="color:#34D399;">🟢 MODEL TERKINI & AKTIF</span>
+            Buka 3.8 Flash Preview
+          </a>
+          <a class="btn-step" style="border-color: rgba(139,92,246,0.4); background: rgba(139,92,246,0.1);" href="5/3.1pro/step1_spesifikasi_preview.html">
+            <span class="step-num" style="color:#A78BFA;">🔴 MODEL LEGASI DEPRECATED</span>
+            Buka 3.1 Pro Preview
+          </a>
+        </div>
+      </div>
+
+      <!-- FOLDER 3 -->
+      <div class="card-version recommended">
+        <div class="card-header">
+          <span class="folder-tag">FOLDER 3/</span>
+          <span class="status-badge rec">DISYORKAN (APPLE HIG)</span>
+        </div>
+        <h2 class="card-title">Edisi Apple HIG Balanced Elegance</h2>
+        <p class="card-desc">Susun atur Bento Grid 24px Squircle yang seimbang. Sifar bar sisi, 6 foto katalog + tab dwipratonton 360 luaran/dalaman.</p>
+        <div class="links-grid three">
+          <a class="btn-step" href="3/step1_spesifikasi_preview.html"><span class="step-num">Langkah 1</span>Spesifikasi</a>
+          <a class="btn-step" href="3/step2_studio360_preview.html"><span class="step-num">Langkah 2</span>Studio 360</a>
+          <a class="btn-step" href="3/step3_pengesahan_preview.html"><span class="step-num">Langkah 3</span>Pengesahan</a>
+        </div>
+      </div>
+
+      <!-- FOLDER 2 -->
+      <div class="card-version">
+        <div class="card-header">
+          <span class="folder-tag">FOLDER 2/</span>
+          <span class="status-badge archive">Generasi 2</span>
+        </div>
+        <h2 class="card-title">Edisi Fokus Penuh (Sifar Bar Sisi)</h2>
+        <p class="card-desc">Menghapuskan bar sisi untuk kanvas kerja penuh. Pengguna menumpukan perhatian sepenuhnya pada pengisian borang kenderaan.</p>
+        <div class="links-grid three">
+          <a class="btn-step" href="2/step1_spesifikasi_preview.html"><span class="step-num">Langkah 1</span>Spesifikasi</a>
+          <a class="btn-step" href="2/step2_studio360_preview.html"><span class="step-num">Langkah 2</span>Studio 360</a>
+          <a class="btn-step" href="2/step3_pengesahan_preview.html"><span class="step-num">Langkah 3</span>Pengesahan</a>
+        </div>
+      </div>
+
+      <!-- FOLDER 1 -->
+      <div class="card-version">
+        <div class="card-header">
+          <span class="folder-tag">FOLDER 1/</span>
+          <span class="status-badge archive">Arkib Asas</span>
+        </div>
+        <h2 class="card-title">Edisi Klasik (Dengan Sidebar)</h2>
+        <p class="card-desc">Reka bentuk generasi pertama dengan kehadiran bar sisi pentadbir penuh dan borang standard.</p>
+        <div class="links-grid three">
+          <a class="btn-step" href="1/step1_spesifikasi_preview.html"><span class="step-num">Langkah 1</span>Spesifikasi</a>
+          <a class="btn-step" href="1/step2_studio360_preview.html"><span class="step-num">Langkah 2</span>Studio 360</a>
+          <a class="btn-step" href="1/step3_pengesahan_preview.html"><span class="step-num">Langkah 3</span>Pengesahan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

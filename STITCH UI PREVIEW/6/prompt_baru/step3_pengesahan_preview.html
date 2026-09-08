@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Semakan Akhir Pendaftaran - WeDRIVE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "surface-variant": "#e2e2e4",
+                "surface-container-low": "#f3f3f5",
+                "on-background": "#1a1c1d",
+                "warning": "#FF9500",
+                "surface-container-lowest": "#ffffff",
+                "on-tertiary-fixed-variant": "#3631b4",
+                "surface-bright": "#f9f9fb",
+                "on-primary-fixed": "#001b3f",
+                "tertiary": "#4b49c9",
+                "inverse-on-surface": "#f0f0f2",
+                "on-surface": "#1D1D1F",
+                "on-primary-fixed-variant": "#00458f",
+                "surface-dim": "#d9dadc",
+                "primary-fixed": "#d7e2ff",
+                "inverse-primary": "#abc7ff",
+                "error-container": "#ffdad6",
+                "background": "#f9f9fb",
+                "on-error-container": "#93000a",
+                "primary-container": "#0071e3",
+                "surface-container-high": "#e8e8ea",
+                "tertiary-fixed-dim": "#c2c1ff",
+                "surface-container-highest": "#D1D1D6",
+                "outline-variant": "#c1c6d6",
+                "secondary-container": "#e0dfe4",
+                "secondary-fixed": "#e3e2e7",
+                "on-tertiary": "#ffffff",
+                "surface-container": "#F2F2F7",
+                "on-secondary": "#ffffff",
+                "on-error": "#ffffff",
+                "on-surface-variant": "#414753",
+                "night-bento-subtle": "#1D1D20",
+                "on-primary-container": "#fcfbff",
+                "on-tertiary-fixed": "#0c006a",
+                "error": "#FF3B30",
+                "secondary": "#5e5e63",
+                "primary-fixed-dim": "#abc7ff",
+                "inverse-surface": "#2f3132",
+                "on-secondary-container": "#626267",
+                "outline": "#717785",
+                "on-secondary-fixed": "#1a1b1f",
+                "night-surface": "#000000",
+                "on-tertiary-container": "#fefaff",
+                "on-primary": "#ffffff",
+                "surface-tint": "#005cbb",
+                "success": "#34C759",
+                "primary": "#0059b5",
+                "surface": "#f9f9fb",
+                "tertiary-container": "#6563e3",
+                "border-night": "rgba(255, 255, 255, 0.08)",
+                "on-secondary-fixed-variant": "#46464b",
+                "tertiary-fixed": "#e2dfff",
+                "night-bento": "#161618",
+                "secondary-fixed-dim": "#c7c6cb",
+                "border-day": "rgba(0, 0, 0, 0.06)"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "xxl": "32px",
+                "gutter": "16px",
+                "xl": "24px",
+                "lg": "20px",
+                "unit": "4px",
+                "xs": "4px",
+                "sm": "8px",
+                "md": "16px",
+                "container-padding": "24px"
+              },
+              "fontFamily": {
+                "title-3": ["Inter"],
+                "headline": ["Inter"],
+                "large-title-mobile": ["Inter"],
+                "callout": ["Inter"],
+                "large-title": ["Inter"],
+                "footnote": ["Inter"],
+                "label-tabular": ["Inter"],
+                "body": ["Inter"],
+                "title-2": ["Inter"],
+                "caption": ["Inter"],
+                "title-1": ["Inter"]
+              },
+              "fontSize": {
+                "title-3": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600"}],
+                "headline": ["17px", {"lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+                "large-title-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+                "callout": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500"}],
+                "large-title": ["34px", {"lineHeight": "41px", "letterSpacing": "-0.035em", "fontWeight": "800"}],
+                "footnote": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                "label-tabular": ["14px", {"lineHeight": "16px", "fontWeight": "600"}],
+                "body": ["15px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400"}],
+                "title-2": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.022em", "fontWeight": "700"}],
+                "caption": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                "title-1": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.028em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased pb-[130px]">
+<!-- Top Header -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-[20px] saturate-[1.8] border-b border-border-day px-container-padding h-16 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-md">
+<span class="font-title-2 text-title-2 font-black tracking-tight text-on-surface">WeDRIVE</span>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<span class="font-headline text-headline text-on-surface-variant">Pendaftaran Kenderaan Baharu - Semakan Akhir</span>
+</div>
+<button class="bg-surface-container border border-border-day rounded-full px-md py-sm font-callout text-callout text-on-surface hover:brightness-95 active:scale-[0.97] transition-all">
+            Batal
+        </button>
+</header>
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-container-padding pt-xxl mt-16">
+<!-- Floating Stepper -->
+<div class="flex justify-center mb-xl">
+<div class="bg-surface-container-lowest border border-border-day rounded-full px-xl py-sm flex items-center gap-md shadow-[0px_4px_24px_rgba(0,0,0,0.04)]">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-success/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-success font-bold" data-icon="check">check</span>
+</div>
+<span class="font-callout text-callout text-on-surface-variant">Info Asas</span>
+</div>
+<div class="w-8 h-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-success/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-success font-bold" data-icon="check">check</span>
+</div>
+<span class="font-callout text-callout text-on-surface-variant">Visual Studio</span>
+</div>
+<div class="w-8 h-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-sm">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_12px_rgba(0,113,227,0.4)]">
+<span class="font-caption text-caption">3</span>
+</div>
+<span class="font-callout text-callout text-on-surface font-semibold">Semakan &amp; Pengesahan</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column -->
+<div class="col-span-1 md:col-span-7 flex flex-col gap-gutter">
+<!-- Bento Card 1: Hero Vehicle -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="relative w-full h-[300px] rounded-xl overflow-hidden mb-lg">
+<img class="w-full h-full object-cover" data-alt="A highly detailed, ultra-realistic studio shot of a pristine Pearl White Toyota Corolla Cross 2024 parked in a high-end, minimalist light-mode environment. The lighting is soft and diffused, highlighting the vehicle's curves and premium finish. The background is a clean, seamless white gradient, emphasizing a corporate, reliable, and sophisticated aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvXWPYPwl9RpdnDilVm-EkhsqxWsBs5TWDJ4Qlk_TCOUNbV7OiQyeFVcfCF4idcdtndKHQRT1yvFRjH4w_YqG-Bev6AjjEzjxVqP2BLB21bjDifqtTM3vALPLD_mUneY3QurkKtCZ_b7eH0E7grVY2gEppiWA9NFhGvTm95-NBiVAKJbHdXt0bb2nb_Ng9tFyqXwzzVq3h9wgdsAzCs6aF0pvNIAIhqWrDYI5AMiwckairt240LN_qLaLNxDzPp2I691-NJYrD6RE"/>
+<div class="absolute bottom-md left-md bg-surface-container-lowest/90 backdrop-blur-md px-md py-sm rounded-lg border border-border-day flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface" data-icon="directions_car">directions_car</span>
+<span class="font-title-3 text-title-3 text-on-surface font-bold tracking-widest">VXX 1234</span>
+</div>
+</div>
+<div class="mb-md">
+<h2 class="font-title-2 text-title-2 text-on-surface mb-xs">Toyota Corolla Cross 1.8 Hybrid (2024)</h2>
+<p class="font-body text-body text-on-surface-variant">Semakan visual dan status sediaan operasi</p>
+</div>
+<div class="flex flex-wrap gap-sm">
+<div class="bg-success/10 border border-success/20 px-sm py-unit rounded-full flex items-center gap-unit">
+<div class="w-2 h-2 rounded-full bg-success"></div>
+<span class="font-caption text-caption text-success">Sedia Untuk Sewaan</span>
+</div>
+<div class="bg-primary/10 border border-primary/20 px-sm py-unit rounded-full flex items-center gap-unit">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="360">360</span>
+<span class="font-caption text-caption text-primary">Aset 360 Lengkap</span>
+</div>
+<div class="bg-surface-container border border-border-day px-sm py-unit rounded-full flex items-center gap-unit">
+<span class="material-symbols-outlined text-[14px] text-on-surface" data-icon="verified">verified</span>
+<span class="font-caption text-caption text-on-surface">6 Foto JPJ Disahkan</span>
+</div>
+</div>
+</div>
+<!-- Bento Card 2: Specs -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.04)]">
+<h3 class="font-title-3 text-title-3 text-on-surface mb-lg">Spesifikasi Teknikal &amp; Ciri</h3>
+<div class="grid grid-cols-2 gap-md mb-lg">
+<div class="bg-surface-container rounded-lg p-md border border-border-day">
+<div class="flex items-center gap-sm mb-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="category">category</span>
+<span class="font-footnote text-footnote">Kelas</span>
+</div>
+<span class="font-headline text-headline text-on-surface">SUV Hibrid</span>
+</div>
+<div class="bg-surface-container rounded-lg p-md border border-border-day">
+<div class="flex items-center gap-sm mb-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="settings">settings</span>
+<span class="font-footnote text-footnote">Transmisi</span>
+</div>
+<span class="font-headline text-headline text-on-surface">Automatik</span>
+</div>
+<div class="bg-surface-container rounded-lg p-md border border-border-day">
+<div class="flex items-center gap-sm mb-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="airline_seat_recline_normal">airline_seat_recline_normal</span>
+<span class="font-footnote text-footnote">Kapasiti</span>
+</div>
+<span class="font-headline text-headline text-on-surface">5 Tempat Duduk</span>
+</div>
+<div class="bg-surface-container rounded-lg p-md border border-border-day">
+<div class="flex items-center gap-sm mb-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="format_color_fill">format_color_fill</span>
+<span class="font-footnote text-footnote">Warna &amp; Enjin</span>
+</div>
+<span class="font-headline text-headline text-on-surface">Pearl White • 1798cc</span>
+</div>
+</div>
+<div>
+<h4 class="font-footnote text-footnote text-on-surface-variant mb-md uppercase tracking-wider">Ciri Dilengkapi</h4>
+<div class="flex flex-wrap gap-sm">
+<span class="bg-surface px-md py-sm rounded-lg border border-border-day font-footnote text-footnote text-on-surface flex items-center gap-sm"><span class="material-symbols-outlined text-[16px]" data-icon="explore">explore</span> GPS</span>
+<span class="bg-surface px-md py-sm rounded-lg border border-border-day font-footnote text-footnote text-on-surface flex items-center gap-sm"><span class="material-symbols-outlined text-[16px]" data-icon="phone_iphone">phone_iphone</span> CarPlay</span>
+<span class="bg-surface px-md py-sm rounded-lg border border-border-day font-footnote text-footnote text-on-surface flex items-center gap-sm"><span class="material-symbols-outlined text-[16px]" data-icon="videocam">videocam</span> 360 Camera</span>
+<span class="bg-surface px-md py-sm rounded-lg border border-border-day font-footnote text-footnote text-on-surface flex items-center gap-sm"><span class="material-symbols-outlined text-[16px]" data-icon="sensors">sensors</span> Parking Sensors</span>
+<span class="bg-surface px-md py-sm rounded-lg border border-border-day font-footnote text-footnote text-on-surface flex items-center gap-sm"><span class="material-symbols-outlined text-[16px]" data-icon="chair">chair</span> Leather Seats</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column -->
+<div class="col-span-1 md:col-span-5 flex flex-col gap-gutter">
+<!-- Bento Card 3: Tarif Summary -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.04)]">
+<h3 class="font-title-3 text-title-3 text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+                        Ringkasan Tarif
+                    </h3>
+<div class="grid grid-cols-2 gap-md">
+<div class="bg-surface p-md rounded-lg border border-border-day">
+<p class="font-footnote text-footnote text-on-surface-variant mb-unit">Harian</p>
+<p class="font-title-3 text-title-3 font-label-tabular text-on-surface">RM 180</p>
+</div>
+<div class="bg-surface p-md rounded-lg border border-border-day">
+<p class="font-footnote text-footnote text-on-surface-variant mb-unit">Mingguan</p>
+<p class="font-title-3 text-title-3 font-label-tabular text-on-surface">RM 1,100</p>
+</div>
+<div class="bg-surface p-md rounded-lg border border-border-day">
+<p class="font-footnote text-footnote text-on-surface-variant mb-unit">Bulanan</p>
+<p class="font-title-3 text-title-3 font-label-tabular text-on-surface">RM 3,500</p>
+</div>
+<div class="bg-surface-variant/30 p-md rounded-lg border border-border-day">
+<p class="font-footnote text-footnote text-on-surface-variant mb-unit">Deposit Keselamatan</p>
+<p class="font-title-3 text-title-3 font-label-tabular text-on-surface">RM 500</p>
+</div>
+</div>
+</div>
+<!-- Bento Card 4: Data Integrity Checklist -->
+<div class="bg-surface-container-lowest rounded-[24px] border border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.04)]">
+<h3 class="font-title-3 text-title-3 text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="shield_person">shield_person</span>
+                        Integriti Pangkalan Data
+                    </h3>
+<div class="flex flex-col gap-sm">
+<div class="flex items-center gap-md p-sm rounded-lg hover:bg-surface transition-colors">
+<div class="w-6 h-6 rounded-full bg-success/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] text-success" data-icon="check">check</span>
+</div>
+<div class="flex-1">
+<p class="font-callout text-callout text-on-surface">Skema Pangkalan Data Disahkan</p>
+</div>
+</div>
+<div class="w-full h-[1px] bg-border-day ml-10"></div>
+<div class="flex items-center gap-md p-sm rounded-lg hover:bg-surface transition-colors">
+<div class="w-6 h-6 rounded-full bg-success/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] text-success" data-icon="check">check</span>
+</div>
+<div class="flex-1">
+<p class="font-callout text-callout text-on-surface">Dokumen Pemilikan Sepadan (JPJ)</p>
+</div>
+</div>
+<div class="w-full h-[1px] bg-border-day ml-10"></div>
+<div class="flex items-center gap-md p-sm rounded-lg hover:bg-surface transition-colors">
+<div class="w-6 h-6 rounded-full bg-success/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] text-success" data-icon="check">check</span>
+</div>
+<div class="flex-1">
+<p class="font-callout text-callout text-on-surface">Polisi Insurans Aktif &amp; Disahkan</p>
+</div>
+</div>
+<div class="w-full h-[1px] bg-border-day ml-10"></div>
+<div class="flex items-center gap-md p-sm rounded-lg hover:bg-surface transition-colors">
+<div class="w-6 h-6 rounded-full bg-success/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px] text-success" data-icon="check">check</span>
+</div>
+<div class="flex-1">
+<p class="font-callout text-callout text-on-surface">Lokasi Sediaan: <span class="font-semibold text-primary">Melaka Airport</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Bottom Action Dock -->
+<div class="fixed bottom-0 left-0 w-full z-50 p-md flex justify-center pointer-events-none">
+<div class="bg-surface/80 backdrop-blur-[20px] saturate-[1.8] border border-border-day shadow-[0px_4px_24px_rgba(0,0,0,0.04)] rounded-full w-full max-w-7xl px-xl py-md flex justify-between items-center pointer-events-auto">
+<button class="flex items-center gap-sm text-on-surface-variant hover:text-on-surface transition-colors font-callout text-callout active:scale-[0.97]">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_back">arrow_back</span>
+                Kembali ke Studio Visual
+            </button>
+<div class="hidden md:flex items-center gap-sm text-on-surface-variant bg-surface-container px-md py-sm rounded-full border border-border-day">
+<span class="material-symbols-outlined text-[16px] text-success" data-icon="verified_user">verified_user</span>
+<span class="font-footnote text-footnote">Semua data telah disahkan dan sedia diterbitkan</span>
+</div>
+<button class="bg-primary-container text-on-primary-container px-xxl py-sm rounded-full font-headline text-headline font-semibold flex items-center gap-sm hover:brightness-110 active:scale-[0.97] transition-all shadow-[0_0_20px_rgba(0,113,227,0.3)]">
+                Daftar Kenderaan Baharu
+                <span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</button>
+</div>
+</div>
+</body></html>

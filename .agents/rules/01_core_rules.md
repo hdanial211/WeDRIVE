@@ -11,11 +11,16 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 1. **Wajib Baca Peraturan Ejen Terlebih Dahulu**: Sentiasa semak dan patuhi peraturan dalam `.agents/rules/` sebelum sebarang pengubahsuaian.
 2. **Wajib Temu Duga /grill-me Dahulu**: Sekiranya terdapat arahan baharu, ketidakpastian skop, atau pilihan seni bina, AI WAJIB menjalankan sesi temu duga menggunakan alatan `ask_question` untuk menyelaraskan kehendak bersama pengguna sebelum sebarang kod disentuh.
 3. **Wajib Semak Halaman Sebagai Pengguna (Check Page As User First & Post-Test)**: Sebelum dan selepas mengekod, AI WAJIB memeriksa visual dan fungsi pada tab aktif mengikut spektrum Apple 3-Peranti (MacBook 1440px $\to$ iPad 820px $\to$ iPhone 393px via `resize_page`) daripada perspektif pengguna sebenar tanpa membuka banyak tab (Rujuk [05_apple_device_support.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/05_apple_device_support.md)).
-4. **Wajib Manfaatkan Ekosistem Alatan Pintar & Kemahiran WeDRIVE**:
-   - Tertakluk secara mutlak kepada [16_ai_tooling_and_mcps.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/16_ai_tooling_and_mcps.md) dan [18_skills_and_workflows_protocol.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/18_skills_and_workflows_protocol.md).
-   - Wajib gunakan Playwright CLI (100% Pass), Supabase MCP, Strix Security, Frontend UI, Context7, Graphify & Chrome DevTools.
+4. **Wajib Panggilan Penuh Alatan MCP & Kemahiran Secara Aktif (Strict Active Tooling & MCP Execution)**:
+   - **DILARANG SAMA SEKALI** meneka sintaks atau menulis kod tanpa memanggil alatan rasmi yang telah disediakan.
+   - **Context7 MCP**: WAJIB dipanggil (`resolve-library-id` $\to$ `query-docs`) setiap kali menulis atau mengubah kod melibatkan pustaka luaran (Supabase JS, Flatpickr, Three.js, Playwright, Anime.js).
+   - **Frontend UI & Stitch MCP**: WAJIB dimanfaatkan semasa mereka bentuk atau memperhalusi komponen Apple HIG & Bento Grid.
+   - **Chrome DevTools MCP**: WAJIB digunakan untuk memeriksa visual DOM dan saiz responsif Apple 3-peranti pada tab aktif sebelum dan selepas ubah kod.
+   - **Playwright CLI & Graphify**: WAJIB jalankan ujian automatik (100% pass) dan kemas kini graf pengetahuan (`graphify update .`).
+   - **Penyegerakan GitHub Mandatori (Auto-Sync GitHub)**: Setiap kali sesuatu arahan/tugasan selesai diuji, AI WAJIB menyegerakkan kod ke GitHub melalui alur kerja `/release_push` dengan Git Tag SemVer (X.Y.Z) dan commit rasmi supaya repositori sentiasa terkini.
 5. **Wajib Patuhi Standard Bahasa Moden 2026**: Sentiasa rujuk [11_language_standards.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md) untuk semua teks antaramuka dan perbualan AI.
 6. **Wajib Had Kandungan Maksimum 12,000 Aksara (Strict 12,000 Characters Limit)**: Rujuk [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md). Setiap fail peraturan `.agents/rules/*.md` WAJIB kekal $\le 12,000$ aksara.
+7. **Wajib Kitaran 5-Langkah Sandbox `STITCH UI PREVIEW/`**: Sebelum sebarang skrin baharu dicipta atau direka semula, AI WAJIB menjana reka bentuk ke `STITCH UI PREVIEW/` terlebih dahulu untuk semakan kendiri pengguna melalui HTML. Kod pengeluaran DILARANG disentuh sehingga pengguna memberi kelulusan eksplisit (Rujuk [07_stitch_design_system.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/07_stitch_design_system.md)).
 
 ---
 
@@ -54,7 +59,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 
 ---
 
-## 7. Indeks & Rujukan 20 Peraturan Modul Berkaitan
+## 7. Indeks & Rujukan 20 Peraturan Modul Berkaitan (Jumlah 21 Fail Peraturan)
 - **Standard BM Moden 2026:** [11_language_standards.md](11_language_standards.md)
 - **Apple HIG Design System:** [02_apple_hig_design_system.md](02_apple_hig_design_system.md) & [03_apple_hig_components.md](03_apple_hig_components.md)
 - **Navigation & UI/UX:** [04_navigation_and_ui.md](04_navigation_and_ui.md)
@@ -72,6 +77,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 - **Protokol Skills & Workflows:** [18_skills_and_workflows_protocol.md](18_skills_and_workflows_protocol.md)
 - **Piawaian Prompt Emas & Peringatan Proaktif:** [19_prompt_engineering_standard.md](19_prompt_engineering_standard.md)
 - **Peranan Pasukan Kejuruteraan Perisian:** [20_team_roles_and_responsibilities.md](20_team_roles_and_responsibilities.md)
+- **Operasi Lanjutan & Pasca-Prompt Stitch MCP:** [21_stitch_mcp_advanced_operations.md](21_stitch_mcp_advanced_operations.md)
 
 ---
 

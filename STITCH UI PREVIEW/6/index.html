@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeDRIVE — Folder 6: Perbandingan Prompt Lama vs Prompt Baharu (Gemini 3.8 Flash)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #090A0F;
+      --card-bg: rgba(22, 24, 34, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent: #0071E3;
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 40px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60A5FA;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .card-model {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .card-model.old {
+      border-color: rgba(148, 163, 184, 0.3);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    }
+    .card-model.new {
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 16px 36px rgba(16, 185, 129, 0.12);
+    }
+    .model-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .model-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 8px;
+    }
+    .model-tag.old {
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #94A3B8;
+    }
+    .model-tag.new {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34D399;
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .status-badge.baseline { background: rgba(148, 163, 184, 0.2); color: #CBD5E1; }
+    .status-badge.upgraded { background: #10B981; color: #064E3B; }
+    .model-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .model-desc { color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+    .feature-list {
+      list-style: none;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #CBD5E1;
+      line-height: 1.8;
+    }
+    .feature-list li { display: flex; align-items: flex-start; gap: 8px; }
+    .feature-list li i { margin-top: 4px; font-size: 12px; }
+    .img-preview {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #000;
+    }
+    .btn-open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #0071E3;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 14px 20px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: auto;
+    }
+    .btn-open:hover {
+      background: #0077ED;
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
+    }
+    .btn-open.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-open.secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
+      box-shadow: none;
+    }
+    .breakdown-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .breakdown-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: #60A5FA; }
+    .patch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .patch-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 16px;
+      border-radius: 16px;
+    }
+    .patch-card h4 { font-size: 14px; font-weight: 700; color: #F8FAFC; margin-bottom: 6px; }
+    .patch-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .back-nav {
+      text-align: center;
+      margin-top: 32px;
+    }
+    .back-nav a {
+      color: #60A5FA;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge"><i class="fa-solid fa-wand-magic-sparkles"></i> PROMPT ENGINEERING BENCHMARK</div>
+      <h1>Folder 6: Prompt Asal vs Prompt Baharu (Gemini 3.8 Flash)</h1>
+      <p class="subtitle">Ujian perbandingan 100% kod mentah Google Stitch MCP menggunakan model yang sama (GEMINI_3_8_FLASH) untuk melihat impak 5 Precision Patches.</p>
+    </header>
+
+    <div class="grid">
+      <!-- PROMPT LAMA -->
+      <div class="card-model old">
+        <div class="model-header">
+          <span class="model-tag old">PROMPT ASAL (FOLDER 5)</span>
+          <span class="status-badge baseline">GARIS ASAS (BASELINE)</span>
+        </div>
+        <h2 class="model-title">Prompt Asal (Sebelum Patches)</h2>
+        <p class="model-desc">Prompt generasi awal yang memfokuskan visual Bento Grid dan responsif umum.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-circle-xmark text-yellow-500"></i> Grid Tarif 3 Kolum (4 medan terbahagi 3+1 janggal)</li>
+          <li><i class="fa-solid fa-circle-xmark text-yellow-500"></i> Tiada kawalan limpahan bawah pada mobile dock</li>
+          <li><i class="fa-solid fa-circle-check text-green-400"></i> Sifar Sidebar & Sifar Oval dipatuhi</li>
+          <li><i class="fa-solid fa-circle-check text-green-400"></i> Bahasa Melayu Moden 2026</li>
+        </ul>
+        <img class="img-preview" src="prompt_lama/step1_spesifikasi_screenshot.png" alt="Prompt Asal Preview">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: auto;">
+          <a class="btn-open secondary" style="padding: 12px 14px; font-size: 13px;" href="prompt_lama/step1_spesifikasi_preview.html">
+            <i class="fa-solid fa-file-lines"></i> Langkah 1 (Spesifikasi)
+          </a>
+          <a class="btn-open secondary" style="padding: 12px 14px; font-size: 13px;" href="prompt_lama/step2_studio360_preview.html">
+            <i class="fa-solid fa-camera"></i> Langkah 2 (Studio 360)
+          </a>
+        </div>
+      </div>
+
+      <!-- PROMPT BARU -->
+      <div class="card-model new">
+        <div class="model-header">
+          <span class="model-tag new">PROMPT BAHARU (5 PATCHES)</span>
+          <span class="status-badge upgraded">🟢 DIOPTIMUMKAN (9.5/10)</span>
+        </div>
+        <h2 class="model-title">Prompt Baharu (Dengan 5 Precision Patches)</h2>
+        <p class="model-desc">Disuntik dengan prinsip Focused Wizard, Restrained Glassmorphism, 4-Metric Grid, dan 6-Slot JPJ Photo Studio.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-circle-check text-green-400"></i> <strong>Grid Tarif Seimbang:</strong> 4 metrik disusun 2x2 kemas tanpa orphan box</li>
+          <li><i class="fa-solid fa-circle-check text-green-400"></i> <strong>Studio 360 Interaktif:</strong> Pentas pusingan 360° berkualiti Apple Studio</li>
+          <li><i class="fa-solid fa-circle-check text-green-400"></i> <strong>Kelegaan Bawah (Clearance):</strong> Jarak 130px menghalang dock menutup borang</li>
+          <li><i class="fa-solid fa-circle-check text-green-400"></i> <strong>Kaca Terkawal:</strong> Kad input legap berkontras tinggi untuk pembacaan jelas</li>
+        </ul>
+        <img class="img-preview" src="prompt_baru/step2_studio360_screenshot.png" alt="Prompt Baharu Step 2 Preview">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: auto;">
+          <a class="btn-open secondary" style="padding: 12px 14px; font-size: 13px;" href="prompt_baru/step1_spesifikasi_preview.html">
+            <i class="fa-solid fa-file-lines"></i> Langkah 1 (Spesifikasi)
+          </a>
+          <a class="btn-open" style="padding: 12px 14px; font-size: 13px; background: #10B981; color: #064E3B;" href="prompt_baru/step2_studio360_preview.html">
+            <i class="fa-solid fa-camera"></i> Langkah 2 (Studio 360) →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- BREAKDOWN BOX -->
+    <div class="breakdown-box">
+      <h3><i class="fa-solid fa-list-check"></i> Ringkasan 5 Precision Patches Yang Diterapkan</h3>
+      <div class="patch-grid">
+        <div class="patch-card">
+          <h4>1. Grid Tarif 4-Item</h4>
+          <p>Memperbetulkan arahan dari 3 kolum kepada susun atur seimbang (2x2 / 4-kolum) supaya medan Deposit Keselamatan tidak terasing.</p>
+        </div>
+        <div class="patch-card">
+          <h4>2. Bottom Clearance (120px)</h4>
+          <p>Memastikan ruang bawah mencukupi supaya bar tindakan terapung tidak melindungi butang borang di iPhone.</p>
+        </div>
+        <div class="patch-card">
+          <h4>3. Kaca Terkawal (Restrained Glass)</h4>
+          <p>Kesan kaca hanya pada pengepala & dock; kad borang kekal legap untuk keterbacaan teks optimum.</p>
+        </div>
+        <div class="patch-card">
+          <h4>4. Reka Letak Runtuhan Adaptif</h4>
+          <p>Menentukan secara eksplisit bila 2 kolum perlu diadaptasi dan bila perlu bertukar kepada satu kolum menegak.</p>
+        </div>
+        <div class="patch-card">
+          <h4>5. Breakpoint Cecair (Fluid Scaling)</h4>
+          <p>1440px, 820px, dan 393px berfungsi sebagai piawaian rujukan, dengan penskalaan cecair merentas semua saiz.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="back-nav">
+      <a href="../index.html">← Kembali ke Arkib Galeri Utama (Hub)</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -17,88 +17,114 @@ Setiap panggilan alatan Stitch MCP WAJIB menggunakan spesifikasi parameter berik
 ```json
 {
   "projectId": "1862124494843018493",
-  "designSystem": "assets/d66115a696e44b2381ec5f5d829e8a88",
-  "modelId": "GEMINI_3_1_PRO",
-  "deviceType": "DESKTOP"
+  "designSystem": "assets/e051cb5fe5c44d05bd007cde43ddad8e",
+  "modelId": "GEMINI_3_8_FLASH",
+  "deviceType": "AGNOSTIC"
 }
 ```
 
-* **Standard Kualiti Model:** **Gemini 3.8 (Ultra High-Quality Tier / Deep Reasoning)**.
-* **Pemetaan Parameter Enjin:** Parameter `modelId` WAJIB dihantar sebagai `"GEMINI_3_1_PRO"` (iaitu identifier teknikal rasmi Stitch MCP untuk model penaakulan tertinggi Google).
-* **Larangan Model Pantas:** Dilarang sama sekali menggunakan `GEMINI_3_FLASH` bagi skrin teras kerana ia memotong perincian visual Apple HIG.
+* **Standard Kualiti Model:** Model generasi semasa tertinggi & terkini rasmi Google Stitch MCP ialah **`GEMINI_3_8_FLASH`**.
+* **Universal 3-Peranti Apple:** Parameter `deviceType` WAJIB dihantar sebagai `"AGNOSTIC"` supaya hasil reka bentuk merangkumi ketiga-tiga spektrum peranti Apple serentak: MacBook (1440px), iPad (820px), dan iPhone (393px).
 
 ---
 
-## 📝 Fasa 1: Pembinaan Prompt Berpandukan Apple HIG & DESIGN.md
+## 📝 Fasa 1: Pembinaan Prompt Berpandukan Master Prompt Architecture 7-Blok
 
-Sebelum memanggil alatan `generate_screen_from_text`, pastikan prompt mengandungi 5 blok teras:
+Sebelum memanggil alatan `generate_screen_from_text`, prompt WAJIB mengikut struktur 7-blok konsisten:
 
-1. **Konteks Operasi Sebenar (*Domain Reality*)**:
-   - Sistem mobiliti kenderaan profesional di Melaka (contoh: Terminal Lapangan Terbang Batu Berendam, Melaka Sentral, Jonker Point).
-   - Istilah automotif sah: Nombor Pendaftaran (JPJ Plate), Kadar Sewaan Harian, Deposit Keselamatan, Status Ketersediaan, Transmisi, dan Bahan Api.
-2. **Geometri & Token Visual Apple HIG**:
-   - Rujuk token rasmi [`.agents/DESIGN.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/DESIGN.md).
-   - Susun atur Bento Grid dengan kad squircle `border-radius: 24px` atau `28px`.
-   - Butang kapsul `border-radius: 9999px` dan butang ikon bulat 1:1 `border-radius: 50%`.
-   - Angka metrik dan harga menggunakan fon tabular (`tabular-nums`).
-3. **Dwi-Tema Konsisten**:
-   - Mod Siang: Kanvas `#F5F5F7` / Kad `#FFFFFF` dengan bayang ambien lembut.
-   - Mod Malam (Obsidian): Kanvas `#000000` / Kad Bento `#161618`.
-4. **Bahan Kaca Apple Thin Material**:
-   - `-webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);`.
+```text
+Create a universal responsive web page in contemporary Malay (Standard BM 2026) for WeDRIVE:
+"{{MODUL}} - {{HALAMAN}}" featuring an ultra-premium Linear / Apple Studio floating aesthetic.
 
----
+0. CORE DESIGN PHILOSOPHY & DUAL-THEME SWITCHER (STRICT):
+- INTERACTIVE DUAL-THEME (DAY & NIGHT MODE): The generated page MUST support BOTH Day Mode (Apple Light #F5F5F7/#FFFFFF) and Night Mode (Dark Obsidian #000000/#161618). Include an interactive circular 1:1 theme switcher (☀️/🌙) in the top glass header with working vanilla JavaScript that smoothly toggles theme classes on document.body or html.
+- FOCUSED WORKSPACE, NOT DASHBOARD: Dedicated onboarding workspace (STRICTLY ZERO PERMANENT SIDEBAR for wizards).
+- SPATIAL CALM: Clean typography, comfortable spacing, sub-pixel glass definition.
+- STRICT ZERO DUPLICATE ACTIONS: Single official primary action dock. Never generate duplicate "Simpan", "Simpan Draf", or duplicate "Seterusnya" buttons.
+- STRICT ZERO HORIZONTAL SCROLLING: Flawless fluid layout across all resolutions.
 
-## ⏳ Fasa 2: Protokol Kesabaran & Batas Masa (Patience & Polling Protocol)
+1. FLUID RESPONSIVE SYSTEM (APPLE 3-TIER ECOSYSTEM):
+- Desktop Retina (MacBook 1440px+): Content max-width 1280px–1380px, centered balanced Bento composition.
+- Tablet Touch (iPad 768px–1024px): Adaptive layout, minimum 44px touch targets.
+- Mobile Retina XDR (iPhone 393px): Single-column stream, form fonts minimum 16px to prevent iOS Safari auto-zoom.
 
-Penjanaan dengan model penaakulan tinggi mengambil masa 2 hingga 4 minit untuk menaakul hierarki sub-piksel secara mendalam.
+2. DUAL-THEME MATERIALS, RESTRAINED GLASS & APPLE MICRO-ANIMATIONS:
+- Dynamic Theme Tokens: Day Mode (base #F5F5F7, cards #FFFFFF, text #1D1D1F, border rgba(0,0,0,0.06)) vs Night Mode (base #000000, cards #161618, text #FFFFFF, border rgba(255,255,255,0.08)).
+- Restrained Glassmorphism: Translucency & blur (backdrop-blur-xl) strictly reserved for floating top header, floating stepper capsule, and bottom dock. Form cards MUST remain solid/opaque for 100% text readability in both modes.
+- Rich Micro-Animations: Smooth CSS transition on theme switch (0.3s cubic-bezier(0.16, 1, 0.3, 1)), tactile button press scale(0.97), subtle card hover lift (translateY(-2px)), and fluid interactive widgets.
+- Bottom Clearance: Body MUST include pb-[130px] padding so fixed bottom dock never covers content on mobile.
 
-1. **Dilarang Mencuba Semula Tergesa-Gesa (DO NOT RETRY)**:
-   - Apabila memanggil `generate_screen_from_text`, jangan batalkan atau panggil semula alatan jika ia masih memproses.
-2. **Pengendalian Timeout / Ralat Sambungan**:
-   - Jika panggilan `generate_screen_from_text` mengembalikan batas masa (*timeout*), proses di pelayan Stitch selalunya **tetap berjalan sehingga selesai**.
-   - Gunakan kaedah `get_screen` selang **30 saat sehingga 10 kali** dengan `projectId: "1862124494843018493"` untuk memeriksa status skrin siap.
+3. GEOMETRY RULES (STRICT ZERO OVAL):
+- Circular icon buttons MUST be 1:1 aspect ratio (width == height, rounded-full, padding: 0, centered icon).
+- Text buttons MUST be symmetric 9999px pills (rounded-full, white-space: nowrap).
+- Bento cards: 24px squircle. Inputs: 12px–14px rounded corners.
 
----
+4. TOP APPLICATION HEADER, THEME SWITCHER & STEPPER CAPSULE:
+- Top Glass Header: WeDRIVE branding on left, circular 1:1 theme switcher (☀️/🌙), center title, right action text pill 'Batal' (rounded-full).
+- Floating Stepper Capsule:
+  * Completed: Green circular checkmark badge + calm text.
+  * Active: Glowing blue circular badge (with subtle ambient blue shadow) + bold title.
+  * Inactive: Grey circular badge + muted text. Thin hairline connector lines.
 
-## 🚫 Fasa 3: Penapis Penyingkiran Templat AI Murahan (Anti-Cheesy AI Filter)
+5. BENTO GRID ARCHITECTURE:
+{{SENARAI_KAD_BENTO_DAN_KOMPONEN_KHAS}}
+- Susunan seimbang (contoh: 8 kolum borang/media utama : 4 kolum tarif/status sisi). Nombor kewangan guna tabular-nums.
 
-Selepas kod antaramuka dijana oleh Stitch, lakukan saringan mandatori sebelum menyerap kod ke dalam fail projek:
+6. FLOATING BOTTOM ACTION DOCK (BALANCED FORMULA):
+- Single Fixed Floating Dock at viewport bottom (rounded-full 9999px, backdrop-blur):
+  * Left: Secondary action ('← Kembali ke ...') ATAU status awan 'Draf disimpan secara automatik di awan'.
+  * Center (jika ada): Lencana semakan hijau 'Semua data telah disahkan dan sedia diterbitkan'.
+  * Right: Single primary action pill button in solid Apple Blue (#0071E3).
 
-1. **Singkirkan Istilah Khayalan AI**:
-   - Padam istilah seperti: *"Quantum Fleet"*, *"Neural Velocity"*, *"Sanitasi Hospital"*, *"Cyber Turbo"*.
-   - Gantikan dengan istilah industri sah: *"Kereta Tersedia"*, *"Pemeriksaan Kereta"*, *"Invois Cukai Rasmi"*.
-2. **Singkirkan Graf / Nombor Statik Palsu**:
-   - Jangan kekalkan graf hiasan yang tiada kaitan dengan data operasi WeDRIVE.
-3. **Periksa Integriti Elemen Interaktif**:
-   - Setiap butang mesti mempunyai fungsi operasi yang jelas (contoh: Tempah, Muat Turun Resit, Sahkan Lesen, Perincian Kenderaan).
+7. LANGUAGE & TERMINOLOGY (CONTEMPORARY MALAY 2026):
+- Strictly ban archaic words: Armada, Fleet, Wahana, Kabin, Kokpit, Prapapar.
+- Use natural SaaS terms: Kenderaan, Spesifikasi, Tarif, Ruang Pemandu, Studio Visual, Pengesahan Rasmi, Simpanan Automatik.
+```
 
----
+## 🚀 5 Fasa Mandatori Kitaran Penjanaan & Integrasi UI (STITCH UI PREVIEW Protocol)
 
-## 💻 Fasa 4: Pengintegrasian Kod Fizikal Bersih (Zero Inline Styles)
+Setiap kali skrin baharu dicipta atau skrin sedia ada direka semula menggunakan Stitch MCP, aliran kerja WAJIB mematuhi 5 fasa berikut secara berturutan:
 
-1. **Pemisahan Kod CSS**:
-   - Kod CSS yang diekstrak daripada Stitch WAJIB disepadukan ke dalam fail master [`shared/css/wedrive.css`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/shared/css/wedrive.css).
-   - Dilarang meninggalkan blok `<style>` besar atau atribut `style="..."` sebaris dalam HTML.
-2. **Penyambungan Punca Data Sebenar**:
-   - Sambungkan jadual, kad kenderaan, dan borang kepada enjin API sebenar: `window.WeDriveAPI` / Supabase.
-3. **Struktur Fail Fizikal Dedicated**:
-   - Setiap halaman baharu mesti disimpan sebagai fail fizikal `.html` tersendiri di bawah modul berkaitan (contoh: `admin/pages/...` atau `customer/pages/...`).
+### 1. Fasa 1: Penjanaan atau Rekaan Semula Skrin (Stitch MCP Generation)
+- Bina prompt berpandukan Apple HIG, istilah mobiliti sebenar, dan token `.agents/DESIGN.md`.
+- Hantar panggilan ke `generate_screen_from_text` dengan `projectId: "1862124494843018493"`, `designSystem: "assets/e051cb5fe5c44d05bd007cde43ddad8e"`, `modelId: "GEMINI_3_8_FLASH"`, dan `deviceType: "AGNOSTIC"`.
+- Jika berlaku batas masa (*timeout*), jangan cuba semula tergesa-gesa; gunakan `get_screen` berselang 30 saat sehingga 10 kali.
 
----
+### 2. Fasa 2: Enjin Kualiti Pasca-Prompt & Penalaan Pembedahan (Post-Prompt Quality Engine)
+- **Pengambilan Kod & Visual Mentah (`get_screen`):**
+  - Muat turun kod HTML dan tangkapan skrin (`.png`) terus daripada Stitch ke folder sandbox:
+    ```bash
+    STITCH UI PREVIEW/
+    ├── <nama_halaman>_preview.html
+    └── <nama_halaman>_screenshot.png
+    ```
+- **Pemeriksaan Geometri & Zero Oval Rule:**
+  - AI menyemak kod yang dijana secara automatik. Jika ada butang bulat dikesan bujur/lonjong, atau terdapat butang bertindan:
+  - **Pembedahan AI Pantas (`edit_screens`):** Jalankan `edit_screens` dengan prompt pembedahan spesifik untuk membaiki elemen tanpa menjana semula keseluruhan skrin.
+  - **Penerokaan Variasi Halus (`generate_variants`):** Sekiranya memerlukan variasi susun atur kad alternatif, gunakan `generate_variants` dengan tetapan ketat `creativeRange: "REFINE"` dan `aspects: ["LAYOUT"]`.
+  - **Penguatkuasaan Tema (`apply_design_system`):** Gunakan aset `assets/e051cb5fe5c44d05bd007cde43ddad8e` untuk mengunci warna, font, dan corner radius.
+- **AMARAN KERAS:** DILARANG SAMA SEKALI mengubah, menimpa, atau menyentuh fail pengeluaran sebenar di `admin/`, `customer/`, atau `shared/` pada tahap ini.
 
-## 🧪 Fasa 5: Pengesahan & Ujian Automasi Mandatori
+### 3. Fasa 3: Semakan Kendiri Pengguna Melalui HTML & Kelulusan Eksplisit (User Gatekeeper)
+- AI membentangkan pautan klik terus kepada pengguna untuk membuka fail HTML pratonton dalam pelayar.
+- Pengguna memeriksa susun atur, aliran, responsif, dan estetika.
+- **AI WAJIB MENUNGGU KELULUSAN EKSPLISIT PENGGUNA** sebelum sebarang kod pengeluaran disentuh.
+- Jika pengguna meminta pindaan, lakukan semakan bertumpu melalui `edit_screens` atau prompt baharu dan muat turun semula ke `STITCH UI PREVIEW/` untuk semakan pusingan seterusnya.
 
-Setiap kali skrin baharu siap diintegrasikan:
+### 4. Fasa 4: Pemisahan Modular Kod & Integrasi Pengeluaran Sebenar
+- Sebaik sahaja pengguna meluluskan:
+  - **HTML:** Pindahkan struktur bersih ke fail `.html` sasaran (contoh: `admin/pages/car/add-car.html`).
+  - **CSS:** Asingkan gaya ke dalam `shared/css/wedrive.css` atau `admin/css/admin.css`. Sifar blok `<style>` inline yang besar.
+  - **JS:** Pindahkan logik interaktif ke fail modul JS (contoh: `admin/js/add-car.js`). Sambungkan ke data sebenar `window.WeDriveAPI` & Supabase.
+  - Saring dan buang sebarang istilah cereka murah (*cheesy AI clichés*) sebelum commit.
 
-1. Jalankan suite ujian Playwright:
-   ```bash
-   cd tests && npx playwright test
-   ```
-2. Pastikan kadar kelulusan kekal **100% Pass Rate**.
-3. Kemas kini pangkalan pengetahuan Graphify:
-   ```bash
-   graphify update .
-   ```
-4. Catat ringkasan pembangunan dalam `PLAN/FYP1_to_FYP2_Development_Summary.md`.
-5. Buat commit Git dengan format `X.X.X <Penerangan>` dan tag versi yang sepadan.
+### 5. Fasa 5: Pembersihan Penuh Folder Sandbox & Ujian Pasca Integrasi
+- Setelah integrasi siap dan disahkan:
+  - Padam dan bersihkan semua fail di dalam folder `STITCH UI PREVIEW/` (`rm STITCH UI PREVIEW/*`).
+  - Jalankan ujian Playwright:
+    ```bash
+    cd tests && npx playwright test
+    ```
+  - Pastikan kelulusan **100% Pass Rate**.
+  - Kemas kini Graphify (`graphify update .`), rekod log `PLAN/`, dan lakukan commit Git SemVer.
+

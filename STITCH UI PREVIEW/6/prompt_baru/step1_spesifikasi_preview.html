@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pendaftaran Kenderaan Baharu - WeDRIVE Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#f9f9fb",
+                        "surface-variant": "#e2e2e4",
+                        "surface-bright": "#FFFFFF",
+                        "surface-dim": "#E5E5EA",
+                        "tertiary": "#4b49c9",
+                        "night-bento-subtle": "#1D1D20",
+                        "surface-container-low": "#FBFBFD",
+                        "on-surface-variant": "#6E6E73",
+                        "secondary-fixed-dim": "#c7c6cb",
+                        "inverse-on-surface": "#f0f0f2",
+                        "surface-container": "#F2F2F7",
+                        "on-error": "#ffffff",
+                        "on-surface": "#1a1c1d",
+                        "on-tertiary-fixed-variant": "#3631b4",
+                        "on-primary-container": "#fcfbff",
+                        "night-bento": "#161618",
+                        "surface-container-highest": "#D1D1D6",
+                        "secondary": "#5e5e63",
+                        "surface": "#f9f9fb",
+                        "on-primary-fixed": "#001b3f",
+                        "on-tertiary-container": "#fefaff",
+                        "tertiary-fixed": "#e2dfff",
+                        "inverse-surface": "#000000",
+                        "primary": "#0059b5",
+                        "outline-variant": "#c1c6d6",
+                        "primary-container": "#0071e3",
+                        "primary-fixed-dim": "#abc7ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#E5E5EA",
+                        "tertiary-fixed-dim": "#c2c1ff",
+                        "on-primary-fixed-variant": "#00458f",
+                        "secondary-container": "#e0dfe4",
+                        "error": "#FF3B30",
+                        "night-surface": "#000000",
+                        "error-container": "#ffdad6",
+                        "warning": "#FF9500",
+                        "on-secondary-fixed-variant": "#46464b",
+                        "border-day": "rgba(0, 0, 0, 0.06)",
+                        "on-secondary-fixed": "#1a1b1f",
+                        "inverse-primary": "#abc7ff",
+                        "success": "#34C759",
+                        "tertiary-container": "#6563e3",
+                        "outline": "#717785",
+                        "secondary-fixed": "#e3e2e7",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1d",
+                        "on-tertiary-fixed": "#0c006a",
+                        "primary-fixed": "#d7e2ff",
+                        "surface-tint": "#005cbb",
+                        "on-tertiary": "#ffffff",
+                        "border-night": "rgba(255, 255, 255, 0.08)",
+                        "on-secondary-container": "#626267",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "24px": "24px"
+                    },
+                    spacing: {
+                        "xxl": "32px",
+                        "lg": "20px",
+                        "xl": "24px",
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "container-padding": "24px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "large-title-mobile": ["Inter"],
+                        "body": ["Inter"],
+                        "label-tabular": ["Inter"],
+                        "title-1": ["Inter"],
+                        "caption": ["Inter"],
+                        "title-2": ["Inter"],
+                        "large-title": ["Inter"],
+                        "callout": ["Inter"],
+                        "footnote": ["Inter"],
+                        "title-3": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline": ["17px", {"lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+                        "large-title-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "800"}],
+                        "body": ["15px", {"lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "label-tabular": ["14px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "title-1": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.028em", "fontWeight": "800"}],
+                        "caption": ["12px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+                        "title-2": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.022em", "fontWeight": "700"}],
+                        "large-title": ["34px", {"lineHeight": "41px", "letterSpacing": "-0.035em", "fontWeight": "800"}],
+                        "callout": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500"}],
+                        "footnote": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "title-3": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #F5F5F7; } /* Forced light canvas */
+        .glass-header { backdrop-filter: blur(20px) saturate(180%); }
+        .ambient-shadow { box-shadow: 0px 4px 24px rgba(0,0,0,0.04); }
+        .bento-card { border: 1px solid rgba(0,0,0,0.06); }
+        
+        /* Stepper CSS */
+        .stepper-item.active { position: relative; }
+        .stepper-item.active::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px;
+            background-color: theme('colors.primary-container'); border-radius: 99px;
+            box-shadow: 0 0 8px theme('colors.primary-container');
+        }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked { right: 0; border-color: #0071e3; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #34C759; }
+        
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+</head>
+<body class="text-on-surface antialiased font-body flex flex-col min-h-screen relative pb-[120px]">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-bright/70 backdrop-blur-xl border-b border-border-day shadow-sm flex justify-between items-center px-gutter py-4 transition-all">
+<div class="flex items-center gap-2 w-1/3">
+<span class="font-headline text-headline font-extrabold text-on-surface">WeDRIVE Admin</span>
+</div>
+<div class="flex-1 text-center hidden md:block">
+<h1 class="font-title-3 text-title-3">Pendaftaran Kenderaan Baharu</h1>
+</div>
+<div class="flex items-center justify-end w-1/3">
+<button class="font-callout text-callout bg-surface-container text-on-surface-variant hover:bg-surface-variant px-4 py-2 rounded-full transition-colors active:scale-95 duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                Batal
+            </button>
+</div>
+</header>
+<!-- Floating Stepper Capsule -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-32px)] md:w-auto max-w-2xl bg-surface-bright/80 backdrop-blur-xl rounded-full border border-border-day ambient-shadow px-2 py-2 flex items-center justify-between md:justify-center gap-1 md:gap-4 overflow-x-auto">
+<div class="stepper-item active flex items-center gap-2 px-4 py-2 rounded-full bg-primary-container/10 text-primary-container font-label-tabular text-label-tabular whitespace-nowrap">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-xs">1</span>
+            Spesifikasi &amp; Tarif
+        </div>
+<span class="material-symbols-outlined text-outline-variant text-sm hidden md:block" style="font-variation-settings: 'FILL' 0;">chevron_right</span>
+<div class="stepper-item flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant font-label-tabular text-label-tabular whitespace-nowrap opacity-60">
+<span class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center text-xs">2</span>
+            Studio Visual &amp; Galeri
+        </div>
+<span class="material-symbols-outlined text-outline-variant text-sm hidden md:block" style="font-variation-settings: 'FILL' 0;">chevron_right</span>
+<div class="stepper-item flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant font-label-tabular text-label-tabular whitespace-nowrap opacity-60">
+<span class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center text-xs">3</span>
+            Semakan &amp; Pengesahan
+        </div>
+</div>
+<!-- Main Content Workspace -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 md:px-8 pt-[140px] flex flex-col gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Column 1: Spesifikasi (Spans 8 cols on desktop) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Bento Card 1: Maklumat Utama -->
+<div class="bg-surface-container-lowest rounded-[24px] bento-card p-6 md:p-8 flex flex-col gap-6">
+<div class="flex items-center gap-3 border-b border-border-day pb-4">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+</div>
+<h2 class="font-title-2 text-title-2 text-on-surface">Maklumat Utama &amp; Spesifikasi</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Pengeluar</label>
+<input class="w-full bg-surface-container border-border-day rounded-xl px-4 py-3 font-body text-[16px] md:text-body text-on-surface focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-shadow" placeholder="Cth: Toyota, Honda..." type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Model</label>
+<input class="w-full bg-surface-container border-border-day rounded-xl px-4 py-3 font-body text-[16px] md:text-body text-on-surface focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-shadow" placeholder="Cth: Camry, Civic..." type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Varian</label>
+<input class="w-full bg-surface-container border-border-day rounded-xl px-4 py-3 font-body text-[16px] md:text-body text-on-surface focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-shadow" placeholder="Cth: 2.5V, 1.5 TC-P..." type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">No. Pendaftaran</label>
+<input class="w-full bg-surface-container border-border-day rounded-xl px-4 py-3 font-body text-[16px] md:text-body text-on-surface uppercase focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-shadow" placeholder="VXX 1234" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Tahun Dibuat</label>
+<input class="w-full bg-surface-container border-border-day rounded-xl px-4 py-3 font-label-tabular text-label-tabular text-on-surface focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-shadow" placeholder="YYYY" type="number"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Warna</label>
+<input class="w-full bg-surface-container border-border-day rounded-xl px-4 py-3 font-body text-[16px] md:text-body text-on-surface focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none transition-shadow" placeholder="Cth: Platinum White Pearl" type="text"/>
+</div>
+</div>
+<!-- Kategori Chips -->
+<div class="flex flex-col gap-3 pt-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Kategori Kenderaan</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface hover:bg-surface-container font-callout text-callout text-on-surface transition-colors">Sedan</button>
+<button class="px-4 py-2 rounded-full border border-primary-container bg-primary-container/10 font-callout text-callout text-primary-container transition-colors">SUV</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface hover:bg-surface-container font-callout text-callout text-on-surface transition-colors">MPV</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface hover:bg-surface-container font-callout text-callout text-on-surface transition-colors">Hatchback</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface hover:bg-surface-container font-callout text-callout text-on-surface transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-sm">ev_station</span> Elektrik EV</button>
+<button class="px-4 py-2 rounded-full border border-border-day bg-surface hover:bg-surface-container font-callout text-callout text-on-surface transition-colors">Mewah</button>
+</div>
+</div>
+<!-- Tech Specs Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-4 border-t border-border-day">
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Transmisi</label>
+<div class="flex bg-surface-container rounded-xl p-1">
+<button class="flex-1 py-2 text-center rounded-lg bg-surface-bright shadow-sm font-callout text-callout text-on-surface">Auto</button>
+<button class="flex-1 py-2 text-center rounded-lg text-on-surface-variant font-callout text-callout hover:text-on-surface">Manual</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Kapasiti Tempat Duduk</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">airline_seat_recline_normal</span>
+<input class="w-full bg-surface-container border-border-day rounded-xl pl-10 pr-4 py-3 font-label-tabular text-label-tabular text-on-surface focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none" placeholder="5" type="number"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-caption text-caption text-on-surface-variant uppercase tracking-wider">Kapasiti Enjin (cc)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">speed</span>
+<input class="w-full bg-surface-container border-border-day rounded-xl pl-10 pr-4 py-3 font-label-tabular text-label-tabular text-on-surface focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none" placeholder="1998" type="number"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Tarif & Features (Spans 4 cols on desktop) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Bento Card 2: Tarif -->
+<div class="bg-surface-container-lowest rounded-[24px] bento-card p-6 flex flex-col gap-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center text-success">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<h3 class="font-headline text-headline text-on-surface">Struktur Tarif Sewaan</h3>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container rounded-xl p-4 flex flex-col gap-1 border border-border-day/50">
+<span class="font-caption text-caption text-on-surface-variant">Kadar Harian</span>
+<div class="flex items-baseline gap-1">
+<span class="font-callout text-callout text-on-surface-variant">RM</span>
+<input class="bg-transparent border-none p-0 m-0 font-label-tabular text-[20px] font-bold text-on-surface w-full focus:ring-0" type="number" value="180"/>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 flex flex-col gap-1 border border-border-day/50">
+<span class="font-caption text-caption text-on-surface-variant">Kadar Mingguan</span>
+<div class="flex items-baseline gap-1">
+<span class="font-callout text-callout text-on-surface-variant">RM</span>
+<input class="bg-transparent border-none p-0 m-0 font-label-tabular text-[20px] font-bold text-on-surface w-full focus:ring-0" type="number" value="1100"/>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 flex flex-col gap-1 border border-border-day/50 col-span-2">
+<span class="font-caption text-caption text-on-surface-variant">Kadar Bulanan</span>
+<div class="flex items-baseline gap-1">
+<span class="font-callout text-callout text-on-surface-variant">RM</span>
+<input class="bg-transparent border-none p-0 m-0 font-label-tabular text-[24px] font-bold text-on-surface w-full focus:ring-0" type="number" value="3500"/>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-4 flex flex-col gap-1 border border-border-day/50 col-span-2">
+<span class="font-caption text-caption text-on-surface-variant">Deposit Keselamatan</span>
+<div class="flex items-baseline gap-1">
+<span class="font-callout text-callout text-on-surface-variant">RM</span>
+<input class="bg-transparent border-none p-0 m-0 font-label-tabular text-[20px] font-bold text-on-surface w-full focus:ring-0" type="number" value="500"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Card 3: Features -->
+<div class="bg-surface-container-lowest rounded-[24px] bento-card p-6 flex flex-col gap-4">
+<h3 class="font-headline text-headline text-on-surface">Ciri &amp; Kelengkapan</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors cursor-pointer border border-transparent hover:border-border-day">
+<span class="font-body text-body text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">explore</span> GPS Navigasi
+                            </span>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle1"></label>
+</div>
+</label>
+<label class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors cursor-pointer border border-transparent hover:border-border-day">
+<span class="font-body text-body text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">phone_iphone</span> Apple CarPlay / Android Auto
+                            </span>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0" id="toggle2" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle2"></label>
+</div>
+</label>
+<label class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors cursor-pointer border border-transparent hover:border-border-day">
+<span class="font-body text-body text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">videocam</span> 360° Kamera
+                            </span>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0" id="toggle3" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle3"></label>
+</div>
+</label>
+<label class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors cursor-pointer border border-transparent hover:border-border-day">
+<span class="font-body text-body text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">sensors</span> Sensor Letak Kereta
+                            </span>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0" id="toggle4" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle4"></label>
+</div>
+</label>
+<label class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container transition-colors cursor-pointer border border-transparent hover:border-border-day">
+<span class="font-body text-body text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">chair</span> Kerusi Kulit
+                            </span>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 top-0" id="toggle5" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle5"></label>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar / Fixed Floating Dock -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-4xl bg-surface-bright/80 backdrop-blur-2xl border border-border-day rounded-full p-2 flex justify-between items-center z-50 ambient-shadow">
+<div class="hidden md:flex items-center gap-2 px-4 text-on-surface-variant font-footnote text-footnote">
+<span class="material-symbols-outlined text-[18px]">cloud_done</span>
+<span>Draf disimpan automatik di awan</span>
+</div>
+<div class="md:hidden flex items-center justify-center w-12 h-12 bg-surface-container rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined">save</span>
+</div>
+<button class="bg-primary-container text-on-primary rounded-full px-6 py-3 flex items-center gap-2 font-label-tabular text-label-tabular hover:brightness-110 transition-all active:scale-97 duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]">
+            Seterusnya: Studio Visual
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</body></html>

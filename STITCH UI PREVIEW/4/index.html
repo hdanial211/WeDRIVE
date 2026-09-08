@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WeDRIVE — Galeri Perbandingan Reka Bentuk Stitch UI (Preview Hub)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #090A0F;
+      --card-bg: rgba(22, 24, 34, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(59, 130, 246, 0.4);
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent: #3B82F6;
+      --accent-glow: rgba(59, 130, 246, 0.2);
+      --radius: 20px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      padding: 40px 24px 80px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 60%, transparent 100%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .badge-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60A5FA;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .card-version {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-version:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -15px var(--accent-glow);
+    }
+    .card-version.recommended {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .folder-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #93C5FD;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .status-badge.rec {
+      background: #10B981;
+      color: #064E3B;
+    }
+    .status-badge.archive {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94A3B8;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .specs-list {
+      list-style: none;
+      margin-bottom: 20px;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .specs-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: #CBD5E1;
+    }
+    .specs-list li i {
+      font-size: 12px;
+      margin-top: 3px;
+    }
+    .specs-list li i.fa-check { color: #10B981; }
+    .specs-list li i.fa-xmark { color: #EF4444; }
+    .links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .btn-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px 6px;
+      color: #F1F5F9;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .btn-step span.step-num {
+      font-size: 10px;
+      color: #94A3B8;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .btn-step:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.5);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+    .footer-notes {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 32px;
+      line-height: 1.6;
+    }
+  </style>
+
+  <!-- WeDRIVE Preview Dark/Light Theme Support -->
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge-hub"><i class="fa-solid fa-shapes"></i> STITCH UI PREVIEW ARCHIVE HUB</div>
+      <h1>Perbandingan Reka Bentuk Add Car Wizard</h1>
+      <p class="subtitle">Arkib perbandingan berfolder berasaskan reka bentuk Gemini Stitch MCP. Buka mana-mana langkah untuk menilai visual secara langsung di pelayar anda.</p>
+    </header>
+
+    <div class="grid">
+      <!-- FOLDER 1 -->
+      <div class="card-version">
+        <div class="card-header">
+          <span class="folder-tag">FOLDER 1/</span>
+          <span class="status-badge archive">Arkib Asas</span>
+        </div>
+        <h2 class="card-title">Edisi Klasik (Dengan Sidebar)</h2>
+        <p class="card-desc">Reka bentuk generasi pertama dengan kehadiran bar sisi pentadbir penuh. Menampilkan borang langkah demi langkah asas dan pratonton standard.</p>
+        <ul class="specs-list">
+          <li><i class="fa-solid fa-xmark"></i> Bar sisi penuh (agak sesak pada skrin kecil)</li>
+          <li><i class="fa-solid fa-check"></i> 3 Langkah Wizard asas</li>
+          <li><i class="fa-solid fa-xmark"></i> Tiada pengurusan khusus 6 foto katalog vs 360</li>
+        </ul>
+        <div class="links-grid">
+          <a class="btn-step" href="1/step1_spesifikasi_preview.html">
+            <span class="step-num">Langkah 1</span>
+            Spesifikasi
+          </a>
+          <a class="btn-step" href="1/step2_studio360_preview.html">
+            <span class="step-num">Langkah 2</span>
+            Studio 360
+          </a>
+          <a class="btn-step" href="1/step3_pengesahan_preview.html">
+            <span class="step-num">Langkah 3</span>
+            Pengesahan
+          </a>
+        </div>
+      </div>
+
+      <!-- FOLDER 2 -->
+      <div class="card-version">
+        <div class="card-header">
+          <span class="folder-tag">FOLDER 2/</span>
+          <span class="status-badge archive">Generasi 2</span>
+        </div>
+        <h2 class="card-title">Edisi Fokus Penuh (Sifar Bar Sisi)</h2>
+        <p class="card-desc">Menghapuskan bar sisi untuk kanvas kerja penuh. Pengguna menumpukan perhatian sepenuhnya pada pengisian borang kenderaan.</p>
+        <ul class="specs-list">
+          <li><i class="fa-solid fa-check"></i> Sifar bar sisi (ruang kerja lebar & luas)</li>
+          <li><i class="fa-solid fa-check"></i> Ciri muat naik 6 foto & pautan SpinCar</li>
+          <li><i class="fa-solid fa-check"></i> Layout kemas & minimalis</li>
+        </ul>
+        <div class="links-grid">
+          <a class="btn-step" href="2/step1_spesifikasi_preview.html">
+            <span class="step-num">Langkah 1</span>
+            Spesifikasi
+          </a>
+          <a class="btn-step" href="2/step2_studio360_preview.html">
+            <span class="step-num">Langkah 2</span>
+            Studio 360
+          </a>
+          <a class="btn-step" href="2/step3_pengesahan_preview.html">
+            <span class="step-num">Langkah 3</span>
+            Pengesahan
+          </a>
+        </div>
+      </div>
+
+      <!-- FOLDER 3 -->
+      <div class="card-version recommended">
+        <div class="card-header">
+          <span class="folder-tag">FOLDER 3/</span>
+          <span class="status-badge rec">DISYORKAN (APPLE HIG)</span>
+        </div>
+        <h2 class="card-title">Edisi Apple HIG Balanced Elegance</h2>
+        <p class="card-desc">Susun atur Bento Grid 24px Squircle yang sangat seimbang. Tiada bar sisi, penyingkiran dropdown lokasi (diselaraskan ke HQ Melaka), 6 foto katalog + tab 360 luaran/dalaman.</p>
+        <ul class="specs-list">
+          <li><i class="fa-solid fa-check"></i> Sifar bar sisi, fokus penuh aliran pendaftaran</li>
+          <li><i class="fa-solid fa-check"></i> Bento Grid 2-kolum kemas + 3-kolum kad tarif sewaan</li>
+          <li><i class="fa-solid fa-check"></i> Zon 6 Foto Katalog Wajib + Pentas Dwipratonton 360</li>
+          <li><i class="fa-solid fa-check"></i> Fallback galeri statik automatik jika tiada fail 360</li>
+        </ul>
+        <div class="links-grid">
+          <a class="btn-step" href="3/step1_spesifikasi_preview.html">
+            <span class="step-num">Langkah 1</span>
+            Spesifikasi
+          </a>
+          <a class="btn-step" href="3/step2_studio360_preview.html">
+            <span class="step-num">Langkah 2</span>
+            Studio 360
+          </a>
+          <a class="btn-step" href="3/step3_pengesahan_preview.html">
+            <span class="step-num">Langkah 3</span>
+            Pengesahan
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-notes">
+      <p>💡 <strong>Panduan:</strong> Anda boleh terus membuka pautan di atas menggunakan pelayan aktif anda di <code>http://127.0.0.1:5504/STITCH%20UI%20PREVIEW/index.html</code>.</p>
+      <p>Sila buat semakan dan maklumkan kepada ejen sekiranya anda bersetuju dengan <strong>Folder 3</strong> atau mahu variasi tambahan (Folder 4, 5, ...).</p>
+    </div>
+  </div>
+</body>
+</html>
