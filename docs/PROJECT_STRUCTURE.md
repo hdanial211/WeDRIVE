@@ -19,7 +19,7 @@ AI CAR RENTAL SYSTEM/
 +-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk (Master Hub)
 |   +-- PROJECT_STRUCTURE.md    # Dokumen Struktur Projek Utama (Master Authority)
 |   +-- DESIGN.md               # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–21, Strict Max 12k chars)
+|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–22, Strict Max 12k chars)
 |   |   +-- 01_core_rules.md    # Gatekeeper Protocol, Peraturan Teras Projek, Git, PRD
 |   |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3 (Asas, Bento & Corak)
 |   |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6 (Komponen & Input)
@@ -41,6 +41,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- 19_prompt_engineering_standard.md # Piawaian Kejuruteraan Prompt Emas, Peringatan Proaktif & Penalaan Prompt
 |   |   +-- 20_team_roles_and_responsibilities.md # 5 Domain Peranan Kejuruteraan Perisian Profesional WeDRIVE
 |   |   +-- 21_stitch_mcp_advanced_operations.md # Operasi Lanjutan & Enjin Kualiti Pasca-Prompt Stitch MCP
+|   |   +-- 22_user_feedback_golden_rules.md # Undang-undang Emas Maklum Balas & Mandat Langsung Pengguna
 |   +-- skills/                 # 6 Kemahiran Automasi Khusus:
 |   |   +-- context7/           # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
 |   |   +-- frontend-ui/        # Rekaan Antaramuka Apple HIG & Bento Grid

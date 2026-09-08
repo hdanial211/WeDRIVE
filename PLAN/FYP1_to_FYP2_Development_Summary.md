@@ -5939,6 +5939,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.10 Compact AI spec button microcopy to prevent ellipsis and overflow`
   - Tag Versi: `6.9.10`
 
+---
+
+### [MINOR UPDATE] v6.10.0 — Penginstitusian Fail Peraturan Baharu 22: Undang-undang Emas Maklum Balas Pengguna (New Rule 22: User Feedback Golden Rules Codification)
+
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna mengarahkan agar kesemua teguran, maklum balas, dan arahan langsung pengguna diabadikan secara kekal dalam sistem peraturan ejen:
+    > *"Perfecto ...nnti kalau boleh kan setiap kata2 saya ni awak boleh jugak update dekat agent supaya ingat selalu"*
+
+- **Tindakan Pelaksanaan (`.agents/rules/` & Dokumentasi Seni Bina)**:
+  - **1. Penggubalan Fail Peraturan Baharu `.agents/rules/22_user_feedback_golden_rules.md`**:
+    - **Peraturan Dwikeadaan Draf Bertukar**: Butang `Simpan Draf` terpapar lalai, bertukar kepada `Draf disimpan` apabila ditekan, dan hilang semula kepada butang `Simpan Draf` apabila sebarang input dipinda. Ayat diringkaskan kepada "Draf disimpan".
+    - **Peraturan Sifar Elipsis & Pemadatan Teks**: Teks butang dihadkan 10–16 aksara (contoh: `Isi Automatik`) bagi menghapuskan risiko pemotongan atau elipsis `...`.
+    - **Peraturan Pemisahan Maksud Label & Butang**: Sifar pertindihan maksud antara label konteks (`Cadangan Spesifikasi Pintar`) dan butang tindakan (`Isi Automatik [Jana AI ↓]`).
+    - **Peraturan Penyeragaman Istilah Harga**: Penyenaraian hitam perkataan lapuk `Tarif` dan penguatkuasaan perkataan moden `Harga` di seluruh UI.
+    - **Peraturan Penjanaan Serentak 6 Sudut Foto**: Pengisian automatik 6 sudut foto kenderaan serentak dengan imbasan pautan CDN 360°.
+    - **Peraturan Keseimbangan Ketinggian Menegak (46px)**: Penyelarasan ketinggian elemen sebaris tepat 1:1.
+  - **2. Pengemaskinian Senarai Hitam Bahasa (`11_language_standards.md`)**:
+    - Menambah perkataan `Tarif` / `Kadar Tarif` ke dalam jadual perkataan terlarang dengan pengganti rasmi `Harga` / `Kadar Sewaan`.
+  - **3. Pengemaskinian Indeks & Struktur Projek**:
+    - Mengemas kini kiraan peraturan kepada 22 fail di `01_core_rules.md` (Seksyen 7), `.agents/PROJECT_STRUCTURE.md`, dan `docs/PROJECT_STRUCTURE.md`.
+  - **4. Pematuhan Had Siling 12,000 Aksara**:
+    - Kesemua 22 fail peraturan `.agents/rules/*.md` disahkan kekal $\le 12,000$ aksara (`wc -m`).
+
+- **Maklumat Git**:
+  - Commit: `6.10.0 Codify user verbal mandates into permanent Rule 22 User Feedback Golden Rules`
+  - Tag Versi: `6.10.0`
+
 
 
 

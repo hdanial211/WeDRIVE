@@ -35,6 +35,7 @@ Jadual di bawah mengandungi kata-kata yang **DIHARAMKAN SAMA SEKALI** penggunaan
 | **JPJ** / **Geran JPJ** *(Terkait Kereta/Add Car)* | WeDRIVE bisnes sewa kereta bukan jual kereta. Kereta syarikat sudah siap didaftarkan dengan JPJ. Dilarang sebut JPJ berkaitan kereta. | **Pemeriksaan Visual Syarikat** / **Maklumat Asas Pendaftaran** |
 | **Aset** *(dalam konteks sewa kereta)* | Istilah perakaunan kaku/canggung untuk kereta sewaan. | **Kereta** / **Kenderaan** / **Visual 360°** |
 | **Muka Kubus** / **Integriti Data** | Jargon grafik 3D/pengaturcaraan pelik yang membingungkan pentadbir operasi. | **Spesifikasi Kenderaan** / **Lokasi & Status Serahan** |
+| **Tarif** / **Kadar Tarif** | Istilah utiliti/cukai lapuk yang janggal dan pelik untuk sewaan kereta. | **Harga** / **Kadar Sewaan** / **Harga Sewaan** |
 
 ---
 

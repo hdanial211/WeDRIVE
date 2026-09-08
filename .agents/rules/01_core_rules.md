@@ -63,7 +63,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 
 ---
 
-## 7. Indeks & Rujukan 20 Peraturan Modul Berkaitan (Jumlah 21 Fail Peraturan)
+## 7. Indeks & Rujukan 21 Peraturan Modul Berkaitan (Jumlah 22 Fail Peraturan)
 - **Standard BM Moden 2026:** [11_language_standards.md](11_language_standards.md)
 - **Apple HIG Design System:** [02_apple_hig_design_system.md](02_apple_hig_design_system.md) & [03_apple_hig_components.md](03_apple_hig_components.md)
 - **Navigation & UI/UX:** [04_navigation_and_ui.md](04_navigation_and_ui.md)
@@ -82,6 +82,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 - **Piawaian Prompt Emas & Peringatan Proaktif:** [19_prompt_engineering_standard.md](19_prompt_engineering_standard.md)
 - **Peranan Pasukan Kejuruteraan Perisian:** [20_team_roles_and_responsibilities.md](20_team_roles_and_responsibilities.md)
 - **Operasi Lanjutan & Pasca-Prompt Stitch MCP:** [21_stitch_mcp_advanced_operations.md](21_stitch_mcp_advanced_operations.md)
+- **Undang-undang Emas Maklum Balas Pengguna:** [22_user_feedback_golden_rules.md](22_user_feedback_golden_rules.md)
 
 ---
 
