@@ -5854,6 +5854,45 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.7 Add zero coding jargon, JPJ vehicle scope rules, single HQ location, and strict single unified pill toast notification standard`
   - Tag Versi: `6.9.7`
 
+---
+
+### [MINOR UPDATE] v6.9.8 — Penggantian Status Draf Interaktif Swapping, Pemudahan Teks & Populasi Automatik 6 Sudut Foto AI (Interactive Swapping Draft State, Copy Simplification & Auto 6-Photo AI Population)
+
+- **Latar Belakang & Maklum Balas Pengguna**:
+  - Pengguna mengarahkan penalaan antaramuka interaktif untuk status draf:
+    > *"Draf disimpan secara automatik di awan > Draf disimpan ... ayat simple kan aja"*
+    > *"sebelum keluar macam ni awak tambah button simpan draf"*
+    > *"ni akan muncul apabila saya tekan simpan draf sahaja ...n simpan draf tu akan hilang ..kiranya dia bertukar...nnti bila saya ada tukar2 sikit dia muncul balik simpan draf"*
+    > *"Tarif ni tukar macam pelik guna perkataan harga better lagi"*
+    > *"perfecto kalau letak link tu terus ai generate untuk 6gambar terus kan macam tu lg better"*
+    > *"kalau boleh saya nak ai punya bentuk tinggi ni sama dengan sebelah , lebar saya x kesah"*
+
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/`)**:
+  - **1. Penggantian Status Draf Interaktif Swapping (`Simpan Draf` $\leftrightarrow$ `Draf disimpan`)**:
+    - Membina kontena pertukaran dwikeadaan (`#dockDraftWrapper` di Langkah 1 dan `#dockDraftWrapperStep2` di Langkah 2).
+    - **Keadaan 1 (Belum Disimpan / Diedit)**: Butang `[Simpan Draf]` terpapar secara lalai; penunjuk `Draf disimpan` disembunyikan (`hidden`).
+    - **Tindakan Klik `Simpan Draf`**: Butang `[Simpan Draf]` hilang / disembunyikan (`hidden`), dan digantikan serta-merta oleh ikon awan hijau berserta tanda semak putih padu dan teks `Draf disimpan` (`flex` dengan animasi gelombang haptik Apple `ai-field-wave` dan notifikasi Apple Glass Toast).
+    - **Keadaan 2 (Pengguna Membuat Perubahan)**: Sebaik sahaja pengguna mengubah atau menaip sebarang medan borang (`input`/`change` event) atau menjana semula spesifikasi, penunjuk `Draf disimpan` hilang dan butang `[Simpan Draf]` muncul semula untuk simpanan seterusnya.
+  - **2. Pemudahan Teks Status Draf (Simplified Copy)**:
+    - Memendekkan teks panjang *"Draf disimpan secara automatik di awan"* kepada ungkapan ringkas, padat dan elegan: *"Draf disimpan"*.
+  - **3. Penyeragaman Istilah Moden (Harga menggantikan Tarif)**:
+    - Menggantikan istilah kaku *"Tarif"* kepada *"Harga"* merentas seluruh dokumen pratonton (`Spesifikasi & Harga`, `Penetapan Harga Sewaan Pintar`, `Ringkasan Harga`).
+  - **4. Penjanaan Automatik 6 Sudut Foto Pemeriksaan (`populateAiInspectionPhotos`)**:
+    - Apabila pautan CDN dimasukkan dan butang `Jana AI` ditekan, enjin AI menjana visual 360° serentak dengan pengisian automatik 6 sudut foto kenderaan (Hadapan, Belakang, Sisi Kanan, Sisi Kiri, Ruang Pemandu, Ruang Penumpang) berserta lencana `✓ Diimbas AI`.
+  - **5. Penyelarasan Ketinggian Butang Sama Rata (Equal Height Alignment 46px)**:
+    - Menyelaraskan ketinggian menegak butang `AI Auto Generate Spec` (`h-[46px] py-0`) agar seimbang tepat 1:1 dengan medan input bersebelahannya (`inputColorHeight: 46px`).
+
+- **Pengesahan Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Ujian dwiarah pertukaran butang `Simpan Draf` $\leftrightarrow$ penunjuk `Draf disimpan` berfungsi lancar dan sempurna.
+  - **iPad Tablet (820 × 1180)**: Susun atur 2-kolum responsif dengan zon sentuhan minimum $\ge 44$px.
+  - **iPhone Mobile (393 × 852)**: Sifar limpahan mendatar (`hasHorizontalOverflow: false`), butang kapsul simetri 9999px.
+  - **Playwright Test Suite**: 100% Pass Rate merentas suite ujian automatik.
+  - **Audit Had Aksara 12,000**: Kesemua 21 fail peraturan `.agents/rules/*.md` disahkan kekal $\le 12,000$ aksara.
+
+- **Maklumat Git**:
+  - Commit: `6.9.8 Implement interactive swapping draft state, simplified copy, terminology modernization, and auto 6-photo AI population`
+  - Tag Versi: `6.9.8`
+
 
 
 

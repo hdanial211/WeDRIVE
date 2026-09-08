@@ -39,11 +39,16 @@ Projek ini menyokong dwibahasa (EN/MS) dan dwi-tema (Day/Night) penuh di semua h
   - Setiap elemen WAJIB dibinding menggunakan atribut `data-key`, `data-key-ph`, `data-key-title`, `data-key-html` atau `data-i18n`.
   - Tertakluk secara mutlak kepada piawaian Bahasa Melayu Moden 2026 dalam [11_language_standards.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II%28FYP%202%29/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md).
 
-## 4. Dummy Data & Database Sync
+## 4. Dasar Sifar Dummy Hardcode & Aliran Data Sebenar Sahaja (Strict Real Data Pipeline - Zero Hardcoded Dummy Data)
 
-- Data dummy / frontend data mesti disimpan secara tersusun dalam `shared/dummy/`.
-- Data mesti boleh sync dengan backend apabila backend siap.
-- Gunakan satu fail data utama (`shared/dummy/data.json`) sebagai single source of truth.
+- **Larangan Mutlak Hardcode Dummy Data:**
+  - DILARANG SAMA SEKALI meletakkan data dummy yang di-hardcode (statik) pada halaman pengesahan, pratonton, atau paparan operasi.
+  - Sistem WeDRIVE adalah sistem pengeluaran profesional yang HANYA menggunakan data sebenar (*real data only*).
+- **Aliran Paip Data Sebenar (Real Data Pipeline):**
+  - **Aliran Wizard / Borang Pelbagai Langkah (Multi-Step Stepper):** Data yang diisi pada langkah terawal (contoh: Langkah 1 Spesifikasi Kenderaan) WAJIB disimpan secara automatik ke dalam storan draf sesi (`localStorage.getItem('wedrive_new_car_draft')`) dan dibaca secara dinamik oleh langkah seterusnya (Langkah 2 & Langkah 3). DILARANG memaparkan teks statik contoh sekiranya pengguna memasukkan data lain.
+  - **Penyegerakan Dua Hala (Two-Way Restoration):** Sekiranya pengguna menavigasi kembali ke langkah sebelumnya, borang WAJIB memulihkan nilai yang telah disimpan (*restore draft*) supaya pengguna tidak perlu menaip semula.
+  - **Pangkalan Data Pengeluaran:** Semua rekod inventori, tempahan, profil pelanggan, dan transaksi kewangan WAJIB bersumberkan pangkalan data Supabase PostgreSQL melalui `window.WeDriveAPI` atau klien rasmi Supabase.
+
 
 ## 5. Auth Guard
 

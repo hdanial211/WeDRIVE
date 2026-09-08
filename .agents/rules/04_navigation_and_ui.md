@@ -100,4 +100,31 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
   - **Bahan Kaca Apple**: Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(0, 113, 227, 0.3); box-shadow: 0 20px 35px rgba(0, 0, 0, 0.18);`).
   - **Teks**: Teks sebaris ringkas (*single line message*) dengan animasi lincah jatuh dari atas (`translate-y-[-10px]` $\leftrightarrow$ `translate-y-0`).
 
+---
 
+## 8. Prinsip Logik Akal Operasi: Sifar Medan Rekaan & Sifar Ulangan Universal pada Rekod Individu (Strict Zero Fabricated Fields & Zero Universal Clutter)
+
+- **Sifar Medan Rekaan ("Benda yang tak ada jangan diadakan"):**
+  - WeDRIVE adalah perkhidmatan sewaan kenderaan sebenar (*car rental with unlimited mileage*), BUKAN penjual kereta terpakai (*used car dealer*).
+  - **DILARANG SAMA SEKALI** mengada-adakan atau mereka medan yang tiada logik operasi, tiada keperluan perniagaan sewaan, atau tiada dalam skema data sebenar (seperti *Odometer*, *Perbatuan Semasa*, *Mileage*, *Tarikh Luput Geran*, *Cukai Jalan*, dll.).
+  - Hanya paparkan parameter teknikal yang benar-benar wujud dalam skema pangkalan data dan dimasukkan secara sah oleh pengguna/operasi (contoh 10 spesifikasi rasmi kenderaan: No. Pendaftaran, Pengeluar, Model & Varian, Kategori, Tahun Buatan, Warna, Enjin & Kuasa, Punca Kuasa, Transmisi, Kapasiti Tempat Duduk).
+- **Sifar Ulangan Universal pada Rekod Individu ("Benda yang semua pakai jangan tunjuk dekat individu"):**
+  - Maklumat dan polisi dasar yang terpakai secara universal kepada SELURUH sistem atau SEMUA kenderaan **DILARANG dipamerkan berulang-ulang sebagai kad atau lencana pada paparan rekod individu**.
+  - Contoh:
+    - *Pusat Pengambilan & Pemulangan*: Sistem WeDRIVE beroperasi pada satu HQ tunggal (HQ Cyberjaya) untuk semua kenderaan. Ini adalah ketetapan menyeluruh sistem. DILARANG meletakkan kad/lencana berasingan "Lokasi: HQ Cyberjaya" pada setiap kad ringkasan kenderaan individu kerana ia membazirkan ruang visual dan mencemarkan estetika kemas Apple HIG.
+    - *Status Kereta Baharu*: Kenderaan yang didaftarkan sememangnya didaftarkan untuk sedia disewa. DILARANG meletakkan kad berasingan semata-mata untuk memaparkan "Status: Sedia Disewa" pada pratonton kenderaan individu.
+- **Pemanfaatan Ruang Penuh Bento (Full-Width Zero Dead Space):**
+  - Ruang Bento grid WAJIB dimanfaatkan sepenuhnya (contoh: kad spesifikasi `col-span-12` penuh) untuk memaparkan butiran unik kenderaan tersebut tanpa ruang mati (*Zero Dead Space*).
+
+---
+
+## 9. Pendedahan Progresif Media & Sifar Lencana Gimik AI (Progressive Visual Disclosure & Zero AI Gimmick Clutter)
+
+- **Pendedahan Progresif Suis Media ("Tunjuk Galeri Sahaja Dulu, Ada 360 Baru Kembang"):**
+  - Suis bersegmen visual (*Segmented Switcher*) WAJIB bermula secara padat memaparkan pilihan **"Galeri" sahaja** sebagai asas mandatori kenderaan.
+  - Pilihan **"Pusingan 360°"** dan **"Panorama"** DILARANG dipaparkan secara pramatang sekiranya aset interaktif tersebut belum dijana atau dipautkan.
+  - Sebaik sahaja aset 360° wujud atau selesai dijana, suis bersegmen tersebut akan mengembang secara dinamik dan lancar (*smooth expand*) mengikut fizik Apple HIG untuk mendedahkan mod 360° dan Panorama.
+- **Sifar Lencana Gimik AI ("Ayat Ni Xyah Kot Nampak Macam AI Buat Page Ni"):**
+  - DILARANG SAMA SEKALI meletakkan lencana pelekat cereka seperti *"✨ Kualiti AI Terjamin"*, *"Dikuasakan AI"*, atau seumpamanya pada paparan kenderaan.
+  - Kehadiran lencana seperti ini merendahkan kredibiliti profesional sistem dan menampakkan reka bentuk seperti projek mainan generatif amatur.
+  - Kekalkan penunjuk status korporat sebenar Apple HIG (contoh: *"CDN Bersambung"*, *"10 Butiran Disahkan"*, *"Siap Sedia"*).

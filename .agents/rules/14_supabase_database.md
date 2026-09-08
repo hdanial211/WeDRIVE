@@ -51,10 +51,13 @@ ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
 
 ---
 
-## 4. Peraturan Sifar Data Palsu (*Zero Fake Data Rule*)
+## 4. Peraturan Sifar Data Palsu & Sifar Hardcode Dummy (Zero Fake Data & Zero Hardcoded Dummy Rule)
 
-- Sebarang data yang dipaparkan dalam antara muka WeDRIVE (sama ada senarai kereta, tempahan, atau analitik) mesti bersumberkan pangkalan data Supabase atau objek API yang diselaraskan (`window.WeDriveAPI`).
-- DILARANG mereka-reka data palsu statik (*hardcoded fiction*) di dalam komponen antaramuka pelanggan.
+- **Skema Supabase Sebagai Single Source of Truth:**
+  - Sebarang data yang dipaparkan dalam antara muka WeDRIVE (sama ada senarai kereta, tempahan, profil pelanggan, atau analitik) mesti bersumberkan pangkalan data Supabase PostgreSQL atau objek API yang diselaraskan (`window.WeDriveAPI`).
+  - DILARANG SAMA SEKALI mereka-reka data palsu statik (*hardcoded fiction*) di dalam komponen antaramuka pengguna mahupun pentadbir.
+  - DILARANG mencipta medan rekaan yang tiada dalam skema pangkalan data sebenar (seperti medan *odometer* atau *perbatuan* yang tidak relevan dengan perniagaan perbatuan tanpa had WeDRIVE).
+  - Aliran wizard pendaftaran WAJIB mengalirkan data input pengguna sebenar secara dinamik ke pangkalan data Supabase tanpa rekaan data statik perantaraan.
 
 ---
 

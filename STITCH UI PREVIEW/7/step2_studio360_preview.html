@@ -234,6 +234,61 @@
             animation: aiTurntableFlash 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* Apple HIG Field Wave Animation (Cascading Pulse) */
+        @keyframes aiFieldPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+            50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(94, 92, 230, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+        }
+
+        .ai-field-wave {
+            animation: aiFieldPulse 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            border-color: #5E5CE6 !important;
+            background-color: rgba(94, 92, 230, 0.09) !important;
+            box-shadow: 0 0 14px rgba(94, 92, 230, 0.25) !important;
+        }
+        html.dark .ai-field-wave {
+            border-color: #BF5AF2 !important;
+            background-color: rgba(191, 90, 242, 0.16) !important;
+            box-shadow: 0 0 18px rgba(191, 90, 242, 0.35) !important;
+        }
+
+        /* Unified Apple Intelligence Glass Bar (Light vs Dark) */
+        .ai-container-bar {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.05) 0%, rgba(94, 92, 230, 0.08) 50%, rgba(191, 90, 242, 0.12) 100%) !important;
+            border: 1px solid rgba(94, 92, 230, 0.35) !important;
+            box-shadow: 0 4px 20px rgba(94, 92, 230, 0.12);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ai-container-bar:hover {
+            border-color: rgba(191, 90, 242, 0.6) !important;
+            box-shadow: 0 6px 25px rgba(191, 90, 242, 0.2);
+        }
+        html.dark .ai-container-bar {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.18) 0%, rgba(94, 92, 230, 0.22) 50%, rgba(191, 90, 242, 0.28) 100%) !important;
+            border: 1px solid rgba(191, 90, 242, 0.45) !important;
+            box-shadow: 0 4px 25px rgba(94, 92, 230, 0.25);
+        }
+        html.dark .ai-container-bar:hover {
+            border-color: rgba(191, 90, 242, 0.8) !important;
+            box-shadow: 0 6px 30px rgba(191, 90, 242, 0.35);
+        }
+
+        /* Unified AI Button Gradient (Exact Match Across Step 1 & Step 2) */
+        .ai-gradient-pill {
+            background: linear-gradient(135deg, #0071E3 0%, #5E5CE6 50%, #BF5AF2 100%) !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 16px rgba(94, 92, 230, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ai-gradient-pill:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 6px 22px rgba(191, 90, 242, 0.45);
+        }
+        .ai-gradient-pill:active {
+            transform: scale(0.97);
+        }
+
         /* Turntable Fullscreen Viewport Mode */
         #turntableViewport:fullscreen,
         #turntableViewport:-webkit-full-screen,
@@ -343,7 +398,7 @@
                 <!-- Step 3 Upcoming -->
                 <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                     <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
-                    <span class="font-callout text-callout font-medium">Pengesahan</span>
+                    <span class="font-callout text-callout font-medium">Semakan Akhir</span>
                 </a>
             </div>
         </div>
@@ -361,34 +416,34 @@
                         <p class="font-callout text-callout text-on-surface-variant">Muat naik 6 sudut kenderaan untuk rekod pemeriksaan visual syarikat.</p>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-md">
+                    <div id="photoUploadSlotsGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-md">
                         <!-- Upload Slot 1 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
                             <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Hadapan Penuh</span>
                         </button>
                         <!-- Upload Slot 2 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
                             <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Belakang Penuh</span>
                         </button>
                         <!-- Upload Slot 3 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
                             <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Sisi Kanan Profil</span>
                         </button>
                         <!-- Upload Slot 4 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
                             <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Sisi Kiri Profil</span>
                         </button>
                         <!-- Upload Slot 5 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
                             <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Ruang Pemandu &amp; Papan Pemuka</span>
                         </button>
                         <!-- Upload Slot 6 -->
-                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-all interactive-btn">
                             <span class="material-symbols-outlined text-primary">add_a_photo</span>
                             <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Tempat Duduk Belakang / Kargo</span>
                         </button>
@@ -411,14 +466,14 @@
                     <div class="flex flex-col gap-md">
                         <!-- Input + Action Button Group -->
                         <div class="flex flex-col xl:flex-row gap-2 sm:gap-3 items-stretch">
-                            <div id="cdnInputWrapper" class="relative flex-1 rounded-xl transition-all duration-300 overflow-hidden bg-surface-container hairline border-border-day">
+                            <div id="cdnInputWrapper" class="relative flex-1 rounded-xl transition-all duration-300 overflow-hidden ai-container-bar">
                                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant z-10 text-[20px]">link</span>
                                 <input id="cdnUrlInput" class="w-full bg-transparent border-none rounded-xl pl-10 pr-3 py-3 font-body text-body text-on-surface focus:outline-none transition-all font-mono text-[13px] relative z-10" placeholder="https://cdn.wedrive.app/assets/3d/..." value="https://cdn.wedrive.app/assets/3d/honda-civic-2024-360/" type="text"/>
                                 <div id="aiLaserScanner" class="hidden ai-laser-line"></div>
                             </div>
                             <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0">
                                 <!-- 1. Jana AI Button (Generates 360 Preview) -->
-                                <button id="btnGenerate3D" type="button" class="pill-btn interactive-btn bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] hover:brightness-110 text-white font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97]" style="color: #FFFFFF !important;">
+                                <button id="btnGenerate3D" type="button" class="ai-gradient-pill pill-btn interactive-btn font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97]" style="color: #FFFFFF !important;">
                                     <span id="btnGenIcon" class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
                                     <span id="btnGenText">Jana AI</span>
                                 </button>
@@ -476,20 +531,26 @@
                 <!-- Bento Card C: Pentas Pratonton Interaktif -->
                 <div class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)] h-full flex flex-col">
                     
-                    <!-- Segmented Switch -->
-                    <div class="bg-surface-container rounded-full p-xs flex gap-xs mb-lg w-full">
-                        <button type="button" class="flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all">Pusingan 360°</button>
-                        <button type="button" class="flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all">Panorama</button>
-                        <button type="button" class="flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all">Galeri</button>
+                    <!-- Segmented Switch (Tunjuk galeri sahaja dulu, bila ada 360 baru kembang 360 & panorama) -->
+                    <div id="segmentedSwitcher" class="bg-surface-container rounded-full p-xs flex gap-xs mb-lg w-full max-w-[130px] transition-all duration-500 mx-auto">
+                        <button id="tab360" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap">Pusingan 360°</button>
+                        <button id="tabPanorama" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap">Panorama</button>
+                        <button id="tabGallery" type="button" class="flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all whitespace-nowrap">Galeri</button>
                     </div>
 
                     <!-- Turntable Viewport -->
                     <div id="turntableViewport" class="relative flex-1 bg-surface-container rounded-2xl overflow-hidden min-h-[400px] flex items-center justify-center group cursor-ew-resize transition-all duration-500">
-                        <!-- Image Container with prompt_baru 360 render -->
-                        <div class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXv-DH82fsjprfpGpSo2DHFgcMwOtUC3ZASUhwfjHsNXTMVzs6gH1edgnQoIeM5BQ-gN5Quk__-3fh0tRncgoo8CwqIDSi3SzWNMSkRhEVtIrkDJCfRZMRNF8lX8AGLWTdF0jPHpnI3HywwDZEwxcUlJtoQ00vlCiI82q9HzlrtRvGLMD32g63eHxTy-ErJMRcOfqLzUfqMKg1VUFyEgDi1wUjsql-khj5lNAkwmLnQc-ZUnXgxY4g-7VNBOZm1VN_eCh3ANLf-7Q')"></div>
+                        <!-- Image Container (Initially shows Galeri front photo; when 360 activated, switches to 360 render) -->
+                        <div id="viewportRenderImage" class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-all duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtBDDlUrmJDNhDsS4aV1no7_ijMp3LDBIEuO8JFSLu1rhZtzRptizXrOOhrC4F9UM_GgVDGzcAxyDfse6ygFP8JmSGyjv71IIKEzYBhzmRw7hDm5v779sZUlzh9qAN7SOqsPGhcB_Czd7Yc7HZemwGIFVradMOJlXOSx87_TKIZzR5kuC3Lt7YEVxnlUdIvKA8fnQCkIEXAdlm7dA7MYzd0eNSvwggNzObheoeAcMgKy9b-GN11jAQiS1tJPCdGlY5skGa1MRHwGc');"></div>
 
-                        <!-- Drag Indicator Overlay -->
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <!-- Gallery Viewport Mode Pill -->
+                        <div id="viewportModePill" class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 dark:bg-black/70 backdrop-blur-md px-4 py-1.5 rounded-full hairline border-border-day flex items-center gap-2 shadow-sm text-secondary font-footnote text-footnote font-medium transition-all">
+                            <span class="material-symbols-outlined text-[16px] text-primary">photo_library</span>
+                            <span id="viewportModeText">Pratonton Galeri: Hadapan Penuh</span>
+                        </div>
+
+                        <!-- Drag Indicator Overlay (Hidden in Galeri mode, active in 360 mode) -->
+                        <div id="dragIndicatorOverlay" class="hidden absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                             <div class="bg-black/60 backdrop-blur-md rounded-full px-md py-sm flex items-center gap-sm shadow-lg border border-white/10 text-white font-medium">
                                 <span class="material-symbols-outlined text-white text-[18px]">swipe_left</span>
                                 <span class="font-caption text-caption">Seret untuk Putar</span>
@@ -501,12 +562,6 @@
                         <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh">
                             <span id="iconFullscreen" class="material-symbols-outlined text-[20px]">fullscreen</span>
                         </button>
-
-                        <!-- AI Quality Badge (Pill) -->
-                        <div class="absolute top-md left-md bg-surface-container-lowest/85 backdrop-blur-md hairline border-border-day pill-btn px-sm py-xs flex items-center gap-xs shadow-sm">
-                            <span class="material-symbols-outlined text-primary text-[14px]">auto_awesome</span>
-                            <span class="font-caption text-caption text-on-surface font-semibold">Kualiti AI Terjamin</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -521,15 +576,24 @@
             <span>Maklumat Asas</span>
         </a>
 
-        <!-- Center Status Reassurance (Combined from Gambar 1) -->
-        <div class="hidden sm:flex items-center gap-2 text-on-surface-variant font-medium px-2">
-            <span class="material-symbols-outlined text-[18px] text-success">cloud_done</span>
-            <span class="font-footnote text-footnote">Draf disimpan secara automatik di awan</span>
+        <!-- Center Action & Status: Bertukar antara Butang Simpan Draf <-> Draf disimpan -->
+        <div id="dockDraftWrapperStep2" class="hidden sm:flex items-center justify-center min-w-[140px] px-2">
+            <!-- State 1: Butang Simpan Draf (Muncul apabila ada perubahan / sebelum ditekan) -->
+            <button id="btnSaveDraftStep2" type="button" onclick="manualSaveDraftStep2()" class="pill-btn interactive-btn flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high border border-border-day text-on-surface font-footnote text-[13px] font-semibold transition-all duration-300 active:scale-[0.97] cursor-pointer shadow-xs" title="Simpan visual kenderaan ke draf">
+                <span class="material-symbols-outlined text-[16px] text-primary">bookmark</span>
+                <span>Simpan Draf</span>
+            </button>
+
+            <!-- State 2: Status Draf Disimpan (HANYA muncul apabila ditekan Simpan Draf) -->
+            <div id="draftSavedStatusStep2" class="hidden items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300">
+                <span id="draftSavedIconStep2" class="material-symbols-outlined text-[20px] text-[#28C840]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+                <span id="draftSavedTextStep2" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold">Draf disimpan</span>
+            </div>
         </div>
 
         <!-- Seterusnya to Step 3 (Font from Gambar 1: Crisp Bold Pure White) -->
         <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;">Seterusnya: Pengesahan</span>
+            <span class="text-white" style="color: #FFFFFF !important;">Seterusnya: Semakan Akhir</span>
             <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
         </a>
     </nav>
@@ -566,6 +630,129 @@
                 document.documentElement.classList.remove('dark');
                 document.documentElement.classList.add('light');
                 if (themeIcon) themeIcon.textContent = 'dark_mode';
+            }
+        }
+
+        // ==========================================================================
+        // Progressive Segmented Switch: Galeri Sahaja Dulu -> Kembang 360 & Panorama
+        // ==========================================================================
+        const segmentedSwitcher = document.getElementById('segmentedSwitcher');
+        const tab360 = document.getElementById('tab360');
+        const tabPanorama = document.getElementById('tabPanorama');
+        const tabGallery = document.getElementById('tabGallery');
+        const viewportRenderImage = document.getElementById('viewportRenderImage');
+        const viewportModePill = document.getElementById('viewportModePill');
+        const viewportModeText = document.getElementById('viewportModeText');
+        const dragIndicatorOverlay = document.getElementById('dragIndicatorOverlay');
+
+        const ASSET_GALLERY_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtBDDlUrmJDNhDsS4aV1no7_ijMp3LDBIEuO8JFSLu1rhZtzRptizXrOOhrC4F9UM_GgVDGzcAxyDfse6ygFP8JmSGyjv71IIKEzYBhzmRw7hDm5v779sZUlzh9qAN7SOqsPGhcB_Czd7Yc7HZemwGIFVradMOJlXOSx87_TKIZzR5kuC3Lt7YEVxnlUdIvKA8fnQCkIEXAdlm7dA7MYzd0eNSvwggNzObheoeAcMgKy9b-GN11jAQiS1tJPCdGlY5skGa1MRHwGc';
+        const ASSET_360_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXv-DH82fsjprfpGpSo2DHFgcMwOtUC3ZASUhwfjHsNXTMVzs6gH1edgnQoIeM5BQ-gN5Quk__-3fh0tRncgoo8CwqIDSi3SzWNMSkRhEVtIrkDJCfRZMRNF8lX8AGLWTdF0jPHpnI3HywwDZEwxcUlJtoQ00vlCiI82q9HzlrtRvGLMD32g63eHxTy-ErJMRcOfqLzUfqMKg1VUFyEgDi1wUjsql-khj5lNAkwmLnQc-ZUnXgxY4g-7VNBOZm1VN_eCh3ANLf-7Q';
+        const ASSET_PANORAMA_IMG = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80';
+
+        let has360Expanded = false;
+        let activeVisualMode = 'gallery';
+
+        function setVisualTab(mode) {
+            activeVisualMode = mode;
+            const activeStyle = 'flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all whitespace-nowrap';
+            const inactiveStyle = 'flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap';
+
+            if (mode === '360') {
+                if (tab360) tab360.className = activeStyle;
+                if (tabPanorama) tabPanorama.className = inactiveStyle;
+                if (tabGallery) tabGallery.className = inactiveStyle;
+                if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_360_IMG}')`;
+                if (dragIndicatorOverlay) dragIndicatorOverlay.classList.remove('hidden');
+                if (viewportModePill) viewportModePill.classList.add('hidden');
+            } else if (mode === 'panorama') {
+                if (tab360) tab360.className = inactiveStyle;
+                if (tabPanorama) tabPanorama.className = activeStyle;
+                if (tabGallery) tabGallery.className = inactiveStyle;
+                if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_PANORAMA_IMG}')`;
+                if (dragIndicatorOverlay) dragIndicatorOverlay.classList.remove('hidden');
+                if (viewportModePill) viewportModePill.classList.add('hidden');
+            } else {
+                // Gallery mode
+                if (tab360) tab360.className = inactiveStyle;
+                if (tabPanorama) tabPanorama.className = inactiveStyle;
+                if (tabGallery) tabGallery.className = activeStyle;
+                if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_GALLERY_IMG}')`;
+                if (dragIndicatorOverlay) dragIndicatorOverlay.classList.add('hidden');
+                if (viewportModePill) {
+                    viewportModePill.classList.remove('hidden');
+                    if (viewportModeText) viewportModeText.textContent = 'Pratonton Galeri: Hadapan Penuh';
+                }
+            }
+        }
+
+        function expand360Tabs() {
+            if (has360Expanded) return;
+            has360Expanded = true;
+
+            if (segmentedSwitcher) {
+                segmentedSwitcher.classList.remove('max-w-[130px]');
+                segmentedSwitcher.classList.add('max-w-md');
+            }
+            if (tab360) tab360.classList.remove('hidden');
+            if (tabPanorama) tabPanorama.classList.remove('hidden');
+
+            // Switch to 360 mode
+            setVisualTab('360');
+
+            // Update localStorage draft so Step 3 also knows 360 is present!
+            try {
+                const raw = localStorage.getItem('wedrive_new_car_draft');
+                const draft = raw ? JSON.parse(raw) : {};
+                draft.has360 = true;
+                draft.cdnUrl = cdnUrlInput ? cdnUrlInput.value.trim() : '';
+                localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+            } catch(e) {}
+        }
+
+        function saveStep2Draft() {
+            try {
+                const raw = localStorage.getItem('wedrive_new_car_draft');
+                const draft = raw ? JSON.parse(raw) : {};
+                if (cdnUrlInput) draft.cdnUrl = cdnUrlInput.value.trim();
+                draft.hasAiPhotos = true;
+                localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+            } catch(e) {}
+        }
+
+        function showDraftSavedStateStep2() {
+            const btn = document.getElementById('btnSaveDraftStep2');
+            const status = document.getElementById('draftSavedStatusStep2');
+            if (btn) {
+                btn.classList.add('hidden');
+                btn.classList.remove('flex');
+            }
+            if (status) {
+                status.classList.remove('hidden');
+                status.classList.add('flex');
+                status.classList.add('ai-field-wave');
+                setTimeout(() => status.classList.remove('ai-field-wave'), 1200);
+            }
+        }
+
+        function showDraftUnsavedStateStep2() {
+            const btn = document.getElementById('btnSaveDraftStep2');
+            const status = document.getElementById('draftSavedStatusStep2');
+            if (status) {
+                status.classList.add('hidden');
+                status.classList.remove('flex');
+            }
+            if (btn) {
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            }
+        }
+
+        function manualSaveDraftStep2(showToast = true) {
+            saveStep2Draft();
+            showDraftSavedStateStep2();
+
+            if (showToast) {
+                showAiToast('✓ Draf visual kenderaan berjaya disimpan.', true, 'bookmark_added');
             }
         }
 
@@ -621,6 +808,67 @@
             }, 3200);
         }
 
+        const INSPECTION_PHOTOS_AI = [
+            {
+                title: 'Hadapan Penuh',
+                img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=600&q=80',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Belakang Penuh',
+                img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=600&q=80',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Sisi Kanan Profil',
+                img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Sisi Kiri Profil',
+                img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Ruang Pemandu & Papan Pemuka',
+                img: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80',
+                badge: 'Diimbas AI'
+            },
+            {
+                title: 'Tempat Duduk Belakang / Kargo',
+                img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80',
+                badge: 'Diimbas AI'
+            }
+        ];
+
+        function populateAiInspectionPhotos() {
+            const grid = document.getElementById('photoUploadSlotsGrid');
+            if (!grid) return;
+
+            grid.innerHTML = INSPECTION_PHOTOS_AI.map((photo, i) => `
+                <div class="relative group rounded-xl h-32 overflow-hidden border border-border-day shadow-xs interactive-btn cursor-pointer transition-all duration-300 ai-field-wave">
+                    <img src="${photo.img}" alt="${photo.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-between p-2.5 pointer-events-none">
+                        <div class="flex justify-end">
+                            <span class="pill-btn bg-black/60 backdrop-blur-md text-white border border-white/20 text-[10px] px-2 py-0.5 font-semibold flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-[12px] text-green-400" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                <span>${photo.badge}</span>
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-white">
+                            <span class="material-symbols-outlined text-[14px] text-white/80">photo_camera</span>
+                            <span class="font-footnote text-footnote font-semibold text-white truncate drop-shadow-sm">${photo.title}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                const cards = grid.querySelectorAll('.ai-field-wave');
+                cards.forEach(c => c.classList.remove('ai-field-wave'));
+            }, 1200);
+        }
+
         function triggerAiScan(isAuto = false) {
             if (isAnalyzing) return;
             const urlVal = cdnUrlInput ? cdnUrlInput.value.trim() : '';
@@ -653,6 +901,15 @@
             // 1. Activate AI Iridescent Glow & Holographic Laser Scanner
             if (cdnInputWrapper) cdnInputWrapper.classList.add('ai-analyzing-active');
             if (aiLaserScanner) aiLaserScanner.classList.remove('hidden');
+
+            // Cascading wave animation across 6 inspection photo slots (From Page 1)
+            const photoSlots = document.querySelectorAll('#photoUploadSlotsGrid button');
+            photoSlots.forEach((slot, index) => {
+                setTimeout(() => {
+                    slot.classList.add('ai-field-wave');
+                    setTimeout(() => slot.classList.remove('ai-field-wave'), 1200);
+                }, index * 75);
+            });
 
             // 2. Button Analyzing State with Micro-Spinner
             if (btnGenIcon) {
@@ -710,6 +967,9 @@
                     cdnStatusText.textContent = 'Pratonton Sedia';
                 }
 
+                // Auto-populate 6 Inspection Photo Slots with AI Extracted Angles
+                populateAiInspectionPhotos();
+
                 // Display Final Verified Detection Tags
                 if (cdnDetectionTags) {
                     cdnDetectionTags.innerHTML = `
@@ -719,15 +979,15 @@
                         </span>
                         <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                             <span class="material-symbols-outlined text-[14px] text-success">check</span>
+                            <span>6 Sudut Foto Terjana</span>
+                        </span>
+                        <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
+                            <span class="material-symbols-outlined text-[14px] text-success">check</span>
                             <span>200 Kerangka Luaran</span>
                         </span>
                         <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                             <span class="material-symbols-outlined text-[14px] text-success">check</span>
                             <span>Panorama Dalaman 8K</span>
-                        </span>
-                        <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
-                            <span class="material-symbols-outlined text-[14px] text-primary">speed</span>
-                            <span>Latensi: 14ms (Pantas)</span>
                         </span>
                     `;
                 }
@@ -748,7 +1008,7 @@
                 }
                 if (btnGenText) btnGenText.textContent = 'Visual Sedia';
                 if (btnGenerate3D) {
-                    btnGenerate3D.classList.remove('from-primary', 'via-[#5E5CE6]', 'to-[#BF5AF2]');
+                    btnGenerate3D.classList.remove('ai-gradient-pill');
                     btnGenerate3D.classList.add('bg-success');
                 }
 
@@ -758,7 +1018,8 @@
                     setTimeout(() => turntableViewport.classList.remove('turntable-flash-effect'), 1200);
                 }
 
-                showAiToast('✓ Visual kenderaan sedia disemak di meja putar 360°', true, 'auto_awesome');
+                showAiToast('✓ Visual 360° & 6 sudut foto berjaya dijana oleh AI!', true, 'auto_awesome');
+                expand360Tabs();
 
                 // Gracefully reset button state after 2.5s
                 setTimeout(() => {
@@ -766,7 +1027,7 @@
                     if (btnGenText) btnGenText.textContent = 'Jana AI';
                     if (btnGenerate3D) {
                         btnGenerate3D.classList.remove('bg-success');
-                        btnGenerate3D.classList.add('from-primary', 'via-[#5E5CE6]', 'to-[#BF5AF2]');
+                        btnGenerate3D.classList.add('ai-gradient-pill');
                         btnGenerate3D.disabled = false;
                     }
                     isAnalyzing = false;
@@ -998,6 +1259,10 @@
             }
         });
 
+        if (tab360) tab360.addEventListener('click', () => setVisualTab('360'));
+        if (tabPanorama) tabPanorama.addEventListener('click', () => setVisualTab('panorama'));
+        if (tabGallery) tabGallery.addEventListener('click', () => setVisualTab('gallery'));
+
         if (btnGenerate3D) {
             btnGenerate3D.addEventListener('click', () => triggerAiScan(false));
         }
@@ -1007,6 +1272,11 @@
         }
 
         if (cdnUrlInput) {
+            // Trigger when typing or changing URL
+            cdnUrlInput.addEventListener('input', () => {
+                showDraftUnsavedStateStep2();
+            });
+
             // Trigger when pressing Enter
             cdnUrlInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
@@ -1017,9 +1287,27 @@
 
             // Trigger when pasting a link
             cdnUrlInput.addEventListener('paste', () => {
+                showDraftUnsavedStateStep2();
                 setTimeout(() => triggerAiScan(true), 250);
             });
         }
+
+        // Restore saved draft state on initial load
+        try {
+            const raw = localStorage.getItem('wedrive_new_car_draft');
+            if (raw) {
+                const draft = JSON.parse(raw);
+                if (draft.cdnUrl && cdnUrlInput) {
+                    cdnUrlInput.value = draft.cdnUrl;
+                }
+                if (draft.hasAiPhotos) {
+                    populateAiInspectionPhotos();
+                }
+                if (draft.has360) {
+                    expand360Tabs();
+                }
+            }
+        } catch(e) {}
     </script>
 </body>
 </html>
