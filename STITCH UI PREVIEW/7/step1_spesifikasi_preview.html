@@ -205,6 +205,13 @@
         html.dark select:focus {
             border-color: #0071e3 !important;
         }
+        /* Penghapusan Chevron Bertindih (Eliminate Tailwind Forms Default SVG Chevron Overlap) */
+        select {
+            background-image: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+        }
     </style>
 </head>
 <body class="bg-background text-on-background min-h-screen font-body text-body selection:bg-primary-fixed selection:text-on-primary-fixed pb-[120px] transition-colors duration-300">
@@ -302,147 +309,177 @@
         <!-- Bento Form (Screenshot 6 Reference) -->
         <form class="grid grid-cols-1 md:grid-cols-12 gap-gutter" onsubmit="event.preventDefault();">
             
-            <!-- Section 1: Maklumat Utama & Spesifikasi -->
+            <!-- Section 1: Maklumat Utama & Spesifikasi (Kotak Yang Sama: Bahagian Atas & Bawah) -->
             <section class="bento-card col-span-1 md:col-span-12 p-container-padding">
-                <h2 class="font-title-3 text-title-3 mb-lg border-b border-border-day pb-4 flex items-center gap-2 text-on-surface font-bold">
+                <h2 class="font-title-3 text-title-3 mb-6 border-b border-border-day pb-4 flex items-center gap-2 text-on-surface font-bold">
                     <span class="material-symbols-outlined text-primary">directions_car</span>
-                    <span>Maklumat Utama &amp; Spesifikasi</span>
+                    <span>Maklumat Kenderaan &amp; Spesifikasi</span>
                 </h2>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
-                    <!-- Row 1: Pengeluar -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Pengeluar</label>
-                        <div class="relative">
-                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                <option value="">Pilih Pengeluar</option>
-                                <option value="Honda" selected>Honda</option>
-                                <option value="Toyota">Toyota</option>
-                                <option value="Perodua">Perodua</option>
-                                <option value="Proton">Proton</option>
-                                <option value="BMW">BMW</option>
-                                <option value="Mercedes-Benz">Mercedes-Benz</option>
-                                <option value="Mazda">Mazda</option>
-                                <option value="Nissan">Nissan</option>
-                                <option value="Hyundai">Hyundai</option>
-                                <option value="BYD">BYD</option>
-                                <option value="Tesla">Tesla</option>
-                            </select>
-                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                <!-- Bahagian Atas: Maklumat Asas Kenderaan -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 mb-4 pb-2 border-b border-border-day/50">
+                        <span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+                        <h3 class="font-headline text-[15px] font-bold text-on-surface">Maklumat Asas</h3>
+                        <span class="font-footnote text-footnote text-secondary font-medium">(Identiti &amp; Pendaftaran Kenderaan)</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+                        <!-- Pengeluar -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Pengeluar</label>
+                            <div class="relative">
+                                <select id="inputBrand" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="">Pilih Pengeluar</option>
+                                    <option value="Honda" selected>Honda</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Perodua">Perodua</option>
+                                    <option value="Proton">Proton</option>
+                                    <option value="BMW">BMW</option>
+                                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                    <option value="Mazda">Mazda</option>
+                                    <option value="Nissan">Nissan</option>
+                                    <option value="Hyundai">Hyundai</option>
+                                    <option value="BYD">BYD</option>
+                                    <option value="Tesla">Tesla</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Model -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Model</label>
+                            <input id="inputModel" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Civic" value="Civic" type="text"/>
+                        </div>
+
+                        <!-- Varian -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Varian</label>
+                            <input id="inputVariant" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5 TC-P" value="1.5 TC-P" type="text"/>
+                        </div>
+
+                        <!-- No Pendaftaran -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">No. Pendaftaran</label>
+                            <input id="inputPlate" class="uppercase bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full tracking-wider font-semibold text-on-surface" placeholder="VBA 1234" value="VBA 1234" type="text"/>
+                        </div>
+
+                        <!-- Tahun Dibuat -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Tahun Dibuat</label>
+                            <input id="inputYear" class="font-label-tabular text-label-tabular bg-surface-container border border-border-day rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="2024" value="2024" type="number"/>
+                        </div>
+
+                        <!-- Warna Rasmi Kenderaan -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Warna Kenderaan</label>
+                            <input id="inputColor" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Meteoroid Gray Metallic" value="Meteoroid Gray Metallic" type="text"/>
+                        </div>
+
+                        <!-- AI Auto Generate Spesifikasi (Menggantikan Status Operasi Awal) -->
+                        <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
+                            <label class="font-footnote text-footnote text-primary font-semibold flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <span>Pengecaman Spesifikasi Pintar</span>
+                            </label>
+                            <input type="hidden" id="inputStatus" name="status" value="available"/>
+                            <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="pill-btn interactive-btn group w-full py-3 px-5 rounded-xl border border-primary/40 bg-primary/10 hover:bg-primary/20 dark:bg-primary/15 dark:hover:bg-primary/25 text-primary flex items-center justify-between transition-all duration-300 shadow-sm active:scale-[0.98] cursor-pointer">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="material-symbols-outlined text-[20px] text-primary group-hover:rotate-12 transition-transform duration-300" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                    <span id="aiBtnText" class="font-headline text-[14px] md:text-[15px] font-bold text-primary tracking-tight">AI Auto Generate Spec</span>
+                                </div>
+                                <span class="font-footnote text-[11px] px-2.5 py-1 rounded-full bg-primary/20 text-primary font-bold flex items-center gap-1">
+                                    <span>Jana Pintar</span>
+                                    <span class="material-symbols-outlined text-[13px]">arrow_downward</span>
+                                </span>
+                            </button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Model -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Model</label>
-                        <input class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Civic" value="Civic" type="text"/>
+                <!-- Pemisah Apple HIG Divider -->
+                <div class="my-6 border-t border-border-day/70"></div>
+
+                <!-- Bahagian Bawah: Spesifikasi Kenderaan (Spec) -->
+                <div>
+                    <div class="flex items-center gap-2 mb-4 pb-2 border-b border-border-day/50">
+                        <span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+                        <h3 class="font-headline text-[15px] font-bold text-on-surface">Spesifikasi Kenderaan</h3>
+                        <span class="font-footnote text-footnote text-secondary font-medium">(Klasifikasi &amp; Keupayaan Mekanikal)</span>
                     </div>
 
-                    <!-- Varian -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Varian</label>
-                        <input class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5 TC-P" value="1.5 TC-P" type="text"/>
-                    </div>
-
-                    <!-- No Pendaftaran -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">No. Pendaftaran</label>
-                        <input class="uppercase bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full tracking-wider font-semibold text-on-surface" placeholder="VBA 1234" value="VBA 1234" type="text"/>
-                    </div>
-
-                    <!-- Row 2: Kategori Kenderaan (Pilihan macam yang lain - Standard Carlist/Mudah) -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kategori Kenderaan</label>
-                        <div class="relative">
-                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                <option value="" disabled>Pilih Kategori</option>
-                                <option value="Sedan" selected>Sedan</option>
-                                <option value="Hatchback">Hatchback</option>
-                                <option value="SUV">SUV</option>
-                                <option value="MPV">MPV</option>
-                                <option value="Crossover">Crossover</option>
-                                <option value="Pickup">Pickup (4x4)</option>
-                                <option value="Coupe">Coupe</option>
-                                <option value="Wagon">Wagon</option>
-                                <option value="Convertible">Convertible</option>
-                                <option value="Van">Van</option>
-                            </select>
-                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+                        <!-- Kategori Kenderaan -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kategori Kenderaan</label>
+                            <div class="relative">
+                                <select id="inputCategory" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" disabled>Pilih Kategori</option>
+                                    <option value="Sedan" selected>Sedan</option>
+                                    <option value="Hatchback">Hatchback</option>
+                                    <option value="SUV">SUV</option>
+                                    <option value="MPV">MPV</option>
+                                    <option value="Crossover">Crossover</option>
+                                    <option value="Pickup">Pickup (4x4)</option>
+                                    <option value="Coupe">Coupe</option>
+                                    <option value="Wagon">Wagon</option>
+                                    <option value="Convertible">Convertible</option>
+                                    <option value="Van">Van</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Punca Kuasa / Bahan Api (+ petrol, hybrid, diesel, electric) -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Punca Kuasa (Bahan Api)</label>
-                        <div class="relative">
-                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                <option value="" disabled>Pilih Punca Kuasa</option>
-                                <option value="Petrol" selected>Petrol (RON95/97)</option>
-                                <option value="Hybrid">Hybrid (HEV)</option>
-                                <option value="Diesel">Diesel Euro 5</option>
-                                <option value="Electric">Elektrik Penuh (EV/BEV)</option>
-                            </select>
-                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        <!-- Punca Kuasa / Bahan Api -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Punca Kuasa (Bahan Api)</label>
+                            <div class="relative">
+                                <select id="inputFuel" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" disabled>Pilih Punca Kuasa</option>
+                                    <option value="Petrol" selected>Petrol (RON95/97)</option>
+                                    <option value="Hybrid">Hybrid (HEV)</option>
+                                    <option value="Diesel">Diesel Euro 5</option>
+                                    <option value="Electric">Elektrik Penuh (EV/BEV)</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Sistem Transmisi -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Sistem Transmisi</label>
-                        <div class="relative">
-                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                <option value="" disabled>Pilih Transmisi</option>
-                                <option value="Automatic" selected>Automatik (AT / CVT / DCT)</option>
-                                <option value="Manual">Manual (MT)</option>
-                            </select>
-                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        <!-- Sistem Transmisi -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Sistem Transmisi</label>
+                            <div class="relative">
+                                <select id="inputTransmission" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" disabled>Pilih Transmisi</option>
+                                    <option value="Automatic" selected>Automatik (AT / CVT / DCT)</option>
+                                    <option value="Manual">Manual (MT)</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Kapasiti Tempat Duduk -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti Tempat Duduk</label>
-                        <div class="relative">
-                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                <option value="" disabled>Pilih Tempat Duduk</option>
-                                <option value="2">2 Tempat Duduk</option>
-                                <option value="4">4 Tempat Duduk</option>
-                                <option value="5" selected>5 Tempat Duduk</option>
-                                <option value="7">7 Tempat Duduk</option>
-                                <option value="8">8 Tempat Duduk</option>
-                                <option value="10">10–12 Tempat Duduk</option>
-                            </select>
-                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        <!-- Kapasiti Tempat Duduk -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti Tempat Duduk</label>
+                            <div class="relative">
+                                <select id="inputSeats" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" disabled>Pilih Tempat Duduk</option>
+                                    <option value="2">2 Tempat Duduk</option>
+                                    <option value="4">4 Tempat Duduk</option>
+                                    <option value="5" selected>5 Tempat Duduk</option>
+                                    <option value="7">7 Tempat Duduk</option>
+                                    <option value="8">8 Tempat Duduk</option>
+                                    <option value="10">10–12 Tempat Duduk</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Row 3: Tahun Dibuat -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Tahun Dibuat</label>
-                        <input class="font-label-tabular text-label-tabular bg-surface-container border border-border-day rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="2024" value="2024" type="number"/>
-                    </div>
-
-                    <!-- Kapasiti / Sesaran Enjin -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti / Sesaran Enjin</label>
-                        <input class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L VTEC Turbo" value="1.5L VTEC Turbo" type="text"/>
-                    </div>
-
-                    <!-- Warna Rasmi Kenderaan -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Warna Kenderaan</label>
-                        <input class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Meteoroid Gray Metallic" value="Meteoroid Gray Metallic" type="text"/>
-                    </div>
-
-                    <!-- Status Operasi Kenderaan -->
-                    <div class="flex flex-col gap-sm">
-                        <label class="font-footnote text-footnote text-on-surface-variant font-medium">Status Operasi Awal</label>
-                        <div class="relative">
-                            <select class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                <option value="available" selected>Tersedia untuk Disewa</option>
-                                <option value="maintenance">Pemeriksaan / Depot</option>
-                            </select>
-                            <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                        <!-- Kapasiti / Sesaran Enjin -->
+                        <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-4">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kapasiti / Sesaran Enjin &amp; Kuasa</label>
+                            <input id="inputEngine" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" value="1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" type="text"/>
                         </div>
                     </div>
                 </div>
@@ -461,7 +498,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Harian</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="280.00" type="number" step="10"/>
+                            <input id="inputDailyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="280.00" type="number" step="10"/>
                         </div>
                     </div>
 
@@ -470,7 +507,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Mingguan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="1680.00" type="number" step="50"/>
+                            <input id="inputWeeklyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="1680.00" type="number" step="50"/>
                         </div>
                     </div>
 
@@ -479,7 +516,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium">Kadar Bulanan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="4800.00" type="number" step="100"/>
+                            <input id="inputMonthlyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 p-0 text-on-surface font-bold" placeholder="0.00" value="4800.00" type="number" step="100"/>
                         </div>
                     </div>
                 </div>
@@ -508,7 +545,15 @@
         </a>
     </footer>
 
-    <!-- Theme Controller Script -->
+    <!-- AI Apple Glass Floating Toast Notification -->
+    <div id="aiToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
+        <div class="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">Spesifikasi kenderaan berjaya dijana secara automatik!</span>
+    </div>
+
+    <!-- Theme & AI Specs Controller Script -->
     <script>
         const themeBtn = document.getElementById('themeToggleBtn');
         const themeIcon = document.getElementById('themeIcon');
@@ -534,6 +579,258 @@
                 document.documentElement.classList.add('light');
                 if (themeIcon) themeIcon.textContent = 'dark_mode';
             }
+        }
+
+        // WeDRIVE AI Auto Generate Car Specifications Knowledge Database
+        const AI_CAR_SPEC_DB = {
+            'Honda': {
+                'Civic': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)', daily: 280, weekly: 1680, monthly: 4800 },
+                'City': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L DOHC i-VTEC (121 PS / 145 Nm)', daily: 180, weekly: 1080, monthly: 3200 },
+                'HR-V': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '1.5L e:HEV DOHC i-VTEC (131 PS / 253 Nm)', daily: 260, weekly: 1560, monthly: 4500 },
+                'CR-V': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L VTEC Turbo (193 PS / 243 Nm)', daily: 350, weekly: 2100, monthly: 5800 },
+                'Accord': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L VTEC Turbo (201 PS / 260 Nm)', daily: 380, weekly: 2280, monthly: 6200 },
+                'WR-V': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L DOHC i-VTEC (121 PS / 145 Nm)', daily: 200, weekly: 1200, monthly: 3500 }
+            },
+            'Toyota': {
+                'Vios': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (106 PS / 138 Nm)', daily: 180, weekly: 1080, monthly: 3200 },
+                'Yaris': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-FE (107 PS / 140 Nm)', daily: 170, weekly: 1020, monthly: 3000 },
+                'Corolla Cross': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '1.8L Hybrid Electric HEV (122 PS Total)', daily: 290, weekly: 1740, monthly: 4900 },
+                'Camry': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.5L Dynamic Force 8AT (209 PS / 253 Nm)', daily: 420, weekly: 2520, monthly: 6800 },
+                'Alphard': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.4L Turbo T24A-FTS Direct Shift 8AT (279 PS)', daily: 850, weekly: 5100, monthly: 13800 },
+                'Vellfire': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.5L Dual VVT-i Super CVT-i (182 PS / 235 Nm)', daily: 800, weekly: 4800, monthly: 12800 },
+                'Innova': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.0L Dual VVT-i 1TR-FE 6AT (139 PS)', daily: 320, weekly: 1920, monthly: 5200 },
+                'Hilux': { category: 'Pickup', fuel: 'Diesel', transmission: 'Automatic', seats: '5', engine: '2.8L 1GD-FTV Turbo Diesel (204 PS / 500 Nm)', daily: 350, weekly: 2100, monthly: 5600 },
+                'Fortuner': { category: 'SUV', fuel: 'Diesel', transmission: 'Automatic', seats: '7', engine: '2.8L VRZ 4x4 Turbo Diesel (204 PS / 500 Nm)', daily: 480, weekly: 2880, monthly: 7600 }
+            },
+            'Perodua': {
+                'Myvi': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (103 PS / 137 Nm)', daily: 130, weekly: 780, monthly: 2400 },
+                'Axia': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L 1KR-VE D-CVT (68 PS / 91 Nm)', daily: 110, weekly: 660, monthly: 2000 },
+                'Bezza': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L 1NR-VE Dual VVT-i (95 PS / 121 Nm)', daily: 130, weekly: 780, monthly: 2400 },
+                'Ativa': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L Turbo 1KR-VET D-CVT (98 PS / 140 Nm)', daily: 170, weekly: 1020, monthly: 3000 },
+                'Alza': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (106 PS / 138 Nm)', daily: 190, weekly: 1140, monthly: 3400 },
+                'Aruz': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '1.5L Dual VVT-i 2NR-VE 4AT (102 PS / 133 Nm)', daily: 200, weekly: 1200, monthly: 3500 }
+            },
+            'Proton': {
+                'S70': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Turbo 7-Speed Dual Clutch DCT (150 PS / 226 Nm)', daily: 190, weekly: 1140, monthly: 3300 },
+                'X50': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L TGDi Turbo 7-Speed DCT (177 PS / 255 Nm)', daily: 220, weekly: 1320, monthly: 3800 },
+                'X70': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L TGDi Direct Injection 7-DCT (177 PS / 255 Nm)', daily: 260, weekly: 1560, monthly: 4400 },
+                'X90': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '1.5L TGDi 48V Mild Hybrid BSG (190 PS / 300 Nm)', daily: 330, weekly: 1980, monthly: 5400 },
+                'Saga': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L 4-Silinder VVT 4AT (95 PS / 120 Nm)', daily: 120, weekly: 720, monthly: 2200 },
+                'Persona': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.6L VVT CVT (109 PS / 150 Nm)', daily: 140, weekly: 840, monthly: 2500 },
+                'Iriz': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.6L VVT Active CVT (109 PS / 150 Nm)', daily: 140, weekly: 840, monthly: 2500 }
+            },
+            'BYD': {
+                'Atto 3': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'PMSM 150 kW Permanent Magnet EV (204 PS / 310 Nm)', daily: 290, weekly: 1740, monthly: 4900 },
+                'Dolphin': { category: 'Hatchback', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Blade Battery EV Motor 150 kW (204 PS / 310 Nm)', daily: 220, weekly: 1320, monthly: 3800 },
+                'Seal': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor AWD 390 kW Performance (530 PS / 670 Nm)', daily: 450, weekly: 2700, monthly: 7200 }
+            },
+            'Tesla': {
+                'Model 3': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor All-Wheel Drive EV (498 PS / 4.4s 0-100)', daily: 480, weekly: 2880, monthly: 7600 },
+                'Model Y': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor Long Range AWD EV (514 PS / 533 km Range)', daily: 520, weekly: 3120, monthly: 8200 }
+            },
+            'BMW': {
+                '3 Series': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L BMW TwinPower Turbo 8-Speed Steptronic (258 PS)', daily: 490, weekly: 2940, monthly: 7800 },
+                '5 Series': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L TwinPower Turbo Mild Hybrid (258 PS / 400 Nm)', daily: 650, weekly: 3900, monthly: 9900 },
+                'X3': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L xDrive30i TwinPower Turbo (252 PS / 350 Nm)', daily: 550, weekly: 3300, monthly: 8800 },
+                'X5': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '3.0L xDrive50e Plug-in Hybrid PHEV (489 PS / 700 Nm)', daily: 880, weekly: 5280, monthly: 14200 },
+                'i4': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'eDrive40 250 kW eDrive EV (340 PS / 430 Nm)', daily: 560, weekly: 3360, monthly: 8900 },
+                'iX': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'xDrive40 Dual Motor AWD EV (326 PS / 630 Nm)', daily: 790, weekly: 4740, monthly: 12500 }
+            },
+            'Mercedes-Benz': {
+                'C-Class': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L Turbo 9G-TRONIC Mild Hybrid (258 PS / 400 Nm)', daily: 520, weekly: 3120, monthly: 8200 },
+                'E-Class': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L 4-Silinder Turbo 9G-TRONIC (258 PS / 400 Nm)', daily: 680, weekly: 4080, monthly: 10500 },
+                'GLC': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '2.0L Turbo 4MATIC Mild Hybrid EQ Boost (258 PS)', daily: 580, weekly: 3480, monthly: 9200 },
+                'A-Class': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L Turbo 7G-DCT (163 PS / 250 Nm)', daily: 380, weekly: 2280, monthly: 6000 }
+            },
+            'Mazda': {
+                'Mazda 3': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed AT (162 PS / 213 Nm)', daily: 240, weekly: 1440, monthly: 4100 },
+                'CX-5': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed Activematic (162 PS / 213 Nm)', daily: 290, weekly: 1740, monthly: 4800 },
+                'CX-30': { category: 'Crossover', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed AT (162 PS / 213 Nm)', daily: 260, weekly: 1560, monthly: 4400 }
+            },
+            'Nissan': {
+                'Almera': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L Turbo HR10DET X-Tronic CVT (100 PS / 152 Nm)', daily: 160, weekly: 960, monthly: 2800 },
+                'Serena': { category: 'MPV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '2.0L S-Hybrid MR20DD X-Tronic CVT (150 PS / 200 Nm)', daily: 320, weekly: 1920, monthly: 5200 },
+                'Navara': { category: 'Pickup', fuel: 'Diesel', transmission: 'Automatic', seats: '5', engine: '2.5L YD25DDTi Turbo Diesel 7AT (190 PS / 450 Nm)', daily: 320, weekly: 1920, monthly: 5100 }
+            },
+            'Hyundai': {
+                'Ioniq 5': { category: 'Crossover', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor AWD 72.6 kWh EV (305 PS / 605 Nm)', daily: 440, weekly: 2640, monthly: 7000 },
+                'Staria': { category: 'MPV', fuel: 'Diesel', transmission: 'Automatic', seats: '7', engine: '2.2L CRDi Turbo Diesel 8AT (177 PS / 431 Nm)', daily: 580, weekly: 3480, monthly: 9400 }
+            }
+        };
+
+        function detectCarSpecs() {
+            const brand = (document.getElementById('inputBrand')?.value || '').trim();
+            const model = (document.getElementById('inputModel')?.value || '').trim();
+            const variant = (document.getElementById('inputVariant')?.value || '').trim();
+
+            if (!brand && !model) {
+                showAiToast('Sila pilih Pengeluar atau masukkan Model terlebih dahulu.', 'warning');
+                return null;
+            }
+
+            // 1. Direct or partial match in AI_CAR_SPEC_DB
+            let match = null;
+            if (brand && AI_CAR_SPEC_DB[brand]) {
+                const brandModels = AI_CAR_SPEC_DB[brand];
+                for (const m in brandModels) {
+                    if (model.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(model.toLowerCase())) {
+                        match = { ...brandModels[m] };
+                        break;
+                    }
+                }
+            }
+
+            // If not found under specified brand, search globally across all brands
+            if (!match && model) {
+                for (const b in AI_CAR_SPEC_DB) {
+                    for (const m in AI_CAR_SPEC_DB[b]) {
+                        if (model.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(model.toLowerCase())) {
+                            match = { ...AI_CAR_SPEC_DB[b][m] };
+                            break;
+                        }
+                    }
+                    if (match) break;
+                }
+            }
+
+            // 2. Intelligent heuristic fallback if not in database
+            if (!match) {
+                const combined = `${brand} ${model} ${variant}`.toLowerCase();
+                let category = 'Sedan';
+                let fuel = 'Petrol';
+                let transmission = 'Automatic';
+                let seats = '5';
+                let engine = `${variant || '2.0L Enjin Pintar'} DOHC`;
+                let daily = 250;
+
+                if (combined.includes('ev') || combined.includes('electric') || combined.includes('bev') || combined.includes('atto') || combined.includes('seal') || combined.includes('ioniq') || combined.includes('tesla')) {
+                    fuel = 'Electric';
+                    engine = 'Motor Elektrik AC Segerak (EV / Blade Battery)';
+                    daily = 350;
+                } else if (combined.includes('hybrid') || combined.includes('hev') || combined.includes('phev') || combined.includes('e:hev')) {
+                    fuel = 'Hybrid';
+                    engine = '1.8L DOHC 16V Atkinson Cycle + Motor Elektrik HEV';
+                    daily = 280;
+                } else if (combined.includes('diesel') || combined.includes('d-max') || combined.includes('hilux') || combined.includes('ranger') || combined.includes('triton') || combined.includes('navara')) {
+                    fuel = 'Diesel';
+                    category = 'Pickup';
+                    seats = '5';
+                    engine = '2.4L - 2.8L Turbo Diesel Commonrail Intercooled';
+                    daily = 320;
+                }
+
+                if (combined.includes('alphard') || combined.includes('vellfire') || combined.includes('alza') || combined.includes('innova') || combined.includes('serena') || combined.includes('staria') || combined.includes('carnival') || combined.includes('mpv')) {
+                    category = 'MPV';
+                    seats = '7';
+                    daily = daily < 300 ? 300 : daily;
+                } else if (combined.includes('suv') || combined.includes('cr-v') || combined.includes('hr-v') || combined.includes('cx-5') || combined.includes('x50') || combined.includes('x70') || combined.includes('x90') || combined.includes('ativa') || combined.includes('aruz')) {
+                    category = 'SUV';
+                    seats = (combined.includes('x90') || combined.includes('aruz')) ? '7' : '5';
+                    daily = daily < 220 ? 220 : daily;
+                } else if (combined.includes('myvi') || combined.includes('axia') || combined.includes('yaris') || combined.includes('iriz') || combined.includes('hatchback')) {
+                    category = 'Hatchback';
+                    seats = '5';
+                    daily = 140;
+                } else if (combined.includes('van') || combined.includes('hiace') || combined.includes('urvan')) {
+                    category = 'Van';
+                    seats = '10';
+                    daily = 380;
+                } else if (combined.includes('coupe') || combined.includes('gt') || combined.includes('supra') || combined.includes('mustang')) {
+                    category = 'Coupe';
+                    seats = '4';
+                    daily = 550;
+                }
+
+                if (combined.includes('manual') || combined.includes('mt')) {
+                    transmission = 'Manual';
+                }
+
+                match = {
+                    category,
+                    fuel,
+                    transmission,
+                    seats,
+                    engine,
+                    daily,
+                    weekly: Math.round(daily * 6),
+                    monthly: Math.round(daily * 20)
+                };
+            }
+
+            return match;
+        }
+
+        function runAiAutoGenerate() {
+            const btn = document.getElementById('aiAutoGenerateBtn');
+            const btnText = document.getElementById('aiBtnText');
+            const brand = (document.getElementById('inputBrand')?.value || '').trim();
+            const model = (document.getElementById('inputModel')?.value || '').trim();
+
+            if (!brand && !model) {
+                showAiToast('Sila pilih Pengeluar atau masukkan Model kenderaan terlebih dahulu.', 'warning');
+                return;
+            }
+
+            // Apple tactile loading state
+            const origHtml = btnText.innerHTML;
+            btnText.innerHTML = '<span class="inline-flex items-center gap-1.5"><span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-primary border-t-transparent rounded-full" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;"></span> <span>Menganalisis Spesifikasi...</span></span>';
+            btn.classList.add('opacity-80', 'pointer-events-none');
+
+            setTimeout(() => {
+                const specs = detectCarSpecs();
+                btnText.innerHTML = origHtml;
+                btn.classList.remove('opacity-80', 'pointer-events-none');
+
+                if (!specs) return;
+
+                // Populate lower specification fields
+                const categoryEl = document.getElementById('inputCategory');
+                const fuelEl = document.getElementById('inputFuel');
+                const transEl = document.getElementById('inputTransmission');
+                const seatsEl = document.getElementById('inputSeats');
+                const engineEl = document.getElementById('inputEngine');
+                const dailyEl = document.getElementById('inputDailyRate');
+                const weeklyEl = document.getElementById('inputWeeklyRate');
+                const monthlyEl = document.getElementById('inputMonthlyRate');
+
+                const targetElements = [];
+
+                if (categoryEl) { categoryEl.value = specs.category; targetElements.push(categoryEl); }
+                if (fuelEl) { fuelEl.value = specs.fuel; targetElements.push(fuelEl); }
+                if (transEl) { transEl.value = specs.transmission; targetElements.push(transEl); }
+                if (seatsEl) { seatsEl.value = specs.seats; targetElements.push(seatsEl); }
+                if (engineEl) { engineEl.value = specs.engine; targetElements.push(engineEl); }
+
+                if (dailyEl) { dailyEl.value = Number(specs.daily).toFixed(2); targetElements.push(dailyEl.closest('.bg-surface-container') || dailyEl); }
+                if (weeklyEl) { weeklyEl.value = Number(specs.weekly).toFixed(2); targetElements.push(weeklyEl.closest('.bg-surface-container') || weeklyEl); }
+                if (monthlyEl) { monthlyEl.value = Number(specs.monthly).toFixed(2); targetElements.push(monthlyEl.closest('.bg-surface-container') || monthlyEl); }
+
+                // Apple HIG gentle blue highlight glow
+                targetElements.forEach(el => {
+                    el.classList.add('ring-2', 'ring-primary', 'bg-primary/5', 'transition-all', 'duration-500');
+                    setTimeout(() => {
+                        el.classList.remove('ring-2', 'ring-primary', 'bg-primary/5');
+                    }, 2200);
+                });
+
+                const carTitle = [brand, model].filter(Boolean).join(' ');
+                showAiToast(`✓ Spesifikasi ${carTitle} berjaya dijana secara automatik!`, 'success');
+            }, 380);
+        }
+
+        function showAiToast(msg, type = 'success') {
+            const toast = document.getElementById('aiToast');
+            const toastMsg = document.getElementById('aiToastMsg');
+            if (!toast || !toastMsg) return;
+
+            toastMsg.textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3200);
         }
     </script>
 </body>

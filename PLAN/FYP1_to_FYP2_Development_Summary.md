@@ -5676,6 +5676,45 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.3 Standardize Carlist and Mudah car categories and add fuel type dropdown in STITCH UI PREVIEW/7`
   - Tag Versi: `6.9.3`
 
+---
+
+## ⚡ [PATCH UPDATE] 218. Integrasi Butang Tindakan 'AI Auto Generate' Spesifikasi Kenderaan & Maklum Balas Visual Apple (v6.9.4)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna mengarahkan penukaran medan *Status Operasi Awal* (`Tersedia untuk Disewa (Available)`) kepada butang pintar **AI Auto Generate**:
+     > *"yes perfect macam tu.. yang dalam gambar ni tukar kepada ai auto generate n function dia lepas saya isi semua data basic ...tekan ai auto generate tu dia akan suggestion generate spec kereta"*
+  2. Melaksanakan fungsi pintar: Selepas pengguna mengisi maklumat asas kenderaan (Pengeluar, Model, Varian), menekan butang AI akan mencadangkan dan mengisi secara automatik spesifikasi teknikal (Kategori, Punca Kuasa, Transmisi, Bilangan Kerusi, Spesifikasi Enjin, dan Formula Tarif Sewaan) pada bahagian bawah kad Bento.
+
+- **Tindakan Pelaksanaan**:
+  - Di dalam `STITCH UI PREVIEW/7/step1_spesifikasi_preview.html`:
+    - **1. Penggantian Medan 'Status Operasi Awal' dengan Butang AI Auto Generate**:
+      - Menggantikan elemen dropdown statik dengan butang tindakan berkualiti tinggi Apple HIG (`#aiAutoGenerateBtn`).
+      - Dilengkapi lencana pengepala `✨ Pengecaman Spesifikasi Pintar` dan butang kaca biru (`bg-primary/10 hover:bg-primary/20 border-primary/40 text-primary font-bold`) dengan lencana mikro `Jana Pintar ↓`.
+      - Status kenderaan dikekalkan sebagai medan tersembunyi (`<input type="hidden" id="inputStatus" value="available" />`).
+    - **2. Pembangunan Enjin Pengecaman Spesifikasi AI Pintar (`runAiAutoGenerate()` & `detectCarSpecs()`)**:
+      - Pangkalan data kenderaan komprehensif Malaysia (`AI_CAR_SPEC_DB`): Merangkumi Honda, Toyota, Perodua, Proton, BYD, Tesla, BMW, Mercedes-Benz, Mazda, Nissan, dan Hyundai.
+      - Enjin fallback heuristik dinamik bagi sebarang model baharu (cth. mengesan *EV / Electric / Atto / Seal / Tesla / Ioniq* $\to$ Elektrik Penuh; *Hybrid / e:HEV / PHEV* $\to$ Hybrid; *Diesel / Hilux / Ranger / D-Max* $\to$ Diesel & Pickup; *Alphard / Vellfire / Alza / Innova / Serena* $\to$ MPV 7 Kerusi; *SUV / CR-V / HR-V / CX-5 / X50 / X70* $\to$ SUV; dsb.).
+      - Pengisian automatik 8 medan: Kategori Kenderaan, Punca Kuasa (Bahan Api), Sistem Transmisi, Kapasiti Tempat Duduk, Kapasiti / Sesaran Enjin & Kuasa, serta Kadar Sewaan Harian, Mingguan, dan Bulanan.
+    - **3. Maklum Balas Visual Apple HIG**:
+      - Keadaan analisis taktil Apple (`Menganalisis Spesifikasi...` berserta pemutar mikro selama 380ms).
+      - Sorotan cahaya biru (*Apple HIG Blue Glow* via `ring-2 ring-primary bg-primary/5`) pada medan yang diisi automatik selama 2.2 saat.
+      - Notifikasi kaca terapung (*Floating Apple Glass Toast* via `#aiToast`) yang mengesahkan model kenderaan berjaya dijanakan.
+
+    - **4. Penghapusan Ikon Chevron Bertindih pada Elemen Dropdown**:
+      - Membetulkan isu tindihan anak panah berganda (`v v`) pada kesemua dropdown yang berpunca daripada pemalam Tailwind Forms yang menjana SVG secara automatik pada `background-image`.
+      - Menguatkuasakan tetapan CSS `select { background-image: none !important; appearance: none !important; -webkit-appearance: none !important; }` bagi memastikan hanya ikon chevron tunggal Material Symbols yang kemas dipaparkan.
+
+- **Pengesahan Ujian Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Butang terletak kemas dan simetri pada baris kedua Bahagian Atas, mengelakkan sebarang ruang mati (*Zero Dead Space*), dan anak panah dropdown disahkan tunggal tanpa herotan bertindih.
+  - **iPad Tablet (820 × 1180)**: Susun atur 2 kolum dengan butang AI merentangi 2 kolum secara simetri, zon sentuhan selesa $\ge 48\text{px}$.
+  - **iPhone Mobile (393 × 852)**: Paparan 1 kolum lancar, mematuhi sepenuhnya Prinsip Sifar Bujur (*Zero Oval Rule*), fon $\ge 16\text{px}$ menghalang lonjakan auto-zoom iOS Safari.
+  - **Ujian Dwi-Tema**: Mod Siang (*Day*) dan Mod Obsidian Malam (*Dark*) disahkan berkontras tinggi dan berfungsi 100%.
+
+- **Maklumat Git**:
+  - Commit: `6.9.4 Replace Status Operasi Awal with interactive AI Auto Generate car specs button and fix overlapping dropdown chevron in STITCH UI PREVIEW/7`
+  - Tag Versi: `6.9.4`
+
+
 
 
 
