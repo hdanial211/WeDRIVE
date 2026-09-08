@@ -30,6 +30,25 @@ Jadual di bawah mengandungi kata-kata yang **DIHARAMKAN SAMA SEKALI** penggunaan
 | **Perisai Keselamatan** | Frasa hiperbola robotik AI yang mengelirukan pelanggan. | **Perlindungan Insurans** / **Insurans Penuh** |
 | **Gugusan Kereta** | Terjemahan kaku robotik bagi "vehicle cluster". | **Pilihan Kereta** / **Senarai Kereta** |
 | **Penstriman Tempahan** | Terjemahan salah bagi "booking stream/flow". | **Aliran Tempahan** / **Status Tempahan** |
+| **Database** / **Pangkalan Data** / **Supabase** *(dalam UI)* | Pengguna & admin adalah staf operasi, bukan pengaturcara (*non-coder*). Mereka tidak tahu coding. Istilah ini HANYA untuk kod belakang tabir. | **Simpan Rekod** / **Simpan Visual** / **✓ Berjaya Disimpan** / **Tersimpan di Awan** |
+| **Cache** *(dalam UI)* | Pengguna tidak faham teknologi cache. DILARANG SAMA SEKALI memaparkannya pada UI. | **Pratonton Sedia** / **Pratonton 360° Aktif** |
+| **JPJ** / **Geran JPJ** *(Terkait Kereta/Add Car)* | WeDRIVE bisnes sewa kereta bukan jual kereta. Kereta syarikat sudah siap didaftarkan dengan JPJ. Dilarang sebut JPJ berkaitan kereta. | **Pemeriksaan Visual Syarikat** / **Maklumat Asas Pendaftaran** |
+| **Aset** *(dalam konteks sewa kereta)* | Istilah perakaunan kaku/canggung untuk kereta sewaan. | **Kereta** / **Kenderaan** / **Visual 360°** |
+| **Muka Kubus** / **Integriti Data** | Jargon grafik 3D/pengaturcaraan pelik yang membingungkan pentadbir operasi. | **Spesifikasi Kenderaan** / **Lokasi & Status Serahan** |
+
+---
+
+### 2.1 Prinsip Sifar Jargon Pengaturcaraan dalam UI (Zero Coding Jargon in Interface UI)
+- **Kefahaman Pengguna Operasi (Non-Coder Standard):** Pengguna akhir dan pentadbir operasi adalah orang awam yang menguruskan operasi sewaan kenderaan dan BUKAN pengaturcara (*non-coders*).
+- **Larangan Mutlak Istilah Coding dalam UI:**
+  - **DILARANG SAMA SEKALI** memaparkan perkataan teknikal pengaturcaraan seperti: `"database"`, `"pangkalan data"`, `"cache"`, `"supabase"`, `"SQL"`, `"JSON"`, `"API"`, `"staging"`, `"payload"`, atau `"query"` pada sebarang butang, label borang, lencana status, kad Bento, mahupun mesej toast.
+  - Perkataan teknikal tersebut **HANYA** boleh digunakan di dalam fail kod sumber, skrip backend, dan dokumentasi kejuruteraan dalaman di sebalik tabir.
+  - Antaramuka pengguna WAJIB menggunakan bahasa pengalaman pengguna (UX) Apple yang ringkas, bersih, dan berorientasikan tindakan (contoh: `Simpan Visual`, `✓ Berjaya Disimpan`, `Pratonton Sedia`).
+
+### 2.2 Garis Panduan Mutlak Sempadan JPJ (JPJ Scope Isolation Standard)
+- **Bisnes Sewa Kereta Bukan Jual Kereta:** Sistem WeDRIVE beroperasi sebagai platform sewaan kenderaan (*car rental*), bukan platform jual beli kereta atau pendaftaran geran baharu. Semua kereta yang dimiliki syarikat sememangnya **sudah siap berdaftar dengan JPJ terlebih dahulu** sebelum dimasukkan ke dalam sistem sewaan.
+- **Larangan Keras pada Modul Kereta:** DILARANG SAMA SEKALI menyebut atau mengaitkan `JPJ`, `geran JPJ`, atau `pendaftaran JPJ` pada modul inventori kenderaan, pendaftaran kenderaan baharu (`add-car.html`), atau studio pemeriksaan visual kenderaan.
+- **Pengecualian Tunggal Sahaja (OCR Lesen Pelanggan):** Istilah JPJ **HANYA** wujud dan dibenarkan pada satu bahagian sahaja dalam sistem: iaitu modul **Pengesahan Identiti & Lesen Memandu Pelanggan (*Customer Identity & Driving License OCR Verification*)** untuk mengesahkan bahawa pelanggan memiliki lesen memandu JPJ yang sah sebelum membenarkan sewaan dibuat.
 
 ---
 

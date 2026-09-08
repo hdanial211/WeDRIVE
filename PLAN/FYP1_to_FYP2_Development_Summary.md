@@ -5794,6 +5794,67 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.9.6 Add AI iridescent aura, CDN laser scanner, and Jana Aset AI button in STITCH UI PREVIEW/7 Step 2`
   - Tag Versi: `6.9.6`
 
+---
+
+## ⚡ [PATCH UPDATE] 221. Pembersihan Mutlak Istilah Teknikal (Sifar Cache/Database/JPJ/Aset), Butang Skrin Penuh 1:1, Palang Kemajuan Dinamik & Animasi Siri Spesifikasi Pintar (v6.9.7)
+
+- **Punca Keperluan (Context & User Directives)**:
+  1. Pengguna memberikan beberapa arahan penalaan UI/UX dan bahasa yang sangat tegas:
+     > *"ehh bukan aset..kelakar pulak jana ai sahaja...n tambah satu lagi button untuk lepas preview untuk download letak dalam database...sebab lepas generate letak dalam cache dulu lepas okey betul gmbr nye baru masuk database saya rasa...ni pon concept sahaja kan nnti kita dh siap build 100% page add car ni terus buat apa yang saya suruh"*
+     > *"ini semua x de kaitan dengan jpj ehh reminder untuk awak ini antara company dengan kereta sahaja"*
+     > *"banyak perkataan yang official xkan guna apa yang berkaitan dengan jpj pulak ni. JPJ tukar. aset tu apa jangan pakai perkataan pelik janggal tukar. macam mana nak tahu loading download tu dh siap???"*
+     > *"button ni ubah jadikan button full screen"*
+     > *"ni pon sama saya nak warna ai yang lawa + animation ai effect bila saya tekan"*
+     > *"(Supabase) ni xpayah lahh sebut ..ada ke company2 besar bagitahu dia pakai database apa ... n perkataan database tu pon x payah guna ...cakap berjaya disimpan tu jek macam company apple ada dia sebut semua???"*
+     > *"dalam cache pon xyah sebut ...admin bukan coding ..dia x tahu apa2 pasal coding just saya jek tahu"*
+
+- **Tindakan Pelaksanaan (`STITCH UI PREVIEW/7/` & `.agents/rules/`)**:
+  - **1. Pembersihan Menyeluruh Istilah Teknikal & Kerajaan (Zero Tech & Non-Rental Jargon)**:
+    - Membuang 100% rujukan `JPJ` dan `geran` daripada modul kenderaan. Bento Card A dinamakan `Galeri Pemeriksaan Kenderaan` untuk rekod pemeriksaan visual syarikat.
+    - Menghapuskan perkataan canggung `aset`. Butang dinamakan `Jana AI`.
+    - Menghapuskan perkataan `(Supabase)`, `database`, dan `pangkalan data` daripada semua elemen antaramuka pentadbir. Digantikan dengan istilah minimalis gred Apple: `Simpan Visual` dan `✓ Berjaya Disimpan`.
+    - Menghapuskan perkataan `cache` daripada semua label, lencana, teks status, dan pemboleh ubah JavaScript. Digantikan dengan `Pratonton Sedia` dan `Pratonton 360° Aktif`.
+  - **2. Penjejak Kemajuan Muat Turun Dinamik Apple HIG (`#saveDbProgressBox`)**:
+    - Membina palang kemajuan interaktif dengan pecahan fasa yang jelas (0% $\to$ 25% $\to$ 65% $\to$ 90% $\to$ 100%).
+    - Memaparkan anggaran masa, perincian kerangka visual (cth: `130/200 dipindahkan`), penunjuk status hijau padu, dan notifikasi Apple Glass Toast yang mewah.
+  - **3. Butang Skrin Penuh Meja Putar 360° (`#btnFullscreen360`)**:
+    - Menukar butang bulat pada penjuru kanan bawah meja putar kepada butang togol mod skrin penuh (`requestFullscreen` + sandaran kelas `.viewport-fallback-fullscreen`).
+    - Mematuhi nisbah bulatan tepat 1:1 (`circle-1-1 w-10 h-10` dengan `aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;`).
+    - Pertukaran ikon dinamik antara `fullscreen` dan `fullscreen_exit`.
+  - **4. Kesan Animasi Siri AI & Gelombang Spesifikasi Pintar (`step1_spesifikasi_preview.html`)**:
+    - Mengintegrasikan sempadan bercahaya iridescent Siri AI (`ai-analyzing-active`) dan garis imbasan laser (`#aiSpecLaserScanner`).
+    - Apabila butang *Pengecaman Spesifikasi Pintar* ditekan, enjin AI mengimbas model kenderaan dan mencetuskan gelombang cahaya Siri melata (*cascading wave glow*) merentasi medan Kategori, Bahan Api, Transmisi, Tempat Duduk, Enjin, dan Kadar Sewaan satu demi satu secara berperingkat.
+    - Butang memaparkan maklum balas haptik visual `✓ Spesifikasi Dikenal Pasti` dan lencana `Selesai 100%` sebelum kembali ke keadaan sedia.
+  - **5. Rombakan Bento Grid Langkah 3 Pengesahan (`step3_pengesahan_preview.html`)**:
+    - Menghapuskan kad `Integriti Data` dan istilah teknikal 3D (`Muka Kubus Dalaman`).
+    - Memanjangkan kad kiri `Spesifikasi Kenderaan` (`md:col-span-8`) menjadi grid 8-jubin responsif (No. Pendaftaran, Kategori, Tahun, Warna, Enjin, Punca Kuasa, Transmisi, Kapasiti Duduk).
+    - Membina kad kanan `Lokasi & Status` (`md:col-span-4`) yang menetapkan lokasi tunggal serahan: `Ibu Pejabat WeDRIVE, Cyberjaya`, status `Sedia Disewa`, dan jarak perbatuan `12,450 km`.
+  - **6. Penggubalan & Pengemaskinian Peraturan Sistem (`.agents/rules/`)**:
+    - `01_core_rules.md` (Seksyen 1B): Menginstitusikan prinsip Sifar Jargon Pengaturcaraan dalam UI dan Had Sempadan Skop JPJ.
+    - `04_navigation_and_ui.md` (Seksyen 6): Menginstitusikan Pantang Larang Mandatori Polisi Lokasi Tunggal Ambil & Pulang (HQ Cyberjaya).
+    - `06_code_and_backend.md` (Seksyen 6): Mengasingkan sepenuhnya kod sumber teknikal daripada paparan antaramuka UI.
+    - `11_language_standards.md` (Seksyen 2, 2.1 & 2.2): Menyenaraihitamkan perkataan Database, Cache, Supabase, JPJ (terkait kereta), Aset, dan Muka Kubus, serta menggariskan piawaian bahasa produk gred Apple.
+  - **7. Penyeragaman Mutlak Reka Bentuk Notifikasi Tunggal (Strict Single Unified Pill Toast Notification Standard)**:
+    - Pengguna mengarahkan secara mutlak berpandukan imej rujukan:
+      > *"notification untuk anything guna satu sahaja yang ini sahaja"*
+    - Menghapuskan kotak notifikasi segi empat lama di `step2_studio360_preview.html` (`rounded-2xl` di bucu kanan atas) dan menggantikannya dengan kapsul pil terapung tengah atas (`fixed top-20 left-1/2 -translate-x-1/2 rounded-full glass-panel border border-primary/30 shadow-2xl`).
+    - Menetapkan ikon bulat kiri 1:1 tepat (`w-7 h-7 circle-1-1`) dan mesej teks sebaris dengan animasi jatuh lancar.
+    - Menginstitusikan piawaian ini ke dalam fail peraturan rasmi: `.agents/rules/03_apple_hig_components.md` (Pilar 4, Butiran 6), `.agents/rules/04_navigation_and_ui.md` (Seksyen 7), dan `.agents/rules/01_core_rules.md` (Seksyen 1).
+  - **8. Dokumentasi Spesifikasi Aliran Kerja**:
+    - Mengemas kini `SPECS_AI_360_STUDIO_CACHE_WORKFLOW.md` dan `index.html` dengan prinsip sifar jargon teknikal, sifar cache, lokasi tunggal HQ, dan notifikasi tunggal gred Apple.
+
+- **Pengesahan Visual & Kualiti (Apple 3-Device Protocol)**:
+  - **MacBook Retina (1440 × 900)**: Ujian paparan skrin penuh dan meja putar 360° interaktif lancar tanpa ralat.
+  - **iPad Tablet (820 × 1180)**: Susun atur 2-kolum responsif dengan butang kapsul simetri.
+  - **iPhone Mobile (393 × 852)**: Sifar herotan bujur (Prinsip Sifar Bujur / *Zero Oval Rule* dipatuhi 100%), sifar limpahan mendatar.
+  - **Playwright Test Suite**: Ujian automasi E2E dijalankan secara berasingan (**100% Pass Rate: 48/48 Ujian Lulus**).
+  - **Audit Had Aksara 12,000**: Kesemua 21 fail peraturan `.agents/rules/*.md` disahkan kekal $\le 12,000$ aksara.
+
+- **Maklumat Git**:
+  - Commit: `6.9.7 Add zero coding jargon, JPJ vehicle scope rules, single HQ location, and strict single unified pill toast notification standard`
+  - Tag Versi: `6.9.7`
+
+
 
 
 

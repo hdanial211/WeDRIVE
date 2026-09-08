@@ -21,7 +21,13 @@ Standard Rujukan Mandatori Bahagian 2 untuk komponen dan ciri sistem WeDRIVE.
 5. **Lencana Status & Penunjuk Kapsul**:
    - Lencana status (Tersedia, Aktif, Selesai) berbentuk kapsul pil huruf besar berkod warna.
    - Penunjuk karusel: Titik pasif `7px × 7px` $\to$ Kapsul aktif melebar `22px × 7px`.
-6. **Notifikasi Terapung (Apple Toasts)**: Kapsul terapung di sudut skrin dengan ikon bulat, teks ringkas, bayang kaca berlapis, auto-hilang 3 saat.
+6. **Piawaian Mandatori Notifikasi Tunggal (Strict Single Unified Apple Pill Toast Standard)**:
+   - **HANYA SATU FORMAT SAHAJA**: DILARANG SAMA SEKALI menggunakan pelbagai bentuk notifikasi (seperti kad segi empat, kotak mesej tepi skrin, atau modal berlebihan). Apa jua notifikasi sistem, kejayaan, amaran, atau pemakluman WAJIB menggunakan SATU reka bentuk ini sahaja:
+   - **Bentuk & Geometri**: Kapsul pil terapung simetri penuh (`border-radius: 9999px !important;` / `rounded-full`).
+   - **Kedudukan**: Sentiasa terapung di tengah bahagian atas skrin (`fixed top-20 left-1/2 -translate-x-1/2 z-50`).
+   - **Ikon Bulat Kiri**: Bulatan 1:1 sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`, cth: `28px × 28px` / `w-7 h-7`) dengan latar belakang lut sinar berkod warna (cth: `bg-primary/20 text-primary` atau `bg-amber-500/20 text-amber-500`).
+   - **Bahan Kaca Apple Thin Material**: Latar belakang kabur kaca (`backdrop-filter: blur(20px) saturate(180%); background: rgba(var(--surface-rgb), 0.9); border: 1px solid rgba(0, 113, 227, 0.25); box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);`).
+   - **Tipografi & Animasi**: Mesej teks sebaris yang kemas dan jelas, kontras tinggi, auto-tutup 3 saat dengan animasi jatuh lancar dari atas (`translate-y-[-10px]` $\leftrightarrow$ `translate-y-0`).
 
 ---
 

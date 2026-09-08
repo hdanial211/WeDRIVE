@@ -233,6 +233,30 @@
         .turntable-flash-effect {
             animation: aiTurntableFlash 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        /* Turntable Fullscreen Viewport Mode */
+        #turntableViewport:fullscreen,
+        #turntableViewport:-webkit-full-screen,
+        #turntableViewport.viewport-fallback-fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: none !important;
+            max-height: none !important;
+            border-radius: 0 !important;
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 99999 !important;
+            background-color: #000000 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        #turntableViewport:fullscreen #btnFullscreen360,
+        #turntableViewport:-webkit-full-screen #btnFullscreen360,
+        #turntableViewport.viewport-fallback-fullscreen #btnFullscreen360 {
+            bottom: 24px !important;
+            right: 24px !important;
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface antialiased min-h-screen pb-[130px] font-body selection:bg-primary-fixed selection:text-on-primary-fixed transition-colors duration-300">
@@ -330,11 +354,11 @@
             <!-- Left Column -->
             <div class="lg:col-span-7 flex flex-col gap-gutter">
                 
-                <!-- Bento Card A: Galeri Foto Wajib JPJ -->
+                <!-- Bento Card A: Galeri Pemeriksaan Kenderaan -->
                 <div class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
                     <div class="flex flex-col gap-sm mb-lg">
-                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Galeri Foto Wajib JPJ</h2>
-                        <p class="font-callout text-callout text-on-surface-variant">Muat naik 6 sudut wajib untuk pengesahan geran dan identiti kenderaan.</p>
+                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Galeri Pemeriksaan Kenderaan</h2>
+                        <p class="font-callout text-callout text-on-surface-variant">Muat naik 6 sudut kenderaan untuk rekod pemeriksaan visual syarikat.</p>
                     </div>
 
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-md">
@@ -371,11 +395,11 @@
                     </div>
                 </div>
 
-                <!-- Bento Card B: Integrasi Aset Interaktif 360° -->
+                <!-- Bento Card B: Integrasi Visual 360° & Meja Putar -->
                 <div id="bentoCard3D" class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)] transition-all duration-300">
                     <div class="flex flex-col gap-sm mb-lg">
                         <div class="flex justify-between items-start">
-                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Integrasi Aset Interaktif 360°</h2>
+                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Integrasi Visual 360° &amp; Meja Putar</h2>
                             <div id="cdnStatusBadge" class="pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold transition-all">
                                 <span id="cdnStatusIcon" class="material-symbols-outlined text-[14px]">verified</span>
                                 <span id="cdnStatusText">Siap Sedia</span>
@@ -386,16 +410,45 @@
 
                     <div class="flex flex-col gap-md">
                         <!-- Input + Action Button Group -->
-                        <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 items-stretch">
+                        <div class="flex flex-col xl:flex-row gap-2 sm:gap-3 items-stretch">
                             <div id="cdnInputWrapper" class="relative flex-1 rounded-xl transition-all duration-300 overflow-hidden bg-surface-container hairline border-border-day">
                                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant z-10 text-[20px]">link</span>
                                 <input id="cdnUrlInput" class="w-full bg-transparent border-none rounded-xl pl-10 pr-3 py-3 font-body text-body text-on-surface focus:outline-none transition-all font-mono text-[13px] relative z-10" placeholder="https://cdn.wedrive.app/assets/3d/..." value="https://cdn.wedrive.app/assets/3d/honda-civic-2024-360/" type="text"/>
                                 <div id="aiLaserScanner" class="hidden ai-laser-line"></div>
                             </div>
-                            <button id="btnGenerate3D" type="button" class="pill-btn interactive-btn bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] hover:brightness-110 text-white font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97]" style="color: #FFFFFF !important;">
-                                <span id="btnGenIcon" class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                                <span id="btnGenText">Jana Aset AI</span>
-                            </button>
+                            <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0">
+                                <!-- 1. Jana AI Button (Generates 360 Preview) -->
+                                <button id="btnGenerate3D" type="button" class="pill-btn interactive-btn bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] hover:brightness-110 text-white font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97]" style="color: #FFFFFF !important;">
+                                    <span id="btnGenIcon" class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                    <span id="btnGenText">Jana AI</span>
+                                </button>
+                                <!-- 2. Simpan Rekod Visual Button -->
+                                <button id="btnSaveToDb" type="button" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high hairline border-border-day text-on-surface-variant font-headline text-[13px] font-semibold px-4 py-2.5 flex items-center justify-center gap-2 shadow-xs shrink-0 transition-all active:scale-[0.97] opacity-60 cursor-not-allowed" disabled title="Jana pratonton AI dahulu untuk semak kenderaan sebelum simpan visual">
+                                    <span id="btnSaveDbIcon" class="material-symbols-outlined text-[18px] text-primary">cloud_download</span>
+                                    <span id="btnSaveDbText">Simpan Visual</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Progress Box (Unmistakable Loading & 100% Completion Tracker) -->
+                        <div id="saveDbProgressBox" class="hidden flex-col gap-2 p-3.5 bg-surface-container rounded-xl hairline border-border-day transition-all duration-300">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2 text-on-surface font-headline text-[13px] font-semibold" id="downloadStatusHeading">
+                                    <span id="downloadStatusIcon" class="material-symbols-outlined text-[18px] text-primary animate-spin">progress_activity</span>
+                                    <span id="downloadStatusLabel">Sedang Memuat Turun Visual 360°...</span>
+                                </div>
+                                <span id="downloadPercentText" class="font-mono text-primary font-bold text-[14px]">0%</span>
+                            </div>
+                            
+                            <!-- Apple HIG Progress Bar Track -->
+                            <div class="w-full bg-surface-container-highest rounded-full h-2 overflow-hidden relative">
+                                <div id="downloadProgressBar" class="bg-gradient-to-r from-primary via-[#5E5CE6] to-success h-full w-0 transition-all duration-300 rounded-full"></div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center text-[12px] text-on-surface-variant font-medium">
+                                <span id="downloadFilesStatus">Memindahkan 200 kerangka visual &amp; panorama 8K...</span>
+                                <span id="downloadTimeEstimate">Anggaran: ~1.2s</span>
+                            </div>
                         </div>
 
                         <!-- Progressive Detection Tags -->
@@ -444,10 +497,10 @@
                             </div>
                         </div>
 
-                        <!-- 360 Icon Badge (Strict 1:1 Circle) -->
-                        <div class="absolute bottom-md right-md bg-surface-container-lowest/85 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface">
-                            <span class="material-symbols-outlined text-[20px]">360</span>
-                        </div>
+                        <!-- Fullscreen Toggle Button (Strict 1:1 Circle) -->
+                        <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh">
+                            <span id="iconFullscreen" class="material-symbols-outlined text-[20px]">fullscreen</span>
+                        </button>
 
                         <!-- AI Quality Badge (Pill) -->
                         <div class="absolute top-md left-md bg-surface-container-lowest/85 backdrop-blur-md hairline border-border-day pill-btn px-sm py-xs flex items-center gap-xs shadow-sm">
@@ -481,15 +534,12 @@
         </a>
     </nav>
 
-    <!-- Floating Apple Glass Toast Notification -->
-    <div id="ai3dToast" class="fixed top-20 right-6 z-50 glass-panel border border-border-day rounded-2xl p-4 shadow-2xl flex items-center gap-3 transition-all duration-500 opacity-0 -translate-y-5 pointer-events-none max-w-md">
-        <div class="circle-1-1 w-9 h-9 bg-primary/15 text-primary flex items-center justify-center shrink-0">
-            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    <!-- AI Apple Glass Floating Toast Notification (Standard Unified Single Design) -->
+    <div id="ai3dToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
+        <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
+            <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
         </div>
-        <div class="flex flex-col min-w-0">
-            <div id="aiToastTitle" class="font-headline text-[14px] font-bold text-on-surface">Aset 360° Disahkan</div>
-            <div id="aiToastMsg" class="font-footnote text-[12px] text-on-surface-variant truncate">Pautan CDN aktif &amp; 200 kerangka berjaya dimuatkan ke studio.</div>
-        </div>
+        <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">✓ Visual 360° berjaya disimpan</span>
     </div>
 
     <!-- Theme Controller Script -->
@@ -528,31 +578,47 @@
         const btnGenerate3D = document.getElementById('btnGenerate3D');
         const btnGenIcon = document.getElementById('btnGenIcon');
         const btnGenText = document.getElementById('btnGenText');
+        const btnSaveToDb = document.getElementById('btnSaveToDb');
+        const btnSaveDbIcon = document.getElementById('btnSaveDbIcon');
+        const btnSaveDbText = document.getElementById('btnSaveDbText');
         const cdnStatusBadge = document.getElementById('cdnStatusBadge');
         const cdnStatusIcon = document.getElementById('cdnStatusIcon');
         const cdnStatusText = document.getElementById('cdnStatusText');
         const cdnDetectionTags = document.getElementById('cdnDetectionTags');
         const turntableViewport = document.getElementById('turntableViewport');
         const ai3dToast = document.getElementById('ai3dToast');
-        const aiToastTitle = document.getElementById('aiToastTitle');
         const aiToastMsg = document.getElementById('aiToastMsg');
+        const aiToastIcon = document.getElementById('aiToastIcon');
 
         let isAnalyzing = false;
+        let isSavingDb = false;
+        let isPreviewReady = false;
+        let isSavedToDb = false;
         let toastTimeout = null;
 
-        function showAiToast(title, message, isSuccess = true) {
-            if (!ai3dToast) return;
+        function showAiToast(message, isSuccess = true, icon = 'auto_awesome') {
+            if (!ai3dToast || !aiToastMsg) return;
             clearTimeout(toastTimeout);
-            aiToastTitle.textContent = title;
-            aiToastMsg.textContent = message;
             
-            ai3dToast.classList.remove('opacity-0', '-translate-y-5', 'pointer-events-none');
+            aiToastMsg.textContent = message;
+            if (aiToastIcon) {
+                aiToastIcon.textContent = icon;
+                if (!isSuccess) {
+                    aiToastIcon.className = 'material-symbols-outlined text-amber-500 text-[18px]';
+                    if (aiToastIcon.parentElement) aiToastIcon.parentElement.className = 'circle-1-1 w-7 h-7 bg-amber-500/20 text-amber-500 flex items-center justify-center flex-shrink-0';
+                } else {
+                    aiToastIcon.className = 'material-symbols-outlined text-primary text-[18px]';
+                    if (aiToastIcon.parentElement) aiToastIcon.parentElement.className = 'circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0';
+                }
+            }
+            
+            ai3dToast.classList.remove('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
             ai3dToast.classList.add('opacity-100', 'translate-y-0');
 
             toastTimeout = setTimeout(() => {
                 ai3dToast.classList.remove('opacity-100', 'translate-y-0');
-                ai3dToast.classList.add('opacity-0', '-translate-y-5', 'pointer-events-none');
-            }, 3500);
+                ai3dToast.classList.add('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+            }, 3200);
         }
 
         function triggerAiScan(isAuto = false) {
@@ -573,12 +639,16 @@
                         </span>
                     `;
                 }
-                showAiToast('Pautan Diperlukan', 'Sila masukkan URL CDN kenderaan untuk memulakan imbasan AI.', false);
+                showAiToast('Sila masukkan URL CDN kenderaan terlebih dahulu.', false, 'warning');
                 return;
             }
 
             isAnalyzing = true;
             if (btnGenerate3D) btnGenerate3D.disabled = true;
+            if (btnSaveToDb) {
+                btnSaveToDb.disabled = true;
+                btnSaveToDb.classList.add('opacity-60', 'cursor-not-allowed');
+            }
 
             // 1. Activate AI Iridescent Glow & Holographic Laser Scanner
             if (cdnInputWrapper) cdnInputWrapper.classList.add('ai-analyzing-active');
@@ -624,25 +694,32 @@
                 }
             }, 550);
 
-            // Phase 3: Final Completion (after 1300ms)
+            // Phase 3: Final Completion (after 1300ms) - Preview Ready
             setTimeout(() => {
+                isPreviewReady = true;
+                isSavedToDb = false;
+
                 // Remove glowing borders & hide laser
                 if (cdnInputWrapper) cdnInputWrapper.classList.remove('ai-analyzing-active');
                 if (aiLaserScanner) aiLaserScanner.classList.add('hidden');
 
-                // Status Badge back to Verified Ready
+                // Status Badge: Pratonton Sedia
                 if (cdnStatusBadge) {
                     cdnStatusBadge.className = 'pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold';
                     cdnStatusIcon.textContent = 'verified';
-                    cdnStatusText.textContent = 'Siap Sedia';
+                    cdnStatusText.textContent = 'Pratonton Sedia';
                 }
 
                 // Display Final Verified Detection Tags
                 if (cdnDetectionTags) {
                     cdnDetectionTags.innerHTML = `
+                        <span class="pill-btn bg-primary/10 text-primary font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-primary/20">
+                            <span class="material-symbols-outlined text-[14px]">visibility</span>
+                            <span>Pratonton 360° Aktif</span>
+                        </span>
                         <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                             <span class="material-symbols-outlined text-[14px] text-success">check</span>
-                            <span>200 Kerangka Luaran dikesan</span>
+                            <span>200 Kerangka Luaran</span>
                         </span>
                         <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
                             <span class="material-symbols-outlined text-[14px] text-success">check</span>
@@ -655,12 +732,21 @@
                     `;
                 }
 
+                // Unlock Save Button
+                if (btnSaveToDb) {
+                    btnSaveToDb.disabled = false;
+                    btnSaveToDb.className = 'pill-btn interactive-btn bg-primary/15 hover:bg-primary/25 text-primary border border-primary/30 font-headline text-[13px] font-bold px-4 py-2.5 flex items-center justify-center gap-2 shadow-xs shrink-0 transition-all active:scale-[0.97] cursor-pointer';
+                    btnSaveToDb.title = 'Pratonton sedia. Semak pusingan kenderaan dahulu, kemudian klik Simpan.';
+                    if (btnSaveDbIcon) btnSaveDbIcon.textContent = 'cloud_download';
+                    if (btnSaveDbText) btnSaveDbText.textContent = 'Simpan Visual';
+                }
+
                 // Button Success State
                 if (btnGenIcon) {
                     btnGenIcon.classList.remove('animate-spin');
                     btnGenIcon.textContent = 'check_circle';
                 }
-                if (btnGenText) btnGenText.textContent = 'Aset Siap';
+                if (btnGenText) btnGenText.textContent = 'Visual Sedia';
                 if (btnGenerate3D) {
                     btnGenerate3D.classList.remove('from-primary', 'via-[#5E5CE6]', 'to-[#BF5AF2]');
                     btnGenerate3D.classList.add('bg-success');
@@ -672,12 +758,12 @@
                     setTimeout(() => turntableViewport.classList.remove('turntable-flash-effect'), 1200);
                 }
 
-                showAiToast('Aset 360° Berjaya Disahkan', 'Pautan CDN aktif & model 3D berjaya dihubungkan ke meja putar studio.');
+                showAiToast('✓ Visual kenderaan sedia disemak di meja putar 360°', true, 'auto_awesome');
 
                 // Gracefully reset button state after 2.5s
                 setTimeout(() => {
                     if (btnGenIcon) btnGenIcon.textContent = 'auto_awesome';
-                    if (btnGenText) btnGenText.textContent = 'Jana Aset AI';
+                    if (btnGenText) btnGenText.textContent = 'Jana AI';
                     if (btnGenerate3D) {
                         btnGenerate3D.classList.remove('bg-success');
                         btnGenerate3D.classList.add('from-primary', 'via-[#5E5CE6]', 'to-[#BF5AF2]');
@@ -689,8 +775,235 @@
             }, 1300);
         }
 
+        // Progress Elements
+        const saveDbProgressBox = document.getElementById('saveDbProgressBox');
+        const downloadStatusIcon = document.getElementById('downloadStatusIcon');
+        const downloadStatusLabel = document.getElementById('downloadStatusLabel');
+        const downloadPercentText = document.getElementById('downloadPercentText');
+        const downloadProgressBar = document.getElementById('downloadProgressBar');
+        const downloadFilesStatus = document.getElementById('downloadFilesStatus');
+        const downloadTimeEstimate = document.getElementById('downloadTimeEstimate');
+
+        function saveCarVisuals() {
+            if (!btnSaveToDb || btnSaveToDb.disabled || isSavingDb || isSavedToDb) return;
+
+            isSavingDb = true;
+            btnSaveToDb.disabled = true;
+
+            // Show Progress Box
+            if (saveDbProgressBox) {
+                saveDbProgressBox.classList.remove('hidden');
+                saveDbProgressBox.classList.add('flex');
+                saveDbProgressBox.classList.remove('border-success/40', 'bg-success/5');
+            }
+            if (downloadStatusIcon) {
+                downloadStatusIcon.textContent = 'progress_activity';
+                downloadStatusIcon.className = 'material-symbols-outlined text-[18px] text-primary animate-spin';
+            }
+            if (downloadStatusLabel) {
+                downloadStatusLabel.textContent = 'Menyediakan simpanan visual kenderaan...';
+            }
+            if (downloadProgressBar) {
+                downloadProgressBar.style.width = '0%';
+                downloadProgressBar.className = 'bg-gradient-to-r from-primary via-[#5E5CE6] to-success h-full transition-all duration-300 rounded-full';
+            }
+            if (downloadPercentText) {
+                downloadPercentText.textContent = '0%';
+                downloadPercentText.className = 'font-mono text-primary font-bold text-[14px]';
+            }
+            if (downloadFilesStatus) {
+                downloadFilesStatus.textContent = 'Memindahkan 200 kerangka visual & panorama 8K...';
+            }
+            if (downloadTimeEstimate) {
+                downloadTimeEstimate.textContent = 'Anggaran: ~1.2s';
+            }
+
+            if (btnSaveDbIcon) {
+                btnSaveDbIcon.textContent = 'progress_activity';
+                btnSaveDbIcon.classList.add('animate-spin');
+            }
+            if (btnSaveDbText) btnSaveDbText.textContent = 'Memuat Turun (15%)...';
+
+            // Stage 1: 25% (after 200ms)
+            setTimeout(() => {
+                if (downloadProgressBar) downloadProgressBar.style.width = '25%';
+                if (downloadPercentText) downloadPercentText.textContent = '25%';
+                if (downloadStatusLabel) downloadStatusLabel.textContent = 'Menyambung ke pelayan visual CDN...';
+                if (btnSaveDbText) btnSaveDbText.textContent = 'Memuat Turun (25%)...';
+            }, 200);
+
+            // Stage 2: 65% (after 550ms)
+            setTimeout(() => {
+                if (downloadProgressBar) downloadProgressBar.style.width = '65%';
+                if (downloadPercentText) downloadPercentText.textContent = '65%';
+                if (downloadStatusLabel) downloadStatusLabel.textContent = 'Memuat turun 200 kerangka visual pusingan 360°...';
+                if (downloadFilesStatus) downloadFilesStatus.textContent = '130/200 kerangka visual selesai dipindahkan...';
+                if (btnSaveDbText) btnSaveDbText.textContent = 'Memuat Turun (65%)...';
+            }, 550);
+
+            // Stage 3: 90% (after 950ms)
+            setTimeout(() => {
+                if (downloadProgressBar) downloadProgressBar.style.width = '90%';
+                if (downloadPercentText) downloadPercentText.textContent = '90%';
+                if (downloadStatusLabel) downloadStatusLabel.textContent = 'Menyimpan panorama dalaman 8K...';
+                if (downloadFilesStatus) downloadFilesStatus.textContent = 'Semua kerangka visual & metadata selesai diselaraskan...';
+                if (btnSaveDbText) btnSaveDbText.textContent = 'Menyimpan (90%)...';
+            }, 950);
+
+            // Stage 4: 100% Full Completion (after 1300ms)
+            setTimeout(() => {
+                isSavingDb = false;
+                isSavedToDb = true;
+
+                // 100% Full Completion State
+                if (downloadProgressBar) {
+                    downloadProgressBar.style.width = '100%';
+                    downloadProgressBar.className = 'bg-success h-full transition-all duration-300 rounded-full';
+                }
+                if (downloadPercentText) {
+                    downloadPercentText.textContent = '100%';
+                    downloadPercentText.className = 'font-mono text-success font-bold text-[14px]';
+                }
+                if (downloadStatusIcon) {
+                    downloadStatusIcon.textContent = 'check_circle';
+                    downloadStatusIcon.className = 'material-symbols-outlined text-[18px] text-success';
+                }
+                if (downloadStatusLabel) {
+                    downloadStatusLabel.textContent = '✓ 100% Selesai: Visual 360° Berjaya Disimpan';
+                }
+                if (downloadFilesStatus) {
+                    downloadFilesStatus.textContent = 'Semua 200 kerangka visual & panorama 8K kini selamat disimpan.';
+                }
+                if (downloadTimeEstimate) {
+                    downloadTimeEstimate.textContent = 'Selesai: 1.3s';
+                }
+                if (saveDbProgressBox) {
+                    saveDbProgressBox.classList.add('border-success/40', 'bg-success/5');
+                }
+
+                // Button State Update
+                if (btnSaveDbIcon) {
+                    btnSaveDbIcon.classList.remove('animate-spin');
+                    btnSaveDbIcon.textContent = 'cloud_done';
+                }
+                if (btnSaveDbText) {
+                    btnSaveDbText.textContent = '✓ Berjaya Disimpan';
+                }
+                btnSaveToDb.className = 'pill-btn bg-success text-white font-headline text-[13px] font-bold px-4 py-2.5 flex items-center justify-center gap-2 shadow-sm shrink-0 cursor-default';
+                btnSaveToDb.style.color = '#FFFFFF !important';
+
+                // Add confirmed tag
+                if (cdnDetectionTags) {
+                    const existingDbTag = document.getElementById('tagDbSaved');
+                    if (!existingDbTag) {
+                        const dbTag = document.createElement('span');
+                        dbTag.id = 'tagDbSaved';
+                        dbTag.className = 'pill-btn bg-success/15 text-success font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-success/30';
+                        dbTag.innerHTML = `
+                            <span class="material-symbols-outlined text-[14px]">cloud_done</span>
+                            <span>✓ Berjaya Disimpan</span>
+                        `;
+                        cdnDetectionTags.appendChild(dbTag);
+                    }
+                }
+
+                // Turntable Viewport Flash
+                if (turntableViewport) {
+                    turntableViewport.classList.add('turntable-flash-effect');
+                    setTimeout(() => turntableViewport.classList.remove('turntable-flash-effect'), 1200);
+                }
+
+                showAiToast('✓ Visual 360° & panorama berjaya disimpan!', true, 'check_circle');
+            }, 1300);
+        }
+
+        // Fullscreen Toggle Logic
+        const btnFullscreen360 = document.getElementById('btnFullscreen360');
+        const iconFullscreen = document.getElementById('iconFullscreen');
+
+        function isViewportFullscreen() {
+            return document.fullscreenElement === turntableViewport ||
+                   document.webkitFullscreenElement === turntableViewport ||
+                   (turntableViewport && turntableViewport.classList.contains('viewport-fallback-fullscreen'));
+        }
+
+        function updateFullscreenUi(isFullscreen) {
+            if (!iconFullscreen || !btnFullscreen360) return;
+            if (isFullscreen) {
+                iconFullscreen.textContent = 'fullscreen_exit';
+                btnFullscreen360.title = 'Keluar Skrin Penuh (Exit Full Screen)';
+                btnFullscreen360.setAttribute('aria-label', 'Keluar Skrin Penuh');
+            } else {
+                iconFullscreen.textContent = 'fullscreen';
+                btnFullscreen360.title = 'Skrin Penuh (Full Screen)';
+                btnFullscreen360.setAttribute('aria-label', 'Skrin Penuh');
+            }
+        }
+
+        async function toggleFullscreen() {
+            if (!turntableViewport) return;
+            if (isViewportFullscreen()) {
+                try {
+                    if (document.fullscreenElement && document.exitFullscreen) {
+                        await document.exitFullscreen();
+                    } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+                        await document.webkitExitFullscreen();
+                    }
+                } catch (err) {
+                    // ignore
+                }
+                turntableViewport.classList.remove('viewport-fallback-fullscreen');
+                updateFullscreenUi(false);
+            } else {
+                if (turntableViewport.requestFullscreen) {
+                    try {
+                        await turntableViewport.requestFullscreen();
+                        updateFullscreenUi(true);
+                        return;
+                    } catch (err) {
+                        // fallback to CSS overlay class
+                    }
+                } else if (turntableViewport.webkitRequestFullscreen) {
+                    try {
+                        await turntableViewport.webkitRequestFullscreen();
+                        updateFullscreenUi(true);
+                        return;
+                    } catch (err) {
+                        // fallback
+                    }
+                }
+                // Fallback class if browser fullscreen blocked or denied
+                turntableViewport.classList.add('viewport-fallback-fullscreen');
+                updateFullscreenUi(true);
+            }
+        }
+
+        if (btnFullscreen360) {
+            btnFullscreen360.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFullscreen();
+            });
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            updateFullscreenUi(isViewportFullscreen());
+        });
+        document.addEventListener('webkitfullscreenchange', () => {
+            updateFullscreenUi(isViewportFullscreen());
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && turntableViewport && turntableViewport.classList.contains('viewport-fallback-fullscreen')) {
+                turntableViewport.classList.remove('viewport-fallback-fullscreen');
+                updateFullscreenUi(false);
+            }
+        });
+
         if (btnGenerate3D) {
             btnGenerate3D.addEventListener('click', () => triggerAiScan(false));
+        }
+
+        if (btnSaveToDb) {
+            btnSaveToDb.addEventListener('click', saveCarVisuals);
         }
 
         if (cdnUrlInput) {

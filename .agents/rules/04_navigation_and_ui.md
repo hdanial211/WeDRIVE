@@ -74,3 +74,30 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
     - **Langkah 2 (Visual & Muktamad):** Butang `← Kembali ke Langkah 1` dan butang muktamad tunggal `Daftar Kenderaan Baharu`.
 - **Pengurusan Auto-Save Draf:**
   - Sekiranya sesuatu sistem telah mempunyai mekanisme penyimpanan automatik di latar belakang (*Auto-Save Draft*), **JANGAN cipta butang manual 'Simpan Draf'** yang memenuhkan ruang pengepala. Pengguna cukup sekadar dimaklumkan melalui sepanduk pulihkan draf atau notifikasi status halus.
+
+---
+
+## 6. Pantang Larang Mandatori: Polisi Lokasi Tunggal Ambil & Pulang (Strict Single Pick-Up & Return Location Rule)
+
+- **Syarat Mutlak Lokasi Tunggal (Single HQ Operational Depot):**
+  - Sistem WeDRIVE menetapkan bahawa kenderaan **HANYA mempunyai SATU lokasi tunggal rasmi** bagi urusan pengambilan dan pemulangan kenderaan, iaitu di **Ibu Pejabat WeDRIVE (Cyberjaya)**.
+  - **DILARANG SAMA SEKALI** menyediakan pilihan lokasi pemulangan yang berbeza, cawangan berasingan, atau membenarkan pengguna memilih lokasi drop-off sewenang-wenangnya.
+  - Semua borang tempahan, wizard pendaftaran kereta baharu, dan ringkasan pengesahan WAJIB memaparkan lokasi tunggal ini secara konsisten.
+
+---
+
+## 7. Piawaian Mandatori Notifikasi Tunggal (Strict Single Unified Pill Toast Notification Standard)
+
+- **Satu Format Notifikasi Sahaja untuk Seluruh Sistem:**
+  - Apa jua notifikasi kejayaan, amaran pengesahan borang, maklum balas tindakan AI, atau pemakluman status **WAJIB menggunakan SATU reka bentuk ini sahaja**: iaitu *Floating Pill Capsule Toast* di bahagian tengah atas skrin.
+  - **Sifar Toleransi Format Bertindan / Pelbagai:**
+    - DILARANG SAMA SEKALI menggunakan kad/kotak segi empat (*rectangular cards*).
+    - DILARANG meletakkan notifikasi di bucu kanan bawah (*bottom-right popups*), tepi skrin, atau sepanduk penuh (*full-width banner*) yang mengganggu susun atur visual.
+- **Spesifikasi Geometri Piawai Tunggal:**
+  - **Bentuk**: Kapsul pil simetri penuh (`border-radius: 9999px !important;` / `rounded-full`).
+  - **Kedudukan**: Sentiasa di tengah atas skrin (`fixed top-20 left-1/2 -translate-x-1/2 z-50`).
+  - **Ikon Kiri**: Bulatan 1:1 sempurna (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`, cth: `w-7 h-7` / 28px).
+  - **Bahan Kaca Apple**: Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(0, 113, 227, 0.3); box-shadow: 0 20px 35px rgba(0, 0, 0, 0.18);`).
+  - **Teks**: Teks sebaris ringkas (*single line message*) dengan animasi lincah jatuh dari atas (`translate-y-[-10px]` $\leftrightarrow$ `translate-y-0`).
+
+

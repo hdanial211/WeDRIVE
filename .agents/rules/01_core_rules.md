@@ -32,10 +32,13 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
   - **Prinsip Sifar Tindakan Bertindan (Strict Zero Duplicate Actions):** DILARANG SAMA SEKALI menyediakan 2 atau 3 elemen/butang yang menjalankan fungsi sama dalam satu halaman. Setiap fungsi WAJIB mempunyai SATU butang tindakan tunggal sahaja (Rujuk [04_navigation_and_ui.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)).
   - **Bento Grid & Bahan Kaca:** Susun atur kad Bento squircle (`border-radius: 24px/28px`), sifar ruang mati (*Zero Dead Space*), nombor `tabular-nums`, fizik sentuhan `scale(0.97)`, dan Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
   - **Dwi-Tema:** Mod Siang (`#F5F5F7` / `#FFFFFF`) dan Mod Obsidian Malam (`#000000` True Black / `#161618` Bento).
+  - **Piawaian Notifikasi Tunggal (Strict Single Unified Pill Toast):** Semua notifikasi sistem WAJIB menggunakan format kapsul pil terapung di tengah atas skrin dengan ikon bulat 1:1, bahan kaca Apple, dan teks sebaris (Rujuk [03_apple_hig_components.md](03_apple_hig_components.md) & [04_navigation_and_ui.md](04_navigation_and_ui.md)).
 
 ### 1B. Penyeragaman Mutlak Bahasa Melayu Moden Kontemporari Malaysia 2026
 - Tertakluk kepada [11_language_standards.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md).
 - **Larangan Senarai Hitam (Sifar Toleransi):** DILARANG SAMA SEKALI menggunakan kata terlarang (*Armada, Fleet, Wahana, Kabin, Kokpit, Prapapar, Perisai Keselamatan, Gugusan Kereta*).
+- **Sifar Jargon Pengaturcaraan dalam UI:** Dilarang menggunakan perkataan pengaturcaraan (*Database, Pangkalan Data, Cache, Supabase, SQL, API, JSON, query*) pada UI pengguna/admin. Istilah ini HANYA untuk kod dalaman.
+- **Sempadan Skop JPJ:** JPJ HANYA dibenarkan semasa pengesahan identiti dan lesen memandu pelanggan. DILARANG mengaitkan JPJ dengan kereta atau pendaftaran kenderaan kerana WeDRIVE menyewa kereta, bukan menjual kereta.
 
 ---
 

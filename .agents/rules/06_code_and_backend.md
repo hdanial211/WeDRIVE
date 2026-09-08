@@ -49,3 +49,11 @@ Projek ini menyokong dwibahasa (EN/MS) dan dwi-tema (Day/Night) penuh di semua h
 
 - **Semasa development:** Auth guard di-disable supaya mudah navigate antara page.
 - **Selepas semua page siap:** Auth guard diaktifkan untuk redirect ke login page bagi user yang belum login.
+
+## 6. Zero Coding Jargon in Interface UI (Prinsip Sifar Jargon Pengaturcaraan dalam UI)
+
+- **Pemisahan Jelas Antara Kod & Antaramuka:**
+  - Segala istilah teknikal pengaturcaraan, pangkalan data, dan cache (seperti `database`, `pangkalan data`, `cache`, `Supabase`, `SQL`, `API`, `JSON`, `query`, `staging`) HANYA dibenarkan wujud dalam fail kod sumber (`.js`, `.sql`, komen kod).
+  - **DILARANG SAMA SEKALI** memaparkan istilah-istilah ini pada antaramuka pengguna (UI) sama ada untuk Admin mahupun Pelanggan. Pengguna dan staf pentadbir operasi adalah orang awam (*non-coders*) yang tidak tahu pengaturcaraan.
+  - Antaramuka WAJIB menggunakan bahasa pengalaman pengguna (UX) Apple yang bersih dan mesra pengguna (contoh: *Simpan Visual*, *✓ Berjaya Disimpan*, *Pratonton Sedia*, *Tersimpan Selamat*).
+

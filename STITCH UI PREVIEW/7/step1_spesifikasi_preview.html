@@ -225,6 +225,78 @@
         input[type="number"]:focus::-webkit-inner-spin-button {
             opacity: 1;
         }
+        /* AI Animation Effects & Shimmer */
+        @keyframes aiGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes aiLaserSweep {
+            0% { transform: translateX(-100%); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateX(450%); opacity: 0; }
+        }
+
+        @keyframes aiPulseGlow {
+            0%, 100% { 
+                box-shadow: 0 0 16px rgba(94, 92, 230, 0.35), 0 0 32px rgba(191, 90, 242, 0.2); 
+            }
+            50% { 
+                box-shadow: 0 0 24px rgba(0, 113, 227, 0.55), 0 0 44px rgba(255, 55, 95, 0.35); 
+            }
+        }
+
+        @keyframes aiFieldPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+            50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(94, 92, 230, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+        }
+
+        .ai-analyzing-active {
+            position: relative;
+            border-color: transparent !important;
+            animation: aiPulseGlow 2s infinite ease-in-out;
+        }
+
+        .ai-analyzing-active::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            padding: 2px;
+            background: linear-gradient(90deg, #0071E3, #5E5CE6, #BF5AF2, #FF375F, #00D2FF, #0071E3);
+            background-size: 300% 300%;
+            animation: aiGradientShift 2.2s infinite linear;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .ai-laser-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            background: linear-gradient(90deg, transparent, rgba(94, 92, 230, 0.3), rgba(0, 210, 255, 0.8), rgba(191, 90, 242, 0.6), transparent);
+            pointer-events: none;
+            z-index: 5;
+            animation: aiLaserSweep 1.3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ai-field-wave {
+            animation: aiFieldPulse 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            border-color: #BF5AF2 !important;
+            background-color: rgba(94, 92, 230, 0.08) !important;
+        }
+        html.dark .ai-field-wave {
+            border-color: #BF5AF2 !important;
+            background-color: rgba(191, 90, 242, 0.15) !important;
+        }
     </style>
 </head>
 <body class="bg-background text-on-background min-h-screen font-body text-body selection:bg-primary-fixed selection:text-on-primary-fixed pb-[120px] transition-colors duration-300">
@@ -390,21 +462,22 @@
                             <input id="inputColor" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Meteoroid Gray Metallic" value="Meteoroid Gray Metallic" type="text"/>
                         </div>
 
-                        <!-- AI Auto Generate Spesifikasi (Menggantikan Status Operasi Awal) -->
+                        <!-- AI Auto Generate Spesifikasi -->
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
-                            <label class="font-footnote text-footnote text-primary font-semibold flex items-center gap-1.5">
-                                <span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                                <span>Pengecaman Spesifikasi Pintar</span>
+                            <label class="font-footnote text-footnote font-semibold flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[16px] text-[#BF5AF2]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold">Pengecaman Spesifikasi Pintar</span>
                             </label>
                             <input type="hidden" id="inputStatus" name="status" value="available"/>
-                            <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="pill-btn interactive-btn group w-full py-3 px-5 rounded-xl border border-primary/40 bg-primary/10 hover:bg-primary/20 dark:bg-primary/15 dark:hover:bg-primary/25 text-primary flex items-center justify-between transition-all duration-300 shadow-sm active:scale-[0.98] cursor-pointer">
-                                <div class="flex items-center gap-2.5">
-                                    <span class="material-symbols-outlined text-[20px] text-primary group-hover:rotate-12 transition-transform duration-300" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-                                    <span id="aiBtnText" class="font-headline text-[14px] md:text-[15px] font-bold text-primary tracking-tight">AI Auto Generate Spec</span>
+                            <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="pill-btn interactive-btn group relative w-full py-3 px-5 rounded-xl border border-[#5E5CE6]/40 hover:border-[#BF5AF2]/70 bg-gradient-to-r from-[#0071E3]/12 via-[#5E5CE6]/15 to-[#BF5AF2]/20 hover:from-[#0071E3]/22 hover:via-[#5E5CE6]/25 hover:to-[#BF5AF2]/30 dark:from-[#0071E3]/25 dark:via-[#5E5CE6]/30 dark:to-[#BF5AF2]/35 flex items-center justify-between transition-all duration-300 shadow-[0_4px_20px_rgba(94,92,230,0.15)] hover:shadow-[0_6px_25px_rgba(191,90,242,0.25)] active:scale-[0.98] cursor-pointer overflow-hidden">
+                                <div id="aiSpecLaserScanner" class="hidden ai-laser-line"></div>
+                                <div class="flex items-center gap-2.5 z-10">
+                                    <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] group-hover:rotate-12 transition-transform duration-300" style="font-variation-settings: 'FILL' 1; color: #5E5CE6;">auto_awesome</span>
+                                    <span id="aiBtnText" class="font-headline text-[14px] md:text-[15px] font-bold text-on-surface tracking-tight">AI Auto Generate Spec</span>
                                 </div>
-                                <span class="font-footnote text-[11px] px-2.5 py-1 rounded-full bg-primary/20 text-primary font-bold flex items-center gap-1">
-                                    <span>Jana Pintar</span>
-                                    <span class="material-symbols-outlined text-[13px]">arrow_downward</span>
+                                <span id="aiBtnBadge" class="pill-btn font-footnote text-[11px] px-3 py-1.5 rounded-full bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] text-white font-bold flex items-center gap-1 shadow-sm z-10 transition-all shrink-0" style="color: #FFFFFF !important;">
+                                    <span id="aiBtnBadgeText">Jana Pintar</span>
+                                    <span id="aiBtnBadgeIcon" class="material-symbols-outlined text-[13px]">arrow_downward</span>
                                 </span>
                             </button>
                         </div>
@@ -594,7 +667,7 @@
             }
         }
 
-        // WeDRIVE AI Auto Generate Car Specifications Knowledge Database
+        // WeDRIVE AI Auto Generate Car Specifications Knowledge Repository
         const AI_CAR_SPEC_DB = {
             'Honda': {
                 'Civic': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)', daily: 280, weekly: 1680, monthly: 4800 },
@@ -706,7 +779,7 @@
                 }
             }
 
-            // 2. Intelligent heuristic fallback if not in database
+            // 2. Intelligent heuristic fallback if not in knowledge repository
             if (!match) {
                 const combined = `${brand} ${model} ${variant}`.toLowerCase();
                 let category = 'Sedan';
@@ -776,6 +849,9 @@
         function runAiAutoGenerate() {
             const btn = document.getElementById('aiAutoGenerateBtn');
             const btnText = document.getElementById('aiBtnText');
+            const btnBadge = document.getElementById('aiBtnBadge');
+            const btnSparkle = document.getElementById('aiBtnSparkle');
+            const laserScanner = document.getElementById('aiSpecLaserScanner');
             const brand = (document.getElementById('inputBrand')?.value || '').trim();
             const model = (document.getElementById('inputModel')?.value || '').trim();
 
@@ -784,17 +860,41 @@
                 return;
             }
 
-            // Apple tactile loading state
-            const origHtml = btnText.innerHTML;
-            btnText.innerHTML = '<span class="inline-flex items-center gap-1.5"><span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-primary border-t-transparent rounded-full" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;"></span> <span>Menganalisis Spesifikasi...</span></span>';
-            btn.classList.add('opacity-80', 'pointer-events-none');
+            // 1. Activate Apple Siri AI Iridescent Border Glow & Laser Scanner
+            if (btn) btn.classList.add('ai-analyzing-active', 'pointer-events-none');
+            if (laserScanner) laserScanner.classList.remove('hidden');
+            if (btnSparkle) {
+                btnSparkle.classList.add('animate-spin');
+                btnSparkle.textContent = 'progress_activity';
+            }
+            if (btnText) {
+                btnText.textContent = 'AI Menganalisis Spesifikasi...';
+            }
+            if (btnBadge) {
+                btnBadge.textContent = 'Mengenal Pasti...';
+                btnBadge.className = 'pill-btn text-[11px] font-semibold px-2 py-0.5 bg-primary/20 text-primary animate-pulse border border-primary/30';
+            }
 
             setTimeout(() => {
                 const specs = detectCarSpecs();
-                btnText.innerHTML = origHtml;
-                btn.classList.remove('opacity-80', 'pointer-events-none');
 
-                if (!specs) return;
+                // Remove laser and analyzing active
+                if (laserScanner) laserScanner.classList.add('hidden');
+                if (btn) btn.classList.remove('ai-analyzing-active');
+
+                if (!specs) {
+                    if (btn) btn.classList.remove('pointer-events-none');
+                    if (btnSparkle) {
+                        btnSparkle.classList.remove('animate-spin');
+                        btnSparkle.textContent = 'auto_awesome';
+                    }
+                    if (btnText) btnText.textContent = 'Pengecaman Spesifikasi Pintar';
+                    if (btnBadge) {
+                        btnBadge.textContent = 'Jana Pintar ↓';
+                        btnBadge.className = 'pill-btn text-[11px] font-semibold px-2 py-0.5 bg-gradient-to-r from-primary/20 via-[#5E5CE6]/20 to-[#BF5AF2]/20 text-primary border border-primary/20 shadow-xs';
+                    }
+                    return;
+                }
 
                 // Populate lower specification fields
                 const categoryEl = document.getElementById('inputCategory');
@@ -806,29 +906,67 @@
                 const weeklyEl = document.getElementById('inputWeeklyRate');
                 const monthlyEl = document.getElementById('inputMonthlyRate');
 
-                const targetElements = [];
+                const targetFields = [
+                    { el: categoryEl, val: specs.category },
+                    { el: fuelEl, val: specs.fuel },
+                    { el: transEl, val: specs.transmission },
+                    { el: seatsEl, val: specs.seats },
+                    { el: engineEl, val: specs.engine },
+                    { el: dailyEl, val: Number(specs.daily).toFixed(2), wrap: dailyEl?.closest('.bg-surface-container') },
+                    { el: weeklyEl, val: Number(specs.weekly).toFixed(2), wrap: weeklyEl?.closest('.bg-surface-container') },
+                    { el: monthlyEl, val: Number(specs.monthly).toFixed(2), wrap: monthlyEl?.closest('.bg-surface-container') }
+                ];
 
-                if (categoryEl) { categoryEl.value = specs.category; targetElements.push(categoryEl); }
-                if (fuelEl) { fuelEl.value = specs.fuel; targetElements.push(fuelEl); }
-                if (transEl) { transEl.value = specs.transmission; targetElements.push(transEl); }
-                if (seatsEl) { seatsEl.value = specs.seats; targetElements.push(seatsEl); }
-                if (engineEl) { engineEl.value = specs.engine; targetElements.push(engineEl); }
-
-                if (dailyEl) { dailyEl.value = Number(specs.daily).toFixed(2); targetElements.push(dailyEl.closest('.bg-surface-container') || dailyEl); }
-                if (weeklyEl) { weeklyEl.value = Number(specs.weekly).toFixed(2); targetElements.push(weeklyEl.closest('.bg-surface-container') || weeklyEl); }
-                if (monthlyEl) { monthlyEl.value = Number(specs.monthly).toFixed(2); targetElements.push(monthlyEl.closest('.bg-surface-container') || monthlyEl); }
-
-                // Apple HIG gentle blue highlight glow
-                targetElements.forEach(el => {
-                    el.classList.add('ring-2', 'ring-primary', 'bg-primary/5', 'transition-all', 'duration-500');
+                // 2. Cascading Siri Wave Animation across fields
+                targetFields.forEach((item, index) => {
                     setTimeout(() => {
-                        el.classList.remove('ring-2', 'ring-primary', 'bg-primary/5');
-                    }, 2200);
+                        if (item.el) {
+                            item.el.value = item.val;
+                            const targetGlow = item.wrap || item.el;
+                            targetGlow.classList.add('ring-2', 'ring-primary', 'bg-primary/10', 'transition-all', 'duration-500');
+                            setTimeout(() => {
+                                targetGlow.classList.remove('ring-2', 'ring-primary', 'bg-primary/10');
+                            }, 1800);
+                        }
+                    }, index * 65);
                 });
+
+                // 3. Success state on button
+                if (btnSparkle) {
+                    btnSparkle.classList.remove('animate-spin');
+                    btnSparkle.textContent = 'check_circle';
+                    btnSparkle.classList.add('text-success');
+                }
+                if (btnText) {
+                    btnText.textContent = '✓ Spesifikasi Dikenal Pasti';
+                    btnText.className = 'font-headline text-[13px] font-bold text-success';
+                }
+                if (btnBadge) {
+                    btnBadge.textContent = 'Selesai 100%';
+                    btnBadge.className = 'pill-btn text-[11px] font-bold px-2 py-0.5 bg-success/20 text-success border border-success/30';
+                }
 
                 const carTitle = [brand, model].filter(Boolean).join(' ');
                 showAiToast(`✓ Spesifikasi ${carTitle} berjaya dijana secara automatik!`, 'success');
-            }, 380);
+
+                // Gracefully reset button after 2.8s
+                setTimeout(() => {
+                    if (btn) btn.classList.remove('pointer-events-none');
+                    if (btnSparkle) {
+                        btnSparkle.textContent = 'auto_awesome';
+                        btnSparkle.classList.remove('text-success');
+                    }
+                    if (btnText) {
+                        btnText.textContent = 'Pengecaman Spesifikasi Pintar';
+                        btnText.className = 'font-headline text-[13px] font-bold bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent';
+                    }
+                    if (btnBadge) {
+                        btnBadge.textContent = 'Jana Pintar ↓';
+                        btnBadge.className = 'pill-btn text-[11px] font-semibold px-2 py-0.5 bg-gradient-to-r from-primary/20 via-[#5E5CE6]/20 to-[#BF5AF2]/20 text-primary border border-primary/20 shadow-xs';
+                    }
+                }, 2800);
+
+            }, 600);
         }
 
         function showAiToast(msg, type = 'success') {

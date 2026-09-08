@@ -295,35 +295,53 @@
                 </div>
             </div>
 
-            <!-- Technical Specs Card (Bottom Left, 8 cols) -->
+            <!-- Specifications Card (Bottom Left, 8 cols - Lengthened & Comprehensive) -->
             <div class="md:col-span-8 bento-card hairline-border p-container-padding flex flex-col gap-lg">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 circle-1-1 bg-surface-container text-on-surface hairline-border">
-                        <span class="material-symbols-outlined text-primary">settings_suggest</span>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 circle-1-1 bg-surface-container text-on-surface hairline-border">
+                            <span class="material-symbols-outlined text-primary">directions_car</span>
+                        </div>
+                        <div>
+                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Spesifikasi Kenderaan</h2>
+                            <p class="font-caption text-caption text-secondary">Klasifikasi teknikal &amp; maklumat pendaftaran disahkan</p>
+                        </div>
                     </div>
-                    <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Spesifikasi Teknikal</h2>
+                    <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 hairline-border hidden sm:flex items-center gap-1 font-semibold">
+                        <span class="material-symbols-outlined text-success text-[14px]">check</span>
+                        <span>8 Butiran Lengkap</span>
+                    </span>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-md">
+                <!-- 8 Spec Boxes in 4 Columns -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-sm md:gap-md">
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">No. Plat</span>
-                        <span class="font-callout text-callout text-on-surface font-semibold">VDD 2573</span>
+                        <span class="font-caption text-caption text-secondary">No. Pendaftaran</span>
+                        <span class="font-callout text-callout text-on-surface font-semibold">VBA 1234</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
                         <span class="font-caption text-caption text-secondary">Kategori</span>
-                        <span class="font-callout text-callout text-on-surface font-semibold">Exec Sedan</span>
+                        <span class="font-callout text-callout text-on-surface font-semibold">Sedan</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Enjin</span>
-                        <span class="font-callout text-callout text-on-surface font-semibold">2.0L Turbo</span>
+                        <span class="font-caption text-caption text-secondary">Tahun Dibuat</span>
+                        <span class="font-callout text-callout text-on-surface font-semibold">2024</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary">Bahan Api</span>
-                        <span class="font-callout text-callout text-on-surface font-semibold">Petrol RON97</span>
+                        <span class="font-caption text-caption text-secondary">Warna</span>
+                        <span class="font-callout text-callout text-on-surface font-semibold truncate" title="Meteoroid Gray Metallic">Meteoroid Gray</span>
+                    </div>
+                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
+                        <span class="font-caption text-caption text-secondary">Enjin &amp; Kuasa</span>
+                        <span class="font-callout text-callout text-on-surface font-semibold truncate" title="1.5L VTEC Turbo (182 PS)">1.5L Turbo (182 PS)</span>
+                    </div>
+                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
+                        <span class="font-caption text-caption text-secondary">Punca Kuasa</span>
+                        <span class="font-callout text-callout text-on-surface font-semibold">Petrol RON95/97</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
                         <span class="font-caption text-caption text-secondary">Transmisi</span>
-                        <span class="font-callout text-callout text-on-surface font-semibold">9-Speed Auto</span>
+                        <span class="font-callout text-callout text-on-surface font-semibold">Automatik (CVT)</span>
                     </div>
                     <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
                         <span class="font-caption text-caption text-secondary">Kapasiti</span>
@@ -332,22 +350,55 @@
                 </div>
             </div>
 
-            <!-- Data Integrity Card (Bottom Right, 4 cols) -->
-            <div class="md:col-span-4 bento-card hairline-border p-container-padding flex flex-col gap-lg">
+            <!-- Operational Location & Readiness Card (Bottom Right, 4 cols) -->
+            <div class="md:col-span-4 bento-card hairline-border p-container-padding flex flex-col gap-md">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 circle-1-1 bg-success/10 text-success">
-                        <span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 1;">verified</span>
+                    <div class="w-10 h-10 circle-1-1 bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_on</span>
                     </div>
-                    <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Integriti Data</h2>
+                    <div>
+                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Lokasi &amp; Status</h2>
+                        <p class="font-caption text-caption text-secondary">Maklumat serahan operasi sewaan</p>
+                    </div>
                 </div>
-                <div class="bg-surface-container rounded-xl p-md hairline-border">
-                    <p class="font-footnote text-footnote text-secondary leading-relaxed font-medium">
-                        200 Kerangka Luaran + 6 Muka Kubus Dalaman + 6 Foto Utama Disahkan.
-                    </p>
+
+                <!-- Concise Practical Info Boxes -->
+                <div class="flex flex-col gap-sm">
+                    <!-- Single Pick-up & Return Location Rule -->
+                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
+                        <span class="font-caption text-caption text-secondary">Pusat Ambil &amp; Pulang (Tunggal)</span>
+                        <div class="flex items-center gap-1.5 text-on-surface font-semibold text-[13px]">
+                            <span class="material-symbols-outlined text-primary text-[16px] shrink-0">storefront</span>
+                            <span>Ibu Pejabat WeDRIVE, Cyberjaya</span>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle Status Pill -->
+                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex justify-between items-center">
+                        <span class="font-caption text-caption text-secondary">Status Kenderaan</span>
+                        <span class="pill-btn bg-success/15 text-success font-caption text-caption px-2.5 py-0.5 font-bold flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            <span>Sedia Disewa</span>
+                        </span>
+                    </div>
+
+                    <!-- Current Mileage -->
+                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex justify-between items-center">
+                        <span class="font-caption text-caption text-secondary">Odometer Semasa</span>
+                        <span class="font-label-tabular text-on-surface font-bold text-[13px]">12,450 km</span>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- AI Apple Glass Floating Toast Notification (Standard Unified Single Design) -->
+    <div id="aiToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
+        <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
+            <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">✓ Rekod kenderaan sedia disahkan</span>
+    </div>
 
     <!-- Floating Bottom Action Dock (Standardized Apple HIG) -->
     <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2 z-50 transition-all duration-300">
