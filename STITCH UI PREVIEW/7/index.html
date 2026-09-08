@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ms" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeDRIVE — Master Finishing Preview (Versi 7) | Gabungan Pilihan Rasmi Stitch</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --bg-canvas: #090A0F;
+      --card-bg: rgba(22, 22, 24, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(0, 113, 227, 0.4);
+      --text-main: #F5F5F7;
+      --text-muted: #86868B;
+      --accent-blue: #0071E3;
+      --accent-glow: rgba(0, 113, 227, 0.25);
+    }
+
+    html.light {
+      --bg-canvas: #F5F5F7;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(0, 0, 0, 0.08);
+      --card-hover-border: rgba(0, 113, 227, 0.5);
+      --text-main: #1D1D1F;
+      --text-muted: #6E6E73;
+      --accent-blue: #0071E3;
+      --accent-glow: rgba(0, 113, 227, 0.15);
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Strict Zero Oval Rule */
+    .circle-1-1 {
+      aspect-ratio: 1 / 1 !important;
+      border-radius: 50% !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+    }
+
+    .pill-btn {
+      border-radius: 9999px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .pill-btn:active, .circle-1-1:active { transform: scale(0.96) !important; }
+
+    .bento-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 24px;
+      backdrop-filter: blur(24px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .bento-card:hover {
+      border-color: var(--card-hover-border);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px -12px var(--accent-glow);
+    }
+
+    .simulator-frame {
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      background: #000;
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,0.5);
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="p-4 sm:p-8 md:p-12">
+
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Top Breadcrumb & Actions -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8 pb-4 border-b border-[var(--card-border)]">
+      <a href="../index.html" class="pill-btn px-4 py-2 text-[13px] font-semibold text-[var(--text-muted)] hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 w-fit">
+        <span class="material-symbols-outlined text-[16px] mr-1.5">arrow_back</span>
+        <span>Kembali ke Galeri Utama</span>
+      </a>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Theme Switcher Button -->
+        <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-white/5 hover:bg-white/10 text-[var(--text-main)] border border-white/10 shadow-sm">
+          <span id="themeIcon" class="material-symbols-outlined text-[20px]">light_mode</span>
+        </button>
+
+        <span class="pill-btn px-3 py-1 text-[11px] font-extrabold bg-[#0071E3]/20 border border-[#0071E3]/40 text-[#2997FF]">
+          VERSI 7 — GABUNGAN PILIHAN RASMI
+        </span>
+        <span class="pill-btn px-3 py-1 text-[11px] font-bold bg-[#34C759]/20 border border-[#34C759]/40 text-[#34C759]">
+          100% APPLE HIG & DUAL THEME
+        </span>
+      </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[13px] font-bold tracking-wide uppercase mb-4">
+        <span class="w-2 h-2 circle-1-1 bg-blue-400 animate-ping"></span>
+        Gabungan 3 Skrin Pilihan Anda (Langkah 1 → Langkah 2 → Langkah 3)
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3 bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+        Master Finishing Studio UI WeDRIVE
+      </h1>
+      <p class="text-[16px] text-[var(--text-muted)] max-w-3xl mx-auto leading-relaxed">
+        Menggabungkan 100% skrin pilihan anda dari Stitch: <strong>Langkah 1 (Civic &amp; Tarif)</strong>, <strong>Langkah 2 (Studio Visual 6-Sudut &amp; 360)</strong>, dan <strong>Langkah 3 (Pengesahan CLS 350)</strong> dengan kawalan dwitema (☀️ Siang / 🌙 Malam) dan fizik sentuhan Apple <code class="text-blue-400 font-mono">scale(0.97)</code>.
+      </p>
+
+      <!-- Launch Full Wizard Flow Button -->
+      <div class="mt-6">
+        <a href="step1_spesifikasi_preview.html" class="pill-btn px-8 py-3.5 bg-[#0071E3] hover:bg-[#0077ED] text-white font-bold text-[15px] shadow-lg hover:shadow-[#0071E3]/40">
+          <span>Mulakan Aliran Wizard Lengkap (Langkah 1 &rarr; 2 &rarr; 3)</span>
+          <span class="material-symbols-outlined text-[18px] ml-2">play_arrow</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- 3-Step Wizard Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      
+      <!-- Step 1 Card -->
+      <div class="bento-card">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-10 h-10 circle-1-1 bg-[#0071E3]/20 text-[#2997FF] border border-[#0071E3]/30 font-bold text-[16px]">1</span>
+          <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Pilihan Anda: Prompt Lama</span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Langkah 1: Spesifikasi &amp; Tarif</h3>
+        <p class="text-[13px] text-[var(--text-muted)] leading-relaxed mb-6 flex-1">
+          Borang Bento Honda Civic 1.5 TC-P, kategori Sedan/SUV/MPV, transmisi Auto/Manual, dan struktur kadar sewaan harian/mingguan/bulanan.
+        </p>
+        <div class="space-y-2 pt-4 border-t border-white/10">
+          <a href="step1_spesifikasi_preview.html" target="_blank" class="w-full pill-btn py-2.5 bg-[#0071E3] hover:bg-[#0077ED] text-white text-[13px] font-bold shadow-md">
+            <span>Buka Skrin Penuh</span>
+            <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
+          </a>
+          <button type="button" onclick="loadPreview('step1_spesifikasi_preview.html', 'Langkah 1: Spesifikasi & Tarif')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
+            Papar dalam Simulator Bawah
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2 Card -->
+      <div class="bento-card">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-10 h-10 circle-1-1 bg-[#5856D6]/20 text-[#8E8CFF] border border-[#5856D6]/30 font-bold text-[16px]">2</span>
+          <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Pilihan Anda: Prompt Baru</span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Langkah 2: Studio Visual 360</h3>
+        <p class="text-[13px] text-[var(--text-muted)] leading-relaxed mb-6 flex-1">
+          Galeri 6 sudut wajib JPJ, integrasi CDN 200 kerangka dan panorama 8K, serta pentas pratonton interaktif dengan pusingan 360° luaran.
+        </p>
+        <div class="space-y-2 pt-4 border-t border-white/10">
+          <a href="step2_studio360_preview.html" target="_blank" class="w-full pill-btn py-2.5 bg-[#5856D6] hover:bg-[#6866E6] text-white text-[13px] font-bold shadow-md">
+            <span>Buka Skrin Penuh</span>
+            <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
+          </a>
+          <button type="button" onclick="loadPreview('step2_studio360_preview.html', 'Langkah 2: Studio Visual 360')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
+            Papar dalam Simulator Bawah
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3 Card -->
+      <div class="bento-card">
+        <div class="flex items-center justify-between mb-4">
+          <span class="w-10 h-10 circle-1-1 bg-[#34C759]/20 text-[#34C759] border border-[#34C759]/30 font-bold text-[16px]">3</span>
+          <span class="text-[11px] font-extrabold px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">Pilihan Anda: Prompt Lama</span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Langkah 3: Semakan &amp; Pengesahan</h3>
+        <p class="text-[13px] text-[var(--text-muted)] leading-relaxed mb-6 flex-1">
+          Pentas sorotan Mercedes-Benz CLS 350 AMG Line, ringkasan lejar tarif, spesifikasi teknikal VDD 2573, integriti data, dan butang daftar rasmi.
+        </p>
+        <div class="space-y-2 pt-4 border-t border-white/10">
+          <a href="step3_pengesahan_preview.html" target="_blank" class="w-full pill-btn py-2.5 bg-[#34C759] hover:bg-[#30B753] text-black text-[13px] font-bold shadow-md">
+            <span>Buka Skrin Penuh</span>
+            <span class="material-symbols-outlined text-[16px] ml-1.5">open_in_new</span>
+          </a>
+          <button type="button" onclick="loadPreview('step3_pengesahan_preview.html', 'Langkah 3: Semakan & Pengesahan')" class="w-full pill-btn py-2 bg-white/5 hover:bg-white/10 text-white text-[12px] font-semibold border border-white/10">
+            Papar dalam Simulator Bawah
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Simulator Section -->
+    <div class="bento-card p-6 md:p-8">
+      
+      <!-- Controls Toolbar -->
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 mb-6 border-b border-[var(--card-border)]">
+        <div>
+          <h2 id="activePreviewTitle" class="text-xl font-bold">Simulator Interaktif Apple (Langkah 1: Spesifikasi &amp; Tarif)</h2>
+          <p class="text-[13px] text-[var(--text-muted)]">Pilih peranti untuk menguji ketepatan nisbah bulat 1:1, responsif kad, dan kelancaran dwi-tema.</p>
+        </div>
+
+        <!-- Apple Device Switcher -->
+        <div class="flex items-center gap-2 p-1.5 rounded-full bg-white/5 border border-white/10">
+          <button type="button" onclick="setDevice('1440px', this)" class="device-tab pill-btn px-4 py-1.5 text-[12px] font-bold bg-[#0071E3] text-white">
+            <span class="material-symbols-outlined text-[14px] mr-1">laptop_mac</span>
+            <span>MacBook 1440px</span>
+          </button>
+          <button type="button" onclick="setDevice('820px', this)" class="device-tab pill-btn px-4 py-1.5 text-[12px] font-semibold text-[var(--text-muted)] hover:text-white">
+            <span class="material-symbols-outlined text-[14px] mr-1">tablet_mac</span>
+            <span>iPad 820px</span>
+          </button>
+          <button type="button" onclick="setDevice('393px', this)" class="device-tab pill-btn px-4 py-1.5 text-[12px] font-semibold text-[var(--text-muted)] hover:text-white">
+            <span class="material-symbols-outlined text-[14px] mr-1">smartphone</span>
+            <span>iPhone 393px</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulator Iframe Canvas -->
+      <div class="flex justify-center w-full overflow-x-auto py-4">
+        <div id="simulatorWrapper" class="simulator-frame w-full max-w-[1440px] h-[820px] overflow-hidden flex flex-col">
+          <!-- Browser Mock Bar -->
+          <div class="h-10 bg-black/80 px-4 flex items-center justify-between border-b border-white/10 shrink-0">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 circle-1-1 bg-[#FF5F56]"></span>
+              <span class="w-3 h-3 circle-1-1 bg-[#FFBD2E]"></span>
+              <span class="w-3 h-3 circle-1-1 bg-[#27C93F]"></span>
+            </div>
+            <div id="urlBar" class="text-[11px] text-white/50 font-mono bg-white/5 px-4 py-1 rounded-full border border-white/5">
+              step1_spesifikasi_preview.html
+            </div>
+            <div class="w-12"></div>
+          </div>
+          <!-- Actual Iframe -->
+          <iframe id="previewIframe" src="step1_spesifikasi_preview.html" class="w-full flex-1 border-none bg-white"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const iframe = document.getElementById('previewIframe');
+
+    const currentTheme = localStorage.getItem('wedrive_preview_theme') || 'dark';
+    applyTheme(currentTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      const targetTheme = isDark ? 'light' : 'dark';
+      applyTheme(targetTheme);
+      localStorage.setItem('wedrive_preview_theme', targetTheme);
+      syncIframeTheme(targetTheme);
+    });
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+        if (themeIcon) themeIcon.textContent = 'light_mode';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        if (themeIcon) themeIcon.textContent = 'dark_mode';
+      }
+    }
+
+    function syncIframeTheme(theme) {
+      try {
+        if (iframe && iframe.contentDocument) {
+          if (theme === 'dark') {
+            iframe.contentDocument.documentElement.classList.add('dark');
+            iframe.contentDocument.documentElement.classList.remove('light');
+          } else {
+            iframe.contentDocument.documentElement.classList.remove('dark');
+            iframe.contentDocument.documentElement.classList.add('light');
+          }
+        }
+      } catch (e) {}
+    }
+
+    function loadPreview(url, title) {
+      iframe.src = url;
+      document.getElementById('urlBar').textContent = url;
+      document.getElementById('activePreviewTitle').textContent = `Simulator Interaktif Apple (${title})`;
+      document.getElementById('simulatorWrapper').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function setDevice(width, btn) {
+      document.getElementById('simulatorWrapper').style.maxWidth = width;
+      document.querySelectorAll('.device-tab').forEach(b => {
+        b.classList.remove('bg-[#0071E3]', 'text-white');
+        b.classList.add('text-[var(--text-muted)]');
+      });
+      btn.classList.add('bg-[#0071E3]', 'text-white');
+      btn.classList.remove('text-[var(--text-muted)]');
+    }
+  </script>
+</body>
+</html>

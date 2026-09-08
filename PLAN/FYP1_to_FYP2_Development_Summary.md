@@ -5499,6 +5499,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.8.0 Comprehensive agent audit, advanced Stitch MCP operations in rule 21, and mandatory active MCP GitHub sync`
   - Tag Versi: `6.8.0`
 
+---
+
+## [MINOR UPDATE] 214. Pewujudan Master Finishing Preview Folder 7 Berdasarkan Gabungan Tepat 3 Skrin Pilihan Stitch MCP & Dwitema Siang/Malam (v6.9.0)
+
+- **Punca Arahan Pengguna**:
+  - Pengguna merujuk kepada perbualan jam 10:04 PM di mana 3 skrin khusus daripada Stitch telah dipilih berserta tangkapan skrin komponen yang diminati:
+    > *"okey awak describe kan nnti buat kesimpulan...saya nak bagitahu sikit saya pilih yang mana: 1. prompt_lama/step1_spesifikasi_preview.html, 2. prompt_baru/step2_studio360_preview.html, 3. prompt_lama/step3_pengesahan_preview.html"*
+  - Pengguna mengarahkan pembinaan folder finishing gabungan rasmi di Folder 7:
+    > *"okey now balik pada add car ni buat folder finishing dari stitch gabungan yang saya cakap tadi buat folder 7"*
+  - Pengguna meminta sokongan animasi taktil Apple, suis dwi-tema aktif (☀️ Siang / 🌙 Malam), dan kawalan geometri sifar bujur (Zero Oval):
+    > *"saya nak direct dari stitch terus tu dapat sekali animation, boleh tukar theme dark mode n mode biasa , ui yang cantik faham kan???"*
+
+- **Tindakan Pelaksanaan**:
+  - **1. Langkah 1 (`STITCH UI PREVIEW/7/step1_spesifikasi_preview.html`)**:
+    - Dibina 100% berpandukan kod asal pilihan pengguna `6/prompt_lama/step1_spesifikasi_preview.html` & Tangkapan Skrin 5 & 6.
+    - Maklumat borang: Honda Civic 1.5 TC-P (VBA 1234), tahun 2024, butang pil Sedan/SUV/MPV, suis Auto/Manual, dan lejar tarif sewaan pintar (Harian, Mingguan, Bulanan).
+    - Stepper pil biru `#0071E3` (`[tune] 1. Spesifikasi & Tarif`), dok terapung bawah dengan pautan pantas ke Langkah 2, dan butang suis tema ☀️/🌙 bulat 1:1.
+  - **2. Langkah 2 (`STITCH UI PREVIEW/7/step2_studio360_preview.html`)**:
+    - Dibina 100% berpandukan kod asal pilihan pengguna `6/prompt_baru/step2_studio360_preview.html` & Tangkapan Skrin 3 & 4.
+    - Menampilkan Galeri Foto Wajib JPJ (6 slot muat naik), Integrasi Aset Interaktif 360° (CDN link, 200 kerangka luaran, panorama dalaman 8K), dan pentas meja putar 360° dengan lencana Kualiti AI Terjamin.
+    - Stepper kapsul biru fasa 2 (`[✓] Maklumat Asas` ── `[2] Studio Visual` ── `[3] Pengesahan`), dok bawah interaktif `← Spesifikasi` dan `Seterusnya: Semakan →`.
+  - **3. Langkah 3 (`STITCH UI PREVIEW/7/step3_pengesahan_preview.html`)**:
+    - Dibina 100% berpandukan kod asal pilihan pengguna `6/prompt_lama/step3_pengesahan_preview.html` & Tangkapan Skrin 1 & 2.
+    - Sorotan kenderaan eksekutif Mercedes-Benz CLS 350 AMG Line dalam studio 360°, lejar tarif (RM 450 / RM 2,800 / Deposit RM 1,000), spesifikasi teknikal VDD 2573, dan kad pengesahan integriti data.
+    - Stepper bercahaya biru fasa 3, dok tindakan bawah rasmi berserta lencana `Semua data telah disahkan dan sedia diterbitkan`, dan butang muktamad `Daftar Kenderaan Baharu ✓` dengan modal pengesahan kejayaan.
+  - **4. Portal Simulator Apple & Galeri (`STITCH UI PREVIEW/7/index.html`)**:
+    - Hab utama bagi menguji keseluruhan aliran wizard dari Langkah 1 $\to$ 2 $\to$ 3 secara bersambung.
+    - Simulator 3-Peranti Apple (MacBook 1440px, iPad 820px, iPhone 393px) dengan penyeragaman tema automatik ke dalam iframe.
+    - Pematuhan ketat Peraturan Sifar Bujur (Strict Zero Oval Rule) bagi semua elemen bulat (1:1 tepat) dan butang teks mengembang mendatar menjadi kapsul pil (9999px).
+
+- **Pengesahan Ujian Automatik & Kualiti**:
+  - **Ujian Automasi Playwright CLI**: `cd tests && npx playwright test` menghasilkan keputusan cemerlang **48/48 Lulus (100% Pass Rate)**.
+  - **Audit Had Siling Aksara 12,000**: Kesemua 21 fail peraturan `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Pemeriksaan Visual Chrome DevTools**: Disahkan berfungsi dan diuji secara langsung pada tab tunggal aktif (`pageId: 1`) merentas Mod Siang dan Mod Malam.
+
+- **Maklumat Git**:
+  - Commit: `6.9.0 Master finishing Add Car wizard in STITCH UI PREVIEW/7 combining user selected Stitch screens with dual theme and Apple micro-animations`
+  - Tag Versi: `6.9.0`
+
+
 
 
 

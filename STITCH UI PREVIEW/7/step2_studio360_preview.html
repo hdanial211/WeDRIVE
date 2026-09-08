@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Pendaftaran Kenderaan Baharu - Langkah 2: Studio Visual 360 | WeDRIVE</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0071e3",
+                        "on-background": "#1a1c1d",
+                        "night-bento": "#161618",
+                        "primary": "#0071e3",
+                        "success": "#34C759",
+                        "border-day": "rgba(0, 0, 0, 0.06)",
+                        "border-night": "rgba(255, 255, 255, 0.08)",
+                        "on-surface": "#1D1D1F",
+                        "on-surface-variant": "#6E6E73",
+                        "surface": "#f9f9fb",
+                        "surface-bright": "#FFFFFF",
+                        "surface-container": "#eeeef0",
+                        "surface-container-high": "#e8e8ea",
+                        "surface-container-highest": "#D1D1D6",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f9f9fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xxl": "32px",
+                        "unit": "4px",
+                        "container-padding": "24px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "xl": "24px",
+                        "lg": "20px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "title-3": ["Inter", "sans-serif"],
+                        "callout": ["Inter", "sans-serif"],
+                        "footnote": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"],
+                        "label-tabular": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "title-3": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600" }],
+                        "callout": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "headline": ["17px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+                        "footnote": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "label-tabular": ["14px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body": ["15px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .squircle { border-radius: 24px; }
+        .hairline { border-width: 0.5px; }
+
+        .glass-panel {
+            background-color: rgba(249, 249, 251, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        .interactive-btn {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, opacity 0.2s ease;
+        }
+        .interactive-btn:active {
+            transform: scale(0.97) !important;
+        }
+
+        /* ZERO OVAL MANDATORY RULE */
+        .circle-1-1 {
+            aspect-ratio: 1 / 1 !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-sizing: border-box !important;
+        }
+        .pill-btn {
+            border-radius: 9999px !important;
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* DARK THEME STYLING (Apple Obsidian) */
+        html.dark body {
+            background-color: #000000 !important;
+            color: #F5F5F7 !important;
+        }
+        html.dark .glass-panel {
+            background-color: rgba(22, 22, 24, 0.85) !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark .bg-surface-container-lowest {
+            background-color: #161618 !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4) !important;
+        }
+        html.dark .bg-surface-container {
+            background-color: #1D1D20 !important;
+        }
+        html.dark .bg-surface-container-high {
+            background-color: #262629 !important;
+        }
+        html.dark .text-on-surface {
+            color: #F5F5F7 !important;
+        }
+        html.dark .text-on-surface-variant {
+            color: #8E8E93 !important;
+        }
+        html.dark .border-border-day {
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark input {
+            background-color: #1D1D20 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #FFFFFF !important;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen pb-[130px] font-body selection:bg-primary-fixed selection:text-on-primary-fixed transition-colors duration-300">
+
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 glass-panel border-b border-border-day shadow-sm flex justify-between items-center px-gutter py-3 h-16">
+        <div class="flex items-center gap-sm">
+            <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+            <span class="font-headline text-headline font-extrabold text-on-surface tracking-tight">WeDRIVE</span>
+        </div>
+
+        <div class="hidden md:block font-headline text-headline text-on-surface font-semibold">
+            Pendaftaran Kenderaan Baharu — Studio Visual
+        </div>
+
+        <div class="flex items-center gap-3">
+            <!-- Theme Toggle Button (☀️ / 🌙) -->
+            <button id="themeToggleBtn" type="button" aria-label="Tukar Tema Siang / Malam" class="circle-1-1 w-10 h-10 bg-surface-container hover:bg-surface-container-high text-on-surface border border-border-day interactive-btn shadow-sm">
+                <span id="themeIcon" class="material-symbols-outlined text-[20px]">dark_mode</span>
+            </button>
+
+            <!-- Batal Button -->
+            <a href="index.html" class="pill-btn interactive-btn text-on-surface font-medium font-label-tabular text-label-tabular bg-surface-container px-4 py-2 border border-border-day flex items-center gap-xs">
+                Batal
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-[96px] px-gutter md:px-container-padding max-w-[1440px] mx-auto flex flex-col gap-xl">
+        
+        <!-- Floating Stepper Capsule (Screenshot 4 Reference) -->
+        <div class="flex justify-center w-full">
+            <div class="bg-surface-container-lowest glass-panel hairline border-border-day shadow-sm rounded-full p-xs flex items-center gap-xs">
+                <!-- Step 1 Complete -->
+                <a href="step1_spesifikasi_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container">
+                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                    <span class="font-callout text-callout text-on-surface font-medium hidden sm:block">Maklumat Asas</span>
+                </a>
+
+                <div class="w-8 h-[1px] bg-border-day"></div>
+
+                <!-- Step 2 Active (Screenshot 4: soft blue pill with circle 2) -->
+                <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
+                    <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">2</span>
+                    <span class="font-label-tabular text-label-tabular">Studio Visual</span>
+                </div>
+
+                <div class="w-8 h-[1px] bg-border-day"></div>
+
+                <!-- Step 3 Upcoming -->
+                <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full text-on-surface-variant hover:text-on-surface">
+                    <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
+                    <span class="font-callout text-callout hidden sm:block">Pengesahan</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2-Column Bento Studio Layout (Screenshot Reference from prompt_baru) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+            
+            <!-- Left Column -->
+            <div class="lg:col-span-7 flex flex-col gap-gutter">
+                
+                <!-- Bento Card A: Galeri Foto Wajib JPJ -->
+                <div class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
+                    <div class="flex flex-col gap-sm mb-lg">
+                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Galeri Foto Wajib JPJ</h2>
+                        <p class="font-callout text-callout text-on-surface-variant">Muat naik 6 sudut wajib untuk pengesahan geran dan identiti kenderaan.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-md">
+                        <!-- Upload Slot 1 -->
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                            <span class="material-symbols-outlined text-primary">add_a_photo</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Hadapan Penuh</span>
+                        </button>
+                        <!-- Upload Slot 2 -->
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                            <span class="material-symbols-outlined text-primary">add_a_photo</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Belakang Penuh</span>
+                        </button>
+                        <!-- Upload Slot 3 -->
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                            <span class="material-symbols-outlined text-primary">add_a_photo</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Sisi Kanan Profil</span>
+                        </button>
+                        <!-- Upload Slot 4 -->
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                            <span class="material-symbols-outlined text-primary">add_a_photo</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Sisi Kiri Profil</span>
+                        </button>
+                        <!-- Upload Slot 5 -->
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                            <span class="material-symbols-outlined text-primary">add_a_photo</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Ruang Pemandu &amp; Papan Pemuka</span>
+                        </button>
+                        <!-- Upload Slot 6 -->
+                        <button type="button" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-variant transition-colors interactive-btn">
+                            <span class="material-symbols-outlined text-primary">add_a_photo</span>
+                            <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">Tempat Duduk Belakang / Kargo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bento Card B: Integrasi Aset Interaktif 360° -->
+                <div class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)]">
+                    <div class="flex flex-col gap-sm mb-lg">
+                        <div class="flex justify-between items-start">
+                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold">Integrasi Aset Interaktif 360°</h2>
+                            <div class="pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold">
+                                <span class="material-symbols-outlined text-[14px]">verified</span>
+                                <span>Siap Sedia</span>
+                            </div>
+                        </div>
+                        <p class="font-callout text-callout text-on-surface-variant">Pautkan URL CDN untuk muatan model 3D dan meja putar kenderaan.</p>
+                    </div>
+
+                    <div class="flex flex-col gap-md">
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">link</span>
+                            <input class="w-full bg-surface-container hairline border-border-day rounded-xl pl-10 pr-md py-sm font-body text-body text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-mono text-[13px]" placeholder="https://cdn.wedrive.app/assets/3d/..." value="https://cdn.wedrive.app/assets/3d/honda-civic-2024-360/" type="text"/>
+                        </div>
+                        <div class="flex flex-wrap gap-sm">
+                            <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
+                                <span class="material-symbols-outlined text-[14px] text-success">check</span>
+                                <span>200 Kerangka Luaran dikesan</span>
+                            </span>
+                            <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
+                                <span class="material-symbols-outlined text-[14px] text-success">check</span>
+                                <span>Panorama Dalaman 8K</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="lg:col-span-5 h-full">
+                
+                <!-- Bento Card C: Pentas Pratonton Interaktif -->
+                <div class="bg-surface-container-lowest squircle hairline border-border-day p-xl shadow-[0px_4px_24px_rgba(0,0,0,0.02)] h-full flex flex-col">
+                    
+                    <!-- Segmented Switch -->
+                    <div class="bg-surface-container rounded-full p-xs flex gap-xs mb-lg w-full">
+                        <button type="button" class="flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all">Pusingan 360°</button>
+                        <button type="button" class="flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all">Panorama</button>
+                        <button type="button" class="flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all">Galeri</button>
+                    </div>
+
+                    <!-- Turntable Viewport -->
+                    <div class="relative flex-1 bg-surface-container rounded-2xl overflow-hidden min-h-[400px] flex items-center justify-center group cursor-ew-resize">
+                        <!-- Image Container with prompt_baru 360 render -->
+                        <div class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXv-DH82fsjprfpGpSo2DHFgcMwOtUC3ZASUhwfjHsNXTMVzs6gH1edgnQoIeM5BQ-gN5Quk__-3fh0tRncgoo8CwqIDSi3SzWNMSkRhEVtIrkDJCfRZMRNF8lX8AGLWTdF0jPHpnI3HywwDZEwxcUlJtoQ00vlCiI82q9HzlrtRvGLMD32g63eHxTy-ErJMRcOfqLzUfqMKg1VUFyEgDi1wUjsql-khj5lNAkwmLnQc-ZUnXgxY4g-7VNBOZm1VN_eCh3ANLf-7Q')"></div>
+
+                        <!-- Drag Indicator Overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div class="bg-black/60 backdrop-blur-md rounded-full px-md py-sm flex items-center gap-sm shadow-lg border border-white/10 text-white font-medium">
+                                <span class="material-symbols-outlined text-white text-[18px]">swipe_left</span>
+                                <span class="font-caption text-caption">Seret untuk Putar</span>
+                                <span class="material-symbols-outlined text-white text-[18px]">swipe_right</span>
+                            </div>
+                        </div>
+
+                        <!-- 360 Icon Badge (Strict 1:1 Circle) -->
+                        <div class="absolute bottom-md right-md bg-surface-container-lowest/85 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface">
+                            <span class="material-symbols-outlined text-[20px]">360</span>
+                        </div>
+
+                        <!-- AI Quality Badge (Pill) -->
+                        <div class="absolute top-md left-md bg-surface-container-lowest/85 backdrop-blur-md hairline border-border-day pill-btn px-sm py-xs flex items-center gap-xs shadow-sm">
+                            <span class="material-symbols-outlined text-primary text-[14px]">auto_awesome</span>
+                            <span class="font-caption text-caption text-on-surface font-semibold">Kualiti AI Terjamin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar (Screenshot 3 Reference: [cloud_done] Simpan | Seterusnya →) -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-lg rounded-full border border-border-day shadow-xl bg-surface-bright/85 dark:bg-[#161618]/85 backdrop-blur-2xl flex justify-between items-center p-2 z-50">
+        <!-- Back to Step 1 / Save -->
+        <a href="step1_spesifikasi_preview.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-6 py-2.5 font-label-tabular text-label-tabular font-medium">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            <span>Spesifikasi</span>
+        </a>
+
+        <!-- Seterusnya to Step 3 -->
+        <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-on-primary px-6 py-3 flex items-center gap-2 font-label-tabular text-label-tabular font-bold shadow-md">
+            <span>Seterusnya: Semakan</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+    </nav>
+
+    <!-- Theme Controller Script -->
+    <script>
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+
+        const currentTheme = localStorage.getItem('wedrive_preview_theme') || 'light';
+        applyTheme(currentTheme);
+
+        themeBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const targetTheme = isDark ? 'light' : 'dark';
+            applyTheme(targetTheme);
+            localStorage.setItem('wedrive_preview_theme', targetTheme);
+        });
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+                if (themeIcon) themeIcon.textContent = 'light_mode';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light');
+                if (themeIcon) themeIcon.textContent = 'dark_mode';
+            }
+        }
+    </script>
+</body>
+</html>
