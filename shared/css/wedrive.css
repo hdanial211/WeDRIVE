@@ -20845,4 +20845,139 @@ html.dark .spotlight-card {
   color: var(--primary, #0071E3);
 }
 
+/* ── Additional STITCH UI Utility Classes ── */
+.hairline-border {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+[data-theme="night"] .hairline-border,
+.night-mode .hairline-border,
+html.dark .hairline-border {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.card-spec-pill {
+  background-color: #F5F5F7;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: #1D1D1F;
+  transition: all 0.25s ease;
+  border-radius: 9999px;
+}
+[data-theme="night"] .card-spec-pill,
+.night-mode .card-spec-pill,
+html.dark .card-spec-pill {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #F5F5F7 !important;
+}
+.card-spec-pill:hover {
+  border-color: rgba(0, 113, 227, 0.4) !important;
+  transform: translateY(-1px);
+}
+
+.media-bottom-gradient {
+  background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  transition: background 0.3s ease;
+}
+[data-theme="night"] .media-bottom-gradient,
+[data-theme="dark"] .media-bottom-gradient,
+.night-mode .media-bottom-gradient,
+html.dark .media-bottom-gradient {
+  background: linear-gradient(to top, #16171A 0%, rgba(0, 0, 0, 0) 100%) !important;
+}
+
+.spotlight-title-text {
+  color: #1D1D1F;
+}
+[data-theme="night"] .spotlight-title-text,
+[data-theme="dark"] .spotlight-title-text,
+.night-mode .spotlight-title-text,
+html.dark .spotlight-title-text {
+  color: #F5F5F7 !important;
+}
+
+.spotlight-subtitle-text {
+  color: #6E6E73;
+}
+[data-theme="night"] .spotlight-subtitle-text,
+[data-theme="dark"] .spotlight-subtitle-text,
+.night-mode .spotlight-subtitle-text,
+html.dark .spotlight-subtitle-text {
+  color: #A1A1A6 !important;
+}
+
+.spotlight-divider {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+[data-theme="night"] .spotlight-divider,
+[data-theme="dark"] .spotlight-divider,
+.night-mode .spotlight-divider,
+html.dark .spotlight-divider {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.emerald-pulse {
+  animation: emeraldGlowPulse 2s infinite;
+}
+
+@keyframes emeraldGlowPulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(52, 199, 89, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+}
+
+/* STITCH Apple HIG Responsive Theme Tokens */
+.text-on-surface {
+  color: var(--text-primary, #1D1D1F);
+}
+.text-on-surface-variant {
+  color: var(--text-secondary, #6E6E73);
+}
+.bg-surface-container {
+  background-color: var(--bg-surface-container, rgba(0, 0, 0, 0.04));
+}
+.bg-surface-container-lowest {
+  background-color: var(--bg-card, #ffffff);
+}
+.bg-surface-container-highest {
+  background-color: var(--bg-surface-high, #D1D1D6);
+}
+.border-border-day {
+  border-color: var(--border-color, rgba(0, 0, 0, 0.06));
+}
+
+[data-theme="night"] .text-on-surface,
+[data-theme="dark"] .text-on-surface,
+.night-mode .text-on-surface,
+html.dark .text-on-surface {
+  color: #F5F5F7 !important;
+}
+
+[data-theme="night"] .text-on-surface-variant,
+[data-theme="dark"] .text-on-surface-variant,
+.night-mode .text-on-surface-variant,
+html.dark .text-on-surface-variant {
+  color: #A1A1A6 !important;
+}
+
+[data-theme="night"] .bg-surface-container,
+[data-theme="dark"] .bg-surface-container,
+.night-mode .bg-surface-container,
+html.dark .bg-surface-container {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="night"] .bg-surface-container-lowest,
+[data-theme="dark"] .bg-surface-container-lowest,
+.night-mode .bg-surface-container-lowest,
+html.dark .bg-surface-container-lowest {
+  background-color: #161618 !important;
+}
+
+[data-theme="night"] .border-border-day,
+[data-theme="dark"] .border-border-day,
+.night-mode .border-border-day,
+html.dark .border-border-day {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 

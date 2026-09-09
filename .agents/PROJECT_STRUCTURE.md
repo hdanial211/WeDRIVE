@@ -35,6 +35,7 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 |   +-- 20_team_roles_and_responsibilities.md # 5 Domain Peranan Kejuruteraan Perisian Profesional WeDRIVE
 |   +-- 21_stitch_mcp_advanced_operations.md # Operasi Lanjutan & Enjin Kualiti Pasca-Prompt Stitch MCP
 |   +-- 22_user_feedback_golden_rules.md # Undang-undang Emas Maklum Balas & Mandat Langsung Pengguna
+|   +-- 23_stitch_to_production_workflow.md # Piawaian Universal Penukaran Pratonton STITCH ke Pengeluaran Sebenar
 +-- skills/                     # 6 Kemahiran Automasi Khusus:
 |   +-- context7/               # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
 |   +-- frontend-ui/            # Rekaan Antaramuka Apple HIG & Bento Grid

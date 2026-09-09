@@ -7,10 +7,10 @@
     <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
     <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=5.6.9"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.16.0" />
     <!-- AUTH GUARD -->
     <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
     <script src="preview-i18n.js"></script>
@@ -22,7 +22,6 @@
                 extend: {
                     "colors": {
                         "primary-container": "#0071e3",
-                        "on-primary-container": "#fcfbff",
                         "on-background": "#1a1c1d",
                         "night-bento": "#161618",
                         "primary": "#0071e3",
@@ -31,11 +30,11 @@
                         "border-night": "rgba(255, 255, 255, 0.08)",
                         "on-surface": "#1D1D1F",
                         "on-surface-variant": "#6E6E73",
-                        "secondary": "#5e5e63",
                         "surface": "#f9f9fb",
                         "surface-bright": "#FFFFFF",
                         "surface-container": "#eeeef0",
                         "surface-container-high": "#e8e8ea",
+                        "surface-container-highest": "#D1D1D6",
                         "surface-container-lowest": "#ffffff",
                         "background": "#f9f9fb"
                     },
@@ -78,422 +77,271 @@
             }
         }
     </script>
-    <style>
-        .hairline-border {
-            border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-        .bento-card {
-            background-color: #ffffff;
-            border-radius: 24px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .glass-panel {
-            background-color: rgba(249, 249, 251, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-        }
-
-        .interactive-btn {
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, opacity 0.2s ease;
-        }
-        .interactive-btn:active {
-            transform: scale(0.97) !important;
-        }
-
-        /* ZERO OVAL MANDATORY RULE */
-        .circle-1-1 {
-            aspect-ratio: 1 / 1 !important;
-            border-radius: 50% !important;
-            padding: 0 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            box-sizing: border-box !important;
-        }
-        .circle-1-1.hidden,
-        .hidden {
-            display: none !important;
-        }
-        .pill-btn {
-            border-radius: 9999px !important;
-            white-space: nowrap !important;
-            flex-shrink: 0 !important;
-        }
-        .nav-icon-link {
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
-        }
-        .nav-icon-link:hover {
-            transform: scale(1.08);
-        }
-
-        /* Mode Biasa (Light Mode) */
-        :root {
-            --spotlight-card-bg: #FFFFFF;
-            --spotlight-card-border: rgba(0, 0, 0, 0.08);
-            --spotlight-card-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-            --spotlight-title: #1D1D1F;
-            --spotlight-subtitle: #6E6E73;
-            --spotlight-body-text: #1D1D1F;
-            --spotlight-spec-bg: #F5F5F7;
-            --spotlight-spec-border: rgba(0, 0, 0, 0.06);
-            --spotlight-spec-text: #1D1D1F;
-            --spotlight-gradient-fade: #FFFFFF;
-            --spotlight-divider: rgba(0, 0, 0, 0.08);
-        }
-
-        /* Mod Gelap Obsidian (Dark Mode) */
-        html.dark {
-            --spotlight-card-bg: #16171A;
-            --spotlight-card-border: rgba(255, 255, 255, 0.12);
-            --spotlight-card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            --spotlight-title: #F5F5F7;
-            --spotlight-subtitle: #A1A1A6;
-            --spotlight-body-text: #E5E5EA;
-            --spotlight-spec-bg: rgba(255, 255, 255, 0.06);
-            --spotlight-spec-border: rgba(255, 255, 255, 0.1);
-            --spotlight-spec-text: #F5F5F7;
-            --spotlight-gradient-fade: #16171A;
-            --spotlight-divider: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Spotlight Customer Card Spec (Exact Match to WeDRIVE Production .car-card) */
-        .spotlight-card {
-            background-color: var(--spotlight-card-bg);
-            border: 1px solid var(--spotlight-card-border);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: var(--spotlight-card-shadow);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .spotlight-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 30px 60px -15px rgba(0, 113, 227, 0.25), 0 0 0 1px rgba(0, 113, 227, 0.3);
-        }
-
-        /* Media glass pill: stays dark translucent glass with white text for maximum readability over automotive photos */
-        .media-glass-pill {
-            background: rgba(0, 0, 0, 0.52);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            color: #FFFFFF;
-        }
-
-        .media-bottom-gradient {
-            background: linear-gradient(to top, var(--spotlight-gradient-fade) 0%, rgba(0, 0, 0, 0) 100%);
-            transition: background 0.3s ease;
-        }
-
-        .card-spec-pill {
-            background-color: var(--spotlight-spec-bg);
-            border: 1px solid var(--spotlight-spec-border);
-            color: var(--spotlight-spec-text);
-            transition: all 0.25s ease;
-        }
-        .card-spec-pill:hover {
-            border-color: rgba(0, 113, 227, 0.4);
-            transform: translateY(-1px);
-        }
-
-        .spotlight-title-text {
-            color: var(--spotlight-title);
-        }
-        .spotlight-subtitle-text {
-            color: var(--spotlight-subtitle);
-        }
-        .spotlight-divider {
-            border-color: var(--spotlight-divider);
-        }
-
-        .emerald-pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4); }
-            70% { box-shadow: 0 0 0 5px rgba(52, 199, 89, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
-        }
-
-        /* Dark Theme Variables */
-        html.dark body {
-            background-color: #000000 !important;
-            color: #F5F5F7 !important;
-        }
-        html.dark .bento-card {
-            background-color: #161618 !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-        html.dark .glass-panel {
-            background-color: rgba(22, 22, 24, 0.85) !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-        html.dark .bg-surface-container {
-            background-color: #1D1D20 !important;
-        }
-        html.dark .text-on-surface {
-            color: #F5F5F7 !important;
-        }
-        html.dark .text-secondary,
-        html.dark .text-on-surface-variant {
-            color: #8E8E93 !important;
-        }
-        html.dark .border-border-day {
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-    </style>
 </head>
-<body class="bg-background text-on-surface min-h-screen font-body text-body selection:bg-primary selection:text-white transition-colors duration-300">
-
-    <!-- Real Admin Navigation Sidebar -->
+<body data-particles="6" data-cursor-glow class="bg-background text-on-surface antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300">
+    <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
     <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>
 
-    <!-- Main Content Container with Real Top Navbar -->
+    <!-- MAIN WRAPPER -->
     <main class="main">
+        <!-- TOPBAR (Main 6-Module Navigation) -->
         <div id="navbar-placeholder" data-module="admin"></div>
-        <div class="content">
-            <div class="space-y-lg relative">
-        
-        <!-- Floating Stepper Capsule (4 Steps) -->
-        <div class="flex justify-center w-full mb-md">
-            <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-xs flex items-center gap-xs max-w-full overflow-x-auto hide-scrollbar">
-                <!-- Step 1 Complete -->
-                <a href="step1_spesifikasi.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step1_pill">Maklumat Asas</span>
-                </a>
 
-                <div class="w-6 h-[1px] bg-border-day"></div>
-
-                <!-- Step 2 Complete -->
-                <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step2_pill">Studio Visual</span>
-                </a>
-
-                <div class="w-6 h-[1px] bg-border-day"></div>
-
-                <!-- Step 3 Complete -->
-                <a href="step3_pengesahan.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step3_pill">Semakan Akhir</span>
-                </a>
-
-                <div class="w-6 h-[1px] bg-border-day"></div>
-
-                <!-- Step 4 Active -->
-                <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
-                    <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">4</span>
-                    <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step4_pill">Pandangan Pelanggan</span>
-                </div>
-
-                <div class="w-6 h-[1px] bg-border-day"></div>
-
-                <!-- Step 5 Inactive -->
-                <a href="step5_tempahan.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="circle-1-1 w-5 h-5 bg-surface-container-high text-secondary text-[11px] font-bold">5</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Section Intro Banner: Customer Preview Mode -->
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-primary/10 border border-primary/20 rounded-2xl p-4">
-            <div class="flex items-center gap-3">
-                <div class="circle-1-1 w-10 h-10 bg-primary/20 text-primary flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-[22px]">visibility</span>
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h2 class="font-headline text-[16px] font-bold text-on-surface" data-i18n="step4_preview_notice">Paparan Katalog Pelanggan (WYSIWYG)</h2>
-                        <span class="pill-btn text-[11px] font-bold px-2.5 py-0.5 bg-primary text-white" data-i18n="step4_preview_badge">Mod Pratonton Pelanggan</span>
-                    </div>
-                    <p class="font-body text-[13px] text-secondary" data-i18n="step4_preview_desc">Paparan langsung bagaimana kad kenderaan ini dipamerkan di portal carian kenderaan pelanggan WeDRIVE.</p>
-                </div>
-            </div>
-            <div class="pill-btn self-end sm:self-auto bg-surface-container px-3 py-1 text-xs font-semibold text-secondary hairline-border flex items-center gap-1.5">
-                <span class="material-symbols-outlined text-[14px] text-primary">touch_app</span>
-                <span>Simulasi Interaktif</span>
-            </div>
-        </div>
-
-        <!-- 2-Column Responsive Layout: Customer Sidebar (Left, 3 cols) + Center Spotlight Card (Right, 9 cols) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-md items-start">
-            
-            <!-- Left: Customer Navigation Sidebar (Preview Mode Only) -->
-            <aside class="lg:col-span-4 xl:col-span-3 bento-card hairline-border p-md flex flex-col gap-4">
-                <!-- Sidebar Header -->
-                <div class="flex items-center justify-between pb-3 border-b border-border-day">
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary text-[22px]">account_circle</span>
-                        <span class="font-headline text-[14.5px] font-bold text-on-surface">Portal Pelanggan</span>
-                    </div>
-                    <span class="pill-btn text-[10px] font-bold px-2 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25" data-i18n="step4_sidebar_tag">Pratonton Sahaja</span>
-                </div>
-
-                <!-- Customer Nav Menu Items -->
-                <nav class="flex flex-col gap-1.5 text-sm" aria-label="Menu Pelanggan Pratonton">
-                    <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
-                        <span class="material-symbols-outlined text-[20px]">dashboard</span>
-                        <span class="font-medium" data-i18n="step4_sidebar_dashboard">Papan Pemuka</span>
-                    </div>
-                    
-                    <!-- Active: Browse Cars -->
-                    <div class="flex items-center justify-between px-3 py-2.5 rounded-xl bg-primary text-white font-semibold shadow-sm select-none">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[20px] text-white">directions_car</span>
-                            <span data-i18n="step4_sidebar_cars">Teroka Kereta</span>
+        <div class="content pt-4 pb-32 max-w-7xl mx-auto flex flex-col gap-xl">
+            <!-- BENTO HEADER HERO -->
+            <div class="bento-header-hero reveal-onload mb-2">
+                <div class="flex-between flex-wrap gap-16">
+                    <div>
+                        <div class="bento-breadcrumbs">
+                            <a href="../cars.html" data-key="addcar_bc_mgmt">Pengurusan Kereta</a>
+                            <span class="material-icons-round">chevron_right</span>
+                            <span data-key="sidebar_add_car">Tambah Kereta Baharu</span>
+                            <span class="material-icons-round">chevron_right</span>
+                            <span data-i18n="step4_pill">Pandangan Pelanggan</span>
                         </div>
-                        <span class="material-symbols-outlined text-[16px] text-white/80">chevron_right</span>
+                        <div class="bento-title-row flex-start gap-12 flex-wrap mb-4">
+                            <h1 class="bento-title-main" data-i18n="step4_title">Pandangan Pelanggan (WYSIWYG)</h1>
+                            <span class="status-badge info"><span class="dot"></span> <span>Langkah 4 / 5</span></span>
+                        </div>
+                        <p class="bento-subtitle-main" data-i18n="step4_subtitle">Tinjauan tepat paparan kad kenderaan sewaan seperti mana yang dilihat dan ditempah oleh pelanggan sebenar.</p>
                     </div>
-
-                    <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
-                        <span class="material-symbols-outlined text-[20px]">receipt_long</span>
-                        <span class="font-medium" data-i18n="step4_sidebar_bookings">Tempahan Saya</span>
+                    <div class="flex-center gap-10">
+                        <button class="btn-outline-sm" onclick="window.location.href='../cars.html'">
+                            <span class="material-icons-round fs-16">close</span> <span data-i18n="nav_cancel">Batal</span>
+                        </button>
                     </div>
-
-                    <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
-                        <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
-                        <span class="font-medium" data-i18n="step4_sidebar_wallet">Dompet &amp; Pas</span>
-                    </div>
-
-                    <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
-                        <span class="material-symbols-outlined text-[20px]">person</span>
-                        <span class="font-medium" data-i18n="step4_sidebar_profile">Profil Pengguna</span>
-                    </div>
-                </nav>
-
-                <!-- Sidebar Simulation Note -->
-                <div class="mt-2 p-3 rounded-xl bg-surface-container hairline-border flex items-start gap-2.5">
-                    <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
-                    <p class="text-[12px] text-secondary leading-relaxed">
-                        Menu bar sisi ini merupakan replika susun atur sebenar di portal pelanggan WeDRIVE untuk memberikan konteks visual yang tepat.
-                    </p>
                 </div>
-            </aside>
+            </div>
 
-            <!-- Right: Center Spotlight Car Card Canvas (8 cols on lg, 9 on xl) -->
-            <section class="lg:col-span-8 xl:col-span-9 bento-card hairline-border p-4 sm:p-8 flex flex-col items-center justify-center min-h-[580px] bg-gradient-to-b from-surface-container/30 to-surface-container/80 dark:from-night-bento/50 dark:to-night-bento">
+            <!-- Floating Stepper Capsule (Standardized Apple HIG 5-Step) -->
+            <div class="flex justify-center w-full mb-6">
+                <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-1.5 flex items-center gap-1.5 max-w-full overflow-x-auto hide-scrollbar">
+                    <!-- Step 1 Complete -->
+                    <a href="step1_spesifikasi.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container text-on-surface transition-colors">
+                        <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step1_pill">Maklumat Asas</span>
+                    </a>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 2 Complete -->
+                    <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container text-on-surface transition-colors">
+                        <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
+                    </a>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 3 Complete -->
+                    <a href="step3_pengesahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container text-on-surface transition-colors">
+                        <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
+                    </a>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 4 Active -->
+                    <div class="pill-btn flex items-center gap-2 px-4 py-2 rounded-full bg-primary/15 text-primary font-bold shadow-xs">
+                        <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">4</span>
+                        <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step4_pill">Pandangan Pelanggan</span>
+                    </div>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 5 Upcoming -->
+                    <a href="step5_tempahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                        <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">5</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Customer Simulation Banner -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-primary/10 border border-primary/20 rounded-2xl p-4">
+                <div class="flex items-center gap-3">
+                    <div class="circle-1-1 w-10 h-10 bg-primary/20 text-primary flex items-center justify-center shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;">
+                        <span class="material-symbols-outlined text-[22px]">visibility</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="font-headline text-[16px] font-bold text-on-surface" data-i18n="step4_preview_notice">Paparan Katalog Pelanggan (WYSIWYG)</h2>
+                            <span class="pill-btn text-[11px] font-bold px-2.5 py-0.5 bg-primary text-white" data-i18n="step4_preview_badge">Mod Pratonton Pelanggan</span>
+                        </div>
+                        <p class="font-body text-[13px] text-on-surface-variant" data-i18n="step4_preview_desc">Paparan langsung bagaimana kad kenderaan ini dipamerkan di portal carian kenderaan pelanggan WeDRIVE.</p>
+                    </div>
+                </div>
+                <div class="pill-btn self-end sm:self-auto bg-surface-container px-3 py-1 text-xs font-semibold text-on-surface-variant hairline border border-border-day flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[14px] text-primary">touch_app</span>
+                    <span>Simulasi Interaktif</span>
+                </div>
+            </div>
+
+            <!-- 2-Column Responsive Layout: Customer Navigation Sidebar + Center Spotlight Card -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-md items-start">
                 
-                <div class="w-full flex items-center justify-between max-w-[360px] mb-3 px-1">
-                    <span class="text-xs font-semibold text-secondary uppercase tracking-wider">Kad Hasil Terbitan (Live Card)</span>
-                    <span class="pill-btn text-[11px] font-bold px-2.5 py-0.5 bg-success/15 text-success border border-success/30 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
-                        <span>Aktif di Portal</span>
-                    </span>
-                </div>
+                <!-- Left: Customer Navigation Sidebar (Replika Pratonton Sahaja) -->
+                <aside class="lg:col-span-4 xl:col-span-3 bento-card-v7 p-md flex flex-col gap-4">
+                    <!-- Sidebar Header -->
+                    <div class="flex items-center justify-between pb-3 border-b border-border-day">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-[22px]">account_circle</span>
+                            <span class="font-headline text-[14.5px] font-bold text-on-surface">Portal Pelanggan</span>
+                        </div>
+                        <span class="pill-btn text-[10px] font-bold px-2 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25" data-i18n="step4_sidebar_tag">Pratonton Sahaja</span>
+                    </div>
 
-                <!-- SPOTLIGHT CAR CARD (Exact Match to WeDRIVE Production Size: max-w-[360px]) -->
-                <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan.html'" class="spotlight-card w-full max-w-[360px] cursor-pointer hover:scale-[1.01] transition-transform duration-300 shadow-xl" title="Klik untuk lihat butiran dan tempahan">
+                    <!-- Customer Nav Menu Items -->
+                    <nav class="flex flex-col gap-1.5 text-sm" aria-label="Menu Pelanggan Pratonton">
+                        <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
+                            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                            <span class="font-medium" data-i18n="step4_sidebar_dashboard">Papan Pemuka</span>
+                        </div>
+                        
+                        <!-- Active: Browse Cars -->
+                        <div class="flex items-center justify-between px-3 py-2.5 rounded-xl bg-primary text-white font-semibold shadow-sm select-none">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-[20px] text-white">directions_car</span>
+                                <span data-i18n="step4_sidebar_cars">Teroka Kereta</span>
+                            </div>
+                            <span class="material-symbols-outlined text-[16px] text-white/80">chevron_right</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
+                            <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+                            <span class="font-medium" data-i18n="step4_sidebar_bookings">Tempahan Saya</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
+                            <span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+                            <span class="font-medium" data-i18n="step4_sidebar_wallet">Dompet &amp; Pas</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer select-none">
+                            <span class="material-symbols-outlined text-[20px]">person</span>
+                            <span class="font-medium" data-i18n="step4_sidebar_profile">Profil Pengguna</span>
+                        </div>
+                    </nav>
+
+                    <!-- Sidebar Simulation Note -->
+                    <div class="mt-2 p-3 rounded-xl bg-surface-container hairline border border-border-day flex items-start gap-2.5">
+                        <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
+                        <p class="text-[12px] text-on-surface-variant leading-relaxed">
+                            Menu bar sisi ini merupakan replika susun atur sebenar di portal pelanggan WeDRIVE untuk memberikan konteks visual yang tepat.
+                        </p>
+                    </div>
+                </aside>
+
+                <!-- Right: Center Spotlight Car Card Canvas -->
+                <section class="lg:col-span-8 xl:col-span-9 bento-card-v7 p-4 sm:p-8 flex flex-col items-center justify-center min-h-[580px] bg-gradient-to-b from-surface-container/30 to-surface-container/80 dark:from-night-bento/50 dark:to-night-bento">
                     
-                    <!-- Top Media Showcase (Exact Real Height: 220px) -->
-                    <div class="relative w-full h-[220px] bg-[#0e0e10] overflow-hidden group">
-                        
-                        <!-- Floating Top Badges (100% Real Input Driven - Zero Redundant Clutter) -->
-                        <div class="absolute top-3.5 inset-x-3.5 flex items-center justify-between z-20 pointer-events-none">
-                            <!-- Left: Status Badge (Tersedia / Disewa) -->
-                            <div id="cardStatusContainer" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto">
-                                <span id="cardStatusDot" class="w-2 h-2 rounded-full bg-[#34C759] emerald-pulse"></span>
-                                <span id="cardStatus" class="text-[11px] font-bold text-white uppercase tracking-wider" data-i18n="step4_card_available">Tersedia</span>
-                                <span id="cardStatusIcon" class="material-symbols-outlined text-[14px] text-[#34C759]">check</span>
-                            </div>
-
-                            <!-- Right: 360° View Badge (Real Step 2 Feature) -->
-                            <div id="cardBadge360" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto text-[#abc7ff]">
-                                <span class="material-symbols-outlined text-[15px]">360</span>
-                                <span class="text-[11px] font-bold text-white tracking-wider" data-i18n="step4_card_360">360° View</span>
-                            </div>
-                        </div>
-
-                        <!-- Car Image with subtle zoom on hover -->
-                        <img id="cardImage" 
-                             src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=85" 
-                             alt="Kenderaan WeDRIVE" 
-                             class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-
-                        <!-- Bottom Gradient for Seamless Blending in both Day & Night modes -->
-                        <div class="media-bottom-gradient absolute bottom-0 inset-x-0 h-16 pointer-events-none"></div>
+                    <div class="w-full flex items-center justify-between max-w-[360px] mb-3 px-1">
+                        <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Kad Hasil Terbitan (Live Card)</span>
+                        <span class="pill-btn text-[11px] font-bold px-2.5 py-0.5 bg-success/15 text-success border border-success/30 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                            <span>Aktif di Portal</span>
+                        </span>
                     </div>
 
-                    <!-- Card Body Details (Exact Real Padding: 20px) -->
-                    <div class="p-5 flex flex-col gap-3.5" style="background-color: var(--spotlight-card-bg);">
+                    <!-- SPOTLIGHT CAR CARD (Production Size: max-w-[360px]) -->
+                    <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan.html'" class="spotlight-card w-full max-w-[360px] cursor-pointer hover:scale-[1.01] transition-transform duration-300 shadow-xl" title="Klik untuk lihat butiran dan tempahan">
                         
-                        <!-- Header: Kicker, Title & Color Dot -->
-                        <header class="flex flex-col gap-1.5">
-                            <!-- Category & Engine Kicker -->
-                            <div class="flex items-center gap-2">
-                                <span id="cardCategory" class="text-[11px] font-extrabold spotlight-subtitle-text uppercase tracking-[0.18em]">-</span>
-                                <span class="w-1 h-1 rounded-full bg-gray-400/60"></span>
-                                <span id="cardEngine" class="text-[11px] font-bold spotlight-subtitle-text uppercase tracking-wider">-</span>
+                        <!-- Top Media Showcase (Height: 220px) -->
+                        <div class="relative w-full h-[220px] bg-[#0e0e10] overflow-hidden group">
+                            
+                            <!-- Floating Top Badges -->
+                            <div class="absolute top-3.5 inset-x-3.5 flex items-center justify-between z-20 pointer-events-none">
+                                <!-- Left: Status Badge -->
+                                <div id="cardStatusContainer" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto">
+                                    <span id="cardStatusDot" class="w-2 h-2 rounded-full bg-[#34C759] emerald-pulse"></span>
+                                    <span id="cardStatus" class="text-[11px] font-bold text-white uppercase tracking-wider" data-i18n="step4_card_available">Tersedia</span>
+                                    <span id="cardStatusIcon" class="material-symbols-outlined text-[14px] text-[#34C759]">check</span>
+                                </div>
+
+                                <!-- Right: 360° View Badge -->
+                                <div id="cardBadge360" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto text-[#abc7ff]">
+                                    <span class="material-symbols-outlined text-[15px]">360</span>
+                                    <span class="text-[11px] font-bold text-white tracking-wider" data-i18n="step4_card_360">360° View</span>
+                                </div>
                             </div>
 
-                            <!-- Main Car Title (Real font size: 19px) -->
-                            <h3 id="cardTitle" class="font-headline text-[19px] font-bold spotlight-title-text tracking-tight leading-snug">
-                                -
-                            </h3>
+                            <!-- Car Image -->
+                            <img id="cardImage" 
+                                 src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=85" 
+                                 alt="Kenderaan WeDRIVE" 
+                                 class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
 
-                            <!-- Color Dot & Name -->
-                            <div class="flex items-center gap-2 pt-0.5">
-                                <div id="cardColorDot" class="w-3 h-3 rounded-full bg-transparent border border-black/10 dark:border-white/20 shadow-sm"></div>
-                                <span id="cardColor" class="text-[13px] spotlight-subtitle-text font-medium">-</span>
-                            </div>
-                        </header>
-
-                        <!-- 2x2 Clean Specs Grid (Sifar Kotak / Borderless persis Gambar 2 Rujukan Pengguna) -->
-                        <div class="grid grid-cols-2 gap-y-2.5 gap-x-4 py-2.5 border-t border-b spotlight-divider text-[13px] font-medium">
-                            <!-- 1. Bahan Api -->
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">local_gas_station</span>
-                                <span id="cardFuel" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
-                            <!-- 2. Kapasiti Tempat Duduk -->
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">airline_seat_recline_normal</span>
-                                <span id="cardSeatsPill" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
-                            <!-- 3. Transmisi -->
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">settings</span>
-                                <span id="cardTransmission" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
-                            <!-- 4. Jenis Kenderaan -->
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">directions_car</span>
-                                <span id="cardCategoryPill" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
+                            <!-- Bottom Gradient -->
+                            <div class="media-bottom-gradient absolute bottom-0 inset-x-0 h-16 pointer-events-none"></div>
                         </div>
 
-                        <!-- Bottom Price & Book Now Row -->
-                        <div class="flex items-center justify-between pt-1">
-                            <!-- Price -->
-                            <div class="flex items-baseline gap-1">
-                                <span id="cardPrice" class="font-extrabold text-[20px] spotlight-title-text tabular-nums">RM 0.00</span>
-                                <span class="text-[12px] spotlight-subtitle-text font-normal" data-i18n="step4_card_per_day">/hari</span>
+                        <!-- Card Body Details -->
+                        <div class="p-5 flex flex-col gap-3.5">
+                            
+                            <!-- Header: Kicker, Title & Color Dot -->
+                            <header class="flex flex-col gap-1.5">
+                                <div class="flex items-center gap-2">
+                                    <span id="cardCategory" class="text-[11px] font-extrabold spotlight-subtitle-text uppercase tracking-[0.18em]">-</span>
+                                    <span class="w-1 h-1 rounded-full bg-gray-400/60"></span>
+                                    <span id="cardEngine" class="text-[11px] font-bold spotlight-subtitle-text uppercase tracking-wider">-</span>
+                                </div>
+
+                                <h3 id="cardTitle" class="font-headline text-[19px] font-bold spotlight-title-text tracking-tight leading-snug">
+                                    -
+                                </h3>
+
+                                <div class="flex items-center gap-2 pt-0.5">
+                                    <div id="cardColorDot" class="w-3 h-3 rounded-full bg-white border border-black/10 dark:border-white/20 shadow-sm"></div>
+                                    <span id="cardColor" class="text-[13px] spotlight-subtitle-text font-medium">-</span>
+                                </div>
+                            </header>
+
+                            <!-- 2x2 Clean Specs Grid (Sifar Kotak / Borderless) -->
+                            <div class="grid grid-cols-2 gap-y-2.5 gap-x-4 py-2.5 border-t border-b spotlight-divider text-[13px] font-medium">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">local_gas_station</span>
+                                    <span id="cardFuel" class="spotlight-subtitle-text truncate">-</span>
+                                </div>
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">airline_seat_recline_normal</span>
+                                    <span id="cardSeatsPill" class="spotlight-subtitle-text truncate">-</span>
+                                </div>
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">settings</span>
+                                    <span id="cardTransmission" class="spotlight-subtitle-text truncate">-</span>
+                                </div>
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+                                    <span id="cardCategoryPill" class="spotlight-subtitle-text truncate">-</span>
+                                </div>
                             </div>
 
-                            <!-- Book Now Button -->
-                            <a href="step5_tempahan.html" id="btnCustomerBookNow" class="pill-btn interactive-btn bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-[13px] px-5 py-2.5 flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition-all" style="text-decoration: none;">
-                                <span class="text-white" data-i18n="step4_card_book_now">Tempah Sekarang</span>
-                                <span class="material-symbols-outlined text-[16px] text-white">arrow_forward</span>
-                            </a>
-                        </div>
+                            <!-- Bottom Price & Book Now Row -->
+                            <div class="flex items-center justify-between pt-1">
+                                <div class="flex items-baseline gap-1">
+                                    <span id="cardPrice" class="font-extrabold text-[20px] spotlight-title-text tabular-nums">RM 0.00</span>
+                                    <span class="text-[12px] spotlight-subtitle-text font-normal" data-i18n="step4_card_per_day">/hari</span>
+                                </div>
 
+                                <a href="step5_tempahan.html" id="btnCustomerBookNow" class="pill-btn interactive-btn bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-[13px] px-5 py-2.5 flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition-all" style="text-decoration: none;">
+                                    <span class="text-white" data-i18n="step4_card_book_now">Tempah Sekarang</span>
+                                    <span class="material-symbols-outlined text-[16px] text-white">arrow_forward</span>
+                                </a>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
 
-                <!-- Simulation Footer Feedback -->
-                <p class="text-xs text-secondary mt-5 text-center max-w-sm">
-                    Kad hasil penerbitan rasmi berdasarkan spesifikasi yang disahkan di Langkah 1 &amp; 2.
-                </p>
-            </section>
+                    <p class="text-xs text-on-surface-variant mt-5 text-center max-w-sm">
+                        Kad hasil penerbitan rasmi berdasarkan spesifikasi yang disahkan di Langkah 1 &amp; 2.
+                    </p>
+                </section>
 
+            </div>
+
+            <!-- Footer Placeholder -->
+            <div id="footer-placeholder" class="mt-20"></div>
         </div>
-
-        <!-- Footer Placeholder -->
-        <div id="footer-placeholder" class="mt-32"></div>
-    </div>
-</div>
-</main>
+    </main>
 
     <!-- Floating Bottom Action Dock (Apple HIG Standard) -->
     <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2 z-50 transition-all duration-300">
@@ -516,207 +364,8 @@
         </a>
     </footer>
 
-    <!-- Success Modal Dialog -->
-    <div id="successModalStep4" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bento-card max-w-md w-full p-8 text-center shadow-2xl hairline-border">
-            <div class="w-16 h-16 circle-1-1 bg-success/15 text-success mx-auto mb-4">
-                <span class="material-symbols-outlined text-[36px]">check_circle</span>
-            </div>
-            <h3 class="font-title-2 text-title-2 text-on-surface font-bold mb-2" data-i18n="modal_success_title">Kenderaan Berjaya Didaftarkan!</h3>
-            <p id="modalCarDesc" class="font-body text-body text-secondary mb-6">
-                Kenderaan telah berjaya diterbitkan ke inventori aktif sistem dengan integrasi Studio 360° dan sedia untuk disewa pelanggan.
-            </p>
-            <div class="space-y-3">
-                <a href="../cars.html" class="pill-btn block w-full py-3 bg-primary text-white font-semibold shadow-sm hover:bg-[#0077ED]" data-i18n="modal_btn_menu">
-                    Kembali ke Menu Utama
-                </a>
-                <button type="button" onclick="closeModalStep4()" class="pill-btn block w-full py-2 bg-surface-container text-on-surface font-medium hover:bg-surface-container-high" data-i18n="modal_btn_close">
-                    Tutup
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Script: Dynamic Data Hydration & Interaction -->
-    <script>
-        function confirmPublishStep4() {
-            document.getElementById('successModalStep4').classList.remove('hidden');
-        }
-
-        function closeModalStep4() {
-            document.getElementById('successModalStep4').classList.add('hidden');
-        }
-
-        /**
-         * Hydrate Spotlight Car Card with Real Draft Data from localStorage
-         */
-        function hydrateCustomerCard() {
-            try {
-                const draftRaw = localStorage.getItem('wedrive_new_car_draft');
-                let data = {};
-                if (draftRaw) {
-                    data = JSON.parse(draftRaw);
-                }
-
-                const brand = data.brand || '';
-                const model = data.model || '';
-                const variant = data.variant || '';
-                const year = data.year || '';
-                const category = data.category || '-';
-                const color = data.color || '-';
-                const engine = data.engine || '-';
-                const fuel = data.fuel || '-';
-                const transmission = data.transmission || '-';
-                const seats = data.seats || '-';
-                const dailyRate = data.dailyPrice || data.dailyRate || '';
-                const statusVal = data.status || 'available';
-                const has360 = !!(data.has360 || (data.cdnUrl && data.cdnUrl.trim().length > 0));
-
-                const titleParts = [year, brand, model, variant].filter(Boolean);
-                const fullTitle = titleParts.length > 0 ? titleParts.join(' ') : '-';
-
-                // Populate Card Elements
-                const cardTitle = document.getElementById('cardTitle');
-                if (cardTitle) {
-                    cardTitle.textContent = fullTitle;
-                }
-
-                const cardCategory = document.getElementById('cardCategory');
-                if (cardCategory) {
-                    cardCategory.textContent = category.toUpperCase();
-                }
-
-                // Status Badge Hydration (Tersedia / Disewa)
-                const cardStatus = document.getElementById('cardStatus');
-                const cardStatusDot = document.getElementById('cardStatusDot');
-                const cardStatusIcon = document.getElementById('cardStatusIcon');
-                const isEn = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en') || (localStorage.getItem('wedrive_lang') === 'en');
-
-                if (cardStatus) {
-                    if (statusVal === 'rented') {
-                        cardStatus.textContent = isEn ? 'Rented' : 'Disewa';
-                        cardStatus.setAttribute('data-i18n', 'step4_card_rented');
-                        if (cardStatusDot) {
-                            cardStatusDot.className = 'w-2 h-2 rounded-full bg-amber-500';
-                            cardStatusDot.style.animation = 'none';
-                        }
-                        if (cardStatusIcon) {
-                            cardStatusIcon.textContent = 'schedule';
-                            cardStatusIcon.className = 'material-symbols-outlined text-[15px] text-amber-400';
-                        }
-                    } else {
-                        cardStatus.textContent = isEn ? 'Available' : 'Tersedia';
-                        cardStatus.setAttribute('data-i18n', 'step4_card_available');
-                        if (cardStatusDot) {
-                            cardStatusDot.className = 'w-2 h-2 rounded-full bg-[#34C759] emerald-pulse';
-                        }
-                        if (cardStatusIcon) {
-                            cardStatusIcon.textContent = 'check';
-                            cardStatusIcon.className = 'material-symbols-outlined text-[15px] text-[#34C759]';
-                        }
-                    }
-                }
-
-                const cardColor = document.getElementById('cardColor');
-                if (cardColor) {
-                    cardColor.textContent = color;
-                }
-
-                const cardColorDot = document.getElementById('cardColorDot');
-                if (cardColorDot) {
-                    const c = (color || '').toLowerCase();
-                    if (c.includes('black') || c.includes('hitam')) {
-                        cardColorDot.style.backgroundColor = '#1c1c1e';
-                    } else if (c.includes('red') || c.includes('merah')) {
-                        cardColorDot.style.backgroundColor = '#ff3b30';
-                    } else if (c.includes('blue') || c.includes('biru')) {
-                        cardColorDot.style.backgroundColor = '#0071e3';
-                    } else if (c.includes('grey') || c.includes('kelabu') || c.includes('silver')) {
-                        cardColorDot.style.backgroundColor = '#8e8e93';
-                    } else if (color === '-') {
-                        cardColorDot.style.backgroundColor = 'transparent';
-                    } else {
-                        cardColorDot.style.backgroundColor = '#ffffff';
-                    }
-                }
-
-                const cardEngine = document.getElementById('cardEngine');
-                if (cardEngine) {
-                    if (engine === '-') {
-                        cardEngine.textContent = '-';
-                    } else {
-                        const eng = engine.trim();
-                        cardEngine.textContent = (eng.toLowerCase().startsWith('enjin') || eng.toLowerCase().startsWith('engine')) ? eng.toUpperCase() : `ENJIN ${eng.toUpperCase()}`;
-                    }
-                }
-
-                const cardSeatsPill = document.getElementById('cardSeatsPill');
-                if (cardSeatsPill) {
-                    if (seats === '-') {
-                        cardSeatsPill.textContent = '-';
-                    } else {
-                        cardSeatsPill.textContent = `${seats} ${isEn ? 'Seats' : 'Tempat Duduk'}`;
-                    }
-                }
-
-                const cardFuel = document.getElementById('cardFuel');
-                if (cardFuel) {
-                    cardFuel.textContent = fuel;
-                }
-
-                const cardTransmission = document.getElementById('cardTransmission');
-                if (cardTransmission) {
-                    if (transmission === '-') {
-                        cardTransmission.textContent = '-';
-                    } else {
-                        cardTransmission.textContent = transmission.toLowerCase().includes('auto') ? (isEn ? 'Automatic' : 'Automatik') : transmission;
-                    }
-                }
-
-                const cardCategoryPill = document.getElementById('cardCategoryPill');
-                if (cardCategoryPill) {
-                    cardCategoryPill.textContent = category;
-                }
-
-                const cardPrice = document.getElementById('cardPrice');
-                if (cardPrice) {
-                    cardPrice.textContent = dailyRate ? `RM ${Number(dailyRate).toFixed(2)}` : 'RM 0.00';
-                }
-
-                const cardImage = document.getElementById('cardImage');
-                if (cardImage && data.photos && data.photos[0] && data.photos[0].img) {
-                    cardImage.src = data.photos[0].img;
-                }
-
-                // 360 Badge Visibility
-                const cardBadge360 = document.getElementById('cardBadge360');
-                if (cardBadge360) {
-                    if (has360) {
-                        cardBadge360.style.display = 'inline-flex';
-                    } else {
-                        cardBadge360.style.display = 'none';
-                    }
-                }
-
-                const modalCarDesc = document.getElementById('modalCarDesc');
-                if (modalCarDesc) {
-                    modalCarDesc.textContent = `${fullTitle !== '-' ? fullTitle : 'Kenderaan'} telah diterbitkan ke inventori aktif sistem dan sedia ditempah oleh pelanggan.`;
-                }
-
-            } catch (err) {
-                console.warn('Draft hydration error:', err);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            hydrateCustomerCard();
-        });
-
-        // Re-hydrate if language applied
-        document.addEventListener('wedrive:language-applied', () => {
-            hydrateCustomerCard();
-        });
-    </script>
+    <!-- Step 4 Modular Controller Script -->
+    <script src="step4-pandangan-pelanggan.js"></script>
 
     <!-- Real Admin Navigation & System Scripts -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>

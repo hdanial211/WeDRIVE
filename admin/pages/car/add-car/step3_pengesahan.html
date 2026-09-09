@@ -10,10 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=5.6.9" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.16.0" />
     <!-- AUTH GUARD -->
     <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
     <script src="preview-i18n.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -21,7 +22,6 @@
                 extend: {
                     "colors": {
                         "primary-container": "#0071e3",
-                        "on-primary-container": "#fcfbff",
                         "on-background": "#1a1c1d",
                         "night-bento": "#161618",
                         "primary": "#0071e3",
@@ -30,11 +30,11 @@
                         "border-night": "rgba(255, 255, 255, 0.08)",
                         "on-surface": "#1D1D1F",
                         "on-surface-variant": "#6E6E73",
-                        "secondary": "#5e5e63",
                         "surface": "#f9f9fb",
                         "surface-bright": "#FFFFFF",
                         "surface-container": "#eeeef0",
                         "surface-container-high": "#e8e8ea",
+                        "surface-container-highest": "#D1D1D6",
                         "surface-container-lowest": "#ffffff",
                         "background": "#f9f9fb"
                     },
@@ -77,100 +77,19 @@
             }
         }
     </script>
-    <style>
-        .hairline-border {
-            border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-        .bento-card {
-            background-color: #ffffff;
-            border-radius: 24px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        .glass-panel {
-            background-color: rgba(249, 249, 251, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-        }
-
-        .interactive-btn {
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, opacity 0.2s ease;
-        }
-        .interactive-btn:active {
-            transform: scale(0.97) !important;
-        }
-
-        /* ZERO OVAL MANDATORY RULE */
-        .circle-1-1 {
-            aspect-ratio: 1 / 1 !important;
-            border-radius: 50% !important;
-            padding: 0 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            box-sizing: border-box !important;
-        }
-        .circle-1-1.hidden,
-        .hidden {
-            display: none !important;
-        }
-        .pill-btn {
-            border-radius: 9999px !important;
-            white-space: nowrap !important;
-            flex-shrink: 0 !important;
-        }
-        .nav-icon-link {
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
-        }
-        .nav-icon-link:hover {
-            transform: scale(1.08);
-        }
-        .nav-icon-link:active {
-            transform: scale(0.95);
-        }
-
-        /* DARK THEME STYLING (Apple Obsidian) */
-        html.dark body {
-            background-color: #000000 !important;
-            color: #F5F5F7 !important;
-        }
-        html.dark .glass-panel {
-            background-color: rgba(22, 22, 24, 0.85) !important;
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-        html.dark .hairline-border {
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-        html.dark .bento-card {
-            background-color: #161618 !important;
-            box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4) !important;
-        }
-        html.dark .bg-surface-container {
-            background-color: #1D1D20 !important;
-        }
-        html.dark .text-on-surface {
-            color: #F5F5F7 !important;
-        }
-        html.dark .text-secondary,
-        html.dark .text-on-surface-variant {
-            color: #8E8E93 !important;
-        }
-        html.dark .border-border-day {
-            border-color: rgba(255, 255, 255, 0.08) !important;
-        }
-    </style>
 </head>
-<body data-particles="6" data-cursor-glow>
+<body data-particles="6" data-cursor-glow class="bg-background text-on-surface antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300">
     <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
     <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>
 
-    <!-- MAIN -->
+    <!-- MAIN WRAPPER -->
     <main class="main">
-        <!-- TOPBAR (Main Navigation) -->
+        <!-- TOPBAR (Main 6-Module Navigation) -->
         <div id="navbar-placeholder" data-module="admin"></div>
 
-        <div class="content">
+        <div class="content pt-4 pb-32 max-w-7xl mx-auto flex flex-col gap-xl">
             <!-- BENTO HEADER HERO -->
-            <div class="bento-header-hero reveal-onload mb-20">
+            <div class="bento-header-hero reveal-onload mb-2">
                 <div class="flex-between flex-wrap gap-16">
                     <div>
                         <div class="bento-breadcrumbs">
@@ -180,11 +99,11 @@
                             <span class="material-icons-round">chevron_right</span>
                             <span data-i18n="step3_pill">Semakan Akhir</span>
                         </div>
-                        <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-                            <h1 class="bento-title-main" data-i18n="step3_title">Semakan &amp; Pengesahan Kenderaan</h1>
+                        <div class="bento-title-row flex-start gap-12 flex-wrap mb-4">
+                            <h1 class="bento-title-main" data-i18n="step3_title">Semakan Akhir &amp; Pengesahan Inventori</h1>
                             <span class="status-badge info"><span class="dot"></span> <span>Langkah 3 / 5</span></span>
                         </div>
-                        <p class="bento-subtitle-main" data-i18n="step3_subtitle">Sahkan spesifikasi teknikal, visual pemeriksaan, dan kadar sewaan sebelum diterbitkan secara rasmi.</p>
+                        <p class="bento-subtitle-main" data-i18n="step3_subtitle">Sahkan keselarasan spesifikasi teknikal, media visual dan struktur tarif harga sebelum mendaftarkan kenderaan.</p>
                     </div>
                     <div class="flex-center gap-10">
                         <button class="btn-outline-sm" onclick="window.location.href='../cars.html'">
@@ -193,198 +112,190 @@
                     </div>
                 </div>
             </div>
-        
-        <!-- Floating Stepper Capsule (Standardized Apple HIG) -->
-        <div class="flex justify-center w-full mb-xl">
-            <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-xs flex items-center gap-xs max-w-full overflow-x-auto hide-scrollbar">
-                <!-- Step 1 Complete -->
-                <a href="step1_spesifikasi.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step1_pill">Maklumat Asas</span>
-                </a>
 
-                <div class="w-8 h-[1px] bg-border-day"></div>
+            <!-- Floating Stepper Capsule (Standardized Apple HIG 5-Step) -->
+            <div class="flex justify-center w-full mb-6">
+                <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-1.5 flex items-center gap-1.5 max-w-full overflow-x-auto hide-scrollbar">
+                    <!-- Step 1 Complete -->
+                    <a href="step1_spesifikasi.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container text-on-surface transition-colors">
+                        <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step1_pill">Maklumat Asas</span>
+                    </a>
 
-                <!-- Step 2 Complete -->
-                <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step2_pill">Studio Visual</span>
-                </a>
+                    <div class="w-8 h-[1px] bg-border-day"></div>
 
-                <div class="w-8 h-[1px] bg-border-day"></div>
+                    <!-- Step 2 Complete -->
+                    <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container text-on-surface transition-colors">
+                        <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
+                    </a>
 
-                <!-- Step 3 Active -->
-                <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
-                    <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">3</span>
-                    <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step3_pill">Semakan Akhir</span>
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 3 Active -->
+                    <div class="pill-btn flex items-center gap-2 px-4 py-2 rounded-full bg-primary/15 text-primary font-bold shadow-xs">
+                        <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">3</span>
+                        <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step3_pill">Semakan Akhir</span>
+                    </div>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 4 Upcoming -->
+                    <a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                        <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">4</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
+                    </a>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 5 Upcoming -->
+                    <a href="step5_tempahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                        <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">5</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bento Grid Layout (100% STITCH UI PREVIEW 7) -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-md">
+                
+                <!-- Showcase Card (Left, 8 cols) -->
+                <div class="md:col-span-8 bento-card-v7 p-md flex flex-col gap-md relative overflow-hidden group">
+                    <!-- 360 Studio Render Viewport -->
+                    <div class="relative w-full h-[400px] rounded-2xl overflow-hidden bg-surface-container flex items-center justify-center cursor-ew-resize">
+                        <div id="step3ViewportImage" class="absolute inset-0 bg-cover bg-center w-full h-full mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85')"></div>
+
+                        <!-- Left Navigation Button (<) - Strict 1:1 Circle -->
+                        <button id="step3BtnPrevImage" type="button" class="circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
+                            <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                        </button>
+
+                        <!-- Right Navigation Button (>) - Strict 1:1 Circle -->
+                        <button id="step3BtnNextImage" type="button" class="circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
+                            <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                        </button>
+                        
+                        <!-- Swipe indicator pill -->
+                        <div id="step3SwipeIndicator" class="hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 dark:bg-black/70 backdrop-blur-md px-4 py-2 rounded-full hairline border border-border-day flex items-center gap-2 shadow-md">
+                            <span class="material-symbols-outlined text-[18px] text-secondary">swipe</span>
+                            <span id="step3IndicatorText" class="font-footnote text-footnote text-secondary font-medium" data-i18n="step3_indicator_rotate">Leret untuk memutar</span>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Thumbnails Slider Strip -->
+                    <div id="step3GalleryThumbnailsContainer" class="mt-2 flex flex-col gap-1">
+                        <div id="step3GalleryThumbnailsStrip" class="flex items-center justify-center gap-2 overflow-x-auto p-1 hide-scrollbar w-full">
+                            <!-- Populated dynamically via step3-pengesahan.js -->
+                        </div>
+                    </div>
+
+                    <!-- Showcase Segmented Switch (Galeri dulu, ada 360 baru kembang) -->
+                    <div id="step3SegmentedSwitcher" class="bg-surface-container rounded-full p-1 flex mt-auto relative z-10 hairline border border-border-day w-full max-w-[150px] mx-auto transition-all duration-500">
+                        <button id="step3Tab360" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap" data-i18n="tab_360">Pusingan 360°</button>
+                        <button id="step3TabPanorama" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap" data-i18n="tab_panorama">Panorama</button>
+                        <button id="step3TabGallery" type="button" class="flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap" data-i18n="tab_gallery">Galeri</button>
+                    </div>
                 </div>
 
-                <div class="w-8 h-[1px] bg-border-day"></div>
+                <!-- Side Card: Pricing Summary (Right, 4 cols) -->
+                <div class="md:col-span-4 flex flex-col gap-md">
+                    <div class="bento-card-v7 p-container-padding flex flex-col gap-lg h-full">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 circle-1-1 bg-surface-container text-on-surface hairline border border-border-day" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;">
+                                <span class="material-symbols-outlined text-primary">payments</span>
+                            </div>
+                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="pricing_summary_title">Ringkasan Harga</h2>
+                        </div>
 
-                <!-- Step 4 Pandangan Pelanggan -->
-                <a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="circle-1-1 w-5 h-5 bg-surface-container-high text-secondary text-[11px] font-bold">4</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
-                </a>
+                        <div class="flex flex-col gap-sm mt-2">
+                            <div class="flex justify-between items-center py-2.5 border-b border-border-day">
+                                <span class="font-body text-body text-on-surface-variant" data-i18n="price_daily_label">Harian</span>
+                                <span id="tarifDaily" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 0.00</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2.5 border-b border-border-day">
+                                <span class="font-body text-body text-on-surface-variant" data-i18n="price_weekly_label">Mingguan</span>
+                                <span id="tarifWeekly" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 0.00</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2.5">
+                                <span class="font-body text-body text-on-surface-variant" data-i18n="price_monthly_label">Bulanan</span>
+                                <span id="tarifMonthly" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="w-8 h-[1px] bg-border-day"></div>
+                <!-- Specifications Card (Full Width Bento Card, 12 cols) -->
+                <div class="col-span-1 md:col-span-12 bento-card-v7 p-container-padding flex flex-col gap-lg">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 circle-1-1 bg-surface-container text-on-surface hairline border border-border-day" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;">
+                                <span class="material-symbols-outlined text-primary">directions_car</span>
+                            </div>
+                            <div>
+                                <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="step3_sec_specs_title">Spesifikasi Kenderaan</h2>
+                                <p class="font-caption text-caption text-on-surface-variant" data-i18n="step3_sec_specs_desc">Parameter teknikal &amp; pendaftaran kenderaan daripada Langkah 1</p>
+                            </div>
+                        </div>
+                        <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 hairline border border-border-day hidden sm:flex items-center gap-1 font-semibold">
+                            <span class="material-symbols-outlined text-success text-[14px]">check</span>
+                            <span data-i18n="step3_details_complete">10 Butiran Lengkap</span>
+                        </span>
+                    </div>
 
-                <!-- Step 5 Butiran & Tempahan -->
-                <a href="step5_tempahan.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
-                    <span class="circle-1-1 w-5 h-5 bg-surface-container-high text-secondary text-[11px] font-bold">5</span>
-                    <span class="font-callout text-callout text-on-surface font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
-                </a>
+                    <!-- 10 Spec Boxes in 5 Columns x 2 Rows -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-sm md:gap-md">
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="field_plate">No. Pendaftaran</span>
+                            <span id="specPlate" class="font-callout text-callout text-on-surface font-semibold tracking-wider uppercase">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="field_brand">Pengeluar</span>
+                            <span id="specBrand" class="font-callout text-callout text-on-surface font-semibold">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="field_variant">Model &amp; Varian</span>
+                            <span id="specModelVariant" class="font-callout text-callout text-on-surface font-semibold truncate">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="spec_category">Kategori</span>
+                            <span id="specCategory" class="font-callout text-callout text-on-surface font-semibold">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="field_year">Tahun Dibuat</span>
+                            <span id="specYear" class="font-callout text-callout text-on-surface font-semibold">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="spec_color">Warna Badan</span>
+                            <span id="specColor" class="font-callout text-callout text-on-surface font-semibold truncate">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="spec_engine_power">Enjin &amp; Kuasa</span>
+                            <span id="specEngine" class="font-callout text-callout text-on-surface font-semibold truncate">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="spec_fuel">Punca Kuasa</span>
+                            <span id="specFuel" class="font-callout text-callout text-on-surface font-semibold">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="spec_transmission">Transmisi</span>
+                            <span id="specTransmission" class="font-callout text-callout text-on-surface font-semibold">-</span>
+                        </div>
+                        <div class="bg-surface-container p-sm rounded-xl hairline border border-border-day flex flex-col gap-1">
+                            <span class="font-caption text-caption text-on-surface-variant" data-i18n="field_seats">Kapasiti Tempat Duduk</span>
+                            <span id="specSeats" class="font-callout text-callout text-on-surface font-semibold">-</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Footer Placeholder -->
+            <div id="footer-placeholder" class="mt-20"></div>
         </div>
-
-        <!-- Bento Grid Layout (Screenshot & prompt_lama step 3 reference) -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-md">
-            
-            <!-- Showcase Card (Left, 8 cols) -->
-            <div class="md:col-span-8 bento-card hairline-border p-md flex flex-col gap-md relative overflow-hidden group">
-                <!-- 360 Studio Render Viewport -->
-                <div class="relative w-full h-[400px] rounded-2xl overflow-hidden bg-surface-container flex items-center justify-center cursor-ew-resize">
-                    <div id="step3ViewportImage" class="absolute inset-0 bg-cover bg-center w-full h-full mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85')"></div>
-
-                    <!-- Left Navigation Button (<) - Strict 1:1 Circle -->
-                    <button id="step3BtnPrevImage" type="button" onclick="navigateStep3Gallery(-1)" class="circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline-border text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
-                        <span class="material-symbols-outlined text-[20px]">chevron_left</span>
-                    </button>
-
-                    <!-- Right Navigation Button (>) - Strict 1:1 Circle -->
-                    <button id="step3BtnNextImage" type="button" onclick="navigateStep3Gallery(1)" class="circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline-border text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
-                        <span class="material-symbols-outlined text-[20px]">chevron_right</span>
-                    </button>
-                    
-                    <!-- Swipe indicator pill -->
-                    <div id="step3SwipeIndicator" class="hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/80 dark:bg-black/70 backdrop-blur-md px-4 py-2 rounded-full hairline-border flex items-center gap-2 shadow-md">
-                        <span class="material-symbols-outlined text-[18px] text-secondary">swipe</span>
-                        <span id="step3IndicatorText" class="font-footnote text-footnote text-secondary font-medium" data-i18n="step3_indicator_rotate">Leret untuk memutar</span>
-                    </div>
-                </div>
-
-                <!-- Gallery Thumbnails Slider Strip (Shows available photos: e.g. 5 if 5, 6 if 6) -->
-                <div id="step3GalleryThumbnailsContainer" class="mt-2 flex flex-col gap-1">
-                    <div id="step3GalleryThumbnailsStrip" class="flex items-center justify-center gap-2 overflow-x-auto p-1 hide-scrollbar w-full">
-                        <!-- Populated dynamically via renderStep3GalleryThumbnails() -->
-                    </div>
-                </div>
-
-                <!-- Showcase Segmented Switch (Tunjuk galeri sahaja dulu, bila ada 360 baru kembang 360 & panorama) -->
-                <div id="step3SegmentedSwitcher" class="bg-surface-container rounded-full p-1 flex mt-auto relative z-10 hairline-border w-full max-w-[150px] mx-auto transition-all duration-500">
-                    <button id="step3Tab360" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap" data-i18n="tab_360">Pusingan 360°</button>
-                    <button id="step3TabPanorama" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap" data-i18n="tab_panorama">Panorama</button>
-                    <button id="step3TabGallery" type="button" class="flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap" data-i18n="tab_gallery">Galeri</button>
-                </div>
-            </div>
-
-            <!-- Side Card: Pricing (Right, 4 cols) -->
-            <div class="md:col-span-4 flex flex-col gap-md">
-                <div class="bento-card hairline-border p-container-padding flex flex-col gap-lg h-full">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 circle-1-1 bg-surface-container text-on-surface hairline-border">
-                            <span class="material-symbols-outlined text-primary">payments</span>
-                        </div>
-                        <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="pricing_summary_title">Ringkasan Harga</h2>
-                    </div>
-
-                    <div class="flex flex-col gap-sm mt-2">
-                        <div class="flex justify-between items-center py-2.5 border-b border-border-day">
-                            <span class="font-body text-body text-secondary" data-i18n="price_daily_label">Harian</span>
-                            <span id="tarifDaily" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 0.00</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2.5 border-b border-border-day">
-                            <span class="font-body text-body text-secondary" data-i18n="price_weekly_label">Mingguan</span>
-                            <span id="tarifWeekly" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 0.00</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2.5">
-                            <span class="font-body text-body text-secondary" data-i18n="price_monthly_label">Bulanan</span>
-                            <span id="tarifMonthly" class="font-label-tabular text-label-tabular text-on-surface font-bold text-[16px]">RM 0.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Specifications Card (Full Width Bento Card, 12 cols) -->
-            <div class="col-span-1 md:col-span-12 bento-card hairline-border p-container-padding flex flex-col gap-lg">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 circle-1-1 bg-surface-container text-on-surface hairline-border">
-                            <span class="material-symbols-outlined text-primary">directions_car</span>
-                        </div>
-                        <div>
-                            <h2 class="font-title-3 text-title-3 text-on-surface font-bold" data-i18n="step3_sec_specs_title">Spesifikasi Kenderaan</h2>
-                            <p class="font-caption text-caption text-secondary" data-i18n="step3_sec_specs_desc">Parameter teknikal &amp; pendaftaran kenderaan daripada Langkah 1</p>
-                        </div>
-                    </div>
-                    <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 hairline-border hidden sm:flex items-center gap-1 font-semibold">
-                        <span class="material-symbols-outlined text-success text-[14px]">check</span>
-                        <span id="step3DetailsBadgeText" data-i18n="step3_details_complete">Semakan Data</span>
-                    </span>
-                </div>
-
-                <!-- 10 Spec Boxes in 5 Columns x 2 Rows -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-sm md:gap-md">
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="field_plate">No. Pendaftaran</span>
-                        <span id="specPlate" class="font-callout text-callout text-on-surface font-semibold tracking-wider uppercase">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="field_brand">Pengeluar</span>
-                        <span id="specBrand" class="font-callout text-callout text-on-surface font-semibold">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="field_variant">Model &amp; Varian</span>
-                        <span id="specModelVariant" class="font-callout text-callout text-on-surface font-semibold truncate" title="-">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="spec_category">Kategori</span>
-                        <span id="specCategory" class="font-callout text-callout text-on-surface font-semibold">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="field_year">Tahun Dibuat</span>
-                        <span id="specYear" class="font-callout text-callout text-on-surface font-semibold">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="spec_color">Warna Badan</span>
-                        <span id="specColor" class="font-callout text-callout text-on-surface font-semibold truncate" title="-">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="spec_engine_power">Enjin &amp; Kuasa</span>
-                        <span id="specEngine" class="font-callout text-callout text-on-surface font-semibold truncate" title="-">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="spec_fuel">Punca Kuasa</span>
-                        <span id="specFuel" class="font-callout text-callout text-on-surface font-semibold">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="spec_transmission">Transmisi</span>
-                        <span id="specTransmission" class="font-callout text-callout text-on-surface font-semibold">-</span>
-                    </div>
-                    <div class="bg-surface-container p-sm rounded-xl hairline-border flex flex-col gap-1">
-                        <span class="font-caption text-caption text-secondary" data-i18n="field_seats">Kapasiti Tempat Duduk</span>
-                        <span id="specSeats" class="font-callout text-callout text-on-surface font-semibold">-</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTER -->
-        <div id="footer-placeholder" class="mt-32"></div>
-    </div>
-</main>
-
-    <!-- AI Apple Glass Floating Toast Notification (Standard Unified Single Design) -->
-    <div id="aiToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
-        <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
-            <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-        </div>
-        <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface" data-i18n="toast_step3_ready">✓ Maklumat kenderaan lengkap &amp; sedia didaftarkan</span>
-    </div>
+    </main>
 
     <!-- Floating Bottom Action Dock (Standardized Apple HIG) -->
     <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2 z-50 transition-all duration-300">
-        <!-- Back to Studio Visual -->
+        <!-- Back to Step 2 Studio Visual -->
         <a href="step2_studio360.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
             <span data-i18n="step3_btn_back">Studio Visual</span>
@@ -396,8 +307,8 @@
             <span data-i18n="step3_btn_view_as_customer">Lihat Sebagai Pelanggan →</span>
         </a>
 
-        <!-- Single Official Publish Button (Font from Gambar 1: Crisp Bold Pure White) -->
-        <button id="publishBtn" type="button" onclick="confirmPublish()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
+        <!-- Single Official Publish Button (Crisp Bold Pure White) -->
+        <button id="btnSubmitCarRegistration" type="button" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
             <span class="text-white" style="color: #FFFFFF !important;" data-i18n="step3_btn_publish">Daftar Kenderaan Baharu</span>
             <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">check</span>
         </button>
@@ -405,312 +316,30 @@
 
     <!-- Success Modal Dialog -->
     <div id="successModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bento-card max-w-md w-full p-8 text-center shadow-2xl hairline-border">
-            <div class="w-16 h-16 circle-1-1 bg-success/15 text-success mx-auto mb-4">
+        <div class="bento-card-v7 max-w-md w-full p-8 text-center shadow-2xl hairline border border-border-day">
+            <div class="w-16 h-16 circle-1-1 bg-success/15 text-success mx-auto mb-4" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 64px !important; height: 64px !important;">
                 <span class="material-symbols-outlined text-[36px]">check_circle</span>
             </div>
             <h3 class="font-title-2 text-title-2 text-on-surface font-bold mb-2" data-i18n="modal_success_title">Kenderaan Berjaya Didaftarkan!</h3>
-            <p class="font-body text-body text-secondary mb-6">
-                Mercedes-Benz CLS 350 AMG Line (VDD 2573) telah diterbitkan ke inventori aktif sistem dengan integrasi Studio 360°.
+            <p class="font-body text-body text-on-surface-variant mb-6">
+                Kenderaan telah berjaya didaftarkan ke inventori aktif sistem WeDRIVE.
             </p>
             <div class="space-y-3">
                 <a href="../cars.html" class="pill-btn block w-full py-3 bg-primary text-white font-semibold shadow-sm hover:bg-[#0077ED]" data-i18n="modal_btn_menu">
-                    Kembali ke Menu Utama
+                    Kembali ke Pengurusan Kereta
                 </a>
-                <button type="button" onclick="closeModal()" class="pill-btn block w-full py-2 bg-surface-container text-on-surface font-medium hover:bg-surface-container-high" data-i18n="modal_btn_close">
+                <a href="step4_pandangan_pelanggan.html" class="pill-btn block w-full py-2.5 bg-primary/10 text-primary font-semibold hover:bg-primary/20">
+                    Lihat Kad Pelanggan (Langkah 4)
+                </a>
+                <button id="btnCloseSuccessModal" type="button" class="pill-btn block w-full py-2 bg-surface-container text-on-surface font-medium hover:bg-surface-container-high" data-i18n="modal_btn_close">
                     Tutup
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script>
-        function confirmPublish() {
-            document.getElementById('successModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('successModal').classList.add('hidden');
-        }
-
-
-        const RENDER_360_URL = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtBDDlUrmJDNhDsS4aV1no7_ijMp3LDBIEuO8JFSLu1rhZtzRptizXrOOhrC4F9UM_GgVDGzcAxyDfse6ygFP8JmSGyjv71IIKEzYBhzmRw7hDm5v779sZUlzh9qAN7SOqsPGhcB_Czd7Yc7HZemwGIFVradMOJlXOSx87_TKIZzR5kuC3Lt7YEVxnlUdIvKA8fnQCkIEXAdlm7dA7MYzd0eNSvwggNzObheoeAcMgKy9b-GN11jAQiS1tJPCdGlY5skGa1MRHwGc';
-        const PANORAMA_URL = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85';
-        const GALLERY_URL = 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85';
-
-        const INSPECTION_PHOTOS_STEP3 = [
-            {
-                title: 'Hadapan Penuh',
-                titleEn: 'Full Front',
-                img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85'
-            },
-            {
-                title: 'Belakang Penuh',
-                titleEn: 'Full Rear',
-                img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=85'
-            },
-            {
-                title: 'Sisi Kanan Profil',
-                titleEn: 'Right Side Profile',
-                img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85'
-            },
-            {
-                title: 'Sisi Kiri Profil',
-                titleEn: 'Left Side Profile',
-                img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85'
-            },
-            {
-                title: 'Suku Hadapan Kiri',
-                titleEn: 'Front Left Quarter',
-                img: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1200&q=85'
-            },
-            {
-                title: 'Suku Belakang Kanan',
-                titleEn: 'Rear Right Quarter',
-                img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=85'
-            }
-        ];
-
-        let currentStep3Photos = [...INSPECTION_PHOTOS_STEP3];
-        let currentStep3PhotoIndex = 0;
-        let activeStep3VisualMode = 'gallery';
-        let hasStep3360 = false;
-        window.currentStep3Photos = currentStep3Photos;
-        window.currentStep3PhotoIndex = currentStep3PhotoIndex;
-
-        function renderStep3GalleryThumbnails() {
-            const strip = document.getElementById('step3GalleryThumbnailsStrip');
-            if (!strip) return;
-            const photos = window.currentStep3Photos || currentStep3Photos;
-            if (!photos || photos.length === 0) {
-                strip.innerHTML = '';
-                return;
-            }
-
-            const isEn = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en');
-            strip.innerHTML = photos.map((photo, idx) => {
-                const isActive = (idx === currentStep3PhotoIndex && activeStep3VisualMode === 'gallery');
-                const title = isEn ? (photo.titleEn || photo.title) : photo.title;
-                return `
-                    <button type="button" onclick="selectStep3GalleryPhoto(${idx})"
-                        class="gallery-thumb-btn relative rounded-xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300 ${isActive ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-md border-transparent' : 'opacity-60 hover:opacity-100 hover:scale-[1.03] border border-border-day bg-surface-container'}"
-                        style="width: 58px; height: 42px;"
-                        title="${title}" aria-label="${title}">
-                        <img src="${photo.img}" alt="${title}" class="w-full h-full object-cover" />
-                    </button>
-                `;
-            }).join('');
-        }
-        window.renderStep3GalleryThumbnails = renderStep3GalleryThumbnails;
-
-        function selectStep3GalleryPhoto(index) {
-            const photos = window.currentStep3Photos || currentStep3Photos;
-            if (!photos || !photos[index]) return;
-            currentStep3PhotoIndex = index;
-            window.currentStep3PhotoIndex = index;
-            const photo = photos[index];
-
-            const viewportImg = document.getElementById('step3ViewportImage');
-            if (viewportImg) {
-                viewportImg.style.backgroundImage = `url('${photo.img}')`;
-            }
-
-            if (activeStep3VisualMode !== 'gallery') {
-                setStep3Tab('gallery');
-            } else {
-                renderStep3GalleryThumbnails();
-            }
-        }
-        window.selectStep3GalleryPhoto = selectStep3GalleryPhoto;
-
-        function navigateStep3Gallery(direction) {
-            const photos = window.currentStep3Photos || currentStep3Photos;
-            if (!photos || photos.length === 0) return;
-            let nextIndex = currentStep3PhotoIndex + direction;
-            if (nextIndex < 0) nextIndex = photos.length - 1;
-            if (nextIndex >= photos.length) nextIndex = 0;
-            selectStep3GalleryPhoto(nextIndex);
-        }
-        window.navigateStep3Gallery = navigateStep3Gallery;
-
-        function setStep3Tab(mode) {
-            activeStep3VisualMode = mode;
-            const tab360 = document.getElementById('step3Tab360');
-            const tabPano = document.getElementById('step3TabPanorama');
-            const tabGal = document.getElementById('step3TabGallery');
-            const viewportImg = document.getElementById('step3ViewportImage');
-            const swipeIndicator = document.getElementById('step3SwipeIndicator');
-            const indicatorText = document.getElementById('step3IndicatorText');
-            const btnPrev = document.getElementById('step3BtnPrevImage');
-            const btnNext = document.getElementById('step3BtnNextImage');
-            const thumbsContainer = document.getElementById('step3GalleryThumbnailsContainer');
-
-            const activeStyle = 'flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap';
-            const inactiveStyle = 'flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap';
-
-            if (mode === '360') {
-                if (tab360) tab360.className = activeStyle;
-                if (tabPano) tabPano.className = inactiveStyle;
-                if (tabGal) tabGal.className = inactiveStyle;
-                if (viewportImg) viewportImg.style.backgroundImage = `url('${RENDER_360_URL}')`;
-                if (swipeIndicator) swipeIndicator.classList.remove('hidden');
-                if (indicatorText) indicatorText.textContent = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en') ? 'Swipe to rotate 360°' : 'Leret untuk memutar 360°';
-
-                // HANYA MUNCUL BILA SAYA TEKAN GALERI SAHAJA -> Sembunyi bila 360
-                if (btnPrev) {
-                    btnPrev.classList.add('hidden');
-                    btnPrev.style.setProperty('display', 'none', 'important');
-                }
-                if (btnNext) {
-                    btnNext.classList.add('hidden');
-                    btnNext.style.setProperty('display', 'none', 'important');
-                }
-                if (thumbsContainer) {
-                    thumbsContainer.classList.add('hidden');
-                    thumbsContainer.style.setProperty('display', 'none', 'important');
-                }
-            } else if (mode === 'panorama') {
-                if (tab360) tab360.className = inactiveStyle;
-                if (tabPano) tabPano.className = activeStyle;
-                if (tabGal) tabGal.className = inactiveStyle;
-                if (viewportImg) viewportImg.style.backgroundImage = `url('${PANORAMA_URL}')`;
-                if (swipeIndicator) swipeIndicator.classList.remove('hidden');
-                if (indicatorText) indicatorText.textContent = (typeof getCurrentLang === 'function' && getCurrentLang() === 'en') ? 'Drag to explore panorama' : 'Seret untuk tinjauan panorama';
-
-                // HANYA MUNCUL BILA SAYA TEKAN GALERI SAHAJA -> Sembunyi bila panorama
-                if (btnPrev) {
-                    btnPrev.classList.add('hidden');
-                    btnPrev.style.setProperty('display', 'none', 'important');
-                }
-                if (btnNext) {
-                    btnNext.classList.add('hidden');
-                    btnNext.style.setProperty('display', 'none', 'important');
-                }
-                if (thumbsContainer) {
-                    thumbsContainer.classList.add('hidden');
-                    thumbsContainer.style.setProperty('display', 'none', 'important');
-                }
-            } else {
-                // Gallery mode - HANYA MUNCUL BILA SAYA TEKAN GALERI SAHAJA
-                if (tab360) tab360.className = inactiveStyle + (hasStep3360 ? '' : ' hidden');
-                if (tabPano) tabPano.className = inactiveStyle + (hasStep3360 ? '' : ' hidden');
-                if (tabGal) tabGal.className = activeStyle;
-                const photo = (currentStep3Photos && currentStep3Photos[currentStep3PhotoIndex]) ? currentStep3Photos[currentStep3PhotoIndex] : currentStep3Photos[0];
-                if (viewportImg && photo) viewportImg.style.backgroundImage = `url('${photo.img}')`;
-                if (swipeIndicator) swipeIndicator.classList.add('hidden');
-
-                // Paparkan anak panah < dan > serta jalur thumbnail bila tekan galeri sahaja
-                if (btnPrev) {
-                    btnPrev.classList.remove('hidden');
-                    btnPrev.style.removeProperty('display');
-                }
-                if (btnNext) {
-                    btnNext.classList.remove('hidden');
-                    btnNext.style.removeProperty('display');
-                }
-                if (thumbsContainer) {
-                    thumbsContainer.classList.remove('hidden');
-                    thumbsContainer.style.removeProperty('display');
-                }
-                renderStep3GalleryThumbnails();
-            }
-        }
-
-        document.getElementById('step3Tab360')?.addEventListener('click', () => setStep3Tab('360'));
-        document.getElementById('step3TabPanorama')?.addEventListener('click', () => setStep3Tab('panorama'));
-        document.getElementById('step3TabGallery')?.addEventListener('click', () => setStep3Tab('gallery'));
-
-        // Real Data Pipeline: Load draft values directly from Step 1
-        function loadCarDraft() {
-            try {
-                const raw = localStorage.getItem('wedrive_new_car_draft');
-                if (!raw) {
-                    setStep3Tab('gallery');
-                    return;
-                }
-                const data = JSON.parse(raw);
-
-                const brand = data.brand || '-';
-                const model = data.model || '-';
-                const variant = data.variant || '';
-                const plate = data.plate || '-';
-                const category = data.category || '-';
-                const year = data.year || '-';
-                const color = data.color || '-';
-                const engine = data.engine || '-';
-                const fuel = data.fuel || '-';
-                const transmission = data.transmission || '-';
-                const seats = data.seats || '-';
-                const daily = data.dailyPrice ? `RM ${Number(data.dailyPrice).toFixed(2)}` : 'RM 0.00';
-                const weekly = data.weeklyPrice ? `RM ${Number(data.weeklyPrice).toFixed(2)}` : 'RM 0.00';
-                const monthly = data.monthlyPrice ? `RM ${Number(data.monthlyPrice).toFixed(2)}` : 'RM 0.00';
-
-                // Update Spec Fields
-                if (document.getElementById('specPlate')) document.getElementById('specPlate').textContent = plate;
-                if (document.getElementById('specBrand')) document.getElementById('specBrand').textContent = brand;
-                if (document.getElementById('specModelVariant')) {
-                    const fullModel = [model, variant].filter(Boolean).join(' ');
-                    document.getElementById('specModelVariant').textContent = fullModel;
-                    document.getElementById('specModelVariant').title = fullModel;
-                }
-                if (document.getElementById('specCategory')) document.getElementById('specCategory').textContent = category;
-                if (document.getElementById('specYear')) document.getElementById('specYear').textContent = year;
-                if (document.getElementById('specColor')) {
-                    document.getElementById('specColor').textContent = color;
-                    document.getElementById('specColor').title = color;
-                }
-                if (document.getElementById('specEngine')) {
-                    document.getElementById('specEngine').textContent = engine;
-                    document.getElementById('specEngine').title = engine;
-                }
-                if (document.getElementById('specFuel')) document.getElementById('specFuel').textContent = fuel;
-                if (document.getElementById('specTransmission')) document.getElementById('specTransmission').textContent = transmission;
-                if (document.getElementById('specSeats')) document.getElementById('specSeats').textContent = seats;
-
-                // Update Pricing
-                if (document.getElementById('tarifDaily')) document.getElementById('tarifDaily').textContent = daily;
-                if (document.getElementById('tarifWeekly')) document.getElementById('tarifWeekly').textContent = weekly;
-                if (document.getElementById('tarifMonthly')) document.getElementById('tarifMonthly').textContent = monthly;
-
-                // Update Modal Text
-                const modalDesc = document.querySelector('#successModal p');
-                if (modalDesc) {
-                    const carTitle = [brand, model, variant].filter(x => x && x !== '-').join(' ');
-                    const plateText = (plate && plate !== '-') ? ` (${plate})` : '';
-                    modalDesc.textContent = `${carTitle || 'Kenderaan'}${plateText} telah berjaya didaftarkan ke inventori aktif sistem.`;
-                }
-
-                // Progressive Visual Disclosure: If 360 asset generated/linked, expand switcher
-                hasStep3360 = !!data.has360;
-                const switcher = document.getElementById('step3SegmentedSwitcher');
-                const tab360 = document.getElementById('step3Tab360');
-                const tabPano = document.getElementById('step3TabPanorama');
-                if (hasStep3360) {
-                    if (switcher) {
-                        switcher.classList.remove('max-w-[150px]');
-                        switcher.classList.add('max-w-md');
-                    }
-                    if (tab360) tab360.classList.remove('hidden');
-                    if (tabPano) tabPano.classList.remove('hidden');
-                    setStep3Tab('360');
-                } else {
-                    if (switcher) {
-                        switcher.classList.remove('max-w-md');
-                        switcher.classList.add('max-w-[150px]');
-                    }
-                    if (tab360) tab360.classList.add('hidden');
-                    if (tabPano) tabPano.classList.add('hidden');
-                    setStep3Tab('gallery');
-                }
-            } catch (e) {
-                console.warn('Gagal memuatkan draf:', e);
-                setStep3Tab('gallery');
-            }
-        }
-
-        loadCarDraft();
-    </script>
+    <!-- Step 3 Modular Controller Script -->
+    <script src="step3-pengesahan.js"></script>
 
     <!-- Real Admin Navigation & System Scripts -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>

@@ -1,11 +1,11 @@
 # Graph Report - AI CAR RENTAL SYSTEM  (2026-09-09)
 
 ## Corpus Check
-- 138 files · ~21,177,403 words
+- 138 files · ~21,176,120 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3115 nodes · 5637 edges · 203 communities (143 shown, 60 thin omitted)
+- 3115 nodes · 5637 edges · 202 communities (144 shown, 58 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 292 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
@@ -47,7 +47,7 @@
 - 🚗 WeDRIVE: Ringkasan Penuh Pembangunan Sistem (FYP 1 hingga FYP 2)
 - cl
 - lr
-- fn
+- .dot
 - yr
 - qc
 - cars.js
@@ -97,7 +97,6 @@
 - reports.js
 - initPairedPickers
 - shared/js/sidebar-loader.js
-- equals
 - Apple Human Interface Guidelines (HIG) Standard
 - updateMatrixWorld
 - DESIGN.md
@@ -236,7 +235,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (203 total, 60 thin omitted)
+## Communities (202 total, 58 thin omitted)
 
 ### Community 0 - "three.min.js"
 Cohesion: 0.02
@@ -327,12 +326,12 @@ Cohesion: 0.13
 Nodes (4): cl, lineTo(), moveTo(), Pl
 
 ### Community 31 - "lr"
-Cohesion: 0.11
-Nodes (3): delta(), distanceToPoint(), lr
+Cohesion: 0.08
+Nodes (4): delta(), distanceToPoint(), lr, ur
 
-### Community 32 - "fn"
+### Community 32 - ".dot"
 Cohesion: 0.10
-Nodes (4): at(), fn, li, wc
+Nodes (4): at(), closestPointToPointParameter(), fn, te()
 
 ### Community 33 - "yr"
 Cohesion: 0.10
@@ -506,6 +505,10 @@ Nodes (4): mh, nr, updateMatrixWorld(), wh
 Cohesion: 0.15
 Nodes (12): AI Chatbot Interface, Brand & Style, Buttons & Controls, Car Cards, Colors, Components, Dashboard Metrics, Elevation & Depth (+4 more)
 
+### Community 89 - "on"
+Cohesion: 0.08
+Nodes (3): equals(), fc(), on
+
 ### Community 90 - "marketing-ai.js"
 Cohesion: 0.38
 Nodes (3): getFutureDate(), getRandomColor(), parseAiOutput()
@@ -523,8 +526,8 @@ Cohesion: 0.32
 Nodes (3): initChatbot(), resolveBase(), setupFabScrollCollapse()
 
 ### Community 94 - "applyMatrix4"
-Cohesion: 0.06
-Nodes (7): applyMatrix4(), nn(), translate(), ur, vo, Yt(), Zo
+Cohesion: 0.07
+Nodes (6): applyMatrix4(), li, translate(), vo, Yt(), Xi
 
 ### Community 95 - "admin-idle-timeout.js"
 Cohesion: 0.38
@@ -583,8 +586,8 @@ Cohesion: 0.18
 Nodes (11): 1. Konfigurasi Projek & Rujukan Stitch MCP, 1B. Piawaian Master Payload & Prompt Architecture (7-Blok Mandatori), 2. Protokol Masa & Kesabaran Alatan (Patience & Polling Protocol), 3. Protokol Mandatori 5-Langkah Kitaran Pratonton STITCH UI PREVIEW (Strict 5-Step Sandbox Protocol), 4. Senarai Alatan Stitch MCP Rasmi, 5. Operasi Maksimum Pasca-Prompt (Post-Prompt Quality Engine), A. Master Parameter Payload (JSON), B. Formula Master Prompt 7-Blok Rasmi (+3 more)
 
 ### Community 119 - "copy"
-Cohesion: 0.09
-Nodes (6): copy(), fo(), ih, ka(), i(), ra()
+Cohesion: 0.08
+Nodes (7): copy(), fo(), ih, ka(), i(), nn(), ra()
 
 ### Community 123 - "CHAPTER 4: DESIGN"
 Cohesion: 0.18
@@ -660,7 +663,7 @@ Nodes (10): 1. Security Architecture & OWASP Best Practices, 2. Automated AI Sec
 
 ### Community 144 - "sl"
 Cohesion: 0.10
-Nodes (3): bl, sl, Xi
+Nodes (3): bl, sl, Zo
 
 ### Community 145 - "Context7 Live Documentation & API Skill (WeDRIVE)"
 Cohesion: 0.20
@@ -723,12 +726,12 @@ Cohesion: 0.25
 Nodes (7): 1. Official Test Credentials & Rules, 2. Struktur Direktori & Persekitaran Ujian, 3. Protokol Pelaksanaan Ujian (Execution Protocol), 4. Protokol Diagnosis & Pembaikan Kegagalan, 5. Piawaian Menulis Ujian Baharu, Peraturan Kredensial:, Playwright Sentinel Persona & Operating Guidelines
 
 ### Community 179 - ".multiplyScalar"
-Cohesion: 0.09
-Nodes (8): add(), T(), al(), closestPointToPoint(), closestPointToPointParameter(), setFromCamera(), setFromCenterAndSize(), te()
+Cohesion: 0.10
+Nodes (7): add(), T(), al(), closestPointToPoint(), setFromCamera(), setFromCenterAndSize(), wc
 
 ### Community 180 - "⚡ [PATCH UPDATE] 221. Pembersihan Mutlak Istilah Teknikal (Sifar Cache/Database/JPJ/Aset), Butang Skrin Penuh 1:1, Palang Kemajuan Dinamik & Animasi Siri Spesifikasi Pintar (v6.9.7)"
 Cohesion: 0.18
-Nodes (11): [MINOR UPDATE] v6.10.0 — Penginstitusian Fail Peraturan Baharu 22: Undang-undang Emas Maklum Balas Pengguna (New Rule 22: User Feedback Golden Rules Codification), [MINOR UPDATE] v6.11.0 — Navigasi Karusel Galeri, Jalur Pratonton Gambar Kecil Dinamik & Kawalan Bersyarat Eksklusif Tab Galeri (Gallery Carousel Navigation, Dynamic Thumbnail Strips & Strict Gallery-Only Visibility), [MINOR UPDATE] v6.12.0 — Langkah 4: Pandangan Pelanggan & Kad Bento Sorotan Spotlight Bersama Bar Sisi Pratonton Simulasi Pelanggan (Step 4 Customer View Spotlight Bento Card with Customer Sidebar Simulation Preview), [MINOR UPDATE] v6.13.0 — Langkah 5: Butiran & Tempahan Pelanggan Berdasarkan Penjanaan Tulen Stitch MCP (Step 5 Customer Vehicle Details & In-Page Date Booking Preview), [MINOR UPDATE] v6.14.0 — Penjanaan Kad Sorotan Pelanggan Ultra-Gempak Melalui Stitch MCP & Penyingkiran Skor Ulasan Palsu (Customer Spotlight Bento Card Overhaul via Stitch MCP), [MINOR UPDATE] v6.15.0 — Seni Bina Modular Folder Berasingan Pendaftaran Kereta Baharu (`admin/pages/car/add/`) Berasaskan Skrin Fizikal 5-Langkah (Modular Multi-Page Add Car Wizard Architecture), [MINOR UPDATE] v6.9.8 — Penggantian Status Draf Interaktif Swapping, Pemudahan Teks & Populasi Automatik 6 Sudut Foto AI (Interactive Swapping Draft State, Copy Simplification & Auto 6-Photo AI Population), ⚡ [PATCH UPDATE] 221. Pembersihan Mutlak Istilah Teknikal (Sifar Cache/Database/JPJ/Aset), Butang Skrin Penuh 1:1, Palang Kemajuan Dinamik & Animasi Siri Spesifikasi Pintar (v6.9.7) (+3 more)
+Nodes (11): [MINOR UPDATE] v6.10.0 — Penginstitusian Fail Peraturan Baharu 22: Undang-undang Emas Maklum Balas Pengguna (New Rule 22: User Feedback Golden Rules Codification), [MINOR UPDATE] v6.11.0 — Navigasi Karusel Galeri, Jalur Pratonton Gambar Kecil Dinamik & Kawalan Bersyarat Eksklusif Tab Galeri (Gallery Carousel Navigation, Dynamic Thumbnail Strips & Strict Gallery-Only Visibility), [MINOR UPDATE] v6.12.0 — Langkah 4: Pandangan Pelanggan & Kad Bento Sorotan Spotlight Bersama Bar Sisi Pratonton Simulasi Pelanggan (Step 4 Customer View Spotlight Bento Card with Customer Sidebar Simulation Preview), [MINOR UPDATE] v6.13.0 — Langkah 5: Butiran & Tempahan Pelanggan Berdasarkan Penjanaan Tulen Stitch MCP (Step 5 Customer Vehicle Details & In-Page Date Booking Preview), [MINOR UPDATE] v6.14.0 — Penjanaan Kad Sorotan Pelanggan Ultra-Gempak Melalui Stitch MCP & Penyingkiran Skor Ulasan Palsu (Customer Spotlight Bento Card Overhaul via Stitch MCP), [MINOR UPDATE] v6.15.0 — Seni Bina Modular Folder Berasingan Pendaftaran Kereta Baharu (`admin/pages/car/add-car/`) Berasaskan Skrin Fizikal 5-Langkah & Pemansuhan Fail Monolitik Lama (Modular Multi-Page Add Car Wizard Architecture), [MINOR UPDATE] v6.9.8 — Penggantian Status Draf Interaktif Swapping, Pemudahan Teks & Populasi Automatik 6 Sudut Foto AI (Interactive Swapping Draft State, Copy Simplification & Auto 6-Photo AI Population), ⚡ [PATCH UPDATE] 221. Pembersihan Mutlak Istilah Teknikal (Sifar Cache/Database/JPJ/Aset), Butang Skrin Penuh 1:1, Palang Kemajuan Dinamik & Animasi Siri Spesifikasi Pintar (v6.9.7) (+3 more)
 
 ### Community 181 - "1. Empat Domain Audit Keselamatan Mandatori"
 Cohesion: 0.25
@@ -773,16 +776,16 @@ Nodes (7): bind(), getValue(), _s(), setValue(), Tu(), xc, ys()
 ## Knowledge Gaps
 - **610 isolated node(s):** `PREVIEW_I18N`, `allCars`, `allBookings`, `allCars`, `CAL_DATA` (+605 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **60 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **58 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `copy()` connect `copy` to `three.min.js`, `ve`, `ai`, `dc`, `dr`, `sl`, `clone`, `.constructor`, `.fromBufferAttribute`, `he`, `i`, `tr`, `.constructor`, `cl`, `lr`, `fn`, `yr`, `Ml`, `Uo`, `.fromJSON`, `da`, `gi`, `.constructor`, `ie`, `.multiplyScalar`, `.setValues`, `.setAttribute`, `ll`, `bc`, `.invert`, `Ro`, `.updateMatrix`, `toJSON`, `s`, `.constructor`, `kc`, `ph`, `equals`, `.parse`, `updateMatrixWorld`, `on`, `applyMatrix4`, `fa`?**
+- **Why does `copy()` connect `copy` to `three.min.js`, `ve`, `ai`, `dc`, `dr`, `sl`, `clone`, `.constructor`, `.fromBufferAttribute`, `he`, `i`, `tr`, `.constructor`, `cl`, `lr`, `.dot`, `yr`, `Ml`, `Uo`, `.fromJSON`, `da`, `gi`, `.constructor`, `ie`, `.multiplyScalar`, `.setValues`, `.setAttribute`, `ll`, `bc`, `.invert`, `Ro`, `.updateMatrix`, `toJSON`, `s`, `.constructor`, `kc`, `ph`, `.parse`, `updateMatrixWorld`, `on`, `applyMatrix4`, `fa`?**
   _High betweenness centrality (0.030) - this node is a cross-community bridge._
-- **Why does `gn` connect `gn` to `three.min.js`, `.updateMatrix`, `load`, `toJSON`, `.constructor`, `clone`, `.multiplyScalar`, `copy`, `he`, `updateMatrixWorld`, `i`, `.invert`, `.constructor`, `t`, `applyMatrix4`?**
+- **Why does `gn` connect `gn` to `three.min.js`, `.dot`, `.updateMatrix`, `load`, `toJSON`, `.constructor`, `clone`, `.multiplyScalar`, `i`, `he`, `updateMatrixWorld`, `copy`, `applyMatrix4`, `.constructor`, `t`, `.invert`?**
   _High betweenness centrality (0.025) - this node is a cross-community bridge._
-- **Why does `ze` connect `ze` to `three.min.js`, `fn`, `ve`, `.multiplyScalar`, `.fromBufferAttribute`, `.length`, `copy`, `t`, `on`, `.constructor`, `setXYZ`, `applyMatrix4`?**
+- **Why does `ze` connect `ze` to `three.min.js`, `.dot`, `ve`, `.multiplyScalar`, `.fromBufferAttribute`, `.length`, `copy`, `t`, `on`, `.constructor`, `setXYZ`, `applyMatrix4`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
 - **What connects `PREVIEW_I18N`, `allCars`, `allBookings` to the rest of the system?**
   _610 weakly-connected nodes found - possible documentation gaps or missing edges._

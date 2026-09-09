@@ -6263,3 +6263,57 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.15.1 Integrate real admin topbar and sidebar navigation and clear all dummy mock data across 5 add car wizard steps`
   - Tag Versi: `6.15.1`
 
+---
+
+### [MAJOR UPDATE] v6.16.0 — Migrasi 100% Antaramuka STITCH UI Preview Bagi Langkah 2, 3, 4 Pendaftaran Kereta, Integrasi Data Sebenar Supabase, & Penggubalan Peraturan Universal Migrasi STITCH (`23_stitch_to_production_workflow.md`)
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna mengarahkan agar komponen antaramuka dan penggayaan daripada pratonton STITCH (`STITCH UI PREVIEW/7/`) diserap 100% ke dalam halaman modular pengeluaran:
+    - `STITCH UI PREVIEW/7/step2_studio360_preview.html` $\to$ `admin/pages/car/add-car/step2_studio360.html`
+    - `STITCH UI PREVIEW/7/step3_pengesahan_preview.html` $\to$ `admin/pages/car/add-car/step3_pengesahan.html`
+    - `STITCH UI PREVIEW/7/step4_pandangan_pelanggan_preview.html` $\to$ `admin/pages/car/add-car/step4_pandangan_pelanggan.html`
+  - Mengekalkan navigasi sebenar pentadbir WeDRIVE (Dwi-Navigasi: Topbar 6-modul dan Bar Sisi Kontekstual Sub-Main) seperti di `step1_spesifikasi.html` tanpa menggunakan mock header/sidebar STITCH.
+  - Memindahkan kesemua CSS inline daripada fail STITCH ke dalam fail master CSS global `shared/css/wedrive.css`.
+  - Memisahkan logik JavaScript ke dalam fail modul khusus `.js` di bawah `admin/pages/car/add-car/`.
+  - "Guna pangkalan data Supabase bermaksud buang dummy data lepastu connectkan terus dengan database Supabase." Mengalirkan paip data sebenar (`localStorage.getItem('wedrive_new_car_draft')` dan klien Supabase `window.WeDriveAPI`), serta memaparkan penunjuk neutral bersih (`"-"` dan `"RM 0.00"`) sekiranya draf belum diisi.
+  - Menjana peraturan ejen universal baharu dalam `.agents/rules/23_stitch_to_production_workflow.md` bagi mengawal selia proses penukaran mana-mana reka bentuk STITCH UI ke halaman pengeluaran pada masa hadapan.
+
+- **Tindakan Pembangunan & Transformasi Kod (Implementation)**:
+  1. **Penggubalan Peraturan Ejen Universal Baharu ([`23_stitch_to_production_workflow.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/23_stitch_to_production_workflow.md))**:
+     - Menggariskan **Protokol 6-Langkah Mandatori**:
+       - Langkah 1: Pengekstrakan Intipati Reka Bentuk 100% daripada `STITCH UI PREVIEW/`.
+       - Langkah 2: Pemisahan Mutlak CSS ke `shared/css/wedrive.css` (Sifar `<style>` inline dalam HTML).
+       - Langkah 3: Pemisahan Mutlak Skrip ke Modular `.js` (Sifar `<script>` logik inline dalam HTML).
+       - Langkah 4: Penggantian Rangka Mock dengan Navigasi Sebenar WeDRIVE (`#navbar-placeholder` & `#sidebar-placeholder`).
+       - Langkah 5: Penyambungan Paip Data Sebenar Supabase & Sifar Dummy Hardcode (Zero Fake Data).
+       - Langkah 6: Protokol Pengesahan 3-Peranti Apple & Ujian Automasi Playwright (100% Pass Rate).
+     - Mengemas kini indeks di `01_core_rules.md`, `.agents/PROJECT_STRUCTURE.md`, dan `docs/PROJECT_STRUCTURE.md`.
+     - Memastikan kesemua 23 fail peraturan berada di bawah siling $\le 12,000$ aksara.
+
+  2. **Penyatuan Penggayaan ke Master CSS (`shared/css/wedrive.css`)**:
+     - Menambah Seksyen 22: Penggayaan STITCH Apple HIG & Bento Grid Components (`.bento-card-v7`, `.hairline-border`, `.card-spec-pill`, `.media-bottom-gradient`, `.spotlight-title-text`, `.spotlight-subtitle-text`, `.spotlight-divider`, `.emerald-pulse`).
+     - Menambah token semantik adaptif mod siang/malam Apple HIG (`.text-on-surface`, `.text-on-surface-variant`, `.bg-surface-container`, `.bg-surface-container-lowest`, `.border-border-day`) dengan kontras tajam pada tema obsidian hitam.
+
+  3. **Penciptaan Fail Pengawal Skrip Modular (Dedicated JS Modules)**:
+     - `admin/pages/car/add-car/step2-studio360.js`: Mengurus penggiliran turntable 3D interaktif, 6 slot pemeriksaan visual kenderaan, pengimbas laser AI CDN, pendedahan progresif mod 360°, mod skrin penuh, dan auto-simpan draf sesi.
+     - `admin/pages/car/add-car/step3-pengesahan.js`: Menghidrat 10 spesifikasi teknikal pendaftaran daripada draf sesi / Supabase (`#specPlate`, `#specBrand`, `#specModel`, `#specCategory`, `#specYear`, `#specColor`, `#specEngine`, `#specFuel`, `#specTransmission`, `#specSeats`), slider galeri imej, pecahan tarif harga harian/mingguan/bulanan, dan pengesahan pendaftaran ke Supabase.
+     - `admin/pages/car/add-car/step4-pandangan-pelanggan.js`: Menghidrat kad sorotan pelanggan WYSIWYG (`#customerSpotlightCard`, `#customerCarTitle`, `#customerCarCategory`, `#customerCarPrice`, `#customerCarSpecsBadge`, `#customerCarColorBadge`, `#customerCarTransmissionBadge`), pematuhan sifar dummy data, dan penyegerakan tema/bahasa.
+
+  4. **Penulisan Semula Halaman Pengeluaran HTML**:
+     - `admin/pages/car/add-car/step2_studio360.html`: Bento layout 100% STITCH, navigasi pentadbir sebenar, sifar inline style/script.
+     - `admin/pages/car/add-car/step3_pengesahan.html`: Reka letak showcase 8:4 & kad 12-kolum spesifikasi kenderaan 100% STITCH, navigasi pentadbir sebenar, sifar inline style/script.
+     - `admin/pages/car/add-car/step4_pandangan_pelanggan.html`: Kad sorotan pelanggan WYSIWYG & replika sidebar pelanggan 100% STITCH, navigasi pentadbir sebenar, sifar inline style/script.
+
+- **Kepatuhan Ujian Automasi & Standard**:
+  - Ujian Playwright dijalankan menggunakan `cd tests && npx playwright test`.
+  - **Keputusan**: **51/51 ujian lulus (100% Pass Rate)**.
+  - Pengesahan visual pada tab tunggal merentas MacBook (1440px), iPad (820px), dan iPhone (393px) menggunakan Chrome DevTools MCP.
+  - Mematuhi Peraturan Mandatori Zero Oval Rule (1:1 ikon bulat sempurna dan kapsul pil 9999px).
+  - Mematuhi Polisi Sifar Jargon Pengaturcaraan dalam Antaramuka (Zero Coding Jargon).
+  - Graphify Knowledge Graph dikemas kini (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.16.0 Implement 100% STITCH UI preview conversion for Add Car steps 2, 3, 4 with real admin navigation, external CSS/JS, and Supabase data pipeline`
+  - Tag Versi: `6.16.0`
+
+
