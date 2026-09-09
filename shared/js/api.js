@@ -121,7 +121,23 @@ window.WeDriveAPI = {
                 var sb = window.supabaseClient;
                 var result = await sb.from('cars').select('*');
                 if (result.error) throw result.error;
-                return result.data || [];
+                var fetchedCars = result.data || [];
+                try {
+                    var localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+                    if (Array.isArray(localCars) && localCars.length > 0) {
+                        localCars.forEach(function(lc) {
+                            var exists = fetchedCars.some(function(c) {
+                                return (lc.id && c.id === lc.id) || (lc.plate && c.plate && lc.plate.toUpperCase() === c.plate.toUpperCase());
+                            });
+                            if (!exists) {
+                                fetchedCars.unshift(lc);
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.warn('[WeDriveAPI] Local cars merge warning:', e);
+                }
+                return fetchedCars;
             } catch (err) {
                 console.error('[WeDriveAPI] Supabase getCars error:', err);
                 var data = await _loadDummyData();
@@ -174,6 +190,21 @@ window.WeDriveAPI = {
                 ]);
 
                 var cars = coreResults[0].data || [];
+                try {
+                    var localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+                    if (Array.isArray(localCars) && localCars.length > 0) {
+                        localCars.forEach(function(lc) {
+                            var exists = cars.some(function(c) {
+                                return (lc.id && c.id === lc.id) || (lc.plate && c.plate && lc.plate.toUpperCase() === c.plate.toUpperCase());
+                            });
+                            if (!exists) {
+                                cars.unshift(lc);
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.warn('[WeDriveAPI] Local cars merge warning:', e);
+                }
                 var bookings = coreResults[1].data || [];
                 var customers = coreResults[2].data || [];
                 var admins = coreResults[3].data || [];
@@ -714,6 +745,62 @@ window.WeDriveAPI = {
             } catch (err) {
                 console.error('[WeDriveAPI] updateCarStatus error:', err);
                 return { success: false };
+            }
+        }
+    },
+
+    /**
+     * Create a new car record in the inventory.
+     * Used in: add-car.html (Admin New Car Registration)
+     * Inserts into Supabase PostgreSQL cars table and updates local cache.
+     */
+    createCar: async function (carData) {
+        var newRecord = {
+            name: carData.name,
+            brand: carData.brand || 'WeDRIVE',
+            plate: (carData.plate || '').toUpperCase(),
+            type: carData.type || 'Sedan',
+            color: carData.color || 'Putih',
+            year: parseInt(carData.year, 10) || 2024,
+            rate: carData.rate || 'RM 150/hari',
+            deposit: carData.deposit || 'RM 200',
+            seats: parseInt(carData.seats, 10) || 5,
+            transmission: carData.transmission || 'Automatic',
+            fuel: carData.fuel || 'Petrol',
+            engine: carData.engine || '2.0L Standard',
+            status: carData.status || 'Available',
+            location: carData.location || 'Pusat Operasi Utama WeDRIVE (HQ Melaka)',
+            has_360: Boolean(carData.has_360),
+            exterior_360: carData.exterior_360 || null,
+            interior_360: carData.interior_360 || null,
+            images: (carData.images && carData.images.length) ? carData.images : ['../../../shared/model/bezza.png']
+        };
+
+        if (!window.AppConfig.USE_REAL_DB) {
+            var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+            newRecord.id = carData.id || ('CR-' + Date.now());
+            existingLocal.unshift(newRecord);
+            localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
+            return { data: newRecord, error: null };
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var result = await sb.from('cars').insert([newRecord]).select();
+                if (result.error) throw result.error;
+
+                var savedCar = (result.data && result.data.length > 0) ? result.data[0] : newRecord;
+                var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+                existingLocal.unshift(savedCar);
+                localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
+
+                return { data: savedCar, error: null };
+            } catch (err) {
+                console.error('[WeDriveAPI] Supabase createCar error, saving to local cache fallback:', err);
+                var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+                newRecord.id = carData.id || ('CR-' + Date.now());
+                existingLocal.unshift(newRecord);
+                localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
+                return { data: newRecord, error: null };
             }
         }
     },

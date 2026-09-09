@@ -24,6 +24,14 @@
   // Resolve the base path to /shared/ from wherever the current page lives.
 
   function resolveBase() {
+    var link = document.querySelector('link[href*="shared/css/"]');
+    if (link) {
+      return link.getAttribute('href').replace(/shared\/css\/.*$/, '');
+    }
+    var script = document.querySelector('script[src*="shared/js/"]');
+    if (script) {
+      return script.getAttribute('src').replace(/shared\/js\/.*$/, '');
+    }
     var parts = window.location.pathname.split('/').filter(Boolean);
     if (!parts.length || !parts[parts.length - 1].includes('.')) return '';
     return parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);

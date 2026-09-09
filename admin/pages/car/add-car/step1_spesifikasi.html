@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Pendaftaran Kenderaan Baharu - Langkah 1: Spesifikasi &amp; Harga | WeDRIVE</title>
+    <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
+    <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=5.6.9" />
+    <!-- AUTH GUARD -->
+    <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+    <script src="preview-i18n.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#0c006a",
+                        "primary-container": "#0071e3",
+                        "on-background": "#1a1c1d",
+                        "tertiary": "#4b49c9",
+                        "night-bento": "#161618",
+                        "surface-dim": "#d9dadc",
+                        "primary-fixed-dim": "#abc7ff",
+                        "on-tertiary-container": "#fefaff",
+                        "secondary-fixed-dim": "#c7c6cb",
+                        "inverse-surface": "#2f3132",
+                        "warning": "#FF9500",
+                        "on-primary-fixed-variant": "#00458f",
+                        "surface-container": "#eeeef0",
+                        "success": "#34C759",
+                        "inverse-on-surface": "#F5F5F7",
+                        "surface-container-highest": "#D1D1D6",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#abc7ff",
+                        "surface-container-high": "#e8e8ea",
+                        "border-day": "rgba(0, 0, 0, 0.06)",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#6E6E73",
+                        "surface-variant": "#e2e2e4",
+                        "error-container": "#ffdad6",
+                        "surface": "#f9f9fb",
+                        "tertiary-fixed-dim": "#c2c1ff",
+                        "surface-tint": "#005cbb",
+                        "on-primary-fixed": "#001b3f",
+                        "on-error-container": "#93000a",
+                        "night-bento-subtle": "#1D1D20",
+                        "on-primary-container": "#fcfbff",
+                        "on-secondary-fixed": "#1a1b1f",
+                        "surface-container-low": "#FBFBFD",
+                        "primary-fixed": "#d7e2ff",
+                        "secondary-fixed": "#e3e2e7",
+                        "on-surface": "#1D1D1F",
+                        "surface-bright": "#FFFFFF",
+                        "primary": "#0071e3",
+                        "background": "#f9f9fb",
+                        "on-tertiary-fixed-variant": "#3631b4",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c1c6d6",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "night-surface": "#000000",
+                        "on-secondary-fixed-variant": "#46464b",
+                        "on-secondary-container": "#626267",
+                        "secondary": "#5e5e63",
+                        "outline": "#717785",
+                        "error": "#FF3B30",
+                        "tertiary-fixed": "#e2dfff",
+                        "border-night": "rgba(255, 255, 255, 0.08)",
+                        "tertiary-container": "#6563e3",
+                        "secondary-container": "#e0dfe4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xxl": "32px",
+                        "unit": "4px",
+                        "container-padding": "24px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "xl": "24px",
+                        "lg": "20px"
+                    },
+                    "fontFamily": {
+                        "title-1": ["Inter", "sans-serif"],
+                        "label-tabular": ["Inter", "sans-serif"],
+                        "title-3": ["Inter", "sans-serif"],
+                        "large-title-mobile": ["Inter", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"],
+                        "callout": ["Inter", "sans-serif"],
+                        "large-title": ["Inter", "sans-serif"],
+                        "footnote": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "headline": ["Inter", "sans-serif"],
+                        "title-2": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "title-1": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.028em", "fontWeight": "800" }],
+                        "label-tabular": ["14px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "title-3": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600" }],
+                        "large-title-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+                        "callout": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }],
+                        "large-title": ["34px", { "lineHeight": "41px", "letterSpacing": "-0.035em", "fontWeight": "800" }],
+                        "footnote": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "body": ["15px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline": ["17px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+                        "title-2": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.022em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Apple HIG Glass & Card Styles */
+        .glass-panel {
+            background-color: rgba(249, 249, 251, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        .bento-card {
+            background-color: #ffffff;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .interactive-btn {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, opacity 0.2s ease;
+        }
+        .interactive-btn:active {
+            transform: scale(0.97) !important;
+        }
+
+        /* ZERO OVAL RULE */
+        .circle-1-1 {
+            aspect-ratio: 1 / 1 !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-sizing: border-box !important;
+        }
+        .pill-btn {
+            border-radius: 9999px !important;
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+        }
+        .nav-icon-link {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease;
+        }
+        .nav-icon-link:hover {
+            transform: scale(1.08);
+        }
+        .nav-icon-link:active {
+            transform: scale(0.95);
+        }
+
+        /* DARK THEME STYLING (Apple Obsidian) */
+        html.dark body {
+            background-color: #000000 !important;
+            color: #F5F5F7 !important;
+        }
+        html.dark .glass-panel {
+            background-color: rgba(22, 22, 24, 0.85) !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark .bento-card {
+            background-color: #161618 !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+            box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4) !important;
+        }
+        html.dark .text-on-surface,
+        html.dark .text-on-background {
+            color: #F5F5F7 !important;
+        }
+        html.dark .text-on-surface-variant,
+        html.dark .text-secondary {
+            color: #8E8E93 !important;
+        }
+        html.dark .border-border-day {
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark .bg-surface-container {
+            background-color: #1D1D20 !important;
+        }
+        html.dark .bg-surface-container-high {
+            background-color: #262629 !important;
+        }
+        html.dark .bg-surface-container-lowest {
+            background-color: #161618 !important;
+        }
+        html.dark input, 
+        html.dark select {
+            background-color: #1D1D20 !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+            color: #FFFFFF !important;
+        }
+        html.dark input:focus,
+        html.dark select:focus {
+            border-color: #0071e3 !important;
+        }
+        /* Penghapusan Chevron Bertindih (Eliminate Tailwind Forms Default SVG Chevron Overlap) */
+        select {
+            background-image: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+        }
+        /* Jarak Ergonomik Butang Stepper Nombor (Apple HIG Number Stepper Spacing) */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            margin-left: 12px !important;
+            padding-left: 2px !important;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        input[type="number"]:hover::-webkit-inner-spin-button,
+        input[type="number"]:focus::-webkit-inner-spin-button {
+            opacity: 1;
+        }
+        /* AI Animation Effects & Shimmer */
+        @keyframes aiGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes aiLaserSweep {
+            0% { transform: translateX(-100%); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateX(450%); opacity: 0; }
+        }
+
+        @keyframes aiPulseGlow {
+            0%, 100% { 
+                box-shadow: 0 0 16px rgba(94, 92, 230, 0.35), 0 0 32px rgba(191, 90, 242, 0.2); 
+            }
+            50% { 
+                box-shadow: 0 0 24px rgba(0, 113, 227, 0.55), 0 0 44px rgba(255, 55, 95, 0.35); 
+            }
+        }
+
+        @keyframes aiFieldPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+            50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(94, 92, 230, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+        }
+
+        .ai-analyzing-active {
+            position: relative;
+            border-color: transparent !important;
+            animation: aiPulseGlow 2s infinite ease-in-out;
+        }
+
+        .ai-analyzing-active::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            padding: 2px;
+            background: linear-gradient(90deg, #0071E3, #5E5CE6, #BF5AF2, #FF375F, #00D2FF, #0071E3);
+            background-size: 300% 300%;
+            animation: aiGradientShift 2.2s infinite linear;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .ai-laser-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            background: linear-gradient(90deg, transparent, rgba(94, 92, 230, 0.3), rgba(0, 210, 255, 0.8), rgba(191, 90, 242, 0.6), transparent);
+            pointer-events: none;
+            z-index: 5;
+            animation: aiLaserSweep 1.3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ai-field-wave {
+            animation: aiFieldPulse 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            border-color: #5E5CE6 !important;
+            background-color: rgba(94, 92, 230, 0.09) !important;
+            box-shadow: 0 0 14px rgba(94, 92, 230, 0.25) !important;
+        }
+        html.dark .ai-field-wave {
+            border-color: #BF5AF2 !important;
+            background-color: rgba(191, 90, 242, 0.16) !important;
+            box-shadow: 0 0 18px rgba(191, 90, 242, 0.35) !important;
+        }
+
+        /* Unified Apple Intelligence Glass Bar (Light vs Dark) */
+        .ai-container-bar {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.05) 0%, rgba(94, 92, 230, 0.08) 50%, rgba(191, 90, 242, 0.12) 100%);
+            border: 1px solid rgba(94, 92, 230, 0.35);
+            box-shadow: 0 4px 20px rgba(94, 92, 230, 0.12);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ai-container-bar:hover {
+            border-color: rgba(191, 90, 242, 0.6);
+            box-shadow: 0 6px 25px rgba(191, 90, 242, 0.2);
+        }
+        html.dark .ai-container-bar {
+            background: linear-gradient(135deg, rgba(0, 113, 227, 0.18) 0%, rgba(94, 92, 230, 0.22) 50%, rgba(191, 90, 242, 0.28) 100%);
+            border: 1px solid rgba(191, 90, 242, 0.45);
+            box-shadow: 0 4px 25px rgba(94, 92, 230, 0.25);
+        }
+        html.dark .ai-container-bar:hover {
+            border-color: rgba(191, 90, 242, 0.8);
+            box-shadow: 0 6px 30px rgba(191, 90, 242, 0.35);
+        }
+
+        /* Unified AI Button Gradient (Exact Match Across Step 1 & Step 2) */
+        .ai-gradient-pill {
+            background: linear-gradient(135deg, #0071E3 0%, #5E5CE6 50%, #BF5AF2 100%) !important;
+            color: #FFFFFF !important;
+            box-shadow: 0 4px 16px rgba(94, 92, 230, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ai-gradient-pill:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 6px 22px rgba(191, 90, 242, 0.45);
+        }
+        .ai-gradient-pill:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body data-particles="6" data-cursor-glow>
+    <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+    <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>
+
+    <!-- MAIN -->
+    <main class="main">
+        <!-- TOPBAR (Main Navigation) -->
+        <div id="navbar-placeholder" data-module="admin"></div>
+
+        <div class="content">
+            <!-- BENTO HEADER HERO -->
+            <div class="bento-header-hero reveal-onload mb-20">
+                <div class="flex-between flex-wrap gap-16">
+                    <div>
+                        <div class="bento-breadcrumbs">
+                            <a href="../cars.html" data-key="addcar_bc_mgmt">Pengurusan Kereta</a>
+                            <span class="material-icons-round">chevron_right</span>
+                            <span data-key="sidebar_add_car">Tambah Kereta Baharu</span>
+                            <span class="material-icons-round">chevron_right</span>
+                            <span data-i18n="step1_pill">Maklumat Asas</span>
+                        </div>
+                        <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
+                            <h1 class="bento-title-main" data-i18n="step1_title" data-key="ac_step1_title">Spesifikasi Kenderaan</h1>
+                            <span class="status-badge info"><span class="dot"></span> <span>Langkah 1 / 5</span></span>
+                        </div>
+                        <p class="bento-subtitle-main" data-i18n="step1_subtitle">Konfigurasikan spesifikasi teknikal rasmi dan formula penetapan kadar sewaan bagi kenderaan baharu.</p>
+                    </div>
+                    <div class="flex-center gap-10">
+                        <button class="btn-outline-sm" onclick="window.location.href='../cars.html'">
+                            <span class="material-icons-round fs-16">close</span> <span data-i18n="nav_cancel">Batal</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Stepper Capsule (Standardized Apple HIG 5-Step) -->
+            <div class="flex justify-center w-full mb-8">
+                <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-1.5 flex items-center gap-1.5 max-w-full overflow-x-auto hide-scrollbar">
+                    <!-- Step 1 Active -->
+                    <div class="pill-btn flex items-center gap-2 px-4 py-2 rounded-full bg-primary/15 text-primary font-bold shadow-xs">
+                        <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">1</span>
+                        <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step1_pill">Maklumat Asas</span>
+                    </div>
+                    
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+                    
+                    <!-- Step 2 Link -->
+                    <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                        <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">2</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
+                    </a>
+                    
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+                    
+                    <!-- Step 3 Link -->
+                    <a href="step3_pengesahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                        <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
+                    </a>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 4 Link -->
+                    <a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                        <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">4</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
+                    </a>
+
+                    <div class="w-8 h-[1px] bg-border-day"></div>
+
+                    <!-- Step 5 Link -->
+                    <a href="step5_tempahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                        <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">5</span>
+                        <span class="font-callout text-callout font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bento Form -->
+            <form class="grid grid-cols-1 md:grid-cols-12 gap-gutter" onsubmit="event.preventDefault();">
+            
+            <!-- Section 1: Maklumat Utama & Spesifikasi (Kotak Yang Sama: Bahagian Atas & Bawah) -->
+            <section class="bento-card col-span-1 md:col-span-12 p-container-padding">
+                <h2 class="font-title-3 text-title-3 mb-6 border-b border-border-day pb-4 flex items-center gap-2 text-on-surface font-bold">
+                    <span class="material-symbols-outlined text-primary">directions_car</span>
+                    <span data-i18n="step1_sec1_title">Maklumat Kenderaan &amp; Spesifikasi</span>
+                </h2>
+
+                <!-- Bahagian Atas: Maklumat Asas Kenderaan -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 mb-4 pb-2 border-b border-border-day/50">
+                        <span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+                        <h3 class="font-headline text-[15px] font-bold text-on-surface" data-i18n="step1_sec1_sub1">Maklumat Asas</h3>
+                        <span class="font-footnote text-footnote text-secondary font-medium" data-i18n="step1_sec1_sub1_note">(Identiti &amp; Pendaftaran Kenderaan)</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+                        <!-- Pengeluar -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
+                            <div class="relative">
+                                <select id="inputBrand" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" selected data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
+                                    <option value="Honda">Honda</option>
+                                    <option value="Toyota">Toyota</option>
+                                    <option value="Perodua">Perodua</option>
+                                    <option value="Proton">Proton</option>
+                                    <option value="BMW">BMW</option>
+                                    <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                    <option value="Mazda">Mazda</option>
+                                    <option value="Nissan">Nissan</option>
+                                    <option value="Hyundai">Hyundai</option>
+                                    <option value="BYD">BYD</option>
+                                    <option value="Tesla">Tesla</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Model -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_model">Model</label>
+                            <input id="inputModel" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Civic" data-i18n-ph="field_model_ph" value="" type="text"/>
+                        </div>
+
+                        <!-- Varian -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_variant">Varian</label>
+                            <input id="inputVariant" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5 TC-P" data-i18n-ph="field_variant_ph" value="" type="text"/>
+                        </div>
+
+                        <!-- No Pendaftaran -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_plate">No. Pendaftaran</label>
+                            <input id="inputPlate" class="uppercase bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full tracking-wider font-semibold text-on-surface" placeholder="Cth: VBA 1234" value="" type="text"/>
+                        </div>
+
+                        <!-- Tahun Dibuat -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_year">Tahun Dibuat</label>
+                            <input id="inputYear" class="font-label-tabular text-label-tabular bg-surface-container border border-border-day rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 2024" value="" type="number"/>
+                        </div>
+
+                        <!-- Warna Rasmi Kenderaan -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_color">Warna Kenderaan</label>
+                            <input id="inputColor" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Meteoroid Gray Metallic" data-i18n-ph="field_color_ph" value="" type="text"/>
+                        </div>
+
+                        <!-- AI Auto Generate Spesifikasi -->
+                        <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
+                            <label class="font-footnote text-footnote font-semibold flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[16px] text-[#BF5AF2]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold" data-i18n="ai_suggestion_label">Cadangan Spesifikasi Pintar</span>
+                            </label>
+                            <input type="hidden" id="inputStatus" name="status" value="available"/>
+                            <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="ai-container-bar interactive-btn group relative w-full h-[46px] py-0 px-4 rounded-xl flex items-center justify-between transition-all duration-300 active:scale-[0.98] cursor-pointer overflow-hidden">
+                                <div id="aiSpecLaserScanner" class="hidden ai-laser-line"></div>
+                                <div class="flex items-center gap-2 z-10">
+                                    <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300" style="font-variation-settings: 'FILL' 1; color: #5E5CE6;">auto_awesome</span>
+                                    <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap" data-i18n="ai_btn_autofill">Isi Automatik</span>
+                                </div>
+                                <span id="aiBtnBadge" class="ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0">
+                                    <span id="aiBtnBadgeText" data-i18n="ai_btn_generate">Jana AI</span>
+                                    <span id="aiBtnBadgeIcon" class="material-symbols-outlined text-[14px]">arrow_downward</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pemisah Apple HIG Divider -->
+                <div class="my-6 border-t border-border-day/70"></div>
+
+                <!-- Bahagian Bawah: Spesifikasi Kenderaan (Spec) -->
+                <div>
+                    <div class="flex items-center gap-2 mb-4 pb-2 border-b border-border-day/50">
+                        <span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+                        <h3 class="font-headline text-[15px] font-bold text-on-surface" data-i18n="step1_sec1_sub2">Spesifikasi Kenderaan</h3>
+                        <span class="font-footnote text-footnote text-secondary font-medium" data-i18n="step1_sec1_sub2_note">(Klasifikasi &amp; Keupayaan Mekanikal)</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
+                        <!-- Kategori Kenderaan -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_category">Kategori Kenderaan</label>
+                            <div class="relative">
+                                <select id="inputCategory" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" selected disabled data-i18n-opt="field_category_select">Pilih Kategori</option>
+                                    <option value="Sedan">Sedan</option>
+                                    <option value="Hatchback">Hatchback</option>
+                                    <option value="SUV">SUV</option>
+                                    <option value="MPV">MPV</option>
+                                    <option value="Crossover">Crossover</option>
+                                    <option value="Pickup">Pickup (4x4)</option>
+                                    <option value="Coupe">Coupe</option>
+                                    <option value="Wagon">Wagon</option>
+                                    <option value="Convertible">Convertible</option>
+                                    <option value="Van">Van</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Punca Kuasa / Bahan Api -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_fuel">Punca Kuasa (Bahan Api)</label>
+                            <div class="relative">
+                                <select id="inputFuel" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" selected disabled data-i18n-opt="field_fuel_select">Pilih Punca Kuasa</option>
+                                    <option value="Petrol">Petrol (RON95/97)</option>
+                                    <option value="Hybrid">Hybrid (HEV)</option>
+                                    <option value="Diesel">Diesel Euro 5</option>
+                                    <option value="Electric">Elektrik Penuh (EV/BEV)</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Sistem Transmisi -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_transmission">Sistem Transmisi</label>
+                            <div class="relative">
+                                <select id="inputTransmission" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" selected disabled data-i18n-opt="field_transmission_select">Pilih Transmisi</option>
+                                    <option value="Automatic">Automatik (AT / CVT / DCT)</option>
+                                    <option value="Manual">Manual (MT)</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Kapasiti Tempat Duduk -->
+                        <div class="flex flex-col gap-sm">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_seats">Kapasiti Tempat Duduk</label>
+                            <div class="relative">
+                                <select id="inputSeats" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" selected disabled data-i18n-opt="field_seats_select">Pilih Tempat Duduk</option>
+                                    <option value="2" data-i18n-opt="seats_2">2 Tempat Duduk</option>
+                                    <option value="4" data-i18n-opt="seats_4">4 Tempat Duduk</option>
+                                    <option value="5" data-i18n-opt="seats_5">5 Tempat Duduk</option>
+                                    <option value="7" data-i18n-opt="seats_7">7 Tempat Duduk</option>
+                                    <option value="8" data-i18n-opt="seats_8">8 Tempat Duduk</option>
+                                    <option value="10" data-i18n-opt="seats_10">10–12 Tempat Duduk</option>
+                                </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Kapasiti / Sesaran Enjin -->
+                        <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-4">
+                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_engine">Kapasiti / Sesaran Enjin &amp; Kuasa</label>
+                            <input id="inputEngine" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" data-i18n-ph="field_engine_ph" value="" type="text"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Penetapan Harga Sewaan Pintar -->
+            <section class="bento-card col-span-1 md:col-span-12 p-container-padding">
+                <h2 class="font-title-3 text-title-3 mb-lg border-b border-border-day pb-4 flex items-center gap-2 text-on-surface font-bold">
+                    <span class="material-symbols-outlined text-primary">payments</span>
+                    <span data-i18n="step1_sec2_title">Penetapan Harga Sewaan Pintar</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+                    <!-- Kadar Harian -->
+                    <div class="bg-surface-container p-lg rounded-xl border border-border-day flex flex-col gap-2">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_daily_rate">Kadar Harian</label>
+                        <div class="flex items-center gap-2">
+                            <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
+                            <input id="inputDailyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="" type="number" step="10"/>
+                        </div>
+                    </div>
+
+                    <!-- Kadar Mingguan -->
+                    <div class="bg-surface-container p-lg rounded-xl border border-border-day flex flex-col gap-2">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_weekly_rate">Kadar Mingguan</label>
+                        <div class="flex items-center gap-2">
+                            <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
+                            <input id="inputWeeklyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="" type="number" step="50"/>
+                        </div>
+                    </div>
+
+                    <!-- Kadar Bulanan -->
+                    <div class="bg-surface-container p-lg rounded-xl border border-border-day flex flex-col gap-2">
+                        <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_monthly_rate">Kadar Bulanan</label>
+                        <div class="flex items-center gap-2">
+                            <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
+                            <input id="inputMonthlyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="" type="number" step="100"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+
+        <!-- FOOTER -->
+        <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+</main>
+
+    <!-- Floating Bottom Action Dock (Standardized Apple HIG) -->
+    <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2 z-50 transition-all duration-300">
+        <!-- Left Action (Kembali / Batal) -->
+        <a href="../cars.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            <span data-i18n="dock_back_cancel">Batal</span>
+        </a>
+
+        <!-- Center Action & Status: Bertukar antara Butang Simpan Draf <-> Draf disimpan -->
+        <div id="dockDraftWrapper" class="hidden sm:flex items-center justify-center min-w-[140px] px-2">
+            <!-- State 1: Butang Simpan Draf (Muncul apabila ada perubahan / sebelum ditekan) -->
+            <button id="btnSaveDraft" type="button" onclick="manualSaveDraft()" class="pill-btn interactive-btn flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high border border-border-day text-on-surface font-footnote text-[13px] font-semibold transition-all duration-300 active:scale-[0.97] cursor-pointer shadow-xs" title="Simpan perubahan spesifikasi ke draf" data-i18n-title="dock_btn_save_draft_title">
+                <span id="btnSaveDraftIcon" class="material-symbols-outlined text-[16px] text-primary">bookmark</span>
+                <span id="btnSaveDraftText" data-i18n="dock_btn_save_draft">Simpan Draf</span>
+            </button>
+
+            <!-- State 2: Status Draf Disimpan (HANYA muncul apabila ditekan Simpan Draf) -->
+            <div id="draftSavedStatus" class="hidden items-center gap-2 text-on-surface-variant font-medium px-3 py-1.5 rounded-full transition-all duration-300">
+                <span id="draftSavedIcon" class="material-symbols-outlined text-[20px] text-[#28C840]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+                <span id="draftSavedText" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold" data-i18n="dock_status_draft_saved">Draf disimpan</span>
+            </div>
+        </div>
+
+        <!-- Right Primary Action (Font from Gambar 1: Crisp Bold Pure White) -->
+        <a href="step2_studio360.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
+            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
+            <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
+        </a>
+    </footer>
+
+    <!-- AI Apple Glass Floating Toast Notification -->
+    <div id="aiToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
+        <div class="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
+            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        </div>
+        <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">Spesifikasi kenderaan berjaya dijana secara automatik!</span>
+    </div>
+
+    <!-- AI Specs Controller Script -->
+    <script>
+        // WeDRIVE AI Auto Generate Car Specifications Knowledge Repository
+        const AI_CAR_SPEC_DB = {
+            'Honda': {
+                'Civic': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)', daily: 280, weekly: 1680, monthly: 4800 },
+                'City': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L DOHC i-VTEC (121 PS / 145 Nm)', daily: 180, weekly: 1080, monthly: 3200 },
+                'HR-V': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '1.5L e:HEV DOHC i-VTEC (131 PS / 253 Nm)', daily: 260, weekly: 1560, monthly: 4500 },
+                'CR-V': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L VTEC Turbo (193 PS / 243 Nm)', daily: 350, weekly: 2100, monthly: 5800 },
+                'Accord': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L VTEC Turbo (201 PS / 260 Nm)', daily: 380, weekly: 2280, monthly: 6200 },
+                'WR-V': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L DOHC i-VTEC (121 PS / 145 Nm)', daily: 200, weekly: 1200, monthly: 3500 }
+            },
+            'Toyota': {
+                'Vios': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (106 PS / 138 Nm)', daily: 180, weekly: 1080, monthly: 3200 },
+                'Yaris': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-FE (107 PS / 140 Nm)', daily: 170, weekly: 1020, monthly: 3000 },
+                'Corolla Cross': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '1.8L Hybrid Electric HEV (122 PS Total)', daily: 290, weekly: 1740, monthly: 4900 },
+                'Camry': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.5L Dynamic Force 8AT (209 PS / 253 Nm)', daily: 420, weekly: 2520, monthly: 6800 },
+                'Alphard': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.4L Turbo T24A-FTS Direct Shift 8AT (279 PS)', daily: 850, weekly: 5100, monthly: 13800 },
+                'Vellfire': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.5L Dual VVT-i Super CVT-i (182 PS / 235 Nm)', daily: 800, weekly: 4800, monthly: 12800 },
+                'Innova': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.0L Dual VVT-i 1TR-FE 6AT (139 PS)', daily: 320, weekly: 1920, monthly: 5200 },
+                'Hilux': { category: 'Pickup', fuel: 'Diesel', transmission: 'Automatic', seats: '5', engine: '2.8L 1GD-FTV Turbo Diesel (204 PS / 500 Nm)', daily: 350, weekly: 2100, monthly: 5600 },
+                'Fortuner': { category: 'SUV', fuel: 'Diesel', transmission: 'Automatic', seats: '7', engine: '2.8L VRZ 4x4 Turbo Diesel (204 PS / 500 Nm)', daily: 480, weekly: 2880, monthly: 7600 }
+            },
+            'Perodua': {
+                'Myvi': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (103 PS / 137 Nm)', daily: 130, weekly: 780, monthly: 2400 },
+                'Axia': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L 1KR-VE D-CVT (68 PS / 91 Nm)', daily: 110, weekly: 660, monthly: 2000 },
+                'Bezza': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L 1NR-VE Dual VVT-i (95 PS / 121 Nm)', daily: 130, weekly: 780, monthly: 2400 },
+                'Ativa': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L Turbo 1KR-VET D-CVT (98 PS / 140 Nm)', daily: 170, weekly: 1020, monthly: 3000 },
+                'Alza': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (106 PS / 138 Nm)', daily: 190, weekly: 1140, monthly: 3400 },
+                'Aruz': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '1.5L Dual VVT-i 2NR-VE 4AT (102 PS / 133 Nm)', daily: 200, weekly: 1200, monthly: 3500 }
+            },
+            'Proton': {
+                'S70': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Turbo 7-Speed Dual Clutch DCT (150 PS / 226 Nm)', daily: 190, weekly: 1140, monthly: 3300 },
+                'X50': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L TGDi Turbo 7-Speed DCT (177 PS / 255 Nm)', daily: 220, weekly: 1320, monthly: 3800 },
+                'X70': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L TGDi Direct Injection 7-DCT (177 PS / 255 Nm)', daily: 260, weekly: 1560, monthly: 4400 },
+                'X90': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '1.5L TGDi 48V Mild Hybrid BSG (190 PS / 300 Nm)', daily: 330, weekly: 1980, monthly: 5400 },
+                'Saga': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L 4-Silinder VVT 4AT (95 PS / 120 Nm)', daily: 120, weekly: 720, monthly: 2200 },
+                'Persona': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.6L VVT CVT (109 PS / 150 Nm)', daily: 140, weekly: 840, monthly: 2500 },
+                'Iriz': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.6L VVT Active CVT (109 PS / 150 Nm)', daily: 140, weekly: 840, monthly: 2500 }
+            },
+            'BYD': {
+                'Atto 3': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'PMSM 150 kW Permanent Magnet EV (204 PS / 310 Nm)', daily: 290, weekly: 1740, monthly: 4900 },
+                'Dolphin': { category: 'Hatchback', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Blade Battery EV Motor 150 kW (204 PS / 310 Nm)', daily: 220, weekly: 1320, monthly: 3800 },
+                'Seal': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor AWD 390 kW Performance (530 PS / 670 Nm)', daily: 450, weekly: 2700, monthly: 7200 }
+            },
+            'Tesla': {
+                'Model 3': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor All-Wheel Drive EV (498 PS / 4.4s 0-100)', daily: 480, weekly: 2880, monthly: 7600 },
+                'Model Y': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor Long Range AWD EV (514 PS / 533 km Range)', daily: 520, weekly: 3120, monthly: 8200 }
+            },
+            'BMW': {
+                '3 Series': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L BMW TwinPower Turbo 8-Speed Steptronic (258 PS)', daily: 490, weekly: 2940, monthly: 7800 },
+                '5 Series': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L TwinPower Turbo Mild Hybrid (258 PS / 400 Nm)', daily: 650, weekly: 3900, monthly: 9900 },
+                'X3': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L xDrive30i TwinPower Turbo (252 PS / 350 Nm)', daily: 550, weekly: 3300, monthly: 8800 },
+                'X5': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '3.0L xDrive50e Plug-in Hybrid PHEV (489 PS / 700 Nm)', daily: 880, weekly: 5280, monthly: 14200 },
+                'i4': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'eDrive40 250 kW eDrive EV (340 PS / 430 Nm)', daily: 560, weekly: 3360, monthly: 8900 },
+                'iX': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'xDrive40 Dual Motor AWD EV (326 PS / 630 Nm)', daily: 790, weekly: 4740, monthly: 12500 }
+            },
+            'Mercedes-Benz': {
+                'C-Class': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L Turbo 9G-TRONIC Mild Hybrid (258 PS / 400 Nm)', daily: 520, weekly: 3120, monthly: 8200 },
+                'E-Class': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L 4-Silinder Turbo 9G-TRONIC (258 PS / 400 Nm)', daily: 680, weekly: 4080, monthly: 10500 },
+                'GLC': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '2.0L Turbo 4MATIC Mild Hybrid EQ Boost (258 PS)', daily: 580, weekly: 3480, monthly: 9200 },
+                'A-Class': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L Turbo 7G-DCT (163 PS / 250 Nm)', daily: 380, weekly: 2280, monthly: 6000 }
+            },
+            'Mazda': {
+                'Mazda 3': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed AT (162 PS / 213 Nm)', daily: 240, weekly: 1440, monthly: 4100 },
+                'CX-5': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed Activematic (162 PS / 213 Nm)', daily: 290, weekly: 1740, monthly: 4800 },
+                'CX-30': { category: 'Crossover', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed AT (162 PS / 213 Nm)', daily: 260, weekly: 1560, monthly: 4400 }
+            },
+            'Nissan': {
+                'Almera': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L Turbo HR10DET X-Tronic CVT (100 PS / 152 Nm)', daily: 160, weekly: 960, monthly: 2800 },
+                'Serena': { category: 'MPV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '2.0L S-Hybrid MR20DD X-Tronic CVT (150 PS / 200 Nm)', daily: 320, weekly: 1920, monthly: 5200 },
+                'Navara': { category: 'Pickup', fuel: 'Diesel', transmission: 'Automatic', seats: '5', engine: '2.5L YD25DDTi Turbo Diesel 7AT (190 PS / 450 Nm)', daily: 320, weekly: 1920, monthly: 5100 }
+            },
+            'Hyundai': {
+                'Ioniq 5': { category: 'Crossover', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor AWD 72.6 kWh EV (305 PS / 605 Nm)', daily: 440, weekly: 2640, monthly: 7000 },
+                'Staria': { category: 'MPV', fuel: 'Diesel', transmission: 'Automatic', seats: '7', engine: '2.2L CRDi Turbo Diesel 8AT (177 PS / 431 Nm)', daily: 580, weekly: 3480, monthly: 9400 }
+            }
+        };
+
+        function detectCarSpecs() {
+            const brand = (document.getElementById('inputBrand')?.value || '').trim();
+            const model = (document.getElementById('inputModel')?.value || '').trim();
+            const variant = (document.getElementById('inputVariant')?.value || '').trim();
+
+            if (!brand && !model) {
+                showAiToast('Sila pilih Pengeluar atau masukkan Model terlebih dahulu.', 'warning');
+                return null;
+            }
+
+            // 1. Direct or partial match in AI_CAR_SPEC_DB
+            let match = null;
+            if (brand && AI_CAR_SPEC_DB[brand]) {
+                const brandModels = AI_CAR_SPEC_DB[brand];
+                for (const m in brandModels) {
+                    if (model.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(model.toLowerCase())) {
+                        match = { ...brandModels[m] };
+                        break;
+                    }
+                }
+            }
+
+            // If not found under specified brand, search globally across all brands
+            if (!match && model) {
+                for (const b in AI_CAR_SPEC_DB) {
+                    for (const m in AI_CAR_SPEC_DB[b]) {
+                        if (model.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(model.toLowerCase())) {
+                            match = { ...AI_CAR_SPEC_DB[b][m] };
+                            break;
+                        }
+                    }
+                    if (match) break;
+                }
+            }
+
+            // 2. Intelligent heuristic fallback if not in knowledge repository
+            if (!match) {
+                const combined = `${brand} ${model} ${variant}`.toLowerCase();
+                let category = 'Sedan';
+                let fuel = 'Petrol';
+                let transmission = 'Automatic';
+                let seats = '5';
+                let engine = `${variant || '2.0L Enjin Pintar'} DOHC`;
+                let daily = 250;
+
+                if (combined.includes('ev') || combined.includes('electric') || combined.includes('bev') || combined.includes('atto') || combined.includes('seal') || combined.includes('ioniq') || combined.includes('tesla')) {
+                    fuel = 'Electric';
+                    engine = 'Motor Elektrik AC Segerak (EV / Blade Battery)';
+                    daily = 350;
+                } else if (combined.includes('hybrid') || combined.includes('hev') || combined.includes('phev') || combined.includes('e:hev')) {
+                    fuel = 'Hybrid';
+                    engine = '1.8L DOHC 16V Atkinson Cycle + Motor Elektrik HEV';
+                    daily = 280;
+                } else if (combined.includes('diesel') || combined.includes('d-max') || combined.includes('hilux') || combined.includes('ranger') || combined.includes('triton') || combined.includes('navara')) {
+                    fuel = 'Diesel';
+                    category = 'Pickup';
+                    seats = '5';
+                    engine = '2.4L - 2.8L Turbo Diesel Commonrail Intercooled';
+                    daily = 320;
+                }
+
+                if (combined.includes('alphard') || combined.includes('vellfire') || combined.includes('alza') || combined.includes('innova') || combined.includes('serena') || combined.includes('staria') || combined.includes('carnival') || combined.includes('mpv')) {
+                    category = 'MPV';
+                    seats = '7';
+                    daily = daily < 300 ? 300 : daily;
+                } else if (combined.includes('suv') || combined.includes('cr-v') || combined.includes('hr-v') || combined.includes('cx-5') || combined.includes('x50') || combined.includes('x70') || combined.includes('x90') || combined.includes('ativa') || combined.includes('aruz')) {
+                    category = 'SUV';
+                    seats = (combined.includes('x90') || combined.includes('aruz')) ? '7' : '5';
+                    daily = daily < 220 ? 220 : daily;
+                } else if (combined.includes('myvi') || combined.includes('axia') || combined.includes('yaris') || combined.includes('iriz') || combined.includes('hatchback')) {
+                    category = 'Hatchback';
+                    seats = '5';
+                    daily = 140;
+                } else if (combined.includes('van') || combined.includes('hiace') || combined.includes('urvan')) {
+                    category = 'Van';
+                    seats = '10';
+                    daily = 380;
+                } else if (combined.includes('coupe') || combined.includes('gt') || combined.includes('supra') || combined.includes('mustang')) {
+                    category = 'Coupe';
+                    seats = '4';
+                    daily = 550;
+                }
+
+                if (combined.includes('manual') || combined.includes('mt')) {
+                    transmission = 'Manual';
+                }
+
+                match = {
+                    category,
+                    fuel,
+                    transmission,
+                    seats,
+                    engine,
+                    daily,
+                    weekly: Math.round(daily * 6),
+                    monthly: Math.round(daily * 20)
+                };
+            }
+
+            return match;
+        }
+
+        let isGeneratingSpec = false;
+
+        function runAiAutoGenerate() {
+            if (isGeneratingSpec) return;
+
+            const btn = document.getElementById('aiAutoGenerateBtn');
+            const btnText = document.getElementById('aiBtnText');
+            const btnIcon = document.getElementById('aiBtnIcon');
+            const btnBadge = document.getElementById('aiBtnBadge');
+            const btnBadgeText = document.getElementById('aiBtnBadgeText');
+            const btnBadgeIcon = document.getElementById('aiBtnBadgeIcon');
+            const laserScanner = document.getElementById('aiSpecLaserScanner');
+            const brand = (document.getElementById('inputBrand')?.value || '').trim();
+            const model = (document.getElementById('inputModel')?.value || '').trim();
+
+            if (!brand && !model) {
+                showAiToast('Sila pilih Pengeluar atau masukkan Model kenderaan terlebih dahulu.', 'warning');
+                return;
+            }
+
+            isGeneratingSpec = true;
+            const dict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
+
+            // Phase 1 (0ms): Activate Apple Siri Iridescent Aura, Laser Sweep, Spinner & Loading State
+            if (btn) btn.classList.add('ai-analyzing-active', 'pointer-events-none');
+            if (laserScanner) laserScanner.classList.remove('hidden');
+            
+            if (btnIcon) {
+                btnIcon.textContent = 'progress_activity';
+                btnIcon.classList.add('animate-spin');
+                btnIcon.style.color = '#BF5AF2';
+            }
+            if (btnText) {
+                btnText.textContent = dict.ai_generating_step1 || 'Mengenal model...';
+            }
+            if (btnBadge) {
+                btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-primary/25 text-primary border border-primary/30 flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
+            }
+            if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Scanning...' : 'Imbas...';
+            if (btnBadgeIcon) {
+                btnBadgeIcon.textContent = 'progress_activity';
+                btnBadgeIcon.classList.add('animate-spin');
+            }
+
+            // Phase 2 (550ms): Match specs & start cascading ripple wave across the fields
+            setTimeout(() => {
+                if (!isGeneratingSpec) return;
+                if (btnText) btnText.textContent = dict.ai_generating_step2 || 'Memadankan data...';
+
+                const specs = detectCarSpecs();
+                if (specs) {
+                    const categoryEl = document.getElementById('inputCategory');
+                    const fuelEl = document.getElementById('inputFuel');
+                    const transEl = document.getElementById('inputTransmission');
+                    const seatsEl = document.getElementById('inputSeats');
+                    const engineEl = document.getElementById('inputEngine');
+                    const dailyEl = document.getElementById('inputDailyRate');
+                    const weeklyEl = document.getElementById('inputWeeklyRate');
+                    const monthlyEl = document.getElementById('inputMonthlyRate');
+
+                    const targetFields = [
+                        { el: categoryEl, val: specs.category },
+                        { el: fuelEl, val: specs.fuel },
+                        { el: transEl, val: specs.transmission },
+                        { el: seatsEl, val: specs.seats },
+                        { el: engineEl, val: specs.engine },
+                        { el: dailyEl, val: Number(specs.daily).toFixed(2), wrap: dailyEl?.closest('.bg-surface-container') },
+                        { el: weeklyEl, val: Number(specs.weekly).toFixed(2), wrap: weeklyEl?.closest('.bg-surface-container') },
+                        { el: monthlyEl, val: Number(specs.monthly).toFixed(2), wrap: monthlyEl?.closest('.bg-surface-container') }
+                    ];
+
+                    // Cascading ripple wave animation across fields (from Page 1)
+                    targetFields.forEach((item, index) => {
+                        setTimeout(() => {
+                            if (item.el) {
+                                item.el.value = item.val;
+                                const targetGlow = item.wrap || item.el;
+                                targetGlow.classList.add('ai-field-wave');
+                                setTimeout(() => {
+                                    targetGlow.classList.remove('ai-field-wave');
+                                }, 1400);
+                            }
+                        }, index * 70);
+                    });
+                }
+            }, 550);
+
+            // Phase 3 (1300ms): Completion, Green check morphing, and Apple Glass Toast
+            setTimeout(() => {
+                const specs = detectCarSpecs();
+
+                // Remove laser and rotating border
+                if (laserScanner) laserScanner.classList.add('hidden');
+                if (btn) btn.classList.remove('ai-analyzing-active');
+
+                if (btnIcon) {
+                    btnIcon.classList.remove('animate-spin');
+                    btnIcon.textContent = 'check_circle';
+                    btnIcon.style.color = '#34C759';
+                }
+                if (btnText) {
+                    btnText.textContent = (getCurrentLang() === 'en') ? '✓ Specs Complete' : '✓ Spesifikasi Lengkap';
+                    btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-success tracking-tight';
+                }
+                if (btnBadge) {
+                    btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-success text-white flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
+                    btnBadge.style.cssText = 'color: #FFFFFF !important; background-color: #34C759 !important;';
+                }
+                if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Done' : 'Selesai';
+                if (btnBadgeIcon) {
+                    btnBadgeIcon.classList.remove('animate-spin');
+                    btnBadgeIcon.textContent = 'check';
+                }
+
+                const carTitle = [brand, model].filter(Boolean).join(' ');
+                const toastSuccessMsg = (getCurrentLang() === 'en') 
+                    ? `✓ ${carTitle} specifications auto-generated successfully!` 
+                    : `✓ Spesifikasi ${carTitle} berjaya dijana secara automatik!`;
+                showAiToast(toastSuccessMsg, 'success');
+                saveStep1Draft();
+                showDraftUnsavedState();
+
+                // Phase 4 (2800ms): Gracefully reset button state
+                setTimeout(() => {
+                    const currentDict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
+                    if (btn) btn.classList.remove('pointer-events-none');
+                    if (btnIcon) {
+                        btnIcon.textContent = 'auto_awesome';
+                        btnIcon.style.color = '#5E5CE6';
+                    }
+                    if (btnText) {
+                        btnText.textContent = currentDict.ai_btn_autofill || 'Isi Automatik';
+                        btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight';
+                    }
+                    if (btnBadge) {
+                        btnBadge.className = 'ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
+                        btnBadge.style.cssText = '';
+                    }
+                    if (btnBadgeText) btnBadgeText.textContent = currentDict.ai_btn_generate || 'Jana AI';
+                    if (btnBadgeIcon) btnBadgeIcon.textContent = 'arrow_downward';
+
+                    isGeneratingSpec = false;
+                }, 2800);
+
+            }, 1300);
+        }
+
+        function showAiToast(msg, type = 'success') {
+            const toast = document.getElementById('aiToast');
+            const toastMsg = document.getElementById('aiToastMsg');
+            if (!toast || !toastMsg) return;
+
+            toastMsg.textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-10px]', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3200);
+        }
+
+        // Real Data Pipeline: Save draft to localStorage so Step 2 and Step 3 read real data
+        function saveStep1Draft() {
+            const draft = {
+                brand: document.getElementById('inputBrand')?.value || '',
+                model: document.getElementById('inputModel')?.value || '',
+                variant: document.getElementById('inputVariant')?.value || '',
+                plate: document.getElementById('inputPlate')?.value || '',
+                category: document.getElementById('inputCategory')?.value || '',
+                year: document.getElementById('inputYear')?.value || '',
+                color: document.getElementById('inputColor')?.value || '',
+                engine: document.getElementById('inputEngine')?.value || '',
+                fuel: document.getElementById('inputFuel')?.value || '',
+                transmission: document.getElementById('inputTransmission')?.value || '',
+                seats: document.getElementById('inputSeats')?.value || '',
+                dailyPrice: document.getElementById('inputDailyRate')?.value || '',
+                weeklyPrice: document.getElementById('inputWeeklyRate')?.value || '',
+                monthlyPrice: document.getElementById('inputMonthlyRate')?.value || ''
+            };
+            try {
+                localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+            } catch(e) {}
+        }
+
+        function showDraftSavedState() {
+            const btn = document.getElementById('btnSaveDraft');
+            const status = document.getElementById('draftSavedStatus');
+            if (btn) {
+                btn.classList.add('hidden');
+                btn.classList.remove('flex');
+            }
+            if (status) {
+                status.classList.remove('hidden');
+                status.classList.add('flex');
+                status.classList.add('ai-field-wave');
+                setTimeout(() => status.classList.remove('ai-field-wave'), 1200);
+            }
+        }
+
+        function showDraftUnsavedState() {
+            const btn = document.getElementById('btnSaveDraft');
+            const status = document.getElementById('draftSavedStatus');
+            if (status) {
+                status.classList.add('hidden');
+                status.classList.remove('flex');
+            }
+            if (btn) {
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            }
+        }
+
+        function manualSaveDraft(showToast = true) {
+            saveStep1Draft();
+            showDraftSavedState();
+
+            if (showToast) {
+                const toastMsg = (getCurrentLang() === 'en') ? '✓ Specification draft saved successfully.' : '✓ Draf spesifikasi kenderaan berjaya disimpan.';
+                showAiToast(toastMsg, 'success');
+            }
+        }
+
+        function restoreStep1Draft() {
+            try {
+                const raw = localStorage.getItem('wedrive_new_car_draft');
+                if (!raw) return;
+                const d = JSON.parse(raw);
+                if (d.brand && document.getElementById('inputBrand')) document.getElementById('inputBrand').value = d.brand;
+                if (d.model && document.getElementById('inputModel')) document.getElementById('inputModel').value = d.model;
+                if (d.variant && document.getElementById('inputVariant')) document.getElementById('inputVariant').value = d.variant;
+                if (d.plate && document.getElementById('inputPlate')) document.getElementById('inputPlate').value = d.plate;
+                if (d.category && document.getElementById('inputCategory')) document.getElementById('inputCategory').value = d.category;
+                if (d.year && document.getElementById('inputYear')) document.getElementById('inputYear').value = d.year;
+                if (d.color && document.getElementById('inputColor')) document.getElementById('inputColor').value = d.color;
+                if (d.engine && document.getElementById('inputEngine')) document.getElementById('inputEngine').value = d.engine;
+                if (d.fuel && document.getElementById('inputFuel')) document.getElementById('inputFuel').value = d.fuel;
+                if (d.transmission && document.getElementById('inputTransmission')) document.getElementById('inputTransmission').value = d.transmission;
+                if (d.seats && document.getElementById('inputSeats')) document.getElementById('inputSeats').value = d.seats;
+                if (d.dailyPrice && document.getElementById('inputDailyRate')) document.getElementById('inputDailyRate').value = d.dailyPrice;
+                if (d.weeklyPrice && document.getElementById('inputWeeklyRate')) document.getElementById('inputWeeklyRate').value = d.weeklyPrice;
+                if (d.monthlyPrice && document.getElementById('inputMonthlyRate')) document.getElementById('inputMonthlyRate').value = d.monthlyPrice;
+            } catch(e) {}
+        }
+
+        ['inputBrand', 'inputModel', 'inputVariant', 'inputPlate', 'inputCategory', 'inputYear', 'inputColor', 'inputEngine', 'inputFuel', 'inputTransmission', 'inputSeats', 'inputDailyRate', 'inputWeeklyRate', 'inputMonthlyRate'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('input', () => {
+                    saveStep1Draft();
+                    showDraftUnsavedState();
+                });
+                el.addEventListener('change', () => {
+                    saveStep1Draft();
+                    showDraftUnsavedState();
+                });
+            }
+        });
+
+        // Restore saved draft if user had previously entered details
+        restoreStep1Draft();
+    </script>
+
+    <!-- Real Admin Navigation & System Scripts -->
+    <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
+    <script src="../../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
+    <script src="../../../../shared/js/main.js?v=5.2.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/api.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/anime.min.js"></script>
+    <script src="../../../../shared/js/animate.js?v=5.2.3"></script>
+    <script src="../../../js/admin-idle-timeout.js?v=5.2.77"></script>
+</body>
+</html>

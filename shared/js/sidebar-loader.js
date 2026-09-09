@@ -29,7 +29,7 @@
         { page: 'car-available', href: 'car/available-cars.html', icon: 'check_circle', key: 'sidebar_available_cars', label: 'Kereta Tersedia' },
         { page: 'car-rented', href: 'car/rented-cars.html', icon: 'car_rental', key: 'sidebar_rented_cars', label: 'Kereta Sedang Disewa' },
         { page: 'car-detail', href: 'car/car-detail/car-detail.html', icon: '360', key: 'sidebar_car_showcase', label: 'Studio 360° & Info Kereta' },
-        { page: 'car-add', href: 'car/add-car.html', icon: 'add_circle', key: 'sidebar_add_car', label: 'Tambah Kereta Baharu' }
+        { page: 'car-add', href: 'car/add-car/index.html', icon: 'add_circle', key: 'sidebar_add_car', label: 'Tambah Kereta Baharu' }
       ]
     },
     booking: {
@@ -127,6 +127,13 @@
         if (items[k].page === currentPage) {
           return items[k].page;
         }
+      }
+    }
+
+    // 1b. Check if inside /car/add-car/ modular wizard
+    if (pathname.indexOf('/car/add-car/') !== -1 || pathname.endsWith('/car/add-car.html')) {
+      for (var a = 0; a < items.length; a++) {
+        if (items[a].page === 'car-add') return 'car-add';
       }
     }
 

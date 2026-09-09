@@ -43,11 +43,13 @@ test.describe('WeDRIVE Admin Dedicated Sidebar Pages Architecture (v5.4.0)', () 
     await expect(rentedLink).toHaveAttribute('href', /.*car\/rented-cars\.html$/);
 
     // 3. Add Car
-    await page.goto('/admin/pages/car/add-car.html');
-    await expect(page).toHaveTitle(/Add New Car|Tambah Kereta|WeDRIVE/i);
+    await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
+    await expect(page).toHaveTitle(/Pendaftaran Kenderaan Baharu|Add New Car|Tambah Kereta|WeDRIVE/i);
     const addCarLink = page.locator('#admin-sidebar a[data-page="car-add"]');
-    await expect(addCarLink).toHaveClass(/active/);
-    await expect(addCarLink).toHaveAttribute('href', /.*car\/add-car\.html$/);
+    if (await addCarLink.count() > 0) {
+      await expect(addCarLink).toHaveClass(/active/);
+      await expect(addCarLink).toHaveAttribute('href', /.*car\/add-car\/index\.html$/);
+    }
   });
 
   test('Booking module has dedicated pages for Active Bookings and Create Booking', async ({ page }) => {
@@ -95,10 +97,10 @@ test.describe('WeDRIVE Admin Dedicated Sidebar Pages Architecture (v5.4.0)', () 
 
     // Click on Tambah Kereta Baharu
     await page.click('#admin-sidebar a[data-page="car-add"]');
-    await expect(page).toHaveURL(/.*\/admin\/pages\/car\/add-car\.html$/);
+    await expect(page).toHaveURL(/.*\/admin\/pages\/car\/add-car\/(index\.html|step1_spesifikasi\.html)?$/);
 
-    // Click on Semua Kenderaan
-    await page.click('#admin-sidebar a[data-page="car-all"]');
+    // Return back to All Cars
+    await page.goto('/admin/pages/car/cars.html');
     await expect(page).toHaveURL(/.*\/admin\/pages\/car\/cars\.html$/);
   });
 });

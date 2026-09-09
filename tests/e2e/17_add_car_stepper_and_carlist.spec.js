@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.describe('WeDRIVE Add Car 2-Step Stepper & Carlist Cascading Selectors', () => {
+test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Sync', () => {
 
   test.beforeEach(async ({ page }) => {
     // Inject valid admin session
@@ -16,112 +16,110 @@ test.describe('WeDRIVE Add Car 2-Step Stepper & Carlist Cascading Selectors', ()
     });
   });
 
-  test('Cascading selectors auto-fill model, variant, technical specs, and formula pricing', async ({ page }) => {
-    await page.goto('/admin/pages/car/add-car.html');
-    await page.waitForLoadState('networkidle');
+  test('Index entrypoint auto-forwards to Step 1: Spesifikasi & Harga', async ({ page }) => {
+    await page.goto('/admin/pages/car/add-car/index.html');
+    await page.waitForURL('**/admin/pages/car/add-car/step1_spesifikasi.html');
+    expect(page.url()).toContain('step1_spesifikasi.html');
 
-    // 1. Verify Stepper and Step 1 is active
-    await expect(page.locator('#step-btn-1')).toHaveClass(/active/);
-    await expect(page.locator('#step-1-container')).toBeVisible();
-    await expect(page.locator('#step-2-container')).toBeHidden();
-
-    // 2. Select Brand 'Proton'
-    await page.selectOption('#car-brand', 'Proton');
-
-    // Verify Models populated with Proton models (S70, X50, X70, etc.)
-    const modelSelect = page.locator('#car-model');
-    await expect(modelSelect).toContainText('S70');
-    await expect(modelSelect).toContainText('X50');
-
-    // 3. Select Model 'X50'
-    await page.selectOption('#car-model', 'X50');
-
-    // Verify Variants populated
-    const variantSelect = page.locator('#car-variant');
-    await expect(variantSelect).toContainText('1.5 TGDi Flagship');
-
-    // 4. Verify Technical specs auto-filled
-    await expect(page.locator('#car-type')).toHaveValue('SUV');
-    await expect(page.locator('#car-seats')).toHaveValue('5');
-    await expect(page.locator('#car-transmission')).toHaveValue('Automatic');
-    await expect(page.locator('#car-fuel')).toHaveValue('Petrol');
-
-    // 5. Verify Rate and Deposit calculated by formula
-    const rateVal = await page.locator('#car-rate').inputValue();
-    expect(parseInt(rateVal, 10)).toBeGreaterThanOrEqual(100);
-
-    const depVal = await page.locator('#car-deposit').inputValue();
-    expect(parseInt(depVal, 10)).toBeGreaterThanOrEqual(150);
-
-    // 6. Test 'Lain-lain' Color Option displays custom color input
-    await page.selectOption('#car-color-select', 'other');
-    await expect(page.locator('#car-color-custom-wrap')).toBeVisible();
-
-    // Select standard color again hides it
-    await page.selectOption('#car-color-select', 'Hitam (Midnight / Metallic Black)');
-    await expect(page.locator('#car-color-custom-wrap')).toBeHidden();
+    // Verify Stepper Capsule Step 1 is active
+    const step1Pill = page.locator('.pill-btn:has-text("Maklumat Asas"), .pill-btn:has-text("Basic Info")');
+    await expect(step1Pill.first()).toBeVisible();
   });
 
-  test('Stepper transitions between Step 1 and Step 2 smoothly', async ({ page }) => {
-    await page.goto('/admin/pages/car/add-car.html');
+  test('Step 1: Specifications form inputs, AI suggestions, and formula pricing', async ({ page }) => {
+    await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
     await page.waitForLoadState('networkidle');
 
-    // Select brand, model, and plate number
-    await page.selectOption('#car-brand', 'Perodua');
-    await page.selectOption('#car-model', 'Myvi');
-    await page.fill('#car-plate', 'WXY 8899');
+    // Select Brand and Fill details
+    await page.selectOption('#inputBrand', 'Honda');
+    await page.fill('#inputModel', 'Civic');
+    await page.fill('#inputVariant', '1.5 TC-P');
+    await page.fill('#inputPlate', 'WKL 9988');
 
-    // Click Next to Step 2
-    await page.locator('#btn-next-step').click();
+    // Verify AI Auto Generate Button
+    const aiBtn = page.locator('#aiAutoGenerateBtn');
+    await expect(aiBtn).toBeVisible();
 
-    // Verify Step 2 is now active
-    await expect(page.locator('#step-btn-2')).toHaveClass(/active/);
-    await expect(page.locator('#step-2-container')).toBeVisible();
-    await expect(page.locator('#step-1-container')).toBeHidden();
-    await expect(page.locator('#card-360-studio')).toBeVisible();
+    // Verify Daily Rate and Weekly Rate inputs exist
+    await expect(page.locator('#inputDailyRate')).toBeVisible();
+    await expect(page.locator('#inputWeeklyRate')).toBeVisible();
 
-    // Return to Step 1
-    await page.locator('button:has-text("Kembali ke Spesifikasi")').first().click();
-    await expect(page.locator('#step-btn-1')).toHaveClass(/active/);
-    await expect(page.locator('#step-1-container')).toBeVisible();
-    await expect(page.locator('#step-2-container')).toBeHidden();
+    // Navigate to Step 2 via bottom dock
+    const nextBtn = page.locator('a[href="step2_studio360.html"]').last();
+    await expect(nextBtn).toBeVisible();
+    await nextBtn.click();
+    await page.waitForURL('**/admin/pages/car/add-car/step2_studio360.html');
+    expect(page.url()).toContain('step2_studio360.html');
   });
 
-  test('Draft auto-save and exit confirmation modal protect work in progress', async ({ page }) => {
-    await page.addInitScript(() => {
-      localStorage.setItem('wedrive-lang', 'ms');
-      localStorage.setItem('wedrive_lang', 'ms');
-      localStorage.setItem('wedrive_language', 'ms');
+  test('Step 2: Visual Studio 360 viewer, photo slots, and progression to Step 3', async ({ page }) => {
+    await page.goto('/admin/pages/car/add-car/step2_studio360.html');
+    await page.waitForLoadState('networkidle');
+
+    // Verify 360 Turntable Viewport
+    await expect(page.locator('#turntableViewport')).toBeVisible();
+    await expect(page.locator('#photoUploadSlotsGrid')).toBeVisible();
+
+    // Navigate to Step 3
+    const nextBtn = page.locator('a[href="step3_pengesahan.html"]').last();
+    await expect(nextBtn).toBeVisible();
+    await nextBtn.click();
+    await page.waitForURL('**/admin/pages/car/add-car/step3_pengesahan.html');
+    expect(page.url()).toContain('step3_pengesahan.html');
+  });
+
+  test('Full 5-step modular journey: Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5 -> Registration & CRUD sync to cars list', async ({ page }) => {
+    page.on('dialog', async dialog => {
+      await dialog.accept();
     });
-    await page.goto('/admin/pages/car/add-car.html');
+
+    // 1. Step 1: Input Details
+    await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
     await page.waitForLoadState('networkidle');
 
-    // Fill plate and trigger draft save
-    await page.fill('#car-plate', 'DRAFT 1234');
+    const testPlate = 'WDR ' + Math.floor(1000 + Math.random() * 9000);
+    await page.selectOption('#inputBrand', 'Honda');
+    await page.fill('#inputModel', 'City');
+    await page.fill('#inputPlate', testPlate);
+
+    // Save and advance to Step 2
+    const toStep2 = page.locator('a[href="step2_studio360.html"]').last();
+    await toStep2.click();
+    await page.waitForURL('**/admin/pages/car/add-car/step2_studio360.html');
+
+    // 2. Step 2 -> Advance to Step 3
+    const toStep3 = page.locator('a[href="step3_pengesahan.html"]').last();
+    await toStep3.click();
+    await page.waitForURL('**/admin/pages/car/add-car/step3_pengesahan.html');
+
+    // 3. Step 3 -> Advance to Step 4 (Lihat Sebagai Pelanggan)
+    const toStep4 = page.locator('#btnViewAsCustomer');
+    await expect(toStep4).toBeVisible();
+    await toStep4.click();
+    await page.waitForURL('**/admin/pages/car/add-car/step4_pandangan_pelanggan.html');
+
+    // 4. Step 4: Verify Customer Spotlight Card & Advance to Step 5
+    await expect(page.locator('#customerSpotlightCard')).toBeVisible();
+    const toStep5 = page.locator('a[href="step5_tempahan.html"]').last();
+    await toStep5.click();
+    await page.waitForURL('**/admin/pages/car/add-car/step5_tempahan.html');
+
+    // 5. Step 5: Final Registration Submit
+    await expect(page.locator('#step5Title')).toBeVisible();
+    const submitBtn = page.locator('#btn-final-register');
+    await expect(submitBtn).toBeVisible();
+    await submitBtn.click();
+
+    await page.waitForURL('**/admin/pages/car/cars.html', { timeout: 10000 });
+    await page.waitForSelector('#car-grid');
+
+    // Search for the newly created car by plate number
+    await page.fill('#fl-search', testPlate);
     await page.waitForTimeout(500);
 
-    // Click Batal & verify Exit Confirmation Modal appears
-    await page.locator('.btn-cancel-clean, button:has-text("Batal"), button:has-text("Cancel")').first().click();
-    const modal = page.locator('#modal-exit-confirm');
-    await expect(modal).toHaveClass(/show/);
-    await expect(modal).toContainText(/Tinggalkan Pendaftaran Kereta|Leave Car Registration/);
-
-    // Click Stay on page
-    await page.locator('.apple-exit-modal-card button.btn-primary, button:has-text("Kekal di Halaman Ini")').click();
-    await expect(modal).not.toHaveClass(/show/);
-
-    // Reload page to test Draft Resume Banner
-    await page.reload();
-    await page.waitForLoadState('networkidle');
-
-    // Banner should be visible
-    const draftBanner = page.locator('#banner-draft-resume');
-    await expect(draftBanner).toBeVisible();
-    await expect(draftBanner).toContainText(/Draf Pendaftaran Ditemui|Draft Registration Found/);
-
-    // Click Pulihkan Draf
-    await page.locator('#banner-draft-resume button.btn-primary-sm, button:has-text("Pulihkan Draf")').click();
-    await expect(page.locator('#car-plate')).toHaveValue('DRAFT 1234');
+    // Check that the car-grid contains the registered plate
+    const carListing = page.locator('#car-grid');
+    await expect(carListing).toContainText(testPlate);
   });
 
 });

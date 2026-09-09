@@ -6177,5 +6177,89 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.14.1 Align spotlight card to real WeDRIVE production card dimensions and borderless specs`
   - Tag Versi: `6.14.1`
 
+---
 
+### [MINOR UPDATE] v6.15.0 — Seni Bina Modular Folder Berasingan Pendaftaran Kereta Baharu (`admin/pages/car/add-car/`) Berasaskan Skrin Fizikal 5-Langkah & Pemansuhan Fail Monolitik Lama (Modular Multi-Page Add Car Wizard Architecture)
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna meminta agar halaman penambahan kenderaan diasingkan ke dalam folder khusus bernama `add-car` dengan setiap langkah mempunyai fail fizikal `.html` sendiri sepadan 100% dengan `STITCH UI PREVIEW/7/`, dan membenarkan pemadaman fail lama `admin/pages/car/add-car.html` sebaik sahaja aliran modular siap dan diuji:
+    > *"kenapa x sama ...a suruh kau buat jek page add car ni ikut 5 page xnak...xsama buruk ...kiranya 5 step ni setiap step satu page faham x...buat folder add car lepastu yang skrg ni lepas siap dalam folder saya izinkan delete boleh delete tapi kena siap dulu"*
+
+- **Seni Bina Folder & Modul Terasing (`admin/pages/car/add-car/`)**:
+  1. **`index.html`**: Halaman pelancar (*launcher & auto-redirect*) yang memajukan sesi terus ke `step1_spesifikasi.html`.
+  2. **`step1_spesifikasi.html`**: Fasa 1 Spesifikasi Kenderaan Bento Grid — Pemilih bertingkat (Pengeluar $\to$ Model $\to$ Varian $\to$ Spesifikasi Teknikal), pengiraan formula kadar harian/mingguan/bulanan, dan pengimbas laser Siri AI.
+  3. **`step2_studio360.html`**: Fasa 2 Studio Visual 360° — Paparan turntable 360 interaktif, zon seret/muat naik foto galeri Apple Bento, dan palang kemajuan simpan visual (0% $\to$ 100%).
+  4. **`step3_pengesahan.html`**: Fasa 3 Semakan Akhir Pentadbir — Pameran Bento 10 spesifikasi kenderaan yang disahkan (Tanpa data palsu atau ulangan universal) dengan mod dwi-tema.
+  5. **`step4_pandangan_pelanggan.html`**: Fasa 4 Pandangan Pelanggan WYSIWYG — Kad Sorotan Pelanggan (*Customer Spotlight Card*) bersaiz standard pengeluaran WeDRIVE (`360px` $\times$ `220px`), spesifikasi bersih 2×2 tanpa kotak, dan lencana ketersediaan zamrud.
+  6. **`step5_tempahan.html`**: Fasa 5 Butiran & Tempahan Pelanggan — Paparan interaktif butiran kenderaan, simulator pemilih tarikh sewaan, pengiraan anggaran harga sewaan automatik, dock tindakan terapung bawah Apple HIG, dan fungsi pendaftaran mutlak ke pangkalan data/Supabase serta lencongan lancar ke `../cars.html`.
+  7. **`add-car-flow.js`**: Enjin penyelarasan keadaan dan pemulihan draf dwiarah (`localStorage.getItem('wedrive_new_car_draft')`).
+  8. **`preview-i18n.js`**: Enjin lokalisasi dwibahasa (EN & MS) khusus untuk aliran modular pendaftaran kereta yang menyokong pemetaan atribut `[data-i18n]` dan `[data-key]`.
+
+- **Pembersihan & Pemansuhan Fail Lama**:
+  - Fail monolitik lapuk `admin/pages/car/add-car.html` selamat disandarkan ke `bin/legacy_add_car/add-car.html` (mematuhi Peraturan 06) dan dipadam daripada direktori pengeluaran `admin/pages/car/`.
+  - Kesemua pautan navigasi dalam bar sisi (`shared/js/sidebar-loader.js`), butang tindakan pantas papan pemuka (`admin/pages/dashboard/admin.html`), dan butang "Tambah Kereta" (`admin/pages/car/available-cars.html`) diselaraskan ke `add-car/index.html`.
+
+- **Kepatuhan Ujian Automasi & Standard**:
+  - Menambah suite ujian E2E baharu di [`tests/e2e/18_modular_add_car_flow.spec.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/tests/e2e/18_modular_add_car_flow.spec.js) dan menyelaraskan ujian sedia ada di `10_admin_sidebar_pages.spec.js`, `14_ai_key_vault_and_location.spec.js`, `17_add_car_stepper_and_carlist.spec.js`, dan `18_full_system_bilingual_parity.spec.js`.
+  - Jumlah ujian keseluruhan: **51/51 ujian lulus (100% Pass Rate)**.
+  - Mematuhi Peraturan Mandatori Zero Oval Rule (1:1 ikon bulat dan kapsul pil 9999px).
+  - Mematuhi Polisi Lokasi Tunggal WeDRIVE (HQ Cyberjaya).
+  - Kesemua 22 fail peraturan `.agents/rules/*.md` kekal $\le 12,000$ aksara.
+
+- **Maklumat Git**:
+  - Commit: `6.15.0 Implement modular multi-page add car wizard architecture across dedicated HTML steps`
+  - Tag Versi: `6.15.0`
+
+---
+
+### [PATCH UPDATE] v6.15.1 — Integrasi Penuh Navigasi Pentadbir Sebenar (Real Topbar & Contextual Sub-Main Sidebar) dan Pembersihan Mutlak Data Olokan (Zero Dummy Data / Clean Blank State) Merentas 5 Langkah Pendaftaran Kereta
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna mengarahkan agar komponen navigasi olok-olok (*mock header/sidebar*) pada kelima-lima skrin modular pendaftaran kereta digantikan dengan komponen navigasi pentadbir sebenar WeDRIVE (*Real Topbar & Real Contextual Sidebar*), serta membuang kesemua data contoh atau data olok-olok (*mock/pre-filled dummy data*) supaya borang dan paparan bersih ditinggalkan kosong:
+    > *"skrg ganti lahh topbar admin real,sidebar,admin real dari admin punya n data tu semua buang lahh tinggalkan kosong."*
+
+- **Integrasi Navigasi Pentadbir Sebenar (Real Admin Dual-Navigation)**:
+  1. **Topbar Utama Pentadbir (`#navbar-placeholder` & `navbar-loader.js`)**:
+     - Menggantikan bar atas olok-olok dengan `<div id="navbar-placeholder" data-module="admin"></div>`.
+     - Mengemas kini algoritma resolusi laluan asas `resolveBase()` dalam `shared/js/navbar-loader.js` untuk menyokong laluan bersarang 4-tahap (`admin/pages/car/add-car/*.html`) melalui pemeriksaan dinamik `<link href*="shared/css/">` dan `<script src*="shared/js/">`.
+     - Menyuntik bar navigasi 6-modul pentadbir (Dashboard, Cars, Bookings, Customers, Reports, AI Intelligence) lengkap dengan suis dwibahasa (EN/MS) dan suis tema Apple.
+  2. **Bar Sisi Kontekstual Sub-Main (`#sidebar-placeholder` & `sidebar-loader.js`)**:
+     - Menggantikan kanvas kendiri atau bar sisi pelanggan olok-olok dengan `<div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>`.
+     - Menyeragamkan penyerlah aktif pada menu *Tambah Kereta Baharu* di bawah sub-modul Pengurusan Kereta.
+  3. **Susun Atur Master Kontena (`<main class="main"><div class="content">...</div></main>`)**:
+     - Memastikan margin anjal kiri (`margin-left: 300px` desktop) diselaraskan secara natif dengan `shared/css/wedrive.css` tanpa limpahan mendatar atau ricihan z-index.
+     - Menyuntik pemegang tempat pengaki rasmi `<div id="footer-placeholder" class="mt-32"></div>`.
+  4. **Pustaka Ikon Rasmi Apple & WeDRIVE**:
+     - Menghubungkan font `Material+Icons+Round`, `Material+Symbols+Outlined`, `SF Pro Display`, dan `Inter` secara seragam di kelima-lima fail langkah (`step1_spesifikasi.html` hingga `step5_tempahan.html`).
+
+- **Pembersihan Mutlak Data Olokan (Zero Dummy Data / Clean Blank State)**:
+  1. **Langkah 1 (Spesifikasi & Harga)**:
+     - Mengosongkan kesemua medan input (`value=""` bagi inputModel, inputVariant, inputPlate, inputDailyRate, inputWeeklyRate, inputMonthlyRate, inputDeposit).
+     - Mengembalikan semua menu lungsur `<select>` ke pilihan placeholder awal (*Pilih Pengeluar...*, *Pilih Kategori...*, dsb.) tanpa seleksi paksa statik.
+     - Mengeluarkan nilai sandaran statik (*dummy fallback strings*) daripada `saveStep1Draft()` dan `restoreStep1Draft()`.
+  2. **Langkah 2 (Studio Visual 360°)**:
+     - Mengosongkan medan input CDN URL (`value=""`) dan menetapkan lencana status kepada *"Belum Dipautkan"*.
+     - Menyembunyikan tag pengesanan pramatang sekiranya tiada aset 360° dimasukkan.
+  3. **Langkah 3 (Semakan & Pengesahan)**:
+     - Menetapkan kesemua penunjuk spesifikasi kenderaan kepada keadaan neutral bersih (`"-"`) dan ringkasan harga kepada `"RM 0.00"`.
+     - Membuang teks sandaran statik (*Honda Civic RM 280.00*) dalam `loadCarDraft()`.
+  4. **Langkah 4 (Pandangan Pelanggan)**:
+     - Menetapkan paparan tajuk kenderaan kepada `"-"`, kategori kepada `"-"`, dan harga sewaan kepada `"RM 0.00"`.
+     - Memadam objek `fallbackData` (BMW 320i M Sport) dalam `hydrateCustomerCard()` agar kad bertindak secara reaktif dan bersih sekiranya draf belum diisi.
+  5. **Langkah 5 (Butiran & Tempahan Pelanggan)**:
+     - Mengosongkan tajuk kenderaan (`"-"`), butiran spesifikasi (`"-"`), dan perkiraan jumlah sewaan (`"RM 0.00"`).
+     - Menghapuskan nilai sandaran statik BMW dalam `hydrateStep5()` dan `submitRegistration()`.
+  6. **Pembersihan Storan Tempatan**:
+     - Mengosongkan kunci draf basi `localStorage.removeItem('wedrive_new_car_draft')` supaya pengguna bermula dengan kanvas bersih sepenuhnya.
+
+- **Kepatuhan Ujian Automasi & Standard**:
+  - Mengemas kini suite ujian Playwright di `tests/e2e/17_add_car_stepper_and_carlist.spec.js` (menggunakan `waitForSelector('#car-grid')` bagi mengatasi sekatan `networkidle`) dan `tests/e2e/18_full_system_bilingual_parity.spec.js` (memastikan klik bahasa bebas gangguan pointer).
+  - Jumlah ujian keseluruhan: **51/51 ujian lulus (100% Pass Rate)**.
+  - Mematuhi Peraturan Mandatori Zero Oval Rule (1:1 ikon bulat dan kapsul pil 9999px).
+  - Mematuhi Polisi Sifar Jargon Pengaturcaraan dalam Antaramuka (Zero Coding Jargon).
+  - Kesemua 22 fail peraturan `.agents/rules/*.md` disahkan kekal $\le 12,000$ aksara.
+
+- **Maklumat Git**:
+  - Commit: `6.15.1 Integrate real admin topbar and sidebar navigation and clear all dummy mock data across 5 add car wizard steps`
+  - Tag Versi: `6.15.1`
 

@@ -80,7 +80,15 @@ AI CAR RENTAL SYSTEM/
 |   |   |   +-- cars.html                  # Direktori Semua Kereta
 |   |   |   +-- available-cars.html        # Kereta Tersedia Sahaja
 |   |   |   +-- rented-cars.html           # Kereta Sedang Disewa (On-Road Tracking)
-|   |   |   +-- add-car.html               # Pendaftaran Kereta Baharu & Upload 360 Studio
+|   |   |   +-- add-car/                   # Folder Pendaftaran Kereta Modular 5-Langkah (Dedicated 5-Page Flow)
+|   |   |   |   +-- index.html             # Auto-redirect ke Step 1
+|   |   |   |   +-- step1_spesifikasi.html # Langkah 1: Spesifikasi & Harga Bento
+|   |   |   |   +-- step2_studio360.html   # Langkah 2: Studio Visual 360°
+|   |   |   |   +-- step3_pengesahan.html  # Langkah 3: Semakan Akhir Pentadbir
+|   |   |   |   +-- step4_pandangan_pelanggan.html # Langkah 4: Pandangan Pelanggan WYSIWYG
+|   |   |   |   +-- step5_tempahan.html    # Langkah 5: Butiran & Tempahan Pelanggan
+|   |   |   |   +-- add-car-flow.js        # Pengurus Keadaan Draf Dwiarah
+|   |   |   |   +-- preview-i18n.js        # Enjin Dwibahasa Setempat
 |   |   |   +-- car-detail/
 |   |   |       +-- car-detail.html        # Pengurusan Terperinci & Status Kereta Individu
 |   |   +-- booking/

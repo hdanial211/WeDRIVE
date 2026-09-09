@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+<html lang="ms">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pendaftaran Kenderaan - Langkah 5: Butiran &amp; Tempahan Pelanggan | WeDRIVE</title>
+<link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
+<link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
+<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=5.6.9"/>
+<!-- AUTH GUARD -->
+<script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error-container": "#93000a",
+            "surface-container-highest": "#353535",
+            "surface-container-high": "#1D1D20",
+            "primary-fixed": "#d7e2ff",
+            "tertiary": "#c2c1ff",
+            "surface-bright": "#1D1D20",
+            "on-surface": "#e2e2e2",
+            "on-secondary-fixed": "#1a1b1f",
+            "outline-variant": "#414753",
+            "surface-container-lowest": "#0e0e0e",
+            "primary": "#abc7ff",
+            "on-secondary": "#2f3034",
+            "on-tertiary": "#1c0b9f",
+            "surface-tint": "#abc7ff",
+            "success": "#34C759",
+            "tertiary-container": "#6563e3",
+            "on-primary-fixed-variant": "#00458f",
+            "on-tertiary-fixed": "#0c006a",
+            "on-secondary-container": "#b5b4ba",
+            "surface-container-low": "#1b1b1b",
+            "on-surface-variant": "#c1c6d6",
+            "surface-variant": "#353535",
+            "on-tertiary-fixed-variant": "#3631b4",
+            "on-secondary-fixed-variant": "#46464b",
+            "on-background": "#e2e2e2",
+            "on-error-container": "#ffdad6",
+            "tertiary-fixed": "#e2dfff",
+            "primary-container": "#0071e3",
+            "on-primary-container": "#fcfbff",
+            "primary-fixed-dim": "#abc7ff",
+            "warning": "#FF9500",
+            "surface-container": "#161618",
+            "error": "#FF3B30",
+            "inverse-primary": "#005cbb",
+            "on-primary": "#002f66",
+            "surface": "#131313",
+            "secondary-fixed-dim": "#c7c6cb",
+            "secondary-fixed": "#e3e2e7",
+            "background": "#131313",
+            "secondary-container": "#46464b",
+            "on-tertiary-container": "#fefaff",
+            "surface-dim": "#131313",
+            "outline": "rgba(255, 255, 255, 0.12)",
+            "inverse-surface": "#e2e2e2",
+            "secondary": "#c7c6cb",
+            "tertiary-fixed-dim": "#c2c1ff",
+            "on-primary-fixed": "#001b3f",
+            "inverse-on-surface": "#303030",
+            "on-error": "#690005"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "lg": "20px",
+            "container-padding-desktop": "24px",
+            "xl": "24px",
+            "container-padding-mobile": "16px",
+            "xxl": "32px",
+            "sm": "8px",
+            "bento-gap": "16px",
+            "xs": "4px",
+            "md": "16px",
+            "bottom-dock-clearance": "130px"
+          },
+          "fontFamily": {
+            "large-title": ["Inter"],
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "large-title-mobile": ["Inter"],
+            "caption": ["Inter"],
+            "title-2": ["Inter"],
+            "footnote": ["Inter"],
+            "title-1": ["Inter"],
+            "title-3": ["Inter"],
+            "tabular-label": ["Inter"],
+            "callout": ["Inter"]
+          },
+          "fontSize": {
+            "large-title": ["34px", { "lineHeight": "41px", "letterSpacing": "-0.035em", "fontWeight": "800" }],
+            "headline": ["17px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body": ["15px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "large-title-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.03em", "fontWeight": "800" }],
+            "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "title-2": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.022em", "fontWeight": "700" }],
+            "footnote": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "title-1": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.028em", "fontWeight": "800" }],
+            "title-3": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.018em", "fontWeight": "600" }],
+            "tabular-label": ["14px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "callout": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #000000;
+      color: #e2e2e2;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Hide scrollbar for clean horizontal scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+  </style>
+</head>
+<body class="font-body antialiased bg-black text-on-surface">
+
+    <!-- Real Admin Navigation Sidebar -->
+    <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>
+
+    <!-- Main Content Container with Real Top Navbar -->
+    <main class="main">
+        <div id="navbar-placeholder" data-module="admin"></div>
+        <div class="content">
+            <div class="space-y-lg relative">
+
+                <!-- Floating Stepper Capsule (5 Steps) -->
+                <div class="flex justify-center w-full mb-md">
+                    <div class="bg-surface-container-lowest glass-panel border border-white/10 shadow-sm rounded-full p-xs flex items-center gap-xs max-w-full overflow-x-auto no-scrollbar">
+                        <!-- Step 1 Complete -->
+                        <a href="step1_spesifikasi.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                            <span class="font-callout text-callout text-on-surface font-medium">Maklumat Asas</span>
+                        </a>
+
+                        <div class="w-6 h-[1px] bg-white/10"></div>
+
+                        <!-- Step 2 Complete -->
+                        <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                            <span class="font-callout text-callout text-on-surface font-medium">Studio Visual</span>
+                        </a>
+
+                        <div class="w-6 h-[1px] bg-white/10"></div>
+
+                        <!-- Step 3 Complete -->
+                        <a href="step3_pengesahan.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                            <span class="font-callout text-callout text-on-surface font-medium">Semakan Akhir</span>
+                        </a>
+
+                        <div class="w-6 h-[1px] bg-white/10"></div>
+
+                        <!-- Step 4 Complete -->
+                        <a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn flex items-center gap-sm px-md py-sm rounded-full bg-surface-container/50 hover:bg-surface-container transition-colors">
+                            <span class="material-symbols-outlined text-success text-[18px]">check_circle</span>
+                            <span class="font-callout text-callout text-on-surface font-medium">Pandangan Pelanggan</span>
+                        </a>
+
+                        <div class="w-6 h-[1px] bg-white/10"></div>
+
+                        <!-- Step 5 Active -->
+                        <div class="pill-btn flex items-center gap-sm px-md py-sm rounded-full bg-primary/15 text-primary font-bold shadow-xs">
+                            <span class="circle-1-1 w-5 h-5 bg-primary text-black text-[11px] font-bold">5</span>
+                            <span class="font-label-tabular text-label-tabular font-bold">Butiran &amp; Tempahan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Title Area -->
+                <div class="mb-4">
+                    <h1 class="font-large-title-mobile md:font-large-title text-large-title-mobile md:text-large-title text-on-surface mb-2">Langkah 5: Butiran &amp; Tempahan</h1>
+                    <p class="font-body text-body text-on-surface-variant">Sila sahkan butiran kenderaan dan pilih tarikh tempahan anda.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-bento-gap">
+<!-- LEFT COL: Visual Studio & Specs (Span 8) -->
+<div class="lg:col-span-8 flex flex-col gap-bento-gap">
+<!-- Interactive Visual Studio Card -->
+<div class="bg-surface-container rounded-[24px] border border-white/5 overflow-hidden flex flex-col relative group">
+<!-- Glass Top Bar -->
+<div class="absolute top-0 left-0 w-full p-4 flex justify-between items-start z-10">
+<!-- Segmented Tabs -->
+<div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-full p-1 flex">
+<button class="px-4 py-1.5 rounded-full bg-white/10 text-on-surface font-caption text-caption shadow-sm backdrop-blur-lg">Galeri</button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors">Pusingan 360°</button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors">Panorama Dalaman</button>
+</div>
+<!-- Badges -->
+<div class="flex flex-col gap-2 items-end">
+<span class="px-3 py-1 bg-success/20 text-success border border-success/30 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-success"></span> Available
+                </span>
+<span class="px-3 py-1 bg-black/40 text-on-surface border border-white/10 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1">
+<span class="text-warning text-[10px]">★</span> 4.9 (128 reviews)
+                </span>
+<span class="px-3 py-1 bg-tertiary-container/20 text-tertiary border border-tertiary-container/30 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">360</span> 360° View
+                </span>
+</div>
+</div>
+<!-- Hero Image -->
+<div class="h-[400px] w-full relative bg-surface-container-lowest flex items-center justify-center">
+<img class="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" data-alt="A pristine white 2023 BMW 320i M Sport sedan parked in a sleek, minimalist dark studio environment. High-key dramatic lighting highlights the car's aggressive M Sport aerodynamic curves and glossy finish. The background is a seamless pure black obsidian infinite backdrop, reflecting the ultra-premium Apple HIG aesthetic. Sharp focus, automotive photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgTgGM2h_W2Ya-Cl0kBt1jJvEnsZmQGAGVBNfa4YbviKK3Z6eJllOYhIWXSNLv6Kl1wIJc_C4K6B6uNEHv_GovsXQMYGb27BPE6Mo6IYdE80-pkc-_dVoHgYMOCpBEYRENkmQRzmLHPy5ZXQC5-0y5JUkHPKZbMXS7OgM8ixOK1L09eY0r6vuqFA0NHwDM3_FpkSxLsF1BVuee-6ezZZDLC8vx3jYDyfXY6a4gDX2aBmsq6C3KzBBlo5dbsrMQ4uzYj-_lvn7ot5A"/>
+<!-- Floating Nav Arrows (1:1 aspect) -->
+<button class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all aspect-square scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all aspect-square scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+<!-- Thumbnail Strip -->
+<div class="p-4 bg-surface-container flex gap-3 overflow-x-auto no-scrollbar border-t border-white/5">
+<div class="w-24 h-16 rounded-lg border-2 border-primary overflow-hidden flex-shrink-0 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Close up front 3/4 view of white BMW 320i M sport, studio lighting, dark background, ultra-premium automotive detail shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRh2oa8vJmJlRlT2fR7iqk_WMRzprKTtBq7FFHUzGc5oRBNSBFT5bzVCiPshz_zEn3mnLTRq-EU4dYUDWemTatPltNV9k-b_4OvGD9IzQ79Fr9T4JKw8rEmzDyCOSBnpyxCL-rALNiddPAtRLhqXGFdEfSfrsTofSFdmFlgYTPeyAX0InrVoIlMjE0YYokMkJNNBawinmHkVxgcm_zyWUP_HAEZkHn4-rQQJP0tUWxZa60hBKYSgKhmQgmzdXiU9eUYUgO3P79He0"/>
+</div>
+<div class="w-24 h-16 rounded-lg border border-white/10 overflow-hidden flex-shrink-0 cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Side profile view of white BMW 320i M sport showing alloy wheels, studio lighting, dark background, ultra-premium automotive detail shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlxHOTUemlMNvSUDO6wZUnUkj_d4Y50-ON3vuKO8zgGnO39yRWHyvCriwcgymposJ9YNv-MUnidlBMpntKD2DpSSzGfsgkyIbWknvbR36TMUM8OYLprJu980CCJTZxU8h59IaCGcKlSxatWrQvxXioAo8heiILuFVkLC0xI8GXUyonQlZRiILwZ4hFazCHM7d4Bd0ia58LYqJ2hLCnAlJitFfiKkeVWuiRg3Ef-z2ok5bmGP4J7ednZCP0Id2m3Y4NCwrGZbOxMaI"/>
+</div>
+<div class="w-24 h-16 rounded-lg border border-white/10 overflow-hidden flex-shrink-0 cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Interior driver seat view of BMW 320i M sport, showing digital dashboard and leather steering wheel, moody dark lighting, ultra-premium detail shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVAKTTMwxO0yv0FXBgs7mu0W-NK0-aV1LPkeF2gnY1d5rQ6aT0VoUb95XRs79LEak857maxb1EY2_Z6fuQdWEmLp5JWwQqxnZhYQwkWPpwEwMH9rR2ata9KPTumrdmEYC_ly2-4Zd5M1hnbuj2POhxrz8BHD-jGASjgcJyUdhgyw8KoM9ZL1TIMreRUrnim-Xgdn1_QBtOL5V-z0jhv0ZmGtOEPrASJRa0DOs7x6byp31My41H_JpICVTkirKw08KJ3hckqUD3x0I"/>
+</div>
+<div class="w-24 h-16 rounded-lg border border-white/10 overflow-hidden flex-shrink-0 cursor-pointer opacity-60 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Close up of BMW kidney grille and laser headlights on white 320i M sport, studio lighting, dark background, ultra-premium automotive detail shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvFUkrwQ2vEYXnFrPnWIigdjaAr3FHKPqwyJQvpUEeDSoiaqCPljHPr2IEDGJzaVuFM-RyTMqyVEA-OuoGIISTqYVWuBh1sCNe4bTrqArf3EbcEBxI_0dfKXQA--tFioyCk7s9x4fpyEnaaznzd-_OtRBbTeX8QR9OlXdnODZEsed0CLSZGDHrMqw-EbD6BextwulAfnrxE2BSUHAOVDlJwcByQACQ-ZkXTGbyrvx8quGcBM46jIwXhKp_zu-RljSjf8n-1zsdboA"/>
+</div>
+</div>
+</div>
+<!-- Vehicle Specs Bento Card -->
+<div class="bg-surface-container rounded-[24px] border border-white/5 p-6 md:p-8 flex flex-col gap-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-white/10 pb-6">
+<div>
+<div id="step5Category" class="text-caption font-caption tracking-widest text-on-surface-variant uppercase mb-1">-</div>
+<h2 id="step5Title" class="font-title-2 text-title-2 text-on-surface">-</h2>
+<div class="text-body font-body text-on-surface-variant mt-1 flex items-center gap-2">
+<span id="step5ColorDot" class="w-3 h-3 rounded-full bg-transparent border border-white/20"></span> <span id="step5ColorText">Warna: -</span>
+</div>
+</div>
+<div class="text-right">
+<div id="step5PricePerDay" class="font-tabular-label text-tabular-label text-primary text-xl">RM 0.00<span class="text-body text-on-surface-variant">/hari</span></div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<!-- Spec Items -->
+<div class="bg-surface-container-high rounded-xl p-4 flex flex-col gap-2 border border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+<span id="step5Engine" class="font-callout text-callout text-on-surface">-</span>
+</div>
+<div class="bg-surface-container-high rounded-xl p-4 flex flex-col gap-2 border border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant">account_tree</span>
+<span id="step5Transmission" class="font-callout text-callout text-on-surface">-</span>
+</div>
+<div class="bg-surface-container-high rounded-xl p-4 flex flex-col gap-2 border border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant">airline_seat_recline_normal</span>
+<span id="step5Seats" class="font-callout text-callout text-on-surface">-</span>
+</div>
+<div class="bg-surface-container-high rounded-xl p-4 flex flex-col gap-2 border border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant">local_gas_station</span>
+<span id="step5Fuel" class="font-callout text-callout text-on-surface">-</span>
+</div>
+<div class="bg-surface-container-high rounded-xl p-4 flex flex-col gap-2 border border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant">speed</span>
+<span class="font-callout text-callout text-on-surface">Perbatuan Tanpa Had</span>
+</div>
+<div class="bg-surface-container-high rounded-xl p-4 flex flex-col gap-2 border border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant">location_on</span>
+<span class="font-callout text-callout text-on-surface">Pusat Operasi WeDRIVE HQ</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COL: Booking Selection (Span 4) -->
+<div class="lg:col-span-4">
+<div class="bg-surface-container-low rounded-[24px] border border-white/10 p-6 md:p-8 flex flex-col gap-6 sticky top-32 shadow-2xl">
+<h3 class="font-title-3 text-title-3 text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+Pilih Tarikh Tempahan
+</h3>
+<div class="flex flex-col gap-4">
+<!-- Date Picker Pick Up -->
+<div class="relative">
+<label class="block text-caption font-caption text-on-surface-variant mb-2 ml-1">Tarikh Pengambilan (Ambil)</label>
+<div class="flex items-center bg-[#0E0E10] border border-white/10 rounded-xl p-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">event</span>
+<input id="inputPickupDate" class="bg-transparent border-none w-full text-on-surface font-body text-body focus:ring-0 p-0" type="text" value="12 Nov 2026, 10:00 AM" readonly/>
+</div>
+</div>
+<!-- Date Picker Return -->
+<div class="relative">
+<label class="block text-caption font-caption text-on-surface-variant mb-2 ml-1">Tarikh Pemulangan (Pulang)</label>
+<div class="flex items-center bg-[#0E0E10] border border-white/10 rounded-xl p-3 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">event</span>
+<input id="inputReturnDate" class="bg-transparent border-none w-full text-on-surface font-body text-body focus:ring-0 p-0" type="text" value="15 Nov 2026, 10:00 AM" readonly/>
+</div>
+</div>
+</div>
+<!-- Summary Line -->
+<div class="bg-surface-container-highest/30 rounded-xl p-4 flex justify-between items-center border border-white/5">
+<span class="font-body text-body text-on-surface-variant">Tempoh Sewaan</span>
+<span class="font-tabular-label text-tabular-label text-on-surface font-bold">3 hari</span>
+</div>
+<div class="flex justify-between items-end pt-4 border-t border-white/10">
+<div class="font-body text-body text-on-surface-variant">Anggaran Jumlah</div>
+<div id="step5EstTotal" class="font-tabular-label text-tabular-label text-primary text-2xl font-bold">RM 0.00</div>
+</div>
+<button id="btnSideSubmitCar" type="button" onclick="submitRegistration()" class="w-full bg-primary-container text-on-primary-container rounded-full py-4 font-headline text-headline flex items-center justify-center gap-2 hover:bg-[#0077ED] transition-all active:scale-95 shadow-[0_0_20px_rgba(0,113,227,0.35)] mt-2 cursor-pointer">
+<span>Daftar Kenderaan Baharu</span> <span class="material-symbols-outlined">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- Footer Placeholder -->
+<div id="footer-placeholder" class="mt-32"></div>
+</div>
+</div>
+</main>
+
+<!-- FLOATING BOTTOM ACTION DOCK (Apple HIG Standard) -->
+<footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full bg-[#1b1b1b]/80 backdrop-blur-2xl border border-white/10 shadow-2xl flex items-center justify-between p-2.5 z-50 transition-all duration-300">
+<!-- Back to Step 4 -->
+<a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors" style="text-decoration: none;">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Pandangan Pelanggan</span>
+</a>
+
+<!-- Status Badge -->
+<div class="hidden sm:flex items-center gap-2 text-primary font-medium px-2">
+<span class="material-symbols-outlined text-[18px] text-primary">verified</span>
+<span class="font-footnote text-footnote font-semibold">Langkah 5 Selesai</span>
+</div>
+
+<!-- Final DB Submit Button -->
+<button id="btn-final-register" type="button" onclick="submitRegistration()" class="pill-btn interactive-btn bg-primary-container hover:bg-[#0077ED] text-white font-headline text-[15px] font-bold px-7 py-3 flex items-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer" style="color: #FFFFFF !important; text-decoration: none;">
+<span class="text-white">Daftar Kenderaan Baharu</span>
+<span class="material-symbols-outlined text-[20px] text-white">check_circle</span>
+</button>
+</footer>
+
+<!-- Unified Apple HIG Floating Pill Toast Container -->
+<div id="toast-container" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300"></div>
+
+<!-- Scripts -->
+<script src="../../../../shared/js/api.js"></script>
+<script src="add-car-flow.js"></script>
+<script src="preview-i18n.js"></script>
+
+<script>
+function showPillToast(message, type = 'success') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const isSuccess = type === 'success';
+  const icon = isSuccess ? 'check_circle' : 'error';
+  const iconColor = isSuccess ? 'text-[#34C759]' : 'text-[#FF3B30]';
+  const borderColor = isSuccess ? 'rgba(52, 199, 89, 0.3)' : 'rgba(255, 59, 48, 0.3)';
+
+  const toast = document.createElement('div');
+  toast.className = 'pill-btn px-5 py-3 rounded-full flex items-center gap-3 shadow-2xl backdrop-blur-2xl bg-black/80 text-white font-headline text-[14px] border transition-all duration-300 pointer-events-auto transform -translate-y-2 opacity-0';
+  toast.style.borderColor = borderColor;
+  toast.innerHTML = `
+    <span class="material-symbols-outlined text-[20px] ${iconColor}" style="font-variation-settings: 'FILL' 1;">${icon}</span>
+    <span>${message}</span>
+  `;
+  container.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.classList.remove('-translate-y-2', 'opacity-0');
+  });
+
+  setTimeout(() => {
+    toast.classList.add('-translate-y-2', 'opacity-0');
+    setTimeout(() => toast.remove(), 300);
+  }, 2200);
+}
+
+function hydrateStep5() {
+  try {
+    const draftRaw = localStorage.getItem('wedrive_new_car_draft');
+    if (!draftRaw) return;
+    const draft = JSON.parse(draftRaw);
+
+    const titleEl = document.getElementById('step5Title');
+    if (titleEl) {
+      const parts = [draft.year, draft.brand, draft.model, draft.variant].filter(Boolean);
+      titleEl.textContent = parts.length ? parts.join(' ') : '-';
+    }
+
+    const catEl = document.getElementById('step5Category');
+    if (catEl) {
+      catEl.textContent = draft.category ? draft.category.toUpperCase() : '-';
+    }
+
+    const colorText = document.getElementById('step5ColorText');
+    if (colorText) {
+      colorText.textContent = draft.color ? `Warna: ${draft.color}` : 'Warna: -';
+    }
+
+    const colorDot = document.getElementById('step5ColorDot');
+    if (colorDot) {
+      const c = (draft.color || '').toLowerCase();
+      if (c.includes('black') || c.includes('hitam')) colorDot.style.backgroundColor = '#1c1c1e';
+      else if (c.includes('red') || c.includes('merah')) colorDot.style.backgroundColor = '#ff3b30';
+      else if (c.includes('blue') || c.includes('biru')) colorDot.style.backgroundColor = '#0071e3';
+      else if (c.includes('grey') || c.includes('kelabu')) colorDot.style.backgroundColor = '#8e8e93';
+      else if (!draft.color) colorDot.style.backgroundColor = 'transparent';
+      else colorDot.style.backgroundColor = '#ffffff';
+    }
+
+    const dailyRate = parseInt(draft.dailyPrice || draft.dailyRate, 10) || 0;
+    const priceEl = document.getElementById('step5PricePerDay');
+    if (priceEl) {
+      priceEl.innerHTML = dailyRate ? `RM ${dailyRate}<span class="text-body text-on-surface-variant">/hari</span>` : `RM 0.00<span class="text-body text-on-surface-variant">/hari</span>`;
+    }
+
+    const totalEl = document.getElementById('step5EstTotal');
+    if (totalEl) {
+      totalEl.textContent = dailyRate ? `RM ${(dailyRate * 3).toLocaleString()}` : 'RM 0.00';
+    }
+
+    const engEl = document.getElementById('step5Engine');
+    if (engEl) engEl.textContent = draft.engine || '-';
+
+    const transEl = document.getElementById('step5Transmission');
+    if (transEl) transEl.textContent = draft.transmission || '-';
+
+    const seatsEl = document.getElementById('step5Seats');
+    if (seatsEl) seatsEl.textContent = draft.seats ? `${draft.seats} Tempat Duduk` : '-';
+
+    const fuelEl = document.getElementById('step5Fuel');
+    if (fuelEl) fuelEl.textContent = draft.fuel || '-';
+
+    // Photos
+    if (draft.photos && draft.photos.length > 0 && draft.photos[0].img) {
+      const hero = document.querySelector('.lg\\:col-span-8 img.object-cover');
+      if (hero) hero.src = draft.photos[0].img;
+    }
+  } catch (err) {
+    console.warn('Hydrate step 5 err:', err);
+  }
+}
+
+function submitRegistration() {
+  const btn = document.getElementById('btn-final-register');
+  const sideBtn = document.getElementById('btnSideSubmitCar');
+  if (btn) btn.disabled = true;
+  if (sideBtn) sideBtn.disabled = true;
+
+  try {
+    const draftRaw = localStorage.getItem('wedrive_new_car_draft');
+    const draft = draftRaw ? JSON.parse(draftRaw) : {};
+
+    const carName = [draft.year, draft.brand, draft.model, draft.variant].filter(Boolean).join(' ') || 'Kenderaan Baharu';
+    const plate = draft.plate || ('WD ' + Math.floor(1000 + Math.random() * 9000));
+    const dailyRateNum = parseInt(draft.dailyPrice || draft.dailyRate, 10) || 0;
+
+    const newCar = {
+      name: carName,
+      plate: plate,
+      brand: draft.brand || '',
+      year: parseInt(draft.year, 10) || new Date().getFullYear(),
+      color: draft.color || '',
+      type: draft.category || 'Sedan',
+      seats: parseInt(draft.seats, 10) || 5,
+      transmission: draft.transmission || 'Automatik',
+      fuel: draft.fuel || 'Petrol',
+      engine: draft.engine || '',
+      rate: 'RM ' + dailyRateNum + '/hari',
+      deposit: 'RM ' + (draft.deposit || 300),
+      status: 'Available',
+      location: 'Pusat Operasi Utama WeDRIVE (HQ Cyberjaya)',
+      has_360: Boolean(draft.cdnUrl && draft.cdnUrl.trim().length > 0),
+      images: (draft.photos && draft.photos.length) ? draft.photos.map(p => p.img) : []
+    };
+
+    // Save car into system
+    if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
+      window.WeDriveAPI.createCar(newCar)
+        .then(() => finishAndRedirect())
+        .catch(() => saveFallbackAndRedirect(newCar));
+    } else {
+      saveFallbackAndRedirect(newCar);
+    }
+  } catch (err) {
+    console.error('Submit error:', err);
+    saveFallbackAndRedirect({});
+  }
+}
+
+function saveFallbackAndRedirect(car) {
+  try {
+    const existing = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+    car.id = 'CR-' + Date.now();
+    existing.unshift(car);
+    localStorage.setItem('wedrive_cars', JSON.stringify(existing));
+  } catch (e) {
+    console.warn('Fallback save failed:', e);
+  }
+  finishAndRedirect();
+}
+
+function finishAndRedirect() {
+  showPillToast('✓ Kenderaan berjaya didaftarkan ke dalam inventori!');
+  localStorage.removeItem('wedrive_new_car_draft');
+  setTimeout(() => {
+    window.location.href = '../cars.html';
+  }, 1400);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  hydrateStep5();
+});
+</script>
+
+<!-- Real Admin Navigation & System Scripts -->
+<script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
+<script src="../../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
+<script src="../../../../shared/js/main.js?v=5.2.8"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
+<script src="../../../../shared/js/api.js?v=5.2.3"></script>
+<script src="../../../../shared/js/anime.min.js"></script>
+<script src="../../../../shared/js/animate.js?v=5.2.3"></script>
+<script src="../../../js/admin-idle-timeout.js?v=5.2.77"></script>
+</body></html>

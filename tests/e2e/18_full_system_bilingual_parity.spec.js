@@ -41,7 +41,7 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
     await expect(bookBtn).toHaveText('Teruskan Tempahan');
 
     // Click toggle to switch to English
-    await langBtn.click();
+    await langBtn.click({ force: true });
     await page.waitForTimeout(400);
 
     await expect(specTitle).toHaveText('Technical Specifications');
@@ -87,7 +87,7 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
     await expect(stepSummary).toHaveText('Ringkasan Sewaan');
 
     // Toggle to EN
-    await langBtn.click();
+    await langBtn.click({ force: true });
     await page.waitForTimeout(400);
 
     await expect(stepDates).toHaveText('Dates & Location');
@@ -133,7 +133,7 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
     await expect(payBtn).toHaveText('Bayar Deposit & Sahkan Tempahan');
 
     // Toggle to EN
-    await langBtn.click();
+    await langBtn.click({ force: true });
     await page.waitForTimeout(400);
 
     await expect(payTitle).toHaveText('Payment & Confirmation');
@@ -179,7 +179,7 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
     await expect(summaryLbl).toHaveText('Ringkasan Tempahan');
 
     // Toggle to EN
-    await langBtn.click();
+    await langBtn.click({ force: true });
     await page.waitForTimeout(400);
 
     await expect(confTitle).toHaveText('Booking Confirmed!');
@@ -232,7 +232,7 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
     await expect(receiptTitle).toHaveText('Resit Pembayaran Rasmi');
 
     // Toggle to EN
-    await langBtn.click();
+    await langBtn.click({ force: true });
     await page.waitForTimeout(400);
 
     await expect(receiptTitle).toHaveText('Official Payment Receipt');
@@ -250,7 +250,7 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
       }));
     });
 
-    await page.goto('/admin/pages/car/add-car.html');
+    await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
 
@@ -270,11 +270,11 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
     });
     await page.waitForTimeout(400);
 
-    const stepSpec = page.locator('[data-key="ac_step1_title"]');
+    const stepSpec = page.locator('[data-key="ac_step1_title"], [data-i18n="step1_title"]').first();
     await expect(stepSpec).toHaveText('Spesifikasi Kenderaan');
 
     // Toggle to EN
-    await langBtn.click();
+    await langBtn.click({ force: true });
     await page.waitForTimeout(400);
 
     await expect(stepSpec).toHaveText('Vehicle Specifications');
@@ -305,7 +305,7 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
     await expect(errTitle).toHaveText('Nampaknya anda tersilap simpang!');
 
     // Toggle to EN
-    await langBtn.click();
+    await langBtn.click({ force: true });
     await page.waitForTimeout(400);
 
     await expect(errTitle).toHaveText('Looks like you took a wrong turn!');

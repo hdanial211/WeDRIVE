@@ -20217,3 +20217,632 @@ input[type="number"]:hover::-webkit-inner-spin-button,
 input[type="number"]:focus::-webkit-inner-spin-button {
   opacity: 1;
 }
+
+/* ==========================================================================
+   WeDRIVE 5-Step Vehicle Registration & Live Customer Simulation Wizard
+   ========================================================================== */
+:root {
+  --spotlight-card-bg: #ffffff;
+  --spotlight-card-border: rgba(0, 0, 0, 0.08);
+  --spotlight-title: #1d1d1f;
+  --spotlight-subtitle: #6e6e73;
+  --spotlight-divider: rgba(0, 0, 0, 0.06);
+  --spotlight-spec-icon: #0071e3;
+  --spotlight-pill-bg: rgba(0, 0, 0, 0.45);
+  --spotlight-pill-border: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"], html.dark {
+  --spotlight-card-bg: #161618;
+  --spotlight-card-border: rgba(255, 255, 255, 0.08);
+  --spotlight-title: #f5f5f7;
+  --spotlight-subtitle: #8e8e93;
+  --spotlight-divider: rgba(255, 255, 255, 0.08);
+  --spotlight-spec-icon: #2997ff;
+  --spotlight-pill-bg: rgba(0, 0, 0, 0.6);
+  --spotlight-pill-border: rgba(255, 255, 255, 0.15);
+}
+
+/* Spotlight Card (Exact Match to WeDRIVE Production Size: max-w-[360px]) */
+.spotlight-card {
+  width: 100%;
+  max-width: 360px;
+  background-color: var(--spotlight-card-bg);
+  border: 1px solid var(--spotlight-card-border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.spotlight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.spotlight-media {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background-color: #0e0e10;
+  overflow: hidden;
+}
+
+.spotlight-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spotlight-card:hover .spotlight-media img {
+  transform: scale(1.04);
+}
+
+.media-glass-pill {
+  background-color: var(--spotlight-pill-bg);
+  border: 1px solid var(--spotlight-pill-border);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-radius: 9999px;
+}
+
+/* 2x2 Clean Specs Grid (Sifar Kotak / Borderless persis Gambar 2 Rujukan Pengguna) */
+.spotlight-spec-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 10px;
+  column-gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--spotlight-divider);
+  border-bottom: 1px solid var(--spotlight-divider);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.spotlight-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.spotlight-spec-item .material-symbols-outlined,
+.spotlight-spec-item .material-icons-round {
+  color: var(--spotlight-spec-icon);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.spotlight-spec-item span.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--spotlight-subtitle);
+}
+
+/* Step 3: Admin Review Bento */
+.review-bento-card {
+  background: var(--bg-surface-1, #161618);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 24px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .review-bento-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.review-specs-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.review-spec-box {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+[data-theme="light"] .review-spec-box {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.review-spec-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted, #8e8e93);
+}
+
+.review-spec-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary, #f5f5f7);
+}
+
+[data-theme="light"] .review-spec-value {
+  color: #1d1d1f;
+}
+
+/* Step 5: Booking Simulation Layout */
+.booking-sim-card {
+  background: var(--bg-surface-1, #161618);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .booking-sim-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+}
+
+.booking-date-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--bg-surface-2, rgba(0, 0, 0, 0.25));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+}
+
+[data-theme="light"] .booking-date-box {
+  background: #f5f5f7;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.booking-calc-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(0, 113, 227, 0.08);
+  border: 1px solid rgba(0, 113, 227, 0.2);
+}
+
+/* ==============================================================================
+   22. BENTO UI VERSI 7 (MASTER STITCH STYLING EXTENSION)
+   Siri AI Animations, Apple Intelligence Glass Bar, Turntable 360 & Fullscreen
+   ============================================================================== */
+
+/* Apple HIG Glass & Card Styles for Versi 7 */
+.glass-panel-v7 {
+  background-color: rgba(249, 249, 251, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.bento-card-v7 {
+  background-color: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+[data-theme="night"] .glass-panel-v7,
+.night-mode .glass-panel-v7,
+html.dark .glass-panel-v7 {
+  background-color: rgba(22, 22, 24, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="night"] .bento-card-v7,
+.night-mode .bento-card-v7,
+html.dark .bento-card-v7 {
+  background-color: #161618 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Strict Zero Oval Rule */
+.circle-1-1 {
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+.pill-btn {
+  border-radius: 9999px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pill-btn:active, .circle-1-1:active {
+  transform: scale(0.96) !important;
+}
+
+/* AI Animation Effects & Siri Shimmer */
+@keyframes aiGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes aiLaserSweep {
+  0% { transform: translateX(-100%); opacity: 0; }
+  25% { opacity: 0.85; }
+  75% { opacity: 0.85; }
+  100% { transform: translateX(350%); opacity: 0; }
+}
+
+@keyframes aiPulseGlow {
+  0%, 100% { 
+    box-shadow: 0 0 16px rgba(94, 92, 230, 0.35), 0 0 32px rgba(191, 90, 242, 0.2); 
+  }
+  50% { 
+    box-shadow: 0 0 24px rgba(0, 113, 227, 0.55), 0 0 44px rgba(255, 55, 95, 0.35); 
+  }
+}
+
+@keyframes aiFieldPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+  50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(94, 92, 230, 0.4); }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
+}
+
+@keyframes aiTurntableFlash {
+  0% { box-shadow: 0 0 0 0 rgba(94, 92, 230, 0); }
+  50% { box-shadow: 0 0 35px 6px rgba(0, 113, 227, 0.5); }
+  100% { box-shadow: 0 0 0 0 rgba(94, 92, 230, 0); }
+}
+
+.ai-analyzing-active {
+  position: relative;
+  border-color: transparent !important;
+  animation: aiPulseGlow 2s infinite ease-in-out;
+}
+
+.ai-analyzing-active::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  padding: 2px;
+  background: linear-gradient(90deg, #0071E3, #5E5CE6, #BF5AF2, #FF375F, #00D2FF, #0071E3);
+  background-size: 300% 300%;
+  animation: aiGradientShift 2.2s infinite linear;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ai-laser-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 120px;
+  background: linear-gradient(90deg, transparent, rgba(94, 92, 230, 0.25), rgba(0, 210, 255, 0.7), rgba(191, 90, 242, 0.5), transparent);
+  pointer-events: none;
+  z-index: 5;
+  animation: aiLaserSweep 1.3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-badge-pulse {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.15), rgba(191, 90, 242, 0.2)) !important;
+  border: 1px solid rgba(94, 92, 230, 0.4) !important;
+  color: #5E5CE6 !important;
+  animation: aiPulseGlow 2s infinite ease-in-out;
+}
+
+[data-theme="night"] .ai-badge-pulse,
+.night-mode .ai-badge-pulse,
+html.dark .ai-badge-pulse {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.28), rgba(191, 90, 242, 0.32)) !important;
+  border-color: rgba(191, 90, 242, 0.5) !important;
+  color: #BF5AF2 !important;
+}
+
+.turntable-flash-effect {
+  animation: aiTurntableFlash 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-field-wave {
+  animation: aiFieldPulse 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  border-color: #5E5CE6 !important;
+  background-color: rgba(94, 92, 230, 0.09) !important;
+  box-shadow: 0 0 14px rgba(94, 92, 230, 0.25) !important;
+}
+
+[data-theme="night"] .ai-field-wave,
+.night-mode .ai-field-wave,
+html.dark .ai-field-wave {
+  border-color: #BF5AF2 !important;
+  background-color: rgba(191, 90, 242, 0.16) !important;
+  box-shadow: 0 0 18px rgba(191, 90, 242, 0.35) !important;
+}
+
+/* Unified Apple Intelligence Glass Bar */
+.ai-container-bar {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.05) 0%, rgba(94, 92, 230, 0.08) 50%, rgba(191, 90, 242, 0.12) 100%) !important;
+  border: 1px solid rgba(94, 92, 230, 0.35) !important;
+  box-shadow: 0 4px 20px rgba(94, 92, 230, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-container-bar:hover {
+  border-color: rgba(191, 90, 242, 0.6) !important;
+  box-shadow: 0 6px 25px rgba(191, 90, 242, 0.2);
+}
+
+[data-theme="night"] .ai-container-bar,
+.night-mode .ai-container-bar,
+html.dark .ai-container-bar {
+  background: linear-gradient(135deg, rgba(0, 113, 227, 0.18) 0%, rgba(94, 92, 230, 0.22) 50%, rgba(191, 90, 242, 0.28) 100%) !important;
+  border: 1px solid rgba(191, 90, 242, 0.45) !important;
+  box-shadow: 0 4px 25px rgba(94, 92, 230, 0.25);
+}
+
+[data-theme="night"] .ai-container-bar:hover,
+.night-mode .ai-container-bar:hover,
+html.dark .ai-container-bar:hover {
+  border-color: rgba(191, 90, 242, 0.8) !important;
+  box-shadow: 0 6px 30px rgba(191, 90, 242, 0.35);
+}
+
+/* Unified AI Button Gradient */
+.ai-gradient-pill {
+  background: linear-gradient(135deg, #0071E3 0%, #5E5CE6 50%, #BF5AF2 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(94, 92, 230, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-gradient-pill:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 22px rgba(191, 90, 242, 0.45);
+}
+
+.ai-gradient-pill:active {
+  transform: scale(0.97);
+}
+
+/* Turntable Fullscreen Viewport Mode */
+#turntableViewport:fullscreen,
+#turntableViewport:-webkit-full-screen,
+#turntableViewport.viewport-fallback-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  border-radius: 0 !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  background-color: #000000 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#turntableViewport:fullscreen #btnFullscreen360,
+#turntableViewport:-webkit-full-screen #btnFullscreen360,
+#turntableViewport.viewport-fallback-fullscreen #btnFullscreen360 {
+  bottom: 24px !important;
+  right: 24px !important;
+}
+
+/* ── Versi 7 Stepper Floating Capsule ── */
+.v7-stepper-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-surface-2, rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+[data-theme="night"] .v7-stepper-capsule,
+.night-mode .v7-stepper-capsule,
+html.dark .v7-stepper-capsule {
+  background: rgba(22, 22, 24, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.v7-stepper-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #6E6E73);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.v7-stepper-step:hover {
+  color: var(--text-primary, #1D1D1F);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="night"] .v7-stepper-step:hover,
+.night-mode .v7-stepper-step:hover,
+html.dark .v7-stepper-step:hover {
+  color: #FFFFFF !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.v7-stepper-step.active {
+  background: rgba(0, 113, 227, 0.12) !important;
+  color: var(--primary, #0071E3) !important;
+  font-weight: 700;
+}
+
+[data-theme="night"] .v7-stepper-step.active,
+.night-mode .v7-stepper-step.active,
+html.dark .v7-stepper-step.active {
+  background: rgba(0, 113, 227, 0.25) !important;
+  color: #2997FF !important;
+}
+
+.v7-stepper-num {
+  width: 22px;
+  height: 22px;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--bg-surface-3, rgba(0, 0, 0, 0.08));
+  color: inherit;
+}
+
+.v7-stepper-step.active .v7-stepper-num {
+  background: var(--primary, #0071E3);
+  color: #FFFFFF;
+}
+
+.v7-stepper-divider {
+  width: 16px;
+  height: 1px;
+  background: var(--border-subtle, rgba(0, 0, 0, 0.1));
+  flex-shrink: 0;
+}
+
+[data-theme="night"] .v7-stepper-divider,
+.night-mode .v7-stepper-divider,
+html.dark .v7-stepper-divider {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ── Versi 7 Bento Form Grid & Inputs ── */
+.v7-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.v7-form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #6E6E73);
+}
+
+.v7-input, .v7-select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1));
+  background: var(--bg-surface-2, #F9F9FB);
+  color: var(--text-primary, #1D1D1F);
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.v7-input:focus, .v7-select:focus {
+  border-color: var(--primary, #0071E3);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+}
+
+[data-theme="night"] .v7-input,
+[data-theme="night"] .v7-select,
+.night-mode .v7-input,
+.night-mode .v7-select,
+html.dark .v7-input,
+html.dark .v7-select {
+  background: #1D1D20 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+/* ── Customer Spotlight Card (Step 4 WYSIWYG) ── */
+.spotlight-card {
+  --spotlight-card-bg: #ffffff;
+  --spotlight-card-border: rgba(0, 0, 0, 0.08);
+  --spotlight-card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07);
+  background-color: var(--spotlight-card-bg);
+  border: 1px solid var(--spotlight-card-border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--spotlight-card-shadow);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 380px;
+}
+
+[data-theme="night"] .spotlight-card,
+.night-mode .spotlight-card,
+html.dark .spotlight-card {
+  --spotlight-card-bg: #161618;
+  --spotlight-card-border: rgba(255, 255, 255, 0.08);
+  --spotlight-card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.spotlight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -15px rgba(0, 113, 227, 0.25), 0 0 0 1px rgba(0, 113, 227, 0.3);
+}
+
+.media-glass-pill {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  border-radius: 9999px;
+}
+
+.spotlight-spec-grid-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.spotlight-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary, #6E6E73);
+}
+
+.spotlight-spec-item span.material-icons-round,
+.spotlight-spec-item span.material-symbols-outlined {
+  font-size: 18px;
+  color: var(--primary, #0071E3);
+}
+
+

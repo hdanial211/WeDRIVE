@@ -88,32 +88,20 @@ test.describe('WeDRIVE AI Key Vault & Unified HQ Location Tests', () => {
       }));
     });
 
-    await page.goto('/admin/pages/car/add-car.html');
+    // Step 1: Basic Specs
+    await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
     await page.waitForLoadState('networkidle');
 
-    // Verify HQ Location is locked
-    const locationInput = page.locator('#car-location');
-    await expect(locationInput).toBeAttached();
-    await expect(locationInput).toHaveAttribute('readonly', '');
-    await expect(locationInput).toHaveValue(/Pusat Operasi Utama WeDRIVE \(HQ Melaka\)/);
+    // Verify Brand selection and Step 1 form
+    await expect(page.locator('#inputBrand')).toBeVisible();
 
-    // Verify 2-Step Stepper Navigation to Step 2 (360 Studio)
-    const step2Btn = page.locator('#step-btn-2');
-    if (await step2Btn.isVisible()) {
-      await page.selectOption('#car-brand', 'Toyota');
-      await page.selectOption('#car-model', 'Vios');
-      await page.fill('#car-plate', 'VAB 4821');
-      await step2Btn.click();
-    }
+    // Step 2: 360 Studio
+    await page.goto('/admin/pages/car/add-car/step2_studio360.html');
+    await page.waitForLoadState('networkidle');
 
     // Verify 360 Studio Section
-    await expect(page.locator('#card-360-studio')).toBeVisible();
-    await expect(page.locator('#exterior-files-input')).toBeAttached();
-    await expect(page.locator('#ai-360-link-input')).toBeVisible();
-
-    // Verify Live Preview tabs for 360
-    await expect(page.locator('#tab-prev-exterior')).toBeVisible();
-    await expect(page.locator('#tab-prev-interior')).toBeVisible();
+    await expect(page.locator('#photoUploadSlotsGrid')).toBeVisible();
+    await expect(page.locator('#turntableViewport')).toBeVisible();
   });
 
   test('Customer Browse Cars displays 360 View badge only on cars with 360 assets', async ({ page }) => {

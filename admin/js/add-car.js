@@ -11,10 +11,34 @@
   var selectedPhotoBase64 = null;
   var currentStep = 1;
   var isFormDirty = false;
+  var isSubmitted = false;
   var isInitializing = true;
   var isRestoringDraft = false;
   var draftTimer = null;
   var pendingExitUrl = null;
+
+  /* ── Safe Toast (add-car page does not load cars.js where showToast lives) ── */
+  function showToast(msg, type) {
+    try {
+      if (typeof window.showToast === 'function') {
+        window.showToast(msg, type);
+        return;
+      }
+      /* Minimal pill toast fallback */
+      var t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position:'fixed',top:'24px',left:'50%',transform:'translateX(-50%)',
+        padding:'10px 24px',borderRadius:'9999px',zIndex:'99999',
+        background: type === 'error' ? '#ff3b30' : '#34c759',
+        color:'#fff',fontSize:'14px',fontWeight:'600',
+        boxShadow:'0 8px 24px rgba(0,0,0,.18)',transition:'opacity .4s'
+      });
+      document.body.appendChild(t);
+      setTimeout(function(){ t.style.opacity='0'; }, 2400);
+      setTimeout(function(){ t.remove(); }, 2900);
+    } catch(e) { console.warn('Toast fallback error:', e); }
+  }
 
   window.__360Data = {
     has360: false,
@@ -947,10 +971,21 @@
 
   /**
    * =========================================================================
-   * 4. 2-STEP STEPPER WIZARD CONTROLLER
+   * 4. 5-STEP STEPPER WIZARD CONTROLLER (WeDRIVE 2026 Production)
    * =========================================================================
    */
   window.goToStep = function (step) {
+    // Hide all step containers
+    for (var s = 1; s <= 5; s++) {
+      var c = document.getElementById('step-' + s + '-container');
+      if (c) c.classList.add('hidden');
+      var b = document.getElementById('step-btn-' + s);
+      if (b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      }
+    }
+
     if (step === 2) {
       // Validate Step 1 fields
       var brand = document.getElementById('car-brand')?.value;
@@ -962,68 +997,328 @@
       if (!brand) {
         window.showToast('Sila pilih Pengeluar (Jenama) kenderaan.', 'warning');
         document.getElementById('car-brand')?.focus();
+        showStepOnly(1);
         return;
       }
       if (!model) {
         window.showToast('Sila pilih Model kenderaan.', 'warning');
         document.getElementById('car-model')?.focus();
+        showStepOnly(1);
         return;
       }
       if (!plate) {
         window.showToast('Sila masukkan No. Pendaftaran (Plat) kenderaan.', 'warning');
         document.getElementById('car-plate')?.focus();
+        showStepOnly(1);
         return;
       }
       if (!rate || parseInt(rate, 10) < 50) {
         window.showToast('Sila masukkan Kadar Sewaan Harian yang sah.', 'warning');
         document.getElementById('car-rate')?.focus();
+        showStepOnly(1);
         return;
       }
       if (!deposit) {
         window.showToast('Sila masukkan Deposit Keselamatan.', 'warning');
         document.getElementById('car-deposit')?.focus();
+        showStepOnly(1);
         return;
       }
 
-      // Transition to Step 2
-      currentStep = 2;
-      document.getElementById('step-1-container')?.classList.add('hidden');
-      document.getElementById('step-2-container')?.classList.remove('hidden');
-
-      var b1 = document.getElementById('step-btn-1');
-      var b2 = document.getElementById('step-btn-2');
-      if (b1) {
-        b1.classList.remove('active');
-        b1.classList.add('completed');
-        b1.setAttribute('aria-selected', 'false');
-      }
-      if (b2) {
-        b2.classList.add('active');
-        b2.setAttribute('aria-selected', 'true');
-      }
-
+      showStepOnly(2);
       window.updateLivePreview();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } else if (step === 3) {
+      showStepOnly(3);
+      updateAdminReviewSummary();
+
+    } else if (step === 4) {
+      showStepOnly(4);
+      updateCustomerSpotlightCard();
+
+    } else if (step === 5) {
+      showStepOnly(5);
+      initStep5BookingSimulation();
 
     } else {
-      // Return to Step 1
-      currentStep = 1;
-      document.getElementById('step-2-container')?.classList.add('hidden');
-      document.getElementById('step-1-container')?.classList.remove('hidden');
-
-      var btn1 = document.getElementById('step-btn-1');
-      var btn2 = document.getElementById('step-btn-2');
-      if (btn1) {
-        btn1.classList.add('active');
-        btn1.setAttribute('aria-selected', 'true');
-      }
-      if (btn2) {
-        btn2.classList.remove('active');
-        btn2.setAttribute('aria-selected', 'false');
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Step 1
+      showStepOnly(1);
     }
+
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  function showStepOnly(stepNum) {
+    for (var s = 1; s <= 5; s++) {
+      var c = document.getElementById('step-' + s + '-container');
+      var b = document.getElementById('step-btn-' + s);
+      if (s === stepNum) {
+        if (c) c.classList.remove('hidden');
+        if (b) {
+          b.classList.add('active');
+          b.setAttribute('aria-selected', 'true');
+        }
+      } else {
+        if (c) c.classList.add('hidden');
+        if (b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+          if (s < stepNum) b.classList.add('completed');
+          else b.classList.remove('completed');
+        }
+      }
+    }
+
+    // Toggle forward buttons according to active step
+    var btnNext = document.getElementById('btn-next-step');
+    var btnTo3 = document.getElementById('btn-to-step-3');
+    var btnTo4 = document.getElementById('btn-to-step-4');
+    var btnTo5 = document.getElementById('btn-to-step-5');
+    var btnSubmit = document.getElementById('btn-submit-car');
+    var btnBack = document.getElementById('dock-btn-back');
+
+    if (btnNext) {
+      if (stepNum === 1) {
+        btnNext.classList.remove('hidden');
+        btnNext.classList.add('flex');
+      } else {
+        btnNext.classList.add('hidden');
+        btnNext.classList.remove('flex');
+      }
+    }
+    if (btnTo3) {
+      if (stepNum === 2) {
+        btnTo3.classList.remove('hidden');
+        btnTo3.classList.add('flex');
+      } else {
+        btnTo3.classList.add('hidden');
+        btnTo3.classList.remove('flex');
+      }
+    }
+    if (btnTo4) {
+      if (stepNum === 3) {
+        btnTo4.classList.remove('hidden');
+        btnTo4.classList.add('flex');
+      } else {
+        btnTo4.classList.add('hidden');
+        btnTo4.classList.remove('flex');
+      }
+    }
+    if (btnTo5) {
+      if (stepNum === 4) {
+        btnTo5.classList.remove('hidden');
+        btnTo5.classList.add('flex');
+      } else {
+        btnTo5.classList.add('hidden');
+        btnTo5.classList.remove('flex');
+      }
+    }
+    if (btnSubmit) {
+      if (stepNum === 5) {
+        btnSubmit.classList.remove('hidden');
+        btnSubmit.classList.add('flex');
+      } else {
+        btnSubmit.classList.add('hidden');
+        btnSubmit.classList.remove('flex');
+      }
+    }
+    if (btnBack) {
+      if (stepNum > 1) {
+        btnBack.classList.remove('invisible');
+        btnBack.style.display = 'flex';
+      } else {
+        btnBack.style.display = 'none';
+      }
+    }
+  }
+
+  /**
+   * Update 10 Verified Specs in Step 3 (Admin Review)
+   */
+  function updateAdminReviewSummary() {
+    var plate = (document.getElementById('car-plate')?.value || '').trim().toUpperCase() || 'WXY 8899';
+    var brand = document.getElementById('car-brand')?.value || 'BMW';
+    var model = document.getElementById('car-model')?.value || '320i';
+    var variant = document.getElementById('car-variant')?.value || 'M Sport 2.0';
+    var fullModel = (model + ' ' + variant).trim();
+    var type = document.getElementById('car-type')?.value || 'Sedan';
+    var year = document.getElementById('car-year')?.value || '2023';
+    var color = (document.getElementById('car-color')?.value || '').trim() || 'Alpine White';
+    var engine = (document.getElementById('car-engine')?.value || '').trim() || '2.0L TwinPower Turbo';
+    var trans = document.getElementById('car-transmission')?.value || 'Automatic';
+    var transLabel = trans === 'Automatic' ? 'Automatik' : 'Manual';
+    var fuel = document.getElementById('car-fuel')?.value || 'Petrol';
+    var seats = document.getElementById('car-seats')?.value || '5';
+    var rate = document.getElementById('car-rate')?.value || '450';
+    var deposit = document.getElementById('car-deposit')?.value || '400';
+
+    var elPlate = document.getElementById('rev-plate');
+    var elBrand = document.getElementById('rev-brand');
+    var elModel = document.getElementById('rev-model');
+    var elType = document.getElementById('rev-type');
+    var elYear = document.getElementById('rev-year');
+    var elColor = document.getElementById('rev-color');
+    var elEngine = document.getElementById('rev-engine');
+    var elTrans = document.getElementById('rev-trans');
+    var elFuel = document.getElementById('rev-fuel');
+    var elSeats = document.getElementById('rev-seats');
+    var elRate = document.getElementById('rev-rate');
+    var elDeposit = document.getElementById('rev-deposit');
+
+    if (elPlate) elPlate.textContent = plate;
+    if (elBrand) elBrand.textContent = brand;
+    if (elModel) elModel.textContent = fullModel;
+    if (elType) elType.textContent = type;
+    if (elYear) elYear.textContent = year;
+    if (elColor) elColor.textContent = color;
+    if (elEngine) elEngine.textContent = engine;
+    if (elTrans) elTrans.textContent = transLabel;
+    if (elFuel) elFuel.textContent = fuel;
+    if (elSeats) elSeats.textContent = seats + ' Tempat Duduk';
+    if (elRate) elRate.textContent = 'RM ' + rate;
+    if (elDeposit) elDeposit.textContent = 'RM ' + deposit;
+  }
+
+  /**
+   * Update Customer Spotlight Card in Step 4 (Matching Image 2 Specs Grid)
+   */
+  function updateCustomerSpotlightCard() {
+    var fullName = updateFullCarName() || '2023 BMW 320i M Sport 2.0';
+    var brand = document.getElementById('car-brand')?.value || 'BMW';
+    var color = (document.getElementById('car-color')?.value || '').trim() || 'Alpine White';
+    var type = (document.getElementById('car-type')?.value || 'Sedan').toUpperCase();
+    var engine = (document.getElementById('car-engine')?.value || '').trim().toUpperCase() || '2.0L TWINPOWER TURBO';
+    var fuel = document.getElementById('car-fuel')?.value || 'Petrol';
+    var seats = document.getElementById('car-seats')?.value || '5';
+    var trans = document.getElementById('car-transmission')?.value || 'Automatic';
+    var transLabel = trans === 'Automatic' ? 'Automatik' : 'Manual';
+    var rate = document.getElementById('car-rate')?.value || '450';
+
+    var cTitle = document.getElementById('cardTitle');
+    var cCat = document.getElementById('cardCategory');
+    var cEngine = document.getElementById('cardEngine');
+    var cColor = document.getElementById('cardColor');
+    var cFuel = document.getElementById('cardFuel');
+    var cSeats = document.getElementById('cardSeatsPill');
+    var cTrans = document.getElementById('cardTransmission');
+    var cCatPill = document.getElementById('cardCategoryPill');
+    var cPrice = document.getElementById('cardPrice');
+    var cImg = document.getElementById('cardImage');
+    var b360 = document.getElementById('cardBadge360');
+
+    if (cTitle) cTitle.textContent = fullName;
+    if (cCat) cCat.textContent = type;
+    if (cEngine) cEngine.textContent = engine.startsWith('ENJIN') ? engine : ('ENJIN ' + engine);
+    if (cColor) cColor.textContent = color;
+    if (cFuel) cFuel.textContent = fuel;
+    if (cSeats) cSeats.textContent = seats + ' Tempat Duduk';
+    if (cTrans) cTrans.textContent = transLabel;
+    if (cCatPill) cCatPill.textContent = type.charAt(0) + type.slice(1).toLowerCase();
+    if (cPrice) cPrice.textContent = 'RM ' + rate;
+
+    // Image sync: use uploaded photo or sample
+    var imgSrc = selectedPhotoBase64 || (window.__360Data && window.__360Data.exteriorFrames.length ? window.__360Data.exteriorFrames[0] : '../../../shared/model/bezza.png');
+    if (cImg) cImg.src = imgSrc;
+
+    // 360 badge
+    if (b360) {
+      b360.style.display = (window.__360Data && window.__360Data.has360) ? 'inline-flex' : 'none';
+    }
+  }
+
+  /**
+   * Step 5: Initialize Customer Booking Simulation & Flatpickr
+   */
+  var simFpPickup = null;
+  var simFpReturn = null;
+
+  function initStep5BookingSimulation() {
+    var fullName = updateFullCarName() || '2023 BMW 320i M Sport 2.0';
+    var rateVal = parseInt(document.getElementById('car-rate')?.value, 10) || 450;
+    var type = (document.getElementById('car-type')?.value || 'Sedan').toUpperCase();
+    var fuel = document.getElementById('car-fuel')?.value || 'Petrol';
+    var seats = document.getElementById('car-seats')?.value || '5';
+    var trans = document.getElementById('car-transmission')?.value || 'Automatic';
+    var engine = (document.getElementById('car-engine')?.value || '').trim() || '2.0L Turbo';
+
+    var s5Title = document.getElementById('step5-title-display');
+    var s5Rate = document.getElementById('step5-rate-display');
+    var s5Badge = document.getElementById('step5-category-badge');
+    var s5Trans = document.getElementById('step5-spec-trans');
+    var s5Fuel = document.getElementById('step5-spec-fuel');
+    var s5Seats = document.getElementById('step5-spec-seats');
+    var s5Engine = document.getElementById('step5-spec-engine');
+    var s5Img = document.getElementById('step5-display-img');
+
+    if (s5Title) s5Title.textContent = fullName;
+    if (s5Rate) s5Rate.textContent = 'RM ' + rateVal + '/hari';
+    if (s5Badge) s5Badge.textContent = type;
+    if (s5Trans) s5Trans.textContent = trans === 'Automatic' ? 'Automatik' : 'Manual';
+    if (s5Fuel) s5Fuel.textContent = fuel;
+    if (s5Seats) s5Seats.textContent = seats + ' Tempat Duduk';
+    if (s5Engine) s5Engine.textContent = engine;
+
+    var imgSrc = selectedPhotoBase64 || (window.__360Data && window.__360Data.exteriorFrames.length ? window.__360Data.exteriorFrames[0] : '../../../shared/model/bezza.png');
+    if (s5Img) s5Img.src = imgSrc;
+
+    // Initialize Flatpickr for booking simulator if not initialized
+    var today = new Date();
+    var returnDate = new Date();
+    returnDate.setDate(today.getDate() + 3);
+
+    var pickupInput = document.getElementById('sim-date-pickup');
+    var returnInput = document.getElementById('sim-date-return');
+
+    if (window.flatpickr && pickupInput && returnInput) {
+      if (!simFpPickup) {
+        simFpPickup = window.flatpickr(pickupInput, {
+          defaultDate: today,
+          minDate: 'today',
+          dateFormat: 'd M Y',
+          onChange: function (selectedDates) {
+            if (selectedDates[0] && simFpReturn) {
+              simFpReturn.set('minDate', selectedDates[0]);
+              recalcBookingSimulation();
+            }
+          }
+        });
+      }
+      if (!simFpReturn) {
+        simFpReturn = window.flatpickr(returnInput, {
+          defaultDate: returnDate,
+          minDate: today,
+          dateFormat: 'd M Y',
+          onChange: function () {
+            recalcBookingSimulation();
+          }
+        });
+      }
+    }
+
+    recalcBookingSimulation();
+  }
+
+  function recalcBookingSimulation() {
+    var rateVal = parseInt(document.getElementById('car-rate')?.value, 10) || 450;
+    var durationDays = 3;
+
+    if (simFpPickup && simFpReturn && simFpPickup.selectedDates && simFpPickup.selectedDates[0] && simFpReturn.selectedDates && simFpReturn.selectedDates[0]) {
+      var diffMs = simFpReturn.selectedDates[0].getTime() - simFpPickup.selectedDates[0].getTime();
+      var days = Math.round(diffMs / (1000 * 60 * 60 * 24));
+      durationDays = days > 0 ? days : 1;
+    }
+
+    var totalEst = durationDays * rateVal;
+    var durText = document.getElementById('sim-duration-text');
+    var priceText = document.getElementById('sim-total-price');
+
+    if (durText) durText.textContent = durationDays + ' hari';
+    if (priceText) priceText.textContent = 'RM ' + totalEst.toLocaleString();
+  }
+
+  window.simulateCustomerBooking = function () {
+    window.showToast('✓ Simulasi Berjaya: Tarikh tempahan sah dan pengiraan harga sewaan berfungsi!', 'success');
   };
 
   /**
@@ -1223,6 +1518,7 @@
   // Intercept Navigation Links on Page
   function setupNavigationGuards() {
     document.addEventListener('click', function (e) {
+      if (isSubmitted) return;
       var link = e.target.closest('a');
       if (!link) return;
       var href = link.getAttribute('href');
@@ -1239,6 +1535,7 @@
 
     // Browser close / tab reload warning
     window.addEventListener('beforeunload', function (e) {
+      if (isSubmitted) return;
       var plate = (document.getElementById('car-plate')?.value || '').trim();
       var brand = document.getElementById('car-brand')?.value;
       if (isFormDirty || plate || brand) {
@@ -1665,7 +1962,7 @@
    * =========================================================================
    */
   window.handleCarSubmit = function (e) {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
 
     var nameVal = updateFullCarName();
     var plateVal = (document.getElementById('car-plate')?.value || '').trim().toUpperCase();
@@ -1700,14 +1997,15 @@
     };
 
     // Clean up draft since registered successfully
-    window.clearCarDraft(false);
+    isSubmitted = true;
     isFormDirty = false;
+    window.clearCarDraft(false);
 
     if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
       window.WeDriveAPI.createCar(newCar)
         .then(function () {
-          window.showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
-          setTimeout(function () { window.location.href = 'cars.html'; }, 800);
+          showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
+          setTimeout(function () { window.location.href = 'cars.html'; }, 300);
         })
         .catch(function (err) {
           console.error('Create car error:', err);
@@ -1717,8 +2015,11 @@
       saveFallback(newCar);
     }
   };
+  window.submitNewCar = window.handleCarSubmit;
 
   function saveFallback(car) {
+    isSubmitted = true;
+    isFormDirty = false;
     try {
       var existing = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
       car.id = 'CR-' + Date.now();
@@ -1727,8 +2028,8 @@
     } catch (err) {
       console.warn('Local storage save:', err);
     }
-    window.showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
-    setTimeout(function () { window.location.href = 'cars.html'; }, 800);
+    showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
+    setTimeout(function () { window.location.href = 'cars.html'; }, 300);
   }
 
   /**
