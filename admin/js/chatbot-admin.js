@@ -1,12 +1,10 @@
 /**
- * WeDRIVE - AI Chatbot Settings (OpenRouter.ai)
- * admin/js/chatbot-admin.js
+ * WeDRIVE - AI Chatbot Settings (Admin Config Panel)
+ * admin/js/chatbot-admin.js (v6.17.0)
  *
- * Provider: OpenRouter.ai — unified API gateway (supports GPT-4o, Claude, Gemini, etc.)
- * Model:    google/gemini-2.5-flash
- * Settings stored in localStorage for demo/FYP purposes.
- *
- * System prompt now auto-injects LIVE data from Supabase (cars, stats, etc.)
+ * API key is now read from WeDriveAiVault Slot 3 (customer_chatbot).
+ * Go to Admin → AI Intelligence → Pusat Kunci API to configure.
+ * System prompt & promo context still stored in Supabase chatbot_settings.
  */
 
 const STORAGE_KEY = 'wedrive_chatbot_settings';
@@ -378,10 +376,16 @@ window.sendTestMsg = async function () {
   const text = input.value.trim();
   if (!text) return;
 
-  const apiKey = document.getElementById('api-key').value.trim();
+  // Read key: WeDriveAiVault Slot 3 (primary) → input field (fallback)
+  let apiKey = '';
+  if (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('customer_chatbot')) {
+    apiKey = window.WeDriveAiVault.getKey('customer_chatbot');
+  } else {
+    apiKey = document.getElementById('api-key').value.trim();
+  }
 
   if (!apiKey) {
-    showToast('Set your OpenRouter API key first', true);
+    showToast('Tiada kunci API. Pergi ke Pusat Kunci API → Slot 3 untuk konfigurasi.', true);
     return;
   }
 
@@ -572,12 +576,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  document.getElementById('api-key').value = settings.apiKey || '';
+  // Pre-fill API key field from vault (Slot 3: customer_chatbot)
+  const vaultKey = (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('customer_chatbot'))
+    ? window.WeDriveAiVault.getKey('customer_chatbot') : '';
+  const displayKey = vaultKey || settings.apiKey || '';
+  document.getElementById('api-key').value = displayKey;
   document.getElementById('system-prompt').value = settings.systemPrompt || '';
   document.getElementById('promo-context').value = settings.promoContext || '';
   document.getElementById('greeting-msg').value = settings.greeting || '';
 
-  updateStatusBadge(settings);
+  // Update status badge — show vault status
+  if (vaultKey) {
+    const provider = window.WeDriveAiVault.getProvider('customer_chatbot');
+    updateStatusBadge({ apiKey: vaultKey });
+    const badge = document.getElementById('api-status');
+    if (badge) badge.innerHTML = '<span class="dot-indicator"></span> '
+      + (provider ? provider.name : 'AI') + ' ✓ Vault Slot 3';
+  } else {
+    updateStatusBadge(settings);
+  }
 
   // Show greeting in test chat
   if (settings.greeting) {

@@ -6316,4 +6316,47 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.16.0 Implement 100% STITCH UI preview conversion for Add Car steps 2, 3, 4 with real admin navigation, external CSS/JS, and Supabase data pipeline`
   - Tag Versi: `6.16.0`
 
+---
+
+### [PATCH UPDATE] v6.16.1 — Pembersihan Menyeluruh Isu Linter IDE, Sifar Gaya CSS Inline, Keserasian Pelayar Safari/WebKit & Penyatuan Kamus Terjemahan
+
+- **Punca Keperluan & Arahan Pengguna**:
+  - Pengguna meminta agar kesemua masalah linter IDE yang dilaporkan (`@[current_problems]`) dibaiki secara tuntas:
+    1. Kunci objek pendua dalam kamus bahasa `shared/lang/en.json` dan `shared/lang/ms.json`.
+    2. Amaran ketidakserasian `scrollbar-width` pada Safari / versi pelayar lama dalam `admin/pages/car/add-car/step5_tempahan.html` dan `shared/css/wedrive.css`.
+    3. Amaran keserasian `background-clip` dalam `STITCH UI PREVIEW/index.html`.
+    4. Amaran gaya CSS inline (`style="..."`) merentas kesemua halaman wizard pendaftaran kenderaan baharu (`step1_spesifikasi.html`, `step2_studio360.html`, `step3_pengesahan.html`, `step4_pandangan_pelanggan.html`, `step5_tempahan.html`) dan fail pratonton STITCH UI.
+    5. Amaran linter dalam fail `graphify-out/GRAPH_TREE.html` dan `graphify-out/graph.html` (tag viewport meta, `-webkit-user-select`, susunan `-webkit-backdrop-filter`, atribut `title` butang, dan penyingkiran inline styles).
+
+- **Tindakan Teknikal & Pembaikan**:
+  1. **Penyatuan Kamus Bahasa (`shared/lang/`)**:
+     - Menyingkirkan kunci pendua (`cust_pay_title`, `cust_pay_btn`, `cust_conf_title`, `cust_conf_summary`) di baris 814–817 dalam `en.json`, `ms.json`, `en.js`, dan `ms.js`. Kesemua 1,306 kunci disahkan unik (sifar pendua).
+  2. **Pengukuhan Kelas Utiliti Global (`shared/css/wedrive.css`)**:
+     - Menambah kelas utiliti berkongsi `.icon-fill`, `.text-white-force`, dan penindas bar tatal sejagat `.no-scrollbar` / `.hide-scrollbar` dengan sokongan penuh WebKit (`display: none; width: 0; height: 0;`) dan `-ms-overflow-style: none;` tanpa amaran `scrollbar-width`.
+  3. **Pembersihan Halaman Pengeluaran Wizard Pendaftaran**:
+     - `step1_spesifikasi.html`: Menggantikan kesemua gaya inline ikon AI, teks putih paksa, dan butang bulat dengan kelas utiliti `.icon-fill`, `.text-white-force`, dan `.circle-1-1`.
+     - `step2_studio360.html`: Menggantikan inline styles kanvas kosong, kawalan turntable, dan toast dengan `.circle-1-1`, `.text-white-force`, dan `.icon-fill`.
+     - `step3_pengesahan.html`: Menggantikan inline styles spesifikasi kad, slider galeri, dan notifikasi dengan `.circle-1-1` dan `.text-white-force`.
+     - `step4_pandangan_pelanggan.html`: Menggantikan inline styles kad sorotan WYSIWYG dengan `.circle-1-1`, `.icon-fill`, `.no-underline`, dan `.text-white-force`.
+     - `step5_tempahan.html`: Menyingkirkan blok `<style>` tempatan lapuk dan menggantikan inline styles notifikasi toast dengan `.icon-fill` dan `.circle-1-1`.
+  4. **Pembersihan Fail STITCH UI Preview (`STITCH UI PREVIEW/`)**:
+     - `index.html`: Menambah `background-clip: text;` piawai bersama `-webkit-background-clip: text;`. Memindahkan semua inline styles ke kelas CSS kemas.
+     - `7/card_spotlight_gempak.html`: Memindahkan inline styles ke kelas CSS modular (`.toolbar-btn`, `.sim-section`, `.icon-fill`).
+     - `7/step1_spesifikasi_preview.html`: Menyingkirkan kesemua inline styles dan memanfaatkan `.circle-1-1`, `.icon-fill`, `.text-white-force`.
+     - `7/step2_studio360_preview.html`: Memindahkan inline background hero ke `.preview-hero-car-bg`, menambah `.active-nav-glow`, dan menyingkirkan semua inline styles.
+  5. **Pembersihan Fail Visualisasi Graf (`graphify-out/`)**:
+     - `graphify-out/graph.html`: Menambah `<meta name="viewport">`, `-webkit-user-select: none;`, dan menyusun `appearance` selepas `-webkit-appearance`.
+     - `graphify-out/GRAPH_TREE.html`: Menyusun `-webkit-backdrop-filter` sebelum `backdrop-filter`, menambah `-webkit-user-select`, menghapuskan `scrollbar-width`, menambah atribut `title` dan `aria-label` pada butang `.drawer-close`, serta memindahkan semua inline styles ke kelas CSS.
+
+- **Kepatuhan Ujian Automasi & Standard**:
+  - Suite ujian Playwright lengkap dijalankan: **51/51 ujian lulus (100% Pass Rate)**.
+  - Kesemua 23 fail peraturan `.agents/rules/*.md` kekal di bawah siling 12,000 aksara.
+  - Mematuhi Peraturan Mandatori Zero Oval Rule (1:1 ikon bulat sempurna dan kapsul pil 9999px).
+  - Graphify Knowledge Graph dikemas kini (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.16.1 Resolve all IDE linter warnings, eliminate inline styles, fix cross-browser webkit prefixes, and unify translation keys`
+  - Tag Versi: `6.16.1`
+
+
 

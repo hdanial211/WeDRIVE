@@ -553,18 +553,22 @@ window.sendChat = async function() {
   input.value = ''; input.style.height = 'auto';
   window.showTypingIndicator();
 
-  // Load settings (use window.chatbotData from Supabase if available, fallback to localStorage)
+  // Load settings: vault (Slot 3) → Supabase chatbotData → localStorage fallback
   let settings = window.chatbotData || {};
-  if (!settings.apiKey) {
+  // Primary: WeDriveAiVault Slot 3 (customer_chatbot) — Single Source of Truth
+  let apiKey = '';
+  if (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('customer_chatbot')) {
+    apiKey = window.WeDriveAiVault.getKey('customer_chatbot');
+  } else if (!settings.apiKey) {
+    // Fallback: legacy wedrive_chatbot_settings
     try {
       const saved = localStorage.getItem('wedrive_chatbot_settings');
-      if (saved) {
-        settings = { ...settings, ...JSON.parse(saved) };
-      }
+      if (saved) settings = { ...settings, ...JSON.parse(saved) };
     } catch (e) {}
+    apiKey = settings.apiKey || '';
+  } else {
+    apiKey = settings.apiKey || '';
   }
-
-  const apiKey = settings.apiKey || '';
   const systemPrompt = settings.systemPrompt || "You are WeDRIVE Bot, a helpful AI assistant for WeDRIVE car rental in Melaka, Malaysia. Be friendly, concise, and helpful.";
   const promoContext = settings.promoContext || '';
 
@@ -697,7 +701,13 @@ Always use the exact markdown links built above. Do not use absolute domains.
 
   if (!apiKey) {
     window.removeTyping();
-    window.addChatMsg("I'm currently offline. Please ask the admin to configure the API key.", false);
+    const isEn = (localStorage.getItem('wedrive_lang') || 'ms') === 'en';
+    window.addChatMsg(
+      isEn
+        ? "I'm currently offline. Please ask the admin to add an API key at: Admin → AI Intelligence → API Key Centre (Slot 3)."
+        : "Saya tidak dapat berfungsi sekarang. Sila minta admin memasukkan kunci API di: Admin → AI Intelligence → Pusat Kunci API (Slot 3).",
+      false
+    );
     return;
   }
 

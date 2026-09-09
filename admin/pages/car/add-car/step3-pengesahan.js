@@ -12,22 +12,15 @@
 (function () {
   'use strict';
 
-  const RENDER_360_URL = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtBDDlUrmJDNhDsS4aV1no7_ijMp3LDBIEuO8JFSLu1rhZtzRptizXrOOhrC4F9UM_GgVDGzcAxyDfse6ygFP8JmSGyjv71IIKEzYBhzmRw7hDm5v779sZUlzh9qAN7SOqsPGhcB_Czd7Yc7HZemwGIFVradMOJlXOSx87_TKIZzR5kuC3Lt7YEVxnlUdIvKA8fnQCkIEXAdlm7dA7MYzd0eNSvwggNzObheoeAcMgKy9b-GN11jAQiS1tJPCdGlY5skGa1MRHwGc';
-  const PANORAMA_URL = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85';
+  // Zero Fake Data: No hardcoded fallback images. 360° loads real cdnUrl from draft.
 
-  const INSPECTION_PHOTOS_DEFAULT = [
-    { title: 'Hadapan Penuh', titleEn: 'Full Front', img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85' },
-    { title: 'Belakang Penuh', titleEn: 'Full Rear', img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=85' },
-    { title: 'Sisi Kanan Profil', titleEn: 'Right Side Profile', img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85' },
-    { title: 'Sisi Kiri Profil', titleEn: 'Left Side Profile', img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85' },
-    { title: 'Suku Hadapan Kiri', titleEn: 'Front Left Quarter', img: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1200&q=85' },
-    { title: 'Suku Belakang Kanan', titleEn: 'Rear Right Quarter', img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=85' }
-  ];
-
-  let currentStep3Photos = [...INSPECTION_PHOTOS_DEFAULT];
+  let currentStep3Photos = [];
   let currentStep3PhotoIndex = 0;
   let activeStep3VisualMode = 'gallery';
   let hasStep3360 = false;
+  let step3CdnUrl = '';          // exterior: !view=ext
+  let step3CdnInteriorUrl = '';  // interior: !view=int
+  let step3CdnPhotosUrl = '';    // gallery:  !view=photos
   let isPublishing = false;
 
   function getLang() {
@@ -37,16 +30,19 @@
   // Gallery Navigation & Thumbnails
   function renderStep3GalleryThumbnails() {
     const strip = document.getElementById('step3GalleryThumbnailsStrip');
+    const container = document.getElementById('step3GalleryThumbnailsContainer');
     if (!strip) return;
-    if (!currentStep3Photos || currentStep3Photos.length === 0) {
+    if (!currentStep3Photos || currentStep3Photos.length <= 1) {
       strip.innerHTML = '';
+      if (container) container.classList.add('hidden');
       return;
     }
 
+    if (container) container.classList.remove('hidden');
     const isEn = getLang() === 'en';
     strip.innerHTML = currentStep3Photos.map((photo, idx) => {
       const isActive = (idx === currentStep3PhotoIndex && activeStep3VisualMode === 'gallery');
-      const title = isEn ? (photo.titleEn || photo.title) : photo.title;
+      const title = isEn ? (photo.titleEn || photo.title || `Photo ${idx + 1}`) : (photo.title || `Foto ${idx + 1}`);
       return `
         <button type="button" onclick="window.WeDriveStep3.selectPhoto(${idx})"
           class="gallery-thumb-btn relative rounded-xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300 ${isActive ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-md border-transparent' : 'opacity-60 hover:opacity-100 hover:scale-[1.03] border border-border-day bg-surface-container'}"
@@ -64,8 +60,11 @@
     const photo = currentStep3Photos[index];
 
     const viewportImg = document.getElementById('step3ViewportImage');
-    if (viewportImg) {
+    const emptyState = document.getElementById('step3EmptyShowcaseState');
+    if (viewportImg && photo.img) {
       viewportImg.style.backgroundImage = `url('${photo.img}')`;
+      viewportImg.classList.remove('hidden');
+      if (emptyState) emptyState.classList.add('hidden');
     }
 
     if (activeStep3VisualMode !== 'gallery') {
@@ -84,52 +83,66 @@
   function setStep3Tab(mode) {
     activeStep3VisualMode = mode;
     const tab360 = document.getElementById('step3Tab360');
-    const tabPano = document.getElementById('step3TabPanorama');
     const tabGal = document.getElementById('step3TabGallery');
     const viewportImg = document.getElementById('step3ViewportImage');
+    const iframe360 = document.getElementById('step3Iframe360');
+    const emptyState = document.getElementById('step3EmptyShowcaseState');
     const swipeIndicator = document.getElementById('step3SwipeIndicator');
     const indicatorText = document.getElementById('step3IndicatorText');
     const btnPrev = document.getElementById('step3BtnPrevImage');
     const btnNext = document.getElementById('step3BtnNextImage');
     const thumbsContainer = document.getElementById('step3GalleryThumbnailsContainer');
+    const isEn = getLang() === 'en';
+
+    // Helper: hide all layers
+    function hideAll() {
+      if (emptyState) emptyState.classList.add('hidden');
+      if (viewportImg) { viewportImg.classList.add('hidden'); viewportImg.style.backgroundImage = ''; }
+      if (iframe360) iframe360.classList.add('hidden');
+      if (swipeIndicator) swipeIndicator.classList.add('hidden');
+      if (btnPrev) btnPrev.classList.add('hidden');
+      if (btnNext) btnNext.classList.add('hidden');
+      if (thumbsContainer) thumbsContainer.classList.add('hidden');
+    }
 
     const activeStyle = 'flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap cursor-pointer';
     const inactiveStyle = 'flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap cursor-pointer';
 
-    if (mode === '360') {
+    if (mode === '360' && hasStep3360) {
       if (tab360) tab360.className = activeStyle;
-      if (tabPano) tabPano.className = inactiveStyle;
       if (tabGal) tabGal.className = inactiveStyle;
-      if (viewportImg) viewportImg.style.backgroundImage = `url('${RENDER_360_URL}')`;
-      if (swipeIndicator) swipeIndicator.classList.remove('hidden');
-      if (indicatorText) indicatorText.textContent = getLang() === 'en' ? 'Swipe to rotate 360°' : 'Leret untuk memutar 360°';
-
-      if (btnPrev) btnPrev.classList.add('hidden');
-      if (btnNext) btnNext.classList.add('hidden');
-      if (thumbsContainer) thumbsContainer.classList.add('hidden');
-    } else if (mode === 'panorama') {
-      if (tab360) tab360.className = inactiveStyle;
-      if (tabPano) tabPano.className = activeStyle;
-      if (tabGal) tabGal.className = inactiveStyle;
-      if (viewportImg) viewportImg.style.backgroundImage = `url('${PANORAMA_URL}')`;
-      if (swipeIndicator) swipeIndicator.classList.remove('hidden');
-      if (indicatorText) indicatorText.textContent = getLang() === 'en' ? 'Drag to explore panorama' : 'Seret untuk tinjauan panorama';
-
-      if (btnPrev) btnPrev.classList.add('hidden');
-      if (btnNext) btnNext.classList.add('hidden');
-      if (thumbsContainer) thumbsContainer.classList.add('hidden');
+      hideAll();
+      if (step3CdnUrl.length > 0 && iframe360) {
+        if (iframe360.src !== step3CdnUrl) iframe360.src = step3CdnUrl;
+        iframe360.classList.remove('hidden');
+        if (swipeIndicator) swipeIndicator.classList.remove('hidden');
+        if (indicatorText) indicatorText.textContent = isEn ? 'Drag to rotate 360°' : 'Seret untuk putar 360°';
+      } else {
+        if (emptyState) emptyState.classList.remove('hidden');
+      }
     } else {
+      activeStep3VisualMode = 'gallery';
       if (tab360) tab360.className = inactiveStyle + (hasStep3360 ? '' : ' hidden');
-      if (tabPano) tabPano.className = inactiveStyle + (hasStep3360 ? '' : ' hidden');
       if (tabGal) tabGal.className = activeStyle;
-      const photo = currentStep3Photos[currentStep3PhotoIndex] || currentStep3Photos[0];
-      if (viewportImg && photo) viewportImg.style.backgroundImage = `url('${photo.img}')`;
-      if (swipeIndicator) swipeIndicator.classList.add('hidden');
+      hideAll();
 
-      if (btnPrev) btnPrev.classList.remove('hidden');
-      if (btnNext) btnNext.classList.remove('hidden');
-      if (thumbsContainer) thumbsContainer.classList.remove('hidden');
-      renderStep3GalleryThumbnails();
+      if (currentStep3Photos && currentStep3Photos.length > 0) {
+        const photo = currentStep3Photos[currentStep3PhotoIndex] || currentStep3Photos[0];
+        if (photo && photo.img) {
+          if (viewportImg) {
+            viewportImg.classList.remove('hidden');
+            viewportImg.style.backgroundImage = `url('${photo.img}')`;
+          }
+          if (currentStep3Photos.length > 1) {
+            if (btnPrev) btnPrev.classList.remove('hidden');
+            if (btnNext) btnNext.classList.remove('hidden');
+            if (thumbsContainer) thumbsContainer.classList.remove('hidden');
+            renderStep3GalleryThumbnails();
+          }
+        }
+      } else {
+        if (emptyState) emptyState.classList.remove('hidden');
+      }
     }
   }
 
@@ -139,6 +152,59 @@
     try {
       const raw = localStorage.getItem('wedrive_new_car_draft');
       const data = raw ? JSON.parse(raw) : null;
+      const isEn = getLang() === 'en';
+
+      const isDownloaded = data && data.downloaded === true;
+      const switcher = document.getElementById('step3SegmentedSwitcher');
+      const tab360 = document.getElementById('step3Tab360');
+
+      if (!isDownloaded) {
+        // Strict Zero Preview Leak: Without download, Step 3 displays ZERO images or 360
+        currentStep3Photos = [];
+        hasStep3360 = false;
+        step3CdnUrl = '';
+        if (switcher) switcher.classList.add('hidden');
+        setStep3Tab('gallery');
+      } else {
+        // Visuals are downloaded & saved to Supabase/draft
+        const draftSupabase = (data && Array.isArray(data.supabase_images) && data.supabase_images.length > 0) ? data.supabase_images : [];
+        const draftGallery8 = (data && Array.isArray(data.gallery8Photos) && data.gallery8Photos.length > 0) ? data.gallery8Photos : [];
+        const draftUploaded = (data && Array.isArray(data.photos) && data.photos.length > 0) ? data.photos.filter(p => p && p.img) : [];
+
+        if (draftSupabase.length > 0) {
+          currentStep3Photos = draftSupabase;
+        } else if (draftGallery8.length > 0) {
+          currentStep3Photos = draftGallery8;
+        } else if (draftUploaded.length > 0) {
+          currentStep3Photos = draftUploaded.map((p, idx) => (typeof p === 'string' ? { title: `Foto ${idx + 1}`, titleEn: `Photo ${idx + 1}`, img: p } : p));
+        } else if (data && data.image_url) {
+          currentStep3Photos = [{ title: 'Hadapan Penuh', titleEn: 'Full Front', img: data.image_url }];
+        } else {
+          currentStep3Photos = [];
+        }
+
+        step3CdnUrl = (data && (data.supabase_360 || data.cdnUrlExterior || data.cdnUrl))
+          ? (data.supabase_360 || data.cdnUrlExterior || data.cdnUrl).trim()
+          : '';
+        hasStep3360 = !!step3CdnUrl;
+
+        if (hasStep3360) {
+          if (switcher) {
+            switcher.classList.remove('hidden', 'max-w-[150px]');
+            switcher.classList.add('max-w-[260px]');
+          }
+          if (tab360) tab360.classList.remove('hidden');
+          setStep3Tab('360');
+        } else {
+          if (switcher) {
+            switcher.classList.remove('hidden', 'max-w-[260px]');
+            switcher.classList.add('max-w-[150px]');
+          }
+          if (tab360) tab360.classList.add('hidden');
+          setStep3Tab('gallery');
+        }
+      }
+      currentStep3PhotoIndex = 0;
 
       // Pure real data, clean blank placeholders if absent (Sifar Data Palsu)
       const brand = data && data.brand ? data.brand : '-';
@@ -151,7 +217,7 @@
       const engine = data && data.engine ? data.engine : '-';
       const fuel = data && data.fuel ? data.fuel : '-';
       const transmission = data && data.transmission ? data.transmission : '-';
-      const seats = data && data.seats ? `${data.seats} Tempat Duduk` : '-';
+      const seats = data && data.seats ? `${data.seats} ${isEn ? 'Seats' : 'Tempat Duduk'}` : '-';
 
       const dailyVal = data && data.dailyPrice ? Number(data.dailyPrice) : 0;
       const weeklyVal = data && data.weeklyPrice ? Number(data.weeklyPrice) : (dailyVal ? dailyVal * 6 : 0);
@@ -187,38 +253,76 @@
       if (document.getElementById('tarifDaily')) document.getElementById('tarifDaily').textContent = daily;
       if (document.getElementById('tarifWeekly')) document.getElementById('tarifWeekly').textContent = weekly;
       if (document.getElementById('tarifMonthly')) document.getElementById('tarifMonthly').textContent = monthly;
-
-      // Progressive Visual Disclosure
-      hasStep3360 = data && !!data.has360;
-      const switcher = document.getElementById('step3SegmentedSwitcher');
-      const tab360 = document.getElementById('step3Tab360');
-      const tabPano = document.getElementById('step3TabPanorama');
-      if (hasStep3360) {
-        if (switcher) {
-          switcher.classList.remove('max-w-[150px]');
-          switcher.classList.add('max-w-md');
-        }
-        if (tab360) tab360.classList.remove('hidden');
-        if (tabPano) tabPano.classList.remove('hidden');
-        setStep3Tab('360');
-      } else {
-        if (switcher) {
-          switcher.classList.remove('max-w-md');
-          switcher.classList.add('max-w-[150px]');
-        }
-        if (tab360) tab360.classList.add('hidden');
-        if (tabPano) tabPano.classList.add('hidden');
-        setStep3Tab('gallery');
-      }
     } catch (e) {
       console.warn('[WeDRIVE] Error loading car draft:', e);
       setStep3Tab('gallery');
     }
   }
 
+  let step3ToastTimeout = null;
+  function showStep3Toast(msg, type = 'error') {
+    const toast = document.getElementById('step3Toast');
+    const toastMsg = document.getElementById('step3ToastMsg');
+    const toastIcon = document.getElementById('step3ToastIcon');
+    const iconContainer = document.getElementById('step3ToastIconContainer');
+    if (!toast || !toastMsg) return;
+
+    clearTimeout(step3ToastTimeout);
+    toastMsg.textContent = msg;
+
+    if (toastIcon && iconContainer) {
+      if (type === 'error' || type === 'warning') {
+        toastIcon.textContent = 'warning';
+        toastIcon.className = 'material-symbols-outlined text-red-500 text-[18px]';
+        iconContainer.className = 'circle-1-1 w-7 h-7 bg-red-500/20 text-red-500 flex items-center justify-center flex-shrink-0';
+      } else {
+        toastIcon.textContent = 'check_circle';
+        toastIcon.className = 'material-symbols-outlined text-green-500 text-[18px]';
+        iconContainer.className = 'circle-1-1 w-7 h-7 bg-green-500/20 text-green-500 flex items-center justify-center flex-shrink-0';
+      }
+    }
+
+    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    step3ToastTimeout = setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+    }, 4000);
+  }
+
   // Publish / Register Car into Supabase Database
   async function confirmPublish() {
     if (isPublishing) return;
+    const isEn = getLang() === 'en';
+
+    const raw = localStorage.getItem('wedrive_new_car_draft');
+    const draft = raw ? JSON.parse(raw) : null;
+    if (!draft || !draft.downloaded) {
+      showStep3Toast(
+        isEn ? 'Please download vehicle visuals in Step 2 before submitting.' : 'Sila muat turun visual kenderaan di Langkah 2 sebelum mendaftar.',
+        'error'
+      );
+      return;
+    }
+
+    isPublishing = true;
+
+    // Syarat Mandatori: Kenderaan WAJIB ada sekurang-kurangnya 1 foto atau pautan 360°
+    const hasPhotos = (currentStep3Photos && currentStep3Photos.length > 0 && currentStep3Photos.some(p => p && p.img)) ||
+                      (draft.photos && Array.isArray(draft.photos) && draft.photos.some(p => p && (p.img || typeof p === 'string'))) ||
+                      (draft.gallery8Photos && Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) ||
+                      Boolean(draft.image_url);
+    const has360 = Boolean(draft.cdnUrl || draft.cdnUrlExterior || draft.spincarUrl || draft.has360);
+
+    if (!hasPhotos && !has360) {
+      const errMsg = isEn
+        ? 'Registration rejected: Vehicle must have at least 1 photo or a 360° link before registration.'
+        : 'Pendaftaran ditolak: Sila muat naik sekurang-kurangnya 1 gambar atau pautan 360° kenderaan.';
+      showStep3Toast(errMsg, 'error');
+      return;
+    }
+
     isPublishing = true;
 
     const btnSubmit = document.getElementById('btnSubmitCarRegistration');
@@ -226,14 +330,11 @@
       btnSubmit.disabled = true;
       btnSubmit.innerHTML = `
         <span class="material-symbols-outlined text-[20px] text-white animate-spin">progress_activity</span>
-        <span>Mendaftarkan ke Pangkalan Data...</span>
+        <span>${isEn ? 'Registering Vehicle...' : 'Mendaftarkan Kenderaan...'}</span>
       `;
     }
 
     try {
-      const raw = localStorage.getItem('wedrive_new_car_draft');
-      const draft = raw ? JSON.parse(raw) : {};
-
       const newCarPayload = {
         name: `${draft.brand || ''} ${draft.model || ''} ${draft.variant || ''}`.trim() || 'Kenderaan Baharu',
         brand: draft.brand || '',
@@ -262,7 +363,9 @@
       const modal = document.getElementById('successModal');
       const modalDesc = document.querySelector('#successModal p');
       if (modalDesc) {
-        modalDesc.textContent = `${newCarPayload.name} (${draft.plate || 'No. Pendaftaran'}) telah berjaya didaftarkan ke pangkalan data inventori aktif WeDRIVE.`;
+        modalDesc.textContent = isEn
+          ? `${newCarPayload.name} (${draft.plate || 'Registration No.'}) has been successfully registered into WeDRIVE active inventory.`
+          : `${newCarPayload.name} (${draft.plate || 'No. Pendaftaran'}) telah berjaya didaftarkan ke dalam sistem inventori aktif WeDRIVE.`;
       }
       if (modal) modal.classList.remove('hidden');
 
@@ -290,7 +393,6 @@
 
   function init() {
     document.getElementById('step3Tab360')?.addEventListener('click', () => setStep3Tab('360'));
-    document.getElementById('step3TabPanorama')?.addEventListener('click', () => setStep3Tab('panorama'));
     document.getElementById('step3TabGallery')?.addEventListener('click', () => setStep3Tab('gallery'));
 
     document.getElementById('step3BtnPrevImage')?.addEventListener('click', () => navigateStep3Gallery(-1));
@@ -308,10 +410,12 @@
   }
 
   window.WeDriveStep3 = {
+    setStep3Tab: setStep3Tab,
     selectPhoto: selectStep3GalleryPhoto,
     navigateGallery: navigateStep3Gallery,
     confirmPublish: confirmPublish,
-    closeModal: closeModal
+    closeModal: closeModal,
+    loadCarDraft: loadCarDraft
   };
 
   if (document.readyState === 'loading') {

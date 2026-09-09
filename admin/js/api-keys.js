@@ -1,13 +1,15 @@
 /**
- * WeDRIVE - AI Key Vault & Multi-Provider Ingestion Engine
- * admin/js/api-keys.js (v5.8.0)
+ * WeDRIVE - AI Key Vault UI Controller
+ * admin/js/api-keys.js (v6.17.0)
  *
  * Features:
- *  - Real-time API Key Signature Auto-Detection (Google Gemini, OpenRouter, Groq, OpenAI, Anthropic)
- *  - Zero-Cost free model mapping (Gemini 2.5 Flash, OpenRouter :free, Groq Llama 3)
+ *  - Real-time API Key Signature Auto-Detection via shared WeDriveAiVault
  *  - Live latency testing ping engine
  *  - 360 viewer link ingestion parser
  *  - Sync with Supabase settings ('ai_keys') & localStorage
+ *
+ * IMPORTANT: Provider detection & PROVIDERS map now live in shared/js/ai-vault.js
+ * This file uses window.WeDriveAiVault.detectProvider() as the single source.
  */
 
 (function (window, document) {
@@ -15,74 +17,15 @@
 
   var STORAGE_KEY = 'wedrive_ai_keys';
 
-  var PROVIDERS = {
-    gemini: {
-      id: 'gemini',
-      name: 'Google Gemini (Percuma)',
-      badgeCls: 'detected-gemini',
-      defaultModel: 'gemini-2.5-flash',
-      isFree: true
-    },
-    openrouter: {
-      id: 'openrouter',
-      name: 'OpenRouter (Free Tier)',
-      badgeCls: 'detected-openrouter',
-      defaultModel: 'google/gemini-2.0-flash-exp:free',
-      isFree: true
-    },
-    groq: {
-      id: 'groq',
-      name: 'Groq Cloud (Laju & Percuma)',
-      badgeCls: 'detected-groq',
-      defaultModel: 'llama-3.3-70b-versatile',
-      isFree: true
-    },
-    huggingface: {
-      id: 'huggingface',
-      name: 'Hugging Face (Percuma)',
-      badgeCls: 'detected-gemini',
-      defaultModel: 'mistralai/Mistral-7B',
-      isFree: true
-    },
-    openai: {
-      id: 'openai',
-      name: 'OpenAI (GPT-4o)',
-      badgeCls: 'detected-openai',
-      defaultModel: 'gpt-4o-mini',
-      isFree: false
-    },
-    anthropic: {
-      id: 'anthropic',
-      name: 'Anthropic Claude',
-      badgeCls: 'detected-openai',
-      defaultModel: 'claude-3-5-haiku',
-      isFree: false
-    }
-  };
-
-  /**
-   * Auto-detect provider by prefix / signature
-   */
+  // Use shared vault for provider detection (Single Source of Truth)
   function detectProvider(key) {
-    if (!key || typeof key !== 'string') return null;
-    var trimmed = key.trim();
-    if (trimmed.startsWith('AIzaSy')) return PROVIDERS.gemini;
-    if (trimmed.startsWith('sk-or-v1-')) return PROVIDERS.openrouter;
-    if (trimmed.startsWith('gsk_')) return PROVIDERS.groq;
-    if (trimmed.startsWith('hf_')) return PROVIDERS.huggingface;
-    if (trimmed.startsWith('sk-proj-') || (trimmed.startsWith('sk-') && !trimmed.startsWith('sk-ant-') && !trimmed.startsWith('sk-or-'))) return PROVIDERS.openai;
-    if (trimmed.startsWith('sk-ant-')) return PROVIDERS.anthropic;
-
-    // Fallback if long key but unknown prefix
-    if (trimmed.length > 20) {
-      return {
-        id: 'custom',
-        name: 'Kunci Kustom',
-        badgeCls: '',
-        defaultModel: 'model-tersedia',
-        isFree: false
-      };
+    if (window.WeDriveAiVault && window.WeDriveAiVault.detectProvider) {
+      return window.WeDriveAiVault.detectProvider(key);
     }
+    // Minimal fallback if vault not loaded yet
+    if (!key || typeof key !== 'string') return null;
+    var k = key.trim();
+    if (k.length > 20) return { id: 'custom', name: 'Kunci Kustom', badgeCls: '', defaultModel: 'custom', isFree: false };
     return null;
   }
 

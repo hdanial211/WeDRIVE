@@ -287,7 +287,7 @@ window.escapeHtml = function (str) {
 
   // Resolve path to shared/lang/ using the theme-link base path
   function resolveLangPath(lang) {
-    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=6.7.3';
+    return resolveProjectBase() + 'shared/lang/' + lang + '.js?v=6.16.0&t=' + Date.now();
   }
 
   function doApplyTranslation(data, animate) {

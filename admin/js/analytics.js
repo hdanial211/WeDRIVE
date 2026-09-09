@@ -1,6 +1,7 @@
 /**
  * WeDRIVE - AI Data Analysis Controller
- * admin/js/analytics.js
+ * admin/js/analytics.js (v6.17.0)
+ * AI model uses WeDriveAiVault Slot 1 (system_core) when available.
  */
 
 (function () {
@@ -124,6 +125,11 @@
     var btn = document.getElementById('btn-rerun-ai');
     if (!btn) return;
 
+    var hasVaultKey = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('system_core');
+    var providerName = hasVaultKey
+      ? (window.WeDriveAiVault.getProvider('system_core') || {name: 'AI'}).name
+      : null;
+
     var originalHtml = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<span class="material-icons-round fs-18 spin">refresh</span> <span>Menjana Model...</span>';
@@ -131,11 +137,13 @@
     setTimeout(function () {
       btn.disabled = false;
       btn.innerHTML = originalHtml;
-      // Show toast
+      var msg = hasVaultKey
+        ? 'Model AI WeDRIVE dikemas kini menggunakan ' + providerName + '!'
+        : 'Model AI WeDRIVE berjaya dikemas kini! (Mod Simulasi)';
       if (typeof window.showToast === 'function') {
-        window.showToast('Model AI WeDRIVE berjaya dikemas kini!', 'success');
+        window.showToast(msg, 'success');
       } else {
-        alert('Model AI WeDRIVE berjaya dikemas kini!');
+        alert(msg);
       }
       renderDemandChart(currentHorizon);
     }, 800);

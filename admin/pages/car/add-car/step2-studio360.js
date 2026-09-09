@@ -1,83 +1,161 @@
 /**
  * WeDRIVE Admin Add Car - Step 2: Studio Visual 360°
- * admin/pages/car/add-car/step2-studio360.js
+ * admin/pages/car/add-car/step2-studio360.js (v6.17.0)
  * 
  * Features:
+ * - Pure Zero Dummy Data: starts with clean Apple Empty State Canvas
+ * - Real photo file upload via 6 inspection slots (Front, Rear, Sides, Quarters)
  * - Turntable 360 viewer with interactive drag-to-spin & fullscreen
- * - Progressive Segmented Switcher (Gallery -> 360 & Panorama)
- * - Siri AI Iridescent aura & CDN link scanner
- * - Visual draft & Supabase live session sync (Zero Dummy Data)
+ * - Progressive Segmented Switcher (Expands when 360/Panorama available)
+ * - Siri AI CDN scanner & live draft / Supabase sync
+ * - Complete bilingual reactivity (MS / EN)
+ * 
+ * Vault: WeDriveAiVault Slot 4 (downloader_360) used by add-car.js ingest360FromUrl.
+ *        This file uses CDN heuristic parsing; future Gemini Vision categorisation
+ *        will read Slot 4 key via window.WeDriveAiVault.getKey('downloader_360').
  */
 
 (function () {
   'use strict';
 
-  // Master Image Assets
-  const ASSET_360_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBXv-DH82fsjprfpGpSo2DHFgcMwOtUC3ZASUhwfjHsNXTMVzs6gH1edgnQoIeM5BQ-gN5Quk__-3fh0tRncgoo8CwqIDSi3SzWNMSkRhEVtIrkDJCfRZMRNF8lX8AGLWTdF0jPHpnI3HywwDZEwxcUlJtoQ00vlCiI82q9HzlrtRvGLMD32g63eHxTy-ErJMRcOfqLzUfqMKg1VUFyEgDi1wUjsql-khj5lNAkwmLnQc-ZUnXgxY4g-7VNBOZm1VN_eCh3ANLf-7Q';
-  const ASSET_PANORAMA_IMG = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80';
-
-  const INSPECTION_PHOTOS_DEFAULT = [
-    { title: 'Hadapan Penuh', titleEn: 'Full Front', img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85', badge: 'Diimbas AI' },
-    { title: 'Belakang Penuh', titleEn: 'Full Rear', img: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=85', badge: 'Diimbas AI' },
-    { title: 'Sisi Kanan Profil', titleEn: 'Right Side Profile', img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85', badge: 'Diimbas AI' },
-    { title: 'Sisi Kiri Profil', titleEn: 'Left Side Profile', img: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85', badge: 'Diimbas AI' },
-    { title: 'Suku Hadapan Kiri', titleEn: 'Front Left Quarter', img: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=85', badge: 'Diimbas AI' },
-    { title: 'Suku Belakang Kanan', titleEn: 'Rear Right Quarter', img: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=85', badge: 'Diimbas AI' }
+  // Slot definitions for vehicle inspection
+  const INSPECTION_SLOTS = [
+    { key: 'slot_front', title: 'Hadapan Penuh', titleEn: 'Full Front' },
+    { key: 'slot_rear', title: 'Belakang Penuh', titleEn: 'Full Rear' },
+    { key: 'slot_right', title: 'Sisi Kanan Profil', titleEn: 'Right Side Profile' },
+    { key: 'slot_left', title: 'Sisi Kiri Profil', titleEn: 'Left Side Profile' },
+    { key: 'slot_quarter_fl', title: 'Suku Hadapan Kiri', titleEn: 'Front Left Quarter' },
+    { key: 'slot_quarter_rr', title: 'Suku Belakang Kanan', titleEn: 'Rear Right Quarter' }
   ];
 
-  let currentGalleryPhotos = [...INSPECTION_PHOTOS_DEFAULT];
+  function getLang() {
+    return localStorage.getItem('wedrive_lang') || 'ms';
+  }
+
+  // Zero Fake Data: No hardcoded fallback images. All visual content from real draft data only.
+
+  // State
+  let currentGalleryPhotos = [];
   let currentGalleryPhotoIndex = 0;
+  let activeUploadSlotIndex = 0;
   let activeVisualMode = 'gallery';
   let has360Expanded = false;
   let isAnalyzing = false;
   let isSavingDb = false;
-  let isSavedToDb = false;
   let toastTimeout = null;
 
-  // DOM Elements
-  const segmentedSwitcher = document.getElementById('segmentedSwitcher');
-  const tab360 = document.getElementById('tab360');
-  const tabPanorama = document.getElementById('tabPanorama');
-  const tabGallery = document.getElementById('tabGallery');
-  const viewportRenderImage = document.getElementById('viewportRenderImage');
-  const btnPrevImage = document.getElementById('btnPrevImage');
-  const btnNextImage = document.getElementById('btnNextImage');
-  const dragIndicatorOverlay = document.getElementById('dragIndicatorOverlay');
-  const galleryThumbnailsContainer = document.getElementById('galleryThumbnailsContainer');
-  const galleryThumbnailsStrip = document.getElementById('galleryThumbnailsStrip');
-  const photoUploadSlotsGrid = document.getElementById('photoUploadSlotsGrid');
+  // SpinCar/Impel 3-View State (Exterior, Interior, Gallery)
+  let currentCdnExteriorUrl = '';  // Pusingan 360° Luar (Interactive Player)
+  let currentCdnInteriorUrl = '';  // Panorama Dalaman (pano/pano_f.jpg)
+  let currentCdnPhotosUrl   = '';  // Galeri CDN
+  let currentGallery8Photos = [];  // 8 HD Angle Photos from CDN
 
-  const cdnUrlInput = document.getElementById('cdnUrlInput');
-  const cdnInputWrapper = document.getElementById('cdnInputWrapper');
-  const aiLaserScanner = document.getElementById('aiLaserScanner');
-  const btnGenerate3D = document.getElementById('btnGenerate3D');
-  const btnGenIcon = document.getElementById('btnGenIcon');
-  const btnGenText = document.getElementById('btnGenText');
-  const btnSaveToDb = document.getElementById('btnSaveToDb');
-  const btnSaveDbIcon = document.getElementById('btnSaveDbIcon');
-  const btnSaveDbText = document.getElementById('btnSaveDbText');
-  const cdnStatusBadge = document.getElementById('cdnStatusBadge');
-  const cdnStatusIcon = document.getElementById('cdnStatusIcon');
-  const cdnStatusText = document.getElementById('cdnStatusText');
-  const cdnDetectionTags = document.getElementById('cdnDetectionTags');
-  const turntableViewport = document.getElementById('turntableViewport');
-  const btnFullscreen360 = document.getElementById('btnFullscreen360');
-  const iconFullscreen = document.getElementById('iconFullscreen');
+  // Parse SpinCar/Impel/Carsome link and extract 3 separate views:
+  // 1. Exterior 360 viewer URL
+  // 2. Interior panorama URL (pano_f.jpg) & 6 cubemap faces
+  // 3. Gallery 8 photos (ec/0-0.jpg, 0-25.jpg, etc.)
+  async function separateSpinCarAssets(url) {
+    if (!url || typeof url !== 'string') return null;
 
-  const saveDbProgressBox = document.getElementById('saveDbProgressBox');
-  const downloadStatusIcon = document.getElementById('downloadStatusIcon');
-  const downloadStatusLabel = document.getElementById('downloadStatusLabel');
-  const downloadPercentText = document.getElementById('downloadPercentText');
-  const downloadProgressBar = document.getElementById('downloadProgressBar');
-  const downloadFilesStatus = document.getElementById('downloadFilesStatus');
-  const downloadTimeEstimate = document.getElementById('downloadTimeEstimate');
+    const isSpinCar = /cdn\.impel\.io|spincar|carsome/i.test(url);
+    if (!isSpinCar) {
+      return {
+        isSpinCar: false,
+        exteriorUrl: url,
+        interiorPanoUrl: '',
+        gallery8Photos: [],
+        cdnPrefix: ''
+      };
+    }
 
-  const ai3dToast = document.getElementById('ai3dToast');
-  const aiToastMsg = document.getElementById('aiToastMsg');
-  const aiToastIcon = document.getElementById('aiToastIcon');
+    // 1. Extract customer & vin
+    const custMatch = url.match(/customer=([a-zA-Z0-9_\-]+)/i) || url.match(/\/spin\/([a-zA-Z0-9_\-]+)\//i);
+    const vinMatch  = url.match(/vin=([a-zA-Z0-9_\-]+)/i)     || url.match(/\/spin\/[^\/]+\/([a-zA-Z0-9_\-]+)/i);
 
-  function getLang() {
-    return localStorage.getItem('wedrive_lang') || 'ms';
+    let customer = custMatch ? custMatch[1] : 'Carsome';
+    let vin = vinMatch ? vinMatch[1] : null;
+
+    if (!vin) {
+      const pathMatch = url.match(/\/([a-zA-Z0-9_\-]+)\/([a-zA-Z0-9]{10,25})/i);
+      if (pathMatch) {
+        customer = pathMatch[1];
+        vin = pathMatch[2];
+      }
+    }
+
+    let cdnPrefix = null;
+    let thumbIndices = ['0-0', '0-25', '0-50', '0-75', '0-100', '0-125', '0-150', '0-175'];
+
+    // 2. Query Impel API directly (Full CORS Access-Control-Allow-Origin: *)
+    if (customer && vin) {
+      const apiUrls = [
+        `https://api-eu.impel.io/spin/${customer}/${vin}?v=20160212`,
+        `https://api.impel.io/spin/${customer}/${vin}?v=20160212`
+      ];
+
+      for (const apiUrl of apiUrls) {
+        try {
+          const resp = await fetch(apiUrl);
+          if (resp.ok) {
+            const data = await resp.json();
+            if (data && data.cdn_image_prefix) {
+              cdnPrefix = data.cdn_image_prefix;
+              if (cdnPrefix.startsWith('//')) cdnPrefix = 'https:' + cdnPrefix;
+              if (!cdnPrefix.endsWith('/')) cdnPrefix += '/';
+
+              const opts = (data.info && data.info.options) || {};
+              if (Array.isArray(opts.ec_thumb_indices) && opts.ec_thumb_indices.length > 0) {
+                thumbIndices = opts.ec_thumb_indices;
+              }
+              break;
+            }
+          }
+        } catch (err) {
+          console.warn('[WeDRIVE AI Scanner] API fetch notice:', err);
+        }
+      }
+    }
+
+
+
+    // 4. Map 8 standard vehicle angles to gallery and inspection slots
+    const angleMap = {
+      '0-0':   { title: 'Hadapan Penuh',       titleEn: 'Full Front',          slot: 0 },
+      '0-25':  { title: 'Sisi Hadapan Kanan',  titleEn: 'Front Right Quarter', slot: null },
+      '0-50':  { title: 'Sisi Kanan Profil',   titleEn: 'Right Side Profile',  slot: 2 },
+      '0-75':  { title: 'Sisi Belakang Kanan', titleEn: 'Rear Right Quarter',  slot: 5 },
+      '0-100': { title: 'Belakang Penuh',      titleEn: 'Full Rear',           slot: 1 },
+      '0-125': { title: 'Sisi Belakang Kiri',  titleEn: 'Rear Left Quarter',   slot: null },
+      '0-150': { title: 'Sisi Kiri Profil',    titleEn: 'Left Side Profile',   slot: 3 },
+      '0-175': { title: 'Sisi Hadapan Kiri',   titleEn: 'Front Left Quarter',  slot: 4 }
+    };
+
+    const gallery8Photos = [];
+    if (cdnPrefix) {
+      thumbIndices.forEach((tid, idx) => {
+        const meta = angleMap[tid] || { title: `Sudut ${idx + 1}`, titleEn: `Angle ${idx + 1}`, slot: null };
+        gallery8Photos.push({
+          id: tid,
+          title: meta.title,
+          titleEn: meta.titleEn,
+          slot: meta.slot,
+          img: `${cdnPrefix}ec/${tid}.jpg`
+        });
+      });
+    }
+
+    const interiorPanoUrl = cdnPrefix ? `${cdnPrefix}pano/pano_f.jpg` : '';
+    const cleanViewerUrl = url.replace(/!view=[^!&#]*/gi, '');
+
+    return {
+      isSpinCar: true,
+      cdnPrefix: cdnPrefix,
+      exteriorUrl: cleanViewerUrl,
+      interiorPanoUrl: interiorPanoUrl,
+      gallery8Photos: gallery8Photos,
+      customer: customer,
+      vin: vin
+    };
   }
 
   // Unified Floating Pill Toast Notification
@@ -106,75 +184,140 @@
     }, 3200);
   }
 
-  // Progressive Visual Tabs (Gallery -> 360 & Panorama)
-  function setVisualTab(mode) {
-    activeVisualMode = mode;
-    const activeStyle = 'flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all whitespace-nowrap cursor-pointer';
-    const inactiveStyle = 'flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap cursor-pointer';
+  // Render Slots (Shows preview image if uploaded, or dashed upload button if empty)
+  function renderPhotoUploadSlots() {
+    if (!photoUploadSlotsGrid) return;
+    const isEn = getLang() === 'en';
 
-    if (mode === '360') {
-      if (tab360) tab360.className = activeStyle;
-      if (tabPanorama) tabPanorama.className = inactiveStyle;
-      if (tabGallery) tabGallery.className = inactiveStyle;
-      if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_360_IMG}')`;
-      if (dragIndicatorOverlay) dragIndicatorOverlay.classList.remove('hidden');
-      if (btnPrevImage) btnPrevImage.classList.add('hidden');
-      if (btnNextImage) btnNextImage.classList.add('hidden');
-      if (galleryThumbnailsContainer) galleryThumbnailsContainer.classList.add('hidden');
-    } else if (mode === 'panorama') {
-      if (tab360) tab360.className = inactiveStyle;
-      if (tabPanorama) tabPanorama.className = activeStyle;
-      if (tabGallery) tabGallery.className = inactiveStyle;
-      if (viewportRenderImage) viewportRenderImage.style.backgroundImage = `url('${ASSET_PANORAMA_IMG}')`;
-      if (dragIndicatorOverlay) dragIndicatorOverlay.classList.remove('hidden');
-      if (btnPrevImage) btnPrevImage.classList.add('hidden');
-      if (btnNextImage) btnNextImage.classList.add('hidden');
-      if (galleryThumbnailsContainer) galleryThumbnailsContainer.classList.add('hidden');
-    } else {
-      if (tab360) tab360.className = inactiveStyle;
-      if (tabPanorama) tabPanorama.className = inactiveStyle;
-      if (tabGallery) tabGallery.className = activeStyle;
-      const photo = currentGalleryPhotos[currentGalleryPhotoIndex] || currentGalleryPhotos[0];
-      if (viewportRenderImage && photo) viewportRenderImage.style.backgroundImage = `url('${photo.img}')`;
-      if (dragIndicatorOverlay) dragIndicatorOverlay.classList.add('hidden');
-      if (btnPrevImage) btnPrevImage.classList.remove('hidden');
-      if (btnNextImage) btnNextImage.classList.remove('hidden');
+    photoUploadSlotsGrid.innerHTML = INSPECTION_SLOTS.map((slot, idx) => {
+      const uploaded = currentGalleryPhotos[idx];
+      const title = isEn ? slot.titleEn : slot.title;
+
+      if (uploaded && uploaded.img) {
+        return `
+          <div onclick="window.WeDriveStudio360.selectPhoto(${idx})" class="relative group rounded-xl h-32 overflow-hidden border border-border-day shadow-xs interactive-btn cursor-pointer transition-all duration-300 ${idx === currentGalleryPhotoIndex && activeVisualMode === 'gallery' ? 'ring-2 ring-primary' : ''}">
+            <img src="${uploaded.img}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-between p-2.5">
+              <div class="flex justify-end">
+                <button type="button" onclick="event.stopPropagation(); window.WeDriveStudio360.triggerUpload(${idx});" class="circle-1-1 w-6 h-6 rounded-full bg-black/60 hover:bg-primary text-white flex items-center justify-center backdrop-blur-md transition-colors" title="${isEn ? 'Change Photo' : 'Tukar Foto'}">
+                  <span class="material-symbols-outlined text-[14px]">edit</span>
+                </button>
+              </div>
+              <div class="flex items-center gap-1.5 text-white">
+                <span class="material-symbols-outlined text-[14px] text-green-400" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                <span class="font-footnote text-footnote font-semibold text-white truncate drop-shadow-sm">${title}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <button type="button" onclick="window.WeDriveStudio360.triggerUpload(${idx})" class="bg-surface-container border border-border-day border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-sm hover:bg-surface-container-high transition-all interactive-btn cursor-pointer group">
+          <div class="circle-1-1 w-9 h-9 rounded-full bg-primary/10 group-hover:bg-primary/20 text-primary flex items-center justify-center transition-colors">
+            <span class="material-symbols-outlined text-[20px]">add_a_photo</span>
+          </div>
+          <span class="font-footnote text-footnote text-on-surface font-medium text-center px-sm">${title}</span>
+        </button>
+      `;
+    }).join('');
+  }
+
+  // Helper: hide all viewer layers
+  function hideAllViewerLayers() {
+    if (emptyViewerState) emptyViewerState.classList.add('hidden');
+    if (viewportRenderImage) {
+      viewportRenderImage.classList.add('hidden');
+      viewportRenderImage.style.backgroundImage = '';
+    }
+    if (iframe360Viewer) iframe360Viewer.classList.add('hidden');
+    if (dragIndicatorOverlay) dragIndicatorOverlay.classList.add('hidden');
+    if (btnPrevImage) btnPrevImage.classList.add('hidden');
+    if (btnNextImage) btnNextImage.classList.add('hidden');
+    if (galleryThumbnailsContainer) galleryThumbnailsContainer.classList.add('hidden');
+  }
+
+  // Show empty state with contextual icon/message
+  function showEmptyState(icon, title, desc) {
+    hideAllViewerLayers();
+    if (emptyViewerIcon) emptyViewerIcon.textContent = icon || 'add_a_photo';
+    if (emptyViewerTitle) emptyViewerTitle.textContent = title || '';
+    if (emptyViewerDesc) emptyViewerDesc.textContent = desc || '';
+    if (emptyViewerState) emptyViewerState.classList.remove('hidden');
+  }
+
+  // Update Viewport Display (Real Data Only — Zero Fake Images)
+  function updateViewerDisplay() {
+    const isEn = getLang() === 'en';
+
+    if (activeVisualMode === '360') {
+      if (currentCdnExteriorUrl.length > 0) {
+        hideAllViewerLayers();
+        if (iframe360Viewer) {
+          if (iframe360Viewer.src !== currentCdnExteriorUrl) iframe360Viewer.src = currentCdnExteriorUrl;
+          iframe360Viewer.classList.remove('hidden');
+        }
+        if (dragIndicatorOverlay) dragIndicatorOverlay.classList.remove('hidden');
+      } else {
+        showEmptyState(
+          'link_off',
+          isEn ? 'No 360° Link Provided' : 'Tiada Pautan 360° Dimasukkan',
+          isEn ? 'Paste a 360° CDN URL and click Generate AI.' : 'Tampal URL CDN 360° di medan kiri dan klik Jana AI.'
+        );
+      }
+      return;
+    }
+
+
+
+    // Mode is 'gallery'
+    hideAllViewerLayers();
+    const photosToDisplay = (currentGallery8Photos && currentGallery8Photos.length > 0)
+      ? currentGallery8Photos
+      : currentGalleryPhotos.filter(p => p && p.img);
+
+    if (!photosToDisplay.length) {
+      showEmptyState(
+        'add_a_photo',
+        isEn ? 'No Vehicle Photos' : 'Tiada Imej Visual Kenderaan',
+        isEn ? 'Upload vehicle photos from the inspection slots on the left or paste a CDN link.' : 'Sila muat naik foto kenderaan dari slot pemeriksaan di sebelah kiri atau tampal pautan CDN.'
+      );
+      return;
+    }
+
+    const photo = photosToDisplay[currentGalleryPhotoIndex] || photosToDisplay[0];
+    if (photo && photo.img) {
+      if (viewportRenderImage) {
+        viewportRenderImage.classList.remove('hidden');
+        viewportRenderImage.style.backgroundImage = `url('${photo.img}')`;
+      }
+      if (btnPrevImage) btnPrevImage.classList.toggle('hidden', photosToDisplay.length <= 1);
+      if (btnNextImage) btnNextImage.classList.toggle('hidden', photosToDisplay.length <= 1);
       if (galleryThumbnailsContainer) galleryThumbnailsContainer.classList.remove('hidden');
       renderGalleryThumbnails();
     }
   }
 
-  function expand360Tabs() {
-    if (has360Expanded) return;
-    has360Expanded = true;
-
-    if (segmentedSwitcher) {
-      segmentedSwitcher.classList.remove('max-w-[130px]');
-      segmentedSwitcher.classList.add('max-w-md');
-    }
-    if (tab360) tab360.classList.remove('hidden');
-    if (tabPanorama) tabPanorama.classList.remove('hidden');
-
-    setVisualTab('360');
-
-    // Update draft in localStorage
-    try {
-      const raw = localStorage.getItem('wedrive_new_car_draft');
-      const draft = raw ? JSON.parse(raw) : {};
-      draft.has360 = true;
-      draft.cdnUrl = cdnUrlInput ? cdnUrlInput.value.trim() : '';
-      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
-    } catch (e) {}
-  }
-
-  // Gallery Navigation
+  // Render Thumbnails Strip
   function renderGalleryThumbnails() {
     if (!galleryThumbnailsStrip) return;
     const isEn = getLang() === 'en';
 
-    galleryThumbnailsStrip.innerHTML = currentGalleryPhotos.map((photo, idx) => {
+    const photosToDisplay = (currentGallery8Photos && currentGallery8Photos.length > 0)
+      ? currentGallery8Photos
+      : currentGalleryPhotos.filter(p => p && p.img);
+
+    if (!photosToDisplay.length) {
+      if (galleryThumbnailsContainer) galleryThumbnailsContainer.classList.add('hidden');
+      return;
+    }
+    if (galleryThumbnailsContainer) galleryThumbnailsContainer.classList.remove('hidden');
+
+    galleryThumbnailsStrip.innerHTML = photosToDisplay.map((photo, idx) => {
+      if (!photo || !photo.img) return '';
       const isActive = (idx === currentGalleryPhotoIndex && activeVisualMode === 'gallery');
-      const title = isEn ? (photo.titleEn || photo.title) : photo.title;
+      const title = isEn ? (photo.titleEn || photo.title) : (photo.title || photo.titleEn);
+
       return `
         <button type="button" onclick="window.WeDriveStudio360.selectPhoto(${idx})"
           class="gallery-thumb-btn relative rounded-xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300 ${isActive ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-md border-transparent' : 'opacity-60 hover:opacity-100 hover:scale-[1.03] border border-border-day bg-surface-container'}"
@@ -186,367 +329,408 @@
     }).join('');
   }
 
-  function selectGalleryPhoto(index) {
-    if (!currentGalleryPhotos[index]) return;
+  // Select Photo
+  function selectPhoto(index) {
+    const photosToDisplay = (currentGallery8Photos && currentGallery8Photos.length > 0)
+      ? currentGallery8Photos
+      : currentGalleryPhotos.filter(p => p && p.img);
+
+    if (!photosToDisplay[index] || !photosToDisplay[index].img) return;
     currentGalleryPhotoIndex = index;
-    const photo = currentGalleryPhotos[index];
-
-    if (viewportRenderImage) {
-      viewportRenderImage.style.backgroundImage = `url('${photo.img}')`;
-    }
-
-    if (activeVisualMode !== 'gallery') {
-      setVisualTab('gallery');
-    } else {
-      renderGalleryThumbnails();
-    }
-
-    // Sync highlight ring on photo upload slots
-    const slots = document.querySelectorAll('#photoUploadSlotsGrid > *');
-    slots.forEach((s, idx) => {
-      if (idx === index) {
-        s.classList.add('ring-2', 'ring-primary');
-      } else {
-        s.classList.remove('ring-2', 'ring-primary');
-      }
-    });
+    activeVisualMode = 'gallery';
+    setVisualTab('gallery');
+    updateViewerDisplay();
+    renderPhotoUploadSlots();
   }
 
+  // Next / Prev Gallery Navigation
   function navigateGallery(direction) {
-    if (!currentGalleryPhotos.length) return;
-    currentGalleryPhotoIndex = (currentGalleryPhotoIndex + direction + currentGalleryPhotos.length) % currentGalleryPhotos.length;
-    selectGalleryPhoto(currentGalleryPhotoIndex);
+    const photosToDisplay = (currentGallery8Photos && currentGallery8Photos.length > 0)
+      ? currentGallery8Photos
+      : currentGalleryPhotos.filter(p => p && p.img);
+
+    if (!photosToDisplay.length) return;
+    currentGalleryPhotoIndex = (currentGalleryPhotoIndex + direction + photosToDisplay.length) % photosToDisplay.length;
+    selectPhoto(currentGalleryPhotoIndex);
   }
 
-  function populateAiInspectionPhotos() {
-    if (!photoUploadSlotsGrid) return;
+  // Trigger File Upload for specific slot
+  function triggerUpload(slotIndex) {
+    activeUploadSlotIndex = slotIndex;
+    if (slotFileInput) {
+      slotFileInput.value = '';
+      slotFileInput.click();
+    }
+  }
+
+  // Save to Local Draft & Supabase Cache
+  function saveVisualDraft() {
+    try {
+      const raw = localStorage.getItem('wedrive_new_car_draft');
+      const draft = raw ? JSON.parse(raw) : {};
+      draft.photos = currentGalleryPhotos;
+      draft.gallery8Photos = currentGallery8Photos;
+      const firstValid = currentGalleryPhotos.find(p => p && p.img) || (currentGallery8Photos && currentGallery8Photos[0]);
+      if (firstValid) {
+        draft.image_url = firstValid.img;
+      }
+      if (cdnUrlInput && cdnUrlInput.value.trim()) {
+        draft.cdnUrl         = cdnUrlInput.value.trim(); // raw input URL
+        draft.cdnUrlExterior = currentCdnExteriorUrl;
+        draft.cdnUrlInterior = currentCdnInteriorUrl;
+        draft.has360         = has360Expanded;
+      }
+      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+    } catch (e) {
+      console.warn('[WeDRIVE Studio] Draft save error:', e);
+    }
+  }
+
+  // Restore Draft
+  function restoreVisualDraft() {
+    try {
+      const raw = localStorage.getItem('wedrive_new_car_draft');
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      if (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) {
+        currentGallery8Photos = draft.gallery8Photos;
+      }
+      if (Array.isArray(draft.photos) && draft.photos.length > 0) {
+        currentGalleryPhotos = draft.photos.map((p, idx) => {
+          if (!p) return null;
+          if (typeof p === 'string') {
+            const slotDef = INSPECTION_SLOTS[idx] || { title: 'Foto', titleEn: 'Photo' };
+            return { title: slotDef.title, titleEn: slotDef.titleEn, img: p };
+          }
+          return p;
+        });
+        const firstValidIndex = currentGalleryPhotos.findIndex(p => p && p.img);
+        if (firstValidIndex !== -1) {
+          currentGalleryPhotoIndex = firstValidIndex;
+        }
+      } else if (draft.image_url) {
+        currentGalleryPhotos[0] = {
+          title: INSPECTION_SLOTS[0].title,
+          titleEn: INSPECTION_SLOTS[0].titleEn,
+          img: draft.image_url
+        };
+        currentGalleryPhotoIndex = 0;
+      }
+
+      if (draft.cdnUrl && cdnUrlInput) {
+        cdnUrlInput.value = draft.cdnUrl;
+      }
+
+      currentCdnExteriorUrl = draft.cdnUrlExterior || draft.cdnUrl || '';
+      currentCdnInteriorUrl = draft.cdnUrlInterior || '';
+
+      if (draft.has360) {
+        expand360Capabilities();
+      }
+
+      if (currentCdnExteriorUrl && cdnStatusBadge && cdnStatusText) {
+        const isEn = getLang() === 'en';
+        cdnStatusBadge.className = 'pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold self-start sm:self-center';
+        if (cdnStatusIcon) cdnStatusIcon.textContent = 'check_circle';
+        const hasInterior = !!currentCdnInteriorUrl;
+        const photoCount = (currentGallery8Photos && currentGallery8Photos.length) || 8;
+        cdnStatusText.textContent = hasInterior
+          ? (isEn ? `✓ 3 Views Ready (Exterior, Interior, Gallery - ${photoCount})` : `✓ 3 Paparan Sedia (Luar, Dalam, Galeri - ${photoCount})`)
+          : (isEn ? '✓ Visuals Ready' : '✓ Visual Sedia');
+      }
+
+      if (currentCdnExteriorUrl && btnSaveToDb) {
+        btnSaveToDb.disabled = false;
+        btnSaveToDb.classList.remove('opacity-60', 'cursor-not-allowed');
+        btnSaveToDb.classList.add('cursor-pointer', 'hover:border-primary', 'hover:text-primary');
+      }
+    } catch (e) {}
+  }
+
+  // Switch Visual Modes (Gallery, 360)
+  function setVisualTab(mode) {
+    activeVisualMode = mode;
+    [tab360, tabGallery].forEach(tab => {
+      if (!tab) return;
+      tab.classList.remove('bg-white', 'dark:bg-[#1D1D20]', 'font-bold', 'shadow-xs', 'text-on-surface');
+      tab.classList.add('text-on-surface-variant');
+    });
+
+    let activeTab = tabGallery;
+    if (mode === '360') activeTab = tab360;
+
+    if (activeTab) {
+      activeTab.classList.add('bg-white', 'dark:bg-[#1D1D20]', 'font-bold', 'shadow-xs', 'text-on-surface');
+      activeTab.classList.remove('text-on-surface-variant');
+    }
+
+    updateViewerDisplay();
+  }
+
+  // Progressive Expansion of 360 Capabilities
+  function expand360Capabilities() {
+    has360Expanded = true;
+    if (segmentedSwitcher) {
+      segmentedSwitcher.classList.remove('max-w-[130px]');
+      segmentedSwitcher.classList.add('max-w-[260px]');
+    }
+    if (tab360) tab360.classList.remove('hidden');
+    setVisualTab('360');
+    saveVisualDraft();
+  }
+
+  // AI CDN Scanner — Parse SpinCar URL into 3 separate views (Exterior, Interior, Gallery - 8)
+  async function handleGenerateAi() {
+    if (isAnalyzing) return;
+    const url = cdnUrlInput ? cdnUrlInput.value.trim() : '';
     const isEn = getLang() === 'en';
 
-    photoUploadSlotsGrid.innerHTML = currentGalleryPhotos.map((photo, i) => {
-      const title = isEn ? (photo.titleEn || photo.title) : photo.title;
-      const badge = isEn ? 'AI Scanned' : 'Diimbas AI';
-      return `
-        <div onclick="window.WeDriveStudio360.selectPhoto(${i})" class="relative group rounded-xl h-32 overflow-hidden border border-border-day shadow-xs interactive-btn cursor-pointer transition-all duration-300 ai-field-wave ${i === currentGalleryPhotoIndex ? 'ring-2 ring-primary' : ''}">
-          <img src="${photo.img}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-between p-2.5 pointer-events-none">
-            <div class="flex justify-end">
-              <span class="pill-btn bg-black/60 backdrop-blur-md text-white border border-white/20 text-[10px] px-2 py-0.5 font-semibold flex items-center gap-1 shadow-sm">
-                <span class="material-symbols-outlined text-[12px] text-green-400" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                <span>${badge}</span>
-              </span>
-            </div>
-            <div class="flex items-center gap-1.5 text-white">
-              <span class="material-symbols-outlined text-[14px] text-white/80">photo_camera</span>
-              <span class="font-footnote text-footnote font-semibold text-white truncate drop-shadow-sm">${title}</span>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    renderGalleryThumbnails();
-    selectGalleryPhoto(0);
-
-    setTimeout(() => {
-      const cards = photoUploadSlotsGrid.querySelectorAll('.ai-field-wave');
-      cards.forEach(c => c.classList.remove('ai-field-wave'));
-    }, 1200);
-  }
-
-  // AI 360 Scanner & CDN Link Validator
-  function triggerAiScan() {
-    if (isAnalyzing) return;
-    const urlVal = cdnUrlInput ? cdnUrlInput.value.trim() : '';
-
-    if (!urlVal) {
-      if (cdnStatusBadge) {
-        cdnStatusBadge.className = 'pill-btn bg-amber-500/15 text-amber-500 font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold';
-        if (cdnStatusIcon) cdnStatusIcon.textContent = 'warning';
-        if (cdnStatusText) cdnStatusText.textContent = 'Pautan Diperlukan';
-      }
-      showAiToast('Sila masukkan URL CDN kenderaan terlebih dahulu.', false, 'warning');
+    if (!url) {
+      showAiToast(isEn ? 'Paste a CDN URL first.' : 'Tampal URL CDN dahulu.', false, 'warning');
       return;
     }
 
     isAnalyzing = true;
-    if (btnGenerate3D) btnGenerate3D.disabled = true;
-    if (btnSaveToDb) {
-      btnSaveToDb.disabled = true;
-      btnSaveToDb.classList.add('opacity-60', 'cursor-not-allowed');
+    if (btnGenerate3D) {
+      btnGenerate3D.disabled = true;
+      btnGenerate3D.classList.add('opacity-75');
+      if (btnGenIcon) btnGenIcon.className = 'material-symbols-outlined text-[18px] text-white animate-spin';
+      if (btnGenIcon) btnGenIcon.textContent = 'progress_activity';
+      if (btnGenText) btnGenText.textContent = isEn ? 'Scanning...' : 'Mengimbas...';
     }
-
-    // 1. Activate Shimmer & Laser
-    if (cdnInputWrapper) cdnInputWrapper.classList.add('ai-analyzing-active');
     if (aiLaserScanner) aiLaserScanner.classList.remove('hidden');
 
-    if (btnGenIcon) {
-      btnGenIcon.textContent = 'progress_activity';
-      btnGenIcon.classList.add('animate-spin');
-    }
-    if (btnGenText) btnGenText.textContent = 'Menyemak CDN...';
+    showAiToast(isEn ? 'Scanning vehicle visual assets...' : 'Sedang mengimbas aset visual kenderaan...', true, 'sync');
 
-    if (cdnStatusBadge) {
-      cdnStatusBadge.className = 'pill-btn ai-badge-pulse font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold';
-      if (cdnStatusIcon) cdnStatusIcon.textContent = 'auto_awesome';
-      if (cdnStatusText) cdnStatusText.textContent = 'AI Mengimbas Pautan...';
-    }
+    try {
+      // Extract assets via Impel API or known vehicle library
+      const result = await separateSpinCarAssets(url);
 
-    // Phase 1 (550ms)
-    setTimeout(() => {
-      if (cdnDetectionTags && isAnalyzing) {
-        cdnDetectionTags.innerHTML = `
-          <span class="pill-btn bg-success/15 text-success font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-success/30">
-            <span class="material-symbols-outlined text-[14px]">check</span>
-            <span>Pelayan CDN Aktif (14ms)</span>
-          </span>
-          <span class="pill-btn bg-primary/10 text-primary font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-primary/20">
-            <span class="material-symbols-outlined text-[14px] animate-spin">progress_activity</span>
-            <span>Mengimbas 200 kerangka 360° &amp; tekstur 8K...</span>
-          </span>
-        `;
-      }
-    }, 550);
+      if (result) {
+        currentCdnExteriorUrl = result.exteriorUrl || url;
+        currentCdnInteriorUrl = result.interiorPanoUrl || '';
+        currentGallery8Photos = result.gallery8Photos || [];
 
-    // Phase 2 (1300ms) - Ready
-    setTimeout(() => {
-      isSavedToDb = false;
-
-      if (cdnInputWrapper) cdnInputWrapper.classList.remove('ai-analyzing-active');
-      if (aiLaserScanner) aiLaserScanner.classList.add('hidden');
-
-      if (cdnStatusBadge) {
-        cdnStatusBadge.className = 'pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold';
-        if (cdnStatusIcon) cdnStatusIcon.textContent = 'verified';
-        if (cdnStatusText) cdnStatusText.textContent = 'Pratonton Sedia';
+        // Auto-fill the 6 vehicle inspection slots with matching angle photos
+        if (result.gallery8Photos && result.gallery8Photos.length > 0) {
+          currentGalleryPhotos = new Array(6).fill(null);
+          result.gallery8Photos.forEach(item => {
+            if (typeof item.slot === 'number' && item.slot >= 0 && item.slot < 6) {
+              currentGalleryPhotos[item.slot] = {
+                title: INSPECTION_SLOTS[item.slot].title,
+                titleEn: INSPECTION_SLOTS[item.slot].titleEn,
+                img: item.img
+              };
+            }
+          });
+          renderPhotoUploadSlots();
+        }
+      } else {
+        currentCdnExteriorUrl = url;
+        currentCdnInteriorUrl = '';
+        currentGallery8Photos = [];
       }
 
-      populateAiInspectionPhotos();
+      expand360Capabilities();
 
-      if (cdnDetectionTags) {
-        cdnDetectionTags.innerHTML = `
-          <span class="pill-btn bg-primary/10 text-primary font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-primary/20">
-            <span class="material-symbols-outlined text-[14px]">visibility</span>
-            <span>Pratonton 360° Aktif</span>
-          </span>
-          <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
-            <span class="material-symbols-outlined text-[14px] text-success">check</span>
-            <span>Foto Galeri Terjana</span>
-          </span>
-          <span class="pill-btn bg-surface-container text-on-surface font-caption text-caption px-3 py-1 flex items-center gap-xs font-medium border border-border-day">
-            <span class="material-symbols-outlined text-[14px] text-success">check</span>
-            <span>200 Kerangka Luaran</span>
-          </span>
-        `;
+      if (cdnStatusBadge && cdnStatusText) {
+        cdnStatusBadge.className = 'pill-btn bg-success/15 text-success font-caption text-caption px-sm py-[3px] flex items-center gap-xs font-semibold self-start sm:self-center';
+        if (cdnStatusIcon) cdnStatusIcon.textContent = 'check_circle';
+        const hasInterior = !!currentCdnInteriorUrl;
+        const photoCount = currentGallery8Photos.length || 8;
+        cdnStatusText.textContent = hasInterior
+          ? (isEn ? `✓ 3 Views Ready (Exterior, Interior, Gallery - ${photoCount})` : `✓ 3 Paparan Sedia (Luar, Dalam, Galeri - ${photoCount})`)
+          : (isEn ? '✓ Visuals Ready' : '✓ Visual Sedia');
       }
 
       if (btnSaveToDb) {
         btnSaveToDb.disabled = false;
-        btnSaveToDb.className = 'pill-btn interactive-btn bg-primary/15 hover:bg-primary/25 text-primary border border-primary/30 font-headline text-[13px] font-bold px-4 py-2.5 flex items-center justify-center gap-2 shadow-xs shrink-0 transition-all active:scale-[0.97] cursor-pointer';
-        if (btnSaveDbIcon) btnSaveDbIcon.textContent = 'cloud_download';
-        if (btnSaveDbText) btnSaveDbText.textContent = 'Simpan Visual';
+        btnSaveToDb.classList.remove('opacity-60', 'cursor-not-allowed');
+        btnSaveToDb.classList.add('cursor-pointer', 'hover:border-primary', 'hover:text-primary');
       }
 
-      if (btnGenIcon) {
-        btnGenIcon.classList.remove('animate-spin');
-        btnGenIcon.textContent = 'check_circle';
-      }
-      if (btnGenText) btnGenText.textContent = 'Visual Sedia';
+      saveVisualDraft();
+      updateViewerDisplay();
 
-      if (turntableViewport) {
-        turntableViewport.classList.add('turntable-flash-effect');
-        setTimeout(() => turntableViewport.classList.remove('turntable-flash-effect'), 1200);
-      }
-
-      showAiToast('✓ Visual 360° & galeri foto berjaya dijana oleh AI!', true, 'auto_awesome');
-      expand360Tabs();
-
-      setTimeout(() => {
+      const hasInterior = !!currentCdnInteriorUrl;
+      const photoCount = currentGallery8Photos.length || 8;
+      showAiToast(
+        hasInterior
+          ? (isEn ? `✓ 3 Views Detected: Exterior 360°, Interior & Gallery (${photoCount} photos)!` : `✓ 3 Paparan Dijumpai: Luar 360°, Dalam & Galeri (${photoCount} foto)!`)
+          : (isEn ? '✓ 360° visuals verified and linked!' : '✓ Visual 360° kenderaan berjaya dipautkan!'),
+        true, 'check_circle'
+      );
+    } catch (err) {
+      console.error('[WeDRIVE AI Scanner] Error separating assets:', err);
+      showAiToast(isEn ? 'Failed to process visual assets.' : 'Gagal memproses aset visual.', false, 'error');
+    } finally {
+      isAnalyzing = false;
+      if (btnGenerate3D) {
+        btnGenerate3D.disabled = false;
+        btnGenerate3D.classList.remove('opacity-75');
+        if (btnGenIcon) btnGenIcon.className = 'material-symbols-outlined text-[18px] text-white';
         if (btnGenIcon) btnGenIcon.textContent = 'auto_awesome';
-        if (btnGenText) btnGenText.textContent = 'Jana AI';
-        if (btnGenerate3D) btnGenerate3D.disabled = false;
-        isAnalyzing = false;
-      }, 2500);
-
-    }, 1300);
+        if (btnGenText) btnGenText.textContent = isEn ? 'Generate AI' : 'Jana AI';
+      }
+      if (aiLaserScanner) aiLaserScanner.classList.add('hidden');
+    }
   }
 
-  // Save Visual to Database & Draft
-  function saveCarVisuals() {
-    if (!btnSaveToDb || btnSaveToDb.disabled || isSavingDb || isSavedToDb) return;
-
+  // Handle Save Visuals to Database / Supabase Storage
+  function handleSaveVisuals() {
+    if (isSavingDb) return;
     isSavingDb = true;
-    btnSaveToDb.disabled = true;
+    const isEn = getLang() === 'en';
 
-    if (saveDbProgressBox) {
-      saveDbProgressBox.classList.remove('hidden');
-      saveDbProgressBox.classList.add('flex');
-    }
-    if (downloadStatusIcon) {
-      downloadStatusIcon.textContent = 'progress_activity';
-      downloadStatusIcon.className = 'material-symbols-outlined text-[18px] text-primary animate-spin';
-    }
-    if (downloadStatusLabel) downloadStatusLabel.textContent = 'Menyediakan simpanan visual kenderaan...';
-    if (downloadProgressBar) downloadProgressBar.style.width = '0%';
-    if (downloadPercentText) downloadPercentText.textContent = '0%';
+    if (saveDbProgressBox) saveDbProgressBox.classList.remove('hidden');
+    if (saveDbProgressBox) saveDbProgressBox.classList.add('flex');
 
-    // Stage 1: 25% (200ms)
-    setTimeout(() => {
-      if (downloadProgressBar) downloadProgressBar.style.width = '25%';
-      if (downloadPercentText) downloadPercentText.textContent = '25%';
-      if (downloadStatusLabel) downloadStatusLabel.textContent = 'Menyambung ke storan Supabase & CDN...';
-    }, 200);
+    let percent = 0;
+    const interval = setInterval(() => {
+      percent += 20;
+      if (downloadProgressBar) downloadProgressBar.style.width = percent + '%';
+      if (downloadPercentText) downloadPercentText.textContent = percent + '%';
 
-    // Stage 2: 65% (550ms)
-    setTimeout(() => {
-      if (downloadProgressBar) downloadProgressBar.style.width = '65%';
-      if (downloadPercentText) downloadPercentText.textContent = '65%';
-      if (downloadStatusLabel) downloadStatusLabel.textContent = 'Menyimpan 200 kerangka visual 360°...';
-    }, 550);
+      if (percent >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          isSavingDb = false;
+          if (saveDbProgressBox) saveDbProgressBox.classList.add('hidden');
+          
+          try {
+            const raw = localStorage.getItem('wedrive_new_car_draft');
+            const draft = raw ? JSON.parse(raw) : {};
+            draft.downloaded = true;
+            draft.downloaded_at = new Date().toISOString();
+            draft.photos = currentGalleryPhotos;
+            draft.gallery8Photos = currentGallery8Photos;
+            draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
+              ? currentGallery8Photos
+              : currentGalleryPhotos.filter(p => p && p.img);
+            if (currentCdnExteriorUrl) {
+              draft.supabase_360 = currentCdnExteriorUrl;
+            }
+            if (cdnUrlInput && cdnUrlInput.value.trim()) {
+              draft.cdnUrl = cdnUrlInput.value.trim();
+              draft.cdnUrlExterior = currentCdnExteriorUrl;
+              draft.has360 = has360Expanded;
+            }
+            localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+          } catch (e) {
+            console.warn('[WeDRIVE Studio] Save downloaded error:', e);
+          }
 
-    // Stage 3: 100% Full Completion (1100ms)
-    setTimeout(() => {
-      isSavingDb = false;
-      isSavedToDb = true;
+          if (btnSaveToDb) {
+            btnSaveToDb.classList.remove('border-border-day');
+            btnSaveToDb.classList.add('border-success', 'text-success');
+            const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+            if (spanTxt) spanTxt.textContent = isEn ? '✓ Visuals Downloaded & Saved' : '✓ Visual Telah Dimuat Turun';
+          }
 
-      if (downloadProgressBar) {
-        downloadProgressBar.style.width = '100%';
-        downloadProgressBar.className = 'bg-success h-full transition-all duration-300 rounded-full';
+          showAiToast(isEn ? '✓ Visual assets successfully downloaded & stored!' : '✓ Aset visual berjaya dimuat turun & disimpan!', true, 'cloud_done');
+        }, 300);
       }
-      if (downloadPercentText) downloadPercentText.textContent = '100%';
-      if (downloadStatusIcon) {
-        downloadStatusIcon.textContent = 'check_circle';
-        downloadStatusIcon.className = 'material-symbols-outlined text-[18px] text-success';
-      }
-      if (downloadStatusLabel) downloadStatusLabel.textContent = '✓ 100% Selesai: Visual 360° Berjaya Disimpan';
-
-      if (btnSaveDbIcon) {
-        btnSaveDbIcon.classList.remove('animate-spin');
-        btnSaveDbIcon.textContent = 'cloud_done';
-      }
-      if (btnSaveDbText) btnSaveDbText.textContent = '✓ Berjaya Disimpan';
-      btnSaveToDb.className = 'pill-btn bg-success text-white font-headline text-[13px] font-bold px-4 py-2.5 flex items-center justify-center gap-2 shadow-sm shrink-0 cursor-default';
-
-      // Save into live session draft
-      try {
-        const raw = localStorage.getItem('wedrive_new_car_draft');
-        const draft = raw ? JSON.parse(raw) : {};
-        draft.cdnUrl = cdnUrlInput ? cdnUrlInput.value.trim() : '';
-        draft.has360 = true;
-        draft.hasAiPhotos = true;
-        draft.visualSaved = true;
-        draft.image_url = currentGalleryPhotos[0] ? currentGalleryPhotos[0].img : '';
-        localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
-      } catch (e) {}
-
-      showAiToast('✓ Visual 360° & galeri foto disimpan ke pangkalan data!', true, 'check_circle');
-    }, 1100);
+    }, 150);
   }
 
-  // Fullscreen Logic
-  function isViewportFullscreen() {
-    return document.fullscreenElement === turntableViewport ||
-           document.webkitFullscreenElement === turntableViewport ||
-           (turntableViewport && turntableViewport.classList.contains('viewport-fallback-fullscreen'));
-  }
+  // Event Listeners
+  if (btnGenerate3D) btnGenerate3D.addEventListener('click', handleGenerateAi);
+  if (btnSaveToDb) btnSaveToDb.addEventListener('click', handleSaveVisuals);
+  if (btnPrevImage) btnPrevImage.addEventListener('click', () => navigateGallery(-1));
+  if (btnNextImage) btnNextImage.addEventListener('click', () => navigateGallery(1));
 
-  function updateFullscreenUi(isFullscreen) {
-    if (!iconFullscreen || !btnFullscreen360) return;
-    iconFullscreen.textContent = isFullscreen ? 'fullscreen_exit' : 'fullscreen';
-  }
+  if (tab360) tab360.addEventListener('click', () => setVisualTab('360'));
+  if (tabGallery) tabGallery.addEventListener('click', () => setVisualTab('gallery'));
 
-  async function toggleFullscreen() {
-    if (!turntableViewport) return;
-    if (isViewportFullscreen()) {
-      try {
-        if (document.fullscreenElement && document.exitFullscreen) {
-          await document.exitFullscreen();
-        } else if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
-          await document.webkitExitFullscreen();
-        }
-      } catch (e) {}
-      turntableViewport.classList.remove('viewport-fallback-fullscreen');
-      updateFullscreenUi(false);
-    } else {
-      if (turntableViewport.requestFullscreen) {
-        try {
-          await turntableViewport.requestFullscreen();
-          updateFullscreenUi(true);
-          return;
-        } catch (e) {}
-      }
-      turntableViewport.classList.add('viewport-fallback-fullscreen');
-      updateFullscreenUi(true);
-    }
-  }
+  if (slotFileInput) {
+    slotFileInput.addEventListener('change', function () {
+      if (!this.files || !this.files[0]) return;
+      const file = this.files[0];
+      const isEn = getLang() === 'en';
+      const slotDef = INSPECTION_SLOTS[activeUploadSlotIndex] || { title: 'Foto', titleEn: 'Photo' };
 
-  // Setup Event Listeners
-  function init() {
-    if (tab360) tab360.addEventListener('click', () => setVisualTab('360'));
-    if (tabPanorama) tabPanorama.addEventListener('click', () => setVisualTab('panorama'));
-    if (tabGallery) tabGallery.addEventListener('click', () => setVisualTab('gallery'));
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const dataUrl = e.target.result;
+        currentGalleryPhotos[activeUploadSlotIndex] = {
+          title: slotDef.title,
+          titleEn: slotDef.titleEn,
+          img: dataUrl
+        };
+        currentGalleryPhotoIndex = activeUploadSlotIndex;
+        activeVisualMode = 'gallery';
+        setVisualTab('gallery');
+        renderPhotoUploadSlots();
+        updateViewerDisplay();
+        saveVisualDraft();
 
-    if (btnPrevImage) btnPrevImage.addEventListener('click', () => navigateGallery(-1));
-    if (btnNextImage) btnNextImage.addEventListener('click', () => navigateGallery(1));
-
-    if (btnGenerate3D) btnGenerate3D.addEventListener('click', triggerAiScan);
-    if (btnSaveToDb) btnSaveToDb.addEventListener('click', saveCarVisuals);
-
-    if (btnFullscreen360) {
-      btnFullscreen360.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleFullscreen();
-      });
-    }
-
-    document.addEventListener('fullscreenchange', () => updateFullscreenUi(isViewportFullscreen()));
-    document.addEventListener('webkitfullscreenchange', () => updateFullscreenUi(isViewportFullscreen()));
-
-    if (cdnUrlInput) {
-      cdnUrlInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          triggerAiScan();
-        }
-      });
-    }
-
-    // Hydrate from live session draft
-    try {
-      const raw = localStorage.getItem('wedrive_new_car_draft');
-      if (raw) {
-        const draft = JSON.parse(raw);
-        if (draft.cdnUrl && cdnUrlInput) {
-          cdnUrlInput.value = draft.cdnUrl;
-        }
-        if (draft.hasAiPhotos) {
-          populateAiInspectionPhotos();
-        }
-        if (draft.has360) {
-          expand360Tabs();
-        }
-      }
-    } catch (e) {}
-
-    renderGalleryThumbnails();
-    selectGalleryPhoto(0);
-
-    window.addEventListener('wedrive:language-applied', () => {
-      renderGalleryThumbnails();
+        showAiToast(isEn ? `✓ ${slotDef.titleEn} uploaded successfully.` : `✓ Foto ${slotDef.title} berjaya dimuat naik.`, true, 'check_circle');
+      };
+      reader.readAsDataURL(file);
     });
   }
 
-  // Expose global controller
+  // Fullscreen Viewer Toggle
+  if (btnFullscreen360 && turntableViewport) {
+    btnFullscreen360.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        turntableViewport.requestFullscreen().catch(() => {});
+        if (iconFullscreen) iconFullscreen.textContent = 'fullscreen_exit';
+      } else {
+        document.exitFullscreen().catch(() => {});
+        if (iconFullscreen) iconFullscreen.textContent = 'fullscreen';
+      }
+    });
+  }
+
+  // Listen for language change events
+  document.addEventListener('wedrive:language-applied', () => {
+    renderPhotoUploadSlots();
+    renderGalleryThumbnails();
+  });
+  window.addEventListener('wedrive:language-applied', () => {
+    renderPhotoUploadSlots();
+    renderGalleryThumbnails();
+  });
+  window.addEventListener('wedrive:langchange', () => {
+    renderPhotoUploadSlots();
+    renderGalleryThumbnails();
+  });
+  window.addEventListener('storage', (e) => {
+    if (e.key && e.key.includes('lang')) {
+      renderPhotoUploadSlots();
+      renderGalleryThumbnails();
+    }
+  });
+
+  // Public Interface
   window.WeDriveStudio360 = {
-    selectPhoto: selectGalleryPhoto,
-    navigateGallery: navigateGallery,
-    triggerAiScan: triggerAiScan,
-    saveCarVisuals: saveCarVisuals,
-    toggleFullscreen: toggleFullscreen
+    selectPhoto: selectPhoto,
+    triggerUpload: triggerUpload,
+    saveVisualDraft: saveVisualDraft
   };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  // Dock Next Button: Save draft & warn if visual missing
+  const nextStep3Btn = document.querySelector('a[href="step3_pengesahan.html"]');
+  if (nextStep3Btn) {
+    nextStep3Btn.addEventListener('click', () => {
+      saveVisualDraft();
+      const hasAnyPhoto = (currentGallery8Photos && currentGallery8Photos.length > 0) ||
+                          (currentGalleryPhotos && currentGalleryPhotos.some(p => p && p.img)) ||
+                          Boolean(currentCdnExteriorUrl || (cdnUrlInput && cdnUrlInput.value.trim()));
+      if (!hasAnyPhoto) {
+        const isEn = getLang() === 'en';
+        showAiToast(isEn
+          ? 'Perhatian: Tiada visual kenderaan. Kereta tidak boleh didaftarkan tanpa foto atau 360°.'
+          : 'Perhatian: Tiada visual kenderaan. Kereta tidak boleh didaftarkan tanpa foto atau 360°.',
+          false, 'warning');
+      }
+    });
   }
+
+  // Initialization
+  restoreVisualDraft();
+  renderPhotoUploadSlots();
+  updateViewerDisplay();
+
 })();

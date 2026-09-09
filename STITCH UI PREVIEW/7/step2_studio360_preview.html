@@ -76,8 +76,8 @@
 
         .glass-panel {
             background-color: rgba(249, 249, 251, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
         }
 
         .interactive-btn {
@@ -203,6 +203,7 @@
             background-size: 300% 300%;
             animation: aiGradientShift 2.2s infinite linear;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
@@ -317,6 +318,19 @@
             bottom: 24px !important;
             right: 24px !important;
         }
+
+        .icon-fill {
+            font-variation-settings: 'FILL' 1 !important;
+        }
+        .text-white-force {
+            color: #FFFFFF !important;
+        }
+        .active-nav-glow {
+            box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35) !important;
+        }
+        .preview-hero-car-bg {
+            background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85');
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface antialiased min-h-screen pb-[130px] font-body selection:bg-primary-fixed selection:text-on-primary-fixed transition-colors duration-300">
@@ -325,8 +339,8 @@
     <header class="fixed top-0 w-full z-50 glass-panel border-b border-border-day flex items-center justify-between px-4 sm:px-6 h-16 shadow-sm relative transition-colors duration-300">
         <!-- Left: WeDRIVE Brand + Context Title -->
         <div class="flex items-center gap-3 min-w-0 z-10">
-            <a href="index.html" class="flex items-center gap-2 shrink-0 interactive-btn" style="text-decoration: none;">
-                <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+            <a href="index.html" class="flex items-center gap-2 shrink-0 interactive-btn no-underline">
+                <span class="material-symbols-outlined text-primary text-2xl icon-fill">directions_car</span>
                 <span class="font-headline text-headline font-extrabold tracking-tight">
                     <span class="text-primary font-black">We</span><span class="text-on-surface font-black">DRIVE</span>
                 </span>
@@ -342,8 +356,8 @@
             <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Papan Pemuka" aria-label="Papan Pemuka">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">dashboard</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all" style="box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35);" title="Kenderaan" aria-label="Kenderaan">
-                <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+            <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all active-nav-glow" title="Kenderaan" aria-label="Kenderaan">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white icon-fill">directions_car</span>
             </a>
             <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan" data-i18n-title="nav_bookings">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">receipt_long</span>
@@ -372,7 +386,7 @@
             </button>
 
             <!-- Batal Button -->
-            <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day" style="text-decoration: none;">
+            <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day no-underline">
                 <span data-i18n="nav_cancel">Batal</span>
             </a>
         </div>
@@ -494,8 +508,8 @@
                             </div>
                             <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0">
                                 <!-- 1. Jana AI Button (Generates 360 Preview) -->
-                                <button id="btnGenerate3D" type="button" class="ai-gradient-pill pill-btn interactive-btn font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97]" style="color: #FFFFFF !important;">
-                                    <span id="btnGenIcon" class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <button id="btnGenerate3D" type="button" class="ai-gradient-pill pill-btn interactive-btn font-headline text-[14px] font-bold px-5 py-2.5 flex items-center justify-center gap-2 shadow-md shrink-0 transition-all active:scale-[0.97] text-white-force">
+                                    <span id="btnGenIcon" class="material-symbols-outlined text-[18px] icon-fill">auto_awesome</span>
                                     <span id="btnGenText" data-i18n="cdn_btn_scan">Jana AI</span>
                                 </button>
                                 <!-- 2. Simpan Rekod Visual Button -->
@@ -562,15 +576,15 @@
                     <!-- Turntable Viewport -->
                     <div id="turntableViewport" class="relative flex-1 bg-surface-container rounded-2xl overflow-hidden min-h-[400px] flex items-center justify-center group cursor-ew-resize transition-all duration-500">
                         <!-- Image Container (Shows active gallery photo or 360 render) -->
-                        <div id="viewportRenderImage" class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-all duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85');"></div>
+                        <div id="viewportRenderImage" class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-all duration-500 group-hover:scale-105 preview-hero-car-bg"></div>
 
                         <!-- Left Navigation Button (<) - Strict 1:1 Circle -->
-                        <button id="btnPrevImage" type="button" onclick="navigateGallery(-1)" class="circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
+                        <button id="btnPrevImage" type="button" onclick="navigateGallery(-1)" class="circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
                             <span class="material-symbols-outlined text-[20px]">chevron_left</span>
                         </button>
 
                         <!-- Right Navigation Button (>) - Strict 1:1 Circle -->
-                        <button id="btnNextImage" type="button" onclick="navigateGallery(1)" class="circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
+                        <button id="btnNextImage" type="button" onclick="navigateGallery(1)" class="circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
                             <span class="material-symbols-outlined text-[20px]">chevron_right</span>
                         </button>
 
@@ -584,7 +598,7 @@
                         </div>
 
                         <!-- Fullscreen Toggle Button (Strict 1:1 Circle - Stays Here) -->
-                        <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh" data-i18n-title="fullscreen_title">
+                        <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh" data-i18n-title="fullscreen_title">
                             <span id="iconFullscreen" class="material-symbols-outlined text-[20px]">fullscreen</span>
                         </button>
                     </div>
@@ -618,22 +632,22 @@
 
             <!-- State 2: Status Draf Disimpan (HANYA muncul apabila ditekan Simpan Draf) -->
             <div id="draftSavedStatusStep2" class="hidden items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300">
-                <span id="draftSavedIconStep2" class="material-symbols-outlined text-[20px] text-[#28C840]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+                <span id="draftSavedIconStep2" class="material-symbols-outlined text-[20px] text-[#28C840] icon-fill">cloud_done</span>
                 <span id="draftSavedTextStep2" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold" data-i18n="dock_status_draft_saved">Draf disimpan</span>
             </div>
         </div>
 
         <!-- Seterusnya to Step 3 (Font from Gambar 1: Crisp Bold Pure White) -->
-        <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="dock_next_step3">Seterusnya: Semakan Akhir</span>
-            <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
+        <a href="step3_pengesahan_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white text-white-force font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0">
+            <span class="text-white text-white-force" data-i18n="dock_next_step3">Seterusnya: Semakan Akhir</span>
+            <span class="material-symbols-outlined text-[20px] text-white text-white-force">arrow_forward</span>
         </a>
     </nav>
 
     <!-- AI Apple Glass Floating Toast Notification (Standard Unified Single Design) -->
     <div id="ai3dToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
-        <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
-            <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0">
+            <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px] icon-fill">auto_awesome</span>
         </div>
         <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">✓ Visual 360° berjaya disimpan</span>
     </div>
@@ -727,8 +741,7 @@
                 const title = isEn ? (photo.titleEn || photo.title) : photo.title;
                 return `
                     <button type="button" onclick="selectGalleryPhoto(${idx})"
-                        class="gallery-thumb-btn relative rounded-xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300 ${isActive ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-md border-transparent' : 'opacity-60 hover:opacity-100 hover:scale-[1.03] border border-border-day bg-surface-container'}"
-                        style="width: 58px; height: 42px;"
+                        class="gallery-thumb-btn relative rounded-xl overflow-hidden flex-shrink-0 cursor-pointer transition-all duration-300 w-[58px] h-[42px] ${isActive ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-md border-transparent' : 'opacity-60 hover:opacity-100 hover:scale-[1.03] border border-border-day bg-surface-container'}"
                         title="${title}" aria-label="${title}">
                         <img src="${photo.img}" alt="${title}" class="w-full h-full object-cover" />
                     </button>
@@ -1002,7 +1015,7 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex flex-col justify-between p-2.5 pointer-events-none">
                         <div class="flex justify-end">
                             <span class="pill-btn bg-black/60 backdrop-blur-md text-white border border-white/20 text-[10px] px-2 py-0.5 font-semibold flex items-center gap-1 shadow-sm">
-                                <span class="material-symbols-outlined text-[12px] text-green-400" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                <span class="material-symbols-outlined text-[12px] text-green-400 icon-fill">check_circle</span>
                                 <span>${badge}</span>
                             </span>
                         </div>

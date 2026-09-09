@@ -38,7 +38,6 @@
       const dailyVal = rawDaily ? Number(rawDaily) : 0;
       const dailyRate = dailyVal > 0 ? `RM ${dailyVal.toFixed(2)}` : 'RM 0.00';
       const statusVal = (draft && draft.status) ? draft.status : 'available';
-      const imageUrl = (draft && draft.image_url) ? draft.image_url : (draft && draft.cdnUrl ? draft.cdnUrl : '');
       const has360 = (draft && (draft.has360 || (draft.cdnUrl && draft.cdnUrl.trim().length > 0)));
 
       const isEn = getLang() === 'en';
@@ -153,29 +152,40 @@
         cardPrice.textContent = dailyRate;
       }
 
+      let imageUrl = '';
+      if (draft && draft.downloaded === true) {
+        if (draft.image_url) {
+          imageUrl = draft.image_url;
+        } else if (Array.isArray(draft.supabase_images) && draft.supabase_images.length > 0) {
+          const first = draft.supabase_images[0];
+          imageUrl = typeof first === 'string' ? first : (first && first.img ? first.img : '');
+        } else if (Array.isArray(draft.photos) && draft.photos.length > 0) {
+          const first = draft.photos[0];
+          imageUrl = typeof first === 'string' ? first : (first && first.img ? first.img : '');
+        }
+      }
+
       const cardImage = document.getElementById('cardImage');
-      if (cardImage) {
-        if (imageUrl) {
+      const cardImageEmptyState = document.getElementById('cardImageEmptyState');
+      if (cardImage && cardImageEmptyState) {
+        if (imageUrl && imageUrl.trim().length > 0) {
           cardImage.src = imageUrl;
-          cardImage.style.display = 'block';
+          cardImage.classList.remove('hidden');
+          cardImageEmptyState.classList.add('hidden');
         } else {
-          cardImage.src = 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=85';
+          cardImage.src = '';
+          cardImage.classList.add('hidden');
+          cardImageEmptyState.classList.remove('hidden');
         }
       }
 
       // 360 Badge Visibility
       const cardBadge360 = document.getElementById('cardBadge360');
       if (cardBadge360) {
-        cardBadge360.style.display = has360 ? 'inline-flex' : 'none';
-      }
-
-      // Modal Description
-      const modalCarDesc = document.getElementById('modalCarDesc');
-      if (modalCarDesc) {
-        if (!isDraftEmpty) {
-          modalCarDesc.textContent = `${year} ${brand} ${model} ${variant} telah diterbitkan ke inventori aktif sistem dan sedia ditempah oleh pelanggan.`;
+        if (has360) {
+          cardBadge360.classList.remove('hidden');
         } else {
-          modalCarDesc.textContent = 'Kenderaan telah diterbitkan ke inventori aktif sistem dan sedia ditempah oleh pelanggan.';
+          cardBadge360.classList.add('hidden');
         }
       }
 

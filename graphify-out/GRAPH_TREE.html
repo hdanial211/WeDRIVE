@@ -41,6 +41,7 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      -webkit-user-select: none;
       user-select: none;
     }
 
@@ -67,8 +68,8 @@
       justify-content: space-between;
       padding: 16px 28px;
       background: var(--bg-card);
-      backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--border-subtle);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
@@ -219,6 +220,7 @@
       justify-content: space-between;
       padding: 10px 28px;
       background: rgba(10, 15, 26, 0.6);
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       gap: 16px;
@@ -229,11 +231,13 @@
       align-items: center;
       gap: 8px;
       overflow-x: auto;
-      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
 
     .chip-container::-webkit-scrollbar {
       display: none;
+      width: 0;
+      height: 0;
     }
 
     .chip {
@@ -370,6 +374,7 @@
       flex-direction: column;
       gap: 6px;
       background: var(--bg-card);
+      -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
@@ -410,8 +415,8 @@
       width: 360px;
       height: 100%;
       background: rgba(10, 15, 26, 0.88);
-      backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
+      backdrop-filter: blur(28px);
       border-left: 1px solid var(--border-subtle);
       box-shadow: -15px 0 40px rgba(0, 0, 0, 0.6);
       z-index: 20;
@@ -525,6 +530,23 @@
       align-items: center;
       justify-content: space-between;
     }
+
+    .dot-all { background: #fff; }
+    .dot-admin { background: #38bdf8; }
+    .dot-customer { background: #4ade80; }
+    .dot-account { background: #f472b6; }
+    .dot-guest { background: #fbbf24; }
+    .dot-shared { background: #a855f7; }
+    .dot-supabase { background: #2dd4bf; }
+    .dot-docs { background: #818cf8; }
+    .dot-bin { background: #94a3b8; }
+    .zoom-btn-cyan { color: var(--accent-cyan); }
+    .drawer-title-group { display: flex; align-items: center; gap: 8px; }
+    .btn-focus { padding: 4px 8px; font-size: 0.75rem; background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.3); color: var(--accent-cyan); }
+    .drawer-close-svg { width: 18px; height: 18px; fill: currentColor; }
+    .empty-child-note { color: var(--text-muted); font-size: 0.8rem; }
+    .child-type-badge { color: var(--text-muted); }
+    .more-symbols-note { color: var(--accent-cyan); font-size: 0.75rem; padding: 4px; text-align: center; }
   </style>
 </head>
 <body>
@@ -589,31 +611,31 @@
   <div class="filters-bar">
     <div class="chip-container" id="chipContainer">
       <div class="chip active" onclick="filterByModule('All')">
-        <span class="dot" style="background:#fff"></span> All Modules
+        <span class="dot dot-all"></span> All Modules
       </div>
       <div class="chip" onclick="filterByModule('admin')">
-        <span class="dot" style="background:#38bdf8"></span> Admin Module
+        <span class="dot dot-admin"></span> Admin Module
       </div>
       <div class="chip" onclick="filterByModule('customer')">
-        <span class="dot" style="background:#4ade80"></span> Customer Module
+        <span class="dot dot-customer"></span> Customer Module
       </div>
       <div class="chip" onclick="filterByModule('account')">
-        <span class="dot" style="background:#f472b6"></span> Account & Auth
+        <span class="dot dot-account"></span> Account & Auth
       </div>
       <div class="chip" onclick="filterByModule('guest')">
-        <span class="dot" style="background:#fbbf24"></span> Guest & Landing
+        <span class="dot dot-guest"></span> Guest & Landing
       </div>
       <div class="chip" onclick="filterByModule('shared')">
-        <span class="dot" style="background:#a855f7"></span> Shared & 3D Engine
+        <span class="dot dot-shared"></span> Shared & 3D Engine
       </div>
       <div class="chip" onclick="filterByModule('supabase')">
-        <span class="dot" style="background:#2dd4bf"></span> Supabase Backend
+        <span class="dot dot-supabase"></span> Supabase Backend
       </div>
       <div class="chip" onclick="filterByModule('docs')">
-        <span class="dot" style="background:#818cf8"></span> Docs
+        <span class="dot dot-docs"></span> Docs
       </div>
       <div class="chip" onclick="filterByModule('bin')">
-        <span class="dot" style="background:#94a3b8"></span> Bin / Archive
+        <span class="dot dot-bin"></span> Bin / Archive
       </div>
     </div>
 
@@ -632,7 +654,7 @@
       <button class="zoom-btn" title="Zoom Out (-)" onclick="zoomOut()">
         <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
       </button>
-      <button class="zoom-btn" title="Recenter View (R / Space)" onclick="fitView()" style="color:var(--accent-cyan)">
+      <button class="zoom-btn zoom-btn-cyan" title="Recenter View (R / Space)" onclick="fitView()">
         <svg viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
       </button>
     </div>
@@ -641,14 +663,14 @@
   <!-- Node Inspector Slide-Over Drawer -->
   <div class="inspector-drawer" id="inspectorDrawer">
     <div class="drawer-header">
-      <div style="display:flex;align-items:center;gap:8px">
+      <div class="drawer-title-group">
         <h3>Node Inspector</h3>
-        <button class="btn" style="padding:4px 8px;font-size:0.75rem;background:rgba(56,189,248,0.15);border-color:rgba(56,189,248,0.3);color:var(--accent-cyan)" onclick="centerOnSelectedNode()" title="Center camera on this node">
+        <button class="btn btn-focus" onclick="centerOnSelectedNode()" title="Center camera on this node">
           🎯 Focus
         </button>
       </div>
-      <button class="drawer-close" onclick="closeDrawer()">
-        <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24">
+      <button class="drawer-close" onclick="closeDrawer()" title="Close Drawer" aria-label="Close Drawer">
+        <svg class="drawer-close-svg" viewBox="0 0 24 24">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         </svg>
       </button>
@@ -1104,17 +1126,17 @@
       const list = document.getElementById("drawerChildren");
       list.innerHTML = "";
       if (children.length === 0) {
-        list.innerHTML = `<div style="color:var(--text-muted);font-size:0.8rem">No deeper child symbols</div>`;
+        list.innerHTML = `<div class="empty-child-note">No deeper child symbols</div>`;
       } else {
         children.slice(0, 30).forEach(c => {
           const div = document.createElement("div");
           div.className = "child-item";
-          div.innerHTML = `<span>${c.data.name}</span><span style="color:var(--text-muted)">${c.data.isFunc ? 'fn' : 'sub'}</span>`;
+          div.innerHTML = `<span>${c.data.name}</span><span class="child-type-badge">${c.data.isFunc ? 'fn' : 'sub'}</span>`;
           list.appendChild(div);
         });
         if (children.length > 30) {
           const more = document.createElement("div");
-          more.style.cssText = "color:var(--accent-cyan);font-size:0.75rem;padding:4px;text-align:center";
+          more.className = "more-symbols-note";
           more.innerText = `+ ${children.length - 30} more symbols...`;
           list.appendChild(more);
         }

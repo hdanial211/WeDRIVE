@@ -1,30 +1,35 @@
 /**
  * WeDRIVE - Marketing AI Module
- * admin/js/marketing-ai.js
+ * admin/js/marketing-ai.js (v6.17.0)
  *
- * AI-powered marketing content generator using Gemini API (free tier).
- * API key is stored in Supabase settings table - no code editing needed.
+ * AI-powered marketing content generator.
+ * API key is now managed exclusively via WeDriveAiVault (Slot 2: events_pricing).
+ * Go to Admin → AI Intelligence → Pusat Kunci API to configure.
  */
 
 'use strict';
 
-var _aiApiKey = '';
 var _aiParsedSuggestions = [];
 
-// ── Load saved API key from Supabase on page load ─────────────────────────────
-window.addEventListener('DOMContentLoaded', async function () {
-  try {
-    var sb = window.supabaseClient;
-    if (!sb || !window.AppConfig || !window.AppConfig.USE_REAL_DB) return;
-    var result = await sb.from('settings').select('value').eq('key', 'gemini_api_key').maybeSingle();
-    if (result.data && result.data.value) {
-      _aiApiKey = result.data.value;
-      var input = document.getElementById('ai-api-key');
-      if (input) input.value = _aiApiKey;
-      setAiKeyStatus('Key saved. Ready to generate.', '#059669');
-    }
-  } catch (e) {
-    console.warn('[WeDRIVE AI] Could not load API key:', e);
+// ── Get key from centralised vault (Slot 2: events_pricing) ──────────────────
+function _getMarketingKey() {
+  // Primary: WeDriveAiVault Slot 2
+  if (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('events_pricing')) {
+    return window.WeDriveAiVault.getKey('events_pricing');
+  }
+  // Fallback: input field on this page (if admin types directly)
+  var input = document.getElementById('ai-api-key');
+  return input ? input.value.trim() : '';
+}
+
+// ── Show vault key status on page load ────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function () {
+  var hasKey = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('events_pricing');
+  if (hasKey) {
+    var provider = window.WeDriveAiVault.getProvider('events_pricing');
+    setAiKeyStatus('✓ Kunci ' + (provider ? provider.name : 'AI') + ' sedia dari Peti Besi AI.', '#059669');
+  } else {
+    setAiKeyStatus('Tiada kunci dikonfigurasi. Pergi ke Pusat Kunci API untuk memasukkan kunci Slot 2.', '#D97706');
   }
 });
 
@@ -38,34 +43,14 @@ window.toggleApiKeyVisibility = function () {
   icon.textContent = isHidden ? 'visibility_off' : 'visibility';
 };
 
-// ── Save API key to Supabase settings table ───────────────────────────────────
-window.saveAiApiKey = async function () {
-  var input = document.getElementById('ai-api-key');
-  if (!input) return;
-  var key = input.value.trim();
-  if (!key) { setAiKeyStatus('API key cannot be empty.', '#DC2626'); return; }
-
-  _aiApiKey = key;
-
-  if (window.AppConfig && window.AppConfig.USE_REAL_DB && window.supabaseClient) {
-    try {
-      var sb = window.supabaseClient;
-      // Upsert into settings table (key/value store)
-      var result = await sb.from('settings').upsert(
-        { key: 'gemini_api_key', value: key },
-        { onConflict: 'key' }
-      );
-      if (result.error) throw result.error;
-      setAiKeyStatus('API key saved to Supabase successfully.', '#059669');
-    } catch (err) {
-      console.error('[WeDRIVE AI] Save key error:', err);
-      setAiKeyStatus('Error saving key: ' + err.message, '#DC2626');
-    }
-  } else {
-    // Demo mode: save to localStorage
-    localStorage.setItem('wedrive_gemini_key', key);
-    setAiKeyStatus('API key saved (demo mode).', '#D97706');
-  }
+// ── Redirect admin to vault page to manage keys ──────────────────────────────
+window.saveAiApiKey = function () {
+  // Keys are now managed from the AI Vault page (Pusat Kunci API)
+  // This is kept for backward compat with any UI button that calls it
+  setAiKeyStatus('Untuk simpan kunci, pergi ke: AI Intelligence → Pusat Kunci API', '#0071E3');
+  setTimeout(function () {
+    window.location.href = '/admin/pages/ai/api-keys.html';
+  }, 1500);
 };
 
 function setAiKeyStatus(msg, color) {
@@ -89,14 +74,11 @@ window.generateAiSuggestions = async function () {
   if (errorEl) { errorEl.style.display = 'none'; errorEl.textContent = ''; }
   if (outputWrapper) outputWrapper.style.display = 'none';
 
-  // Get API key
-  var apiKey = _aiApiKey
-    || (document.getElementById('ai-api-key') || {}).value
-    || localStorage.getItem('wedrive_gemini_key')
-    || '';
+  // Get API key from centralised vault (Slot 2)
+  var apiKey = _getMarketingKey();
 
   if (!apiKey) {
-    showAiError('Sila masukkan Gemini API Key dahulu dan klik "Save Key".');
+    showAiError('Tiada kunci AI dikonfigurasi. Pergi ke AI Intelligence → Pusat Kunci API dan isikan Slot 2 (Pemasaran & Harga).');
     return;
   }
 

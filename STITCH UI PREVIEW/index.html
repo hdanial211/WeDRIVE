@@ -52,6 +52,7 @@
       margin-bottom: 12px;
       background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     p.subtitle {
@@ -72,6 +73,7 @@
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
       padding: 24px;
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
@@ -182,6 +184,72 @@
       background: #34D399;
       transform: translateY(-2px);
     }
+    .card-version.card-v7 {
+      border-color: rgba(52, 199, 89, 0.7);
+      background: linear-gradient(180deg, rgba(6, 78, 59, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+    }
+    .folder-tag.green-bright {
+      color: #34D399;
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+    .status-badge.master-finishing {
+      background: #34C759;
+      color: #042F1A;
+    }
+    .code-blue {
+      color: #60A5FA;
+    }
+    .links-grid.four-cols {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .btn-step.step-portal {
+      border-color: rgba(59, 130, 246, 0.4);
+      background: rgba(59, 130, 246, 0.15);
+    }
+    .step-portal .step-num {
+      color: #60A5FA;
+    }
+    .card-version.card-v6 {
+      border-color: rgba(59, 130, 246, 0.6);
+      background: linear-gradient(180deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.85) 100%);
+    }
+    .folder-tag.blue-tag {
+      color: #60A5FA;
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    .status-badge.prompt-bench {
+      background: #0071E3;
+      color: #FFFFFF;
+    }
+    .btn-step.btn-gray-tint {
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(148, 163, 184, 0.1);
+    }
+    .step-baseline .step-num {
+      color: #94A3B8;
+    }
+    .btn-step.btn-green-tint {
+      border-color: rgba(16, 185, 129, 0.5);
+      background: rgba(16, 185, 129, 0.15);
+    }
+    .step-patches .step-num,
+    .step-active .step-num {
+      color: #34D399;
+    }
+    .btn-step.btn-emerald-outline {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .btn-step.btn-purple-outline {
+      border-color: rgba(139, 92, 246, 0.4);
+      background: rgba(139, 92, 246, 0.1);
+    }
+    .step-deprecated .step-num {
+      color: #A78BFA;
+    }
   </style>
 </head>
 <body>
@@ -194,16 +262,16 @@
 
     <div class="grid">
       <!-- FOLDER 7: MASTER FINISHING (DUAL THEME + APPLE MICRO-ANIMATIONS) -->
-      <div class="card-version benchmark" style="border-color: rgba(52, 199, 89, 0.7); background: linear-gradient(180deg, rgba(6, 78, 59, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);">
+      <div class="card-version benchmark card-v7">
         <div class="card-header">
-          <span class="folder-tag green" style="color: #34D399; background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.5);">FOLDER 7/ (MASTER FINISHING)</span>
-          <span class="status-badge" style="background: #34C759; color: #042F1A;">🌟 KARYA AGUNG MUKTAMAD (DUAL THEME ☀️/🌙)</span>
+          <span class="folder-tag green-bright">FOLDER 7/ (MASTER FINISHING)</span>
+          <span class="status-badge master-finishing">🌟 KARYA AGUNG MUKTAMAD (DUAL THEME ☀️/🌙)</span>
         </div>
         <h2 class="card-title">Koleksi Lengkap Tambah Kenderaan (Langkah 1, 2, 3 + Dual Theme Switcher)</h2>
-        <p class="card-desc">Hasil finishing muktamad Stitch MCP dengan suis dwi-tema interaktif (☀️ Siang / 🌙 Malam), animasi mikro sentuhan Apple <code style="color: #60A5FA;">scale(0.97)</code>, kawalan geometri sifar bujur (Zero Oval 1:1), dan simulator peranti responsif (MacBook, iPad, iPhone).</p>
-        <div class="links-grid" style="grid-template-columns: repeat(4, 1fr); gap: 8px;">
-          <a class="btn-step" style="border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.15);" href="7/index.html">
-            <span class="step-num" style="color:#60A5FA;">PORTAL</span>
+        <p class="card-desc">Hasil finishing muktamad Stitch MCP dengan suis dwi-tema interaktif (☀️ Siang / 🌙 Malam), animasi mikro sentuhan Apple <code class="code-blue">scale(0.97)</code>, kawalan geometri sifar bujur (Zero Oval 1:1), dan simulator peranti responsif (MacBook, iPad, iPhone).</p>
+        <div class="links-grid four-cols">
+          <a class="btn-step step-portal" href="7/index.html">
+            <span class="step-num">PORTAL</span>
             Hub Versi 7
           </a>
           <a class="btn-step" href="7/step1_spesifikasi_preview.html">
@@ -222,20 +290,20 @@
       </div>
 
       <!-- FOLDER 6: PROMPT BENCHMARK HEAD-TO-HEAD -->
-      <div class="card-version benchmark" style="border-color: rgba(59, 130, 246, 0.6); background: linear-gradient(180deg, rgba(30, 58, 138, 0.3) 0%, rgba(15, 23, 42, 0.85) 100%);">
+      <div class="card-version benchmark card-v6">
         <div class="card-header">
-          <span class="folder-tag" style="color: #60A5FA; background: rgba(59, 130, 246, 0.2); border-color: rgba(59, 130, 246, 0.4);">FOLDER 6/ (TERKINI)</span>
-          <span class="status-badge" style="background: #0071E3; color: #FFFFFF;">⚡ PROMPT ENGINEERING BENCHMARK</span>
+          <span class="folder-tag blue-tag">FOLDER 6/ (TERKINI)</span>
+          <span class="status-badge prompt-bench">⚡ PROMPT ENGINEERING BENCHMARK</span>
         </div>
         <h2 class="card-title">Perbandingan Prompt: Asal vs Baharu (Gemini 3.8 Flash)</h2>
         <p class="card-desc">Ujian perbandingan 100% kod mentah Stitch MCP menggunakan model GEMINI_3_8_FLASH yang sama untuk menguji impak 5 Precision Patches (Grid Tarif Seimbang 2x2, Bottom Clearance 120px, Kaca Terkawal, Fluid Scaling).</p>
         <div class="links-grid">
-          <a class="btn-step" style="border-color: rgba(148, 163, 184, 0.4); background: rgba(148, 163, 184, 0.1);" href="6/prompt_lama/step1_spesifikasi_preview.html">
-            <span class="step-num" style="color:#94A3B8;">PROMPT ASAL (BASELINE)</span>
+          <a class="btn-step btn-gray-tint step-baseline" href="6/prompt_lama/step1_spesifikasi_preview.html">
+            <span class="step-num">PROMPT ASAL (BASELINE)</span>
             Buka Prompt Asal
           </a>
-          <a class="btn-step" style="border-color: rgba(16, 185, 129, 0.5); background: rgba(16, 185, 129, 0.15);" href="6/prompt_baru/step1_spesifikasi_preview.html">
-            <span class="step-num" style="color:#34D399;">🟢 PROMPT BAHARU (5 PATCHES)</span>
+          <a class="btn-step btn-green-tint step-patches" href="6/prompt_baru/step1_spesifikasi_preview.html">
+            <span class="step-num">🟢 PROMPT BAHARU (5 PATCHES)</span>
             Buka Prompt Baharu
           </a>
         </div>
@@ -250,12 +318,12 @@
         <h2 class="card-title">Perbandingan Model: GEMINI_3_8_FLASH vs GEMINI_3_1_PRO</h2>
         <p class="card-desc">Ujian rasmi perbandingan reka bentuk skrin "Langkah 1: Spesifikasi & Tarif" dengan prompt dan design system yang sama untuk menilai kualiti model Google Stitch MCP.</p>
         <div class="links-grid">
-          <a class="btn-step" style="border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.1);" href="5/3.8flash/step1_spesifikasi_preview.html">
-            <span class="step-num" style="color:#34D399;">🟢 MODEL TERKINI & AKTIF</span>
+          <a class="btn-step btn-emerald-outline step-active" href="5/3.8flash/step1_spesifikasi_preview.html">
+            <span class="step-num">🟢 MODEL TERKINI & AKTIF</span>
             Buka 3.8 Flash Preview
           </a>
-          <a class="btn-step" style="border-color: rgba(139,92,246,0.4); background: rgba(139,92,246,0.1);" href="5/3.1pro/step1_spesifikasi_preview.html">
-            <span class="step-num" style="color:#A78BFA;">🔴 MODEL LEGASI DEPRECATED</span>
+          <a class="btn-step btn-purple-outline step-deprecated" href="5/3.1pro/step1_spesifikasi_preview.html">
+            <span class="step-num">🔴 MODEL LEGASI DEPRECATED</span>
             Buka 3.1 Pro Preview
           </a>
         </div>

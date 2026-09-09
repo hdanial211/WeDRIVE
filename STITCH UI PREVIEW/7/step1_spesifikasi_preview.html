@@ -120,8 +120,8 @@
         /* Apple HIG Glass & Card Styles */
         .glass-panel {
             background-color: rgba(249, 249, 251, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
         }
         .bento-card {
             background-color: #ffffff;
@@ -271,6 +271,7 @@
             background-size: 300% 300%;
             animation: aiGradientShift 2.2s infinite linear;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
@@ -336,6 +337,18 @@
         .ai-gradient-pill:active {
             transform: scale(0.97);
         }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1 !important;
+        }
+        .text-white-force {
+            color: #FFFFFF !important;
+        }
+        .no-underline {
+            text-decoration: none !important;
+        }
+        .active-nav-glow {
+            box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35) !important;
+        }
     </style>
 </head>
 <body class="bg-background text-on-background min-h-screen font-body text-body selection:bg-primary-fixed selection:text-on-primary-fixed pb-[120px] transition-colors duration-300">
@@ -344,8 +357,8 @@
     <header class="fixed top-0 w-full z-50 glass-panel border-b border-border-day flex items-center justify-between px-4 sm:px-6 h-16 shadow-sm relative transition-colors duration-300">
         <!-- Left: WeDRIVE Brand + Context Title -->
         <div class="flex items-center gap-3 min-w-0 z-10">
-            <a href="index.html" class="flex items-center gap-2 shrink-0 interactive-btn" style="text-decoration: none;">
-                <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+            <a href="index.html" class="flex items-center gap-2 shrink-0 interactive-btn no-underline">
+                <span class="material-symbols-outlined text-primary text-2xl icon-fill">directions_car</span>
                 <span class="font-headline text-headline font-extrabold tracking-tight">
                     <span class="text-primary font-black">We</span><span class="text-on-surface font-black">DRIVE</span>
                 </span>
@@ -361,8 +374,8 @@
             <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Papan Pemuka" aria-label="Papan Pemuka">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">dashboard</span>
             </a>
-            <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all" style="box-shadow: 0 3px 12px rgba(0, 113, 227, 0.35);" title="Kenderaan" aria-label="Kenderaan">
-                <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+            <a href="javascript:void(0)" class="nav-icon-link active circle-1-1 w-9 h-9 lg:w-10 lg:h-10 bg-primary text-white shadow-sm transition-all active-nav-glow" title="Kenderaan" aria-label="Kenderaan">
+                <span class="material-symbols-outlined text-[20px] lg:text-[21px] text-white icon-fill">directions_car</span>
             </a>
             <a href="javascript:void(0)" class="nav-icon-link circle-1-1 w-9 h-9 lg:w-10 lg:h-10 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" title="Tempahan" aria-label="Tempahan" data-i18n-title="nav_bookings">
                 <span class="material-symbols-outlined text-[20px] lg:text-[21px]">receipt_long</span>
@@ -391,7 +404,7 @@
             </button>
 
             <!-- Batal Button -->
-            <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day" style="text-decoration: none;">
+            <a href="index.html" class="pill-btn interactive-btn bg-surface-container hover:bg-surface-container-high text-on-surface px-4 py-2 font-callout text-callout border border-border-day no-underline">
                 <span data-i18n="nav_cancel">Batal</span>
             </a>
         </div>
@@ -467,9 +480,9 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
                         <!-- Pengeluar -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
+                            <label for="inputBrand" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
                             <div class="relative">
-                                <select id="inputBrand" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
                                     <option value="Honda" selected>Honda</option>
                                     <option value="Toyota">Toyota</option>
@@ -520,14 +533,14 @@
                         <!-- AI Auto Generate Spesifikasi -->
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
                             <label class="font-footnote text-footnote font-semibold flex items-center gap-1.5">
-                                <span class="material-symbols-outlined text-[16px] text-[#BF5AF2]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <span class="material-symbols-outlined text-[16px] text-[#BF5AF2] icon-fill">auto_awesome</span>
                                 <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold" data-i18n="ai_suggestion_label">Cadangan Spesifikasi Pintar</span>
                             </label>
                             <input type="hidden" id="inputStatus" name="status" value="available"/>
                             <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="ai-container-bar interactive-btn group relative w-full h-[46px] py-0 px-4 rounded-xl flex items-center justify-between transition-all duration-300 active:scale-[0.98] cursor-pointer overflow-hidden">
                                 <div id="aiSpecLaserScanner" class="hidden ai-laser-line"></div>
                                 <div class="flex items-center gap-2 z-10">
-                                    <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300" style="font-variation-settings: 'FILL' 1; color: #5E5CE6;">auto_awesome</span>
+                                    <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300 icon-fill text-[#5E5CE6]">auto_awesome</span>
                                     <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap" data-i18n="ai_btn_autofill">Isi Automatik</span>
                                 </div>
                                 <span id="aiBtnBadge" class="ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0">
@@ -553,9 +566,9 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
                         <!-- Kategori Kenderaan -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_category">Kategori Kenderaan</label>
+                            <label for="inputCategory" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_category">Kategori Kenderaan</label>
                             <div class="relative">
-                                <select id="inputCategory" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputCategory" title="Kategori Kenderaan" aria-label="Kategori Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" disabled data-i18n-opt="field_category_select">Pilih Kategori</option>
                                     <option value="Sedan" selected>Sedan</option>
                                     <option value="Hatchback">Hatchback</option>
@@ -574,9 +587,9 @@
 
                         <!-- Punca Kuasa / Bahan Api -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_fuel">Punca Kuasa (Bahan Api)</label>
+                            <label for="inputFuel" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_fuel">Punca Kuasa (Bahan Api)</label>
                             <div class="relative">
-                                <select id="inputFuel" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputFuel" title="Punca Kuasa Kenderaan" aria-label="Punca Kuasa Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" disabled data-i18n-opt="field_fuel_select">Pilih Punca Kuasa</option>
                                     <option value="Petrol" selected>Petrol (RON95/97)</option>
                                     <option value="Hybrid">Hybrid (HEV)</option>
@@ -589,9 +602,9 @@
 
                         <!-- Sistem Transmisi -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_transmission">Sistem Transmisi</label>
+                            <label for="inputTransmission" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_transmission">Sistem Transmisi</label>
                             <div class="relative">
-                                <select id="inputTransmission" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputTransmission" title="Sistem Transmisi" aria-label="Sistem Transmisi" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" disabled data-i18n-opt="field_transmission_select">Pilih Transmisi</option>
                                     <option value="Automatic" selected>Automatik (AT / CVT / DCT)</option>
                                     <option value="Manual">Manual (MT)</option>
@@ -602,9 +615,9 @@
 
                         <!-- Kapasiti Tempat Duduk -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_seats">Kapasiti Tempat Duduk</label>
+                            <label for="inputSeats" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_seats">Kapasiti Tempat Duduk</label>
                             <div class="relative">
-                                <select id="inputSeats" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputSeats" title="Kapasiti Tempat Duduk" aria-label="Kapasiti Tempat Duduk" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" disabled data-i18n-opt="field_seats_select">Pilih Tempat Duduk</option>
                                     <option value="2" data-i18n-opt="seats_2">2 Tempat Duduk</option>
                                     <option value="4" data-i18n-opt="seats_4">4 Tempat Duduk</option>
@@ -683,22 +696,22 @@
 
             <!-- State 2: Status Draf Disimpan (HANYA muncul apabila ditekan Simpan Draf) -->
             <div id="draftSavedStatus" class="hidden items-center gap-2 text-on-surface-variant font-medium px-3 py-1.5 rounded-full transition-all duration-300">
-                <span id="draftSavedIcon" class="material-symbols-outlined text-[20px] text-[#28C840]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+                <span id="draftSavedIcon" class="material-symbols-outlined text-[20px] text-[#28C840] icon-fill">cloud_done</span>
                 <span id="draftSavedText" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold" data-i18n="dock_status_draft_saved">Draf disimpan</span>
             </div>
         </div>
 
         <!-- Right Primary Action (Font from Gambar 1: Crisp Bold Pure White) -->
-        <a href="step2_studio360_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
-            <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
+        <a href="step2_studio360_preview.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white text-white-force font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0">
+            <span class="text-white text-white-force" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
+            <span class="material-symbols-outlined text-[20px] text-white text-white-force">arrow_forward</span>
         </a>
     </footer>
 
     <!-- AI Apple Glass Floating Toast Notification -->
     <div id="aiToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
-        <div class="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
-            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        <div class="circle-1-1 w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-primary text-[18px] icon-fill">auto_awesome</span>
         </div>
         <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">Spesifikasi kenderaan berjaya dijana secara automatik!</span>
     </div>

@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788909347.76555,
-    "seen": 1788930160.3577979,
-    "ast_hash": "ad229b3d30cbf47616bffce9d96ae66f",
+    "mtime": 1788930184.845296,
+    "seen": 1788931965.529972,
+    "ast_hash": "4fc22cb9a320293dfcc5b464ac8c60d6",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -660,9 +660,9 @@
     "semantic_hash": ""
   },
   "docs/PROJECT_STRUCTURE.md": {
-    "mtime": 1788909240.1378675,
-    "seen": 1788909335.137963,
-    "ast_hash": "cdc42d9d90236a3ee0d1095edf4ce4fa",
+    "mtime": 1788931061.9108307,
+    "seen": 1788931965.530068,
+    "ast_hash": "9b2388513b974fdd66ad64d5fe053463",
     "semantic_hash": ""
   },
   "docs/sitemap.html": {
@@ -11256,9 +11256,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/01_core_rules.md": {
-    "mtime": 1788889595.2400546,
-    "seen": 1788889649.490697,
-    "ast_hash": "9aa34c026efa50ec580d538c146860a5",
+    "mtime": 1788931040.376979,
+    "seen": 1788931965.5299368,
+    "ast_hash": "423ed5ed83b124a1ca15ff9faf54fbc1",
     "semantic_hash": ""
   },
   ".agents/rules/02_apple_hig_design_system.md": {
@@ -11322,9 +11322,9 @@
     "semantic_hash": ""
   },
   ".agents/PROJECT_STRUCTURE.md": {
-    "mtime": 1788909221.1992335,
-    "seen": 1788909335.137873,
-    "ast_hash": "e84e1389cc235cc746cc375f22fad243",
+    "mtime": 1788931052.1750226,
+    "seen": 1788931965.529929,
+    "ast_hash": "b042986c15cf721989710895e8c1bbe7",
     "semantic_hash": ""
   },
   ".agents/rules/12_max_content_limit.md": {
@@ -11850,27 +11850,51 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step2_studio360.html": {
-    "mtime": 1788926015.1893895,
-    "seen": 1788930160.3578398,
-    "ast_hash": "6711719358c8ed4de7c8a25fd48587d4",
+    "mtime": 1788931586.8400629,
+    "seen": 1788931965.5300338,
+    "ast_hash": "57eed1d9c1fd1f74c507abae5e33f22b",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step3_pengesahan.html": {
-    "mtime": 1788926124.6969905,
-    "seen": 1788930160.3578398,
-    "ast_hash": "10e763902db241033ff17388b46c8654",
+    "mtime": 1788931593.515533,
+    "seen": 1788931965.530036,
+    "ast_hash": "61d9aad012939d6593428b446a49c646",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step4_pandangan_pelanggan.html": {
-    "mtime": 1788926636.9141202,
-    "seen": 1788930160.357841,
-    "ast_hash": "7ff839abdfc09c75a2f5fa8f923e98d1",
+    "mtime": 1788931600.6157243,
+    "seen": 1788931965.530037,
+    "ast_hash": "c298c1ffef3d3db45053c5823d0d0859",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step5_tempahan.html": {
     "mtime": 1788926647.8174622,
     "seen": 1788930160.357842,
     "ast_hash": "e41ae26bbb0121e55df482642904f823",
+    "semantic_hash": ""
+  },
+  "admin/pages/car/add-car/step2-studio360.js": {
+    "mtime": 1788931144.2771838,
+    "seen": 1788931965.529851,
+    "ast_hash": "5bb64a3def8d2a82ef6d77f1d210f328",
+    "semantic_hash": ""
+  },
+  "admin/pages/car/add-car/step3-pengesahan.js": {
+    "mtime": 1788931164.9465137,
+    "seen": 1788931965.529854,
+    "ast_hash": "dfc5ed2839fa4001ba5499993b8d07bc",
+    "semantic_hash": ""
+  },
+  "admin/pages/car/add-car/step4-pandangan-pelanggan.js": {
+    "mtime": 1788931571.4620166,
+    "seen": 1788931965.52986,
+    "ast_hash": "983f08b9b4bde3091ba5824406e71501",
+    "semantic_hash": ""
+  },
+  ".agents/rules/23_stitch_to_production_workflow.md": {
+    "mtime": 1788931022.5049846,
+    "seen": 1788931965.52996,
+    "ast_hash": "a6b3135e8dacd7d3aa7a848e5b1567a3",
     "semantic_hash": ""
   }
 }

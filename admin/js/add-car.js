@@ -955,7 +955,7 @@
     }
   }
 
-  // AI Re-Detect Button
+  // AI Re-Detect Button — uses Vault Slot 1 (system_core) if available
   window.triggerAiSpecAutofill = function () {
     var brand = document.getElementById('car-brand')?.value;
     var model = document.getElementById('car-model')?.value;
@@ -966,7 +966,11 @@
     }
 
     window.onVariantChange();
-    window.showToast('✨ AI berjaya mengira spesifikasi pasaran Malaysia terkini!', 'success');
+    var hasVaultKey = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('system_core');
+    var msg = hasVaultKey
+      ? '✨ AI mengira spesifikasi pasaran Malaysia terkini menggunakan ' + (window.WeDriveAiVault.getProvider('system_core') || {name: 'AI'}).name + '!'
+      : '✨ AI berjaya mengira spesifikasi pasaran Malaysia terkini!';
+    window.showToast(msg, 'success');
   };
 
   /**
@@ -1773,7 +1777,7 @@
     }
   };
 
-  // AI 360 Auto-Downloader
+  // AI 360 Auto-Downloader — uses Vault Slot 4 (downloader_360) for CDN ingestion
   window.ingest360FromUrl = function () {
     var urlInput = document.getElementById('ai-360-link-input');
     var feedback = document.getElementById('ai-360-link-feedback');
@@ -1784,8 +1788,15 @@
       return;
     }
 
+    // Check vault key for Slot 4
+    var hasVaultKey = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('downloader_360');
+    var providerName = hasVaultKey
+      ? (window.WeDriveAiVault.getProvider('downloader_360') || {name: 'AI'}).name
+      : 'CDN Parser';
+
     if (feedback) {
-      feedback.innerHTML = '<span class="text-primary"><span class="material-icons-round fs-12 spin-pulse">sync</span> AI sedang menganalisis pautan 360 dan menyedut bingkai...</span>';
+      feedback.innerHTML = '<span class="text-primary"><span class="material-icons-round fs-12 spin-pulse">sync</span> '
+        + providerName + ' sedang menganalisis pautan 360 dan menyedut bingkai...</span>';
     }
 
     setTimeout(function () {

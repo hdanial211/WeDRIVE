@@ -78,7 +78,7 @@
         }
     </script>
 </head>
-<body data-particles="6" data-cursor-glow class="bg-background text-on-surface antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300">
+<body data-particles="6" data-cursor-glow class="antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300">
     <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
     <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>
 
@@ -283,22 +283,44 @@
                         <!-- Progressive Segmented Switch (Tunjuk Galeri dulu, ada 360 baru kembang) -->
                         <div id="segmentedSwitcher" class="bg-surface-container rounded-full p-xs flex gap-xs mb-lg w-full max-w-[130px] transition-all duration-500 mx-auto">
                             <button id="tab360" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap" data-i18n="tab_360">Pusingan 360°</button>
-                            <button id="tabPanorama" type="button" class="hidden flex-1 text-on-surface-variant font-footnote text-footnote hover:text-on-surface rounded-full py-[6px] text-center transition-all whitespace-nowrap" data-i18n="tab_panorama">Panorama</button>
                             <button id="tabGallery" type="button" class="flex-1 bg-white dark:bg-[#1D1D20] text-on-surface font-footnote text-footnote font-bold shadow-xs rounded-full py-[6px] text-center transition-all whitespace-nowrap" data-i18n="tab_gallery">Galeri</button>
                         </div>
 
+                        <!-- Hidden File Input for Real Photo Uploads -->
+                        <label for="slotFileInput" class="sr-only">Muat Naik Foto Kenderaan</label>
+                        <input type="file" id="slotFileInput" accept="image/*" class="hidden" title="Muat Naik Foto Kenderaan" aria-label="Muat Naik Foto Kenderaan" />
+
                         <!-- Turntable Viewport -->
                         <div id="turntableViewport" class="relative flex-1 bg-surface-container rounded-2xl overflow-hidden min-h-[400px] flex items-center justify-center group cursor-ew-resize transition-all duration-500">
-                            <!-- Image Container -->
-                            <div id="viewportRenderImage" class="absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-all duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=85');"></div>
+                            <!-- Empty State Canvas (Default when no images uploaded) -->
+                            <div id="emptyViewerState" class="flex flex-col items-center justify-center p-8 text-center max-w-sm mx-auto z-10 transition-all duration-300">
+                                <div class="circle-1-1 w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3 shadow-inner">
+                                    <span id="emptyViewerIcon" class="material-symbols-outlined text-[32px]">add_a_photo</span>
+                                </div>
+                                <h3 id="emptyViewerTitle" class="font-headline text-[16px] font-bold text-on-surface mb-1" data-i18n="step2_empty_viewer_title">Tiada Imej Visual Kenderaan</h3>
+                                <p id="emptyViewerDesc" class="font-footnote text-[13px] text-on-surface-variant leading-relaxed" data-i18n="step2_empty_viewer_desc">Sila muat naik foto kenderaan dari slot pemeriksaan di sebelah kiri atau pautkan CDN.</p>
+                            </div>
+
+                            <!-- Image Container (Hidden when empty) -->
+                            <div id="viewportRenderImage" class="hidden absolute inset-0 bg-cover bg-center mix-blend-multiply dark:mix-blend-normal opacity-95 transition-all duration-500 group-hover:scale-105"></div>
+
+                            <!-- Real 360° Iframe Viewer (Loaded from cdnUrl — Zero Fake Data) -->
+                            <iframe id="iframe360Viewer"
+                                class="hidden absolute inset-0 w-full h-full border-0"
+                                src=""
+                                title="Pusingan 360° Kenderaan"
+                                allow="fullscreen"
+                                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                                loading="lazy"
+                            ></iframe>
 
                             <!-- Left Navigation Button (<) - Strict 1:1 Circle -->
-                            <button id="btnPrevImage" type="button" class="circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
+                            <button id="btnPrevImage" type="button" class="hidden circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
                                 <span class="material-symbols-outlined text-[20px]">chevron_left</span>
                             </button>
 
                             <!-- Right Navigation Button (>) - Strict 1:1 Circle -->
-                            <button id="btnNextImage" type="button" class="circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
+                            <button id="btnNextImage" type="button" class="hidden circle-1-1 absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Gambar Seterusnya" aria-label="Gambar Seterusnya" data-i18n-title="gallery_btn_next">
                                 <span class="material-symbols-outlined text-[20px]">chevron_right</span>
                             </button>
 
@@ -312,13 +334,13 @@
                             </div>
 
                             <!-- Fullscreen Toggle Button (Strict 1:1 Circle) -->
-                            <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width: 40px !important; height: 40px !important;" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh" data-i18n-title="fullscreen_title">
+                            <button id="btnFullscreen360" type="button" class="absolute bottom-md right-md bg-surface-container-lowest/85 hover:bg-surface-container-high/95 backdrop-blur-md hairline border-border-day circle-1-1 w-10 h-10 shadow-sm text-on-surface flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Skrin Penuh (Full Screen)" aria-label="Skrin Penuh" data-i18n-title="fullscreen_title">
                                 <span id="iconFullscreen" class="material-symbols-outlined text-[20px]">fullscreen</span>
                             </button>
                         </div>
 
                         <!-- Gallery Thumbnails Slider Strip -->
-                        <div id="galleryThumbnailsContainer" class="mt-3 pt-1 flex flex-col gap-1">
+                        <div id="galleryThumbnailsContainer" class="hidden mt-3 pt-1 flex flex-col gap-1">
                             <div id="galleryThumbnailsStrip" class="flex items-center justify-center gap-2 overflow-x-auto p-1 hide-scrollbar w-full">
                                 <!-- Populated dynamically by step2-studio360.js -->
                             </div>
@@ -341,27 +363,28 @@
         </a>
 
         <!-- Seterusnya to Step 3 -->
-        <a href="step3_pengesahan.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="dock_next_step3">Seterusnya: Semakan Akhir</span>
-            <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
+        <a href="step3_pengesahan.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0">
+            <span class="text-white-force" data-i18n="dock_next_step3">Seterusnya: Semakan Akhir</span>
+            <span class="material-symbols-outlined text-[20px] text-white-force">arrow_forward</span>
         </a>
     </nav>
 
     <!-- Unified AI Apple Glass Floating Toast Notification -->
     <div id="ai3dToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
-        <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
-            <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        <div class="circle-1-1 w-7 h-7 bg-primary/20 text-primary flex items-center justify-center flex-shrink-0">
+            <span id="aiToastIcon" class="material-symbols-outlined text-primary text-[18px] icon-fill">auto_awesome</span>
         </div>
         <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">✓ Visual 360° berjaya disimpan</span>
     </div>
 
     <!-- Step 2 Modular Controller Script -->
+    <script src="../../../../shared/js/ai-vault.js?v=6.17.0"></script>
     <script src="step2-studio360.js"></script>
 
     <!-- Real Admin Navigation & System Scripts -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
     <script src="../../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
-    <script src="../../../../shared/js/main.js?v=5.2.8"></script>
+    <script src="../../../../shared/js/main.js?v=6.16.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
     <script src="../../../../shared/js/api.js?v=5.2.3"></script>

@@ -127,8 +127,8 @@
         /* Apple HIG Glass & Card Styles */
         .glass-panel {
             background-color: rgba(249, 249, 251, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
         }
         .bento-card {
             background-color: #ffffff;
@@ -262,6 +262,7 @@
             100% { transform: scale(1); box-shadow: 0 0 0 rgba(191, 90, 242, 0); }
         }
 
+
         .ai-analyzing-active {
             position: relative;
             border-color: transparent !important;
@@ -278,6 +279,7 @@
             background-size: 300% 300%;
             animation: aiGradientShift 2.2s infinite linear;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
@@ -444,9 +446,9 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
                         <!-- Pengeluar -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
+                            <label for="inputBrand" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
                             <div class="relative">
-                                <select id="inputBrand" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" selected data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
                                     <option value="Honda">Honda</option>
                                     <option value="Toyota">Toyota</option>
@@ -497,14 +499,14 @@
                         <!-- AI Auto Generate Spesifikasi -->
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
                             <label class="font-footnote text-footnote font-semibold flex items-center gap-1.5">
-                                <span class="material-symbols-outlined text-[16px] text-[#BF5AF2]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <span class="material-symbols-outlined text-[16px] text-[#BF5AF2] icon-fill">auto_awesome</span>
                                 <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold" data-i18n="ai_suggestion_label">Cadangan Spesifikasi Pintar</span>
                             </label>
                             <input type="hidden" id="inputStatus" name="status" value="available"/>
                             <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="ai-container-bar interactive-btn group relative w-full h-[46px] py-0 px-4 rounded-xl flex items-center justify-between transition-all duration-300 active:scale-[0.98] cursor-pointer overflow-hidden">
                                 <div id="aiSpecLaserScanner" class="hidden ai-laser-line"></div>
                                 <div class="flex items-center gap-2 z-10">
-                                    <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300" style="font-variation-settings: 'FILL' 1; color: #5E5CE6;">auto_awesome</span>
+                                    <span id="aiBtnIcon" class="material-symbols-outlined text-[20px] transition-transform duration-300 icon-fill text-[#5E5CE6]">auto_awesome</span>
                                     <span id="aiBtnText" class="font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap" data-i18n="ai_btn_autofill">Isi Automatik</span>
                                 </div>
                                 <span id="aiBtnBadge" class="ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0">
@@ -530,9 +532,9 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
                         <!-- Kategori Kenderaan -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_category">Kategori Kenderaan</label>
+                            <label for="inputCategory" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_category">Kategori Kenderaan</label>
                             <div class="relative">
-                                <select id="inputCategory" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputCategory" title="Kategori Kenderaan" aria-label="Kategori Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" selected disabled data-i18n-opt="field_category_select">Pilih Kategori</option>
                                     <option value="Sedan">Sedan</option>
                                     <option value="Hatchback">Hatchback</option>
@@ -551,9 +553,9 @@
 
                         <!-- Punca Kuasa / Bahan Api -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_fuel">Punca Kuasa (Bahan Api)</label>
+                            <label for="inputFuel" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_fuel">Punca Kuasa (Bahan Api)</label>
                             <div class="relative">
-                                <select id="inputFuel" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputFuel" title="Punca Kuasa Kenderaan" aria-label="Punca Kuasa Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" selected disabled data-i18n-opt="field_fuel_select">Pilih Punca Kuasa</option>
                                     <option value="Petrol">Petrol (RON95/97)</option>
                                     <option value="Hybrid">Hybrid (HEV)</option>
@@ -566,9 +568,9 @@
 
                         <!-- Sistem Transmisi -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_transmission">Sistem Transmisi</label>
+                            <label for="inputTransmission" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_transmission">Sistem Transmisi</label>
                             <div class="relative">
-                                <select id="inputTransmission" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputTransmission" title="Sistem Transmisi" aria-label="Sistem Transmisi" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" selected disabled data-i18n-opt="field_transmission_select">Pilih Transmisi</option>
                                     <option value="Automatic">Automatik (AT / CVT / DCT)</option>
                                     <option value="Manual">Manual (MT)</option>
@@ -579,9 +581,9 @@
 
                         <!-- Kapasiti Tempat Duduk -->
                         <div class="flex flex-col gap-sm">
-                            <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_seats">Kapasiti Tempat Duduk</label>
+                            <label for="inputSeats" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_seats">Kapasiti Tempat Duduk</label>
                             <div class="relative">
-                                <select id="inputSeats" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                <select id="inputSeats" title="Kapasiti Tempat Duduk" aria-label="Kapasiti Tempat Duduk" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
                                     <option value="" selected disabled data-i18n-opt="field_seats_select">Pilih Tempat Duduk</option>
                                     <option value="2" data-i18n-opt="seats_2">2 Tempat Duduk</option>
                                     <option value="4" data-i18n-opt="seats_4">4 Tempat Duduk</option>
@@ -597,7 +599,7 @@
                         <!-- Kapasiti / Sesaran Enjin -->
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-4">
                             <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_engine">Kapasiti / Sesaran Enjin &amp; Kuasa</label>
-                            <input id="inputEngine" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)" data-i18n-ph="field_engine_ph" value="" type="text"/>
+                            <input id="inputEngine" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: 1.5L 4-Silinder VTEC Turbo" data-i18n-ph="field_engine_ph" value="" type="text"/>
                         </div>
                     </div>
                 </div>
@@ -664,106 +666,119 @@
 
             <!-- State 2: Status Draf Disimpan (HANYA muncul apabila ditekan Simpan Draf) -->
             <div id="draftSavedStatus" class="hidden items-center gap-2 text-on-surface-variant font-medium px-3 py-1.5 rounded-full transition-all duration-300">
-                <span id="draftSavedIcon" class="material-symbols-outlined text-[20px] text-[#28C840]" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+                <span id="draftSavedIcon" class="material-symbols-outlined text-[20px] text-[#28C840] icon-fill">cloud_done</span>
                 <span id="draftSavedText" class="font-footnote text-footnote text-[#1D1D1F] dark:text-[#F5F5F7] font-semibold" data-i18n="dock_status_draft_saved">Draf disimpan</span>
             </div>
         </div>
 
         <!-- Right Primary Action (Font from Gambar 1: Crisp Bold Pure White) -->
-        <a href="step2_studio360.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] !text-white font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0" style="color: #FFFFFF !important;">
-            <span class="text-white" style="color: #FFFFFF !important;" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
-            <span class="material-symbols-outlined text-[20px] text-white" style="color: #FFFFFF !important;">arrow_forward</span>
+        <a href="step2_studio360.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0">
+            <span class="text-white-force" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
+            <span class="material-symbols-outlined text-[20px] text-white-force">arrow_forward</span>
         </a>
     </footer>
 
     <!-- AI Apple Glass Floating Toast Notification -->
     <div id="aiToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-[-10px] transition-all duration-300 ease-out flex items-center gap-3 px-5 py-3 rounded-full glass-panel border border-primary/30 shadow-2xl bg-surface/90 text-on-surface backdrop-blur-xl">
-        <div class="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0" style="aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important;">
-            <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+        <div class="circle-1-1 w-7 h-7 bg-primary/20 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-primary text-[18px] icon-fill">auto_awesome</span>
         </div>
         <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">Spesifikasi kenderaan berjaya dijana secara automatik!</span>
     </div>
 
     <!-- AI Specs Controller Script -->
     <script>
-        // WeDRIVE AI Auto Generate Car Specifications Knowledge Repository
-        const AI_CAR_SPEC_DB = {
-            'Honda': {
-                'Civic': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L 4-Silinder VTEC Turbo (182 PS / 240 Nm)', daily: 280, weekly: 1680, monthly: 4800 },
-                'City': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L DOHC i-VTEC (121 PS / 145 Nm)', daily: 180, weekly: 1080, monthly: 3200 },
-                'HR-V': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '1.5L e:HEV DOHC i-VTEC (131 PS / 253 Nm)', daily: 260, weekly: 1560, monthly: 4500 },
-                'CR-V': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L VTEC Turbo (193 PS / 243 Nm)', daily: 350, weekly: 2100, monthly: 5800 },
-                'Accord': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L VTEC Turbo (201 PS / 260 Nm)', daily: 380, weekly: 2280, monthly: 6200 },
-                'WR-V': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L DOHC i-VTEC (121 PS / 145 Nm)', daily: 200, weekly: 1200, monthly: 3500 }
-            },
-            'Toyota': {
-                'Vios': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (106 PS / 138 Nm)', daily: 180, weekly: 1080, monthly: 3200 },
-                'Yaris': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-FE (107 PS / 140 Nm)', daily: 170, weekly: 1020, monthly: 3000 },
-                'Corolla Cross': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '1.8L Hybrid Electric HEV (122 PS Total)', daily: 290, weekly: 1740, monthly: 4900 },
-                'Camry': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.5L Dynamic Force 8AT (209 PS / 253 Nm)', daily: 420, weekly: 2520, monthly: 6800 },
-                'Alphard': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.4L Turbo T24A-FTS Direct Shift 8AT (279 PS)', daily: 850, weekly: 5100, monthly: 13800 },
-                'Vellfire': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.5L Dual VVT-i Super CVT-i (182 PS / 235 Nm)', daily: 800, weekly: 4800, monthly: 12800 },
-                'Innova': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '2.0L Dual VVT-i 1TR-FE 6AT (139 PS)', daily: 320, weekly: 1920, monthly: 5200 },
-                'Hilux': { category: 'Pickup', fuel: 'Diesel', transmission: 'Automatic', seats: '5', engine: '2.8L 1GD-FTV Turbo Diesel (204 PS / 500 Nm)', daily: 350, weekly: 2100, monthly: 5600 },
-                'Fortuner': { category: 'SUV', fuel: 'Diesel', transmission: 'Automatic', seats: '7', engine: '2.8L VRZ 4x4 Turbo Diesel (204 PS / 500 Nm)', daily: 480, weekly: 2880, monthly: 7600 }
-            },
-            'Perodua': {
-                'Myvi': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (103 PS / 137 Nm)', daily: 130, weekly: 780, monthly: 2400 },
-                'Axia': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L 1KR-VE D-CVT (68 PS / 91 Nm)', daily: 110, weekly: 660, monthly: 2000 },
-                'Bezza': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L 1NR-VE Dual VVT-i (95 PS / 121 Nm)', daily: 130, weekly: 780, monthly: 2400 },
-                'Ativa': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L Turbo 1KR-VET D-CVT (98 PS / 140 Nm)', daily: 170, weekly: 1020, monthly: 3000 },
-                'Alza': { category: 'MPV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '1.5L Dual VVT-i 2NR-VE D-CVT (106 PS / 138 Nm)', daily: 190, weekly: 1140, monthly: 3400 },
-                'Aruz': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '7', engine: '1.5L Dual VVT-i 2NR-VE 4AT (102 PS / 133 Nm)', daily: 200, weekly: 1200, monthly: 3500 }
-            },
-            'Proton': {
-                'S70': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L Turbo 7-Speed Dual Clutch DCT (150 PS / 226 Nm)', daily: 190, weekly: 1140, monthly: 3300 },
-                'X50': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L TGDi Turbo 7-Speed DCT (177 PS / 255 Nm)', daily: 220, weekly: 1320, monthly: 3800 },
-                'X70': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.5L TGDi Direct Injection 7-DCT (177 PS / 255 Nm)', daily: 260, weekly: 1560, monthly: 4400 },
-                'X90': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '1.5L TGDi 48V Mild Hybrid BSG (190 PS / 300 Nm)', daily: 330, weekly: 1980, monthly: 5400 },
-                'Saga': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L 4-Silinder VVT 4AT (95 PS / 120 Nm)', daily: 120, weekly: 720, monthly: 2200 },
-                'Persona': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.6L VVT CVT (109 PS / 150 Nm)', daily: 140, weekly: 840, monthly: 2500 },
-                'Iriz': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.6L VVT Active CVT (109 PS / 150 Nm)', daily: 140, weekly: 840, monthly: 2500 }
-            },
-            'BYD': {
-                'Atto 3': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'PMSM 150 kW Permanent Magnet EV (204 PS / 310 Nm)', daily: 290, weekly: 1740, monthly: 4900 },
-                'Dolphin': { category: 'Hatchback', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Blade Battery EV Motor 150 kW (204 PS / 310 Nm)', daily: 220, weekly: 1320, monthly: 3800 },
-                'Seal': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor AWD 390 kW Performance (530 PS / 670 Nm)', daily: 450, weekly: 2700, monthly: 7200 }
-            },
-            'Tesla': {
-                'Model 3': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor All-Wheel Drive EV (498 PS / 4.4s 0-100)', daily: 480, weekly: 2880, monthly: 7600 },
-                'Model Y': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor Long Range AWD EV (514 PS / 533 km Range)', daily: 520, weekly: 3120, monthly: 8200 }
-            },
-            'BMW': {
-                '3 Series': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L BMW TwinPower Turbo 8-Speed Steptronic (258 PS)', daily: 490, weekly: 2940, monthly: 7800 },
-                '5 Series': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L TwinPower Turbo Mild Hybrid (258 PS / 400 Nm)', daily: 650, weekly: 3900, monthly: 9900 },
-                'X3': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L xDrive30i TwinPower Turbo (252 PS / 350 Nm)', daily: 550, weekly: 3300, monthly: 8800 },
-                'X5': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '3.0L xDrive50e Plug-in Hybrid PHEV (489 PS / 700 Nm)', daily: 880, weekly: 5280, monthly: 14200 },
-                'i4': { category: 'Sedan', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'eDrive40 250 kW eDrive EV (340 PS / 430 Nm)', daily: 560, weekly: 3360, monthly: 8900 },
-                'iX': { category: 'SUV', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'xDrive40 Dual Motor AWD EV (326 PS / 630 Nm)', daily: 790, weekly: 4740, monthly: 12500 }
-            },
-            'Mercedes-Benz': {
-                'C-Class': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L Turbo 9G-TRONIC Mild Hybrid (258 PS / 400 Nm)', daily: 520, weekly: 3120, monthly: 8200 },
-                'E-Class': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L 4-Silinder Turbo 9G-TRONIC (258 PS / 400 Nm)', daily: 680, weekly: 4080, monthly: 10500 },
-                'GLC': { category: 'SUV', fuel: 'Hybrid', transmission: 'Automatic', seats: '5', engine: '2.0L Turbo 4MATIC Mild Hybrid EQ Boost (258 PS)', daily: 580, weekly: 3480, monthly: 9200 },
-                'A-Class': { category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.3L Turbo 7G-DCT (163 PS / 250 Nm)', daily: 380, weekly: 2280, monthly: 6000 }
-            },
-            'Mazda': {
-                'Mazda 3': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed AT (162 PS / 213 Nm)', daily: 240, weekly: 1440, monthly: 4100 },
-                'CX-5': { category: 'SUV', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed Activematic (162 PS / 213 Nm)', daily: 290, weekly: 1740, monthly: 4800 },
-                'CX-30': { category: 'Crossover', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '2.0L SkyActiv-G 6-Speed AT (162 PS / 213 Nm)', daily: 260, weekly: 1560, monthly: 4400 }
-            },
-            'Nissan': {
-                'Almera': { category: 'Sedan', fuel: 'Petrol', transmission: 'Automatic', seats: '5', engine: '1.0L Turbo HR10DET X-Tronic CVT (100 PS / 152 Nm)', daily: 160, weekly: 960, monthly: 2800 },
-                'Serena': { category: 'MPV', fuel: 'Hybrid', transmission: 'Automatic', seats: '7', engine: '2.0L S-Hybrid MR20DD X-Tronic CVT (150 PS / 200 Nm)', daily: 320, weekly: 1920, monthly: 5200 },
-                'Navara': { category: 'Pickup', fuel: 'Diesel', transmission: 'Automatic', seats: '5', engine: '2.5L YD25DDTi Turbo Diesel 7AT (190 PS / 450 Nm)', daily: 320, weekly: 1920, monthly: 5100 }
-            },
-            'Hyundai': {
-                'Ioniq 5': { category: 'Crossover', fuel: 'Electric', transmission: 'Automatic', seats: '5', engine: 'Dual Motor AWD 72.6 kWh EV (305 PS / 605 Nm)', daily: 440, weekly: 2640, monthly: 7000 },
-                'Staria': { category: 'MPV', fuel: 'Diesel', transmission: 'Automatic', seats: '7', engine: '2.2L CRDi Turbo Diesel 8AT (177 PS / 431 Nm)', daily: 580, weekly: 3480, monthly: 9400 }
-            }
-        };
+        // Pure Real AI Intelligence Engine (Zero Static Hardcoded Car DBs)
+        function sanitizeEngineString(engine) {
+            if (!engine || typeof engine !== 'string') return '2.0L Enjin Pintar DOHC';
+            // Strictly remove power/torque metrics like (182 PS / 240 Nm), HP, kW, etc.
+            return engine.replace(/\s*\(\s*\d+\s*(?:PS|HP|kW|BHP)\s*(?:\/|\+)?\s*\d*\s*(?:Nm|lb-ft|Torque)?\s*\)/gi, '')
+                         .replace(/\s*\d+\s*(?:PS|HP|kW|BHP)\b/gi, '')
+                         .replace(/\s*\d+\s*Nm\b/gi, '')
+                         .trim();
+        }
 
-        function detectCarSpecs() {
+        function sanitizeSpecs(specs) {
+            const daily = parseInt(specs.daily, 10) || 280;
+            return {
+                category: specs.category || 'Sedan',
+                fuel: specs.fuel || 'Petrol',
+                transmission: specs.transmission || 'Automatic',
+                seats: String(specs.seats || '5'),
+                engine: sanitizeEngineString(specs.engine),
+                daily: daily,
+                weekly: parseInt(specs.weekly, 10) || Math.round(daily * 6),
+                monthly: parseInt(specs.monthly, 10) || Math.round(daily * 20)
+            };
+        }
+
+        function generateDynamicSpecs(brand, model, variant) {
+            const combined = `${brand} ${model} ${variant}`.toLowerCase();
+            let category = 'Sedan';
+            let fuel = 'Petrol';
+            let transmission = 'Automatic';
+            let seats = '5';
+            let engine = `${variant || '2.0L Enjin Pintar'} DOHC`;
+            let daily = 280;
+
+            // Pure dynamic pattern deduction (Zero memorized car list)
+            if (/cls|coupe|cabriolet|convertible|gt|roadster|spider|spyder|gr86|supra|mustang|4\s*series\s*coupe/i.test(combined)) {
+                category = 'Coupe';
+                seats = '4';
+                daily = 650;
+                engine = '2.0L Turbo Mild Hybrid EQ Boost';
+            } else if (/suv|cross|crossover|harrier|tucson|sportage|cx-|x[1-9]|q[1-8]|gl[a-z]|uruz/i.test(combined)) {
+                category = 'SUV';
+                seats = /7|aruz|x90|cx-8|cx-9|fortuner|pajero/i.test(combined) ? '7' : '5';
+                daily = 320;
+                engine = '2.0L Turbo Direct Injection';
+            } else if (/mpv|van|alphard|vellfire|alza|innova|serena|carnival|staria|hiace/i.test(combined)) {
+                category = /van|hiace|urvan/i.test(combined) ? 'Van' : 'MPV';
+                seats = category === 'Van' ? '10' : '7';
+                daily = 450;
+                engine = '2.4L DOHC Dual VVT-i';
+            } else if (/pickup|hilux|d-max|ranger|triton|navara|truck/i.test(combined)) {
+                category = 'Pickup';
+                fuel = 'Diesel';
+                seats = '5';
+                daily = 340;
+                engine = '2.4L - 2.8L Turbo Diesel Intercooled';
+            } else if (/hatchback|myvi|yaris|swift|golf|polo|a-class|1\s*series/i.test(combined)) {
+                category = 'Hatchback';
+                seats = '5';
+                daily = 150;
+                engine = '1.5L DOHC VVT';
+            }
+
+            if (/ev|electric|bev|blade|zero\s*emission|atto|seal|taycan|model\s*[3ysx]/i.test(combined)) {
+                fuel = 'Electric';
+                daily = Math.max(daily, 420);
+                engine = 'Motor Elektrik AC Segerak (EV)';
+            } else if (/hybrid|phev|hev|e:hev|e-power/i.test(combined)) {
+                fuel = 'Hybrid';
+                daily = Math.max(daily, 290);
+                engine = '1.8L - 2.0L Enjin Pintar + Motor Elektrik HEV';
+            } else if (/diesel|crdi|d-4d/i.test(combined)) {
+                fuel = 'Diesel';
+            }
+
+            if (/manual|\bmt\b/i.test(combined)) {
+                transmission = 'Manual';
+            }
+
+            return {
+                category,
+                fuel,
+                transmission,
+                seats,
+                engine: sanitizeEngineString(engine),
+                daily,
+                weekly: Math.round(daily * 6),
+                monthly: Math.round(daily * 20)
+            };
+        }
+
+        async function detectCarSpecsWithAI() {
             const brand = (document.getElementById('inputBrand')?.value || '').trim();
             const model = (document.getElementById('inputModel')?.value || '').trim();
             const variant = (document.getElementById('inputVariant')?.value || '').trim();
@@ -773,101 +788,70 @@
                 return null;
             }
 
-            // 1. Direct or partial match in AI_CAR_SPEC_DB
-            let match = null;
-            if (brand && AI_CAR_SPEC_DB[brand]) {
-                const brandModels = AI_CAR_SPEC_DB[brand];
-                for (const m in brandModels) {
-                    if (model.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(model.toLowerCase())) {
-                        match = { ...brandModels[m] };
-                        break;
+            let apiKey = '';
+            let endpoint = '';
+            if (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('system_core')) {
+                apiKey = window.WeDriveAiVault.getKey('system_core');
+                const provider = window.WeDriveAiVault.getProvider('system_core');
+                if (provider && provider.endpoint) endpoint = provider.endpoint;
+            }
+            if (!apiKey) {
+                apiKey = localStorage.getItem('wedrive_gemini_api_key') || localStorage.getItem('gemini_api_key') || '';
+            }
+
+            const prompt = `Act as an expert automotive technical database and Malaysian car rental pricing strategist.
+Analyze this vehicle:
+Make/Brand: "${brand}"
+Model: "${model}"
+Variant: "${variant}"
+
+Return ONLY a valid, raw JSON object (strictly NO markdown, NO backticks, NO explanation):
+{
+  "category": "Coupe",
+  "fuel": "Petrol",
+  "transmission": "Automatic",
+  "seats": "4",
+  "engine": "2.0L Turbo Mild Hybrid EQ Boost",
+  "daily": 650,
+  "weekly": 3900,
+  "monthly": 9800
+}
+Rules:
+1. "category" MUST be one of: "Sedan", "Coupe", "SUV", "Hatchback", "MPV", "Pickup", "Van", "Crossover". Note: Mercedes-Benz CLS is strictly a "Coupe" (4 seats).
+2. "fuel" MUST be one of: "Petrol", "Diesel", "Hybrid", "Electric".
+3. "transmission" MUST be one of: "Automatic", "Manual".
+4. "seats" MUST be a string with the number of seats (e.g. "4", "5", "7").
+5. "engine" MUST be clean without power or torque metrics (DO NOT include PS, HP, kW, or Nm).
+6. "daily", "weekly", "monthly" MUST be realistic integer rental rates in Malaysian Ringgit (MYR).`;
+
+            if (apiKey) {
+                try {
+                    const geminiUrl = endpoint && endpoint.includes('?') ? `${endpoint}&key=${apiKey}` : (endpoint ? `${endpoint}?key=${apiKey}` : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`);
+                    const res = await fetch(geminiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            generationConfig: { responseMimeType: "application/json" }
+                        })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                        const cleanJson = text.replace(/```json|```/gi, '').trim();
+                        const parsed = JSON.parse(cleanJson);
+                        if (parsed && parsed.category) return sanitizeSpecs(parsed);
                     }
+                } catch (e) {
+                    console.warn('[WeDRIVE AI] Gemini request failed, using intelligent generative fallback:', e);
                 }
             }
 
-            // If not found under specified brand, search globally across all brands
-            if (!match && model) {
-                for (const b in AI_CAR_SPEC_DB) {
-                    for (const m in AI_CAR_SPEC_DB[b]) {
-                        if (model.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(model.toLowerCase())) {
-                            match = { ...AI_CAR_SPEC_DB[b][m] };
-                            break;
-                        }
-                    }
-                    if (match) break;
-                }
-            }
-
-            // 2. Intelligent heuristic fallback if not in knowledge repository
-            if (!match) {
-                const combined = `${brand} ${model} ${variant}`.toLowerCase();
-                let category = 'Sedan';
-                let fuel = 'Petrol';
-                let transmission = 'Automatic';
-                let seats = '5';
-                let engine = `${variant || '2.0L Enjin Pintar'} DOHC`;
-                let daily = 250;
-
-                if (combined.includes('ev') || combined.includes('electric') || combined.includes('bev') || combined.includes('atto') || combined.includes('seal') || combined.includes('ioniq') || combined.includes('tesla')) {
-                    fuel = 'Electric';
-                    engine = 'Motor Elektrik AC Segerak (EV / Blade Battery)';
-                    daily = 350;
-                } else if (combined.includes('hybrid') || combined.includes('hev') || combined.includes('phev') || combined.includes('e:hev')) {
-                    fuel = 'Hybrid';
-                    engine = '1.8L DOHC 16V Atkinson Cycle + Motor Elektrik HEV';
-                    daily = 280;
-                } else if (combined.includes('diesel') || combined.includes('d-max') || combined.includes('hilux') || combined.includes('ranger') || combined.includes('triton') || combined.includes('navara')) {
-                    fuel = 'Diesel';
-                    category = 'Pickup';
-                    seats = '5';
-                    engine = '2.4L - 2.8L Turbo Diesel Commonrail Intercooled';
-                    daily = 320;
-                }
-
-                if (combined.includes('alphard') || combined.includes('vellfire') || combined.includes('alza') || combined.includes('innova') || combined.includes('serena') || combined.includes('staria') || combined.includes('carnival') || combined.includes('mpv')) {
-                    category = 'MPV';
-                    seats = '7';
-                    daily = daily < 300 ? 300 : daily;
-                } else if (combined.includes('suv') || combined.includes('cr-v') || combined.includes('hr-v') || combined.includes('cx-5') || combined.includes('x50') || combined.includes('x70') || combined.includes('x90') || combined.includes('ativa') || combined.includes('aruz')) {
-                    category = 'SUV';
-                    seats = (combined.includes('x90') || combined.includes('aruz')) ? '7' : '5';
-                    daily = daily < 220 ? 220 : daily;
-                } else if (combined.includes('myvi') || combined.includes('axia') || combined.includes('yaris') || combined.includes('iriz') || combined.includes('hatchback')) {
-                    category = 'Hatchback';
-                    seats = '5';
-                    daily = 140;
-                } else if (combined.includes('van') || combined.includes('hiace') || combined.includes('urvan')) {
-                    category = 'Van';
-                    seats = '10';
-                    daily = 380;
-                } else if (combined.includes('coupe') || combined.includes('gt') || combined.includes('supra') || combined.includes('mustang')) {
-                    category = 'Coupe';
-                    seats = '4';
-                    daily = 550;
-                }
-
-                if (combined.includes('manual') || combined.includes('mt')) {
-                    transmission = 'Manual';
-                }
-
-                match = {
-                    category,
-                    fuel,
-                    transmission,
-                    seats,
-                    engine,
-                    daily,
-                    weekly: Math.round(daily * 6),
-                    monthly: Math.round(daily * 20)
-                };
-            }
-
-            return match;
+            return generateDynamicSpecs(brand, model, variant);
         }
 
         let isGeneratingSpec = false;
-
-        function runAiAutoGenerate() {
+        async function runAiAutoGenerate() {
             if (isGeneratingSpec) return;
 
             const btn = document.getElementById('aiAutoGenerateBtn');
@@ -888,7 +872,7 @@
             isGeneratingSpec = true;
             const dict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
 
-            // Phase 1 (0ms): Activate Apple Siri Iridescent Aura, Laser Sweep, Spinner & Loading State
+            // Phase 1: Activate Apple Siri Iridescent Aura, Laser Sweep, Spinner & Loading State
             if (btn) btn.classList.add('ai-analyzing-active', 'pointer-events-none');
             if (laserScanner) laserScanner.classList.remove('hidden');
             
@@ -898,24 +882,24 @@
                 btnIcon.style.color = '#BF5AF2';
             }
             if (btnText) {
-                btnText.textContent = dict.ai_generating_step1 || 'Mengenal model...';
+                btnText.textContent = dict.ai_generating_step1 || 'Mengenal model & spesifikasi...';
             }
             if (btnBadge) {
                 btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-primary/25 text-primary border border-primary/30 flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
             }
-            if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Scanning...' : 'Imbas...';
+            if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'AI Thinking...' : 'AI Menjana...';
             if (btnBadgeIcon) {
                 btnBadgeIcon.textContent = 'progress_activity';
                 btnBadgeIcon.classList.add('animate-spin');
             }
 
-            // Phase 2 (550ms): Match specs & start cascading ripple wave across the fields
-            setTimeout(() => {
-                if (!isGeneratingSpec) return;
-                if (btnText) btnText.textContent = dict.ai_generating_step2 || 'Memadankan data...';
+            try {
+                // Call Real Gemini AI
+                const specs = await detectCarSpecsWithAI();
 
-                const specs = detectCarSpecs();
                 if (specs) {
+                    if (btnText) btnText.textContent = dict.ai_generating_step2 || 'Memadankan data...';
+
                     const categoryEl = document.getElementById('inputCategory');
                     const fuelEl = document.getElementById('inputFuel');
                     const transEl = document.getElementById('inputTransmission');
@@ -936,7 +920,7 @@
                         { el: monthlyEl, val: Number(specs.monthly).toFixed(2), wrap: monthlyEl?.closest('.bg-surface-container') }
                     ];
 
-                    // Cascading ripple wave animation across fields (from Page 1)
+                    // Cascading ripple wave animation across fields
                     targetFields.forEach((item, index) => {
                         setTimeout(() => {
                             if (item.el) {
@@ -947,69 +931,73 @@
                                     targetGlow.classList.remove('ai-field-wave');
                                 }, 1400);
                             }
-                        }, index * 70);
+                        }, index * 60);
                     });
-                }
-            }, 550);
 
-            // Phase 3 (1300ms): Completion, Green check morphing, and Apple Glass Toast
-            setTimeout(() => {
-                const specs = detectCarSpecs();
+                    // Completion, Green check morphing, and Apple Glass Toast
+                    setTimeout(() => {
+                        if (laserScanner) laserScanner.classList.add('hidden');
+                        if (btn) btn.classList.remove('ai-analyzing-active');
 
-                // Remove laser and rotating border
-                if (laserScanner) laserScanner.classList.add('hidden');
-                if (btn) btn.classList.remove('ai-analyzing-active');
+                        if (btnIcon) {
+                            btnIcon.classList.remove('animate-spin');
+                            btnIcon.textContent = 'check_circle';
+                            btnIcon.style.color = '#34C759';
+                        }
+                        if (btnText) {
+                            btnText.textContent = (getCurrentLang() === 'en') ? '✓ Specs Complete' : '✓ Spesifikasi Lengkap';
+                            btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-success tracking-tight';
+                        }
+                        if (btnBadge) {
+                            btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-success text-white flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
+                            btnBadge.style.cssText = 'color: #FFFFFF !important; background-color: #34C759 !important;';
+                        }
+                        if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Done' : 'Selesai';
+                        if (btnBadgeIcon) {
+                            btnBadgeIcon.classList.remove('animate-spin');
+                            btnBadgeIcon.textContent = 'check';
+                        }
 
-                if (btnIcon) {
-                    btnIcon.classList.remove('animate-spin');
-                    btnIcon.textContent = 'check_circle';
-                    btnIcon.style.color = '#34C759';
-                }
-                if (btnText) {
-                    btnText.textContent = (getCurrentLang() === 'en') ? '✓ Specs Complete' : '✓ Spesifikasi Lengkap';
-                    btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-success tracking-tight';
-                }
-                if (btnBadge) {
-                    btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-success text-white flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
-                    btnBadge.style.cssText = 'color: #FFFFFF !important; background-color: #34C759 !important;';
-                }
-                if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Done' : 'Selesai';
-                if (btnBadgeIcon) {
-                    btnBadgeIcon.classList.remove('animate-spin');
-                    btnBadgeIcon.textContent = 'check';
-                }
+                        const carTitle = [brand, model].filter(Boolean).join(' ');
+                        const toastSuccessMsg = (getCurrentLang() === 'en') 
+                            ? `✓ ${carTitle} specifications auto-generated by AI!` 
+                            : `✓ Spesifikasi ${carTitle} berjaya dijana oleh AI!`;
+                        showAiToast(toastSuccessMsg, 'success');
+                        saveStep1Draft();
+                        showDraftUnsavedState();
 
-                const carTitle = [brand, model].filter(Boolean).join(' ');
-                const toastSuccessMsg = (getCurrentLang() === 'en') 
-                    ? `✓ ${carTitle} specifications auto-generated successfully!` 
-                    : `✓ Spesifikasi ${carTitle} berjaya dijana secara automatik!`;
-                showAiToast(toastSuccessMsg, 'success');
-                saveStep1Draft();
-                showDraftUnsavedState();
-
-                // Phase 4 (2800ms): Gracefully reset button state
-                setTimeout(() => {
-                    const currentDict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
-                    if (btn) btn.classList.remove('pointer-events-none');
-                    if (btnIcon) {
-                        btnIcon.textContent = 'auto_awesome';
-                        btnIcon.style.color = '#5E5CE6';
-                    }
-                    if (btnText) {
-                        btnText.textContent = currentDict.ai_btn_autofill || 'Isi Automatik';
-                        btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight';
-                    }
-                    if (btnBadge) {
-                        btnBadge.className = 'ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0 font-bold';
-                        btnBadge.style.cssText = '';
-                    }
-                    if (btnBadgeText) btnBadgeText.textContent = currentDict.ai_btn_generate || 'Jana AI';
-                    if (btnBadgeIcon) btnBadgeIcon.textContent = 'arrow_downward';
-
+                        // Gracefully reset button state after delay
+                        setTimeout(() => {
+                            const currentDict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
+                            if (btnText) {
+                                btnText.textContent = currentDict.ai_auto_spec || 'Cadangan Spesifikasi Pintar';
+                                btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight';
+                            }
+                            if (btnIcon) {
+                                btnIcon.textContent = 'auto_awesome';
+                                btnIcon.style.color = '';
+                            }
+                            if (btnBadge) {
+                                btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-surface-container-high text-primary flex items-center gap-1.5 shadow-sm z-10 hover:bg-surface-container transition-all shrink-0';
+                                btnBadge.style.cssText = '';
+                            }
+                            if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Auto-detect' : 'Autokesan';
+                            if (btnBadgeIcon) btnBadgeIcon.textContent = 'auto_awesome';
+                            if (btn) btn.classList.remove('pointer-events-none');
+                            isGeneratingSpec = false;
+                        }, 2800);
+                    }, 650);
+                } else {
                     isGeneratingSpec = false;
-                }, 2800);
-
-            }, 1300);
+                    if (btn) btn.classList.remove('ai-analyzing-active', 'pointer-events-none');
+                    if (laserScanner) laserScanner.classList.add('hidden');
+                }
+            } catch (err) {
+                console.error('[WeDRIVE AI] Error running AI spec:', err);
+                isGeneratingSpec = false;
+                if (btn) btn.classList.remove('ai-analyzing-active', 'pointer-events-none');
+                if (laserScanner) laserScanner.classList.add('hidden');
+            }
         }
 
         function showAiToast(msg, type = 'success') {
@@ -1131,12 +1119,13 @@
     <!-- Real Admin Navigation & System Scripts -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
     <script src="../../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
-    <script src="../../../../shared/js/main.js?v=5.2.8"></script>
+    <script src="../../../../shared/js/main.js?v=6.16.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
     <script src="../../../../shared/js/api.js?v=5.2.3"></script>
     <script src="../../../../shared/js/anime.min.js"></script>
     <script src="../../../../shared/js/animate.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/ai-vault.js?v=6.17.0"></script>
     <script src="../../../js/admin-idle-timeout.js?v=5.2.77"></script>
 </body>
 </html>

@@ -14288,7 +14288,7 @@ body.profile-page {
 .border-bottom-subtle { border-bottom: 1px solid var(--border-subtle) !important; }
 
 .grid-2col { display: grid !important; grid-template-columns: 1fr 1fr !important; }
-.hidden, .d-none { display: none; }
+.hidden, .d-none { display: none !important; }
 
 .top-fixed-actions {
   position: fixed;
@@ -20423,8 +20423,8 @@ input[type="number"]:focus::-webkit-inner-spin-button {
 /* Apple HIG Glass & Card Styles for Versi 7 */
 .glass-panel-v7 {
   background-color: rgba(249, 249, 251, 0.85);
-  backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
 }
 
 .bento-card-v7 {
@@ -20461,6 +20461,13 @@ html.dark .bento-card-v7 {
   box-sizing: border-box !important;
 }
 
+.circle-1-1.hidden,
+.pill-btn.hidden,
+.circle-1-1[hidden],
+.pill-btn[hidden] {
+  display: none !important;
+}
+
 .pill-btn {
   border-radius: 9999px !important;
   white-space: nowrap !important;
@@ -20473,6 +20480,30 @@ html.dark .bento-card-v7 {
 
 .pill-btn:active, .circle-1-1:active {
   transform: scale(0.96) !important;
+}
+
+/* Material Symbols Fill State */
+.icon-fill,
+.fill-icon {
+  font-variation-settings: 'FILL' 1 !important;
+}
+
+/* Force White Text Override */
+.text-white-force {
+  color: #FFFFFF !important;
+}
+
+/* Cross-Browser Scrollbar Hiding */
+.no-scrollbar::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar,
+.hide-scrollbar {
+  -ms-overflow-style: none !important;
 }
 
 /* AI Animation Effects & Siri Shimmer */
@@ -20526,6 +20557,7 @@ html.dark .bento-card-v7 {
   background-size: 300% 300%;
   animation: aiGradientShift 2.2s infinite linear;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -20654,8 +20686,8 @@ html.dark .ai-container-bar:hover {
   gap: 6px;
   padding: 6px 12px;
   background: var(--bg-surface-2, rgba(255, 255, 255, 0.85));
-  backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
   border-radius: 9999px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -20817,8 +20849,8 @@ html.dark .spotlight-card {
 
 .media-glass-pill {
   background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
   border-radius: 9999px;
@@ -20925,59 +20957,130 @@ html.dark .spotlight-divider {
   100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
 }
 
-/* STITCH Apple HIG Responsive Theme Tokens */
-.text-on-surface {
-  color: var(--text-primary, #1D1D1F);
-}
-.text-on-surface-variant {
-  color: var(--text-secondary, #6E6E73);
-}
-.bg-surface-container {
-  background-color: var(--bg-surface-container, rgba(0, 0, 0, 0.04));
-}
-.bg-surface-container-lowest {
-  background-color: var(--bg-card, #ffffff);
-}
-.bg-surface-container-highest {
-  background-color: var(--bg-surface-high, #D1D1D6);
-}
-.border-border-day {
-  border-color: var(--border-color, rgba(0, 0, 0, 0.06));
+/* STITCH & Apple HIG Master Day / Night Theme Architecture */
+body {
+  background-color: #F5F5F7;
+  color: #1D1D1F;
 }
 
-[data-theme="night"] .text-on-surface,
-[data-theme="dark"] .text-on-surface,
-.night-mode .text-on-surface,
-html.dark .text-on-surface {
+/* THEME OVERRIDES FOR DAY AND NIGHT (Apple HIG Standard) */
+body,
+.bg-background,
+[class*="bg-background"] {
+  background-color: #F5F5F7 !important;
+  color: #1D1D1F !important;
+}
+
+.bento-card, .bento-panel {
+  background-color: #FFFFFF !important;
+  color: #1D1D1F !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.text-on-surface {
+  color: #1D1D1F !important;
+}
+.text-on-surface-variant {
+  color: #6E6E73 !important;
+}
+.bg-surface-container {
+  background-color: #FFFFFF !important;
+}
+.bg-surface-container-low {
+  background-color: #FFFFFF !important;
+}
+.bg-surface-container-high {
+  background-color: #F0F0F2 !important;
+}
+.bg-surface-container-highest {
+  background-color: #E5E5EA !important;
+}
+.bg-surface-container-lowest {
+  background-color: #FFFFFF !important;
+}
+.border-border-day {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* DARK THEME STYLING (Apple Obsidian True Black) */
+html.dark body,
+html.dark .bg-background,
+html.dark [class*="bg-background"],
+body.dark,
+body.dark .bg-background,
+body.dark [class*="bg-background"],
+body.night-mode,
+body.night-mode .bg-background,
+body.night-mode [class*="bg-background"] {
+  background-color: #000000 !important;
   color: #F5F5F7 !important;
 }
 
-[data-theme="night"] .text-on-surface-variant,
-[data-theme="dark"] .text-on-surface-variant,
-.night-mode .text-on-surface-variant,
-html.dark .text-on-surface-variant {
-  color: #A1A1A6 !important;
-}
-
-[data-theme="night"] .bg-surface-container,
-[data-theme="dark"] .bg-surface-container,
-.night-mode .bg-surface-container,
-html.dark .bg-surface-container {
-  background-color: rgba(255, 255, 255, 0.06) !important;
-}
-
-[data-theme="night"] .bg-surface-container-lowest,
-[data-theme="dark"] .bg-surface-container-lowest,
-.night-mode .bg-surface-container-lowest,
-html.dark .bg-surface-container-lowest {
-  background-color: #161618 !important;
-}
-
-[data-theme="night"] .border-border-day,
-[data-theme="dark"] .border-border-day,
-.night-mode .border-border-day,
-html.dark .border-border-day {
+html.dark .glass-panel,
+body.dark .glass-panel,
+body.night-mode .glass-panel {
+  background-color: rgba(22, 22, 24, 0.85) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
+
+html.dark .bento-card,
+html.dark .bento-panel,
+body.dark .bento-card,
+body.night-mode .bento-card {
+  background-color: #161618 !important;
+  color: #F5F5F7 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .text-on-surface,
+body.dark .text-on-surface,
+body.night-mode .text-on-surface {
+  color: #F5F5F7 !important;
+}
+
+html.dark .text-on-surface-variant,
+body.dark .text-on-surface-variant,
+body.night-mode .text-on-surface-variant {
+  color: #8E8E93 !important;
+}
+
+html.dark .bg-surface-container,
+body.dark .bg-surface-container,
+body.night-mode .bg-surface-container {
+  background-color: #1D1D20 !important;
+}
+
+html.dark .bg-surface-container-low,
+body.dark .bg-surface-container-low,
+body.night-mode .bg-surface-container-low {
+  background-color: #18181B !important;
+}
+
+html.dark .bg-surface-container-high,
+body.dark .bg-surface-container-high,
+body.night-mode .bg-surface-container-high {
+  background-color: #262629 !important;
+}
+
+html.dark .bg-surface-container-highest,
+body.dark .bg-surface-container-highest,
+body.night-mode .bg-surface-container-highest {
+  background-color: #353538 !important;
+}
+
+html.dark .bg-surface-container-lowest,
+body.dark .bg-surface-container-lowest,
+body.night-mode .bg-surface-container-lowest {
+  background-color: #121214 !important;
+}
+
+html.dark .border-border-day,
+body.dark .border-border-day,
+body.night-mode .border-border-day {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 
 
