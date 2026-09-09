@@ -154,12 +154,19 @@
       const data = raw ? JSON.parse(raw) : null;
       const isEn = getLang() === 'en';
 
-      const isDownloaded = data && data.downloaded === true;
+      const hasVisualAssets = data && (
+        data.downloaded === true ||
+        data.image_url ||
+        (Array.isArray(data.photos) && data.photos.some(p => p && (p.img || typeof p === 'string'))) ||
+        (Array.isArray(data.gallery8Photos) && data.gallery8Photos.length > 0) ||
+        (Array.isArray(data.supabase_images) && data.supabase_images.length > 0) ||
+        data.cdnUrl || data.cdnUrlExterior || data.supabase_360
+      );
       const switcher = document.getElementById('step3SegmentedSwitcher');
       const tab360 = document.getElementById('step3Tab360');
 
-      if (!isDownloaded) {
-        // Strict Zero Preview Leak: Without download, Step 3 displays ZERO images or 360
+      if (!hasVisualAssets) {
+        // Without visuals, Step 3 displays empty prompt
         currentStep3Photos = [];
         hasStep3360 = false;
         step3CdnUrl = '';
@@ -298,15 +305,13 @@
 
     const raw = localStorage.getItem('wedrive_new_car_draft');
     const draft = raw ? JSON.parse(raw) : null;
-    if (!draft || !draft.downloaded) {
+    if (!draft || (!draft.brand && !draft.model)) {
       showStep3Toast(
-        isEn ? 'Please download vehicle visuals in Step 2 before submitting.' : 'Sila muat turun visual kenderaan di Langkah 2 sebelum mendaftar.',
+        isEn ? 'Please complete vehicle specifications in Step 1 before submitting.' : 'Sila lengkapkan spesifikasi kenderaan di Langkah 1 sebelum mendaftar.',
         'error'
       );
       return;
     }
-
-    isPublishing = true;
 
     // Syarat Mandatori: Kenderaan WAJIB ada sekurang-kurangnya 1 foto atau pautan 360°
     const hasPhotos = (currentStep3Photos && currentStep3Photos.length > 0 && currentStep3Photos.some(p => p && p.img)) ||
@@ -335,21 +340,41 @@
     }
 
     try {
+      const carName = `${draft.brand || ''} ${draft.model || ''} ${draft.variant || ''}`.trim() || 'Kenderaan Baharu';
+      const dailyPrice = parseFloat(draft.dailyPrice) || 200;
+      const imagesList = (draft.supabase_images && draft.supabase_images.length > 0)
+        ? draft.supabase_images
+        : (currentStep3Photos && currentStep3Photos.length > 0)
+          ? currentStep3Photos
+          : (draft.image_url ? [{ title: 'Foto Utama', img: draft.image_url }] : []);
+
       const newCarPayload = {
-        name: `${draft.brand || ''} ${draft.model || ''} ${draft.variant || ''}`.trim() || 'Kenderaan Baharu',
-        brand: draft.brand || '',
-        category: draft.category || 'Sedan',
+        name: carName,
+        plate: (draft.plate || '').toUpperCase() || null,
+        type: (draft.category || 'sedan').toLowerCase(),
+        label: draft.category || 'Sedan',
+        status: 'Available',
+        rate: `RM ${dailyPrice.toFixed(2)}/hari`,
+        price: dailyPrice,
+        fuel: draft.fuel || 'Petrol',
         transmission: draft.transmission || 'Automatic',
-        fuel_type: draft.fuel || 'Petrol',
-        seats: parseInt(draft.seats) || 5,
-        price_per_day: parseFloat(draft.dailyPrice) || 200,
-        status: 'available',
-        image_url: draft.image_url || (currentStep3Photos[0] ? currentStep3Photos[0].img : ''),
-        created_at: new Date().toISOString()
+        trans: (draft.transmission || '').toLowerCase().includes('auto') ? 'Auto' : 'Manual',
+        seats: parseInt(draft.seats, 10) || 5,
+        year: parseInt(draft.year, 10) || new Date().getFullYear(),
+        color: draft.color || 'Putih',
+        rating: 5.0,
+        reviews: 0,
+        ai: draft.engine || '2.0L Standard',
+        images: imagesList,
+        has_360: Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360),
+        exterior_360: draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || null,
+        interior_360: draft.cdnUrlInterior || null
       };
 
       // Call WeDriveAPI or Supabase client
-      if (window.WeDriveAPI && typeof window.WeDriveAPI.createCar === 'function') {
+      if (window.WeDriveAPI && typeof window.WeDriveAPI.publishCarDraft === 'function' && draft.supabase_draft_id) {
+        await window.WeDriveAPI.publishCarDraft(draft.supabase_draft_id, newCarPayload);
+      } else if (window.WeDriveAPI && typeof window.WeDriveAPI.createCar === 'function') {
         await window.WeDriveAPI.createCar(newCarPayload);
       } else if (window.supabaseClient) {
         await window.supabaseClient.from('cars').insert([newCarPayload]);

@@ -187,30 +187,13 @@
                     </span>
                 </div>
 
-                <!-- SPOTLIGHT CAR CARD (Production Size: max-w-[380px]) -->
-                <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan.html'" class="spotlight-card w-full max-w-[380px] cursor-pointer hover:scale-[1.01] transition-transform duration-300 shadow-xl" title="Klik untuk lihat butiran dan tempahan">
-                    
-                    <!-- Top Media Showcase (Height: 220px) -->
-                    <div class="relative w-full h-[220px] bg-[#0e0e10] overflow-hidden group">
+                <!-- OFFICIAL PRODUCTION CAR CARD (Identical to wedrive.website/index.html & customer.js) -->
+                <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan.html'" class="car-card w-full max-w-[380px] cursor-pointer shadow-xl" title="Klik untuk lihat butiran dan tempahan">
+                    <div class="car-img">
+                        <img id="cardImage" src="" alt="Kenderaan WeDRIVE" onerror="this.onerror=null;this.src='../../../../shared/model/bezza.png'" />
                         
-                        <!-- Floating Top Badges -->
-                        <div class="absolute top-3.5 inset-x-3.5 flex items-center justify-between z-20 pointer-events-none">
-                            <!-- Left: Status Badge -->
-                            <div id="cardStatusContainer" class="media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto">
-                                <span id="cardStatusDot" class="w-2 h-2 rounded-full bg-[#34C759] emerald-pulse"></span>
-                                <span id="cardStatus" class="text-[11px] font-bold text-white uppercase tracking-wider" data-i18n="step4_card_available">Tersedia</span>
-                                <span id="cardStatusIcon" class="material-symbols-outlined text-[14px] text-[#34C759]">check</span>
-                            </div>
-
-                            <!-- Right: 360° View Badge -->
-                            <div id="cardBadge360" class="hidden media-glass-pill rounded-full px-3 py-1 flex items-center gap-1.5 pointer-events-auto text-[#abc7ff]">
-                                <span class="material-symbols-outlined text-[15px]">360</span>
-                                <span class="text-[11px] font-bold text-white tracking-wider" data-i18n="step4_card_360">360° View</span>
-                            </div>
-                        </div>
-
                         <!-- Empty State Placeholder (Shown when no image uploaded) -->
-                        <div id="cardImageEmptyState" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-surface-container/50 dark:bg-surface-container-high transition-all">
+                        <div id="cardImageEmptyState" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-surface-container/80 dark:bg-surface-container-high transition-all">
                             <div class="circle-1-1 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2 shadow-inner">
                                 <span class="material-symbols-outlined text-[24px]">no_photography</span>
                             </div>
@@ -218,70 +201,40 @@
                             <span class="text-[11px] text-on-surface-variant mt-0.5" data-i18n="step4_no_photo_desc">Muat naik di Langkah 2 (Studio Visual)</span>
                         </div>
 
-                        <!-- Car Image (Hidden if empty) -->
-                        <img id="cardImage" 
-                             src="" 
-                             alt="Kenderaan WeDRIVE" 
-                             class="hidden w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-
-                        <!-- Bottom Gradient -->
-                        <div class="media-bottom-gradient absolute bottom-0 inset-x-0 h-16 pointer-events-none"></div>
+                        <div class="car-badges">
+                            <span id="cardStatus" class="status-pill available">Tersedia</span>
+                            <span class="rating-pill">⭐ 5.0</span>
+                            <span id="cardBadge360" class="badge-360 hidden"><span class="material-icons-round" style="font-size:12px">360</span> 360° View</span>
+                        </div>
                     </div>
 
-                    <!-- Card Body Details -->
-                    <div class="p-5 flex flex-col gap-3.5">
-                        
-                        <!-- Header: Kicker, Title & Color Dot -->
-                        <header class="flex flex-col gap-1.5">
-                            <div class="flex items-center gap-2">
-                                <span id="cardCategory" class="text-[11px] font-extrabold spotlight-subtitle-text uppercase tracking-[0.18em]">-</span>
-                                <span class="w-1 h-1 rounded-full bg-gray-400/60"></span>
-                                <span id="cardEngine" class="text-[11px] font-bold spotlight-subtitle-text uppercase tracking-wider">-</span>
-                            </div>
-
-                            <h3 id="cardTitle" class="font-headline text-[19px] font-bold spotlight-title-text tracking-tight leading-snug">
-                                -
-                            </h3>
-
-                            <div class="flex items-center gap-2 pt-0.5">
-                                <div id="cardColorDot" class="w-3 h-3 rounded-full bg-white border border-black/10 dark:border-white/20 shadow-sm"></div>
-                                <span id="cardColor" class="text-[13px] spotlight-subtitle-text font-medium">-</span>
-                            </div>
-                        </header>
-
-                        <!-- 2x2 Clean Specs Grid (Sifar Kotak / Borderless) -->
-                        <div class="grid grid-cols-2 gap-y-2.5 gap-x-4 py-2.5 border-t border-b spotlight-divider text-[13px] font-medium">
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0 icon-fill">local_gas_station</span>
-                                <span id="cardFuel" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0 icon-fill">airline_seat_recline_normal</span>
-                                <span id="cardSeatsPill" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0 icon-fill">settings</span>
-                                <span id="cardTransmission" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
-                            <div class="flex items-center gap-2 min-w-0">
-                                <span class="material-symbols-outlined text-[#0071e3] text-[18px] shrink-0 icon-fill">directions_car</span>
-                                <span id="cardCategoryPill" class="spotlight-subtitle-text truncate">-</span>
-                            </div>
+                    <div class="car-body">
+                        <div class="car-topline">
+                            <p id="cardCategory" class="car-type">MPV</p>
+                            <span class="rating-pill"><span class="material-icons-round">reviews</span>0 Reviews</span>
                         </div>
-
-                        <!-- Bottom Price & Book Now Row -->
-                        <div class="flex items-center justify-between pt-1">
-                            <div class="flex items-baseline gap-1">
-                                <span id="cardPrice" class="font-extrabold text-[20px] spotlight-title-text tabular-nums">RM 0.00</span>
-                                <span class="text-[12px] spotlight-subtitle-text font-normal" data-i18n="step4_card_per_day">/hari</span>
-                            </div>
-
-                            <a href="step5_tempahan.html" id="btnCustomerBookNow" class="pill-btn interactive-btn bg-[#0071e3] hover:bg-[#0077ed] text-white font-bold text-[13px] px-5 py-2.5 flex items-center gap-1.5 shadow-md shadow-blue-500/20 active:scale-95 transition-all no-underline">
-                                <span class="text-white" data-i18n="step4_card_book_now">Tempah Sekarang</span>
-                                <span class="material-symbols-outlined text-[16px] text-white">arrow_forward</span>
-                            </a>
+                        <h3 id="cardTitle">-</h3>
+                        <div class="car-meta">
+                            <span id="cardColor">Warna: -</span>
+                            <span id="cardPlate" class="ml-2">Plat: -</span>
                         </div>
-
+                        <div class="car-specs">
+                            <div class="spec"><span class="material-icons-round">local_gas_station</span><span id="cardFuel">-</span></div>
+                            <div class="spec"><span class="material-icons-round">event_seat</span><span id="cardSeatsPill">-</span></div>
+                            <div class="spec"><span class="material-icons-round">settings</span><span id="cardTransmission">-</span></div>
+                            <div class="spec"><span class="material-icons-round">verified</span><span id="cardVerified">Tersedia</span></div>
+                        </div>
+                        <div class="ai-chip">
+                            <span class="material-icons-round" style="font-size:12px">psychology</span>
+                            <span id="cardEngine">-</span>
+                        </div>
+                        <div class="car-footer">
+                            <div class="price tabular-nums"><span id="cardPrice">RM 0.00</span><span data-i18n="step4_card_per_day">/hari</span></div>
+                            <button type="button" class="btn-book" onclick="event.stopPropagation();window.location.href='step5_tempahan.html'">
+                                <span class="material-icons-round" style="font-size:17px">event_available</span>
+                                <span data-i18n="step4_card_book_now">Tempah Sekarang</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 

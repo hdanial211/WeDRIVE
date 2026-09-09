@@ -91,7 +91,8 @@
       if (th.startsWith('http://') || th.startsWith('https://') || th.startsWith('data:')) return th;
       return rootPrefix() + 'shared/model/' + th;
     }
-    var file = car && car.images && car.images.length ? car.images[0] : '';
+    var rawFile = car && car.images && car.images.length ? car.images[0] : '';
+    var file = typeof rawFile === 'string' ? rawFile : (rawFile && rawFile.img ? rawFile.img : '');
     if (!file) return fallbackImagePath(car);
     // Handle full URLs (Supabase Storage) and relative paths
     if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('data:')) return file;

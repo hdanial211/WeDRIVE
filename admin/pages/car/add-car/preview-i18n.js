@@ -60,6 +60,7 @@ const PREVIEW_I18N = {
         step5_duration_unit: "hari",
         step5_btn_continue_booking: "Teruskan ke Tempahan",
         step5_btn_back_step4: "Pandangan Pelanggan",
+        step5_btn_finish: "Selesai & Ke Pengurusan Kereta",
         step5_toast_booking_simulated: "✓ Simulasi Selesai: Tempahan sedia diproses di portal sebenar",
 
         // Step 1: Spesifikasi Kenderaan
@@ -253,6 +254,7 @@ const PREVIEW_I18N = {
         step5_duration_unit: "days",
         step5_btn_continue_booking: "Continue to Booking",
         step5_btn_back_step4: "Customer View",
+        step5_btn_finish: "Finish & Go to Car Management",
         step5_toast_booking_simulated: "✓ Simulation Complete: Ready to proceed to booking flow",
 
         // Step 1: Vehicle Specifications

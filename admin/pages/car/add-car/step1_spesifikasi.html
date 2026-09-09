@@ -444,25 +444,17 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
-                        <!-- Pengeluar -->
-                        <div class="flex flex-col gap-sm">
+                        <!-- Pengeluar (Searchable Combobox Apple HIG - Boleh Tulis & Cari) -->
+                        <div class="flex flex-col gap-sm" id="brandComboboxContainer">
                             <label for="inputBrand" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
-                            <div class="relative">
-                                <select id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                            <div class="flex flex-col gap-1.5">
+                                <div class="relative">
+                                    <input type="text" id="inputBrandSearch" autocomplete="off" placeholder="Tulis untuk cari jenama..." data-i18n-ph="field_brand_search_ph" class="bg-surface-container border border-border-day rounded-xl pl-8 pr-4 py-2 text-xs focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all w-full text-on-surface cursor-text" />
+                                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
+                                </div>
+                                <select id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface cursor-pointer">
                                     <option value="" selected data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
-                                    <option value="Honda">Honda</option>
-                                    <option value="Toyota">Toyota</option>
-                                    <option value="Perodua">Perodua</option>
-                                    <option value="Proton">Proton</option>
-                                    <option value="BMW">BMW</option>
-                                    <option value="Mercedes-Benz">Mercedes-Benz</option>
-                                    <option value="Mazda">Mazda</option>
-                                    <option value="Nissan">Nissan</option>
-                                    <option value="Hyundai">Hyundai</option>
-                                    <option value="BYD">BYD</option>
-                                    <option value="Tesla">Tesla</option>
                                 </select>
-                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
                             </div>
                         </div>
 
@@ -712,70 +704,111 @@
             };
         }
 
-        function generateDynamicSpecs(brand, model, variant) {
-            const combined = `${brand} ${model} ${variant}`.toLowerCase();
-            let category = 'Sedan';
-            let fuel = 'Petrol';
-            let transmission = 'Automatic';
-            let seats = '5';
-            let engine = `${variant || '2.0L Enjin Pintar'} DOHC`;
-            let daily = 280;
+        // ── Brand Searchable Combobox (Carlist.my & Mudah.my Comprehensive Brand Directory) ──
+        const MALAYSIA_POPULAR_BRANDS = [
+            'Proton', 'Perodua', 'Toyota', 'Honda', 'Nissan', 'Mazda', 'Mitsubishi',
+            'Kia', 'Hyundai', 'Ford', 'Isuzu', 'BMW', 'Mercedes-Benz', 'BYD', 'Tesla',
+            'Chery', 'Volkswagen', 'Volvo', 'Audi', 'Lexus', 'Porsche', 'Subaru',
+            'Suzuki', 'MG', 'Omoda', 'Jaecoo', 'GWM'
+        ];
 
-            // Pure dynamic pattern deduction (Zero memorized car list)
-            if (/cls|coupe|cabriolet|convertible|gt|roadster|spider|spyder|gr86|supra|mustang|4\s*series\s*coupe/i.test(combined)) {
-                category = 'Coupe';
-                seats = '4';
-                daily = 650;
-                engine = '2.0L Turbo Mild Hybrid EQ Boost';
-            } else if (/suv|cross|crossover|harrier|tucson|sportage|cx-|x[1-9]|q[1-8]|gl[a-z]|uruz/i.test(combined)) {
-                category = 'SUV';
-                seats = /7|aruz|x90|cx-8|cx-9|fortuner|pajero/i.test(combined) ? '7' : '5';
-                daily = 320;
-                engine = '2.0L Turbo Direct Injection';
-            } else if (/mpv|van|alphard|vellfire|alza|innova|serena|carnival|staria|hiace/i.test(combined)) {
-                category = /van|hiace|urvan/i.test(combined) ? 'Van' : 'MPV';
-                seats = category === 'Van' ? '10' : '7';
-                daily = 450;
-                engine = '2.4L DOHC Dual VVT-i';
-            } else if (/pickup|hilux|d-max|ranger|triton|navara|truck/i.test(combined)) {
-                category = 'Pickup';
-                fuel = 'Diesel';
-                seats = '5';
-                daily = 340;
-                engine = '2.4L - 2.8L Turbo Diesel Intercooled';
-            } else if (/hatchback|myvi|yaris|swift|golf|polo|a-class|1\s*series/i.test(combined)) {
-                category = 'Hatchback';
-                seats = '5';
-                daily = 150;
-                engine = '1.5L DOHC VVT';
+        const MALAYSIA_ALL_BRANDS = [
+            'Abarth', 'Aion', 'Alfa Romeo', 'Alpine', 'Aston Martin', 'Audi', 'BAIC',
+            'Bentley', 'BMW', 'Borgward', 'Bufori', 'BYD', 'Cadillac', 'Caterham',
+            'Chana', 'Changan', 'Chery', 'Chevrolet', 'Chrysler', 'Citroen', 'Cupra',
+            'Dacia', 'Daewoo', 'Daihatsu', 'Datsun', 'Deepal', 'Denza', 'DFSK',
+            'Dodge', 'Dongfeng', 'DS Automobiles', 'Ferrari', 'Fiat', 'Ford', 'Foton',
+            'GAC', 'Geely', 'Genesis', 'GMC', 'Great Wall', 'GWM', 'Haval', 'Hino',
+            'Honda', 'Hummer', 'Hyundai', 'iCaur', 'Infiniti', 'Isuzu', 'Iveco',
+            'JAC', 'Jaecoo', 'Jaguar', 'Jeep', 'Jetour', 'JMC', 'Kia', 'Koenigsegg',
+            'Lada', 'Lamborghini', 'Lancia', 'Land Rover', 'Leapmotor', 'Lepas',
+            'Lexus', 'Lincoln', 'Lotus', 'Lucid', 'Mahindra', 'Maserati', 'Maxus',
+            'Maybach', 'Mazda', 'McLaren', 'Mercedes-Benz', 'MG', 'MINI', 'Mitsubishi',
+            'Mitsuoka', 'Morgan', 'Neta', 'Nissan', 'Omoda', 'Opel', 'Pagani',
+            'Perodua', 'Peugeot', 'Polestar', 'Pontiac', 'Porsche', 'Proton', 'Ram',
+            'Range Rover', 'Renault', 'Rimac', 'Rivian', 'Rolls-Royce', 'Rover',
+            'Saab', 'Scion', 'Seat', 'Seres', 'Skoda', 'smart', 'SsangYong', 'Subaru',
+            'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Triumph', 'TVR', 'Vauxhall',
+            'VinFast', 'Volkswagen', 'Volvo', 'Wuling', 'Xpeng', 'Zeekr', 'Lain-lain'
+        ];
+
+        function setupBrandSearchableCombobox() {
+            const searchInput = document.getElementById('inputBrandSearch');
+            const select = document.getElementById('inputBrand');
+            if (!select) return;
+
+            const uniqueBrands = Array.from(new Set([...MALAYSIA_POPULAR_BRANDS, ...MALAYSIA_ALL_BRANDS])).sort();
+
+            function populateOptions(filterText = '') {
+                const currentVal = select.value;
+                const q = filterText.trim().toLowerCase();
+                select.innerHTML = '<option value="" selected>Pilih Pengeluar</option>';
+
+                // Group 1: Popular Brands in Malaysia
+                const popular = MALAYSIA_POPULAR_BRANDS.filter(b => !q || b.toLowerCase().includes(q));
+                if (popular.length > 0) {
+                    const optgroupPop = document.createElement('optgroup');
+                    optgroupPop.label = '⭐ Pengeluar Utama (Malaysia)';
+                    popular.forEach(b => {
+                        const opt = document.createElement('option');
+                        opt.value = b;
+                        opt.textContent = b;
+                        optgroupPop.appendChild(opt);
+                    });
+                    select.appendChild(optgroupPop);
+                }
+
+                // Group 2: All Other Brands
+                const others = MALAYSIA_ALL_BRANDS.filter(b => !MALAYSIA_POPULAR_BRANDS.includes(b) && (!q || b.toLowerCase().includes(q)));
+                if (others.length > 0) {
+                    const optgroupAll = document.createElement('optgroup');
+                    optgroupAll.label = 'Semua Pengeluar Lain (A-Z)';
+                    others.forEach(b => {
+                        const opt = document.createElement('option');
+                        opt.value = b;
+                        opt.textContent = b;
+                        optgroupAll.appendChild(opt);
+                    });
+                    select.appendChild(optgroupAll);
+                }
+
+                // If user typed a custom brand not in the list
+                if (q && !uniqueBrands.some(b => b.toLowerCase() === q)) {
+                    const optCustom = document.createElement('option');
+                    optCustom.value = filterText.trim();
+                    optCustom.textContent = `+ Guna "${filterText.trim()}"`;
+                    select.appendChild(optCustom);
+                }
+
+                // Restore or match value
+                if (currentVal && Array.from(select.options).some(o => o.value.toLowerCase() === currentVal.toLowerCase())) {
+                    select.value = currentVal;
+                } else if (q) {
+                    const firstMatch = Array.from(select.options).find(o => o.value && o.value.toLowerCase().includes(q));
+                    if (firstMatch) {
+                        select.value = firstMatch.value;
+                        select.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                }
             }
 
-            if (/ev|electric|bev|blade|zero\s*emission|atto|seal|taycan|model\s*[3ysx]/i.test(combined)) {
-                fuel = 'Electric';
-                daily = Math.max(daily, 420);
-                engine = 'Motor Elektrik AC Segerak (EV)';
-            } else if (/hybrid|phev|hev|e:hev|e-power/i.test(combined)) {
-                fuel = 'Hybrid';
-                daily = Math.max(daily, 290);
-                engine = '1.8L - 2.0L Enjin Pintar + Motor Elektrik HEV';
-            } else if (/diesel|crdi|d-4d/i.test(combined)) {
-                fuel = 'Diesel';
+            populateOptions();
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    populateOptions(e.target.value);
+                });
             }
 
-            if (/manual|\bmt\b/i.test(combined)) {
-                transmission = 'Manual';
-            }
+            select.addEventListener('change', () => {
+                if (searchInput && select.value) {
+                    searchInput.value = select.value;
+                }
+            });
 
-            return {
-                category,
-                fuel,
-                transmission,
-                seats,
-                engine: sanitizeEngineString(engine),
-                daily,
-                weekly: Math.round(daily * 6),
-                monthly: Math.round(daily * 20)
-            };
+            if (select.value && searchInput) {
+                searchInput.value = select.value;
+            }
         }
 
         async function detectCarSpecsWithAI() {
@@ -817,10 +850,10 @@ Return ONLY a valid, raw JSON object (strictly NO markdown, NO backticks, NO exp
   "monthly": 9800
 }
 Rules:
-1. "category" MUST be one of: "Sedan", "Coupe", "SUV", "Hatchback", "MPV", "Pickup", "Van", "Crossover". Note: Mercedes-Benz CLS is strictly a "Coupe" (4 seats).
+1. "category" MUST be one of: "Sedan", "Coupe", "SUV", "Hatchback", "MPV", "Pickup", "Van", "Crossover".
 2. "fuel" MUST be one of: "Petrol", "Diesel", "Hybrid", "Electric".
 3. "transmission" MUST be one of: "Automatic", "Manual".
-4. "seats" MUST be a string with the number of seats (e.g. "4", "5", "7").
+4. "seats" MUST be a string with the number of seats (e.g. "4", "5", "7", "8", "11").
 5. "engine" MUST be clean without power or torque metrics (DO NOT include PS, HP, kW, or Nm).
 6. "daily", "weekly", "monthly" MUST be realistic integer rental rates in Malaysian Ringgit (MYR).`;
 
@@ -841,13 +874,24 @@ Rules:
                         const cleanJson = text.replace(/```json|```/gi, '').trim();
                         const parsed = JSON.parse(cleanJson);
                         if (parsed && parsed.category) return sanitizeSpecs(parsed);
+                    } else {
+                        const errData = await res.json().catch(() => null);
+                        const msg = errData?.error?.message || 'Ralat sambungan API Google Gemini';
+                        console.warn('[WeDRIVE AI] Gemini API returned error status:', res.status, msg);
+                        showAiToast(`Ralat AI: Kunci API tidak sah atau kuota habis. Sila kemas kini di Peti Kunci AI.`, 'warning');
+                        return null;
                     }
                 } catch (e) {
-                    console.warn('[WeDRIVE AI] Gemini request failed, using intelligent generative fallback:', e);
+                    console.warn('[WeDRIVE AI] Gemini network error:', e);
+                    showAiToast('Ralat sambungan ke pelayan AI. Sila periksa sambungan internet.', 'warning');
+                    return null;
                 }
+            } else {
+                showAiToast('Kunci API Google Gemini belum ditetapkan. Sila tetapkannya di Peti Kunci AI.', 'warning');
+                return null;
             }
 
-            return generateDynamicSpecs(brand, model, variant);
+            return null; // Sifar data olok-olok / heuristic fallback!
         }
 
         let isGeneratingSpec = false;
@@ -1035,6 +1079,14 @@ Rules:
             };
             try {
                 localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+                if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
+                    window.WeDriveAPI.saveCarDraft(draft).then(res => {
+                        if (res && res.data && res.data.id) {
+                            draft.supabase_draft_id = res.data.id;
+                            try { localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft)); } catch(_) {}
+                        }
+                    }).catch(err => console.warn('[WeDRIVE] Supabase draft save error:', err));
+                }
             } catch(e) {}
         }
 
@@ -1112,8 +1164,14 @@ Rules:
             }
         });
 
+        // Inisialisasi Searchable Combobox Pengeluar
+        setupBrandSearchableCombobox();
+
         // Restore saved draft if user had previously entered details
         restoreStep1Draft();
+        if (document.getElementById('inputBrand')) {
+            document.getElementById('inputBrand').dispatchEvent(new Event('change', { bubbles: true }));
+        }
     </script>
 
     <!-- Real Admin Navigation & System Scripts -->

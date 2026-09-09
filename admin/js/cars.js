@@ -116,8 +116,9 @@ function renderCarCards(car) {
       ? { text: '#10B981', dot: '#10B981', label: 'Tersedia' }
       : { text: '#0071E3', dot: '#0071E3', label: 'Sedang Disewa' };
 
-    const img0 = (c.images && c.images.length > 0) ? c.images[0] : null;
-    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+    const rawImg = (c.images && c.images.length > 0) ? c.images[0] : null;
+    const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
+    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
     const rateNum = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : '150';
     const lugText = (c.type === 'MPV' || (c.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((c.type === 'SUV' || (c.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((c.type === 'Sedan' || (c.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
 
@@ -188,8 +189,9 @@ function renderCarTable(car) {
       ? { bg: 'rgba(16, 185, 129, 0.12)', text: '#10B981', dot: '#10B981', label: 'Tersedia' }
       : { bg: 'rgba(0, 113, 227, 0.12)', text: '#0071E3', dot: '#0071E3', label: 'Sedang Disewa' };
     
-    const img0 = (car.images && car.images.length > 0) ? car.images[0] : null;
-    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+    const rawImg = (car.images && car.images.length > 0) ? car.images[0] : null;
+    const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
+    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
     const rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
 
     return `

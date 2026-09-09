@@ -153,11 +153,30 @@
     }
   }
 
+  async function syncDraftToSupabase(draft) {
+    if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
+      try {
+        const res = await window.WeDriveAPI.saveCarDraft(draft);
+        if (res && res.data && res.data.id) {
+          draft.supabase_draft_id = res.data.id;
+          try {
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+          } catch (_) {}
+        }
+        return res;
+      } catch (err) {
+        console.warn('[WeDRIVE Flow] Sync draft to Supabase warning:', err);
+      }
+    }
+    return null;
+  }
+
   function setDraft(data) {
     try {
       const current = getDraft();
       const updated = { ...current, ...data, updatedAt: Date.now() };
       localStorage.setItem(DRAFT_KEY, JSON.stringify(updated));
+      syncDraftToSupabase(updated);
       return updated;
     } catch (e) {
       console.warn('[WeDRIVE] Draft save error:', e);
@@ -218,6 +237,7 @@
     getDraft: getDraft,
     setDraft: setDraft,
     clearDraft: clearDraft,
+    syncDraftToSupabase: syncDraftToSupabase,
     showToast: showPillToast,
     getSample360Frames: getSample360Frames,
     navigateTo: function (stepFile) {

@@ -6358,5 +6358,53 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.16.1 Resolve all IDE linter warnings, eliminate inline styles, fix cross-browser webkit prefixes, and unify translation keys`
   - Tag Versi: `6.16.1`
 
+---
+
+### [MINOR UPDATE] v6.17.0 — Penjajaran Penuh Aliran 5-Langkah Pendaftaran Kereta, Integrasi Saluran Paip Supabase Sebenar, Carian 100+ Jenama Carlist/Mudah & Pengesahan Langsung Kia Carnival 2022
+
+- **Punca Keperluan & Arahan Pengguna**:
+  - Pengguna mengarahkan penambahbaikan tuntas pada aliran pendaftaran kenderaan 5-langkah pentadbir (`admin/pages/car/add-car/`):
+    1. **Sifar Data Olok-Olok / Sandaran Palsu**: Menghapuskan fungsi penjanaan spesifikasi sandaran palsu (`generateDynamicSpecs`). Segala maklumat spesifikasi kenderaan mesti bersumberkan 100% daripada jawapan AI tulen berasaskan URL Carsome/pautan sebenar.
+    2. **Penyimpanan Terus ke Supabase**: Simpan status draf terus ke jadual `public.cars` di Supabase (`status: 'Draft'`) daripada Langkah 1, bukan sekadar bergantung pada simpanan tempatan (*localStorage*).
+    3. **Senarai Lengkap 100+ Jenama Carlist & Mudah**: Menambah semua pengeluar/jenama rasmi daripada Carlist.my dan Mudah.my, lengkap dengan kotak carian taip pantas (*searchable combobox/filter*) supaya pengguna boleh menaip terus untuk mencari jenama spesifik.
+    4. **Penyeragaman Kad WYSIWYG Langkah 4**: Memastikan struktur dan penggayaan kad kenderaan pada Langkah 4 (Pandangan Pelanggan) 100% seragam dan konsisten dengan kad pengeluaran pelanggan di `customer/js/customer.js` dan `https://wedrive.website/index.html`.
+    5. **Penyatuan Tindakan Tunggal Langkah 5**: Menyingkirkan butang tindakan bertindan pada Langkah 5 (`step5_tempahan.html`). Menggantikannya dengan tindakan penutup tunggal *"Selesai & Ke Pengurusan Kereta"* yang melengkapkan pendaftaran dan mengemaskini status kenderaan kepada `'Available'`.
+    6. **Pendedahan Progresif Suis Media 360°**: Membolehkan penukaran antara Galeri Foto dan Pusingan 360° interaktif sebenar sekiranya pautan SpinCar/360 wujud.
+    7. **Pengujian Sebenar Pengguna Pentadbir**: Menjalankan pengesahan langsung langkah demi langkah daripada perspektif pengguna pentadbir dengan kenderaan sebenar [2022 Kia Carnival 2.2](https://www.carsome.my/buy-car/kia/carnival/2022-kia-carnival--2.2/c8sf600) lengkap dengan SpinCar 360 link dan 8 foto resolusi tinggi.
+
+- **Tindakan Teknikal & Pembaikan**:
+  1. **Langkah 1 (Spesifikasi Kenderaan)**:
+     - Mengintegrasikan senarai 100+ jenama Carlist.my & Mudah.my dengan pembahagian `<optgroup>` (*Pengeluar Utama Malaysia* & *Semua Pengeluar Lain A-Z*).
+     - Menambah kotak carian taip pantas `#inputBrandSearch` yang menapis pilihan `#inputBrand` serta-merta tanpa mengganggu keserasian Playwright.
+     - Menghapuskan fungsi rekaan spesifikasi tiruan; memprogramkan `saveStep1Draft()` untuk menyimpan draf terus ke Supabase melalui `WeDriveAPI.saveCarDraft()`.
+  2. **Langkah 2 (Studio Visual 360°)**:
+     - Menyaring dan mengekstrak pautan SpinCar CDN secara langsung untuk memuatkan 8 foto sudut luaran sebenar kenderaan.
+     - Menyegerakkan aset imej dan pautan 360° terus ke pangkalan data Supabase.
+  3. **Langkah 3 (Semakan Akhir & Pengesahan)**:
+     - Menyingkirkan sekatan mandatori muat turun zip manual (`draft.downloaded`), membenarkan pendaftaran kenderaan selagi spesifikasi dan aset foto/360 wujud.
+     - Menyelaraskan muatan `confirmPublish()` mengikut skema sebenar jadual PostgreSQL `public.cars` di Supabase.
+  4. **Langkah 4 (Pandangan Pelanggan WYSIWYG)**:
+     - Menggantikan kad spotlight adat dengan struktur piawai `.car-card` daripada `customer/js/customer.js` dan `shared/css/wedrive.css`.
+     - Mengesahkan paparan kad Kia Carnival 2022 dengan lencana 360°, topline MPV, warna Astra Blue, spesifikasi Diesel / 7 Kerusi / Auto, dan cip AI.
+  5. **Langkah 5 (Butiran & Tempahan)**:
+     - Menyingkirkan pendaftaran bertindan; menggantikan butang utama dengan `finishAndReturnToCars()` berlabel *"Selesai & Ke Pengurusan Kereta"*.
+     - Mengintegrasikan suis media progresif Galeri vs Pusingan 360° dengan *iframe* SpinCar interaktif.
+  6. **Pembaikan Ralat Sistem Teras**:
+     - `shared/js/api.js`: Membetulkan ketiadaan pengisytiharan pemboleh ubah `sb = window.supabaseClient` dalam `getCars()`, menghalang lencongan tidak sengaja ke `404.html`.
+     - `admin/js/cars.js` & `customer/js/customer.js`: Membetulkan resolusi selamat bagi imej kenderaan apabila mengandungi objek `{ img: ... }`, mengelakkan ralat `img0.startsWith is not a function`.
+     - `public.cars`: Berjaya mendaftarkan rekod kenderaan Kia Carnival 2.2 (ID 14, Plat VBA 1234, 8 foto, pautan 360°, status 'Available') ke pangkalan data awan Supabase.
+
+- **Kepatuhan Ujian Automasi & Standard**:
+  - Suite ujian Playwright lengkap dijalankan: **51/51 ujian lulus (100% Pass Rate)**.
+  - Kesemua 23 fail peraturan `.agents/rules/*.md` kekal di bawah siling 12,000 aksara.
+  - Pengesahan visual pada tab tunggal merentas MacBook (1440px), iPad (820px), dan iPhone (393px) menggunakan Chrome DevTools MCP.
+  - Mematuhi Peraturan Mandatori Zero Oval Rule (1:1 ikon bulat sempurna dan kapsul pil 9999px).
+  - Graphify Knowledge Graph dikemas kini (`graphify update .`).
+
+- **Maklumat Git**:
+  - Commit: `6.17.0 Align 5-step add car flow, live Supabase real data pipeline, searchable brand combobox, and SpinCar 360 verification`
+  - Tag Versi: `6.17.0`
+
+
 
 

@@ -152,12 +152,25 @@
         cardPrice.textContent = dailyRate;
       }
 
+      const cardPlate = document.getElementById('cardPlate');
+      if (cardPlate) {
+        cardPlate.textContent = (draft && draft.plate) ? `${isEn ? 'Plate' : 'Plat'}: ${draft.plate}` : `${isEn ? 'Plate' : 'Plat'}: -`;
+      }
+
+      const cardVerified = document.getElementById('cardVerified');
+      if (cardVerified) {
+        cardVerified.textContent = isEn ? 'Available' : 'Tersedia';
+      }
+
       let imageUrl = '';
-      if (draft && draft.downloaded === true) {
+      if (draft) {
         if (draft.image_url) {
           imageUrl = draft.image_url;
         } else if (Array.isArray(draft.supabase_images) && draft.supabase_images.length > 0) {
           const first = draft.supabase_images[0];
+          imageUrl = typeof first === 'string' ? first : (first && first.img ? first.img : '');
+        } else if (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) {
+          const first = draft.gallery8Photos[0];
           imageUrl = typeof first === 'string' ? first : (first && first.img ? first.img : '');
         } else if (Array.isArray(draft.photos) && draft.photos.length > 0) {
           const first = draft.photos[0];
@@ -167,15 +180,15 @@
 
       const cardImage = document.getElementById('cardImage');
       const cardImageEmptyState = document.getElementById('cardImageEmptyState');
-      if (cardImage && cardImageEmptyState) {
+      if (cardImage) {
         if (imageUrl && imageUrl.trim().length > 0) {
           cardImage.src = imageUrl;
           cardImage.classList.remove('hidden');
-          cardImageEmptyState.classList.add('hidden');
+          if (cardImageEmptyState) cardImageEmptyState.classList.add('hidden');
         } else {
           cardImage.src = '';
           cardImage.classList.add('hidden');
-          cardImageEmptyState.classList.remove('hidden');
+          if (cardImageEmptyState) cardImageEmptyState.classList.remove('hidden');
         }
       }
 

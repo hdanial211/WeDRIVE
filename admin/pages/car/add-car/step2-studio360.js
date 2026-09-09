@@ -370,17 +370,31 @@
       const draft = raw ? JSON.parse(raw) : {};
       draft.photos = currentGalleryPhotos;
       draft.gallery8Photos = currentGallery8Photos;
+      draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
+        ? currentGallery8Photos
+        : currentGalleryPhotos.filter(p => p && p.img);
+      draft.downloaded = true;
       const firstValid = currentGalleryPhotos.find(p => p && p.img) || (currentGallery8Photos && currentGallery8Photos[0]);
       if (firstValid) {
-        draft.image_url = firstValid.img;
+        draft.image_url = typeof firstValid === 'string' ? firstValid : (firstValid.img || '');
       }
       if (cdnUrlInput && cdnUrlInput.value.trim()) {
         draft.cdnUrl         = cdnUrlInput.value.trim(); // raw input URL
         draft.cdnUrlExterior = currentCdnExteriorUrl;
         draft.cdnUrlInterior = currentCdnInteriorUrl;
         draft.has360         = has360Expanded;
+        draft.supabase_360   = currentCdnExteriorUrl;
       }
       localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+
+      if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
+        window.WeDriveAPI.saveCarDraft(draft).then(res => {
+          if (res && res.data && res.data.id) {
+            draft.supabase_draft_id = res.data.id;
+            try { localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft)); } catch(_) {}
+          }
+        }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error:', err));
+      }
     } catch (e) {
       console.warn('[WeDRIVE Studio] Draft save error:', e);
     }
@@ -616,6 +630,14 @@
               draft.has360 = has360Expanded;
             }
             localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+            if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
+              window.WeDriveAPI.saveCarDraft(draft).then(res => {
+                if (res && res.data && res.data.id) {
+                  draft.supabase_draft_id = res.data.id;
+                  try { localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft)); } catch(_) {}
+                }
+              }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error in handleSaveVisuals:', err));
+            }
           } catch (e) {
             console.warn('[WeDRIVE Studio] Save downloaded error:', e);
           }

@@ -119,13 +119,16 @@ window.WeDriveAPI = {
         } else {
             try {
                 var sb = window.supabaseClient;
-                var result = await sb.from('cars').select('*');
+                var result = await sb.from('cars').select('*').neq('status', 'Draft');
                 if (result.error) throw result.error;
-                var fetchedCars = result.data || [];
+                var fetchedCars = (result.data || []).filter(function(c) {
+                    return !c.status || c.status.toLowerCase() !== 'draft';
+                });
                 try {
                     var localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
                     if (Array.isArray(localCars) && localCars.length > 0) {
                         localCars.forEach(function(lc) {
+                            if (lc.status && lc.status.toLowerCase() === 'draft') return;
                             var exists = fetchedCars.some(function(c) {
                                 return (lc.id && c.id === lc.id) || (lc.plate && c.plate && lc.plate.toUpperCase() === c.plate.toUpperCase());
                             });
@@ -755,21 +758,28 @@ window.WeDriveAPI = {
      * Inserts into Supabase PostgreSQL cars table and updates local cache.
      */
     createCar: async function (carData) {
+        var dailyNum = parseFloat(carData.price || carData.dailyPrice || 0);
+        var rateStr = carData.rate || (dailyNum > 0 ? ('RM ' + dailyNum.toFixed(2) + '/hari') : 'RM 0.00/hari');
+        var transStr = carData.transmission || 'Automatic';
+        var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
+        
         var newRecord = {
-            name: carData.name,
-            brand: carData.brand || 'WeDRIVE',
-            plate: (carData.plate || '').toUpperCase(),
-            type: carData.type || 'Sedan',
-            color: carData.color || 'Putih',
-            year: parseInt(carData.year, 10) || 2024,
-            rate: carData.rate || 'RM 150/hari',
-            deposit: carData.deposit || 'RM 200',
-            seats: parseInt(carData.seats, 10) || 5,
-            transmission: carData.transmission || 'Automatic',
-            fuel: carData.fuel || 'Petrol',
-            engine: carData.engine || '2.0L Standard',
+            name: carData.name || 'Kenderaan Baharu',
+            plate: (carData.plate || '').toUpperCase() || null,
+            type: (carData.type || carData.category || 'sedan').toLowerCase(),
+            label: carData.label || carData.category || 'Sedan',
             status: carData.status || 'Available',
-            location: carData.location || 'Pusat Operasi Utama WeDRIVE (HQ Melaka)',
+            rate: rateStr,
+            price: dailyNum,
+            fuel: carData.fuel || 'Petrol',
+            transmission: transStr,
+            trans: carData.trans || shortTrans,
+            seats: parseInt(carData.seats, 10) || 5,
+            year: parseInt(carData.year, 10) || new Date().getFullYear(),
+            color: carData.color || 'Putih',
+            rating: typeof carData.rating === 'number' ? carData.rating : 5.0,
+            reviews: typeof carData.reviews === 'number' ? carData.reviews : 0,
+            ai: carData.ai || carData.engine || '2.0L Standard',
             has_360: Boolean(carData.has_360),
             exterior_360: carData.exterior_360 || null,
             interior_360: carData.interior_360 || null,
@@ -803,6 +813,111 @@ window.WeDriveAPI = {
                 return { data: newRecord, error: null };
             }
         }
+    },
+
+    /**
+     * Save or update a car draft in Supabase.
+     */
+    saveCarDraft: async function (draftData) {
+        var dailyNum = parseFloat(draftData.dailyPrice || draftData.price || 0);
+        var rateStr = draftData.rate || (dailyNum > 0 ? ('RM ' + dailyNum.toFixed(2) + '/hari') : 'RM 0.00/hari');
+        var transStr = draftData.transmission || 'Automatic';
+        var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
+
+        var record = {
+            name: draftData.name || [draftData.year, draftData.brand, draftData.model, draftData.variant].filter(Boolean).join(' ') || 'Draf Kenderaan Baharu',
+            plate: (draftData.plate || '').toUpperCase() || null,
+            type: (draftData.category || draftData.type || 'sedan').toLowerCase(),
+            label: draftData.category || draftData.type || 'Sedan',
+            status: 'Draft',
+            rate: rateStr,
+            price: dailyNum,
+            fuel: draftData.fuel || 'Petrol',
+            transmission: transStr,
+            trans: draftData.trans || shortTrans,
+            seats: parseInt(draftData.seats, 10) || 5,
+            year: parseInt(draftData.year, 10) || new Date().getFullYear(),
+            color: draftData.color || 'Putih',
+            rating: 5.0,
+            reviews: 0,
+            ai: draftData.engine || draftData.ai || 'Standard',
+            images: Array.isArray(draftData.images) ? draftData.images : (draftData.gallery8Photos || []),
+            has_360: Boolean(draftData.has_360 || draftData.has360),
+            exterior_360: draftData.exterior_360 || draftData.cdnUrlExterior || draftData.cdnUrl || null,
+            interior_360: draftData.interior_360 || draftData.cdnUrlInterior || null
+        };
+
+        var sb = window.supabaseClient;
+        if (sb && window.AppConfig && window.AppConfig.USE_REAL_DB) {
+            try {
+                if (draftData.supabase_draft_id && Number.isInteger(Number(draftData.supabase_draft_id))) {
+                    var updateRes = await sb.from('cars').update(record).eq('id', Number(draftData.supabase_draft_id)).select();
+                    if (!updateRes.error && updateRes.data && updateRes.data.length > 0) {
+                        return { data: updateRes.data[0], error: null };
+                    }
+                }
+                var insertRes = await sb.from('cars').insert([record]).select();
+                if (insertRes.error) throw insertRes.error;
+                return { data: insertRes.data ? insertRes.data[0] : record, error: null };
+            } catch (err) {
+                console.error('[WeDriveAPI] saveCarDraft Supabase error:', err);
+            }
+        }
+        return { data: record, error: null };
+    },
+
+    /**
+     * Publish an existing draft car or create a new active car.
+     */
+    publishCarDraft: async function (draftId, finalData) {
+        var dailyNum = parseFloat(finalData.dailyPrice || finalData.price || 0);
+        var rateStr = finalData.rate || (dailyNum > 0 ? ('RM ' + dailyNum.toFixed(2) + '/hari') : 'RM 0.00/hari');
+        var transStr = finalData.transmission || 'Automatic';
+        var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
+
+        var updatePayload = {
+            name: finalData.name || [finalData.year, finalData.brand, finalData.model, finalData.variant].filter(Boolean).join(' ') || 'Kenderaan Baharu',
+            plate: (finalData.plate || '').toUpperCase() || null,
+            type: (finalData.category || finalData.type || 'sedan').toLowerCase(),
+            label: finalData.category || finalData.type || 'Sedan',
+            status: 'Available',
+            rate: rateStr,
+            price: dailyNum,
+            fuel: finalData.fuel || 'Petrol',
+            transmission: transStr,
+            trans: finalData.trans || shortTrans,
+            seats: parseInt(finalData.seats, 10) || 5,
+            year: parseInt(finalData.year, 10) || new Date().getFullYear(),
+            color: finalData.color || 'Putih',
+            rating: 5.0,
+            reviews: 0,
+            ai: finalData.engine || finalData.ai || 'Standard',
+            images: Array.isArray(finalData.images) ? finalData.images : (finalData.gallery8Photos || []),
+            has_360: Boolean(finalData.has_360 || finalData.has360),
+            exterior_360: finalData.exterior_360 || finalData.cdnUrlExterior || finalData.cdnUrl || null,
+            interior_360: finalData.interior_360 || finalData.cdnUrlInterior || null
+        };
+
+        var sb = window.supabaseClient;
+        if (sb && window.AppConfig && window.AppConfig.USE_REAL_DB) {
+            try {
+                if (draftId && Number.isInteger(Number(draftId))) {
+                    var res = await sb.from('cars').update(updatePayload).eq('id', Number(draftId)).select();
+                    if (res.error) throw res.error;
+                    var pubCar = res.data ? res.data[0] : updatePayload;
+                    var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
+                    existingLocal.unshift(pubCar);
+                    localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
+                    return { data: pubCar, error: null };
+                } else {
+                    return await window.WeDriveAPI.createCar(updatePayload);
+                }
+            } catch (err) {
+                console.error('[WeDriveAPI] publishCarDraft error:', err);
+                return await window.WeDriveAPI.createCar(updatePayload);
+            }
+        }
+        return await window.WeDriveAPI.createCar(updatePayload);
     },
 
     /**

@@ -129,7 +129,7 @@
     <main class="main">
         <div id="navbar-placeholder" data-module="admin"></div>
         <div class="content">
-            <div class="space-y-lg relative">
+            <div class="space-y-lg relative pb-32">
 
                 <!-- Floating Stepper Capsule (5 Steps) -->
                 <div class="flex justify-center w-full mb-md">
@@ -185,42 +185,38 @@
 <div class="lg:col-span-8 flex flex-col gap-bento-gap">
 <!-- Interactive Visual Studio Card -->
 <div class="bg-surface-container rounded-[24px] border border-border-day overflow-hidden flex flex-col relative group">
-<!-- Glass Top Bar -->
-<div class="absolute top-0 left-0 w-full p-4 flex justify-between items-start z-10">
-<!-- Segmented Tabs -->
-<div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-full p-1 flex">
-<button class="px-4 py-1.5 rounded-full bg-white/10 text-on-surface font-caption text-caption shadow-sm backdrop-blur-lg">Galeri</button>
-<button class="px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors">Pusingan 360°</button>
-<button class="px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors">Panorama Dalaman</button>
-</div>
-<!-- Badges -->
-<div class="flex flex-col gap-2 items-end">
-<span class="px-3 py-1 bg-success/20 text-success border border-success/30 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1">
-<span class="w-1.5 h-1.5 rounded-full bg-success"></span> <span data-i18n="step4_card_available">Tersedia</span>
-</span>
-<span class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1 font-semibold">
-<span class="material-symbols-outlined text-[14px]">auto_awesome</span> <span data-i18n="step4_badge_new">Baharu</span>
-</span>
-<span id="step5Badge360" class="hidden px-3 py-1 bg-tertiary-container/20 text-tertiary border border-tertiary-container/30 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">360</span> 360° View
-</span>
-</div>
-</div>
-<!-- Hero Image / Empty Canvas -->
-<div id="step5HeroContainer" class="h-[400px] w-full relative bg-surface-container-lowest flex items-center justify-center">
-<!-- Empty state canvas -->
-<div id="step5EmptyHeroState" class="flex flex-col items-center justify-center p-8 text-center max-w-sm mx-auto z-10 transition-all duration-300">
-    <div class="circle-1-1 w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3 shadow-inner">
-        <span class="material-symbols-outlined text-[32px]">no_photography</span>
-    </div>
-    <h3 class="font-headline text-[16px] font-bold text-on-surface mb-1" data-i18n="step3_empty_showcase_title">Imej Visual Belum Dimuat Naik</h3>
-    <p class="font-footnote text-[13px] text-on-surface-variant leading-relaxed" data-i18n="step3_empty_showcase_desc">Sila kembali ke Langkah 2 untuk memuat naik foto kenderaan.</p>
-</div>
-<img id="step5HeroImage" class="hidden w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" src="" alt="Kenderaan WeDRIVE"/>
-<!-- Floating Nav Arrows (1:1 aspect) -->
-<button id="step5BtnPrev" type="button" class="hidden circle-1-1 absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_left</span></button>
-<button id="step5BtnNext" type="button" class="hidden circle-1-1 absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_right</span></button>
-</div>
+                <!-- Glass Top Bar -->
+                <div class="absolute top-0 left-0 w-full p-4 flex justify-between items-start z-10">
+                    <!-- Segmented Tabs (Progressive Disclosure - Apple HIG) -->
+                    <div id="step5MediaSwitcher" class="bg-black/40 backdrop-blur-md border border-white/10 rounded-full p-1 flex">
+                        <button id="tabGallery" type="button" onclick="switchStep5MediaTab('gallery')" class="px-4 py-1.5 rounded-full bg-white/10 text-on-surface font-caption text-caption shadow-sm backdrop-blur-lg cursor-pointer transition-all">Galeri</button>
+                        <button id="tab360" type="button" onclick="switchStep5MediaTab('360')" class="hidden px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors cursor-pointer flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[14px]">360</span>
+                            <span>Pusingan 360°</span>
+                        </button>
+                    </div>
+                    <!-- Badges: Zero AI gimmick, Single 360 indicator if present -->
+                    <div class="flex items-center gap-2">
+                        <span id="step5Badge360" class="hidden px-3 py-1 bg-tertiary-container/20 text-tertiary border border-tertiary-container/30 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">360</span> 360° View
+                        </span>
+                    </div>
+                </div>
+                <!-- Hero Image / Empty Canvas / 360 Iframe -->
+                <div id="step5HeroContainer" class="h-[400px] w-full relative bg-surface-container-lowest flex items-center justify-center overflow-hidden">
+                    <!-- Empty state canvas -->
+                    <div id="step5EmptyHeroState" class="flex flex-col items-center justify-center p-8 text-center max-w-sm mx-auto z-10 transition-all duration-300">
+                        <div class="circle-1-1 w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3 shadow-inner">
+                            <span class="material-symbols-outlined text-[32px]">no_photography</span>
+                        </div>
+                        <h3 class="font-headline text-[16px] font-bold text-on-surface mb-1" data-i18n="step3_empty_showcase_title">Imej Visual Belum Dimuat Naik</h3>
+                        <p class="font-footnote text-[13px] text-on-surface-variant leading-relaxed" data-i18n="step3_empty_showcase_desc">Sila kembali ke Langkah 2 untuk memuat naik foto kenderaan.</p>
+                    </div>
+                    <img id="step5HeroImage" class="hidden w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" src="" alt="Kenderaan WeDRIVE"/>
+                    <iframe id="step5360Iframe" class="hidden w-full h-full border-0 bg-black" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    <!-- Floating Nav Arrows (1:1 aspect) -->
+                    <button id="step5BtnPrev" type="button" class="hidden circle-1-1 absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_left</span></button>
+                </div>
 <!-- Thumbnail Strip -->
 <div id="step5ThumbnailStrip" class="hidden p-4 bg-surface-container flex gap-3 overflow-x-auto no-scrollbar border-t border-white/5">
 </div>
@@ -330,10 +326,10 @@ Pilih Tarikh Tempahan
 <span class="font-footnote text-footnote font-semibold" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
 </div>
 
-<!-- Final DB Submit Button -->
-<button id="btn-final-register" type="button" onclick="submitRegistration()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[15px] font-bold px-7 py-3 flex items-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer no-underline">
-<span class="text-white-force" data-i18n="step3_btn_publish">Daftar Kenderaan Baharu</span>
-<span class="material-symbols-outlined text-[20px] text-white-force">check_circle</span>
+<!-- Final Completion Button (Concludes Add Car Workflow) -->
+<button id="btn-final-register" type="button" onclick="finishAndReturnToCars()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[15px] font-bold px-7 py-3 flex items-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer no-underline">
+<span class="text-white-force" data-i18n="step5_btn_finish">Selesai &amp; Ke Pengurusan Kereta</span>
+<span class="material-symbols-outlined text-[20px] text-white-force">task_alt</span>
 </button>
 </footer>
 
@@ -405,6 +401,50 @@ function navigateStep5Photo(direction) {
   selectStep5Photo(currentStep5PhotoIndex);
 }
 
+function switchStep5MediaTab(tab) {
+  const tabGal = document.getElementById('tabGallery');
+  const tab360 = document.getElementById('tab360');
+  const heroImg = document.getElementById('step5HeroImage');
+  const iframe = document.getElementById('step5360Iframe');
+  const thumbStrip = document.getElementById('step5ThumbnailStrip');
+  const btnPrev = document.getElementById('step5BtnPrev');
+  const btnNext = document.getElementById('step5BtnNext');
+  const draftRaw = localStorage.getItem('wedrive_new_car_draft');
+  const draft = draftRaw ? JSON.parse(draftRaw) : {};
+
+  if (tab === '360') {
+    if (tabGal) tabGal.className = 'px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors cursor-pointer';
+    if (tab360) tab360.className = 'px-4 py-1.5 rounded-full bg-white/10 text-on-surface font-caption text-caption shadow-sm backdrop-blur-lg cursor-pointer flex items-center gap-1.5';
+    if (heroImg) heroImg.classList.add('hidden');
+    if (btnPrev) btnPrev.classList.add('hidden');
+    if (btnNext) btnNext.classList.add('hidden');
+    if (thumbStrip) thumbStrip.classList.add('hidden');
+    if (iframe) {
+      const url = draft.exterior_360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360;
+      if (url && (!iframe.src || iframe.src === 'about:blank' || !iframe.src.includes('spincar'))) {
+        iframe.src = url;
+      }
+      iframe.classList.remove('hidden');
+    }
+  } else {
+    if (tabGal) tabGal.className = 'px-4 py-1.5 rounded-full bg-white/10 text-on-surface font-caption text-caption shadow-sm backdrop-blur-lg cursor-pointer transition-all';
+    if (tab360) tab360.className = 'px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors cursor-pointer flex items-center gap-1.5';
+    if (iframe) {
+      iframe.classList.add('hidden');
+    }
+    if (heroImg && step5PhotosList.length > 0) {
+      heroImg.classList.remove('hidden');
+    }
+    if (thumbStrip && step5PhotosList.length > 0) {
+      thumbStrip.classList.remove('hidden');
+    }
+    if (step5PhotosList.length > 1) {
+      if (btnPrev) btnPrev.classList.remove('hidden');
+      if (btnNext) btnNext.classList.remove('hidden');
+    }
+  }
+}
+
 function hydrateStep5() {
   try {
     const draftRaw = localStorage.getItem('wedrive_new_car_draft');
@@ -470,16 +510,29 @@ function hydrateStep5() {
     const yearEl = document.getElementById('step5Year');
     if (yearEl) yearEl.textContent = draft.year || '-';
 
-    // Photos Hydration - Only show downloaded visual assets
+    // Photos Hydration
     step5PhotosList = [];
-    if (draft.downloaded === true) {
-      if (draft.supabase_images && Array.isArray(draft.supabase_images) && draft.supabase_images.length > 0) {
-        step5PhotosList = draft.supabase_images.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
-      } else if (draft.photos && Array.isArray(draft.photos) && draft.photos.length > 0) {
-        step5PhotosList = draft.photos.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
-      } else if (draft.image_url) {
-        step5PhotosList = [{ img: draft.image_url }];
-      }
+    if (draft.supabase_images && Array.isArray(draft.supabase_images) && draft.supabase_images.length > 0) {
+      step5PhotosList = draft.supabase_images.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
+    } else if (draft.gallery8Photos && Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) {
+      step5PhotosList = draft.gallery8Photos.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
+    } else if (draft.photos && Array.isArray(draft.photos) && draft.photos.length > 0) {
+      step5PhotosList = draft.photos.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
+    } else if (draft.image_url) {
+      step5PhotosList = [{ img: draft.image_url, title: 'Foto 1' }];
+    }
+
+    // 360 Progressive Switcher & Badge
+    const has360 = Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || draft.exterior_360);
+    const tab360 = document.getElementById('tab360');
+    const badge360 = document.getElementById('step5Badge360');
+    if (tab360) {
+      if (has360) tab360.classList.remove('hidden');
+      else tab360.classList.add('hidden');
+    }
+    if (badge360) {
+      if (has360) badge360.classList.remove('hidden');
+      else badge360.classList.add('hidden');
     }
 
     const heroImg = document.getElementById('step5HeroImage');
@@ -531,71 +584,64 @@ function hydrateStep5() {
   }
 }
 
-function submitRegistration() {
+async function finishAndReturnToCars() {
   const btn = document.getElementById('btn-final-register');
-  const sideBtn = document.getElementById('btnSideSubmitCar');
   if (btn) btn.disabled = true;
-  if (sideBtn) sideBtn.disabled = true;
 
   try {
     const draftRaw = localStorage.getItem('wedrive_new_car_draft');
     const draft = draftRaw ? JSON.parse(draftRaw) : {};
 
-    const carName = [draft.year, draft.brand, draft.model, draft.variant].filter(Boolean).join(' ') || 'Kenderaan Baharu';
-    const plate = draft.plate || ('WD ' + Math.floor(1000 + Math.random() * 9000));
-    const dailyRateNum = parseInt(draft.dailyPrice || draft.dailyRate, 10) || 0;
+    // If not published yet in Step 3, publish now
+    if (!draft.isPublished) {
+      const carName = `${draft.brand || ''} ${draft.model || ''} ${draft.variant || ''}`.trim() || 'Kenderaan Baharu';
+      const dailyPrice = parseFloat(draft.dailyPrice || draft.dailyRate) || 200;
+      const imagesList = (draft.supabase_images && draft.supabase_images.length > 0)
+        ? draft.supabase_images
+        : (draft.gallery8Photos && draft.gallery8Photos.length > 0)
+          ? draft.gallery8Photos
+          : (draft.photos && draft.photos.length > 0)
+            ? draft.photos.filter(p => p && p.img).map(p => p.img)
+            : (draft.image_url ? [draft.image_url] : []);
 
-    const newCar = {
-      name: carName,
-      plate: plate,
-      brand: draft.brand || '',
-      year: parseInt(draft.year, 10) || new Date().getFullYear(),
-      color: draft.color || '',
-      type: draft.category || 'Sedan',
-      seats: parseInt(draft.seats, 10) || 5,
-      transmission: draft.transmission || 'Automatik',
-      fuel: draft.fuel || 'Petrol',
-      engine: draft.engine || '',
-      rate: 'RM ' + dailyRateNum + '/hari',
-      deposit: 'RM ' + (draft.deposit || 300),
-      status: 'Available',
-      location: 'Pusat Operasi Utama WeDRIVE (HQ Cyberjaya)',
-      has_360: Boolean(draft.cdnUrl && draft.cdnUrl.trim().length > 0),
-      images: (draft.photos && draft.photos.length) ? draft.photos.map(p => p.img) : []
-    };
+      const newCar = {
+        name: carName,
+        plate: (draft.plate || '').toUpperCase() || null,
+        type: (draft.category || 'sedan').toLowerCase(),
+        label: draft.category || 'Sedan',
+        status: 'Available',
+        rate: `RM ${dailyPrice.toFixed(2)}/hari`,
+        price: dailyPrice,
+        fuel: draft.fuel || 'Petrol',
+        transmission: draft.transmission || 'Automatic',
+        trans: (draft.transmission || '').toLowerCase().includes('auto') ? 'Auto' : 'Manual',
+        seats: parseInt(draft.seats, 10) || 5,
+        year: parseInt(draft.year, 10) || new Date().getFullYear(),
+        color: draft.color || 'Putih',
+        rating: 5.0,
+        reviews: 0,
+        ai: draft.engine || '2.0L Standard',
+        images: imagesList,
+        has_360: Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360),
+        exterior_360: draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || null,
+        interior_360: draft.cdnUrlInterior || null
+      };
 
-    // Save car into system
-    if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
-      window.WeDriveAPI.createCar(newCar)
-        .then(() => finishAndRedirect())
-        .catch(() => saveFallbackAndRedirect(newCar));
-    } else {
-      saveFallbackAndRedirect(newCar);
+      if (window.WeDriveAPI && typeof window.WeDriveAPI.publishCarDraft === 'function' && draft.supabase_draft_id) {
+        await window.WeDriveAPI.publishCarDraft(draft.supabase_draft_id, newCar);
+      } else if (window.WeDriveAPI && typeof window.WeDriveAPI.createCar === 'function') {
+        await window.WeDriveAPI.createCar(newCar);
+      }
     }
   } catch (err) {
-    console.error('Submit error:', err);
-    saveFallbackAndRedirect({});
+    console.warn('[WeDRIVE Step 5] Completion error:', err);
   }
-}
 
-function saveFallbackAndRedirect(car) {
-  try {
-    const existing = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-    car.id = 'CR-' + Date.now();
-    existing.unshift(car);
-    localStorage.setItem('wedrive_cars', JSON.stringify(existing));
-  } catch (e) {
-    console.warn('Fallback save failed:', e);
-  }
-  finishAndRedirect();
-}
-
-function finishAndRedirect() {
-  showPillToast('✓ Kenderaan berjaya didaftarkan ke dalam inventori!');
+  showPillToast('✓ Pendaftaran kenderaan selesai!');
   localStorage.removeItem('wedrive_new_car_draft');
   setTimeout(() => {
     window.location.href = '../cars.html';
-  }, 1400);
+  }, 1200);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
