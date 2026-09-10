@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sunting Kenderaan - Langkah 3: Semakan &amp; Pengesahan | WeDRIVE</title>
+    <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
+    <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.18.0" />
+    <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0071e3",
+                        "night-bento": "#161618",
+                        "surface-container": "#eeeef0",
+                        "border-day": "rgba(0, 0, 0, 0.08)",
+                        "border-night": "rgba(255, 255, 255, 0.08)"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .apple-stepper-dock {
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        .diff-tag-changed {
+            background: rgba(0, 113, 227, 0.12);
+            color: #0071E3;
+            border: 1px solid rgba(0, 113, 227, 0.3);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
+
+    <div id="navbar-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <!-- 1. HEADER & BREADCRUMB -->
+        <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs font-semibold text-secondary mb-1">
+                    <a href="../cars.html" class="hover:text-primary transition-colors">Pengurusan Kereta</a>
+                    <span>/</span>
+                    <a id="linkCarDetailBreadcrumb" href="../cars.html" class="hover:text-primary transition-colors">Profil Kenderaan</a>
+                    <span>/</span>
+                    <span class="text-primary font-bold">Sunting Kenderaan</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-primary m-0 flex items-center gap-2">
+                        <span class="material-icons-round text-2xl text-emerald-500">verified</span>
+                        Semakan Akhir &amp; Pengesahan
+                    </h1>
+                    <span id="headerPlatePill" class="apple-plate-pill tabular-nums text-xs px-3 py-1 font-bold">-</span>
+                </div>
+                <p class="text-xs sm:text-sm text-secondary mt-1">Sila semak semula maklumat spesifikasi dan visual kenderaan sebelum mengemas kini pangkalan data WeDRIVE.</p>
+            </div>
+
+            <!-- STEPPER INDICATOR -->
+            <div class="bg-surface-2 border border-subtle rounded-full p-1.5 flex items-center gap-1 shadow-xs self-start md:self-auto">
+                <a id="step1Link" href="step1_spesifikasi.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
+                    <span>Spesifikasi</span>
+                </a>
+                <a id="step2Link" href="step2_studio360.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
+                    <span>Studio Visual</span>
+                </a>
+                <div class="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-white text-primary text-[10px] font-black flex items-center justify-center">3</span>
+                    <span>Pengesahan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. BENTO REVIEW GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- LEFT COLUMN: SPESIFIKASI KENDERAAN (7 COLUMNS) -->
+            <div class="lg:col-span-7 flex flex-col gap-6">
+                <div class="card p-6 sm:p-8 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center justify-between pb-4 mb-6 border-bottom-subtle">
+                        <div class="flex items-center gap-2">
+                            <span class="material-icons-round text-primary text-xl">fact_check</span>
+                            <h2 class="text-base font-bold text-primary m-0">Ringkasan Spesifikasi Terkini</h2>
+                        </div>
+                        <a id="linkEditSpec" href="step1_spesifikasi.html" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
+                            <span class="material-icons-round fs-14">edit</span> Sunting Spesifikasi
+                        </a>
+                    </div>
+
+                    <!-- 2-COL SPECS TABLE -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">Nama Model:</span>
+                            <span id="sumName" class="text-sm font-bold text-primary">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">No. Pendaftaran (Plat):</span>
+                            <span id="sumPlate" class="text-sm font-bold text-primary tabular-nums">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">Pengeluar / Jenama:</span>
+                            <span id="sumBrand" class="text-sm font-bold text-primary">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">Tahun &amp; Warna:</span>
+                            <span id="sumYearColor" class="text-sm font-bold text-primary">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">Kategori Kenderaan:</span>
+                            <span id="sumCategory" class="text-sm font-bold text-primary">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">Transmisi:</span>
+                            <span id="sumTransmission" class="text-sm font-bold text-primary">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">Punca Kuasa / Bahan Api:</span>
+                            <span id="sumFuel" class="text-sm font-bold text-primary">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1">
+                            <span class="text-secondary font-medium">Kapasiti Tempat Duduk:</span>
+                            <span id="sumSeats" class="text-sm font-bold text-primary">-</span>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex flex-col gap-1 sm:col-span-2">
+                            <span class="text-secondary font-medium">Enjin &amp; Kuasa Mekanikal:</span>
+                            <span id="sumEngine" class="text-sm font-bold text-primary">-</span>
+                        </div>
+                    </div>
+
+                    <!-- KADAR SEWA & STATUS HIGHLIGHT -->
+                    <div class="mt-6 pt-6 border-top-subtle grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-2xl bg-primary/5 border border-primary/20 flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-secondary font-semibold block">Kadar Sewa Harian</span>
+                                <span id="sumDailyRate" class="text-xl font-black text-primary tabular-nums">RM 0</span>
+                            </div>
+                            <span class="material-icons-round text-2xl text-primary">payments</span>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-surface-2 border-subtle flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-secondary font-semibold block">Status Operasi</span>
+                                <span id="sumStatus" class="text-sm font-bold text-primary flex items-center gap-1.5 mt-0.5">
+                                    <span class="circle-1-1 w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Tersedia
+                                </span>
+                            </div>
+                            <span class="material-icons-round text-2xl text-secondary">verified</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: VISUAL & 360 CARD PREVIEW (5 COLUMNS) -->
+            <div class="lg:col-span-5 flex flex-col gap-6">
+                <div class="card p-6 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center justify-between pb-4 mb-4 border-bottom-subtle">
+                        <div class="flex items-center gap-2">
+                            <span class="material-icons-round text-primary text-xl">photo_camera</span>
+                            <h2 class="text-base font-bold text-primary m-0">Aset Visual &amp; Studio</h2>
+                        </div>
+                        <a id="linkEditVisual" href="step2_studio360.html" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
+                            <span class="material-icons-round fs-14">edit</span> Sunting Visual
+                        </a>
+                    </div>
+
+                    <!-- SHOWCASE CANVAS -->
+                    <div class="apple-car-studio-canvas relative overflow-hidden bg-surface-3 rounded-2xl h-56 flex items-center justify-center mb-4">
+                        <!-- 360 View Badge (Dynamic Auto-Detect) -->
+                        <span id="finalBadge360" class="badge-360 badge-360-canvas hidden" title="360° Interactive Studio">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                                <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
+                                <polyline points="7.5 14.5 10 17.5 7 20"/>
+                            </svg>
+                            <span>360° View</span>
+                        </span>
+
+                        <img id="finalPreviewImg" src="../../../../shared/model/bezza.png" alt="Kenderaan" class="w-full h-full object-contain p-4" />
+                    </div>
+
+                    <!-- 360 STATUS REPORT -->
+                    <div class="p-3.5 rounded-xl bg-surface-2 border-subtle mb-4">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-bold text-primary flex items-center gap-1.5">
+                                <span id="final360Icon" class="material-icons-round text-purple-500 text-sm">360</span>
+                                Keupayaan Visual 360°:
+                            </span>
+                            <span id="final360StatusPill" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                                Dikesan
+                            </span>
+                        </div>
+                        <div id="final360UrlText" class="text-[11px] text-secondary font-mono truncate">-</div>
+                    </div>
+
+                    <!-- GALLERY THUMBNAILS PREVIEW -->
+                    <div>
+                        <span class="text-xs font-bold text-secondary uppercase tracking-wider block mb-2">Foto Galeri Sedia Ada</span>
+                        <div id="finalThumbnailsStrip" class="grid grid-cols-4 gap-2">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECURITY & AUDIT NOTICE -->
+                <div class="p-4 rounded-2xl bg-surface-2 border-subtle text-xs text-secondary leading-relaxed flex items-start gap-2.5">
+                    <span class="material-icons-round text-emerald-500 text-lg flex-shrink-0 mt-0.5">lock</span>
+                    <span>Tindakan kemas kini ini akan menyegerakkan maklumat kenderaan secara terus ke pangkalan data berpusat Supabase WeDRIVE tanpa menduplikasi rekod.</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
+            <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
+                <button type="button" id="btnBackToStep2" class="apple-btn-capsule-secondary" onclick="handleBackToStep2()">
+                    <span class="material-icons-round fs-15">arrow_back</span>
+                    <span>Kembali ke Studio Visual</span>
+                </button>
+
+                <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
+                    <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
+                    <span>Semakan Sedia</span>
+                </div>
+
+                <button type="button" id="btnConfirmUpdate" class="apple-btn-capsule-primary bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-2" onclick="handleConfirmUpdate()">
+                    <span class="material-icons-round fs-16">check_circle</span>
+                    <span>Kemas Kini Rekod Kenderaan</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- SCRIPTS -->
+    <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
+    <script src="../../../../shared/js/sidebar-loader.js?v=6.18.0"></script>
+    <script src="../../../../shared/js/main.js?v=5.2.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/api.js?v=5.2.3"></script>
+    <script src="edit-car.js?v=6.18.0"></script>
+
+    <script>
+        let currentCarId = null;
+        let activeDraft = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            currentCarId = window.WeDriveEditCar.getCarIdFromUrl();
+            if (!currentCarId) {
+                alert('Ralat: Tiada ID kenderaan.');
+                window.location.href = '../cars.html';
+                return;
+            }
+
+            document.getElementById('step1Link').href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('step2Link').href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('linkEditSpec').href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('linkEditVisual').href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
+
+            const breadcrumbLink = document.getElementById('linkCarDetailBreadcrumb');
+            if (breadcrumbLink) {
+                breadcrumbLink.href = `../car-detail/car-detail.html?id=${encodeURIComponent(currentCarId)}`;
+            }
+
+            activeDraft = await window.WeDriveEditCar.loadCarDraft(currentCarId);
+            if (!activeDraft) {
+                alert('Ralat: Kenderaan tidak dijumpai.');
+                window.location.href = '../cars.html';
+                return;
+            }
+
+            document.getElementById('headerPlatePill').textContent = activeDraft.plate || '-';
+
+            renderReviewData(activeDraft);
+        });
+
+        function renderReviewData(d) {
+            document.getElementById('sumName').textContent = d.name || '-';
+            document.getElementById('sumPlate').textContent = d.plate || '-';
+            document.getElementById('sumBrand').textContent = d.brand || '-';
+            document.getElementById('sumYearColor').textContent = `${d.year || 2024} • ${d.color || 'Putih'}`;
+            document.getElementById('sumCategory').textContent = d.category || 'Sedan';
+            document.getElementById('sumTransmission').textContent = d.transmission || 'Automatic';
+            document.getElementById('sumFuel').textContent = d.fuel || 'Petrol';
+            document.getElementById('sumSeats').textContent = `${d.seats || 5} Tempat Duduk`;
+            document.getElementById('sumEngine').textContent = d.engine || '-';
+            document.getElementById('sumDailyRate').textContent = `RM ${Math.round(d.dailyPrice || 150)}/hari`;
+
+            // Status
+            const isAvail = (d.status === 'Available');
+            const isRented = (d.status === 'Rented');
+            const statusEl = document.getElementById('sumStatus');
+            if (statusEl) {
+                if (isAvail) {
+                    statusEl.innerHTML = '<span class="circle-1-1 w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Tersedia';
+                } else if (isRented) {
+                    statusEl.innerHTML = '<span class="circle-1-1 w-2.5 h-2.5 rounded-full bg-blue-500"></span> Sedang Disewa';
+                } else {
+                    statusEl.innerHTML = '<span class="circle-1-1 w-2.5 h-2.5 rounded-full bg-amber-500"></span> Penyelenggaraan';
+                }
+            }
+
+            // Visual preview
+            const photos = d.gallery8Photos || d.photos || [];
+            if (photos.length > 0) {
+                const first = photos[0];
+                const raw = typeof first === 'string' ? first : (first.img || '');
+                document.getElementById('finalPreviewImg').src = window.WeDriveEditCar.resolveCarImg(raw);
+            }
+
+            // 360 Auto-detection
+            const has360 = Boolean(d.has_360 || d.has360 || (d.cdnUrlExterior && d.cdnUrlExterior.length > 5) || (d.supabase_360 && d.supabase_360.length > 5));
+            const badge360 = document.getElementById('finalBadge360');
+            const status360Pill = document.getElementById('final360StatusPill');
+            const urlText = document.getElementById('final360UrlText');
+
+            if (has360) {
+                badge360.classList.remove('hidden');
+                status360Pill.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400';
+                status360Pill.textContent = 'Aktif & Dikesan';
+                urlText.textContent = d.cdnUrlExterior || d.supabase_360 || 'Pautan 360° Aktif';
+            } else {
+                badge360.classList.add('hidden');
+                status360Pill.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-2 text-secondary';
+                status360Pill.textContent = 'Tiada (Galeri Sahaja)';
+                urlText.textContent = 'Tiada pautan 360° dikonfigurasikan.';
+            }
+
+            // Thumbnails
+            const strip = document.getElementById('finalThumbnailsStrip');
+            if (strip && photos.length > 0) {
+                strip.innerHTML = photos.slice(0, 4).map((p, idx) => {
+                    const raw = typeof p === 'string' ? p : (p.img || '');
+                    const src = window.WeDriveEditCar.resolveCarImg(raw);
+                    return `<img src="${src}" alt="Foto ${idx + 1}" class="w-full h-12 rounded-lg object-cover border border-subtle" />`;
+                }).join('');
+            }
+        }
+
+        function handleBackToStep2() {
+            window.location.href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
+        }
+
+        async function handleConfirmUpdate() {
+            const btn = document.getElementById('btnConfirmUpdate');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-icons-round fs-16 animate-spin">sync</span><span>Mengemas kini...</span>';
+
+            try {
+                await window.WeDriveEditCar.updateCarRecord(currentCarId, activeDraft);
+                window.WeDriveEditCar.showUnifiedPillToast('✓ Rekod kenderaan berjaya dikemas kini!', 'success');
+
+                setTimeout(() => {
+                    window.location.href = `../car-detail/car-detail.html?id=${encodeURIComponent(currentCarId)}`;
+                }, 1200);
+            } catch (err) {
+                console.error('[WeDRIVE EditCar] Update failed:', err);
+                window.WeDriveEditCar.showUnifiedPillToast(`Ralat: ${err.message || 'Gagal mengemas kini kenderaan.'}`, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-icons-round fs-16">check_circle</span><span>Kemas Kini Rekod Kenderaan</span>';
+            }
+        }
+    </script>
+</body>
+</html>

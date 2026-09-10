@@ -138,10 +138,19 @@ function renderCarCards(car) {
     const carType = (typeUpper === 'SUV' || typeUpper === 'MPV') 
       ? typeUpper 
       : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
+    const has360 = Boolean(c.has_360 || c.has360 || c.exterior_360 || c.supabase_360 || (Array.isArray(c.exterior_frames) && c.exterior_frames.length > 0));
 
     return `
     <div class="apple-car-showcase-card reveal-on-scroll" data-car-id="${c.id}" onclick="navigateToCarDetail('${c.id}', event)">
       <div class="apple-car-studio-canvas">
+        ${has360 ? `
+        <span class="badge-360 badge-360-canvas" title="360° Interactive Studio">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+            <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
+            <polyline points="7.5 14.5 10 17.5 7 20"/>
+          </svg>
+          <span>360° View</span>
+        </span>` : ''}
         <div class="glass-status-pill">
           <span class="live-pulse-dot" style="background:${sc.dot}"></span> ${sc.label}
         </div>
@@ -178,10 +187,7 @@ function renderCarCards(car) {
             <div class="apple-car-rate">RM ${rateNum} <span class="apple-car-rate-sub">/hari</span></div>
           </div>
           <div class="flex-center gap-8">
-            <button class="apple-btn-capsule-secondary" onclick="event.stopPropagation(); navigateToCarDetail('${c.id}')">
-              <span class="material-icons-round fs-14">info</span> Perincian
-            </button>
-            <button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); manageCar(${c.id})">
+            <button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); navigateToCarDetail('${c.id}')">
               <span class="material-icons-round fs-14">tune</span> Urus
             </button>
           </div>

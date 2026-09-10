@@ -38,7 +38,7 @@
       const dailyVal = rawDaily ? Number(rawDaily) : 0;
       const dailyRate = dailyVal > 0 ? `RM ${Math.round(dailyVal)}` : 'RM 0';
       const statusVal = (draft && draft.status) ? draft.status : 'available';
-      const has360 = (draft && (draft.has360 || (draft.cdnUrl && draft.cdnUrl.trim().length > 0)));
+      const has360 = Boolean(draft && (draft.has_360 || draft.has360 || (draft.cdnUrlExterior && draft.cdnUrlExterior.trim()) || (draft.cdnUrl && draft.cdnUrl.trim()) || (draft.supabase_360 && draft.supabase_360.trim()) || (draft.exterior_360 && draft.exterior_360.trim()) || (Array.isArray(draft.frames_360) && draft.frames_360.length > 0) || (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0)));
 
       const isEn = getLang() === 'en';
 

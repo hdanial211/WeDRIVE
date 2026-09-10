@@ -754,60 +754,16 @@ async function confirmQuickStatusChange() {
 }
 
 function editDetails() {
-  const modal = document.getElementById('edit-car-modal');
-  if (!modal || !activeCar) return;
-
-  document.getElementById('edit-name').value = activeCar.name || '';
-  document.getElementById('edit-plate').value = activeCar.plate || '';
-  document.getElementById('edit-type').value = (activeCar.type || 'sedan').toLowerCase();
-  document.getElementById('edit-fuel').value = activeCar.fuel || 'Petrol';
-  document.getElementById('edit-trans').value = activeCar.transmission || 'Auto';
-  document.getElementById('edit-seats').value = activeCar.seats || 5;
-  document.getElementById('edit-rate').value = parseInt(String(activeCar.rate || '').replace(/[^0-9]/g, '')) || activeCar.price || 250;
-  document.getElementById('edit-status').value = activeCar.status || 'Available';
-
-  modal.classList.remove('hidden');
-}
-
-function closeEditCarModal() {
-  const modal = document.getElementById('edit-car-modal');
-  if (modal) modal.classList.add('hidden');
-}
-
-async function saveCarEdit(e) {
-  e.preventDefault();
-  if (!activeCar) return;
-
-  activeCar.name = document.getElementById('edit-name').value.trim();
-  activeCar.plate = document.getElementById('edit-plate').value.trim();
-  activeCar.type = document.getElementById('edit-type').value;
-  activeCar.fuel = document.getElementById('edit-fuel').value;
-  activeCar.transmission = document.getElementById('edit-trans').value;
-  activeCar.seats = parseInt(document.getElementById('edit-seats').value);
-  activeCar.rate = `RM ${document.getElementById('edit-rate').value}/hari`;
-  activeCar.status = document.getElementById('edit-status').value;
-
-  // Persist to Supabase
-  if (window.supabase) {
-    try {
-      await window.supabase.from('cars').update({
-        name: activeCar.name,
-        plate: activeCar.plate,
-        type: activeCar.type,
-        fuel: activeCar.fuel,
-        transmission: activeCar.transmission,
-        seats: activeCar.seats,
-        rate: activeCar.rate,
-        status: activeCar.status
-      }).eq('id', activeCar.id);
-    } catch (err) {
-      console.warn('Failed to sync car update with Supabase:', err);
-    }
+  var targetId = selectedCarId || (activeCar ? activeCar.id : null);
+  if (!targetId) {
+    const params = new URLSearchParams(window.location.search);
+    targetId = params.get('id');
   }
-
-  loadCarProfile(activeCar);
-  renderFleetSelector();
-  closeEditCarModal();
+  if (targetId) {
+    window.location.href = `../edit-car/step1_spesifikasi.html?id=${encodeURIComponent(targetId)}`;
+  } else {
+    window.location.href = '../edit-car/step1_spesifikasi.html';
+  }
 }
 
 function viewInsurance() {

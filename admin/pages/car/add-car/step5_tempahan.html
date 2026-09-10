@@ -90,7 +90,7 @@
     }
   </script>
 </head>
-<body data-particles="6" data-cursor-glow class="antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300">
+<body data-particles="6" data-cursor-glow class="antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300 has-action-dock">
 
     <!-- Real Admin Navigation Sidebar -->
     <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-add"></div>
@@ -167,8 +167,12 @@
                     </div>
                     <!-- Badges: Zero AI gimmick, Single 360 indicator if present -->
                     <div class="flex items-center gap-2">
-                        <span id="step5Badge360" class="hidden px-3 py-1 bg-tertiary-container/20 text-tertiary border border-tertiary-container/30 rounded-full font-caption text-caption backdrop-blur-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">360</span> 360° View
+                        <span id="step5Badge360" class="badge-360 hidden">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                                <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
+                                <polyline points="7.5 14.5 10 17.5 7 20"/>
+                            </svg>
+                            <span>360° View</span>
                         </span>
                     </div>
                 </div>

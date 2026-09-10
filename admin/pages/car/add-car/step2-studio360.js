@@ -378,12 +378,15 @@
       if (firstValid) {
         draft.image_url = typeof firstValid === 'string' ? firstValid : (firstValid.img || '');
       }
-      if (cdnUrlInput && cdnUrlInput.value.trim()) {
-        draft.cdnUrl         = cdnUrlInput.value.trim(); // raw input URL
-        draft.cdnUrlExterior = currentCdnExteriorUrl;
-        draft.cdnUrlInterior = currentCdnInteriorUrl;
-        draft.has360         = has360Expanded;
-        draft.supabase_360   = currentCdnExteriorUrl;
+      const hasValid360 = Boolean(currentCdnExteriorUrl || (cdnUrlInput && cdnUrlInput.value.trim()));
+      draft.has360         = hasValid360;
+      draft.has_360        = hasValid360;
+      draft.supabase_360   = hasValid360 ? currentCdnExteriorUrl : null;
+      draft.exterior_360   = hasValid360 ? currentCdnExteriorUrl : null;
+      if (cdnUrlInput) {
+        draft.cdnUrl         = cdnUrlInput.value.trim();
+        draft.cdnUrlExterior = hasValid360 ? currentCdnExteriorUrl : '';
+        draft.cdnUrlInterior = hasValid360 ? currentCdnInteriorUrl : '';
       }
       localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
 

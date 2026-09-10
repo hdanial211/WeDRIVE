@@ -6762,11 +6762,53 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.8 Remove car-detail from sidebar and enable universal card click navigation`
   - Tag Versi: `6.17.8`
 
+---
 
+### [MINOR UPDATE] v6.18.0 — Modul Stepper Kemas Kini Kenderaan (Edit Car Stepper), Pengesanan Dinamik Lencana 360° (Zero Hardcoding), & Penyeragaman Butang Tindakan Tunggal "Urus" (Modular Edit Car Stepper, Dynamic 360 Badge & Single Action Button)
 
+- **Latar Belakang & Arahan Pengguna**:
+  1. Pengguna meminta halaman modular bertahap seperti pendaftaran kereta untuk tujuan kemas kini rekod kenderaan sedia ada dan memansuhkan popup modal lama:
+     > *"boleh x buatkan page macam add car page tapi versi untuk update ...sebab saya rasa dh x relavent untuk popup display untuk update atau edit"*
+  2. Pengguna menetapkan bahawa simbol/lencana 360° View WAJIB dikesan secara automatik (auto-detect) apabila kenderaan mempunyai data 360° tanpa sebarang hardcoding:
+     > *"symbol ni muncul pada card apabila diisi dengan 360view automatic detect ...xnak ada hardcord...dekat add car tu bila ada 360view baru muncul n automatic sendiri"*
+  3. Pengguna mengarahkan penyingkiran butang pendua *Perincian* pada kad kenderaan dan mengekalkan satu butang tindakan tunggal *Urus*:
+     > *"urus = perincian ...so buang perincian tu"*
+  4. Melalui sesi temu duga `ask_question`, pengguna mengesahkan pilihan reka bentuk: **Aliran Pelbagai Langkah (Multi-Step Stepper ala Add Car: Langkah 1 Spesifikasi → Langkah 2 Studio Visual → Langkah 3 Pengesahan)**.
 
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Modul Modular Baharu Kemas Kini Kenderaan ([`admin/pages/car/edit-car/`](admin/pages/car/edit-car/))**:
+     - `index.html`: Titik masuk pintar yang melencongkan permintaan ke `step1_spesifikasi.html?id=[id]`.
+     - `edit-car.js`: Pengurus kitaran draf sesi (`sessionStorage`) dan penyegerakan atomik ke jadual `cars` Supabase PostgreSQL mengikut skema sebenar. Menyediakan normalisasi imej kenderaan (`resolveCarImg`), pembersihan laluan DB (`cleanImgForDb`), notifikasi kapsul tunggal Apple HIG (`showUnifiedPillToast`), dan pembacaan data awal (pre-filling) yang tepat.
+     - `step1_spesifikasi.html`: Borang pengisian semula Maklumat Asas, Powertrain & Enjin, Kadar Sewa Harian, dan Status Operasi dengan kad pratonton langsung (live Bento preview) bersepadu lencana 360° dinamik.
+     - `step2_studio360.html`: Pengurusan Visual & Galeri Foto. Menyediakan input URL/CDN 360° dengan pengesanan automatik dinamik serta-merta (live auto-detection), butang padam pantas (`btnClear360`), dan pratonton pentas galeri interaktif.
+     - `step3_pengesahan.html`: Semakan komprehensif perbandingan spesifikasi kemas kini dengan nilai asal, pratonton visual, laporan status 360°, dan butang muktamad `Kemas Kini Rekod Kenderaan` yang mengemas kini pangkalan data Supabase secara langsung tanpa penduaan.
+  2. **Pengesanan Dinamik Lencana 360° (Strict Zero Hardcoding)**:
+     - Mengemas kini lencana `.badge-360`, `.apple-360-badge`, dan `.badge-360-canvas` dalam `shared/css/wedrive.css` mengikut reka bentuk rujukan pengguna: latar ungu lavendar lembut (`#9333EA` / `#C084FC`), ikon SVG panah melengkung orbit (orbit curved arrow), dan kapsul simetri `border-radius: 9999px`.
+     - Melaksanakan logik semakan dinamik `c.has_360 || c.has360 || c.exterior_360 || c.supabase_360` merentas `cars.js`, `available-cars.html`, `rented-cars.html`, `add-car/`, dan `edit-car/`. Lencana muncul secara automatik hanya apabila data 360 wujud, dan hilang serta-merta apabila tiada.
+  3. **Penyeragaman Butang Tindakan Tunggal "Urus" (Strict Zero Duplicate Actions)**:
+     - Membuang sepenuhnya butang pendua *Perincian* daripada semua kad pameran kenderaan (`cars.html`, `available-cars.html`, `rented-cars.html`).
+     - Setiap kad kini memaparkan tepat SATU butang kapsul rasmi iaitu `[tune] Urus` (`apple-btn-capsule-primary`) di bahagian bawah kanan kad, mengekalkan estetika minimalis Apple HIG dan sifar kesesakan visual.
+  4. **Pembersihan Hab Profil Kenderaan ([`car-detail.html`](admin/pages/car/car-detail/car-detail.html) & [`car-detail.js`](admin/js/car-detail.js))**:
+     - Memadamkan keseluruhan markup popup modal lapuk (`#edit-car-modal`).
+     - Menggantikan butang sunting dengan butang kapsul biru premium `[edit] Sunting Kenderaan` yang melencongkan pengguna terus ke `../edit-car/step1_spesifikasi.html?id=[id]`.
+  5. **Ergonomik Dok Tindakan & Pelarasan Responsif 3-Peranti Apple ([`shared/css/wedrive.css`](shared/css/wedrive.css))**:
+     - Menyelaraskan kelas `has-action-dock` dan `body:has(.apple-stepper-dock)` supaya butang suis bar sisi (hamburger menu) dan butang terapung Pembantu AI terangkat secara dinamik pada peranti tablet iPad (`bottom: 108px/112px`) dan telefon iPhone (`bottom: 112px`, bulatan 1:1 sempurna `48x48px`) tanpa menindih sebarang butang pada dok tindakan bawah.
 
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Ujian Automasi Playwright CLI**:
+    - `tests/e2e/19_edit_car_stepper.spec.js`: 5/5 Ujian Lulus (**100% Pass Rate**).
+    - `tests/e2e/17_add_car_stepper_and_carlist.spec.js`: 5/5 Ujian Lulus (**100% Pass Rate**).
+    - `tests/e2e/18_modular_add_car_flow.spec.js`: 2/2 Ujian Lulus (**100% Pass Rate**).
+  - **Pemeriksaan DevTools MCP Tab Tunggal (`pageId: 2`)**:
+    - `cars.html`: Butang *Perincian* berjaya dihapuskan sepenuhnya; semua kad kini memaparkan butang tunggal `Urus`. Lencana `360° View` dikesan secara dinamik (cth: BMW 320i, Mercedes GLA250, VW Golf GTI memaparkan lencana ungu, manakala Ford Ranger Raptor tidak memaparkannya).
+    - `car-detail.html?id=1`: Menekan butang kapsul `Sunting Kenderaan` melencongkan pengguna ke `step1_spesifikasi.html?id=1`.
+    - `edit-car/step1_spesifikasi.html?id=1`: Memuatkan spesifikasi BMW 320i sedia ada secara tepat dan kad pratonton langsung memaparkan imej kenderaan serta lencana 360°.
+    - `edit-car/step2_studio360.html?id=1`: Galeri foto dan medan CDN 360 memuatkan data sebenar. Ujian padam 360 menyembunyikan lencana secara dinamik, manakala pengisian semula memaparkannya kembali secara langsung.
+    - `edit-car/step3_pengesahan.html?id=1`: Ringkasan perbandingan lengkap dan pengesanan 360 aktif. Menekan `Kemas Kini Rekod Kenderaan` berjaya mengemas kini rekod di Supabase dan melencongkan pelayar kembali ke `car-detail.html?id=1`.
+    - **Spektrum 3-Peranti Apple**: MacBook (1440px), iPad (820px), dan iPhone (393px) disahkan memenuhi Prinsip Sifar Bujur (Zero Oval Rule) dengan nisbah 1:1 sempurna pada butang ikon dan jarak dok yang selamat tanpa pertindihan elemen.
+  - **Audit Had Aksara 12,000**: Kesemua 23 fail `.agents/rules/*.md` disahkan <= 12,000 aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
 
-
-
-
+- **Maklumat Git**:
+  - Commit: `6.18.0 Add modular edit car stepper, auto-detect 360 view badge, and unify single Urus action button`
+  - Tag Versi: `6.18.0`

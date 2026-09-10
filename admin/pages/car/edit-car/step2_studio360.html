@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sunting Kenderaan - Langkah 2: Studio Visual 360° &amp; Galeri | WeDRIVE</title>
+    <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
+    <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.18.0" />
+    <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0071e3",
+                        "night-bento": "#161618",
+                        "surface-container": "#eeeef0",
+                        "border-day": "rgba(0, 0, 0, 0.08)",
+                        "border-night": "rgba(255, 255, 255, 0.08)"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .apple-stepper-dock {
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        .canvas-stage-wrapper {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #0f1015;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .photo-thumb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+        }
+        .photo-thumb-item {
+            position: relative;
+            height: 80px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .photo-thumb-item.active {
+            border-color: #0071E3;
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
+
+    <div id="navbar-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <!-- 1. HEADER & BREADCRUMB -->
+        <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs font-semibold text-secondary mb-1">
+                    <a href="../cars.html" class="hover:text-primary transition-colors">Pengurusan Kereta</a>
+                    <span>/</span>
+                    <a id="linkCarDetailBreadcrumb" href="../cars.html" class="hover:text-primary transition-colors">Profil Kenderaan</a>
+                    <span>/</span>
+                    <span class="text-primary font-bold">Sunting Kenderaan</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-primary m-0 flex items-center gap-2">
+                        <span class="material-icons-round text-2xl">photo_camera</span>
+                        Studio Visual 360° &amp; Galeri Foto
+                    </h1>
+                    <span id="headerPlatePill" class="apple-plate-pill tabular-nums text-xs px-3 py-1 font-bold">-</span>
+                </div>
+                <p class="text-xs sm:text-sm text-secondary mt-1">Konfigurasikan visual galeri dan pautan 360° interaktif. Sistem akan mengesan pautan 360° secara automatik.</p>
+            </div>
+
+            <!-- STEPPER INDICATOR -->
+            <div class="bg-surface-2 border border-subtle rounded-full p-1.5 flex items-center gap-1 shadow-xs self-start md:self-auto">
+                <a id="step1Link" href="step1_spesifikasi.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
+                    <span>Spesifikasi</span>
+                </a>
+                <div class="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-white text-primary text-[10px] font-black flex items-center justify-center">2</span>
+                    <span>Studio Visual</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-surface-3 text-secondary text-[10px] font-black flex items-center justify-center">3</span>
+                    <span>Pengesahan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. STUDIO VIEWPORT BENTO SHOWCASE -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- LEFT COLUMN: STUDIO CANVAS & MEDIA SWITCHER (7 COLUMNS) -->
+            <div class="lg:col-span-7 flex flex-col gap-5">
+                <div class="card p-5 sm:p-6 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center justify-between pb-3 mb-4 border-bottom-subtle">
+                        <!-- PROGRESSIVE MEDIA SWITCHER -->
+                        <div class="bg-surface-2 border border-subtle rounded-full p-1 flex items-center gap-1">
+                            <button type="button" id="tabGallery" onclick="switchVisualMode('gallery')" class="px-4 py-1.5 rounded-full bg-surface-1 text-primary text-xs font-bold shadow-xs cursor-pointer transition-all">
+                                <span class="material-icons-round fs-14 mr-1">photo_library</span> Galeri
+                            </button>
+                            <button type="button" id="tab360" onclick="switchVisualMode('360')" class="px-4 py-1.5 rounded-full text-secondary text-xs font-bold cursor-pointer transition-all hover:text-primary flex items-center">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                                    <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
+                                    <polyline points="7.5 14.5 10 17.5 7 20"/>
+                                </svg>
+                                <span>Pusingan 360°</span>
+                            </button>
+                        </div>
+
+                        <!-- 360 AUTO-DETECT STATUS PILL -->
+                        <div id="badge360Indicator">
+                            <span class="badge-360" id="studioBadge360">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                                    <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
+                                    <polyline points="7.5 14.5 10 17.5 7 20"/>
+                                </svg>
+                                <span>360° View</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- STUDIO CANVAS STAGE -->
+                    <div class="canvas-stage-wrapper" id="canvasContainer">
+                        <!-- GALLERY STAGE -->
+                        <div id="stageGallery" class="w-full h-full flex items-center justify-center relative">
+                            <img id="mainGalleryImg" src="../../../../shared/model/bezza.png" alt="Paparan Galeri" class="max-w-full max-h-full object-contain select-none transition-all duration-300" />
+                            <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[11px] text-white font-medium">
+                                <span id="galleryIndexText">Foto 1 daripada 1</span>
+                            </div>
+                        </div>
+
+                        <!-- 360 VIEWER STAGE (IFRAME / WEBGL) -->
+                        <div id="stage360" class="w-full h-full hidden relative flex items-center justify-center">
+                            <iframe id="iframe360" class="w-full h-full border-0 rounded-2xl" src="" title="360 View"></iframe>
+                            <div id="empty360Message" class="flex flex-col items-center justify-center p-6 text-center text-secondary">
+                                <div class="circle-1-1 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+                                    <span class="material-icons-round text-2xl">sync</span>
+                                </div>
+                                <p class="text-sm font-bold text-primary mb-1">Tiada Pautan 360° Dikonfigurasikan</p>
+                                <p class="text-xs text-secondary max-w-sm">Tampal pautan URL CDN 360° di panel sebelah kanan untuk membolehkan pusingan interaktif 360°.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GALLERY THUMBNAIL STRIP -->
+                    <div class="mt-4 pt-4 border-top-subtle">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-secondary uppercase tracking-wider">Jalur Foto Galeri</span>
+                            <span class="text-xs text-secondary" id="totalPhotosCount">1 Foto</span>
+                        </div>
+                        <div class="photo-thumb-grid" id="thumbStrip">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: CONFIGURATION & AUTO-DETECT CONTROLS (5 COLUMNS) -->
+            <div class="lg:col-span-5 flex flex-col gap-5">
+                
+                <!-- BENTO CARD: 360° CDN AUTO-DETECTION CONFIGURATION -->
+                <div class="card p-6 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center justify-between pb-3 mb-4 border-bottom-subtle">
+                        <div class="flex items-center gap-2">
+                            <span class="material-icons-round text-primary text-xl">auto_awesome</span>
+                            <h2 class="text-base font-bold text-primary m-0">Pautan Visual 360°</h2>
+                        </div>
+                        <span id="autoDetectBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-surface-2 text-secondary">
+                            Pengesanan Automatik
+                        </span>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputExteriorCdnUrl">
+                                CDN / URL Viewer 360° Luaran
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary material-icons-round fs-16">link</span>
+                                <input type="text" id="inputExteriorCdnUrl" class="w-full pl-10 pr-10 py-3 rounded-xl bg-surface-2 border-subtle text-xs text-primary font-mono focus:border-primary outline-none transition-all" placeholder="https://cdn.wedrive.my/360/bmw-320i/ atau Sedan/2023 BMW... atau https://my.sirv.com/..." />
+                                <button type="button" id="btnClear360" onclick="handleClear360()" class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-error transition-colors" title="Padam Pautan 360°">
+                                    <span class="material-icons-round fs-16">cancel</span>
+                                </button>
+                            </div>
+                            <p class="text-[11px] text-secondary mt-1.5 leading-relaxed">
+                                💡 <strong>Auto-Detect:</strong> Sebaik sahaja URL sah diisi, lencana ungu <span class="badge-360 text-[10px] py-0.5 px-2">360° View</span> akan muncul secara automatik pada kad dan profil kenderaan. Jika dikosongkan, lencana tersebut akan hilang secara automatik (Sifar Hardcoding).
+                            </p>
+                        </div>
+
+                        <!-- Live Status Preview -->
+                        <div class="p-3.5 rounded-xl bg-surface-2 border-subtle flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <span id="status360Dot" class="circle-1-1 w-3 h-3 rounded-full bg-slate-400"></span>
+                                <div>
+                                    <div id="status360Title" class="text-xs font-bold text-primary">Status 360°: Tidak Dikesan</div>
+                                    <div id="status360Desc" class="text-[11px] text-secondary">Kenderaan akan dipaparkan dengan mod galeri foto sahaja.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BENTO CARD: TAMBAH FOTO GALERI -->
+                <div class="card p-6 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center gap-2 pb-3 mb-4 border-bottom-subtle">
+                        <span class="material-icons-round text-primary text-xl">add_photo_alternate</span>
+                        <h2 class="text-base font-bold text-primary m-0">Tambah Foto Galeri Baru</h2>
+                    </div>
+
+                    <div class="flex flex-col gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputNewPhotoUrl">
+                                Pautkan URL Imej / Muat Naik
+                            </label>
+                            <div class="flex gap-2">
+                                <input type="url" id="inputNewPhotoUrl" class="flex-1 px-4 py-2.5 rounded-xl bg-surface-2 border-subtle text-xs text-primary focus:border-primary outline-none transition-all" placeholder="https://images.unsplash.com/... atau URL gambar" />
+                                <button type="button" onclick="handleAddPhotoUrl()" class="apple-btn-capsule-primary text-xs px-4">
+                                    <span class="material-icons-round fs-14">add</span> Tambah
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Local File Upload input -->
+                        <div class="border-2 border-dashed border-subtle rounded-xl p-4 text-center hover:border-primary transition-colors cursor-pointer" onclick="document.getElementById('inputPhotoFile').click()">
+                            <input type="file" id="inputPhotoFile" class="hidden" accept="image/*" multiple onchange="handleFileUpload(event)" />
+                            <span class="material-icons-round text-2xl text-secondary mb-1 block">cloud_upload</span>
+                            <span class="text-xs font-bold text-primary block">Klik untuk Muat Naik dari Peranti</span>
+                            <span class="text-[11px] text-secondary">Menyokong format JPG, PNG, WebP</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
+            <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
+                <button type="button" id="btnBackToStep1" class="apple-btn-capsule-secondary" onclick="handleBackToStep1()">
+                    <span class="material-icons-round fs-15">arrow_back</span>
+                    <span>Kembali ke Langkah 1</span>
+                </button>
+
+                <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
+                    <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
+                    <span>Langkah 2 daripada 3</span>
+                </div>
+
+                <button type="button" id="btnProceedStep3" class="apple-btn-capsule-primary" onclick="handleProceedToStep3()">
+                    <span>Seterusnya: Semakan &amp; Pengesahan</span>
+                    <span class="material-icons-round fs-15">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- SCRIPTS -->
+    <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
+    <script src="../../../../shared/js/sidebar-loader.js?v=6.18.0"></script>
+    <script src="../../../../shared/js/main.js?v=5.2.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/api.js?v=5.2.3"></script>
+    <script src="edit-car.js?v=6.18.0"></script>
+
+    <script>
+        let currentCarId = null;
+        let activeDraft = null;
+        let activeVisualMode = 'gallery';
+        let currentGalleryIndex = 0;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            currentCarId = window.WeDriveEditCar.getCarIdFromUrl();
+            if (!currentCarId) {
+                alert('Ralat: Tiada ID kenderaan.');
+                window.location.href = '../cars.html';
+                return;
+            }
+
+            document.getElementById('step1Link').href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
+            const breadcrumbLink = document.getElementById('linkCarDetailBreadcrumb');
+            if (breadcrumbLink) {
+                breadcrumbLink.href = `../car-detail/car-detail.html?id=${encodeURIComponent(currentCarId)}`;
+            }
+
+            activeDraft = await window.WeDriveEditCar.loadCarDraft(currentCarId);
+            if (!activeDraft) {
+                alert('Ralat: Kenderaan tidak dijumpai.');
+                window.location.href = '../cars.html';
+                return;
+            }
+
+            document.getElementById('headerPlatePill').textContent = activeDraft.plate || '-';
+
+            initMediaFields();
+            setup360AutoDetect();
+            renderThumbnails();
+            update360StatusDisplay();
+        });
+
+        function initMediaFields() {
+            const cdnInput = document.getElementById('inputExteriorCdnUrl');
+            if (cdnInput) {
+                cdnInput.value = activeDraft.cdnUrlExterior || activeDraft.supabase_360 || '';
+            }
+
+            if (!Array.isArray(activeDraft.photos) || activeDraft.photos.length === 0) {
+                activeDraft.photos = [{ img: activeDraft.image_url || '../../../../shared/model/bezza.png', title: 'Foto Utama' }];
+            }
+            if (!Array.isArray(activeDraft.gallery8Photos)) {
+                activeDraft.gallery8Photos = [...activeDraft.photos];
+            }
+        }
+
+        function setup360AutoDetect() {
+            const cdnInput = document.getElementById('inputExteriorCdnUrl');
+            if (cdnInput) {
+                cdnInput.addEventListener('input', () => {
+                    const url = cdnInput.value.trim();
+                    const hasValidUrl = url.length > 3;
+
+                    activeDraft.has360 = hasValidUrl;
+                    activeDraft.has_360 = hasValidUrl;
+                    activeDraft.cdnUrlExterior = hasValidUrl ? url : '';
+                    activeDraft.supabase_360 = hasValidUrl ? url : '';
+
+                    window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
+                    update360StatusDisplay();
+
+                    if (hasValidUrl && (url.startsWith('http://') || url.startsWith('https://'))) {
+                        const iframe = document.getElementById('iframe360');
+                        if (iframe) iframe.src = url;
+                    }
+                });
+            }
+        }
+
+        function update360StatusDisplay() {
+            const has360 = Boolean(activeDraft && (activeDraft.has_360 || activeDraft.has360 || (activeDraft.cdnUrlExterior && activeDraft.cdnUrlExterior.length > 5)));
+            const badge = document.getElementById('studioBadge360');
+            const dot = document.getElementById('status360Dot');
+            const title = document.getElementById('status360Title');
+            const desc = document.getElementById('status360Desc');
+            const tab360 = document.getElementById('tab360');
+            const autoBadge = document.getElementById('autoDetectBadge');
+
+            if (has360) {
+                if (badge) badge.classList.remove('hidden');
+                if (dot) {
+                    dot.className = 'circle-1-1 w-3 h-3 rounded-full bg-purple-500 shadow-sm';
+                }
+                if (title) {
+                    title.textContent = 'Status 360°: Aktif & Dikesan ✓';
+                    title.className = 'text-xs font-bold text-purple-600 dark:text-purple-400';
+                }
+                if (desc) {
+                    desc.textContent = 'Lencana 360° View akan dipaparkan secara dinamik pada kad kenderaan.';
+                }
+                if (autoBadge) {
+                    autoBadge.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400';
+                    autoBadge.textContent = '360° View Aktif';
+                }
+            } else {
+                if (badge) badge.classList.add('hidden');
+                if (dot) {
+                    dot.className = 'circle-1-1 w-3 h-3 rounded-full bg-slate-400';
+                }
+                if (title) {
+                    title.textContent = 'Status 360°: Tidak Dikesan';
+                    title.className = 'text-xs font-bold text-primary';
+                }
+                if (desc) {
+                    desc.textContent = 'Kenderaan akan dipaparkan dengan mod galeri foto sahaja.';
+                }
+                if (autoBadge) {
+                    autoBadge.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-surface-2 text-secondary';
+                    autoBadge.textContent = 'Galeri Sahaja';
+                }
+            }
+        }
+
+        function handleClear360() {
+            const cdnInput = document.getElementById('inputExteriorCdnUrl');
+            if (cdnInput) cdnInput.value = '';
+            activeDraft.has360 = false;
+            activeDraft.has_360 = false;
+            activeDraft.cdnUrlExterior = '';
+            activeDraft.supabase_360 = '';
+            window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
+            update360StatusDisplay();
+            switchVisualMode('gallery');
+            window.WeDriveEditCar.showUnifiedPillToast('Pautan 360° dipadamkan. Lencana 360° disembunyikan.', 'success');
+        }
+
+        function switchVisualMode(mode) {
+            activeVisualMode = mode;
+            const tabGal = document.getElementById('tabGallery');
+            const tab3 = document.getElementById('tab360');
+            const stageGal = document.getElementById('stageGallery');
+            const stage3 = document.getElementById('stage360');
+            const iframe = document.getElementById('iframe360');
+            const emptyMsg = document.getElementById('empty360Message');
+
+            if (mode === 'gallery') {
+                tabGal.className = 'px-4 py-1.5 rounded-full bg-surface-1 text-primary text-xs font-bold shadow-xs cursor-pointer transition-all';
+                tab3.className = 'px-4 py-1.5 rounded-full text-secondary text-xs font-bold cursor-pointer transition-all hover:text-primary flex items-center';
+                stageGal.classList.remove('hidden');
+                stage3.classList.add('hidden');
+            } else {
+                tab3.className = 'px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold shadow-xs cursor-pointer transition-all flex items-center';
+                tabGal.className = 'px-4 py-1.5 rounded-full text-secondary text-xs font-bold cursor-pointer transition-all hover:text-primary';
+                stageGal.classList.add('hidden');
+                stage3.classList.remove('hidden');
+
+                const url = (activeDraft.cdnUrlExterior || activeDraft.supabase_360 || '').trim();
+                if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                    if (iframe.src !== url) iframe.src = url;
+                    iframe.classList.remove('hidden');
+                    emptyMsg.classList.add('hidden');
+                } else {
+                    iframe.classList.add('hidden');
+                    emptyMsg.classList.remove('hidden');
+                }
+            }
+        }
+
+        function renderThumbnails() {
+            const strip = document.getElementById('thumbStrip');
+            if (!strip) return;
+
+            const photos = activeDraft.gallery8Photos || activeDraft.photos || [];
+            document.getElementById('totalPhotosCount').textContent = `${photos.length} Foto`;
+
+            if (photos.length === 0) {
+                strip.innerHTML = '<p class="text-xs text-secondary col-span-full py-2">Tiada foto dimuat naik.</p>';
+                return;
+            }
+
+            strip.innerHTML = photos.map((p, idx) => {
+                const raw = typeof p === 'string' ? p : (p.img || '');
+                const src = window.WeDriveEditCar.resolveCarImg(raw);
+                const isActive = (idx === currentGalleryIndex);
+                return `
+                    <div class="photo-thumb-item ${isActive ? 'active' : ''}" onclick="selectPhoto(${idx})">
+                        <img src="${src}" alt="Foto ${idx + 1}" class="w-full h-full object-cover" />
+                        <button type="button" onclick="event.stopPropagation(); handleDeletePhoto(${idx})" class="circle-1-1 w-5 h-5 rounded-full bg-black/70 hover:bg-error text-white absolute top-1 right-1 flex items-center justify-center text-xs transition-colors" title="Padam Foto">
+                            <span class="material-icons-round text-xs">close</span>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            // Update main stage image
+            if (photos[currentGalleryIndex]) {
+                const cur = photos[currentGalleryIndex];
+                const mainImg = document.getElementById('mainGalleryImg');
+                const raw = typeof cur === 'string' ? cur : (cur.img || '');
+                const src = window.WeDriveEditCar.resolveCarImg(raw);
+                if (mainImg) mainImg.src = src;
+                const indexText = document.getElementById('galleryIndexText');
+                if (indexText) indexText.textContent = `Foto ${currentGalleryIndex + 1} daripada ${photos.length}`;
+            }
+        }
+
+        function selectPhoto(idx) {
+            currentGalleryIndex = idx;
+            renderThumbnails();
+            switchVisualMode('gallery');
+        }
+
+        function handleDeletePhoto(idx) {
+            const photos = activeDraft.gallery8Photos || activeDraft.photos || [];
+            if (photos.length <= 1) {
+                window.WeDriveEditCar.showUnifiedPillToast('Kenderaan wajib mempunyai sekurang-kurangnya 1 foto utama.', 'error');
+                return;
+            }
+            photos.splice(idx, 1);
+            activeDraft.photos = photos;
+            activeDraft.gallery8Photos = photos;
+            activeDraft.image_url = (typeof photos[0] === 'string') ? photos[0] : (photos[0].img || '');
+            if (currentGalleryIndex >= photos.length) currentGalleryIndex = photos.length - 1;
+            window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
+            renderThumbnails();
+            window.WeDriveEditCar.showUnifiedPillToast('Foto berjaya dipadamkan.', 'success');
+        }
+
+        function handleAddPhotoUrl() {
+            const input = document.getElementById('inputNewPhotoUrl');
+            const url = input.value.trim();
+            if (!url || (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('data:'))) {
+                window.WeDriveEditCar.showUnifiedPillToast('Sila masukkan URL imej yang sah.', 'error');
+                return;
+            }
+
+            const photos = activeDraft.gallery8Photos || activeDraft.photos || [];
+            photos.push({ img: url, title: `Foto ${photos.length + 1}` });
+            activeDraft.photos = photos;
+            activeDraft.gallery8Photos = photos;
+            window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
+
+            input.value = '';
+            currentGalleryIndex = photos.length - 1;
+            renderThumbnails();
+            window.WeDriveEditCar.showUnifiedPillToast('Foto baharu berjaya ditambah!', 'success');
+        }
+
+        function handleFileUpload(e) {
+            const files = e.target.files;
+            if (!files || files.length === 0) return;
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    const dataUrl = evt.target.result;
+                    const photos = activeDraft.gallery8Photos || activeDraft.photos || [];
+                    photos.push({ img: dataUrl, title: file.name || `Foto ${photos.length + 1}` });
+                    activeDraft.photos = photos;
+                    activeDraft.gallery8Photos = photos;
+                    window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
+                    renderThumbnails();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            window.WeDriveEditCar.showUnifiedPillToast(`${files.length} foto berjaya dimuat naik!`, 'success');
+        }
+
+        function handleBackToStep1() {
+            window.location.href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
+        }
+
+        function handleProceedToStep3() {
+            const photos = activeDraft.gallery8Photos || activeDraft.photos || [];
+            if (photos.length === 0 && !activeDraft.has360) {
+                window.WeDriveEditCar.showUnifiedPillToast('Sila sediakan sekurang-kurangnya 1 foto atau pautan 360° yang sah.', 'error');
+                return;
+            }
+
+            window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
+            window.location.href = `step3_pengesahan.html?id=${encodeURIComponent(currentCarId)}`;
+        }
+    </script>
+</body>
+</html>

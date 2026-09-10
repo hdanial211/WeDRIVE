@@ -176,7 +176,7 @@
         // Visuals are downloaded & saved to Supabase/draft
         const draftSupabase = (data && Array.isArray(data.supabase_images) && data.supabase_images.length > 0) ? data.supabase_images : [];
         const draftGallery8 = (data && Array.isArray(data.gallery8Photos) && data.gallery8Photos.length > 0) ? data.gallery8Photos : [];
-        const draftUploaded = (data && Array.isArray(data.photos) && data.photos.length > 0) ? data.photos.filter(p => p && p.img) : [];
+        const draftUploaded = (data && Array.isArray(data.photos) && data.photos.length > 0) ? data.photos.filter(p => p && (p.img || typeof p === 'string')) : [];
 
         if (draftSupabase.length > 0) {
           currentStep3Photos = draftSupabase;

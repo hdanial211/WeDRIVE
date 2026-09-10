@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sunting Kenderaan - Langkah 1: Spesifikasi &amp; Kadar Sewa | WeDRIVE</title>
+    <link rel="icon" type="image/png" href="../../../../shared/logo/wedrive-icon.png" />
+    <link rel="apple-touch-icon" href="../../../../shared/logo/wedrive-icon.png" />
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.18.0" />
+    <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0071e3",
+                        "night-bento": "#161618",
+                        "surface-container": "#eeeef0",
+                        "border-day": "rgba(0, 0, 0, 0.08)",
+                        "border-night": "rgba(255, 255, 255, 0.08)"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .apple-stepper-dock {
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+        }
+        .live-preview-card {
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
+
+    <div id="navbar-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <!-- 1. HEADER & BREADCRUMB -->
+        <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-2 text-xs font-semibold text-secondary mb-1">
+                    <a href="../cars.html" class="hover:text-primary transition-colors">Pengurusan Kereta</a>
+                    <span>/</span>
+                    <a id="linkCarDetailBreadcrumb" href="../cars.html" class="hover:text-primary transition-colors">Profil Kenderaan</a>
+                    <span>/</span>
+                    <span class="text-primary font-bold">Sunting Kenderaan</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-primary m-0 flex items-center gap-2">
+                        <span class="material-icons-round text-2xl">edit_square</span>
+                        Sunting Maklumat Kenderaan
+                    </h1>
+                    <span id="headerPlatePill" class="apple-plate-pill tabular-nums text-xs px-3 py-1 font-bold">MEMUATKAN...</span>
+                </div>
+                <p class="text-xs sm:text-sm text-secondary mt-1">Kemas kini spesifikasi teknikal, kadar sewa, dan status kenderaan dalam sistem inventori WeDRIVE.</p>
+            </div>
+
+            <!-- STEPPER INDICATOR (Apple HIG Capsule Standard) -->
+            <div class="bg-surface-2 border border-subtle rounded-full p-1.5 flex items-center gap-1 shadow-xs self-start md:self-auto">
+                <div class="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-white text-primary text-[10px] font-black flex items-center justify-center">1</span>
+                    <span>Spesifikasi</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-surface-3 text-secondary text-[10px] font-black flex items-center justify-center">2</span>
+                    <span>Studio Visual</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5">
+                    <span class="circle-1-1 w-4 h-4 rounded-full bg-surface-3 text-secondary text-[10px] font-black flex items-center justify-center">3</span>
+                    <span>Pengesahan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. MAIN BENTO GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- FORM COLUMN (8 COLUMNS) -->
+            <div class="lg:col-span-8 flex flex-col gap-6">
+                
+                <!-- BENTO CARD 1: MAKLUMAT ASAS & PENGELUAR -->
+                <div class="card p-6 sm:p-8 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center gap-2 pb-4 mb-5 border-bottom-subtle">
+                        <span class="material-icons-round text-primary text-xl">directions_car</span>
+                        <h2 class="text-base font-bold text-primary m-0">Maklumat Asas Kenderaan</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Nama Rasmi -->
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputName">Nama Penuh Model Kenderaan <span class="text-error">*</span></label>
+                            <input type="text" id="inputName" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all" placeholder="Cth: 2023 BMW 320i M Sport 2.0" required />
+                        </div>
+
+                        <!-- Jenama -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="selectBrand">Pengeluar / Jenama</label>
+                            <select id="selectBrand" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all">
+                                <option value="Proton">Proton</option>
+                                <option value="Perodua">Perodua</option>
+                                <option value="Honda">Honda</option>
+                                <option value="Toyota">Toyota</option>
+                                <option value="BMW">BMW</option>
+                                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                                <option value="Ford">Ford</option>
+                                <option value="Nissan">Nissan</option>
+                                <option value="Hyundai">Hyundai</option>
+                                <option value="Mazda">Mazda</option>
+                                <option value="Volkswagen">Volkswagen</option>
+                                <option value="Tesla">Tesla</option>
+                                <option value="Porsche">Porsche</option>
+                            </select>
+                        </div>
+
+                        <!-- No Pendaftaran (Plat) -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputPlate">Nombor Plat Pendaftaran <span class="text-error">*</span></label>
+                            <input type="text" id="inputPlate" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-bold tracking-wider uppercase focus:border-primary outline-none transition-all" placeholder="Cth: WDD 8899" required />
+                        </div>
+
+                        <!-- Tahun Dibuat -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputYear">Tahun Buatan</label>
+                            <input type="number" id="inputYear" min="2015" max="2027" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold tabular-nums focus:border-primary outline-none transition-all" placeholder="2024" />
+                        </div>
+
+                        <!-- Warna -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputColor">Warna Kenderaan</label>
+                            <input type="text" id="inputColor" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all" placeholder="Cth: Meteoroid Gray Metallic" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BENTO CARD 2: SPESIFIKASI MEKANIKAL -->
+                <div class="card p-6 sm:p-8 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center gap-2 pb-4 mb-5 border-bottom-subtle">
+                        <span class="material-icons-round text-primary text-xl">tune</span>
+                        <h2 class="text-base font-bold text-primary m-0">Klasifikasi & Keupayaan Mekanikal</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Kategori Badan -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="selectCategory">Kategori Kenderaan</label>
+                            <select id="selectCategory" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all">
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="MPV">MPV</option>
+                                <option value="Truck">Truck (Pickup)</option>
+                                <option value="Coupe">Coupe</option>
+                                <option value="Van">Van</option>
+                            </select>
+                        </div>
+
+                        <!-- Transmisi -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="selectTrans">Transmisi</label>
+                            <select id="selectTrans" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all">
+                                <option value="Automatic">Automatic (Auto)</option>
+                                <option value="Manual">Manual</option>
+                            </select>
+                        </div>
+
+                        <!-- Bahan Api -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="selectFuel">Punca Kuasa / Bahan Api</label>
+                            <select id="selectFuel" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all">
+                                <option value="Petrol">Petrol</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Hybrid">Hybrid</option>
+                                <option value="Electric">Elektrik (EV)</option>
+                            </select>
+                        </div>
+
+                        <!-- Enjin / Kuasa -->
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputEngine">Enjin &amp; Kuasa</label>
+                            <input type="text" id="inputEngine" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all" placeholder="Cth: 1.5L VTEC Turbo 182PS" />
+                        </div>
+
+                        <!-- Bilangan Tempat Duduk -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputSeats">Bilangan Kerusi</label>
+                            <input type="number" id="inputSeats" min="2" max="15" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold tabular-nums focus:border-primary outline-none transition-all" placeholder="5" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BENTO CARD 3: KADAR HARGA & STATUS OPERASI -->
+                <div class="card p-6 sm:p-8 radius-24 bg-surface-1 border-subtle shadow-xs">
+                    <div class="flex items-center gap-2 pb-4 mb-5 border-bottom-subtle">
+                        <span class="material-icons-round text-primary text-xl">payments</span>
+                        <h2 class="text-base font-bold text-primary m-0">Kadar Sewa Harian & Status Operasi</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Kadar Harian -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputDailyRate">Kadar Sewa Harian (RM) <span class="text-error">*</span></label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-secondary">RM</span>
+                                <input type="number" id="inputDailyRate" min="30" max="5000" class="w-full pl-12 pr-4 py-3 rounded-xl bg-surface-2 border-subtle text-base font-bold text-primary tabular-nums focus:border-primary outline-none transition-all" placeholder="180" required />
+                            </div>
+                        </div>
+
+                        <!-- Status Operasi -->
+                        <div>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="selectStatus">Status Operasi Inventori</label>
+                            <select id="selectStatus" class="w-full px-4 py-3 rounded-xl bg-surface-2 border-subtle text-sm text-primary font-semibold focus:border-primary outline-none transition-all">
+                                <option value="Available">Available (Tersedia Untuk Sewaan)</option>
+                                <option value="Rented">Rented (Sedang Digunakan / Atas Jalan)</option>
+                                <option value="Maintenance">Maintenance (Dalam Servis / Penyelenggaraan)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- PREVIEW CARD COLUMN (4 COLUMNS) -->
+            <div class="lg:col-span-4 sticky top-24">
+                <div class="card p-6 radius-24 bg-surface-1 border-subtle shadow-sm flex flex-col gap-4">
+                    <div class="flex items-center justify-between pb-3 border-bottom-subtle">
+                        <span class="text-xs font-bold text-secondary uppercase tracking-wider flex items-center gap-1">
+                            <span class="material-icons-round text-sm text-primary">visibility</span>
+                            Pratonton Kad Masa Nyata
+                        </span>
+                        <span class="text-[11px] font-semibold text-emerald-500 bg-emerald-500/10 px-2.5 py-0.5 rounded-full">Segerak Automatik</span>
+                    </div>
+
+                    <!-- PREVIEW CARD (Apple HIG Bento Standard) -->
+                    <div class="apple-car-showcase-card shadow-md">
+                        <div class="apple-car-studio-canvas relative overflow-hidden bg-surface-3">
+                            <!-- 360 View Badge (Dynamic Auto-Detect) -->
+                            <span id="live360Badge" class="badge-360 badge-360-canvas hidden" title="360° Interactive Studio">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                                    <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
+                                    <polyline points="7.5 14.5 10 17.5 7 20"/>
+                                </svg>
+                                <span>360° View</span>
+                            </span>
+
+                            <!-- Status Pill -->
+                            <div class="glass-status-pill">
+                                <span id="liveStatusDot" class="live-pulse-dot" style="background:#10B981"></span>
+                                <span id="liveStatusText">Tersedia</span>
+                            </div>
+
+                            <img id="livePreviewImg" src="../../../../shared/model/bezza.png" alt="Kenderaan" class="apple-car-studio-img" />
+                        </div>
+
+                        <div class="apple-car-card-body">
+                            <div class="apple-car-meta-header">
+                                <span id="liveCategoryPill" class="apple-category-pill">Sedan</span>
+                                <span id="livePlatePill" class="apple-plate-pill tabular-nums">-</span>
+                            </div>
+
+                            <h3 id="liveTitle" class="apple-car-title">Nama Model</h3>
+
+                            <div class="apple-micro-specs">
+                                <span id="liveTransPill" class="apple-spec-tag"><span class="material-icons-round">settings</span> Auto</span>
+                                <span id="liveFuelPill" class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> Petrol</span>
+                                <span id="liveSeatsPill" class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> 5 Kerusi</span>
+                            </div>
+
+                            <div class="apple-car-footer mt-4 pt-4 border-top-subtle flex items-center justify-between">
+                                <div class="apple-car-rate">
+                                    <span id="liveRateText">RM 150</span> <span class="apple-car-rate-sub">/hari</span>
+                                </div>
+                                <button class="apple-btn-capsule-primary opacity-60 cursor-not-allowed">
+                                    <span class="material-icons-round fs-14">tune</span> Urus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Helpful Notice -->
+                    <div class="bg-surface-2 p-3.5 radius-16 border-subtle flex items-start gap-2.5 text-xs text-secondary leading-relaxed">
+                        <span class="material-icons-round text-primary text-base flex-shrink-0 mt-0.5">info</span>
+                        <span>Sebarang perubahan spesifikasi akan disimpan ke draf sesi secara langsung sebelum beralih ke Studio Visual 360°.</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
+            <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
+                <button type="button" id="btnCancelEdit" class="apple-btn-capsule-secondary" onclick="handleCancelEdit()">
+                    <span class="material-icons-round fs-15">arrow_back</span>
+                    <span>Kembali ke Profil</span>
+                </button>
+
+                <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
+                    <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
+                    <span>Langkah 1 daripada 3</span>
+                </div>
+
+                <button type="button" id="btnProceedStep2" class="apple-btn-capsule-primary" onclick="handleProceedToStep2()">
+                    <span>Seterusnya: Studio Visual 360°</span>
+                    <span class="material-icons-round fs-15">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- SCRIPTS -->
+    <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
+    <script src="../../../../shared/js/sidebar-loader.js?v=6.18.0"></script>
+    <script src="../../../../shared/js/main.js?v=5.2.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/api.js?v=5.2.3"></script>
+    <script src="edit-car.js?v=6.18.0"></script>
+
+    <script>
+        let currentCarId = null;
+        let activeDraft = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            currentCarId = window.WeDriveEditCar.getCarIdFromUrl();
+            if (!currentCarId) {
+                alert('Ralat: Tiada ID kenderaan yang sah disediakan.');
+                window.location.href = '../cars.html';
+                return;
+            }
+
+            // Set breadcrumb link
+            const breadcrumbLink = document.getElementById('linkCarDetailBreadcrumb');
+            if (breadcrumbLink) {
+                breadcrumbLink.href = `../car-detail/car-detail.html?id=${encodeURIComponent(currentCarId)}`;
+            }
+
+            // Load draft or database record
+            activeDraft = await window.WeDriveEditCar.loadCarDraft(currentCarId);
+            if (!activeDraft) {
+                alert('Ralat: Kenderaan tidak dijumpai.');
+                window.location.href = '../cars.html';
+                return;
+            }
+
+            populateForm(activeDraft);
+            setupLiveSync();
+            updateLivePreview();
+        });
+
+        function populateForm(d) {
+            document.getElementById('inputName').value = d.name || '';
+            document.getElementById('selectBrand').value = d.brand || 'Proton';
+            document.getElementById('inputPlate').value = d.plate || '';
+            document.getElementById('inputYear').value = d.year || 2024;
+            document.getElementById('inputColor').value = d.color || '';
+            document.getElementById('selectCategory').value = d.category || 'Sedan';
+            document.getElementById('selectTrans').value = d.transmission || 'Automatic';
+            document.getElementById('selectFuel').value = d.fuel || 'Petrol';
+            document.getElementById('inputEngine').value = d.engine || '';
+            document.getElementById('inputSeats').value = d.seats || 5;
+            document.getElementById('inputDailyRate').value = Math.round(d.dailyPrice) || 150;
+            document.getElementById('selectStatus').value = d.status || 'Available';
+
+            const headerPlate = document.getElementById('headerPlatePill');
+            if (headerPlate) headerPlate.textContent = d.plate || '-';
+        }
+
+        function setupLiveSync() {
+            const inputs = ['inputName', 'selectBrand', 'inputPlate', 'inputYear', 'inputColor', 'selectCategory', 'selectTrans', 'selectFuel', 'inputEngine', 'inputSeats', 'inputDailyRate', 'selectStatus'];
+            inputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', updateLivePreview);
+                    el.addEventListener('change', updateLivePreview);
+                }
+            });
+        }
+
+        function updateLivePreview() {
+            const name = document.getElementById('inputName').value.trim() || 'Nama Model Kenderaan';
+            const plate = document.getElementById('inputPlate').value.trim().toUpperCase() || '-';
+            const category = document.getElementById('selectCategory').value;
+            const trans = document.getElementById('selectTrans').value;
+            const fuel = document.getElementById('selectFuel').value;
+            const seats = document.getElementById('inputSeats').value || 5;
+            const price = document.getElementById('inputDailyRate').value || 150;
+            const status = document.getElementById('selectStatus').value;
+
+            document.getElementById('liveTitle').textContent = name;
+            document.getElementById('livePlatePill').textContent = plate;
+            document.getElementById('liveCategoryPill').textContent = category;
+            document.getElementById('liveTransPill').innerHTML = `<span class="material-icons-round">settings</span> ${trans.toLowerCase().includes('auto') ? 'Auto' : 'Manual'}`;
+            document.getElementById('liveFuelPill').innerHTML = `<span class="material-icons-round">local_gas_station</span> ${fuel}`;
+            document.getElementById('liveSeatsPill').innerHTML = `<span class="material-icons-round">airline_seat_recline_normal</span> ${seats} Kerusi`;
+            document.getElementById('liveRateText').textContent = `RM ${price}`;
+
+            // Status indicator
+            const isAvail = (status === 'Available');
+            const isRented = (status === 'Rented');
+            const dot = document.getElementById('liveStatusDot');
+            const text = document.getElementById('liveStatusText');
+            if (dot && text) {
+                if (isAvail) {
+                    dot.style.background = '#10B981';
+                    text.textContent = 'Tersedia';
+                } else if (isRented) {
+                    dot.style.background = '#0071E3';
+                    text.textContent = 'Sedang Disewa';
+                } else {
+                    dot.style.background = '#F59E0B';
+                    text.textContent = 'Servis';
+                }
+            }
+
+            // Image
+            if (activeDraft && activeDraft.image_url) {
+                const imgEl = document.getElementById('livePreviewImg');
+                if (imgEl) imgEl.src = window.WeDriveEditCar.resolveCarImg(activeDraft.image_url);
+            }
+
+            // 360 Auto-detection Badge
+            const badge360 = document.getElementById('live360Badge');
+            if (badge360) {
+                const has360 = Boolean(activeDraft && (activeDraft.has_360 || activeDraft.has360 || activeDraft.cdnUrlExterior || activeDraft.supabase_360));
+                if (has360) {
+                    badge360.classList.remove('hidden');
+                } else {
+                    badge360.classList.add('hidden');
+                }
+            }
+        }
+
+        function collectFormData() {
+            return {
+                name: document.getElementById('inputName').value.trim(),
+                brand: document.getElementById('selectBrand').value,
+                plate: document.getElementById('inputPlate').value.trim().toUpperCase(),
+                year: parseInt(document.getElementById('inputYear').value, 10) || 2024,
+                color: document.getElementById('inputColor').value.trim(),
+                category: document.getElementById('selectCategory').value,
+                transmission: document.getElementById('selectTrans').value,
+                fuel: document.getElementById('selectFuel').value,
+                engine: document.getElementById('inputEngine').value.trim(),
+                seats: parseInt(document.getElementById('inputSeats').value, 10) || 5,
+                dailyPrice: parseFloat(document.getElementById('inputDailyRate').value) || 150,
+                status: document.getElementById('selectStatus').value
+            };
+        }
+
+        function handleCancelEdit() {
+            if (confirm('Adakah anda pasti ingin membatalkan suntingan? Sebarang perubahan yang belum disimpan akan terbatal.')) {
+                window.WeDriveEditCar.clearCarDraft(currentCarId);
+                window.location.href = `../car-detail/car-detail.html?id=${encodeURIComponent(currentCarId)}`;
+            }
+        }
+
+        function handleProceedToStep2() {
+            const data = collectFormData();
+
+            if (!data.name) {
+                window.WeDriveEditCar.showUnifiedPillToast('Sila masukkan nama model kenderaan.', 'error');
+                document.getElementById('inputName').focus();
+                return;
+            }
+            if (!data.plate || data.plate.length < 3) {
+                window.WeDriveEditCar.showUnifiedPillToast('Sila masukkan nombor pendaftaran (plat) sah.', 'error');
+                document.getElementById('inputPlate').focus();
+                return;
+            }
+            if (isNaN(data.dailyPrice) || data.dailyPrice <= 0) {
+                window.WeDriveEditCar.showUnifiedPillToast('Sila masukkan kadar sewa harian yang sah.', 'error');
+                document.getElementById('inputDailyRate').focus();
+                return;
+            }
+
+            // Merge with active draft
+            Object.assign(activeDraft, data);
+            window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
+
+            // Navigate to Step 2
+            window.location.href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
+        }
+    </script>
+</body>
+</html>

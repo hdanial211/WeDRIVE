@@ -208,9 +208,19 @@
           var carType = (typeUpper === 'SUV' || typeUpper === 'MPV') 
             ? typeUpper 
             : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
+          var has360 = Boolean(car.has_360 || car.has360 || car.exterior_360 || car.supabase_360 || (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0));
 
           return '<div class="apple-car-showcase-card reveal-onload" data-car-id="' + (car.id || '') + '" onclick="navigateToCarDetail(\'' + (car.id || '') + '\', event)">' +
             '<div class="apple-car-studio-canvas">' +
+              (has360 ? (
+                '<span class="badge-360 badge-360-canvas" title="360° Interactive Studio">' +
+                  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">' +
+                    '<path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>' +
+                    '<polyline points="7.5 14.5 10 17.5 7 20"/>' +
+                  '</svg>' +
+                  '<span>360° View</span>' +
+                '</span>'
+              ) : '') +
               '<div class="glass-status-pill">' +
                 '<span class="live-pulse-dot" style="background:#10B981"></span> Tersedia' +
               '</div>' +
@@ -242,11 +252,8 @@
                   '<div class="apple-car-rate">RM ' + rateNum + ' <span class="apple-car-rate-sub">/hari</span></div>' +
                 '</div>' +
                 '<div class="flex-center gap-8">' +
-                  '<button class="apple-btn-capsule-secondary" onclick="event.stopPropagation(); navigateToCarDetail(\'' + (car.id || '') + '\')">' +
-                    '<span class="material-icons-round fs-14">info</span> Perincian' +
-                  '</button>' +
-                  '<button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">' +
-                    '<span class="material-icons-round fs-14">add_task</span> Tempah' +
+                  '<button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); navigateToCarDetail(\'' + (car.id || '') + '\')">' +
+                    '<span class="material-icons-round fs-14">tune</span> Urus' +
                   '</button>' +
                 '</div>' +
               '</div>' +
@@ -255,7 +262,7 @@
         }).join('');
       }
 
-      // Render Table
+      // Render Table List
       var tbody = document.getElementById('avail-tbody');
       if (tbody) {
         if (filtered.length === 0) {
@@ -276,8 +283,7 @@
               '<td><span class="status-badge success"><span class="dot"></span> Tersedia</span></td>' +
               '<td class="table-action-cell">' +
                 '<div class="table-action-group">' +
-                  '<button class="apple-btn-capsule-secondary" onclick="event.stopPropagation(); navigateToCarDetail(\'' + (car.id || '') + '\')">Perincian</button>' +
-                  '<button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
+                  '<button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); navigateToCarDetail(\'' + (car.id || '') + '\')"><span class="material-icons-round fs-14">tune</span> Urus</button>' +
                 '</div>' +
               '</td>' +
             '</tr>';
