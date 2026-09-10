@@ -82,59 +82,61 @@
     return data.secure_url; // e.g. https://res.cloudinary.com/gwd1bhcx/image/upload/...
   }
 
-  // Upload 36 key frames from Impel CDN to Cloudinary (mirroring shared/model/ folder structure)
-  // Also uploads interior pano if available.
-  // Returns { exteriorFrames: string[], interiorFacesObj: Object|null }
-  async function uploadImpelFramesToCloudinary(cdnPrefix, carLabel, carName, onProgress) {
-    const TOTAL_FRAMES = 200;  // Full 200 frames — sama seperti shared/model/
-    const BATCH_SIZE   = 8;    // 8 parallel untuk lebih laju
-
-    // Sanitize folder path to match shared/model/ convention: {Label}/{Name}
-    const safeLabel = (carLabel || 'Car').replace(/[/\\:*?"<>|]/g, '-').trim();
-    const safeName  = (carName  || 'Unknown').replace(/[/\\:*?"<>|]/g, '-').trim();
+  // Upload publicly accessible Impel assets to Cloudinary:
+  //   1. Interior pano cube-map (pano/pano_{face}.jpg) — 6 faces, publicly accessible ✅
+  //   2. Gallery 8 photos (ec/0-0.jpg, 0-25.jpg...) — publicly accessible ✅
+  //   3. Thumbnail (thumb-sm.jpg) — publicly accessible ✅
+  // Exterior frames (exterior/full-res/frame-XXX.jpg) are CloudFront-protected — use SpinCar iframe instead.
+  // Returns { interiorFacesObj, galleryCloudUrls, thumbnailUrl }
+  async function uploadImpelPublicAssetsToCloudinary(cdnPrefix, carLabel, carName, onProgress) {
+    const safeLabel  = (carLabel || 'Car').replace(/[/\\:*?"<>|]/g, '-').trim();
+    const safeName   = (carName  || 'Unknown').replace(/[/\\:*?"<>|]/g, '-').trim();
     const baseFolder = `wedrive-model/${safeLabel}/${safeName}`;
 
-    // All 200 frames: frame-000 to frame-199 (same as shared/model/)
-    const frameNums = Array.from({ length: TOTAL_FRAMES }, (_, i) => i);
-    const cloudinaryUrls = new Array(TOTAL_FRAMES).fill(null);
-    let uploaded = 0;
+    let total = 6 + 8 + 1; // 6 interior + 8 gallery + 1 thumb
+    let done  = 0;
+    const tick = () => { done++; if (onProgress) onProgress(done, total); };
 
-    // Batch upload all 200 exterior frames
-    for (let b = 0; b < frameNums.length; b += BATCH_SIZE) {
-      const batch = frameNums.slice(b, b + BATCH_SIZE);
-      await Promise.all(batch.map(async (frameNum) => {
-        const padded   = String(frameNum).padStart(3, '0');
-        const cdnUrl   = `${cdnPrefix}exterior/full-res/frame-${padded}.jpg`;
-        const publicId = `${baseFolder}/exterior/full-res/frame-${padded}`;
-        const blob     = await downloadFrameBlob(cdnUrl);
+    // 1. Interior pano cube-map faces (f, b, l, r, u, d)
+    const FACES = ['f', 'b', 'l', 'r', 'u', 'd'];
+    const faceResults = {};
+    await Promise.all(FACES.map(async (face) => {
+      try {
+        const faceUrl  = `${cdnPrefix}pano/pano_${face}.jpg`;
+        const publicId = `${baseFolder}/interior/full-res/pano_${face}`;
+        const blob     = await downloadFrameBlob(faceUrl);
+        faceResults[face] = await uploadToCloudinary(blob, publicId);
+      } catch (e) {
+        console.warn(`[WeDRIVE] Interior face '${face}' skipped:`, e.message);
+      } finally { tick(); }
+    }));
+    const interiorFacesObj = Object.keys(faceResults).length > 0 ? faceResults : null;
+
+    // 2. Gallery 8 ec/ photos
+    const EC_INDICES   = ['0-0','0-25','0-50','0-75','0-100','0-125','0-150','0-175'];
+    const galleryCloudUrls = [];
+    await Promise.all(EC_INDICES.map(async (idx) => {
+      try {
+        const ecUrl    = `${cdnPrefix}ec/${idx}.jpg`;
+        const publicId = `${baseFolder}/gallery/ec-${idx.replace('-','_')}`;
+        const blob     = await downloadFrameBlob(ecUrl);
         const url      = await uploadToCloudinary(blob, publicId);
-        cloudinaryUrls[frameNum] = url;
-        uploaded++;
-        if (onProgress) onProgress(uploaded, TOTAL_FRAMES);
-      }));
-    }
+        galleryCloudUrls.push(url);
+      } catch (e) {
+        console.warn(`[WeDRIVE] Gallery ec/${idx} skipped:`, e.message);
+      } finally { tick(); }
+    }));
 
+    // 3. Thumbnail
+    let thumbnailUrl = '';
+    try {
+      const thumbBlob = await downloadFrameBlob(`${cdnPrefix}thumb-sm.jpg`);
+      thumbnailUrl    = await uploadToCloudinary(thumbBlob, `${baseFolder}/thumb-sm`);
+    } catch (e) {
+      console.warn('[WeDRIVE] Thumbnail skipped:', e.message);
+    } finally { tick(); }
 
-    // Upload interior cube-map faces (f, b, l, r, u, d) — Impel format: pano/pano_{face}.jpg
-    let interiorFacesObj = null;
-    if (currentCdnInteriorUrl) {
-      const FACES = ['f', 'b', 'l', 'r', 'u', 'd'];
-      const faceResults = {};
-      await Promise.all(FACES.map(async (face) => {
-        try {
-          // Impel interior path: ${cdnPrefix}pano/pano_{face}.jpg
-          const faceUrl  = `${cdnPrefix}pano/pano_${face}.jpg`;
-          const publicId = `${baseFolder}/interior/full-res/pano_${face}`;
-          const blob     = await downloadFrameBlob(faceUrl);
-          faceResults[face] = await uploadToCloudinary(blob, publicId);
-        } catch (e) {
-          console.warn(`[WeDRIVE] Interior face '${face}' unavailable — skipping:`, e);
-        }
-      }));
-      if (Object.keys(faceResults).length > 0) interiorFacesObj = faceResults;
-    }
-
-    return { exteriorFrames: cloudinaryUrls.filter(Boolean), interiorFacesObj };
+    return { interiorFacesObj, galleryCloudUrls, thumbnailUrl };
   }
 
 
@@ -745,37 +747,47 @@
 
       draft.orientation_frames = { hero: 140, front: 125, right: 175, left: 75, rear: 24, rear_left: 0 };
 
-      // ── Cloudinary Upload Path (when Impel CDN metadata available) ──
+      // ── Cloudinary Upload (interior + gallery + thumb — exterior via SpinCar iframe) ──
       if (currentCdnPrefix) {
-        showAiToast(isEn ? 'Uploading 200 frames to cloud... (0/200)' : 'Memuat naik 200 bingkai ke awan... (0/200)', true, 'cloud_upload');
+        showAiToast(isEn ? 'Uploading visuals to cloud (0/15)...' : 'Memuat naik visual ke awan (0/15)...', true, 'cloud_upload');
 
         const carLabel = draft.label || draft.type || 'Car';
         const carName  = draft.name  || 'Unknown';
 
-        const { exteriorFrames, interiorFacesObj } = await uploadImpelFramesToCloudinary(
+        const { interiorFacesObj, galleryCloudUrls, thumbnailUrl } = await uploadImpelPublicAssetsToCloudinary(
           currentCdnPrefix, carLabel, carName,
-          (done, total) => {
-            showAiToast(
-              isEn ? `Uploading... (${done}/${total} frames)` : `Memuat naik... (${done}/${total} bingkai)`,
-              true, 'cloud_upload'
-            );
-          }
+          (done, total) => showAiToast(
+            isEn ? `Uploading visuals... (${done}/${total})` : `Memuat naik visual... (${done}/${total})`,
+            true, 'cloud_upload'
+          )
         );
 
-        draft.exterior_frames = exteriorFrames;  // Array of 36 Cloudinary URLs
-        draft.has_360         = true;
-
+        // Interior: save 6-face JSON
         if (interiorFacesObj && Object.keys(interiorFacesObj).length > 0) {
-          // Save 6-face cube-map URLs as JSON string — car-detail.js parses face keys (f,b,l,r,u,d)
           draft.interior_360 = JSON.stringify(interiorFacesObj);
         }
 
-        // Clear the impel JSON meta from exterior_360 (not needed anymore)
-        draft.exterior_360 = null;
-        draft.supabase_360 = currentCdnExteriorUrl; // Keep SpinCar URL as backup
+        // Gallery: save Cloudinary photo URLs (override ec/ gallery)
+        if (galleryCloudUrls.length > 0) {
+          draft.supabase_images = galleryCloudUrls;
+          if (!draft.image_url && galleryCloudUrls[0]) draft.image_url = galleryCloudUrls[0];
+        }
 
-      } else if (currentCdnPrefix === '' && currentCdnExteriorUrl) {
-        // Fallback: save raw SpinCar URL if Cloudinary not configured
+        // Thumbnail override
+        if (thumbnailUrl) draft.thumbnail_url = thumbnailUrl;
+
+        // Exterior 360: save SpinCar JSON metadata (iframe will render it)
+        draft.exterior_360 = JSON.stringify({
+          type: 'impel_cdn',
+          cdn_prefix: currentCdnPrefix,
+          vin: currentImpelVin,
+          customer: currentImpelCustomer,
+          frame_count: 200
+        });
+        draft.supabase_360 = currentCdnExteriorUrl;
+        draft.has_360      = true;
+
+      } else if (currentCdnExteriorUrl) {
         draft.supabase_360 = currentCdnExteriorUrl;
         draft.exterior_360 = currentCdnExteriorUrl;
       }
