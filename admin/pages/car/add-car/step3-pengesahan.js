@@ -376,9 +376,10 @@
         reviews: 0,
         ai: draft.engine || '2.0L Standard',
         images: imagesList,
-        has_360: Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360),
+        has_360: Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0)),
         exterior_360: draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || null,
         interior_360: draft.cdnUrlInterior || null,
+        exterior_frames: (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0) ? draft.exterior_frames : null,
         orientation_frames: draft.orientation_frames || {
           hero: 140,
           front: 125,

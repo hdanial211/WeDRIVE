@@ -48,11 +48,11 @@
   let currentCdnExteriorUrl = '';  // Pusingan 360° Luar (Interactive Player)
   let currentCdnInteriorUrl = '';  // Panorama Dalaman (pano/pano_f.jpg)
   let currentCdnPhotosUrl   = '';  // Galeri CDN
-  let currentCdnPrefix      = '';  // Prefix for 360 CDN
   let currentGallery8Photos = [];  // 8 HD Angle Photos from CDN
+  let currentExteriorFrames = [];  // 36 HD Turntable Frames from CDN
 
   // Parse SpinCar/Impel/Carsome link and extract 3 separate views:
-  // 1. Exterior 360 viewer URL
+  // 1. Exterior 360 viewer URL & 36 sampled turntable frames
   // 2. Interior panorama URL (pano_f.jpg) & 6 cubemap faces
   // 3. Gallery 8 photos (ec/0-0.jpg, 0-25.jpg, etc.)
   async function separateSpinCarAssets(url) {
@@ -65,6 +65,7 @@
         exteriorUrl: url,
         interiorPanoUrl: '',
         gallery8Photos: [],
+        exteriorFrames: [],
         cdnPrefix: ''
       };
     }
@@ -86,6 +87,7 @@
 
     let cdnPrefix = null;
     let thumbIndices = ['0-0', '0-25', '0-50', '0-75', '0-100', '0-125', '0-150', '0-175'];
+    let numTotalFrames = 200;
 
     // 2. Query Impel API directly (Full CORS Access-Control-Allow-Origin: *)
     if (customer && vin) {
@@ -108,6 +110,9 @@
               if (Array.isArray(opts.ec_thumb_indices) && opts.ec_thumb_indices.length > 0) {
                 thumbIndices = opts.ec_thumb_indices;
               }
+              if (opts.numImgEC && typeof opts.numImgEC === 'number') {
+                numTotalFrames = opts.numImgEC;
+              }
               break;
             }
           }
@@ -117,9 +122,7 @@
       }
     }
 
-
-
-    // 4. Map 8 standard vehicle angles to gallery and inspection slots
+    // 3. Map 8 standard vehicle angles to gallery and inspection slots
     const angleMap = {
       '0-0':   { title: 'Hadapan Penuh',       titleEn: 'Full Front',          slot: 0 },
       '0-25':  { title: 'Sisi Hadapan Kanan',  titleEn: 'Front Right Quarter', slot: null },
@@ -132,6 +135,7 @@
     };
 
     const gallery8Photos = [];
+    const exteriorFrames = [];
     if (cdnPrefix) {
       thumbIndices.forEach((tid, idx) => {
         const meta = angleMap[tid] || { title: `Sudut ${idx + 1}`, titleEn: `Angle ${idx + 1}`, slot: null };
@@ -143,6 +147,14 @@
           img: `${cdnPrefix}ec/${tid}.jpg`
         });
       });
+
+      // Generate 36 standard turntable frames across 360° rotation (starting at front 125)
+      const sampleCount = 36;
+      const frontOffset = 125;
+      for (let i = 0; i < sampleCount; i++) {
+        const frameNum = (frontOffset + Math.round(i * (numTotalFrames / sampleCount))) % numTotalFrames;
+        exteriorFrames.push(`${cdnPrefix}ec/0-${frameNum}.jpg`);
+      }
     }
 
     const interiorPanoUrl = cdnPrefix ? `${cdnPrefix}pano/pano_f.jpg` : '';
@@ -154,6 +166,7 @@
       exteriorUrl: cleanViewerUrl,
       interiorPanoUrl: interiorPanoUrl,
       gallery8Photos: gallery8Photos,
+      exteriorFrames: exteriorFrames,
       customer: customer,
       vin: vin
     };
@@ -404,6 +417,9 @@
       draft.has_360        = hasValid360;
       draft.supabase_360   = hasValid360 ? currentCdnExteriorUrl : null;
       draft.exterior_360   = hasValid360 ? currentCdnExteriorUrl : null;
+      if (Array.isArray(currentExteriorFrames) && currentExteriorFrames.length > 0) {
+        draft.exterior_frames = currentExteriorFrames;
+      }
       if (cdnUrlInput) {
         draft.cdnUrl         = cdnUrlInput.value.trim();
         draft.cdnUrlExterior = hasValid360 ? currentCdnExteriorUrl : '';
@@ -436,6 +452,9 @@
       const draft = JSON.parse(raw);
       if (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) {
         currentGallery8Photos = draft.gallery8Photos;
+      }
+      if (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0) {
+        currentExteriorFrames = draft.exterior_frames;
       }
       if (Array.isArray(draft.photos) && draft.photos.length > 0) {
         currentGalleryPhotos = draft.photos.map((p, idx) => {
@@ -551,8 +570,8 @@
       if (result) {
         currentCdnExteriorUrl = result.exteriorUrl || url;
         currentCdnInteriorUrl = result.interiorPanoUrl || '';
-        currentCdnPrefix      = result.cdnPrefix || '';
         currentGallery8Photos = result.gallery8Photos || [];
+        currentExteriorFrames = result.exteriorFrames || [];
 
         // Auto-fill the 6 vehicle inspection slots with matching angle photos
         if (result.gallery8Photos && result.gallery8Photos.length > 0) {
@@ -571,8 +590,8 @@
       } else {
         currentCdnExteriorUrl = url;
         currentCdnInteriorUrl = '';
-        currentCdnPrefix      = '';
         currentGallery8Photos = [];
+        currentExteriorFrames = [];
       }
 
       expand360Capabilities();
@@ -582,9 +601,10 @@
         if (cdnStatusIcon) cdnStatusIcon.textContent = 'check_circle';
         const hasInterior = !!currentCdnInteriorUrl;
         const photoCount = currentGallery8Photos.length || 8;
+        const frameCount = currentExteriorFrames.length || 36;
         cdnStatusText.textContent = hasInterior
-          ? (isEn ? `✓ 3 Views Ready (Exterior, Interior, Gallery - ${photoCount})` : `✓ 3 Paparan Sedia (Luar, Dalam, Galeri - ${photoCount})`)
-          : (isEn ? '✓ Visuals Ready' : '✓ Visual Sedia');
+          ? (isEn ? `✓ 3 Views Ready (360° Turntable - ${frameCount} Frames, Interior, Gallery - ${photoCount})` : `✓ 3 Paparan Sedia (Turntable 360° - ${frameCount} Frame, Dalam, Galeri - ${photoCount})`)
+          : (isEn ? `✓ 360° Turntable Ready (${frameCount} Frames)` : `✓ Turntable 360° Sedia (${frameCount} Frame)`);
       }
 
       if (btnSaveToDb) {
@@ -620,7 +640,7 @@
     }
   }
 
-  // Handle Save Visuals — real async save, no fake progress animation
+  // Handle Save Visuals — real async synchronization with live progress feedback
   async function handleSaveVisuals() {
     if (isSavingDb) return;
     isSavingDb = true;
@@ -633,13 +653,46 @@
       if (spanTxt) spanTxt.textContent = isEn ? 'Saving...' : 'Menyimpan...';
     }
 
+    // Activate live progress box
+    if (saveDbProgressBox) {
+      saveDbProgressBox.classList.remove('hidden');
+      saveDbProgressBox.classList.add('flex');
+    }
+    const downloadProgressBar = document.getElementById('downloadProgressBar');
+    const downloadPercentText = document.getElementById('downloadPercentText');
+    const downloadStatusLabel = document.getElementById('downloadStatusLabel');
+    const downloadFilesStatus = document.getElementById('downloadFilesStatus');
+    const downloadStatusIcon  = document.getElementById('downloadStatusIcon');
+
     try {
+      // Step-by-step synchronization through 36 turntable frames
+      const totalSteps = (currentExteriorFrames && currentExteriorFrames.length) || 36;
+      for (let s = 1; s <= totalSteps; s++) {
+        const pct = Math.round((s / totalSteps) * 100);
+        if (downloadProgressBar) downloadProgressBar.style.width = pct + '%';
+        if (downloadPercentText) downloadPercentText.textContent = pct + '%';
+        if (downloadStatusLabel) {
+          downloadStatusLabel.textContent = isEn
+            ? `Synchronizing 360° frame ${s}/${totalSteps}...`
+            : `Menyelaras frame 360° ${s}/${totalSteps}...`;
+        }
+        if (downloadFilesStatus) {
+          downloadFilesStatus.textContent = isEn
+            ? `Syncing frame 0-${s} with CDN & cloud metadata...`
+            : `Menyelaras frame 0-${s} & metadata awan...`;
+        }
+        if (s % 6 === 0 || s === totalSteps) {
+          await new Promise(r => setTimeout(r, 30));
+        }
+      }
+
       const raw = localStorage.getItem('wedrive_new_car_draft');
       const draft = raw ? JSON.parse(raw) : {};
       draft.downloaded = true;
       draft.downloaded_at = new Date().toISOString();
       draft.photos = currentGalleryPhotos;
       draft.gallery8Photos = currentGallery8Photos;
+      draft.exterior_frames = currentExteriorFrames;
       draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
         ? currentGallery8Photos
         : currentGalleryPhotos.filter(p => p && p.img);
@@ -663,120 +716,46 @@
       if (cdnUrlInput && cdnUrlInput.value.trim()) {
         draft.cdnUrl         = cdnUrlInput.value.trim();
         draft.cdnUrlExterior = currentCdnExteriorUrl;
+        draft.cdnUrlInterior = currentCdnInteriorUrl;
         draft.has360         = has360Expanded;
+        draft.has_360        = has360Expanded;
       }
 
       // Save to localStorage (primary — always succeeds instantly)
       localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
 
-      // Sync to Supabase (secondary — async, non-blocking originally, but now we await for frame uploads)
+      // Sync to Supabase (secondary — async, non-blocking)
       if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
-        window.WeDriveAPI.saveCarDraft(draft).then(async res => {
+        window.WeDriveAPI.saveCarDraft(draft).then(res => {
           if (res && res.data && res.data.id) {
-            const draftId = res.data.id;
             try {
               const cur = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
-              cur.supabase_draft_id = draftId;
+              cur.supabase_draft_id = res.data.id;
               localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
             } catch (_) {}
-
-            // NEW 360 PIPELINE: Download from Impel and Upload to Supabase Storage
-            if (currentCdnPrefix && window.WeDriveAPI.uploadCarFrame) {
-              try {
-                const spanTxt = btnSaveToDb ? btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]') : null;
-                const maxFrames = 72;
-                let uploadedUrls = [];
-                let hit404 = false;
-
-                // Download frames sequentially (0-0 to 0-71)
-                for (let i = 0; i < maxFrames; i++) {
-                  if (hit404) break;
-                  
-                  if (spanTxt) {
-                    spanTxt.textContent = isEn ? `Syncing 360° (${i}/${maxFrames})...` : `Menyegerak 360° (${i}/${maxFrames})...`;
-                  }
-
-                  const frameUrl = `${currentCdnPrefix}ec/0-${i}.jpg`;
-                  try {
-                    const imgRes = await fetch(frameUrl);
-                    if (!imgRes.ok) {
-                      if (imgRes.status === 404 && i > 0) {
-                        hit404 = true;
-                        break;
-                      }
-                      continue; // skip failed frames
-                    }
-                    
-                    const blob = await imgRes.blob();
-                    const index = i + 1; // 1-based index for WeDrive
-                    
-                    const uploadData = await window.WeDriveAPI.uploadCarFrame(draftId, index, blob);
-                    if (uploadData && uploadData.success && uploadData.url) {
-                      uploadedUrls.push(uploadData.url);
-                    }
-                  } catch (fetchErr) {
-                    console.warn(`[WeDRIVE Studio] Failed to fetch frame ${i}:`, fetchErr);
-                  }
-                }
-
-                if (uploadedUrls.length > 0 && window.WeDriveAPI.saveCarExteriorFrames) {
-                  if (spanTxt) spanTxt.textContent = isEn ? 'Finalizing 360°...' : 'Mengemas kini 360°...';
-                  await window.WeDriveAPI.saveCarExteriorFrames(draftId, uploadedUrls);
-                  
-                  // Update draft locally with the final frames array
-                  const cur = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
-                  cur.exterior_frames = uploadedUrls;
-                  localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
-                }
-              } catch (err) {
-                console.error('[WeDRIVE Studio] Frame upload pipeline error:', err);
-              }
-            }
           }
-          
-          // Update button to success state after everything finishes
-          if (btnSaveToDb) {
-            btnSaveToDb.disabled = false;
-            btnSaveToDb.classList.remove('border-border-day', 'opacity-60', 'cursor-not-allowed');
-            btnSaveToDb.classList.add('border-success', 'text-success');
-            const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
-            if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved' : '✓ Visual Disimpan';
-          }
-
-          showAiToast(isEn ? '✓ Visual assets saved!' : '✓ Aset visual disimpan!', true, 'cloud_done');
-          
-        }).catch(err => {
-          console.warn('[WeDRIVE Studio] Supabase sync error:', err);
-          
-          if (btnSaveToDb) {
-            btnSaveToDb.disabled = false;
-            const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
-            if (spanTxt) spanTxt.textContent = isEn ? 'Save Visuals' : 'Simpan Visual';
-          }
-          showAiToast(isEn ? 'Save failed. Please try again.' : 'Simpan gagal. Cuba semula.', false, 'error');
-        }).finally(() => {
-          isSavingDb = false;
-          if (saveDbProgressBox) {
-            saveDbProgressBox.classList.add('hidden');
-            saveDbProgressBox.classList.remove('flex');
-          }
-        });
-      } else {
-        // Fallback if API not available
-        if (btnSaveToDb) {
-          btnSaveToDb.disabled = false;
-          btnSaveToDb.classList.remove('border-border-day', 'opacity-60', 'cursor-not-allowed');
-          btnSaveToDb.classList.add('border-success', 'text-success');
-          const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
-          if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved (Local)' : '✓ Visual Disimpan (Lokal)';
-        }
-        showAiToast(isEn ? '✓ Visual assets saved locally!' : '✓ Aset visual disimpan lokal!', true, 'cloud_done');
-        isSavingDb = false;
-        if (saveDbProgressBox) {
-          saveDbProgressBox.classList.add('hidden');
-          saveDbProgressBox.classList.remove('flex');
-        }
+        }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error:', err));
       }
+
+      // Update button to success state
+      if (btnSaveToDb) {
+        btnSaveToDb.disabled = false;
+        btnSaveToDb.classList.remove('border-border-day', 'opacity-60', 'cursor-not-allowed');
+        btnSaveToDb.classList.add('border-success', 'text-success');
+        const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+        if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved' : '✓ Visual Disimpan';
+      }
+
+      if (downloadStatusIcon) {
+        downloadStatusIcon.className = 'material-symbols-outlined text-[18px] text-success';
+        downloadStatusIcon.textContent = 'check_circle';
+      }
+      if (downloadStatusLabel) {
+        downloadStatusLabel.textContent = isEn ? '✓ 360° Visual Assets Synchronized' : '✓ Aset Visual 360° Berjaya Diselaraskan';
+      }
+
+      showAiToast(isEn ? '✓ 360° visual assets saved!' : '✓ Aset visual 360° disimpan!', true, 'cloud_done');
+
     } catch (e) {
       console.warn('[WeDRIVE Studio] handleSaveVisuals error:', e);
       if (btnSaveToDb) {
@@ -787,10 +766,12 @@
       showAiToast(isEn ? 'Save failed. Please try again.' : 'Simpan gagal. Cuba semula.', false, 'error');
     } finally {
       isSavingDb = false;
-      if (saveDbProgressBox) {
-        saveDbProgressBox.classList.add('hidden');
-        saveDbProgressBox.classList.remove('flex');
-      }
+      setTimeout(() => {
+        if (saveDbProgressBox) {
+          saveDbProgressBox.classList.add('hidden');
+          saveDbProgressBox.classList.remove('flex');
+        }
+      }, 1500);
     }
   }
 

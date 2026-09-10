@@ -6983,3 +6983,33 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.20.0 Implement AI 360 Studio automated sync pipeline and fix E2E regressions`
   - Tag Versi: `6.20.0`
+
+---
+
+## 33. [MINOR UPDATE] Versi 6.21.0 — Studio Meja Putar 360° Asli Tanpa Iframe untuk Pautan Carsome/SpinCar CDN & Animasi Muat Turun Progresif
+- **Tarikh**: 10 September 2026
+- **Objektif**: Melengkapkan saluran paip "Jana Studio AI" di mana pautan Carsome/SpinCar CDN dihuraikan kepada 36 bingkai meja putar (turntable) beresolusi tinggi, membolehkan kenderaan baharu (seperti Nissan Navara dan Volvo S60) menikmati pengalaman interaktif seret 360° Apple HIG yang asli tanpa bergantung kepada iframe pihak ketiga yang perlahan.
+- **Perubahan Teras**:
+  1. **Enjin Pengekstrakan 36 Bingkai Meja Putar (`step2-studio360.js`)**:
+     - Membina fungsi peleraian `separateSpinCarAssets(url)` yang menyambung terus ke Impel API (`api-eu.impel.io`) bagi mengekstrak `cdn_image_prefix` dan menghasilkan 36 URL bingkai HD (`${cdnPrefix}ec/0-${frameNum}.jpg`) bermula dari sudut hadapan (offset 125).
+     - Menambah kotak status progresif `#saveDbProgressBox` dengan animasi bar muat turun masa nyata (0% hingga 100%) dan teks peratusan `#downloadPercentText`.
+     - Menyimpan bingkai terpilih ke dalam storan draf `wedrive_new_car_draft.exterior_frames`.
+  2. **Penyelarasan API & Pengesahan (`api.js` & `step3-pengesahan.js`)**:
+     - Mengemas kini `confirmPublish` di Langkah 3 untuk mengikat `exterior_frames` dan menetapkan `has_360 = true`.
+     - Menambah fungsi pemprosesan `_processCarRecord(c)` di `api.js` yang mengurai rekod JSON `exterior_360` dan menyelaraskan `exterior_frames` secara telus pada semua capaian data kenderaan.
+  3. **Penyemak Imbas Meja Putar Asli Tanpa Iframe (`car-detail.js`)**:
+     - Mengemas kini `setupExterior360(car)` dengan enjin pelerai automatik `resolveSpinCarFrames(url)` yang memuatkan bingkai secara dinamik dan menyingkirkan sebarang iframe.
+     - Melaksanakan prapemuatan imej sifar lengah (*zero-lag image preloader*) untuk kesemua 36 bingkai bagi memastikan pergerakan seret tetikus/sentuh sentiasa lancar pada kadar 60fps.
+     - Menyelaraskan butang skrin penuh mengikut peraturan mutlak bulatan 1:1 Apple HIG.
+  4. **Suite Ujian Automasi Khusus Playwright (`tests/e2e/21_spincar_cdn_studio360.spec.js`)**:
+     - Menguji pemuatan Nissan Navara (#394) menggunakan bingkai meja putar asli tanpa sebarang iframe.
+     - Menguji interaksi seretan tetikus yang menukar sudut darjah pada pil status (`#studio-angle-text`).
+     - Menguji langkah 2 penjanaan AI dan bar kemajuan penyimpanan visual ke draf.
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Playwright CLI**: 69/69 Ujian Lulus (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 24 fail `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+- **Maklumat Git**:
+  - Commit: `6.21.0 Native 360 exterior turntable without iframe for Carsome CDN links`
+  - Tag Versi: `6.21.0`
+

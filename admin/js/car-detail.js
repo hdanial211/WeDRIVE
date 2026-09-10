@@ -346,10 +346,122 @@ function setText(id, text) {
 /* ─────────────────────────────────────────────────────────────────────────────
    3. STUDIO 360° EXTERIOR SPIN ENGINE (FULLY DYNAMIC — ZERO HARDCODE)
    ───────────────────────────────────────────────────────────────────────────── */
-function setupExterior360(car) {
+async function resolveSpinCarFrames(url) {
+  if (!url || typeof url !== 'string') return null;
+  const isSpinCar = /cdn\.impel\.io|spincar|carsome/i.test(url);
+  if (!isSpinCar) return null;
+
+  const custMatch = url.match(/customer=([a-zA-Z0-9_\-]+)/i) || url.match(/\/spin\/([a-zA-Z0-9_\-]+)\//i);
+  const vinMatch  = url.match(/vin=([a-zA-Z0-9_\-]+)/i)     || url.match(/\/spin\/[^\/]+\/([a-zA-Z0-9_\-]+)/i);
+
+  let customer = custMatch ? custMatch[1] : 'Carsome';
+  let vin = vinMatch ? vinMatch[1] : null;
+
+  if (!vin) {
+    const pathMatch = url.match(/\/([a-zA-Z0-9_\-]+)\/([a-zA-Z0-9]{10,25})/i);
+    if (pathMatch) {
+      customer = pathMatch[1];
+      vin = pathMatch[2];
+    }
+  }
+  if (!vin) return null;
+
+  const apiUrls = [
+    `https://api-eu.impel.io/spin/${customer}/${vin}?v=20160212`,
+    `https://api.impel.io/spin/${customer}/${vin}?v=20160212`
+  ];
+
+  for (const apiUrl of apiUrls) {
+    try {
+      const resp = await fetch(apiUrl);
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data && data.cdn_image_prefix) {
+          let cdnPrefix = data.cdn_image_prefix;
+          if (cdnPrefix.startsWith('//')) cdnPrefix = 'https:' + cdnPrefix;
+          if (!cdnPrefix.endsWith('/')) cdnPrefix += '/';
+
+          const opts = (data.info && data.info.options) || {};
+          const numTotalFrames = (opts.numImgEC && typeof opts.numImgEC === 'number') ? opts.numImgEC : 200;
+          const sampleCount = 36;
+          const frontOffset = 125;
+          const frames = [];
+          for (let i = 0; i < sampleCount; i++) {
+            const frameNum = (frontOffset + Math.round(i * (numTotalFrames / sampleCount))) % numTotalFrames;
+            frames.push(`${cdnPrefix}ec/0-${frameNum}.jpg`);
+          }
+          return frames;
+        }
+      }
+    } catch (err) {
+      console.warn('[WeDRIVE Car Detail] SpinCar CDN frames resolve notice:', err);
+    }
+  }
+  return null;
+}
+
+function injectFallbackIframe(url) {
   const stageImg = document.getElementById('studio-canvas-stage');
   const fallbackIcon = document.getElementById('studio-fallback-icon');
   const exteriorStage = document.getElementById('studio-exterior-stage');
+
+  const oldIframe = document.getElementById('studio-exterior-iframe');
+  if (oldIframe) oldIframe.remove();
+
+  if (stageImg) stageImg.style.display = 'none';
+  if (fallbackIcon) fallbackIcon.classList.add('hidden');
+
+  const iframe = document.createElement('iframe');
+  iframe.id = 'studio-exterior-iframe';
+  iframe.src = url;
+  iframe.allow = 'fullscreen; xr-spatial-tracking';
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.style.cssText = [
+    'width:100%', 'height:100%', 'border:none',
+    'border-radius:inherit', 'display:block',
+    'position:absolute', 'inset:0', 'z-index:2'
+  ].join(';');
+
+  if (exteriorStage) {
+    exteriorStage.style.position = 'relative';
+    exteriorStage.appendChild(iframe);
+  }
+
+  const anglePill = document.getElementById('studio-angle-pill');
+  if (anglePill) anglePill.style.display = 'none';
+}
+
+function activateFrameViewer() {
+  const stageImg = document.getElementById('studio-canvas-stage');
+  const fallbackIcon = document.getElementById('studio-fallback-icon');
+  const anglePill = document.getElementById('studio-angle-pill');
+
+  const oldIframe = document.getElementById('studio-exterior-iframe');
+  if (oldIframe) oldIframe.remove();
+
+  if (stageImg) {
+    stageImg.classList.remove('hidden');
+    stageImg.style.display = 'block';
+    stageImg.src = resolveImgSrc(exteriorFrames[0]);
+  }
+  if (fallbackIcon) fallbackIcon.classList.add('hidden');
+
+  if (anglePill) anglePill.style.display = '';
+
+  currentFrameIndex = 0;
+  updateAnglePill(0);
+  bind360DragEvents();
+
+  // Zero-lag 60fps image preloading
+  exteriorFrames.forEach(frameUrl => {
+    const img = new Image();
+    img.src = resolveImgSrc(frameUrl);
+  });
+}
+
+function setupExterior360(car) {
+  const stageImg = document.getElementById('studio-canvas-stage');
+  const fallbackIcon = document.getElementById('studio-fallback-icon');
   exteriorFrames = [];
   currentFrameIndex = 0;
 
@@ -359,50 +471,7 @@ function setupExterior360(car) {
     return;
   }
 
-  // ── Case 1: SpinCar / HTTP external interactive 360 URL ──
-  // When exterior_360 is a full URL (SpinCar, impel360, etc.),
-  // inject a real <iframe> instead of a static <img>.
-  if (
-    car.exterior_360 &&
-    typeof car.exterior_360 === 'string' &&
-    car.exterior_360.startsWith('http') &&
-    !findRegistryEntry(car) &&
-    (!Array.isArray(car.exterior_frames) || !car.exterior_frames.length)
-  ) {
-    // Remove any old iframe first
-    const oldIframe = document.getElementById('studio-exterior-iframe');
-    if (oldIframe) oldIframe.remove();
-
-    // Hide static img — iframe takes over
-    if (stageImg) stageImg.style.display = 'none';
-    if (fallbackIcon) fallbackIcon.classList.add('hidden');
-
-    // Inject interactive iframe
-    const iframe = document.createElement('iframe');
-    iframe.id = 'studio-exterior-iframe';
-    iframe.src = car.exterior_360;
-    iframe.allow = 'fullscreen; xr-spatial-tracking';
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.style.cssText = [
-      'width:100%', 'height:100%', 'border:none',
-      'border-radius:inherit', 'display:block',
-      'position:absolute', 'inset:0', 'z-index:2'
-    ].join(';');
-
-    if (exteriorStage) {
-      exteriorStage.style.position = 'relative';
-      exteriorStage.appendChild(iframe);
-    }
-
-    // Hide angle pill — not applicable for iframe player
-    const anglePill = document.getElementById('studio-angle-pill');
-    if (anglePill) anglePill.style.display = 'none';
-
-    // No frame-based drag needed — SpinCar handles interaction internally
-    return;
-  }
-
-  // ── Case 2: Local Carsome frame registry ──
+  // ── Case 1: Local Carsome frame registry ──
   const match = findRegistryEntry(car);
   if (match) {
     const basePath = match.entry.sourceJson.replace(/\/source\.json$/i, '');
@@ -415,10 +484,10 @@ function setupExterior360(car) {
       exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
     }
   } else if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) {
-    // ── Case 3: Explicit frames array ──
+    // ── Case 2: Explicit frames array ──
     exteriorFrames = [...car.exterior_frames];
-  } else if (car.exterior_360 && typeof car.exterior_360 === 'string') {
-    // ── Case 4: Local relative path to frames folder ──
+  } else if (car.exterior_360 && typeof car.exterior_360 === 'string' && !car.exterior_360.startsWith('http')) {
+    // ── Case 3: Local relative path to frames folder ──
     const basePath = car.exterior_360.replace(/\/exterior\/full-res$/i, '').replace(/\/+$/, '');
     const frontOffset = 125;
     const sampleCount = 36;
@@ -430,29 +499,31 @@ function setupExterior360(car) {
     }
   }
 
-  // Remove any injected iframe from previous load
-  const oldIframe = document.getElementById('studio-exterior-iframe');
-  if (oldIframe) oldIframe.remove();
-
   if (exteriorFrames.length > 0) {
-    if (stageImg) {
-      stageImg.classList.remove('hidden');
-      stageImg.style.display = 'block';
-    }
-    if (fallbackIcon) fallbackIcon.classList.add('hidden');
-
-    const anglePill = document.getElementById('studio-angle-pill');
-    if (anglePill) anglePill.style.display = '';
-
-    stageImg.src = resolveImgSrc(exteriorFrames[0]);
-    currentFrameIndex = 0;
-    updateAnglePill(0);
-    // Bind mouse drag & touch scrub events for frame-based viewer
-    bind360DragEvents();
-  } else {
-    if (stageImg) stageImg.style.display = 'none';
-    if (fallbackIcon) fallbackIcon.classList.remove('hidden');
+    activateFrameViewer();
+    return;
   }
+
+  // ── Case 4: SpinCar / CDN external URL (Auto-resolve 36 frames or fallback iframe) ──
+  if (car.exterior_360 && typeof car.exterior_360 === 'string' && car.exterior_360.startsWith('http')) {
+    if (/cdn\.impel\.io|spincar|carsome/i.test(car.exterior_360)) {
+      resolveSpinCarFrames(car.exterior_360).then(frames => {
+        if (frames && frames.length > 0) {
+          car.exterior_frames = frames;
+          exteriorFrames = [...frames];
+          activateFrameViewer();
+        } else {
+          injectFallbackIframe(car.exterior_360);
+        }
+      });
+    } else {
+      injectFallbackIframe(car.exterior_360);
+    }
+    return;
+  }
+
+  if (stageImg) stageImg.style.display = 'none';
+  if (fallbackIcon) fallbackIcon.classList.remove('hidden');
 }
 
 function bind360DragEvents() {
