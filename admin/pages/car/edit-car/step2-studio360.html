@@ -31,8 +31,11 @@
     </script>
     <style>
         .apple-stepper-dock {
-            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+        .badge-360 svg {
+            flex-shrink: 0;
         }
         .canvas-stage-wrapper {
             position: relative;
@@ -94,7 +97,7 @@
 
             <!-- STEPPER INDICATOR -->
             <div class="bg-surface-2 border border-subtle rounded-full p-1.5 flex items-center gap-1 shadow-xs self-start md:self-auto">
-                <a id="step1Link" href="step1_spesifikasi.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
+                <a id="step1Link" href="step1-specification.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
                     <span>Spesifikasi</span>
                 </a>
@@ -133,7 +136,7 @@
                         <!-- 360 AUTO-DETECT STATUS PILL -->
                         <div id="badge360Indicator">
                             <span class="badge-360" id="studioBadge360">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
                                     <polyline points="7.5 14.5 10 17.5 7 20"/>
                                 </svg>
@@ -245,7 +248,7 @@
 
                         <!-- Local File Upload input -->
                         <div class="border-2 border-dashed border-subtle rounded-xl p-4 text-center hover:border-primary transition-colors cursor-pointer" onclick="document.getElementById('inputPhotoFile').click()">
-                            <input type="file" id="inputPhotoFile" class="hidden" accept="image/*" multiple onchange="handleFileUpload(event)" />
+                            <input type="file" id="inputPhotoFile" class="hidden" accept="image/*" multiple onchange="handleFileUpload(event)" title="Muat Naik Fail Foto" aria-label="Muat Naik Fail Foto" />
                             <span class="material-icons-round text-2xl text-secondary mb-1 block">cloud_upload</span>
                             <span class="text-xs font-bold text-primary block">Klik untuk Muat Naik dari Peranti</span>
                             <span class="text-[11px] text-secondary">Menyokong format JPG, PNG, WebP</span>
@@ -301,7 +304,7 @@
                 return;
             }
 
-            document.getElementById('step1Link').href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('step1Link').href = `step1-specification.html?id=${encodeURIComponent(currentCarId)}`;
             const breadcrumbLink = document.getElementById('linkCarDetailBreadcrumb');
             if (breadcrumbLink) {
                 breadcrumbLink.href = `../car-detail/car-detail.html?id=${encodeURIComponent(currentCarId)}`;
@@ -550,7 +553,7 @@
         }
 
         function handleBackToStep1() {
-            window.location.href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
+            window.location.href = `step1-specification.html?id=${encodeURIComponent(currentCarId)}`;
         }
 
         function handleProceedToStep3() {
@@ -561,7 +564,7 @@
             }
 
             window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
-            window.location.href = `step3_pengesahan.html?id=${encodeURIComponent(currentCarId)}`;
+            window.location.href = `step3-confirmation.html?id=${encodeURIComponent(currentCarId)}`;
         }
     </script>
 </body>

@@ -91,9 +91,14 @@ AI CAR RENTAL SYSTEM/
 |   |   |   |   +-- step4_pandangan_pelanggan.html # Langkah 4: Pandangan Pelanggan WYSIWYG
 |   |   |   |   +-- step5_tempahan.html    # Langkah 5: Butiran & Tempahan Pelanggan
 |   |   |   |   +-- add-car-flow.js        # Pengurus Keadaan Draf Dwiarah
-|   |   |   |   +-- preview-i18n.js        # Enjin Dwibahasa Setempat
 |   |   |   +-- car-detail/
-|   |   |       +-- car-detail.html        # Pengurusan Terperinci & Status Kereta Individu
+|   |   |   |   +-- car-detail.html        # Pengurusan Terperinci & Status Kereta Individu
+|   |   |   +-- edit-car/                  # Folder Sunting Kereta Modular 3-Langkah (English Kebab-Case)
+|   |   |       +-- index.html             # Auto-redirect ke Step 1 mengikut ID
+|   |   |       +-- step1-specification.html # Langkah 1: Spesifikasi & Harga Bento
+|   |   |       +-- step2-studio360.html   # Langkah 2: Studio Visual & Pusingan 360°
+|   |   |       +-- step3-confirmation.html # Langkah 3: Semakan Akhir & Pengesahan Simpan
+|   |   |       +-- edit-car.js            # Pengurus Keadaan Sesi Draf & API Supabase
 |   |   +-- booking/
 |   |   |   +-- bookings.html              # Lejer Semua Tempahan
 |   |   |   +-- active-bookings.html       # Pengurusan Tempahan Aktif & Bayaran Balik (Refund)

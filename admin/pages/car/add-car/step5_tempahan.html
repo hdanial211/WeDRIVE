@@ -89,6 +89,11 @@
       }
     }
   </script>
+  <style>
+    .badge-360 svg {
+      flex-shrink: 0;
+    }
+  </style>
 </head>
 <body data-particles="6" data-cursor-glow class="antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300 has-action-dock">
 
@@ -168,7 +173,7 @@
                     <!-- Badges: Zero AI gimmick, Single 360 indicator if present -->
                     <div class="flex items-center gap-2">
                         <span id="step5Badge360" class="badge-360 hidden">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
                                 <polyline points="7.5 14.5 10 17.5 7 20"/>
                             </svg>
@@ -187,7 +192,7 @@
                         <p class="font-footnote text-[13px] text-on-surface-variant leading-relaxed" data-i18n="step3_empty_showcase_desc">Sila kembali ke Langkah 2 untuk memuat naik foto kenderaan.</p>
                     </div>
                     <img id="step5HeroImage" class="hidden w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" src="" alt="Kenderaan WeDRIVE"/>
-                    <iframe id="step5360Iframe" class="hidden w-full h-full border-0 bg-black" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    <iframe id="step5360Iframe" class="hidden w-full h-full border-0 bg-black" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title="Pratonton Interaktif 360 Kenderaan"></iframe>
                     <!-- Floating Nav Arrows (1:1 aspect) -->
                     <button id="step5BtnPrev" type="button" class="hidden circle-1-1 absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_left</span></button>
                     <button id="step5BtnNext" type="button" class="hidden circle-1-1 absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_right</span></button>

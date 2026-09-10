@@ -44,12 +44,12 @@ test.describe('WeDRIVE Edit Car Modular Stepper & Dynamic 360 Auto-Detection', (
     await expect(editBtn).toBeVisible();
 
     await editBtn.click();
-    await page.waitForURL('**/admin/pages/car/edit-car/step1_spesifikasi.html?id=1');
-    expect(page.url()).toContain('step1_spesifikasi.html?id=1');
+    await page.waitForURL('**/admin/pages/car/edit-car/step1-specification.html?id=1');
+    expect(page.url()).toContain('step1-specification.html?id=1');
   });
 
   test('Step 1 pre-fills car specs, provides live preview with dynamic 360 badge, and proceeds to Step 2', async ({ page }) => {
-    await page.goto('/admin/pages/car/edit-car/step1_spesifikasi.html?id=1');
+    await page.goto('/admin/pages/car/edit-car/step1-specification.html?id=1');
     await page.waitForLoadState('networkidle');
 
     const nameInput = page.locator('#inputName');
@@ -65,12 +65,12 @@ test.describe('WeDRIVE Edit Car Modular Stepper & Dynamic 360 Auto-Detection', (
     await expect(nextBtn).toBeVisible();
     await nextBtn.click();
 
-    await page.waitForURL('**/admin/pages/car/edit-car/step2_studio360.html?id=1');
-    expect(page.url()).toContain('step2_studio360.html?id=1');
+    await page.waitForURL('**/admin/pages/car/edit-car/step2-studio360.html?id=1');
+    expect(page.url()).toContain('step2-studio360.html?id=1');
   });
 
   test('Step 2 manages gallery and dynamically toggles 360 badge when cleared or restored', async ({ page }) => {
-    await page.goto('/admin/pages/car/edit-car/step2_studio360.html?id=1');
+    await page.goto('/admin/pages/car/edit-car/step2-studio360.html?id=1');
     await page.waitForLoadState('networkidle');
 
     const cdnInput = page.locator('#inputExteriorCdnUrl');
@@ -94,12 +94,12 @@ test.describe('WeDRIVE Edit Car Modular Stepper & Dynamic 360 Auto-Detection', (
     const nextBtn = page.locator('#btnProceedStep3');
     await nextBtn.click();
 
-    await page.waitForURL('**/admin/pages/car/edit-car/step3_pengesahan.html?id=1');
-    expect(page.url()).toContain('step3_pengesahan.html?id=1');
+    await page.waitForURL('**/admin/pages/car/edit-car/step3-confirmation.html?id=1');
+    expect(page.url()).toContain('step3-confirmation.html?id=1');
   });
 
   test('Step 3 displays review summary and successfully updates record', async ({ page }) => {
-    await page.goto('/admin/pages/car/edit-car/step3_pengesahan.html?id=1');
+    await page.goto('/admin/pages/car/edit-car/step3-confirmation.html?id=1');
     await page.waitForLoadState('networkidle');
 
     await expect(page.locator('#sumPlate')).toHaveText('WDR 3388');

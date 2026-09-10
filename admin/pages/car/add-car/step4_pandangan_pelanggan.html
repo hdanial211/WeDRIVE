@@ -77,6 +77,22 @@
             }
         }
     </script>
+    <style>
+        .star-icon-rating {
+            font-size: 12px;
+            color: #f59e0b;
+            margin-right: 2px;
+        }
+        .badge-360 svg {
+            flex-shrink: 0;
+        }
+        .ai-chip-icon {
+            font-size: 12px;
+        }
+        .btn-book-icon {
+            font-size: 17px;
+        }
+    </style>
 </head>
 <body data-particles="6" data-cursor-glow class="antialiased min-h-screen font-body selection:bg-primary selection:text-white transition-colors duration-300">
     <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
@@ -203,9 +219,9 @@
 
                         <div class="car-badges">
                             <span id="cardStatus" class="status-pill available">Tersedia</span>
-                            <span class="rating-pill"><span class="material-icons-round" style="font-size:12px; color:#f59e0b; margin-right:2px;">star</span>5.0</span>
+                            <span class="rating-pill"><span class="material-icons-round star-icon-rating">star</span>5.0</span>
                             <span id="cardBadge360" class="badge-360 hidden">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
                                     <polyline points="7.5 14.5 10 17.5 7 20"/>
                                 </svg>
@@ -231,13 +247,13 @@
                             <div class="spec"><span class="material-icons-round">verified</span><span id="cardVerified">Tersedia</span></div>
                         </div>
                         <div class="ai-chip">
-                            <span class="material-icons-round" style="font-size:12px">psychology</span>
+                            <span class="material-icons-round ai-chip-icon">psychology</span>
                             <span id="cardEngine">-</span>
                         </div>
                         <div class="car-footer">
                             <div class="price tabular-nums"><span id="cardPrice">RM 0</span><span data-i18n="step4_card_per_day">/hari</span></div>
                             <button type="button" class="btn-book" onclick="event.stopPropagation();window.location.href='step5_tempahan.html'">
-                                <span class="material-icons-round" style="font-size:17px">event_available</span>
+                                <span class="material-icons-round btn-book-icon">event_available</span>
                                 <span data-i18n="step4_card_book_now">Tempah Sekarang</span>
                             </button>
                         </div>

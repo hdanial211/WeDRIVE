@@ -38,9 +38,9 @@ test.describe('WeDRIVE Admin Audit Bugs Resolution Verification', () => {
 
   test('Bug 2: Edit Car wizard steps render Admin Navbar with 6 modules', async ({ page }) => {
     const steps = [
-      '/admin/pages/car/edit-car/step1_spesifikasi.html?id=6',
-      '/admin/pages/car/edit-car/step2_studio360.html?id=6',
-      '/admin/pages/car/edit-car/step3_pengesahan.html?id=6'
+      '/admin/pages/car/edit-car/step1-specification.html?id=6',
+      '/admin/pages/car/edit-car/step2-studio360.html?id=6',
+      '/admin/pages/car/edit-car/step3-confirmation.html?id=6'
     ];
 
     for (const stepUrl of steps) {
@@ -57,7 +57,7 @@ test.describe('WeDRIVE Admin Audit Bugs Resolution Verification', () => {
 
   test('Bug 3: Category and Transmission dropdowns are correctly pre-filled without blank values', async ({ page }) => {
     // Ford Ranger Raptor ID=6 (type=truck, transmission=Auto in DB)
-    await page.goto('/admin/pages/car/edit-car/step1_spesifikasi.html?id=6');
+    await page.goto('/admin/pages/car/edit-car/step1-specification.html?id=6');
     await page.waitForLoadState('networkidle');
 
     const selectCategory = page.locator('#selectCategory');

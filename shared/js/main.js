@@ -269,6 +269,14 @@ window.escapeHtml = function (str) {
   }
 
   function resolveProjectBase() {
+    var link = document.querySelector('link[href*="shared/css/"]');
+    if (link) {
+      return link.getAttribute('href').replace(/shared\/css\/.*$/, '');
+    }
+    var script = document.querySelector('script[src*="shared/js/"]');
+    if (script) {
+      return script.getAttribute('src').replace(/shared\/js\/.*$/, '');
+    }
     var pathname = decodeURIComponent(window.location.pathname);
     var marker = '/AI CAR RENTAL SYSTEM/';
     var idx = pathname.indexOf(marker);
@@ -714,7 +722,9 @@ window.escapeHtml = function (str) {
 
   function getMergedLangData(lang) {
     var fallback = FALLBACK_LANG[lang] || {};
-    var loaded = window['wedrive_lang_' + lang] || {};
+    var loaded = window['wedrive_lang_' + lang] ||
+                 (lang === 'ms' ? window.wedriveMs : window.wedriveEn) ||
+                 window['wedrive_' + lang] || {};
     return Object.assign({}, fallback, loaded);
   }
 

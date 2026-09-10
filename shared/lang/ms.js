@@ -1,4 +1,4 @@
-window.wedriveMs = {
+window.wedriveMs = window.wedrive_lang_ms = window.wedrive_ms = {
   "_comment": "WeDRIVE — Bahasa Melayu Language Pack",
   "app_tagline": "Sistem Penyewaan Kereta Berkuasa AI",
   "nav_browse": "Cari Kereta",

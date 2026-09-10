@@ -31,8 +31,11 @@
     </script>
     <style>
         .apple-stepper-dock {
-            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+        .badge-360 svg {
+            flex-shrink: 0;
         }
         .diff-tag-changed {
             background: rgba(0, 113, 227, 0.12);
@@ -73,11 +76,11 @@
 
             <!-- STEPPER INDICATOR -->
             <div class="bg-surface-2 border border-subtle rounded-full p-1.5 flex items-center gap-1 shadow-xs self-start md:self-auto">
-                <a id="step1Link" href="step1_spesifikasi.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
+                <a id="step1Link" href="step1-specification.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
                     <span>Spesifikasi</span>
                 </a>
-                <a id="step2Link" href="step2_studio360.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
+                <a id="step2Link" href="step2-studio360.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
                     <span>Studio Visual</span>
                 </a>
@@ -99,7 +102,7 @@
                             <span class="material-icons-round text-primary text-xl">fact_check</span>
                             <h2 class="text-base font-bold text-primary m-0">Ringkasan Spesifikasi Terkini</h2>
                         </div>
-                        <a id="linkEditSpec" href="step1_spesifikasi.html" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
+                        <a id="linkEditSpec" href="step1-specification.html" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
                             <span class="material-icons-round fs-14">edit</span> Sunting Spesifikasi
                         </a>
                     </div>
@@ -183,7 +186,7 @@
                             <span class="material-icons-round text-primary text-xl">photo_camera</span>
                             <h2 class="text-base font-bold text-primary m-0">Aset Visual &amp; Studio</h2>
                         </div>
-                        <a id="linkEditVisual" href="step2_studio360.html" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
+                        <a id="linkEditVisual" href="step2-studio360.html" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
                             <span class="material-icons-round fs-14">edit</span> Sunting Visual
                         </a>
                     </div>
@@ -192,7 +195,7 @@
                     <div class="apple-car-studio-canvas relative overflow-hidden bg-surface-3 rounded-2xl h-56 flex items-center justify-center mb-4">
                         <!-- 360 View Badge (Dynamic Auto-Detect) -->
                         <span id="finalBadge360" class="badge-360 badge-360-canvas hidden" title="360° Interactive Studio">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
                                 <polyline points="7.5 14.5 10 17.5 7 20"/>
                             </svg>
@@ -276,10 +279,10 @@
                 return;
             }
 
-            document.getElementById('step1Link').href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
-            document.getElementById('step2Link').href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
-            document.getElementById('linkEditSpec').href = `step1_spesifikasi.html?id=${encodeURIComponent(currentCarId)}`;
-            document.getElementById('linkEditVisual').href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('step1Link').href = `step1-specification.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('step2Link').href = `step2-studio360.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('linkEditSpec').href = `step1-specification.html?id=${encodeURIComponent(currentCarId)}`;
+            document.getElementById('linkEditVisual').href = `step2-studio360.html?id=${encodeURIComponent(currentCarId)}`;
 
             const breadcrumbLink = document.getElementById('linkCarDetailBreadcrumb');
             if (breadcrumbLink) {
@@ -362,7 +365,7 @@
         }
 
         function handleBackToStep2() {
-            window.location.href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
+            window.location.href = `step2-studio360.html?id=${encodeURIComponent(currentCarId)}`;
         }
 
         async function handleConfirmUpdate() {

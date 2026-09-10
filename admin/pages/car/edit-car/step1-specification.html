@@ -31,8 +31,14 @@
     </script>
     <style>
         .apple-stepper-dock {
-            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+        .badge-360 svg {
+            flex-shrink: 0;
+        }
+        .live-pulse-dot.dot-available {
+            background: #10B981;
         }
         .live-preview-card {
             border-radius: 24px;
@@ -247,7 +253,7 @@
                         <div class="apple-car-studio-canvas relative overflow-hidden bg-surface-3">
                             <!-- 360 View Badge (Dynamic Auto-Detect) -->
                             <span id="live360Badge" class="badge-360 badge-360-canvas hidden" title="360° Interactive Studio">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
                                     <polyline points="7.5 14.5 10 17.5 7 20"/>
                                 </svg>
@@ -256,7 +262,7 @@
 
                             <!-- Status Pill -->
                             <div class="glass-status-pill">
-                                <span id="liveStatusDot" class="live-pulse-dot" style="background:#10B981"></span>
+                                <span id="liveStatusDot" class="live-pulse-dot dot-available"></span>
                                 <span id="liveStatusText">Tersedia</span>
                             </div>
 
@@ -589,7 +595,7 @@
             window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
 
             // Navigate to Step 2
-            window.location.href = `step2_studio360.html?id=${encodeURIComponent(currentCarId)}`;
+            window.location.href = `step2-studio360.html?id=${encodeURIComponent(currentCarId)}`;
         }
     </script>
 </body>

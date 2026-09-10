@@ -4,22 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sunting Maklumat Kenderaan — WeDRIVE</title>
+  <style>
+    body {
+      background: #000000;
+      color: #F5F5F7;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .redirect-box {
+      text-align: center;
+    }
+    .redirect-msg {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .redirect-link {
+      color: #2997FF;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
   <script>
     (function () {
       const params = new URLSearchParams(window.location.search);
       const carId = params.get('id');
       if (carId) {
-        window.location.replace('step1_spesifikasi.html?id=' + encodeURIComponent(carId));
+        window.location.replace('step1-specification.html?id=' + encodeURIComponent(carId));
       } else {
         window.location.replace('../cars.html');
       }
     })();
   </script>
 </head>
-<body style="background:#000000;color:#F5F5F7;font-family:-apple-system,BlinkMacSystemFont,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;">
-  <div style="text-align:center;">
-    <p style="font-size:16px;font-weight:600;margin-bottom:12px;">Memuatkan Wizard Suntingan Kenderaan WeDRIVE...</p>
-    <a href="../cars.html" style="color:#2997FF;text-decoration:none;font-weight:bold;font-size:14px;">Klik di sini jika tidak diarahkan secara automatik &rarr;</a>
+<body>
+  <div class="redirect-box">
+    <p class="redirect-msg">Memuatkan Wizard Suntingan Kenderaan WeDRIVE...</p>
+    <a href="../cars.html" class="redirect-link">Klik di sini jika tidak diarahkan secara automatik &rarr;</a>
   </div>
 </body>
 </html>

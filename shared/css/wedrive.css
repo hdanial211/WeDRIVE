@@ -502,7 +502,7 @@ body.dark .nav-links:has(.nav-icon-link) {
     max-width: calc(100% - 110px) !important;
     flex-shrink: 1 !important;
     overflow-x: auto !important;
-    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
   }
   .navbar.navbar-no-brand .nav-links.nav-icons-bar::-webkit-scrollbar,
   .navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar::-webkit-scrollbar {
@@ -546,8 +546,7 @@ body.dark .nav-links:has(.nav-icon-link) {
     max-width: calc(100% - 78px) !important;
     flex-shrink: 1 !important;
     overflow-x: auto !important;
-    scrollbar-width: none !important;
-    -webkit-overflow-scrolling: touch !important;
+    -ms-overflow-style: none !important;
   }
   .navbar.navbar-no-brand .nav-links.nav-icons-bar::-webkit-scrollbar,
   .navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar::-webkit-scrollbar {
@@ -19709,6 +19708,10 @@ body.day-mode .cal-filter-chip.active {
   transition: all 0.2s var(--ease-apple);
 }
 
+.studio-tab-btn.tab-hidden {
+  display: none;
+}
+
 .studio-tab-btn.active {
   background: #0071E3;
   color: #FFFFFF;
@@ -21451,8 +21454,8 @@ body.night-mode .border-border-day {
   color: #1D1D1F !important;
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   opacity: 0;
   pointer-events: none !important;
@@ -21568,8 +21571,8 @@ body.dark .toast-notify {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   animation: slideDownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

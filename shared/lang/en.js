@@ -1,4 +1,4 @@
-window.wedriveEn = {
+window.wedriveEn = window.wedrive_lang_en = window.wedrive_en = {
   "_comment": "WeDRIVE — English Language Pack",
   "app_tagline": "AI-Powered Car Rental System",
   "nav_browse": "Browse Cars",

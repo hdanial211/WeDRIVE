@@ -269,8 +269,14 @@ function updateStudioTabs(car) {
   const tabInt = document.getElementById('tab-interior');
   const tabGal = document.getElementById('tab-gallery');
 
-  if (tabExt) tabExt.style.display = hasExt ? 'inline-flex' : 'none';
-  if (tabInt) tabInt.style.display = hasInt ? 'inline-flex' : 'none';
+  if (tabExt) {
+    tabExt.classList.toggle('tab-hidden', !hasExt);
+    tabExt.style.display = hasExt ? 'inline-flex' : 'none';
+  }
+  if (tabInt) {
+    tabInt.classList.toggle('tab-hidden', !hasInt);
+    tabInt.style.display = hasInt ? 'inline-flex' : 'none';
+  }
   if (tabGal) tabGal.style.display = 'inline-flex';
 
   // Dynamic Page Title & Subtitle Adaptation
@@ -893,9 +899,9 @@ function editDetails() {
     targetId = params.get('id');
   }
   if (targetId) {
-    window.location.href = `../edit-car/step1_spesifikasi.html?id=${encodeURIComponent(targetId)}`;
+    window.location.href = `../edit-car/step1-specification.html?id=${encodeURIComponent(targetId)}`;
   } else {
-    window.location.href = '../edit-car/step1_spesifikasi.html';
+    window.location.href = '../edit-car/step1-specification.html';
   }
 }
 
