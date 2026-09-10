@@ -617,90 +617,94 @@
     }
   }
 
-  // Handle Save Visuals to Database / Supabase Storage
-  function handleSaveVisuals() {
+  // Handle Save Visuals — real async save, no fake progress animation
+  async function handleSaveVisuals() {
     if (isSavingDb) return;
     isSavingDb = true;
     const isEn = getLang() === 'en';
 
-    if (saveDbProgressBox) saveDbProgressBox.classList.remove('hidden');
-    if (saveDbProgressBox) saveDbProgressBox.classList.add('flex');
+    // Show saving state on button immediately
+    if (btnSaveToDb) {
+      btnSaveToDb.disabled = true;
+      const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+      if (spanTxt) spanTxt.textContent = isEn ? 'Saving...' : 'Menyimpan...';
+    }
 
-    let percent = 0;
-    const interval = setInterval(() => {
-      percent += 20;
-      if (downloadProgressBar) downloadProgressBar.style.width = percent + '%';
-      if (downloadPercentText) downloadPercentText.textContent = percent + '%';
+    try {
+      const raw = localStorage.getItem('wedrive_new_car_draft');
+      const draft = raw ? JSON.parse(raw) : {};
+      draft.downloaded = true;
+      draft.downloaded_at = new Date().toISOString();
+      draft.photos = currentGalleryPhotos;
+      draft.gallery8Photos = currentGallery8Photos;
+      draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
+        ? currentGallery8Photos
+        : currentGalleryPhotos.filter(p => p && p.img);
 
-      if (percent >= 100) {
-        clearInterval(interval);
-        setTimeout(() => {
-          isSavingDb = false;
-          if (saveDbProgressBox) saveDbProgressBox.classList.add('hidden');
-          
-          try {
-            const raw = localStorage.getItem('wedrive_new_car_draft');
-            const draft = raw ? JSON.parse(raw) : {};
-            draft.downloaded = true;
-            draft.downloaded_at = new Date().toISOString();
-            draft.photos = currentGalleryPhotos;
-            draft.gallery8Photos = currentGallery8Photos;
-            draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
-              ? currentGallery8Photos
-              : currentGalleryPhotos.filter(p => p && p.img);
-            // Strictly lock Hero photo to Slot 0 (Hadapan Tiga Suku 0-140 BMW/Alphard Standard)
-            const heroPhoto = (currentGalleryPhotos && currentGalleryPhotos[0] && currentGalleryPhotos[0].img)
-              ? currentGalleryPhotos[0]
-              : (currentGallery8Photos && currentGallery8Photos[0])
-                ? currentGallery8Photos[0]
-                : currentGalleryPhotos.find(p => p && p.img);
-            if (heroPhoto) {
-              draft.image_url = typeof heroPhoto === 'string' ? heroPhoto : (heroPhoto.img || '');
-            }
-            draft.orientation_frames = {
-              hero: 140,
-              front: 125,
-              right: 175,
-              left: 75,
-              rear: 24,
-              rear_left: 0
-            };
-            if (currentCdnExteriorUrl) {
-              draft.supabase_360 = currentCdnExteriorUrl;
-            }
-            if (cdnUrlInput && cdnUrlInput.value.trim()) {
-              draft.cdnUrl = cdnUrlInput.value.trim();
-              draft.cdnUrlExterior = currentCdnExteriorUrl;
-              draft.has360 = has360Expanded;
-            }
-            localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
-            if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
-              window.WeDriveAPI.saveCarDraft(draft).then(res => {
-                if (res && res.data && res.data.id) {
-                  try {
-                    const curRaw = localStorage.getItem('wedrive_new_car_draft');
-                    const cur = curRaw ? JSON.parse(curRaw) : {};
-                    cur.supabase_draft_id = res.data.id;
-                    localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
-                  } catch(_) {}
-                }
-              }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error in handleSaveVisuals:', err));
-            }
-          } catch (e) {
-            console.warn('[WeDRIVE Studio] Save downloaded error:', e);
-          }
-
-          if (btnSaveToDb) {
-            btnSaveToDb.classList.remove('border-border-day');
-            btnSaveToDb.classList.add('border-success', 'text-success');
-            const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
-            if (spanTxt) spanTxt.textContent = isEn ? '✓ Visuals Downloaded & Saved' : '✓ Visual Telah Dimuat Turun';
-          }
-
-          showAiToast(isEn ? '✓ Visual assets successfully downloaded & stored!' : '✓ Aset visual berjaya dimuat turun & disimpan!', true, 'cloud_done');
-        }, 300);
+      // Lock Hero photo to Slot 0
+      const heroPhoto = (currentGalleryPhotos && currentGalleryPhotos[0] && currentGalleryPhotos[0].img)
+        ? currentGalleryPhotos[0]
+        : (currentGallery8Photos && currentGallery8Photos[0])
+          ? currentGallery8Photos[0]
+          : currentGalleryPhotos.find(p => p && p.img);
+      if (heroPhoto) {
+        draft.image_url = typeof heroPhoto === 'string' ? heroPhoto : (heroPhoto.img || '');
       }
-    }, 150);
+
+      draft.orientation_frames = { hero: 140, front: 125, right: 175, left: 75, rear: 24, rear_left: 0 };
+
+      if (currentCdnExteriorUrl) {
+        draft.supabase_360 = currentCdnExteriorUrl;
+        draft.exterior_360  = currentCdnExteriorUrl;
+      }
+      if (cdnUrlInput && cdnUrlInput.value.trim()) {
+        draft.cdnUrl         = cdnUrlInput.value.trim();
+        draft.cdnUrlExterior = currentCdnExteriorUrl;
+        draft.has360         = has360Expanded;
+      }
+
+      // Save to localStorage (primary — always succeeds instantly)
+      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+
+      // Sync to Supabase (secondary — async, non-blocking)
+      if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
+        window.WeDriveAPI.saveCarDraft(draft).then(res => {
+          if (res && res.data && res.data.id) {
+            try {
+              const cur = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+              cur.supabase_draft_id = res.data.id;
+              localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
+            } catch (_) {}
+          }
+        }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error:', err));
+      }
+
+      // Update button to success state
+      if (btnSaveToDb) {
+        btnSaveToDb.disabled = false;
+        btnSaveToDb.classList.remove('border-border-day', 'opacity-60', 'cursor-not-allowed');
+        btnSaveToDb.classList.add('border-success', 'text-success');
+        const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+        if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved' : '✓ Visual Disimpan';
+      }
+
+      showAiToast(isEn ? '✓ Visual assets saved!' : '✓ Aset visual disimpan!', true, 'cloud_done');
+
+    } catch (e) {
+      console.warn('[WeDRIVE Studio] handleSaveVisuals error:', e);
+      if (btnSaveToDb) {
+        btnSaveToDb.disabled = false;
+        const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+        if (spanTxt) spanTxt.textContent = isEn ? 'Save Visuals' : 'Simpan Visual';
+      }
+      showAiToast(isEn ? 'Save failed. Please try again.' : 'Simpan gagal. Cuba semula.', false, 'error');
+    } finally {
+      isSavingDb = false;
+      if (saveDbProgressBox) {
+        saveDbProgressBox.classList.add('hidden');
+        saveDbProgressBox.classList.remove('flex');
+      }
+    }
   }
 
   // Event Listeners

@@ -349,6 +349,7 @@ function setText(id, text) {
 function setupExterior360(car) {
   const stageImg = document.getElementById('studio-canvas-stage');
   const fallbackIcon = document.getElementById('studio-fallback-icon');
+  const exteriorStage = document.getElementById('studio-exterior-stage');
   exteriorFrames = [];
   currentFrameIndex = 0;
 
@@ -358,58 +359,100 @@ function setupExterior360(car) {
     return;
   }
 
-  // Dynamic lookup from registry.json — no hardcoded car names
+  // ── Case 1: SpinCar / HTTP external interactive 360 URL ──
+  // When exterior_360 is a full URL (SpinCar, impel360, etc.),
+  // inject a real <iframe> instead of a static <img>.
+  if (
+    car.exterior_360 &&
+    typeof car.exterior_360 === 'string' &&
+    car.exterior_360.startsWith('http') &&
+    !findRegistryEntry(car) &&
+    (!Array.isArray(car.exterior_frames) || !car.exterior_frames.length)
+  ) {
+    // Remove any old iframe first
+    const oldIframe = document.getElementById('studio-exterior-iframe');
+    if (oldIframe) oldIframe.remove();
+
+    // Hide static img — iframe takes over
+    if (stageImg) stageImg.style.display = 'none';
+    if (fallbackIcon) fallbackIcon.classList.add('hidden');
+
+    // Inject interactive iframe
+    const iframe = document.createElement('iframe');
+    iframe.id = 'studio-exterior-iframe';
+    iframe.src = car.exterior_360;
+    iframe.allow = 'fullscreen; xr-spatial-tracking';
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.style.cssText = [
+      'width:100%', 'height:100%', 'border:none',
+      'border-radius:inherit', 'display:block',
+      'position:absolute', 'inset:0', 'z-index:2'
+    ].join(';');
+
+    if (exteriorStage) {
+      exteriorStage.style.position = 'relative';
+      exteriorStage.appendChild(iframe);
+    }
+
+    // Hide angle pill — not applicable for iframe player
+    const anglePill = document.getElementById('studio-angle-pill');
+    if (anglePill) anglePill.style.display = 'none';
+
+    // No frame-based drag needed — SpinCar handles interaction internally
+    return;
+  }
+
+  // ── Case 2: Local Carsome frame registry ──
   const match = findRegistryEntry(car);
-
   if (match) {
-    // Derive base model folder from sourceJson (e.g. "Sedan/2023 BMW 320i M Sport 2.0")
     const basePath = match.entry.sourceJson.replace(/\/source\.json$/i, '');
-
-    // Standard Carsome 200-frame turntable parameters:
-    // frame-125 = true front (0°), frame-175 = right (90°),
-    // frame-025 = rear (180°), frame-075 = left (270°).
     const frontOffset = 125;
     const sampleCount = 36;
     const totalFrames = 200;
-
     for (let i = 0; i < sampleCount; i++) {
       const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
       const padded = String(frameNum).padStart(3, '0');
       exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
     }
   } else if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) {
+    // ── Case 3: Explicit frames array ──
     exteriorFrames = [...car.exterior_frames];
   } else if (car.exterior_360 && typeof car.exterior_360 === 'string') {
-    if (car.exterior_360.startsWith('http')) {
-      exteriorFrames = [car.exterior_360];
-    } else {
-      const basePath = car.exterior_360.replace(/\/exterior\/full-res$/i, '').replace(/\/+$/, '');
-      const frontOffset = 125;
-      const sampleCount = 36;
-      const totalFrames = 200;
-      for (let i = 0; i < sampleCount; i++) {
-        const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
-        const padded = String(frameNum).padStart(3, '0');
-        exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
-      }
+    // ── Case 4: Local relative path to frames folder ──
+    const basePath = car.exterior_360.replace(/\/exterior\/full-res$/i, '').replace(/\/+$/, '');
+    const frontOffset = 125;
+    const sampleCount = 36;
+    const totalFrames = 200;
+    for (let i = 0; i < sampleCount; i++) {
+      const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
+      const padded = String(frameNum).padStart(3, '0');
+      exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
     }
   }
 
+  // Remove any injected iframe from previous load
+  const oldIframe = document.getElementById('studio-exterior-iframe');
+  if (oldIframe) oldIframe.remove();
+
   if (exteriorFrames.length > 0) {
-    stageImg.classList.remove('hidden');
-    stageImg.style.display = 'block';
+    if (stageImg) {
+      stageImg.classList.remove('hidden');
+      stageImg.style.display = 'block';
+    }
     if (fallbackIcon) fallbackIcon.classList.add('hidden');
+
+    const anglePill = document.getElementById('studio-angle-pill');
+    if (anglePill) anglePill.style.display = '';
 
     stageImg.src = resolveImgSrc(exteriorFrames[0]);
     currentFrameIndex = 0;
     updateAnglePill(0);
+    // Bind mouse drag & touch scrub events for frame-based viewer
+    bind360DragEvents();
   } else {
-    stageImg.style.display = 'none';
+    if (stageImg) stageImg.style.display = 'none';
     if (fallbackIcon) fallbackIcon.classList.remove('hidden');
   }
-
-  // Bind mouse drag & touch scrub events
-  bind360DragEvents();
 }
 
 function bind360DragEvents() {
