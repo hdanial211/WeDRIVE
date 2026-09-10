@@ -1,6 +1,6 @@
 /**
  * WeDRIVE - Promo Banner Loader
- * shared/js/promo-banner.js
+ * guest/js/promo-banner.js
  *
  * Inject this into guest and customer pages.
  * Reads active banners from marketing data and injects a
@@ -35,12 +35,6 @@
     } catch (e) {
       return;
     }
-
-    // Also check localStorage for admin-created banners
-    try {
-      const stored = JSON.parse(localStorage.getItem('wedrive_marketing') || '{}');
-      if (stored.banners && stored.banners.length) banners = stored.banners;
-    } catch {}
 
     const today = new Date().toISOString().slice(0, 10);
     const dismissed = getDismissed();
