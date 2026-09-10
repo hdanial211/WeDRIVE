@@ -202,7 +202,7 @@
                             <span>360° View</span>
                         </span>
 
-                        <img id="finalPreviewImg" src="../../../../shared/model/bezza.png" alt="Kenderaan" class="w-full h-full object-contain p-4" />
+                        <img id="finalPreviewImg" src="" alt="Kenderaan" class="w-full h-full object-contain p-4 hidden" />
                     </div>
 
                     <!-- 360 STATUS REPORT -->
@@ -332,11 +332,15 @@
             if (photos.length > 0) {
                 const first = photos[0];
                 const raw = typeof first === 'string' ? first : (first.img || '');
-                document.getElementById('finalPreviewImg').src = window.WeDriveEditCar.resolveCarImg(raw);
+                const preview = document.getElementById('finalPreviewImg');
+                const src = window.WeDriveEditCar.resolveCarImg(raw);
+                preview.src = src;
+                preview.classList.toggle('hidden', !src);
             }
 
             // 360 Auto-detection
-            const has360 = Boolean(d.has_360 || d.has360 || (d.cdnUrlExterior && d.cdnUrlExterior.length > 5) || (d.supabase_360 && d.supabase_360.length > 5));
+            const frameCount = Array.isArray(d.exterior_frames) ? d.exterior_frames.length : 0;
+            const has360 = frameCount > 0;
             const badge360 = document.getElementById('finalBadge360');
             const status360Pill = document.getElementById('final360StatusPill');
             const urlText = document.getElementById('final360UrlText');
@@ -345,7 +349,7 @@
                 badge360.classList.remove('hidden');
                 status360Pill.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400';
                 status360Pill.textContent = 'Aktif & Dikesan';
-                urlText.textContent = d.cdnUrlExterior || d.supabase_360 || 'Pautan 360° Aktif';
+                urlText.textContent = `${frameCount} frame Cloudinary tersedia`;
             } else {
                 badge360.classList.add('hidden');
                 status360Pill.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-2 text-secondary';

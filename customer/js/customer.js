@@ -11,6 +11,7 @@
   var currentSort = 'recommended';
   var availableOnly = false;
   var controlsBound = false;
+  var carsLoaded = false;
   var lastRenderedCars = [];
   var spotlightCars = [];
   var spotlightIndex = 0;
@@ -30,9 +31,10 @@
       plate: 'Plate',
       plateHidden: 'Plate revealed after payment',
       color: 'Color',
-      reviews: 'reviews',
       resultsPrefix: 'Showing',
       resultsSuffix: 'cars available',
+      loading: 'Loading vehicle catalogue…',
+      catalogWaiting: 'The vehicle catalogue is being prepared…',
       empty: 'No cars match your filters right now.',
       booking: 'Booking'
     },
@@ -49,9 +51,10 @@
       plate: 'Plat',
       plateHidden: 'Plat dipaparkan selepas bayaran',
       color: 'Warna',
-      reviews: 'ulasan',
       resultsPrefix: 'Menunjukkan',
       resultsSuffix: 'kereta tersedia',
+      loading: 'Memuatkan katalog kenderaan…',
+      catalogWaiting: 'Katalog kenderaan sedang disediakan…',
       empty: 'Tiada kereta sepadan dengan pilihan anda sekarang.',
       booking: 'Tempahan'
     }
@@ -410,7 +413,6 @@
       setText('guest-spotlight-type', car.label || car.type || '');
       setText('guest-spotlight-name', car.name || '');
       setText('guest-spotlight-rate', 'RM ' + carPrice(car) + t('day'));
-      setText('guest-spotlight-rating', String(car.rating || ''));
       setText('guest-spotlight-seats', car.seats + ' ' + t('seatsShort'));
       setText('guest-spotlight-fuel', car.fuel || '');
       setText('guest-spotlight-status', statusText(car));
@@ -441,10 +443,72 @@
     startSpotlightCarousel();
   };
 
+  function renderCarsLoading() {
+    var grid = document.getElementById('cars-grid');
+    var results = document.getElementById('results-count');
+    if (!grid) return;
+
+    if (results) {
+      results.innerHTML = [
+        '<span class="material-icons-round spin-icon fs-14" aria-hidden="true">progress_activity</span>',
+        '<span>' + escapeHtml(t('loading')) + '</span>'
+      ].join(' ');
+    }
+
+    var cards = [];
+    for (var i = 0; i < 6; i += 1) {
+      cards.push([
+        '<div class="car-card skeleton-card" aria-hidden="true">',
+        '  <div class="car-img">',
+        '    <div class="skeleton-shimmer-box skeleton-img-box"></div>',
+        '  </div>',
+        '  <div class="car-body">',
+        '    <div class="skeleton-shimmer-box skeleton-badge-box"></div>',
+        '    <div class="skeleton-shimmer-box skeleton-title-box"></div>',
+        '    <div class="skeleton-shimmer-box skeleton-specs-box"></div>',
+        '    <div class="skeleton-shimmer-box skeleton-btn-box"></div>',
+        '  </div>',
+        '</div>'
+      ].join(''));
+    }
+    grid.innerHTML = cards.join('');
+  }
+
+  function renderCatalogWaiting() {
+    var grid = document.getElementById('cars-grid');
+    var results = document.getElementById('results-count');
+    if (!grid) return;
+
+    if (results) {
+      results.innerHTML = [
+        '<span class="material-icons-round spin-icon fs-14" aria-hidden="true">progress_activity</span>',
+        '<span>' + escapeHtml(t('loading')) + '</span>'
+      ].join(' ');
+    }
+
+    grid.innerHTML = [
+      '<div class="catalog-loading-state" role="status" aria-live="polite">',
+      '  <span class="material-icons-round spin-icon" aria-hidden="true">progress_activity</span>',
+      '  <strong>' + escapeHtml(t('catalogWaiting')) + '</strong>',
+      '</div>'
+    ].join('');
+  }
+
   function renderCars(list) {
     var grid = document.getElementById('cars-grid');
     var results = document.getElementById('results-count');
     if (!grid) return;
+
+    if (!carsLoaded) {
+      renderCarsLoading();
+      return;
+    }
+
+    if (!allCars.length) {
+      lastRenderedCars = [];
+      renderCatalogWaiting();
+      return;
+    }
 
     lastRenderedCars = list.slice();
 
@@ -469,9 +533,7 @@
       var safeTrans = escapeHtml(car.trans || car.transmission || '');
       var safePlate = escapeHtml(car.plate || '');
       var safeColor = escapeHtml(car.color || '');
-      var safeAi = escapeHtml(car.ai || t('aiMatch'));
-      var rating = escapeHtml(car.rating || '⭐ 4.7');
-      var reviews = escapeHtml(car.reviews || '0');
+      var safeAi = car.ai ? escapeHtml(car.ai) : '';
       var status = statusKey(car);
       var img = imagePath(car);
       var fallbackImg = fallbackImagePath();
@@ -493,14 +555,12 @@
         '    <img src="' + img + '" alt="' + safeName + '" onerror="this.onerror=null;this.src=\'' + fallbackImg + '\'" />',
         '    <div class="car-badges">',
         '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
-        '      <span class="rating-pill">' + rating + '</span>',
         (has360 ? '      <span class="badge-360"><span class="material-icons-round" style="font-size:12px">360</span> 360° View</span>' : ''),
         '    </div>',
         '  </div>',
         '  <div class="car-body">',
         '    <div class="car-topline">',
         '      <p class="car-type">' + safeType + '</p>',
-        '      <span class="rating-pill"><span class="material-icons-round">reviews</span>' + reviews + ' ' + escapeHtml(t('reviews')) + '</span>',
         '    </div>',
         '    <h3>' + safeName + '</h3>',
         metaItems.length ? '    <div class="car-meta">' + metaItems.join('') + '</div>' : '',
@@ -510,7 +570,7 @@
         '      <div class="spec"><span class="material-icons-round">settings</span>' + safeTrans + '</div>',
         '      <div class="spec"><span class="material-icons-round">verified</span>' + escapeHtml(window.__GUEST_MODE__ ? t('locked') : statusText(car)) + '</div>',
         '    </div>',
-        '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>',
+        safeAi ? '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>' : '',
         '    <div class="car-footer">',
         '      <div class="price tabular-nums">RM ' + carPrice(car) + '<span>' + escapeHtml(t('day')) + '</span></div>',
         '      <button class="btn-book' + (window.__GUEST_MODE__ ? ' btn-book-guest' : '') + '" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
@@ -542,15 +602,12 @@
 
     var chosen = [];
     if (sedanCar) {
-      sedanCar._customAi = isMs ? 'Pilihan Eksekutif' : 'Executive Choice';
       chosen.push(sedanCar);
     }
     if (suvCar) {
-      suvCar._customAi = isMs ? 'Pilihan Keluarga' : 'Family Choice';
       chosen.push(suvCar);
     }
     if (hatchCar) {
-      hatchCar._customAi = isMs ? 'Paling Jimat Bahan Api' : 'Best Fuel Economy';
       chosen.push(hatchCar);
     }
 
@@ -558,7 +615,6 @@
     if (chosen.length < 3) {
       for (var i = 0; i < cars.length && chosen.length < 3; i++) {
         if (chosen.indexOf(cars[i]) === -1) {
-          cars[i]._customAi = isMs ? 'Pilihan Popular' : 'Popular Cars';
           chosen.push(cars[i]);
         }
       }
@@ -569,8 +625,7 @@
       var safeType = escapeHtml(car.label || car.type || '');
       var safeFuel = escapeHtml(car.fuel || '');
       var safeTrans = escapeHtml(car.trans || car.transmission || 'Auto');
-      var safeAi = escapeHtml(car._customAi || car.ai || t('aiMatch'));
-      var rating = escapeHtml(car.rating || '⭐ 4.8');
+      var safeAi = car.ai ? escapeHtml(car.ai) : '';
       var status = statusKey(car);
       var img = imagePath(car);
       var fallbackImg = fallbackImagePath(car);
@@ -583,14 +638,12 @@
         '    <img src="' + img + '" alt="' + safeName + '" onerror="this.onerror=null;this.src=\'' + fallbackImg + '\'" />',
         '    <div class="car-badges">',
         '      <span class="status-pill ' + status + '">' + escapeHtml(statusText(car)) + '</span>',
-        '      <span class="rating-pill">' + rating + '</span>',
         (has360 ? '      <span class="badge-360"><span class="material-icons-round" style="font-size:12px">360</span> 360° View</span>' : ''),
         '    </div>',
         '  </div>',
         '  <div class="car-body">',
         '    <div class="car-topline">',
         '      <p class="car-type">' + safeType + '</p>',
-        '      <span class="rating-pill"><span class="material-icons-round">reviews</span>' + escapeHtml(car.reviews || '12') + ' ' + escapeHtml(t('reviews')) + '</span>',
         '    </div>',
         '    <h3>' + safeName + '</h3>',
         '    <div class="car-specs">',
@@ -599,7 +652,7 @@
         '      <div class="spec"><span class="material-icons-round">settings</span>' + safeTrans + '</div>',
         '      <div class="spec"><span class="material-icons-round">verified</span>' + escapeHtml(statusText(car)) + '</div>',
         '    </div>',
-        '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>',
+        safeAi ? '    <div class="ai-chip"><span class="material-icons-round" style="font-size:12px">psychology</span>' + safeAi + '</div>' : '',
         '    <div class="car-footer">',
         '      <div class="price">RM ' + carPrice(car) + '<span>' + escapeHtml(t('day')) + '</span></div>',
         '      <button class="btn-book" onclick="event.stopPropagation();bookCar(' + Number(car.id) + ')">',
@@ -677,8 +730,7 @@
       return;
     }
 
-    selectedBookingCar = car;
-    openBookingPopup(car);
+    window.location.href = '../car-details/car-details.html?id=' + encodeURIComponent(car.id);
   };
 
   function openBookingPopup(car) {
@@ -992,7 +1044,11 @@
 
   function loadCars() {
     var grid = document.getElementById('cars-grid');
+    carsLoaded = false;
+    renderCarsLoading();
+
     if (!window.WeDriveAPI || !window.WeDriveAPI.getCars) {
+      carsLoaded = true;
       if (grid) grid.innerHTML = '<div class="empty-state">Unable to load cars.</div>';
       return;
     }
@@ -1004,6 +1060,7 @@
       .then(function (results) {
         allCars = results[0] || [];
         allBookingsCache = results[1] || [];
+        carsLoaded = true;
         renderHeroStats();
         buildSpotlightCars();
         renderSpotlight(0, false);
@@ -1037,6 +1094,7 @@
         }
       })
       .catch(function () {
+        carsLoaded = true;
         if (grid) {
           grid.innerHTML = '<div class="empty-state"><span class="material-icons-round">error</span><strong>Unable to load cars. Please refresh the page.</strong></div>';
         }

@@ -10,6 +10,16 @@ let currentSearch = '';
 
 let currentViewMode = localStorage.getItem('wedrive_car_view_mode') || 'grid';
 
+function resolveInventoryImage(value) {
+  if (typeof value !== 'string') return '';
+  const url = value.trim();
+  if (!url || url.startsWith('data:')) return '';
+  if (url.includes('res.cloudinary.com/')) return url;
+  if (url.includes('shared/model/')) return '../../../../' + url.split('../../../../').pop();
+  if (/^(?:Sedan|Hatchback|SUV|MPV|Truck|Coupe|Convertible|Wagon|Van)\//i.test(url)) return '../../../shared/model/' + url;
+  return '';
+}
+
 window.WeDriveAPI.getAdminData()
   .then(data => {
     // Only display and count active vehicles (Available or Rented)
@@ -129,7 +139,10 @@ function renderCarCards(car) {
 
     const rawImg = (c.images && c.images.length > 0) ? c.images[0] : null;
     const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
-    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+    const src = resolveInventoryImage(img0);
+    const imageMarkup = src
+      ? `<img src="${src}" alt="${c.name}" class="apple-car-studio-img" onerror="this.remove()" />`
+      : '<div class="flex h-full w-full items-center justify-center text-xs text-on-surface-variant">Tiada gambar</div>';
     const rawRateStr = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : (c.price ? String(c.price) : '150');
     const parsedRate = parseFloat(rawRateStr);
     const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
@@ -138,7 +151,7 @@ function renderCarCards(car) {
     const carType = (typeUpper === 'SUV' || typeUpper === 'MPV') 
       ? typeUpper 
       : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
-    const has360 = Boolean(c.has_360 || c.has360 || c.exterior_360 || c.supabase_360 || (Array.isArray(c.exterior_frames) && c.exterior_frames.length > 0));
+    const has360 = Boolean(Array.isArray(c.exterior_frames) && c.exterior_frames.length > 0);
 
     const isMalay = (window.WeDriveLang && window.WeDriveLang.current ? window.WeDriveLang.current() : (localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || 'ms')) === 'ms';
     const seatsLabel = isMalay ? 'Tempat Duduk' : 'Seats';
@@ -157,7 +170,7 @@ function renderCarCards(car) {
         <div class="glass-status-pill">
           <span class="live-pulse-dot" style="background:${sc.dot}"></span> ${sc.label}
         </div>
-        <img src="${src}" alt="${c.name}" class="apple-car-studio-img" onerror="this.src='../../../shared/model/bezza.png'" />
+        ${imageMarkup}
       </div>
 
       <div class="apple-car-card-body">
@@ -216,7 +229,10 @@ function renderCarTable(car) {
     
     const rawImg = (car.images && car.images.length > 0) ? car.images[0] : null;
     const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
-    const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+    const src = resolveInventoryImage(img0);
+    const imageMarkup = src
+      ? `<img src="${src}" alt="${car.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.remove()" />`
+      : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:11px;">Tiada gambar</div>';
     const rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '150');
     const parsedRate = parseFloat(rawRateStr);
     const isMalay = (window.WeDriveLang && window.WeDriveLang.current ? window.WeDriveLang.current() : (localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || 'ms')) === 'ms';
@@ -228,7 +244,7 @@ function renderCarTable(car) {
       <td style="padding:14px 20px;">
         <div style="display:flex; align-items:center; gap:12px;">
           <div style="width:48px; height:36px; border-radius:8px; overflow:hidden; background:var(--bg-surface-3); display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1px solid var(--border-subtle);">
-            <img src="${src}" alt="${car.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='../../../shared/model/bezza.png';" />
+            ${imageMarkup}
           </div>
           <div>
             <div style="font-weight:600; color:var(--text-primary); font-size:14px;">${car.name}</div>
@@ -408,6 +424,12 @@ function _removeNewCarImage(idx) {
 }
 
 function addNewCar() {
+  // Use the canonical 5-step flow so every new vehicle goes through
+  // Cloudinary media upload and Supabase persistence.
+  // index.html clears any previous unfinished local draft before Step 1.
+  window.location.href = 'add-car/index.html?new=1';
+  return;
+
   _resetNewCarImages();
 
   // Create modal if not exists

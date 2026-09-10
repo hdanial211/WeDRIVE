@@ -64,7 +64,7 @@
           <div class="user-av" id="user-av">CU</div>
           <span class="user-name" id="user-name-nav" data-key="nav_customer">Customer</span>
         </a>
-        <button class="btn-logout" onclick="(function(){ var sb=window.supabaseClient; if(sb){sb.auth.signOut().then(function(){localStorage.clear();window.location='{base}account/pages/login/login.html';})}else{localStorage.clear();window.location='{base}account/pages/login/login.html';} })()">
+        <button class="btn-logout" onclick="(function(){ var sb=window.supabaseClient; var keepDraft=localStorage.getItem('wedrive_new_car_draft'); var finish=function(){ localStorage.removeItem('wedrive_session'); sessionStorage.removeItem('wedrive_car_draft_prompted_session'); if(keepDraft) localStorage.setItem('wedrive_new_car_draft', keepDraft); window.location='{base}account/pages/login/login.html'; }; if(sb){sb.auth.signOut().then(finish)}else{finish();} })()">
           <span class="material-icons-round" style="font-size:16px">logout</span>
           <span data-key="nav_logout">Logout</span>
         </button>

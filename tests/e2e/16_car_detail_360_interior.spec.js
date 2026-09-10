@@ -87,8 +87,8 @@ test.describe('WeDRIVE - Car Detail 360° Studio & 3D Interior Panorama', () => 
     await expect(frontFace).toBeVisible();
   });
 
-  test('should hide 360 tabs and default to Photo Gallery for cars without 360 assets (Honda City #1193)', async ({ page }) => {
-    await page.goto('/admin/pages/car/car-detail/car-detail.html?id=1193');
+  test('should hide 360 tabs and default to Photo Gallery for cars without 360 assets (Honda City #492)', async ({ page }) => {
+    await page.goto('/admin/pages/car/car-detail/car-detail.html?id=492');
     await page.waitForLoadState('networkidle');
 
     // Should load Honda City

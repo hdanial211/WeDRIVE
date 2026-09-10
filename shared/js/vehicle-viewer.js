@@ -36,6 +36,7 @@
 
   function safeGet(el, selector) {
     if (!el) return null;
+    if (el.matches && el.matches(selector)) return el;
     return el.querySelector(selector);
   }
 
@@ -328,6 +329,31 @@
     };
   }
 
+  function getDirectInteriorFaceMap(faceUrls, label) {
+    var faces = {};
+    var faceLabelMap = {
+      b: 'Back seat',
+      d: 'Floor view',
+      f: 'Front interior',
+      l: 'Left side',
+      r: 'Right side',
+      u: 'Roofline'
+    };
+
+    FACE_ORDER.forEach(function (faceKey) {
+      var value = faceUrls && faceUrls[faceKey];
+      var src = typeof value === 'string' ? value.trim() : '';
+      if (!src) return;
+      faces[faceKey] = {
+        src: src,
+        alt: (label || 'Vehicle') + ' interior ' + faceLabelMap[faceKey],
+        real: true
+      };
+    });
+
+    return { faces: faces, real: Object.keys(faces).length > 0 };
+  }
+
   function setTextKey(statusEl, key) {
     if (!statusEl) return;
     statusEl.setAttribute('data-key', key);
@@ -375,6 +401,7 @@
       isDragging: false,
       isAnimating: false,
       manifest: null,
+      directInteriorFaces: null,
       currentManifestPromise: null,
       pendingFrame: null,
       exteriorImage: safeGet(root, '[data-vehicle-exterior-frame], #hiwInteractiveFrame'),
@@ -508,7 +535,7 @@
 
     function syncRootState() {
       root.classList.toggle('is-interior', state.viewMode === 'interior');
-      root.classList.toggle('is-reference-interior', state.viewMode === 'interior' && state.manifest && !(state.manifest.interior && state.manifest.interior.full_res_pattern));
+      root.classList.toggle('is-reference-interior', state.viewMode === 'interior' && !((state.directInteriorFaces && state.directInteriorFaces.real) || (state.manifest && state.manifest.interior && state.manifest.interior.full_res_pattern)));
       root.classList.toggle('has-webgl-interior', !!state.interiorRenderer);
       root.classList.toggle('is-webgl-interior-ready', !!state.webglInteriorReady);
       root.classList.toggle('is-webgl-interior-failed', !!state.webglInteriorFailed);
@@ -583,9 +610,9 @@
     }
 
     function applyInteriorFaces() {
-      if (!state.interiorScene || !state.interiorCube || !state.manifest) return;
+      if (!state.interiorScene || !state.interiorCube || (!state.manifest && !state.directInteriorFaces)) return;
 
-      var interior = getInteriorFaceMap(state.manifest);
+      var interior = state.directInteriorFaces || getInteriorFaceMap(state.manifest);
       var size;
       var face;
 
@@ -601,6 +628,8 @@
       size = Math.max(state.root.clientWidth || 0, state.root.clientHeight || 0);
       size = Math.max(1200, Math.min(size * 2.08, 1680));
       state.interiorCube.style.setProperty('--vehicle-cube-size', size + 'px');
+      state.interiorCube.style.setProperty('--vehicle-cube-half-size', (size / 2) + 'px');
+      state.interiorCube.style.setProperty('--vehicle-cube-negative-half-size', (-size / 2) + 'px');
       state.interiorCube.style.width = size + 'px';
       state.interiorCube.style.height = size + 'px';
       state.interiorScene.style.perspective = Math.max(1800, Math.round(size * 1.35)) + 'px';
@@ -620,13 +649,14 @@
     }
 
     function ensureInteriorTexture() {
-      if (!state.THREE || !state.manifest || !state.interiorScene3D) return Promise.resolve(null);
+      if (!state.THREE || (!state.manifest && !state.directInteriorFaces) || !state.interiorScene3D) return Promise.resolve(null);
 
-      var interior = getInteriorFaceMap(state.manifest);
+      var interior = state.directInteriorFaces || getInteriorFaceMap(state.manifest);
+      var label = state.manifest && (state.manifest.__displayLabel || state.manifest.model || state.modelKey) || 'Vehicle';
       var urls = ['r', 'l', 'u', 'd', 'f', 'b'].map(function (faceKey) {
         return interior.faces[faceKey]
           ? interior.faces[faceKey].src
-          : buildPlaceholderInteriorSvg(state.manifest.__displayLabel || state.manifest.model || state.modelKey, faceKey, faceKey);
+          : buildPlaceholderInteriorSvg(label, faceKey, faceKey);
       });
       var signature = urls.join('|');
       if (state.interiorTexture && state.interiorTextureSignature === signature) {
@@ -814,7 +844,7 @@
     }
 
     function scheduleInteriorRefresh() {
-      if (state.viewMode !== 'interior' || !state.manifest) return;
+      if (state.viewMode !== 'interior' || (!state.manifest && !state.directInteriorFaces)) return;
 
       if (state.webglInteriorFailed) {
         applyInteriorFaces();
@@ -1080,7 +1110,7 @@
         queueInteriorAnimation();
       }, { passive: false });
       window.addEventListener('resize', function () {
-        if (!state.manifest) return;
+        if (!state.manifest && !state.directInteriorFaces) return;
         if (state.viewMode === 'interior') {
           applyInteriorFaces();
           resizeInteriorRenderer();
@@ -1099,6 +1129,15 @@
       setView: setView,
       loadModel: loadModel,
       getManifest: function () { return state.manifest; },
+      setInteriorFaces: function (faceUrls, label) {
+        state.directInteriorFaces = getDirectInteriorFaceMap(faceUrls, label || state.modelKey);
+        state.interiorTexture = null;
+        state.interiorTextureSignature = '';
+        state.webglInteriorFailed = false;
+        applyInteriorFaces();
+        scheduleInteriorRefresh();
+        return api;
+      },
       triggerIntroAutospin: function (callback) {
         if (state.viewMode !== 'exterior' || state.isDragging || !state.manifest) return;
         var startFrame = state.lastExteriorFrame || 100;
@@ -1150,6 +1189,11 @@
         if (typeof yaw === 'number') state.targetYaw = yaw;
         if (typeof pitch === 'number') state.targetPitch = Math.min(24, Math.max(-34, pitch));
         if (instant) {
+          // An explicit orientation reset must also clear momentum. This keeps
+          // manual-only viewers still until the user presses and drags again.
+          state.yawVelocity = 0;
+          state.pitchVelocity = 0;
+          state.lastInteriorMoveAt = window.performance && performance.now ? performance.now() : Date.now();
           state.interiorYaw = state.targetYaw;
           state.interiorPitch = state.targetPitch;
           renderInteriorCube();

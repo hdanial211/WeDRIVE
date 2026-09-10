@@ -48,9 +48,6 @@
                   <h2 id="booking-car-name">BMW 320i M Sport</h2>
                   <span class="car-summary-tag">Sedan -- 2023 M Sport</span>
                 </div>
-                <span class="car-rating">
-                  <span class="material-icons-round">star</span> 4.9
-                </span>
               </div>
               <p class="car-summary-price" id="booking-price-display">RM450<span class="car-price-unit">/day</span></p>
             </div>
@@ -292,7 +289,6 @@
         const carColor = currentCar.color || '';
         document.querySelector('.car-summary-tag').textContent = `${typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1)} -- ${carYear} ${carColor}`;
         
-        document.querySelector('.car-rating').innerHTML = `<span class="material-icons-round">star</span> ${currentCar.rating || '4.8'}`;
         const currency = currentSettings.currency || 'MYR';
         document.getElementById('booking-price-display').innerHTML = `${currency}${basePrice}<span class="car-price-unit">/day</span>`;
         

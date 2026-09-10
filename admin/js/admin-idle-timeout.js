@@ -219,6 +219,7 @@
     // Wipe session tokens
     localStorage.removeItem('wedrive_session');
     sessionStorage.removeItem('wedrive_session');
+    sessionStorage.removeItem('wedrive_car_draft_prompted_session');
 
     var base = getBasePath();
     var redirectUrl = base + 'account/pages/login/login.html?session_expired=' + (reason || 'timeout');

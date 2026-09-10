@@ -28,7 +28,7 @@ function generateReportStats(bookings, cars) {
   var el;
   el = document.getElementById('rp-revenue'); if (el) el.textContent = 'RM ' + totalRevenue.toLocaleString();
   el = document.getElementById('rp-bookings'); if (el) el.textContent = totalBookings;
-  el = document.getElementById('rp-avg'); if (el) el.textContent = avgDays + ' days';
+  el = document.getElementById('rp-avg'); if (el) el.textContent = avgDays + ' hari';
   el = document.getElementById('rp-rating'); if (el) el.textContent = '4.8/5';
 }
 
@@ -100,9 +100,9 @@ function renderUtilChart(bookings, cars) {
 
   container.innerHTML = utilData.map(u => {
     var barColor = 'var(--primary)';
-    if (u.utilization >= 80) barColor = '#34C759';
-    else if (u.utilization >= 50) barColor = '#FF9500';
-    else barColor = '#FF3B30';
+    if (u.utilization >= 70) barColor = '#34C759';
+    else if (u.utilization >= 40) barColor = '#FF9500';
+    else barColor = 'var(--primary)';
 
     // Scale width relative to max utilization so it fills the space (at least 1% for visibility if utilization > 0)
     var widthPct = maxUtil > 0 ? (u.utilization / maxUtil) * 100 : 0;
@@ -120,7 +120,7 @@ function renderUtilChart(bookings, cars) {
         </div>
       </div>
       ${!labelInside ? `<span style="font-size:10px; font-weight:700; color:var(--text-primary); margin-left:8px;">${u.utilization}%</span>` : ''}
-      <span style="font-size:11px; color:var(--text-secondary); width:60px;">${u.days} days</span>
+      <span style="font-size:11px; color:var(--text-secondary); width:60px;">${u.days} hari</span>
     </div>`;
   }).join('');
 }

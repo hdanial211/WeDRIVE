@@ -29,7 +29,7 @@ const PREVIEW_I18N = {
         // Step 4: Pandangan Pelanggan (Customer View)
         step4_title: "Pandangan Pelanggan",
         step4_preview_badge: "Mod Pratonton Pelanggan",
-        step4_preview_notice: "Paparan Katalog Pelanggan (WYSIWYG)",
+        step4_preview_notice: "Paparan Katalog Pelanggan",
         step4_preview_desc: "Paparan langsung bagaimana kad kenderaan ini dipamerkan di portal carian kenderaan pelanggan WeDRIVE.",
         step4_sidebar_tag: "Pratonton Sahaja",
         step4_sidebar_dashboard: "Papan Pemuka",

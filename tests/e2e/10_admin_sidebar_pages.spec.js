@@ -87,6 +87,15 @@ test.describe('WeDRIVE Admin Dedicated Sidebar Pages Architecture (v5.4.0)', () 
   test('Clicking between dedicated sidebar links smoothly navigates without query params', async ({ page }) => {
     await page.goto('/admin/pages/car/cars.html');
 
+    // A real unfinished draft intentionally blocks the page until the admin
+    // chooses what to do with it. This test postpones it before checking the
+    // remaining sidebar navigation.
+    const initialDraftDialog = page.locator('#wedrive-draft-guard');
+    await page.waitForTimeout(5000);
+    if (await initialDraftDialog.isVisible({ timeout: 3000 }).catch(() => false)) {
+      await page.getByRole('button', { name: 'Nanti', exact: true }).click();
+    }
+
     // Click on Kenderaan Tersedia
     await page.click('#admin-sidebar a[data-page="car-available"]');
     await expect(page).toHaveURL(/.*\/admin\/pages\/car\/available-cars\.html$/);
@@ -97,7 +106,13 @@ test.describe('WeDRIVE Admin Dedicated Sidebar Pages Architecture (v5.4.0)', () 
 
     // Click on Tambah Kereta Baharu
     await page.click('#admin-sidebar a[data-page="car-add"]');
-    await expect(page).toHaveURL(/.*\/admin\/pages\/car\/add-car\/(index\.html|step1_spesifikasi\.html)?$/);
+    const draftDialog = page.locator('#wedrive-draft-guard');
+    if (await draftDialog.isVisible({ timeout: 3000 }).catch(() => false)) {
+      const continueDraft = page.getByRole('button', { name: 'Sambung buat kereta', exact: true });
+      await expect(continueDraft).toHaveCount(1);
+      await continueDraft.click();
+    }
+    await expect(page).toHaveURL(/.*\/admin\/pages\/car\/add-car\/(index\.html|step[1-5]_[^/]+\.html)$/);
 
     // Return back to All Cars
     await page.goto('/admin/pages/car/cars.html');

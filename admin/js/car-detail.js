@@ -85,8 +85,18 @@ function findRegistryEntry(car) {
 function carHasExterior360(car) {
   if (!car) return false;
   if (car.has_360 === false && !car.exterior_360 && (!Array.isArray(car.exterior_frames) || !car.exterior_frames.length)) return false;
-  if (car.exterior_360 && typeof car.exterior_360 === 'string' && car.exterior_360.trim().length > 5) return true;
   if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) return true;
+  if (car.exterior_360 && typeof car.exterior_360 === 'string' && car.exterior_360.trim().length > 5) {
+    if (car.exterior_360.trim().startsWith('{')) {
+      try {
+        const manifest = JSON.parse(car.exterior_360);
+        return manifest.type === 'cloudinary' && Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0;
+      } catch (_) { return false; }
+    }
+    // External CDN/SpinCar URLs are never rendered by the production viewer.
+    if (/^https?:\/\//i.test(car.exterior_360)) return false;
+    return true; // local shared/model path or Cloudinary manifest JSON
+  }
   if (findRegistryEntry(car) && car.has_360 !== false) return true;
   return false;
 }
@@ -97,7 +107,14 @@ function carHasExterior360(car) {
 function carHasInterior360(car) {
   if (!car) return false;
   if (car.has_360 === false && !car.interior_360) return false;
-  if (car.interior_360 && typeof car.interior_360 === 'string' && car.interior_360.trim().length > 5) return true;
+    if (car.interior_360 && typeof car.interior_360 === 'string' && car.interior_360.trim().length > 5) {
+        if (/^https?:\/\//i.test(car.interior_360)) return false;
+        if (!car.interior_360.trim().startsWith('{')) return false;
+        try {
+          const faces = JSON.parse(car.interior_360);
+          return Object.values(faces).some(value => isAllowedProductionMedia(value));
+        } catch (_) { return false; }
+  }
   if (findRegistryEntry(car) && car.has_360 !== false) return true;
   return false;
 }
@@ -109,10 +126,21 @@ function carHas360(car) {
   return carHasExterior360(car) || carHasInterior360(car);
 }
 
-// Resolve any image string to a valid src
+function isAllowedProductionMedia(value) {
+  if (typeof value !== 'string') return false;
+  const url = value.trim();
+  if (!url || url.startsWith('data:')) return false;
+  if (url.includes('res.cloudinary.com/')) return true;
+  if (url.includes('shared/model/')) return true;
+  return /^(?:Sedan|Hatchback|SUV|MPV|Truck|Coupe|Convertible|Wagon|Van)\//i.test(url);
+}
+
+// Resolve only Cloudinary or the explicitly allowed shared/model assets.
 function resolveImgSrc(img) {
-  if (!img) return '';
-  if (img.startsWith('data:') || img.startsWith('http://') || img.startsWith('https://')) return img;
+  if (img && typeof img === 'object') img = img.img || '';
+  if (typeof img !== 'string' || !isAllowedProductionMedia(img)) return '';
+  if (img.includes('res.cloudinary.com/')) return img;
+  if (img.includes('shared/model/')) return IMG_BASE + img.split('shared/model/').pop();
   return IMG_BASE + img;
 }
 
@@ -170,13 +198,15 @@ function renderFleetSelector() {
 
     return `
       <button class="fleet-car-chip ${isActive ? 'active' : ''}" onclick="selectFleetCar('${c.id}')" title="${c.name}">
-        <img src="${thumbSrc}" class="fleet-chip-thumb" alt="${c.name}" onerror="this.src='../../../../shared/logo/wedrive-icon.png';" />
+        ${thumbSrc
+          ? `<img src="${thumbSrc}" class="fleet-chip-thumb" alt="${c.name}" onerror="this.remove();" />`
+          : '<span class="fleet-chip-thumb flex items-center justify-center text-[10px] text-on-surface-variant">Tiada</span>'}
         <div class="fleet-chip-info">
           <div class="fleet-chip-name">${c.name}</div>
           <div class="fleet-chip-meta">
             <span>${c.plate || '--'}</span>
             <span>·</span>
-            <span class="text-capitalize">${c.type || 'Sedan'}</span>
+            <span class="text-capitalize">${c.type || '-'}</span>
             ${has360Badge}
           </div>
         </div>
@@ -219,7 +249,7 @@ function loadCarProfile(car) {
   if (plateEl) plateEl.textContent = car.plate;
 
   const typeEl = document.getElementById('cd-type-pill');
-  if (typeEl) typeEl.textContent = (car.type || 'Sedan').toUpperCase();
+  if (typeEl) typeEl.textContent = (car.type || '-').toUpperCase();
 
   const statusEl = document.getElementById('cd-status');
   if (statusEl) {
@@ -231,7 +261,7 @@ function loadCarProfile(car) {
   }
 
   // Commercial rate & deposit
-  const rateText = car.rate || (car.price ? `RM ${car.price}/hari` : 'RM 250/hari');
+  const rateText = car.rate || (car.price ? `RM ${car.price}/hari` : '-');
   const rateEl = document.getElementById('cd-rate');
   if (rateEl) rateEl.textContent = rateText;
 
@@ -317,25 +347,25 @@ function updateStudioTabs(car) {
 
 function setupCarSpecs(car) {
   // 1. ID Inventori Sistem (Primary Key Database)
-  const carIdFormatted = car.id ? `#CAR-${String(car.id).padStart(3, '0')}` : '#CAR-001';
+  const carIdFormatted = car.id ? `#CAR-${String(car.id).padStart(3, '0')}` : '-';
   setText('spec-id', carIdFormatted);
 
   // 2. Tahun Pembuatan (Kolum: year)
-  setText('spec-year', `${car.year || 2023}`);
+  setText('spec-year', `${car.year || '-'}`);
 
   // 3. Warna Luaran Rasmi (Kolum: color)
-  setText('spec-color', car.color || 'Alpine White');
+  setText('spec-color', car.color || '-');
 
   // 4. Sistem Transmisi (Kolum: transmission / trans)
-  const rawTrans = (car.transmission || car.trans || 'Auto').trim();
+  const rawTrans = (car.transmission || car.trans || '-').trim();
   const transLabel = rawTrans.toLowerCase().includes('auto') ? 'Automatik (Auto)' : rawTrans.toLowerCase().includes('manual') ? 'Manual (MT)' : rawTrans;
   setText('spec-trans', transLabel);
 
   // 5. Punca Kuasa / Bahan Api (Kolum: fuel)
-  setText('spec-fuel', car.fuel || 'Petrol');
+  setText('spec-fuel', car.fuel || '-');
 
   // 6. Kapasiti Tempat Duduk (Kolum: seats)
-  setText('spec-seats', `${car.seats || 5} Tempat Duduk`);
+  setText('spec-seats', car.seats ? `${car.seats} Tempat Duduk` : '-');
 }
 
 function setText(id, text) {
@@ -352,6 +382,8 @@ function setupExterior360(car) {
   const exteriorStage = document.getElementById('studio-exterior-stage');
   exteriorFrames = [];
   currentFrameIndex = 0;
+  window._wedrive_impel_interior_pano = '';
+  window._wedrive_impel_cdn_prefix = '';
 
   if (!carHasExterior360(car)) {
     if (stageImg) stageImg.style.display = 'none';
@@ -359,91 +391,9 @@ function setupExterior360(car) {
     return;
   }
 
-  // ── Case 0: Impel CDN metadata JSON (zero-storage turntable) ──
-  // exterior_360 = JSON string: { type:'impel_cdn', cdn_prefix, vin, frame_count, has_pano, interior_pano_url }
-  // Browser fetches frames directly from Impel CDN — no Supabase storage needed.
-  let impelMeta = null;
-  if (
-    car.exterior_360 &&
-    typeof car.exterior_360 === 'string' &&
-    car.exterior_360.trim().startsWith('{')
-  ) {
-    try { impelMeta = JSON.parse(car.exterior_360); } catch (_) {}
-  }
-
-  if (impelMeta && impelMeta.type === 'impel_cdn' && impelMeta.cdn_prefix) {
-    const prefix = impelMeta.cdn_prefix.endsWith('/') ? impelMeta.cdn_prefix : impelMeta.cdn_prefix + '/';
-    const totalFrames = impelMeta.frame_count || 200;
-    const sampleCount = 36; // 36 frames @ 10° steps = smooth turntable
-    const frontOffset = 125;
-    for (let i = 0; i < sampleCount; i++) {
-      const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
-      const padded = String(frameNum).padStart(3, '0');
-      exteriorFrames.push(`${prefix}exterior/full-res/frame-${padded}.jpg`);
-    }
-
-    // Store interior pano URL for setupInterior360 to use
-    if (impelMeta.has_pano && impelMeta.interior_pano_url) {
-      window._wedrive_impel_interior_pano = impelMeta.interior_pano_url;
-      window._wedrive_impel_cdn_prefix    = prefix;
-    }
-
-    // Remove any old iframe
-    const oldIframe = document.getElementById('studio-exterior-iframe');
-    if (oldIframe) oldIframe.remove();
-
-    // Show stage img (turntable will control it)
-    if (stageImg) { stageImg.style.display = ''; stageImg.src = exteriorFrames[0] || ''; }
-    if (fallbackIcon) fallbackIcon.classList.add('hidden');
-
-    // Continue to turntable setup below (do NOT return here)
-
-  } else if (
-    // ── Case 1: SpinCar / HTTP external interactive 360 URL ──
-    // When exterior_360 is a full URL (SpinCar, impel360, etc.),
-    // inject a real <iframe> instead of a static <img>.
-    car.exterior_360 &&
-    typeof car.exterior_360 === 'string' &&
-    car.exterior_360.startsWith('http') &&
-    !findRegistryEntry(car) &&
-    (!Array.isArray(car.exterior_frames) || !car.exterior_frames.length)
-  ) {
-    // Remove any old iframe first
-    const oldIframe = document.getElementById('studio-exterior-iframe');
-    if (oldIframe) oldIframe.remove();
-
-    // Hide static img — iframe takes over
-    if (stageImg) stageImg.style.display = 'none';
-    if (fallbackIcon) fallbackIcon.classList.add('hidden');
-
-    // Inject interactive iframe
-    const iframe = document.createElement('iframe');
-    iframe.id = 'studio-exterior-iframe';
-    iframe.src = car.exterior_360;
-    iframe.allow = 'fullscreen; xr-spatial-tracking';
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.style.cssText = [
-      'width:100%', 'height:100%', 'border:none',
-      'border-radius:inherit', 'display:block',
-      'position:absolute', 'inset:0', 'z-index:2'
-    ].join(';');
-
-    if (exteriorStage) {
-      exteriorStage.style.position = 'relative';
-      exteriorStage.appendChild(iframe);
-    }
-
-    // Hide angle pill — not applicable for iframe player
-    const anglePill = document.getElementById('studio-angle-pill');
-    if (anglePill) anglePill.style.display = 'none';
-
-    // No frame-based drag needed — SpinCar handles interaction internally
-    return;
-
-  } else {
-    // ── Case 2: Local Carsome frame registry ──
-    const match = findRegistryEntry(car);
-    if (match) {
+  // ── Case 1: Local shared/model registry ──
+  const match = findRegistryEntry(car);
+  if (match) {
       const basePath = match.entry.sourceJson.replace(/\/source\.json$/i, '');
       const frontOffset = 125;
       const sampleCount = 36;
@@ -453,11 +403,11 @@ function setupExterior360(car) {
         const padded = String(frameNum).padStart(3, '0');
         exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
       }
-    } else if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) {
-      // ── Case 3: Explicit frames array ──
-      exteriorFrames = [...car.exterior_frames];
-    } else if (car.exterior_360 && typeof car.exterior_360 === 'string') {
-      // ── Case 4: Local relative path to frames folder ──
+  } else if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) {
+    // ── Case 2: Explicit Cloudinary frame array ──
+    exteriorFrames = [...car.exterior_frames];
+  } else if (car.exterior_360 && typeof car.exterior_360 === 'string' && !/^https?:\/\//i.test(car.exterior_360)) {
+    // ── Case 3: Local shared/model path to frames folder ──
       const basePath = car.exterior_360.replace(/\/exterior\/full-res$/i, '').replace(/\/+$/, '');
       const frontOffset = 125;
       const sampleCount = 36;
@@ -467,7 +417,6 @@ function setupExterior360(car) {
         const padded = String(frameNum).padStart(3, '0');
         exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
       }
-    }
   }
 
   // Remove any injected iframe from previous load
@@ -656,7 +605,7 @@ function setupInteriorCockpit(car) {
     const faceImgs = stage.querySelectorAll('[data-vehicle-interior-face]');
     faceImgs.forEach(img => {
       const face = img.getAttribute('data-vehicle-interior-face');
-      if (face && cloudinaryFaces[face]) img.src = cloudinaryFaces[face];
+      if (face && isAllowedProductionMedia(cloudinaryFaces[face])) img.src = cloudinaryFaces[face];
     });
 
     stage.classList.remove('hidden');
@@ -674,35 +623,6 @@ function setupInteriorCockpit(car) {
     updateCockpitAngleIndicator({ yaw: 180, pitch: 0 });
     return;
   }
-
-  // ── Fallback: Impel CDN prefix set by setupExterior360 Case 0 (live CDN preview, no upload) ──
-  const impelPrefix = window._wedrive_impel_cdn_prefix || '';
-  if (impelPrefix) {
-    const faces = ['f', 'b', 'l', 'r', 'u', 'd'];
-    const faceImgs = stage.querySelectorAll('[data-vehicle-interior-face]');
-    faceImgs.forEach(img => {
-      const face = img.getAttribute('data-vehicle-interior-face');
-      if (face && faces.includes(face)) {
-        img.src = `${impelPrefix}pano/pano_${face}.jpg`;
-      }
-    });
-
-    stage.classList.remove('hidden');
-    stage.style.display = '';
-    if (fallback) fallback.classList.add('hidden');
-    if (scene) scene.style.display = 'flex';
-    if (hud) hud.classList.remove('hidden');
-    if (dragHint) dragHint.classList.remove('is-hidden');
-
-    if (window.WedriveVehicleViewer && !interiorViewerApi) {
-      interiorViewerApi = window.WedriveVehicleViewer.get(stage) || window.WedriveVehicleViewer.init(stage, {
-        defaultView: 'interior', autoDrift: false
-      });
-    }
-    updateCockpitAngleIndicator({ yaw: 180, pitch: 0 });
-    return;
-  }
-
 
   if (!carHasInterior360(car)) {
     stage.classList.add('hidden');
@@ -850,9 +770,11 @@ function setupPhotoGallery(car) {
   const navPrev = document.querySelector('.gallery-nav-btn.prev');
   const navNext = document.querySelector('.gallery-nav-btn.next');
 
-  galleryImages = (car.images && car.images.length > 0) ? [...car.images] : [];
+  galleryImages = (car.images && car.images.length > 0)
+    ? car.images.filter(img => isAllowedProductionMedia(typeof img === 'string' ? img : (img && img.img)))
+    : [];
   if (galleryImages.length === 0 && car.image_url) {
-    galleryImages = [car.image_url];
+    if (isAllowedProductionMedia(car.image_url)) galleryImages = [car.image_url];
   }
   currentGalleryIndex = 0;
 
@@ -877,7 +799,10 @@ function setupPhotoGallery(car) {
       }
     }
   } else {
-    if (heroImg) heroImg.src = '../../../../shared/logo/wedrive-icon.png';
+    if (heroImg) {
+      heroImg.src = '';
+      heroImg.style.display = 'none';
+    }
     if (badge) badge.textContent = 'TIADA FOTO';
     if (navPrev) navPrev.style.display = 'none';
     if (navNext) navNext.style.display = 'none';

@@ -21,6 +21,14 @@
     return 'wedrive_edit_car_' + id;
   }
 
+  function isAllowedCarMedia(value) {
+    if (typeof value !== 'string') return false;
+    const url = value.trim();
+    if (!url || url.startsWith('data:')) return false;
+    if (url.includes('res.cloudinary.com/') || url.includes('shared/model/')) return true;
+    return /^(?:Sedan|Hatchback|SUV|MPV|Truck|Coupe|Convertible|Wagon|Van)\//i.test(url);
+  }
+
   async function fetchCarById(carId) {
     if (!carId) return null;
 
@@ -53,12 +61,14 @@
   }
 
   function resolveCarImg(img) {
-    if (!img) return '../../../../shared/model/bezza.png';
+    if (!img) return '';
     if (typeof img !== 'string') img = img.img || '';
-    if (!img) return '../../../../shared/model/bezza.png';
-    if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:') || img.startsWith('/')) {
+    if (!img) return '';
+    if (img.includes('res.cloudinary.com/') || img.startsWith('data:')) {
       return img;
     }
+    if (img.startsWith('http://') || img.startsWith('https://')) return '';
+    if (img.startsWith('/')) return img;
     if (img.startsWith('../../../../shared/model/')) {
       return img;
     }
@@ -68,7 +78,10 @@
     if (img.startsWith('shared/model/')) {
       return '../../../../' + img;
     }
-    return '../../../../shared/model/' + img;
+    if (/^(?:Sedan|Hatchback|SUV|MPV|Truck|Coupe|Convertible|Wagon|Van)\//i.test(img)) {
+      return '../../../../shared/model/' + img;
+    }
+    return '';
   }
 
   function normalizeCategory(cat) {
@@ -142,7 +155,8 @@
 
     const rawRate = rawCar.rate ? String(rawCar.rate).replace(/[^0-9.]/g, '') : (rawCar.price ? String(rawCar.price) : '150');
     const parsedRate = parseFloat(rawRate) || 150;
-    const has360Initial = Boolean(rawCar.has_360 || rawCar.has360 || rawCar.exterior_360 || rawCar.supabase_360 || (Array.isArray(rawCar.exterior_frames) && rawCar.exterior_frames.length > 0));
+    const exteriorFrames = Array.isArray(rawCar.exterior_frames) ? rawCar.exterior_frames.filter(Boolean) : [];
+    const has360Initial = exteriorFrames.length > 0;
 
     // Normalize photos
     let photosList = [];
@@ -155,7 +169,7 @@
       photosList = [{ img: resolveCarImg(rawCar.image_url), raw: rawCar.image_url, title: 'Foto Utama' }];
     }
 
-    const firstImg = photosList.length > 0 ? photosList[0].img : resolveCarImg('');
+    const firstImg = photosList.length > 0 ? photosList[0].img : '';
 
     const draft = {
       id: rawCar.id,
@@ -176,8 +190,11 @@
       status: rawCar.status || 'Available',
       has360: has360Initial,
       has_360: has360Initial,
-      cdnUrlExterior: rawCar.exterior_360 || rawCar.supabase_360 || '',
-      supabase_360: rawCar.exterior_360 || rawCar.supabase_360 || '',
+      exterior_frames: exteriorFrames,
+      exterior_360: rawCar.exterior_360 || null,
+      interior_360: rawCar.interior_360 || null,
+      cdnUrlExterior: '',
+      supabase_360: '',
       photos: photosList,
       gallery8Photos: photosList,
       image_url: firstImg,
@@ -253,12 +270,10 @@
       throw new Error('Kadar harian sewa wajib berupa nombor sah melebihi RM 0.');
     }
 
-    const has360Final = Boolean(
-      draft.has_360 || 
-      draft.has360 || 
-      (draft.cdnUrlExterior && String(draft.cdnUrlExterior).trim().length > 0) ||
-      (draft.supabase_360 && String(draft.supabase_360).trim().length > 0)
-    );
+    const exteriorFrames = Array.isArray(draft.exterior_frames)
+      ? draft.exterior_frames.filter(function (url) { return typeof url === 'string' && url.trim(); })
+      : [];
+    const has360Final = exteriorFrames.length > 0;
 
     function cleanImgForDb(src) {
       if (!src) return '';
@@ -269,9 +284,40 @@
     }
 
     // Normalize images array for DB
-    const imageList = (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0)
+    let imageList = (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0)
       ? draft.gallery8Photos.map(cleanImgForDb).filter(Boolean)
       : (Array.isArray(draft.photos) ? draft.photos.map(cleanImgForDb).filter(Boolean) : []);
+
+    // New edit photos may still be data URLs or external URLs in the session
+    // draft. Convert them before UPDATE; never persist those sources directly.
+    const rawImages = (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0)
+      ? draft.gallery8Photos
+      : (Array.isArray(draft.photos) ? draft.photos : []);
+    const needsUpload = rawImages.some(function (item) {
+      const value = typeof item === 'string' ? item : (item && (item.raw || item.img));
+      return typeof value === 'string' && value.trim() && !isAllowedCarMedia(value);
+    });
+    if (needsUpload) {
+      if (!window.WeDriveAPI || typeof window.WeDriveAPI.uploadImageToCloudinary !== 'function') {
+        throw new Error('Fungsi upload Cloudinary tidak tersedia.');
+      }
+      const folderName = String(draft.name || [draft.year, draft.brand, draft.model, draft.variant].filter(Boolean).join(' ') || 'Unknown Car')
+        .replace(/[\\/:*?"<>|]/g, '-').trim();
+      const categoryName = String(draft.category || 'SUV').replace(/[\\/:*?"<>|]/g, '-').trim();
+      const uploaded = [];
+      for (let index = 0; index < rawImages.length; index += 1) {
+        const item = rawImages[index];
+        const value = typeof item === 'string' ? item : (item && (item.raw || item.img));
+        if (!value || !String(value).trim()) continue;
+        if (isAllowedCarMedia(value)) {
+          uploaded.push(cleanImgForDb(value));
+          continue;
+        }
+        const publicId = `model/${categoryName}/${folderName}/gallery/edit-${String(index).padStart(2, '0')}`;
+        uploaded.push(await window.WeDriveAPI.uploadImageToCloudinary(value, publicId));
+      }
+      imageList = uploaded.filter(Boolean);
+    }
 
     const updatePayload = {
       name: name,
@@ -289,38 +335,29 @@
       status: draft.status || 'Available',
       ai: draft.engine || '2.0L Standard',
       has_360: has360Final,
-      exterior_360: has360Final ? (draft.cdnUrlExterior || draft.supabase_360 || null) : null,
-      images: imageList.length > 0 ? imageList : [cleanImgForDb(draft.image_url) || 'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-140.jpg']
+      exterior_360: has360Final ? (draft.exterior_360 || JSON.stringify({ type: 'cloudinary', frame_count: exteriorFrames.length })) : null,
+      interior_360: draft.interior_360 || null,
+      exterior_frames: has360Final ? exteriorFrames : null,
+      images: imageList
     };
 
+    if (!hasAllowedCarImages(updatePayload.images) && !has360Final) {
+      throw new Error('Kereta mesti mempunyai sekurang-kurangnya satu gambar atau satu 360 view.');
+    }
+
     // 2. Persist to Supabase PostgreSQL
-    if (window.supabaseClient) {
-      const targetId = isNaN(parseInt(carId, 10)) ? carId : parseInt(carId, 10);
-      const { error } = await window.supabaseClient
-        .from('cars')
-        .update(updatePayload)
-        .eq('id', targetId);
-      if (error) {
-        console.error('[WeDRIVE EditCar] Supabase error detail:', error);
-        throw error;
-      }
+    if (!window.supabaseClient) throw new Error('Supabase client is unavailable.');
+    const targetId = isNaN(parseInt(carId, 10)) ? carId : parseInt(carId, 10);
+    const { error } = await window.supabaseClient
+      .from('cars')
+      .update(updatePayload)
+      .eq('id', targetId);
+    if (error) {
+      console.error('[WeDRIVE EditCar] Supabase error detail:', error);
+      throw error;
     }
 
-    // 3. Update localStorage cache if used
-    try {
-      const localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-      const updatedLocal = localCars.map(c => {
-        if (String(c.id) === String(carId)) {
-          return { ...c, ...updatePayload, id: carId };
-        }
-        return c;
-      });
-      localStorage.setItem('wedrive_cars', JSON.stringify(updatedLocal));
-    } catch (e) {
-      console.warn('[WeDRIVE EditCar] Local cache update warning:', e);
-    }
-
-    // 4. Clear edit draft
+    // Clear edit draft after the Supabase UPDATE succeeds.
     clearCarDraft(carId);
 
     return { success: true, id: carId };

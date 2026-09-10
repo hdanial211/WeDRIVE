@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.17.4" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.20.5" />
     <!-- AUTH GUARD -->
     <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
     <script src="preview-i18n.js"></script>
@@ -162,7 +162,7 @@
                 <!-- Showcase Card (Left, 8 cols) -->
                 <div class="md:col-span-8 bento-card-v7 p-md flex flex-col gap-md relative overflow-hidden group">
                     <!-- 360 Studio Render Viewport -->
-                    <div class="relative w-full h-[400px] rounded-2xl overflow-hidden bg-surface-container flex items-center justify-center cursor-ew-resize">
+                    <div id="step3VisualViewer" class="relative w-full h-[400px] rounded-2xl overflow-hidden bg-surface-container flex items-center justify-center cursor-ew-resize">
                         <!-- Empty State Canvas (Shown when visuals not downloaded) -->
                         <div id="step3EmptyShowcaseState" class="flex flex-col items-center justify-center p-8 text-center max-w-md mx-auto z-10 transition-all duration-300">
                             <div class="circle-1-1 w-16 h-16 rounded-full bg-warning/15 text-warning flex items-center justify-center mb-3 shadow-inner">
@@ -179,15 +179,28 @@
                         <!-- Image Container (Hidden when empty) -->
                         <div id="step3ViewportImage" class="hidden absolute inset-0 bg-cover bg-center w-full h-full mix-blend-multiply dark:mix-blend-normal opacity-95 transition-transform duration-500 group-hover:scale-105"></div>
 
-                        <!-- Real 360° Iframe Viewer (cdnUrl from draft — Zero Fake Data) -->
-                        <iframe id="step3Iframe360"
-                            class="hidden absolute inset-0 w-full h-full border-0"
-                            src=""
-                            title="Pusingan 360° Kenderaan"
-                            allow="fullscreen"
-                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                            loading="lazy"
-                        ></iframe>
+                        <!-- Progressive Cloudinary frame loader -->
+                        <div id="step3FrameLoading" class="hidden absolute top-4 left-1/2 -translate-x-1/2 z-30 min-w-[210px] max-w-[min(86%,320px)] rounded-full bg-black/65 backdrop-blur-md px-4 py-2 text-white shadow-lg" role="status" aria-live="polite">
+                            <div class="flex items-center gap-2">
+                                <span id="step3FrameLoadingIcon" class="material-symbols-outlined text-[17px] animate-spin">progress_activity</span>
+                                <span id="step3FrameLoadingText" class="font-caption text-[12px] font-semibold tabular-nums">Memuat frame 0/200...</span>
+                            </div>
+                            <div class="mt-1.5 h-1 overflow-hidden rounded-full bg-white/20">
+                                <div id="step3FrameLoadingBar" class="h-full w-0 rounded-full bg-success transition-[width] duration-200" style="width:0%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cloudinary Interior Cubemap -->
+                        <div id="step3InteriorScene" class="hiw-interior-scene hidden" data-vehicle-interior-scene aria-hidden="true">
+                            <div id="step3InteriorCube" class="hiw-interior-cube" data-vehicle-interior-cube>
+                                <img class="hiw-interior-face" data-vehicle-interior-face="f" alt="Interior hadapan" draggable="false" />
+                                <img class="hiw-interior-face" data-vehicle-interior-face="b" alt="Interior belakang" draggable="false" />
+                                <img class="hiw-interior-face" data-vehicle-interior-face="l" alt="Interior kiri" draggable="false" />
+                                <img class="hiw-interior-face" data-vehicle-interior-face="r" alt="Interior kanan" draggable="false" />
+                                <img class="hiw-interior-face" data-vehicle-interior-face="u" alt="Interior atas" draggable="false" />
+                                <img class="hiw-interior-face" data-vehicle-interior-face="d" alt="Interior bawah" draggable="false" />
+                            </div>
+                        </div>
 
                         <!-- Left Navigation Button (<) - Strict 1:1 Circle -->
                         <button id="step3BtnPrevImage" type="button" class="hidden circle-1-1 absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-surface-container-lowest/85 hover:bg-surface-container-high/95 dark:bg-black/60 dark:hover:bg-black/80 backdrop-blur-md hairline border border-border-day text-on-surface shadow-md flex items-center justify-center interactive-btn cursor-pointer z-20 transition-all active:scale-[0.92]" title="Gambar Sebelumnya" aria-label="Gambar Sebelumnya" data-i18n-title="gallery_btn_prev">
@@ -216,6 +229,7 @@
                     <!-- Showcase Segmented Switch (Galeri dulu, ada 360 baru kembang) -->
                     <div id="step3SegmentedSwitcher" class="bg-surface-container rounded-full p-1 flex mt-auto relative z-10 hairline border border-border-day w-full max-w-[150px] mx-auto transition-all duration-500">
                         <button id="step3Tab360" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap" data-i18n="tab_360">Pusingan 360°</button>
+                        <button id="step3TabInterior" type="button" class="hidden flex-1 text-secondary font-caption text-caption py-1.5 text-center transition-colors hover:text-on-surface whitespace-nowrap">Interior</button>
                         <button id="step3TabGallery" type="button" class="flex-1 bg-white dark:bg-[#161618] shadow-xs rounded-full py-1.5 font-caption text-caption text-on-surface text-center font-bold whitespace-nowrap" data-i18n="tab_gallery">Galeri</button>
                     </div>
                 </div>
@@ -374,8 +388,10 @@
 
     <!-- AI Key Vault (Centralized) -->
     <script src="../../../../shared/js/ai-vault.js?v=6.17.0"></script>
+    <!-- Shared 360/interior viewer used by How It Works -->
+    <script src="../../../../shared/js/vehicle-viewer.js?v=6.20.6"></script>
     <!-- Step 3 Modular Controller Script -->
-    <script src="step3-pengesahan.js"></script>
+    <script src="step3-pengesahan.js?v=6.20.7"></script>
 
     <!-- Real Admin Navigation & System Scripts -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>

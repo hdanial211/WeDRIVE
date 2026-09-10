@@ -1,6 +1,6 @@
 /**
  * WeDRIVE — AI Key Vault (Single Source of Truth)
- * shared/js/ai-vault.js (v6.17.0)
+ * shared/js/ai-vault.js (v6.18.0)
  *
  * Central utility for ALL AI modules to read API keys.
  * Every module (chatbot, marketing-ai, studio360, analytics, add-car)
@@ -11,6 +11,8 @@
  *   Slot 2 → events_pricing   (marketing-ai content generator)
  *   Slot 3 → customer_chatbot (chatbot.js, chatbot-admin.js)
  *   Slot 4 → downloader_360   (step2-studio360.js CDN scanner & Gemini Vision)
+ *   Slot 5 → customer_lifecycle (event promotions, customer email & reminders)
+ *   Slot 6 → document_verification (IC, driving licence & form analysis)
  */
 
 (function (window) {
@@ -99,7 +101,9 @@
     1: 'system_core',
     2: 'events_pricing',
     3: 'customer_chatbot',
-    4: 'downloader_360'
+    4: 'downloader_360',
+    5: 'customer_lifecycle',
+    6: 'document_verification'
   };
 
   var ROLE_TO_SLOT = {};
@@ -158,6 +162,7 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(_cache));
         return _cache;
       }
+      _cache = null;
     } catch (e) {
       console.warn('[AI Vault] Supabase read error:', e);
     }
@@ -196,7 +201,7 @@
 
   /**
    * Get API key by role name
-   * @param {string} role - 'system_core' | 'events_pricing' | 'customer_chatbot' | 'downloader_360'
+   * @param {string} role - AI role name from SLOT_ROLES
    * @returns {string} API key or empty string
    */
   function getKey(role) {
@@ -208,7 +213,7 @@
 
   /**
    * Get API key by slot number (1-4)
-   * @param {number} slotNum
+   * @param {number} slotNum (1-6)
    * @returns {string} API key or empty string
    */
   function getSlotKey(slotNum) {
@@ -257,7 +262,7 @@
   }
 
   /**
-   * Get all 4 slot keys
+   * Get all configured slot keys
    * @returns {object} All slots data
    */
   function getAllKeys() {
@@ -266,14 +271,14 @@
 
   /**
    * Save a single slot key directly to storage & Supabase
-   * @param {number} slotNum - 1 to 4
+   * @param {number} slotNum - 1 to 6
    * @param {string} key - API key string
    * @param {string} [providerId] - Optional provider override
    * @param {string} [customModel] - Optional custom model override
    * @returns {Promise<boolean>} Success status
    */
   async function saveSlotKey(slotNum, key, providerId, customModel) {
-    if (!slotNum || slotNum < 1 || slotNum > 4) return false;
+    if (!slotNum || slotNum < 1 || slotNum > 6) return false;
     var trimmedKey = (key || '').trim();
     var detected = detectProvider(trimmedKey);
     var pId = providerId || (detected ? detected.id : '');
@@ -283,7 +288,9 @@
       slot1: { key: '', provider: '', model: '' },
       slot2: { key: '', provider: '', model: '' },
       slot3: { key: '', provider: '', model: '' },
-      slot4: { key: '', provider: '', model: '' }
+      slot4: { key: '', provider: '', model: '' },
+      slot5: { key: '', provider: '', model: '' },
+      slot6: { key: '', provider: '', model: '' }
     };
 
     keys['slot' + slotNum] = {
@@ -319,10 +326,15 @@
     // Sync to Supabase if available
     if (window.supabaseClient) {
       try {
-        await window.supabaseClient.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
+        var syncResult = await window.supabaseClient.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
+        if (syncResult.error) throw syncResult.error;
       } catch (err) {
         console.warn('[AI Vault] Supabase sync error:', err);
+        return false;
       }
+    } else {
+      console.warn('[AI Vault] Supabase client unavailable; key was not persisted to database.');
+      return false;
     }
 
     return true;
@@ -379,6 +391,9 @@
       };
       if (jsonMode) {
         geminiBody.generationConfig.responseMimeType = 'application/json';
+      }
+      if (opts.googleSearch) {
+        geminiBody.tools = [{ google_search: {} }];
       }
 
       var gr = await fetch(geminiUrl, {

@@ -61,10 +61,11 @@
       sectionKey: 'nav_sec_ai_suite',
       sectionLabel: 'Kecerdasan AI',
       items: [
+        { page: 'event-planner', href: 'ai/event-planner.html', icon: 'event_available', key: 'sidebar_ai_event_planner', label: 'Perancang Event AI' },
+        { page: 'ai-automation', href: 'ai/automation.html', icon: 'auto_awesome', key: 'sidebar_ai_automation', label: 'Pusat Automasi AI' },
         { page: 'analytics', href: 'analytics/analytics.html', icon: 'insights', key: 'sidebar_ai_analytics', label: 'Analisis Data AI' },
         { page: 'ai-keys', href: 'ai/api-keys.html', icon: 'vpn_key', key: 'sidebar_ai_keys', label: 'Pusat Kunci API AI' },
-        { page: 'chatbot-settings', href: 'chatbot/chatbot.html', icon: 'smart_toy', key: 'sidebar_ai_api_chatbot', label: 'Chatbot Khidmat Pelanggan' },
-        { page: 'marketing', href: 'marketing/marketing.html', icon: 'campaign', key: 'sidebar_ai_marketing', label: 'Pemasaran Pintar AI' }
+        { page: 'chatbot-settings', href: 'chatbot/chatbot.html', icon: 'smart_toy', key: 'sidebar_ai_api_chatbot', label: 'Chatbot AI' }
       ]
     }
   };
@@ -222,11 +223,14 @@
         var sb = window.supabaseClient;
         if (sb) {
           sb.auth.signOut().then(function () {
-            localStorage.clear();
+            // Keep the unfinished Add Car draft available after logout.
+            localStorage.removeItem('wedrive_session');
+            sessionStorage.removeItem('wedrive_car_draft_prompted_session');
             window.location.href = base + 'account/pages/login/login.html';
           });
         } else {
-          localStorage.clear();
+          localStorage.removeItem('wedrive_session');
+          sessionStorage.removeItem('wedrive_car_draft_prompted_session');
           window.location.href = base + 'account/pages/login/login.html';
         }
       });
@@ -306,6 +310,19 @@
 
         resolveLinks(placeholder, base);
         setupMobileToggle(placeholder);
+
+        // Load the draft recovery dialog only after the real sidebar exists.
+        if (component === 'sidebar-admin' && !document.querySelector('script[data-wedrive-draft-guard]')) {
+          var draftGuardScript = document.createElement('script');
+          draftGuardScript.src = base + 'shared/js/car-draft-guard.js?v=6.21.0';
+          draftGuardScript.setAttribute('data-wedrive-draft-guard', '1');
+          draftGuardScript.onload = function () {
+            if (window.WeDriveDraftGuard) window.WeDriveDraftGuard.init(base);
+          };
+          document.body.appendChild(draftGuardScript);
+        } else if (window.WeDriveDraftGuard) {
+          window.WeDriveDraftGuard.refreshAddCarLinks();
+        }
 
         if (typeof window.setLanguage === 'function') {
           var lang = localStorage.getItem('wedrive_lang') || localStorage.getItem('wedrive-lang') || 'ms';

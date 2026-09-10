@@ -3852,6 +3852,9 @@ body.night-mode .segmented-control .segmented-glider,
   position: absolute;
   width: 1400px;
   height: 1400px;
+  --vehicle-cube-size: 1400px;
+  --vehicle-cube-half-size: 700px;
+  --vehicle-cube-negative-half-size: -700px;
   transform-style: preserve-3d;
   pointer-events: none;
 }
@@ -3862,26 +3865,30 @@ body.night-mode .segmented-control .segmented-glider,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  backface-visibility: hidden;
+  /* CSS fallback must show the inward-facing side of the cubemap. WebGL
+     covers this layer when available; when it is unavailable, hiding the
+     back face exposes the wrong outer faces (for example b + r together). */
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
 }
 
 .hiw-interior-face[data-hiw-interior-face="f"],
-[data-vehicle-interior-face="f"] { transform: translateZ(700px) rotateY(180deg); }
+[data-vehicle-interior-face="f"] { transform: translateZ(var(--vehicle-cube-half-size, 700px)) rotateY(180deg); }
 
 .hiw-interior-face[data-hiw-interior-face="b"],
-[data-vehicle-interior-face="b"] { transform: translateZ(-700px) rotateY(0deg); }
+[data-vehicle-interior-face="b"] { transform: translateZ(var(--vehicle-cube-negative-half-size, -700px)) rotateY(0deg); }
 
 .hiw-interior-face[data-hiw-interior-face="l"],
-[data-vehicle-interior-face="l"] { transform: translateX(-700px) rotateY(90deg); }
+[data-vehicle-interior-face="l"] { transform: translateX(var(--vehicle-cube-negative-half-size, -700px)) rotateY(90deg); }
 
 .hiw-interior-face[data-hiw-interior-face="r"],
-[data-vehicle-interior-face="r"] { transform: translateX(700px) rotateY(-90deg); }
+[data-vehicle-interior-face="r"] { transform: translateX(var(--vehicle-cube-half-size, 700px)) rotateY(-90deg); }
 
 .hiw-interior-face[data-hiw-interior-face="u"],
-[data-vehicle-interior-face="u"] { transform: translateY(-700px) rotateX(-90deg); }
+[data-vehicle-interior-face="u"] { transform: translateY(var(--vehicle-cube-negative-half-size, -700px)) rotateX(-90deg); }
 
 .hiw-interior-face[data-hiw-interior-face="d"],
-[data-vehicle-interior-face="d"] { transform: translateY(700px) rotateX(90deg); }
+[data-vehicle-interior-face="d"] { transform: translateY(var(--vehicle-cube-half-size, 700px)) rotateX(90deg); }
 
 .vehicle-viewer-webgl {
   position: absolute;
@@ -8203,14 +8210,16 @@ body.dark aside.sidebar {
   max-height: 38px !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 50% !important;
-  background: var(--primary-light);
-  color: var(--primary);
-  font-size: 14px;
+  background: linear-gradient(135deg, var(--primary) 0%, #34aadc 100%);
+  color: #FFFFFF;
+  font-size: 13px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.35);
+  letter-spacing: 0.5px;
 }
 
 .sidebar-user .user-info .name {
@@ -14625,6 +14634,22 @@ body.profile-page {
 .fs-15 { font-size: 15px !important; }
 .grid-4col { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; }
 .mybk-loading-box { grid-column: 1 / -1; text-align: center; padding: 48px; color: var(--text-secondary); }
+.catalog-loading-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 220px;
+  padding: 48px 24px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+.catalog-loading-state .material-icons-round {
+  color: var(--primary);
+  font-size: 32px;
+}
 .modal-cancel-msg { font-size: 14px; line-height: 1.5; color: var(--text-primary); margin: 0; }
 .modal-extend-desc { font-size: 13.5px; color: var(--text-secondary); margin: 0; }
 
@@ -16028,6 +16053,13 @@ html.night-mode .admin-depot-badge,
   margin-bottom: 22px !important;
 }
 
+.stats-grid.grid-3col,
+.grid-3col {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px !important;
+}
+
 .stat-card {
   position: relative;
   background: var(--bg-surface);
@@ -16861,8 +16893,10 @@ html.night-mode .bento-ghost-icon,
 /* ── Responsive Adaptations ────────────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .stats-grid,
+  .stats-grid.grid-3col,
   .grid-4,
-  .grid-4col {
+  .grid-4col,
+  .grid-3col {
     grid-template-columns: repeat(2, 1fr) !important;
   }
   .grid-2 {
@@ -16886,8 +16920,10 @@ html.night-mode .bento-ghost-icon,
 
 @media (max-width: 540px) {
   .stats-grid,
+  .stats-grid.grid-3col,
   .grid-4,
-  .grid-4col {
+  .grid-4col,
+  .grid-3col {
     grid-template-columns: 1fr !important;
   }
   .actions-grid {
@@ -20782,6 +20818,21 @@ input[type="number"]:focus::-webkit-inner-spin-button {
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Step 2 preview follows the compact 16:9 showroom stage used by How It Works.
+   It must not stretch to match the taller inspection column beside it. */
+.step2-turntable-viewport {
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  max-height: 460px;
+}
+
+@media (max-width: 768px) {
+  .step2-turntable-viewport {
+    aspect-ratio: 16 / 9;
+    max-height: none;
+  }
+}
+
 [data-theme="night"] .glass-panel,
 [data-theme="night"] .glass-panel-v7,
 .night-mode .glass-panel,
@@ -21170,7 +21221,7 @@ html.dark .v7-select {
   color: #FFFFFF !important;
 }
 
-/* ── Customer Spotlight Card (Step 4 WYSIWYG) ── */
+/* ── Customer Spotlight Card (Step 4 customer preview) ── */
 .spotlight-card {
   --spotlight-card-bg: #ffffff;
   --spotlight-card-border: rgba(0, 0, 0, 0.08);
@@ -21613,6 +21664,3 @@ body.dark .toast-notify {
 .export-dropdown button:hover .material-icons-round {
   color: var(--primary);
 }
-
-
-

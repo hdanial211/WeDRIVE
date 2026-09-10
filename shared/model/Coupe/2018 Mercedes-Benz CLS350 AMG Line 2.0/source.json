@@ -14,14 +14,58 @@
     "full_res_pattern": "exterior/full-res/frame-{padded}.jpg"
   },
   "interior": {
+    "type": "cube-map-panorama",
     "viewer_supported": true,
-    "download_status": "viewer panorama is protected behind tour loader; frame export not publicly exposed via direct CDN paths in current fetch flow",
-    "full_res_pattern": null
+    "faces": [
+      "f",
+      "b",
+      "d",
+      "l",
+      "r",
+      "u"
+    ],
+    "full_res_pattern": "interior/full-res/pano_{face}.jpg",
+    "cdn_pattern": "pano/pano_{face}.jpg",
+    "files": {
+      "f": {
+        "local": "interior/full-res/pano_f.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/pano/pano_f.jpg",
+        "bytes": 176848
+      },
+      "b": {
+        "local": "interior/full-res/pano_b.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/pano/pano_b.jpg",
+        "bytes": 115766
+      },
+      "d": {
+        "local": "interior/full-res/pano_d.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/pano/pano_d.jpg",
+        "bytes": 213078
+      },
+      "l": {
+        "local": "interior/full-res/pano_l.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/pano/pano_l.jpg",
+        "bytes": 146475
+      },
+      "r": {
+        "local": "interior/full-res/pano_r.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/pano/pano_r.jpg",
+        "bytes": 145263
+      },
+      "u": {
+        "local": "interior/full-res/pano_u.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/pano/pano_u.jpg",
+        "bytes": 54948
+      }
+    }
   },
   "placeholders": {
     "still": {
       "full_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/placeholder/placeholder.jpg"
     }
   },
-  "thumb": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/thumb-sm.jpg"
+  "thumb": "https://cdn.impel.io/swipetospin-viewers/Carsome/wdd2573502a021584/20260114095830.BMEDLDSI/thumb-sm.jpg",
+  "vin": "wdd2573502a021584",
+  "customer": "Carsome",
+  "downloaded_at": "2026-09-10T22:20:56.826Z"
 }

@@ -149,21 +149,29 @@
                     <div class="canvas-stage-wrapper" id="canvasContainer">
                         <!-- GALLERY STAGE -->
                         <div id="stageGallery" class="w-full h-full flex items-center justify-center relative">
-                            <img id="mainGalleryImg" src="../../../../shared/model/bezza.png" alt="Paparan Galeri" class="max-w-full max-h-full object-contain select-none transition-all duration-300" />
+                            <img id="mainGalleryImg" src="" alt="Paparan Galeri" class="max-w-full max-h-full object-contain select-none transition-all duration-300 hidden" />
+                            <div id="emptyGalleryMessage" class="flex flex-col items-center justify-center p-6 text-center text-secondary">
+                                <span class="material-icons-round text-3xl mb-2">image_not_supported</span>
+                                <p class="text-sm font-bold text-primary">Tiada gambar</p>
+                            </div>
                             <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[11px] text-white font-medium">
                                 <span id="galleryIndexText">Foto 1 daripada 1</span>
                             </div>
                         </div>
 
-                        <!-- 360 VIEWER STAGE (IFRAME / WEBGL) -->
+                        <!-- 360 VIEWER STAGE (Cloudinary frame array) -->
                         <div id="stage360" class="w-full h-full hidden relative flex items-center justify-center">
-                            <iframe id="iframe360" class="w-full h-full border-0 rounded-2xl" src="" title="360 View"></iframe>
+                            <img id="edit360FrameImg" class="max-w-full max-h-full object-contain rounded-2xl hidden" alt="Cloudinary 360 frame" />
+                            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                <button type="button" id="edit360Prev" class="circle-1-1 w-9 h-9 rounded-full bg-black/60 text-white" aria-label="Frame sebelum">‹</button>
+                                <button type="button" id="edit360Next" class="circle-1-1 w-9 h-9 rounded-full bg-black/60 text-white" aria-label="Frame seterusnya">›</button>
+                            </div>
                             <div id="empty360Message" class="flex flex-col items-center justify-center p-6 text-center text-secondary">
                                 <div class="circle-1-1 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
                                     <span class="material-icons-round text-2xl">sync</span>
                                 </div>
-                                <p class="text-sm font-bold text-primary mb-1">Tiada Pautan 360° Dikonfigurasikan</p>
-                                <p class="text-xs text-secondary max-w-sm">Tampal pautan URL CDN 360° di panel sebelah kanan untuk membolehkan pusingan interaktif 360°.</p>
+                                <p class="text-sm font-bold text-primary mb-1">Tiada 360° Cloudinary</p>
+                                <p class="text-xs text-secondary max-w-sm">Simpan aset 360° melalui aliran Add Car untuk memuat naik frame ke Cloudinary.</p>
                             </div>
                         </div>
                     </div>
@@ -184,12 +192,12 @@
             <!-- RIGHT COLUMN: CONFIGURATION & AUTO-DETECT CONTROLS (5 COLUMNS) -->
             <div class="lg:col-span-5 flex flex-col gap-5">
                 
-                <!-- BENTO CARD: 360° CDN AUTO-DETECTION CONFIGURATION -->
+                <!-- BENTO CARD: 360° CLOUDINARY STATUS -->
                 <div class="card p-6 radius-24 bg-surface-1 border-subtle shadow-xs">
                     <div class="flex items-center justify-between pb-3 mb-4 border-bottom-subtle">
                         <div class="flex items-center gap-2">
                             <span class="material-icons-round text-primary text-xl">auto_awesome</span>
-                            <h2 class="text-base font-bold text-primary m-0">Pautan Visual 360°</h2>
+                            <h2 class="text-base font-bold text-primary m-0">Visual 360° Cloudinary</h2>
                         </div>
                         <span id="autoDetectBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-surface-2 text-secondary">
                             Pengesanan Automatik
@@ -199,17 +207,17 @@
                     <div class="flex flex-col gap-4">
                         <div>
                             <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputExteriorCdnUrl">
-                                CDN / URL Viewer 360° Luaran
+                                Status frame tersimpan
                             </label>
                             <div class="relative">
                                 <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary material-icons-round fs-16">link</span>
-                                <input type="text" id="inputExteriorCdnUrl" class="w-full pl-10 pr-10 py-3 rounded-xl bg-surface-2 border-subtle text-xs text-primary font-mono focus:border-primary outline-none transition-all" placeholder="https://cdn.wedrive.my/360/bmw-320i/ atau Sedan/2023 BMW... atau https://my.sirv.com/..." />
-                                <button type="button" id="btnClear360" onclick="handleClear360()" class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-error transition-colors" title="Padam Pautan 360°">
+                                <input type="text" id="inputExteriorCdnUrl" readonly class="w-full pl-10 pr-10 py-3 rounded-xl bg-surface-2 border-subtle text-xs text-primary font-mono opacity-70 cursor-not-allowed" placeholder="Tiada URL CDN digunakan" />
+                                <button type="button" id="btnClear360" onclick="handleClear360()" class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-error transition-colors" title="Padam frame 360° Cloudinary">
                                     <span class="material-icons-round fs-16">cancel</span>
                                 </button>
                             </div>
                             <p class="text-[11px] text-secondary mt-1.5 leading-relaxed">
-                                💡 <strong>Auto-Detect:</strong> Sebaik sahaja URL sah diisi, lencana ungu <span class="badge-360 text-[10px] py-0.5 px-2">360° View</span> akan muncul secara automatik pada kad dan profil kenderaan. Jika dikosongkan, lencana tersebut akan hilang secara automatik (Sifar Hardcoding).
+                                💡 Frame 360° dibaca daripada <strong>exterior_frames</strong> Cloudinary. URL SpinCar/CDN tidak dipaparkan atau disimpan sebagai media.
                             </p>
                         </div>
 
@@ -239,7 +247,7 @@
                                 Pautkan URL Imej / Muat Naik
                             </label>
                             <div class="flex gap-2">
-                                <input type="url" id="inputNewPhotoUrl" class="flex-1 px-4 py-2.5 rounded-xl bg-surface-2 border-subtle text-xs text-primary focus:border-primary outline-none transition-all" placeholder="https://images.unsplash.com/... atau URL gambar" />
+                                <input type="url" id="inputNewPhotoUrl" class="flex-1 px-4 py-2.5 rounded-xl bg-surface-2 border-subtle text-xs text-primary focus:border-primary outline-none transition-all" placeholder="URL imej awam (akan disimpan ke Cloudinary)" />
                                 <button type="button" onclick="handleAddPhotoUrl()" class="apple-btn-capsule-primary text-xs px-4">
                                     <span class="material-icons-round fs-14">add</span> Tambah
                                 </button>
@@ -295,6 +303,7 @@
         let activeDraft = null;
         let activeVisualMode = 'gallery';
         let currentGalleryIndex = 0;
+        let current360FrameIndex = 0;
 
         document.addEventListener('DOMContentLoaded', async () => {
             currentCarId = window.WeDriveEditCar.getCarIdFromUrl();
@@ -328,11 +337,12 @@
         function initMediaFields() {
             const cdnInput = document.getElementById('inputExteriorCdnUrl');
             if (cdnInput) {
-                cdnInput.value = activeDraft.cdnUrlExterior || activeDraft.supabase_360 || '';
+                const frames = Array.isArray(activeDraft.exterior_frames) ? activeDraft.exterior_frames : [];
+                cdnInput.value = frames.length > 0 ? `${frames.length} frame Cloudinary tersimpan` : '';
             }
 
             if (!Array.isArray(activeDraft.photos) || activeDraft.photos.length === 0) {
-                activeDraft.photos = [{ img: activeDraft.image_url || '../../../../shared/model/bezza.png', title: 'Foto Utama' }];
+                activeDraft.photos = activeDraft.image_url ? [{ img: activeDraft.image_url, title: 'Foto Utama' }] : [];
             }
             if (!Array.isArray(activeDraft.gallery8Photos)) {
                 activeDraft.gallery8Photos = [...activeDraft.photos];
@@ -340,30 +350,12 @@
         }
 
         function setup360AutoDetect() {
-            const cdnInput = document.getElementById('inputExteriorCdnUrl');
-            if (cdnInput) {
-                cdnInput.addEventListener('input', () => {
-                    const url = cdnInput.value.trim();
-                    const hasValidUrl = url.length > 3;
-
-                    activeDraft.has360 = hasValidUrl;
-                    activeDraft.has_360 = hasValidUrl;
-                    activeDraft.cdnUrlExterior = hasValidUrl ? url : '';
-                    activeDraft.supabase_360 = hasValidUrl ? url : '';
-
-                    window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
-                    update360StatusDisplay();
-
-                    if (hasValidUrl && (url.startsWith('http://') || url.startsWith('https://'))) {
-                        const iframe = document.getElementById('iframe360');
-                        if (iframe) iframe.src = url;
-                    }
-                });
-            }
+            // 360 is read-only here. New SpinCar assets must go through the
+            // Add Car Cloudinary ingestion pipeline; this page never renders CDN.
         }
 
         function update360StatusDisplay() {
-            const has360 = Boolean(activeDraft && (activeDraft.has_360 || activeDraft.has360 || (activeDraft.cdnUrlExterior && activeDraft.cdnUrlExterior.length > 5)));
+            const has360 = Boolean(activeDraft && Array.isArray(activeDraft.exterior_frames) && activeDraft.exterior_frames.length > 0);
             const badge = document.getElementById('studioBadge360');
             const dot = document.getElementById('status360Dot');
             const title = document.getElementById('status360Title');
@@ -411,8 +403,8 @@
             if (cdnInput) cdnInput.value = '';
             activeDraft.has360 = false;
             activeDraft.has_360 = false;
-            activeDraft.cdnUrlExterior = '';
-            activeDraft.supabase_360 = '';
+            activeDraft.exterior_frames = [];
+            activeDraft.exterior_360 = null;
             window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
             update360StatusDisplay();
             switchVisualMode('gallery');
@@ -425,8 +417,10 @@
             const tab3 = document.getElementById('tab360');
             const stageGal = document.getElementById('stageGallery');
             const stage3 = document.getElementById('stage360');
-            const iframe = document.getElementById('iframe360');
+            const frameImg = document.getElementById('edit360FrameImg');
             const emptyMsg = document.getElementById('empty360Message');
+            const prev = document.getElementById('edit360Prev');
+            const next = document.getElementById('edit360Next');
 
             if (mode === 'gallery') {
                 tabGal.className = 'px-4 py-1.5 rounded-full bg-surface-1 text-primary text-xs font-bold shadow-xs cursor-pointer transition-all';
@@ -439,16 +433,30 @@
                 stageGal.classList.add('hidden');
                 stage3.classList.remove('hidden');
 
-                const url = (activeDraft.cdnUrlExterior || activeDraft.supabase_360 || '').trim();
-                if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
-                    if (iframe.src !== url) iframe.src = url;
-                    iframe.classList.remove('hidden');
+                const frames = Array.isArray(activeDraft.exterior_frames) ? activeDraft.exterior_frames.filter(Boolean) : [];
+                if (frames.length > 0) {
+                    current360FrameIndex = Math.min(current360FrameIndex, frames.length - 1);
+                    frameImg.src = frames[current360FrameIndex];
+                    frameImg.classList.remove('hidden');
                     emptyMsg.classList.add('hidden');
+                    prev.classList.remove('hidden');
+                    next.classList.remove('hidden');
                 } else {
-                    iframe.classList.add('hidden');
+                    frameImg.src = '';
+                    frameImg.classList.add('hidden');
                     emptyMsg.classList.remove('hidden');
+                    prev.classList.add('hidden');
+                    next.classList.add('hidden');
                 }
             }
+        }
+
+        function navigateEdit360(direction) {
+            const frames = Array.isArray(activeDraft.exterior_frames) ? activeDraft.exterior_frames.filter(Boolean) : [];
+            if (!frames.length) return;
+            current360FrameIndex = (current360FrameIndex + direction + frames.length) % frames.length;
+            const frameImg = document.getElementById('edit360FrameImg');
+            if (frameImg) frameImg.src = frames[current360FrameIndex];
         }
 
         function renderThumbnails() {
@@ -459,9 +467,14 @@
             document.getElementById('totalPhotosCount').textContent = `${photos.length} Foto`;
 
             if (photos.length === 0) {
+                document.getElementById('mainGalleryImg')?.classList.add('hidden');
+                document.getElementById('emptyGalleryMessage')?.classList.remove('hidden');
                 strip.innerHTML = '<p class="text-xs text-secondary col-span-full py-2">Tiada foto dimuat naik.</p>';
                 return;
             }
+
+            document.getElementById('mainGalleryImg')?.classList.remove('hidden');
+            document.getElementById('emptyGalleryMessage')?.classList.add('hidden');
 
             strip.innerHTML = photos.map((p, idx) => {
                 const raw = typeof p === 'string' ? p : (p.img || '');
@@ -558,7 +571,7 @@
 
         function handleProceedToStep3() {
             const photos = activeDraft.gallery8Photos || activeDraft.photos || [];
-            if (photos.length === 0 && !activeDraft.has360) {
+            if (photos.length === 0 && !(Array.isArray(activeDraft.exterior_frames) && activeDraft.exterior_frames.length > 0)) {
                 window.WeDriveEditCar.showUnifiedPillToast('Sila sediakan sekurang-kurangnya 1 foto atau pautan 360° yang sah.', 'error');
                 return;
             }
@@ -566,6 +579,9 @@
             window.WeDriveEditCar.saveCarDraft(currentCarId, activeDraft);
             window.location.href = `step3-confirmation.html?id=${encodeURIComponent(currentCarId)}`;
         }
+
+        document.getElementById('edit360Prev')?.addEventListener('click', () => navigateEdit360(-1));
+        document.getElementById('edit360Next')?.addEventListener('click', () => navigateEdit360(1));
     </script>
 </body>
 </html>

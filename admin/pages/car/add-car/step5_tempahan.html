@@ -192,7 +192,6 @@
                         <p class="font-footnote text-[13px] text-on-surface-variant leading-relaxed" data-i18n="step3_empty_showcase_desc">Sila kembali ke Langkah 2 untuk memuat naik foto kenderaan.</p>
                     </div>
                     <img id="step5HeroImage" class="hidden w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105" src="" alt="Kenderaan WeDRIVE"/>
-                    <iframe id="step5360Iframe" class="hidden w-full h-full border-0 bg-black" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title="Pratonton Interaktif 360 Kenderaan"></iframe>
                     <!-- Floating Nav Arrows (1:1 aspect) -->
                     <button id="step5BtnPrev" type="button" class="hidden circle-1-1 absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_left</span></button>
                     <button id="step5BtnNext" type="button" class="hidden circle-1-1 absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white transition-all scale-97 active:scale-90"><span class="material-symbols-outlined">chevron_right</span></button>
@@ -353,6 +352,8 @@ function showPillToast(message, type = 'success') {
 
 let currentStep5PhotoIndex = 0;
 let step5PhotosList = [];
+let currentStep5FrameIndex = 125;
+let step5ExteriorFrames = [];
 
 function getLang() {
   return localStorage.getItem('wedrive_lang') || 'ms';
@@ -383,6 +384,17 @@ function navigateStep5Photo(direction) {
   selectStep5Photo(currentStep5PhotoIndex);
 }
 
+function selectStep5ExteriorFrame(index) {
+  if (!step5ExteriorFrames || step5ExteriorFrames.length === 0) return;
+  currentStep5FrameIndex = (index + step5ExteriorFrames.length) % step5ExteriorFrames.length;
+  const heroImg = document.getElementById('step5HeroImage');
+  if (heroImg) heroImg.src = step5ExteriorFrames[currentStep5FrameIndex];
+}
+
+function navigateStep5ExteriorFrame(direction) {
+  selectStep5ExteriorFrame(currentStep5FrameIndex + direction);
+}
+
 function switchStep5MediaTab(tab) {
   const tabGal = document.getElementById('tabGallery');
   const tab360 = document.getElementById('tab360');
@@ -397,23 +409,35 @@ function switchStep5MediaTab(tab) {
   if (tab === '360') {
     if (tabGal) tabGal.className = 'px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors cursor-pointer';
     if (tab360) tab360.className = 'px-4 py-1.5 rounded-full bg-white/10 text-on-surface font-caption text-caption shadow-sm backdrop-blur-lg cursor-pointer flex items-center gap-1.5';
-    if (heroImg) heroImg.classList.add('hidden');
-    if (btnPrev) btnPrev.classList.add('hidden');
-    if (btnNext) btnNext.classList.add('hidden');
+    if (iframe) iframe.classList.add('hidden');
     if (thumbStrip) thumbStrip.classList.add('hidden');
-    if (iframe) {
-      const url = draft.exterior_360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360;
-      if (url && (!iframe.src || iframe.src === 'about:blank' || !iframe.src.includes('spincar'))) {
-        iframe.src = url;
+    if (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0) {
+      step5ExteriorFrames = draft.exterior_frames.filter(url => typeof url === 'string' && url.trim());
+      if (step5ExteriorFrames.length > 0) {
+        if (heroImg) heroImg.classList.remove('hidden');
+        if (btnPrev) {
+          btnPrev.classList.remove('hidden');
+          btnPrev.onclick = () => navigateStep5ExteriorFrame(-1);
+        }
+        if (btnNext) {
+          btnNext.classList.remove('hidden');
+          btnNext.onclick = () => navigateStep5ExteriorFrame(1);
+        }
+        selectStep5ExteriorFrame(currentStep5FrameIndex);
       }
-      iframe.classList.remove('hidden');
+    } else {
+      // A saved car must have Cloudinary frames. Do not revive the old CDN iframe.
+      if (heroImg) {
+        heroImg.src = '';
+        heroImg.classList.add('hidden');
+      }
+      if (btnPrev) btnPrev.classList.add('hidden');
+      if (btnNext) btnNext.classList.add('hidden');
     }
   } else {
     if (tabGal) tabGal.className = 'px-4 py-1.5 rounded-full bg-white/10 text-on-surface font-caption text-caption shadow-sm backdrop-blur-lg cursor-pointer transition-all';
     if (tab360) tab360.className = 'px-4 py-1.5 rounded-full text-on-surface-variant font-caption text-caption hover:bg-white/5 transition-colors cursor-pointer flex items-center gap-1.5';
-    if (iframe) {
-      iframe.classList.add('hidden');
-    }
+    if (iframe) iframe.classList.add('hidden');
     if (heroImg && step5PhotosList.length > 0) {
       heroImg.classList.remove('hidden');
     }
@@ -494,18 +518,18 @@ function hydrateStep5() {
 
     // Photos Hydration
     step5PhotosList = [];
-    if (draft.supabase_images && Array.isArray(draft.supabase_images) && draft.supabase_images.length > 0) {
-      step5PhotosList = draft.supabase_images.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
-    } else if (draft.gallery8Photos && Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) {
-      step5PhotosList = draft.gallery8Photos.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
-    } else if (draft.photos && Array.isArray(draft.photos) && draft.photos.length > 0) {
-      step5PhotosList = draft.photos.map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p).filter(p => p && p.img);
-    } else if (draft.image_url) {
-      step5PhotosList = [{ img: draft.image_url, title: 'Foto 1' }];
-    }
+    const persistedGallery = Array.isArray(draft.cloudinary_gallery) && draft.cloudinary_gallery.length > 0
+      ? draft.cloudinary_gallery
+      : (Array.isArray(draft.supabase_images) ? draft.supabase_images : []);
+    step5PhotosList = persistedGallery
+      .map((p, idx) => typeof p === 'string' ? { img: p, title: `Foto ${idx + 1}` } : p)
+      .filter(p => p && typeof p.img === 'string' && p.img.includes('res.cloudinary.com/'));
 
     // 360 Progressive Switcher & Badge
-    const has360 = Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || draft.exterior_360);
+    step5ExteriorFrames = Array.isArray(draft.exterior_frames)
+      ? draft.exterior_frames.filter(url => typeof url === 'string' && url.trim())
+      : [];
+    const has360 = step5ExteriorFrames.length > 0;
     const tab360 = document.getElementById('tab360');
     const badge360 = document.getElementById('step5Badge360');
     if (tab360) {
@@ -584,14 +608,12 @@ async function finishAndReturnToCars() {
   }
 
   // Validasi Ketat 2: Visual (Gambar / 360) Wajib Wujud
-  const imagesList = (draft.supabase_images && draft.supabase_images.length > 0)
-    ? draft.supabase_images
-    : (draft.gallery8Photos && draft.gallery8Photos.length > 0)
-      ? draft.gallery8Photos
-      : (draft.photos && draft.photos.length > 0)
-        ? draft.photos.filter(p => p && (p.img || typeof p === 'string')).map(p => typeof p === 'string' ? p : p.img)
-        : (draft.image_url ? [draft.image_url] : []);
-  const hasVisual = (imagesList.length > 0) || Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360);
+  const imagesList = [
+    ...(Array.isArray(draft.cloudinary_gallery) ? draft.cloudinary_gallery : []),
+    ...(Array.isArray(draft.supabase_images) ? draft.supabase_images : [])
+  ].map(item => typeof item === 'string' ? item : (item && item.img))
+    .filter(url => typeof url === 'string' && url.includes('res.cloudinary.com/'));
+  const hasVisual = (imagesList.length > 0) || Boolean(Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0);
 
   if (!hasVisual) {
     showPillToast(isEn
@@ -625,21 +647,29 @@ async function finishAndReturnToCars() {
         color: draft.color || 'Putih',
         rating: 5.0,
         reviews: 0,
-        ai: draft.engine || '2.0L Standard',
+        ai: draft.ai_tagline || null,
         images: imagesList,
-        has_360: Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360),
-        exterior_360: draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || null,
-        interior_360: draft.cdnUrlInterior || null
+        has_360: Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0,
+        exterior_frames: Array.isArray(draft.exterior_frames) ? draft.exterior_frames : [],
+        exterior_360: draft.exterior_360 || null,
+        interior_360: draft.interior_360 || null
       };
 
       if (window.WeDriveAPI && typeof window.WeDriveAPI.publishCarDraft === 'function' && draft.supabase_draft_id) {
-        await window.WeDriveAPI.publishCarDraft(draft.supabase_draft_id, newCar);
+        const result = await window.WeDriveAPI.publishCarDraft(draft.supabase_draft_id, newCar);
+        if (!result || result.error || !result.data) throw (result && result.error) || new Error('Supabase publish returned no record.');
       } else if (window.WeDriveAPI && typeof window.WeDriveAPI.createCar === 'function') {
-        await window.WeDriveAPI.createCar(newCar);
+        const result = await window.WeDriveAPI.createCar(newCar);
+        if (!result || result.error || !result.data) throw (result && result.error) || new Error('Supabase create returned no record.');
       }
     }
   } catch (err) {
-    console.warn('[WeDRIVE Step 5] Completion error:', err);
+    console.error('[WeDRIVE Step 5] Completion error:', err);
+    if (btn) btn.disabled = false;
+    showPillToast(isEn
+      ? `Registration failed: ${err.message || 'Supabase could not save the vehicle.'}`
+      : `Pendaftaran gagal: ${err.message || 'Supabase tidak dapat menyimpan kenderaan.'}`, 'error');
+    return;
   }
 
   showPillToast(isEn ? '✓ Vehicle registered successfully!' : '✓ Pendaftaran kenderaan selesai!', 'success');

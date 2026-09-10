@@ -168,6 +168,14 @@
 
   <script>
     var rentedCars = [];
+    function resolveInventoryImage(value) {
+      if (typeof value !== 'string') return '';
+      var url = value.trim();
+      if (!url || url.indexOf('data:') === 0) return '';
+      if (url.indexOf('res.cloudinary.com/') !== -1) return url;
+      if (url.indexOf('shared/model/') !== -1) return '../../../shared/model/' + url.split('shared/model/').pop();
+      return /^(?:Sedan|Hatchback|SUV|MPV|Truck|Coupe|Convertible|Wagon|Van)\//i.test(url) ? '../../../shared/model/' + url : '';
+    }
     var currentCat = 'all';
     var currentSearch = '';
     var viewMode = 'grid';
@@ -274,13 +282,16 @@
           var bk = item.booking;
           var rawImg = (car.images && car.images.length > 0) ? car.images[0] : null;
           var img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
-          var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+          var src = resolveInventoryImage(img0);
+          var imageMarkup = src
+            ? '<img src="' + src + '" alt="' + car.name + '" class="apple-car-studio-img" onerror="this.remove()" />'
+            : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:11px;">Tiada gambar</div>';
           var rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '180');
           var parsedRate = parseFloat(rawRateStr);
           var rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '180';
           var todayStr = new Date().toISOString().split('T')[0];
           var isToday = bk.return_date === todayStr;
-          var has360 = Boolean(car.has_360 || car.has360 || car.exterior_360 || car.supabase_360 || (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0));
+          var has360 = Boolean(Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0);
 
           return '<div class="apple-car-showcase-card reveal-onload" data-car-id="' + (car.id || '') + '" onclick="navigateToCarDetail(\'' + (car.id || '') + '\', event)">' +
             '<div class="apple-car-studio-canvas">' +
@@ -296,7 +307,7 @@
               '<div class="glass-status-pill">' +
                 '<span class="live-pulse-dot"></span> Sedang Disewa' +
               '</div>' +
-              '<img src="' + src + '" alt="' + car.name + '" class="apple-car-studio-img" onerror="this.src=\'../../../shared/model/bezza.png\'" />' +
+              imageMarkup +
             '</div>' +
             '<div class="apple-car-card-body">' +
               '<div class="apple-car-meta-header">' +

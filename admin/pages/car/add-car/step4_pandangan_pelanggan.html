@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.17.4" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.20.9" />
     <!-- AUTH GUARD -->
     <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
-    <script src="preview-i18n.js"></script>
+    <script src="preview-i18n.js?v=6.20.8"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
         tailwind.config = {
@@ -78,11 +78,6 @@
         }
     </script>
     <style>
-        .star-icon-rating {
-            font-size: 12px;
-            color: #f59e0b;
-            margin-right: 2px;
-        }
         .badge-360 svg {
             flex-shrink: 0;
         }
@@ -117,6 +112,7 @@
                         </div>
                         <div class="bento-title-row flex-start gap-12 flex-wrap mb-4">
                             <h1 class="bento-title-main" data-i18n="step4_title">Pandangan Pelanggan</h1>
+                            <span id="step4PreviewPlate" class="pill-btn text-[12px] font-bold px-3 py-1 bg-primary/10 text-primary border border-primary/20 hidden"></span>
                             <span class="status-badge info"><span class="dot"></span> <span>Langkah 4 / 5</span></span>
                         </div>
                         <p class="bento-subtitle-main" data-i18n="step4_subtitle">Tinjauan tepat paparan kad kenderaan sewaan seperti mana yang dilihat dan ditempah oleh pelanggan sebenar.</p>
@@ -192,10 +188,10 @@
                 </div>
             </div>
 
-            <!-- Centered Bento Showcase: WYSIWYG Customer Spotlight Card (Sifar Sidebar Dummy) -->
+            <!-- Centered Bento Showcase: Customer Spotlight Card (Sifar Sidebar Dummy) -->
             <div class="bento-card-v7 p-6 sm:p-10 flex flex-col items-center justify-center min-h-[580px] bg-gradient-to-b from-surface-container/20 to-surface-container/60 dark:from-night-bento/50 dark:to-night-bento w-full">
                 
-                <div class="w-full flex items-center justify-between max-w-[380px] mb-4 px-1">
+                <div class="w-full flex items-center justify-between mb-4 px-1">
                     <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" data-i18n="step4_card_live_label">Kad Hasil Terbitan (Live Card)</span>
                     <span class="pill-btn text-[11px] font-bold px-2.5 py-0.5 bg-success/15 text-success border border-success/30 flex items-center gap-1">
                         <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
@@ -204,9 +200,9 @@
                 </div>
 
                 <!-- OFFICIAL PRODUCTION CAR CARD (Identical to wedrive.website/index.html & customer.js) -->
-                <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan.html'" class="car-card w-full max-w-[380px] cursor-pointer shadow-xl" title="Klik untuk lihat butiran dan tempahan">
+                <div id="customerSpotlightCard" onclick="window.location.href='step5_tempahan.html'" class="car-card w-full cursor-pointer" title="Klik untuk lihat butiran dan tempahan">
                     <div class="car-img">
-                        <img id="cardImage" src="" alt="Kenderaan WeDRIVE" onerror="this.onerror=null;this.src='../../../../shared/model/bezza.png'" />
+                        <img id="cardImage" src="" alt="Kenderaan WeDRIVE" onerror="this.onerror=null;this.classList.add('hidden');document.getElementById('cardImageEmptyState')?.classList.remove('hidden')" />
                         
                         <!-- Empty State Placeholder (Shown when no image uploaded) -->
                         <div id="cardImageEmptyState" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-surface-container/80 dark:bg-surface-container-high transition-all">
@@ -219,7 +215,6 @@
 
                         <div class="car-badges">
                             <span id="cardStatus" class="status-pill available">Tersedia</span>
-                            <span class="rating-pill"><span class="material-icons-round star-icon-rating">star</span>5.0</span>
                             <span id="cardBadge360" class="badge-360 hidden">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
@@ -233,7 +228,6 @@
                     <div class="car-body">
                         <div class="car-topline">
                             <p id="cardCategory" class="car-type">MPV</p>
-                            <span class="rating-pill"><span class="material-icons-round">reviews</span>0 Reviews</span>
                         </div>
                         <h3 id="cardTitle">-</h3>
                         <div class="car-meta">
@@ -250,6 +244,10 @@
                             <span class="material-icons-round ai-chip-icon">psychology</span>
                             <span id="cardEngine">-</span>
                         </div>
+                        <button id="btnGenerateAiCardLabel" type="button" class="pill-btn self-start bg-primary/10 text-primary border border-primary/20 hover:bg-primary/15 text-[12px] font-semibold px-3 py-1.5 flex items-center gap-1.5">
+                            <span class="material-icons-round text-[15px]">auto_awesome</span>
+                            <span id="step4AiLabelButtonText">Jana cadangan AI</span>
+                        </button>
                         <div class="car-footer">
                             <div class="price tabular-nums"><span id="cardPrice">RM 0</span><span data-i18n="step4_card_per_day">/hari</span></div>
                             <button type="button" class="btn-book" onclick="event.stopPropagation();window.location.href='step5_tempahan.html'">
@@ -293,9 +291,6 @@
         </a>
     </footer>
 
-    <!-- Step 4 Modular Controller Script -->
-    <script src="step4-pandangan-pelanggan.js?v=6.16.1"></script>
-
     <!-- Real Admin Navigation & System Scripts -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
     <script src="../../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
@@ -303,6 +298,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
     <script src="../../../../shared/js/api.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/ai-vault.js?v=6.18.0"></script>
+    <!-- Step 4 Modular Controller Script -->
+    <script src="step4-pandangan-pelanggan.js?v=6.20.9"></script>
     <script src="../../../../shared/js/anime.min.js"></script>
     <script src="../../../../shared/js/animate.js?v=5.2.3"></script>
     <script src="../../../js/admin-idle-timeout.js?v=5.2.77"></script>

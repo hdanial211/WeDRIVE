@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Konfigurasi Pembantu AI | WeDRIVE Admin</title>
+  <title>Chatbot AI | WeDRIVE Admin</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
@@ -39,10 +39,10 @@
             <div class="bento-breadcrumbs">
               <a href="chatbot.html">AI Intelligence</a>
               <span class="material-icons-round">chevron_right</span>
-              <span>Konfigurasi Pembantu Maya</span>
+              <span>Chatbot AI</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main" data-key="cb_admin_title">Konfigurasi Pembantu Khidmat Pelanggan</h1>
+              <h1 class="bento-title-main" data-key="cb_admin_title">Chatbot AI</h1>
               <span class="status-badge active"><span class="live-pulse-dot"></span> <span data-key="cb_badge_active">Pembantu Maya 24/7 (AI)</span></span>
             </div>
             <p class="bento-subtitle-main" data-key="cb_admin_subtitle">Urus kunci pintu masuk API, persona komunikasi, promosi semasa, dan pantau respons ejen secara langsung melalui konsol simulasi.</p>
@@ -69,9 +69,9 @@
               <div>
                 <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
                   <span class="material-icons-round text-primary">vpn_key</span>
-                  <span data-key="cb_card_api_title">Konfigurasi Kunci API AI</span>
+                  <span data-key="cb_card_api_title">Sambungan Chatbot AI</span>
                 </h3>
-                <p class="fs-13 text-secondary m-0 mt-2" data-key="cb_card_api_sub">Sambungan pintu masuk keselamatan OpenRouter.ai</p>
+                <p class="fs-13 text-secondary m-0 mt-2" data-key="cb_card_api_sub">Chatbot menggunakan konfigurasi Slot 3 daripada Pusat Kunci API AI.</p>
               </div>
               <span id="api-status" class="api-status disconnected radius-pill px-10 py-4">
                 <span class="dot-indicator"></span> <span data-key="cb_status_disconnected">Belum Disambung</span>
@@ -84,30 +84,33 @@
                 <div class="flex-center gap-8 items-start">
                   <span class="material-icons-round text-primary fs-18">info</span>
                   <div>
-                    <strong>OpenRouter.ai</strong> bertindak sebagai pintu masuk AI rasmi WeDRIVE untuk menyalurkan pertanyaan pelanggan kepada model <strong>Gemini 2.5 Flash</strong> dengan latensi sub-saat.
+                    <strong>Slot 3 · Khidmat Pelanggan</strong> ialah sumber tunggal key dan provider chatbot. Tetapan key diurus di
+                    <a href="../ai/api-keys.html#card-slot-3" class="text-primary fw-600">Pusat Kunci API AI</a>.
+                    Chatbot akan mengikut provider/model yang dikesan secara automatik.
                   </div>
                 </div>
               </div>
 
               <div class="form-group mb-16">
-                <label class="flex-center gap-6 fw-600 fs-13 text-title mb-6">
-                  OpenRouter API Key
-                </label>
-                <div class="api-row flex-center gap-10">
-                  <div class="api-key-wrap position-relative flex-1">
-                    <input type="password" id="api-key" placeholder="sk-or-v1-..." class="form-input radius-14" autocomplete="off" />
-                    <span class="material-icons-round toggle-eye cursor-pointer" onclick="toggleKey('api-key', this)">visibility_off</span>
+                <div class="flex-between align-center gap-12 p-14 radius-16 bg-surface-2 border-subtle">
+                  <div>
+                    <div class="fs-12 text-muted">Provider aktif</div>
+                    <div id="ai-provider-name" class="fs-16 fw-700 text-title">Menyemak Slot 3...</div>
+                    <div id="ai-provider-source" class="fs-12 text-secondary mt-2">Sumber: Konfigurasi dalaman WeDRIVE</div>
                   </div>
-                  <button class="btn-secondary" id="btn-test-openrouter" onclick="testSingleKey('openrouter')">
-                    <span class="material-icons-round fs-16">bolt</span> <span data-key="cb_btn_test_conn">Uji Sambungan</span>
-                  </button>
+                  <div class="text-right">
+                    <div class="fs-12 text-muted">Model</div>
+                    <div id="ai-model-name" class="fs-13 fw-600 text-primary">--</div>
+                  </div>
                 </div>
-                <div class="key-status mt-4" id="status-openrouter"></div>
               </div>
 
               <div class="mt-12 flex-row gap-8">
-                <button class="btn-primary w-full" onclick="saveSettings()">
-                  <span class="material-icons-round fs-18">save</span> Simpan Kunci API
+                <a class="btn-secondary w-full flex-center gap-8" href="../ai/api-keys.html#card-slot-3">
+                  <span class="material-icons-round fs-18">key</span> Urus Slot 3
+                </a>
+                <button class="btn-primary w-full" id="btn-test-configured-ai" onclick="testConfiguredKey()">
+                  <span class="material-icons-round fs-18">bolt</span> Uji Chatbot AI
                 </button>
               </div>
             </div>
@@ -194,12 +197,12 @@
             </div>
           </div>
 
-          <!-- CARD 3: Database Auto-Sync -->
+          <!-- CARD 3: Live Operational Data -->
           <div class="card p-24 radius-24 reveal-on-scroll">
             <div class="card-header chatbot-card-header mb-16 border-bottom-subtle pb-12">
               <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
                 <span class="material-icons-round text-primary">sync</span>
-                <span data-key="cb_card_sync_title">Penyelarasan Pangkalan Data Langsung</span>
+                <span data-key="cb_card_sync_title">Penyelarasan Data Operasi Langsung</span>
               </h3>
               <p class="fs-13 text-secondary m-0 mt-2" data-key="cb_card_sync_sub">Data operasi yang disuntik terus ke dalam pengetahuan AI</p>
             </div>
@@ -207,7 +210,7 @@
             <div class="chatbot-settings-form">
               <div class="card p-14 radius-16 bg-surface-2 border-subtle mb-16 fs-12 text-secondary">
                 <div class="flex-center gap-8 items-start">
-                  <span class="material-icons-round text-emerald fs-18">database</span>
+                  <span class="material-icons-round text-emerald fs-18">sync</span>
                   <div>
                     <strong>Kesedaran Sistem Masa Nyata</strong> — Ejen secara automatik mengakses senarai kenderaan terkini, status ketersediaan di cawangan, waktu operasi, kadar sewaan dan lokasi penyerahan.
                   </div>
@@ -250,7 +253,7 @@
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js?v=5.2.3"></script>
   <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
-  <script src="../../../shared/js/ai-vault.js?v=6.17.0"></script>
-  <script src="../../js/chatbot-admin.js?v=6.17.0"></script>
+  <script src="../../../shared/js/ai-vault.js?v=6.17.1"></script>
+  <script src="../../js/chatbot-admin.js?v=6.17.1"></script>
 </body>
 </html>

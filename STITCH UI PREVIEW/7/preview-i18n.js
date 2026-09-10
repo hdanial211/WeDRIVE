@@ -29,7 +29,7 @@ const PREVIEW_I18N = {
         // Step 4: Pandangan Pelanggan (Customer View)
         step4_title: "Pandangan Pelanggan",
         step4_preview_badge: "Mod Pratonton Pelanggan",
-        step4_preview_notice: "Paparan Katalog Pelanggan (WYSIWYG)",
+        step4_preview_notice: "Paparan Katalog Pelanggan",
         step4_preview_desc: "Paparan langsung bagaimana kad kenderaan ini dipamerkan di portal carian kenderaan pelanggan WeDRIVE.",
         step4_sidebar_tag: "Pratonton Sahaja",
         step4_sidebar_dashboard: "Papan Pemuka",
@@ -217,7 +217,7 @@ const PREVIEW_I18N = {
         // Step 4: Pandangan Pelanggan (Customer View)
         step4_title: "Customer View",
         step4_preview_badge: "Customer Preview Mode",
-        step4_preview_notice: "Customer Catalog View (WYSIWYG)",
+        step4_preview_notice: "Customer Catalog View",
         step4_preview_desc: "Direct preview of how this vehicle card is showcased in the WeDRIVE customer car search portal.",
         step4_sidebar_tag: "Preview Only",
         step4_sidebar_dashboard: "Dashboard",

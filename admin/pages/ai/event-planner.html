@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perancang Event AI | WeDRIVE Admin</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=6.23.0" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <script src="../../../shared/js/auth-guard.js?v=6.23.0" data-role="admin"></script>
+  <style>
+    .planner-hero { background:linear-gradient(135deg,rgba(0,113,227,.13),rgba(88,86,214,.14)); border:1px solid rgba(0,113,227,.18); }
+    .planner-hero h1 { margin:0; letter-spacing:-.04em; }
+    .planner-toolbar { display:flex; align-items:end; gap:12px; flex-wrap:wrap; }
+    .planner-field { display:grid; gap:6px; min-width:180px; }
+    .planner-field label { color:#64748b; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; }
+    .planner-field input { height:44px; box-sizing:border-box; border:1px solid #dbe3ef; border-radius:12px; padding:0 12px; background:#fff; color:#1e293b; font:inherit; }
+    .planner-calendar { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .planner-month { min-height:130px; border:1px solid #e2e8f0; border-radius:16px; padding:14px; background:rgba(248,250,252,.75); }
+    .planner-month-name { color:#64748b; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; }
+    .planner-event-chip { display:block; width:100%; box-sizing:border-box; margin-top:7px; border:0; border-left:3px solid #0071e3; border-radius:8px; padding:7px 8px; text-align:left; background:#eaf3ff; color:#1e40af; cursor:pointer; font:inherit; font-size:11px; font-weight:700; }
+    .planner-event-chip:hover { background:#dbeafe; }
+    .planner-event-chip small { display:block; margin-top:3px; color:#64748b; font-size:10px; font-weight:600; }
+    .planner-list { display:grid; gap:12px; }
+    .planner-suggestion { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:14px; align-items:center; border:1px solid #e2e8f0; border-radius:16px; padding:16px; background:#fff; }
+    .planner-suggestion-title { font-size:15px; font-weight:800; color:#1e293b; }
+    .planner-suggestion-meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:7px; }
+    .planner-suggestion p { color:#64748b; font-size:12px; line-height:1.55; margin:8px 0 0; }
+    .planner-actions { display:flex; align-items:center; justify-content:flex-end; gap:8px; flex-wrap:wrap; }
+    .planner-confidence { font-variant-numeric:tabular-nums; color:#0071e3; font-size:12px; font-weight:800; white-space:nowrap; }
+    .planner-note { display:flex; gap:8px; align-items:flex-start; border-radius:14px; padding:12px 14px; background:#fff8e6; color:#7c5a00; font-size:12px; line-height:1.5; }
+    .planner-empty { padding:36px 18px; border:1px dashed #cbd5e1; border-radius:16px; color:#94a3b8; text-align:center; font-size:13px; }
+    .planner-result { min-height:90px; white-space:pre-line; }
+    @media (max-width:1050px) { .planner-calendar { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media (max-width:760px) { .planner-calendar { grid-template-columns:repeat(2,minmax(0,1fr)); } .planner-suggestion { grid-template-columns:1fr; } .planner-actions { justify-content:flex-start; } }
+    @media (max-width:480px) { .planner-calendar { grid-template-columns:1fr; } .planner-field { width:100%; } .planner-toolbar button { width:100%; } }
+  </style>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="event-planner"></div>
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+    <div class="content">
+      <section class="card planner-hero p-24 radius-24 reveal-onload mb-20">
+        <div class="flex-between flex-wrap gap-16 align-center">
+          <div><div class="flex-row align-center gap-8 mb-6"><span class="badge badge-purple"><span class="material-icons-round fs-14">event_available</span> AI Event Intelligence</span><span class="fs-12 text-muted">Cadangan untuk semakan admin</span></div><h1 class="fs-28 fw-800">Perancang Event AI</h1><p class="fs-13 text-muted mt-6 mb-0">Jana peluang promosi berdasarkan kalendar, musim perayaan, cuti sekolah dan corak perjalanan yang sesuai untuk sewaan kereta.</p></div>
+          <a class="btn-secondary flex-center gap-8" href="automation.html"><span class="material-icons-round fs-16">auto_awesome</span> Pusat Automasi</a>
+        </div>
+      </section>
+
+      <section class="card p-24 radius-24 reveal-on-scroll mb-20">
+        <div class="flex-between flex-wrap gap-16"><div><h2 class="fs-18 fw-800 m-0">AI Auto Generate</h2><p class="fs-12 text-muted mt-4 mb-0">Pilih tahun dan kawasan. AI akan bina senarai calon event tanpa mencipta harga atau promosi palsu.</p></div><span id="planner-status" class="badge badge-blue">Belum dijana</span></div>
+        <div class="planner-toolbar mt-18"><div class="planner-field"><label for="planner-year">Tahun</label><input id="planner-year" type="number" min="2025" max="2030" /></div><div class="planner-field" style="flex:1"><label for="planner-region">Kawasan</label><input id="planner-region" value="Melaka, Malaysia" /></div><div class="planner-field" style="flex:1"><label for="planner-focus">Fokus kajian</label><input id="planner-focus" value="cuti sekolah, Raya, cuti umum, perayaan dan musim pelancongan" /></div><button id="btn-generate-plan" class="btn-primary flex-center gap-8"><span class="material-icons-round fs-16">auto_awesome</span> Jana Senarai Event</button></div>
+        <div class="planner-note mt-16"><span class="material-icons-round fs-17">fact_check</span><span>Tarikh yang dijana ialah cadangan perancangan. Admin perlu menyemak tarikh rasmi sebelum menjadikannya kempen kepada pelanggan.</span></div>
+      </section>
+
+      <section class="card p-24 radius-24 reveal-on-scroll mb-20"><div class="flex-between flex-wrap gap-12 mb-16"><div><h2 class="fs-18 fw-800 m-0">Kalendar Peluang Promosi</h2><p class="fs-12 text-muted mt-4 mb-0">Event yang mempunyai tarikh akan disusun mengikut bulan.</p></div><span id="planner-count" class="fs-12 fw-700 text-muted">0 event</span></div><div id="planner-calendar" class="planner-calendar"><div class="planner-empty" style="grid-column:1/-1">Tekan “Jana Senarai Event” untuk membina kalendar.</div></div></section>
+
+      <section class="card p-24 radius-24 reveal-on-scroll mb-20"><div class="flex-between flex-wrap gap-12 mb-16"><div><h2 class="fs-18 fw-800 m-0">Senarai Cadangan AI</h2><p class="fs-12 text-muted mt-4 mb-0">Pilih cadangan untuk jana draf promosi atau sahkan selepas semakan.</p></div><span class="badge badge-amber">Perlu semakan</span></div><div id="planner-list" class="planner-list"><div class="planner-empty">Belum ada cadangan event.</div></div></section>
+
+      <section class="card p-24 radius-24 reveal-on-scroll"><div class="card-header mb-12"><h2 class="fs-18 fw-800 m-0">Draf Promosi Dipilih</h2><p class="fs-12 text-muted mt-4 mb-0">Draf ini belum dihantar kepada pelanggan.</p></div><div id="planner-result" class="planner-empty planner-result">Pilih “Jana Promosi” pada mana-mana cadangan.</div></section>
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=6.23.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=6.23.0"></script>
+  <script src="../../../shared/js/main.js?v=6.23.0"></script>
+  <script src="../../../shared/js/api.js?v=6.23.0"></script>
+  <script src="../../../shared/js/ai-vault.js?v=6.23.0"></script>
+  <script src="../../../shared/js/animate.js?v=6.23.0"></script>
+  <script src="../../js/event-planner.js?v=6.23.0"></script>
+</body>
+</html>

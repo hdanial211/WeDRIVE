@@ -147,6 +147,36 @@ window.chatbotData = null;       // Cache for chatbot settings
 window._chatUserData = null;     // Cache for logged-in user personal data
 window._chatUserLoaded = false;  // Flag to prevent re-fetching
 
+// The AI key is managed centrally in Admin -> AI API Keys -> Slot 3.
+// Load the vault lazily because public/customer pages historically did not
+// include ai-vault.js in their HTML.
+let _chatbotVaultPromise = null;
+async function ensureChatbotAiVault() {
+  if (window.WeDriveAiVault) {
+    if (window.WeDriveAiVault.syncFromSupabase) await window.WeDriveAiVault.syncFromSupabase();
+    return window.WeDriveAiVault;
+  }
+  if (!_chatbotVaultPromise) {
+    _chatbotVaultPromise = new Promise(function (resolve, reject) {
+      var parts = window.location.pathname.split('/').filter(Boolean);
+      var base = parts.length <= 1 ? '' : '../'.repeat(parts.length - 1);
+      var script = document.createElement('script');
+      script.src = base + 'shared/js/ai-vault.js?v=6.17.1';
+      script.onload = async function () {
+        try {
+          if (window.WeDriveAiVault && window.WeDriveAiVault.syncFromSupabase) {
+            await window.WeDriveAiVault.syncFromSupabase();
+          }
+          resolve(window.WeDriveAiVault);
+        } catch (e) { reject(e); }
+      };
+      script.onerror = function () { reject(new Error('AI Vault tidak dapat dimuatkan.')); };
+      document.head.appendChild(script);
+    });
+  }
+  return _chatbotVaultPromise;
+}
+
 // ─── Fetch Personal User Data ───────────────────────────────────────────────
 async function fetchChatUserData() {
   if (window._chatUserLoaded) return window._chatUserData;
@@ -553,23 +583,12 @@ window.sendChat = async function() {
   input.value = ''; input.style.height = 'auto';
   window.showTypingIndicator();
 
-  // Load settings: vault (Slot 3) → Supabase chatbotData → localStorage fallback
+  // Load chatbot instructions from Supabase and the API key from Vault Slot 3.
   let settings = window.chatbotData || {};
-  // Primary: WeDriveAiVault Slot 3 (customer_chatbot) — Single Source of Truth
-  let apiKey = '';
-  if (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('customer_chatbot')) {
-    apiKey = window.WeDriveAiVault.getKey('customer_chatbot');
-  } else if (!settings.apiKey) {
-    // Fallback: legacy wedrive_chatbot_settings
-    try {
-      const saved = localStorage.getItem('wedrive_chatbot_settings');
-      if (saved) settings = { ...settings, ...JSON.parse(saved) };
-    } catch (e) {}
-    apiKey = settings.apiKey || '';
-  } else {
-    apiKey = settings.apiKey || '';
-  }
-  const systemPrompt = settings.systemPrompt || "You are WeDRIVE Bot, a helpful AI assistant for WeDRIVE car rental in Melaka, Malaysia. Be friendly, concise, and helpful.";
+  let aiVault;
+  try { aiVault = await ensureChatbotAiVault(); } catch (e) { aiVault = null; }
+  const hasAiKey = !!(aiVault && aiVault.hasKey('customer_chatbot'));
+  const systemPrompt = settings.systemPrompt || "You are WeDRIVE Bot, a helpful AI assistant for WeDRIVE car rental. Be friendly, concise, and use only the live system data provided.";
   const promoContext = settings.promoContext || '';
 
   // Fetch LIVE car and settings data from Supabase
@@ -595,30 +614,22 @@ window.sendChat = async function() {
       if (settingsResult.data && settingsResult.data.value) {
         const s = settingsResult.data.value;
         liveData += `\nCompany & System Settings:
-- Company Name: ${s.company_name || 'WeDRIVE Sdn Bhd'}
-- Address/Location: ${s.company_address || 'Lot 123, Jalan Hang Tuah, 75300 Melaka'}
-- Phone Contact: ${s.company_phone || '012-345 6789'}
-- Email Contact: ${s.company_email || 'admin@wedrive.my'}
-- Operating Hours: ${s.operating_hours || '8:00 AM - 10:00 PM daily'}
-- Currency: ${s.currency || 'MYR'}
-- Tax Rate: ${s.tax_rate !== undefined ? s.tax_rate : '6'}%
-- Security Deposit: ${s.deposit_percentage !== undefined ? s.deposit_percentage : '20'}% of rental or standard deposit
-- Rental Duration Limits: Min ${s.min_rental_days || '1'} day(s), Max ${s.max_rental_days || '30'} day(s)
-- Late Return Fee: RM${s.late_fee_per_hour || '25'}/hour
+        - Company Name: ${s.company_name || '[not configured]'}
+- Address/Location: ${s.company_address || '[not configured]'}
+- Phone Contact: ${s.company_phone || '[not configured]'}
+- Email Contact: ${s.company_email || '[not configured]'}
+- Operating Hours: ${s.operating_hours || '[not configured]'}
+- Currency: ${s.currency || '[not configured]'}
+- Tax Rate: ${s.tax_rate !== undefined ? s.tax_rate + '%' : '[not configured]'}
+- Security Deposit: ${s.deposit_percentage !== undefined ? s.deposit_percentage + '% of rental' : '[not configured]'}
+- Rental Duration Limits: Min ${s.min_rental_days || '[not configured]'} day(s), Max ${s.max_rental_days || '[not configured]'} day(s)
+- Late Return Fee: ${s.late_fee_per_hour !== undefined ? 'RM' + s.late_fee_per_hour + '/hour' : '[not configured]'}
 `;
         if (s.pickup_locations && s.pickup_locations.length > 0) {
           liveData += `- Pickup & Drop-off Locations: ${s.pickup_locations.join(', ')}\n`;
         }
       } else {
-        liveData += `\nCompany & System Settings (Default):
-- Company Name: WeDRIVE Sdn Bhd
-- Address/Location: Lot 123, Jalan Hang Tuah, 75300 Melaka
-- Phone Contact: 012-345 6789
-- Email Contact: admin@wedrive.my
-- Operating Hours: 8AM - 10PM daily
-- Security Deposit: RM 500 (refundable)
-- Pickup & Drop-off Locations: Melaka Sentral (Company HQ Office is at Lot 123, Jalan Hang Tuah, 75300 Melaka)
-`;
+        liveData += `\nCompany & System Settings: Not configured in Supabase.\n`;
       }
 
       // 2. Available Cars
@@ -639,7 +650,7 @@ window.sendChat = async function() {
     }
   } catch(e) {
     console.warn("Failed to fetch live system details for chatbot:", e);
-    liveData += "\n[Live database details currently unavailable - fallback to general knowledge]";
+    liveData += "\n[Live database details currently unavailable. Do not invent company, car, price, or policy data.]";
   }
 
   // Detect current portal context
@@ -699,7 +710,7 @@ Always use the exact markdown links built above. Do not use absolute domains.
 
   const fullSystem = systemPrompt + portalContext + (promoContext ? '\n\n' + promoContext : '') + liveData + personalContext + '\n\n' + bookingRulesInstruction;
 
-  if (!apiKey) {
+  if (!hasAiKey) {
     window.removeTyping();
     const isEn = (localStorage.getItem('wedrive_lang') || 'ms') === 'en';
     window.addChatMsg(
@@ -716,26 +727,17 @@ Always use the exact markdown links built above. Do not use absolute domains.
   window._chatHistory.push({ role: 'user', content: msg });
 
   try {
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-        'HTTP-Referer': window.location.origin,
-        'X-Title': 'WeDRIVE Chatbot'
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
-        messages: [
-          { role: 'system', content: fullSystem },
-          ...window._chatHistory
-        ],
-        max_tokens: 2000
-      })
+    const historyText = window._chatHistory
+      .slice(0, -1)
+      .map(function (item) { return (item.role === 'assistant' ? 'Assistant' : 'User') + ': ' + item.content; })
+      .join('\n');
+    const prompt = historyText
+      ? 'Previous conversation:\n' + historyText + '\n\nLatest user message:\n' + msg
+      : msg;
+    let reply = await aiVault.callAi('customer_chatbot', fullSystem, prompt, {
+      maxTokens: 2000,
+      temperature: 0.4
     });
-
-    const data = await res.json();
-    let reply = data.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Please try again.";
     
     let recommendedCars = [];
     const carCardRegex = /\[CAR_CARD:\s*(\d+)\]/gi;
@@ -760,15 +762,7 @@ Always use the exact markdown links built above. Do not use absolute domains.
           console.warn("Failed to fetch recommended car details:", e);
         }
       }
-      if (recommendedCars.length === 0) {
-        recommendedCars = carIds.map(id => ({ id, name: "Available Rental Vehicle", price: "320", type: "Premium" }));
-      } else if (recommendedCars.length < carIds.length) {
-        carIds.forEach(id => {
-          if (!recommendedCars.some(c => c.id === id)) {
-            recommendedCars.push({ id, name: "Available Rental Vehicle", price: "320", type: "Premium" });
-          }
-        });
-      }
+      // Do not render a fabricated card when the AI returns an invalid ID.
     }
 
     window._chatHistory.push({ role: 'assistant', content: reply });

@@ -1,6 +1,6 @@
 /**
  * WeDRIVE - AI Key Vault UI Controller
- * admin/js/api-keys.js (v6.17.0)
+ * admin/js/api-keys.js (v6.18.0)
  *
  * Features:
  *  - Real-time API Key Signature Auto-Detection via shared WeDriveAiVault
@@ -156,7 +156,8 @@
         if (latencyEl) latencyEl.textContent = 'Latensi: ' + latency + ' ms';
 
         // Auto-save apabila ujian sambungan berjaya
-        await window.saveSingleSlot(slotNum, true);
+        var persisted = await window.saveSingleSlot(slotNum, true);
+        if (!persisted) throw new Error('Kunci gagal disimpan ke Supabase.');
       } else {
         throw new Error('Gagal mengesahkan kunci API.');
       }
@@ -173,14 +174,14 @@
   };
 
   window.testAllKeys = async function () {
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <= 6; i++) {
       await window.testSingleSlot(i);
     }
   };
 
   /**
    * Save a single slot key directly to Supabase and localStorage
-   * @param {number} slotNum - 1 to 4
+   * @param {number} slotNum - 1 to 6
    * @param {boolean} [isAutoSave] - true if called from testSingleSlot
    */
   window.saveSingleSlot = async function (slotNum, isAutoSave) {
@@ -203,22 +204,32 @@
         slot1: { role: 'system_core', key: '', provider: 'unknown' },
         slot2: { role: 'events_pricing', key: '', provider: 'unknown' },
         slot3: { role: 'customer_chatbot', key: '', provider: 'unknown' },
-        slot4: { role: 'downloader_360', key: '', provider: 'unknown' }
+        slot4: { role: 'downloader_360', key: '', provider: 'unknown' },
+        slot5: { role: 'customer_lifecycle', key: '', provider: 'unknown' },
+        slot6: { role: 'document_verification', key: '', provider: 'unknown' }
       };
     }
 
-    var slotRoles = { 1: 'system_core', 2: 'events_pricing', 3: 'customer_chatbot', 4: 'downloader_360' };
+    var slotRoles = {
+      1: 'system_core',
+      2: 'events_pricing',
+      3: 'customer_chatbot',
+      4: 'downloader_360',
+      5: 'customer_lifecycle',
+      6: 'document_verification'
+    };
     var detected = detectProvider(keyVal);
     var slotId = 'slot' + slotNum;
 
     keys[slotId] = {
       role: slotRoles[slotNum],
       key: keyVal,
-      provider: (detected && detected.id) ? detected.id : 'unknown'
+      provider: (detected && detected.id) ? detected.id : 'unknown',
+      model: detected ? detected.defaultModel : ''
     };
     keys.updated_at = new Date().toISOString();
 
-    // 1. Simpan ke localStorage
+    // Keep a browser cache, but Supabase is the required persistent store.
     localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
 
     // 2. Selaraskan Slot 3 jika dikemas kini
@@ -241,10 +252,17 @@
       try {
         var sb = window.supabaseClient;
         var r = await sb.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
-        if (!r.error) savedToDb = true;
+        if (r.error) throw r.error;
+        savedToDb = true;
       } catch (err) {
         console.warn('[AI Key Vault] Supabase save error:', err);
       }
+    }
+
+    if (!savedToDb) {
+      if (btn && !isAutoSave) btn.innerHTML = originalBtnText;
+      showToast('Gagal menyimpan kunci ke Supabase. Sila semak sambungan dan cuba lagi.', 'error');
+      return false;
     }
 
     if (btn && !isAutoSave) {
@@ -255,19 +273,22 @@
       1: 'Slot 1 (Sistem Teras)',
       2: 'Slot 2 (Enjin Harga & Acara)',
       3: 'Slot 3 (Chatbot Pelanggan)',
-      4: 'Slot 4 (Automasi 360°)'
+      4: 'Slot 4 (Automasi 360°)',
+      5: 'Slot 5 (Customer Lifecycle)',
+      6: 'Slot 6 (Pengesahan Dokumen)'
     };
     var slotName = slotNames[slotNum] || ('Slot ' + slotNum);
 
     if (isAutoSave) {
       showToast('Sambungan disahkan & ' + slotName + ' disimpan secara automatik!', 'success');
     } else {
-      showToast(savedToDb ? 'Kunci ' + slotName + ' berjaya disimpan ke pangkalan data!' : 'Kunci ' + slotName + ' berjaya disimpan secara lokal!', 'success');
+      showToast('Kunci ' + slotName + ' berjaya disimpan ke pangkalan data Supabase!', 'success');
     }
+    return true;
   };
 
   /**
-   * Save all 4 keys to Supabase and localStorage
+   * Save all 6 keys to Supabase and localStorage
    */
   window.saveAllKeys = async function () {
     var btn = document.querySelector('button[onclick="saveAllKeys()"]');
@@ -278,22 +299,38 @@
       slot1: {
         role: 'system_core',
         key: document.getElementById('key-slot-1').value.trim(),
-        provider: (detectProvider(document.getElementById('key-slot-1').value.trim()) || {}).id || 'unknown'
+        provider: (detectProvider(document.getElementById('key-slot-1').value.trim()) || {}).id || 'unknown',
+        model: (detectProvider(document.getElementById('key-slot-1').value.trim()) || {}).defaultModel || ''
       },
       slot2: {
         role: 'events_pricing',
         key: document.getElementById('key-slot-2').value.trim(),
-        provider: (detectProvider(document.getElementById('key-slot-2').value.trim()) || {}).id || 'unknown'
+        provider: (detectProvider(document.getElementById('key-slot-2').value.trim()) || {}).id || 'unknown',
+        model: (detectProvider(document.getElementById('key-slot-2').value.trim()) || {}).defaultModel || ''
       },
       slot3: {
         role: 'customer_chatbot',
         key: document.getElementById('key-slot-3').value.trim(),
-        provider: (detectProvider(document.getElementById('key-slot-3').value.trim()) || {}).id || 'unknown'
+        provider: (detectProvider(document.getElementById('key-slot-3').value.trim()) || {}).id || 'unknown',
+        model: (detectProvider(document.getElementById('key-slot-3').value.trim()) || {}).defaultModel || ''
       },
       slot4: {
         role: 'downloader_360',
         key: document.getElementById('key-slot-4').value.trim(),
-        provider: (detectProvider(document.getElementById('key-slot-4').value.trim()) || {}).id || 'unknown'
+        provider: (detectProvider(document.getElementById('key-slot-4').value.trim()) || {}).id || 'unknown',
+        model: (detectProvider(document.getElementById('key-slot-4').value.trim()) || {}).defaultModel || ''
+      },
+      slot5: {
+        role: 'customer_lifecycle',
+        key: document.getElementById('key-slot-5').value.trim(),
+        provider: (detectProvider(document.getElementById('key-slot-5').value.trim()) || {}).id || 'unknown',
+        model: (detectProvider(document.getElementById('key-slot-5').value.trim()) || {}).defaultModel || ''
+      },
+      slot6: {
+        role: 'document_verification',
+        key: document.getElementById('key-slot-6').value.trim(),
+        provider: (detectProvider(document.getElementById('key-slot-6').value.trim()) || {}).id || 'unknown',
+        model: (detectProvider(document.getElementById('key-slot-6').value.trim()) || {}).defaultModel || ''
       },
       updated_at: new Date().toISOString()
     };
@@ -321,7 +358,8 @@
       try {
         var sb = window.supabaseClient;
         var r = await sb.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
-        if (!r.error) savedToDb = true;
+        if (r.error) throw r.error;
+        savedToDb = true;
       } catch (err) {
         console.warn('[AI Key Vault] Supabase save error:', err);
       }
@@ -329,7 +367,11 @@
 
     if (btn) btn.innerHTML = originalBtnHtml;
 
-    showToast(savedToDb ? 'Semua kunci API AI berjaya disimpan ke pangkalan data!' : 'Kunci API AI berjaya disimpan secara lokal!', 'success');
+    if (savedToDb) {
+      showToast('Semua kunci API AI berjaya disimpan ke pangkalan data Supabase!', 'success');
+    } else {
+      showToast('Gagal menyimpan kunci ke Supabase. Sila semak sambungan dan cuba lagi.', 'error');
+    }
   };
 
   /**
@@ -416,7 +458,7 @@
     }
 
     if (keys) {
-      for (var i = 1; i <= 4; i++) {
+      for (var i = 1; i <= 6; i++) {
         var slotKey = 'slot' + i;
         if (keys[slotKey] && keys[slotKey].key) {
           var input = document.getElementById('key-slot-' + i);

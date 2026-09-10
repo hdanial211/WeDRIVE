@@ -1,195 +1,280 @@
 #!/usr/bin/env node
 /**
- * WeDRIVE SpinCar Frame Downloader v2
- * Uses page.evaluate() to fetch frames FROM INSIDE browser context
- * (browser has CloudFront signed cookies from SpinCar viewer)
+ * WeDRIVE SpinCar 360 downloader (no Puppeteer).
+ *
+ * The Impel `exterior/full-res/frame-*` path is protected. The public viewer
+ * exposes the same exterior frames through `ec/0-{index}.jpg`.
+ *
+ * This CLI writes the canonical local tree:
+ * shared/model/{category}/{model}/exterior/full-res/frame-000.jpg
+ * and optionally uploads the same bytes to Cloudinary using an unsigned preset.
  */
-const puppeteer = require('puppeteer');
-const path      = require('path');
-const fs        = require('fs');
-const https     = require('https');
-const http      = require('http');
 
-// CLI
+const fs = require('fs/promises');
+const path = require('path');
+
 const args = {};
-process.argv.slice(2).forEach((a,i,arr) => { if (a.startsWith('--')) args[a.slice(2)] = arr[i+1]===undefined?true:arr[i+1]; });
-const SPINCAR_URL   = args.url;
-const CAR_NAME      = args.name     || 'Unknown Car';
-const CAR_CATEGORY  = args.category || 'Unknown';
-const DO_CLOUDINARY = args.cloudinary==='true'||args.cloudinary===true;
-
-if (!SPINCAR_URL) { console.error('Usage: node tools/download-spincar-frames.js --url "..." --name "..." --category "..." [--cloudinary]'); process.exit(1); }
-
-// Cloudinary
-const CLD_CLOUD  = 'gwd1bhcx';
-const CLD_PRESET = 'wedrive_360';
-
-// Paths
-const ROOT    = path.resolve(__dirname, '..');
-const SNAME   = CAR_NAME.replace(/[/\\:*?"<>|]/g,'-').trim();
-const SCAT    = CAR_CATEGORY.replace(/[/\\:*?"<>|]/g,'-').trim();
-const MDIR    = path.join(ROOT,'shared','model',SCAT,SNAME);
-const EDIR    = path.join(MDIR,'exterior','full-res');
-const IDIR    = path.join(MDIR,'interior','full-res');
-fs.mkdirSync(EDIR,{recursive:true}); fs.mkdirSync(IDIR,{recursive:true});
-
-console.log(`\n🚗  WeDRIVE SpinCar Downloader v2`);
-console.log(`   Car    : ${CAR_NAME}`);
-console.log(`   Output : ${MDIR}`);
-console.log(`   Cloud  : ${DO_CLOUDINARY?'✅':'⬜ local only'}\n`);
-
-// Cloudinary upload (no overwrite for unsigned preset)
-async function uploadCld(buffer, publicId) {
-  const boundary = 'WD' + Date.now();
-  const pre  = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="img.jpg"\r\nContent-Type: image/jpeg\r\n\r\n`;
-  const mid1 = `\r\n--${boundary}\r\nContent-Disposition: form-data; name="upload_preset"\r\n\r\n${CLD_PRESET}`;
-  const mid2 = `\r\n--${boundary}\r\nContent-Disposition: form-data; name="public_id"\r\n\r\n${publicId}`;
-  const end  = `\r\n--${boundary}--\r\n`;
-  const body = Buffer.concat([Buffer.from(pre), buffer, Buffer.from(mid1+mid2+end)]);
-  return new Promise((res,rej) => {
-    const req = https.request({ hostname:'api.cloudinary.com', path:`/v1_1/${CLD_CLOUD}/image/upload`, method:'POST', headers:{'Content-Type':`multipart/form-data; boundary=${boundary}`,'Content-Length':body.length} }, r => {
-      let raw=''; r.on('data',d=>raw+=d); r.on('end',()=>{ try{ const d=JSON.parse(raw); r.statusCode===200?res(d.secure_url):rej(new Error(`CLD ${r.statusCode}`)); }catch(e){rej(e);} });
-    });
-    req.on('error',rej); req.write(body); req.end();
-  });
+for (let i = 2; i < process.argv.length; i += 1) {
+  const item = process.argv[i];
+  if (!item.startsWith('--')) continue;
+  const key = item.slice(2);
+  const next = process.argv[i + 1];
+  args[key] = next && !next.startsWith('--') ? next : true;
+  if (args[key] !== true) i += 1;
 }
 
-// Server-side fetch for publicly accessible URLs (interior pano)
-function nodeFetch(url) {
-  return new Promise((res,rej) => {
-    const mod = url.startsWith('https')?https:http;
-    mod.get(url, r=>{ const c=[]; r.on('data',d=>c.push(d)); r.on('end',()=>res(Buffer.concat(c))); r.on('error',rej); });
+const SPINCAR_URL = String(args.url || '');
+const MODEL_NAME = String(args.name || '');
+const CATEGORY = String(args.category || '');
+const PLATE = String(args.plate || '');
+const LISTING_URL = String(args.listing || '');
+const UPLOAD_CLOUDINARY = args.cloudinary === true || args.cloudinary === 'true';
+const CLOUDINARY_CLOUD = 'gwd1bhcx';
+const CLOUDINARY_PRESET = 'wedrive_360';
+
+if (!SPINCAR_URL || !MODEL_NAME || !CATEGORY) {
+  console.error('Usage: node tools/download-spincar-frames.js --url "..." --name "..." --category "..." [--plate "..."] [--listing "..."] [--cloudinary]');
+  process.exit(1);
+}
+
+function safeSegment(value) {
+  return value.replace(/[\\/:*?"<>|]/g, '-').trim();
+}
+
+const FOLDER_MODEL_NAME = `${safeSegment(MODEL_NAME)}${PLATE ? ` (${safeSegment(PLATE)})` : ''}`;
+
+function extractSource(url) {
+  const vinMatch = url.match(/vin=([a-z0-9_-]+)/i) || url.match(/\/Carsome\/([a-z0-9_-]{10,25})/i);
+  const customerMatch = url.match(/customer=([a-z0-9_-]+)/i) || url.match(/\/([a-z0-9_-]+)\/[a-z0-9_-]{10,25}/i);
+  return {
+    vin: vinMatch ? vinMatch[1] : '',
+    customer: customerMatch ? customerMatch[1] : 'Carsome'
+  };
+}
+
+async function getCdnPrefix(customer, vin) {
+  for (const host of ['https://api-eu.impel.io', 'https://api.impel.io']) {
+    const endpoint = `${host}/spin/${encodeURIComponent(customer)}/${encodeURIComponent(vin)}?v=20160212`;
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) continue;
+      const data = await response.json();
+      let prefix = data && (data.cdn_image_prefix || data.cdn_prefix);
+      if (!prefix) continue;
+      if (prefix.startsWith('//')) prefix = `https:${prefix}`;
+      if (!prefix.endsWith('/')) prefix += '/';
+      return prefix;
+    } catch (_) {
+      // Try the next Impel API host.
+    }
+  }
+  throw new Error('Unable to resolve cdn_prefix from the Impel API.');
+}
+
+async function fetchImage(url) {
+  const response = await fetch(url, { headers: { accept: 'image/jpeg' } });
+  if (!response.ok) throw new Error(`HTTP ${response.status}: ${url}`);
+  const buffer = Buffer.from(await response.arrayBuffer());
+  if (buffer.length < 1000) throw new Error(`Empty image response: ${url}`);
+  return buffer;
+}
+
+async function uploadToCloudinary(buffer, publicId) {
+  const form = new FormData();
+  form.append('file', new Blob([buffer], { type: 'image/jpeg' }), 'frame.jpg');
+  form.append('upload_preset', CLOUDINARY_PRESET);
+  form.append('public_id', publicId);
+  const cleanPublicId = String(publicId || '').replace(/^\/+|\/+$/g, '');
+  const folderSeparator = cleanPublicId.lastIndexOf('/');
+  if (folderSeparator > 0) {
+    form.append('asset_folder', cleanPublicId.slice(0, folderSeparator));
+  }
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+    method: 'POST',
+    body: form
   });
+  const data = await response.json();
+  if (!response.ok) {
+    const message = data && data.error && data.error.message ? data.error.message : `HTTP ${response.status}`;
+    // The unsigned preset cannot overwrite. Only an explicit duplicate
+    // response is safe to treat as an idempotent success; any other error
+    // must not produce a fake delivery URL.
+    if (/already\s+exists/i.test(message)) {
+      return cloudinaryDeliveryUrl(publicId);
+    }
+    throw new Error(`Cloudinary upload failed: ${message}`);
+  }
+  if (!data || typeof data.secure_url !== 'string' || !data.secure_url.includes('res.cloudinary.com/')) {
+    throw new Error('Cloudinary upload returned no secure asset URL.');
+  }
+  return data.secure_url;
+}
+
+function cloudinaryDeliveryUrl(publicId) {
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/upload/${publicId.split('/').map(encodeURIComponent).join('/')}.jpg`;
+}
+
+async function mapLimit(items, limit, worker) {
+  const results = new Array(items.length);
+  let cursor = 0;
+  async function runner() {
+    while (true) {
+      const index = cursor++;
+      if (index >= items.length) return;
+      results[index] = await worker(items[index], index);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, runner));
+  return results;
+}
+
+function cloudinaryPublicId(category, model, section, filename) {
+  const sectionPath = section ? `/${section}` : '';
+  return `model/${safeSegment(category)}/${safeSegment(model)}${sectionPath}/${filename.replace(/\.jpg$/i, '')}`;
 }
 
 (async () => {
-  const browser = await puppeteer.launch({ headless:'new', args:['--no-sandbox','--disable-web-security','--disable-features=IsolateOrigins,site-per-process'] });
-  const page    = await browser.newPage();
-  await page.setViewport({width:1280, height:800});
+  const source = extractSource(SPINCAR_URL);
+  if (!source.vin) throw new Error('VIN not found in SpinCar URL.');
 
-  // Get cdnPrefix from API first
-  let cdnPrefix = '';
-  try {
-    const m = SPINCAR_URL.match(/vin=([^!&#]+)/i);
-    const vin = m?m[1]:'';
-    if (vin) {
-      const apiR = await fetch(`https://api-eu.impel.io/spin/Carsome/${vin}?v=20160212`);
-      const api  = await apiR.json();
-      cdnPrefix  = (api.cdn_image_prefix||'').replace(/^\/\//,'https://');
-      if (cdnPrefix && !cdnPrefix.endsWith('/')) cdnPrefix+='/';
-      console.log(`   🔑 CDN prefix: ${cdnPrefix}`);
+  const root = path.resolve(__dirname, '..');
+  const modelDir = path.join(root, 'shared', 'model', safeSegment(CATEGORY), FOLDER_MODEL_NAME);
+  const exteriorDir = path.join(modelDir, 'exterior', 'full-res');
+  const interiorDir = path.join(modelDir, 'interior', 'full-res');
+  await fs.mkdir(exteriorDir, { recursive: true });
+  await fs.mkdir(interiorDir, { recursive: true });
+
+  const cdnPrefix = await getCdnPrefix(source.customer, source.vin);
+  const indices = Array.from({ length: 200 }, (_, index) => index);
+  const exteriorUrls = [];
+  let completed = 0;
+
+  console.log(`SpinCar downloader (no Puppeteer)`);
+  console.log(`Model : ${FOLDER_MODEL_NAME}`);
+  console.log(`Output: ${modelDir}`);
+  console.log(`CDN   : ${cdnPrefix}`);
+
+  const exteriorResults = await mapLimit(indices, 8, async (index) => {
+    const padded = String(index).padStart(3, '0');
+    const filename = `frame-${padded}.jpg`;
+    const url = `${cdnPrefix}ec/0-${index}.jpg`;
+    const temporary = path.join(exteriorDir, `.${filename}.part`);
+    const target = path.join(exteriorDir, filename);
+    const buffer = await fetchImage(url);
+    await fs.writeFile(temporary, buffer);
+    await fs.rename(temporary, target);
+    let cloudinaryUrl = '';
+    if (UPLOAD_CLOUDINARY) {
+      cloudinaryUrl = await uploadToCloudinary(
+        buffer,
+          cloudinaryPublicId(CATEGORY, FOLDER_MODEL_NAME, 'exterior/full-res', filename)
+      );
     }
-  } catch(e) { console.warn('   ⚠️  API call failed:', e.message); }
+    completed += 1;
+    process.stdout.write(`\rExterior: ${completed}/200`);
+    return { index, local: `exterior/full-res/${filename}`, url, cloudinaryUrl };
+  });
+  console.log('');
 
-  console.log('   🌐 Loading SpinCar viewer (to get CloudFront cookies)...');
-  await page.goto(SPINCAR_URL, { waitUntil:'networkidle0', timeout:90000 });
-  await new Promise(r=>setTimeout(r,3000));
-
-  // Try to get cdnPrefix from page JS if not already
-  if (!cdnPrefix) {
-    cdnPrefix = await page.evaluate(() => {
-      const keys = ['cdnPrefix','cdn_prefix','cdn_image_prefix','window.cdnImagePrefix'];
-      for (const k of keys) { try { const v=eval(k); if(v&&v.includes('cdn.impel.io')) return v.startsWith('//')?'https:'+v:v; } catch(_){} }
-      // Check all img tags
-      const imgs = [...document.querySelectorAll('img')].map(i=>i.src).filter(s=>s.includes('cdn.impel.io/swipetospin-viewers'));
-      if (imgs.length) { const m=imgs[0].match(/(https:\/\/cdn\.impel\.io\/swipetospin-viewers\/[^/]+\/[^/]+\/[^/]+\/)/); if(m) return m[1]; }
-      return '';
-    });
-    console.log(`   🔑 CDN from page: ${cdnPrefix}`);
-  }
-
-  if (!cdnPrefix) { console.error('❌ Could not determine cdn_prefix. Exiting.'); await browser.close(); process.exit(1); }
-
-  // Fetch ALL 200 frames from INSIDE browser (browser has CloudFront cookies!)
-  console.log(`   📡 Fetching 200 frames from inside browser (using CDN cookies)...`);
-  const BATCH = 10;
-  const allFrameB64 = {};
-  
-  for (let start = 0; start < 200; start += BATCH) {
-    const end = Math.min(start + BATCH, 200);
-    const frameNums = Array.from({length: end-start}, (_,i) => start+i);
-    
-    const results = await page.evaluate(async (prefix, nums) => {
-      const out = {};
-      await Promise.all(nums.map(async n => {
-        const padded = String(n).padStart(3,'0');
-        const url = `${prefix}exterior/full-res/frame-${padded}.jpg`;
-        try {
-          const r = await fetch(url, { credentials:'include', mode:'cors' });
-          if (!r.ok) { out[n]=null; return; }
-          const blob   = await r.blob();
-          const base64 = await new Promise(res => {
-            const fr = new FileReader();
-            fr.onload = e => res(e.target.result.split(',')[1]);
-            fr.readAsDataURL(blob);
-          });
-          out[n] = base64;
-        } catch(_) { out[n]=null; }
-      }));
-      return out;
-    }, cdnPrefix, frameNums);
-
-    let batchOk = 0;
-    for (const [n, b64] of Object.entries(results)) {
-      if (b64) { allFrameB64[n] = b64; batchOk++; }
-    }
-    process.stdout.write(`\r   📸 Frames: ${Object.keys(allFrameB64).length}/200 (batch ${Math.ceil(end/BATCH)}/${Math.ceil(200/BATCH)}) `);
-  }
-  console.log(`\n   ✅ Captured: ${Object.keys(allFrameB64).length} exterior frames`);
-
-  await browser.close();
-
-  // Save exterior frames
-  const cldExtUrls = {};
-  const fnums = Object.keys(allFrameB64).map(Number).sort((a,b)=>a-b);
-  console.log(`\n   💾 Saving ${fnums.length} exterior frames...`);
-  for (const n of fnums) {
-    const padded = String(n).padStart(3,'0');
-    const buf    = Buffer.from(allFrameB64[n], 'base64');
-    fs.writeFileSync(path.join(EDIR,`frame-${padded}.jpg`), buf);
-    if (DO_CLOUDINARY) {
-      try {
-        const url = await uploadCld(buf, `wedrive-model/${SCAT}/${SNAME}/exterior/full-res/frame-${padded}`);
-        cldExtUrls[n]=url;
-        process.stdout.write(`\r   ☁️  Cloudinary: ${Object.keys(cldExtUrls).length}/${fnums.length}`);
-      } catch(e){ process.stdout.write(`\n   ⚠️  frame-${padded}: ${e.message}\n`); }
-    }
-  }
-
-  // Save interior faces (server-side direct fetch — pano/ is public)
-  const cldIntUrls = {};
-  const FACES = ['f','b','l','r','u','d'];
-  console.log(`\n\n   💾 Interior pano faces (server-side fetch)...`);
-  for (const face of FACES) {
-    const url = `${cdnPrefix}pano/pano_${face}.jpg`;
+  const faces = ['f', 'b', 'l', 'r', 'u', 'd'];
+  const interiorFaces = {};
+  for (const face of faces) {
+    const filename = `pano_${face}.jpg`;
+    const url = `${cdnPrefix}pano/${filename}`;
     try {
-      const buf = await nodeFetch(url);
-      if (buf.length < 5000) { console.log(`   ⬜ pano_${face} — empty/error`); continue; }
-      fs.writeFileSync(path.join(IDIR,`pano_${face}.jpg`), buf);
-      console.log(`   ✅ Saved pano_${face}.jpg (${(buf.length/1024).toFixed(0)}KB)`);
-      if (DO_CLOUDINARY) {
-        try {
-          cldIntUrls[face] = await uploadCld(buf, `wedrive-model/${SCAT}/${SNAME}/interior/full-res/pano_${face}`);
-          console.log(`   ☁️  Uploaded pano_${face}`);
-        } catch(e){ console.warn(`   ⚠️  pano_${face} Cloudinary: ${e.message}`); }
+      const buffer = await fetchImage(url);
+      const temporary = path.join(interiorDir, `.${filename}.part`);
+      await fs.writeFile(temporary, buffer);
+      await fs.rename(temporary, path.join(interiorDir, filename));
+      let cloudinaryUrl = '';
+      if (UPLOAD_CLOUDINARY) {
+        cloudinaryUrl = await uploadToCloudinary(
+          buffer,
+          cloudinaryPublicId(CATEGORY, FOLDER_MODEL_NAME, 'interior/full-res', filename)
+        );
       }
-    } catch(e){ console.log(`   ⬜ pano_${face} — ${e.message}`); }
+      interiorFaces[face] = {
+        local: `interior/full-res/${filename}`,
+        url,
+        cloudinary_url: cloudinaryUrl
+      };
+    } catch (error) {
+      console.warn(`Interior ${face} skipped: ${error.message}`);
+    }
   }
 
-  // source.json
-  const src = {
-    model: CAR_NAME, category: CAR_CATEGORY, asset_type:'360-spin-exterior',
-    source_viewer_exterior: SPINCAR_URL, cdn_prefix: cdnPrefix, downloaded_at: new Date().toISOString(),
-    exterior: { frame_start:0, frame_end:199, frame_count:fnums.length, frame_pad:3, full_res_pattern:'exterior/full-res/frame-{padded}.jpg' },
-    interior: { viewer_supported:true, format:'cubemap', full_res_pattern:'interior/full-res/pano_{face}.jpg', faces:Object.fromEntries(FACES.filter(f=>fs.existsSync(path.join(IDIR,`pano_${f}.jpg`))).map(f=>[f,`interior/full-res/pano_${f}.jpg`])) },
-    ...(DO_CLOUDINARY && { cloudinary:{ cloud:CLD_CLOUD, exterior_frames:Object.values(cldExtUrls), interior_faces:cldIntUrls } })
-  };
-  fs.writeFileSync(path.join(MDIR,'source.json'), JSON.stringify(src,null,2));
+  const gallery = [];
+  let thumbnailUrl = '';
+  if (UPLOAD_CLOUDINARY) {
+    const galleryIndices = ['0-0', '0-25', '0-50', '0-75', '0-100', '0-125', '0-150', '0-175'];
+    for (const index of galleryIndices) {
+      try {
+        const filename = `ec-${index.replace('-', '_')}.jpg`;
+        const url = `${cdnPrefix}ec/${index}.jpg`;
+        const buffer = await fetchImage(url);
+        const cloudinaryUrl = await uploadToCloudinary(
+          buffer,
+          cloudinaryPublicId(CATEGORY, FOLDER_MODEL_NAME, 'gallery', filename)
+        );
+        gallery.push({ index, url, cloudinary_url: cloudinaryUrl });
+      } catch (error) {
+        console.warn(`Gallery ${index} skipped: ${error.message}`);
+      }
+    }
 
-  console.log(`\n${'─'.repeat(58)}`);
-  console.log(`✅  DONE — ${CAR_NAME}`);
-  console.log(`   🎞️  ${fnums.length}/200 exterior  |  ${FACES.filter(f=>fs.existsSync(path.join(IDIR,`pano_${f}.jpg`))).length}/6 interior`);
-  if (DO_CLOUDINARY) console.log(`   ☁️  ${Object.keys(cldExtUrls).length} exterior + ${Object.keys(cldIntUrls).length} interior uploaded to Cloudinary`);
-  console.log(`\n📌 Next: git add shared/model && git commit && git push`);
-  console.log(`${'─'.repeat(58)}\n`);
-})().catch(e => { console.error('\n❌ ERROR:', e.message); process.exit(1); });
+    try {
+      const url = `${cdnPrefix}thumb-sm.jpg`;
+      const buffer = await fetchImage(url);
+      thumbnailUrl = await uploadToCloudinary(
+        buffer,
+        cloudinaryPublicId(CATEGORY, FOLDER_MODEL_NAME, '', 'thumb-sm.jpg')
+      );
+    } catch (error) {
+      console.warn(`Thumbnail skipped: ${error.message}`);
+    }
+  }
+
+  const sourceJson = {
+    model: FOLDER_MODEL_NAME,
+    category: CATEGORY,
+    plate: PLATE || undefined,
+    vin: source.vin,
+    customer: source.customer,
+    source_listing_url: LISTING_URL || undefined,
+    local_model_path: `${safeSegment(CATEGORY)}/${FOLDER_MODEL_NAME}`,
+    cloudinary_folder: `model/${safeSegment(CATEGORY)}/${FOLDER_MODEL_NAME}`,
+    cloudinary_thumbnail_url: thumbnailUrl,
+    cloudinary_gallery: gallery,
+    asset_type: '360-spin-exterior',
+    source_viewer_exterior: SPINCAR_URL,
+    cdn_prefix: cdnPrefix,
+    downloaded_at: new Date().toISOString(),
+    download_method: 'Node fetch via public Impel ec/0-{index}.jpg route',
+    exterior: {
+      frame_start: 0,
+      frame_end: 199,
+      frame_count: exteriorResults.length,
+      frame_pad: 3,
+      full_res_pattern: 'exterior/full-res/frame-{padded}.jpg',
+      cdn_pattern: 'ec/0-{index}.jpg',
+      cloudinary_uploaded: UPLOAD_CLOUDINARY,
+      cloudinary_urls: exteriorResults.map(item => item.cloudinaryUrl).filter(Boolean)
+    },
+    interior: {
+      viewer_supported: true,
+      format: 'cubemap',
+      faces: interiorFaces
+    },
+    gallery,
+    thumbnail_url: thumbnailUrl
+  };
+  await fs.writeFile(path.join(modelDir, 'source.json'), `${JSON.stringify(sourceJson, null, 2)}\n`);
+
+  console.log(`Done: ${exteriorResults.length}/200 exterior frames`);
+  console.log(`Local model path: ${path.relative(root, modelDir)}`);
+  if (UPLOAD_CLOUDINARY) console.log('Cloudinary upload: enabled');
+})().catch(error => {
+  console.error(`\nERROR: ${error.message}`);
+  process.exit(1);
+});

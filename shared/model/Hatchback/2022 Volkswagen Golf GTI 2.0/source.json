@@ -14,14 +14,58 @@
     "full_res_pattern": "exterior/full-res/frame-{padded}.jpg"
   },
   "interior": {
+    "type": "cube-map-panorama",
     "viewer_supported": true,
-    "download_status": "viewer panorama is protected behind tour loader; frame export not publicly exposed via direct CDN paths in current fetch flow",
-    "full_res_pattern": null
+    "faces": [
+      "f",
+      "b",
+      "d",
+      "l",
+      "r",
+      "u"
+    ],
+    "full_res_pattern": "interior/full-res/pano_{face}.jpg",
+    "cdn_pattern": "pano/pano_{face}.jpg",
+    "files": {
+      "f": {
+        "local": "interior/full-res/pano_f.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/pano/pano_f.jpg",
+        "bytes": 127593
+      },
+      "b": {
+        "local": "interior/full-res/pano_b.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/pano/pano_b.jpg",
+        "bytes": 97152
+      },
+      "d": {
+        "local": "interior/full-res/pano_d.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/pano/pano_d.jpg",
+        "bytes": 142806
+      },
+      "l": {
+        "local": "interior/full-res/pano_l.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/pano/pano_l.jpg",
+        "bytes": 129927
+      },
+      "r": {
+        "local": "interior/full-res/pano_r.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/pano/pano_r.jpg",
+        "bytes": 129178
+      },
+      "u": {
+        "local": "interior/full-res/pano_u.jpg",
+        "url": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/pano/pano_u.jpg",
+        "bytes": 19806
+      }
+    }
   },
   "placeholders": {
     "still": {
       "full_res": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/placeholder/placeholder.jpg"
     }
   },
-  "thumb": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/thumb-sm.jpg"
+  "thumb": "https://cdn.impel.io/swipetospin-viewers/Carsome/ppvzzzcdznl000596/20260312130911.2MHS2IYI/thumb-sm.jpg",
+  "vin": "ppvzzzcdznl000596",
+  "customer": "Carsome",
+  "downloaded_at": "2026-09-10T22:21:19.880Z"
 }

@@ -815,12 +815,12 @@ function renderTodayPickups() {
 
   var pendingHandovers = todayBookings.filter(b => b.status === 'Confirmed' || b.status === 'Pending').length;
   if (badge) {
-    badge.textContent = pendingHandovers + ' pending';
+    badge.textContent = pendingHandovers + ' menunggu';
     badge.className = 'status-badge ' + (pendingHandovers > 0 ? 'pending' : 'completed');
   }
 
   if (todayBookings.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94A3B8;padding:24px">No handovers scheduled for today.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#94A3B8;padding:24px">Tiada jadual serahan kunci hari ini.</td></tr>';
     return;
   }
 
@@ -832,13 +832,13 @@ function renderTodayPickups() {
     if (b.status === 'Confirmed' || b.status === 'Pending') {
       actionHtml = `
         <button class="btn-primary-sm" onclick="quickHandover('${b.id}')" style="font-size:12px;padding:6px 12px;background:#059669;border-color:#059669;display:flex;align-items:center;gap:4px;margin:0 auto;">
-          <span class="material-icons-round" style="font-size:14px">vpn_key</span> Handover
+          <span class="material-icons-round" style="font-size:14px">vpn_key</span> Serahkan
         </button>
       `;
     } else {
       actionHtml = `
         <span style="color:#059669;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:4px;">
-          <span class="material-icons-round" style="font-size:16px">check_circle</span> Active / Driving
+          <span class="material-icons-round" style="font-size:16px">check_circle</span> Aktif / Dalam Perjalanan
         </span>
       `;
     }

@@ -453,11 +453,6 @@
         var carTitle = sidebar.querySelector('.summary-car-info h3');
         if (carTitle) carTitle.textContent = pendingBooking.carName;
 
-        var carMeta1 = sidebar.querySelector('.summary-car-info p:nth-of-type(1)');
-        if (carMeta1) {
-          carMeta1.textContent = 'Vehicle Rating: 4.8';
-        }
-
         var carMeta2 = sidebar.querySelector('.summary-car-info p:nth-of-type(2)');
         if (carMeta2) {
           carMeta2.textContent = formatDate(pendingBooking.pickupDate) + ' - ' + formatDate(pendingBooking.returnDate) + ' (' + pendingBooking.days + ' day' + (pendingBooking.days > 1 ? 's' : '') + ')';

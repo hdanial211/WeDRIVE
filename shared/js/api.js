@@ -13,10 +13,10 @@
 
 window.AppConfig = {
     // -------------------------------------------------------------------------
-    // 1. SWITCH BETWEEN DUMMY JSON AND REAL DATABASE
+    // 1. PRODUCTION DATA SOURCE
     // -------------------------------------------------------------------------
-    // Set to 'false' to use the local dummy JSON files.
-    // Set to 'true' when your database backend is ready.
+    // Production uses Supabase PostgreSQL. LocalStorage is only allowed for
+    // short-lived UI preferences and the in-progress Add Car draft.
     USE_REAL_DB: true,
 
     // -------------------------------------------------------------------------
@@ -32,30 +32,53 @@ window.AppConfig = {
     }
 };
 
-/**
- * Helper function to locate the local dummy JSON files correctly,
- * regardless of which page the user is currently on (root vs subfolder).
- */
-function getDummyPath(filename) {
-    const isRoot = !window.location.pathname.includes('/pages/');
-    const prefix = isRoot ? 'shared/dummy/' : '../../shared/dummy/';
-    return prefix + filename;
+// Dummy data is deliberately disabled in production. This guard remains only
+// so an old caller fails loudly instead of silently displaying fake records.
+async function _loadDummyData() {
+    throw new Error('Dummy database is disabled. Supabase is required.');
 }
 
-// Dummy data connection removed.
-// If the system tries to load dummy data (e.g. Supabase connection fails or offline), redirect to 404.html
-async function _loadDummyData() {
-    console.error("[WeDriveAPI] Database connection failed or offline. Redirecting to error page.");
-    var scripts = document.getElementsByTagName('script');
-    for (var i = 0; i < scripts.length; i++) {
-        var src = scripts[i].getAttribute('src');
-        if (src && src.indexOf('shared/js/api.js') !== -1) {
-            window.location.href = src.replace('shared/js/api.js', 'shared/pages/error/404.html');
-            return {};
-        }
+function isAllowedCarMedia(value) {
+    if (typeof value !== 'string') return false;
+    const url = value.trim();
+    if (!url || url.startsWith('data:')) return false;
+    if (url.includes('res.cloudinary.com/')) return true;
+    if (url.includes('shared/model/')) return true;
+    // Existing local model records store the path without the shared/model/
+    // prefix in the cars.images column.
+    return /^(?:Sedan|Hatchback|SUV|MPV|Truck|Coupe|Convertible|Wagon|Van)\//i.test(url);
+}
+
+function hasAllowedCarImages(images) {
+    return Array.isArray(images) && images.some(function (image) {
+        return isAllowedCarMedia(typeof image === 'string' ? image : (image && image.img));
+    });
+}
+
+function cloudinaryFolderFromUrl(value) {
+    if (typeof value !== 'string' || value.indexOf('res.cloudinary.com/') === -1) return null;
+    try {
+        var marker = '/image/upload/';
+        var path = decodeURIComponent(value.split(marker)[1] || '');
+        path = path.replace(/^v\d+\//, '').split('?')[0];
+        var sectionMatch = path.match(/\/(exterior|interior|gallery)(?:\/|$)/);
+        if (!sectionMatch) return null;
+        var folder = path.slice(0, sectionMatch.index).replace(/^\/+|\/+$/g, '');
+        return /^model\/[^/]+\/[^/]+/.test(folder) && !folder.includes('..') ? folder : null;
+    } catch (_) {
+        return null;
     }
-    window.location.href = '/shared/pages/error/404.html';
-    return {};
+}
+
+function addCloudinaryFolderFromValue(target, value) {
+    if (typeof value !== 'string') return;
+    var direct = value.replace(/^\/+|\/+$/g, '');
+    if (/^model\/[^/]+\/[^/]+/.test(direct) && !direct.includes('..')) {
+        target.push(direct);
+        return;
+    }
+    var fromUrl = cloudinaryFolderFromUrl(value);
+    if (fromUrl) target.push(fromUrl);
 }
 
 
@@ -64,10 +87,46 @@ async function _loadDummyData() {
  * 3. GLOBAL DATABASE SERVICE (WeDriveAPI)
  * -----------------------------------------------------------------------------
  * All pages should call these functions instead of using fetch() directly.
- * When USE_REAL_DB is true, data is read from/written to Supabase PostgreSQL.
- * When USE_REAL_DB is false, data is read from the local dummy JSON files.
+ * Inventory, bookings, customers and car media metadata are read from and
+ * written to Supabase PostgreSQL. There is no local database fallback.
  */
 window.WeDriveAPI = {
+
+    /**
+     * Upload an image from an admin edit flow to the same unsigned Cloudinary
+     * preset used by Add Car. This accepts a Blob/data URL or a public remote
+     * URL; the database receives only the resulting Cloudinary URL.
+     */
+    uploadImageToCloudinary: async function (source, publicId) {
+        var cloudName = 'gwd1bhcx';
+        var uploadPreset = 'wedrive_360';
+        var endpoint = 'https://api.cloudinary.com/v1_1/' + cloudName + '/image/upload';
+        var file = source;
+        if (typeof source === 'string' && source.startsWith('data:')) {
+            var response = await fetch(source);
+            file = await response.blob();
+        }
+        if (!file) throw new Error('Imej untuk dimuat naik tidak sah.');
+        var form = new FormData();
+        form.append('file', file);
+        form.append('upload_preset', uploadPreset);
+        form.append('public_id', publicId);
+        var publicIdValue = String(publicId || '').replace(/^\/+|\/+$/g, '');
+        var folderSeparator = publicIdValue.lastIndexOf('/');
+        if (folderSeparator > 0) {
+            form.append('asset_folder', publicIdValue.slice(0, folderSeparator));
+        }
+        var result = await fetch(endpoint, { method: 'POST', body: form });
+        var data = await result.json().catch(function () { return {}; });
+        if (!result.ok) {
+            var message = data && data.error && data.error.message ? data.error.message : ('HTTP ' + result.status);
+            if (/already exists|public.?id/i.test(message)) {
+                return 'https://res.cloudinary.com/' + cloudName + '/image/upload/' + publicId.split('/').map(encodeURIComponent).join('/') + '.jpg';
+            }
+            throw new Error('Cloudinary upload gagal: ' + message);
+        }
+        return data.secure_url;
+    },
 
     /**
      * Internal helper to clean up/delete bookings that are 'Unpaid' and created > 10 minutes ago.
@@ -108,62 +167,18 @@ window.WeDriveAPI = {
             }
         }
     },
-    _processCarRecord: function (c) {
-        if (!c) return c;
-        if (c.exterior_360 && typeof c.exterior_360 === 'string' && c.exterior_360.startsWith('{')) {
-            try {
-                var parsed = JSON.parse(c.exterior_360);
-                if (Array.isArray(parsed.frames) && parsed.frames.length > 0) {
-                    c.exterior_frames = parsed.frames;
-                }
-                c.exterior_360 = parsed.viewerUrl || parsed.url || c.exterior_360;
-                c.has_360 = true;
-            } catch (e) {}
-        }
-        return c;
-    },
-
     /**
      * Get the list of all available cars.
      * Used in: index.html (Landing), customer.html (Dashboard), admin.html (Car)
      */
     getCars: async function () {
-        if (!window.AppConfig.USE_REAL_DB) {
-            const data = await _loadDummyData();
-            return (data.car || []).map(window.WeDriveAPI._processCarRecord);
-        } else {
-            try {
-                var sb = window.supabaseClient;
-                var result = await sb.from('cars').select('*').neq('status', 'Draft');
-                if (result.error) throw result.error;
-                var fetchedCars = (result.data || []).filter(function(c) {
-                    return !c.status || c.status.toLowerCase() !== 'draft';
-                });
-                try {
-                    var localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-                        localCars.forEach(function(lc) {
-                            if (!lc) return;
-                            if (lc.status && lc.status.toLowerCase() === 'draft') return;
-                            if (!lc.plate || String(lc.plate).trim().length < 3) return;
-                            var hasImg = (Array.isArray(lc.images) && lc.images.some(Boolean)) || Boolean(lc.image_url) || Boolean(lc.has_360);
-                            if (!hasImg) return;
-                            var exists = fetchedCars.some(function(c) {
-                                return (lc.id && c.id === lc.id) || (lc.plate && c.plate && lc.plate.toUpperCase() === c.plate.toUpperCase());
-                            });
-                            if (!exists) {
-                                fetchedCars.unshift(lc);
-                            }
-                        });
-                } catch (e) {
-                    console.warn('[WeDriveAPI] Local cars merge warning:', e);
-                }
-                return fetchedCars.map(window.WeDriveAPI._processCarRecord);
-            } catch (err) {
-                console.error('[WeDriveAPI] Supabase getCars error:', err);
-                var data = await _loadDummyData();
-                return (data.car || []).map(window.WeDriveAPI._processCarRecord);
-            }
-        }
+        var sb = window.supabaseClient;
+        if (!sb) throw new Error('Supabase client is unavailable.');
+        var result = await sb.from('cars').select('*').neq('status', 'Draft');
+        if (result.error) throw result.error;
+        return (result.data || []).filter(function(c) {
+            return !c.status || c.status.toLowerCase() !== 'draft';
+        });
     },
 
     /**
@@ -172,21 +187,11 @@ window.WeDriveAPI = {
      */
     getBookings: async function () {
         await window.WeDriveAPI._autoCleanupUnpaidBookings();
-        if (!window.AppConfig.USE_REAL_DB) {
-            const data = await _loadDummyData();
-            return data.bookings || [];
-        } else {
-            try {
-                var sb = window.supabaseClient;
-                var result = await sb.from('bookings').select('*');
-                if (result.error) throw result.error;
-                return result.data || [];
-            } catch (err) {
-                console.error('[WeDriveAPI] Supabase getBookings error:', err);
-                var data = await _loadDummyData();
-                return data.bookings || [];
-            }
-        }
+        var sb = window.supabaseClient;
+        if (!sb) throw new Error('Supabase client is unavailable.');
+        var result = await sb.from('bookings').select('*');
+        if (result.error) throw result.error;
+        return result.data || [];
     },
 
     /**
@@ -213,27 +218,6 @@ window.WeDriveAPI = {
                 var cars = rawCars.filter(function(c) {
                     return !c.status || c.status.toLowerCase() !== 'draft';
                 });
-                try {
-                    var localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-                    if (Array.isArray(localCars) && localCars.length > 0) {
-                        localCars.forEach(function(lc) {
-                            if (!lc) return;
-                            if (lc.status && lc.status.toLowerCase() === 'draft') return;
-                            if (!lc.plate || String(lc.plate).trim().length < 3) return;
-                            var hasImg = (Array.isArray(lc.images) && lc.images.some(Boolean)) || Boolean(lc.image_url) || Boolean(lc.has_360);
-                            if (!hasImg) return;
-                            var exists = cars.some(function(c) {
-                                return (lc.id && c.id === lc.id) || (lc.plate && c.plate && lc.plate.toUpperCase() === c.plate.toUpperCase());
-                            });
-                            if (!exists) {
-                                cars.unshift(lc);
-                            }
-                        });
-                    }
-                } catch (e) {
-                    console.warn('[WeDriveAPI] Local cars merge warning:', e);
-                }
-                cars = cars.map(window.WeDriveAPI._processCarRecord);
                 var bookings = coreResults[1].data || [];
                 var customers = coreResults[2].data || [];
                 var admins = coreResults[3].data || [];
@@ -368,7 +352,7 @@ window.WeDriveAPI = {
                 };
             } catch (err) {
                 console.error('[WeDriveAPI] Supabase getAdminData error:', err);
-                return await _loadDummyData();
+                throw err;
             }
         }
     },
@@ -588,17 +572,7 @@ window.WeDriveAPI = {
                 return JSON.parse(localSettings);
             }
 
-            // Default replies based on original chatbot.js
-            return {
-                greeting: "Hi! I'm your <strong>WeDRIVE AI Assistant</strong>.<br/>I can help you find the perfect car, assist with booking, or answer any questions. How can I help?",
-                replies: {
-                    available: "We have <strong>8 cars available</strong> right now! Scroll down to browse all options or use the filters above.",
-                    recommend: "Based on popular choices, I recommend the <strong>2023 Mercedes-Benz GLA250 AMG Line 2.0</strong> -- ideal for premium family trips and weekend comfort. Here is a quick look:",
-                    book: "Booking is easy! Just:<br/>1. Select your car below<br/>2. Click <strong>Book Now</strong><br/>3. Fill in your dates<br/>4. Complete payment<br/><br/>Need help choosing a car?",
-                    payment: "We accept:<br/>Credit/Debit Card (Visa, Mastercard)<br/>Online Banking (FPX)<br/>eWallet (Touch'n Go, GrabPay)<br/>Cash at counter",
-                    default: "Thanks for your message! I am here to help with car rentals. You can also browse cars below or use the filter chips to narrow your search."
-                }
-            };
+            return {};
         } else {
             try {
                 var sb = window.supabaseClient;
@@ -611,16 +585,7 @@ window.WeDriveAPI = {
                 if (localSettings) {
                     return JSON.parse(localSettings);
                 }
-                return {
-                    greeting: "Hi! I'm your <strong>WeDRIVE AI Assistant</strong>.<br/>I can help you find the perfect car, assist with booking, or answer any questions. How can I help?",
-                    replies: {
-                        available: "We have <strong>8 cars available</strong> right now! Scroll down to browse all options or use the filters above.",
-                        recommend: "Based on popular choices, I recommend the <strong>2023 Mercedes-Benz GLA250 AMG Line 2.0</strong> -- ideal for premium family trips and weekend comfort.",
-                        book: "Booking is easy! Just:<br/>1. Select your car below<br/>2. Click <strong>Book Now</strong><br/>3. Fill in your dates<br/>4. Complete payment",
-                        payment: "We accept:<br/>Credit/Debit Card (Visa, Mastercard)<br/>Online Banking (FPX)<br/>eWallet (Touch'n Go, GrabPay)<br/>Cash at counter",
-                        default: "Thanks for your message! I am here to help with car rentals."
-                    }
-                };
+                return {};
             } catch (err) {
                 console.error('[WeDriveAPI] getChatbotSettings error:', err);
                 return {};
@@ -812,18 +777,19 @@ window.WeDriveAPI = {
     /**
      * Create a new car record in the inventory.
      * Used in: add-car.html (Admin New Car Registration)
-     * Inserts into Supabase PostgreSQL cars table and updates local cache.
+     * Inserts into Supabase PostgreSQL cars table. LocalStorage is not a
+     * second inventory database.
      */
     createCar: async function (carData) {
         var dailyNum = parseFloat(carData.price || carData.dailyPrice || 0);
+        var weeklyNum = parseFloat(carData.weeklyPrice || carData.weekly_price);
+        var monthlyNum = parseFloat(carData.monthlyPrice || carData.monthly_price);
+        weeklyNum = Number.isFinite(weeklyNum) && weeklyNum > 0 ? weeklyNum : null;
+        monthlyNum = Number.isFinite(monthlyNum) && monthlyNum > 0 ? monthlyNum : null;
         var rateStr = carData.rate ? String(carData.rate).replace(/\.00/g, '') : (dailyNum > 0 ? ('RM ' + Math.round(dailyNum) + '/hari') : 'RM 0/hari');
         var transStr = carData.transmission || 'Automatic';
         var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
         
-        var framesJson = (Array.isArray(carData.exterior_frames) && carData.exterior_frames.length > 0)
-            ? JSON.stringify({ viewerUrl: carData.exterior_360 || '', frames: carData.exterior_frames, type: 'turntable' })
-            : (carData.exterior_360 || null);
-
         var newRecord = {
             name: carData.name || 'Kenderaan Baharu',
             plate: (carData.plate || '').toUpperCase() || null,
@@ -832,6 +798,8 @@ window.WeDriveAPI = {
             status: carData.status || 'Available',
             rate: rateStr,
             price: dailyNum,
+            weekly_price: weeklyNum,
+            monthly_price: monthlyNum,
             fuel: carData.fuel || 'Petrol',
             transmission: transStr,
             trans: carData.trans || shortTrans,
@@ -840,48 +808,30 @@ window.WeDriveAPI = {
             color: carData.color || 'Putih',
             rating: typeof carData.rating === 'number' ? carData.rating : 5.0,
             reviews: typeof carData.reviews === 'number' ? carData.reviews : 0,
-            ai: carData.ai || carData.engine || '2.0L Standard',
-            has_360: Boolean(carData.has_360 || (Array.isArray(carData.exterior_frames) && carData.exterior_frames.length > 0)),
-            exterior_360: framesJson,
+            ai: typeof carData.ai === 'string' && carData.ai.trim() ? carData.ai.trim() : null,
+            has_360: Boolean(carData.has_360),
+            exterior_360: carData.exterior_360 || null,
             interior_360: carData.interior_360 || null,
-            images: (carData.images && carData.images.length) ? carData.images : ['../../../shared/model/bezza.png']
+            exterior_frames: Array.isArray(carData.exterior_frames) ? carData.exterior_frames : null,
+            images: (carData.images && carData.images.length) ? carData.images : []
         };
 
-        if (!window.AppConfig.USE_REAL_DB) {
-            var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-            newRecord.id = carData.id || ('CR-' + Date.now());
-            if (Array.isArray(carData.exterior_frames) && carData.exterior_frames.length > 0) {
-                newRecord.exterior_frames = carData.exterior_frames;
-            }
-            existingLocal.unshift(newRecord);
-            localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
-            return { data: newRecord, error: null };
-        } else {
-            try {
-                var sb = window.supabaseClient;
-                var result = await sb.from('cars').insert([newRecord]).select();
-                if (result.error) throw result.error;
+        var hasImages = hasAllowedCarImages(newRecord.images);
+        var has360 = Array.isArray(newRecord.exterior_frames) && newRecord.exterior_frames.length > 0;
+        if (!hasImages && !has360) {
+            return { data: null, error: new Error('Kereta mesti mempunyai sekurang-kurangnya satu gambar atau satu 360 view.') };
+        }
 
-                var savedCar = (result.data && result.data.length > 0) ? result.data[0] : newRecord;
-                if (Array.isArray(carData.exterior_frames) && carData.exterior_frames.length > 0) {
-                    savedCar.exterior_frames = carData.exterior_frames;
-                }
-                var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-                existingLocal.unshift(savedCar);
-                localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
-
-                return { data: savedCar, error: null };
-            } catch (err) {
-                console.error('[WeDriveAPI] Supabase createCar error, saving to local cache fallback:', err);
-                var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-                newRecord.id = carData.id || ('CR-' + Date.now());
-                if (Array.isArray(carData.exterior_frames) && carData.exterior_frames.length > 0) {
-                    newRecord.exterior_frames = carData.exterior_frames;
-                }
-                existingLocal.unshift(newRecord);
-                localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
-                return { data: newRecord, error: null };
-            }
+        var sb = window.supabaseClient;
+        if (!sb) return { data: null, error: new Error('Supabase client is unavailable.') };
+        try {
+            var result = await sb.from('cars').insert([newRecord]).select();
+            if (result.error) throw result.error;
+            var savedCar = (result.data && result.data.length > 0) ? result.data[0] : newRecord;
+            return { data: savedCar, error: null };
+        } catch (err) {
+            console.error('[WeDriveAPI] Supabase createCar error:', err);
+            return { data: null, error: err };
         }
     },
 
@@ -890,10 +840,16 @@ window.WeDriveAPI = {
      */
     saveCarDraft: async function (draftData) {
         var dailyNum = parseFloat(draftData.dailyPrice || draftData.price || 0);
+        var weeklyNum = parseFloat(draftData.weeklyPrice || draftData.weekly_price);
+        var monthlyNum = parseFloat(draftData.monthlyPrice || draftData.monthly_price);
+        weeklyNum = Number.isFinite(weeklyNum) && weeklyNum > 0 ? weeklyNum : null;
+        monthlyNum = Number.isFinite(monthlyNum) && monthlyNum > 0 ? monthlyNum : null;
         var rateStr = draftData.rate ? String(draftData.rate).replace(/\.00/g, '') : (dailyNum > 0 ? ('RM ' + Math.round(dailyNum) + '/hari') : 'RM 0/hari');
         var transStr = draftData.transmission || 'Automatic';
         var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
 
+        var draftImages = Array.isArray(draftData.images) ? draftData.images : [];
+        var draftFrames = Array.isArray(draftData.exterior_frames) ? draftData.exterior_frames : [];
         var record = {
             name: draftData.name || [draftData.year, draftData.brand, draftData.model, draftData.variant].filter(Boolean).join(' ') || 'Draf Kenderaan Baharu',
             plate: (draftData.plate || '').toUpperCase() || null,
@@ -902,6 +858,8 @@ window.WeDriveAPI = {
             status: 'Draft',
             rate: rateStr,
             price: dailyNum,
+            weekly_price: weeklyNum,
+            monthly_price: monthlyNum,
             fuel: draftData.fuel || 'Petrol',
             transmission: transStr,
             trans: draftData.trans || shortTrans,
@@ -910,30 +868,194 @@ window.WeDriveAPI = {
             color: draftData.color || 'Putih',
             rating: 5.0,
             reviews: 0,
-            ai: draftData.engine || draftData.ai || 'Standard',
-            images: Array.isArray(draftData.images) ? draftData.images : (draftData.gallery8Photos || []),
-            has_360: Boolean(draftData.has_360 || draftData.has360),
-            exterior_360: draftData.exterior_360 || draftData.cdnUrlExterior || draftData.cdnUrl || null,
-            interior_360: draftData.interior_360 || draftData.cdnUrlInterior || null
+            ai: typeof (draftData.ai_tagline || draftData.ai) === 'string' && (draftData.ai_tagline || draftData.ai).trim()
+                ? (draftData.ai_tagline || draftData.ai).trim()
+                : null,
+            images: draftImages.filter(function (image) {
+                return isAllowedCarMedia(typeof image === 'string' ? image : (image && image.img));
+            }),
+            has_360: draftFrames.some(function (url) { return isAllowedCarMedia(url); }),
+            exterior_360: draftFrames.some(function (url) { return isAllowedCarMedia(url); }) ? (draftData.exterior_360 || null) : null,
+            interior_360: draftData.interior_360 || null,
+            exterior_frames: draftFrames.filter(isAllowedCarMedia)
         };
 
         var sb = window.supabaseClient;
-        if (sb && window.AppConfig && window.AppConfig.USE_REAL_DB) {
-            try {
-                if (draftData.supabase_draft_id && Number.isInteger(Number(draftData.supabase_draft_id))) {
-                    var updateRes = await sb.from('cars').update(record).eq('id', Number(draftData.supabase_draft_id)).select();
-                    if (!updateRes.error && updateRes.data && updateRes.data.length > 0) {
-                        return { data: updateRes.data[0], error: null };
-                    }
+        if (!sb) return { data: null, error: new Error('Supabase client is unavailable.') };
+        try {
+            if (draftData.supabase_draft_id && Number.isInteger(Number(draftData.supabase_draft_id))) {
+                var updateRes = await sb.from('cars').update(record).eq('id', Number(draftData.supabase_draft_id)).select();
+                if (updateRes.error) throw updateRes.error;
+                if (updateRes.data && updateRes.data.length > 0) {
+                    return { data: updateRes.data[0], error: null };
                 }
-                var insertRes = await sb.from('cars').insert([record]).select();
-                if (insertRes.error) throw insertRes.error;
-                return { data: insertRes.data ? insertRes.data[0] : record, error: null };
-            } catch (err) {
-                console.error('[WeDriveAPI] saveCarDraft Supabase error:', err);
             }
+            var insertRes = await sb.from('cars').insert([record]).select();
+            if (insertRes.error) throw insertRes.error;
+            return { data: insertRes.data ? insertRes.data[0] : record, error: null };
+        } catch (err) {
+            console.error('[WeDriveAPI] saveCarDraft Supabase error:', err);
+            return { data: null, error: err };
         }
-        return { data: record, error: null };
+    },
+
+    /**
+     * Return recent meaningful drafts for the Admin resume dialog.
+     * Empty test rows are filtered by the caller so an old blank draft cannot
+     * hide the latest vehicle draft.
+     */
+    getLatestCarDrafts: async function (limit) {
+        var sb = window.supabaseClient;
+        if (!sb) return { data: [], error: new Error('Supabase client is unavailable.') };
+        try {
+            var result = await sb.from('cars')
+                .select('*')
+                .eq('status', 'Draft')
+                .order('id', { ascending: false })
+                .limit(Number(limit) || 50);
+            if (result.error) throw result.error;
+            return { data: result.data || [], error: null };
+        } catch (err) {
+            console.error('[WeDriveAPI] getLatestCarDrafts error:', err);
+            return { data: [], error: err };
+        }
+    },
+
+    /**
+     * Delete a draft and all Cloudinary assets belonging to its model folder.
+     * Cloudinary Admin credentials stay inside the cloudinary-admin Edge
+     * Function; the browser only sends validated folder names.
+     */
+    deleteCarDraft: async function (draftId, draftData) {
+        var sb = window.supabaseClient;
+        var targetId = Number(draftId);
+        if (!sb) return { success: false, error: new Error('Supabase client is unavailable.') };
+        if (!Number.isInteger(targetId) || targetId <= 0) {
+            return { success: false, error: new Error('ID draft tidak sah.') };
+        }
+
+        try {
+            var carResult = await sb.from('cars')
+                .select('id,status,exterior_360,interior_360,exterior_frames,images')
+                .eq('id', targetId)
+                .maybeSingle();
+            if (carResult.error) throw carResult.error;
+            if (!carResult.data) return { success: true, deleted: false, reason: 'not_found' };
+            if (String(carResult.data.status || '').toLowerCase() !== 'draft') {
+                throw new Error('Hanya rekod berstatus Draft boleh dipadam melalui dialog ini.');
+            }
+
+            var assetResult = await sb.from('car_visual_assets')
+                .select('id,car_id,cloudinary_folder')
+                .eq('car_id', targetId);
+            if (assetResult.error) throw assetResult.error;
+
+            var folders = [];
+            (assetResult.data || []).forEach(function (asset) {
+                addCloudinaryFolderFromValue(folders, asset && asset.cloudinary_folder);
+            });
+            var supplied = draftData || {};
+            addCloudinaryFolderFromValue(folders, supplied.cloudinary_folder);
+
+            function addManifestFolder(value) {
+                if (!value) return;
+                try {
+                    var parsed = typeof value === 'string' ? JSON.parse(value) : value;
+                    if (parsed && typeof parsed.folder === 'string') {
+                        addCloudinaryFolderFromValue(folders, parsed.folder);
+                    }
+                } catch (_) {}
+            }
+            addManifestFolder(carResult.data.exterior_360);
+            addManifestFolder(carResult.data.interior_360);
+            addManifestFolder(supplied.exterior_360);
+            addManifestFolder(supplied.interior_360);
+
+            var allMedia = []
+                .concat(Array.isArray(carResult.data.exterior_frames) ? carResult.data.exterior_frames : [])
+                .concat(Array.isArray(carResult.data.images) ? carResult.data.images : [])
+                .concat(Array.isArray(supplied.exterior_frames) ? supplied.exterior_frames : [])
+                .concat(Array.isArray(supplied.cloudinary_exterior_frames) ? supplied.cloudinary_exterior_frames : [])
+                .concat(Array.isArray(supplied.images) ? supplied.images : [])
+                .concat(Array.isArray(supplied.cloudinary_gallery) ? supplied.cloudinary_gallery : []);
+            allMedia.forEach(function (media) {
+                addCloudinaryFolderFromValue(folders, typeof media === 'string' ? media : (media && (media.img || media.url || media.cloudinary_url)));
+            });
+            folders = Array.from(new Set(folders));
+
+            // Never remove a folder that another visual-asset record still uses.
+            if (folders.length) {
+                var otherAssets = await sb.from('car_visual_assets')
+                    .select('car_id,cloudinary_folder')
+                    .in('cloudinary_folder', folders)
+                    .neq('car_id', targetId);
+                if (otherAssets.error) throw otherAssets.error;
+                var protectedFolders = new Set((otherAssets.data || []).map(function (row) {
+                    return row.cloudinary_folder;
+                }));
+                folders = folders.filter(function (folder) { return !protectedFolders.has(folder); });
+            }
+
+            if (folders.length) {
+                var cloudinaryResult = await sb.functions.invoke('cloudinary-admin', {
+                    body: { action: 'delete_assets', folders: folders }
+                });
+                if (cloudinaryResult.error) throw cloudinaryResult.error;
+                if (!cloudinaryResult.data || cloudinaryResult.data.ok !== true) {
+                    throw new Error((cloudinaryResult.data && cloudinaryResult.data.error) || 'Cloudinary cleanup gagal.');
+                }
+            }
+
+            var deleteAssetsResult = await sb.from('car_visual_assets').delete().eq('car_id', targetId);
+            if (deleteAssetsResult.error) throw deleteAssetsResult.error;
+            var deleteCarResult = await sb.from('cars').delete().eq('id', targetId).eq('status', 'Draft');
+            if (deleteCarResult.error) throw deleteCarResult.error;
+            return { success: true, deleted: true, folders: folders };
+        } catch (err) {
+            console.error('[WeDriveAPI] deleteCarDraft error:', err);
+            return { success: false, error: err };
+        }
+    },
+
+    /**
+     * Save the Cloudinary manifest for a local/shared model asset.
+     * The image bytes remain in Cloudinary; Supabase stores metadata and URLs.
+     */
+    saveCarVisualAsset: async function (assetData) {
+        var record = {
+            car_id: assetData.car_id ? Number(assetData.car_id) : null,
+            model_key: assetData.model_key,
+            model_name: assetData.model_name,
+            category: assetData.category,
+            vin: assetData.vin || null,
+            local_model_path: assetData.local_model_path,
+            source_viewer_url: assetData.source_viewer_url || null,
+            source_listing_url: assetData.source_listing_url || null,
+            cdn_prefix: assetData.cdn_prefix || null,
+            cloudinary_folder: assetData.cloudinary_folder,
+            cloudinary_thumbnail_url: assetData.cloudinary_thumbnail_url || null,
+            cloudinary_gallery: Array.isArray(assetData.cloudinary_gallery) ? assetData.cloudinary_gallery : [],
+            cloudinary_exterior_frames: Array.isArray(assetData.cloudinary_exterior_frames) ? assetData.cloudinary_exterior_frames : [],
+            cloudinary_interior_faces: assetData.cloudinary_interior_faces || {},
+            frame_count: Number(assetData.frame_count) || 0,
+            frame_pattern: assetData.frame_pattern || 'exterior/full-res/frame-{padded}.jpg',
+            status: assetData.status || 'pending',
+            error_message: assetData.error_message || null
+        };
+
+        try {
+            var sb = window.supabaseClient;
+            if (!sb) throw new Error('Supabase client is unavailable.');
+            var result = await sb.from('car_visual_assets')
+                .upsert([record], { onConflict: 'model_key' })
+                .select()
+                .single();
+            if (result.error) throw result.error;
+            return { data: result.data, error: null };
+        } catch (err) {
+            console.error('[WeDriveAPI] saveCarVisualAsset error:', err);
+            return { data: null, error: err };
+        }
     },
 
     /**
@@ -941,13 +1063,13 @@ window.WeDriveAPI = {
      */
     publishCarDraft: async function (draftId, finalData) {
         var dailyNum = parseFloat(finalData.dailyPrice || finalData.price || 0);
+        var weeklyNum = parseFloat(finalData.weeklyPrice || finalData.weekly_price);
+        var monthlyNum = parseFloat(finalData.monthlyPrice || finalData.monthly_price);
+        weeklyNum = Number.isFinite(weeklyNum) && weeklyNum > 0 ? weeklyNum : null;
+        monthlyNum = Number.isFinite(monthlyNum) && monthlyNum > 0 ? monthlyNum : null;
         var rateStr = finalData.rate ? String(finalData.rate).replace(/\.00/g, '') : (dailyNum > 0 ? ('RM ' + Math.round(dailyNum) + '/hari') : 'RM 0/hari');
         var transStr = finalData.transmission || 'Automatic';
         var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
-
-        var framesJson = (Array.isArray(finalData.exterior_frames) && finalData.exterior_frames.length > 0)
-            ? JSON.stringify({ viewerUrl: finalData.exterior_360 || finalData.cdnUrlExterior || finalData.cdnUrl || '', frames: finalData.exterior_frames, type: 'turntable' })
-            : (finalData.exterior_360 || finalData.cdnUrlExterior || finalData.cdnUrl || null);
 
         var updatePayload = {
             name: finalData.name || [finalData.year, finalData.brand, finalData.model, finalData.variant].filter(Boolean).join(' ') || 'Kenderaan Baharu',
@@ -957,6 +1079,8 @@ window.WeDriveAPI = {
             status: 'Available',
             rate: rateStr,
             price: dailyNum,
+            weekly_price: weeklyNum,
+            monthly_price: monthlyNum,
             fuel: finalData.fuel || 'Petrol',
             transmission: transStr,
             trans: finalData.trans || shortTrans,
@@ -966,38 +1090,34 @@ window.WeDriveAPI = {
             rating: 5.0,
             reviews: 0,
             ai: finalData.engine || finalData.ai || 'Standard',
-            images: Array.isArray(finalData.images) ? finalData.images : (finalData.gallery8Photos || []),
-            has_360: Boolean(finalData.has_360 || finalData.has360 || (Array.isArray(finalData.exterior_frames) && finalData.exterior_frames.length > 0)),
-            exterior_360: framesJson,
-            interior_360: finalData.interior_360 || finalData.cdnUrlInterior || null
+            images: Array.isArray(finalData.images) ? finalData.images : [],
+            has_360: Boolean(finalData.has_360 || finalData.has360),
+            exterior_360: finalData.exterior_360 || null,
+            interior_360: finalData.interior_360 || null,
+            exterior_frames: Array.isArray(finalData.exterior_frames) ? finalData.exterior_frames : null
         };
 
+        if (!hasAllowedCarImages(updatePayload.images) && !(Array.isArray(updatePayload.exterior_frames) && updatePayload.exterior_frames.length > 0)) {
+            return { data: null, error: new Error('Kereta mesti mempunyai sekurang-kurangnya satu gambar Cloudinary/shared model atau satu 360 view.') };
+        }
+
         var sb = window.supabaseClient;
-        if (sb && window.AppConfig && window.AppConfig.USE_REAL_DB) {
+        if (sb) {
             try {
                 if (draftId && Number.isInteger(Number(draftId))) {
                     var res = await sb.from('cars').update(updatePayload).eq('id', Number(draftId)).select();
                     if (res.error) throw res.error;
                     var pubCar = res.data ? res.data[0] : updatePayload;
-                    if (Array.isArray(finalData.exterior_frames) && finalData.exterior_frames.length > 0) {
-                        pubCar.exterior_frames = finalData.exterior_frames;
-                    }
-                    var existingLocal = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-                    existingLocal.unshift(pubCar);
-                    localStorage.setItem('wedrive_cars', JSON.stringify(existingLocal));
                     return { data: pubCar, error: null };
                 } else {
-                    finalData.exterior_360 = framesJson;
-                    return await window.WeDriveAPI.createCar(finalData);
+                    return await window.WeDriveAPI.createCar(updatePayload);
                 }
             } catch (err) {
                 console.error('[WeDriveAPI] publishCarDraft error:', err);
-                finalData.exterior_360 = framesJson;
-                return await window.WeDriveAPI.createCar(finalData);
+                return { data: null, error: err };
             }
         }
-        finalData.exterior_360 = framesJson;
-        return await window.WeDriveAPI.createCar(finalData);
+        return { data: null, error: new Error('Supabase client is unavailable.') };
     },
 
     /**
@@ -1304,6 +1424,55 @@ window.WeDriveAPI = {
             console.error('[WeDriveAPI] verifyCustomer error:', err);
             return { success: false, error: err.message };
         }
+    },
+
+    /**
+     * Invoke the protected AI automation Edge Function.
+     * The Supabase client automatically attaches the current admin session.
+     */
+    invokeAiAutomation: async function (action, payload) {
+        var sb = window.supabaseClient;
+        if (!sb) throw new Error('Supabase client is unavailable.');
+        var body = Object.assign({}, payload || {}, { action: action });
+        var result = await sb.functions.invoke('ai-automation', { body: body });
+        if (result.error) throw result.error;
+        if (result.data && result.data.success === false) {
+            throw new Error(result.data.error || 'AI automation gagal.');
+        }
+        return result.data;
+    },
+
+    /** Generate and optionally send an AI event promotion to registered customers. */
+    promoteEventWithAi: async function (event, send) {
+        return this.invokeAiAutomation('promote_event', { event: event, send: send === true });
+    },
+
+    /** Generate a reviewed-first event opportunity calendar for the selected year. */
+    generateEventPlanWithAi: async function (year, region, focus) {
+        return this.invokeAiAutomation('generate_event_plan', {
+            year: year,
+            region: region,
+            focus: focus
+        });
+    },
+
+    /** Run the 3-day and 1-day booking reminder worker. */
+    runAiBookingReminders: async function () {
+        return this.invokeAiAutomation('run_booking_reminders');
+    },
+
+    /** Review one IC, licence or form image with the configured vision model. */
+    verifyDocumentWithAi: async function (customerId, documentType, documentUrl) {
+        return this.invokeAiAutomation('verify_document', {
+            customer_id: customerId,
+            document_type: documentType,
+            document_url: documentUrl
+        });
+    },
+
+    /** Check the readiness of the event, lifecycle and document AI slots. */
+    getAiAutomationHealth: async function () {
+        return this.invokeAiAutomation('health');
     },
 
     /**

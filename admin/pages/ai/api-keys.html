@@ -36,7 +36,7 @@
               <span class="status-badge available"><span class="ai-pulse-dot mr-6"></span> <span>Pintu Masuk AI Berpusat</span></span>
             </div>
             <p class="bento-subtitle-main" data-key="vault_subtitle">
-              Konfigurasi 4 slot kunci API AI percuma secara terasing. Sistem secara pintar mengesan pembekal kunci secara automatik (Google Gemini, OpenRouter, Groq, OpenAI) sebaik sahaja ditampal.
+              Konfigurasi 6 slot kunci API AI secara terasing. Sistem mengesan pembekal secara automatik (Google Gemini, OpenRouter, Groq, OpenAI) sebaik sahaja key ditampal.
             </p>
           </div>
           <div class="flex-center gap-10">
@@ -276,6 +276,96 @@
           </div>
         </div>
 
+        <!-- SLOT 5: CUSTOMER LIFECYCLE & NOTIFICATION AI -->
+        <div class="ai-vault-card" id="card-slot-5">
+          <div>
+            <div class="ai-vault-card-header">
+              <div>
+                <div class="ai-slot-badge">Slot 5 · Customer Lifecycle</div>
+                <h3 class="ai-slot-title">AI Promosi &amp; Reminder Pelanggan</h3>
+                <p class="ai-slot-desc">Disediakan untuk promosi event akan datang, email pelanggan berdaftar dan reminder tempahan seperti IC verification serta tarikh pemulangan.</p>
+              </div>
+              <span class="ai-provider-badge" id="badge-slot-5">
+                <span class="dot-indicator"></span>
+                <span class="badge-text">Menunggu Kunci</span>
+              </span>
+            </div>
+
+            <div class="form-group mb-14">
+              <label class="form-label fs-12 fw-600 mb-6 d-block" for="key-slot-5">Kunci API (API Key)</label>
+              <div class="ai-key-input-container">
+                <input type="password" id="key-slot-5" class="ai-key-input" placeholder="Tampal kunci AI untuk customer lifecycle..." autocomplete="off" oninput="handleKeyInput(5, this.value)" />
+                <button type="button" class="ai-eye-btn" onclick="toggleVisibility('key-slot-5', this)" title="Lihat/Sembunyi Kunci">
+                  <span class="material-icons-round fs-18">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex-between align-center mb-10">
+              <span class="fs-12 text-secondary">Model Aktif:</span>
+              <span class="fs-12 fw-600 tabular-nums text-primary" id="model-slot-5">-- (auto)</span>
+            </div>
+            <div class="ai-test-status" id="status-slot-5"></div>
+          </div>
+
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center flex-wrap gap-8">
+            <span class="fs-11 text-muted" id="latency-slot-5">Latensi: -- ms</span>
+            <div class="flex-center gap-8">
+              <button class="btn-outline-sm" id="btn-test-5" onclick="testSingleSlot(5)">
+                <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+              </button>
+              <button class="btn-primary-sm" id="btn-save-slot-5" onclick="saveSingleSlot(5)">
+                <span class="material-icons-round fs-14">save</span> Simpan Kunci
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLOT 6: DOCUMENT VERIFICATION AI -->
+        <div class="ai-vault-card" id="card-slot-6">
+          <div>
+            <div class="ai-vault-card-header">
+              <div>
+                <div class="ai-slot-badge">Slot 6 · Document Verification</div>
+                <h3 class="ai-slot-title">AI Pengesahan IC, Lesen &amp; Borang</h3>
+                <p class="ai-slot-desc">Disediakan untuk membaca dokumen KYC, mengesan medan borang dan menyokong semakan IC serta lesen memandu secara tersusun.</p>
+              </div>
+              <span class="ai-provider-badge" id="badge-slot-6">
+                <span class="dot-indicator"></span>
+                <span class="badge-text">Menunggu Kunci</span>
+              </span>
+            </div>
+
+            <div class="form-group mb-14">
+              <label class="form-label fs-12 fw-600 mb-6 d-block" for="key-slot-6">Kunci API (API Key)</label>
+              <div class="ai-key-input-container">
+                <input type="password" id="key-slot-6" class="ai-key-input" placeholder="Tampal kunci AI vision/document..." autocomplete="off" oninput="handleKeyInput(6, this.value)" />
+                <button type="button" class="ai-eye-btn" onclick="toggleVisibility('key-slot-6', this)" title="Lihat/Sembunyi Kunci">
+                  <span class="material-icons-round fs-18">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex-between align-center mb-10">
+              <span class="fs-12 text-secondary">Model Aktif:</span>
+              <span class="fs-12 fw-600 tabular-nums text-primary" id="model-slot-6">-- (auto)</span>
+            </div>
+            <div class="ai-test-status" id="status-slot-6"></div>
+          </div>
+
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center flex-wrap gap-8">
+            <span class="fs-11 text-muted" id="latency-slot-6">Latensi: -- ms</span>
+            <div class="flex-center gap-8">
+              <button class="btn-outline-sm" id="btn-test-6" onclick="testSingleSlot(6)">
+                <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+              </button>
+              <button class="btn-primary-sm" id="btn-save-slot-6" onclick="saveSingleSlot(6)">
+                <span class="material-icons-round fs-14">save</span> Simpan Kunci
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- FOOTER -->
@@ -291,8 +381,8 @@
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/ai-vault.js?v=6.17.1"></script>
-  <script src="../../js/api-keys.js?v=6.17.1"></script>
+  <script src="../../../shared/js/ai-vault.js?v=6.18.0"></script>
+  <script src="../../js/api-keys.js?v=6.18.0"></script>
   <script src="../../js/admin-idle-timeout.js?v=6.17.1"></script>
 </body>
 </html>

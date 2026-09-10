@@ -444,15 +444,10 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
-                        <!-- Pengeluar (Apple HIG Clean Dropdown) -->
+                        <!-- Pengeluar (free text so the AI is not limited to a static catalogue) -->
                         <div class="flex flex-col gap-sm">
                             <label for="inputBrand" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
-                            <div class="relative">
-                                <select id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
-                                    <option value="" selected disabled data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
-                                </select>
-                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
-                            </div>
+                            <input id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface" placeholder="Cth: Honda" data-i18n-ph="field_brand_ph" value="" type="text" autocomplete="off" />
                         </div>
 
                         <!-- Model -->
@@ -758,7 +753,7 @@
     <script>
         // Pure Real AI Intelligence Engine (Zero Static Hardcoded Car DBs)
         function sanitizeEngineString(engine) {
-            if (!engine || typeof engine !== 'string') return '2.0L Enjin Pintar DOHC';
+            if (!engine || typeof engine !== 'string') return '';
             // Strictly remove power/torque metrics like (182 PS / 240 Nm), HP, kW, etc.
             return engine.replace(/\s*\(\s*\d+\s*(?:PS|HP|kW|BHP)\s*(?:\/|\+)?\s*\d*\s*(?:Nm|lb-ft|Torque)?\s*\)/gi, '')
                          .replace(/\s*\d+\s*(?:PS|HP|kW|BHP)\b/gi, '')
@@ -767,122 +762,78 @@
         }
 
         function sanitizeSpecs(specs) {
-            const daily = parseInt(specs.daily, 10) || 280;
-            return {
-                category: specs.category || 'Sedan',
-                fuel: specs.fuel || 'Petrol',
-                transmission: specs.transmission || 'Automatic',
-                seats: String(specs.seats || '5'),
-                engine: sanitizeEngineString(specs.engine),
-                daily: daily,
-                weekly: parseInt(specs.weekly, 10) || Math.round(daily * 6),
-                monthly: parseInt(specs.monthly, 10) || Math.round(daily * 20)
-            };
-        }
+            const allowedCategories = ['Sedan', 'Coupe', 'SUV', 'Hatchback', 'MPV', 'Pickup', 'Van', 'Crossover', 'Wagon', 'Convertible'];
+            const allowedFuel = ['Petrol', 'Diesel', 'Hybrid', 'Electric'];
+            const allowedTransmission = ['Automatic', 'Manual'];
+            const category = String(specs?.category || '').trim();
+            const fuel = String(specs?.fuel || '').trim();
+            const transmission = String(specs?.transmission || '').trim();
+            const engine = sanitizeEngineString(specs?.engine);
+            const seats = String(specs?.seats || '').trim();
+            const daily = Number(specs?.daily);
+            const weekly = Number(specs?.weekly);
+            const monthly = Number(specs?.monthly);
 
-        // ── Brand Searchable Combobox (Carlist.my & Mudah.my Comprehensive Brand Directory) ──
-        const MALAYSIA_POPULAR_BRANDS = [
-            'Proton', 'Perodua', 'Toyota', 'Honda', 'Nissan', 'Mazda', 'Mitsubishi',
-            'Kia', 'Hyundai', 'Ford', 'Isuzu', 'BMW', 'Mercedes-Benz', 'BYD', 'Tesla',
-            'Chery', 'Volkswagen', 'Volvo', 'Audi', 'Lexus', 'Porsche', 'Subaru',
-            'Suzuki', 'MG', 'Omoda', 'Jaecoo', 'GWM'
-        ];
-
-        const MALAYSIA_ALL_BRANDS = [
-            'Abarth', 'Aion', 'Alfa Romeo', 'Alpine', 'Aston Martin', 'Audi', 'BAIC',
-            'Bentley', 'BMW', 'Borgward', 'Bufori', 'BYD', 'Cadillac', 'Caterham',
-            'Chana', 'Changan', 'Chery', 'Chevrolet', 'Chrysler', 'Citroen', 'Cupra',
-            'Dacia', 'Daewoo', 'Daihatsu', 'Datsun', 'Deepal', 'Denza', 'DFSK',
-            'Dodge', 'Dongfeng', 'DS Automobiles', 'Ferrari', 'Fiat', 'Ford', 'Foton',
-            'GAC', 'Geely', 'Genesis', 'GMC', 'Great Wall', 'GWM', 'Haval', 'Hino',
-            'Honda', 'Hummer', 'Hyundai', 'iCaur', 'Infiniti', 'Isuzu', 'Iveco',
-            'JAC', 'Jaecoo', 'Jaguar', 'Jeep', 'Jetour', 'JMC', 'Kia', 'Koenigsegg',
-            'Lada', 'Lamborghini', 'Lancia', 'Land Rover', 'Leapmotor', 'Lepas',
-            'Lexus', 'Lincoln', 'Lotus', 'Lucid', 'Mahindra', 'Maserati', 'Maxus',
-            'Maybach', 'Mazda', 'McLaren', 'Mercedes-Benz', 'MG', 'MINI', 'Mitsubishi',
-            'Mitsuoka', 'Morgan', 'Neta', 'Nissan', 'Omoda', 'Opel', 'Pagani',
-            'Perodua', 'Peugeot', 'Polestar', 'Pontiac', 'Porsche', 'Proton', 'Ram',
-            'Range Rover', 'Renault', 'Rimac', 'Rivian', 'Rolls-Royce', 'Rover',
-            'Saab', 'Scion', 'Seat', 'Seres', 'Skoda', 'smart', 'SsangYong', 'Subaru',
-            'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Triumph', 'TVR', 'Vauxhall',
-            'VinFast', 'Volkswagen', 'Volvo', 'Wuling', 'Xpeng', 'Zeekr', 'Lain-lain'
-        ];
-
-        function setupBrandSearchableCombobox() {
-            const select = document.getElementById('inputBrand');
-            if (!select) return;
-
-            const currentVal = select.value;
-            select.innerHTML = '<option value="" selected disabled data-i18n-opt="field_brand_select">Pilih Pengeluar</option>';
-
-            // Group 1: Popular Brands in Malaysia
-            const optgroupPop = document.createElement('optgroup');
-            optgroupPop.label = 'Pengeluar Utama (Malaysia)';
-            MALAYSIA_POPULAR_BRANDS.forEach(b => {
-                const opt = document.createElement('option');
-                opt.value = b;
-                opt.textContent = b;
-                optgroupPop.appendChild(opt);
-            });
-            select.appendChild(optgroupPop);
-
-            // Group 2: All Other Brands
-            const others = MALAYSIA_ALL_BRANDS.filter(b => !MALAYSIA_POPULAR_BRANDS.includes(b)).sort();
-            if (others.length > 0) {
-                const optgroupAll = document.createElement('optgroup');
-                optgroupAll.label = 'Semua Pengeluar Lain (A-Z)';
-                others.forEach(b => {
-                    const opt = document.createElement('option');
-                    opt.value = b;
-                    opt.textContent = b;
-                    optgroupAll.appendChild(opt);
-                });
-                select.appendChild(optgroupAll);
+            if (!allowedCategories.includes(category)) throw new Error('AI tidak mengembalikan kategori yang sah.');
+            if (!allowedFuel.includes(fuel)) throw new Error('AI tidak mengembalikan jenis bahan api yang sah.');
+            if (!allowedTransmission.includes(transmission)) throw new Error('AI tidak mengembalikan transmisi yang sah.');
+            if (!engine || !/(?:^\d+(?:\.\d+)?\s*L\b|\b(?:electric|hybrid)\b)/i.test(engine)) throw new Error('AI tidak mengembalikan spesifikasi enjin yang sah.');
+            if (!/^\d+$/.test(seats) || Number(seats) < 1 || Number(seats) > 50) throw new Error('AI tidak mengembalikan kapasiti tempat duduk yang sah.');
+            if (![daily, weekly, monthly].every(value => Number.isFinite(value) && Number.isInteger(value) && value > 0)) {
+                throw new Error('AI tidak mengembalikan kadar sewa lengkap.');
             }
 
-            // Restore previously selected value
-            if (currentVal) {
-                select.value = currentVal;
-            }
+            return { category, fuel, transmission, seats, engine, daily, weekly, monthly };
         }
 
         async function detectCarSpecsWithAI() {
             const brand = (document.getElementById('inputBrand')?.value || '').trim();
             const model = (document.getElementById('inputModel')?.value || '').trim();
             const variant = (document.getElementById('inputVariant')?.value || '').trim();
+            const year = (document.getElementById('inputYear')?.value || '').trim();
 
-            if (!brand && !model) {
-                showAiToast('Sila pilih Pengeluar atau masukkan Model terlebih dahulu.', 'warning');
+            if (!brand || !model || !year) {
+                showAiToast('Sila lengkapkan Pengeluar, Model dan Tahun Dibuat terlebih dahulu.', 'warning');
                 return null;
             }
 
-            // Semak kewujudan kunci di Slot 1 (system_core)
+            // Always refresh the key from Supabase before a live AI request.
+            if (window.WeDriveAiVault?.syncFromSupabase) {
+                await window.WeDriveAiVault.syncFromSupabase();
+            }
             const hasSlot1Key = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('system_core');
-            const legacyKey = localStorage.getItem('wedrive_gemini_api_key') || localStorage.getItem('gemini_api_key');
 
-            if (!hasSlot1Key && (!legacyKey || legacyKey.trim().length < 10)) {
+            if (!hasSlot1Key) {
                 showAiToast('Kunci API Slot 1 (Sistem Teras) belum ditetapkan. Sila masukkan kunci anda.', 'warning');
                 setTimeout(() => openQuickKeyModal(), 600);
                 return null;
             }
 
-            const systemPrompt = `Act as an expert automotive technical database and Malaysian car rental pricing strategist. You output ONLY clean, valid JSON.`;
-            const userPrompt = `Analyze this vehicle:
+            const provider = window.WeDriveAiVault.getProvider('system_core');
+            if (!provider) {
+                showAiToast('Provider AI Slot 1 tidak dapat dikenal pasti. Sila semak API key.', 'warning');
+                return null;
+            }
+
+            const usesLiveSearch = provider.id === 'gemini';
+            const currentDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kuala_Lumpur' }).format(new Date());
+            const systemPrompt = usesLiveSearch
+                ? `You are a Malaysian automotive market analyst and vehicle specification expert. Use Google Search grounding when available. Never use a default, placeholder, catalogue value, or guessed fallback. If the exact vehicle cannot be verified, return an error instead of inventing data. Return ONLY valid JSON.`
+                : `You are an expert automotive specification analyst and Malaysian car-rental pricing strategist. You have NO internet access and MUST NOT browse, search, or claim that your answer is live. Use only your trained automotive knowledge and explicit reasoning from the supplied vehicle identity. Never use a default, placeholder, catalogue value, or guessed fallback. If the exact vehicle or variant is not known confidently, return an error instead of inventing data. Return ONLY valid JSON.`;
+            const userPrompt = `Analyze this vehicle for the Malaysian rental market${usesLiveSearch ? ` as of ${currentDate}` : ' using your trained knowledge only'}:
 Make/Brand: "${brand}"
 Model: "${model}"
 Variant: "${variant}"
+Year: "${year}"
 
-Return ONLY a valid, raw JSON object (strictly NO markdown, NO backticks, NO explanation):
-{
-  "category": "Coupe",
-  "fuel": "Petrol",
-  "transmission": "Automatic",
-  "seats": "4",
-  "engine": "2.0L Turbo Mild Hybrid EQ Boost",
-  "daily": 650,
-  "weekly": 3900,
-  "monthly": 9800
-}
+${usesLiveSearch
+    ? 'Verify the exact generation, year, variant, engine, fuel, transmission and seating capacity from reliable public sources. Search current Malaysian rental listings and market references for this exact vehicle.'
+    : 'Determine the most likely exact generation, year, variant, engine, fuel, transmission and seating capacity from your learned automotive knowledge. Do not pretend that this is current web data.'}
+Then calculate a defensible MYR daily, weekly and monthly rental rate using the vehicle segment, age, demand level, maintenance risk and Malaysian rental positioning. The weekly and monthly values must be calculated from the selected daily rate with realistic long-rental discounts, not copied from a static table. Ensure weekly is greater than daily and monthly is greater than weekly.
+
+Return ONLY one raw JSON object (no markdown, no explanation) with these keys and real values:
+category, fuel, transmission, seats, engine, daily, weekly, monthly
+
 Rules:
 1. "category" MUST be one of: "Sedan", "Coupe", "SUV", "Hatchback", "MPV", "Pickup", "Van", "Crossover".
 2. "fuel" MUST be one of: "Petrol", "Diesel", "Hybrid", "Electric".
@@ -897,7 +848,8 @@ Rules:
                 }
                 const rawText = await window.WeDriveAiVault.callAi('system_core', systemPrompt, userPrompt, {
                     jsonMode: true,
-                    temperature: 0.3
+                    temperature: 0.2,
+                    googleSearch: usesLiveSearch
                 });
 
                 if (rawText) {
@@ -1339,6 +1291,33 @@ Rules:
             const plateInput = document.getElementById('inputPlate');
             const plateVal = plateInput ? plateInput.value.trim().toUpperCase() : '';
 
+            const requiredFields = [
+                { id: 'inputBrand', label: isEn ? 'brand' : 'jenama' },
+                { id: 'inputModel', label: isEn ? 'model' : 'model' },
+                { id: 'inputCategory', label: isEn ? 'category' : 'kategori' },
+                { id: 'inputYear', label: isEn ? 'year' : 'tahun' }
+            ];
+            const missingField = requiredFields.find(field => {
+                const input = document.getElementById(field.id);
+                return !input || !String(input.value || '').trim();
+            });
+
+            if (missingField) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                showAiToast(
+                    isEn
+                        ? `Please complete the vehicle ${missingField.label} before proceeding.`
+                        : `Sila lengkapkan ${missingField.label} kenderaan sebelum meneruskan.`,
+                    'error'
+                );
+                const missingInput = document.getElementById(missingField.id);
+                if (missingInput) missingInput.focus();
+                return false;
+            }
+
             if (!plateVal || plateVal.length < 3) {
                 if (event) {
                     event.preventDefault();
@@ -1357,11 +1336,43 @@ Rules:
             }
 
             saveStep1Draft();
+
+            // Step 1 may only open Step 2. The stepper previously allowed a
+            // direct jump to Step 3/4/5 after specifications were valid,
+            // bypassing the mandatory Cloudinary media gate in Step 2.
+            const destination = event && event.currentTarget
+                ? String(event.currentTarget.getAttribute('href') || '')
+                : '';
+            if (/step[345]_/.test(destination)) {
+                let draft = {};
+                try { draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}'); } catch (_) {}
+                const cloudinaryGallery = [
+                    ...(Array.isArray(draft.cloudinary_gallery) ? draft.cloudinary_gallery : []),
+                    ...(Array.isArray(draft.supabase_images) ? draft.supabase_images : []),
+                    ...(Array.isArray(draft.images) ? draft.images : [])
+                ].some(item => {
+                    const url = typeof item === 'string' ? item : (item && item.img);
+                    return typeof url === 'string' && url.includes('res.cloudinary.com/');
+                });
+                const cloudinary360 = Array.isArray(draft.exterior_frames) && draft.exterior_frames.some(url =>
+                    typeof url === 'string' && url.includes('res.cloudinary.com/')
+                );
+                if (!cloudinaryGallery && !cloudinary360) {
+                    if (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    showAiToast(
+                        isEn
+                            ? 'Complete Step 2 and save at least one visual to Cloudinary before continuing.'
+                            : 'Lengkapkan Langkah 2 dan simpan sekurang-kurangnya satu visual ke Cloudinary sebelum meneruskan.',
+                        'error'
+                    );
+                    return false;
+                }
+            }
             return true;
         }
-
-        // Inisialisasi Searchable Combobox Pengeluar
-        setupBrandSearchableCombobox();
 
         // Restore saved draft if user had previously entered details
         restoreStep1Draft();

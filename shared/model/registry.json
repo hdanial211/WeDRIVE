@@ -34,6 +34,11 @@
     "category": "Truck",
     "sourceJson": "Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/source.json"
   },
+  "hilux": {
+    "label": "2021 Toyota Hilux V Dual Cab 2.4",
+    "category": "Truck",
+    "sourceJson": "Truck/2021 Toyota Hilux V Dual Cab 2.4/source.json"
+  },
   "cls350": {
     "label": "Mercedes-Benz CLS350 AMG Line",
     "category": "Coupe",

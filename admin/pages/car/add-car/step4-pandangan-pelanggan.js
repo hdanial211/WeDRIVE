@@ -1,9 +1,9 @@
 /**
- * WeDRIVE Admin Add Car - Step 4: Pandangan Pelanggan WYSIWYG
+ * WeDRIVE Admin Add Car - Step 4: Pandangan Pelanggan
  * admin/pages/car/add-car/step4-pandangan-pelanggan.js
  * 
  * Features:
- * - Real Data Pipeline (Hydrates WYSIWYG card directly from draft/Supabase)
+ * - Real Data Pipeline (Hydrates customer card directly from draft/Supabase)
  * - Strict Zero Fake Data: Clean neutral placeholders when draft is empty
  * - Bilingual parity (EN/MS) & dynamic theme synchronization
  */
@@ -13,6 +13,104 @@
 
   function getLang() {
     return localStorage.getItem('wedrive_lang') || 'ms';
+  }
+
+  function setAiLabelButtonState(state) {
+    const button = document.getElementById('btnGenerateAiCardLabel');
+    const text = document.getElementById('step4AiLabelButtonText');
+    if (!button || !text) return;
+
+    const isEn = getLang() === 'en';
+    button.disabled = state === 'loading';
+    button.classList.toggle('opacity-60', state === 'loading');
+    if (state === 'loading') {
+      text.textContent = isEn ? 'Generating AI suggestion...' : 'AI sedang menjana...';
+    } else if (state === 'success') {
+      text.textContent = isEn ? 'Regenerate AI label' : 'Jana semula label AI';
+    } else {
+      text.textContent = isEn ? 'Generate AI suggestion' : 'Jana cadangan AI';
+    }
+  }
+
+  function setAiLabelText(value) {
+    const label = document.getElementById('cardEngine');
+    if (label) label.textContent = value || '-';
+  }
+
+  async function generateAiCardLabel() {
+    const isEn = getLang() === 'en';
+    const raw = localStorage.getItem('wedrive_new_car_draft');
+    const draft = raw ? JSON.parse(raw) : {};
+    const vehicleName = [draft.year, draft.brand, draft.model, draft.variant].filter(Boolean).join(' ').trim();
+
+    if (!vehicleName) {
+      showStep4Toast(isEn ? 'Complete the vehicle details in Step 1 first.' : 'Lengkapkan maklumat kenderaan di Langkah 1 dahulu.');
+      return false;
+    }
+    if (!window.WeDriveAiVault || typeof window.WeDriveAiVault.callAi !== 'function') {
+      showStep4Toast(isEn ? 'The AI service is not available.' : 'Perkhidmatan AI tidak tersedia.');
+      return false;
+    }
+
+    setAiLabelButtonState('loading');
+    setAiLabelText(isEn ? 'Generating...' : 'Menjana...');
+
+    try {
+      if (typeof window.WeDriveAiVault.syncFromSupabase === 'function') {
+        await window.WeDriveAiVault.syncFromSupabase();
+      }
+      if (typeof window.WeDriveAiVault.hasKey === 'function' && !window.WeDriveAiVault.hasKey('system_core')) {
+        throw new Error(isEn ? 'System AI Slot 1 is not configured.' : 'Kunci AI Sistem Slot 1 belum ditetapkan.');
+      }
+
+      const systemPrompt = "You are WeDRIVE's vehicle merchandising assistant. Generate one honest, customer-facing recommendation label for the exact vehicle supplied. Use only the supplied facts. Do not invent specifications, prices, rankings, reviews, market research, or availability. Return only valid JSON.";
+      const userPrompt = [
+        'Vehicle facts:',
+        'Name: ' + vehicleName,
+        'Category: ' + (draft.category || '-'),
+        'Year: ' + (draft.year || '-'),
+        'Colour: ' + (draft.color || '-'),
+        'Engine: ' + (draft.engine || '-'),
+        'Fuel: ' + (draft.fuel || '-'),
+        'Transmission: ' + (draft.transmission || '-'),
+        'Seats: ' + (draft.seats || '-'),
+        '',
+        'Return exactly one JSON object with this key: {"ai_label":"..."}',
+        'The ai_label must be a concise 2 to 5 word customer-facing phrase in ' + (isEn ? 'English' : 'Malay') + ', relevant to this vehicle.',
+        'Do not include the words AI, best, newest, number-one, guaranteed, or unsupported claims.'
+      ].join('\n');
+      const response = await window.WeDriveAiVault.callAi('system_core', systemPrompt, userPrompt, {
+        jsonMode: true,
+        temperature: 0.3,
+        maxTokens: 80
+      });
+      const match = String(response || '').match(/\{[\s\S]*\}/);
+      const parsed = match ? JSON.parse(match[0]) : null;
+      const label = parsed && typeof parsed.ai_label === 'string'
+        ? parsed.ai_label.replace(/[\r\n]+/g, ' ').replace(/^['"“”]+|['"“”]+$/g, '').trim()
+        : '';
+
+      if (!label || label.split(/\s+/).length > 8 || label.length > 60) {
+        throw new Error(isEn ? 'AI returned an invalid vehicle label.' : 'AI memberikan label kenderaan yang tidak sah.');
+      }
+
+      draft.ai_tagline = label;
+      draft.ai_tagline_provider = typeof window.WeDriveAiVault.getProvider === 'function'
+        ? ((window.WeDriveAiVault.getProvider('system_core') || {}).id || null)
+        : null;
+      draft.ai_tagline_generated_at = new Date().toISOString();
+      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+      setAiLabelText(label);
+      setAiLabelButtonState('success');
+      showStep4Toast(isEn ? 'AI vehicle label generated and saved.' : 'Label kenderaan AI berjaya dijana dan disimpan.', 'success');
+      return true;
+    } catch (error) {
+      console.error('[WeDRIVE Step 4] AI label generation error:', error);
+      setAiLabelText(isEn ? 'AI label unavailable' : 'Label AI tiada');
+      setAiLabelButtonState('idle');
+      showStep4Toast(error.message || (isEn ? 'AI label generation failed.' : 'Janaan label AI gagal.'));
+      return false;
+    }
   }
 
   // Hydrate Customer Spotlight Card from real session draft / Supabase
@@ -30,7 +128,7 @@
       const year = (draft && draft.year) ? draft.year : '';
       const category = (draft && draft.category) ? draft.category : '-';
       const color = (draft && draft.color) ? draft.color : '-';
-      const engine = (draft && draft.engine) ? draft.engine : '-';
+      const aiTagline = (draft && draft.ai_tagline) ? draft.ai_tagline : '';
       const fuel = (draft && draft.fuel) ? draft.fuel : '-';
       const transmission = (draft && draft.transmission) ? draft.transmission : '-';
       const seats = (draft && draft.seats) ? draft.seats : '-';
@@ -38,9 +136,17 @@
       const dailyVal = rawDaily ? Number(rawDaily) : 0;
       const dailyRate = dailyVal > 0 ? `RM ${Math.round(dailyVal)}` : 'RM 0';
       const statusVal = (draft && draft.status) ? draft.status : 'available';
-      const has360 = Boolean(draft && (draft.has_360 || draft.has360 || (draft.cdnUrlExterior && draft.cdnUrlExterior.trim()) || (draft.cdnUrl && draft.cdnUrl.trim()) || (draft.supabase_360 && draft.supabase_360.trim()) || (draft.exterior_360 && draft.exterior_360.trim()) || (Array.isArray(draft.frames_360) && draft.frames_360.length > 0) || (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0)));
+      const has360 = Boolean(draft && Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0);
 
       const isEn = getLang() === 'en';
+
+      // Identify this preview with the real vehicle plate from the current draft.
+      const previewPlate = document.getElementById('step4PreviewPlate');
+      const plate = draft && typeof draft.plate === 'string' ? draft.plate.trim() : '';
+      if (previewPlate) {
+        previewPlate.textContent = plate ? `${isEn ? 'Plate' : 'Plat'}: ${plate}` : '';
+        previewPlate.classList.toggle('hidden', !plate);
+      }
 
       // Card Title
       const cardTitle = document.getElementById('cardTitle');
@@ -115,13 +221,9 @@
       // 4 Key Pills in 2x2 Bento Spec Grid
       const cardEngine = document.getElementById('cardEngine');
       if (cardEngine) {
-        if (engine === '-') {
-          cardEngine.textContent = '-';
-        } else {
-          const eng = engine.trim();
-          cardEngine.textContent = (eng.toLowerCase().startsWith('enjin') || eng.toLowerCase().startsWith('engine')) ? eng.toUpperCase() : `${isEn ? 'ENGINE' : 'ENJIN'} ${eng.toUpperCase()}`;
-        }
+        cardEngine.textContent = aiTagline || (isEn ? 'AI label pending' : 'Label AI belum dijana');
       }
+      setAiLabelButtonState(aiTagline ? 'success' : 'idle');
 
       const cardSeatsPill = document.getElementById('cardSeatsPill');
       if (cardSeatsPill) {
@@ -164,16 +266,15 @@
 
       let imageUrl = '';
       if (draft) {
-        if (draft.image_url) {
-          imageUrl = draft.image_url;
-        } else if (Array.isArray(draft.supabase_images) && draft.supabase_images.length > 0) {
-          const first = draft.supabase_images[0];
-          imageUrl = typeof first === 'string' ? first : (first && first.img ? first.img : '');
-        } else if (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) {
-          const first = draft.gallery8Photos[0];
-          imageUrl = typeof first === 'string' ? first : (first && first.img ? first.img : '');
-        } else if (Array.isArray(draft.photos) && draft.photos.length > 0) {
-          const first = draft.photos[0];
+        const cloudinaryGallery = Array.isArray(draft.cloudinary_gallery) && draft.cloudinary_gallery.length > 0
+          ? draft.cloudinary_gallery
+          : (Array.isArray(draft.supabase_images) ? draft.supabase_images : []);
+        const persistedGallery = cloudinaryGallery.filter(item => {
+          const url = typeof item === 'string' ? item : (item && item.img);
+          return typeof url === 'string' && url.includes('res.cloudinary.com/');
+        });
+        if (persistedGallery.length > 0) {
+          const first = persistedGallery[0];
           imageUrl = typeof first === 'string' ? first : (first && first.img ? first.img : '');
         }
       }
@@ -233,14 +334,30 @@
     const isEn = getLang() === 'en';
     const raw = localStorage.getItem('wedrive_new_car_draft');
     const draft = raw ? JSON.parse(raw) : {};
+    const cloudinaryGallery = [
+      ...(Array.isArray(draft.cloudinary_gallery) ? draft.cloudinary_gallery : []),
+      ...(Array.isArray(draft.supabase_images) ? draft.supabase_images : []),
+      ...(Array.isArray(draft.images) ? draft.images : [])
+    ].filter(item => {
+      const url = typeof item === 'string' ? item : (item && item.img);
+      return typeof url === 'string' && url.includes('res.cloudinary.com/');
+    });
+    const hasCloudinary360 = Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0;
+    const hasCdnSource = Boolean(draft.cdnUrl || draft.cdnUrlExterior || draft.supabase_360);
+    if (hasCdnSource && !hasCloudinary360 && cloudinaryGallery.length === 0) {
+      if (e) e.preventDefault();
+      showStep4Toast(isEn
+        ? 'Save the visual assets to Cloudinary before continuing.'
+        : 'Simpan aset visual ke Cloudinary dahulu sebelum meneruskan.');
+      return false;
+    }
     const hasPlate = Boolean(draft.plate && draft.plate.trim().length >= 3);
-    const hasVisual = Boolean(
-      (draft.images && draft.images.length > 0) ||
-      (draft.gallery8Photos && draft.gallery8Photos.length > 0) ||
-      (draft.photos && draft.photos.length > 0) ||
-      (draft.image_url) ||
-      draft.has360 || draft.cdnUrlExterior || draft.cdnUrl
-    );
+    const hasCloudinaryGallery = [
+      ...(Array.isArray(draft.cloudinary_gallery) ? draft.cloudinary_gallery : []),
+      ...(Array.isArray(draft.supabase_images) ? draft.supabase_images : []),
+      ...(Array.isArray(draft.images) ? draft.images : [])
+    ].some(url => typeof url === 'string' && url.includes('res.cloudinary.com/'));
+    const hasVisual = Boolean(hasCloudinaryGallery || (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0));
 
     if (!hasPlate) {
       if (e) e.preventDefault();
@@ -258,6 +375,15 @@
   function init() {
     hydrateCustomerCard();
 
+    document.getElementById('btnGenerateAiCardLabel')?.addEventListener('click', generateAiCardLabel);
+
+    // Generate the customer-facing label when the completed Step 4 opens.
+    // The button remains available if the admin wants to regenerate it.
+    const existingDraft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+    if (!existingDraft.ai_tagline && (existingDraft.brand || existingDraft.model)) {
+      generateAiCardLabel();
+    }
+
     // Guard forward navigation to Step 5
     document.querySelector('a[href="step5_tempahan.html"]')?.addEventListener('click', validateStep4Forward);
     document.querySelectorAll('.wizard-stepper a[href*="step5"]').forEach(link => {
@@ -267,11 +393,15 @@
     window.addEventListener('wedrive:language-applied', () => {
       hydrateCustomerCard();
     });
+    document.addEventListener('wedrive:language-applied', () => {
+      hydrateCustomerCard();
+    });
   }
 
   window.WeDriveStep4 = {
     hydrateCustomerCard: hydrateCustomerCard,
-    validateStep4Forward: validateStep4Forward
+    validateStep4Forward: validateStep4Forward,
+    generateAiCardLabel: generateAiCardLabel
   };
 
   if (document.readyState === 'loading') {

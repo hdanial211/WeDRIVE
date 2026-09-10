@@ -8,12 +8,8 @@
  */
 
 const STORAGE_KEY = 'wedrive_chatbot_settings';
-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const OPENROUTER_MODEL = 'google/gemini-2.5-flash';
-
 // ─── Default Settings (base prompt only — live data injected at runtime) ─────
 const DEFAULT_SETTINGS = {
-  apiKey: '',
   systemPrompt: `You are WeDRIVE Bot, a friendly and helpful AI assistant for WeDRIVE car rental service based in Melaka, Malaysia.
 
 Your role:
@@ -77,29 +73,21 @@ async function fetchLiveData() {
     if (settingsResult.data && settingsResult.data.value) {
       const s = settingsResult.data.value;
       lines.push('\nCompany & System Settings:');
-      lines.push('- Company Name: ' + (s.company_name || 'WeDRIVE Sdn Bhd'));
-      lines.push('- Address/Location: ' + (s.company_address || 'Lot 123, Jalan Hang Tuah, 75300 Melaka'));
-      lines.push('- Phone Contact: ' + (s.company_phone || '012-345 6789'));
-      lines.push('- Email Contact: ' + (s.company_email || 'admin@wedrive.my'));
-      lines.push('- Operating Hours: ' + (s.operating_hours || '8:00 AM - 10:00 PM daily'));
-      lines.push('- Currency: ' + (s.currency || 'MYR'));
-      lines.push('- Tax Rate: ' + (s.tax_rate !== undefined ? s.tax_rate : '6') + '%');
-      lines.push('- Security Deposit: ' + (s.deposit_percentage !== undefined ? s.deposit_percentage : '20') + '% of rental or standard deposit');
-      lines.push('- Rental Duration Limits: Min ' + (s.min_rental_days || '1') + ' day(s), Max ' + (s.max_rental_days || '30') + ' day(s)');
-      lines.push('- Late Return Fee: RM' + (s.late_fee_per_hour || '25') + '/hour');
+      lines.push('- Company Name: ' + (s.company_name || '[not configured]'));
+      lines.push('- Address/Location: ' + (s.company_address || '[not configured]'));
+      lines.push('- Phone Contact: ' + (s.company_phone || '[not configured]'));
+      lines.push('- Email Contact: ' + (s.company_email || '[not configured]'));
+      lines.push('- Operating Hours: ' + (s.operating_hours || '[not configured]'));
+      lines.push('- Currency: ' + (s.currency || '[not configured]'));
+      lines.push('- Tax Rate: ' + (s.tax_rate !== undefined ? s.tax_rate + '%' : '[not configured]'));
+      lines.push('- Security Deposit: ' + (s.deposit_percentage !== undefined ? s.deposit_percentage + '% of rental' : '[not configured]'));
+      lines.push('- Rental Duration Limits: Min ' + (s.min_rental_days || '[not configured]') + ' day(s), Max ' + (s.max_rental_days || '[not configured]') + ' day(s)');
+      lines.push('- Late Return Fee: ' + (s.late_fee_per_hour !== undefined ? 'RM' + s.late_fee_per_hour + '/hour' : '[not configured]'));
       if (s.pickup_locations && s.pickup_locations.length > 0) {
         lines.push('- Pickup & Drop-off Locations: ' + s.pickup_locations.join(', '));
       }
     } else {
-      // Fallback details if settings table is empty/unconfigured
-      lines.push('\nCompany & System Settings (Default):');
-      lines.push('- Company Name: WeDRIVE Sdn Bhd');
-      lines.push('- Address/Location: Lot 123, Jalan Hang Tuah, 75300 Melaka');
-      lines.push('- Phone Contact: 012-345 6789');
-      lines.push('- Email Contact: admin@wedrive.my');
-      lines.push('- Operating Hours: 8AM - 10PM daily');
-      lines.push('- Security Deposit: RM 500 (refundable)');
-      lines.push('- Pickup & Drop-off Locations: Melaka Sentral (Company HQ Office is at Lot 123, Jalan Hang Tuah, 75300 Melaka)');
+      lines.push('\nCompany & System Settings: Not configured in Supabase.');
     }
 
     // 2. Cars
@@ -154,7 +142,7 @@ async function fetchLiveData() {
 
   } catch (e) {
     console.error('[ChatbotAdmin] Failed to fetch live data:', e);
-    lines.push('\n[Live data unavailable — database connection error]');
+    lines.push('\n[Data operasi tidak tersedia buat sementara]');
   }
 
   cachedLiveData = lines.join('\n');
@@ -181,14 +169,13 @@ window.saveSettings = async function () {
   });
 
   const settings = {
-    apiKey: document.getElementById('api-key').value.trim(),
     systemPrompt: document.getElementById('system-prompt').value.trim(),
     promoContext: document.getElementById('promo-context').value.trim(),
     greeting: document.getElementById('greeting-msg').value.trim()
   };
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-  updateStatusBadge(settings);
+  updateVaultStatus(false);
 
   let dbSuccess = true;
   if (window.WeDriveAPI && typeof window.WeDriveAPI.updateChatbotSettings === 'function') {
@@ -204,9 +191,9 @@ window.saveSettings = async function () {
   }
 
   if (dbSuccess) {
-    showToast('Settings saved successfully to database!', false);
+    showToast('Tetapan berjaya disimpan ke sistem operasi!', false);
   } else {
-    showToast('Saved locally, but failed to sync to database.', true);
+    showToast('Disimpan sementara, tetapi penyelarasan sistem gagal.', true);
   }
 
   setTimeout(() => {
@@ -235,139 +222,55 @@ window.refreshLiveData = async function () {
   btn.innerHTML = original;
   btn.disabled = false;
 
-  showToast('Live data refreshed from database!', false);
+  showToast('Data operasi berjaya disegarkan!', false);
 };
 
-// ─── Test Single Key (inline button) ────────────────────────────────────────
-window.testSingleKey = async function (provider) {
-  const key = document.getElementById('api-key').value.trim();
-  const statusEl = document.getElementById('status-openrouter');
-  const btn = document.getElementById('btn-test-openrouter');
-
-  if (!key) {
-    statusEl.className = 'key-status fail';
-    statusEl.innerHTML = '<span class="material-icons-round">close</span> Please enter a key first';
-    return;
+// ─── Test the configured Slot 3 key ─────────────────────────────────────────
+window.testConfiguredKey = async function () {
+  const btn = document.getElementById('btn-test-configured-ai');
+  const original = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-icons-round fs-18">autorenew</span> Menguji...';
   }
-
-  const original = btn.innerHTML;
-  btn.innerHTML = '<span class="material-icons-round" style="font-size:16px">autorenew</span> Testing...';
-  btn.disabled = true;
-  statusEl.className = 'key-status';
-  statusEl.innerHTML = '';
 
   try {
-    const res = await fetch(OPENROUTER_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`,
-        'HTTP-Referer': window.location.origin,
-        'X-Title': 'WeDRIVE Chatbot'
-      },
-      body: JSON.stringify({
-        model: OPENROUTER_MODEL,
-        messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
-        max_tokens: 10
-      })
-    });
-
-    if (res.ok) {
-      statusEl.className = 'key-status ok';
-      statusEl.innerHTML = '<span class="material-icons-round">check_circle</span> OpenRouter connected successfully';
-    } else {
-      const err = await res.json().catch(() => ({}));
-      statusEl.className = 'key-status fail';
-      statusEl.innerHTML = `<span class="material-icons-round">error</span> ${err?.error?.message || 'Invalid key — check and try again'}`;
+    await ensureChatbotKey();
+    if (!window.WeDriveAiVault || !window.WeDriveAiVault.hasKey('customer_chatbot')) {
+      throw new Error('Slot 3 belum dikonfigurasi. Sila simpan key di Pusat Kunci API AI.');
     }
+    const reply = await window.WeDriveAiVault.callAi(
+      'customer_chatbot',
+      'Balas dengan perkataan OK sahaja.',
+      'Ujian sambungan chatbot. Balas OK.',
+      { maxTokens: 10, temperature: 0 }
+    );
+    if (!reply) throw new Error('Provider tidak memberikan respons.');
+    showToast('Sambungan chatbot berjaya melalui ' + getConfiguredProviderLabel() + '.', false);
+    updateVaultStatus(true);
   } catch (e) {
-    statusEl.className = 'key-status fail';
-    statusEl.innerHTML = `<span class="material-icons-round">error</span> Connection failed: ${e.message}`;
+    showToast(e.message || 'Ujian sambungan gagal.', true);
+    updateVaultStatus(false, e.message);
+  } finally {
+    if (btn) {
+      btn.innerHTML = original;
+      btn.disabled = false;
+    }
   }
-
-  btn.innerHTML = original;
-  btn.disabled = false;
-  updateStatusBadge({ apiKey: document.getElementById('api-key').value.trim() });
 };
 
-// ─── Test Connection (full test via main button) ─────────────────────────────
-window.testConnection = async function () {
-  const key = document.getElementById('api-key').value.trim();
+// Ke belakang untuk mana-mana pemanggil lama.
+window.testConnection = window.testConfiguredKey;
 
-  if (!key) {
-    showToast('Please enter your OpenRouter API key', true);
-    return;
+async function ensureChatbotKey() {
+  if (window.WeDriveAiVault && typeof window.WeDriveAiVault.syncFromSupabase === 'function') {
+    await window.WeDriveAiVault.syncFromSupabase();
   }
+}
 
-  const btn = document.querySelector('.btn-test');
-  const original = btn.innerHTML;
-  btn.innerHTML = '<span class="material-icons-round" style="font-size:18px">autorenew</span> Testing...';
-  btn.disabled = true;
-
-  try {
-    const res = await fetch(OPENROUTER_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`,
-        'HTTP-Referer': window.location.origin,
-        'X-Title': 'WeDRIVE Chatbot'
-      },
-      body: JSON.stringify({
-        model: OPENROUTER_MODEL,
-        messages: [{ role: 'user', content: 'Say "OK" in one word.' }],
-        max_tokens: 10
-      })
-    });
-
-    if (res.ok) {
-      updateStatusBadge({ apiKey: key }, true);
-      showToast('OpenRouter connected successfully!', false);
-    } else {
-      const err = await res.json().catch(() => ({}));
-      updateStatusBadge({}, false);
-      showToast(err?.error?.message || 'Connection failed — check your API key', true);
-    }
-  } catch (e) {
-    updateStatusBadge({}, false);
-    showToast('Connection failed: ' + e.message, true);
-  }
-
-  btn.innerHTML = original;
-  btn.disabled = false;
-};
-
-// ─── OpenRouter API Call ─────────────────────────────────────────────────────
-async function callOpenRouter(apiKey, systemText, history) {
-  const messages = [{ role: 'system', content: systemText }];
-  for (const msg of history) {
-    messages.push({
-      role: msg.role === 'model' ? 'assistant' : 'user',
-      content: msg.parts[0].text
-    });
-  }
-
-  const res = await fetch(OPENROUTER_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-      'HTTP-Referer': window.location.origin,
-      'X-Title': 'WeDRIVE Chatbot'
-    },
-    body: JSON.stringify({
-      model: OPENROUTER_MODEL,
-      messages,
-      max_tokens: 2000
-    })
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err?.error?.message || `OpenRouter ${res.status}`);
-  }
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content || 'No response from OpenRouter.';
+function getConfiguredProviderLabel() {
+  const provider = window.WeDriveAiVault && window.WeDriveAiVault.getProvider('customer_chatbot');
+  return provider ? provider.name : 'AI';
 }
 
 // ─── Send Test Message ───────────────────────────────────────────────────────
@@ -376,15 +279,8 @@ window.sendTestMsg = async function () {
   const text = input.value.trim();
   if (!text) return;
 
-  // Read key: WeDriveAiVault Slot 3 (primary) → input field (fallback)
-  let apiKey = '';
-  if (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('customer_chatbot')) {
-    apiKey = window.WeDriveAiVault.getKey('customer_chatbot');
-  } else {
-    apiKey = document.getElementById('api-key').value.trim();
-  }
-
-  if (!apiKey) {
+  await ensureChatbotKey();
+  if (!window.WeDriveAiVault || !window.WeDriveAiVault.hasKey('customer_chatbot')) {
     showToast('Tiada kunci API. Pergi ke Pusat Kunci API → Slot 3 untuk konfigurasi.', true);
     return;
   }
@@ -411,9 +307,17 @@ window.sendTestMsg = async function () {
 
   let reply = '';
   try {
-    reply = await callOpenRouter(apiKey, fullSystem, chatHistory);
+    const historyText = chatHistory
+      .map(msg => (msg.role === 'model' ? 'Assistant' : 'User') + ': ' + msg.parts[0].text)
+      .join('\n');
+    reply = await window.WeDriveAiVault.callAi(
+      'customer_chatbot',
+      fullSystem,
+      historyText,
+      { maxTokens: 2000, temperature: 0.4 }
+    );
   } catch (e) {
-    console.error('OpenRouter failed:', e.message);
+    console.error('Configured chatbot provider failed:', e.message);
   }
 
   typingEl.remove();
@@ -445,35 +349,15 @@ window.sendTestMsg = async function () {
         }
       }
 
-      if (recommendedCars.length === 0) {
-        recommendedCars = carIds.map(id => ({ id, name: "Available Rental Vehicle", price: "320", type: "Premium" }));
-      } else if (recommendedCars.length < carIds.length) {
-        carIds.forEach(id => {
-          if (!recommendedCars.some(c => c.id === id)) {
-            recommendedCars.push({ id, name: "Available Rental Vehicle", price: "320", type: "Premium" });
-          }
-        });
-      }
+      // Jangan bina kad kereta palsu jika ID tiada dalam database.
     }
 
     appendMsg(reply, 'bot', recommendedCars.length > 0 ? recommendedCars : null);
   } else {
-    appendMsg('Connection failed. Please check your API key and try again.', 'bot');
+    appendMsg('Sambungan AI gagal. Sila semak Slot 3 di Pusat Kunci API AI.', 'bot');
   }
 
   sendBtn.disabled = false;
-};
-
-// ─── Toggle API Key Visibility ──────────────────────────────────────────────
-window.toggleKey = function (inputId, iconEl) {
-  const input = document.getElementById(inputId);
-  if (input.type === 'password') {
-    input.type = 'text';
-    iconEl.textContent = 'visibility';
-  } else {
-    input.type = 'password';
-    iconEl.textContent = 'visibility_off';
-  }
 };
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -530,10 +414,36 @@ function updateStatusBadge(settings, forceConnected) {
 
   if (forceConnected || hasKey) {
     badge.className = 'api-status connected';
-    badge.innerHTML = '<span class="dot-indicator"></span> OpenRouter Connected';
+    badge.innerHTML = '<span class="dot-indicator"></span> AI Connected';
   } else {
     badge.className = 'api-status disconnected';
     badge.innerHTML = '<span class="dot-indicator"></span> Not Connected';
+  }
+}
+
+function updateVaultStatus(connected, errorMessage) {
+  const badge = document.getElementById('api-status');
+  const providerName = document.getElementById('ai-provider-name');
+  const modelName = document.getElementById('ai-model-name');
+  const source = document.getElementById('ai-provider-source');
+  const provider = window.WeDriveAiVault && window.WeDriveAiVault.getProvider('customer_chatbot');
+  const model = window.WeDriveAiVault && window.WeDriveAiVault.getModel('customer_chatbot');
+  const hasKey = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('customer_chatbot');
+
+  if (providerName) providerName.textContent = provider ? provider.name : 'Slot 3 belum dikonfigurasi';
+  if (modelName) modelName.textContent = model || '--';
+  if (source) source.textContent = errorMessage
+    ? 'Ralat pada konfigurasi dalaman WeDRIVE'
+    : 'Sumber: Konfigurasi dalaman WeDRIVE · Slot 3';
+
+  if (badge) {
+    if (connected || hasKey) {
+      badge.className = 'api-status connected radius-pill px-10 py-4';
+      badge.innerHTML = '<span class="dot-indicator"></span> ' + (connected ? 'AI Connected' : 'Key Sedia');
+    } else {
+      badge.className = 'api-status disconnected radius-pill px-10 py-4';
+      badge.innerHTML = '<span class="dot-indicator"></span> Slot 3 Belum Disambung';
+    }
   }
 }
 
@@ -571,8 +481,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (window.WeDriveAPI && typeof window.WeDriveAPI.getChatbotSettings === 'function') {
     try {
       const dbSettings = await window.WeDriveAPI.getChatbotSettings();
-      if (dbSettings && (dbSettings.apiKey || dbSettings.systemPrompt)) {
-        settings = { ...settings, ...dbSettings };
+      if (dbSettings && (dbSettings.apiKey || dbSettings.systemPrompt || dbSettings.greeting || dbSettings.promoContext)) {
+        const { apiKey: ignoredApiKey, ...safeDbSettings } = dbSettings;
+        settings = { ...settings, ...safeDbSettings };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
       }
     } catch (e) {
@@ -593,25 +504,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Pre-fill API key field from vault (Slot 3: customer_chatbot)
-  const vaultKey = (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('customer_chatbot'))
-    ? window.WeDriveAiVault.getKey('customer_chatbot') : '';
-  const displayKey = vaultKey || settings.apiKey || '';
-  document.getElementById('api-key').value = displayKey;
+  // API key lives only in the central AI Vault (Slot 3), not in this page.
+  await ensureChatbotKey();
   document.getElementById('system-prompt').value = settings.systemPrompt || '';
   document.getElementById('promo-context').value = settings.promoContext || '';
   document.getElementById('greeting-msg').value = settings.greeting || '';
 
-  // Update status badge — show vault status
-  if (vaultKey) {
-    const provider = window.WeDriveAiVault.getProvider('customer_chatbot');
-    updateStatusBadge({ apiKey: vaultKey });
-    const badge = document.getElementById('api-status');
-    if (badge) badge.innerHTML = '<span class="dot-indicator"></span> '
-      + (provider ? provider.name : 'AI') + ' ✓ Vault Slot 3';
-  } else {
-    updateStatusBadge(settings);
-  }
+  updateVaultStatus(false);
 
   // Show greeting in test chat
   if (settings.greeting) {

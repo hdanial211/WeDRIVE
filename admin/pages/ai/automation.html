@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pusat Automasi AI | WeDRIVE Admin</title>
+  <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=6.22.0" />
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <script src="../../../shared/js/auth-guard.js?v=6.22.0" data-role="admin"></script>
+  <style>
+    .ai-auto-hero { background: linear-gradient(135deg, rgba(0,113,227,.12), rgba(175,82,222,.14)); border: 1px solid rgba(0,113,227,.18); }
+    .ai-auto-hero h1 { margin: 0; letter-spacing: -.04em; }
+    .ai-auto-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .ai-auto-card { border: 1px solid var(--border-subtle, #e2e8f0); border-radius: 22px; background: var(--bg-card, #fff); padding: 20px; box-shadow: 0 8px 28px rgba(15,23,42,.05); }
+    .ai-auto-card-head { display:flex; justify-content:space-between; gap: 12px; align-items:flex-start; }
+    .ai-auto-icon { width: 44px; height: 44px; border-radius: 14px; display:flex; align-items:center; justify-content:center; background: #e8f2ff; color:#0071e3; }
+    .ai-auto-icon.green { background:#e8f8ee; color:#1b9c54; }
+    .ai-auto-icon.purple { background:#f3eaff; color:#8e44d8; }
+    .ai-auto-status { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:6px 10px; font-size:11px; font-weight:700; white-space:nowrap; background:#f1f5f9; color:#64748b; }
+    .ai-auto-status.ready { color:#168447; background:#e8f8ee; }
+    .ai-auto-status.off { color:#a16207; background:#fff7db; }
+    .ai-auto-status .dot { width:7px; height:7px; border-radius:50%; background:currentColor; }
+    .ai-auto-meta { display:flex; justify-content:space-between; gap:12px; margin-top:18px; padding-top:14px; border-top:1px solid var(--border-subtle, #edf2f7); font-size:12px; color:var(--text-muted, #64748b); }
+    .ai-auto-meta strong { color:var(--text-primary, #1e293b); font-weight:700; }
+    .ai-auto-layout { display:grid; grid-template-columns:minmax(0, 1.1fr) minmax(360px, .9fr); gap:18px; }
+    .ai-auto-form { display:grid; gap:13px; }
+    .ai-auto-form label { display:grid; gap:6px; font-size:12px; font-weight:700; color:var(--text-primary, #1e293b); }
+    .ai-auto-form input, .ai-auto-form textarea { width:100%; box-sizing:border-box; border:1px solid #dbe3ef; background:rgba(248,250,252,.9); color:#1e293b; border-radius:12px; padding:11px 12px; font:inherit; font-size:13px; outline:none; }
+    .ai-auto-form textarea { min-height:100px; resize:vertical; }
+    .ai-auto-form input:focus, .ai-auto-form textarea:focus { border-color:#0071e3; box-shadow:0 0 0 3px rgba(0,113,227,.12); }
+    .ai-auto-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .ai-auto-result { min-height:185px; border:1px dashed #cbd5e1; border-radius:16px; padding:16px; background:#f8fafc; }
+    .ai-auto-result.empty { display:flex; align-items:center; justify-content:center; text-align:center; color:#94a3b8; font-size:13px; }
+    .ai-auto-result h4 { margin:0 0 8px; font-size:16px; color:#1e293b; }
+    .ai-auto-result p { margin:0; white-space:pre-line; color:#475569; font-size:13px; line-height:1.65; }
+    .ai-auto-table-wrap { overflow:auto; }
+    .ai-auto-table { width:100%; border-collapse:collapse; min-width:580px; }
+    .ai-auto-table th, .ai-auto-table td { text-align:left; padding:12px 10px; border-bottom:1px solid #edf2f7; font-size:12px; vertical-align:top; }
+    .ai-auto-table th { color:#64748b; font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+    .ai-auto-table td strong { color:#1e293b; }
+    .ai-auto-empty { color:#94a3b8; text-align:center; padding:22px; font-size:13px; }
+    .ai-auto-log { display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; }
+    .ai-auto-backend { font-size:12px; color:#64748b; }
+    .ai-auto-backend strong { color:#1b9c54; }
+    .ai-auto-kicker { color:#64748b; font-size:12px; margin:4px 0 0; }
+    @media (max-width: 1050px) { .ai-auto-grid, .ai-auto-layout { grid-template-columns:1fr; } }
+    @media (max-width: 700px) { .ai-auto-card { padding:16px; border-radius:18px; } .ai-auto-actions > * { width:100%; } }
+  </style>
+</head>
+<body data-particles="6" data-cursor-glow>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="ai-automation"></div>
+  <main class="main">
+    <div id="navbar-placeholder" data-module="admin"></div>
+    <div class="content">
+      <section class="card ai-auto-hero p-24 radius-24 reveal-onload mb-20">
+        <div class="flex-between flex-wrap gap-16 align-center">
+          <div>
+            <div class="flex-row align-center gap-8 mb-6"><span class="badge badge-purple"><span class="material-icons-round fs-14">auto_awesome</span> AI Operations</span><span id="backend-status" class="ai-auto-backend">Menyemak sambungan...</span></div>
+            <h1 class="fs-28 fw-800">Pusat Automasi AI</h1>
+            <p class="ai-auto-kicker">Satu halaman untuk memantau, menguji dan menjalankan semua fungsi AI WeDRIVE.</p>
+          </div>
+          <div class="flex-row gap-8 flex-wrap"><a class="btn-secondary flex-center gap-8" href="api-keys.html"><span class="material-icons-round fs-16">vpn_key</span> Urus API Keys</a><button class="btn-primary flex-center gap-8" id="btn-refresh-ai"><span class="material-icons-round fs-16">refresh</span> Segarkan</button></div>
+        </div>
+      </section>
+
+      <section class="ai-auto-grid mb-20" id="ai-slot-cards"></section>
+
+      <section class="ai-auto-layout mb-20">
+        <div class="card p-24 radius-24 reveal-on-scroll">
+          <div class="card-header mb-16"><h3 class="fs-17 fw-700 m-0 flex-center gap-8"><span class="material-icons-round text-primary">campaign</span> Jana Promosi Event</h3><p class="fs-12 text-muted mt-4 mb-0">AI Event membaca maklumat yang admin masukkan dan menyimpan kempen ke sistem operasi.</p></div>
+          <form id="event-form" class="ai-auto-form">
+            <label>Tajuk event<input id="event-title" required placeholder="Contoh: Cuti Sekolah Melaka" /></label>
+            <label>Tarikh event<input id="event-date" type="date" /></label>
+            <label>Maklumat event<textarea id="event-description" required placeholder="Masukkan butiran sebenar event, promosi atau aktiviti. AI tidak akan mencipta harga/diskaun yang tiada."></textarea></label>
+            <div class="ai-auto-actions"><button class="btn-primary" type="submit" data-send="false"><span class="material-icons-round fs-16">auto_awesome</span> Jana Kempen</button><button class="btn-secondary" type="submit" data-send="true"><span class="material-icons-round fs-16">send</span> Jana &amp; Hantar Email</button></div>
+          </form>
+        </div>
+        <div class="card p-24 radius-24 reveal-on-scroll"><div class="card-header mb-16"><h3 class="fs-17 fw-700 m-0">Hasil Kempen AI</h3><p class="fs-12 text-muted mt-4 mb-0">Draf yang dijana akan muncul di sini sebelum admin menghantar email.</p></div><div id="campaign-result" class="ai-auto-result empty">Belum ada kempen dijana.</div></div>
+      </section>
+
+      <section class="card p-24 radius-24 reveal-on-scroll mb-20">
+        <div class="ai-auto-log mb-12"><div><h3 class="fs-17 fw-700 m-0 flex-center gap-8"><span class="material-icons-round text-primary">notifications_active</span> Reminder Tempahan</h3><p class="fs-12 text-muted mt-4 mb-0">Semak tempahan bermula dalam 3 hari atau esok dan elakkan email berganda.</p></div><button id="btn-run-reminders" class="btn-primary-sm flex-center gap-8"><span class="material-icons-round fs-15">play_arrow</span> Jalankan Sekarang</button></div>
+        <div id="reminder-result" class="ai-auto-result empty">Belum dijalankan.</div>
+      </section>
+
+      <section class="card p-24 radius-24 reveal-on-scroll mb-20"><div class="card-header mb-12"><h3 class="fs-17 fw-700 m-0">Kempen &amp; Log Email</h3><p class="fs-12 text-muted mt-4 mb-0">Rekod kempen, penghantaran dan status automasi terkini.</p></div><div class="ai-auto-table-wrap"><table class="ai-auto-table"><thead><tr><th>Jenis</th><th>Subjek / Dedupe</th><th>Status</th><th>Tarikh</th></tr></thead><tbody id="notification-table"><tr><td colspan="4" class="ai-auto-empty">Memuatkan...</td></tr></tbody></table></div></section>
+
+      <section class="card p-24 radius-24 reveal-on-scroll"><div class="card-header mb-12"><h3 class="fs-17 fw-700 m-0 flex-center gap-8"><span class="material-icons-round text-primary">badge</span> Semakan IC, Lesen &amp; Borang</h3><p class="fs-12 text-muted mt-4 mb-0">AI hanya mencadangkan keputusan. Kelulusan pelanggan masih dibuat oleh admin.</p></div><div class="ai-auto-table-wrap"><table class="ai-auto-table"><thead><tr><th>Pelanggan</th><th>Jenis dokumen</th><th>Confidence</th><th>Status</th><th>Isu</th></tr></thead><tbody id="document-table"><tr><td colspan="5" class="ai-auto-empty">Memuatkan...</td></tr></tbody></table></div></section>
+      <div id="footer-placeholder" class="mt-32"></div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../shared/js/supabase-config.js"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=6.22.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=6.22.0"></script>
+  <script src="../../../shared/js/main.js?v=6.22.0"></script>
+  <script src="../../../shared/js/api.js?v=6.22.0"></script>
+  <script src="../../../shared/js/ai-vault.js?v=6.22.0"></script>
+  <script src="../../../shared/js/animate.js?v=6.22.0"></script>
+  <script src="../../js/ai-automation.js?v=6.22.0"></script>
+</body>
+</html>

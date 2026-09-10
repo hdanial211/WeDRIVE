@@ -1222,7 +1222,7 @@
     if (cPrice) cPrice.textContent = 'RM ' + rate;
 
     // Image sync: use uploaded photo or sample
-    var imgSrc = selectedPhotoBase64 || (window.__360Data && window.__360Data.exteriorFrames.length ? window.__360Data.exteriorFrames[0] : '../../../shared/model/bezza.png');
+    var imgSrc = selectedPhotoBase64 || (window.__360Data && window.__360Data.exteriorFrames.length ? window.__360Data.exteriorFrames[0] : '');
     if (cImg) cImg.src = imgSrc;
 
     // 360 badge
@@ -1263,7 +1263,7 @@
     if (s5Seats) s5Seats.textContent = seats + ' Tempat Duduk';
     if (s5Engine) s5Engine.textContent = engine;
 
-    var imgSrc = selectedPhotoBase64 || (window.__360Data && window.__360Data.exteriorFrames.length ? window.__360Data.exteriorFrames[0] : '../../../shared/model/bezza.png');
+    var imgSrc = selectedPhotoBase64 || (window.__360Data && window.__360Data.exteriorFrames.length ? window.__360Data.exteriorFrames[0] : '');
     if (s5Img) s5Img.src = imgSrc;
 
     // Initialize Flatpickr for booking simulator if not initialized
@@ -2004,7 +2004,7 @@
         preview_frame: window.__360Data.exteriorFrames[0]
       } : null,
       interior_360: (window.__360Data && window.__360Data.interiorAsset) ? window.__360Data.interiorAsset : null,
-      images: selectedPhotoBase64 ? [selectedPhotoBase64] : ['../../../shared/images/cars/honda-crv-2024.png']
+      images: selectedPhotoBase64 ? [selectedPhotoBase64] : []
     };
 
     // Clean up draft since registered successfully
@@ -2014,34 +2014,24 @@
 
     if (window.WeDriveAPI && window.WeDriveAPI.createCar) {
       window.WeDriveAPI.createCar(newCar)
-        .then(function () {
+        .then(function (result) {
+          if (!result || result.error || !result.data) throw (result && result.error) || new Error('Supabase returned no vehicle record.');
           showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
           setTimeout(function () { window.location.href = 'cars.html'; }, 300);
         })
         .catch(function (err) {
           console.error('Create car error:', err);
-          saveFallback(newCar);
+          isSubmitted = false;
+          isFormDirty = true;
+          showToast('Kereta gagal disimpan ke Supabase: ' + (err.message || err), 'error');
         });
     } else {
-      saveFallback(newCar);
+      isSubmitted = false;
+      isFormDirty = true;
+      showToast('Supabase tidak tersedia. Sila cuba semula.', 'error');
     }
   };
   window.submitNewCar = window.handleCarSubmit;
-
-  function saveFallback(car) {
-    isSubmitted = true;
-    isFormDirty = false;
-    try {
-      var existing = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-      car.id = 'CR-' + Date.now();
-      existing.unshift(car);
-      localStorage.setItem('wedrive_cars', JSON.stringify(existing));
-    } catch (err) {
-      console.warn('Local storage save:', err);
-    }
-    showToast('Kereta berjaya didaftarkan ke dalam sistem!', 'success');
-    setTimeout(function () { window.location.href = 'cars.html'; }, 300);
-  }
 
   /**
    * =========================================================================

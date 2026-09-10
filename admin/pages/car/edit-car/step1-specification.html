@@ -266,7 +266,7 @@
                                 <span id="liveStatusText">Tersedia</span>
                             </div>
 
-                            <img id="livePreviewImg" src="../../../../shared/model/bezza.png" alt="Kenderaan" class="apple-car-studio-img" />
+                            <img id="livePreviewImg" src="" alt="Kenderaan" class="apple-car-studio-img hidden" />
                         </div>
 
                         <div class="apple-car-card-body">
@@ -532,13 +532,17 @@
             // Image
             if (activeDraft && activeDraft.image_url) {
                 const imgEl = document.getElementById('livePreviewImg');
-                if (imgEl) imgEl.src = window.WeDriveEditCar.resolveCarImg(activeDraft.image_url);
+                if (imgEl) {
+                    const src = window.WeDriveEditCar.resolveCarImg(activeDraft.image_url);
+                    imgEl.src = src;
+                    imgEl.classList.toggle('hidden', !src);
+                }
             }
 
             // 360 Auto-detection Badge
             const badge360 = document.getElementById('live360Badge');
             if (badge360) {
-                const has360 = Boolean(activeDraft && (activeDraft.has_360 || activeDraft.has360 || activeDraft.cdnUrlExterior || activeDraft.supabase_360));
+                const has360 = Boolean(activeDraft && Array.isArray(activeDraft.exterior_frames) && activeDraft.exterior_frames.length > 0);
                 if (has360) {
                     badge360.classList.remove('hidden');
                 } else {
