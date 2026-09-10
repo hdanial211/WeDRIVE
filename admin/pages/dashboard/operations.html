@@ -314,9 +314,15 @@
       var returnsEl = document.getElementById('ops-returns-today');
       var utilEl = document.getElementById('ops-utilization');
 
+      var todayStr = new Date().toISOString().slice(0, 10);
+      var returnsToday = bookings.filter(function(b) {
+        var ret = b.end_date || b.return_date || '';
+        return ret === todayStr && ['Active', 'Confirmed', 'Disewa'].includes(b.status);
+      }).length;
+
       if (onRoadEl) onRoadEl.textContent = rentedCount;
       if (readyEl) readyEl.textContent = availableCount;
-      if (returnsEl) returnsEl.textContent = Math.min(rentedCount, 3);
+      if (returnsEl) returnsEl.textContent = returnsToday;
       if (utilEl) utilEl.textContent = utilRate + '%';
 
       // Depot splits
@@ -350,17 +356,17 @@
       }
 
       tbody.innerHTML = displayBookings.map(function (b, idx) {
-        var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : 'BK-2026-0' + b.id) : 'BK-2026-0' + (idx + 80);
-        var cust = b.customer || b.customer_name || b.name || (isEn ? 'WeDRIVE Customer' : 'Pelanggan WeDRIVE');
-        var carName = b.car_name || b.car || (isEn ? 'Vehicle' : 'Kenderaan');
-        var plate = b.plate || 'VAB 4821';
-        var opType = idx % 2 === 0 
+        var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : '#BK-' + b.id) : '-';
+        var cust = b.customer || b.customer_name || b.name || '-';
+        var carName = b.car_name || b.car || '-';
+        var plate = b.plate || b.car_plate || '-';
+        var isPickup = (b.status || '').toLowerCase() === 'confirmed' || idx % 2 === 0;
+        var opType = isPickup 
           ? (isEn ? 'Key Handover (Pickup)' : 'Serahan Kunci (Ambil)') 
           : (isEn ? 'Vehicle Return' : 'Pemulangan Kenderaan');
-        var hubName = idx % 2 === 0 
-          ? (isEn ? 'Melaka Sentral Hub' : 'Hab Melaka Sentral') 
-          : (isEn ? 'MKZ Airport Branch' : 'Cawangan Lapangan Terbang MKZ');
-        var locTime = (b.start_date || b.pickup_date || (isEn ? 'Today' : 'Hari Ini')) + ' • ' + hubName;
+        var hubName = b.pickup_location || b.return_location || b.location || (isEn ? 'Melaka Sentral Hub' : 'Hab Melaka Sentral');
+        var dateField = isPickup ? (b.start_date || b.pickup_date) : (b.end_date || b.return_date);
+        var locTime = (dateField || '-') + ' • ' + hubName;
         var statusBadge = (b.status || '').toLowerCase() === 'completed' ? 'success' : ((b.status || '').toLowerCase() === 'active' ? 'active' : 'pending');
         var statusLabel = (b.status || '').toLowerCase() === 'completed' 
           ? (isEn ? 'Completed' : 'Selesai') 
