@@ -103,43 +103,43 @@
 
                 <!-- Floating Stepper Capsule (5 Steps) -->
                 <div class="flex justify-center w-full mb-md">
-                    <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-1.5 flex items-center gap-2 max-w-full overflow-x-auto no-scrollbar">
+                    <div class="wizard-stepper bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-1.5 flex items-center gap-2 max-w-full overflow-x-auto no-scrollbar">
                         <!-- Step 1 Complete -->
-                        <a href="step1_spesifikasi.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
+                        <a href="step1_spesifikasi.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
                             <span class="material-symbols-outlined text-green-500 text-[18px] icon-fill">check_circle</span>
-                            <span class="font-callout text-callout font-medium" data-i18n="step1_pill">Maklumat Asas</span>
+                            <span class="step-label font-callout text-callout font-medium" data-i18n="step1_pill">Maklumat Asas</span>
                         </a>
 
-                        <div class="w-8 h-[1px] bg-border-day"></div>
+                        <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                         <!-- Step 2 Complete -->
-                        <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
+                        <a href="step2_studio360.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
                             <span class="material-symbols-outlined text-green-500 text-[18px] icon-fill">check_circle</span>
-                            <span class="font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
+                            <span class="step-label font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
                         </a>
 
-                        <div class="w-8 h-[1px] bg-border-day"></div>
+                        <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                         <!-- Step 3 Complete -->
-                        <a href="step3_pengesahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
+                        <a href="step3_pengesahan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
                             <span class="material-symbols-outlined text-green-500 text-[18px] icon-fill">check_circle</span>
-                            <span class="font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
+                            <span class="step-label font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
                         </a>
 
-                        <div class="w-8 h-[1px] bg-border-day"></div>
+                        <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                         <!-- Step 4 Complete -->
-                        <a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
+                        <a href="step4_pandangan_pelanggan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full border border-border-day bg-surface-container text-on-surface hover:border-primary/50 transition-all">
                             <span class="material-symbols-outlined text-green-500 text-[18px] icon-fill">check_circle</span>
-                            <span class="font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
+                            <span class="step-label font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
                         </a>
 
-                        <div class="w-8 h-[1px] bg-border-day"></div>
+                        <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                         <!-- Step 5 Active -->
-                        <div class="pill-btn flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary font-bold shadow-xs">
+                        <div class="step-item active pill-btn flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary font-bold shadow-xs">
                             <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">5</span>
-                            <span class="font-callout text-callout font-bold" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
+                            <span class="step-label font-callout text-callout font-bold" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
                         </div>
                     </div>
                 </div>
@@ -284,11 +284,12 @@ Pilih Tarikh Tempahan
 </main>
 
 <!-- FLOATING BOTTOM ACTION DOCK (Apple HIG Standard) -->
-<footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2.5 z-50 transition-all duration-300">
+<footer class="apple-wizard-dock fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2.5 z-[900] transition-all duration-300">
 <!-- Back to Step 4 -->
-<a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors no-underline">
+<a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-4 sm:px-5 py-2.5 font-headline text-[14px] sm:text-[15px] font-medium transition-colors no-underline flex-shrink-0">
 <span class="material-symbols-outlined text-[18px]">arrow_back</span>
-<span data-i18n="step4_pill">Pandangan Pelanggan</span>
+<span class="hidden sm:inline" data-i18n="step4_pill">Pandangan Pelanggan</span>
+<span class="sm:hidden">Kembali</span>
 </a>
 
 <!-- Status Badge -->
@@ -298,8 +299,9 @@ Pilih Tarikh Tempahan
 </div>
 
 <!-- Final Completion Button (Concludes Add Car Workflow) -->
-<button id="btn-final-register" type="button" onclick="finishAndReturnToCars()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[15px] font-bold px-7 py-3 flex items-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer no-underline">
-<span class="text-white-force" data-i18n="step5_btn_finish">Selesai &amp; Ke Pengurusan Kereta</span>
+<button id="btn-final-register" type="button" onclick="finishAndReturnToCars()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[14px] sm:text-[15px] font-bold px-5 sm:px-7 py-2.5 sm:py-3 flex items-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer no-underline flex-shrink-0">
+<span class="text-white-force hidden sm:inline" data-i18n="step5_btn_finish">Selesai &amp; Ke Pengurusan Kereta</span>
+<span class="text-white-force sm:hidden">Selesai</span>
 <span class="material-symbols-outlined text-[20px] text-white-force">task_alt</span>
 </button>
 </footer>
@@ -626,7 +628,7 @@ window.addEventListener('wedrive:language-applied', () => {
 <!-- Real Admin Navigation & System Scripts -->
 <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
 <script src="../../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
-<script src="../../../../shared/js/main.js?v=6.16.0"></script>
+<script src="../../../../shared/js/main.js?v=6.17.3"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
 <script src="../../../../shared/js/api.js?v=5.2.3"></script>

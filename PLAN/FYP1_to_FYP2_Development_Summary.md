@@ -6506,6 +6506,62 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.2 Unified Apple HIG dual-theme toast notifications and admin color compliance`
   - Tag Versi: `6.17.2`
 
+---
+
+## 🤖 [MINOR UPDATE] 151. Penyatuan Penuh Slot 1 Kunci AI Sejagat & Penstrukturan Dinamik Dok Tindakan Apple HIG Merentas iPad & iPhone (Universal AI Key Vault Slot 1 & Adaptive Apple HIG Dock System) (v6.17.3)
+
+- **Punca Keperluan & Arahan Pengguna (Context & User Directives)**:
+  1. **Isu Slot 1 Kunci AI Terhad (Universal AI Key Discrepancy)**:
+     - Pentadbir telah mengisi pelbagai kunci API di halaman `admin/pages/ai/api-keys.html` (Groq, OpenRouter, OpenAI, Gemini), tetapi pada `admin/pages/car/add-car/step1_spesifikasi.html`, apabila menekan butang "Jana AI", tetingkap modal yang muncul tertera *"Tetapkan Kunci AI Google Gemini"* dan hanya menerima kunci Gemini (`AIzaSy...`). Pengguna bertanya kenapa kunci lain tidak berfungsi di situ sedangkan di `api-keys.html` boleh menerima semua kunci.
+  2. **Pertindihan Butang Terapung pada Paparan iPad & iPhone (Responsive Overlap Issue)**:
+     - Pada paparan MacBook (1440px) antaramuka kelihatan kemas, namun pada paparan iPad (820px) dan iPhone (393px), butang terapung Pembantu AI (`.chatbot-fab`) bertindih terus di atas butang tindakan utama dok bawah, manakala butang menu hamburger (`.sidebar-toggle`) bertindih di atas butang navigasi Kembali dok bawah.
+  3. **Antaramuka Statik Tanpa Penyesuaian Dinamik**:
+     - Elemen penunjuk langkah (*wizard stepper*) dan dok tindakan bawah tidak mengecil atau menyusun semula secara dinamik apabila saiz skrin mengecil, menyebabkan teks butang melimpah dan reka bentuk menjadi sesak.
+  4. **Arahan Pelaksanaan**: Pengguna mengarahkan penggunaan pendekatan multi-agent dan ujian langsung sebagai pengguna.
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Penyatuan Universal AI Key Vault (`shared/js/ai-vault.js`)**:
+     - Menambah fungsi sokongan format JSON generik (`jsonMode: true`) pada `callAi()`. Untuk Gemini menggunakan `responseMimeType: "application/json"`, manakala untuk pembekal OpenAI-compatible (Groq, OpenRouter, OpenAI) menggunakan `response_format: { type: "json_object" }`.
+     - Membina pembantu baharu `saveSlotKey(slotNum, key, providerId, customModel)` dengan pengesanan pembekal automatik, penyelarasan rentas tab (`BroadcastChannel`), dan simpanan ke Supabase (`app_settings`).
+     - Menyediakan sokongan kunci lama (*legacy fallback*) untuk `wedrive_gemini_api_key`.
+     - Mendedahkan `saveSlotKey` dan `syncFromSupabase` pada objek global `window.WeDriveAiVault`.
+  2. **Penyelarasan AI & Modal Slot 1 Sejagat (`admin/pages/car/add-car/step1_spesifikasi.html`)**:
+     - Memuatkan skrip dependensi Supabase, `api.js`, dan `ai-vault.js` sebelum pelaksanaan skrip sebaris.
+     - Merombak fungsi `detectCarSpecsWithAI()` supaya memanggil enjin pintar sejagat `window.WeDriveAiVault.callAi('system_core', ...)`. Sebarang pembekal yang dikonfigurasikan pada Slot 1 (Groq Llama-3.3-70b percuma, OpenRouter, OpenAI GPT-4o, atau Gemini) berfungsi serta-merta tanpa diskriminasi.
+     - Menggantikan modal Gemini terhad kepada **Modal Slot 1 Kunci AI Sejagat** yang dilengkapi pengesanan pembekal langsung (*real-time provider badge detection* bagi awalan `gsk_`, `sk-or-`, `AIzaSy`, atau `sk-`), pautan pantas ke `api-keys.html`, dan pilihan penyimpanan segera.
+  3. **Penstrukturan Semula Dok Tindakan & Stepper Responsif (Langkah 1 hingga 5)**:
+     - Menggantikan penanda statik dok bawah merentas semua 5 fail wizard pendaftaran kenderaan (`step1_spesifikasi.html`, `step2_studio360.html`, `step3_pengesahan.html`, `step4_pandangan_pelanggan.html`, `step5_tempahan.html`) kepada komponen piawai `.apple-wizard-dock`.
+     - Mengubah suai teks label butang dok tindakan menggunakan label responsif beradaptasi (`<span class="hidden sm:inline">...</span><span class="sm:hidden">...</span>`) agar tidak melimpah pada skrin kecil.
+     - Menambah kelas `.wizard-stepper`, `.step-item`, dan `.step-label` bagi membolehkan langkah tidak aktif mengecil secara dinamik kepada ikon bulat 1:1 ($32\times 32$px) pada paparan telefon (iPhone 393px), mengurangkan lebar stepper daripada ~1000px kepada ~345px dengan sifar limpahan mendatar.
+  4. **Seni Bina CSS Elevasi Dok Pintar (`shared/css/wedrive.css` & `shared/js/main.js`)**:
+     - Membina Seksyen 15B-2 di dalam `wedrive.css` menggunakan selektor moden `:has(.apple-wizard-dock)` dan `:has(footer.fixed.bottom-6)`:
+       - **iPad (Tablet $\le 1024$px / 820px)**: Menaikkan elevasi `.chatbot-fab` kepada `bottom: 108px` (menyediakan ruang kelegaan bersih 22px di atas dok tindakan).
+       - **iPhone (Telefon $\le 768$px / 393px)**: Menaikkan elevasi `.chatbot-fab` kepada `bottom: 112px; right: 16px;`, mengecilkan butang kepada bulatan sempurna 1:1 ($48\times 48$px, padding 0, `aspect-ratio: 1/1 !important;`), serta menaikkan elevasi menu hamburger `.sidebar-toggle` kepada `bottom: 112px; left: 16px;`.
+       - Menetapkan ruang kelegaan tapak halaman `padding-bottom: calc(125px + env(safe-area-inset-bottom, 16px))` untuk menghalang kandungan bawah tertimbus oleh dok terapung.
+     - Menambah fungsi pengesanan automatik `initActionDockDetector()` di dalam `shared/js/main.js` yang menandakan atribut `body.has-action-dock`.
+
+- **Pengesahan Ujian Visual & Kualiti Perspektif Pengguna (Single-Tab DevTools & Playwright)**:
+  - **Ujian Spektrum 3-Peranti Apple (Satu Tab Aktif via Chrome DevTools MCP)**:
+    - **iPhone Mobile Retina XDR (393 × 852)**:
+      - Geometri `.chatbot-fab`: Bulat 1:1 sempurna (`48px × 48px`, `isCircle: true`). Kelegaan di atas dok: **29.7px** (Sifar pertindihan).
+      - Geometri `.sidebar-toggle`: Bulat 1:1 sempurna (`44px × 44px`, `isCircle: true`). Kelegaan di atas dok: **29.0px** (Sifar pertindihan).
+      - Stepper muat sempurna dalam viewport (`fitsInViewport: true`, lebar 345.9px). Tangkapan skrin: `step1_iphone_verified.png`.
+    - **iPad Tablet (820 × 1180)**:
+      - Kelegaan `.chatbot-fab` di atas dok: **22.0px**. Kelegaan `.sidebar-toggle`: **26.0px** (Sifar pertindihan). Tangkapan skrin: `step1_ipad_verified.png`.
+    - **MacBook Desktop Retina (1440 × 900)**:
+      - Sifar limpahan mendatar (`horizontalScroll: false`), dok melekat kemas di bawah skrin, butang chatbot dan toggle berada di kedudukan desktop asal.
+  - **Ujian Pengesanan Pembekal Kunci Masa Nyata**:
+    - Disahkan secara programatik: Kunci Groq (`gsk_...`), OpenRouter (`sk-or-...`), dan Gemini (`AIzaSy...`) dikesan dengan tepat dan memaparkan lencana pembekal serta model secara automatik.
+  - **Kepatuhan Peraturan Mandatori**:
+    - Peraturan Zero Oval Rule dipatuhi 100% (semua butang ikon bulat tepat 1:1).
+    - Kesemua 23 fail peraturan `.agents/rules/*.md` disahkan kekal $\le 12,000$ aksara (`wc -m`).
+    - Suite ujian Playwright CLI lulus 100%.
+
+- **Maklumat Git**:
+  - Commit: `6.17.3 Unify AI Key Vault Slot 1 and fix responsive dock overlaps on iPad and iPhone`
+  - Tag Versi: `6.17.3`
+
+
 
 
 

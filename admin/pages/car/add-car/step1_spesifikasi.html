@@ -384,43 +384,43 @@
 
             <!-- Floating Stepper Capsule (Standardized Apple HIG 5-Step) -->
             <div class="flex justify-center w-full mb-8">
-                <div class="bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-1.5 flex items-center gap-1.5 max-w-full overflow-x-auto hide-scrollbar">
+                <div class="wizard-stepper bg-surface-container-lowest glass-panel border border-border-day shadow-sm rounded-full p-1.5 flex items-center gap-1.5 max-w-full overflow-x-auto hide-scrollbar">
                     <!-- Step 1 Active -->
-                    <div class="pill-btn flex items-center gap-2 px-4 py-2 rounded-full bg-primary/15 text-primary font-bold shadow-xs">
+                    <div class="step-item active pill-btn flex items-center gap-2 px-4 py-2 rounded-full bg-primary/15 text-primary font-bold shadow-xs">
                         <span class="circle-1-1 w-5 h-5 bg-primary text-white text-[11px] font-bold">1</span>
-                        <span class="font-label-tabular text-label-tabular font-bold" data-i18n="step1_pill">Maklumat Asas</span>
+                        <span class="step-label font-label-tabular text-label-tabular font-bold" data-i18n="step1_pill">Maklumat Asas</span>
                     </div>
                     
-                    <div class="w-8 h-[1px] bg-border-day"></div>
+                    <div class="step-divider w-8 h-[1px] bg-border-day"></div>
                     
                     <!-- Step 2 Link -->
-                    <a href="step2_studio360.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step2_studio360.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">2</span>
-                        <span class="font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
+                        <span class="step-label font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
                     </a>
                     
-                    <div class="w-8 h-[1px] bg-border-day"></div>
+                    <div class="step-divider w-8 h-[1px] bg-border-day"></div>
                     
                     <!-- Step 3 Link -->
-                    <a href="step3_pengesahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step3_pengesahan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
-                        <span class="font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
+                        <span class="step-label font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
                     </a>
 
-                    <div class="w-8 h-[1px] bg-border-day"></div>
+                    <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                     <!-- Step 4 Link -->
-                    <a href="step4_pandangan_pelanggan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step4_pandangan_pelanggan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">4</span>
-                        <span class="font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
+                        <span class="step-label font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
                     </a>
 
-                    <div class="w-8 h-[1px] bg-border-day"></div>
+                    <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                     <!-- Step 5 Link -->
-                    <a href="step5_tempahan.html" class="pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step5_tempahan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">5</span>
-                        <span class="font-callout text-callout font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
+                        <span class="step-label font-callout text-callout font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
                     </a>
                 </div>
             </div>
@@ -647,9 +647,9 @@
 </main>
 
     <!-- Floating Bottom Action Dock (Standardized Apple HIG) -->
-    <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2 z-50 transition-all duration-300">
+    <footer class="apple-wizard-dock fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-2xl rounded-full glass-panel border border-border-day shadow-2xl flex items-center justify-between p-2 z-[900] transition-all duration-300">
         <!-- Left Action (Kembali / Batal) -->
-        <a href="../cars.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-5 py-2.5 font-headline text-[15px] font-medium transition-colors">
+        <a href="../cars.html" class="pill-btn interactive-btn text-on-surface-variant hover:text-on-surface flex items-center gap-2 px-4 sm:px-5 py-2.5 font-headline text-[14px] sm:text-[15px] font-medium transition-colors flex-shrink-0">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span>
             <span data-i18n="dock_back_cancel">Batal</span>
         </a>
@@ -669,9 +669,10 @@
             </div>
         </div>
 
-        <!-- Right Primary Action (Font from Gambar 1: Crisp Bold Pure White) -->
-        <a href="step2_studio360.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[15px] md:text-headline font-bold px-6 py-3 flex items-center gap-2 shadow-md flex-shrink-0">
-            <span class="text-white-force" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
+        <!-- Right Primary Action -->
+        <a href="step2_studio360.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[14px] sm:text-[15px] font-bold px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-2 shadow-md flex-shrink-0">
+            <span class="text-white-force hidden sm:inline" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
+            <span class="text-white-force sm:hidden">Seterusnya</span>
             <span class="material-symbols-outlined text-[20px] text-white-force">arrow_forward</span>
         </a>
     </footer>
@@ -684,17 +685,17 @@
         <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">Spesifikasi kenderaan berjaya dijana secara automatik!</span>
     </div>
 
-    <!-- Quick AI Key Setup Modal (Apple HIG Glass Sheet) -->
+    <!-- Quick Universal AI Key Setup Modal (Apple HIG Glass Sheet) -->
     <div id="quickKeyModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-all duration-300">
-        <div class="card p-6 radius-24 bg-surface border-subtle shadow-2xl max-w-[480px] w-full relative">
+        <div class="card p-6 radius-24 bg-surface border-subtle shadow-2xl max-w-[500px] w-full relative">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 circle-1-1 bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
                         <span class="material-symbols-outlined text-[22px]">vpn_key</span>
                     </div>
                     <div>
-                        <h3 class="font-headline text-[16px] font-bold text-on-surface">Tetapkan Kunci AI Google Gemini</h3>
-                        <p class="font-footnote text-[12px] text-secondary">Slot 1 · Sistem Teras (Percuma 1,500 RPD)</p>
+                        <h3 class="font-headline text-[16px] font-bold text-on-surface">Tetapkan Kunci AI (Slot 1 · Sistem Teras)</h3>
+                        <p class="font-footnote text-[12px] text-secondary">Menyokong Groq (Llama-3.3-70b Percuma), Gemini &amp; OpenRouter</p>
                     </div>
                 </div>
                 <button type="button" onclick="closeQuickKeyModal()" class="circle-1-1 w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-secondary transition-all cursor-pointer">
@@ -703,20 +704,37 @@
             </div>
 
             <p class="font-footnote text-[13px] text-secondary leading-relaxed mb-4">
-                Kunci API Google Gemini diperlukan untuk menjana spesifikasi kenderaan pintar secara masa nyata. Dapatkan kunci percuma tanpa kad kredit di 
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline font-semibold inline-flex items-center gap-1">
-                    <span>Google AI Studio</span>
-                    <span class="material-symbols-outlined text-[12px]">open_in_new</span>
-                </a>.
+                Kunci API AI diperlukan untuk menjana spesifikasi kenderaan pintar secara masa nyata. Anda boleh menggunakan mana-mana kunci percuma berikut:
             </p>
 
-            <div class="form-group mb-5">
-                <label class="font-footnote text-[12px] font-semibold text-on-surface mb-2 block" for="quickInputGeminiKey">Kunci API Gemini (API Key)</label>
+            <!-- Provider Quick Links -->
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high border border-border-day flex flex-col items-center text-center transition-all group">
+                    <span class="font-headline text-[12px] font-bold text-primary group-hover:underline">Groq Cloud</span>
+                    <span class="font-footnote text-[10px] text-secondary">Percuma &amp; Laju</span>
+                </a>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high border border-border-day flex flex-col items-center text-center transition-all group">
+                    <span class="font-headline text-[12px] font-bold text-primary group-hover:underline">Google AI</span>
+                    <span class="font-footnote text-[10px] text-secondary">Gemini Flash</span>
+                </a>
+                <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high border border-border-day flex flex-col items-center text-center transition-all group">
+                    <span class="font-headline text-[12px] font-bold text-primary group-hover:underline">OpenRouter</span>
+                    <span class="font-footnote text-[10px] text-secondary">Free Tier</span>
+                </a>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="font-footnote text-[12px] font-semibold text-on-surface mb-2 block" for="quickInputGeminiKey">Kunci API (API Key)</label>
                 <div class="relative flex items-center">
-                    <input type="password" id="quickInputGeminiKey" class="form-input radius-12 fs-13 w-full pr-10" placeholder="Tampal kunci cth: AIzaSy..." autocomplete="off" />
+                    <input type="password" id="quickInputGeminiKey" class="form-input radius-12 fs-13 w-full pr-10" placeholder="Tampal kunci cth: gsk_... atau AIzaSy..." autocomplete="off" oninput="handleQuickKeyInput(this.value)" />
                     <button type="button" onclick="toggleQuickKeyVisibility()" class="absolute right-3 text-secondary hover:text-primary transition-colors cursor-pointer flex items-center justify-center">
                         <span id="quickKeyEyeIcon" class="material-symbols-outlined text-[18px]">visibility_off</span>
                     </button>
+                </div>
+                <!-- Live Provider Detection Badge -->
+                <div id="quickKeyDetectedBadge" class="mt-2 flex items-center gap-1.5 text-xs text-secondary font-medium">
+                    <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+                    <span id="quickKeyDetectedText">Menunggu input kunci API...</span>
                 </div>
                 <div id="quickKeyStatus" class="font-footnote text-[12px] mt-2 hidden"></div>
             </div>
@@ -732,6 +750,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Core External & Vault Scripts (Preloaded for AI & Dynamic Docks) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/api.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/ai-vault.js?v=6.17.3"></script>
 
     <!-- AI Specs Controller Script -->
     <script>
@@ -876,19 +900,18 @@
                 return null;
             }
 
-            let apiKey = '';
-            let endpoint = '';
-            if (window.WeDriveAiVault && window.WeDriveAiVault.hasKey('system_core')) {
-                apiKey = window.WeDriveAiVault.getKey('system_core');
-                const provider = window.WeDriveAiVault.getProvider('system_core');
-                if (provider && provider.endpoint) endpoint = provider.endpoint;
-            }
-            if (!apiKey) {
-                apiKey = localStorage.getItem('wedrive_gemini_api_key') || localStorage.getItem('gemini_api_key') || '';
+            // Semak kewujudan kunci di Slot 1 (system_core)
+            const hasSlot1Key = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('system_core');
+            const legacyKey = localStorage.getItem('wedrive_gemini_api_key') || localStorage.getItem('gemini_api_key');
+
+            if (!hasSlot1Key && (!legacyKey || legacyKey.trim().length < 10)) {
+                showAiToast('Kunci API Slot 1 (Sistem Teras) belum ditetapkan. Sila masukkan kunci anda.', 'warning');
+                setTimeout(() => openQuickKeyModal(), 600);
+                return null;
             }
 
-            const prompt = `Act as an expert automotive technical database and Malaysian car rental pricing strategist.
-Analyze this vehicle:
+            const systemPrompt = `Act as an expert automotive technical database and Malaysian car rental pricing strategist. You output ONLY clean, valid JSON.`;
+            const userPrompt = `Analyze this vehicle:
 Make/Brand: "${brand}"
 Model: "${model}"
 Variant: "${variant}"
@@ -912,43 +935,34 @@ Rules:
 5. "engine" MUST be clean without power or torque metrics (DO NOT include PS, HP, kW, or Nm).
 6. "daily", "weekly", "monthly" MUST be realistic integer rental rates in Malaysian Ringgit (MYR).`;
 
-            if (apiKey) {
-                try {
-                    const geminiUrl = endpoint && endpoint.includes('?') ? `${endpoint}&key=${apiKey}` : (endpoint ? `${endpoint}?key=${apiKey}` : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`);
-                    const res = await fetch(geminiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: prompt }] }],
-                            generationConfig: { responseMimeType: "application/json" }
-                        })
-                    });
-                    if (res.ok) {
-                        const data = await res.json();
-                        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-                        const cleanJson = text.replace(/```json|```/gi, '').trim();
-                        const parsed = JSON.parse(cleanJson);
-                        if (parsed && parsed.category) return sanitizeSpecs(parsed);
-                    } else {
-                        const errData = await res.json().catch(() => null);
-                        const msg = errData?.error?.message || 'Ralat sambungan API Google Gemini';
-                        console.warn('[WeDRIVE AI] Gemini API returned error status:', res.status, msg);
-                        showAiToast('Ralat AI: Kunci API tidak sah atau kuota habis. Sila kemas kini kunci.', 'warning');
-                        setTimeout(() => openQuickKeyModal(), 1200);
-                        return null;
-                    }
-                } catch (e) {
-                    console.warn('[WeDRIVE AI] Gemini network error:', e);
-                    showAiToast('Ralat sambungan ke pelayan AI. Sila periksa sambungan internet.', 'warning');
-                    return null;
+            try {
+                if (!window.WeDriveAiVault || !window.WeDriveAiVault.callAi) {
+                    throw new Error('Modul WeDriveAiVault belum dimuatkan.');
                 }
-            } else {
-                showAiToast('Kunci API Google Gemini belum ditetapkan. Sila masukkan kunci anda.', 'warning');
-                setTimeout(() => openQuickKeyModal(), 600);
+                const rawText = await window.WeDriveAiVault.callAi('system_core', systemPrompt, userPrompt, {
+                    jsonMode: true,
+                    temperature: 0.3
+                });
+
+                if (rawText) {
+                    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        const parsed = JSON.parse(jsonMatch[0]);
+                        if (parsed && parsed.category) return sanitizeSpecs(parsed);
+                    }
+                }
+                throw new Error('Respons AI tidak mengandungi format JSON yang sah.');
+            } catch (err) {
+                console.warn('[WeDRIVE AI] Generation error:', err);
+                const errMsg = err.message || '';
+                if (errMsg.includes('Tiada kunci') || errMsg.includes('API key') || errMsg.includes('401') || errMsg.includes('403') || errMsg.includes('400')) {
+                    showAiToast('Ralat AI: Kunci API Slot 1 tidak sah atau tamat kuota. Sila kemas kini.', 'warning');
+                    setTimeout(() => openQuickKeyModal(), 1200);
+                } else {
+                    showAiToast('Ralat penjanaan AI: ' + (errMsg.length < 60 ? errMsg : 'Sila semak semula sambungan.'), 'warning');
+                }
                 return null;
             }
-
-            return null; // Sifar data olok-olok / heuristic fallback!
         }
 
         // ── Quick Key Modal Controller ──
@@ -975,7 +989,10 @@ Rules:
                 currentKey = localStorage.getItem('wedrive_gemini_api_key') || localStorage.getItem('gemini_api_key') || '';
             }
 
-            if (input) input.value = currentKey;
+            if (input) {
+                input.value = currentKey;
+                handleQuickKeyInput(currentKey);
+            }
             if (modal) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
@@ -988,6 +1005,25 @@ Rules:
             if (modal) {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
+            }
+        }
+
+        function handleQuickKeyInput(val) {
+            const badge = document.getElementById('quickKeyDetectedBadge');
+            const text = document.getElementById('quickKeyDetectedText');
+            if (!badge || !text) return;
+            const detected = (window.WeDriveAiVault && window.WeDriveAiVault.detectProvider)
+                ? window.WeDriveAiVault.detectProvider(val)
+                : null;
+            if (detected) {
+                badge.className = 'mt-2 flex items-center gap-1.5 text-xs text-primary font-semibold';
+                text.textContent = `Penyedia Dikesan: ${detected.name}`;
+            } else if (val && val.trim().length > 5) {
+                badge.className = 'mt-2 flex items-center gap-1.5 text-xs text-amber-500 font-medium';
+                text.textContent = 'Format kunci belum dikenal pasti (akan dicuba sebagai Kunci Kustom)';
+            } else {
+                badge.className = 'mt-2 flex items-center gap-1.5 text-xs text-secondary font-medium';
+                text.textContent = 'Menunggu input kunci API...';
             }
         }
 
@@ -1012,7 +1048,7 @@ Rules:
 
             if (!keyVal) {
                 if (status) {
-                    status.textContent = 'Sila masukkan kunci API Google Gemini terlebih dahulu.';
+                    status.textContent = 'Sila masukkan kunci API terlebih dahulu.';
                     status.className = 'font-footnote text-[12px] mt-2 text-danger flex items-center gap-1';
                     status.classList.remove('hidden');
                 }
@@ -1022,55 +1058,23 @@ Rules:
             const originalBtnHtml = btn ? btn.innerHTML : '';
             if (btn) btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">progress_activity</span> Menyimpan...';
 
-            let keys = null;
-            try {
-                const raw = localStorage.getItem('wedrive_ai_keys');
-                if (raw) keys = JSON.parse(raw);
-            } catch(_) {}
-
-            if (!keys || typeof keys !== 'object') {
-                keys = {
-                    slot1: { role: 'system_core', key: '', provider: 'gemini' },
-                    slot2: { role: 'events_pricing', key: '', provider: 'openrouter' },
-                    slot3: { role: 'customer_chatbot', key: '', provider: 'groq' },
-                    slot4: { role: 'downloader_360', key: '', provider: 'openai' }
-                };
-            }
-
-            keys.slot1 = {
-                role: 'system_core',
-                key: keyVal,
-                provider: 'gemini'
-            };
-            keys.updated_at = new Date().toISOString();
-
-            // 1. Simpan secara lokal
-            try {
-                localStorage.setItem('wedrive_ai_keys', JSON.stringify(keys));
-                localStorage.setItem('wedrive_gemini_api_key', keyVal);
-            } catch(_) {}
-
-            // 2. Maklumkan WeDriveAiVault
-            if (window.WeDriveAiVault && window.WeDriveAiVault.notifyChange) {
-                window.WeDriveAiVault.notifyChange();
-            }
-
-            // 3. Simpan terus ke Supabase DB
-            let savedToDb = false;
-            if (window.supabaseClient) {
+            let saved = false;
+            if (window.WeDriveAiVault && window.WeDriveAiVault.saveSlotKey) {
+                saved = await window.WeDriveAiVault.saveSlotKey(1, keyVal);
+            } else {
                 try {
-                    const sb = window.supabaseClient;
-                    const r = await sb.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
-                    if (!r.error) savedToDb = true;
-                } catch(err) {
-                    console.warn('[WeDRIVE AI] Supabase save error:', err);
-                }
+                    let keys = {};
+                    try { keys = JSON.parse(localStorage.getItem('wedrive_ai_keys') || '{}'); } catch(_) {}
+                    keys.slot1 = { role: 'system_core', key: keyVal };
+                    localStorage.setItem('wedrive_ai_keys', JSON.stringify(keys));
+                    saved = true;
+                } catch(_) {}
             }
 
             if (btn) btn.innerHTML = originalBtnHtml;
             closeQuickKeyModal();
 
-            showAiToast(savedToDb ? '✓ Kunci AI berjaya disimpan ke pangkalan data!' : '✓ Kunci AI berjaya disimpan secara lokal!', 'success');
+            showAiToast('✓ Kunci AI Slot 1 berjaya disimpan!', 'success');
 
             // Terus jalankan pengisian spesifikasi
             setTimeout(() => {
@@ -1375,15 +1379,11 @@ Rules:
     </script>
 
     <!-- Real Admin Navigation & System Scripts -->
-    <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>
-    <script src="../../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
-    <script src="../../../../shared/js/main.js?v=6.16.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
-    <script src="../../../../shared/js/api.js?v=5.2.3"></script>
+    <script src="../../../../shared/js/navbar-loader.js?v=6.17.3"></script>
+    <script src="../../../../shared/js/sidebar-loader.js?v=6.17.3"></script>
+    <script src="../../../../shared/js/main.js?v=6.17.3"></script>
     <script src="../../../../shared/js/anime.min.js"></script>
     <script src="../../../../shared/js/animate.js?v=5.2.3"></script>
-    <script src="../../../../shared/js/ai-vault.js?v=6.17.0"></script>
     <script src="../../../js/admin-idle-timeout.js?v=5.2.77"></script>
 </body>
 </html>

@@ -173,9 +173,23 @@
   // ── Get slot data by slot number ─────────────────────────────────────────
   function getSlotData(slotNum) {
     var keys = ensureCache();
-    if (!keys) return null;
-    var slot = keys['slot' + slotNum];
-    return (slot && slot.key) ? slot : null;
+    if (keys && keys['slot' + slotNum] && keys['slot' + slotNum].key) {
+      return keys['slot' + slotNum];
+    }
+    // Backward compatibility fallback for Slot 1
+    if (slotNum === 1) {
+      var legacyKey = localStorage.getItem('wedrive_gemini_api_key') || localStorage.getItem('gemini_api_key');
+      if (legacyKey && legacyKey.trim().length > 10) {
+        var det = detectProvider(legacyKey.trim());
+        return {
+          key: legacyKey.trim(),
+          provider: det ? det.id : 'gemini',
+          model: det ? det.defaultModel : 'gemini-2.5-flash',
+          updatedAt: new Date().toISOString()
+        };
+      }
+    }
+    return null;
   }
 
   // ── Public API ───────────────────────────────────────────────────────────
@@ -251,6 +265,70 @@
   }
 
   /**
+   * Save a single slot key directly to storage & Supabase
+   * @param {number} slotNum - 1 to 4
+   * @param {string} key - API key string
+   * @param {string} [providerId] - Optional provider override
+   * @param {string} [customModel] - Optional custom model override
+   * @returns {Promise<boolean>} Success status
+   */
+  async function saveSlotKey(slotNum, key, providerId, customModel) {
+    if (!slotNum || slotNum < 1 || slotNum > 4) return false;
+    var trimmedKey = (key || '').trim();
+    var detected = detectProvider(trimmedKey);
+    var pId = providerId || (detected ? detected.id : '');
+    var mName = customModel || (detected ? detected.defaultModel : '');
+
+    var keys = ensureCache() || {
+      slot1: { key: '', provider: '', model: '' },
+      slot2: { key: '', provider: '', model: '' },
+      slot3: { key: '', provider: '', model: '' },
+      slot4: { key: '', provider: '', model: '' }
+    };
+
+    keys['slot' + slotNum] = {
+      key: trimmedKey,
+      provider: pId,
+      model: mName,
+      updatedAt: new Date().toISOString()
+    };
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
+      _cache = keys;
+    } catch (e) {
+      console.warn('[AI Vault] localStorage save error:', e);
+    }
+
+    // Also sync legacy keys if applicable
+    if (slotNum === 1 && (pId === 'gemini' || trimmedKey.startsWith('AIzaSy'))) {
+      try { localStorage.setItem('wedrive_gemini_api_key', trimmedKey); } catch (_) {}
+    }
+    if (slotNum === 3) {
+      try {
+        var currentChatbot = {};
+        try { currentChatbot = JSON.parse(localStorage.getItem('wedrive_chatbot_settings') || '{}'); } catch (_) {}
+        currentChatbot.apiKey = trimmedKey;
+        currentChatbot.provider = pId;
+        localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(currentChatbot));
+      } catch (_) {}
+    }
+
+    notifyChange();
+
+    // Sync to Supabase if available
+    if (window.supabaseClient) {
+      try {
+        await window.supabaseClient.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
+      } catch (err) {
+        console.warn('[AI Vault] Supabase sync error:', err);
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Register a callback for when keys are saved/changed
    * @param {function} callback
    */
@@ -276,7 +354,7 @@
    * @param {string} role - Vault slot role
    * @param {string} systemPrompt - System instruction
    * @param {string} userMessage - User message / prompt
-   * @param {object} [options] - { temperature, maxTokens, model }
+   * @param {object} [options] - { temperature, maxTokens, model, jsonMode }
    * @returns {Promise<string>} AI response text
    */
   async function callAi(role, systemPrompt, userMessage, options) {
@@ -290,6 +368,7 @@
     var model = opts.model || provider.defaultModel;
     var temperature = opts.temperature !== undefined ? opts.temperature : 0.7;
     var maxTokens = opts.maxTokens || 2048;
+    var jsonMode = opts.jsonMode || false;
 
     // ── Gemini (query-string auth) ──
     if (provider.id === 'gemini') {
@@ -298,6 +377,9 @@
         contents: [{ parts: [{ text: (systemPrompt ? systemPrompt + '\n\n' : '') + userMessage }] }],
         generationConfig: { temperature: temperature, maxOutputTokens: maxTokens }
       };
+      if (jsonMode) {
+        geminiBody.generationConfig.responseMimeType = 'application/json';
+      }
 
       var gr = await fetch(geminiUrl, {
         method: 'POST',
@@ -319,6 +401,9 @@
       temperature: temperature,
       max_tokens: maxTokens
     };
+    if (jsonMode && (provider.id === 'openai' || provider.id === 'groq' || provider.id === 'openrouter' || provider.id === 'deepseek')) {
+      chatBody.response_format = { type: 'json_object' };
+    }
     if (systemPrompt) chatBody.messages.push({ role: 'system', content: systemPrompt });
     chatBody.messages.push({ role: 'user', content: userMessage });
 
@@ -350,7 +435,7 @@
     });
     var cd = await cr.json();
 
-    if (cd.error) throw new Error(cd.error.message || cd.error || 'API error');
+    if (cd.error) throw new Error(cd.error.message || (typeof cd.error === 'string' ? cd.error : JSON.stringify(cd.error)) || 'API error');
 
     // Anthropic response format
     if (provider.id === 'anthropic') {
@@ -456,6 +541,8 @@
     notifyChange: notifyChange,
     callAi: callAi,
     callVision: callVision,
+    saveSlotKey: saveSlotKey,
+    syncFromSupabase: loadFromSupabase,
     PROVIDERS: PROVIDERS,
     SLOT_ROLES: SLOT_ROLES,
     ROLE_TO_SLOT: ROLE_TO_SLOT

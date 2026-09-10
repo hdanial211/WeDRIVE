@@ -1456,6 +1456,31 @@ window.escapeHtml = function (str) {
 })();
 
 /* =====================================================
+   SECTION 15C-2: UNIVERSAL ACTION DOCK DETECTOR (APPLE HIG)
+   ===================================================== */
+(function initActionDockDetector() {
+  'use strict';
+
+  function checkDocks() {
+    if (!document.body) return;
+    var dock = document.querySelector('.apple-wizard-dock, footer.fixed.bottom-6, nav.fixed.bottom-6, .dock-bottom, #apple-bottom-dock');
+    if (dock || document.body.classList.contains('has-apple-dock')) {
+      document.body.classList.add('has-action-dock');
+    } else {
+      document.body.classList.remove('has-action-dock');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkDocks);
+  } else {
+    checkDocks();
+  }
+  window.addEventListener('load', checkDocks);
+  window.detectActionDock = checkDocks;
+})();
+
+/* =====================================================
    SECTION 15D: GLOBAL APPLE PAGE TRANSITION SYSTEM (IN & OUT)
    ===================================================== */
 (function initGlobalPageTransitions() {
