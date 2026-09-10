@@ -91,7 +91,7 @@
     if (ctx && SIDEBAR_MODULES[ctx]) return ctx.toLowerCase();
 
     var path = window.location.pathname;
-    if (path.includes('/analytics/') || path.includes('/chatbot/') || path.includes('/marketing/')) {
+    if (path.includes('/analytics/') || path.includes('/chatbot/') || path.includes('/marketing/') || path.includes('/ai/')) {
       return 'ai';
     }
     if (path.includes('/car/')) {

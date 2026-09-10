@@ -490,9 +490,15 @@
 
                         <!-- AI Auto Generate Spesifikasi -->
                         <div class="flex flex-col gap-sm col-span-1 sm:col-span-2 lg:col-span-2 justify-end">
-                            <label class="font-footnote text-footnote font-semibold flex items-center gap-1.5">
-                                <span class="material-symbols-outlined text-[16px] text-[#BF5AF2] icon-fill">auto_awesome</span>
-                                <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold" data-i18n="ai_suggestion_label">Cadangan Spesifikasi Pintar</span>
+                            <label class="font-footnote text-footnote font-semibold flex items-center justify-between">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-[16px] text-[#BF5AF2] icon-fill">auto_awesome</span>
+                                    <span class="bg-gradient-to-r from-primary via-[#5E5CE6] to-[#BF5AF2] bg-clip-text text-transparent font-bold" data-i18n="ai_suggestion_label">Cadangan Spesifikasi Pintar</span>
+                                </div>
+                                <button type="button" id="btnQuickAiKey" onclick="openQuickKeyModal()" class="text-xs text-secondary hover:text-primary transition-colors flex items-center gap-1 cursor-pointer font-medium" title="Tetapkan atau kemas kini kunci AI">
+                                    <span class="material-symbols-outlined text-[14px]">key</span>
+                                    <span>Kunci AI</span>
+                                </button>
                             </label>
                             <input type="hidden" id="inputStatus" name="status" value="available"/>
                             <button type="button" id="aiAutoGenerateBtn" onclick="runAiAutoGenerate()" class="ai-container-bar interactive-btn group relative w-full h-[46px] py-0 px-4 rounded-xl flex items-center justify-between transition-all duration-300 active:scale-[0.98] cursor-pointer overflow-hidden">
@@ -676,6 +682,55 @@
             <span class="material-symbols-outlined text-primary text-[18px] icon-fill">auto_awesome</span>
         </div>
         <span id="aiToastMsg" class="font-headline text-[13.5px] font-medium text-on-surface">Spesifikasi kenderaan berjaya dijana secara automatik!</span>
+    </div>
+
+    <!-- Quick AI Key Setup Modal (Apple HIG Glass Sheet) -->
+    <div id="quickKeyModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-all duration-300">
+        <div class="card p-6 radius-24 bg-surface border-subtle shadow-2xl max-w-[480px] w-full relative">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 circle-1-1 bg-primary/15 text-primary flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-[22px]">vpn_key</span>
+                    </div>
+                    <div>
+                        <h3 class="font-headline text-[16px] font-bold text-on-surface">Tetapkan Kunci AI Google Gemini</h3>
+                        <p class="font-footnote text-[12px] text-secondary">Slot 1 · Sistem Teras (Percuma 1,500 RPD)</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeQuickKeyModal()" class="circle-1-1 w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-secondary transition-all cursor-pointer">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            </div>
+
+            <p class="font-footnote text-[13px] text-secondary leading-relaxed mb-4">
+                Kunci API Google Gemini diperlukan untuk menjana spesifikasi kenderaan pintar secara masa nyata. Dapatkan kunci percuma tanpa kad kredit di 
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline font-semibold inline-flex items-center gap-1">
+                    <span>Google AI Studio</span>
+                    <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+                </a>.
+            </p>
+
+            <div class="form-group mb-5">
+                <label class="font-footnote text-[12px] font-semibold text-on-surface mb-2 block" for="quickInputGeminiKey">Kunci API Gemini (API Key)</label>
+                <div class="relative flex items-center">
+                    <input type="password" id="quickInputGeminiKey" class="form-input radius-12 fs-13 w-full pr-10" placeholder="Tampal kunci cth: AIzaSy..." autocomplete="off" />
+                    <button type="button" onclick="toggleQuickKeyVisibility()" class="absolute right-3 text-secondary hover:text-primary transition-colors cursor-pointer flex items-center justify-center">
+                        <span id="quickKeyEyeIcon" class="material-symbols-outlined text-[18px]">visibility_off</span>
+                    </button>
+                </div>
+                <div id="quickKeyStatus" class="font-footnote text-[12px] mt-2 hidden"></div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-3 border-t border-border-day/50">
+                <button type="button" onclick="closeQuickKeyModal()" class="pill-btn px-4 py-2 text-secondary hover:bg-surface-container rounded-full text-xs font-semibold cursor-pointer transition-all">
+                    Batal
+                </button>
+                <button type="button" id="btnSaveQuickKey" onclick="saveQuickKeyAndGenerate()" class="pill-btn px-5 py-2.5 bg-primary text-white hover:bg-primary-hover rounded-full text-xs font-bold shadow-md cursor-pointer transition-all flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">save</span>
+                    <span>Simpan &amp; Jana Spesifikasi</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- AI Specs Controller Script -->
@@ -878,7 +933,8 @@ Rules:
                         const errData = await res.json().catch(() => null);
                         const msg = errData?.error?.message || 'Ralat sambungan API Google Gemini';
                         console.warn('[WeDRIVE AI] Gemini API returned error status:', res.status, msg);
-                        showAiToast(`Ralat AI: Kunci API tidak sah atau kuota habis. Sila kemas kini di Peti Kunci AI.`, 'warning');
+                        showAiToast('Ralat AI: Kunci API tidak sah atau kuota habis. Sila kemas kini kunci.', 'warning');
+                        setTimeout(() => openQuickKeyModal(), 1200);
                         return null;
                     }
                 } catch (e) {
@@ -887,11 +943,175 @@ Rules:
                     return null;
                 }
             } else {
-                showAiToast('Kunci API Google Gemini belum ditetapkan. Sila tetapkannya di Peti Kunci AI.', 'warning');
+                showAiToast('Kunci API Google Gemini belum ditetapkan. Sila masukkan kunci anda.', 'warning');
+                setTimeout(() => openQuickKeyModal(), 600);
                 return null;
             }
 
             return null; // Sifar data olok-olok / heuristic fallback!
+        }
+
+        // ── Quick Key Modal Controller ──
+        function openQuickKeyModal() {
+            const modal = document.getElementById('quickKeyModal');
+            const input = document.getElementById('quickInputGeminiKey');
+            const status = document.getElementById('quickKeyStatus');
+            if (status) status.classList.add('hidden');
+
+            let currentKey = '';
+            if (window.WeDriveAiVault && window.WeDriveAiVault.getKey) {
+                currentKey = window.WeDriveAiVault.getKey('system_core');
+            }
+            if (!currentKey) {
+                try {
+                    const raw = localStorage.getItem('wedrive_ai_keys');
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        currentKey = parsed?.slot1?.key || '';
+                    }
+                } catch(_) {}
+            }
+            if (!currentKey) {
+                currentKey = localStorage.getItem('wedrive_gemini_api_key') || localStorage.getItem('gemini_api_key') || '';
+            }
+
+            if (input) input.value = currentKey;
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => { if (input) input.focus(); }, 120);
+            }
+        }
+
+        function closeQuickKeyModal() {
+            const modal = document.getElementById('quickKeyModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function toggleQuickKeyVisibility() {
+            const input = document.getElementById('quickInputGeminiKey');
+            const icon = document.getElementById('quickKeyEyeIcon');
+            if (!input || !icon) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility_off';
+            }
+        }
+
+        async function saveQuickKeyAndGenerate() {
+            const input = document.getElementById('quickInputGeminiKey');
+            const status = document.getElementById('quickKeyStatus');
+            const btn = document.getElementById('btnSaveQuickKey');
+            const keyVal = (input?.value || '').trim();
+
+            if (!keyVal) {
+                if (status) {
+                    status.textContent = 'Sila masukkan kunci API Google Gemini terlebih dahulu.';
+                    status.className = 'font-footnote text-[12px] mt-2 text-danger flex items-center gap-1';
+                    status.classList.remove('hidden');
+                }
+                return;
+            }
+
+            const originalBtnHtml = btn ? btn.innerHTML : '';
+            if (btn) btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">progress_activity</span> Menyimpan...';
+
+            let keys = null;
+            try {
+                const raw = localStorage.getItem('wedrive_ai_keys');
+                if (raw) keys = JSON.parse(raw);
+            } catch(_) {}
+
+            if (!keys || typeof keys !== 'object') {
+                keys = {
+                    slot1: { role: 'system_core', key: '', provider: 'gemini' },
+                    slot2: { role: 'events_pricing', key: '', provider: 'openrouter' },
+                    slot3: { role: 'customer_chatbot', key: '', provider: 'groq' },
+                    slot4: { role: 'downloader_360', key: '', provider: 'openai' }
+                };
+            }
+
+            keys.slot1 = {
+                role: 'system_core',
+                key: keyVal,
+                provider: 'gemini'
+            };
+            keys.updated_at = new Date().toISOString();
+
+            // 1. Simpan secara lokal
+            try {
+                localStorage.setItem('wedrive_ai_keys', JSON.stringify(keys));
+                localStorage.setItem('wedrive_gemini_api_key', keyVal);
+            } catch(_) {}
+
+            // 2. Maklumkan WeDriveAiVault
+            if (window.WeDriveAiVault && window.WeDriveAiVault.notifyChange) {
+                window.WeDriveAiVault.notifyChange();
+            }
+
+            // 3. Simpan terus ke Supabase DB
+            let savedToDb = false;
+            if (window.supabaseClient) {
+                try {
+                    const sb = window.supabaseClient;
+                    const r = await sb.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
+                    if (!r.error) savedToDb = true;
+                } catch(err) {
+                    console.warn('[WeDRIVE AI] Supabase save error:', err);
+                }
+            }
+
+            if (btn) btn.innerHTML = originalBtnHtml;
+            closeQuickKeyModal();
+
+            showAiToast(savedToDb ? '✓ Kunci AI berjaya disimpan ke pangkalan data!' : '✓ Kunci AI berjaya disimpan secara lokal!', 'success');
+
+            // Terus jalankan pengisian spesifikasi
+            setTimeout(() => {
+                runAiAutoGenerate();
+            }, 350);
+        }
+
+        function resetAiButtonState() {
+            const btn = document.getElementById('aiAutoGenerateBtn');
+            const btnText = document.getElementById('aiBtnText');
+            const btnIcon = document.getElementById('aiBtnIcon');
+            const btnBadge = document.getElementById('aiBtnBadge');
+            const btnBadgeText = document.getElementById('aiBtnBadgeText');
+            const btnBadgeIcon = document.getElementById('aiBtnBadgeIcon');
+            const laserScanner = document.getElementById('aiSpecLaserScanner');
+
+            if (laserScanner) laserScanner.classList.add('hidden');
+            if (btn) {
+                btn.classList.remove('ai-analyzing-active', 'pointer-events-none');
+            }
+            if (btnText) {
+                btnText.textContent = (getCurrentLang() === 'en') ? 'Auto-fill' : 'Isi Automatik';
+                btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight whitespace-nowrap';
+            }
+            if (btnIcon) {
+                btnIcon.classList.remove('animate-spin');
+                btnIcon.textContent = 'auto_awesome';
+                btnIcon.style.color = '#5E5CE6';
+            }
+            if (btnBadge) {
+                btnBadge.className = 'ai-gradient-pill pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full flex items-center gap-1.5 shadow-sm z-10 transition-all shrink-0';
+                btnBadge.style.cssText = '';
+            }
+            if (btnBadgeText) {
+                btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Generate AI' : 'Jana AI';
+            }
+            if (btnBadgeIcon) {
+                btnBadgeIcon.classList.remove('animate-spin');
+                btnBadgeIcon.textContent = 'arrow_downward';
+            }
+            isGeneratingSpec = false;
         }
 
         let isGeneratingSpec = false;
@@ -1012,35 +1232,15 @@ Rules:
 
                         // Gracefully reset button state after delay
                         setTimeout(() => {
-                            const currentDict = (typeof PREVIEW_I18N !== 'undefined' && PREVIEW_I18N[getCurrentLang()]) ? PREVIEW_I18N[getCurrentLang()] : (window.PREVIEW_I18N?.ms || {});
-                            if (btnText) {
-                                btnText.textContent = currentDict.ai_auto_spec || 'Cadangan Spesifikasi Pintar';
-                                btnText.className = 'font-headline text-[13px] sm:text-[14px] font-bold text-on-surface tracking-tight';
-                            }
-                            if (btnIcon) {
-                                btnIcon.textContent = 'auto_awesome';
-                                btnIcon.style.color = '';
-                            }
-                            if (btnBadge) {
-                                btnBadge.className = 'pill-btn font-footnote text-[12px] h-[30px] py-0 px-3 rounded-full bg-surface-container-high text-primary flex items-center gap-1.5 shadow-sm z-10 hover:bg-surface-container transition-all shrink-0';
-                                btnBadge.style.cssText = '';
-                            }
-                            if (btnBadgeText) btnBadgeText.textContent = (getCurrentLang() === 'en') ? 'Auto-detect' : 'Autokesan';
-                            if (btnBadgeIcon) btnBadgeIcon.textContent = 'auto_awesome';
-                            if (btn) btn.classList.remove('pointer-events-none');
-                            isGeneratingSpec = false;
+                            resetAiButtonState();
                         }, 2800);
                     }, 650);
                 } else {
-                    isGeneratingSpec = false;
-                    if (btn) btn.classList.remove('ai-analyzing-active', 'pointer-events-none');
-                    if (laserScanner) laserScanner.classList.add('hidden');
+                    resetAiButtonState();
                 }
             } catch (err) {
                 console.error('[WeDRIVE AI] Error running AI spec:', err);
-                isGeneratingSpec = false;
-                if (btn) btn.classList.remove('ai-analyzing-active', 'pointer-events-none');
-                if (laserScanner) laserScanner.classList.add('hidden');
+                resetAiButtonState();
             }
         }
 

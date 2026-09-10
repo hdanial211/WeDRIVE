@@ -115,7 +115,7 @@
           isActive = true;
         } else if (cleanHref.includes('/report/') && currentPath.includes('/report/')) {
           isActive = true;
-        } else if (cleanHref.includes('/analytics/') && (currentPath.includes('/analytics/') || currentPath.includes('/chatbot/') || currentPath.includes('/marketing/'))) {
+        } else if (cleanHref.includes('/analytics/') && (currentPath.includes('/analytics/') || currentPath.includes('/chatbot/') || currentPath.includes('/marketing/') || currentPath.includes('/ai/'))) {
           isActive = true;
         }
       }

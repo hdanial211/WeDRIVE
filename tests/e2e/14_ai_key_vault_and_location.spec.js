@@ -130,4 +130,76 @@ test.describe('WeDRIVE AI Key Vault & Unified HQ Location Tests', () => {
     await expect(badge360).toContainText('360° View');
   });
 
+  test('Admin AI Key Vault supports dedicated per-slot save with Apple HIG toast', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'admin-test-id',
+        email: 'admin@wedrive.my',
+        role: 'admin',
+        username: 'Admin Test',
+        name: 'Admin Test',
+        timestamp: Date.now()
+      }));
+    });
+
+    await page.goto('/admin/pages/ai/api-keys.html');
+    await page.waitForLoadState('networkidle');
+
+    // Slot 1 dedicated save button should be visible
+    const saveBtnSlot1 = page.locator('#btn-save-slot-1');
+    await expect(saveBtnSlot1).toBeVisible();
+
+    // Type a key and click save
+    const testKey = 'AIzaSyD_TestE2EKeySave1234567890';
+    await page.locator('#key-slot-1').fill(testKey);
+    await saveBtnSlot1.click();
+
+    // Verify unified floating pill toast appears
+    const toast = page.locator('#wedrive-toast-pill');
+    await expect(toast).toBeVisible();
+    await expect(toast).toContainText(/Slot 1 Tersimpan|berjaya disimpan/i);
+
+    // Verify localStorage has the key
+    const vault = await page.evaluate(() => JSON.parse(localStorage.getItem('wedrive_ai_keys') || '{}'));
+    expect(vault.slot1 && vault.slot1.key).toBe(testKey);
+  });
+
+  test('Step 1 Spesifikasi renders Quick AI Key modal and resilient AI button', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'admin-test-id',
+        email: 'admin@wedrive.my',
+        role: 'admin',
+        username: 'Admin Test',
+        name: 'Admin Test',
+        timestamp: Date.now()
+      }));
+    });
+
+    await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
+    await page.waitForLoadState('networkidle');
+
+    // Quick AI Key trigger button exists
+    const quickKeyBtn = page.locator('#btnQuickAiKey');
+    await expect(quickKeyBtn).toBeVisible();
+
+    // Clicking it opens modal
+    await quickKeyBtn.click();
+    const modal = page.locator('#quickKeyModal');
+    await expect(modal).toBeVisible();
+
+    // Save key via modal
+    const modalInput = page.locator('#quickInputGeminiKey');
+    await expect(modalInput).toBeVisible();
+    await modalInput.fill('AIzaSyD_ModalSavedTestKey_9999');
+    await page.locator('#btnSaveQuickKey').click();
+
+    // Modal should close
+    await expect(modal).toBeHidden();
+
+    // Verify AI button is interactive and does not stay frozen
+    const btnAiGenerate = page.locator('#aiAutoGenerateBtn');
+    await expect(btnAiGenerate).toBeEnabled();
+  });
+
 });

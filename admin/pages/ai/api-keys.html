@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms" class="dark">
+<html lang="ms">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,12 +9,12 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.8.0" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=6.17.1" />
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
 <body data-particles="6" data-cursor-glow>
   <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
-  <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="ai-keys"></div>
+  <div id="sidebar-placeholder" data-component="sidebar-admin" data-context="ai" data-page="ai-keys"></div>
 
   <!-- MAIN -->
   <main class="main">
@@ -33,7 +33,7 @@
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
               <h1 class="bento-title-main" data-key="vault_title">Pengurusan Kunci API AI (AI Key Vault)</h1>
-              <span class="status-badge active"><span class="ai-pulse-dot mr-6"></span> <span>Pintu Masuk AI Berpusat</span></span>
+              <span class="status-badge available"><span class="ai-pulse-dot mr-6"></span> <span>Pintu Masuk AI Berpusat</span></span>
             </div>
             <p class="bento-subtitle-main" data-key="vault_subtitle">
               Konfigurasi 4 slot kunci API AI percuma secara terasing. Sistem secara pintar mengesan pembekal kunci secara automatik (Google Gemini, OpenRouter, Groq, OpenAI) sebaik sahaja ditampal.
@@ -53,8 +53,8 @@
       <!-- PANDUAN KUNCI PERCUMA 100% (ZERO COST) -->
       <div class="ai-guide-card reveal-onload">
         <div class="flex-start gap-16 items-start">
-          <div class="w-44 h-44 radius-50 flex-center bg-primary-10 border-primary-20 flex-shrink-0">
-            <span class="material-icons-round text-primary fs-24">lightbulb</span>
+          <div class="ai-guide-icon">
+            <span class="material-icons-round text-primary fs-22">lightbulb</span>
           </div>
           <div class="flex-1">
             <h3 class="fs-16 fw-700 text-title m-0 mb-6">Panduan Kunci API 100% Percuma (Zero Cost Forever)</h3>
@@ -118,11 +118,16 @@
             <div class="ai-test-status" id="status-slot-1"></div>
           </div>
 
-          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center flex-wrap gap-8">
             <span class="fs-11 text-muted" id="latency-slot-1">Latensi: -- ms</span>
-            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-1" onclick="testSingleSlot(1)">
-              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
-            </button>
+            <div class="flex-center gap-8">
+              <button class="btn-outline-sm" id="btn-test-1" onclick="testSingleSlot(1)">
+                <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+              </button>
+              <button class="btn-primary-sm" id="btn-save-slot-1" onclick="saveSingleSlot(1)">
+                <span class="material-icons-round fs-14">save</span> Simpan Kunci
+              </button>
+            </div>
           </div>
         </div>
 
@@ -159,11 +164,16 @@
             <div class="ai-test-status" id="status-slot-2"></div>
           </div>
 
-          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center flex-wrap gap-8">
             <span class="fs-11 text-muted" id="latency-slot-2">Latensi: -- ms</span>
-            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-2" onclick="testSingleSlot(2)">
-              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
-            </button>
+            <div class="flex-center gap-8">
+              <button class="btn-outline-sm" id="btn-test-2" onclick="testSingleSlot(2)">
+                <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+              </button>
+              <button class="btn-primary-sm" id="btn-save-slot-2" onclick="saveSingleSlot(2)">
+                <span class="material-icons-round fs-14">save</span> Simpan Kunci
+              </button>
+            </div>
           </div>
         </div>
 
@@ -200,11 +210,16 @@
             <div class="ai-test-status" id="status-slot-3"></div>
           </div>
 
-          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center flex-wrap gap-8">
             <span class="fs-11 text-muted" id="latency-slot-3">Latensi: -- ms</span>
-            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-3" onclick="testSingleSlot(3)">
-              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
-            </button>
+            <div class="flex-center gap-8">
+              <button class="btn-outline-sm" id="btn-test-3" onclick="testSingleSlot(3)">
+                <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+              </button>
+              <button class="btn-primary-sm" id="btn-save-slot-3" onclick="saveSingleSlot(3)">
+                <span class="material-icons-round fs-14">save</span> Simpan Kunci
+              </button>
+            </div>
           </div>
         </div>
 
@@ -238,7 +253,7 @@
               <label class="form-label fs-11 fw-600 text-title mb-4 d-block">Uji Sedut Pautan 360° (Live URL Tester)</label>
               <div class="flex-start gap-8">
                 <input type="url" id="test-360-url" class="form-input radius-10 fs-12 flex-1" placeholder="https://cdn.impel.io/spincar... atau pautan Carsome" />
-                <button class="btn-primary-sm py-6 px-12 fs-12 flex-shrink-0" onclick="testIngest360Link()">
+                <button class="btn-primary-sm flex-shrink-0" onclick="testIngest360Link()">
                   <span class="material-icons-round fs-14">download</span> Sedut
                 </button>
               </div>
@@ -248,11 +263,16 @@
             <div class="ai-test-status mt-10" id="status-slot-4"></div>
           </div>
 
-          <div class="border-top-subtle pt-14 mt-16 flex-between align-center">
+          <div class="border-top-subtle pt-14 mt-16 flex-between align-center flex-wrap gap-8">
             <span class="fs-11 text-muted" id="latency-slot-4">Latensi: -- ms</span>
-            <button class="btn-outline-sm py-6 px-14 fs-12" id="btn-test-4" onclick="testSingleSlot(4)">
-              <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
-            </button>
+            <div class="flex-center gap-8">
+              <button class="btn-outline-sm" id="btn-test-4" onclick="testSingleSlot(4)">
+                <span class="material-icons-round fs-14">bolt</span> Uji Sambungan
+              </button>
+              <button class="btn-primary-sm" id="btn-save-slot-4" onclick="saveSingleSlot(4)">
+                <span class="material-icons-round fs-14">save</span> Simpan Kunci
+              </button>
+            </div>
           </div>
         </div>
 
@@ -263,16 +283,16 @@
     </div>
   </main>
 
-  <script src="../../../shared/js/navbar-loader.js?v=5.8.0"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.8.0"></script>
-  <script src="../../../shared/js/main.js?v=5.8.0"></script>
+  <script src="../../../shared/js/navbar-loader.js?v=6.17.1"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=6.17.1"></script>
+  <script src="../../../shared/js/main.js?v=6.17.1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js"></script>
   <script src="../../../shared/js/api.js"></script>
   <script src="../../../shared/js/anime.min.js"></script>
   <script src="../../../shared/js/animate.js"></script>
-  <script src="../../../shared/js/ai-vault.js?v=6.17.0"></script>
-  <script src="../../js/api-keys.js?v=6.17.0"></script>
-  <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
+  <script src="../../../shared/js/ai-vault.js?v=6.17.1"></script>
+  <script src="../../js/api-keys.js?v=6.17.1"></script>
+  <script src="../../js/admin-idle-timeout.js?v=6.17.1"></script>
 </body>
 </html>

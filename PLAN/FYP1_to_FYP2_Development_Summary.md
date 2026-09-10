@@ -6405,6 +6405,52 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.0 Align 5-step add car flow, live Supabase real data pipeline, searchable brand combobox, and SpinCar 360 verification`
   - Tag Versi: `6.17.0`
 
+---
+
+### [PATCH UPDATE] v6.17.1 — Penjajaran Penuh Tema Siang & Malam Apple HIG untuk Peti Besi Kunci AI & Integrasi Navigasi Kontekstual
+
+- **Punca Keperluan & Arahan Pengguna**:
+  - Pengguna melaporkan warna dan tema pada halaman `admin/pages/ai/api-keys.html` tidak mengikut spesifikasi reka bentuk ("warna n theme x ikut spesifikasi awak fix").
+  - Pemeriksaan visual mendapati bahawa:
+    1. **Kegagalan Kontras Mod Siang**: Kad Peti Besi Kunci AI (`.ai-vault-card`) dan kad panduan (`.ai-guide-btn`) menggunakan pemboleh ubah tidak wujud `var(--bg-surface-1, #161618)`. Ini menyebabkan nilai lalai gelap (`#161618`) sentiasa diguna pakai walaupun dalam Mod Siang, mengakibatkan teks gelap `#1D1D1F` tenggelam di atas latar belakang hitam (teks tidak boleh dibaca).
+    2. **Pengekodan Tegar 'dark' pada Elemen `<html>`**: Fail `api-keys.html` mempunyai atribut statik `class="dark"`, menyekat fungsi penukaran tema automatik dan manual yang dikawal oleh `shared/js/main.js`.
+    3. **Kegagalan Pemadanan Modul Navigasi**: Bar navigasi atas (topbar) dan bar sisi (sidebar) tidak mengecam laluan `/admin/pages/ai/`, menyebabkan sidebar jatuh balik kepada menu modul Papan Pemuka (*Dashboard*) dan ikon AI di topbar tidak disorot (*highlighted*).
+    4. **Pematuhan Geometri Apple HIG**: Penunjuk ikon dan butang panduan memerlukan penyeragaman kepada nisbah bulat tepat 1:1 (*Zero Oval Rule*) dan butang tindakan kapsul/pil simetri.
+
+- **Tindakan Teknikal & Pembaikan**:
+  1. **Penggayaan CSS Master Global (`shared/css/wedrive.css`)**:
+     - Membetulkan `.ai-vault-card` dan `.ai-guide-btn` menggunakan `var(--bg-surface)` dan `var(--bg-surface-2)`, membolehkan kad memaparkan latar belakang putih `#FFFFFF` bersih dalam Mod Siang dan `#161618` dalam Mod Malam dengan sempadan halus sub-piksel.
+     - Menambah kelas `.ai-guide-icon` bulat tepat 1:1 (`44px × 44px`, `aspect-ratio: 1/1 !important`, `border-radius: 50% !important`) mematuhi Peraturan Mandatori Sifar Bujur.
+     - Mengemas kini lencana pembekal AI (`.ai-provider-badge`) bagi Gemini, OpenRouter, Groq, dan OpenAI dengan warna pastel Apple kontras tinggi bagi kedua-dua mod.
+     - Menyelaraskan medan input `.ai-key-input` dengan `var(--bg-surface-2)`, sempadan dinamik, dan sokongan teks dwimod.
+  2. **Struktur HTML & Penyeragaman (`admin/pages/ai/api-keys.html`)**:
+     - Menyingkirkan `class="dark"` tegar daripada `<html>` bagi membolehkan pensuisan dwitema lancar.
+     - Menetapkan `data-context="ai"` pada `#sidebar-placeholder`.
+     - Menyeragamkan butang tindakan kepada `.btn-outline-sm` dan `.btn-primary-sm` berprofil Apple HIG.
+     - Mengemas kini versi *cache-buster* kepada `?v=6.17.1`.
+  3. **Penyegerakan Navigasi Dinamik (`shared/js/navbar-loader.js` & `sidebar-loader.js`)**:
+     - Menambah corak padanan `/ai/` pada fungsi pengesanan modul aktif dalam kedua-dua skrip pemuat.
+     - Modul Kecerdasan AI kini disorot secara automatik di topbar (ikon berkilau biru) dan memaparkan suite sidebar kontekstual "KECERDASAN AI" (Peti Besi Kunci AI, Analitik Pintar, Studio 360°, Bot Sembang).
+  4. **Penstabilan Modul Spesifikasi & Peti Besi (`admin/pages/car/add-car/step1_spesifikasi.html` & `admin/js/api-keys.js`)**:
+     - Menambah pengenal pasti unik `#btnQuickAiKey` pada butang modal kunci AI pantas.
+     - Memastikan notifikasi notis sistem menggunakan ID rasmi `#wedrive-toast-pill`.
+  5. **Pengemaskinian Ujian Automasi (`tests/e2e/14_ai_key_vault_and_location.spec.js`)**:
+     - Menyelaraskan penegasan ujian storan tempatan `wedrive_ai_keys` dan pemilih interaktif modal `#aiAutoGenerateBtn`.
+
+- **Kepatuhan Ujian Automasi & Standard**:
+  - Suite ujian Playwright lengkap dijalankan: **53/53 ujian lulus (100% Pass Rate)**.
+  - Kesemua 23 fail peraturan `.agents/rules/*.md` disahkan kekal $\le 12,000$ aksara (`wc -m`).
+  - Pengesahan visual 3-peranti Apple pada tab tunggal aktif (`pageId: 2` via Chrome DevTools MCP):
+    - MacBook Desktop Retina (1440 × 900)
+    - iPad Tablet (820 × 1180)
+    - iPhone Mobile Retina XDR (393 × 852)
+  - Mematuhi Peraturan Mandatori Zero Oval Rule (1:1 ikon bulat sempurna dan kapsul pil 9999px).
+
+- **Maklumat Git**:
+  - Commit: `6.17.1 Fix AI Key Vault Day and Night theme compliance and contextual navigation`
+  - Tag Versi: `6.17.1`
+
+
 
 
 

@@ -18813,18 +18813,20 @@ body.day-mode .cal-filter-chip.active {
 }
 
 /* ==========================================================================
-   AI KEY VAULT & 360 STUDIO (Apple HIG Obsidian Bento System - v5.8.0)
+   AI KEY VAULT & 360 STUDIO (Apple HIG Adaptive Bento System - v5.8.0)
    ========================================================================== */
 
 /* Free AI API Guide Card */
 .ai-guide-card {
-  background: linear-gradient(135deg, rgba(0, 113, 227, 0.08) 0%, rgba(88, 86, 214, 0.05) 100%);
-  border: 1px solid rgba(0, 113, 227, 0.2);
-  border-radius: 24px;
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-bento, 24px) !important;
   padding: 24px;
   position: relative;
   overflow: hidden;
   margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s var(--ease-apple);
 }
 
 .ai-guide-card::before {
@@ -18834,8 +18836,27 @@ body.day-mode .cal-filter-chip.active {
   right: -40px;
   width: 180px;
   height: 180px;
-  background: radial-gradient(circle, rgba(0, 113, 227, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--primary-light, rgba(0, 113, 227, 0.15)) 0%, transparent 70%);
   pointer-events: none;
+}
+
+.ai-guide-icon {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--primary-light, rgba(0, 113, 227, 0.1)) !important;
+  border: 1px solid var(--primary-border, rgba(0, 113, 227, 0.25)) !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .ai-guide-links {
@@ -18848,22 +18869,25 @@ body.day-mode .cal-filter-chip.active {
 .ai-guide-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 8px 16px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill, 9999px) !important;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
-  background: var(--bg-surface-1, #161618);
-  color: var(--text-primary, #FFFFFF);
-  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg-surface-2) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-medium) !important;
+  transition: all 0.2s var(--ease-apple);
+  white-space: nowrap !important;
 }
 
 .ai-guide-btn:hover {
-  border-color: #0071E3;
-  color: #0071E3;
+  background: var(--bg-surface-3) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
   transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 /* 4-Slot AI Key Vault Grid */
@@ -18881,18 +18905,20 @@ body.day-mode .cal-filter-chip.active {
 }
 
 .ai-vault-card {
-  background: var(--bg-surface-1, #161618);
-  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
-  border-radius: 24px;
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-bento, 24px) !important;
   padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s var(--ease-apple);
 }
 
 .ai-vault-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: var(--border-medium) !important;
+  box-shadow: var(--shadow-md);
 }
 
 .ai-vault-card-header {
@@ -18900,7 +18926,7 @@ body.day-mode .cal-filter-chip.active {
   justify-content: space-between;
   align-items: flex-start;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  border-bottom: 1px solid var(--border-subtle);
   margin-bottom: 16px;
 }
 
@@ -18909,20 +18935,21 @@ body.day-mode .cal-filter-chip.active {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #0071E3;
+  color: var(--primary);
   margin-bottom: 4px;
 }
 
 .ai-slot-title {
   font-size: 17px;
   font-weight: 700;
-  color: var(--text-primary, #FFFFFF);
+  color: var(--text-primary) !important;
   margin: 0;
 }
 
 .ai-slot-desc {
-  font-size: 12px;
-  color: var(--text-secondary, #86868B);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary) !important;
   margin: 4px 0 0 0;
 }
 
@@ -18930,45 +18957,51 @@ body.day-mode .cal-filter-chip.active {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: 9999px;
-  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill, 9999px) !important;
+  font-size: 11.5px;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--text-secondary, #86868B);
-  white-space: nowrap;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-medium);
+  color: var(--text-secondary);
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .ai-provider-badge.detected-gemini {
-  background: rgba(52, 199, 89, 0.12);
-  border-color: rgba(52, 199, 89, 0.3);
-  color: #34C759;
+  background: rgba(52, 199, 89, 0.12) !important;
+  border-color: rgba(52, 199, 89, 0.3) !important;
+  color: #34C759 !important;
 }
 
 .ai-provider-badge.detected-openrouter {
-  background: rgba(0, 113, 227, 0.12);
-  border-color: rgba(0, 113, 227, 0.3);
-  color: #0071E3;
+  background: rgba(0, 113, 227, 0.12) !important;
+  border-color: rgba(0, 113, 227, 0.3) !important;
+  color: var(--primary) !important;
 }
 
 .ai-provider-badge.detected-groq {
-  background: rgba(175, 82, 222, 0.12);
-  border-color: rgba(175, 82, 222, 0.3);
-  color: #AF52DE;
+  background: rgba(175, 82, 222, 0.12) !important;
+  border-color: rgba(175, 82, 222, 0.3) !important;
+  color: #AF52DE !important;
 }
 
 .ai-provider-badge.detected-openai {
-  background: rgba(16, 185, 129, 0.12);
-  border-color: rgba(16, 185, 129, 0.3);
-  color: #10B981;
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  color: #10B981 !important;
 }
 
 .ai-pulse-dot {
   width: 7px !important;
   height: 7px !important;
+  min-width: 7px !important;
+  min-height: 7px !important;
+  max-width: 7px !important;
+  max-height: 7px !important;
   aspect-ratio: 1 / 1 !important;
   border-radius: 50% !important;
+  padding: 0 !important;
   background: #34C759 !important;
   box-shadow: 0 0 8px #34C759 !important;
   display: inline-block !important;
@@ -18990,19 +19023,20 @@ body.day-mode .cal-filter-chip.active {
 
 .ai-key-input {
   width: 100%;
-  background: var(--bg-surface-2, rgba(255, 255, 255, 0.03)) !important;
-  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1)) !important;
-  border-radius: 14px !important;
+  background: var(--bg-surface-2) !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: var(--radius-input, 14px) !important;
   padding: 12px 42px 12px 14px !important;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", monospace !important;
   font-size: 13px !important;
-  color: var(--text-primary, #FFFFFF) !important;
+  color: var(--text-primary) !important;
   box-sizing: border-box;
+  transition: all 0.2s var(--ease-apple);
 }
 
 .ai-key-input:focus {
-  border-color: #0071E3 !important;
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3.5px rgba(0, 113, 227, 0.2) !important;
   outline: none;
 }
 
@@ -19013,7 +19047,7 @@ body.day-mode .cal-filter-chip.active {
   transform: translateY(-50%);
   background: transparent;
   border: none;
-  color: var(--text-secondary, #86868B);
+  color: var(--text-secondary);
   cursor: pointer;
   width: 32px !important;
   height: 32px !important;
@@ -19032,7 +19066,8 @@ body.day-mode .cal-filter-chip.active {
 }
 
 .ai-eye-btn:hover {
-  color: var(--text-primary, #FFFFFF);
+  color: var(--text-primary);
+  background: var(--bg-surface-3);
 }
 
 .ai-test-status {
@@ -19066,10 +19101,11 @@ body.day-mode .cal-filter-chip.active {
 .ai-360-tester {
   margin-top: 14px;
   padding: 14px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface-2);
+  border: 1px dashed var(--border-medium);
   border-radius: 16px;
 }
+
 
 /* 360 Studio Upload Styles (add-car.html) */
 .bento-360-grid {

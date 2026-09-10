@@ -154,6 +154,9 @@
           statusEl.innerHTML = '<span class="material-icons-round fs-16">check_circle</span> Sambungan Berjaya! ' + pName + ' aktif (' + latency + 'ms).';
         }
         if (latencyEl) latencyEl.textContent = 'Latensi: ' + latency + ' ms';
+
+        // Auto-save apabila ujian sambungan berjaya
+        await window.saveSingleSlot(slotNum, true);
       } else {
         throw new Error('Gagal mengesahkan kunci API.');
       }
@@ -176,9 +179,101 @@
   };
 
   /**
+   * Save a single slot key directly to Supabase and localStorage
+   * @param {number} slotNum - 1 to 4
+   * @param {boolean} [isAutoSave] - true if called from testSingleSlot
+   */
+  window.saveSingleSlot = async function (slotNum, isAutoSave) {
+    var input = document.getElementById('key-slot-' + slotNum);
+    var keyVal = input ? input.value.trim() : '';
+    var btn = document.getElementById('btn-save-slot-' + slotNum);
+    var originalBtnText = btn ? btn.innerHTML : '';
+    if (btn && !isAutoSave) {
+      btn.innerHTML = '<span class="material-icons-round fs-14 spin-pulse">sync</span> Menyimpan...';
+    }
+
+    var keys = null;
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) keys = JSON.parse(raw);
+    } catch (e) {}
+
+    if (!keys || typeof keys !== 'object') {
+      keys = {
+        slot1: { role: 'system_core', key: '', provider: 'unknown' },
+        slot2: { role: 'events_pricing', key: '', provider: 'unknown' },
+        slot3: { role: 'customer_chatbot', key: '', provider: 'unknown' },
+        slot4: { role: 'downloader_360', key: '', provider: 'unknown' }
+      };
+    }
+
+    var slotRoles = { 1: 'system_core', 2: 'events_pricing', 3: 'customer_chatbot', 4: 'downloader_360' };
+    var detected = detectProvider(keyVal);
+    var slotId = 'slot' + slotNum;
+
+    keys[slotId] = {
+      role: slotRoles[slotNum],
+      key: keyVal,
+      provider: (detected && detected.id) ? detected.id : 'unknown'
+    };
+    keys.updated_at = new Date().toISOString();
+
+    // 1. Simpan ke localStorage
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
+
+    // 2. Selaraskan Slot 3 jika dikemas kini
+    if (slotNum === 3) {
+      var currentChatbot = {};
+      try { currentChatbot = JSON.parse(localStorage.getItem('wedrive_chatbot_settings') || '{}'); } catch (e) {}
+      currentChatbot.apiKey = keyVal;
+      currentChatbot.provider = keys.slot3.provider;
+      localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(currentChatbot));
+    }
+
+    // 3. Maklumkan WeDriveAiVault jika ada
+    if (window.WeDriveAiVault && window.WeDriveAiVault.notifyChange) {
+      window.WeDriveAiVault.notifyChange();
+    }
+
+    // 4. Simpan ke pangkalan data Supabase jadual 'settings' (key: 'ai_keys')
+    var savedToDb = false;
+    if (window.supabaseClient) {
+      try {
+        var sb = window.supabaseClient;
+        var r = await sb.from('settings').upsert({ key: 'ai_keys', value: keys }, { onConflict: 'key' });
+        if (!r.error) savedToDb = true;
+      } catch (err) {
+        console.warn('[AI Key Vault] Supabase save error:', err);
+      }
+    }
+
+    if (btn && !isAutoSave) {
+      btn.innerHTML = originalBtnText;
+    }
+
+    var slotNames = {
+      1: 'Slot 1 (Sistem Teras)',
+      2: 'Slot 2 (Enjin Harga & Acara)',
+      3: 'Slot 3 (Chatbot Pelanggan)',
+      4: 'Slot 4 (Automasi 360°)'
+    };
+    var slotName = slotNames[slotNum] || ('Slot ' + slotNum);
+
+    if (isAutoSave) {
+      showToast('Sambungan disahkan & ' + slotName + ' disimpan secara automatik!', 'success');
+    } else {
+      showToast(savedToDb ? 'Kunci ' + slotName + ' berjaya disimpan ke pangkalan data!' : 'Kunci ' + slotName + ' berjaya disimpan secara lokal!', 'success');
+    }
+  };
+
+  /**
    * Save all 4 keys to Supabase and localStorage
    */
   window.saveAllKeys = async function () {
+    var btn = document.querySelector('button[onclick="saveAllKeys()"]');
+    var originalBtnHtml = btn ? btn.innerHTML : '';
+    if (btn) btn.innerHTML = '<span class="material-icons-round fs-16 spin-pulse">sync</span> Menyimpan...';
+
     var keys = {
       slot1: {
         role: 'system_core',
@@ -215,6 +310,11 @@
       localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(currentChatbot));
     }
 
+    // Maklumkan WeDriveAiVault
+    if (window.WeDriveAiVault && window.WeDriveAiVault.notifyChange) {
+      window.WeDriveAiVault.notifyChange();
+    }
+
     // Save to Supabase 'settings' table (key: 'ai_keys')
     var savedToDb = false;
     if (window.supabaseClient) {
@@ -227,7 +327,9 @@
       }
     }
 
-    showToast(savedToDb ? 'Kunci API AI berjaya disimpan ke pangkalan data!' : 'Kunci API AI berjaya disimpan secara lokal!', 'success');
+    if (btn) btn.innerHTML = originalBtnHtml;
+
+    showToast(savedToDb ? 'Semua kunci API AI berjaya disimpan ke pangkalan data!' : 'Kunci API AI berjaya disimpan secara lokal!', 'success');
   };
 
   /**
@@ -332,12 +434,55 @@
     if (existing) existing.remove();
     var toast = document.createElement('div');
     toast.className = 'toast-notify';
-    var icon = type === 'success' ? 'check_circle' : 'info';
-    var bg = type === 'success' ? '#059669' : '#0071E3';
-    toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:' + bg + ';color:#fff;padding:14px 24px;border-radius:14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;z-index:9999;box-shadow:0 12px 32px rgba(0,0,0,0.4);animation:slideUp 0.3s ease';
-    toast.innerHTML = '<span class="material-icons-round" style="font-size:18px">' + icon + '</span> ' + msg;
+    toast.id = 'wedrive-toast-pill';
+    var isSuccess = (type === 'success');
+    var icon = isSuccess ? 'check_circle' : 'info';
+    var accentBg = isSuccess ? 'linear-gradient(135deg, #34C759, #30B0C7)' : 'linear-gradient(135deg, #0071E3, #5E5CE6)';
+    var borderColor = isSuccess ? 'rgba(52, 199, 89, 0.4)' : 'rgba(0, 113, 227, 0.4)';
+    var shadowColor = isSuccess ? 'rgba(52, 199, 89, 0.25)' : 'rgba(0, 113, 227, 0.25)';
+
+    toast.style.cssText = [
+      'position: fixed',
+      'top: 84px',
+      'left: 50%',
+      'transform: translateX(-50%) translateY(-10px)',
+      'z-index: 99999',
+      'display: flex',
+      'align-items: center',
+      'gap: 10px',
+      'padding: 8px 18px 8px 10px',
+      'border-radius: 9999px !important',
+      'background: rgba(22, 22, 24, 0.92)',
+      'color: #FFFFFF',
+      'border: 1px solid ' + borderColor,
+      'box-shadow: 0 16px 36px ' + shadowColor + ', 0 4px 12px rgba(0,0,0,0.35)',
+      'backdrop-filter: blur(20px) saturate(180%)',
+      '-webkit-backdrop-filter: blur(20px) saturate(180%)',
+      'transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+      'opacity: 0',
+      'pointer-events: none'
+    ].join(';');
+
+    var iconCircle = [
+      '<div style="width: 28px; height: 28px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; background: ' + accentBg + '; color: #FFFFFF; flex-shrink: 0 !important; box-shadow: 0 2px 8px ' + shadowColor + ';">',
+      '  <span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>',
+      '</div>'
+    ].join('');
+
+    toast.innerHTML = iconCircle + '<span style="font-size: 13px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap !important;">' + msg + '</span>';
     document.body.appendChild(toast);
-    setTimeout(function () { toast.remove(); }, 3200);
+
+    // Trigger animation frame for smooth drop down
+    requestAnimationFrame(function () {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    });
+
+    setTimeout(function () {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(-10px)';
+      setTimeout(function () { toast.remove(); }, 350);
+    }, 3200);
   }
 
   // Init
