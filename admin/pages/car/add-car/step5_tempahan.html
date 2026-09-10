@@ -203,7 +203,7 @@
 </div>
 </div>
 <div class="text-right">
-<div id="step5PricePerDay" class="font-tabular-label text-tabular-label text-primary text-xl font-bold">RM 0.00<span class="text-body text-on-surface-variant font-normal">/hari</span></div>
+<div id="step5PricePerDay" class="font-tabular-label text-tabular-label text-primary text-xl font-bold">RM 0<span class="text-body text-on-surface-variant font-normal">/hari</span></div>
 </div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -454,12 +454,12 @@ function hydrateStep5() {
     const dailyRate = parseInt(draft.dailyPrice || draft.dailyRate, 10) || 0;
     const priceEl = document.getElementById('step5PricePerDay');
     if (priceEl) {
-      priceEl.innerHTML = dailyRate ? `RM ${dailyRate}<span class="text-body text-on-surface-variant">${isEn ? '/day' : '/hari'}</span>` : `RM 0.00<span class="text-body text-on-surface-variant">${isEn ? '/day' : '/hari'}</span>`;
+      priceEl.innerHTML = dailyRate ? `RM ${dailyRate}<span class="text-body text-on-surface-variant">${isEn ? '/day' : '/hari'}</span>` : `RM 0<span class="text-body text-on-surface-variant">${isEn ? '/day' : '/hari'}</span>`;
     }
 
     const totalEl = document.getElementById('step5EstTotal');
     if (totalEl) {
-      totalEl.textContent = dailyRate ? `RM ${(dailyRate * 3).toLocaleString()}` : 'RM 0.00';
+      totalEl.textContent = dailyRate ? `RM ${(dailyRate * 3).toLocaleString()}` : 'RM 0';
     }
 
     const engEl = document.getElementById('step5Engine');
@@ -606,7 +606,7 @@ async function finishAndReturnToCars() {
         type: (draft.category || 'sedan').toLowerCase(),
         label: draft.category || 'Sedan',
         status: 'Available',
-        rate: `RM ${dailyPrice.toFixed(2)}/hari`,
+        rate: `RM ${Math.round(dailyPrice)}/hari`,
         price: dailyPrice,
         fuel: draft.fuel || 'Petrol',
         transmission: draft.transmission || 'Automatic',

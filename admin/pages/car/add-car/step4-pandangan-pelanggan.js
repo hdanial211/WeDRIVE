@@ -36,7 +36,7 @@
       const seats = (draft && draft.seats) ? draft.seats : '-';
       const rawDaily = draft ? (draft.dailyPrice || draft.daily_rate || draft.price_per_day) : null;
       const dailyVal = rawDaily ? Number(rawDaily) : 0;
-      const dailyRate = dailyVal > 0 ? `RM ${dailyVal.toFixed(2)}` : 'RM 0.00';
+      const dailyRate = dailyVal > 0 ? `RM ${Math.round(dailyVal)}` : 'RM 0';
       const statusVal = (draft && draft.status) ? draft.status : 'available';
       const has360 = (draft && (draft.has360 || (draft.cdnUrl && draft.cdnUrl.trim().length > 0)));
 

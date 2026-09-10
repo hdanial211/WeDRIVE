@@ -189,9 +189,12 @@
           '</div>';
       } else {
         gridEl.innerHTML = filtered.map(function (car) {
-          var img0 = (car.images && car.images.length > 0) ? car.images[0] : '';
-          var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
-          var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
+          var rawImg = (car.images && car.images.length > 0) ? car.images[0] : null;
+          var img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
+          var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
+          var rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '150');
+          var parsedRate = parseFloat(rawRateStr);
+          var rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
           var luggageText = (car.type === 'MPV' || (car.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((car.type === 'SUV' || (car.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((car.type === 'Sedan' || (car.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
 
           return '<div class="apple-car-showcase-card reveal-onload">' +
@@ -248,7 +251,9 @@
           tbody.innerHTML = '<tr><td colspan="9" class="text-center py-24 text-muted">Tiada kenderaan sepadan.</td></tr>';
         } else {
           tbody.innerHTML = filtered.map(function (car) {
-            var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
+            var rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '150');
+            var parsedRate = parseFloat(rawRateStr);
+            var rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
             return '<tr>' +
               '<td><strong>' + car.name + '</strong></td>' +
               '<td><span class="apple-plate-pill tabular-nums">' + (car.plate || '-') + '</span></td>' +

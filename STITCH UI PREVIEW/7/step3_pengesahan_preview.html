@@ -683,9 +683,9 @@
                 const fuel = data.fuel || 'Petrol RON95/97';
                 const transmission = data.transmission || 'Automatik (CVT)';
                 const seats = data.seats || '5 Tempat Duduk';
-                const daily = data.dailyPrice ? `RM ${Number(data.dailyPrice).toFixed(2)}` : 'RM 280.00';
-                const weekly = data.weeklyPrice ? `RM ${Number(data.weeklyPrice).toFixed(2)}` : 'RM 1,680.00';
-                const monthly = data.monthlyPrice ? `RM ${Number(data.monthlyPrice).toFixed(2)}` : 'RM 4,800.00';
+                const daily = data.dailyPrice ? `RM ${Math.round(Number(data.dailyPrice))}` : 'RM 280';
+                const weekly = data.weeklyPrice ? `RM ${Math.round(Number(data.weeklyPrice)).toLocaleString()}` : 'RM 1,680';
+                const monthly = data.monthlyPrice ? `RM ${Math.round(Number(data.monthlyPrice)).toLocaleString()}` : 'RM 4,800';
 
                 // Update Spec Fields
                 if (document.getElementById('specPlate')) document.getElementById('specPlate').textContent = plate;

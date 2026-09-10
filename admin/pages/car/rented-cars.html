@@ -264,9 +264,12 @@
         gridEl.innerHTML = filtered.map(function (item) {
           var car = item.car;
           var bk = item.booking;
-          var img0 = (car.images && car.images.length > 0) ? car.images[0] : '';
+          var rawImg = (car.images && car.images.length > 0) ? car.images[0] : null;
+          var img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
           var src = img0 ? ((img0.startsWith('http') || img0.startsWith('data:')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
-          var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '180';
+          var rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '180');
+          var parsedRate = parseFloat(rawRateStr);
+          var rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '180';
           var todayStr = new Date().toISOString().split('T')[0];
           var isToday = bk.return_date === todayStr;
           var lugText = (car.type === 'MPV' || (car.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((car.type === 'SUV' || (car.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((car.type === 'Sedan' || (car.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
@@ -330,7 +333,9 @@
           tbody.innerHTML = filtered.map(function (item) {
             var car = item.car;
             var bk = item.booking;
-            var rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '180';
+            var rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '180');
+            var parsedRate = parseFloat(rawRateStr);
+            var rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '180';
 
             return '<tr>' +
               '<td><strong class="text-title">' + car.name + '</strong><br><span class="fs-11 text-secondary">' + (car.type || 'Sedan') + '</span></td>' +

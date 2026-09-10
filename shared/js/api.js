@@ -769,7 +769,7 @@ window.WeDriveAPI = {
      */
     createCar: async function (carData) {
         var dailyNum = parseFloat(carData.price || carData.dailyPrice || 0);
-        var rateStr = carData.rate || (dailyNum > 0 ? ('RM ' + dailyNum.toFixed(2) + '/hari') : 'RM 0.00/hari');
+        var rateStr = carData.rate ? String(carData.rate).replace(/\.00/g, '') : (dailyNum > 0 ? ('RM ' + Math.round(dailyNum) + '/hari') : 'RM 0/hari');
         var transStr = carData.transmission || 'Automatic';
         var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
         
@@ -830,7 +830,7 @@ window.WeDriveAPI = {
      */
     saveCarDraft: async function (draftData) {
         var dailyNum = parseFloat(draftData.dailyPrice || draftData.price || 0);
-        var rateStr = draftData.rate || (dailyNum > 0 ? ('RM ' + dailyNum.toFixed(2) + '/hari') : 'RM 0.00/hari');
+        var rateStr = draftData.rate ? String(draftData.rate).replace(/\.00/g, '') : (dailyNum > 0 ? ('RM ' + Math.round(dailyNum) + '/hari') : 'RM 0/hari');
         var transStr = draftData.transmission || 'Automatic';
         var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
 
@@ -881,7 +881,7 @@ window.WeDriveAPI = {
      */
     publishCarDraft: async function (draftId, finalData) {
         var dailyNum = parseFloat(finalData.dailyPrice || finalData.price || 0);
-        var rateStr = finalData.rate || (dailyNum > 0 ? ('RM ' + dailyNum.toFixed(2) + '/hari') : 'RM 0.00/hari');
+        var rateStr = finalData.rate ? String(finalData.rate).replace(/\.00/g, '') : (dailyNum > 0 ? ('RM ' + Math.round(dailyNum) + '/hari') : 'RM 0/hari');
         var transStr = finalData.transmission || 'Automatic';
         var shortTrans = (transStr.toLowerCase().includes('auto')) ? 'Auto' : 'Manual';
 

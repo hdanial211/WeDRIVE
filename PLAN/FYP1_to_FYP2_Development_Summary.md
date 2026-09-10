@@ -6612,6 +6612,52 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.4 Fix database inventory sync, 5-step gatekeepers, navbar overlap, Apple HIG brand select, and zero emojis`
   - Tag Versi: `6.17.4`
 
+---
+
+### [PATCH] v6.17.5 — Penyeragaman Menyeluruh Format Kadar Sewaan Bersih Sifar Titik Perpuluhan (Clean Integer Car Rental Rates Standardization — Zero Decimals & Zero Oval)
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna mendapati percanggahan paparan kadar sewaan pada kad pengurusan kenderaan (`cars.html`): terdapat kenderaan yang memaparkan nilai bertitik perpuluhan `RM 450.00 /hari` (Imej 1) manakala kenderaan lain memaparkan nombor bulat bersih `RM 380 /hari` (Imej 2).
+  - Pengguna mengarahkan penyeragaman mutlak:
+    > *"penyeleraskan hanya tulis tanpa 2 titik perpuluhan sebab nampak lagi menarik"*
+  - Menghapuskan sebarang `.00` pada paparan kadar harian, mingguan, dan bulanan di seluruh sistem (kad pameran, paparan jadual, langkah pendaftaran 1–5, katalog pelanggan, dan pangkalan data).
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Pembersihan Data Supabase PostgreSQL (`cars`)**:
+     - Mengesan rekod `id: 14` (Kia Carnival 2.2) yang menyimpan nilai bercampur titik perpuluhan `rate: 'RM 450.00/hari'`.
+     - Menjalankan kemas kini SQL pada Supabase bagi menghapuskan `.00` daripada kolum `rate` (`UPDATE cars SET rate = 'RM 450/day' WHERE id = 14;`). Kesemua rekod dalam pangkalan data kini menggunakan format nombor bulat seragam.
+  2. **Penyelarasan Skrip Pengurusan Kenderaan Pentadbir (`admin/js/cars.js`)**:
+     - Memperhalusi fungsi pemaparan kad `renderCarShowcaseCard` dan baris jadual `renderCarTableRow`:
+       `const parsedRate = parseFloat(rawRateStr); const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';`
+     - Menjamin paparan kad sentiasa menghasilkan `RM ${rateNum} /hari` dan jadual `RM ${rateNum}/hari` tanpa titik perpuluhan.
+     - Memulihkan definisi selamat gambar kenderaan `const src = img0 ? ... : fallback` bagi menghalang sebarang ralat `ReferenceError`.
+  3. **Penyelarasan Halaman Pameran Tersedia & Disewa**:
+     - **`admin/pages/car/available-cars.html`**: Menyelaraskan `rateNum` dalam `gridEl` dan `avail-tbody` kepada `Math.round(parsedRate)`, serta mengendalikan struktur imej `car.images` (objek atau rentetan) dengan selamat.
+     - **`admin/pages/car/rented-cars.html`**: Menyelaraskan `rateNum` dalam `rented-grid` dan `rented-tbody` kepada `Math.round(parsedRate)` tanpa perpuluhan.
+  4. **Penyelarasan Aliran Modular Pendaftaran Kenderaan (`admin/pages/car/add-car/`)**:
+     - **`step1_spesifikasi.html`**: Mengemas kini teks pemegang tempat (*placeholder*) kadar harian, mingguan, dan bulanan daripada `0.00` kepada `0`. Menyelaraskan fungsi auto-pengisian AI Siri kepada integer bulat `Math.round(Number(specs.daily))`, `specs.weekly`, dan `specs.monthly`.
+     - **`step3-pengesahan.js`**: Mengemas kini formula ringkasan spesifikasi kadar sewaan harian, mingguan, dan bulanan kepada `RM ${Math.round(dailyVal)}` tanpa `.00`, serta penghantaran muatan data `rate: RM ${Math.round(dailyPrice)}/hari`.
+     - **`step4_pandangan_pelanggan.html` & `step4-pandangan-pelanggan.js`**: Mengemas kini sandaran kad daripada `RM 0.00` kepada `RM 0`, dan kalkulator kad kepada `RM ${Math.round(dailyVal)}`.
+     - **`step5_tempahan.html`**: Mengemas kini nilai paparan permulaan `#step5PricePerDay` kepada `RM 0/hari`, logik paparan dinamik kepada `RM ${dailyRate}/hari`, dan muatan pendaftaran akhir kepada `RM ${Math.round(dailyPrice)}/hari`.
+  5. **Penyelarasan Lapisan Pustaka API & Modul Pelanggan (`shared/js/api.js` & `customer/js/customer.js`)**:
+     - `shared/js/api.js`: Menyelaraskan penjanaan rentetan `rateStr` dalam `createCar`, `saveCarDraft`, dan `publishCarDraft` kepada `Math.round(dailyNum)` dan menapis `.00` sedia ada.
+     - `customer/js/customer.js`: Memperkukuh fungsi utiliti `carPrice(car)` untuk sentiasa memulangkan nombor bulat bundar (`Math.round(p)` / `Math.round(parseFloat(match[0]))`), menjamin katalog carian pelanggan (`browse-cars.html`) 100% bebas daripada perpuluhan `.00`.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Pemeriksaan Visual DevTools MCP Tab Aktif**:
+    - `cars.html`: Kesemua 10 kad kenderaan memaparkan nombor bulat bersih: `RM 280 /hari`, `RM 360 /hari`, `RM 450 /hari`, `RM 320 /hari`, `RM 190 /hari`, `RM 420 /hari`, `RM 110 /hari`, `RM 380 /hari`, `RM 450 /hari`, `RM 95 /hari`.
+    - `available-cars.html`: 9 kenderaan memaparkan kadar bulat bersih seragam.
+    - `rented-cars.html`: 1 kenderaan memaparkan `RM 190 /hari`.
+    - `step4_pandangan_pelanggan.html` & `step5_tempahan.html`: Bersih tanpa `.00`.
+    - `customer/pages/browse-cars/browse-cars.html`: 100% paparan kadar sewaan mematuhi integer bersih.
+  - **Ujian Automasi Playwright CLI**: 54/54 ujian lulus sepenuhnya (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 23 fail `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Berjaya dikemas kini melalui `graphify update .` (3196 nod, 5785 sisi).
+
+- **Maklumat Git**:
+  - Commit: `6.17.5 Standardize car rental rates to clean integer format without decimals`
+  - Tag Versi: `6.17.5`
+
 
 
 

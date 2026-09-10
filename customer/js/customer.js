@@ -108,11 +108,11 @@
   function carPrice(car) {
     if (car && car.price !== null && car.price !== undefined) {
       var p = Number(car.price);
-      if (!isNaN(p) && p > 0) return p;
+      if (!isNaN(p) && p > 0) return Math.round(p);
     }
     if (car && car.rate) {
       var match = String(car.rate).match(/[\d.]+/);
-      if (match) return parseFloat(match[0]);
+      if (match) return Math.round(parseFloat(match[0]));
     }
     return 0;
   }

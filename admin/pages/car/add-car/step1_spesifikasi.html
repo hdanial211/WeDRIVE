@@ -613,7 +613,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_daily_rate">Kadar Harian</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input id="inputDailyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="" type="number" step="10"/>
+                            <input id="inputDailyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0" value="" type="number" step="10"/>
                         </div>
                     </div>
 
@@ -622,7 +622,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_weekly_rate">Kadar Mingguan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input id="inputWeeklyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="" type="number" step="50"/>
+                            <input id="inputWeeklyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0" value="" type="number" step="50"/>
                         </div>
                     </div>
 
@@ -631,7 +631,7 @@
                         <label class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_monthly_rate">Kadar Bulanan</label>
                         <div class="flex items-center gap-2">
                             <span class="font-label-tabular text-label-tabular text-secondary font-bold">RM</span>
-                            <input id="inputMonthlyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0.00" value="" type="number" step="100"/>
+                            <input id="inputMonthlyRate" class="bg-transparent border-none font-title-2 text-title-2 w-full outline-none text-right font-label-tabular focus:ring-0 py-0 pl-0 pr-1 text-on-surface font-bold" placeholder="0" value="" type="number" step="100"/>
                         </div>
                     </div>
                 </div>
@@ -1139,9 +1139,9 @@ Rules:
                         { el: transEl, val: specs.transmission },
                         { el: seatsEl, val: specs.seats },
                         { el: engineEl, val: specs.engine },
-                        { el: dailyEl, val: Number(specs.daily).toFixed(2), wrap: dailyEl?.closest('.bg-surface-container') },
-                        { el: weeklyEl, val: Number(specs.weekly).toFixed(2), wrap: weeklyEl?.closest('.bg-surface-container') },
-                        { el: monthlyEl, val: Number(specs.monthly).toFixed(2), wrap: monthlyEl?.closest('.bg-surface-container') }
+                        { el: dailyEl, val: Math.round(Number(specs.daily)), wrap: dailyEl?.closest('.bg-surface-container') },
+                        { el: weeklyEl, val: Math.round(Number(specs.weekly)), wrap: weeklyEl?.closest('.bg-surface-container') },
+                        { el: monthlyEl, val: Math.round(Number(specs.monthly)), wrap: monthlyEl?.closest('.bg-surface-container') }
                     ];
 
                     // Cascading ripple wave animation across fields

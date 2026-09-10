@@ -230,9 +230,9 @@
       const weeklyVal = data && data.weeklyPrice ? Number(data.weeklyPrice) : (dailyVal ? dailyVal * 6 : 0);
       const monthlyVal = data && data.monthlyPrice ? Number(data.monthlyPrice) : (dailyVal ? dailyVal * 20 : 0);
 
-      const daily = dailyVal > 0 ? `RM ${dailyVal.toFixed(2)}` : 'RM 0.00';
-      const weekly = weeklyVal > 0 ? `RM ${weeklyVal.toFixed(2)}` : 'RM 0.00';
-      const monthly = monthlyVal > 0 ? `RM ${monthlyVal.toFixed(2)}` : 'RM 0.00';
+      const daily = dailyVal > 0 ? `RM ${Math.round(dailyVal)}` : 'RM 0';
+      const weekly = weeklyVal > 0 ? `RM ${Math.round(weeklyVal)}` : 'RM 0';
+      const monthly = monthlyVal > 0 ? `RM ${Math.round(monthlyVal)}` : 'RM 0';
 
       // Update Spec Fields
       if (document.getElementById('specPlate')) document.getElementById('specPlate').textContent = plate;
@@ -364,7 +364,7 @@
         type: (draft.category || 'sedan').toLowerCase(),
         label: draft.category || 'Sedan',
         status: 'Available',
-        rate: `RM ${dailyPrice.toFixed(2)}/hari`,
+        rate: `RM ${Math.round(dailyPrice)}/hari`,
         price: dailyPrice,
         fuel: draft.fuel || 'Petrol',
         transmission: draft.transmission || 'Automatic',

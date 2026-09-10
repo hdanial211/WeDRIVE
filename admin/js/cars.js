@@ -120,7 +120,9 @@ function renderCarCards(car) {
     const rawImg = (c.images && c.images.length > 0) ? c.images[0] : null;
     const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
     const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
-    const rateNum = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : '150';
+    const rawRateStr = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : (c.price ? String(c.price) : '150');
+    const parsedRate = parseFloat(rawRateStr);
+    const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
     const lugText = (c.type === 'MPV' || (c.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((c.type === 'SUV' || (c.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((c.type === 'Sedan' || (c.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
 
     return `
@@ -193,7 +195,9 @@ function renderCarTable(car) {
     const rawImg = (car.images && car.images.length > 0) ? car.images[0] : null;
     const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
     const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
-    const rateNum = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : '150';
+    const rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '150');
+    const parsedRate = parseFloat(rawRateStr);
+    const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
 
     return `
     <tr style="border-bottom: 1px solid var(--border-subtle); transition: background 0.15s ease;">

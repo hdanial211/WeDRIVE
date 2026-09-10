@@ -989,9 +989,9 @@
                         { el: transEl, val: specs.transmission },
                         { el: seatsEl, val: specs.seats },
                         { el: engineEl, val: specs.engine },
-                        { el: dailyEl, val: Number(specs.daily).toFixed(2), wrap: dailyEl?.closest('.bg-surface-container') },
-                        { el: weeklyEl, val: Number(specs.weekly).toFixed(2), wrap: weeklyEl?.closest('.bg-surface-container') },
-                        { el: monthlyEl, val: Number(specs.monthly).toFixed(2), wrap: monthlyEl?.closest('.bg-surface-container') }
+                        { el: dailyEl, val: Math.round(Number(specs.daily)), wrap: dailyEl?.closest('.bg-surface-container') },
+                        { el: weeklyEl, val: Math.round(Number(specs.weekly)), wrap: weeklyEl?.closest('.bg-surface-container') },
+                        { el: monthlyEl, val: Math.round(Number(specs.monthly)), wrap: monthlyEl?.closest('.bg-surface-container') }
                     ];
 
                     // Cascading ripple wave animation across fields (from Page 1)
