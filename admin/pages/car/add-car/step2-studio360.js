@@ -54,6 +54,95 @@
   let currentImpelVin       = '';  // e.g. mntccnd23z0011880
   let currentImpelCustomer  = '';  // e.g. Carsome
 
+  // ── Cloudinary Config (WeDRIVE 360° Studio) ──
+  const CLOUDINARY_CLOUD    = 'gwd1bhcx';
+  const CLOUDINARY_PRESET   = 'wedrive_360';
+  const CLOUDINARY_ENDPOINT = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`;
+
+  // Download a single CDN frame as Blob (requires CORS from Impel CDN)
+  async function downloadFrameBlob(url) {
+    const res = await fetch(url, { mode: 'cors' });
+    if (!res.ok) throw new Error(`CDN fetch failed ${res.status}: ${url}`);
+    return res.blob();
+  }
+
+  // Upload a Blob to Cloudinary with a given public_id path
+  async function uploadToCloudinary(blob, publicId) {
+    const fd = new FormData();
+    fd.append('file', blob);
+    fd.append('upload_preset', CLOUDINARY_PRESET);
+    fd.append('public_id', publicId);
+    fd.append('overwrite', 'true');
+    const res = await fetch(CLOUDINARY_ENDPOINT, { method: 'POST', body: fd });
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`Cloudinary upload error ${res.status}: ${errText}`);
+    }
+    const data = await res.json();
+    return data.secure_url; // e.g. https://res.cloudinary.com/gwd1bhcx/image/upload/...
+  }
+
+  // Upload 36 key frames from Impel CDN to Cloudinary (mirroring shared/model/ folder structure)
+  // Also uploads interior pano if available.
+  // Returns { exteriorFrames: string[], interiorFacesObj: Object|null }
+  async function uploadImpelFramesToCloudinary(cdnPrefix, carLabel, carName, onProgress) {
+    const TOTAL_FRAMES  = 200;
+    const SAMPLE_FRAMES = 36;   // 36 frames @ 10° = smooth turntable
+    const FRONT_OFFSET  = 125;
+    const BATCH_SIZE    = 5;    // 5 parallel fetches
+
+    // Sanitize folder path to match shared/model/ convention: {Label}/{Name}
+    const safeLabel = (carLabel || 'Car').replace(/[/\\:*?"<>|]/g, '-').trim();
+    const safeName  = (carName  || 'Unknown').replace(/[/\\:*?"<>|]/g, '-').trim();
+    const baseFolder = `wedrive-model/${safeLabel}/${safeName}`;
+
+    // Build list of 36 frame numbers evenly distributed around 360°
+    const frameNums = [];
+    for (let i = 0; i < SAMPLE_FRAMES; i++) {
+      frameNums.push((FRONT_OFFSET + Math.round(i * (TOTAL_FRAMES / SAMPLE_FRAMES))) % TOTAL_FRAMES);
+    }
+
+    const cloudinaryUrls = new Array(frameNums.length).fill(null);
+    let uploaded = 0;
+
+    // Batch upload exterior frames
+    for (let b = 0; b < frameNums.length; b += BATCH_SIZE) {
+      const batch = frameNums.slice(b, b + BATCH_SIZE);
+      await Promise.all(batch.map(async (frameNum, bIdx) => {
+        const padded   = String(frameNum).padStart(3, '0');
+        const cdnUrl   = `${cdnPrefix}exterior/full-res/frame-${padded}.jpg`;
+        const publicId = `${baseFolder}/exterior/full-res/frame-${padded}`;
+        const blob     = await downloadFrameBlob(cdnUrl);
+        const url      = await uploadToCloudinary(blob, publicId);
+        cloudinaryUrls[b + bIdx] = url;
+        uploaded++;
+        if (onProgress) onProgress(uploaded, frameNums.length);
+      }));
+    }
+
+    // Upload interior cube-map faces (f, b, l, r, u, d) — Impel format: pano/pano_{face}.jpg
+    let interiorFacesObj = null;
+    if (currentCdnInteriorUrl) {
+      const FACES = ['f', 'b', 'l', 'r', 'u', 'd'];
+      const faceResults = {};
+      await Promise.all(FACES.map(async (face) => {
+        try {
+          // Impel interior path: ${cdnPrefix}pano/pano_{face}.jpg
+          const faceUrl  = `${cdnPrefix}pano/pano_${face}.jpg`;
+          const publicId = `${baseFolder}/interior/full-res/pano_${face}`;
+          const blob     = await downloadFrameBlob(faceUrl);
+          faceResults[face] = await uploadToCloudinary(blob, publicId);
+        } catch (e) {
+          console.warn(`[WeDRIVE] Interior face '${face}' unavailable — skipping:`, e);
+        }
+      }));
+      if (Object.keys(faceResults).length > 0) interiorFacesObj = faceResults;
+    }
+
+    return { exteriorFrames: cloudinaryUrls.filter(Boolean), interiorFacesObj };
+  }
+
+
   // Parse SpinCar/Impel/Carsome link and extract 3 separate views:
   // 1. Exterior 360 viewer URL
   // 2. Interior panorama URL (pano_f.jpg) & 6 cubemap faces
@@ -661,22 +750,39 @@
 
       draft.orientation_frames = { hero: 140, front: 125, right: 175, left: 75, rear: 24, rear_left: 0 };
 
+      // ── Cloudinary Upload Path (when Impel CDN metadata available) ──
       if (currentCdnPrefix) {
-        // Save Impel metadata as JSON — car-detail builds frame URLs directly from CDN (zero storage)
-        const impelMeta = JSON.stringify({
-          type: 'impel_cdn',
-          cdn_prefix: currentCdnPrefix,
-          vin: currentImpelVin,
-          customer: currentImpelCustomer,
-          frame_count: 200,
-          has_pano: !!currentCdnInteriorUrl,
-          interior_pano_url: currentCdnInteriorUrl || ''
-        });
-        draft.exterior_360  = impelMeta;
-        draft.supabase_360  = currentCdnExteriorUrl; // Keep SpinCar URL as fallback
-      } else if (currentCdnExteriorUrl) {
+        showAiToast(isEn ? 'Uploading 360° frames to cloud... (0/36)' : 'Memuat naik 36 bingkai 360° ke awan... (0/36)', true, 'cloud_upload');
+
+        const carLabel = draft.label || draft.type || 'Car';
+        const carName  = draft.name  || 'Unknown';
+
+        const { exteriorFrames, interiorFacesObj } = await uploadImpelFramesToCloudinary(
+          currentCdnPrefix, carLabel, carName,
+          (done, total) => {
+            showAiToast(
+              isEn ? `Uploading... (${done}/${total} frames)` : `Memuat naik... (${done}/${total} bingkai)`,
+              true, 'cloud_upload'
+            );
+          }
+        );
+
+        draft.exterior_frames = exteriorFrames;  // Array of 36 Cloudinary URLs
+        draft.has_360         = true;
+
+        if (interiorFacesObj && Object.keys(interiorFacesObj).length > 0) {
+          // Save 6-face cube-map URLs as JSON string — car-detail.js parses face keys (f,b,l,r,u,d)
+          draft.interior_360 = JSON.stringify(interiorFacesObj);
+        }
+
+        // Clear the impel JSON meta from exterior_360 (not needed anymore)
+        draft.exterior_360 = null;
+        draft.supabase_360 = currentCdnExteriorUrl; // Keep SpinCar URL as backup
+
+      } else if (currentCdnPrefix === '' && currentCdnExteriorUrl) {
+        // Fallback: save raw SpinCar URL if Cloudinary not configured
         draft.supabase_360 = currentCdnExteriorUrl;
-        draft.exterior_360  = currentCdnExteriorUrl;
+        draft.exterior_360 = currentCdnExteriorUrl;
       }
       if (cdnUrlInput && cdnUrlInput.value.trim()) {
         draft.cdnUrl         = cdnUrlInput.value.trim();

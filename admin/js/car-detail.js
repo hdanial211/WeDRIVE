@@ -645,7 +645,37 @@ function setupInteriorCockpit(car) {
 
   if (!stage) return;
 
-  // ── Impel CDN Interior: load cube-map faces from CDN prefix ──
+  // ── Cloudinary cube-map faces from interior_360 JSON ──
+  // interior_360 = JSON string: { f: url, b: url, l: url, r: url, u: url, d: url }
+  let cloudinaryFaces = null;
+  if (car.interior_360 && typeof car.interior_360 === 'string' && car.interior_360.trim().startsWith('{')) {
+    try { cloudinaryFaces = JSON.parse(car.interior_360); } catch (_) {}
+  }
+
+  if (cloudinaryFaces && cloudinaryFaces.f) {
+    const faceImgs = stage.querySelectorAll('[data-vehicle-interior-face]');
+    faceImgs.forEach(img => {
+      const face = img.getAttribute('data-vehicle-interior-face');
+      if (face && cloudinaryFaces[face]) img.src = cloudinaryFaces[face];
+    });
+
+    stage.classList.remove('hidden');
+    stage.style.display = '';
+    if (fallback) fallback.classList.add('hidden');
+    if (scene) scene.style.display = 'flex';
+    if (hud) hud.classList.remove('hidden');
+    if (dragHint) dragHint.classList.remove('is-hidden');
+
+    if (window.WedriveVehicleViewer && !interiorViewerApi) {
+      interiorViewerApi = window.WedriveVehicleViewer.get(stage) || window.WedriveVehicleViewer.init(stage, {
+        defaultView: 'interior', autoDrift: false
+      });
+    }
+    updateCockpitAngleIndicator({ yaw: 180, pitch: 0 });
+    return;
+  }
+
+  // ── Fallback: Impel CDN prefix set by setupExterior360 Case 0 (live CDN preview, no upload) ──
   const impelPrefix = window._wedrive_impel_cdn_prefix || '';
   if (impelPrefix) {
     const faces = ['f', 'b', 'l', 'r', 'u', 'd'];
@@ -653,7 +683,7 @@ function setupInteriorCockpit(car) {
     faceImgs.forEach(img => {
       const face = img.getAttribute('data-vehicle-interior-face');
       if (face && faces.includes(face)) {
-        img.src = `${impelPrefix}interior/full-res/pano_${face}.jpg`;
+        img.src = `${impelPrefix}pano/pano_${face}.jpg`;
       }
     });
 
@@ -664,17 +694,15 @@ function setupInteriorCockpit(car) {
     if (hud) hud.classList.remove('hidden');
     if (dragHint) dragHint.classList.remove('is-hidden');
 
-    // Init WedriveVehicleViewer if available for drag interaction
     if (window.WedriveVehicleViewer && !interiorViewerApi) {
       interiorViewerApi = window.WedriveVehicleViewer.get(stage) || window.WedriveVehicleViewer.init(stage, {
-        defaultView: 'interior',
-        autoDrift: false
+        defaultView: 'interior', autoDrift: false
       });
     }
-
     updateCockpitAngleIndicator({ yaw: 180, pitch: 0 });
     return;
   }
+
 
   if (!carHasInterior360(car)) {
     stage.classList.add('hidden');
