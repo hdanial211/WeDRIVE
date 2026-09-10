@@ -18,14 +18,14 @@
 (function () {
   'use strict';
 
-  // Slot definitions for vehicle inspection (Standardized to BMW 320i & Toyota Alphard frame-140 standard)
+  // Slot definitions for vehicle inspection
   const INSPECTION_SLOTS = [
-    { key: 'slot_front', title: 'Hadapan Tiga Suku (Foto Utama)', titleEn: 'Front Three-Quarter (Hero Cover)' },
-    { key: 'slot_full_front', title: 'Hadapan Penuh', titleEn: 'Full Front' },
+    { key: 'slot_front', title: 'Hadapan Penuh', titleEn: 'Full Front' },
+    { key: 'slot_rear', title: 'Belakang Penuh', titleEn: 'Full Rear' },
     { key: 'slot_right', title: 'Sisi Kanan Profil', titleEn: 'Right Side Profile' },
     { key: 'slot_left', title: 'Sisi Kiri Profil', titleEn: 'Left Side Profile' },
-    { key: 'slot_rear', title: 'Belakang Penuh', titleEn: 'Full Rear' },
-    { key: 'slot_rear_quarter', title: 'Sisi Belakang Kiri', titleEn: 'Rear Left Quarter' }
+    { key: 'slot_quarter_fl', title: 'Suku Hadapan Kiri', titleEn: 'Front Left Quarter' },
+    { key: 'slot_quarter_rr', title: 'Suku Belakang Kanan', titleEn: 'Rear Right Quarter' }
   ];
 
   function getLang() {
@@ -118,33 +118,21 @@
 
 
 
-    // 4. Map standard vehicle angles (Referenced to BMW 320i & Toyota Alphard frame-140 hero standard)
+    // 4. Map 8 standard vehicle angles to gallery and inspection slots
     const angleMap = {
-      '0-140': { title: 'Hadapan Tiga Suku (Foto Utama)', titleEn: 'Front Three-Quarter (Hero Cover)', slot: 0 },
-      '0-125': { title: 'Hadapan Penuh',                 titleEn: 'Full Front',                       slot: 1 },
-      '0-175': { title: 'Sisi Kanan Profil',             titleEn: 'Right Side Profile',               slot: 2 },
-      '0-50':  { title: 'Sisi Kiri Profil',              titleEn: 'Left Side Profile',                slot: 3 },
-      '0-100': { title: 'Belakang Penuh',                titleEn: 'Full Rear',                        slot: 4 },
-      '0-0':   { title: 'Sisi Belakang Kiri',            titleEn: 'Rear Left Quarter',                slot: 5 },
-      '0-25':  { title: 'Sisi Hadapan Kanan',            titleEn: 'Front Right Quarter',              slot: null },
-      '0-75':  { title: 'Sisi Belakang Kanan',           titleEn: 'Rear Right Quarter',               slot: null },
-      '0-150': { title: 'Sisi Kiri Suku',                titleEn: 'Left Quarter Profile',             slot: null }
+      '0-0':   { title: 'Hadapan Penuh',       titleEn: 'Full Front',          slot: 0 },
+      '0-25':  { title: 'Sisi Hadapan Kanan',  titleEn: 'Front Right Quarter', slot: null },
+      '0-50':  { title: 'Sisi Kanan Profil',   titleEn: 'Right Side Profile',  slot: 2 },
+      '0-75':  { title: 'Sisi Belakang Kanan', titleEn: 'Rear Right Quarter',  slot: 5 },
+      '0-100': { title: 'Belakang Penuh',      titleEn: 'Full Rear',           slot: 1 },
+      '0-125': { title: 'Sisi Belakang Kiri',  titleEn: 'Rear Left Quarter',   slot: null },
+      '0-150': { title: 'Sisi Kiri Profil',    titleEn: 'Left Side Profile',   slot: 3 },
+      '0-175': { title: 'Sisi Hadapan Kiri',   titleEn: 'Front Left Quarter',  slot: 4 }
     };
-
-    // Standardized frame ordering: 0-140 ALWAYS FIRST (matching BMW & Alphard frame-140.jpg hero cover)
-    const canonicalOrder = ['0-140', '0-125', '0-175', '0-50', '0-100', '0-0', '0-25', '0-75'];
-    const orderedIndices = [];
-    canonicalOrder.forEach(id => {
-      if (!orderedIndices.includes(id)) orderedIndices.push(id);
-    });
-    // Add any remaining indices returned from API
-    thumbIndices.forEach(id => {
-      if (!orderedIndices.includes(id)) orderedIndices.push(id);
-    });
 
     const gallery8Photos = [];
     if (cdnPrefix) {
-      orderedIndices.forEach((tid, idx) => {
+      thumbIndices.forEach((tid, idx) => {
         const meta = angleMap[tid] || { title: `Sudut ${idx + 1}`, titleEn: `Angle ${idx + 1}`, slot: null };
         gallery8Photos.push({
           id: tid,
@@ -386,10 +374,23 @@
         ? currentGallery8Photos
         : currentGalleryPhotos.filter(p => p && p.img);
       draft.downloaded = true;
-      const firstValid = currentGalleryPhotos.find(p => p && p.img) || (currentGallery8Photos && currentGallery8Photos[0]);
-      if (firstValid) {
-        draft.image_url = typeof firstValid === 'string' ? firstValid : (firstValid.img || '');
+      // Strictly lock Hero photo to Slot 0 (Hadapan Tiga Suku 0-140 BMW/Alphard Standard)
+      const heroPhoto = (currentGalleryPhotos && currentGalleryPhotos[0] && currentGalleryPhotos[0].img)
+        ? currentGalleryPhotos[0]
+        : (currentGallery8Photos && currentGallery8Photos[0])
+          ? currentGallery8Photos[0]
+          : currentGalleryPhotos.find(p => p && p.img);
+      if (heroPhoto) {
+        draft.image_url = typeof heroPhoto === 'string' ? heroPhoto : (heroPhoto.img || '');
       }
+      draft.orientation_frames = {
+        hero: 140,
+        front: 125,
+        right: 175,
+        left: 75,
+        rear: 24,
+        rear_left: 0
+      };
       const hasValid360 = Boolean(currentCdnExteriorUrl || (cdnUrlInput && cdnUrlInput.value.trim()));
       draft.has360         = hasValid360;
       draft.has_360        = hasValid360;
@@ -636,6 +637,23 @@
             draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
               ? currentGallery8Photos
               : currentGalleryPhotos.filter(p => p && p.img);
+            // Strictly lock Hero photo to Slot 0 (Hadapan Tiga Suku 0-140 BMW/Alphard Standard)
+            const heroPhoto = (currentGalleryPhotos && currentGalleryPhotos[0] && currentGalleryPhotos[0].img)
+              ? currentGalleryPhotos[0]
+              : (currentGallery8Photos && currentGallery8Photos[0])
+                ? currentGallery8Photos[0]
+                : currentGalleryPhotos.find(p => p && p.img);
+            if (heroPhoto) {
+              draft.image_url = typeof heroPhoto === 'string' ? heroPhoto : (heroPhoto.img || '');
+            }
+            draft.orientation_frames = {
+              hero: 140,
+              front: 125,
+              right: 175,
+              left: 75,
+              rear: 24,
+              rear_left: 0
+            };
             if (currentCdnExteriorUrl) {
               draft.supabase_360 = currentCdnExteriorUrl;
             }

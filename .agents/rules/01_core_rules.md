@@ -10,7 +10,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 
 1. **Wajib Baca Peraturan Ejen Terlebih Dahulu**: Sentiasa semak dan patuhi peraturan dalam `.agents/rules/` sebelum sebarang pengubahsuaian.
 2. **Wajib Temu Duga /grill-me Dahulu**: Sekiranya terdapat arahan baharu, ketidakpastian skop, atau pilihan seni bina, AI WAJIB menjalankan sesi temu duga menggunakan alatan `ask_question` untuk menyelaraskan kehendak bersama pengguna sebelum sebarang kod disentuh.
-3. **Wajib Semak Halaman Sebagai Pengguna (Check Page As User First & Post-Test)**: Sebelum dan selepas mengekod, AI WAJIB memeriksa visual dan fungsi pada tab aktif mengikut spektrum Apple 3-Peranti (MacBook 1440px $\to$ iPad 820px $\to$ iPhone 393px via `resize_page`) daripada perspektif pengguna sebenar tanpa membuka banyak tab (Rujuk [05_apple_device_support.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/05_apple_device_support.md)).
+3. **Wajib Semak Halaman Sebagai Pengguna (Check Page As User First & Post-Test)**: Sebelum dan selepas mengekod, AI WAJIB memeriksa visual dan fungsi pada tab aktif mengikut spektrum Apple 3-Peranti (MacBook 1440px $\to$ iPad 820px $\to$ iPhone 393px via `resize_page`) daripada perspektif pengguna sebenar tanpa membuka banyak tab (Rujuk [05_apple_device_support.md](05_apple_device_support.md)).
 4. **Wajib Panggilan Penuh Alatan MCP & Kemahiran Secara Aktif (Strict Active Tooling & MCP Execution)**:
    - **DILARANG SAMA SEKALI** meneka sintaks atau menulis kod tanpa memanggil alatan rasmi yang telah disediakan.
    - **Context7 MCP**: WAJIB dipanggil (`resolve-library-id` $\to$ `query-docs`) setiap kali menulis atau mengubah kod melibatkan pustaka luaran (Supabase JS, Flatpickr, Three.js, Playwright, Anime.js).
@@ -18,19 +18,19 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
    - **Chrome DevTools MCP**: WAJIB digunakan untuk memeriksa visual DOM dan saiz responsif Apple 3-peranti pada tab aktif sebelum dan selepas ubah kod.
    - **Playwright CLI & Graphify**: WAJIB jalankan ujian automatik (100% pass) dan kemas kini graf pengetahuan (`graphify update .`).
    - **Penyegerakan GitHub Mandatori (Auto-Sync GitHub)**: Setiap kali sesuatu arahan/tugasan selesai diuji, AI WAJIB menyegerakkan kod ke GitHub melalui alur kerja `/release_push` dengan Git Tag SemVer (X.Y.Z) dan commit rasmi supaya repositori sentiasa terkini.
-5. **Wajib Patuhi Standard Bahasa Moden 2026**: Sentiasa rujuk [11_language_standards.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/11_language_standards.md) untuk semua teks antaramuka dan perbualan AI.
-6. **Wajib Had Kandungan Maksimum 12,000 Aksara (Strict 12,000 Characters Limit)**: Rujuk [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md). Setiap fail peraturan `.agents/rules/*.md` WAJIB kekal $\le 12,000$ aksara.
-7. **Wajib Kitaran 5-Langkah Sandbox `STITCH UI PREVIEW/`**: Sebelum sebarang skrin baharu dicipta atau direka semula, AI WAJIB menjana reka bentuk ke `STITCH UI PREVIEW/` terlebih dahulu untuk semakan kendiri pengguna melalui HTML. Kod pengeluaran DILARANG disentuh sehingga pengguna memberi kelulusan eksplisit (Rujuk [07_stitch_design_system.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/07_stitch_design_system.md)).
-8. **Wajib Logik Akal Operasi & Data Sebenar Sahaja (Strict Zero Fabricated Fields & Real Data Only)**: Sifar medan rekaan ("benda yang tak ada jangan diadakan" cth: odometer/perbatuan), sifar ulangan universal pada rekod individu ("benda yang semua pakai jangan tunjuk dekat individu" cth: HQ Cyberjaya dan status sedia disewa), dan sifar hardcoded dummy data (Wajib real data pipeline via draf sesi/Supabase). Rujuk [04_navigation_and_ui.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md) & [06_code_and_backend.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/06_code_and_backend.md).
+5. **Wajib Patuhi Standard Bahasa Moden 2026**: Sentiasa rujuk [11_language_standards.md](11_language_standards.md) untuk semua teks antaramuka dan perbualan AI.
+6. **Wajib Had Kandungan Maksimum 12,000 Aksara (Strict 12,000 Characters Limit)**: Rujuk [12_max_content_limit.md](12_max_content_limit.md). Setiap fail peraturan `.agents/rules/*.md` WAJIB kekal $\le 12,000$ aksara.
+7. **Wajib Kitaran 5-Langkah Sandbox `STITCH UI PREVIEW/`**: Sebelum sebarang skrin baharu dicipta atau direka semula, AI WAJIB menjana reka bentuk ke `STITCH UI PREVIEW/` terlebih dahulu untuk semakan kendiri pengguna melalui HTML. Kod pengeluaran DILARANG disentuh sehingga pengguna memberi kelulusan eksplisit (Rujuk [07_stitch_design_system.md](07_stitch_design_system.md)).
+8. **Wajib Logik Akal Operasi & Data Sebenar Sahaja (Strict Zero Fabricated Fields & Real Data Only)**: Sifar medan rekaan ("benda yang tak ada jangan diadakan" cth: odometer/perbatuan), sifar ulangan universal pada rekod individu ("benda yang semua pakai jangan tunjuk dekat individu" cth: HQ Cyberjaya dan status sedia disewa), dan sifar hardcoded dummy data (Wajib real data pipeline via draf sesi/Supabase). Rujuk [04_navigation_and_ui.md](04_navigation_and_ui.md) & [06_code_and_backend.md](06_code_and_backend.md).
 
 ---
 
 ## 1. Theme & Design Consistency (Apple HIG Standard)
 
 - Semua reka bentuk UI, komponen, peralihan, kad Bento, butang, modal, dan susun atur WAJIB mematuhi piawaian rasmi **Apple HIG**:
-  - **Rujukan Utama:** [02_apple_hig_design_system.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/02_apple_hig_design_system.md) & [03_apple_hig_components.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/03_apple_hig_components.md).
+  - **Rujukan Utama:** [02_apple_hig_design_system.md](02_apple_hig_design_system.md) & [03_apple_hig_components.md](03_apple_hig_components.md).
   - **Prinsip Geometri Bulat (Strict 1:1 Circle — Zero Oval):** Elemen bulat WAJIB bulat tepat 1:1 (`aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; width == height;`). DILARANG SAMA SEKALI bentuk bujur/lonjong. Butang berteks WAJIB kapsul pil (`border-radius: 9999px; white-space: nowrap !important; flex-shrink: 0 !important;`).
-  - **Prinsip Sifar Tindakan Bertindan (Strict Zero Duplicate Actions):** DILARANG SAMA SEKALI menyediakan 2 atau 3 elemen/butang yang menjalankan fungsi sama dalam satu halaman. Setiap fungsi WAJIB mempunyai SATU butang tindakan tunggal sahaja (Rujuk [04_navigation_and_ui.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)).
+  - **Prinsip Sifar Tindakan Bertindan (Strict Zero Duplicate Actions):** DILARANG SAMA SEKALI menyediakan 2 atau 3 elemen/butang yang menjalankan fungsi sama dalam satu halaman. Setiap fungsi WAJIB mempunyai SATU butang tindakan tunggal sahaja (Rujuk [04_navigation_and_ui.md](04_navigation_and_ui.md)).
   - **Bento Grid & Bahan Kaca:** Susun atur kad Bento squircle (`border-radius: 24px/28px`), sifar ruang mati (*Zero Dead Space*), nombor `tabular-nums`, fizik sentuhan `scale(0.97)`, dan Apple Thin Material (`backdrop-filter: blur(20px) saturate(180%)`).
   - **Dwi-Tema:** Mod Siang (`#F5F5F7` / `#FFFFFF`) dan Mod Obsidian Malam (`#000000` True Black / `#161618` Bento).
   - **Piawaian Notifikasi Tunggal (Strict Single Unified Pill Toast):** Semua notifikasi sistem WAJIB menggunakan format kapsul pil terapung di tengah atas skrin dengan ikon bulat 1:1, bahan kaca Apple, dan teks sebaris (Rujuk [03_apple_hig_components.md](03_apple_hig_components.md) & [04_navigation_and_ui.md](04_navigation_and_ui.md)).
@@ -63,7 +63,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 
 ---
 
-## 7. Indeks & Rujukan 22 Peraturan Modul Berkaitan (Jumlah 23 Fail Peraturan)
+## 7. Indeks & Rujukan 23 Peraturan Modul Berkaitan (Jumlah 24 Fail Peraturan)
 - **Standard BM Moden 2026:** [11_language_standards.md](11_language_standards.md)
 - **Apple HIG Design System:** [02_apple_hig_design_system.md](02_apple_hig_design_system.md) & [03_apple_hig_components.md](03_apple_hig_components.md)
 - **Navigation & UI/UX:** [04_navigation_and_ui.md](04_navigation_and_ui.md)
@@ -84,6 +84,7 @@ Setiap kali sesi bermula atau arahan (prompt) diterima, ejen AI **WAJIB** mematu
 - **Operasi Lanjutan & Pasca-Prompt Stitch MCP:** [21_stitch_mcp_advanced_operations.md](21_stitch_mcp_advanced_operations.md)
 - **Undang-undang Emas Maklum Balas Pengguna:** [22_user_feedback_golden_rules.md](22_user_feedback_golden_rules.md)
 - **Alur Kerja STITCH ke Pengeluaran:** [23_stitch_to_production_workflow.md](23_stitch_to_production_workflow.md)
+- **Piawaian Sudut Visual & 360 Meja Putar:** [24_vehicle_visual_angles_standard.md](24_vehicle_visual_angles_standard.md)
 
 ---
 

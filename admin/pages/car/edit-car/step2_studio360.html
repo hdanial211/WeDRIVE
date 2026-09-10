@@ -66,50 +66,45 @@
         }
     </style>
 </head>
-<body data-particles="6" data-cursor-glow class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
+<body class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
 
-    <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
-    <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-all"></div>
+    <div id="navbar-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
 
-    <!-- MAIN -->
-    <main class="main">
-        <!-- TOPBAR (Main Navigation) -->
-        <div id="navbar-placeholder" data-module="admin"></div>
-
-        <div class="content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <!-- 1. HEADER & BREADCRUMB -->
         <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2 text-xs font-semibold text-secondary mb-1">
-                    <a href="../cars.html" class="hover:text-primary transition-colors" data-key="ec_breadcrumb_mgmt">Pengurusan Kereta</a>
+                    <a href="../cars.html" class="hover:text-primary transition-colors">Pengurusan Kereta</a>
                     <span>/</span>
-                    <a id="linkCarDetailBreadcrumb" href="../cars.html" class="hover:text-primary transition-colors" data-key="ec_breadcrumb_profile">Profil Kenderaan</a>
+                    <a id="linkCarDetailBreadcrumb" href="../cars.html" class="hover:text-primary transition-colors">Profil Kenderaan</a>
                     <span>/</span>
-                    <span class="text-primary font-bold" data-key="ec_breadcrumb_current">Sunting Kenderaan</span>
+                    <span class="text-primary font-bold">Sunting Kenderaan</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-primary m-0 flex items-center gap-2">
                         <span class="material-icons-round text-2xl">photo_camera</span>
-                        <span data-key="addcar_card3_title">Studio Visual 360° &amp; Galeri Foto</span>
+                        Studio Visual 360° &amp; Galeri Foto
                     </h1>
                     <span id="headerPlatePill" class="apple-plate-pill tabular-nums text-xs px-3 py-1 font-bold">-</span>
                 </div>
-                <p class="text-xs sm:text-sm text-secondary mt-1" data-key="editcar_step2_sub">Konfigurasikan visual galeri dan pautan 360° interaktif. Sistem akan mengesan pautan 360° secara automatik.</p>
+                <p class="text-xs sm:text-sm text-secondary mt-1">Konfigurasikan visual galeri dan pautan 360° interaktif. Sistem akan mengesan pautan 360° secara automatik.</p>
             </div>
 
             <!-- STEPPER INDICATOR -->
             <div class="bg-surface-2 border border-subtle rounded-full p-1.5 flex items-center gap-1 shadow-xs self-start md:self-auto">
                 <a id="step1Link" href="step1_spesifikasi.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
-                    <span data-key="editcar_step1_name">Spesifikasi</span>
+                    <span>Spesifikasi</span>
                 </a>
                 <div class="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-white text-primary text-[10px] font-black flex items-center justify-center">2</span>
-                    <span data-key="editcar_step2_name">Studio Visual</span>
+                    <span>Studio Visual</span>
                 </div>
                 <div class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-surface-3 text-secondary text-[10px] font-black flex items-center justify-center">3</span>
-                    <span data-key="editcar_step3_name">Pengesahan</span>
+                    <span>Pengesahan</span>
                 </div>
             </div>
         </div>
@@ -124,14 +119,14 @@
                         <!-- PROGRESSIVE MEDIA SWITCHER -->
                         <div class="bg-surface-2 border border-subtle rounded-full p-1 flex items-center gap-1">
                             <button type="button" id="tabGallery" onclick="switchVisualMode('gallery')" class="px-4 py-1.5 rounded-full bg-surface-1 text-primary text-xs font-bold shadow-xs cursor-pointer transition-all">
-                                <span class="material-icons-round fs-14 mr-1">photo_library</span> <span data-key="tab_gallery">Galeri</span>
+                                <span class="material-icons-round fs-14 mr-1">photo_library</span> Galeri
                             </button>
                             <button type="button" id="tab360" onclick="switchVisualMode('360')" class="px-4 py-1.5 rounded-full text-secondary text-xs font-bold cursor-pointer transition-all hover:text-primary flex items-center">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                                     <path d="M21.5 12c0-3-4.25-5.5-9.5-5.5S2.5 9 2.5 12c0 2.5 3 4.6 7.2 5.3"/>
                                     <polyline points="7.5 14.5 10 17.5 7 20"/>
                                 </svg>
-                                <span data-key="tab_360">Pusingan 360°</span>
+                                <span>Pusingan 360°</span>
                             </button>
                         </div>
 
@@ -164,8 +159,8 @@
                                 <div class="circle-1-1 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
                                     <span class="material-icons-round text-2xl">sync</span>
                                 </div>
-                                <p class="text-sm font-bold text-primary mb-1" data-key="step2_empty_viewer_title">Tiada Pautan 360° Dikonfigurasikan</p>
-                                <p class="text-xs text-secondary max-w-sm" data-key="step2_empty_viewer_desc">Sila muat naik foto kenderaan dari slot pemeriksaan di sebelah kiri atau masukkan pautan visual.</p>
+                                <p class="text-sm font-bold text-primary mb-1">Tiada Pautan 360° Dikonfigurasikan</p>
+                                <p class="text-xs text-secondary max-w-sm">Tampal pautan URL CDN 360° di panel sebelah kanan untuk membolehkan pusingan interaktif 360°.</p>
                             </div>
                         </div>
                     </div>
@@ -173,7 +168,7 @@
                     <!-- GALLERY THUMBNAIL STRIP -->
                     <div class="mt-4 pt-4 border-top-subtle">
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-xs font-bold text-secondary uppercase tracking-wider" data-key="editcar_lbl_strip">Jalur Foto Galeri</span>
+                            <span class="text-xs font-bold text-secondary uppercase tracking-wider">Jalur Foto Galeri</span>
                             <span class="text-xs text-secondary" id="totalPhotosCount">1 Foto</span>
                         </div>
                         <div class="photo-thumb-grid" id="thumbStrip">
@@ -191,17 +186,21 @@
                     <div class="flex items-center justify-between pb-3 mb-4 border-bottom-subtle">
                         <div class="flex items-center gap-2">
                             <span class="material-icons-round text-primary text-xl">auto_awesome</span>
-                            <h2 class="text-base font-bold text-primary m-0" data-key="step2_sec_cdn_title">Pautan Visual 360°</h2>
+                            <h2 class="text-base font-bold text-primary m-0">Pautan Visual 360°</h2>
                         </div>
-                        <span id="autoDetectBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-surface-2 text-secondary" data-key="editcar_badge_autodetect">Pengesanan Automatik</span>
+                        <span id="autoDetectBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-surface-2 text-secondary">
+                            Pengesanan Automatik
+                        </span>
                     </div>
 
                     <div class="flex flex-col gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputExteriorCdnUrl" data-key="cdn_input_label">Pautan Visual / Studio 360° Kenderaan</label>
+                            <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1.5" for="inputExteriorCdnUrl">
+                                CDN / URL Viewer 360° Luaran
+                            </label>
                             <div class="relative">
                                 <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary material-icons-round fs-16">link</span>
-                                <input type="text" id="inputExteriorCdnUrl" class="w-full pl-10 pr-10 py-3 rounded-xl bg-surface-2 border-subtle text-xs text-primary font-mono focus:border-primary outline-none transition-all" placeholder="https://cdn.wedrive.my/360/bmw-320i/ atau Sedan/2023 BMW... atau https://my.sirv.com/..." data-key-ph="field_cdn_url_ph" />
+                                <input type="text" id="inputExteriorCdnUrl" class="w-full pl-10 pr-10 py-3 rounded-xl bg-surface-2 border-subtle text-xs text-primary font-mono focus:border-primary outline-none transition-all" placeholder="https://cdn.wedrive.my/360/bmw-320i/ atau Sedan/2023 BMW... atau https://my.sirv.com/..." />
                                 <button type="button" id="btnClear360" onclick="handleClear360()" class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-error transition-colors" title="Padam Pautan 360°">
                                     <span class="material-icons-round fs-16">cancel</span>
                                 </button>
@@ -258,29 +257,26 @@
 
         </div>
 
-        </div>
-        <div id="footer-placeholder" class="mt-32"></div>
-    </main>
+        <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
+            <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
+                <button type="button" id="btnBackToStep1" class="apple-btn-capsule-secondary" onclick="handleBackToStep1()">
+                    <span class="material-icons-round fs-15">arrow_back</span>
+                    <span>Kembali ke Langkah 1</span>
+                </button>
 
-    <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
-    <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
-        <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
-            <button type="button" id="btnBackToStep1" class="apple-btn-capsule-secondary" onclick="handleBackToStep1()">
-                <span class="material-icons-round fs-15">arrow_back</span>
-                <span data-key="ec_step2_dock_back">Kembali: Spesifikasi</span>
-            </button>
+                <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
+                    <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
+                    <span>Langkah 2 daripada 3</span>
+                </div>
 
-            <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
-                <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
-                <span data-key="ec_step2_dock_step_info">Langkah 2 daripada 3</span>
+                <button type="button" id="btnProceedStep3" class="apple-btn-capsule-primary" onclick="handleProceedToStep3()">
+                    <span>Seterusnya: Semakan &amp; Pengesahan</span>
+                    <span class="material-icons-round fs-15">arrow_forward</span>
+                </button>
             </div>
-
-            <button type="button" id="btnProceedStep3" class="apple-btn-capsule-primary" onclick="handleProceedToStep3()">
-                <span data-key="ec_step2_dock_next">Seterusnya: Semakan &amp; Pengesahan</span>
-                <span class="material-icons-round fs-15">arrow_forward</span>
-            </button>
         </div>
-    </footer>
+    </main>
 
     <!-- SCRIPTS -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>

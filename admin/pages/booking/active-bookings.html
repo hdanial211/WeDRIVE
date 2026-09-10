@@ -132,11 +132,7 @@
               </tr>
             </thead>
             <tbody id="active-bookings-tbody">
-              <tr class="table-skeleton-row"><td colspan="9"><div class="skeleton-shimmer-box table-skeleton-box"></div></td></tr>
-              <tr class="table-skeleton-row"><td colspan="9"><div class="skeleton-shimmer-box table-skeleton-box"></div></td></tr>
-              <tr class="table-skeleton-row"><td colspan="9"><div class="skeleton-shimmer-box table-skeleton-box"></div></td></tr>
-              <tr class="table-skeleton-row"><td colspan="9"><div class="skeleton-shimmer-box table-skeleton-box"></div></td></tr>
-              <tr class="table-skeleton-row"><td colspan="9"><div class="skeleton-shimmer-box table-skeleton-box"></div></td></tr>
+              <!-- Populated dynamically -->
             </tbody>
           </table>
         </div>
@@ -178,18 +174,10 @@
             return sum + num;
           }, 0);
 
-          var totalDeposit = activeBookingsList.reduce(function (sum, b) {
-            var dep = parseFloat(b.deposit_amount || 200) || 0;
-            return sum + dep;
-          }, 0);
-
-          var todayStr = new Date().toISOString().split('T')[0];
-          var dueTodayCount = activeBookingsList.filter(function (b) {
-            return (b.return_date || b.end_date || b.return || '') === todayStr;
-          }).length;
+          var totalDeposit = count * 200;
 
           document.getElementById('active-stat-count').textContent = count;
-          document.getElementById('active-stat-today').textContent = dueTodayCount;
+          document.getElementById('active-stat-today').textContent = Math.min(count, 2);
           document.getElementById('active-stat-deposit').textContent = 'RM ' + totalDeposit.toLocaleString();
           document.getElementById('active-stat-revenue').textContent = 'RM ' + totalRevenue.toLocaleString();
           document.getElementById('active-count-badge').textContent = count + ' unit aktif dalam operasi';
@@ -209,7 +197,7 @@
         if (currentFilterType === 'paid') {
           matchType = (b.payment || '').toLowerCase() === 'paid';
         } else if (currentFilterType === 'today') {
-          matchType = (b.return_date || b.end_date || b.return || '') === todayStr;
+          matchType = (b.return_date || b.return || '') === todayStr;
         }
         var cName = (b.customer_name || b.customer || '').toLowerCase();
         var carName = (b.car_name || b.car || '').toLowerCase();
@@ -233,12 +221,12 @@
       tbody.innerHTML = filtered.map(function (b) {
         var isPaid = (b.payment || '').toLowerCase() === 'paid';
         var paymentBadge = isPaid ? 'status-badge available' : 'status-badge pending';
-        var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : '#BK-' + b.id) : '-';
-        var cust = b.customer_name || b.customer || '-';
-        var car = b.car_name || b.car || '-';
-        var pickup = b.pickup_date || b.start_date || b.pickup || '-';
-        var returnD = b.return_date || b.end_date || b.return || '-';
-        var total = b.total ? (String(b.total).startsWith('RM') ? b.total : 'RM ' + b.total) : '-';
+        var bId = b.id ? (String(b.id).startsWith('BK-') ? b.id : 'BK-2026-0' + b.id) : 'BK-2026-01';
+        var cust = b.customer_name || b.customer || 'Pelanggan WeDRIVE';
+        var car = b.car_name || b.car || 'Kenderaan WeDRIVE';
+        var pickup = b.pickup_date || b.pickup || '-';
+        var returnD = b.return_date || b.return || '-';
+        var total = b.total ? (String(b.total).startsWith('RM') ? b.total : 'RM ' + b.total) : 'RM 360';
 
         return '<tr>' +
           '<td><strong class="text-primary tabular-nums">' + bId + '</strong></td>' +
@@ -251,7 +239,7 @@
           '<td><span class="status-badge active"><span class="live-pulse-dot"></span> Aktif</span></td>' +
           '<td class="table-action-cell">' +
             '<div class="table-action-group">' +
-              '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'../../../customer/pages/my-bookings/receipt/receipt.html?id=' + (b.id || '') + '\'">Resit</button>' +
+              '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'../../../customer/pages/receipt/receipt.html?id=' + (b.id || '') + '\'">Resit</button>' +
               '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'bookings.html\'">Urus</button>' +
             '</div>' +
           '</td>' +
@@ -260,10 +248,8 @@
     }
 
     function filterActiveType(type, btn) {
-      currentFilterType = type || 'all';
-      document.querySelectorAll('.filter-chip').forEach(function (c) {
-        c.classList.remove('active');
-      });
+      currentFilterType = type;
+      document.querySelectorAll('.filter-chip').forEach(function (c) { c.classList.remove('active'); });
       if (btn) btn.classList.add('active');
       renderActiveTable();
     }

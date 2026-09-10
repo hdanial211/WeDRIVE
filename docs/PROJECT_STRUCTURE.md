@@ -19,7 +19,7 @@ AI CAR RENTAL SYSTEM/
 +-- .agents/                    # Konfigurasi Ejen, Peraturan & Sistem Reka Bentuk (Master Hub)
 |   +-- PROJECT_STRUCTURE.md    # Dokumen Struktur Projek Utama (Master Authority)
 |   +-- DESIGN.md               # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–22, Strict Max 12k chars)
+|   +-- rules/                  # Peraturan Pembangunan Bernombor (01–24, Strict Max 12k chars)
 |   |   +-- 01_core_rules.md    # Gatekeeper Protocol, Peraturan Teras Projek, Git, PRD
 |   |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3 (Asas, Bento & Corak)
 |   |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6 (Komponen & Input)
@@ -43,6 +43,7 @@ AI CAR RENTAL SYSTEM/
 |   |   +-- 21_stitch_mcp_advanced_operations.md # Operasi Lanjutan & Enjin Kualiti Pasca-Prompt Stitch MCP
 |   |   +-- 22_user_feedback_golden_rules.md # Undang-undang Emas Maklum Balas & Mandat Langsung Pengguna
 |   |   +-- 23_stitch_to_production_workflow.md # Piawaian Universal Penukaran Pratonton STITCH ke Pengeluaran Sebenar
+|   |   +-- 24_vehicle_visual_angles_standard.md # Piawaian Sudut Visual Meja Putar Impel & Pemetaan Bahagian Kereta (BMW 320i SSOT)
 |   +-- skills/                 # 6 Kemahiran Automasi Khusus:
 |   |   +-- context7/           # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
 |   |   +-- frontend-ui/        # Rekaan Antaramuka Apple HIG & Bento Grid

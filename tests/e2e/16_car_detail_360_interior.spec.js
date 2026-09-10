@@ -86,4 +86,36 @@ test.describe('WeDRIVE - Car Detail 360° Studio & 3D Interior Panorama', () => 
     const frontFace = page.locator('#cdInteriorCube [data-vehicle-interior-face="f"]');
     await expect(frontFace).toBeVisible();
   });
+
+  test('should hide 360 tabs and default to Photo Gallery for cars without 360 assets (Honda City #492)', async ({ page }) => {
+    await page.goto('/admin/pages/car/car-detail/car-detail.html?id=492');
+    await page.waitForLoadState('networkidle');
+
+    // Should load Honda City
+    await expect(page.locator('#cd-name')).toContainText('Honda City');
+
+    // 360 Exterior and 360 Interior tabs MUST NOT be visible
+    const tabExterior = page.locator('#tab-exterior');
+    const tabInterior = page.locator('#tab-interior');
+    await expect(tabExterior).not.toBeVisible();
+    await expect(tabInterior).not.toBeVisible();
+
+    // Photo Gallery tab MUST be visible and active
+    const tabGallery = page.locator('#tab-gallery');
+    await expect(tabGallery).toBeVisible();
+    await expect(tabGallery).toHaveClass(/active/);
+
+    // Stages: Gallery stage visible, 360 exterior and interior stages hidden
+    const galleryStage = page.locator('#studio-gallery-stage');
+    const exteriorStage = page.locator('#studio-exterior-stage');
+    const interiorStage = page.locator('#studio-interior-stage');
+
+    await expect(galleryStage).toBeVisible();
+    await expect(exteriorStage).toBeHidden();
+    await expect(interiorStage).toBeHidden();
+
+    // Contextual Page Title: Galeri & Maklumat Terperinci Kereta
+    const topTitle = page.locator('#cd-top-title');
+    await expect(topTitle).toHaveAttribute('data-key', 'cd_title_gallery');
+  });
 });

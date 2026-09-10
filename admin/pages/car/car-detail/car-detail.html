@@ -61,16 +61,16 @@
             <span class="apple-category-pill" id="cd-type-pill">--</span>
           </div>
 
-          <div class="studio-mode-tabs">
-            <button class="studio-tab-btn active" id="tab-exterior" onclick="switchStudioMode('exterior')">
+          <div class="studio-mode-tabs" id="studio-mode-tabs">
+            <button class="studio-tab-btn" id="tab-exterior" onclick="switchStudioMode('exterior')" style="display: none;">
               <span class="material-icons-round fs-16">360</span>
               <span data-key="cd_tab_ext">360° Luaran</span>
             </button>
-            <button class="studio-tab-btn" id="tab-interior" onclick="switchStudioMode('interior')">
+            <button class="studio-tab-btn" id="tab-interior" onclick="switchStudioMode('interior')" style="display: none;">
               <span class="material-icons-round fs-16">airline_seat_recline_extra</span>
               <span data-key="cd_tab_int">360° Dalaman Kereta</span>
             </button>
-            <button class="studio-tab-btn" id="tab-gallery" onclick="switchStudioMode('gallery')">
+            <button class="studio-tab-btn active" id="tab-gallery" onclick="switchStudioMode('gallery')">
               <span class="material-icons-round fs-16">photo_library</span>
               <span>Galeri Foto</span>
             </button>

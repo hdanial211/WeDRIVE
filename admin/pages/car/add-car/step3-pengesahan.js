@@ -378,7 +378,15 @@
         images: imagesList,
         has_360: Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360),
         exterior_360: draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360 || null,
-        interior_360: draft.cdnUrlInterior || null
+        interior_360: draft.cdnUrlInterior || null,
+        orientation_frames: draft.orientation_frames || {
+          hero: 140,
+          front: 125,
+          right: 175,
+          left: 75,
+          rear: 24,
+          rear_left: 0
+        }
       };
 
       // Call WeDriveAPI or Supabase client

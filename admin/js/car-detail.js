@@ -80,10 +80,33 @@ function findRegistryEntry(car) {
 }
 
 /**
- * Check if a car has 360° turntable assets via registry.
+ * Check if a car has 360° exterior turntable assets.
+ */
+function carHasExterior360(car) {
+  if (!car) return false;
+  if (car.has_360 === false && !car.exterior_360 && (!Array.isArray(car.exterior_frames) || !car.exterior_frames.length)) return false;
+  if (car.exterior_360 && typeof car.exterior_360 === 'string' && car.exterior_360.trim().length > 5) return true;
+  if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) return true;
+  if (findRegistryEntry(car) && car.has_360 !== false) return true;
+  return false;
+}
+
+/**
+ * Check if a car has 360° interior panorama assets.
+ */
+function carHasInterior360(car) {
+  if (!car) return false;
+  if (car.has_360 === false && !car.interior_360) return false;
+  if (car.interior_360 && typeof car.interior_360 === 'string' && car.interior_360.trim().length > 5) return true;
+  if (findRegistryEntry(car) && car.has_360 !== false) return true;
+  return false;
+}
+
+/**
+ * Check if a car has any 360° assets.
  */
 function carHas360(car) {
-  return findRegistryEntry(car) !== null;
+  return carHasExterior360(car) || carHasInterior360(car);
 }
 
 // Resolve any image string to a valid src
@@ -141,7 +164,7 @@ function renderFleetSelector() {
 
   container.innerHTML = allCars.map(c => {
     const isActive = String(c.id) === String(selectedCarId);
-    const thumbSrc = c.images && c.images.length > 0 ? resolveImgSrc(c.images[0]) : '';
+    const thumbSrc = (c.images && c.images.length > 0) ? resolveImgSrc(c.images[0]) : (c.image_url ? resolveImgSrc(c.image_url) : '');
     const has360Badge = carHas360(c) ?
       '<span class="badge-360 fs-9 py-2 px-6">360°</span>' : '';
 
@@ -151,7 +174,7 @@ function renderFleetSelector() {
         <div class="fleet-chip-info">
           <div class="fleet-chip-name">${c.name}</div>
           <div class="fleet-chip-meta">
-            <span>${c.plate}</span>
+            <span>${c.plate || '--'}</span>
             <span>·</span>
             <span class="text-capitalize">${c.type || 'Sedan'}</span>
             ${has360Badge}
@@ -218,20 +241,72 @@ function loadCarProfile(car) {
   // Technical specifications setup (dynamically generated based on car model/type)
   setupCarSpecs(car);
 
-  // Initialize 360 exterior spin frames
-  setupExterior360(car);
-
-  // Initialize interior cockpit
-  setupInteriorCockpit(car);
-
   // Initialize Photo Gallery
   setupPhotoGallery(car);
+
+  // Initialize 360 exterior spin frames (if available)
+  setupExterior360(car);
+
+  // Initialize interior cockpit (if available)
+  setupInteriorCockpit(car);
 
   // Initialize Equipment Matrix
   setupEquipmentMatrix(car);
 
-  // Reset to exterior mode tab
-  switchStudioMode('exterior');
+  // Progressive Visual Disclosure: Update tabs and activate appropriate initial mode
+  updateStudioTabs(car);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2B. PROGRESSIVE STUDIO TABS & CONTEXTUAL TITLE ENGINE (RULE 04 SECTION 9)
+   ───────────────────────────────────────────────────────────────────────────── */
+function updateStudioTabs(car) {
+  const hasExt = carHasExterior360(car);
+  const hasInt = carHasInterior360(car);
+  const has360Any = hasExt || hasInt;
+
+  const tabExt = document.getElementById('tab-exterior');
+  const tabInt = document.getElementById('tab-interior');
+  const tabGal = document.getElementById('tab-gallery');
+
+  if (tabExt) tabExt.style.display = hasExt ? 'inline-flex' : 'none';
+  if (tabInt) tabInt.style.display = hasInt ? 'inline-flex' : 'none';
+  if (tabGal) tabGal.style.display = 'inline-flex';
+
+  // Dynamic Page Title & Subtitle Adaptation
+  const titleEl = document.getElementById('cd-top-title');
+  const subtitleEl = document.getElementById('cd-top-subtitle');
+  const isEn = localStorage.getItem('wedrive_lang') === 'en';
+
+  if (titleEl) {
+    if (has360Any) {
+      titleEl.setAttribute('data-key', 'cd_title');
+      titleEl.textContent = isEn ? 'Car Studio & Technical Details' : 'Studio & Maklumat Terperinci Kereta';
+    } else {
+      titleEl.setAttribute('data-key', 'cd_title_gallery');
+      titleEl.textContent = isEn ? 'Vehicle Gallery & Detailed Profile' : 'Galeri & Maklumat Terperinci Kereta';
+    }
+  }
+
+  if (subtitleEl) {
+    if (has360Any) {
+      subtitleEl.setAttribute('data-key', 'cd_subtitle');
+      subtitleEl.textContent = isEn ? 'Interactive 360° exterior spin, 3D interior panorama, and operational parameters.' : 'Putaran interaktif 360° luaran, panorama 3D ruang dalaman, dan parameter operasi.';
+    } else {
+      subtitleEl.setAttribute('data-key', 'cd_subtitle_gallery');
+      subtitleEl.textContent = isEn ? 'High-definition photo gallery inspection and rental operational parameters.' : 'Pemeriksaan galeri foto berkualiti tinggi dan parameter spesifikasi operasi sewaan.';
+    }
+  }
+
+  // Determine initial active mode based on actual assets available
+  let defaultMode = 'gallery';
+  if (hasExt) {
+    defaultMode = 'exterior';
+  } else if (hasInt) {
+    defaultMode = 'interior';
+  }
+
+  switchStudioMode(defaultMode);
 }
 
 function setupCarSpecs(car) {
@@ -271,6 +346,12 @@ function setupExterior360(car) {
   exteriorFrames = [];
   currentFrameIndex = 0;
 
+  if (!carHasExterior360(car)) {
+    if (stageImg) stageImg.style.display = 'none';
+    if (fallbackIcon) fallbackIcon.classList.add('hidden');
+    return;
+  }
+
   // Dynamic lookup from registry.json — no hardcoded car names
   const match = findRegistryEntry(car);
 
@@ -290,11 +371,21 @@ function setupExterior360(car) {
       const padded = String(frameNum).padStart(3, '0');
       exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
     }
-  } else if (car.images && car.images.length > 0) {
-    // Fallback for cars without 360° turntable assets: cycle gallery images
-    for (let i = 0; i < 12; i++) {
-      const imgIdx = i % car.images.length;
-      exteriorFrames.push(car.images[imgIdx]);
+  } else if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) {
+    exteriorFrames = [...car.exterior_frames];
+  } else if (car.exterior_360 && typeof car.exterior_360 === 'string') {
+    if (car.exterior_360.startsWith('http')) {
+      exteriorFrames = [car.exterior_360];
+    } else {
+      const basePath = car.exterior_360.replace(/\/exterior\/full-res$/i, '').replace(/\/+$/, '');
+      const frontOffset = 125;
+      const sampleCount = 36;
+      const totalFrames = 200;
+      for (let i = 0; i < sampleCount; i++) {
+        const frameNum = (frontOffset + Math.round(i * (totalFrames / sampleCount))) % totalFrames;
+        const padded = String(frameNum).padStart(3, '0');
+        exteriorFrames.push(`${basePath}/exterior/full-res/frame-${padded}.jpg`);
+      }
     }
   }
 
@@ -453,13 +544,7 @@ function getCarModelKey(car) {
   // Dynamic lookup from registry — Zero Hardcode
   const match = findRegistryEntry(car);
   if (match) return match.key;
-
-  // Ultimate fallback: first key in registry or 'bmw'
-  if (modelRegistry) {
-    const keys = Object.keys(modelRegistry);
-    return keys.length > 0 ? keys[0] : 'bmw';
-  }
-  return 'bmw';
+  return null;
 }
 
 function setupInteriorCockpit(car) {
@@ -471,7 +556,19 @@ function setupInteriorCockpit(car) {
 
   if (!stage) return;
 
+  if (!carHasInterior360(car)) {
+    stage.classList.add('hidden');
+    stage.style.display = 'none';
+    return;
+  }
+
   const modelKey = getCarModelKey(car);
+  if (!modelKey) {
+    stage.classList.add('hidden');
+    stage.style.display = 'none';
+    return;
+  }
+  stage.style.display = '';
   stage.setAttribute('data-vehicle-default-model', modelKey);
 
   if (window.WedriveVehicleViewer) {
@@ -602,24 +699,44 @@ function setupPhotoGallery(car) {
   const strip = document.getElementById('cd-thumbnails');
   const heroImg = document.getElementById('gallery-hero-img');
   const badge = document.getElementById('gallery-photo-badge');
+  const navPrev = document.querySelector('.gallery-nav-btn.prev');
+  const navNext = document.querySelector('.gallery-nav-btn.next');
 
-  galleryImages = car.images && car.images.length > 0 ? car.images : [];
+  galleryImages = (car.images && car.images.length > 0) ? [...car.images] : [];
+  if (galleryImages.length === 0 && car.image_url) {
+    galleryImages = [car.image_url];
+  }
   currentGalleryIndex = 0;
 
   if (galleryImages.length > 0) {
     if (heroImg) heroImg.src = resolveImgSrc(galleryImages[0]);
     if (badge) badge.textContent = `FOTO 1 / ${galleryImages.length}`;
 
+    if (navPrev) navPrev.style.display = galleryImages.length > 1 ? 'flex' : 'none';
+    if (navNext) navNext.style.display = galleryImages.length > 1 ? 'flex' : 'none';
+
     if (strip) {
-      strip.innerHTML = galleryImages.map((img, idx) => `
-        <div class="gallery-thumb-item ${idx === 0 ? 'active' : ''}" onclick="selectGalleryPhoto(${idx})" title="Foto ${idx + 1}">
-          <img src="${resolveImgSrc(img)}" alt="${car.name} Foto ${idx + 1}" />
-        </div>
-      `).join('');
+      if (galleryImages.length > 1) {
+        strip.style.display = 'flex';
+        strip.innerHTML = galleryImages.map((img, idx) => `
+          <div class="gallery-thumb-item ${idx === 0 ? 'active' : ''}" onclick="selectGalleryPhoto(${idx})" title="Foto ${idx + 1}">
+            <img src="${resolveImgSrc(img)}" alt="${car.name} Foto ${idx + 1}" />
+          </div>
+        `).join('');
+      } else {
+        strip.style.display = 'none';
+        strip.innerHTML = '';
+      }
     }
   } else {
     if (heroImg) heroImg.src = '../../../../shared/logo/wedrive-icon.png';
-    if (strip) strip.innerHTML = '<p class="text-secondary fs-13">Tiada foto galeri tambahan.</p>';
+    if (badge) badge.textContent = 'TIADA FOTO';
+    if (navPrev) navPrev.style.display = 'none';
+    if (navNext) navNext.style.display = 'none';
+    if (strip) {
+      strip.style.display = 'none';
+      strip.innerHTML = '<p class="text-secondary fs-13">Tiada foto galeri tambahan.</p>';
+    }
   }
 }
 
@@ -665,6 +782,13 @@ function toggleFullscreenGallery() {
 }
 
 function switchStudioMode(mode) {
+  // Safety guard against activating unsupported modes
+  if (mode === 'exterior' && !carHasExterior360(activeCar)) {
+    mode = 'gallery';
+  } else if (mode === 'interior' && !carHasInterior360(activeCar)) {
+    mode = carHasExterior360(activeCar) ? 'exterior' : 'gallery';
+  }
+
   currentMode = mode;
 
   // Tabs UI

@@ -45,49 +45,45 @@
         }
     </style>
 </head>
-<body data-particles="6" data-cursor-glow class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
+<body class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
 
-    <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
-    <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-all"></div>
+    <div id="navbar-placeholder"></div>
+    <div id="sidebar-placeholder"></div>
 
-    <!-- MAIN -->
-    <main class="main">
-        <!-- TOPBAR (Main Navigation) -->
-        <div id="navbar-placeholder" data-module="admin"></div>
-
-        <div class="content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <!-- 1. HEADER & BREADCRUMB -->
         <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2 text-xs font-semibold text-secondary mb-1">
-                    <a href="../cars.html" class="hover:text-primary transition-colors" data-key="ec_breadcrumb_mgmt">Pengurusan Kereta</a>
+                    <a href="../cars.html" class="hover:text-primary transition-colors">Pengurusan Kereta</a>
                     <span>/</span>
-                    <a id="linkCarDetailBreadcrumb" href="../cars.html" class="hover:text-primary transition-colors" data-key="ec_breadcrumb_profile">Profil Kenderaan</a>
+                    <a id="linkCarDetailBreadcrumb" href="../cars.html" class="hover:text-primary transition-colors">Profil Kenderaan</a>
                     <span>/</span>
-                    <span class="text-primary font-bold" data-key="ec_breadcrumb_current">Sunting Kenderaan</span>
+                    <span class="text-primary font-bold">Sunting Kenderaan</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-primary m-0 flex items-center gap-2">
-                        <span class="material-icons-round text-2xl text-emerald-500">verified</span> <span data-key="editcar_step3_header">Semakan Akhir &amp; Pengesahan</span>
+                        <span class="material-icons-round text-2xl text-emerald-500">verified</span>
+                        Semakan Akhir &amp; Pengesahan
                     </h1>
                     <span id="headerPlatePill" class="apple-plate-pill tabular-nums text-xs px-3 py-1 font-bold">-</span>
                 </div>
-                <p class="text-xs sm:text-sm text-secondary mt-1" data-key="editcar_step3_sub">Sila semak semula maklumat spesifikasi dan visual kenderaan sebelum mengemas kini pangkalan data WeDRIVE.</p>
+                <p class="text-xs sm:text-sm text-secondary mt-1">Sila semak semula maklumat spesifikasi dan visual kenderaan sebelum mengemas kini pangkalan data WeDRIVE.</p>
             </div>
 
             <!-- STEPPER INDICATOR -->
             <div class="bg-surface-2 border border-subtle rounded-full p-1.5 flex items-center gap-1 shadow-xs self-start md:self-auto">
                 <a id="step1Link" href="step1_spesifikasi.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
-                    <span data-key="editcar_step1_name">Spesifikasi</span>
+                    <span>Spesifikasi</span>
                 </a>
                 <a id="step2Link" href="step2_studio360.html" class="px-3 py-1.5 rounded-full text-secondary text-xs font-semibold flex items-center gap-1.5 hover:text-primary transition-colors">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">✓</span>
-                    <span data-key="editcar_step2_name">Studio Visual</span>
+                    <span>Studio Visual</span>
                 </a>
                 <div class="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
                     <span class="circle-1-1 w-4 h-4 rounded-full bg-white text-primary text-[10px] font-black flex items-center justify-center">3</span>
-                    <span data-key="editcar_step3_name">Pengesahan</span>
+                    <span>Pengesahan</span>
                 </div>
             </div>
         </div>
@@ -101,10 +97,10 @@
                     <div class="flex items-center justify-between pb-4 mb-6 border-bottom-subtle">
                         <div class="flex items-center gap-2">
                             <span class="material-icons-round text-primary text-xl">fact_check</span>
-                            <h2 class="text-base font-bold text-primary m-0" data-key="editcar_sum_spec_title">Ringkasan Spesifikasi Terkini</h2>
+                            <h2 class="text-base font-bold text-primary m-0">Ringkasan Spesifikasi Terkini</h2>
                         </div>
                         <a id="linkEditSpec" href="step1_spesifikasi.html" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
-                            <span class="material-icons-round fs-14">edit</span> <span data-key="editcar_btn_edit_spec">Sunting Spesifikasi</span>
+                            <span class="material-icons-round fs-14">edit</span> Sunting Spesifikasi
                         </a>
                     </div>
 
@@ -160,7 +156,7 @@
                     <div class="mt-6 pt-6 border-top-subtle grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="p-4 rounded-2xl bg-primary/5 border border-primary/20 flex items-center justify-between">
                             <div>
-                                <span class="text-xs text-secondary font-semibold block" data-key="editcar_stat_rate">Kadar Sewa Harian</span>
+                                <span class="text-xs text-secondary font-semibold block">Kadar Sewa Harian</span>
                                 <span id="sumDailyRate" class="text-xl font-black text-primary tabular-nums">RM 0</span>
                             </div>
                             <span class="material-icons-round text-2xl text-primary">payments</span>
@@ -168,7 +164,7 @@
 
                         <div class="p-4 rounded-2xl bg-surface-2 border-subtle flex items-center justify-between">
                             <div>
-                                <span class="text-xs text-secondary font-semibold block" data-key="editcar_stat_status">Status Operasi</span>
+                                <span class="text-xs text-secondary font-semibold block">Status Operasi</span>
                                 <span id="sumStatus" class="text-sm font-bold text-primary flex items-center gap-1.5 mt-0.5">
                                     <span class="circle-1-1 w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Tersedia
                                 </span>
@@ -238,29 +234,26 @@
 
         </div>
 
-        </div>
-        <div id="footer-placeholder" class="mt-32"></div>
-    </main>
+        <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
+            <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
+                <button type="button" id="btnBackToStep2" class="apple-btn-capsule-secondary" onclick="handleBackToStep2()">
+                    <span class="material-icons-round fs-15">arrow_back</span>
+                    <span>Kembali ke Studio Visual</span>
+                </button>
 
-    <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
-    <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
-        <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
-            <button type="button" id="btnBackToStep2" class="apple-btn-capsule-secondary" onclick="handleBackToStep2()">
-                <span class="material-icons-round fs-15">arrow_back</span>
-                <span data-key="ec_step3_dock_back">Kembali: Studio Visual</span>
-            </button>
+                <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
+                    <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
+                    <span>Semakan Sedia</span>
+                </div>
 
-            <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
-                <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
-                <span data-key="ec_step3_dock_step_info">Langkah 3 daripada 3</span>
+                <button type="button" id="btnConfirmUpdate" class="apple-btn-capsule-primary bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-2" onclick="handleConfirmUpdate()">
+                    <span class="material-icons-round fs-16">check_circle</span>
+                    <span>Kemas Kini Rekod Kenderaan</span>
+                </button>
             </div>
-
-            <button type="button" id="btnConfirmUpdate" class="apple-btn-capsule-primary bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-2" onclick="handleConfirmUpdate()">
-                <span class="material-icons-round fs-16">check_circle</span>
-                <span data-key="ec_step3_dock_save">Simpan &amp; Kemas Kini Kereta</span>
-            </button>
         </div>
-    </footer>
+    </main>
 
     <!-- SCRIPTS -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>

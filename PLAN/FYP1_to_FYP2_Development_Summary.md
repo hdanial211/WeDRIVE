@@ -6855,3 +6855,39 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.19.0 Add customer database selector in new booking, universal 360 beauty angle standard, and admin skeleton shimmer loaders`
   - Tag Versi: `6.19.0`
 
+---
+
+### [PATCH] v6.19.2 — Pendedahan Progresif Media 360° & Mod Galeri Foto Pintar di car-detail.html (Progressive 360 Media Disclosure, Dynamic Studio Mode Switcher & Non-360 Photo Gallery Mode)
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna melaporkan ketidakkonsistenan visual pada halaman profil kenderaan pentadbir ([`car-detail.html?id=492`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/pages/car/car-detail/car-detail.html?id=492)) di mana kenderaan yang tiada aset interaktif 360° (seperti Honda City `#492`) tetap memaparkan butang tab "360° Luaran" dan "360° Dalaman Kereta":
+    > *"http://127.0.0.1:5504/admin/pages/car/car-detail/car-detail.html?id=492 kenapa page ni yang xde 360 view jangan tunjuk ...hanya tunjuk yang ada 360view sahaja...kalau xde 360view just kat situ hanya galeri foto only"*
+  - Tindakan ini menyelaraskan sistem dengan ketetapan Peraturan 9 dalam [04_navigation_and_ui.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md) iaitu *Progressive Visual Disclosure*: hanya memaparkan pilihan 360° sekiranya aset wujud dan mengekalkan mod galeri foto sekiranya tiada aset 360°.
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Enjin Pengesanan Aset Sebenar 360° ([`admin/js/car-detail.js`](admin/js/car-detail.js))**:
+     - Membina fungsi `carHasExterior360(car)` dan `carHasInterior360(car)` berasaskan status sebenar pangkalan data Supabase (`has_360`, `exterior_360`, `interior_360`, `exterior_frames`) dan padanan `registry.json`.
+     - Menghapuskan kitaran imej pegun galeri 12-bingkai palsu (*fake 12-frame image loop*) dalam `setupExterior360()`.
+     - Menghapuskan pemuatan *fallback* ruang dalaman BMW secara tidak wajar dalam `getCarModelKey()` dan `setupInteriorCockpit()`.
+  2. **Pendedahan Progresif Bar Suis Tab & Pengaktifan Mod Lalai Pintar (`updateStudioTabs()`)**:
+     - Sembunyikan `#tab-exterior` dan `#tab-interior` sekiranya kenderaan tiada aset berkaitan.
+     - Bagi kenderaan tanpa 360° (seperti Honda City `#492`), bar suis tab secara kemas hanya memaparkan butang kapsul aktif `[ Galeri Foto ]` mengikut estetika Apple HIG.
+     - Mengaktifkan mod `gallery` secara langsung sebagai mod lalai (`#studio-gallery-stage`) tanpa memaparkan kanvas 360° kosong.
+  3. **Penyesuaian Tajuk & Sari Kata Halaman Kontekstual**:
+     - Menambah kunci dwibahasa `cd_title_gallery` dan `cd_subtitle_gallery` dalam `shared/lang/` (EN/MS).
+     - Menukar tajuk dari *"Studio 360° & Profil Kereta"* kepada *"Galeri & Profil Kereta"* / *"Vehicle Gallery & Detailed Profile"* apabila kenderaan tiada aset 360°.
+  4. **Pengendalian Kemas Galeri Foto Tunggal**:
+     - Jika sesebuah kenderaan hanya mempunyai 1 keping foto, butang anak panah pelayaran kiri/kanan (`prev`/`next`) dan jalur lakaran kecil (*thumbnails strip*) disembunyikan secara automatik untuk antaramuka yang bersih.
+  5. **Automasi Ujian E2E Playwright**:
+     - Menambah ujian baharu dalam [`tests/e2e/16_car_detail_360_interior.spec.js`](tests/e2e/16_car_detail_360_interior.spec.js) bagi menguji senario kenderaan tanpa 360° (Honda City `#492`).
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Ujian Automasi Playwright CLI**: 60/60 Ujian Lulus (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 24 fail `.agents/rules/*.md` kekal <= 12,000 aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.19.2 Implement progressive 360 media disclosure and adaptive photo gallery mode on car detail`
+  - Tag Versi: `6.19.2`
+
+

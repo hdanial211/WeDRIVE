@@ -4,9 +4,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
   <title>Cipta Tempahan Kaunter Baharu | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
@@ -353,28 +350,13 @@
           
           <!-- KAD 1: MAKLUMAT PERIBADI PENYEWA -->
           <div class="card p-24 radius-24 reveal-onload">
-            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between items-center">
+            <div class="card-header border-bottom-subtle pb-12 mb-18">
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
                 <div class="circle-1-1 w-7 h-7 bg-primary-soft text-primary">
                   <span class="material-icons-round fs-16">person</span>
                 </div>
                 Maklumat Peribadi Penyewa
               </h3>
-              <span class="fs-11 text-muted fw-600 bg-surface-2 px-8 py-4 radius-9999" id="nb-cust-source-badge">Pangkalan Data</span>
-            </div>
-
-            <!-- Customer Selection from Real DB (Strict Real Data Pipeline) -->
-            <div class="mb-16">
-              <label class="form-label fs-13 fw-600" for="nb-cust-select">Pilih Pelanggan Dari Sistem <span class="text-danger">*</span></label>
-              <div class="apple-select-wrap">
-                <div class="apple-input-wrap">
-                  <span class="material-icons-round apple-input-icon">account_circle</span>
-                  <select id="nb-cust-select" class="apple-form-input cursor-pointer" onchange="handleCustomerSelectChange()" required>
-                    <option value="" disabled selected>Memuatkan senarai pelanggan dari sistem...</option>
-                  </select>
-                </div>
-                <span class="material-icons-round apple-select-chevron">expand_more</span>
-              </div>
             </div>
 
             <div class="mb-16">
@@ -683,127 +665,6 @@
       return new Date(str);
     }
 
-    var registeredCustomers = [];
-
-    /**
-     * Load Customers dynamically from Supabase PostgreSQL (Zero Fake Data)
-     */
-    async function loadRegisteredCustomers() {
-      var custSelect = document.getElementById('nb-cust-select');
-      if (!custSelect) return;
-
-      custSelect.innerHTML = '<option value="" disabled selected>Memuatkan senarai pelanggan dari sistem...</option>';
-
-      try {
-        var customers = [];
-        if (window.WeDriveAPI && typeof window.WeDriveAPI.getCustomers === 'function') {
-          customers = await window.WeDriveAPI.getCustomers();
-        } else if (window.supabaseClient) {
-          var res = await window.supabaseClient.from('customers').select('*').order('name', { ascending: true });
-          customers = res.data || [];
-        }
-
-        registeredCustomers = (customers || []).filter(function (c) {
-          return c && c.name && String(c.name).trim().length > 0;
-        });
-
-        custSelect.innerHTML = '';
-
-        var walkInOpt = document.createElement('option');
-        walkInOpt.value = 'walk_in';
-        walkInOpt.textContent = '+ Pelanggan Baharu (Pendaftaran Kaunter / Walk-in)';
-        custSelect.appendChild(walkInOpt);
-
-        if (registeredCustomers.length > 0) {
-          var groupOpt = document.createElement('optgroup');
-          groupOpt.label = 'Pelanggan Berdaftar (' + registeredCustomers.length + ')';
-
-          registeredCustomers.forEach(function (c) {
-            var opt = document.createElement('option');
-            opt.value = c.id;
-            opt.setAttribute('data-name', c.name || '');
-            opt.setAttribute('data-email', c.email || '');
-            opt.setAttribute('data-phone', c.phone || '');
-            opt.setAttribute('data-ic', c.ic || '');
-            opt.textContent = c.name + ' (' + (c.email || c.phone || 'ID: ' + c.id) + ')';
-            groupOpt.appendChild(opt);
-          });
-          custSelect.appendChild(groupOpt);
-        }
-
-        var urlParams = new URLSearchParams(window.location.search);
-        var targetCustId = urlParams.get('customer_id') || urlParams.get('cust_id');
-        var targetEmail = urlParams.get('email');
-
-        if (targetCustId) {
-          for (var i = 0; i < custSelect.options.length; i++) {
-            if (String(custSelect.options[i].value) === String(targetCustId)) {
-              custSelect.selectedIndex = i;
-              break;
-            }
-          }
-        } else if (targetEmail) {
-          for (var j = 0; j < custSelect.options.length; j++) {
-            if ((custSelect.options[j].getAttribute('data-email') || '').toLowerCase() === targetEmail.toLowerCase()) {
-              custSelect.selectedIndex = j;
-              break;
-            }
-          }
-        } else if (registeredCustomers.length > 0) {
-          // Default to the first registered customer from the database
-          custSelect.selectedIndex = 1;
-        }
-
-        handleCustomerSelectChange();
-
-      } catch (err) {
-        console.error('[NewBooking] Gagal memuatkan pelanggan:', err);
-        custSelect.innerHTML = '<option value="walk_in">+ Pelanggan Baharu (Pendaftaran Kaunter / Walk-in)</option>';
-      }
-    }
-
-    /**
-     * Handle Customer Select Change
-     */
-    function handleCustomerSelectChange() {
-      var sel = document.getElementById('nb-cust-select');
-      var badge = document.getElementById('nb-cust-source-badge');
-      if (!sel) return;
-
-      var nameInput = document.getElementById('nb-cust-name');
-      var emailInput = document.getElementById('nb-cust-email');
-      var phoneInput = document.getElementById('nb-cust-phone');
-      var icInput = document.getElementById('nb-cust-ic');
-
-      var val = sel.value;
-      if (val === 'walk_in') {
-        nameInput.value = '';
-        emailInput.value = '';
-        phoneInput.value = '';
-        icInput.value = '';
-        nameInput.placeholder = 'cth: Ahmad Daniel bin Razak';
-        emailInput.placeholder = 'ahmad@gmail.com';
-        phoneInput.placeholder = '+60 12-345 6789';
-        icInput.placeholder = '000101-04-1234';
-        if (badge) {
-          badge.textContent = 'Daftar Manual';
-          badge.className = 'fs-11 text-secondary fw-600 bg-surface-2 px-8 py-4 radius-9999';
-        }
-      } else {
-        var opt = sel.selectedOptions[0];
-        if (opt) {
-          nameInput.value = opt.getAttribute('data-name') || '';
-          emailInput.value = opt.getAttribute('data-email') || '';
-          phoneInput.value = opt.getAttribute('data-phone') || '';
-          icInput.value = opt.getAttribute('data-ic') || '';
-        }
-        if (badge) {
-          badge.textContent = '✓ Rekod Pangkalan Data';
-          badge.className = 'fs-11 text-primary fw-600 bg-primary-soft px-8 py-4 radius-9999';
-        }
-      }
-    }
-
     /**
      * Load Available Vehicles dynamically from Supabase PostgreSQL (Zero Fake Data)
      */
@@ -987,9 +848,6 @@
         }
       }
 
-      // Load registered customers dynamically from Supabase (Zero Fake Data)
-      loadRegisteredCustomers();
-
       // Load cars dynamically from Supabase
       loadAvailableCars();
     }
@@ -1005,9 +863,6 @@
      */
     async function handleBookingSubmit(e) {
       e.preventDefault();
-
-      var selCust = document.getElementById('nb-cust-select');
-      var selectedCustomerId = selCust ? selCust.value : null;
 
       var custName = document.getElementById('nb-cust-name').value.trim();
       var custEmail = document.getElementById('nb-cust-email').value.trim();
@@ -1039,7 +894,6 @@
         car_id: carId,
         car: carName,
         plate: carPlate,
-        customer_id: (selectedCustomerId && selectedCustomerId !== 'walk_in') ? selectedCustomerId : null,
         customer: custName,
         email: custEmail,
         phone: custPhone,

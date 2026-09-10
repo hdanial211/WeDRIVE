@@ -12,7 +12,7 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 .agents/
 +-- PROJECT_STRUCTURE.md        # Dokumen Struktur Projek Utama (Fail ini)
 +-- DESIGN.md                   # Spesifikasi Master Reka Bentuk Apple HIG & Stitch MCP
-+-- rules/                      # 22 Fail Peraturan Bernombor (Strict Max 12,000 chars - Bebas Kembang Hingga 20-30 Fail):
++-- rules/                      # 24 Fail Peraturan Bernombor (Strict Max 12,000 chars - Bebas Kembang Hingga 20-30 Fail):
 |   +-- 01_core_rules.md        # Gatekeeper Protocol, Protokol Alatan Pintar & MCP, Git, PRD
 |   +-- 02_apple_hig_design_system.md  # Apple HIG Pilar 1–3: Asas, Bento Grid & Corak Interaksi
 |   +-- 03_apple_hig_components.md     # Apple HIG Pilar 4–6: Komponen, Input Borang & Senarai Semak
@@ -36,6 +36,7 @@ Folder `.agents/` bertindak sebagai pusat kawalan pintar, peraturan mandatori, k
 |   +-- 21_stitch_mcp_advanced_operations.md # Operasi Lanjutan & Enjin Kualiti Pasca-Prompt Stitch MCP
 |   +-- 22_user_feedback_golden_rules.md # Undang-undang Emas Maklum Balas & Mandat Langsung Pengguna
 |   +-- 23_stitch_to_production_workflow.md # Piawaian Universal Penukaran Pratonton STITCH ke Pengeluaran Sebenar
+|   +-- 24_vehicle_visual_angles_standard.md # Piawaian Sudut Visual Meja Putar Impel & Pemetaan Bahagian Kereta (BMW 320i SSOT)
 +-- skills/                     # 6 Kemahiran Automasi Khusus:
 |   +-- context7/               # Carian Dokumentasi Masa Nyata & Sifar Kod Lapuk
 |   +-- frontend-ui/            # Rekaan Antaramuka Apple HIG & Bento Grid
