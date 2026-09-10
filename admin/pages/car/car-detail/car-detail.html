@@ -44,6 +44,10 @@
             <span class="material-icons-round fs-15">edit</span>
             <span data-key="cd_btn_edit">Sunting Kenderaan</span>
           </button>
+          <button class="btn-outline-sm" style="color:var(--color-danger,#FF3B30);border-color:var(--color-danger,#FF3B30)" onclick="openDeleteCarModal()" title="Padam Kenderaan Ini">
+            <span class="material-icons-round fs-15">delete_forever</span>
+            <span>Padam</span>
+          </button>
           <button class="btn-outline-sm" onclick="window.print()" title="Cetak Spesifikasi Kereta">
             <span class="material-icons-round fs-15">print</span>
             <span>Cetak Spesifikasi</span>
@@ -292,6 +296,35 @@
         <p class="fs-12 text-secondary m-0 mb-16">Kereta ini dilindungi sepenuhnya terhadap kerosakan kemalangan, kecurian, kebakaran, dan liabiliti pihak ketiga bagi semua operasi WeDRIVE Melaka.</p>
         <div class="flex-end">
           <button class="btn-primary-sm px-20 radius-9999" onclick="closeInsuranceModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE CAR MODAL -->
+  <div class="modal-overlay hidden" id="delete-car-modal" onclick="if(event.target===this)closeDeleteCarModal()">
+    <div class="modal-container max-w-440 radius-24" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+      <div class="modal-header border-bottom-subtle pb-16">
+        <h3 class="flex-center gap-8 text-primary fs-18 fw-700 m-0" id="delete-modal-title">
+          <span class="material-icons-round fs-22" style="color:var(--color-danger,#FF3B30)">delete_forever</span>
+          <span>Padam Kenderaan</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeDeleteCarModal()" aria-label="Tutup">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body pt-20">
+        <div class="card p-16 radius-18 mb-16" style="background:rgba(255,59,48,0.08);border:1px solid rgba(255,59,48,0.25)">
+          <p class="fs-14 fw-600 m-0 mb-4" style="color:var(--color-danger,#FF3B30)">⚠ Tindakan Tidak Boleh Dibatalkan</p>
+          <p class="fs-13 text-secondary m-0">Kenderaan <strong id="delete-car-name" class="text-primary">--</strong> akan dipadam sepenuhnya dari inventori. Semua data kenderaan akan hilang.</p>
+        </div>
+        <p class="fs-13 text-secondary mb-16">Taipkan nombor plat kenderaan untuk mengesahkan pemadaman:</p>
+        <input id="delete-confirm-plate" type="text" class="w-100 p-12 radius-12 bg-surface-2 border-subtle text-primary fs-14 mb-4"
+          placeholder="Contoh: MCM 8820" autocomplete="off" oninput="checkDeletePlateMatch()" style="text-transform:uppercase" />
+        <p id="delete-plate-hint" class="fs-12 text-secondary m-0 mb-16"></p>
+        <div class="flex-end gap-12">
+          <button class="btn-outline-sm" onclick="closeDeleteCarModal()">Batal</button>
+          <button id="btn-confirm-delete" class="btn-primary-sm px-20 radius-9999" style="background:var(--color-danger,#FF3B30);opacity:0.4;cursor:not-allowed" disabled onclick="confirmDeleteCar()">Padam Sekarang</button>
         </div>
       </div>
     </div>

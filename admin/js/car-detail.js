@@ -957,3 +957,103 @@ function closeInsuranceModal() {
   const modal = document.getElementById('insurance-modal');
   if (modal) modal.classList.add('hidden');
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   9. DELETE CAR MODAL
+   ───────────────────────────────────────────────────────────────────────────── */
+function openDeleteCarModal() {
+  const modal = document.getElementById('delete-car-modal');
+  const nameEl = document.getElementById('delete-car-name');
+  const input = document.getElementById('delete-confirm-plate');
+  const hint = document.getElementById('delete-plate-hint');
+  const btn = document.getElementById('btn-confirm-delete');
+
+  if (nameEl && activeCar) {
+    nameEl.textContent = activeCar.name || 'Kenderaan ini';
+  }
+  if (input) input.value = '';
+  if (hint) hint.textContent = '';
+  if (btn) {
+    btn.disabled = true;
+    btn.style.opacity = '0.4';
+    btn.style.cursor = 'not-allowed';
+  }
+  if (modal) modal.classList.remove('hidden');
+  setTimeout(() => { if (input) input.focus(); }, 120);
+}
+
+function closeDeleteCarModal() {
+  const modal = document.getElementById('delete-car-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function checkDeletePlateMatch() {
+  const input = document.getElementById('delete-confirm-plate');
+  const hint = document.getElementById('delete-plate-hint');
+  const btn = document.getElementById('btn-confirm-delete');
+  if (!input || !activeCar) return;
+
+  const typed = input.value.trim().toUpperCase().replace(/\s+/g, ' ');
+  const actual = (activeCar.plate || '').toUpperCase().replace(/\s+/g, ' ');
+  const match = typed === actual;
+
+  if (hint) {
+    hint.textContent = match
+      ? '✓ Nombor plat betul. Anda boleh meneruskan pemadaman.'
+      : (typed.length > 0 ? 'Nombor plat tidak sepadan. Cuba semula.' : '');
+    hint.style.color = match ? 'var(--color-success, #34C759)' : 'var(--color-danger, #FF3B30)';
+  }
+  if (btn) {
+    btn.disabled = !match;
+    btn.style.opacity = match ? '1' : '0.4';
+    btn.style.cursor = match ? 'pointer' : 'not-allowed';
+  }
+}
+
+async function confirmDeleteCar() {
+  const btn = document.getElementById('btn-confirm-delete');
+  if (!activeCar || !activeCar.id) return;
+  if (btn && btn.disabled) return;
+
+  // Lock button while deleting
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Memproses...';
+  }
+
+  try {
+    let success = false;
+    if (window.WeDriveAPI && typeof window.WeDriveAPI.deleteCar === 'function') {
+      const res = await window.WeDriveAPI.deleteCar(activeCar.id);
+      success = res && res.success;
+    } else if (window.supabaseClient) {
+      const targetId = (!isNaN(activeCar.id) && typeof activeCar.id !== 'boolean')
+        ? Number(activeCar.id) : activeCar.id;
+      const res = await window.supabaseClient.from('cars').delete().eq('id', targetId);
+      success = !res.error;
+    }
+
+    if (success) {
+      closeDeleteCarModal();
+      if (typeof showToast === 'function') {
+        showToast('Kenderaan berjaya dipadam dari inventori.', 'success');
+      }
+      // Redirect to car list after short delay
+      setTimeout(() => {
+        window.location.href = '../cars.html';
+      }, 1200);
+    } else {
+      throw new Error('Pemadaman gagal.');
+    }
+  } catch (e) {
+    console.error('[WeDRIVE] deleteCar error:', e);
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = 'Padam Sekarang';
+      btn.style.opacity = '1';
+    }
+    if (typeof showToast === 'function') {
+      showToast('Gagal memadam kenderaan: ' + (e.message || 'Cuba semula.'), 'error');
+    }
+  }
+}

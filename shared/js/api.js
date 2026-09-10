@@ -773,6 +773,27 @@ window.WeDriveAPI = {
     },
 
     /**
+     * Permanently delete a car record from inventory.
+     * Used in: car-detail.html (Admin Delete Car)
+     */
+    deleteCar: async function (carId) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            return { success: true };
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var targetId = (!isNaN(carId) && typeof carId !== 'boolean') ? Number(carId) : carId;
+                var result = await sb.from('cars').delete().eq('id', targetId);
+                if (result.error) throw result.error;
+                return { success: true };
+            } catch (err) {
+                console.error('[WeDriveAPI] deleteCar error:', err);
+                return { success: false, error: err.message };
+            }
+        }
+    },
+
+    /**
      * Create a new car record in the inventory.
      * Used in: add-car.html (Admin New Car Registration)
      * Inserts into Supabase PostgreSQL cars table and updates local cache.
