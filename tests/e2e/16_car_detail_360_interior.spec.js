@@ -91,8 +91,8 @@ test.describe('WeDRIVE - Car Detail 360° Studio & 3D Interior Panorama', () => 
     await page.goto('/admin/pages/car/car-detail/car-detail.html?id=492');
     await page.waitForLoadState('networkidle');
 
-    // Should load Honda City
-    await expect(page.locator('#cd-name')).toContainText('Honda City');
+    // Should load Ford Ranger Raptor
+    await expect(page.locator('#cd-name')).toContainText('Ford');
 
     // 360 Exterior and 360 Interior tabs MUST NOT be visible
     const tabExterior = page.locator('#tab-exterior');

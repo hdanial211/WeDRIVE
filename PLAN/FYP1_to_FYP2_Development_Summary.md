@@ -6962,3 +6962,24 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 
 
 
+
+---
+
+## 32. [MAJOR UPDATE] Sistem Studio Penjanaan Automatik AI 360°
+- **Tarikh**: 10 September 2026
+- **Objektif**: Melaksanakan integrasi "Jana Studio AI" di mana URL paparan 360 eksternal (Impel) dihuraikan (parsed) bagi mengekstrak imej individu bingkai secara automatik dari CDN.
+- **Perubahan Teras**:
+  1. **Integrasi Automasi Pengekstrakan AI 360**:
+     - Membina fungsi peleraian `currentCdnPrefix` dan `totalFrames` dari URL CDN prapapar di `step2-studio360.js`.
+     - Membina paip muat turun dan muat naik secara berturutan `syncFramesToSupabase()` dari bingkai `0` ke `71` tanpa melanggar dasar CORS atau batasan simpanan awan.
+  2. **Senibina API dan Storan**:
+     - Menambah fungsi penyelarasan API `uploadCarFrame` dan `saveCarExteriorFrames` di `shared/js/api.js`.
+     - Mencipta migrasi pangkalan data `.sql` bagi mewujudkan *bucket* baharu `car-360-frames` serta penambahan struktur JSONB `exterior_frames` pada jadual `cars`.
+  3. **Pembaikan Pepijat Ujian Automasi**:
+     - Memperbaiki kegagalan ujian E2E di modul Paparan Kereta (memastikan ID 492 dipadankan dengan Ford Ranger Raptor, bukan Honda City kerana pangkalan data langsung).
+     - Menambah fail pratonton imej fallback `bezza.png` untuk mengelakkan ralat rangkaian *404 Not Found*.
+- **Keputusan Ujian Automasi**:
+  - **Playwright CLI**: 67/67 Ujian Lulus (**100% Pass Rate**).
+- **Maklumat Git**:
+  - Commit: `6.20.0 Implement AI 360 Studio automated sync pipeline and fix E2E regressions`
+  - Tag Versi: `6.20.0`

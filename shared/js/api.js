@@ -1313,5 +1313,52 @@ window.WeDriveAPI = {
                 return { success: false, error: err.message };
             }
         }
+    },
+
+    /**
+     * Upload a car 360 frame to Supabase Storage
+     * Used in: step2-studio360.js (Admin New Car)
+     */
+    uploadCarFrame: async function (carId, frameIndex, blob) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            return { success: true, url: 'dummy-url-' + frameIndex };
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var fileName = carId + '/exterior/frame-' + String(frameIndex).padStart(3, '0') + '.jpg';
+                var result = await sb.storage.from('car-360-frames').upload(fileName, blob, {
+                    cacheControl: '3600',
+                    upsert: true
+                });
+                if (result.error) throw result.error;
+                
+                var publicUrlRes = sb.storage.from('car-360-frames').getPublicUrl(fileName);
+                return { success: true, url: publicUrlRes.data.publicUrl };
+            } catch (err) {
+                console.error('[WeDriveAPI] uploadCarFrame error:', err);
+                return { success: false, error: err.message };
+            }
+        }
+    },
+
+    /**
+     * Save exterior frames array to car database
+     * Used in: step2-studio360.js (Admin New Car)
+     */
+    saveCarExteriorFrames: async function (carId, framesArray) {
+        if (!window.AppConfig.USE_REAL_DB) {
+            return { success: true };
+        } else {
+            try {
+                var sb = window.supabaseClient;
+                var targetId = (!isNaN(carId) && typeof carId !== 'boolean') ? Number(carId) : carId;
+                var result = await sb.from('cars').update({ exterior_frames: framesArray, has_360: true }).eq('id', targetId);
+                if (result.error) throw result.error;
+                return { success: true };
+            } catch (err) {
+                console.error('[WeDriveAPI] saveCarExteriorFrames error:', err);
+                return { success: false, error: err.message };
+            }
+        }
     }
 };

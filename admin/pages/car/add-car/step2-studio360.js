@@ -48,6 +48,7 @@
   let currentCdnExteriorUrl = '';  // Pusingan 360° Luar (Interactive Player)
   let currentCdnInteriorUrl = '';  // Panorama Dalaman (pano/pano_f.jpg)
   let currentCdnPhotosUrl   = '';  // Galeri CDN
+  let currentCdnPrefix      = '';  // Prefix for 360 CDN
   let currentGallery8Photos = [];  // 8 HD Angle Photos from CDN
 
   // Parse SpinCar/Impel/Carsome link and extract 3 separate views:
@@ -550,6 +551,7 @@
       if (result) {
         currentCdnExteriorUrl = result.exteriorUrl || url;
         currentCdnInteriorUrl = result.interiorPanoUrl || '';
+        currentCdnPrefix      = result.cdnPrefix || '';
         currentGallery8Photos = result.gallery8Photos || [];
 
         // Auto-fill the 6 vehicle inspection slots with matching angle photos
@@ -569,6 +571,7 @@
       } else {
         currentCdnExteriorUrl = url;
         currentCdnInteriorUrl = '';
+        currentCdnPrefix      = '';
         currentGallery8Photos = [];
       }
 
@@ -666,30 +669,114 @@
       // Save to localStorage (primary — always succeeds instantly)
       localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
 
-      // Sync to Supabase (secondary — async, non-blocking)
+      // Sync to Supabase (secondary — async, non-blocking originally, but now we await for frame uploads)
       if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
-        window.WeDriveAPI.saveCarDraft(draft).then(res => {
+        window.WeDriveAPI.saveCarDraft(draft).then(async res => {
           if (res && res.data && res.data.id) {
+            const draftId = res.data.id;
             try {
               const cur = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
-              cur.supabase_draft_id = res.data.id;
+              cur.supabase_draft_id = draftId;
               localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
             } catch (_) {}
+
+            // NEW 360 PIPELINE: Download from Impel and Upload to Supabase Storage
+            if (currentCdnPrefix && window.WeDriveAPI.uploadCarFrame) {
+              try {
+                const spanTxt = btnSaveToDb ? btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]') : null;
+                const maxFrames = 72;
+                let uploadedUrls = [];
+                let hit404 = false;
+
+                // Download frames sequentially (0-0 to 0-71)
+                for (let i = 0; i < maxFrames; i++) {
+                  if (hit404) break;
+                  
+                  if (spanTxt) {
+                    spanTxt.textContent = isEn ? `Syncing 360° (${i}/${maxFrames})...` : `Menyegerak 360° (${i}/${maxFrames})...`;
+                  }
+
+                  const frameUrl = `${currentCdnPrefix}ec/0-${i}.jpg`;
+                  try {
+                    const imgRes = await fetch(frameUrl);
+                    if (!imgRes.ok) {
+                      if (imgRes.status === 404 && i > 0) {
+                        hit404 = true;
+                        break;
+                      }
+                      continue; // skip failed frames
+                    }
+                    
+                    const blob = await imgRes.blob();
+                    const index = i + 1; // 1-based index for WeDrive
+                    
+                    const uploadData = await window.WeDriveAPI.uploadCarFrame(draftId, index, blob);
+                    if (uploadData && uploadData.success && uploadData.url) {
+                      uploadedUrls.push(uploadData.url);
+                    }
+                  } catch (fetchErr) {
+                    console.warn(`[WeDRIVE Studio] Failed to fetch frame ${i}:`, fetchErr);
+                  }
+                }
+
+                if (uploadedUrls.length > 0 && window.WeDriveAPI.saveCarExteriorFrames) {
+                  if (spanTxt) spanTxt.textContent = isEn ? 'Finalizing 360°...' : 'Mengemas kini 360°...';
+                  await window.WeDriveAPI.saveCarExteriorFrames(draftId, uploadedUrls);
+                  
+                  // Update draft locally with the final frames array
+                  const cur = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+                  cur.exterior_frames = uploadedUrls;
+                  localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
+                }
+              } catch (err) {
+                console.error('[WeDRIVE Studio] Frame upload pipeline error:', err);
+              }
+            }
           }
-        }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error:', err));
+          
+          // Update button to success state after everything finishes
+          if (btnSaveToDb) {
+            btnSaveToDb.disabled = false;
+            btnSaveToDb.classList.remove('border-border-day', 'opacity-60', 'cursor-not-allowed');
+            btnSaveToDb.classList.add('border-success', 'text-success');
+            const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+            if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved' : '✓ Visual Disimpan';
+          }
+
+          showAiToast(isEn ? '✓ Visual assets saved!' : '✓ Aset visual disimpan!', true, 'cloud_done');
+          
+        }).catch(err => {
+          console.warn('[WeDRIVE Studio] Supabase sync error:', err);
+          
+          if (btnSaveToDb) {
+            btnSaveToDb.disabled = false;
+            const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+            if (spanTxt) spanTxt.textContent = isEn ? 'Save Visuals' : 'Simpan Visual';
+          }
+          showAiToast(isEn ? 'Save failed. Please try again.' : 'Simpan gagal. Cuba semula.', false, 'error');
+        }).finally(() => {
+          isSavingDb = false;
+          if (saveDbProgressBox) {
+            saveDbProgressBox.classList.add('hidden');
+            saveDbProgressBox.classList.remove('flex');
+          }
+        });
+      } else {
+        // Fallback if API not available
+        if (btnSaveToDb) {
+          btnSaveToDb.disabled = false;
+          btnSaveToDb.classList.remove('border-border-day', 'opacity-60', 'cursor-not-allowed');
+          btnSaveToDb.classList.add('border-success', 'text-success');
+          const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
+          if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved (Local)' : '✓ Visual Disimpan (Lokal)';
+        }
+        showAiToast(isEn ? '✓ Visual assets saved locally!' : '✓ Aset visual disimpan lokal!', true, 'cloud_done');
+        isSavingDb = false;
+        if (saveDbProgressBox) {
+          saveDbProgressBox.classList.add('hidden');
+          saveDbProgressBox.classList.remove('flex');
+        }
       }
-
-      // Update button to success state
-      if (btnSaveToDb) {
-        btnSaveToDb.disabled = false;
-        btnSaveToDb.classList.remove('border-border-day', 'opacity-60', 'cursor-not-allowed');
-        btnSaveToDb.classList.add('border-success', 'text-success');
-        const spanTxt = btnSaveToDb.querySelector('span[data-i18n="btn_save_assets"]');
-        if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved' : '✓ Visual Disimpan';
-      }
-
-      showAiToast(isEn ? '✓ Visual assets saved!' : '✓ Aset visual disimpan!', true, 'cloud_done');
-
     } catch (e) {
       console.warn('[WeDRIVE Studio] handleSaveVisuals error:', e);
       if (btnSaveToDb) {
