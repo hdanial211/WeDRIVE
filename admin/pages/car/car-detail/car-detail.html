@@ -10,7 +10,7 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../../shared/css/wedrive.css" />
+  <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.17.8" />
   <script src="../../../../shared/js/auth-guard.js" data-role="admin"></script>
 </head>
 
@@ -25,7 +25,7 @@
       <!-- TOP BAR & ACTIONS -->
       <div class="flex-between flex-wrap gap-16 mb-24">
         <div class="flex-center gap-12">
-          <button class="btn-back" onclick="window.location.href='../cars.html'" data-navigate="../cars.html">
+          <button class="btn-back" onclick="if(document.referrer && (document.referrer.includes('available-cars.html') || document.referrer.includes('rented-cars.html') || document.referrer.includes('cars.html'))) { window.location.href = document.referrer; } else { window.location.href='../cars.html'; }" data-navigate="../cars.html">
             <span class="material-icons-round">arrow_back</span>
             <span data-key="cd_btn_back">Kembali ke Senarai Kereta</span>
           </button>
@@ -372,7 +372,7 @@
   </div>
 
   <script src="../../../../shared/js/navbar-loader.js?v=5.3.5"></script>
-  <script src="../../../../shared/js/sidebar-loader.js?v=5.3.5"></script>
+  <script src="../../../../shared/js/sidebar-loader.js?v=6.17.8"></script>
   <script src="../../../../shared/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../../shared/js/supabase-config.js"></script>
@@ -380,7 +380,7 @@
   <script src="../../../../shared/js/anime.min.js"></script>
   <script src="../../../../shared/js/animate.js"></script>
   <script src="../../../../shared/js/vehicle-viewer.js?v=6.5.7"></script>
-  <script src="../../../js/car-detail.js?v=6.5.7"></script>
+  <script src="../../../js/car-detail.js?v=6.17.8"></script>
   <script src="../../../js/admin-idle-timeout.js?v=5.2.77"></script>
 </body>
 

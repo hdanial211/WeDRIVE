@@ -16997,6 +16997,7 @@ body.theme-dark .apple-segment-btn.active .apple-segment-count {
   flex-direction: column;
   transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s;
   position: relative;
+  cursor: pointer;
 }
 [data-theme="dark"] .apple-car-showcase-card {
   background: #161618;

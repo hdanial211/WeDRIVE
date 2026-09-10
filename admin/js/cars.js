@@ -103,6 +103,16 @@ function populateCarStats(car) {
   if (cntRented) cntRented.textContent = rented;
 }
 
+/* ── Navigate to Car Detail ── */
+function navigateToCarDetail(carId, event) {
+  if (event && event.target && event.target.closest('button, a, input, select, textarea')) {
+    return;
+  }
+  if (!carId) return;
+  window.location.href = 'car-detail/car-detail.html?id=' + encodeURIComponent(carId);
+}
+window.navigateToCarDetail = navigateToCarDetail;
+
 /* ── Card Grid (Apple HIG Bento Showcase) ── */
 function renderCarCards(car) {
   const grid = document.getElementById('car-grid');
@@ -130,7 +140,7 @@ function renderCarCards(car) {
       : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
 
     return `
-    <div class="apple-car-showcase-card reveal-on-scroll">
+    <div class="apple-car-showcase-card reveal-on-scroll" data-car-id="${c.id}" onclick="navigateToCarDetail('${c.id}', event)">
       <div class="apple-car-studio-canvas">
         <div class="glass-status-pill">
           <span class="live-pulse-dot" style="background:${sc.dot}"></span> ${sc.label}
@@ -168,10 +178,10 @@ function renderCarCards(car) {
             <div class="apple-car-rate">RM ${rateNum} <span class="apple-car-rate-sub">/hari</span></div>
           </div>
           <div class="flex-center gap-8">
-            <button class="apple-btn-capsule-secondary" onclick="window.location.href='car-detail/car-detail.html?id=${c.id}'">
+            <button class="apple-btn-capsule-secondary" onclick="event.stopPropagation(); navigateToCarDetail('${c.id}')">
               <span class="material-icons-round fs-14">info</span> Perincian
             </button>
-            <button class="apple-btn-capsule-primary" onclick="manageCar(${c.id})">
+            <button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); manageCar(${c.id})">
               <span class="material-icons-round fs-14">tune</span> Urus
             </button>
           </div>
@@ -203,7 +213,7 @@ function renderCarTable(car) {
     const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
 
     return `
-    <tr style="border-bottom: 1px solid var(--border-subtle); transition: background 0.15s ease;">
+    <tr style="border-bottom: 1px solid var(--border-subtle); transition: background 0.15s ease; cursor: pointer;" onclick="navigateToCarDetail('${car.id}', event)">
       <td style="padding:14px 20px;">
         <div style="display:flex; align-items:center; gap:12px;">
           <div style="width:48px; height:36px; border-radius:8px; overflow:hidden; background:var(--bg-surface-3); display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1px solid var(--border-subtle);">
@@ -227,7 +237,7 @@ function renderCarTable(car) {
         </span>
       </td>
       <td style="padding:14px 20px; text-align:right;">
-        <button class="apple-btn-capsule-primary" onclick="manageCar(${car.id})">
+        <button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); manageCar(${car.id})">
           <span class="material-icons-round fs-14">tune</span> Urus
         </button>
       </td>

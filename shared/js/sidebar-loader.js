@@ -28,7 +28,6 @@
         { page: 'car-all', href: 'car/cars.html', icon: 'directions_car', key: 'sidebar_all_cars', label: 'Semua Kereta' },
         { page: 'car-available', href: 'car/available-cars.html', icon: 'check_circle', key: 'sidebar_available_cars', label: 'Kereta Tersedia' },
         { page: 'car-rented', href: 'car/rented-cars.html', icon: 'car_rental', key: 'sidebar_rented_cars', label: 'Kereta Sedang Disewa' },
-        { page: 'car-detail', href: 'car/car-detail/car-detail.html', icon: '360', key: 'sidebar_car_showcase', label: 'Studio 360° & Info Kereta' },
         { page: 'car-add', href: 'car/add-car/index.html', icon: 'add_circle', key: 'sidebar_add_car', label: 'Tambah Kereta Baharu' }
       ]
     },
@@ -135,6 +134,11 @@
       for (var a = 0; a < items.length; a++) {
         if (items[a].page === 'car-add') return 'car-add';
       }
+    }
+
+    // 1c. Detail views (e.g. car-detail.html) should not highlight any list sub-item
+    if (pathname.indexOf('/car/car-detail/') !== -1 || pathname.endsWith('/car-detail.html')) {
+      return '';
     }
 
     // 2. Direct pathname match against item.href

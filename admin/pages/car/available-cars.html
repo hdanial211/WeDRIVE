@@ -10,7 +10,7 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.6.9" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=6.17.8" />
   <!-- AUTH GUARD -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 </head>
@@ -114,7 +114,7 @@
   </main>
 
   <script src="../../../shared/js/navbar-loader.js?v=5.5.0"></script>
-  <script src="../../../shared/js/sidebar-loader.js?v=5.5.0"></script>
+  <script src="../../../shared/js/sidebar-loader.js?v=6.17.8"></script>
   <script src="../../../shared/js/main.js?v=5.2.8"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../../../shared/js/supabase-config.js?v=5.2.3"></script>
@@ -166,6 +166,14 @@
       });
     }
 
+    function navigateToCarDetail(carId, event) {
+      if (event && event.target && event.target.closest('button, a, input, select, textarea')) {
+        return;
+      }
+      if (!carId) return;
+      window.location.href = 'car-detail/car-detail.html?id=' + encodeURIComponent(carId);
+    }
+
     function renderAvailable() {
       var filtered = availableCars.filter(function (car) {
         var matchCat = currentCat === 'all' || (car.type || '').toLowerCase() === currentCat.toLowerCase();
@@ -201,7 +209,7 @@
             ? typeUpper 
             : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
 
-          return '<div class="apple-car-showcase-card reveal-onload">' +
+          return '<div class="apple-car-showcase-card reveal-onload" data-car-id="' + (car.id || '') + '" onclick="navigateToCarDetail(\'' + (car.id || '') + '\', event)">' +
             '<div class="apple-car-studio-canvas">' +
               '<div class="glass-status-pill">' +
                 '<span class="live-pulse-dot" style="background:#10B981"></span> Tersedia' +
@@ -234,10 +242,10 @@
                   '<div class="apple-car-rate">RM ' + rateNum + ' <span class="apple-car-rate-sub">/hari</span></div>' +
                 '</div>' +
                 '<div class="flex-center gap-8">' +
-                  '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">' +
+                  '<button class="apple-btn-capsule-secondary" onclick="event.stopPropagation(); navigateToCarDetail(\'' + (car.id || '') + '\')">' +
                     '<span class="material-icons-round fs-14">info</span> Perincian' +
                   '</button>' +
-                  '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">' +
+                  '<button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">' +
                     '<span class="material-icons-round fs-14">add_task</span> Tempah' +
                   '</button>' +
                 '</div>' +
@@ -257,7 +265,7 @@
             var rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '150');
             var parsedRate = parseFloat(rawRateStr);
             var rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
-            return '<tr>' +
+            return '<tr style="cursor: pointer;" onclick="navigateToCarDetail(\'' + (car.id || '') + '\', event)">' +
               '<td><strong>' + car.name + '</strong></td>' +
               '<td><span class="apple-plate-pill tabular-nums">' + (car.plate || '-') + '</span></td>' +
               '<td>' + (car.type || '-') + '</td>' +
@@ -268,8 +276,8 @@
               '<td><span class="status-badge success"><span class="dot"></span> Tersedia</span></td>' +
               '<td class="table-action-cell">' +
                 '<div class="table-action-group">' +
-                  '<button class="apple-btn-capsule-secondary" onclick="window.location.href=\'car-detail/car-detail.html?id=' + (car.id || '') + '\'">Perincian</button>' +
-                  '<button class="apple-btn-capsule-primary" onclick="window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
+                  '<button class="apple-btn-capsule-secondary" onclick="event.stopPropagation(); navigateToCarDetail(\'' + (car.id || '') + '\')">Perincian</button>' +
+                  '<button class="apple-btn-capsule-primary" onclick="event.stopPropagation(); window.location.href=\'../booking/new-booking.html?car=' + (car.id || '') + '\'">Tempah</button>' +
                 '</div>' +
               '</td>' +
             '</tr>';

@@ -95,7 +95,8 @@ function resolveImgSrc(img) {
 
 // Extract car ID from URL search params
 const urlParams = new URLSearchParams(window.location.search);
-let selectedCarId = parseInt(urlParams.get('id')) || 1;
+let paramId = urlParams.get('id');
+let selectedCarId = paramId !== null ? (isNaN(Number(paramId)) ? paramId : Number(paramId)) : null;
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
@@ -117,8 +118,12 @@ async function initVehicleStudio() {
     }
 
     // Find requested car or fallback to first car
-    activeCar = allCars.find(c => c.id === selectedCarId) || allCars[0];
-    selectedCarId = activeCar.id;
+    if (selectedCarId !== null) {
+      activeCar = allCars.find(c => String(c.id) === String(selectedCarId)) || allCars[0];
+    } else {
+      activeCar = allCars[0];
+    }
+    selectedCarId = activeCar ? activeCar.id : 1;
 
     renderFleetSelector();
     loadCarProfile(activeCar);
@@ -135,13 +140,13 @@ function renderFleetSelector() {
   if (!container) return;
 
   container.innerHTML = allCars.map(c => {
-    const isActive = c.id === selectedCarId;
+    const isActive = String(c.id) === String(selectedCarId);
     const thumbSrc = c.images && c.images.length > 0 ? resolveImgSrc(c.images[0]) : '';
     const has360Badge = carHas360(c) ?
       '<span class="badge-360 fs-9 py-2 px-6">360°</span>' : '';
 
     return `
-      <button class="fleet-car-chip ${isActive ? 'active' : ''}" onclick="selectFleetCar(${c.id})" title="${c.name}">
+      <button class="fleet-car-chip ${isActive ? 'active' : ''}" onclick="selectFleetCar('${c.id}')" title="${c.name}">
         <img src="${thumbSrc}" class="fleet-chip-thumb" alt="${c.name}" onerror="this.src='../../../../shared/logo/wedrive-icon.png';" />
         <div class="fleet-chip-info">
           <div class="fleet-chip-name">${c.name}</div>
@@ -158,10 +163,10 @@ function renderFleetSelector() {
 }
 
 function selectFleetCar(carId) {
-  if (selectedCarId === carId) return;
+  if (String(selectedCarId) === String(carId)) return;
 
   selectedCarId = carId;
-  activeCar = allCars.find(c => c.id === carId);
+  activeCar = allCars.find(c => String(c.id) === String(carId));
 
   // Update URL without reload
   const newUrl = new URL(window.location);

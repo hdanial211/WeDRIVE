@@ -6722,6 +6722,47 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.7 Replace repetitive HQ depot location with vehicle type in showcase cards`
   - Tag Versi: `6.17.7`
 
+---
+
+### [PATCH] v6.17.8 — Penyingkiran car-detail dari Bar Sisi (Sidebar) & Pengaktifan Navigasi Terus Kad Kenderaan ke car-detail.html?id=... (Remove car-detail from Sidebar & Enable Universal Card Click Navigation)
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna mendapati item `Studio 360° & Info Kereta` diletakkan di bar sisi (`sidebar`) modul Pengurusan Kereta, sedangkan halaman `car-detail.html?id=...` merupakan profil kenderaan terkhusus yang memerlukan ID kenderaan terpilih:
+    > *"https://wedrive.website/admin/pages/car/car-detail/car-detail.html?id=505 page ni sepatutnya muncul apabila saya tekan salah satu card yang berada dekat https://wedrive.website/admin/pages/car/cars.html , https://wedrive.website/admin/pages/car/available-cars.html n https://wedrive.website/admin/pages/car/rented-cars.html sahaja n bukan letak kad sidebar ,so fix ,kiranyanya tekan baru keluar page tu..bukan dari sidebar tekan cuba tengok dulu"*
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Bar Sisi Global ([`shared/js/sidebar-loader.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/shared/js/sidebar-loader.js))**:
+     - Membuang pautan `car-detail` (`Studio 360° & Info Kereta`) daripada senarai alatan modul Kereta (`SIDEBAR_MODULES.car.items`). Bar sisi pentadbir kini kekal bersih dengan 4 alatan teras: *Semua Kereta*, *Kereta Tersedia*, *Kereta Sedang Disewa*, dan *Tambah Kereta Baharu*.
+     - Menambah logik pengesanan dalam `detectActiveSubItem` supaya halaman `/car/car-detail/` memulangkan string kosong `''` agar tiada sub-item bar sisi yang ditandakan `.active` secara palsu ketika pentadbir melihat profil kenderaan.
+  2. **Navigasi Terus Kad Kenderaan ([`admin/js/cars.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/js/cars.js))**:
+     - Menjadikan seluruh permukaan kad pameran kenderaan (`.apple-car-showcase-card`) interaktif dengan `cursor: pointer` dan `onclick="navigateToCarDetail('${c.id}', event)"`.
+     - Melaksanakan pengendali pintar `navigateToCarDetail(carId, event)` yang mengabaikan klik jika sasaran sentuhan ialah butang dalaman (`e.target.closest('button')`).
+     - Memasang `event.stopPropagation()` pada butang tindakan sampingan (`Urus`) supaya tindakannya berfungsi secara terasing tanpa melencongkan pelayar ke halaman perincian.
+     - Menyediakan sokongan klik pada baris jadual (`<tr>`) mod senarai.
+  3. **Halaman Kereta Tersedia & Kereta Sedang Disewa ([`available-cars.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/pages/car/available-cars.html) & [`rented-cars.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/pages/car/rented-cars.html))**:
+     - Menyelaraskan kad grid dan baris jadual kedua-dua halaman dengan atribut `data-car-id` dan pengendali `navigateToCarDetail(carId, event)`.
+     - Butang *Tempah* dan *Log Sewaan* dipasang `event.stopPropagation()`.
+  4. **Hab Profil Kereta ([`admin/js/car-detail.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/js/car-detail.js) & [`car-detail.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/pages/car/car-detail/car-detail.html))**:
+     - Menyelaraskan pemadanan ID kenderaan menerusi perbandingan fleksibel `String(c.id) === String(selectedCarId)` bagi menyokong kedua-dua jenis ID (contoh: ID `505` yang didaftarkan pengguna).
+     - Menambah fungsi navigasi kembali pintar (`document.referrer`) pada butang `btn-back` supaya pengguna kembali ke halaman senarai asal mereka (`cars.html`, `available-cars.html`, atau `rented-cars.html`).
+  5. **Gaya Global ([`shared/css/wedrive.css`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/shared/css/wedrive.css))**:
+     - Menetapkan `cursor: pointer;` pada `.apple-car-showcase-card`.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Pemeriksaan Tab Pelayar Tunggal Chrome DevTools**:
+    - `cars.html`: Bar sisi kini memaparkan tepat 4 alat. Menekan kad kenderaan terus membuka `car-detail.html?id=[id]`.
+    - `car-detail.html?id=505`: Memuatkan Honda Civic (#CAR-505) dengan sempurna. Bar sisi memaparkan 4 alat tanpa sebarang sorotan `.active` yang mengelirukan. Butang "Kembali" melencongkan pengguna kembali ke senarai asal.
+    - `available-cars.html` & `rented-cars.html`: Menekan mana-mana kad kenderaan membuka profil kenderaan masing-masing. Butang *Log Sewaan* dan *Tempah* kekal beroperasi dengan tepat.
+    - Spektrum 3-Peranti Apple: MacBook (1440px), iPad (820px), iPhone (393px) disahkan 0 ovals (`ovals: []`) dan sifar limpahan (`hasHorizontalScroll: false`).
+  - **Ujian Automasi Playwright CLI**: 54/54 ujian lulus sepenuhnya (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 23 fail `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .` (3201 nod, 5790 edges).
+
+- **Maklumat Git**:
+  - Commit: `6.17.8 Remove car-detail from sidebar and enable universal card click navigation`
+  - Tag Versi: `6.17.8`
+
+
 
 
 
