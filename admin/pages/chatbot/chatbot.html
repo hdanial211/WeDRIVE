@@ -36,17 +36,17 @@
               <span>Konfigurasi Pembantu Maya</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main">Konfigurasi Pembantu Khidmat Pelanggan</h1>
-              <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Pembantu Maya 24/7 (AI)</span></span>
+              <h1 class="bento-title-main" data-key="cb_admin_title">Konfigurasi Pembantu Khidmat Pelanggan</h1>
+              <span class="status-badge active"><span class="live-pulse-dot"></span> <span data-key="cb_badge_active">Pembantu Maya 24/7 (AI)</span></span>
             </div>
-            <p class="bento-subtitle-main">Urus kunci pintu masuk API, persona komunikasi, promosi semasa, dan pantau respons ejen secara langsung melalui konsol simulasi.</p>
+            <p class="bento-subtitle-main" data-key="cb_admin_subtitle">Urus kunci pintu masuk API, persona komunikasi, promosi semasa, dan pantau respons ejen secara langsung melalui konsol simulasi.</p>
           </div>
           <div class="flex-center gap-10">
             <button class="btn-outline-sm" onclick="refreshLiveData()">
-              <span class="material-icons-round fs-16">refresh</span> Segarkan Data
+              <span class="material-icons-round fs-16">refresh</span> <span data-key="cb_btn_refresh">Segarkan Data</span>
             </button>
             <button class="btn-primary-sm" onclick="saveSettings()">
-              <span class="material-icons-round fs-16">save</span> Simpan Perubahan
+              <span class="material-icons-round fs-16">save</span> <span data-key="cb_btn_save">Simpan Perubahan</span>
             </button>
           </div>
         </div>
@@ -63,12 +63,12 @@
               <div>
                 <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
                   <span class="material-icons-round text-primary">vpn_key</span>
-                  Konfigurasi Kunci API AI
+                  <span data-key="cb_card_api_title">Konfigurasi Kunci API AI</span>
                 </h3>
-                <p class="fs-13 text-secondary m-0 mt-2">Sambungan pintu masuk keselamatan OpenRouter.ai</p>
+                <p class="fs-13 text-secondary m-0 mt-2" data-key="cb_card_api_sub">Sambungan pintu masuk keselamatan OpenRouter.ai</p>
               </div>
               <span id="api-status" class="api-status disconnected radius-pill px-10 py-4">
-                <span class="dot-indicator"></span> Belum Disambung
+                <span class="dot-indicator"></span> <span data-key="cb_status_disconnected">Belum Disambung</span>
               </span>
             </div>
 
@@ -93,7 +93,7 @@
                     <span class="material-icons-round toggle-eye cursor-pointer" onclick="toggleKey('api-key', this)">visibility_off</span>
                   </div>
                   <button class="btn-secondary" id="btn-test-openrouter" onclick="testSingleKey('openrouter')">
-                    <span class="material-icons-round fs-16">bolt</span> Uji Sambungan
+                    <span class="material-icons-round fs-16">bolt</span> <span data-key="cb_btn_test_conn">Uji Sambungan</span>
                   </button>
                 </div>
                 <div class="key-status mt-4" id="status-openrouter"></div>
@@ -112,36 +112,36 @@
             <div class="card-header chatbot-card-header mb-16 border-bottom-subtle pb-12">
               <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
                 <span class="material-icons-round text-primary">psychology</span>
-                Persona &amp; Garis Panduan Ejen Pintar
+                <span data-key="cb_card_persona_title">Persona &amp; Garis Panduan Ejen Pintar</span>
               </h3>
-              <p class="fs-13 text-secondary m-0 mt-2">Tetapkan mesej aluan dan arahan tatatertib interaksi pengguna</p>
+              <p class="fs-13 text-secondary m-0 mt-2" data-key="cb_card_persona_sub">Tetapkan mesej aluan dan arahan tatatertib interaksi pengguna</p>
             </div>
 
             <div class="chatbot-settings-form">
               <!-- Welcome Greeting -->
               <div class="form-group mb-16">
-                <label class="fw-600 fs-13 text-title">Mesej Aluan Awal (Welcome Message)</label>
-                <div class="fs-12 text-muted mb-6">Dipaparkan serta-merta apabila pelanggan membuka widget perbualan.</div>
+                <label class="fw-600 fs-13 text-title" data-key="cb_lbl_greeting">Mesej Aluan Awal (Welcome Message)</label>
+                <div class="fs-12 text-muted mb-6" data-key="cb_desc_greeting">Dipaparkan serta-merta apabila pelanggan membuka widget perbualan.</div>
                 <input type="text" id="greeting-msg" class="form-input radius-14" placeholder="Hai! Saya Pembantu WeDRIVE. Bagaimana saya boleh bantu anda hari ini?" />
               </div>
 
               <!-- System Prompt -->
               <div class="form-group mb-16">
-                <label class="fw-600 fs-13 text-title">Arahan Sistem Teras (System Prompt)</label>
-                <div class="fs-12 text-muted mb-6">Peraturan rasmi kepatuhan, gaya bahasa, dan sekatan keselamatan ejen.</div>
+                <label class="fw-600 fs-13 text-title" data-key="cb_lbl_sys_prompt">Arahan Sistem Teras (System Prompt)</label>
+                <div class="fs-12 text-muted mb-6" data-key="cb_desc_sys_prompt">Peraturan rasmi kepatuhan, gaya bahasa, dan sekatan keselamatan ejen.</div>
                 <textarea id="system-prompt" rows="8" class="form-input radius-14" placeholder="Anda adalah Pembantu WeDRIVE..."></textarea>
               </div>
 
               <!-- Promotions Context -->
               <div class="form-group mb-16">
-                <label class="fw-600 fs-13 text-title">Konteks Promosi &amp; Dasar Semasa</label>
-                <div class="fs-12 text-muted mb-6">Kenyataan tawaran bermusim yang diserapkan ke dalam jawapan AI secara automatik.</div>
+                <label class="fw-600 fs-13 text-title" data-key="cb_lbl_promo">Konteks Promosi &amp; Dasar Semasa</label>
+                <div class="fs-12 text-muted mb-6" data-key="cb_desc_promo">Kenyataan tawaran bermusim yang diserapkan ke dalam jawapan AI secara automatik.</div>
                 <textarea id="promo-context" rows="4" class="form-input radius-14" placeholder="Promosi Semasa: Diskaun 10% untuk sewaan hujung minggu..."></textarea>
               </div>
 
               <div class="mt-12 flex-row">
                 <button class="btn-primary w-full" onclick="saveSettings()">
-                  <span class="material-icons-round fs-18">save</span> Simpan Persona &amp; Promosi
+                  <span class="material-icons-round fs-18">save</span> <span data-key="cb_btn_save_persona">Simpan Persona &amp; Promosi</span>
                 </button>
               </div>
             </div>
@@ -159,19 +159,19 @@
                   <span class="material-icons-round fs-20">smart_toy</span>
                 </div>
                 <div class="bot-info">
-                  <h4 class="fs-15 fw-700 m-0 text-title">Konsol Ujian Ejen (Simulasi Pelanggan)</h4>
+                  <h4 class="fs-15 fw-700 m-0 text-title" data-key="cb_play_title">Konsol Ujian Ejen (Simulasi Pelanggan)</h4>
                   <span class="fs-12 text-secondary flex-center gap-4">
-                    <span class="live-pulse-dot"></span> Sesi Interaktif Langsung
+                    <span class="live-pulse-dot"></span> <span data-key="cb_play_sub">Sesi Interaktif Langsung</span>
                   </span>
                 </div>
               </div>
 
               <!-- Suggestion Chips for quick testing -->
               <div class="chat-playground-suggestions p-12 bg-surface-3 flex-wrap gap-8 flex-center">
-                <button class="filter-chip" onclick="quickPlayMsg('Apakah kereta yang tersedia hari ini?')">Kereta Tersedia</button>
-                <button class="filter-chip" onclick="quickPlayMsg('Cadangkan sebuah kenderaan keluarga 7 tempat duduk')">Cadangan MPV</button>
-                <button class="filter-chip" onclick="quickPlayMsg('Di manakah lokasi cawangan penyerahan di Melaka?')">Lokasi Cawangan</button>
-                <button class="filter-chip" onclick="quickPlayMsg('Berapakah kadar deposit keselamatan?')">Kadar Deposit</button>
+                <button class="filter-chip" onclick="quickPlayMsg('Apakah kereta yang tersedia hari ini?')" data-key="cb_chip_avail">Kereta Tersedia</button>
+                <button class="filter-chip" onclick="quickPlayMsg('Cadangkan sebuah kenderaan keluarga 7 tempat duduk')" data-key="cb_chip_mpv">Cadangan MPV</button>
+                <button class="filter-chip" onclick="quickPlayMsg('Di manakah lokasi cawangan penyerahan di Melaka?')" data-key="cb_chip_loc">Lokasi Cawangan</button>
+                <button class="filter-chip" onclick="quickPlayMsg('Berapakah kadar deposit keselamatan?')" data-key="cb_chip_deposit">Kadar Deposit</button>
               </div>
 
               <div class="chat-messages chat-messages-scroll p-18" id="chat-messages">
@@ -179,7 +179,7 @@
               </div>
 
               <div class="chat-input-bar p-12 border-top-subtle bg-surface-2 flex-center gap-10">
-                <input type="text" id="chat-input" class="form-input radius-pill flex-1" placeholder="Taip soalan untuk menguji jawapan ejen AI..." 
+                <input type="text" id="chat-input" class="form-input radius-pill flex-1" placeholder="Taip soalan untuk menguji jawapan ejen AI..." data-key-ph="cb_input_ph" 
                        onkeydown="if(event.key==='Enter')sendTestMsg()" />
                 <button onclick="sendTestMsg()" id="send-btn" class="btn-primary btn-icon-send flex-center radius-50" title="Hantar Mesej">
                   <span class="material-icons-round fs-18">send</span>
@@ -193,9 +193,9 @@
             <div class="card-header chatbot-card-header mb-16 border-bottom-subtle pb-12">
               <h3 class="fs-16 fw-700 m-0 flex-center gap-8 text-title">
                 <span class="material-icons-round text-primary">sync</span>
-                Penyelarasan Pangkalan Data Langsung
+                <span data-key="cb_card_sync_title">Penyelarasan Pangkalan Data Langsung</span>
               </h3>
-              <p class="fs-13 text-secondary m-0 mt-2">Data operasi yang disuntik terus ke dalam pengetahuan AI</p>
+              <p class="fs-13 text-secondary m-0 mt-2" data-key="cb_card_sync_sub">Data operasi yang disuntik terus ke dalam pengetahuan AI</p>
             </div>
 
             <div class="chatbot-settings-form">
@@ -210,12 +210,12 @@
 
               <div class="form-group">
                 <label class="flex-between flex-center fw-600 fs-13 text-title mb-6">
-                  Pratonton Konteks Diserap
+                  <span data-key="cb_lbl_preview_context">Pratonton Konteks Diserap</span>
                   <button class="btn-secondary btn-xs" id="btn-refresh-data" onclick="refreshLiveData()">
-                    <span class="material-icons-round fs-14">refresh</span> Segarkan Semula
+                    <span class="material-icons-round fs-14">refresh</span> <span data-key="cb_btn_refresh">Segarkan Semula</span>
                   </button>
                 </label>
-                <div class="fs-12 text-muted mb-8">Format JSON yang disematkan ke dalam memori arahan model AI:</div>
+                <div class="fs-12 text-muted mb-8" data-key="cb_desc_preview_context">Format JSON yang disematkan ke dalam memori arahan model AI:</div>
                 <pre id="live-data-preview" class="hidden pre-preview-180 p-14 radius-14 bg-surface-3 fs-11 text-secondary overflow-auto"></pre>
               </div>
             </div>
