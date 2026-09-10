@@ -215,17 +215,19 @@
     function initVerifications() {
       window.WeDriveAPI.getAdminData()
         .then(function (data) {
-          customersList = (data.customers || []).map(function (c, idx) {
+          customersList = (data.customers || []).map(function (c) {
             return {
-              id: c.id || ('CUST-' + (idx + 1)),
-              name: c.name || 'Pelanggan WeDRIVE',
-              email: c.email || 'customer@gmail.com',
-              phone: c.phone || '+60 12-345 6789',
-              ic: c.ic || ('9' + (idx % 10) + '0512-04-5' + (idx + 100)),
-              license: 'D - 8' + (idx + 100) + '92',
-              expiry: '2028-11-20',
-              submitted: '2026-09-02',
-              status: idx % 3 === 0 ? 'Pending' : 'Verified'
+              id: c.id,
+              name: c.name || c.full_name || 'Pelanggan WeDRIVE',
+              email: c.email || '--',
+              phone: c.phone || '--',
+              ic: c.ic || '--',
+              license: c.license || '--',
+              expiry: c.license_expiry || 'Tidak Ditetapkan',
+              submitted: c.joined || (c.created_at ? c.created_at.slice(0, 10) : '--'),
+              status: c.verification_status || 'Pending',
+              icUrl: c.ic_document_url || null,
+              licenseUrl: c.license_document_url || null
             };
           });
 
@@ -238,9 +240,9 @@
     }
 
     function updateStats() {
-      var pending = customersList.filter(function (c) { return c.status.toLowerCase() === 'pending'; }).length;
-      var approved = customersList.filter(function (c) { return c.status.toLowerCase() === 'verified'; }).length;
-      var rejected = customersList.filter(function (c) { return c.status.toLowerCase() === 'rejected'; }).length;
+      var pending = customersList.filter(function (c) { return (c.status || '').toLowerCase() === 'pending'; }).length;
+      var approved = customersList.filter(function (c) { return (c.status || '').toLowerCase() === 'verified'; }).length;
+      var rejected = customersList.filter(function (c) { return (c.status || '').toLowerCase() === 'rejected'; }).length;
 
       document.getElementById('vf-stat-pending').textContent = pending;
       document.getElementById('vf-stat-approved').textContent = approved;
@@ -251,7 +253,7 @@
 
     function renderTable() {
       var filtered = customersList.filter(function (c) {
-        var matchStatus = currentFilter === 'all' || c.status.toLowerCase() === currentFilter.toLowerCase();
+        var matchStatus = currentFilter === 'all' || (c.status || '').toLowerCase() === currentFilter.toLowerCase();
         var matchSearch = !searchQuery ||
           c.name.toLowerCase().includes(searchQuery) ||
           c.email.toLowerCase().includes(searchQuery) ||
@@ -268,8 +270,8 @@
       }
 
       tbody.innerHTML = filtered.map(function (c) {
-        var isVerified = c.status.toLowerCase() === 'verified';
-        var isPending = c.status.toLowerCase() === 'pending';
+        var isVerified = (c.status || '').toLowerCase() === 'verified';
+        var isPending = (c.status || '').toLowerCase() === 'pending';
         var badgeClass = isVerified ? 'status-badge available' : (isPending ? 'status-badge pending' : 'status-badge danger');
         var badgeText = isVerified ? 'Disahkan JPJ' : (isPending ? 'Menunggu Audit' : 'Ditolak');
 
@@ -309,6 +311,11 @@
       document.getElementById('kyc-ic-val').textContent = c.ic;
       document.getElementById('kyc-expiry-val').textContent = c.expiry;
       
+      var mykadEl = document.getElementById('kyc-mykad-preview');
+      if (mykadEl) mykadEl.src = c.icUrl || '../../../shared/img/docs/sample_mykad.png';
+      var licenseEl = document.getElementById('kyc-license-preview');
+      if (licenseEl) licenseEl.src = c.licenseUrl || '../../../shared/img/docs/sample_license.png';
+
       var modal = document.getElementById('kyc-modal');
       modal.classList.remove('hidden');
       modal.style.display = 'flex';
@@ -321,42 +328,79 @@
       activeCustId = null;
     }
 
-    function quickApprove(id) {
+    async function quickApprove(id) {
       var c = customersList.find(function (item) { return String(item.id) === String(id); });
-      if (c) {
+      if (!c) return;
+
+      try {
+        if (window.WeDriveAPI && window.WeDriveAPI.verifyCustomer) {
+          await window.WeDriveAPI.verifyCustomer(id, 'Verified');
+        } else if (window.supabaseClient) {
+          var res = await window.supabaseClient.from('customers').update({ verification_status: 'Verified', rejection_reason: null }).eq('id', id);
+          if (res.error) throw res.error;
+        }
         c.status = 'Verified';
         updateStats();
         renderTable();
         if (window.showToast) window.showToast('Dokumen ' + c.name + ' berjaya disahkan!', 'success');
+      } catch (err) {
+        console.error('Verifications error:', err);
+        if (window.showToast) window.showToast('Gagal mengesahkan: ' + err.message, 'error');
       }
     }
 
-    function approveCurrentCustomer() {
+    async function approveCurrentCustomer() {
       if (!activeCustId) return;
-      quickApprove(activeCustId);
+      await quickApprove(activeCustId);
       closeKycModal();
     }
 
-    function rejectCurrentCustomer() {
+    async function rejectCurrentCustomer() {
       if (!activeCustId) return;
       var c = customersList.find(function (item) { return String(item.id) === String(activeCustId); });
-      if (c) {
+      if (!c) return;
+
+      var reason = prompt('Sila nyatakan sebab penolakan dokumen:') || 'Dokumen tidak memenuhi piawaian';
+      try {
+        if (window.WeDriveAPI && window.WeDriveAPI.verifyCustomer) {
+          await window.WeDriveAPI.verifyCustomer(activeCustId, 'Rejected', reason);
+        } else if (window.supabaseClient) {
+          var res = await window.supabaseClient.from('customers').update({ verification_status: 'Rejected', rejection_reason: reason }).eq('id', activeCustId);
+          if (res.error) throw res.error;
+        }
         c.status = 'Rejected';
         updateStats();
         renderTable();
         if (window.showToast) window.showToast('Dokumen ' + c.name + ' telah ditolak.', 'error');
+      } catch (err) {
+        console.error('Verifications error:', err);
+        if (window.showToast) window.showToast('Gagal menolak: ' + err.message, 'error');
       }
       closeKycModal();
     }
 
-    function approveAllPending() {
+    async function approveAllPending() {
+      var pendingList = customersList.filter(function (c) { return (c.status || '').toLowerCase() === 'pending'; });
+      if (pendingList.length === 0) {
+        if (window.showToast) window.showToast('Tiada permohonan yang menunggu pengesahan.', 'info');
+        return;
+      }
+
       var count = 0;
-      customersList.forEach(function (c) {
-        if (c.status.toLowerCase() === 'pending') {
+      for (var i = 0; i < pendingList.length; i++) {
+        var c = pendingList[i];
+        try {
+          if (window.WeDriveAPI && window.WeDriveAPI.verifyCustomer) {
+            await window.WeDriveAPI.verifyCustomer(c.id, 'Verified');
+          } else if (window.supabaseClient) {
+            await window.supabaseClient.from('customers').update({ verification_status: 'Verified', rejection_reason: null }).eq('id', c.id);
+          }
           c.status = 'Verified';
           count++;
+        } catch (e) {
+          console.error('Error approving customer:', c.id, e);
         }
-      });
+      }
       updateStats();
       renderTable();
       if (window.showToast) window.showToast(count + ' permohonan lesen berjaya diluluskan!', 'success');
