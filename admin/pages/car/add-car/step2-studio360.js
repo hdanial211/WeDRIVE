@@ -49,10 +49,13 @@
   let currentCdnInteriorUrl = '';  // Panorama Dalaman (pano/pano_f.jpg)
   let currentCdnPhotosUrl   = '';  // Galeri CDN
   let currentGallery8Photos = [];  // 8 HD Angle Photos from CDN
-  let currentExteriorFrames = [];  // 36 HD Turntable Frames from CDN
+  // Impel API metadata — for building CDN frame URLs in car-detail
+  let currentCdnPrefix      = '';  // e.g. https://cdn.impel.io/swipetospin-viewers/Carsome/VIN/version/
+  let currentImpelVin       = '';  // e.g. mntccnd23z0011880
+  let currentImpelCustomer  = '';  // e.g. Carsome
 
   // Parse SpinCar/Impel/Carsome link and extract 3 separate views:
-  // 1. Exterior 360 viewer URL & 36 sampled turntable frames
+  // 1. Exterior 360 viewer URL
   // 2. Interior panorama URL (pano_f.jpg) & 6 cubemap faces
   // 3. Gallery 8 photos (ec/0-0.jpg, 0-25.jpg, etc.)
   async function separateSpinCarAssets(url) {
@@ -65,7 +68,6 @@
         exteriorUrl: url,
         interiorPanoUrl: '',
         gallery8Photos: [],
-        exteriorFrames: [],
         cdnPrefix: ''
       };
     }
@@ -87,7 +89,6 @@
 
     let cdnPrefix = null;
     let thumbIndices = ['0-0', '0-25', '0-50', '0-75', '0-100', '0-125', '0-150', '0-175'];
-    let numTotalFrames = 200;
 
     // 2. Query Impel API directly (Full CORS Access-Control-Allow-Origin: *)
     if (customer && vin) {
@@ -110,9 +111,6 @@
               if (Array.isArray(opts.ec_thumb_indices) && opts.ec_thumb_indices.length > 0) {
                 thumbIndices = opts.ec_thumb_indices;
               }
-              if (opts.numImgEC && typeof opts.numImgEC === 'number') {
-                numTotalFrames = opts.numImgEC;
-              }
               break;
             }
           }
@@ -122,7 +120,9 @@
       }
     }
 
-    // 3. Map 8 standard vehicle angles to gallery and inspection slots
+
+
+    // 4. Map 8 standard vehicle angles to gallery and inspection slots
     const angleMap = {
       '0-0':   { title: 'Hadapan Penuh',       titleEn: 'Full Front',          slot: 0 },
       '0-25':  { title: 'Sisi Hadapan Kanan',  titleEn: 'Front Right Quarter', slot: null },
@@ -135,7 +135,6 @@
     };
 
     const gallery8Photos = [];
-    const exteriorFrames = [];
     if (cdnPrefix) {
       thumbIndices.forEach((tid, idx) => {
         const meta = angleMap[tid] || { title: `Sudut ${idx + 1}`, titleEn: `Angle ${idx + 1}`, slot: null };
@@ -147,14 +146,6 @@
           img: `${cdnPrefix}ec/${tid}.jpg`
         });
       });
-
-      // Generate 36 standard turntable frames across 360° rotation (starting at front 125)
-      const sampleCount = 36;
-      const frontOffset = 125;
-      for (let i = 0; i < sampleCount; i++) {
-        const frameNum = (frontOffset + Math.round(i * (numTotalFrames / sampleCount))) % numTotalFrames;
-        exteriorFrames.push(`${cdnPrefix}ec/0-${frameNum}.jpg`);
-      }
     }
 
     const interiorPanoUrl = cdnPrefix ? `${cdnPrefix}pano/pano_f.jpg` : '';
@@ -166,7 +157,6 @@
       exteriorUrl: cleanViewerUrl,
       interiorPanoUrl: interiorPanoUrl,
       gallery8Photos: gallery8Photos,
-      exteriorFrames: exteriorFrames,
       customer: customer,
       vin: vin
     };
@@ -417,9 +407,6 @@
       draft.has_360        = hasValid360;
       draft.supabase_360   = hasValid360 ? currentCdnExteriorUrl : null;
       draft.exterior_360   = hasValid360 ? currentCdnExteriorUrl : null;
-      if (Array.isArray(currentExteriorFrames) && currentExteriorFrames.length > 0) {
-        draft.exterior_frames = currentExteriorFrames;
-      }
       if (cdnUrlInput) {
         draft.cdnUrl         = cdnUrlInput.value.trim();
         draft.cdnUrlExterior = hasValid360 ? currentCdnExteriorUrl : '';
@@ -452,9 +439,6 @@
       const draft = JSON.parse(raw);
       if (Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) {
         currentGallery8Photos = draft.gallery8Photos;
-      }
-      if (Array.isArray(draft.exterior_frames) && draft.exterior_frames.length > 0) {
-        currentExteriorFrames = draft.exterior_frames;
       }
       if (Array.isArray(draft.photos) && draft.photos.length > 0) {
         currentGalleryPhotos = draft.photos.map((p, idx) => {
@@ -571,7 +555,10 @@
         currentCdnExteriorUrl = result.exteriorUrl || url;
         currentCdnInteriorUrl = result.interiorPanoUrl || '';
         currentGallery8Photos = result.gallery8Photos || [];
-        currentExteriorFrames = result.exteriorFrames || [];
+        // Store Impel metadata for zero-storage CDN frame URL building
+        currentCdnPrefix     = result.cdnPrefix || '';
+        currentImpelVin      = result.vin || '';
+        currentImpelCustomer = result.customer || '';
 
         // Auto-fill the 6 vehicle inspection slots with matching angle photos
         if (result.gallery8Photos && result.gallery8Photos.length > 0) {
@@ -591,7 +578,6 @@
         currentCdnExteriorUrl = url;
         currentCdnInteriorUrl = '';
         currentGallery8Photos = [];
-        currentExteriorFrames = [];
       }
 
       expand360Capabilities();
@@ -601,10 +587,9 @@
         if (cdnStatusIcon) cdnStatusIcon.textContent = 'check_circle';
         const hasInterior = !!currentCdnInteriorUrl;
         const photoCount = currentGallery8Photos.length || 8;
-        const frameCount = currentExteriorFrames.length || 36;
         cdnStatusText.textContent = hasInterior
-          ? (isEn ? `✓ 3 Views Ready (360° Turntable - ${frameCount} Frames, Interior, Gallery - ${photoCount})` : `✓ 3 Paparan Sedia (Turntable 360° - ${frameCount} Frame, Dalam, Galeri - ${photoCount})`)
-          : (isEn ? `✓ 360° Turntable Ready (${frameCount} Frames)` : `✓ Turntable 360° Sedia (${frameCount} Frame)`);
+          ? (isEn ? `✓ 3 Views Ready (Exterior, Interior, Gallery - ${photoCount})` : `✓ 3 Paparan Sedia (Luar, Dalam, Galeri - ${photoCount})`)
+          : (isEn ? '✓ Visuals Ready' : '✓ Visual Sedia');
       }
 
       if (btnSaveToDb) {
@@ -640,7 +625,7 @@
     }
   }
 
-  // Handle Save Visuals — real async synchronization with live progress feedback
+  // Handle Save Visuals — real async save, no fake progress animation
   async function handleSaveVisuals() {
     if (isSavingDb) return;
     isSavingDb = true;
@@ -653,46 +638,13 @@
       if (spanTxt) spanTxt.textContent = isEn ? 'Saving...' : 'Menyimpan...';
     }
 
-    // Activate live progress box
-    if (saveDbProgressBox) {
-      saveDbProgressBox.classList.remove('hidden');
-      saveDbProgressBox.classList.add('flex');
-    }
-    const downloadProgressBar = document.getElementById('downloadProgressBar');
-    const downloadPercentText = document.getElementById('downloadPercentText');
-    const downloadStatusLabel = document.getElementById('downloadStatusLabel');
-    const downloadFilesStatus = document.getElementById('downloadFilesStatus');
-    const downloadStatusIcon  = document.getElementById('downloadStatusIcon');
-
     try {
-      // Step-by-step synchronization through 36 turntable frames
-      const totalSteps = (currentExteriorFrames && currentExteriorFrames.length) || 36;
-      for (let s = 1; s <= totalSteps; s++) {
-        const pct = Math.round((s / totalSteps) * 100);
-        if (downloadProgressBar) downloadProgressBar.style.width = pct + '%';
-        if (downloadPercentText) downloadPercentText.textContent = pct + '%';
-        if (downloadStatusLabel) {
-          downloadStatusLabel.textContent = isEn
-            ? `Synchronizing 360° frame ${s}/${totalSteps}...`
-            : `Menyelaras frame 360° ${s}/${totalSteps}...`;
-        }
-        if (downloadFilesStatus) {
-          downloadFilesStatus.textContent = isEn
-            ? `Syncing frame 0-${s} with CDN & cloud metadata...`
-            : `Menyelaras frame 0-${s} & metadata awan...`;
-        }
-        if (s % 6 === 0 || s === totalSteps) {
-          await new Promise(r => setTimeout(r, 30));
-        }
-      }
-
       const raw = localStorage.getItem('wedrive_new_car_draft');
       const draft = raw ? JSON.parse(raw) : {};
       draft.downloaded = true;
       draft.downloaded_at = new Date().toISOString();
       draft.photos = currentGalleryPhotos;
       draft.gallery8Photos = currentGallery8Photos;
-      draft.exterior_frames = currentExteriorFrames;
       draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
         ? currentGallery8Photos
         : currentGalleryPhotos.filter(p => p && p.img);
@@ -709,16 +661,27 @@
 
       draft.orientation_frames = { hero: 140, front: 125, right: 175, left: 75, rear: 24, rear_left: 0 };
 
-      if (currentCdnExteriorUrl) {
+      if (currentCdnPrefix) {
+        // Save Impel metadata as JSON — car-detail builds frame URLs directly from CDN (zero storage)
+        const impelMeta = JSON.stringify({
+          type: 'impel_cdn',
+          cdn_prefix: currentCdnPrefix,
+          vin: currentImpelVin,
+          customer: currentImpelCustomer,
+          frame_count: 200,
+          has_pano: !!currentCdnInteriorUrl,
+          interior_pano_url: currentCdnInteriorUrl || ''
+        });
+        draft.exterior_360  = impelMeta;
+        draft.supabase_360  = currentCdnExteriorUrl; // Keep SpinCar URL as fallback
+      } else if (currentCdnExteriorUrl) {
         draft.supabase_360 = currentCdnExteriorUrl;
         draft.exterior_360  = currentCdnExteriorUrl;
       }
       if (cdnUrlInput && cdnUrlInput.value.trim()) {
         draft.cdnUrl         = cdnUrlInput.value.trim();
         draft.cdnUrlExterior = currentCdnExteriorUrl;
-        draft.cdnUrlInterior = currentCdnInteriorUrl;
         draft.has360         = has360Expanded;
-        draft.has_360        = has360Expanded;
       }
 
       // Save to localStorage (primary — always succeeds instantly)
@@ -746,15 +709,7 @@
         if (spanTxt) spanTxt.textContent = isEn ? '✓ Visual Saved' : '✓ Visual Disimpan';
       }
 
-      if (downloadStatusIcon) {
-        downloadStatusIcon.className = 'material-symbols-outlined text-[18px] text-success';
-        downloadStatusIcon.textContent = 'check_circle';
-      }
-      if (downloadStatusLabel) {
-        downloadStatusLabel.textContent = isEn ? '✓ 360° Visual Assets Synchronized' : '✓ Aset Visual 360° Berjaya Diselaraskan';
-      }
-
-      showAiToast(isEn ? '✓ 360° visual assets saved!' : '✓ Aset visual 360° disimpan!', true, 'cloud_done');
+      showAiToast(isEn ? '✓ Visual assets saved!' : '✓ Aset visual disimpan!', true, 'cloud_done');
 
     } catch (e) {
       console.warn('[WeDRIVE Studio] handleSaveVisuals error:', e);
@@ -766,12 +721,10 @@
       showAiToast(isEn ? 'Save failed. Please try again.' : 'Simpan gagal. Cuba semula.', false, 'error');
     } finally {
       isSavingDb = false;
-      setTimeout(() => {
-        if (saveDbProgressBox) {
-          saveDbProgressBox.classList.add('hidden');
-          saveDbProgressBox.classList.remove('flex');
-        }
-      }, 1500);
+      if (saveDbProgressBox) {
+        saveDbProgressBox.classList.add('hidden');
+        saveDbProgressBox.classList.remove('flex');
+      }
     }
   }
 
