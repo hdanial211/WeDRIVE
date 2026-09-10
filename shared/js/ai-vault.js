@@ -42,7 +42,7 @@
       id: 'groq',
       name: 'Groq Cloud (Laju & Percuma)',
       badgeCls: 'detected-groq',
-      defaultModel: 'llama-3.3-70b-versatile',
+      defaultModel: 'groq/compound-mini',
       endpoint: 'https://api.groq.com/openai/v1/chat/completions',
       authStyle: 'bearer',
       isFree: true
