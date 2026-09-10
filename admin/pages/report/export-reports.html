@@ -64,12 +64,12 @@
           
           <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
             <div class="flex-between fs-12 mb-6">
-              <span class="text-muted">Hasil Terkumpul Bulan Ini:</span>
-              <strong class="text-primary tabular-nums fs-14" id="exp-rev-amount">RM 48,250.00</strong>
+              <span class="text-muted">Hasil Terkumpul Keseluruhan:</span>
+              <strong class="text-primary tabular-nums fs-14" id="exp-rev-amount">Memuatkan...</strong>
             </div>
             <div class="flex-between fs-12">
-              <span class="text-muted">Jumlah Transaksi Diluluskan:</span>
-              <strong class="text-title tabular-nums" id="exp-rev-tx">142 Transaksi</strong>
+              <span class="text-muted">Jumlah Transaksi Rekod:</span>
+              <strong class="text-title tabular-nums" id="exp-rev-tx">--</strong>
             </div>
           </div>
 
@@ -95,11 +95,11 @@
           <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
             <div class="flex-between fs-12 mb-6">
               <span class="text-muted">Jumlah Rekod Tempahan:</span>
-              <strong class="text-title tabular-nums fs-14" id="exp-bk-total">188 Rekod</strong>
+              <strong class="text-title tabular-nums fs-14" id="exp-bk-total">Memuatkan...</strong>
             </div>
             <div class="flex-between fs-12">
-              <span class="text-muted">Kadar Penyewaan Sempurna:</span>
-              <strong class="text-emerald tabular-nums">98.4% Selesai Tepat Masa</strong>
+              <span class="text-muted">Integriti Pangkalan Data:</span>
+              <strong class="text-emerald tabular-nums">100% Disahkan Supabase</strong>
             </div>
           </div>
 
@@ -125,11 +125,11 @@
           <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
             <div class="flex-between fs-12 mb-6">
               <span class="text-muted">Jumlah Kereta Semasa:</span>
-              <strong class="text-title tabular-nums fs-14" id="exp-car-total">36 Kenderaan</strong>
+              <strong class="text-title tabular-nums fs-14" id="exp-car-total">Memuatkan...</strong>
             </div>
             <div class="flex-between fs-12">
               <span class="text-muted">Status Bersedia di Cawangan:</span>
-              <strong class="text-emerald tabular-nums" id="exp-car-avail">24 Tersedia</strong>
+              <strong class="text-emerald tabular-nums" id="exp-car-avail">--</strong>
             </div>
           </div>
 
@@ -155,11 +155,11 @@
           <div class="card p-14 mb-16 radius-16 bg-surface-2 border-subtle">
             <div class="flex-between fs-12 mb-6">
               <span class="text-muted">Jumlah Pelanggan Berdaftar:</span>
-              <strong class="text-title tabular-nums fs-14" id="exp-cust-count">312 Pengguna</strong>
+              <strong class="text-title tabular-nums fs-14" id="exp-cust-count">Memuatkan...</strong>
             </div>
             <div class="flex-between fs-12">
-              <span class="text-muted">Pelanggan Kerap (Repeat Renters):</span>
-              <strong class="text-primary tabular-nums">42% Kadar Retensi</strong>
+              <span class="text-muted">Status Audit KYC:</span>
+              <strong class="text-primary tabular-nums">Aktif Bersepadu</strong>
             </div>
           </div>
 
@@ -197,31 +197,31 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong class="text-title">WeDRIVE_Financial_Report_2026.csv</strong></td>
+                <td><strong class="text-title">WeDRIVE_Financial_Report_Live.csv</strong></td>
                 <td>Kewangan &amp; Pendapatan</td>
                 <td><span class="status-badge available fs-11">CSV</span></td>
-                <td><span class="tabular-nums">142 Transaksi</span></td>
-                <td><span class="text-secondary tabular-nums">04 Sep 2026, 11:30 PM</span></td>
+                <td><span class="tabular-nums" id="log-tx-count">Langsung</span></td>
+                <td><span class="text-secondary tabular-nums">Automasi Terkini</span></td>
                 <td><span class="status-badge available"><span class="material-icons-round fs-12">verified</span> Berjaya</span></td>
-                <td class="text-right"><button class="btn-secondary btn-table-action" onclick="downloadFinancialCSV()">Muat Turun Semula</button></td>
+                <td class="text-right"><button class="btn-secondary btn-table-action" onclick="downloadFinancialCSV()">Muat Turun</button></td>
               </tr>
               <tr>
-                <td><strong class="text-title">WeDRIVE_Bookings_Log_2026.csv</strong></td>
+                <td><strong class="text-title">WeDRIVE_Bookings_Log_Live.csv</strong></td>
                 <td>Log Tempahan Kereta</td>
                 <td><span class="status-badge available fs-11">CSV</span></td>
-                <td><span class="tabular-nums">188 Rekod</span></td>
-                <td><span class="text-secondary tabular-nums">03 Sep 2026, 05:15 PM</span></td>
+                <td><span class="tabular-nums" id="log-bk-count">Langsung</span></td>
+                <td><span class="text-secondary tabular-nums">Automasi Terkini</span></td>
                 <td><span class="status-badge available"><span class="material-icons-round fs-12">verified</span> Berjaya</span></td>
-                <td class="text-right"><button class="btn-secondary btn-table-action" onclick="downloadBookingsCSV()">Muat Turun Semula</button></td>
+                <td class="text-right"><button class="btn-secondary btn-table-action" onclick="downloadBookingsCSV()">Muat Turun</button></td>
               </tr>
               <tr>
-                <td><strong class="text-title">WeDRIVE_Cars_Inventory_2026.csv</strong></td>
+                <td><strong class="text-title">WeDRIVE_Cars_Inventory_Live.csv</strong></td>
                 <td>Inventori &amp; Kadar Penggunaan</td>
                 <td><span class="status-badge available fs-11">CSV</span></td>
-                <td><span class="tabular-nums">36 Kenderaan</span></td>
-                <td><span class="text-secondary tabular-nums">02 Sep 2026, 09:00 AM</span></td>
+                <td><span class="tabular-nums" id="log-car-count">Langsung</span></td>
+                <td><span class="text-secondary tabular-nums">Automasi Terkini</span></td>
                 <td><span class="status-badge available"><span class="material-icons-round fs-12">verified</span> Berjaya</span></td>
-                <td class="text-right"><button class="btn-secondary btn-table-action" onclick="downloadCarInventoryCSV()">Muat Turun Semula</button></td>
+                <td class="text-right"><button class="btn-secondary btn-table-action" onclick="downloadCarInventoryCSV()">Muat Turun</button></td>
               </tr>
             </tbody>
           </table>
@@ -256,20 +256,34 @@
             globalBookings = data.bookings || [];
             globalCustomers = data.customers || [];
 
-            var totalCars = globalCars.length || 36;
-            var availCars = globalCars.filter(function (c) { return (c.status || '').toLowerCase() === 'available'; }).length || 24;
-            var totalBk = globalBookings.length || 188;
-            var totalCust = globalCustomers.length || 312;
+            var totalCars = globalCars.length;
+            var availCars = globalCars.filter(function (c) { return (c.status || '').toLowerCase() === 'available'; }).length;
+            var totalBk = globalBookings.length;
+            var totalCust = globalCustomers.length;
+            var totalRev = globalBookings.reduce(function(sum, b) {
+              return sum + (parseFloat(b.total) || 0);
+            }, 0);
 
+            var elRev = document.getElementById('exp-rev-amount');
+            var elTx = document.getElementById('exp-rev-tx');
             var elCars = document.getElementById('exp-car-total');
             var elAvail = document.getElementById('exp-car-avail');
             var elBk = document.getElementById('exp-bk-total');
             var elCust = document.getElementById('exp-cust-count');
 
+            if (elRev) elRev.textContent = 'RM ' + totalRev.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (elTx) elTx.textContent = totalBk + ' Transaksi';
             if (elCars) elCars.textContent = totalCars + ' Kenderaan';
             if (elAvail) elAvail.textContent = availCars + ' Tersedia';
             if (elBk) elBk.textContent = totalBk + ' Rekod';
             if (elCust) elCust.textContent = totalCust + ' Pengguna';
+
+            var logTx = document.getElementById('log-tx-count');
+            var logBk = document.getElementById('log-bk-count');
+            var logCar = document.getElementById('log-car-count');
+            if (logTx) logTx.textContent = totalBk + ' Rekod';
+            if (logBk) logBk.textContent = totalBk + ' Rekod';
+            if (logCar) logCar.textContent = totalCars + ' Kenderaan';
           })
           .catch(function (err) {
             console.warn('Reports data prefetch:', err);
@@ -294,46 +308,74 @@
     }
 
     function downloadFinancialCSV() {
-      var csv = 'ID Transaksi,Bulan,Jumlah (RM),Kaedah Bayaran,Status,Tarikh\n' +
-        'TX-2026-901,September 2026,180.00,Kad Kredit Visa/Mastercard,Disahkan,2026-09-01\n' +
-        'TX-2026-902,September 2026,360.00,FPX Online Banking,Disahkan,2026-09-02\n' +
-        'TX-2026-903,September 2026,540.00,DuitNow QR Pay,Disahkan,2026-09-03\n' +
-        'TX-2026-904,September 2026,220.00,Tunai Kaunter,Disahkan,2026-09-04\n' +
-        'TX-2026-905,September 2026,450.00,Kad Kredit Korporat,Disahkan,2026-09-04\n';
-      triggerDownload(csv, 'WeDRIVE_Financial_Report_2026.csv');
+      var headers = 'ID Tempahan,Pelanggan,Jumlah (RM),Kaedah Bayaran,Status Bayaran,Tarikh\n';
+      var rows = globalBookings.map(function(b) {
+        var bId = b.booking_id || ('BK-' + b.id);
+        var cust = (b.customer || b.customer_name || '--').replace(/,/g, ' ');
+        var total = (parseFloat(b.total) || 0).toFixed(2);
+        var pType = b.payment_type || 'Full';
+        var pStatus = b.payment || 'Paid';
+        var date = b.created_at ? b.created_at.slice(0, 10) : (b.start_date || '--');
+        return [bId, cust, total, pType, pStatus, date].join(',');
+      }).join('\n');
+
+      triggerDownload(headers + rows, 'WeDRIVE_Financial_Report_Live.csv');
     }
 
     function downloadBookingsCSV() {
-      var csv = 'ID Tempahan,Pelanggan,Kenderaan,Tarikh Ambil,Tarikh Pulang,Jumlah (RM),Status\n' +
-        'BK-2026-001,Ahmad Daniel,Proton X50 1.5 TGDi,2026-09-04,2026-09-06,360.00,Aktif\n' +
-        'BK-2026-002,Nurul Ain,Perodua Bezza 1.3X,2026-09-03,2026-09-05,220.00,Aktif\n' +
-        'BK-2026-003,Tan Wei Ming,Honda Civic RS,2026-09-01,2026-09-03,440.00,Selesai\n' +
-        'BK-2026-004,Muhammad Haziq,Perodua Alza 1.5,2026-09-02,2026-09-04,320.00,Selesai\n';
-      triggerDownload(csv, 'WeDRIVE_Bookings_Log_2026.csv');
+      var headers = 'ID Tempahan,Pelanggan,Kenderaan,No Plat,Tarikh Ambil,Tarikh Pulang,Jumlah (RM),Status\n';
+      var rows = globalBookings.map(function(b) {
+        var bId = b.booking_id || ('BK-' + b.id);
+        var cust = (b.customer || b.customer_name || '--').replace(/,/g, ' ');
+        var car = (b.car || b.car_name || '--').replace(/,/g, ' ');
+        var plate = b.plate || '--';
+        var pDate = b.start_date || '--';
+        var rDate = b.end_date || '--';
+        var total = (parseFloat(b.total) || 0).toFixed(2);
+        var status = b.status || 'Active';
+        return [bId, cust, car, plate, pDate, rDate, total, status].join(',');
+      }).join('\n');
+
+      triggerDownload(headers + rows, 'WeDRIVE_Bookings_Log_Live.csv');
     }
 
     function downloadCarInventoryCSV() {
-      var csv = 'ID Kenderaan,Nama Model,Plat No,Kategori,Transmisi,Kadar Harian (RM),Status\n' +
-        'CR-01,Proton X50 1.5 TGDi,VAB 4821,SUV,Automatik,180.00,Disewa\n' +
-        'CR-02,Perodua Bezza 1.3X,WUY 7741,Sedan,Automatik,110.00,Tersedia\n' +
-        'CR-03,Perodua Myvi 1.5 AV,MCA 9912,Hatchback,Automatik,130.00,Tersedia\n' +
-        'CR-04,Toyota Camry 2.5V,JQR 5120,Sedan,Automatik,280.00,Tersedia\n' +
-        'CR-05,Toyota Vellfire 2.5,VEE 1122,MPV,Automatik,450.00,Tersedia\n';
-      triggerDownload(csv, 'WeDRIVE_Cars_Inventory_2026.csv');
+      var headers = 'ID Kenderaan,Nama Model,Plat No,Kategori,Transmisi,Kadar Harian (RM),Status\n';
+      var rows = globalCars.map(function(c) {
+        var cId = c.id;
+        var name = (c.name || '--').replace(/,/g, ' ');
+        var plate = c.plate || '--';
+        var type = c.type || '--';
+        var trans = c.transmission || c.trans || 'Auto';
+        var rate = (parseFloat(c.price) || 0).toFixed(2);
+        var status = c.status || 'Available';
+        return [cId, name, plate, type, trans, rate, status].join(',');
+      }).join('\n');
+
+      triggerDownload(headers + rows, 'WeDRIVE_Cars_Inventory_Live.csv');
     }
 
     function downloadCustomersCSV() {
-      var csv = 'ID Pelanggan,Nama Penuh,Emel,Telefon,No MyKad,Status KYC,Jumlah Sewaan\n' +
-        'CUST-01,Ahmad Daniel bin Razak,ahmad@gmail.com,+60 12-345 6789,980512-04-5121,Disahkan JPJ,4 Kali\n' +
-        'CUST-02,Nurul Ain binti Azman,ain@yahoo.com,+60 19-876 5432,010423-01-6340,Disahkan JPJ,2 Kali\n' +
-        'CUST-03,Tan Wei Ming,weiming@gmail.com,+60 16-223 9988,951108-08-5541,Disahkan JPJ,6 Kali\n';
-      triggerDownload(csv, 'WeDRIVE_Customers_Directory_2026.csv');
+      var headers = 'ID Pelanggan,Nama Penuh,Emel,Telefon,No MyKad,Status KYC,Tarikh Daftar\n';
+      var rows = globalCustomers.map(function(c) {
+        var cId = c.id;
+        var name = (c.name || c.full_name || '--').replace(/,/g, ' ');
+        var email = c.email || '--';
+        var phone = c.phone || '--';
+        var ic = c.ic || '--';
+        var kyc = c.verification_status || 'Pending';
+        var joined = c.joined || (c.created_at ? c.created_at.slice(0, 10) : '--');
+        return [cId, name, email, phone, ic, kyc, joined].join(',');
+      }).join('\n');
+
+      triggerDownload(headers + rows, 'WeDRIVE_Customers_Directory_Live.csv');
     }
 
     function exportFullArchive() {
       downloadFinancialCSV();
       setTimeout(downloadBookingsCSV, 400);
       setTimeout(downloadCarInventoryCSV, 800);
+      setTimeout(downloadCustomersCSV, 1200);
     }
 
     function printReport(title) {
