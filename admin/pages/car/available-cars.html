@@ -195,7 +195,6 @@
           var rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '150');
           var parsedRate = parseFloat(rawRateStr);
           var rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
-          var luggageText = (car.type === 'MPV' || (car.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((car.type === 'SUV' || (car.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((car.type === 'Sedan' || (car.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
 
           return '<div class="apple-car-showcase-card reveal-onload">' +
             '<div class="apple-car-studio-canvas">' +
@@ -214,7 +213,6 @@
                 '<span class="apple-spec-tag"><span class="material-icons-round">settings</span> ' + (car.transmission || 'Auto') + '</span>' +
                 '<span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ' + (car.fuel || 'Petrol') + '</span>' +
                 '<span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ' + (car.seats || 5) + ' Kerusi</span>' +
-                '<span class="apple-spec-tag"><span class="material-icons-round">work</span> ' + luggageText + '</span>' +
               '</div>' +
               '<div class="apple-rental-callout">' +
                 '<div class="apple-rental-row">' +

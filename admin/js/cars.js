@@ -123,7 +123,6 @@ function renderCarCards(car) {
     const rawRateStr = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : (c.price ? String(c.price) : '150');
     const parsedRate = parseFloat(rawRateStr);
     const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
-    const lugText = (c.type === 'MPV' || (c.type || '').toLowerCase() === 'mpv') ? '4-5 Beg' : ((c.type === 'SUV' || (c.type || '').toLowerCase() === 'suv') ? '3-4 Beg' : ((c.type === 'Sedan' || (c.type || '').toLowerCase() === 'sedan') ? '2-3 Beg' : '2 Beg'));
 
     return `
     <div class="apple-car-showcase-card reveal-on-scroll">
@@ -146,7 +145,6 @@ function renderCarCards(car) {
           <span class="apple-spec-tag"><span class="material-icons-round">settings</span> ${c.transmission || 'Auto'}</span>
           <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ${c.fuel || 'Petrol'}</span>
           <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ${c.seats || 5} Kerusi</span>
-          <span class="apple-spec-tag"><span class="material-icons-round">work</span> ${lugText}</span>
         </div>
 
         <div class="apple-rental-callout">

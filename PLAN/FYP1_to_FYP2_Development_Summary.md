@@ -6658,6 +6658,38 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.5 Standardize car rental rates to clean integer format without decimals`
   - Tag Versi: `6.17.5`
 
+---
+
+### [PATCH] v6.17.6 — Pembuangan Lencana Kapasiti Beg ("2 Beg" / Ikon Work) Demi Kekemasan & Keselarasan Spesifikasi Sebenar Apple HIG (Remove Luggage Bag Tag & Work Icon from Vehicle Showcase Cards)
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna memuat naik tangkap layar kad kenderaan (`2018 Mercedes-Benz CLS350 AMG Line 2.0`) yang memaparkan baris 4 lencana mikro: `[Auto]`, `[Petrol]`, `[4 Kerusi]`, dan `[work] 2 Beg`.
+  - Pengguna mengarahkan pembuangan lencana jumlah beg tersebut secara terus:
+    > *"work*
+    > *2 Beg buang berapa jumlah beg ni supaya nampak lagi kemas"*
+  - Menepati Peraturan 08 ([`04_navigation_and_ui.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)) mengenai Sifar Medan Rekaan (*Zero Fabricated Fields*), kapasiti muatan beg merupakan nilai heuristik statik yang tiada dalam skema data sebenar kenderaan WeDRIVE mahupun 10 spesifikasi rasmi kenderaan.
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Pengurusan Kenderaan Pentadbir ([`admin/js/cars.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/js/cars.js))**:
+     - Memadam pembolehubah `lugText` dan teg `<span class="apple-spec-tag"><span class="material-icons-round">work</span> ${lugText}</span>` daripada fungsi `renderCarShowcaseCard`.
+     - Mengekalkan tepat 3 spesifikasi teknikal rasmi sebenar yang disahkan pangkalan data: Transmisi (`settings`), Punca Kuasa (`local_gas_station`), dan Bilangan Kerusi (`airline_seat_recline_normal`).
+  2. **Halaman Kenderaan Tersedia ([`admin/pages/car/available-cars.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/pages/car/available-cars.html))**:
+     - Memadam `luggageText` dan lencana `work` daripada pemaparan kad `gridEl`.
+  3. **Halaman Kenderaan Sedang Disewa ([`admin/pages/car/rented-cars.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/pages/car/rented-cars.html))**:
+     - Memadam `lugText` dan lencana `work` daripada pemaparan kad `rented-grid`.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Pemeriksaan Visual DevTools MCP Tab Aktif**:
+    - `cars.html`: Kesemua 11 kad kenderaan kini memaparkan 3 lencana spesifikasi yang kemas sebaris tanpa sebarang lencana beg `work` atau teks beg, menghapuskan kesesakan lencana (*zero crowding*).
+    - `available-cars.html` & `rented-cars.html`: Disahkan bersih tanpa sebarang lencana beg.
+  - **Ujian Automasi Playwright CLI**: 54/54 ujian lulus sepenuhnya (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 23 fail `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Berjaya dikemas kini melalui `graphify update .` (3197 nod, 5786 sisi).
+
+- **Maklumat Git**:
+  - Commit: `6.17.6 Remove luggage bag tag and work icon from car showcase cards`
+  - Tag Versi: `6.17.6`
+
 
 
 

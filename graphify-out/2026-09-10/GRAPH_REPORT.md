@@ -1,7 +1,7 @@
 # Graph Report - AI CAR RENTAL SYSTEM  (2026-09-10)
 
 ## Corpus Check
-- 143 files · ~21,189,079 words
+- 143 files · ~21,189,304 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `398c7ad8`
+- Built from commit: `bd41d272`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -172,7 +172,7 @@
 - playwright.config.js
 - applyMatrix4
 - 09_admin_ai_analytics.spec.js
-- ra
+- .toArray
 - .fromJSON
 - 18_modular_add_car_flow.spec.js
 - 2. Empat Domain Audit Keselamatan Utama
@@ -435,8 +435,8 @@ Cohesion: 0.18
 Nodes (10): 1. Pengenalan & Falsafah Pasukan Kejuruteraan WeDRIVE, 2. Lima Domain Peranan & Tanggungjawab Operasi, 3. Matriks Kolaborasi Antara Peranan, 4. Pematuhan Had Siling 12,000 Aksara, 💼 Domain 1: Pengurusan Projek & Produk (Project Management & Product), ⚙️ Domain 2: Pembangunan Backend & Data ("Tukang API"), 🎨 Domain 3: Pembangunan Frontend & Reka Bentuk UI/UX, 🌐 Domain 4: Gabungan & Infrastruktur (Full-Stack, DevOps & Cloud) (+2 more)
 
 ### Community 58 - "updateMatrixWorld"
-Cohesion: 0.27
-Nodes (3): nr, updateMatrixWorld(), wh
+Cohesion: 0.17
+Nodes (4): nr, updateMatrixWorld(), L(), wh
 
 ### Community 59 - "how-it-works.js"
 Cohesion: 0.19
@@ -552,7 +552,7 @@ Nodes (3): initChatbot(), resolveBase(), setupFabScrollCollapse()
 
 ### Community 94 - ".fromArray"
 Cohesion: 0.08
-Nodes (7): br(), c(), gl, setColors(), translate(), vo, xc
+Nodes (5): fo(), mo, ra(), translate(), vo
 
 ### Community 95 - "admin-idle-timeout.js"
 Cohesion: 0.38
@@ -699,8 +699,8 @@ Cohesion: 0.18
 Nodes (10): 1. Mandatori Penyediaan PRD Sebelum Sebarang Pengekodan, 1. Objektif & Skop Perniagaan (*Objective & Scope*), 2. Enam Komponen Wajib PRD (*The 6 Mandatory PRD Pillars*), 2. Sasaran Pengguna & Aliran Tindakan (*User Personas & Use Cases*), 3. Had Panjang & Pemeliharaan Konteks, 3. Keperluan Fungsian Terperinci (*Functional Requirements*), 4. Keperluan Bukan Fungsian & Piawaian Apple HIG (*Non-Functional & Apple HIG UX*), 5. Integriti Data & Pemetaan API (*Data Models & API Contracts*) (+2 more)
 
 ### Community 147 - ".fromBufferAttribute"
-Cohesion: 0.21
-Nodes (7): al(), closestPointToPoint(), di(), getW(), getX(), getY(), getZ()
+Cohesion: 0.31
+Nodes (5): di(), getW(), getX(), getY(), getZ()
 
 ### Community 148 - "🏛️ 2. Fasa FYP 1 (BITU3973) - Perancangan, Analisis & Prototaip Asas"
 Cohesion: 0.67
@@ -719,12 +719,12 @@ Cohesion: 0.17
 Nodes (11): 1. Falsafah & Protokol Mandatori Penukaran STITCH ke Pengeluaran, 2. Enam Langkah Piawai Universal (The 6 Universal Conversion Pillars), 3. Senarai Semak Pantas Penukaran (Quick Conversion Checklist), 4. Had Siling 12,000 Aksara, Langkah 1: Ambil 100% Reka Bentuk Visual & Bento Grid STITCH, Langkah 2: Buang Komponen Olok-Olok (Mock Navigation Stripping), Langkah 3: Suntik Senibina Navigasi Sebenar WeDRIVE, Langkah 4: Pengekstrakan CSS Mutlak (Strict Zero Inline `<style>`) (+3 more)
 
 ### Community 164 - "applyMatrix4"
-Cohesion: 0.15
-Nodes (3): applyMatrix4(), Yt(), Xi
-
-### Community 166 - "ra"
 Cohesion: 0.13
-Nodes (4): fo(), mo, ra(), setFromCamera()
+Nodes (5): al(), applyMatrix4(), closestPointToPoint(), Yt(), Xi
+
+### Community 166 - ".toArray"
+Cohesion: 0.14
+Nodes (5): br(), c(), gl, setColors(), xc
 
 ### Community 167 - ".fromJSON"
 Cohesion: 0.06
@@ -836,9 +836,9 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `ce` connect `ce` to `three.min.js`, `.dot`, `Qt`, `.fromBufferAttribute`, `.multiplyScalar`, `on`?**
   _High betweenness centrality (0.029) - this node is a cross-community bridge._
-- **Why does `copy()` connect `copy` to `three.min.js`, `Be`, `ve`, `ai`, `Ml`, `dc`, `gn`, `dr`, `clone`, `sl`, `.fromBufferAttribute`, `he`, `.constructor`, `constructor`, `tr`, `cl`, `mc`, `update`, `applyMatrix4`, `ra`, `.fromJSON`, `gi`, `.constructor`, `ie`, `da`, `.multiplyScalar`, `.setValues`, `.setAttribute`, `updateMatrixWorld`, `ei`, `.dot`, `Ro`, `ll`, `Uo`, `fn`, `Wa`, `toJSON`, `Ch`, `kc`, `lr`, `on`, `.fromArray`, `add`?**
+- **Why does `copy()` connect `copy` to `three.min.js`, `Be`, `ve`, `ai`, `Ml`, `dc`, `gn`, `dr`, `clone`, `sl`, `.fromBufferAttribute`, `.constructor`, `constructor`, `tr`, `cl`, `mc`, `update`, `applyMatrix4`, `.toArray`, `.fromJSON`, `gi`, `.constructor`, `ie`, `da`, `.multiplyScalar`, `.setValues`, `.setAttribute`, `updateMatrixWorld`, `ei`, `.dot`, `Ro`, `ll`, `Uo`, `fn`, `Wa`, `toJSON`, `Ch`, `kc`, `lr`, `on`, `.fromArray`, `add`?**
   _High betweenness centrality (0.023) - this node is a cross-community bridge._
-- **Why does `gn` connect `gn` to `three.min.js`, `.dot`, `.invert`, `ra`, `remove`, `toJSON`, `.constructor`, `clone`, `he`, `add`, `load`, `.constructor`, `constructor`, `on`, `updateMatrixWorld`, `.fromArray`?**
+- **Why does `gn` connect `gn` to `three.min.js`, `.dot`, `.invert`, `remove`, `toJSON`, `.constructor`, `clone`, `he`, `add`, `load`, `.constructor`, `constructor`, `on`, `updateMatrixWorld`, `.fromArray`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
 - **What connects `PREVIEW_I18N`, `allCars`, `allBookings` to the rest of the system?**
   _626 weakly-connected nodes found - possible documentation gaps or missing edges._
