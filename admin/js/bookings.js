@@ -342,7 +342,7 @@ function viewBooking(id) {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
         <div style="padding:12px;background:var(--bg-surface-2,#F1F5F9);border-radius:10px;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#D97706;letter-spacing:0.5px;margin-bottom:4px">Deposit Paid</div>
-          <div style="font-size:14px;font-weight:800;color:var(--navy,#1E293B)">RM ${depositAmt.toLocaleString(undefined, {minimumFractionDigits:2})}</div>
+          <div style="font-size:14px;font-weight:800;color:var(--text-primary)">RM ${depositAmt.toLocaleString(undefined, {minimumFractionDigits:2})}</div>
         </div>
         <div style="padding:12px;background:#FEF3C7;border-radius:10px;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:#D97706;letter-spacing:0.5px;margin-bottom:4px">Balance on Pickup</div>
@@ -398,7 +398,7 @@ function viewBooking(id) {
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
         <div>
           <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--slate-400,#94A3B8);letter-spacing:0.5px;margin-bottom:2px">Booking ID</div>
-          <div style="font-size:22px;font-weight:800;color:var(--navy,#1E293B)">#${b.id}</div>
+          <div style="font-size:22px;font-weight:800;color:var(--text-primary)">#${b.id}</div>
         </div>
         <div style="text-align:right;display:flex;flex-direction:column;gap:6px;">
           <span style="background:${sc.bg};color:${sc.text};padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700">${b.status}</span>
@@ -410,7 +410,7 @@ function viewBooking(id) {
       <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--bg-surface-2,#F1F5F9);border-radius:12px;margin-bottom:16px;">
         <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#1D4ED8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:700;flex-shrink:0">${initials}</div>
         <div>
-          <div style="font-size:14px;font-weight:700;color:var(--navy,#1E293B)">${b._customer}</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text-primary)">${b._customer}</div>
           <div style="font-size:12px;color:var(--slate-400,#94A3B8)">Customer${b.email ? ' &bull; ' + b.email : ''}</div>
         </div>
       </div>
@@ -418,7 +418,7 @@ function viewBooking(id) {
       <!-- Car info -->
       <div style="padding:14px;background:var(--bg-surface-2,#F1F5F9);border-radius:12px;margin-bottom:16px;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:8px">Vehicle</div>
-        <div style="font-size:15px;font-weight:700;color:var(--navy,#1E293B)">${b._car_name}</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text-primary)">${b._car_name}</div>
         <div style="font-size:12px;color:var(--slate-400,#94A3B8);margin-top:2px">${b._car_plate}</div>
       </div>
 
@@ -426,19 +426,19 @@ function viewBooking(id) {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
         <div style="padding:12px;background:var(--bg-surface-2,#F1F5F9);border-radius:10px;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Pick-up</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${formatDate(b._pickup)}</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">${formatDate(b._pickup)}</div>
         </div>
         <div style="padding:12px;background:var(--bg-surface-2,#F1F5F9);border-radius:10px;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Return</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${formatDate(b._return)}</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">${formatDate(b._return)}</div>
         </div>
         <div style="padding:12px;background:var(--bg-surface-2,#F1F5F9);border-radius:10px;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Duration</div>
-          <div style="font-size:13px;font-weight:600;color:var(--navy,#1E293B)">${b._days} day${b._days !== 1 ? 's' : ''}</div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-primary)">${b._days} day${b._days !== 1 ? 's' : ''}</div>
         </div>
         <div style="padding:12px;background:var(--bg-surface-2,#F1F5F9);border-radius:10px;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--primary,#3B82F6);letter-spacing:0.5px;margin-bottom:4px">Total</div>
-          <div style="font-size:15px;font-weight:800;color:var(--navy,#1E293B)">RM ${(b._total || 0).toLocaleString()}</div>
+          <div style="font-size:15px;font-weight:800;color:var(--text-primary)">RM ${(b._total || 0).toLocaleString()}</div>
         </div>
       </div>
 
@@ -499,7 +499,7 @@ function openStatusModal(id) {
       <p style="font-size:13px;color:var(--slate-400);margin:0 0 16px;">Booking #${b.id} - ${b._customer}</p>
       <div class="form-group" style="margin-bottom:16px;">
         <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary);letter-spacing:0.5px;">New Status</label>
-        <select id="status-select" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:14px;font-weight:600;background:var(--card-bg);color:var(--navy);">
+        <select id="status-select" style="width:100%;padding:10px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:14px;font-weight:600;background:var(--card-bg);color:var(--text-primary);">
           ${optionsHtml}
         </select>
       </div>
@@ -594,16 +594,32 @@ async function processRefund(id, refundAmt) {
 }
 
 function showToast(msg, type) {
-  var existing = document.querySelector('.toast-notify');
+  var existing = document.getElementById('wedrive-toast-pill') || document.querySelector('.toast-notify');
   if (existing) existing.remove();
+
   var toast = document.createElement('div');
-  toast.className = 'toast-notify';
-  var icon = type === 'success' ? 'check_circle' : 'info';
-  var bg = type === 'success' ? '#059669' : '#3B82F6';
-  toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:' + bg + ';color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:slideUp 0.3s ease';
-  toast.innerHTML = '<span class="material-icons-round" style="font-size:18px">' + icon + '</span> ' + msg;
+  toast.className = 'wedrive-toast-pill toast-notify';
+  toast.id = 'wedrive-toast-pill';
+  var isSuccess = (type === 'success');
+  var isError = (type === 'error');
+  var icon = isSuccess ? 'check_circle' : (isError ? 'error' : 'info');
+  var iconClass = isSuccess ? 'success' : (isError ? 'error' : 'info');
+
+  var iconCircle = '<div class="wedrive-toast-icon ' + iconClass + '">' +
+    '<span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>' +
+    '</div>';
+
+  toast.innerHTML = iconCircle + '<span class="wedrive-toast-text">' + msg + '</span>';
   document.body.appendChild(toast);
-  setTimeout(function() { toast.remove(); }, 3000);
+
+  requestAnimationFrame(function () {
+    toast.classList.add('show');
+  });
+
+  setTimeout(function () {
+    toast.classList.remove('show');
+    setTimeout(function () { toast.remove(); }, 350);
+  }, 3200);
 }
 
 /* -- New Booking Modal (NOTA 13) -- */

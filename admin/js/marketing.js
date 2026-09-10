@@ -354,11 +354,33 @@ function loadFromStorage() {
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
-function showToast(msg) {
-  const t = document.getElementById('mkt-toast');
-  t.textContent = msg;
-  t.style.display = 'flex';
-  setTimeout(() => { t.style.display = 'none'; }, 2500);
+function showToast(msg, type = 'success') {
+  var existing = document.getElementById('wedrive-toast-pill') || document.querySelector('.toast-notify');
+  if (existing) existing.remove();
+
+  var toast = document.createElement('div');
+  toast.className = 'wedrive-toast-pill toast-notify';
+  toast.id = 'wedrive-toast-pill';
+  var isSuccess = (type === 'success');
+  var isError = (type === 'error');
+  var icon = isSuccess ? 'check_circle' : (isError ? 'error' : 'info');
+  var iconClass = isSuccess ? 'success' : (isError ? 'error' : 'info');
+
+  var iconCircle = '<div class="wedrive-toast-icon ' + iconClass + '">' +
+    '<span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>' +
+    '</div>';
+
+  toast.innerHTML = iconCircle + '<span class="wedrive-toast-text">' + msg + '</span>';
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(function () {
+    toast.classList.add('show');
+  });
+
+  setTimeout(function () {
+    toast.classList.remove('show');
+    setTimeout(function () { toast.remove(); }, 350);
+  }, 3200);
 }
 
 // ── Expose for marketing-ai.js cross-script access (strict mode) ──────────────

@@ -430,57 +430,29 @@
   }
 
   function showToast(msg, type) {
-    var existing = document.querySelector('.toast-notify');
+    var existing = document.getElementById('wedrive-toast-pill') || document.querySelector('.toast-notify');
     if (existing) existing.remove();
     var toast = document.createElement('div');
-    toast.className = 'toast-notify';
+    toast.className = 'wedrive-toast-pill toast-notify';
     toast.id = 'wedrive-toast-pill';
     var isSuccess = (type === 'success');
-    var icon = isSuccess ? 'check_circle' : 'info';
-    var accentBg = isSuccess ? 'linear-gradient(135deg, #34C759, #30B0C7)' : 'linear-gradient(135deg, #0071E3, #5E5CE6)';
-    var borderColor = isSuccess ? 'rgba(52, 199, 89, 0.4)' : 'rgba(0, 113, 227, 0.4)';
-    var shadowColor = isSuccess ? 'rgba(52, 199, 89, 0.25)' : 'rgba(0, 113, 227, 0.25)';
+    var isError = (type === 'error');
+    var icon = isSuccess ? 'check_circle' : (isError ? 'error' : 'info');
+    var iconClass = isSuccess ? 'success' : (isError ? 'error' : 'info');
 
-    toast.style.cssText = [
-      'position: fixed',
-      'top: 84px',
-      'left: 50%',
-      'transform: translateX(-50%) translateY(-10px)',
-      'z-index: 99999',
-      'display: flex',
-      'align-items: center',
-      'gap: 10px',
-      'padding: 8px 18px 8px 10px',
-      'border-radius: 9999px !important',
-      'background: rgba(22, 22, 24, 0.92)',
-      'color: #FFFFFF',
-      'border: 1px solid ' + borderColor,
-      'box-shadow: 0 16px 36px ' + shadowColor + ', 0 4px 12px rgba(0,0,0,0.35)',
-      'backdrop-filter: blur(20px) saturate(180%)',
-      '-webkit-backdrop-filter: blur(20px) saturate(180%)',
-      'transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
-      'opacity: 0',
-      'pointer-events: none'
-    ].join(';');
+    var iconCircle = '<div class="wedrive-toast-icon ' + iconClass + '">' +
+      '<span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>' +
+      '</div>';
 
-    var iconCircle = [
-      '<div style="width: 28px; height: 28px; aspect-ratio: 1 / 1 !important; border-radius: 50% !important; padding: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; background: ' + accentBg + '; color: #FFFFFF; flex-shrink: 0 !important; box-shadow: 0 2px 8px ' + shadowColor + ';">',
-      '  <span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>',
-      '</div>'
-    ].join('');
-
-    toast.innerHTML = iconCircle + '<span style="font-size: 13px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap !important;">' + msg + '</span>';
+    toast.innerHTML = iconCircle + '<span class="wedrive-toast-text">' + msg + '</span>';
     document.body.appendChild(toast);
 
-    // Trigger animation frame for smooth drop down
     requestAnimationFrame(function () {
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateX(-50%) translateY(0)';
+      toast.classList.add('show');
     });
 
     setTimeout(function () {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateX(-50%) translateY(-10px)';
+      toast.classList.remove('show');
       setTimeout(function () { toast.remove(); }, 350);
     }, 3200);
   }

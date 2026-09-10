@@ -489,7 +489,7 @@ function appendMsg(text, who, showCar = null) {
       <div class="mini-car-card" style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; padding: 12px; background: var(--bg-card, rgba(255,255,255,0.05)); border: 1px solid var(--border-color, rgba(255,255,255,0.1)); border-radius: 12px; gap: 12px; max-width: 320px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); backdrop-filter: blur(10px);">
         <div class="mini-car-icon" style="color: var(--primary-color, #3b82f6); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: rgba(59, 130, 246, 0.1);"><span class="material-icons-round">directions_car</span></div>
         <div class="mini-car-info" style="flex: 1; display: flex; flex-direction: column;">
-          <div class="c-name" style="font-weight: 600; font-size: 13px; color: var(--text-color, #fff); line-height: 1.3;">${car.name}</div>
+          <div class="c-name" style="font-weight: 600; font-size: 13px; color: var(--text-primary); line-height: 1.3;">${car.name}</div>
           <div class="c-price" style="font-size: 11px; color: var(--text-muted, #aaa); margin-top: 2px;">RM ${car.price}/day · ${(car.type || '').toUpperCase()}</div>
         </div>
         <button class="mini-book-btn" onclick="triggerPlayBook(${car.id})" style="background: var(--primary-color, #3b82f6); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">Book</button>
@@ -538,13 +538,30 @@ function updateStatusBadge(settings, forceConnected) {
 }
 
 function showToast(message, isError) {
-  const toast = document.getElementById('toast');
-  const toastText = document.getElementById('toast-text');
-  const icon = toast.querySelector('.material-icons-round');
-  toastText.textContent = message;
-  toast.className = 'toast show' + (isError ? ' error' : '');
-  icon.textContent = isError ? 'error' : 'check_circle';
-  setTimeout(() => toast.classList.remove('show'), 3500);
+  var existing = document.getElementById('wedrive-toast-pill') || document.querySelector('.toast-notify');
+  if (existing) existing.remove();
+
+  var toast = document.createElement('div');
+  toast.className = 'wedrive-toast-pill toast-notify';
+  toast.id = 'wedrive-toast-pill';
+  var icon = isError ? 'error' : 'check_circle';
+  var iconClass = isError ? 'error' : 'success';
+
+  var iconCircle = '<div class="wedrive-toast-icon ' + iconClass + '">' +
+    '<span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>' +
+    '</div>';
+
+  toast.innerHTML = iconCircle + '<span class="wedrive-toast-text">' + message + '</span>';
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(function () {
+    toast.classList.add('show');
+  });
+
+  setTimeout(function () {
+    toast.classList.remove('show');
+    setTimeout(function () { toast.remove(); }, 350);
+  }, 3200);
 }
 
 // ─── Init ───────────────────────────────────────────────────────────────────

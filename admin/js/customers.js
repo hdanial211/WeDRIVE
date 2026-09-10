@@ -484,11 +484,11 @@ function showConfirmModal(opts) {
     <div style="background:var(--bg-surface,#fff);border-radius:16px;padding:28px 32px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:slideUp 0.2s ease;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
         <span class="material-icons-round" style="font-size:26px;color:${opts.iconColor || '#059669'}">${opts.icon || 'help_outline'}</span>
-        <h3 style="margin:0;font-size:17px;font-weight:700;color:var(--navy,#1E293B)">${opts.title || 'Confirm'}</h3>
+        <h3 style="margin:0;font-size:17px;font-weight:700;color:var(--text-primary)">${opts.title || 'Confirm'}</h3>
       </div>
       <p style="margin:0 0 22px;font-size:14px;color:var(--slate-500,#64748B);line-height:1.6">${opts.message || ''}</p>
       <div style="display:flex;gap:10px;justify-content:flex-end;">
-        <button id="wdcm-cancel" style="padding:9px 20px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);background:transparent;color:var(--navy,#1E293B);font-size:14px;font-weight:600;cursor:pointer;">${opts.cancelLabel || 'Cancel'}</button>
+        <button id="wdcm-cancel" style="padding:9px 20px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);background:transparent;color:var(--text-primary);font-size:14px;font-weight:600;cursor:pointer;">${opts.cancelLabel || 'Cancel'}</button>
         <button id="wdcm-confirm" style="padding:9px 20px;border-radius:10px;border:none;${confirmClass};color:#fff;font-size:14px;font-weight:600;cursor:pointer;">${opts.confirmLabel || 'Confirm'}</button>
       </div>
     </div>`;
@@ -517,13 +517,13 @@ function showPromptModal(opts) {
     <div style="background:var(--bg-surface,#fff);border-radius:16px;padding:28px 32px;max-width:440px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:slideUp 0.2s ease;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
         <span class="material-icons-round" style="font-size:26px;color:#DC2626">cancel</span>
-        <h3 style="margin:0;font-size:17px;font-weight:700;color:var(--navy,#1E293B)">${opts.title || 'Input Required'}</h3>
+        <h3 style="margin:0;font-size:17px;font-weight:700;color:var(--text-primary)">${opts.title || 'Input Required'}</h3>
       </div>
       <p style="margin:0 0 14px;font-size:14px;color:var(--slate-500,#64748B);line-height:1.6">${opts.message || ''}</p>
-      <textarea id="wdpm-input" rows="3" placeholder="${opts.placeholder || ''}" style="width:100%;box-sizing:border-box;padding:10px 14px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);font-size:14px;font-family:inherit;resize:vertical;color:var(--navy,#1E293B);background:var(--bg-surface,#fff);outline:none;"></textarea>
+      <textarea id="wdpm-input" rows="3" placeholder="${opts.placeholder || ''}" style="width:100%;box-sizing:border-box;padding:10px 14px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);font-size:14px;font-family:inherit;resize:vertical;color:var(--text-primary);background:var(--bg-surface,#fff);outline:none;"></textarea>
       <div id="wdpm-error" style="color:#DC2626;font-size:12px;margin-top:6px;display:none;">Please provide a reason.</div>
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;">
-        <button id="wdpm-cancel" style="padding:9px 20px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);background:transparent;color:var(--navy,#1E293B);font-size:14px;font-weight:600;cursor:pointer;">${opts.cancelLabel || 'Cancel'}</button>
+        <button id="wdpm-cancel" style="padding:9px 20px;border-radius:10px;border:1px solid var(--border-color,#E2E8F0);background:transparent;color:var(--text-primary);font-size:14px;font-weight:600;cursor:pointer;">${opts.cancelLabel || 'Cancel'}</button>
         <button id="wdpm-confirm" style="padding:9px 20px;border-radius:10px;border:none;background:#DC2626;color:#fff;font-size:14px;font-weight:600;cursor:pointer;">${opts.confirmLabel || 'Confirm'}</button>
       </div>
     </div>`;
@@ -671,14 +671,30 @@ function formatDate(dateStr) {
 }
 
 function showToast(msg, type) {
-  var existing = document.querySelector('.toast-notify');
+  var existing = document.getElementById('wedrive-toast-pill') || document.querySelector('.toast-notify');
   if (existing) existing.remove();
+
   var toast = document.createElement('div');
-  toast.className = 'toast-notify';
-  var icon = type === 'success' ? 'check_circle' : 'info';
-  var bg = type === 'success' ? '#059669' : '#3B82F6';
-  toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:' + bg + ';color:#fff;padding:14px 24px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:slideUp 0.3s ease';
-  toast.innerHTML = '<span class="material-icons-round" style="font-size:18px">' + icon + '</span> ' + msg;
+  toast.className = 'wedrive-toast-pill toast-notify';
+  toast.id = 'wedrive-toast-pill';
+  var isSuccess = (type === 'success');
+  var isError = (type === 'error');
+  var icon = isSuccess ? 'check_circle' : (isError ? 'error' : 'info');
+  var iconClass = isSuccess ? 'success' : (isError ? 'error' : 'info');
+
+  var iconCircle = '<div class="wedrive-toast-icon ' + iconClass + '">' +
+    '<span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>' +
+    '</div>';
+
+  toast.innerHTML = iconCircle + '<span class="wedrive-toast-text">' + msg + '</span>';
   document.body.appendChild(toast);
-  setTimeout(function() { toast.remove(); }, 3000);
+
+  requestAnimationFrame(function () {
+    toast.classList.add('show');
+  });
+
+  setTimeout(function () {
+    toast.classList.remove('show');
+    setTimeout(function () { toast.remove(); }, 350);
+  }, 3200);
 }

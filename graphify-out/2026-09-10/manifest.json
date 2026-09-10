@@ -168,9 +168,9 @@
     "semantic_hash": ""
   },
   "shared/js/navbar-loader.js": {
-    "mtime": 1788925666.196817,
-    "seen": 1788930160.357694,
-    "ast_hash": "42779ea6c1d4fbe752e238a99db088c7",
+    "mtime": 1788998335.6527784,
+    "seen": 1788998714.068575,
+    "ast_hash": "6fe9389f6e58b42258c3f912445701ec",
     "semantic_hash": ""
   },
   "shared/js/promo-banner.js": {
@@ -186,9 +186,9 @@
     "semantic_hash": ""
   },
   "shared/js/sidebar-loader.js": {
-    "mtime": 1788908788.2897494,
-    "seen": 1788909335.1378329,
-    "ast_hash": "781d6f132c8b5c176d71eb80f5ecc796",
+    "mtime": 1788998331.978931,
+    "seen": 1788998714.068576,
+    "ast_hash": "6114386c82ff4615e09c073f4f289950",
     "semantic_hash": ""
   },
   "shared/js/supabase-config.js": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1788973600.6300933,
-    "seen": 1788973610.923887,
-    "ast_hash": "683b9686e47a1fd6b81807e31611bc10",
+    "mtime": 1788998707.1791892,
+    "seen": 1788998714.0686421,
+    "ast_hash": "ee805c6a3f7e8812566ed4d181fe42f5",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -11214,21 +11214,21 @@
     "semantic_hash": ""
   },
   "admin/js/api-keys.js": {
-    "mtime": 1788945199.784631,
-    "seen": 1788967070.858698,
-    "ast_hash": "92458b05dee4454221be2e343c01ee8c",
+    "mtime": 1788998359.0407794,
+    "seen": 1788998714.0685508,
+    "ast_hash": "b02dd35d4e5f4801bf4c8887f312d1a4",
     "semantic_hash": ""
   },
   "tests/e2e/14_ai_key_vault_and_location.spec.js": {
-    "mtime": 1788909095.6544912,
-    "seen": 1788909335.137862,
-    "ast_hash": "a9ca2fdae2e923b56b7c1292d98c5e1f",
+    "mtime": 1788998563.979413,
+    "seen": 1788998714.0686011,
+    "ast_hash": "245c2e0a22472b55be4c82f7254052a2",
     "semantic_hash": ""
   },
   "admin/pages/ai/api-keys.html": {
-    "mtime": 1788946339.9277558,
-    "seen": 1788967070.858825,
-    "ast_hash": "eaa29b5279c164beb9a274fdad62169e",
+    "mtime": 1788998387.2296822,
+    "seen": 1788998714.068678,
+    "ast_hash": "f98719ce7060da6d92a1e9de98c3fc00",
     "semantic_hash": ""
   },
   "tests/add_car_360_card_verified.png": {
@@ -11844,9 +11844,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step1_spesifikasi.html": {
-    "mtime": 1788973359.3248081,
-    "seen": 1788973610.923929,
-    "ast_hash": "92488174f699fcaf48c962a3371f85b5",
+    "mtime": 1788998464.499011,
+    "seen": 1788998714.068682,
+    "ast_hash": "98617d04b20172d57b1e891860584113",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step2_studio360.html": {

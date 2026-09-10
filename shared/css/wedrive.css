@@ -36,6 +36,7 @@
   --bg-surface: #FFFFFF;
   --bg-surface-2: #FBFBFD;
   --bg-surface-3: #F0F0F3;
+  --bg-secondary: #FBFBFD;
   --bg-glass: rgba(255, 255, 255, 0.82);
   --bg-glass-strong: rgba(255, 255, 255, 0.94);
   --bg-glass-card: rgba(255, 255, 255, 0.72);
@@ -43,6 +44,7 @@
   /* ── Text Hierarchy ────────────────────────────────────────────────────── */
   --text-primary: #1D1D1F;
   --text-secondary: #6E6E73;
+  --text-tertiary: #86868B;
   --text-muted: #86868B;
   --text-inverse: #FFFFFF;
 
@@ -84,12 +86,14 @@
     --bg-surface: #161618;
     --bg-surface-2: #1D1D20;
     --bg-surface-3: #262629;
+    --bg-secondary: #1D1D20;
     --bg-glass: rgba(22, 22, 24, 0.82);
     --bg-glass-strong: rgba(22, 22, 24, 0.94);
     --bg-glass-card: rgba(30, 30, 34, 0.72);
 
     --text-primary: #F5F5F7;
     --text-secondary: #A1A1A6;
+    --text-tertiary: #6E6E73;
     --text-muted: #6E6E73;
     --text-inverse: #1D1D1F;
 
@@ -105,7 +109,7 @@
   }
 }
 
-html.night-mode, body.night-mode, [data-theme="dark"] {
+html.night-mode, body.night-mode, [data-theme="dark"], html.dark, body.dark {
   --primary: #2997FF;
   --primary-hover: #47A7FF;
   --primary-active: #147CE5;
@@ -117,12 +121,14 @@ html.night-mode, body.night-mode, [data-theme="dark"] {
   --bg-surface: #161618;
   --bg-surface-2: #1D1D20;
   --bg-surface-3: #262629;
+  --bg-secondary: #1D1D20;
   --bg-glass: rgba(22, 22, 24, 0.82);
   --bg-glass-strong: rgba(22, 22, 24, 0.94);
   --bg-glass-card: rgba(30, 30, 34, 0.72);
 
   --text-primary: #F5F5F7;
   --text-secondary: #A1A1A6;
+  --text-tertiary: #6E6E73;
   --text-muted: #6E6E73;
   --text-inverse: #1D1D1F;
 
@@ -15094,8 +15100,22 @@ body.pending-page {
   font-weight: 700;
 }
 
+.dot-indicator {
+  width: 6px !important;
+  height: 6px !important;
+  min-width: 6px !important;
+  min-height: 6px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+  background: var(--text-muted, #86868B);
+}
+
 .dot-indicator.dot-green {
-  background: #34C759;
+  background: #34C759 !important;
 }
 
 .ai-header-title {
@@ -16499,14 +16519,18 @@ html.night-mode .bento-ghost-icon,
 }
 
 .status-badge.available,
-.status-badge.tersedia {
+.status-badge.tersedia,
+.status-badge.success,
+.status-badge.active {
   background: rgba(52, 199, 89, 0.12);
   color: #34C759;
   border: 1px solid rgba(52, 199, 89, 0.25);
 }
 
 .status-badge.available .dot,
-.status-badge.tersedia .dot {
+.status-badge.tersedia .dot,
+.status-badge.success .dot,
+.status-badge.active .dot {
   background: #34C759;
 }
 
@@ -19364,14 +19388,15 @@ body.day-mode .cal-filter-chip.active {
 
 /* 2. Studio 360 Hero Viewport */
 .car-studio-hero {
-  background: var(--bg-surface-1, #161618);
-  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border-subtle) !important;
   border-radius: 28px;
   padding: 24px;
   margin-bottom: 28px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-md) !important;
+  transition: all 0.25s var(--ease-apple);
 }
 
 .studio-top-bar {
@@ -19387,9 +19412,9 @@ body.day-mode .cal-filter-chip.active {
   display: inline-flex;
   align-items: center;
   padding: 4px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--bg-surface-2) !important;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle) !important;
 }
 
 .studio-tab-btn {
@@ -19415,7 +19440,12 @@ body.day-mode .cal-filter-chip.active {
 
 .studio-tab-btn:hover:not(.active) {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+html.dark .studio-tab-btn:hover:not(.active),
+body.dark .studio-tab-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .studio-stage-wrapper {
@@ -19482,8 +19512,8 @@ body.day-mode .cal-filter-chip.active {
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF !important;
   font-size: 12px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -20457,8 +20487,9 @@ input[type="number"]:focus::-webkit-inner-spin-button {
    ============================================================================== */
 
 /* Apple HIG Glass & Card Styles for Versi 7 */
+.glass-panel,
 .glass-panel-v7 {
-  background-color: rgba(249, 249, 251, 0.85);
+  background-color: rgba(255, 255, 255, 0.90) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   backdrop-filter: blur(20px) saturate(180%);
 }
@@ -20471,9 +20502,13 @@ input[type="number"]:focus::-webkit-inner-spin-button {
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+[data-theme="night"] .glass-panel,
 [data-theme="night"] .glass-panel-v7,
+.night-mode .glass-panel,
 .night-mode .glass-panel-v7,
-html.dark .glass-panel-v7 {
+html.dark .glass-panel,
+html.dark .glass-panel-v7,
+body.dark .glass-panel {
   background-color: rgba(22, 22, 24, 0.85) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
@@ -21116,6 +21151,187 @@ html.dark .border-border-day,
 body.dark .border-border-day,
 body.night-mode .border-border-day {
   border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ==============================================================================
+   23. UNIFIED DUAL-THEME APPLE HIG TOAST NOTIFICATION (PILL CAPSULE)
+   Strictly White Glass in Day Mode, Dark Obsidian Glass in Night Mode
+   ============================================================================== */
+.wedrive-toast-pill,
+#wedrive-toast-pill,
+.toast-notify {
+  position: fixed !important;
+  top: 84px !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-10px) !important;
+  z-index: 99999 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 20px 8px 10px !important;
+  border-radius: 9999px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: #1D1D1F !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  opacity: 0;
+  pointer-events: none !important;
+  max-width: 90vw !important;
+  box-sizing: border-box !important;
+}
+
+.wedrive-toast-pill.show,
+#wedrive-toast-pill.show,
+.toast-notify.show {
+  opacity: 1 !important;
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+/* Night Mode: True Obsidian Glass Toast */
+[data-theme="night"] .wedrive-toast-pill,
+[data-theme="night"] #wedrive-toast-pill,
+[data-theme="night"] .toast-notify,
+.night-mode .wedrive-toast-pill,
+.night-mode #wedrive-toast-pill,
+.night-mode .toast-notify,
+html.dark .wedrive-toast-pill,
+html.dark #wedrive-toast-pill,
+html.dark .toast-notify,
+body.dark .wedrive-toast-pill,
+body.dark #wedrive-toast-pill,
+body.dark .toast-notify {
+  background: rgba(22, 22, 24, 0.92) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+}
+
+.wedrive-toast-icon {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.wedrive-toast-icon.success {
+  background: linear-gradient(135deg, #34C759, #30B0C7) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.25) !important;
+}
+
+.wedrive-toast-icon.info {
+  background: linear-gradient(135deg, #0071E3, #5E5CE6) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.25) !important;
+}
+
+.wedrive-toast-icon.error {
+  background: linear-gradient(135deg, #FF3B30, #FF9500) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(255, 59, 48, 0.25) !important;
+}
+
+.wedrive-toast-text {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* ==============================================================================
+   24. SYSTEMIC UTILITY CLASSES (BENTO SURFACES, BORDERS & BADGES)
+   ============================================================================== */
+.bg-surface-2 { background-color: var(--bg-surface-2) !important; }
+.bg-surface-3 { background-color: var(--bg-surface-3) !important; }
+.border-subtle { border-color: var(--border-subtle) !important; }
+.border-medium { border-color: var(--border-medium) !important; }
+.radius-24 { border-radius: var(--radius-bento, 24px) !important; }
+.radius-pill { border-radius: var(--radius-pill, 9999px) !important; }
+.text-title { color: var(--text-primary) !important; }
+.text-green { color: #34C759 !important; }
+.text-purple { color: #AF52DE !important; }
+.text-primary-heading { color: var(--text-primary) !important; }
+
+/* Pulse dot blue modifier for rented fleet */
+.live-pulse-dot.blue {
+  background: #0071E3 !important;
+  box-shadow: 0 0 0 rgba(0, 113, 227, 0.4) !important;
+}
+@keyframes livePulseBlue {
+  0% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.5); }
+  70% { box-shadow: 0 0 0 7px rgba(0, 113, 227, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0); }
+}
+
+/* Reports Export Dropdown */
+.export-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-surface, #ffffff);
+  border: 1px solid var(--border-medium, rgba(0,0,0,0.12));
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg, 0 10px 25px rgba(0,0,0,0.1));
+  min-width: 200px;
+  padding: 6px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: slideDownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.export-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s var(--ease-apple);
+}
+
+.export-dropdown button:hover {
+  background: var(--bg-surface-2);
+  color: var(--primary);
+}
+
+.export-dropdown button .material-icons-round {
+  font-size: 18px;
+  color: var(--text-secondary);
+  transition: color 0.15s var(--ease-apple);
+}
+
+.export-dropdown button:hover .material-icons-round {
+  color: var(--primary);
 }
 
 

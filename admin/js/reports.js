@@ -64,14 +64,14 @@ function renderRevenueChart(bookings) {
     <div style="display:flex; align-items:flex-end; gap:16px; height:200px; padding:0 12px;">
       ${chartData.map(m => {
         var pct = (m.revenue / maxVal) * 100;
-        var color = m.revenue === maxVal ? 'var(--primary)' : 'var(--slate-200)';
+        var color = m.revenue === maxVal ? 'var(--primary)' : 'var(--bg-surface-3, rgba(120,120,128,0.24))';
         return `
         <div style="flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px;">
-          <span style="font-size:11px; font-weight:600; color:var(--navy);">RM ${(m.revenue/1000).toFixed(1)}k</span>
+          <span style="font-size:11px; font-weight:600; color:var(--text-primary);">RM ${(m.revenue/1000).toFixed(1)}k</span>
           <div style="flex:1; width:100%; display:flex; align-items:flex-end;">
             <div style="width:100%; background:${color}; border-radius:8px 8px 4px 4px; height:${pct}%; min-height:8px; transition:height 0.6s ease;"></div>
           </div>
-          <span style="font-size:11px; font-weight:600; color:var(--slate-400);">${m.month}</span>
+          <span style="font-size:11px; font-weight:600; color:var(--text-muted);">${m.month}</span>
         </div>`;
       }).join('')}
     </div>`;
@@ -100,9 +100,9 @@ function renderUtilChart(bookings, cars) {
 
   container.innerHTML = utilData.map(u => {
     var barColor = 'var(--primary)';
-    if (u.utilization >= 80) barColor = 'var(--success)';
-    else if (u.utilization >= 50) barColor = 'var(--warning)';
-    else barColor = 'var(--danger)';
+    if (u.utilization >= 80) barColor = '#34C759';
+    else if (u.utilization >= 50) barColor = '#FF9500';
+    else barColor = '#FF3B30';
 
     // Scale width relative to max utilization so it fills the space (at least 1% for visibility if utilization > 0)
     var widthPct = maxUtil > 0 ? (u.utilization / maxUtil) * 100 : 0;
@@ -113,14 +113,14 @@ function renderUtilChart(bookings, cars) {
 
     return `
     <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding:0 12px;">
-      <span style="width:140px; font-size:12px; font-weight:600; color:var(--navy); text-align:right;">${u.car}</span>
-      <div style="flex:1; background:var(--slate-100); border-radius:8px; height:24px; overflow:hidden; display:flex; align-items:center;">
+      <span style="width:140px; font-size:12px; font-weight:600; color:var(--text-primary); text-align:right;">${u.car}</span>
+      <div style="flex:1; background:var(--bg-surface-2, rgba(120,120,128,0.12)); border-radius:8px; height:24px; overflow:hidden; display:flex; align-items:center;">
         <div style="height:100%; width:${widthPct}%; background:${barColor}; border-radius:8px; transition:width 0.8s ease; display:flex; align-items:center; justify-content:flex-end; padding-right:${labelInside ? '8px' : '0px'}; min-width:${u.utilization > 0 ? '12px' : '0px'};">
           ${labelInside ? `<span style="font-size:10px; font-weight:700; color:white;">${u.utilization}%</span>` : ''}
         </div>
-        ${!labelInside ? `<span style="font-size:10px; font-weight:700; color:var(--navy); margin-left:8px;">${u.utilization}%</span>` : ''}
       </div>
-      <span style="font-size:11px; color:var(--slate-400); width:60px;">${u.days} days</span>
+      ${!labelInside ? `<span style="font-size:10px; font-weight:700; color:var(--text-primary); margin-left:8px;">${u.utilization}%</span>` : ''}
+      <span style="font-size:11px; color:var(--text-secondary); width:60px;">${u.days} days</span>
     </div>`;
   }).join('');
 }

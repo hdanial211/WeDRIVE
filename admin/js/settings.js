@@ -73,14 +73,29 @@ async function saveSettings() {
 }
 
 function showToast(msg, type) {
-  var existing = document.querySelector('.toast-notify');
+  var existing = document.getElementById('wedrive-toast-pill') || document.querySelector('.toast-notify');
   if (existing) existing.remove();
   var toast = document.createElement('div');
-  toast.className = 'toast-notify';
-  var icon = type === 'success' ? 'check_circle' : 'info';
-  var bg = type === 'success' ? '#059669' : '#0071E3';
-  toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:' + bg + ';color:#fff;padding:14px 24px;border-radius:14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;z-index:9999;box-shadow:0 12px 32px rgba(0,0,0,0.4);animation:slideUp 0.3s ease';
-  toast.innerHTML = '<span class="material-icons-round" style="font-size:18px">' + icon + '</span> ' + msg;
+  toast.className = 'wedrive-toast-pill toast-notify';
+  toast.id = 'wedrive-toast-pill';
+  var isSuccess = (type === 'success');
+  var isError = (type === 'error');
+  var icon = isSuccess ? 'check_circle' : (isError ? 'error' : 'info');
+  var iconClass = isSuccess ? 'success' : (isError ? 'error' : 'info');
+
+  var iconCircle = '<div class="wedrive-toast-icon ' + iconClass + '">' +
+    '<span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>' +
+    '</div>';
+
+  toast.innerHTML = iconCircle + '<span class="wedrive-toast-text">' + msg + '</span>';
   document.body.appendChild(toast);
-  setTimeout(function () { toast.remove(); }, 3200);
+
+  requestAnimationFrame(function () {
+    toast.classList.add('show');
+  });
+
+  setTimeout(function () {
+    toast.classList.remove('show');
+    setTimeout(function () { toast.remove(); }, 350);
+  }, 3200);
 }

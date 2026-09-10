@@ -270,39 +270,32 @@ function manageCar(id) {
 }
 
 function showToast(msg, type = 'success') {
-  const existing = document.querySelector('.toast-notify');
+  const existing = document.getElementById('wedrive-toast-pill') || document.querySelector('.toast-notify');
   if (existing) existing.remove();
 
   const toast = document.createElement('div');
-  toast.className = 'toast-notify';
-  const icon = type === 'success' ? 'check_circle' : 'error';
-  const bg = type === 'success' ? '#10B981' : '#EF4444';
-  
-  toast.style.cssText = `
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: ${bg};
-    color: #fff;
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 99999;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    animation: slideUp 0.3s ease;
-  `;
-  toast.innerHTML = `<span class="material-icons-round" style="font-size: 18px;">${icon}</span> <span>${msg}</span>`;
+  toast.className = 'wedrive-toast-pill toast-notify';
+  toast.id = 'wedrive-toast-pill';
+  const isSuccess = (type === 'success');
+  const isError = (type === 'error');
+  const icon = isSuccess ? 'check_circle' : (isError ? 'error' : 'info');
+  const iconClass = isSuccess ? 'success' : (isError ? 'error' : 'info');
+
+  const iconCircle = '<div class="wedrive-toast-icon ' + iconClass + '">' +
+    '<span class="material-icons-round" style="font-size: 16px; line-height: 1;">' + icon + '</span>' +
+    '</div>';
+
+  toast.innerHTML = iconCircle + '<span class="wedrive-toast-text">' + msg + '</span>';
   document.body.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.classList.add('show');
+  });
+
   setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(20px)';
-    toast.style.transition = 'all 0.3s ease';
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 350);
+  }, 3200);
 }
 
 /* ── New Car Photos State ── */

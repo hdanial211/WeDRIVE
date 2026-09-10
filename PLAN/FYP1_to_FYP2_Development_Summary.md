@@ -6450,6 +6450,63 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.1 Fix AI Key Vault Day and Night theme compliance and contextual navigation`
   - Tag Versi: `6.17.1`
 
+---
+
+## 🔔 [MINOR UPDATE] 157. Penyeragaman Notifikasi Dwitema Apple HIG (Putih Siang / Hitam Malam) & Kepatuhan Warna Merentas Modul Admin (v6.17.2)
+
+- **Punca Keperluan (Context & User Directives)**:
+  - Pengguna mengarahkan audit penuh ke atas kesemua 25 halaman pentadbir bagi memastikan pematuhan warna dan tema Mod Siang & Mod Malam (*Apple HIG Day/Night Theme Compliance*):
+    > *"cuba awak bagi multi tasking untuk check semua page ikut x warna n theme spesifikasi dalam admin dulu kita fokus jangan ubah dulu bagitahu saya just checking only"*
+  - Pengguna menekankan ralat visual kritikal pada notifikasi sistem di mana kapsul notifikasi memaparkan warna hitam pekat walaupun sistem berada dalam Mod Siang:
+    > *"notifikasi ni kalau mode biasa sepatutnya putih n kalau dark mode baru hitam"*
+  - Pengguna menetapkan penyediaan PRD 6 pilar sebelum sebarang kod diubah:
+    > *"buat prd dulu"*
+  - Pengguna mengarahkan pengujian langsung sebagai pengguna sebenar pada tab aktif sedia ada:
+    > *"Jangan lupa lepas siap coding..awak testing page tu as user"*
+
+- **Tindakan Teknikal & Pembaikan Komprehensif (Implementation & Enhancements)**:
+  1. **Piawaian Notifikasi Dwitema Apple HIG (`shared/css/wedrive.css` Seksyen 23)**:
+     - Dicipta spesifikasi rasmi `.wedrive-toast-pill`, `#wedrive-toast-pill`, dan `.toast-notify`:
+       - **Mod Siang (Day Mode)**: Kaca Putih Apple Tulen `rgba(255, 255, 255, 0.96)` dengan teks hitam `#1D1D1F`, sempadan sub-piksel `rgba(0, 0, 0, 0.08)`, dan bayang lembut berkabus.
+       - **Mod Malam (Night Mode)**: Kaca Obsidian Gelap `rgba(22, 22, 24, 0.92)` dengan teks putih `#FFFFFF` dan sempadan `rgba(255, 255, 255, 0.14)`.
+       - **Geometri Tegas**: Kapsul pil simetri `border-radius: 9999px !important;` dengan ikon bulatan 1:1 tepat (`28px × 28px`, `border-radius: 50% !important`, `aspect-ratio: 1 / 1 !important`, padding 0).
+  2. **Penyeragaman Fungsi `showToast` Merentas Semua Modul Pentadbir**:
+     - `admin/js/api-keys.js`: Menggunakan `.wedrive-toast-pill` dwitema.
+     - `admin/js/settings.js`: Diselaraskan kepada kapsul notifikasi Apple HIG.
+     - `admin/js/cars.js`: Menghapuskan kotak segiempat legasi bucu kanan bawah, menggantikannya dengan `.wedrive-toast-pill` di tengah atas skrin.
+     - `admin/js/bookings.js`: Menggantikan `showToast` legasi kepada `.wedrive-toast-pill` serta menggantikan warna `var(--navy,#1E293B)` dan `var(--navy)` kepada `var(--text-primary)` dalam modal butiran tempahan.
+     - `admin/js/customers.js`: Menggantikan `showToast` kepada `.wedrive-toast-pill` dan menyingkirkan `var(--navy,#1E293B)` dalam dialog pengesahan.
+     - `admin/js/marketing.js`: Membaiki pepijat ketiadaan elemen `#mkt-toast` dengan beralih ke `.wedrive-toast-pill` dinamik.
+     - `admin/js/chatbot-admin.js`: Menyeragamkan notifikasi dan membetulkan warna teks kad mini kereta daripada `var(--text-color, #fff)` kepada `var(--text-primary)`.
+  3. **Pembaikan Halaman Pendaftaran Kenderaan Langkah 5 (`admin/pages/car/add-car/step5_tempahan.html`)**:
+     - Membetulkan konfigurasi `tailwind.config` yang terbalik kepada nilai piawai Mod Siang (`surface: "#f9f9fb"`, `on-surface: "#1D1D1F"`).
+     - Menambah token sempadan `border-day: "rgba(0, 0, 0, 0.06)"` yang hilang.
+     - Menambah butang navigasi galeri kanan `<button id="step5BtnNext">` yang tertinggal dalam markup HTML.
+  4. **Penyingkiran `class="dark"` Tegar**:
+     - Disingkirkan daripada teg `<html>` di `admin/pages/setting/settings.html` dan `admin/pages/car/add-car/index.html` bagi membolehkan enjin tema dinamik `main.js` mengawal dwi-tema tanpa paksaan mod gelap.
+  5. **Penalaan Tipografi & Komponen Tambahan**:
+     - `admin/pages/car/car-detail/car-detail.html`: Menggantikan kelas `#cd-plate` daripada `.apple-category-pill` kepada `.apple-plate-pill tabular-nums`.
+     - `admin/js/reports.js`: Menyelaraskan warna carta hasil dan penggunaan kepada `#34C759`, `#FF9500`, `#FF3B30`, dan `var(--bg-surface-3)`.
+     - `admin/pages/marketing/marketing.html`: Memautkan skrip `marketing-ai.js`.
+     - `admin/pages/chatbot/chatbot.html`: Menyelaraskan geometri avatar bot kepada `.circle-1-1`.
+
+- **Kepatuhan Ujian Automasi & Standard**:
+  - Suite ujian Playwright lengkap dijalankan: **53/53 ujian lulus (100% Pass Rate dalam 1.8m)**.
+  - Kesemua 23 fail peraturan `.agents/rules/*.md` disahkan kekal $\le 12,000$ aksara (`wc -m`).
+  - Pengesahan visual langsung perspektif pengguna pada tab tunggal aktif (`pageId: 2` via Chrome DevTools MCP):
+    - **Ujian Notifikasi Siang**: Disahkan berlatar belakang kaca putih `rgba(255, 255, 255, 0.96)`, teks gelap `#1D1D1F`, ikon bulat 1:1 sempurna.
+    - **Ujian Notifikasi Malam**: Disahkan berlatar belakang kaca obsidian `rgba(22, 22, 24, 0.92)`, teks putih `#FFFFFF`, ikon bulat 1:1 sempurna.
+    - **Ujian Spektrum 3-Peranti Apple pada Langkah 5**:
+      - MacBook Desktop Retina (1440 × 900)
+      - iPad Tablet (820 × 1180)
+      - iPhone Mobile Retina XDR (393 × 852)
+  - Mematuhi Peraturan Mandatori Zero Oval Rule (1:1 ikon bulat sempurna dan kapsul pil 9999px).
+
+- **Maklumat Git**:
+  - Commit: `6.17.2 Unified Apple HIG dual-theme toast notifications and admin color compliance`
+  - Tag Versi: `6.17.2`
+
+
 
 
 
