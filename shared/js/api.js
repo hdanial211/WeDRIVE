@@ -668,17 +668,25 @@ window.WeDriveAPI = {
             return data.marketing || { banners: [], promo_codes: [], seasonal_pricing: [] };
         } else {
             try {
+                var sb = window.supabaseClient;
+                var result = await sb.from('marketing').select('value').eq('key', 'main').maybeSingle();
+                if (result.data && result.data.value) return result.data.value;
+
                 var storedStr = localStorage.getItem('wedrive_marketing');
                 if (storedStr) {
                     var stored = JSON.parse(storedStr);
                     if (stored && (stored.banners || stored.promo_codes)) return stored;
                 }
-                var sb = window.supabaseClient;
-                var result = await sb.from('marketing').select('value').eq('key', 'main').maybeSingle();
-                if (result.data && result.data.value) return result.data.value;
                 return { banners: [], promo_codes: [], seasonal_pricing: [] };
             } catch (err) {
                 console.error('[WeDriveAPI] getMarketing error:', err);
+                try {
+                    var storedStr = localStorage.getItem('wedrive_marketing');
+                    if (storedStr) {
+                        var stored = JSON.parse(storedStr);
+                        if (stored && (stored.banners || stored.promo_codes)) return stored;
+                    }
+                } catch (e) {}
                 return { banners: [], promo_codes: [], seasonal_pricing: [] };
             }
         }
@@ -1283,4 +1291,3 @@ window.WeDriveAPI = {
         }
     }
 };
-
