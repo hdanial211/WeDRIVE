@@ -140,6 +140,9 @@ function renderCarCards(car) {
       : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
     const has360 = Boolean(c.has_360 || c.has360 || c.exterior_360 || c.supabase_360 || (Array.isArray(c.exterior_frames) && c.exterior_frames.length > 0));
 
+    const isMalay = (window.WeDriveLang && window.WeDriveLang.current ? window.WeDriveLang.current() : (localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || 'ms')) === 'ms';
+    const seatsLabel = isMalay ? 'Tempat Duduk' : 'Seats';
+
     return `
     <div class="apple-car-showcase-card reveal-on-scroll" data-car-id="${c.id}" onclick="navigateToCarDetail('${c.id}', event)">
       <div class="apple-car-studio-canvas">
@@ -168,7 +171,7 @@ function renderCarCards(car) {
         <div class="apple-micro-specs">
           <span class="apple-spec-tag"><span class="material-icons-round">settings</span> ${c.transmission || 'Auto'}</span>
           <span class="apple-spec-tag"><span class="material-icons-round">local_gas_station</span> ${c.fuel || 'Petrol'}</span>
-          <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ${c.seats || 5} Kerusi</span>
+          <span class="apple-spec-tag"><span class="material-icons-round">airline_seat_recline_normal</span> ${c.seats || 5} ${seatsLabel}</span>
         </div>
 
         <div class="apple-rental-callout">
@@ -216,7 +219,9 @@ function renderCarTable(car) {
     const src = img0 ? ((img0.startsWith('http://') || img0.startsWith('https://') || img0.startsWith('data:') || img0.startsWith('/')) ? img0 : '../../../shared/model/' + img0) : '../../../shared/model/bezza.png';
     const rawRateStr = car.rate ? String(car.rate).replace(/[^0-9.]/g, '') : (car.price ? String(car.price) : '150');
     const parsedRate = parseFloat(rawRateStr);
-    const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
+    const isMalay = (window.WeDriveLang && window.WeDriveLang.current ? window.WeDriveLang.current() : (localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || 'ms')) === 'ms';
+    const seatsLabel = isMalay ? 'Tempat Duduk' : 'Seats';
+    const perDayLabel = isMalay ? '/hari' : '/day';
 
     return `
     <tr style="border-bottom: 1px solid var(--border-subtle); transition: background 0.15s ease; cursor: pointer;" onclick="navigateToCarDetail('${car.id}', event)">
@@ -233,10 +238,10 @@ function renderCarTable(car) {
       </td>
       <td style="padding:14px 20px;"><span class="apple-plate-pill tabular-nums">${car.plate}</span></td>
       <td style="padding:14px 20px; color:var(--text-secondary);">${car.type || 'Sedan'}</td>
-      <td style="padding:14px 20px; color:var(--text-secondary);">${car.seats || 5} Seats</td>
+      <td style="padding:14px 20px; color:var(--text-secondary);">${car.seats || 5} ${seatsLabel}</td>
       <td style="padding:14px 20px; color:var(--text-secondary);">${car.transmission || 'Auto'}</td>
       <td style="padding:14px 20px; color:var(--text-secondary);">${car.fuel || 'Petrol'}</td>
-      <td style="padding:14px 20px; font-weight:700; color:var(--primary); font-size:14px;">RM ${rateNum}/hari</td>
+      <td style="padding:14px 20px; font-weight:700; color:var(--primary); font-size:14px;">RM ${rateNum}${perDayLabel}</td>
       <td style="padding:14px 20px;">
         <span style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:600; background:${sc.bg}; color:${sc.text};">
           <span class="live-pulse-dot" style="width:6px !important; height:6px !important; aspect-ratio:1/1 !important; border-radius:50% !important; background:${sc.dot} !important; flex-shrink:0 !important; display:inline-block !important;"></span> ${sc.label}

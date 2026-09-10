@@ -6890,4 +6890,49 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.19.2 Implement progressive 360 media disclosure and adaptive photo gallery mode on car detail`
   - Tag Versi: `6.19.2`
 
+---
+
+### [PATCH] v6.19.3 — Penyelesaian Menyeluruh 7 Isu Audit Portal Pentadbir & Penstabilan Alur Kerja Data Sebenar (Comprehensive Resolution of 7 Admin Portal Audit Issues & Real Data Pipeline Stabilization)
+
+- **Latar Belakang & Laporan Penguji**:
+  - Pengguna mengemukakan log audit pengujian pelayar yang mengandungi 7 ralat dan ketidakkonsistenan pada portal pentadbir WeDRIVE:
+    1. **Isu 1**: Ralat konsol HTTP 404 (jadual pangkalan data `reports` tidak wujud) dan HTTP 406 (penggunaan `.single()` pada jadual `config`, `settings`, `marketing`).
+    2. **Isu 2**: Bar navigasi pelawat (*guest navbar*) dipaparkan secara silap pada aliran penyuntingan kenderaan (`step1_spesifikasi.html`, `step2_studio360.html`, `step3_pengesahan.html`) bukannya 6 modul rasmi pentadbir.
+    3. **Isu 3**: Pilihan *Category* dan *Transmission* pada Borang Langkah 1 menjadi kosong/blank semasa penyuntingan disebabkan perbezaan format huruf besar/kecil (`truck` vs `Truck`, `Auto` vs `Automatic`).
+    4. **Isu 4**: Kegagalan pemuatan imej sandaran `shared/model/bezza.png` (HTTP 404).
+    5. **Isu 5**: Dokumen sampel KYC `sample_mykad.png` dan `sample_license.png` mengembalikan HTTP 404 pada `admin/pages/customer/verifications.html`.
+    6. **Isu 6**: Amaran linter form control pendua ID (`#chat-input` dan `#chat-messages`) pada `admin/pages/chatbot/chatbot.html` akibat pemuatan serentak modul sembang pentadbir dan chatbot terapung pelanggan awam.
+    7. **Isu 7**: Ketidakkonsistenan dwibahasa di mana senarai kereta memaparkan `"5 Seats"` dalam Mod Bahasa Melayu, dan lajur `<th>Lokasi Cawangan</th>` pada senarai tempahan bercanggah dengan Peraturan Mandatori 04 (Dasar Lokasi Tunggal Pusat Serahan WeDRIVE).
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Penalaan Pertanyaan API Pangkalan Data (`shared/js/api.js`)**:
+     - Menggantikan `.single()` dengan `.maybeSingle()` bagi pertanyaan konfigurasi, tetapan, dan pemasaran.
+     - Menghapuskan pertanyaan ke atas jadual `reports` yang tidak wujud dalam skema Supabase dan menyelaraskannya dengan data tempahan sebenar.
+  2. **Pembetulan Modul Navigasi Pentadbir (`admin/pages/car/edit-car/`)**:
+     - Menambah atribut mandatori `data-module="admin"` pada `#navbar-placeholder` di ketiga-tiga fail HTML (`step1_spesifikasi.html`, `step2_studio360.html`, `step3_pengesahan.html`) bagi memastikan 6 modul pentadbir dimuatkan.
+  3. **Penyeragaman Normalisasi Nilai Dropdown (`admin/pages/car/edit-car/edit-car.js`)**:
+     - Membina fungsi penormalan pintar `normalizeCategory()`, `normalizeTransmission()`, dan `normalizeFuel()` yang memetakan variasi format (seperti `truck` $\to$ `Truck`, `Auto` $\to$ `Automatic`) dengan pemadanan tanpa peka huruf besar-kecil.
+  4. **Penyediaan Aset Imej Sandaran Rasmi (`shared/model/bezza.png`)**:
+     - Menyediakan imej model fallback berkualiti tinggi bagi kenderaan tanpa gambar.
+  5. **Penjanaan Aset Sampel KYC Rasmi WeDRIVE (`shared/img/docs/`)**:
+     - Menjana dokumen sampel selamat berkualiti tinggi bagi Kad Pengenalan MyKad (`sample_mykad.png`) dan Lesen Memandu Malaysia (`sample_license.png`).
+  6. **Penyisihan Chatbot Terapung Pelanggan Daripada Halaman Pentadbir (`shared/js/main.js` & `chatbot.js`)**:
+     - Mengubah suai `initFloatingChatbot()` supaya tidak memasang widget terapung pengguna awam di dalam direktori modul pentadbir (`/admin/`), menghapuskan konflik penduaan ID form control.
+  7. **Piawaian Bahasa Melayu Moden & Dasar Lokasi Tunggal WeDRIVE (`admin/js/cars.js` & `admin/pages/booking/bookings.html`)**:
+     - Menyelaraskan teks tempat duduk kenderaan secara dwibahasa dinamik (`${c.seats || 5} ${isMalay ? 'Tempat Duduk' : 'Seats'}`) merentas paparan kad Bento dan jadual.
+     - Menggantikan tajuk lajur `<th>Lokasi Cawangan</th>` kepada `<th data-key="bk_th_depot">Pusat Serahan</th>` selaras dengan prinsip Depot Tunggal Cyberjaya (Peraturan 04).
+  8. **Penyelesaian Race Condition Penyegerakan Pangkalan Data (`step1_spesifikasi.html`, `step2-studio360.js`, `add-car-flow.js`)**:
+     - Memperbaiki pengemaskinian asynchronous `supabase_draft_id` supaya membaca semula draf terkini dari `localStorage` tanpa menimpa (*overwrite*) data nombor plat atau input baharu yang sedang ditaip oleh pengguna.
+  9. **Penciptaan Suite Ujian Automasi Khusus**:
+     - Membina suite ujian E2E Playwright menyeluruh [`tests/e2e/20_admin_bugs_resolution.spec.js`](tests/e2e/20_admin_bugs_resolution.spec.js) yang mengesahkan ketujuh-tujuh isu audit berjaya diselesaikan sepenuhnya.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Ujian Automasi Playwright CLI**: 67/67 Ujian Lulus (**100% Pass Rate dalam 2.4 minit**).
+  - **Audit Had Aksara 12,000**: Kesemua 24 fail `.agents/rules/*.md` kekal <= 12,000 aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.19.3 Fix 7 admin portal audit issues across API, navbar, forms, assets, and language`
+  - Tag Versi: `6.19.3`
+
 

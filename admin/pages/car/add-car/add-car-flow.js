@@ -158,9 +158,11 @@
       try {
         const res = await window.WeDriveAPI.saveCarDraft(draft);
         if (res && res.data && res.data.id) {
-          draft.supabase_draft_id = res.data.id;
           try {
-            localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+            const curRaw = localStorage.getItem(DRAFT_KEY);
+            const cur = curRaw ? JSON.parse(curRaw) : {};
+            cur.supabase_draft_id = res.data.id;
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(cur));
           } catch (_) {}
         }
         return res;

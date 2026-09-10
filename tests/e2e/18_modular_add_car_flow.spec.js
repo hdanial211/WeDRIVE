@@ -26,6 +26,7 @@ test.describe('WeDRIVE Modular Add Car Multi-Page Wizard Flow', () => {
     // 1. Start at Step 1: Spesifikasi
     await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => localStorage.removeItem('wedrive_new_car_draft'));
 
     // Verify Brand selection
     await page.selectOption('#inputBrand', 'Honda');

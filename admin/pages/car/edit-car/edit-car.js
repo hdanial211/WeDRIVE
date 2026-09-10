@@ -71,6 +71,36 @@
     return '../../../../shared/model/' + img;
   }
 
+  function normalizeCategory(cat) {
+    if (!cat) return 'Sedan';
+    const c = String(cat).trim().toLowerCase();
+    if (c === 'truck' || c.includes('pickup')) return 'Truck';
+    if (c === 'suv') return 'SUV';
+    if (c === 'hatchback') return 'Hatchback';
+    if (c === 'mpv') return 'MPV';
+    if (c === 'coupe') return 'Coupe';
+    if (c === 'van') return 'Van';
+    if (c === 'sedan') return 'Sedan';
+    return cat.charAt(0).toUpperCase() + cat.slice(1);
+  }
+
+  function normalizeTransmission(trans) {
+    if (!trans) return 'Automatic';
+    const t = String(trans).trim().toLowerCase();
+    if (t.includes('auto')) return 'Automatic';
+    if (t.includes('man')) return 'Manual';
+    return 'Automatic';
+  }
+
+  function normalizeFuel(fuel) {
+    if (!fuel) return 'Petrol';
+    const f = String(fuel).trim().toLowerCase();
+    if (f.includes('diesel')) return 'Diesel';
+    if (f.includes('hybrid')) return 'Hybrid';
+    if (f.includes('elect') || f.includes('ev')) return 'Electric';
+    return 'Petrol';
+  }
+
   async function loadCarDraft(carId) {
     if (!carId) return null;
     const key = getStorageKey(carId);
@@ -81,6 +111,9 @@
       try {
         const parsed = JSON.parse(existingRaw);
         if (parsed) {
+          parsed.category = normalizeCategory(parsed.category);
+          parsed.transmission = normalizeTransmission(parsed.transmission);
+          parsed.fuel = normalizeFuel(parsed.fuel);
           if (parsed.image_url) parsed.image_url = resolveCarImg(parsed.image_url);
           if (Array.isArray(parsed.photos)) {
             parsed.photos = parsed.photos.map((p, idx) => {
@@ -132,10 +165,10 @@
       variant: rawCar.variant || '',
       plate: rawCar.plate || '',
       year: parseInt(rawCar.year, 10) || new Date().getFullYear(),
-      category: rawCar.type || rawCar.category || rawCar.label || 'Sedan',
+      category: normalizeCategory(rawCar.type || rawCar.category || rawCar.label),
       color: rawCar.color || 'Putih',
-      transmission: rawCar.transmission || 'Automatic',
-      fuel: rawCar.fuel || 'Petrol',
+      transmission: normalizeTransmission(rawCar.transmission),
+      fuel: normalizeFuel(rawCar.fuel),
       engine: rawCar.engine || rawCar.ai || '2.0L Turbo',
       seats: parseInt(rawCar.seats, 10) || 5,
       dailyPrice: parsedRate,

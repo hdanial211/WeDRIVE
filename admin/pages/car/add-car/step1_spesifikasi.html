@@ -1221,29 +1221,39 @@ Rules:
 
         // Real Data Pipeline: Save draft to localStorage so Step 2 and Step 3 read real data
         function saveStep1Draft() {
+            let prevDraft = {};
+            try {
+                const raw = localStorage.getItem('wedrive_new_car_draft');
+                if (raw) prevDraft = JSON.parse(raw);
+            } catch(e) {}
             const draft = {
-                brand: document.getElementById('inputBrand')?.value || '',
-                model: document.getElementById('inputModel')?.value || '',
-                variant: document.getElementById('inputVariant')?.value || '',
-                plate: document.getElementById('inputPlate')?.value || '',
-                category: document.getElementById('inputCategory')?.value || '',
-                year: document.getElementById('inputYear')?.value || '',
-                color: document.getElementById('inputColor')?.value || '',
-                engine: document.getElementById('inputEngine')?.value || '',
-                fuel: document.getElementById('inputFuel')?.value || '',
-                transmission: document.getElementById('inputTransmission')?.value || '',
-                seats: document.getElementById('inputSeats')?.value || '',
-                dailyPrice: document.getElementById('inputDailyRate')?.value || '',
-                weeklyPrice: document.getElementById('inputWeeklyRate')?.value || '',
-                monthlyPrice: document.getElementById('inputMonthlyRate')?.value || ''
+                ...prevDraft,
+                brand: document.getElementById('inputBrand')?.value || prevDraft.brand || '',
+                model: document.getElementById('inputModel')?.value || prevDraft.model || '',
+                variant: document.getElementById('inputVariant')?.value || prevDraft.variant || '',
+                plate: document.getElementById('inputPlate')?.value || prevDraft.plate || '',
+                category: document.getElementById('inputCategory')?.value || prevDraft.category || '',
+                year: document.getElementById('inputYear')?.value || prevDraft.year || '',
+                color: document.getElementById('inputColor')?.value || prevDraft.color || '',
+                engine: document.getElementById('inputEngine')?.value || prevDraft.engine || '',
+                fuel: document.getElementById('inputFuel')?.value || prevDraft.fuel || '',
+                transmission: document.getElementById('inputTransmission')?.value || prevDraft.transmission || '',
+                seats: document.getElementById('inputSeats')?.value || prevDraft.seats || '',
+                dailyPrice: document.getElementById('inputDailyRate')?.value || prevDraft.dailyPrice || '',
+                weeklyPrice: document.getElementById('inputWeeklyRate')?.value || prevDraft.weeklyPrice || '',
+                monthlyPrice: document.getElementById('inputMonthlyRate')?.value || prevDraft.monthlyPrice || ''
             };
             try {
                 localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
                 if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
                     window.WeDriveAPI.saveCarDraft(draft).then(res => {
                         if (res && res.data && res.data.id) {
-                            draft.supabase_draft_id = res.data.id;
-                            try { localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft)); } catch(_) {}
+                            try {
+                                const curRaw = localStorage.getItem('wedrive_new_car_draft');
+                                const cur = curRaw ? JSON.parse(curRaw) : {};
+                                cur.supabase_draft_id = res.data.id;
+                                localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
+                            } catch(_) {}
                         }
                     }).catch(err => console.warn('[WeDRIVE] Supabase draft save error:', err));
                 }

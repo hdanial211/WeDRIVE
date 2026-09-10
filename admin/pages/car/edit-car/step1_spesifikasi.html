@@ -43,7 +43,7 @@
 </head>
 <body class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
 
-    <div id="navbar-placeholder"></div>
+    <div id="navbar-placeholder" data-module="admin"></div>
     <div id="sidebar-placeholder"></div>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
@@ -364,14 +364,32 @@
             document.getElementById('selectBrand').value = d.brand || 'Proton';
             document.getElementById('inputPlate').value = d.plate || '';
             document.getElementById('inputYear').value = d.year || 2024;
-            document.getElementById('inputColor').value = d.color || '';
-            document.getElementById('selectCategory').value = d.category || 'Sedan';
-            document.getElementById('selectTrans').value = d.transmission || 'Automatic';
-            document.getElementById('selectFuel').value = d.fuel || 'Petrol';
+            function setSelectSafely(selectId, val, defaultVal) {
+                const el = document.getElementById(selectId);
+                if (!el) return;
+                const target = String(val || defaultVal || '').trim().toLowerCase();
+                let matched = false;
+                for (let i = 0; i < el.options.length; i++) {
+                    const optVal = el.options[i].value.toLowerCase();
+                    const optText = el.options[i].text.toLowerCase();
+                    if (optVal === target || (target && (optText.includes(target) || optVal.includes(target)))) {
+                        el.selectedIndex = i;
+                        matched = true;
+                        break;
+                    }
+                }
+                if (!matched && defaultVal) {
+                    el.value = defaultVal;
+                }
+            }
+
+            setSelectSafely('selectCategory', d.category, 'Sedan');
+            setSelectSafely('selectTrans', d.transmission, 'Automatic');
+            setSelectSafely('selectFuel', d.fuel, 'Petrol');
             document.getElementById('inputEngine').value = d.engine || '';
             document.getElementById('inputSeats').value = d.seats || 5;
             document.getElementById('inputDailyRate').value = Math.round(d.dailyPrice) || 150;
-            document.getElementById('selectStatus').value = d.status || 'Available';
+            setSelectSafely('selectStatus', d.status, 'Available');
 
             const headerPlate = document.getElementById('headerPlatePill');
             if (headerPlate) headerPlate.textContent = d.plate || '-';

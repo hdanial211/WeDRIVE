@@ -1456,6 +1456,7 @@ window.wedriveEn = {
   "bk_th_car": "Vehicle",
   "bk_th_pickup": "Pick-up",
   "bk_th_return": "Return",
+  "bk_th_depot": "Handover Depot",
   "bk_th_total": "Total",
   "bk_th_payment": "Payment",
   "bk_th_status": "Status",

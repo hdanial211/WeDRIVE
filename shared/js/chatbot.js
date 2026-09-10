@@ -88,8 +88,8 @@
   function initChatbot() {
     if (document.getElementById('chatbot-fab')) return;
 
-    // Per Rule 04: Account (login, signup, forgot-pw) is Standalone without floating chatbot
-    if (window.location.pathname.indexOf('/account/') !== -1) return;
+    // Per Rule 04: Account and Admin portals are Standalone without floating customer chatbot
+    if (window.location.pathname.indexOf('/account/') !== -1 || window.location.pathname.indexOf('/admin/') !== -1) return;
 
     var placeholder = document.getElementById('chatbot-placeholder');
     if (!placeholder) {

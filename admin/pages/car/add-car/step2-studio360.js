@@ -368,18 +368,25 @@
     try {
       const raw = localStorage.getItem('wedrive_new_car_draft');
       const draft = raw ? JSON.parse(raw) : {};
-      draft.photos = currentGalleryPhotos;
-      draft.gallery8Photos = currentGallery8Photos;
-      draft.supabase_images = (currentGallery8Photos && currentGallery8Photos.length > 0)
-        ? currentGallery8Photos
-        : currentGalleryPhotos.filter(p => p && p.img);
+      const hasValidInMemory = Array.isArray(currentGalleryPhotos) && currentGalleryPhotos.some(p => p && p.img);
+      if (hasValidInMemory) {
+        draft.photos = currentGalleryPhotos;
+      }
+      if (Array.isArray(currentGallery8Photos) && currentGallery8Photos.length > 0) {
+        draft.gallery8Photos = currentGallery8Photos;
+      }
+      if (Array.isArray(currentGallery8Photos) && currentGallery8Photos.length > 0) {
+        draft.supabase_images = currentGallery8Photos;
+      } else if (hasValidInMemory) {
+        draft.supabase_images = currentGalleryPhotos.filter(p => p && p.img);
+      }
       draft.downloaded = true;
       // Strictly lock Hero photo to Slot 0 (Hadapan Tiga Suku 0-140 BMW/Alphard Standard)
       const heroPhoto = (currentGalleryPhotos && currentGalleryPhotos[0] && currentGalleryPhotos[0].img)
         ? currentGalleryPhotos[0]
         : (currentGallery8Photos && currentGallery8Photos[0])
           ? currentGallery8Photos[0]
-          : currentGalleryPhotos.find(p => p && p.img);
+          : (hasValidInMemory ? currentGalleryPhotos.find(p => p && p.img) : (draft.photos && draft.photos[0]));
       if (heroPhoto) {
         draft.image_url = typeof heroPhoto === 'string' ? heroPhoto : (heroPhoto.img || '');
       }
@@ -406,8 +413,12 @@
       if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
         window.WeDriveAPI.saveCarDraft(draft).then(res => {
           if (res && res.data && res.data.id) {
-            draft.supabase_draft_id = res.data.id;
-            try { localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft)); } catch(_) {}
+            try {
+              const curRaw = localStorage.getItem('wedrive_new_car_draft');
+              const cur = curRaw ? JSON.parse(curRaw) : {};
+              cur.supabase_draft_id = res.data.id;
+              localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
+            } catch(_) {}
           }
         }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error:', err));
       }
@@ -666,8 +677,12 @@
             if (window.WeDriveAPI && typeof window.WeDriveAPI.saveCarDraft === 'function') {
               window.WeDriveAPI.saveCarDraft(draft).then(res => {
                 if (res && res.data && res.data.id) {
-                  draft.supabase_draft_id = res.data.id;
-                  try { localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft)); } catch(_) {}
+                  try {
+                    const curRaw = localStorage.getItem('wedrive_new_car_draft');
+                    const cur = curRaw ? JSON.parse(curRaw) : {};
+                    cur.supabase_draft_id = res.data.id;
+                    localStorage.setItem('wedrive_new_car_draft', JSON.stringify(cur));
+                  } catch(_) {}
                 }
               }).catch(err => console.warn('[WeDRIVE Studio] Supabase sync error in handleSaveVisuals:', err));
             }

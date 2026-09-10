@@ -228,10 +228,11 @@ window.WeDriveAPI = {
                 var config = {};
                 var marketing = { banners: [], promo_codes: [], seasonal_pricing: [] };
 
-                try { var r = await sb.from('settings').select('*').eq('key', 'main').single(); if (r.data && r.data.value) settings = r.data.value; } catch(e) {}
-                try { var r = await sb.from('reports').select('*').eq('key', 'main').single(); if (r.data && r.data.value) reports = r.data.value; } catch(e) {}
-                try { var r = await sb.from('config').select('*').eq('key', 'main').single(); if (r.data && r.data.value) config = r.data.value; } catch(e) {}
-                try { var r = await sb.from('marketing').select('*').eq('key', 'main').single(); if (r.data && r.data.value) marketing = r.data.value; } catch(e) {}
+                try { var r = await sb.from('settings').select('*').eq('key', 'main').maybeSingle(); if (r && r.data && r.data.value) settings = r.data.value; } catch(e) {}
+                // reports table does not exist; avoid 404 console error
+                reports = {};
+                try { var r = await sb.from('config').select('*').eq('key', 'main').maybeSingle(); if (r && r.data && r.data.value) config = r.data.value; } catch(e) {}
+                try { var r = await sb.from('marketing').select('*').eq('key', 'main').maybeSingle(); if (r && r.data && r.data.value) marketing = r.data.value; } catch(e) {}
 
                 // Calculate live stats from real data
                 var today = new Date().toISOString().slice(0, 10);

@@ -1628,6 +1628,8 @@ window.escapeHtml = function (str) {
 
   function checkAndMountChatbot() {
     if (document.getElementById('chatbot-fab')) return;
+    // Per Rule 04: Admin and Account portals do not have the customer-facing floating chatbot
+    if (window.location.pathname.indexOf('/admin/') !== -1 || window.location.pathname.indexOf('/account/') !== -1) return;
 
     if (typeof window.initWeDriveChatbot === 'function') {
       window.initWeDriveChatbot();
