@@ -86,39 +86,34 @@
   // Also uploads interior pano if available.
   // Returns { exteriorFrames: string[], interiorFacesObj: Object|null }
   async function uploadImpelFramesToCloudinary(cdnPrefix, carLabel, carName, onProgress) {
-    const TOTAL_FRAMES  = 200;
-    const SAMPLE_FRAMES = 36;   // 36 frames @ 10° = smooth turntable
-    const FRONT_OFFSET  = 125;
-    const BATCH_SIZE    = 5;    // 5 parallel fetches
+    const TOTAL_FRAMES = 200;  // Full 200 frames — sama seperti shared/model/
+    const BATCH_SIZE   = 8;    // 8 parallel untuk lebih laju
 
     // Sanitize folder path to match shared/model/ convention: {Label}/{Name}
     const safeLabel = (carLabel || 'Car').replace(/[/\\:*?"<>|]/g, '-').trim();
     const safeName  = (carName  || 'Unknown').replace(/[/\\:*?"<>|]/g, '-').trim();
     const baseFolder = `wedrive-model/${safeLabel}/${safeName}`;
 
-    // Build list of 36 frame numbers evenly distributed around 360°
-    const frameNums = [];
-    for (let i = 0; i < SAMPLE_FRAMES; i++) {
-      frameNums.push((FRONT_OFFSET + Math.round(i * (TOTAL_FRAMES / SAMPLE_FRAMES))) % TOTAL_FRAMES);
-    }
-
-    const cloudinaryUrls = new Array(frameNums.length).fill(null);
+    // All 200 frames: frame-000 to frame-199 (same as shared/model/)
+    const frameNums = Array.from({ length: TOTAL_FRAMES }, (_, i) => i);
+    const cloudinaryUrls = new Array(TOTAL_FRAMES).fill(null);
     let uploaded = 0;
 
-    // Batch upload exterior frames
+    // Batch upload all 200 exterior frames
     for (let b = 0; b < frameNums.length; b += BATCH_SIZE) {
       const batch = frameNums.slice(b, b + BATCH_SIZE);
-      await Promise.all(batch.map(async (frameNum, bIdx) => {
+      await Promise.all(batch.map(async (frameNum) => {
         const padded   = String(frameNum).padStart(3, '0');
         const cdnUrl   = `${cdnPrefix}exterior/full-res/frame-${padded}.jpg`;
         const publicId = `${baseFolder}/exterior/full-res/frame-${padded}`;
         const blob     = await downloadFrameBlob(cdnUrl);
         const url      = await uploadToCloudinary(blob, publicId);
-        cloudinaryUrls[b + bIdx] = url;
+        cloudinaryUrls[frameNum] = url;
         uploaded++;
-        if (onProgress) onProgress(uploaded, frameNums.length);
+        if (onProgress) onProgress(uploaded, TOTAL_FRAMES);
       }));
     }
+
 
     // Upload interior cube-map faces (f, b, l, r, u, d) — Impel format: pano/pano_{face}.jpg
     let interiorFacesObj = null;
@@ -752,7 +747,7 @@
 
       // ── Cloudinary Upload Path (when Impel CDN metadata available) ──
       if (currentCdnPrefix) {
-        showAiToast(isEn ? 'Uploading 360° frames to cloud... (0/36)' : 'Memuat naik 36 bingkai 360° ke awan... (0/36)', true, 'cloud_upload');
+        showAiToast(isEn ? 'Uploading 200 frames to cloud... (0/200)' : 'Memuat naik 200 bingkai ke awan... (0/200)', true, 'cloud_upload');
 
         const carLabel = draft.label || draft.type || 'Car';
         const carName  = draft.name  || 'Unknown';
