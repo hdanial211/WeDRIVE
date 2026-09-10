@@ -77,12 +77,14 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
 
 ---
 
-## 6. Pantang Larang Mandatori: Polisi Lokasi Tunggal Ambil & Pulang (Strict Single Pick-Up & Return Location Rule)
+## 6. Pantang Larang Mandatori: Polisi Lokasi Tunggal Ambil & Pulang di Melaka (Single Melaka HQ Depot Rule)
 
-- **Syarat Mutlak Lokasi Tunggal (Single HQ Operational Depot):**
-  - Sistem WeDRIVE menetapkan bahawa kenderaan **HANYA mempunyai SATU lokasi tunggal rasmi** bagi urusan pengambilan dan pemulangan kenderaan, iaitu di **Ibu Pejabat WeDRIVE (Cyberjaya)**.
-  - **DILARANG SAMA SEKALI** menyediakan pilihan lokasi pemulangan yang berbeza, cawangan berasingan, atau membenarkan pengguna memilih lokasi drop-off sewenang-wenangnya.
-  - Semua borang tempahan, wizard pendaftaran kereta baharu, dan ringkasan pengesahan WAJIB memaparkan lokasi tunggal ini secara konsisten.
+- **Syarat Mutlak Lokasi Tunggal Bertapak di Melaka (Single Melaka HQ Operational Depot):**
+  - Operasi WeDRIVE bertapak dan berfokus sepenuhnya di **Melaka sahaja** (belum berkembang ke luar negeri).
+  - Kenderaan **HANYA mempunyai SATU lokasi tunggal rasmi** bagi urusan serahan dan pemulangan kenderaan, iaitu di **Ibu Pejabat WeDRIVE (Melaka)**.
+  - **Kebenaran Pandu Luar Melaka:** Pelanggan DIBENARKAN memandu kereta keluar dari Melaka (merentas negeri / outstation), namun proses serahan ambil dan pulang WAJIB di hab Melaka.
+  - **DILARANG SAMA SEKALI** mereka-reka lokasi luar seperti Cyberjaya, KLIA, atau cawangan negeri lain.
+  - Semua borang tempahan, wizard kereta, dan ringkasan pengesahan WAJIB memaparkan hab Melaka secara konsisten.
 
 ---
 
@@ -111,7 +113,7 @@ Untuk memastikan kualiti projek WeDRIVE sentiasa premium, jadikan rujukan standa
 - **Sifar Ulangan Universal pada Rekod Individu ("Benda yang semua pakai jangan tunjuk dekat individu"):**
   - Maklumat dan polisi dasar yang terpakai secara universal kepada SELURUH sistem atau SEMUA kenderaan **DILARANG dipamerkan berulang-ulang sebagai kad atau lencana pada paparan rekod individu**.
   - Contoh:
-    - *Pusat Pengambilan & Pemulangan*: Sistem WeDRIVE beroperasi pada satu HQ tunggal (HQ Cyberjaya) untuk semua kenderaan. Ini adalah ketetapan menyeluruh sistem. DILARANG meletakkan kad/lencana berasingan "Lokasi: HQ Cyberjaya" pada setiap kad ringkasan kenderaan individu kerana ia membazirkan ruang visual dan mencemarkan estetika kemas Apple HIG.
+    - *Pusat Pengambilan & Pemulangan*: Sistem WeDRIVE beroperasi pada satu HQ tunggal (HQ Melaka) untuk semua kenderaan. Ini adalah ketetapan menyeluruh sistem. DILARANG meletakkan kad/lencana berasingan "Lokasi: HQ Melaka" pada setiap kad ringkasan kenderaan individu kerana ia membazirkan ruang visual dan mencemarkan estetika kemas Apple HIG.
     - *Status Kereta Baharu*: Kenderaan yang didaftarkan sememangnya didaftarkan untuk sedia disewa. DILARANG meletakkan kad berasingan semata-mata untuk memaparkan "Status: Sedia Disewa" pada pratonton kenderaan individu.
 - **Pemanfaatan Ruang Penuh Bento (Full-Width Zero Dead Space):**
   - Ruang Bento grid WAJIB dimanfaatkan sepenuhnya (contoh: kad spesifikasi `col-span-12` penuh) untuk memaparkan butiran unik kenderaan tersebut tanpa ruang mati (*Zero Dead Space*).

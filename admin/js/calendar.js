@@ -21,7 +21,7 @@ const CAL_FILTERS = {
 };
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', async () => {
+async function initCalendar() {
   const now = new Date();
   CAL_YEAR = now.getFullYear();
   CAL_MONTH = now.getMonth();
@@ -74,11 +74,21 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Stat modal close
-  document.getElementById('cal-stat-modal-close').addEventListener('click', closeStatModal);
-  document.getElementById('cal-stat-modal').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) closeStatModal();
-  });
-});
+  const closeBtn = document.getElementById('cal-stat-modal-close');
+  if (closeBtn) closeBtn.addEventListener('click', closeStatModal);
+  const modalEl = document.getElementById('cal-stat-modal');
+  if (modalEl) {
+    modalEl.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeStatModal();
+    });
+  }
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', initCalendar);
+} else {
+  initCalendar();
+}
 
 // ── Month/Year Dropdowns ──────────────────────────────────────────────────────
 function initDropdowns() {

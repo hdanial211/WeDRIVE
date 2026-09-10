@@ -367,19 +367,100 @@
             function setSelectSafely(selectId, val, defaultVal) {
                 const el = document.getElementById(selectId);
                 if (!el) return;
-                const target = String(val || defaultVal || '').trim().toLowerCase();
-                let matched = false;
+                const raw = String(val || defaultVal || '').trim().toLowerCase();
+                let matchedIndex = -1;
+
+                // 1. Exact match on option value
                 for (let i = 0; i < el.options.length; i++) {
-                    const optVal = el.options[i].value.toLowerCase();
-                    const optText = el.options[i].text.toLowerCase();
-                    if (optVal === target || (target && (optText.includes(target) || optVal.includes(target)))) {
-                        el.selectedIndex = i;
-                        matched = true;
+                    if (el.options[i].value.toLowerCase() === raw) {
+                        matchedIndex = i;
                         break;
                     }
                 }
-                if (!matched && defaultVal) {
-                    el.value = defaultVal;
+
+                // 2. Specialized semantic token mapping
+                if (matchedIndex === -1) {
+                    for (let i = 0; i < el.options.length; i++) {
+                        const optVal = el.options[i].value.toLowerCase();
+                        const optText = el.options[i].text.toLowerCase();
+
+                        // Transmission: Auto / Automatic / Manual
+                        if (raw.includes('auto') && (optVal.includes('auto') || optText.includes('auto'))) {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('man') && (optVal.includes('man') || optText.includes('man'))) {
+                            matchedIndex = i;
+                            break;
+                        }
+
+                        // Category: Truck / Pickup / 4x4
+                        if ((raw === 'truck' || raw.includes('pickup') || raw.includes('4x4')) && optVal === 'truck') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('suv') && optVal === 'suv') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('sedan') && optVal === 'sedan') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('hatch') && optVal === 'hatchback') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('mpv') && optVal === 'mpv') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('van') && optVal === 'van') {
+                            matchedIndex = i;
+                            break;
+                        }
+
+                        // Fuel: Petrol, Diesel, Hybrid, Electric
+                        if (raw.includes('petrol') && optVal === 'petrol') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('diesel') && optVal === 'diesel') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if (raw.includes('hybrid') && optVal === 'hybrid') {
+                            matchedIndex = i;
+                            break;
+                        }
+                        if ((raw.includes('elect') || raw.includes('ev')) && optVal === 'electric') {
+                            matchedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                // 3. Substring fallback
+                if (matchedIndex === -1) {
+                    for (let i = 0; i < el.options.length; i++) {
+                        const optVal = el.options[i].value.toLowerCase();
+                        const optText = el.options[i].text.toLowerCase();
+                        if (raw && (optVal.includes(raw) || optText.includes(raw))) {
+                            matchedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                if (matchedIndex >= 0) {
+                    el.selectedIndex = matchedIndex;
+                } else if (defaultVal) {
+                    for (let i = 0; i < el.options.length; i++) {
+                        if (el.options[i].value.toLowerCase() === String(defaultVal).toLowerCase()) {
+                            el.selectedIndex = i;
+                            break;
+                        }
+                    }
                 }
             }
 

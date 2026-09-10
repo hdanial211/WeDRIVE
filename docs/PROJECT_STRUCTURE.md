@@ -61,12 +61,13 @@ AI CAR RENTAL SYSTEM/
 |   +-- plugins/                # Plugin Ekosistem Antigravity:
 |       +-- wedrive/            # Plugin Rasmi WeDRIVE
 |           +-- plugin.json     # Konfigurasi Pendaftaran Plugin
-|           +-- agents/         # Skuad 5 Subagent Khas WeDRIVE:
+|           +-- agents/         # Skuad 6 Subagent Khas WeDRIVE:
 |               +-- wedrive_ui_auditor.md     # Pakar Apple HIG, 3-Peranti & Zero Oval Rule
 |               +-- playwright_sentinel.md    # Pakar Ujian E2E Automatik 100% Pass Rate
 |               +-- strix_security_guardian.md # Pakar Penembusan Etika, OWASP & Audit PII
 |               +-- supabase_dba_agent.md     # Pakar Skema PostgreSQL, RLS & Sifar Data Palsu
 |               +-- bm_language_police.md     # Pakar BM Moden 2026 & Penapis Kata Terlarang
+|               +-- tester.md                 # Penguji Kualiti UI Black-Box Bebas (Pure UI & Realistic CRUD)
 |
 +-- vercel.json                # Vercel deployment config
 |

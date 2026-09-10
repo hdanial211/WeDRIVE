@@ -863,12 +863,21 @@ async function confirmQuickStatusChange() {
   const newStatus = select.value;
   activeCar.status = newStatus;
 
-  // Persist to Supabase if available
-  if (window.supabase) {
-    try {
-      await window.supabase.from('cars').update({ status: newStatus }).eq('id', activeCar.id);
-    } catch (e) {
-      console.warn('Supabase status update fallback:', e);
+  // Persist to Supabase via WeDriveAPI or supabaseClient
+  try {
+    var targetId = (!isNaN(activeCar.id) && typeof activeCar.id !== 'boolean') ? Number(activeCar.id) : activeCar.id;
+    if (window.WeDriveAPI && typeof window.WeDriveAPI.updateCarStatus === 'function') {
+      await window.WeDriveAPI.updateCarStatus(targetId, newStatus);
+    } else if (window.supabaseClient) {
+      await window.supabaseClient.from('cars').update({ status: newStatus }).eq('id', targetId);
+    }
+    if (typeof showToast === 'function') {
+      showToast('Status kenderaan berjaya dikemas kini kepada ' + newStatus, 'success');
+    }
+  } catch (e) {
+    console.warn('Supabase status update fallback error:', e);
+    if (typeof showToast === 'function') {
+      showToast('Gagal mengemas kini status: ' + e.message, 'error');
     }
   }
 

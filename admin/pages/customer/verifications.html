@@ -333,13 +333,20 @@
       if (!c) return;
 
       try {
+        var targetId = (!isNaN(id) && typeof id !== 'boolean') ? Number(id) : id;
+        var saved = false;
         if (window.WeDriveAPI && window.WeDriveAPI.verifyCustomer) {
-          await window.WeDriveAPI.verifyCustomer(id, 'Verified');
-        } else if (window.supabaseClient) {
-          var res = await window.supabaseClient.from('customers').update({ verification_status: 'Verified', rejection_reason: null }).eq('id', id);
+          var res = await window.WeDriveAPI.verifyCustomer(targetId, 'Verified');
+          if (res && res.success) saved = true;
+          else if (res && res.error) throw new Error(res.error);
+        }
+        if (!saved && window.supabaseClient) {
+          var res = await window.supabaseClient.from('customers').update({ verification_status: 'Verified', rejection_reason: null }).eq('id', targetId);
           if (res.error) throw res.error;
+          saved = true;
         }
         c.status = 'Verified';
+        c.verification_status = 'Verified';
         updateStats();
         renderTable();
         if (window.showToast) window.showToast('Dokumen ' + c.name + ' berjaya disahkan!', 'success');
@@ -362,13 +369,20 @@
 
       var reason = prompt('Sila nyatakan sebab penolakan dokumen:') || 'Dokumen tidak memenuhi piawaian';
       try {
+        var targetId = (!isNaN(activeCustId) && typeof activeCustId !== 'boolean') ? Number(activeCustId) : activeCustId;
+        var saved = false;
         if (window.WeDriveAPI && window.WeDriveAPI.verifyCustomer) {
-          await window.WeDriveAPI.verifyCustomer(activeCustId, 'Rejected', reason);
-        } else if (window.supabaseClient) {
-          var res = await window.supabaseClient.from('customers').update({ verification_status: 'Rejected', rejection_reason: reason }).eq('id', activeCustId);
+          var res = await window.WeDriveAPI.verifyCustomer(targetId, 'Rejected', reason);
+          if (res && res.success) saved = true;
+          else if (res && res.error) throw new Error(res.error);
+        }
+        if (!saved && window.supabaseClient) {
+          var res = await window.supabaseClient.from('customers').update({ verification_status: 'Rejected', rejection_reason: reason }).eq('id', targetId);
           if (res.error) throw res.error;
+          saved = true;
         }
         c.status = 'Rejected';
+        c.verification_status = 'Rejected';
         updateStats();
         renderTable();
         if (window.showToast) window.showToast('Dokumen ' + c.name + ' telah ditolak.', 'error');
@@ -390,12 +404,14 @@
       for (var i = 0; i < pendingList.length; i++) {
         var c = pendingList[i];
         try {
+          var targetId = (!isNaN(c.id) && typeof c.id !== 'boolean') ? Number(c.id) : c.id;
           if (window.WeDriveAPI && window.WeDriveAPI.verifyCustomer) {
-            await window.WeDriveAPI.verifyCustomer(c.id, 'Verified');
+            await window.WeDriveAPI.verifyCustomer(targetId, 'Verified');
           } else if (window.supabaseClient) {
-            await window.supabaseClient.from('customers').update({ verification_status: 'Verified', rejection_reason: null }).eq('id', c.id);
+            await window.supabaseClient.from('customers').update({ verification_status: 'Verified', rejection_reason: null }).eq('id', targetId);
           }
           c.status = 'Verified';
+          c.verification_status = 'Verified';
           count++;
         } catch (e) {
           console.error('Error approving customer:', c.id, e);

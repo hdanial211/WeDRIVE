@@ -6935,4 +6935,30 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.19.3 Fix 7 admin portal audit issues across API, navbar, forms, assets, and language`
   - Tag Versi: `6.19.3`
 
+---
+
+### [MINOR UPDATE] Versi 6.19.4 — Penyelarasan Hab Operasi Melaka Sahaja & Pembaikan 7 Isu Hasil Audit Tester
+- **Tarikh**: 10 September 2026
+- **Objektif**:
+  1. **Penyelarasan Hab Melaka Sahaja**: Mengemas kini polisi operasi bahawa WeDRIVE bertapak dan beroperasi di Melaka sahaja (Ibu Pejabat WeDRIVE, Melaka sebagai pusat serahan dan pemulangan kenderaan), namun pelanggan dibenarkan memandu keluar dari Melaka untuk perjalanan luar negeri/outstation.
+  2. **Penambahan Subagent Tester**: Membina peranan ejen universal `tester` di `.agents/plugins/wedrive/agents/tester.md` bagi pengujian black-box berasaskan UI semata-mata dengan data realistik Malaysia.
+  3. **Pembaikan 7 Isu Audit Pentadbir**:
+     - Memperbaiki inisialisasi kalendar operasi `calendar.js` melalui semakan `document.readyState`.
+     - Memperbaiki ketetapan KYC `verifications.html` & `api.js` dengan penukaran ID nombor selamat dan pengesahan respons API.
+     - Memperbaiki rujukan instans Supabase `confirmQuickStatusChange()` di `car-detail.js`.
+     - Menambah `{ onConflict: 'key' }` pada operasi upsert jadual `marketing` & `config` di `api.js`.
+     - Memperbaiki laluan pautan butang resit di `active-bookings.html` ke `customer/pages/my-bookings/receipt/receipt.html`.
+     - Menambah pengesanan sandaran automatik berasaskan laluan URL di `navbar-loader.js`.
+     - Menambah pemetaan berbilang peringkat (*token matching*) bagi dropdown `Category` & `Transmission` di `step1_spesifikasi.html` & `edit-car.js`.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Ujian Automasi Playwright CLI**: 67/67 Ujian Lulus (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 24 fail `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.19.4 Align Melaka operational depot policy and fix 7 admin portal audit bugs`
+  - Tag Versi: `6.19.4`
+
+
 

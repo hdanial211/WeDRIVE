@@ -90,7 +90,17 @@
   // ─── RENDER ─────────────────────────────────────────────────────────────────
 
   function renderNavbar(placeholder) {
-    var module = (placeholder.dataset.module || 'guest').toLowerCase();
+    var module = (placeholder.getAttribute('data-module') || placeholder.dataset.module || '').toLowerCase();
+    if (!module) {
+      var currentPathLower = (window.location.pathname || '').toLowerCase();
+      if (currentPathLower.includes('/admin/')) {
+        module = 'admin';
+      } else if (currentPathLower.includes('/customer/')) {
+        module = 'customer';
+      } else {
+        module = 'guest';
+      }
+    }
     var base   = resolveBase();
     var config = NAV_CONFIG[module] || NAV_CONFIG.guest;
 

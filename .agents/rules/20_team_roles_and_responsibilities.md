@@ -78,11 +78,18 @@ Menjembatani jurang antara pembangunan aplikasi dan operasi sistem/pelayan secar
 ### 🛡️ Domain 5: Jaminan Kualiti & Keselamatan (QA & Security)
 Memastikan aplikasi web bebas daripada sebarang pepijat (bugs) dan selamat daripada sebarang percubaan serangan siber.
 
-1. **QA Engineer / Tester:**
+1. **QA Tester (Universal Black-Box QA Tester):**
+   - Ejen penguji kotak hitam autonomi universal tanpa sentuhan kod (*Pure UI Black-Box Testing*).
+   - Menjalankan ujian manual interaktif 100% menerusi pelayar web (Chrome/Safari) pada URL langsung `https://wedrive.website` (sandaran: `http://localhost:8088/`).
+   - Dilarang sama sekali menyemak atau mengubah kod sumber; hanya berinteraksi melalui elemen UI sebenar.
+   - Menekan dan menguji setiap butang satu demi satu secara teliti (*press every button step-by-step*).
+   - Menguatkuasakan prinsip data realistik Malaysia (nama, nombor plat, model sebenar) dan mengesahkan konsistensi CRUD merentas semua halaman berkaitan.
+   - Mengesahkan 100% fungsi butang, menghapuskan tindakan bertindan (*zero duplicate UI*), dan mengecualikan halaman pelawat (*guest*) yang telah sempurna.
+2. **QA Engineer / Tester (Automated Testing):**
    - Menjalankan ujian manual dan membina skrip automasi pengujian E2E (Playwright CLI) di bawah direktori `tests/`.
    - Mengesahkan kadar kelulusan **100% Pass Rate** merentas aliran log masuk, penukaran tema, dwibahasa, dan tempahan kenderaan.
    - Menjalankan protokol pengesahan satu-tab pelayar pada peranti Apple (MacBook, iPad, iPhone).
-2. **Application Security (AppSec) Engineer:**
+3. **Application Security (AppSec) Engineer:**
    - Menjalankan simulasi penembusan etika (*Ethical AI Penetration Testing*) menggunakan Strix Security Audit.
    - Memeriksa kelemahan OWASP Top 10, sanitasi input XSS & SQLi, pengesahan keselamatan sesi JWT, dan perlindungan data peribadi (PII).
    - Menyediakan bukti empirikal keselamatan siber untuk Bab 4 dan 5 Tesis Laporan FYP 2.

@@ -74,9 +74,9 @@
   function normalizeCategory(cat) {
     if (!cat) return 'Sedan';
     const c = String(cat).trim().toLowerCase();
-    if (c === 'truck' || c.includes('pickup')) return 'Truck';
+    if (c === 'truck' || c.includes('pickup') || c.includes('4x4')) return 'Truck';
     if (c === 'suv') return 'SUV';
-    if (c === 'hatchback') return 'Hatchback';
+    if (c === 'hatchback' || c.includes('compact')) return 'Hatchback';
     if (c === 'mpv') return 'MPV';
     if (c === 'coupe') return 'Coupe';
     if (c === 'van') return 'Van';

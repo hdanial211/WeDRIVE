@@ -624,7 +624,7 @@ window.WeDriveAPI = {
             try {
                 localStorage.setItem('wedrive_chatbot_settings', JSON.stringify(newSettings));
                 var sb = window.supabaseClient;
-                await sb.from('config').upsert({ key: 'chatbot', value: newSettings });
+                await sb.from('config').upsert({ key: 'chatbot', value: newSettings }, { onConflict: 'key' });
                 return { success: true };
             } catch (err) {
                 console.error('[WeDriveAPI] updateChatbotSettings error:', err);
@@ -702,7 +702,7 @@ window.WeDriveAPI = {
         if (window.AppConfig.USE_REAL_DB) {
             try {
                 var sb = window.supabaseClient;
-                await sb.from('marketing').upsert({ key: 'main', value: marketingObj });
+                await sb.from('marketing').upsert({ key: 'main', value: marketingObj }, { onConflict: 'key' });
             } catch (err) {
                 console.error('[WeDriveAPI] saveMarketing error:', err);
             }
@@ -761,12 +761,13 @@ window.WeDriveAPI = {
         } else {
             try {
                 var sb = window.supabaseClient;
-                var result = await sb.from('cars').update({ status: newStatus }).eq('id', carId);
+                var targetCarId = (!isNaN(carId) && typeof carId !== 'boolean') ? Number(carId) : carId;
+                var result = await sb.from('cars').update({ status: newStatus }).eq('id', targetCarId);
                 if (result.error) throw result.error;
                 return { success: true };
             } catch (err) {
                 console.error('[WeDriveAPI] updateCarStatus error:', err);
-                return { success: false };
+                return { success: false, error: err.message };
             }
         }
     },
@@ -1235,7 +1236,8 @@ window.WeDriveAPI = {
             } else {
                 updateData.rejection_reason = null;
             }
-            var result = await sb.from('customers').update(updateData).eq('id', customerId);
+            var targetId = (!isNaN(customerId) && typeof customerId !== 'boolean') ? Number(customerId) : customerId;
+            var result = await sb.from('customers').update(updateData).eq('id', targetId);
             if (result.error) throw result.error;
             return { success: true };
         } catch (err) {
