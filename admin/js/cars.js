@@ -7,6 +7,81 @@
 let allCar = [];
 let currentFilter = 'all';
 let currentSearch = '';
+let localVehicleRegistry = {};
+
+function normalizeVehicleName(value) {
+  return String(value || '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function loadLocalVehicleRegistry() {
+  return fetch('../../../shared/model/registry.json', { credentials: 'same-origin' })
+    .then(function (response) {
+      if (!response.ok) throw new Error('Vehicle model registry unavailable');
+      return response.json();
+    })
+    .then(function (registry) {
+      localVehicleRegistry = registry || {};
+      return localVehicleRegistry;
+    })
+    .catch(function () {
+      localVehicleRegistry = {};
+      return localVehicleRegistry;
+    });
+}
+
+function findLocalVehicleEntry(car) {
+  const carName = normalizeVehicleName(car && car.name);
+  if (!carName) return null;
+
+  const entries = Object.keys(localVehicleRegistry).map(function (key) {
+    const entry = localVehicleRegistry[key] || {};
+    const sourceJson = String(entry.sourceJson || '');
+    const folderName = sourceJson
+      .replace(/\\/g, '/')
+      .replace(/\/source\.json$/i, '')
+      .split('/')
+      .pop() || '';
+    return {
+      key: key,
+      entry: entry,
+      folderName: normalizeVehicleName(folderName),
+      label: normalizeVehicleName(entry.label)
+    };
+  });
+
+  let best = null;
+  let bestScore = 0;
+  entries.forEach(function (candidate) {
+    let score = 0;
+    if (candidate.folderName && carName === candidate.folderName) score = 100;
+    else if (candidate.folderName && (carName.includes(candidate.folderName) || candidate.folderName.includes(carName))) score = 80;
+    else if (candidate.label && (carName.includes(candidate.label) || candidate.label.includes(carName))) score = 50;
+    if (score > bestScore) {
+      best = candidate;
+      bestScore = score;
+    }
+  });
+  return best;
+}
+
+function resolveLocalVehicleImage(car) {
+  const match = findLocalVehicleEntry(car);
+  if (!match || !match.entry.sourceJson) return '';
+  const sourcePath = String(match.entry.sourceJson).replace(/\\/g, '/');
+  const modelPath = sourcePath.replace(/\/source\.json$/i, '');
+  return '../../../shared/model/' + modelPath + '/exterior/full-res/frame-000.jpg';
+}
+
+function resolveCarImage(car) {
+  const rawImg = (car && Array.isArray(car.images) && car.images.length > 0) ? car.images[0] : null;
+  const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
+  return resolveInventoryImage(img0) || resolveLocalVehicleImage(car);
+}
 
 let currentViewMode = localStorage.getItem('wedrive_car_view_mode') || 'grid';
 
@@ -24,24 +99,26 @@ window.WeDriveAPI.getAdminData()
   .then(data => {
     // Only display and count active vehicles (Available or Rented)
     allCar = (data.car || []).filter(c => c.status === 'Available' || c.status === 'Rented');
-    populateCarStats(allCar);
-    renderCarCards(allCar);
-    renderCarTable(allCar);
-    setCarViewMode(currentViewMode);
+    return loadLocalVehicleRegistry().then(function () {
+      populateCarStats(allCar);
+      renderCarCards(allCar);
+      renderCarTable(allCar);
+      setCarViewMode(currentViewMode);
 
-    var filterParam = new URLSearchParams(window.location.search).get('filter');
-    if (filterParam) {
-      var chips = document.querySelectorAll('.filter-chip');
-      chips.forEach(function(c) {
-        if (c.textContent.trim().toLowerCase() === filterParam.toLowerCase()) {
-          filterCar(filterParam, c);
-        }
-      });
-    }
+      var filterParam = new URLSearchParams(window.location.search).get('filter');
+      if (filterParam) {
+        var chips = document.querySelectorAll('.filter-chip');
+        chips.forEach(function(c) {
+          if (c.textContent.trim().toLowerCase() === filterParam.toLowerCase()) {
+            filterCar(filterParam, c);
+          }
+        });
+      }
 
-    if (new URLSearchParams(window.location.search).get('action') === 'add') {
-      addNewCar();
-    }
+      if (new URLSearchParams(window.location.search).get('action') === 'add') {
+        addNewCar();
+      }
+    });
   })
   .catch(err => console.error('Car data load error:', err));
 
@@ -137,9 +214,7 @@ function renderCarCards(car) {
       ? { text: '#10B981', dot: '#10B981', label: 'Tersedia' }
       : { text: '#0071E3', dot: '#0071E3', label: 'Sedang Disewa' };
 
-    const rawImg = (c.images && c.images.length > 0) ? c.images[0] : null;
-    const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
-    const src = resolveInventoryImage(img0);
+    const src = resolveCarImage(c);
     const imageMarkup = src
       ? `<img src="${src}" alt="${c.name}" class="apple-car-studio-img" onerror="this.remove()" />`
       : '<div class="flex h-full w-full items-center justify-center text-xs text-on-surface-variant">Tiada gambar</div>';
@@ -151,7 +226,12 @@ function renderCarCards(car) {
     const carType = (typeUpper === 'SUV' || typeUpper === 'MPV') 
       ? typeUpper 
       : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
-    const has360 = Boolean(Array.isArray(c.exterior_frames) && c.exterior_frames.length > 0);
+    const has360 = Boolean(
+      c.has_360 ||
+      c.exterior_360 ||
+      (Array.isArray(c.exterior_frames) && c.exterior_frames.length > 0) ||
+      findLocalVehicleEntry(c)
+    );
 
     const isMalay = (window.WeDriveLang && window.WeDriveLang.current ? window.WeDriveLang.current() : (localStorage.getItem('wedrive-lang') || localStorage.getItem('wedrive_lang') || 'ms')) === 'ms';
     const seatsLabel = isMalay ? 'Tempat Duduk' : 'Seats';
@@ -227,9 +307,7 @@ function renderCarTable(car) {
       ? { bg: 'rgba(16, 185, 129, 0.12)', text: '#10B981', dot: '#10B981', label: 'Tersedia' }
       : { bg: 'rgba(0, 113, 227, 0.12)', text: '#0071E3', dot: '#0071E3', label: 'Sedang Disewa' };
     
-    const rawImg = (car.images && car.images.length > 0) ? car.images[0] : null;
-    const img0 = typeof rawImg === 'string' ? rawImg : (rawImg && rawImg.img ? rawImg.img : null);
-    const src = resolveInventoryImage(img0);
+    const src = resolveCarImage(car);
     const imageMarkup = src
       ? `<img src="${src}" alt="${car.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.remove()" />`
       : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);font-size:11px;">Tiada gambar</div>';
