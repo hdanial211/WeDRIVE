@@ -297,24 +297,30 @@ window.escapeHtml = function (str) {
       if (data[key] !== undefined) el.innerText = data[key];
     });
 
-    // Set placeholder for [data-key-ph]
-    document.querySelectorAll('[data-key-ph]').forEach(function (el) {
-      var key = el.getAttribute('data-key-ph');
+    // Set placeholder for [data-key-ph] and [data-i18n-ph]
+    document.querySelectorAll('[data-key-ph], [data-i18n-ph]').forEach(function (el) {
+      var key = el.getAttribute('data-key-ph') || el.getAttribute('data-i18n-ph');
       if (data[key] !== undefined) el.setAttribute('placeholder', data[key]);
     });
 
-    // Set title and aria-label for [data-key-title]
-    document.querySelectorAll('[data-key-title]').forEach(function (el) {
-      var key = el.getAttribute('data-key-title');
+    // Set title and aria-label for [data-key-title] and [data-i18n-title]
+    document.querySelectorAll('[data-key-title], [data-i18n-title]').forEach(function (el) {
+      var key = el.getAttribute('data-key-title') || el.getAttribute('data-i18n-title');
       if (data[key] !== undefined) {
         el.setAttribute('title', data[key]);
         el.setAttribute('aria-label', data[key]);
       }
     });
 
-    // Set innerHTML for [data-key-html]
-    document.querySelectorAll('[data-key-html]').forEach(function (el) {
-      var key = el.getAttribute('data-key-html');
+    // Set innerText for option elements [data-key-opt] and [data-i18n-opt]
+    document.querySelectorAll('option[data-key-opt], option[data-i18n-opt]').forEach(function (el) {
+      var key = el.getAttribute('data-key-opt') || el.getAttribute('data-i18n-opt');
+      if (data[key] !== undefined) el.innerText = data[key];
+    });
+
+    // Set innerHTML for [data-key-html] and [data-i18n-html]
+    document.querySelectorAll('[data-key-html], [data-i18n-html]').forEach(function (el) {
+      var key = el.getAttribute('data-key-html') || el.getAttribute('data-i18n-html');
       if (data[key] !== undefined) el.innerHTML = data[key];
     });
 
