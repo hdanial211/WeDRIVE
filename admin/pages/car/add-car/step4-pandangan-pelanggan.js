@@ -207,8 +207,62 @@
     }
   }
 
+  function showStep4Toast(msg, type = 'error') {
+    const existing = document.getElementById('step4-pill-toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'step4-pill-toast';
+    toast.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-50 pill-btn px-5 py-2.5 glass-panel border shadow-2xl flex items-center gap-3 transition-all duration-300';
+    const color = (type === 'error') ? '#FF3B30' : '#34C759';
+    const icon = (type === 'error') ? 'warning' : 'check_circle';
+    toast.innerHTML = `
+      <span class="circle-1-1 w-6 h-6 text-white text-[14px]" style="background-color: ${color};">
+        <span class="material-symbols-outlined text-[16px]">${icon}</span>
+      </span>
+      <span class="font-headline text-[13px] font-bold text-on-surface">${msg}</span>
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translate(-50%, -10px)';
+      setTimeout(() => toast.remove(), 300);
+    }, 2800);
+  }
+
+  function validateStep4Forward(e) {
+    const isEn = getLang() === 'en';
+    const raw = localStorage.getItem('wedrive_new_car_draft');
+    const draft = raw ? JSON.parse(raw) : {};
+    const hasPlate = Boolean(draft.plate && draft.plate.trim().length >= 3);
+    const hasVisual = Boolean(
+      (draft.images && draft.images.length > 0) ||
+      (draft.gallery8Photos && draft.gallery8Photos.length > 0) ||
+      (draft.photos && draft.photos.length > 0) ||
+      (draft.image_url) ||
+      draft.has360 || draft.cdnUrlExterior || draft.cdnUrl
+    );
+
+    if (!hasPlate) {
+      if (e) e.preventDefault();
+      showStep4Toast(isEn ? 'Plate number is missing. Please return to Step 1.' : 'Nombor plat tidak lengkap. Sila kembali ke Langkah 1.');
+      return false;
+    }
+    if (!hasVisual) {
+      if (e) e.preventDefault();
+      showStep4Toast(isEn ? 'Vehicle image is missing. Please return to Step 2.' : 'Gambar kenderaan tiada. Sila kembali ke Langkah 2.');
+      return false;
+    }
+    return true;
+  }
+
   function init() {
     hydrateCustomerCard();
+
+    // Guard forward navigation to Step 5
+    document.querySelector('a[href="step5_tempahan.html"]')?.addEventListener('click', validateStep4Forward);
+    document.querySelectorAll('.wizard-stepper a[href*="step5"]').forEach(link => {
+      link.addEventListener('click', validateStep4Forward);
+    });
 
     window.addEventListener('wedrive:language-applied', () => {
       hydrateCustomerCard();
@@ -216,7 +270,8 @@
   }
 
   window.WeDriveStep4 = {
-    hydrateCustomerCard: hydrateCustomerCard
+    hydrateCustomerCard: hydrateCustomerCard,
+    validateStep4Forward: validateStep4Forward
   };
 
   if (document.readyState === 'loading') {

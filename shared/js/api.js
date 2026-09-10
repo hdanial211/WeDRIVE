@@ -126,9 +126,12 @@ window.WeDriveAPI = {
                 });
                 try {
                     var localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
-                    if (Array.isArray(localCars) && localCars.length > 0) {
                         localCars.forEach(function(lc) {
+                            if (!lc) return;
                             if (lc.status && lc.status.toLowerCase() === 'draft') return;
+                            if (!lc.plate || String(lc.plate).trim().length < 3) return;
+                            var hasImg = (Array.isArray(lc.images) && lc.images.some(Boolean)) || Boolean(lc.image_url) || Boolean(lc.has_360);
+                            if (!hasImg) return;
                             var exists = fetchedCars.some(function(c) {
                                 return (lc.id && c.id === lc.id) || (lc.plate && c.plate && lc.plate.toUpperCase() === c.plate.toUpperCase());
                             });
@@ -136,7 +139,6 @@ window.WeDriveAPI = {
                                 fetchedCars.unshift(lc);
                             }
                         });
-                    }
                 } catch (e) {
                     console.warn('[WeDriveAPI] Local cars merge warning:', e);
                 }
@@ -184,19 +186,27 @@ window.WeDriveAPI = {
             try {
                 var sb = window.supabaseClient;
 
-                // Core tables (always exist)
+                // Core tables (always exist) - Exclude Drafts from active cars
                 var coreResults = await Promise.all([
-                    sb.from('cars').select('*'),
+                    sb.from('cars').select('*').neq('status', 'Draft'),
                     sb.from('bookings').select('*'),
                     sb.from('customers').select('*'),
                     sb.from('admins').select('*')
                 ]);
 
-                var cars = coreResults[0].data || [];
+                var rawCars = coreResults[0].data || [];
+                var cars = rawCars.filter(function(c) {
+                    return !c.status || c.status.toLowerCase() !== 'draft';
+                });
                 try {
                     var localCars = JSON.parse(localStorage.getItem('wedrive_cars') || '[]');
                     if (Array.isArray(localCars) && localCars.length > 0) {
                         localCars.forEach(function(lc) {
+                            if (!lc) return;
+                            if (lc.status && lc.status.toLowerCase() === 'draft') return;
+                            if (!lc.plate || String(lc.plate).trim().length < 3) return;
+                            var hasImg = (Array.isArray(lc.images) && lc.images.some(Boolean)) || Boolean(lc.image_url) || Boolean(lc.has_360);
+                            if (!hasImg) return;
                             var exists = cars.some(function(c) {
                                 return (lc.id && c.id === lc.id) || (lc.plate && c.plate && lc.plate.toUpperCase() === c.plate.toUpperCase());
                             });

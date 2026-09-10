@@ -313,7 +313,17 @@
       return;
     }
 
-    // Syarat Mandatori: Kenderaan WAJIB ada sekurang-kurangnya 1 foto atau pautan 360°
+    // Syarat Mandatori 1: Nombor plat pendaftaran WAJIB sah (minima 3 aksara)
+    const hasPlate = Boolean(draft.plate && draft.plate.trim().length >= 3);
+    if (!hasPlate) {
+      const errMsg = isEn
+        ? 'Registration rejected: Vehicle must have a valid registration plate number. Please return to Step 1.'
+        : 'Pendaftaran ditolak: Nombor plat pendaftaran kenderaan tidak lengkap. Sila kembali ke Langkah 1.';
+      showStep3Toast(errMsg, 'error');
+      return;
+    }
+
+    // Syarat Mandatori 2: Kenderaan WAJIB ada sekurang-kurangnya 1 foto atau pautan 360°
     const hasPhotos = (currentStep3Photos && currentStep3Photos.length > 0 && currentStep3Photos.some(p => p && p.img)) ||
                       (draft.photos && Array.isArray(draft.photos) && draft.photos.some(p => p && (p.img || typeof p === 'string'))) ||
                       (draft.gallery8Photos && Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) ||
@@ -425,6 +435,35 @@
 
     document.getElementById('btnSubmitCarRegistration')?.addEventListener('click', confirmPublish);
     document.getElementById('btnCloseSuccessModal')?.addEventListener('click', closeModal);
+
+    // Forward Navigation Gatekeeper (Lihat Sebagai Pelanggan & Stepper 4/5)
+    function validateStep3Forward(e) {
+      const isEn = (localStorage.getItem('wedrive_lang') || 'ms') === 'en';
+      const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+      const hasPlate = Boolean(draft.plate && draft.plate.trim().length >= 3);
+      const hasPhotos = (currentStep3Photos && currentStep3Photos.length > 0 && currentStep3Photos.some(p => p && p.img)) ||
+                        (draft.photos && Array.isArray(draft.photos) && draft.photos.some(p => p && (p.img || typeof p === 'string'))) ||
+                        (draft.gallery8Photos && Array.isArray(draft.gallery8Photos) && draft.gallery8Photos.length > 0) ||
+                        Boolean(draft.image_url);
+      const has360 = Boolean(draft.cdnUrl || draft.cdnUrlExterior || draft.spincarUrl || draft.has360);
+
+      if (!hasPlate) {
+        if (e) e.preventDefault();
+        showStep3Toast(isEn ? 'Please provide a valid plate number in Step 1 first.' : 'Sila lengkapkan nombor plat di Langkah 1 terlebih dahulu.', 'error');
+        return false;
+      }
+      if (!hasPhotos && !has360) {
+        if (e) e.preventDefault();
+        showStep3Toast(isEn ? 'Please upload at least 1 photo in Step 2 first.' : 'Sila muat naik sekurang-kurangnya 1 gambar di Langkah 2 terlebih dahulu.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    document.getElementById('btnViewAsCustomer')?.addEventListener('click', validateStep3Forward);
+    document.querySelectorAll('.wizard-stepper a[href*="step4"], .wizard-stepper a[href*="step5"]').forEach(link => {
+      link.addEventListener('click', validateStep3Forward);
+    });
 
     loadCarDraft();
 

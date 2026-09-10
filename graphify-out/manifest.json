@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
-    "mtime": 1788999567.473623,
-    "seen": 1788999994.226967,
-    "ast_hash": "b78fc72b146324cece70c258316ca8b2",
+    "mtime": 1789001575.415018,
+    "seen": 1789002703.110112,
+    "ast_hash": "be519b9817e1e4cf5bc7d74f54cdb1f9",
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
@@ -132,9 +132,9 @@
     "semantic_hash": "572d66e85091711b6ee76609573a8364"
   },
   "shared/js/api.js": {
-    "mtime": 1788972866.855766,
-    "seen": 1788973610.923819,
-    "ast_hash": "08a4ad75adaf259e9f23926b49adb5fd",
+    "mtime": 1789001565.4935882,
+    "seen": 1789002703.110136,
+    "ast_hash": "3a9c80dd86bf9e102851ad18515a2dd5",
     "semantic_hash": ""
   },
   "shared/js/auth-guard.js": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1789000978.3938339,
-    "seen": 1789001051.16265,
-    "ast_hash": "c5f5b55ea64cb025a30e232136c78605",
+    "mtime": 1789002332.868942,
+    "seen": 1789002703.110235,
+    "ast_hash": "5089ba87f3b9671f3a74c14d1a567cce",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -11466,15 +11466,15 @@
     "semantic_hash": ""
   },
   "admin/js/add-car.js": {
-    "mtime": 1788946274.103114,
-    "seen": 1788967070.8586931,
-    "ast_hash": "77617c0a1708c947eb9298b0e17e3c56",
+    "mtime": 1789002280.3447237,
+    "seen": 1789002703.110101,
+    "ast_hash": "9489b73c06cf911a99caa2eead4e7878",
     "semantic_hash": ""
   },
   "tests/e2e/17_add_car_stepper_and_carlist.spec.js": {
-    "mtime": 1788926534.695855,
-    "seen": 1788930160.357758,
-    "ast_hash": "8d34ca37230a5d44564360967dbd9f5a",
+    "mtime": 1789002018.806144,
+    "seen": 1789002703.1101792,
+    "ast_hash": "87aaf58ac2cba00ad2c682d5c3b03ca7",
     "semantic_hash": ""
   },
   "tests/e2e/18_full_system_bilingual_parity.spec.js": {
@@ -11820,9 +11820,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/18_modular_add_car_flow.spec.js": {
-    "mtime": 1788908507.8851168,
-    "seen": 1788909335.13787,
-    "ast_hash": "9e375cdf00ee60e53fe1197bab021d41",
+    "mtime": 1789002570.8527536,
+    "seen": 1789002703.1101818,
+    "ast_hash": "6a574fc97c3a16497e96f1bca8bf48e4",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/add-car-flow.js": {
@@ -11832,9 +11832,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/preview-i18n.js": {
-    "mtime": 1788972446.5569954,
-    "seen": 1788973610.923806,
-    "ast_hash": "bef882330a9a7fd31ae443503017bc9f",
+    "mtime": 1789002295.0587478,
+    "seen": 1789002703.110121,
+    "ast_hash": "75d78a3193be084ef573015eba84521a",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/index.html": {
@@ -11844,51 +11844,51 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step1_spesifikasi.html": {
-    "mtime": 1789000714.6524043,
-    "seen": 1789001051.162699,
-    "ast_hash": "33303c473fb5b105af0cdc6d4dfdf0d2",
+    "mtime": 1789002252.1860743,
+    "seen": 1789002703.110293,
+    "ast_hash": "1ce005a378cf86c497e8acb35c67823e",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step2_studio360.html": {
-    "mtime": 1789000850.314785,
-    "seen": 1789001051.1627,
-    "ast_hash": "9171eea7ca9dd4f7b68e0c3a8e4e7406",
+    "mtime": 1789002077.682747,
+    "seen": 1789002703.110294,
+    "ast_hash": "dbaf7d3ae693ab2b384145a47e0e243a",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step3_pengesahan.html": {
-    "mtime": 1789000853.47651,
-    "seen": 1789001051.1627011,
-    "ast_hash": "d74afb52b521e0e8e7136b6ecf0164cd",
+    "mtime": 1789002040.5448387,
+    "seen": 1789002703.110295,
+    "ast_hash": "f7a10bf39d60b228859773419a1490f2",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step4_pandangan_pelanggan.html": {
-    "mtime": 1789000856.4061828,
-    "seen": 1789001051.1627011,
-    "ast_hash": "f4e07fd6a6e8b4db1081fa5d513c5430",
+    "mtime": 1789002259.8783536,
+    "seen": 1789002703.110296,
+    "ast_hash": "89a47f081de3df52810e1b8c05b42830",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step5_tempahan.html": {
-    "mtime": 1789000847.6245072,
-    "seen": 1789001051.162702,
-    "ast_hash": "b1a04305a59269af3e5e0e28c84d9f95",
+    "mtime": 1789002115.3701394,
+    "seen": 1789002703.1102982,
+    "ast_hash": "64d98366f3014accecbc8d1dc13fa7f4",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step2-studio360.js": {
-    "mtime": 1788972269.1775992,
-    "seen": 1788973610.923807,
-    "ast_hash": "3cc2951303b7a508af0f533f83becde7",
+    "mtime": 1789002418.374419,
+    "seen": 1789002703.110123,
+    "ast_hash": "9da013321b73e8701a8c0d3aae78d662",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step3-pengesahan.js": {
-    "mtime": 1788972297.4737523,
-    "seen": 1788973610.923808,
-    "ast_hash": "85e889ec01ed2e10f7d3f2ead53bfcca",
+    "mtime": 1789001651.9792395,
+    "seen": 1789002703.110125,
+    "ast_hash": "135ac745917bea78747a563260b0a670",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step4-pandangan-pelanggan.js": {
-    "mtime": 1788972396.3502955,
-    "seen": 1788973610.923809,
-    "ast_hash": "20d0a196b7fabdf35689206f95bafe28",
+    "mtime": 1789001673.3388336,
+    "seen": 1789002703.110126,
+    "ast_hash": "301258c8d5371551afe1f7d998f4a160",
     "semantic_hash": ""
   },
   ".agents/rules/23_stitch_to_production_workflow.md": {

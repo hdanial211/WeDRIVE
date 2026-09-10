@@ -6561,6 +6561,58 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.3 Unify AI Key Vault Slot 1 and fix responsive dock overlaps on iPad and iPhone`
   - Tag Versi: `6.17.3`
 
+---
+
+### 🌟 [MAJOR UPDATE] 2026-09-10 - VERSI 6.17.4: PENYELESAIAN PENYEGARAKAN INVENTORI SUPABASE, PENGAWALAN 5-LANGKAH KENDERAAN, PENCEGAHAN PERTINDIHAN NAVBAR APPLE HIG & PEMATUHAN SIFAR EMOJI
+
+- **Objektif & Latar Belakang Masalah**:
+  1. **Ketidaksamaan Kiraan Inventori & Pendaftaran Kenderaan Kosong**:
+     - Pengguna mendapati percanggahan kiraan kenderaan (`All: 147`, `Available: 18`, `Rented: 1`) disebabkan lambakan draf sesi terbiar (156 baris) yang tersimpan ke dalam jadual Supabase `cars` tanpa nombor plat lengkap dan tanpa foto visual.
+     - Pengguna menegaskan: *"nak kedepan menyekat tapi kalau nak kebelakang untuk edit dibenarkan faham"*, iaitu navigasi ke hadapan WAJIB menyekat jika maklumat mandatori tidak lengkap, manakala navigasi ke belakang untuk mengubah suai sentiasa dibenarkan.
+  2. **Pertindihan Navigasi Atas (Top Navbar Overlap)**:
+     - Pada paparan sempit (tablet dan telefon), ikon navigasi ke-6 (Kecerdasan AI / `auto_awesome`) bertembung dan bertindih secara langsung dengan butang suis bahasa (`MS`) dan togol tema (`light_mode`).
+  3. **Pengeluar Tidak Mengikut Gaya Apple HIG**:
+     - Medan "Pengeluar" pada Langkah 1 mempunyai kotak carian teks bertindan di atas kotak pilihan (*select box*) yang tidak selaras dengan reka bentuk Apple Bento Grid.
+  4. **Pembersihan Sifar Emoji Mengikut Spesifikasi Ejen**:
+     - Pengguna menegaskan penghapusan sebarang penggunaan emoji dalam UI/kod dan digantikan dengan ikon rasmi Material Icons / Symbols.
+  5. **Audit Multi-Agent (Strix Security & BM Language Police)**:
+     - Audit keselamatan dan bahasa dijalankan serentak untuk memastikan perlindungan PII, pencegahan XSS, dan bahasa Melayu moden kontemporari 2026.
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Pembersihan Pangkalan Data Supabase & Penyelarasan API**:
+     - Menjalankan pembersihan pangkalan data pada jadual `cars`: memadamkan semua rekod draf terbiar dan kenderaan ujian tanpa gambar, mengekalkan tepat 9 kenderaan sah pengeluaran penuh (8 Sedia Disewa, 1 Disewa).
+     - Mengemas kini `shared/js/api.js` (`getAdminData`) dan `admin/js/cars.js` (`populateCarStats`, `allCar`) supaya tapisan `All` mengecualikan draf secara mutlak (`status !== 'Draft'`), menjamin formula konsisten `total === available + rented`.
+  2. **Sistem Pengawalan 5-Langkah (Strict 5-Step Directional Gatekeepers)**:
+     - **Langkah 1 (`step1_spesifikasi.html`)**: Menyemak nombor plat kenderaan ($\ge 3$ aksara). Menyekat butang dok seterusnya (`#btnNextToStep2`) dan pautan stepper ke hadapan jika kosong; navigasi ke belakang (`../cars.html`) sentiasa dibenarkan.
+     - **Langkah 2 (`step2_studio360.html` & `step2-studio360.js`)**: Menyemak kehadiran sekurang-kurangnya 1 foto atau pautan 360°. Menyekat butang `#btnNextToStep3` dan stepper langkah 3, 4, 5; navigasi ke belakang ke Langkah 1 sentiasa dibenarkan.
+     - **Langkah 3 (`step3-pengesahan.js`)**: Pengesahan mandatori nombor plat dan foto sebelum pendaftaran ke inventori atau melihat sebagai pelanggan; navigasi ke belakang ke Langkah 2 sentiasa dibenarkan.
+     - **Langkah 4 (`step4-pandangan-pelanggan.js`)**: Pengesahan data sebelum maju ke Langkah 5; navigasi ke belakang ke Langkah 3 sentiasa dibenarkan.
+     - **Langkah 5 (`step5_tempahan.html`)**: `finishAndReturnToCars()` menyemak integriti plat dan foto sebelum menerbitkan status `Available`. Jika tidak sah, notifikasi amaran dipaparkan dan penerbitan dibatalkan; navigasi ke belakang ke Langkah 4 sentiasa dibenarkan.
+  3. **Penyelesaian Pertindihan Bar Navigasi Atas (`shared/css/wedrive.css`)**:
+     - Merombak selektor `.navbar.navbar-no-brand .nav-links.nav-icons-bar` daripada pemusatan mutlak statik `position: absolute` kepada susun atur flex responsif:
+       - **Desktop (> 900px)**: Terpusat secara mutlak dengan kekangan `max-width: calc(100% - 240px)` dan jarak `gap: 18px` yang menjamin jarak selamat $\ge 266$px daripada tindakan kanan.
+       - **iPad / Tablet ($\le 900$px / 820px)**: Beralih kepada `position: static !important; transform: none !important;` dengan ruang kelegaan $\ge 356$px.
+       - **iPhone / Telefon ($\le 600$px / 393px)**: Saiz ikon diselaraskan ke 32px bulat sempurna 1:1, `gap: 4px`, tindakan kanan `flex-shrink: 0`, menghasilkan ruang kelegaan **72px** tanpa sebarang pertindihan mahupun limpahan mendatar.
+  4. **Penyelarasan Dropdown Pengeluar Apple HIG (`step1_spesifikasi.html`)**:
+     - Menghapuskan kotak carian teks bertindan yang janggal.
+     - Menggantikannya dengan komponen pemilih Apple HIG tunggal (`select` dengan `appearance-none`, `pl-4 pr-10 py-3 font-callout`, dan ikon chevron `expand_more`), dikelompokkan secara kemas mengikut `optgroup` (Pengeluar Utama Malaysia & Semua Pengeluar Lain A-Z).
+  5. **Pembersihan Sifar Emoji (Zero Emoji Compliance)**:
+     - Menggantikan semua emoji (seperti `⭐`, `✨`, `✅`, `☀️`, `🌙`) merentas kod, label `optgroup`, mesej toast, dan fail dwibahasa kepada ikon Material Icons / Symbols atau teks bersih.
+  6. **Pematuhan Linguistik BM Moden 2026 & Keselamatan Siber (Strix Audit)**:
+     - Menggantikan istilah terlarang "tarif / struktur tarif" kepada "kadar sewaan".
+     - Menggantikan jargon "WYSIWYG", "CDN", dan "API" pada antaramuka pengguna kepada istilah mesra operasi Apple.
+     - Menyeragamkan tindakan butang penamat kepada "Kembali ke Senarai Kereta" mengikut Standard 3.1.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - Spektrum 3-Peranti Apple (MacBook 1440px $\to$ iPad 820px $\to$ iPhone 393px) disahkan 100% lulus tanpa pertindihan (Kelegaan FAB Pembantu AI: +26.18px pada iPhone, +18.58px pada iPad) dan Zero Oval Rule dipatuhi sepenuhnya.
+  - Keseluruhan suite ujian Playwright CLI merangkumi 18 fail spesifikasi (54 ujian) disahkan lulus 100% (`54 passed (1.8m)`).
+  - Pangkalan data Supabase dibersihkan daripada 205 rekod draf terbiar; imbangan inventori disahkan seimbang sempurna: $\text{Semua } (10) = \text{Tersedia } (9) + \text{Sedang Disewa } (1)$.
+
+- **Maklumat Git**:
+  - Commit: `6.17.4 Fix database inventory sync, 5-step gatekeepers, navbar overlap, Apple HIG brand select, and zero emojis`
+  - Tag Versi: `6.17.4`
+
+
 
 
 

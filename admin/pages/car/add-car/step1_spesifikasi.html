@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=5.6.9" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.17.4" />
     <!-- AUTH GUARD -->
     <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
     <script src="preview-i18n.js"></script>
@@ -394,7 +394,7 @@
                     <div class="step-divider w-8 h-[1px] bg-border-day"></div>
                     
                     <!-- Step 2 Link -->
-                    <a href="step2_studio360.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step2_studio360.html" onclick="return validateStep1AndProceed(event);" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">2</span>
                         <span class="step-label font-callout text-callout font-medium" data-i18n="step2_pill">Studio Visual</span>
                     </a>
@@ -402,7 +402,7 @@
                     <div class="step-divider w-8 h-[1px] bg-border-day"></div>
                     
                     <!-- Step 3 Link -->
-                    <a href="step3_pengesahan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step3_pengesahan.html" onclick="return validateStep1AndProceed(event);" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
                         <span class="step-label font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
                     </a>
@@ -410,7 +410,7 @@
                     <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                     <!-- Step 4 Link -->
-                    <a href="step4_pandangan_pelanggan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step4_pandangan_pelanggan.html" onclick="return validateStep1AndProceed(event);" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">4</span>
                         <span class="step-label font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
                     </a>
@@ -418,7 +418,7 @@
                     <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                     <!-- Step 5 Link -->
-                    <a href="step5_tempahan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step5_tempahan.html" onclick="return validateStep1AndProceed(event);" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">5</span>
                         <span class="step-label font-callout text-callout font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
                     </a>
@@ -444,17 +444,14 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-md">
-                        <!-- Pengeluar (Searchable Combobox Apple HIG - Boleh Tulis & Cari) -->
-                        <div class="flex flex-col gap-sm" id="brandComboboxContainer">
+                        <!-- Pengeluar (Apple HIG Clean Dropdown) -->
+                        <div class="flex flex-col gap-sm">
                             <label for="inputBrand" class="font-footnote text-footnote text-on-surface-variant font-medium" data-i18n="field_brand">Pengeluar</label>
-                            <div class="flex flex-col gap-1.5">
-                                <div class="relative">
-                                    <input type="text" id="inputBrandSearch" autocomplete="off" placeholder="Tulis untuk cari jenama..." data-i18n-ph="field_brand_search_ph" class="bg-surface-container border border-border-day rounded-xl pl-8 pr-4 py-2 text-xs focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all w-full text-on-surface cursor-text" />
-                                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
-                                </div>
-                                <select id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl px-4 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all w-full text-on-surface cursor-pointer">
-                                    <option value="" selected data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
+                            <div class="relative">
+                                <select id="inputBrand" title="Pengeluar Kenderaan" aria-label="Pengeluar Kenderaan" class="bg-surface-container border border-border-day rounded-xl pl-4 pr-10 py-3 font-callout text-callout focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none w-full text-on-surface cursor-pointer">
+                                    <option value="" selected disabled data-i18n-opt="field_brand_select">Pilih Pengeluar</option>
                                 </select>
+                                <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
                             </div>
                         </div>
 
@@ -670,7 +667,7 @@
         </div>
 
         <!-- Right Primary Action -->
-        <a href="step2_studio360.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[14px] sm:text-[15px] font-bold px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-2 shadow-md flex-shrink-0">
+        <a href="step2_studio360.html" id="btnNextToStep2" onclick="return validateStep1AndProceed(event);" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[14px] sm:text-[15px] font-bold px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-2 shadow-md flex-shrink-0">
             <span class="text-white-force hidden sm:inline" data-i18n="dock_next_step2">Seterusnya: Studio Visual</span>
             <span class="text-white-force sm:hidden">Seterusnya</span>
             <span class="material-symbols-outlined text-[20px] text-white-force">arrow_forward</span>
@@ -812,81 +809,40 @@
         ];
 
         function setupBrandSearchableCombobox() {
-            const searchInput = document.getElementById('inputBrandSearch');
             const select = document.getElementById('inputBrand');
             if (!select) return;
 
-            const uniqueBrands = Array.from(new Set([...MALAYSIA_POPULAR_BRANDS, ...MALAYSIA_ALL_BRANDS])).sort();
+            const currentVal = select.value;
+            select.innerHTML = '<option value="" selected disabled data-i18n-opt="field_brand_select">Pilih Pengeluar</option>';
 
-            function populateOptions(filterText = '') {
-                const currentVal = select.value;
-                const q = filterText.trim().toLowerCase();
-                select.innerHTML = '<option value="" selected>Pilih Pengeluar</option>';
-
-                // Group 1: Popular Brands in Malaysia
-                const popular = MALAYSIA_POPULAR_BRANDS.filter(b => !q || b.toLowerCase().includes(q));
-                if (popular.length > 0) {
-                    const optgroupPop = document.createElement('optgroup');
-                    optgroupPop.label = '⭐ Pengeluar Utama (Malaysia)';
-                    popular.forEach(b => {
-                        const opt = document.createElement('option');
-                        opt.value = b;
-                        opt.textContent = b;
-                        optgroupPop.appendChild(opt);
-                    });
-                    select.appendChild(optgroupPop);
-                }
-
-                // Group 2: All Other Brands
-                const others = MALAYSIA_ALL_BRANDS.filter(b => !MALAYSIA_POPULAR_BRANDS.includes(b) && (!q || b.toLowerCase().includes(q)));
-                if (others.length > 0) {
-                    const optgroupAll = document.createElement('optgroup');
-                    optgroupAll.label = 'Semua Pengeluar Lain (A-Z)';
-                    others.forEach(b => {
-                        const opt = document.createElement('option');
-                        opt.value = b;
-                        opt.textContent = b;
-                        optgroupAll.appendChild(opt);
-                    });
-                    select.appendChild(optgroupAll);
-                }
-
-                // If user typed a custom brand not in the list
-                if (q && !uniqueBrands.some(b => b.toLowerCase() === q)) {
-                    const optCustom = document.createElement('option');
-                    optCustom.value = filterText.trim();
-                    optCustom.textContent = `+ Guna "${filterText.trim()}"`;
-                    select.appendChild(optCustom);
-                }
-
-                // Restore or match value
-                if (currentVal && Array.from(select.options).some(o => o.value.toLowerCase() === currentVal.toLowerCase())) {
-                    select.value = currentVal;
-                } else if (q) {
-                    const firstMatch = Array.from(select.options).find(o => o.value && o.value.toLowerCase().includes(q));
-                    if (firstMatch) {
-                        select.value = firstMatch.value;
-                        select.dispatchEvent(new Event('change', { bubbles: true }));
-                    }
-                }
-            }
-
-            populateOptions();
-
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    populateOptions(e.target.value);
-                });
-            }
-
-            select.addEventListener('change', () => {
-                if (searchInput && select.value) {
-                    searchInput.value = select.value;
-                }
+            // Group 1: Popular Brands in Malaysia
+            const optgroupPop = document.createElement('optgroup');
+            optgroupPop.label = 'Pengeluar Utama (Malaysia)';
+            MALAYSIA_POPULAR_BRANDS.forEach(b => {
+                const opt = document.createElement('option');
+                opt.value = b;
+                opt.textContent = b;
+                optgroupPop.appendChild(opt);
             });
+            select.appendChild(optgroupPop);
 
-            if (select.value && searchInput) {
-                searchInput.value = select.value;
+            // Group 2: All Other Brands
+            const others = MALAYSIA_ALL_BRANDS.filter(b => !MALAYSIA_POPULAR_BRANDS.includes(b)).sort();
+            if (others.length > 0) {
+                const optgroupAll = document.createElement('optgroup');
+                optgroupAll.label = 'Semua Pengeluar Lain (A-Z)';
+                others.forEach(b => {
+                    const opt = document.createElement('option');
+                    opt.value = b;
+                    opt.textContent = b;
+                    optgroupAll.appendChild(opt);
+                });
+                select.appendChild(optgroupAll);
+            }
+
+            // Restore previously selected value
+            if (currentVal) {
+                select.value = currentVal;
             }
         }
 
@@ -1367,6 +1323,32 @@ Rules:
                 });
             }
         });
+
+        function validateStep1AndProceed(event) {
+            const isEn = (getCurrentLang() === 'en');
+            const plateInput = document.getElementById('inputPlate');
+            const plateVal = plateInput ? plateInput.value.trim().toUpperCase() : '';
+
+            if (!plateVal || plateVal.length < 3) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                const msg = isEn 
+                    ? 'Registration plate number is required before proceeding (minimum 3 characters).' 
+                    : 'Sila masukkan nombor plat pendaftaran kenderaan yang sah (minima 3 aksara) sebelum meneruskan.';
+                showAiToast(msg, 'error');
+                if (plateInput) {
+                    plateInput.focus();
+                    plateInput.classList.add('ai-field-wave');
+                    setTimeout(() => plateInput.classList.remove('ai-field-wave'), 1200);
+                }
+                return false;
+            }
+
+            saveStep1Draft();
+            return true;
+        }
 
         // Inisialisasi Searchable Combobox Pengeluar
         setupBrandSearchableCombobox();

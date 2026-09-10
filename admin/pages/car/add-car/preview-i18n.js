@@ -176,7 +176,7 @@ const PREVIEW_I18N = {
         toast_step3_ready: "✓ Maklumat kenderaan lengkap & sedia didaftarkan",
         modal_success_title: "Kenderaan Berjaya Didaftarkan!",
         modal_success_desc: "telah diterbitkan ke inventori aktif sistem dengan integrasi Studio 360°.",
-        modal_btn_menu: "Kembali ke Menu Utama",
+        modal_btn_menu: "Kembali ke Senarai Kereta",
         modal_btn_close: "Tutup",
 
         // Index Overview
@@ -185,7 +185,7 @@ const PREVIEW_I18N = {
         index_badge_hig: "100% APPLE HIG & DUAL THEME",
         index_badge_flow: "Gabungan 4 Skrin Lengkap (Langkah 1 → Langkah 2 → Langkah 3 → Langkah 4)",
         index_hero_title: "Master Finishing Studio UI WeDRIVE",
-        index_hero_desc: "Menggabungkan 100% skrin pilihan anda dari Stitch: Langkah 1 (Civic & Harga), Langkah 2 (Studio Visual & 360), Langkah 3 (Semakan Akhir), dan Langkah 4 (Pandangan Pelanggan) dengan kawalan dwitema (☀️ Siang / 🌙 Malam) dan fizik sentuhan Apple.",
+        index_hero_desc: "Menggabungkan 100% skrin pilihan anda dari Stitch: Langkah 1 (Civic & Harga), Langkah 2 (Studio Visual & 360), Langkah 3 (Semakan Akhir), dan Langkah 4 (Pandangan Pelanggan) dengan kawalan dwitema (Siang / Malam) dan fizik sentuhan Apple.",
         index_btn_launch_wizard: "Mulakan Aliran Wizard Lengkap (Langkah 1 → 2 → 3 → 4)",
         index_step1_card_title: "Langkah 1: Spesifikasi Kenderaan",
         index_step1_card_desc: "Borang spesifikasi kenderaan berkonsep Bento Grid, input nombor tabular, dan integrasi Cadangan Spesifikasi Pintar AI.",
@@ -223,7 +223,7 @@ const PREVIEW_I18N = {
         // Step 4: Pandangan Pelanggan (Customer View)
         step4_title: "Customer View",
         step4_preview_badge: "Customer Preview Mode",
-        step4_preview_notice: "Customer Catalog View (WYSIWYG)",
+        step4_preview_notice: "Customer Catalog View",
         step4_preview_desc: "Direct preview of how this vehicle card is showcased in the WeDRIVE customer car search portal.",
         step4_sidebar_tag: "Preview Only",
         step4_sidebar_dashboard: "Dashboard",
@@ -379,7 +379,7 @@ const PREVIEW_I18N = {
         index_badge_hig: "100% APPLE HIG & DUAL THEME",
         index_badge_flow: "Complete 4 Screen Flow (Step 1 → Step 2 → Step 3 → Step 4)",
         index_hero_title: "WeDRIVE Master Finishing Studio UI",
-        index_hero_desc: "Combining 100% of your Stitch chosen screens: Step 1 (Civic & Pricing), Step 2 (Visual Studio & 360), Step 3 (Final Review), and Step 4 (Customer View) with dual-theme control (☀️ Day / 🌙 Night) and Apple tactile physics.",
+        index_hero_desc: "Combining 100% of your Stitch chosen screens: Step 1 (Civic & Pricing), Step 2 (Visual Studio & 360), Step 3 (Final Review), and Step 4 (Customer View) with dual-theme control (Day / Night) and Apple tactile physics.",
         index_btn_launch_wizard: "Start Full Wizard Flow (Step 1 → 2 → 3 → 4)",
         index_step1_card_title: "Step 1: Vehicle Specifications",
         index_step1_card_desc: "Bento Grid vehicle specification form, tabular number inputs, and AI Smart Spec Suggestions integration.",

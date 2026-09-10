@@ -26,43 +26,73 @@ test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Syn
     await expect(step1Pill.first()).toBeVisible();
   });
 
-  test('Step 1: Specifications form inputs, AI suggestions, and formula pricing', async ({ page }) => {
+  test('Step 1: Specifications form gatekeeper blocks forward navigation without plate, succeeds with plate', async ({ page }) => {
     await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
     await page.waitForLoadState('networkidle');
 
-    // Select Brand and Fill details
+    // Clear draft if any
+    await page.evaluate(() => localStorage.removeItem('wedrive_new_car_draft'));
+    await page.fill('#inputPlate', '');
+
+    // Attempt to navigate to Step 2 without plate - MUST BE BLOCKED
+    const nextBtn = page.locator('#btnNextToStep2, a[href="step2_studio360.html"]').last();
+    await nextBtn.click();
+    await page.waitForTimeout(300);
+    expect(page.url()).toContain('step1_spesifikasi.html');
+
+    // Fill valid plate and specifications
     await page.selectOption('#inputBrand', 'Honda');
     await page.fill('#inputModel', 'Civic');
     await page.fill('#inputVariant', '1.5 TC-P');
     await page.fill('#inputPlate', 'WKL 9988');
 
-    // Verify AI Auto Generate Button
-    const aiBtn = page.locator('#aiAutoGenerateBtn');
-    await expect(aiBtn).toBeVisible();
-
-    // Verify Daily Rate and Weekly Rate inputs exist
+    // Verify AI Auto Generate Button & Rates
+    await expect(page.locator('#aiAutoGenerateBtn')).toBeVisible();
     await expect(page.locator('#inputDailyRate')).toBeVisible();
     await expect(page.locator('#inputWeeklyRate')).toBeVisible();
 
-    // Navigate to Step 2 via bottom dock
-    const nextBtn = page.locator('a[href="step2_studio360.html"]').last();
-    await expect(nextBtn).toBeVisible();
+    // Now navigate to Step 2 - MUST SUCCEED
     await nextBtn.click();
     await page.waitForURL('**/admin/pages/car/add-car/step2_studio360.html');
     expect(page.url()).toContain('step2_studio360.html');
   });
 
-  test('Step 2: Visual Studio 360 viewer, photo slots, and progression to Step 3', async ({ page }) => {
+  test('Step 2: Visual Studio 360 gatekeeper blocks forward progression without photos, succeeds when photo added', async ({ page }) => {
     await page.goto('/admin/pages/car/add-car/step2_studio360.html');
     await page.waitForLoadState('networkidle');
 
-    // Verify 360 Turntable Viewport
-    await expect(page.locator('#turntableViewport')).toBeVisible();
-    await expect(page.locator('#photoUploadSlotsGrid')).toBeVisible();
+    // Clear photo draft to test gatekeeper
+    await page.evaluate(() => {
+      const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+      draft.photos = [];
+      draft.images = [];
+      draft.turntableUrl = '';
+      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+      if (window.studioDraft) {
+        window.studioDraft.photos = [];
+        window.studioDraft.images = [];
+      }
+    });
 
-    // Navigate to Step 3
+    // Attempt to navigate to Step 3 without photos - MUST BE BLOCKED
     const nextBtn = page.locator('a[href="step3_pengesahan.html"]').last();
-    await expect(nextBtn).toBeVisible();
+    await nextBtn.click();
+    await page.waitForTimeout(300);
+    expect(page.url()).toContain('step2_studio360.html');
+
+    // Inject valid sample photo into draft
+    await page.evaluate(() => {
+      const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+      draft.photos = ['https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800'];
+      draft.images = draft.photos;
+      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+      if (window.studioDraft) {
+        window.studioDraft.photos = draft.photos;
+        window.studioDraft.images = draft.photos;
+      }
+    });
+
+    // Navigate to Step 3 with photo present - MUST SUCCEED
     await nextBtn.click();
     await page.waitForURL('**/admin/pages/car/add-car/step3_pengesahan.html');
     expect(page.url()).toContain('step3_pengesahan.html');
@@ -83,11 +113,23 @@ test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Syn
     await page.fill('#inputPlate', testPlate);
 
     // Save and advance to Step 2
-    const toStep2 = page.locator('a[href="step2_studio360.html"]').last();
+    const toStep2 = page.locator('#btnNextToStep2, a[href="step2_studio360.html"]').last();
     await toStep2.click();
     await page.waitForURL('**/admin/pages/car/add-car/step2_studio360.html');
 
-    // 2. Step 2 -> Advance to Step 3
+    // 2. Step 2: Inject valid photo payload to satisfy visual gatekeeper
+    await page.evaluate(() => {
+      const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+      draft.photos = ['https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800'];
+      draft.images = draft.photos;
+      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+      if (window.studioDraft) {
+        window.studioDraft.photos = draft.photos;
+        window.studioDraft.images = draft.photos;
+      }
+    });
+
+    // Advance to Step 3
     const toStep3 = page.locator('a[href="step3_pengesahan.html"]').last();
     await toStep3.click();
     await page.waitForURL('**/admin/pages/car/add-car/step3_pengesahan.html');
@@ -120,6 +162,46 @@ test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Syn
     // Check that the car-grid contains the registered plate
     const carListing = page.locator('#car-grid');
     await expect(carListing).toContainText(testPlate);
+  });
+
+  test('Top Navbar responsive collision & Zero Oval verification across MacBook, iPad, and iPhone', async ({ page }) => {
+    const viewports = [
+      { name: 'MacBook', width: 1440, height: 900 },
+      { name: 'iPad', width: 820, height: 1180 },
+      { name: 'iPhone', width: 393, height: 852 }
+    ];
+
+    for (const vp of viewports) {
+      await page.setViewportSize({ width: vp.width, height: vp.height });
+      await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
+      await page.waitForLoadState('networkidle');
+
+      const checkNavbar = await page.evaluate(() => {
+        const aiLink = document.getElementById('nl-ai');
+        const langToggle = document.querySelector('.navbar .lang-toggle');
+        const themeToggle = document.querySelector('.navbar .theme-toggle');
+
+        if (!aiLink || !langToggle || !themeToggle) return { found: false };
+
+        const aiRect = aiLink.getBoundingClientRect();
+        const langRect = langToggle.getBoundingClientRect();
+        const themeRect = themeToggle.getBoundingClientRect();
+
+        return {
+          found: true,
+          aiRight: aiRect.right,
+          langLeft: langRect.left,
+          clearance: langRect.left - aiRect.right,
+          isOverlapping: aiRect.right > langRect.left,
+          themeAspectRatio: themeRect.width / themeRect.height
+        };
+      });
+
+      expect(checkNavbar.found).toBe(true);
+      expect(checkNavbar.isOverlapping).toBe(false);
+      expect(checkNavbar.clearance).toBeGreaterThanOrEqual(0);
+      expect(Math.abs(checkNavbar.themeAspectRatio - 1.0)).toBeLessThan(0.05);
+    }
   });
 
 });

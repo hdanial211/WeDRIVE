@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.16.0" />
+    <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.17.4" />
     <!-- AUTH GUARD -->
     <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
     <script src="preview-i18n.js"></script>
@@ -133,7 +133,7 @@
                     <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                     <!-- Step 3 Upcoming -->
-                    <a href="step3_pengesahan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step3_pengesahan.html" onclick="return validateStep2Visuals(event);" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">3</span>
                         <span class="step-label font-callout text-callout font-medium" data-i18n="step3_pill">Semakan Akhir</span>
                     </a>
@@ -141,7 +141,7 @@
                     <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                     <!-- Step 4 Upcoming -->
-                    <a href="step4_pandangan_pelanggan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step4_pandangan_pelanggan.html" onclick="return validateStep2Visuals(event);" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">4</span>
                         <span class="step-label font-callout text-callout font-medium" data-i18n="step4_pill">Pandangan Pelanggan</span>
                     </a>
@@ -149,7 +149,7 @@
                     <div class="step-divider w-8 h-[1px] bg-border-day"></div>
 
                     <!-- Step 5 Upcoming -->
-                    <a href="step5_tempahan.html" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+                    <a href="step5_tempahan.html" onclick="return validateStep2Visuals(event);" class="step-item pill-btn interactive-btn flex items-center gap-2 px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
                         <span class="circle-1-1 w-5 h-5 bg-surface-container-highest text-on-surface-variant text-[11px] font-bold">5</span>
                         <span class="step-label font-callout text-callout font-medium" data-i18n="step5_pill">Butiran &amp; Tempahan</span>
                     </a>
@@ -364,7 +364,7 @@
         </a>
 
         <!-- Seterusnya to Step 3 -->
-        <a href="step3_pengesahan.html" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[14px] sm:text-[15px] font-bold px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-2 shadow-md flex-shrink-0">
+        <a href="step3_pengesahan.html" id="btnNextToStep3" onclick="return validateStep2Visuals(event);" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[14px] sm:text-[15px] font-bold px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-2 shadow-md flex-shrink-0">
             <span class="text-white-force hidden sm:inline" data-i18n="dock_next_step3">Seterusnya: Semakan Akhir</span>
             <span class="text-white-force sm:hidden">Seterusnya</span>
             <span class="material-symbols-outlined text-[20px] text-white-force">arrow_forward</span>

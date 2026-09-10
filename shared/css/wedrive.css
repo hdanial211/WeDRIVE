@@ -454,7 +454,7 @@ body.dark .customer-main #wedrive-navbar {
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
-  gap: 28px !important;
+  gap: 18px !important;
   display: inline-flex !important;
   align-items: center !important;
 }
@@ -472,18 +472,150 @@ body.dark .nav-links:has(.nav-icon-link) {
 .navbar.navbar-no-brand,
 .navbar:not(:has(.nav-brand)) {
   position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
-.navbar.navbar-no-brand .nav-links.nav-icons-bar,
-.navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar {
-  position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
+@media (min-width: 901px) {
+  .navbar.navbar-no-brand .nav-links.nav-icons-bar,
+  .navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    max-width: calc(100% - 240px) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar.navbar-no-brand,
+  .navbar:not(:has(.nav-brand)) {
+    padding: 0 16px !important;
+  }
+  .navbar.navbar-no-brand .nav-links.nav-icons-bar,
+  .navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar {
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 auto 0 0 !important;
+    gap: 12px !important;
+    max-width: calc(100% - 110px) !important;
+    flex-shrink: 1 !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  .navbar.navbar-no-brand .nav-links.nav-icons-bar::-webkit-scrollbar,
+  .navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+  .navbar.navbar-no-brand .nav-link.nav-icon-link,
+  .navbar:not(:has(.nav-brand)) .nav-link.nav-icon-link {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  main.main .navbar,
+  main.main #wedrive-navbar,
+  .customer-main .navbar,
+  .customer-main #wedrive-navbar {
+    margin: 10px 10px 0 10px !important;
+    width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;
+    padding: 0 8px !important;
+    height: 46px !important;
+  }
+  .navbar.navbar-no-brand,
+  .navbar:not(:has(.nav-brand)) {
+    padding: 0 8px !important;
+    height: 46px !important;
+  }
+  .navbar.navbar-no-brand .nav-links.nav-icons-bar,
+  .navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar {
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    gap: 4px !important;
+    max-width: calc(100% - 78px) !important;
+    flex-shrink: 1 !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .navbar.navbar-no-brand .nav-links.nav-icons-bar::-webkit-scrollbar,
+  .navbar:not(:has(.nav-brand)) .nav-links.nav-icons-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+  .navbar.navbar-no-brand .nav-link.nav-icon-link,
+  .navbar:not(:has(.nav-brand)) .nav-link.nav-icon-link {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    max-width: 32px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+  }
+  .navbar.navbar-no-brand .nav-link.nav-icon-link span.material-icons-round,
+  .navbar:not(:has(.nav-brand)) .nav-link.nav-icon-link span.material-icons-round {
+    font-size: 17px !important;
+  }
+  .navbar.navbar-no-brand .nav-actions,
+  .navbar:not(:has(.nav-brand)) .nav-actions {
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
+    gap: 5px !important;
+    z-index: 2 !important;
+  }
+  .navbar.navbar-no-brand .lang-toggle,
+  .navbar.navbar-no-brand .btn-lang,
+  .navbar:not(:has(.nav-brand)) .lang-toggle,
+  .navbar:not(:has(.nav-brand)) .btn-lang {
+    height: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    min-width: 36px !important;
+    padding: 0 7px !important;
+    font-size: 11px !important;
+    border-radius: 9999px !important;
+    flex-shrink: 0 !important;
+  }
+  .navbar.navbar-no-brand .theme-toggle,
+  .navbar.navbar-no-brand .btn-theme,
+  .navbar.navbar-no-brand .theme-toggle-btn,
+  .navbar:not(:has(.nav-brand)) .theme-toggle,
+  .navbar:not(:has(.nav-brand)) .btn-theme,
+  .navbar:not(:has(.nav-brand)) .theme-toggle-btn {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    max-width: 30px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+  }
+  .navbar.navbar-no-brand .theme-toggle span.material-icons-round,
+  .navbar.navbar-no-brand .btn-theme span.material-icons-round,
+  .navbar:not(:has(.nav-brand)) .theme-toggle span.material-icons-round,
+  .navbar:not(:has(.nav-brand)) .btn-theme span.material-icons-round {
+    font-size: 15px !important;
+  }
 }
 
 .navbar.navbar-no-brand .nav-actions,
 .navbar:not(:has(.nav-brand)) .nav-actions {
   margin-left: auto !important;
+  flex-shrink: 0 !important;
+  z-index: 2 !important;
 }
 
 .nav-link.nav-icon-link {

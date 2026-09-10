@@ -40,6 +40,12 @@ test.describe('WeDRIVE Modular Add Car Multi-Page Wizard Flow', () => {
 
     // 2. Step 2: Studio Visual 360
     await expect(page).toHaveURL(/step2_studio360\.html/);
+    await page.evaluate(() => {
+      const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+      draft.photos = ['https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800'];
+      draft.images = draft.photos;
+      localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+    });
     const nextBtn2 = page.locator('a[href="step3_pengesahan.html"]').last();
     await expect(nextBtn2).toBeVisible();
     await nextBtn2.click();

@@ -732,23 +732,86 @@
     saveVisualDraft: saveVisualDraft
   };
 
-  // Dock Next Button: Save draft & warn if visual missing
-  const nextStep3Btn = document.querySelector('a[href="step3_pengesahan.html"]');
-  if (nextStep3Btn) {
-    nextStep3Btn.addEventListener('click', () => {
-      saveVisualDraft();
-      const hasAnyPhoto = (currentGallery8Photos && currentGallery8Photos.length > 0) ||
-                          (currentGalleryPhotos && currentGalleryPhotos.some(p => p && p.img)) ||
-                          Boolean(currentCdnExteriorUrl || (cdnUrlInput && cdnUrlInput.value.trim()));
-      if (!hasAnyPhoto) {
-        const isEn = getLang() === 'en';
-        showAiToast(isEn
-          ? 'Perhatian: Tiada visual kenderaan. Kereta tidak boleh didaftarkan tanpa foto atau 360°.'
-          : 'Perhatian: Tiada visual kenderaan. Kereta tidak boleh didaftarkan tanpa foto atau 360°.',
-          false, 'warning');
+  // Visual Gatekeeper: Block forward navigation if photos/360 are missing
+  function validateStep2Visuals(e) {
+    try {
+      const stored = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
+      const storedPhotos = stored.photos || stored.supabase_images || stored.images || [];
+      if (Array.isArray(storedPhotos)) {
+        if (storedPhotos.length === 0) {
+          currentGallery8Photos = [];
+          if (Array.isArray(currentGalleryPhotos)) {
+            currentGalleryPhotos = currentGalleryPhotos.map(p => ({ ...p, img: null }));
+          }
+          currentCdnExteriorUrl = '';
+        } else {
+          const validUrls = storedPhotos.map(p => typeof p === 'string' ? p : (p && p.img ? p.img : null)).filter(Boolean);
+          if (validUrls.length > 0) {
+            currentGallery8Photos = validUrls.slice();
+            if (Array.isArray(currentGalleryPhotos)) {
+              validUrls.forEach((url, idx) => {
+                if (currentGalleryPhotos[idx]) {
+                  currentGalleryPhotos[idx].img = url;
+                } else {
+                  currentGalleryPhotos.push({ slot: idx, img: url });
+                }
+              });
+            }
+          }
+        }
+      }
+      if (stored.cdnUrl || stored.cdnUrlExterior || stored.turntableUrl) {
+        currentCdnExteriorUrl = stored.cdnUrlExterior || stored.cdnUrl || stored.turntableUrl;
+      }
+    } catch (err) {}
+
+    const hasAnyPhoto = (currentGallery8Photos && currentGallery8Photos.length > 0) ||
+                        (currentGalleryPhotos && currentGalleryPhotos.some(p => p && p.img)) ||
+                        Boolean(currentCdnExteriorUrl || (cdnUrlInput && cdnUrlInput.value.trim()));
+    if (!hasAnyPhoto) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const isEn = getLang() === 'en';
+      showAiToast(isEn
+        ? 'Cannot proceed: Please upload at least 1 photo or configure a 360° viewer link.'
+        : 'Tidak boleh meneruskan: Sila muat naik sekurang-kurangnya 1 gambar kenderaan atau pautan 360°.',
+        false, 'warning');
+      const photoZone = document.getElementById('photoSlotsContainer');
+      if (photoZone) {
+        photoZone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        photoZone.classList.add('ai-field-wave');
+        setTimeout(() => photoZone.classList.remove('ai-field-wave'), 1200);
+      }
+      return false;
+    }
+
+    saveVisualDraft();
+    return true;
+  }
+
+  window.validateStep2Visuals = validateStep2Visuals;
+
+  // Dock Next Button & Forward Links: Validate visuals strictly before advancing
+  document.querySelectorAll('#btnNextToStep3, a[href*="step3_pengesahan.html"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      if (!validateStep2Visuals(e)) {
+        e.preventDefault();
+        e.stopPropagation();
       }
     });
-  }
+  });
+
+  // Forward Stepper Links: Steps 3, 4, 5 require visuals
+  document.querySelectorAll('.wizard-stepper a[href*="step3"], .wizard-stepper a[href*="step4"], .wizard-stepper a[href*="step5"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (!validateStep2Visuals(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+  });
 
   // Initialization
   restoreVisualDraft();

@@ -12,7 +12,8 @@ let currentViewMode = localStorage.getItem('wedrive_car_view_mode') || 'grid';
 
 window.WeDriveAPI.getAdminData()
   .then(data => {
-    allCar = data.car || [];
+    // Only display and count active vehicles (Available or Rented)
+    allCar = (data.car || []).filter(c => c.status === 'Available' || c.status === 'Rented');
     populateCarStats(allCar);
     renderCarCards(allCar);
     renderCarTable(allCar);
@@ -83,9 +84,9 @@ function toggleCarView() {
 
 /* ── Stats ── */
 function populateCarStats(car) {
-  const total = car.length;
   const available = car.filter(c => c.status === 'Available').length;
   const rented = car.filter(c => c.status === 'Rented').length;
+  const total = available + rented;
 
   const totalEl = document.getElementById('fl-total');
   if (totalEl) totalEl.textContent = total;

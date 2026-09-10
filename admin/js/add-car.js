@@ -968,8 +968,8 @@
     window.onVariantChange();
     var hasVaultKey = window.WeDriveAiVault && window.WeDriveAiVault.hasKey('system_core');
     var msg = hasVaultKey
-      ? '✨ AI mengira spesifikasi pasaran Malaysia terkini menggunakan ' + (window.WeDriveAiVault.getProvider('system_core') || {name: 'AI'}).name + '!'
-      : '✨ AI berjaya mengira spesifikasi pasaran Malaysia terkini!';
+      ? 'AI mengira spesifikasi pasaran Malaysia terkini menggunakan ' + (window.WeDriveAiVault.getProvider('system_core') || {name: 'AI'}).name + '!'
+      : 'AI berjaya mengira spesifikasi pasaran Malaysia terkini!';
     window.showToast(msg, 'success');
   };
 
@@ -1464,7 +1464,7 @@
       window.updateLivePreview();
 
       document.getElementById('banner-draft-resume')?.classList.add('hidden');
-      window.showToast('✅ Draf berjaya dipulihkan sepenuhnya!', 'success');
+      window.showToast('Draf berjaya dipulihkan sepenuhnya!', 'success');
     } catch (e) {
       console.warn('Draft apply error:', e);
       window.showToast('Ralat memulihkan draf.', 'error');
@@ -1840,7 +1840,7 @@
       if (feedback) {
         feedback.innerHTML = '<span class="text-emerald fw-600"><span class="material-icons-round fs-14">check_circle</span> 36 Bingkai putaran berkualiti tinggi berjaya disedut dari pautan!</span>';
       }
-      window.showToast('✨ Pautan 360° berjaya disedut dan diselaraskan!', 'success');
+      window.showToast('Pautan 360° berjaya disedut dan diselaraskan!', 'success');
     }, 1000);
   };
 

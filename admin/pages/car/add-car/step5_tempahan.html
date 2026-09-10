@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=5.6.9"/>
+<link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.17.4"/>
 <!-- AUTH GUARD -->
 <script src="../../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -300,7 +300,7 @@ Pilih Tarikh Tempahan
 
 <!-- Final Completion Button (Concludes Add Car Workflow) -->
 <button id="btn-final-register" type="button" onclick="finishAndReturnToCars()" class="pill-btn interactive-btn bg-primary hover:bg-[#0077ED] text-white-force font-headline text-[14px] sm:text-[15px] font-bold px-5 sm:px-7 py-2.5 sm:py-3 flex items-center gap-2 shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer no-underline flex-shrink-0">
-<span class="text-white-force hidden sm:inline" data-i18n="step5_btn_finish">Selesai &amp; Ke Pengurusan Kereta</span>
+<span class="text-white-force hidden sm:inline" data-i18n="step5_btn_finish">Selesai &amp; Ke Senarai Kereta</span>
 <span class="text-white-force sm:hidden">Selesai</span>
 <span class="material-symbols-outlined text-[20px] text-white-force">task_alt</span>
 </button>
@@ -559,27 +559,50 @@ function hydrateStep5() {
 
 async function finishAndReturnToCars() {
   const btn = document.getElementById('btn-final-register');
+  const isEn = (localStorage.getItem('wedrive_lang') || 'ms') === 'en';
+
+  const draftRaw = localStorage.getItem('wedrive_new_car_draft');
+  const draft = draftRaw ? JSON.parse(draftRaw) : {};
+
+  // Validasi Ketat 1: Nombor Plat Wajib Sah (Minima 3 Aksara)
+  const plateVal = (draft.plate || '').trim().toUpperCase();
+  if (!plateVal || plateVal.length < 3) {
+    showPillToast(isEn 
+      ? 'Cannot register: Registration plate number is missing. Please return to Step 1.'
+      : 'Pendaftaran disekat: Nombor plat pendaftaran tidak lengkap. Sila kembali ke Langkah 1.', 'error');
+    if (btn) btn.disabled = false;
+    return;
+  }
+
+  // Validasi Ketat 2: Visual (Gambar / 360) Wajib Wujud
+  const imagesList = (draft.supabase_images && draft.supabase_images.length > 0)
+    ? draft.supabase_images
+    : (draft.gallery8Photos && draft.gallery8Photos.length > 0)
+      ? draft.gallery8Photos
+      : (draft.photos && draft.photos.length > 0)
+        ? draft.photos.filter(p => p && (p.img || typeof p === 'string')).map(p => typeof p === 'string' ? p : p.img)
+        : (draft.image_url ? [draft.image_url] : []);
+  const hasVisual = (imagesList.length > 0) || Boolean(draft.has360 || draft.cdnUrlExterior || draft.cdnUrl || draft.supabase_360);
+
+  if (!hasVisual) {
+    showPillToast(isEn
+      ? 'Cannot register: Vehicle must have at least 1 photo. Please return to Step 2 to upload photos.'
+      : 'Pendaftaran disekat: Kenderaan wajib mempunyai sekurang-kurangnya 1 gambar. Sila kembali ke Langkah 2 untuk memuat naik gambar.', 'error');
+    if (btn) btn.disabled = false;
+    return;
+  }
+
   if (btn) btn.disabled = true;
 
   try {
-    const draftRaw = localStorage.getItem('wedrive_new_car_draft');
-    const draft = draftRaw ? JSON.parse(draftRaw) : {};
-
     // If not published yet in Step 3, publish now
     if (!draft.isPublished) {
       const carName = `${draft.brand || ''} ${draft.model || ''} ${draft.variant || ''}`.trim() || 'Kenderaan Baharu';
       const dailyPrice = parseFloat(draft.dailyPrice || draft.dailyRate) || 200;
-      const imagesList = (draft.supabase_images && draft.supabase_images.length > 0)
-        ? draft.supabase_images
-        : (draft.gallery8Photos && draft.gallery8Photos.length > 0)
-          ? draft.gallery8Photos
-          : (draft.photos && draft.photos.length > 0)
-            ? draft.photos.filter(p => p && p.img).map(p => p.img)
-            : (draft.image_url ? [draft.image_url] : []);
 
       const newCar = {
         name: carName,
-        plate: (draft.plate || '').toUpperCase() || null,
+        plate: plateVal,
         type: (draft.category || 'sedan').toLowerCase(),
         label: draft.category || 'Sedan',
         status: 'Available',
@@ -610,7 +633,7 @@ async function finishAndReturnToCars() {
     console.warn('[WeDRIVE Step 5] Completion error:', err);
   }
 
-  showPillToast('✓ Pendaftaran kenderaan selesai!');
+  showPillToast(isEn ? '✓ Vehicle registered successfully!' : '✓ Pendaftaran kenderaan selesai!', 'success');
   localStorage.removeItem('wedrive_new_car_draft');
   setTimeout(() => {
     window.location.href = '../cars.html';
