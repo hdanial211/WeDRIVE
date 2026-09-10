@@ -6690,6 +6690,38 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.17.6 Remove luggage bag tag and work icon from car showcase cards`
   - Tag Versi: `6.17.6`
 
+---
+
+### [PATCH] v6.17.7 — Penggantian Maklumat Lokasi Universal HQ dengan Medan 'Jenis Kenderaan' pada Kad Pameran Kereta (Replace Repetitive Single HQ Depot with Dynamic Vehicle Type in Showcase Cards)
+
+- **Latar Belakang & Arahan Pengguna**:
+  - Pengguna memuat naik tangkap layar kad pameran kenderaan (`Kia Carnival 2.2`) dan memberikan arahan tepat:
+    > *"on*
+    > *Pusat Serahan & Pulangan*
+    > *Pusat Operasi Utama WeDRIVE (HQ) gantikan dengan jenis kenderaan"*
+  - Menepati Peraturan 08 ([`04_navigation_and_ui.md`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/04_navigation_and_ui.md)) mengenai Sifar Ulangan Universal pada Rekod Individu (*Zero Universal Clutter*), perkhidmatan WeDRIVE beroperasi pada satu HQ tunggal bagi seluruh sistem. Memaparkan "Pusat Serahan & Pulangan: Pusat Operasi Utama WeDRIVE (HQ)" berulang-ulang pada setiap kad kenderaan individu membazirkan ruang visual.
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Pengurusan Kenderaan Pentadbir ([`admin/js/cars.js`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/js/cars.js))**:
+     - Menggantikan baris kedua kotak perincian kenderaan (`.apple-rental-callout`) daripada baris lokasi statik `Pusat Serahan & Pulangan` kepada baris dinamik `Jenis Kenderaan` berikon `directions_car`.
+     - Menggunakan logik pengekstrakan jenis kenderaan yang kemas mengikut piawaian Apple HIG:
+       `const rawType = c.label || c.type || 'Sedan'; const typeUpper = rawType.toUpperCase(); const carType = (typeUpper === 'SUV' || typeUpper === 'MPV') ? typeUpper : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());`
+     - Menghasilkan nilai tepat seperti `MPV`, `Sedan`, `SUV`, `Coupe`, `Hatchback`, dan `Truck`.
+  2. **Halaman Kenderaan Tersedia ([`admin/pages/car/available-cars.html`](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/admin/pages/car/available-cars.html))**:
+     - Menyelaraskan baris pameran `apple-rental-callout` untuk memaparkan `Jenis Kenderaan` dengan format yang sama.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Pemeriksaan Visual DevTools MCP Tab Aktif**:
+    - `cars.html`: Kesemua 13 kad kenderaan kini memaparkan baris `Status Operasi: Tersedia` dan `Jenis Kenderaan: MPV / Sedan / SUV / Coupe / Truck / Hatchback` yang bersih dan profesional tanpa pengulangan lokasi HQ yang statik.
+    - `available-cars.html`: Disahkan memaparkan `Jenis Kenderaan` dengan tepat.
+  - **Ujian Automasi Playwright CLI**: 54/54 ujian lulus sepenuhnya (**100% Pass Rate**).
+  - **Audit Had Aksara 12,000**: Kesemua 23 fail `.agents/rules/*.md` disahkan $\le 12,000$ aksara.
+  - **Graf Pengetahuan Graphify**: Berjaya dikemas kini melalui `graphify update .` (3198 nod, 5787 sisi).
+
+- **Maklumat Git**:
+  - Commit: `6.17.7 Replace repetitive HQ depot location with vehicle type in showcase cards`
+  - Tag Versi: `6.17.7`
+
 
 
 

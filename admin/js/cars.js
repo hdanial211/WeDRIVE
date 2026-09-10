@@ -123,6 +123,11 @@ function renderCarCards(car) {
     const rawRateStr = c.rate ? String(c.rate).replace(/[^0-9.]/g, '') : (c.price ? String(c.price) : '150');
     const parsedRate = parseFloat(rawRateStr);
     const rateNum = !isNaN(parsedRate) ? Math.round(parsedRate) : '150';
+    const rawType = c.label || c.type || 'Sedan';
+    const typeUpper = rawType.toUpperCase();
+    const carType = (typeUpper === 'SUV' || typeUpper === 'MPV') 
+      ? typeUpper 
+      : (rawType.charAt(0).toUpperCase() + rawType.slice(1).toLowerCase());
 
     return `
     <div class="apple-car-showcase-card reveal-on-scroll">
@@ -153,8 +158,8 @@ function renderCarCards(car) {
             <span class="apple-rental-value fw-600 ${isAvail ? 'text-emerald' : 'text-primary'}">${sc.label}</span>
           </div>
           <div class="apple-rental-row">
-            <span class="apple-rental-label"><span class="material-icons-round fs-15">location_on</span> Pusat Serahan &amp; Pulangan</span>
-            <span class="apple-rental-value fw-600 text-emerald">Pusat Operasi Utama WeDRIVE (HQ)</span>
+            <span class="apple-rental-label"><span class="material-icons-round fs-15">directions_car</span> Jenis Kenderaan</span>
+            <span class="apple-rental-value">${carType}</span>
           </div>
         </div>
 
