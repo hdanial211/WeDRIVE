@@ -940,6 +940,19 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_ae",
+      "label": "ae()",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": "ae()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_ch",
       "label": "Ch",
       "_callable": true,
@@ -1612,19 +1625,6 @@
       "community_name": "ze",
       "file_type": "code",
       "norm_label": "ze",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ae",
-      "label": "ae()",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 71,
-      "community_name": "ae",
-      "file_type": "code",
-      "norm_label": "ae()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -6694,7 +6694,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 143,
-      "community_name": ".fromBufferAttribute",
+      "community_name": "setXYZ",
       "file_type": "code",
       "norm_label": ".applymatrix4()",
       "source_file": "shared/js/three.min.js",
@@ -6706,7 +6706,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 143,
-      "community_name": ".fromBufferAttribute",
+      "community_name": "setXYZ",
       "file_type": "code",
       "norm_label": ".applynormalmatrix()",
       "source_file": "shared/js/three.min.js",
@@ -6718,7 +6718,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 143,
-      "community_name": ".fromBufferAttribute",
+      "community_name": "setXYZ",
       "file_type": "code",
       "norm_label": ".transformdirection()",
       "source_file": "shared/js/three.min.js",
@@ -6730,55 +6730,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".applymatrix4()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ai_frombufferattribute",
-      "label": ".fromBufferAttribute()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".frombufferattribute()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ai_normalizenormals",
-      "label": ".normalizeNormals()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".normalizenormals()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_gi_applymatrix3",
-      "label": ".applyMatrix3()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".applymatrix3()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_gi_applymatrix4",
-      "label": ".applyMatrix4()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
+      "community_name": "setXYZ",
       "file_type": "code",
       "norm_label": ".applymatrix4()",
       "source_file": "shared/js/three.min.js",
@@ -6790,7 +6742,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 143,
-      "community_name": ".fromBufferAttribute",
+      "community_name": "setXYZ",
       "file_type": "code",
       "norm_label": ".applynormalmatrix()",
       "source_file": "shared/js/three.min.js",
@@ -6802,57 +6754,9 @@
       "_callable": true,
       "_origin": "ast",
       "community": 143,
-      "community_name": ".fromBufferAttribute",
+      "community_name": "setXYZ",
       "file_type": "code",
       "norm_label": ".transformdirection()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ie_transformuv",
-      "label": ".transformUv()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".transformuv()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_qn_setfromattributeandindices",
-      "label": ".setFromAttributeAndIndices()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".setfromattributeandindices()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_rc_constructor",
-      "label": ".constructor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".constructor()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_setxy",
-      "label": "setXY()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": "setxy()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -6862,21 +6766,9 @@
       "_callable": true,
       "_origin": "ast",
       "community": 143,
-      "community_name": ".fromBufferAttribute",
+      "community_name": "setXYZ",
       "file_type": "code",
       "norm_label": "setxyz()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_ze_applynormalmatrix",
-      "label": ".applyNormalMatrix()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 143,
-      "community_name": ".fromBufferAttribute",
-      "file_type": "code",
-      "norm_label": ".applynormalmatrix()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -12257,6 +12149,30 @@
       "source_location": "L7"
     },
     {
+      "id": "shared_js_three_min_gi_applymatrix3",
+      "label": ".applyMatrix3()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "ui",
+      "file_type": "code",
+      "norm_label": ".applymatrix3()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_ie_transformuv",
+      "label": ".transformUv()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "ui",
+      "file_type": "code",
+      "norm_label": ".transformuv()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
       "id": "shared_js_three_min_ro_normalizeskinweights",
       "label": ".normalizeSkinWeights()",
       "_callable": true,
@@ -12289,6 +12205,18 @@
       "community_name": "ui",
       "file_type": "code",
       "norm_label": "setx()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_setxy",
+      "label": "setXY()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "ui",
+      "file_type": "code",
+      "norm_label": "setxy()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -12337,6 +12265,18 @@
       "community_name": "ui",
       "file_type": "code",
       "norm_label": "ui()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_ze_applynormalmatrix",
+      "label": ".applyNormalMatrix()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 199,
+      "community_name": "ui",
+      "file_type": "code",
+      "norm_label": ".applynormalmatrix()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -14053,6 +13993,114 @@
       "community_name": "toJSON",
       "file_type": "code",
       "norm_label": ".tojson()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_a_getw",
+      "label": ".getW()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".getw()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_a_getx",
+      "label": ".getX()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".getx()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_a_gety",
+      "label": ".getY()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".gety()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_a_getz",
+      "label": ".getZ()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".getz()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_gi_getcomponent",
+      "label": ".getComponent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".getcomponent()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_gi_getw",
+      "label": ".getW()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".getw()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_gi_getx",
+      "label": ".getX()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".getx()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_gi_gety",
+      "label": ".getY()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".gety()",
+      "source_file": "shared/js/three.min.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "shared_js_three_min_gi_getz",
+      "label": ".getZ()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 205,
+      "community_name": "ae",
+      "file_type": "code",
+      "norm_label": ".getz()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -23270,7 +23318,7 @@
       "file_type": "code",
       "norm_label": "expand360capabilities()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L488"
+      "source_location": "L500"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_getlang",
@@ -23294,7 +23342,7 @@
       "file_type": "code",
       "norm_label": "handlegenerateai()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L500"
+      "source_location": "L512"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_handlesavevisuals",
@@ -23306,7 +23354,7 @@
       "file_type": "code",
       "norm_label": "handlesavevisuals()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L597"
+      "source_location": "L609"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_hideallviewerlayers",
@@ -23318,7 +23366,7 @@
       "file_type": "code",
       "norm_label": "hideallviewerlayers()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L227"
+      "source_location": "L239"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_navigategallery",
@@ -23330,7 +23378,7 @@
       "file_type": "code",
       "norm_label": "navigategallery()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L347"
+      "source_location": "L359"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_rendergallerythumbnails",
@@ -23342,7 +23390,7 @@
       "file_type": "code",
       "norm_label": "rendergallerythumbnails()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L302"
+      "source_location": "L314"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_renderphotouploadslots",
@@ -23354,7 +23402,7 @@
       "file_type": "code",
       "norm_label": "renderphotouploadslots()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L188"
+      "source_location": "L200"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_restorevisualdraft",
@@ -23366,7 +23414,7 @@
       "file_type": "code",
       "norm_label": "restorevisualdraft()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L407"
+      "source_location": "L419"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_savevisualdraft",
@@ -23378,7 +23426,7 @@
       "file_type": "code",
       "norm_label": "savevisualdraft()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L367"
+      "source_location": "L379"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_selectphoto",
@@ -23390,7 +23438,7 @@
       "file_type": "code",
       "norm_label": "selectphoto()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L333"
+      "source_location": "L345"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_separatespincarassets",
@@ -23414,7 +23462,7 @@
       "file_type": "code",
       "norm_label": "setvisualtab()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L468"
+      "source_location": "L480"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_showaitoast",
@@ -23426,7 +23474,7 @@
       "file_type": "code",
       "norm_label": "showaitoast()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L162"
+      "source_location": "L174"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_showemptystate",
@@ -23438,7 +23486,7 @@
       "file_type": "code",
       "norm_label": "showemptystate()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L241"
+      "source_location": "L253"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_triggerupload",
@@ -23450,7 +23498,7 @@
       "file_type": "code",
       "norm_label": "triggerupload()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L358"
+      "source_location": "L370"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_updateviewerdisplay",
@@ -23462,7 +23510,7 @@
       "file_type": "code",
       "norm_label": "updateviewerdisplay()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L250"
+      "source_location": "L262"
     },
     {
       "id": "admin_pages_car_add_car_step2_studio360_validatestep2visuals",
@@ -23474,19 +23522,7 @@
       "file_type": "code",
       "norm_label": "validatestep2visuals()",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L739"
-    },
-    {
-      "id": "shared_js_three_min_gi_getcomponent",
-      "label": ".getComponent()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 66,
-      "community_name": "Ro",
-      "file_type": "code",
-      "norm_label": ".getcomponent()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
+      "source_location": "L751"
     },
     {
       "id": "shared_js_three_min_ro_applybonetransform",
@@ -24725,50 +24761,26 @@
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_a_getw",
-      "label": ".getW()",
+      "id": "shared_js_three_min_ai_frombufferattribute",
+      "label": ".fromBufferAttribute()",
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
-      "norm_label": ".getw()",
+      "norm_label": ".frombufferattribute()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_a_getx",
-      "label": ".getX()",
+      "id": "shared_js_three_min_ai_normalizenormals",
+      "label": ".normalizeNormals()",
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
-      "norm_label": ".getx()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_a_gety",
-      "label": ".getY()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 71,
-      "community_name": "ae",
-      "file_type": "code",
-      "norm_label": ".gety()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_a_getz",
-      "label": ".getZ()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 71,
-      "community_name": "ae",
-      "file_type": "code",
-      "norm_label": ".getz()",
+      "norm_label": ".normalizenormals()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -24778,7 +24790,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": ".frombufferattribute()",
       "source_file": "shared/js/three.min.js",
@@ -24790,7 +24802,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": ".frombufferattribute()",
       "source_file": "shared/js/three.min.js",
@@ -24802,7 +24814,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": "di()",
       "source_file": "shared/js/three.min.js",
@@ -24814,7 +24826,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": "getw()",
       "source_file": "shared/js/three.min.js",
@@ -24826,7 +24838,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": "getx()",
       "source_file": "shared/js/three.min.js",
@@ -24838,7 +24850,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": "gety()",
       "source_file": "shared/js/three.min.js",
@@ -24850,57 +24862,45 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": "getz()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_gi_getw",
-      "label": ".getW()",
+      "id": "shared_js_three_min_gi_applymatrix4",
+      "label": ".applyMatrix4()",
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
-      "norm_label": ".getw()",
+      "norm_label": ".applymatrix4()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_gi_getx",
-      "label": ".getX()",
+      "id": "shared_js_three_min_qn_setfromattributeandindices",
+      "label": ".setFromAttributeAndIndices()",
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
-      "norm_label": ".getx()",
+      "norm_label": ".setfromattributeandindices()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
     {
-      "id": "shared_js_three_min_gi_gety",
-      "label": ".getY()",
+      "id": "shared_js_three_min_rc_constructor",
+      "label": ".constructor()",
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
-      "norm_label": ".gety()",
-      "source_file": "shared/js/three.min.js",
-      "source_location": "L7"
-    },
-    {
-      "id": "shared_js_three_min_gi_getz",
-      "label": ".getZ()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 71,
-      "community_name": "ae",
-      "file_type": "code",
-      "norm_label": ".getz()",
+      "norm_label": ".constructor()",
       "source_file": "shared/js/three.min.js",
       "source_location": "L7"
     },
@@ -24910,7 +24910,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": ".frombufferattribute()",
       "source_file": "shared/js/three.min.js",
@@ -24922,7 +24922,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 71,
-      "community_name": "ae",
+      "community_name": ".fromBufferAttribute",
       "file_type": "code",
       "norm_label": ".frombufferattribute()",
       "source_file": "shared/js/three.min.js",
@@ -40645,7 +40645,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L495",
+      "source_location": "L507",
       "weight": 1.0
     },
     {
@@ -40657,7 +40657,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L496",
+      "source_location": "L508",
       "weight": 1.0
     },
     {
@@ -40669,7 +40669,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L503",
+      "source_location": "L515",
       "weight": 1.0
     },
     {
@@ -40681,7 +40681,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L506",
+      "source_location": "L518",
       "weight": 1.0
     },
     {
@@ -40693,7 +40693,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L524",
+      "source_location": "L536",
       "weight": 1.0
     },
     {
@@ -40705,7 +40705,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L543",
+      "source_location": "L555",
       "weight": 1.0
     },
     {
@@ -40717,7 +40717,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L551",
+      "source_location": "L563",
       "weight": 1.0
     },
     {
@@ -40729,7 +40729,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L569",
+      "source_location": "L581",
       "weight": 1.0
     },
     {
@@ -40741,7 +40741,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L570",
+      "source_location": "L582",
       "weight": 1.0
     },
     {
@@ -40753,7 +40753,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L600",
+      "source_location": "L612",
       "weight": 1.0
     },
     {
@@ -40765,7 +40765,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L655",
+      "source_location": "L667",
       "weight": 1.0
     },
     {
@@ -40777,7 +40777,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L354",
+      "source_location": "L366",
       "weight": 1.0
     },
     {
@@ -40789,7 +40789,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L304",
+      "source_location": "L316",
       "weight": 1.0
     },
     {
@@ -40801,7 +40801,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L190",
+      "source_location": "L202",
       "weight": 1.0
     },
     {
@@ -40813,7 +40813,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L445",
+      "source_location": "L457",
       "weight": 1.0
     },
     {
@@ -40825,7 +40825,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L449",
+      "source_location": "L461",
       "weight": 1.0
     },
     {
@@ -40837,7 +40837,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L341",
+      "source_location": "L353",
       "weight": 1.0
     },
     {
@@ -40849,7 +40849,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L342",
+      "source_location": "L354",
       "weight": 1.0
     },
     {
@@ -40861,7 +40861,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L343",
+      "source_location": "L355",
       "weight": 1.0
     },
     {
@@ -40873,7 +40873,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L484",
+      "source_location": "L496",
       "weight": 1.0
     },
     {
@@ -40885,7 +40885,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L242",
+      "source_location": "L254",
       "weight": 1.0
     },
     {
@@ -40897,7 +40897,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L251",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -40909,7 +40909,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L255",
+      "source_location": "L267",
       "weight": 1.0
     },
     {
@@ -40921,7 +40921,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L262",
+      "source_location": "L274",
       "weight": 1.0
     },
     {
@@ -40933,7 +40933,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L297",
+      "source_location": "L309",
       "weight": 1.0
     },
     {
@@ -40945,7 +40945,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L779",
+      "source_location": "L791",
       "weight": 1.0
     },
     {
@@ -40957,7 +40957,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L780",
+      "source_location": "L792",
       "weight": 1.0
     },
     {
@@ -40969,7 +40969,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L793",
+      "source_location": "L805",
       "weight": 1.0
     },
     {
@@ -71444,7 +71444,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L162",
+      "source_location": "L174",
       "weight": 1.0
     },
     {
@@ -71455,7 +71455,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L188",
+      "source_location": "L200",
       "weight": 1.0
     },
     {
@@ -71466,7 +71466,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L227",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -71477,7 +71477,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L241",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -71488,18 +71488,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L250",
-      "weight": 1.0
-    },
-    {
-      "source": "admin_pages_car_add_car_step2_studio360",
-      "target": "admin_pages_car_add_car_step2_studio360_rendergallerythumbnails",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L302",
+      "source_location": "L262",
       "weight": 1.0
     },
     {
@@ -71515,13 +71504,24 @@
     },
     {
       "source": "admin_pages_car_add_car_step2_studio360",
+      "target": "admin_pages_car_add_car_step2_studio360_rendergallerythumbnails",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "admin/pages/car/add-car/step2-studio360.js",
+      "source_location": "L314",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_pages_car_add_car_step2_studio360",
       "target": "admin_pages_car_add_car_step2_studio360_selectphoto",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L333",
+      "source_location": "L345",
       "weight": 1.0
     },
     {
@@ -71532,7 +71532,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L347",
+      "source_location": "L359",
       "weight": 1.0
     },
     {
@@ -71543,7 +71543,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L358",
+      "source_location": "L370",
       "weight": 1.0
     },
     {
@@ -71554,7 +71554,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L367",
+      "source_location": "L379",
       "weight": 1.0
     },
     {
@@ -71565,7 +71565,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L407",
+      "source_location": "L419",
       "weight": 1.0
     },
     {
@@ -71576,7 +71576,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L468",
+      "source_location": "L480",
       "weight": 1.0
     },
     {
@@ -71587,7 +71587,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L488",
+      "source_location": "L500",
       "weight": 1.0
     },
     {
@@ -71598,7 +71598,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L500",
+      "source_location": "L512",
       "weight": 1.0
     },
     {
@@ -71620,7 +71620,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L597",
+      "source_location": "L609",
       "weight": 1.0
     },
     {
@@ -71631,7 +71631,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "admin/pages/car/add-car/step2-studio360.js",
-      "source_location": "L739",
+      "source_location": "L751",
       "weight": 1.0
     },
     {
@@ -105439,5 +105439,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2f801dd922a96a1896052cfc36ebec7116033a7d"
+  "built_at_commit": "d35c04474e0314dc7f51a136d501e11ac35c0561"
 }

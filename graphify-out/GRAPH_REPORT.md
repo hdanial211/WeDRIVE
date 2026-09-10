@@ -1,16 +1,16 @@
 # Graph Report - AI CAR RENTAL SYSTEM  (2026-09-10)
 
 ## Corpus Check
-- 145 files · ~21,198,989 words
+- 145 files · ~21,201,858 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3216 nodes · 5809 edges · 212 communities (147 shown, 65 thin omitted)
+- 3216 nodes · 5809 edges · 213 communities (147 shown, 66 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 297 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2f801dd9`
+- Built from commit: `d35c0447`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -86,7 +86,7 @@
 - customer/js/sidebar-loader.js
 - ll
 - Apple Human Interface Guidelines (HIG) Standard
-- ae
+- .fromBufferAttribute
 - WeDRIVE Navigation, Responsive & UI/UX Standards
 - chatbot-admin.js
 - marketing.js
@@ -149,7 +149,7 @@
 - 11_operations_lang.spec.js
 - WeDRIVE Project Structure & Database Integration Guide
 - 01_core_rules.md
-- .fromBufferAttribute
+- setXYZ
 - edit-car.js
 - Context7 Live Documentation & API Skill (WeDRIVE)
 - 2. Enam Komponen Wajib PRD (*The 6 Mandatory PRD Pillars*)
@@ -209,6 +209,7 @@
 - yc
 - 18_full_system_bilingual_parity.spec.js
 - toJSON
+- ae
 - .updateMatrix
 - 🤖 [MINOR UPDATE] 151. Penyatuan Penuh Slot 1 Kunci AI Sejagat & Penstrukturan Dinamik Dok Tindakan Apple HIG Merentas iPad & iPhone (Universal AI Key Vault Slot 1 & Adaptive Apple HIG Dock System) (v6.17.3)
 - kc
@@ -244,7 +245,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (212 total, 65 thin omitted)
+## Communities (213 total, 66 thin omitted)
 
 ### Community 0 - "three.min.js"
 Cohesion: 0.02
@@ -446,9 +447,9 @@ Nodes (3): bl, ll, Rl
 Cohesion: 0.18
 Nodes (10): 1. Tipografi Apple San Francisco, 2. Palet Warna & Mod Gelap Adaptif (Apple System Colors), 3. Bahan Kaca (Apple Materials), 4. Fizik Pergerakan (Motion Physics), Apple Human Interface Guidelines (HIG) Standard, LAMAN RUJUKAN RASMI APPLE DEVELOPER DESIGN & SUMBER FIGMA, PILAR 1: GETTING STARTED & CORE PRINCIPLES, PILAR 2: FOUNDATIONS (ASAS REKA BENTUK) (+2 more)
 
-### Community 71 - "ae"
-Cohesion: 0.19
-Nodes (6): ae(), di(), getW(), getX(), getY(), getZ()
+### Community 71 - ".fromBufferAttribute"
+Cohesion: 0.29
+Nodes (5): di(), getW(), getX(), getY(), getZ()
 
 ### Community 72 - "WeDRIVE Navigation, Responsive & UI/UX Standards"
 Cohesion: 0.15
@@ -771,8 +772,8 @@ Cohesion: 0.14
 Nodes (12): initStep5BookingSimulation(), previewCarPhoto(), processExteriorFiles(), recalcBookingSimulation(), saveCarDraft(), saveFallback(), show360Frame(), showToast() (+4 more)
 
 ### Community 199 - "ui"
-Cohesion: 0.25
-Nodes (6): setW(), setX(), setXYZW(), setY(), setZ(), ui()
+Cohesion: 0.17
+Nodes (7): setW(), setX(), setXY(), setXYZW(), setY(), setZ(), ui()
 
 ### Community 204 - "toJSON"
 Cohesion: 0.06
@@ -793,12 +794,12 @@ Nodes (5): getLang(), hydrateCustomerCard(), init(), showStep4Toast(), validateS
 ## Knowledge Gaps
 - **633 isolated node(s):** `PREVIEW_I18N`, `allCars`, `allBookings`, `allCars`, `CAL_DATA` (+628 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **65 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **66 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `ze` connect `ze` to `three.min.js`, `applyMatrix4`, `.projectOnVector`, `.fromArray`, `ae`, `ui`, `copy`, `.fromBufferAttribute`, `clampPoint`, `add`, `.normalize`, `.constructor`, `.multiplyScalar`?**
+- **Why does `ze` connect `ze` to `three.min.js`, `applyMatrix4`, `.projectOnVector`, `.fromArray`, `ui`, `.fromBufferAttribute`, `copy`, `clampPoint`, `add`, `.normalize`, `.constructor`, `.multiplyScalar`?**
   _High betweenness centrality (0.031) - this node is a cross-community bridge._
 - **Why does `gn` connect `gn` to `three.min.js`, `updateMatrixWorld`, `applyMatrix4`, `.fromArray`, `toJSON`, `.constructor`, `.updateMatrix`, `he`, `.invert`, `.fromJSON`, `add`, `i`, `.normalize`, `.constructor`, `.multiplyScalar`?**
   _High betweenness centrality (0.027) - this node is a cross-community bridge._

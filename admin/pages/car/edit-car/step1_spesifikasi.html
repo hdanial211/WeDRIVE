@@ -41,12 +41,17 @@
         }
     </style>
 </head>
-<body class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
+<body data-particles="6" data-cursor-glow class="bg-background text-on-surface antialiased min-h-screen pb-32 has-action-dock">
 
-    <div id="navbar-placeholder"></div>
-    <div id="sidebar-placeholder"></div>
+    <!-- SIDEBAR (Contextual Sub-Main Navigation) -->
+    <div id="sidebar-placeholder" data-component="sidebar-admin" data-page="car-all"></div>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <!-- MAIN -->
+    <main class="main">
+        <!-- TOPBAR (Main Navigation) -->
+        <div id="navbar-placeholder" data-module="admin"></div>
+
+        <div class="content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <!-- 1. HEADER & BREADCRUMB -->
         <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
@@ -59,7 +64,7 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-primary m-0 flex items-center gap-2">
-                        <span class="material-icons-round text-2xl">edit_square</span>
+                        <span class="material-icons-round text-2xl">edit</span>
                         Sunting Maklumat Kenderaan
                     </h1>
                     <span id="headerPlatePill" class="apple-plate-pill tabular-nums text-xs px-3 py-1 font-bold">MEMUATKAN...</span>
@@ -298,26 +303,29 @@
 
         </div>
 
-        <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
-        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
-            <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
-                <button type="button" id="btnCancelEdit" class="apple-btn-capsule-secondary" onclick="handleCancelEdit()">
-                    <span class="material-icons-round fs-15">arrow_back</span>
-                    <span>Kembali ke Profil</span>
-                </button>
-
-                <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
-                    <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
-                    <span>Langkah 1 daripada 3</span>
-                </div>
-
-                <button type="button" id="btnProceedStep2" class="apple-btn-capsule-primary" onclick="handleProceedToStep2()">
-                    <span>Seterusnya: Studio Visual 360°</span>
-                    <span class="material-icons-round fs-15">arrow_forward</span>
-                </button>
-            </div>
         </div>
+        <div id="footer-placeholder" class="mt-32"></div>
     </main>
+
+    <!-- 3. FLOATING ACTION DOCK (Apple HIG) -->
+    <footer class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-4xl">
+        <div class="apple-stepper-dock bg-surface-1/90 border border-subtle shadow-2xl rounded-full p-2.5 sm:p-3 flex items-center justify-between gap-4">
+            <button type="button" id="btnCancelEdit" class="apple-btn-capsule-secondary" onclick="handleCancelEdit()">
+                <span class="material-icons-round fs-15">arrow_back</span>
+                <span>Kembali ke Profil</span>
+            </button>
+
+            <div class="text-xs text-secondary font-semibold hidden sm:flex items-center gap-2">
+                <span class="material-icons-round text-emerald-500 text-sm">check_circle</span>
+                <span>Langkah 1 daripada 3</span>
+            </div>
+
+            <button type="button" id="btnProceedStep2" class="apple-btn-capsule-primary" onclick="handleProceedToStep2()">
+                <span>Seterusnya: Studio Visual 360°</span>
+                <span class="material-icons-round fs-15">arrow_forward</span>
+            </button>
+        </div>
+    </footer>
 
     <!-- SCRIPTS -->
     <script src="../../../../shared/js/navbar-loader.js?v=5.5.0"></script>

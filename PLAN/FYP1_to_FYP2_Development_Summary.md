@@ -6812,3 +6812,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.18.0 Add modular edit car stepper, auto-detect 360 view badge, and unify single Urus action button`
   - Tag Versi: `6.18.0`
+
+---
+
+### [MINOR UPDATE] v6.19.0 — Pemilihan Pelanggan Sebenar dari Pangkalan Data di Halaman Cipta Tempahan, Penyeragaman Sudut 360° Foto Utama (frame-140), & Pemuat Skeleton Shimmer Universal Admin (Database Customer Selector in New Booking, Universal 360 Beauty Angle Standard & Universal Admin Skeleton Shimmer Loaders)
+
+- **Latar Belakang & Arahan Pengguna**:
+  1. Pengguna meminta penambahbaikan halaman `admin/pages/booking/new-booking.html` agar menggunakan data sebenar pangkalan data dan membolehkan pemilihan pelanggan sedia ada dari sistem tanpa sebarang data palsu atau hardcoded:
+     > *"https://wedrive.website/admin/pages/booking/new-booking.html page ni kena update yang latest sebab saya nampak macam hardcode untuk page ni database dia....sepatutnya dia pilih yang ada dalam database sahaja"*
+  2. Pengguna mengarahkan pembetulan reka bentuk UI borang tempahan yang janggal agar mematuhi spesifikasi Apple HIG yang bersih:
+     > *"UI dia pon x update lagi pelik2 bentuk n x mengikut spec dalam agent satu page ni https://wedrive.website/admin/pages/booking/new-booking.html"*
+  3. Pengguna meminta pendedahan status pemuatan melalui animasi skeleton shimmer pada semua halaman pentadbir yang belum memilikinya:
+     > *"loading page skeleton pun xde ...saya x tahu yang page tu tengah load ke x dekat hampir page admin saya perasan...so fix tambah"*
+  4. Pengguna menetapkan bahawa semua imej 360° dari sumber `https://cdn.impel.io/` mempunyai sudut pusingan meja (turntable) yang seragam. Sudut kecantikan tiga suku hadapan (front 3/4 beauty hero angle) WAJIB konsisten berpandukan piawaian BMW (`id: 1`) dan Toyota Alphard (`id: 4`) iaitu `frame-140.jpg` / `ec/0-140.jpg` sebagai Slot 0 foto utama muka depan kad kenderaan:
+     > *"semua gambar yang saya amik sudutnya adalah sama semua dari sumber https://cdn.impel.io/ should no error about depan n belakang dalam kiri kanan ...sebab dia consistent xde tiba2... awak tengok contoh bmw tu saya dh set mana depan ,belakang kiri kanan dalam luar anything semua refer bmw... ni akan effect dekat add car which is front of card tu tu sendiri...mana2 gambar 6 keping tu amik dari 360 view ..should be sama sahaja front of card tu akan menunjukkan bahagian macam 2019 Toyota Alphard G S C Package 2.5 tu cantik jekk"*
+
+- **Tindakan Pembaikan & Pembangunan (Implementation Details)**:
+  1. **Pemilihan Pelanggan Pangkalan Data Dinamik ([`new-booking.html`](admin/pages/booking/new-booking.html))**:
+     - Menambah pemilih pelanggan pintar (`#nb-cust-select`) yang memuatkan rekod terus dari jadual `customers` Supabase PostgreSQL dan `WeDriveAPI.getCustomers()`.
+     - Menyediakan pilihan pantas `+ Pelanggan Baharu (Pendaftaran Kaunter / Walk-in)`.
+     - Pemilihan pelanggan sedia ada secara automatik mengisi Nama Penuh, Alamat Emel, Nombor Telefon, dan No. Kad Pengenalan berserta lencana `✓ Rekod Pangkalan Data`.
+     - Memperbaiki algoritma kiraan tarikh sewaan berpasangan (paired date calculation) bagi mengelakkan pertukaran bulan/hari Flatpickr (`d/m/Y`) yang sebelum ini mengira 1 hari sebagai 31 hari.
+     - Menguatkuasakan polisi depot operasi tunggal di Ibu Pejabat WeDRIVE (HQ Cyberjaya) mengikut Peraturan 6 dalam `04_navigation_and_ui.md`.
+  2. **Penyeragaman Sudut 360° Foto Hadapan Slot 0 ([`step2-studio360.js`](admin/pages/car/add-car/step2-studio360.js))**:
+     - Menyelaraskan susunan indeks pengekstrakan pusingan 360° daripada `cdn.impel.io`: memetakan `0-140` / `frame-140.jpg` sebagai Slot 0 (Hadapan Tiga Suku / Foto Utama Hero).
+     - Mengemas kini data inventori Kia Carnival 2.2 (`id = 14`) dalam jadual `cars` Supabase PostgreSQL supaya imej Slot 0 menggunakan `ec/0-140.jpg`.
+  3. **Pemuat Skeleton Shimmer Universal di Halaman Pentadbir**:
+     - Menambah kelas `.table-skeleton-row` dan `.table-skeleton-box` ke dalam `shared/css/wedrive.css`.
+     - Memasukkan kad skeleton shimmer pada `#avail-grid` dan `#rented-grid` serta baris skeleton pada `#avail-tbody`, `#rented-tbody`, `#bookings-tbody`, dan `#active-bookings-tbody`.
+  4. **Penyelarasan Seni Bina Navigasi Edit Car ([`edit-car/`](admin/pages/car/edit-car/))**:
+     - Membetulkan pemegang tempat bar navigasi kepada `data-module="admin"` dan bar sisi kepada `data-component="sidebar-admin"`.
+
+- **Keputusan Ujian Automasi & Pengesahan**:
+  - **Ujian Automasi Playwright CLI**: 59/59 Ujian Lulus (**100% Pass Rate**).
+  - **Pemeriksaan DevTools MCP Tab Tunggal (`pageId: 2`)**:
+    - `new-booking.html`: Pemuatan pelanggan dari pangkalan data Supabase dan kenderaan berjalan lancar. Responsif diuji pada MacBook (`1440x900`), iPad (`820x1180`), dan iPhone (`393x852`) menepati Peraturan Sifar Bujur (Zero Oval Rule).
+    - `cars.html`, `available-cars.html`, `rented-cars.html`, `bookings.html`, dan `active-bookings.html`: Paparan pemuatan skeleton shimmer berfungsi dengan lancar.
+  - **Audit Had Aksara 12,000**: Kesemua 23 fail `.agents/rules/*.md` kekal <= 12,000 aksara.
+  - **Graf Pengetahuan Graphify**: Dikemas kini melalui `graphify update .`.
+
+- **Maklumat Git**:
+  - Commit: `6.19.0 Add customer database selector in new booking, universal 360 beauty angle standard, and admin skeleton shimmer loaders`
+  - Tag Versi: `6.19.0`
+

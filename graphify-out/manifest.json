@@ -498,9 +498,9 @@
     "semantic_hash": ""
   },
   "admin/pages/booking/bookings.html": {
-    "mtime": 1788778314.3626273,
-    "seen": 1788778407.247044,
-    "ast_hash": "18bc8af8e224878f4c7717701286d4d0",
+    "mtime": 1789020580.7272568,
+    "seen": 1789020825.291539,
+    "ast_hash": "6457dc7215b9e1aa0f5f61768d7f20bd",
     "semantic_hash": ""
   },
   "admin/pages/calendar/calendar.html": {
@@ -516,9 +516,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
-    "mtime": 1789015923.6815963,
-    "seen": 1789016105.578878,
-    "ast_hash": "960f4c8c71961b8c088b5dbcab6b5be9",
+    "mtime": 1789020270.6680808,
+    "seen": 1789020825.2915468,
+    "ast_hash": "da3c658e477a785706a10b46fb32b897",
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {
@@ -11154,27 +11154,27 @@
     "semantic_hash": ""
   },
   "admin/pages/booking/active-bookings.html": {
-    "mtime": 1788772654.2482164,
-    "seen": 1788773519.9021592,
-    "ast_hash": "8fb0a8eaebcc602ff065324683b57df3",
+    "mtime": 1789020588.64272,
+    "seen": 1789020825.291539,
+    "ast_hash": "369b4378f4664dce4fd29c19715370c6",
     "semantic_hash": ""
   },
   "admin/pages/booking/new-booking.html": {
-    "mtime": 1788778162.611463,
-    "seen": 1788778407.247045,
-    "ast_hash": "20166d81bd81db9392949c07b234c083",
+    "mtime": 1789020491.3823442,
+    "seen": 1789020825.29154,
+    "ast_hash": "0485b76ce969d4a0ab2c6bb9045c191d",
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
-    "mtime": 1789017442.3697834,
-    "seen": 1789018861.461189,
-    "ast_hash": "2be0b6cc83e4fddea7678c1ef5e6fe56",
+    "mtime": 1789020563.1504304,
+    "seen": 1789020825.291546,
+    "ast_hash": "bcac21da53607301656a64281f3f657f",
     "semantic_hash": ""
   },
   "admin/pages/car/rented-cars.html": {
-    "mtime": 1789017460.2902691,
-    "seen": 1789018861.461223,
-    "ast_hash": "3246ce00a12d16187b68469a27596940",
+    "mtime": 1789020573.4406967,
+    "seen": 1789020825.2915509,
+    "ast_hash": "41ddde62be2592ad3dffb5ce9bf7ba5a",
     "semantic_hash": ""
   },
   "admin/pages/customer/verifications.html": {
@@ -11874,9 +11874,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step2-studio360.js": {
-    "mtime": 1789017472.5464656,
-    "seen": 1789018861.46083,
-    "ast_hash": "242e569c898f67e767f723657d997fea",
+    "mtime": 1789020168.650146,
+    "seen": 1789020825.2914078,
+    "ast_hash": "095e9fd55e48ece745967177c16e9e62",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step3-pengesahan.js": {
@@ -11922,21 +11922,21 @@
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step1_spesifikasi.html": {
-    "mtime": 1789018337.2210991,
-    "seen": 1789018861.461192,
-    "ast_hash": "172ed3ccd32a21d4fdfed8f850ce813e",
+    "mtime": 1789019982.1560879,
+    "seen": 1789020825.291549,
+    "ast_hash": "fe846121e94776abaac6c01704f4a480",
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step2_studio360.html": {
-    "mtime": 1789018341.6530905,
-    "seen": 1789018861.4612212,
-    "ast_hash": "5809790d325a8c67eee1ec15e8821f7a",
+    "mtime": 1789019876.5134215,
+    "seen": 1789020825.29155,
+    "ast_hash": "4cece488b1e0100d17f659f124f7a5cb",
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step3_pengesahan.html": {
-    "mtime": 1789018346.9997,
-    "seen": 1789018861.461222,
-    "ast_hash": "c078fab128e67fd8119f6106975e0627",
+    "mtime": 1789019912.110647,
+    "seen": 1789020825.29155,
+    "ast_hash": "9cb47841cee43f61af305e1a521421c9",
     "semantic_hash": ""
   }
 }

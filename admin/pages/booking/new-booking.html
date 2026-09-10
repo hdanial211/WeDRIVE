@@ -1,19 +1,313 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cipta Tempahan Baharu | WeDRIVE Counter Ops</title>
+  <title>Cipta Tempahan Kaunter Baharu | WeDRIVE</title>
   <link rel="icon" type="image/png" href="../../../shared/logo/wedrive-icon.png" />
   <link rel="apple-touch-icon" href="../../../shared/logo/wedrive-icon.png" />
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=5.5.4" />
+  <link rel="stylesheet" href="../../../shared/css/wedrive.css?v=6.18.1" />
+
   <!-- AUTH GUARD: Must run before page renders -->
   <script src="../../../shared/js/auth-guard.js?v=5.2.3" data-role="admin"></script>
+
+  <style>
+    /* ==========================================================================
+       Apple HIG Bento Grid & Form Field Design System
+       ========================================================================== */
+    .apple-bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .apple-bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Apple HIG Form Inputs */
+    .apple-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .apple-input-icon {
+      position: absolute;
+      left: 14px;
+      color: #0071E3;
+      font-size: 18px;
+      pointer-events: none;
+      z-index: 2;
+      transition: color 0.2s ease;
+    }
+
+    .apple-form-input {
+      width: 100% !important;
+      height: 46px !important;
+      padding: 10px 16px 10px 42px !important;
+      border-radius: 14px !important;
+      border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1)) !important;
+      background: var(--bg-surface-2, #F5F5F7) !important;
+      color: var(--text-title, #1D1D1F) !important;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      outline: none !important;
+      box-shadow: none !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      box-sizing: border-box !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+    }
+
+    .apple-form-input:focus {
+      border-color: #0071E3 !important;
+      background: #FFFFFF !important;
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15) !important;
+    }
+
+    .apple-form-input:focus ~ .apple-input-icon,
+    .apple-input-wrap:focus-within .apple-input-icon {
+      color: #0071E3 !important;
+    }
+
+    .apple-select-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .apple-select-chevron {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted, #86868B);
+      font-size: 20px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Dark Mode Form Input Overrides */
+    html.dark .apple-form-input {
+      background: #1C1C1E !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+      color: #F5F5F7 !important;
+    }
+
+    html.dark .apple-form-input:focus {
+      background: #2C2C2E !important;
+      border-color: #0A84FF !important;
+      box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.25) !important;
+    }
+
+    /* ZERO OVAL RULE & Micro Metrics */
+    .circle-1-1 {
+      aspect-ratio: 1 / 1 !important;
+      border-radius: 50% !important;
+      padding: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-sizing: border-box !important;
+      flex-shrink: 0 !important;
+    }
+
+    .btn-pill-primary {
+      border-radius: 9999px !important;
+      white-space: nowrap !important;
+      padding: 12px 28px !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      background: #0071E3 !important;
+      color: #FFFFFF !important;
+      border: none !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      box-shadow: 0 4px 14px rgba(0, 113, 227, 0.25) !important;
+    }
+
+    .btn-pill-primary:hover {
+      background: #0077ED !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 20px rgba(0, 113, 227, 0.35) !important;
+    }
+
+    .btn-pill-primary:active {
+      transform: scale(0.97) !important;
+    }
+
+    .btn-pill-secondary {
+      border-radius: 9999px !important;
+      white-space: nowrap !important;
+      padding: 10px 20px !important;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      background: var(--bg-surface-2, rgba(0, 0, 0, 0.05)) !important;
+      color: var(--text-title, #1D1D1F) !important;
+      border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1)) !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .btn-pill-secondary:hover {
+      background: var(--bg-surface-3, rgba(0, 0, 0, 0.08)) !important;
+    }
+
+    .btn-pill-secondary:active {
+      transform: scale(0.97) !important;
+    }
+
+    /* Duration & Summary Pill */
+    .rental-days-banner {
+      background: linear-gradient(135deg, rgba(0, 113, 227, 0.06) 0%, rgba(94, 92, 230, 0.08) 100%);
+      border: 1px solid rgba(0, 113, 227, 0.2);
+      border-radius: 16px;
+      padding: 14px 18px;
+    }
+
+    html.dark .rental-days-banner {
+      background: linear-gradient(135deg, rgba(0, 113, 227, 0.15) 0%, rgba(94, 92, 230, 0.18) 100%);
+      border-color: rgba(0, 113, 227, 0.35);
+    }
+
+    .pill-badge-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: #0071E3;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+    }
+
+    /* Option Card Checkbox */
+    .apple-option-card {
+      background: var(--bg-surface-2, #F5F5F7);
+      border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .apple-option-card:hover {
+      border-color: rgba(0, 113, 227, 0.35);
+      background: var(--bg-surface-3, #EBEBED);
+      transform: translateY(-1px);
+    }
+
+    .apple-option-card:active {
+      transform: scale(0.98);
+    }
+
+    html.dark .apple-option-card {
+      background: #1C1C1E;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    html.dark .apple-option-card:hover {
+      background: #2C2C2E;
+      border-color: rgba(10, 132, 255, 0.4);
+    }
+
+    /* Custom Apple Checkbox */
+    .apple-checkbox {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      accent-color: #0071E3;
+      cursor: pointer;
+    }
+
+    /* Depot Location Card */
+    .depot-location-card {
+      background: var(--bg-surface-2, #F5F5F7);
+      border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    html.dark .depot-location-card {
+      background: #1C1C1E;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Metric Tile */
+    .apple-metric-tile {
+      background: var(--bg-surface-2, #F5F5F7);
+      border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08));
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    html.dark .apple-metric-tile {
+      background: #1C1C1E;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* UNIFIED PILL TOAST NOTIFICATION */
+    .unified-pill-toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      z-index: 99999;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      border-radius: 9999px !important;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 113, 227, 0.3);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+      color: #1D1D1F;
+      font-size: 13.5px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .unified-pill-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    html.dark .unified-pill-toast {
+      background: rgba(28, 28, 30, 0.9);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #F5F5F7;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+  </style>
 </head>
 
 <body data-particles="6" data-cursor-glow>
@@ -27,149 +321,209 @@
 
     <div class="content">
       <!-- APPLE BENTO HERO HEADER -->
-      <div class="bento-header-hero reveal-onload">
-        <div class="flex-between flex-wrap gap-16">
+      <div class="bento-header-hero reveal-onload mb-24">
+        <div class="flex-between flex-wrap gap-16 items-center">
           <div>
             <div class="bento-breadcrumbs">
               <a href="bookings.html" data-key="sidebar_bookings">Pengurusan Tempahan</a>
               <span class="material-icons-round">chevron_right</span>
-              <span data-key="bk_new_title">Tempahan Kaunter Baharu</span>
+              <span data-key="bk_new_title">Daftar Tempahan Kaunter</span>
             </div>
             <div class="bento-title-row flex-start gap-12 flex-wrap mb-8">
-              <h1 class="bento-title-main" data-key="bk_new_title">Cipta Tempahan Kaunter</h1>
+              <h1 class="bento-title-main" data-key="bk_new_title">Daftar Tempahan Kaunter</h1>
               <span class="status-badge active"><span class="live-pulse-dot"></span> <span>Pendaftaran Kaunter Rasmi</span></span>
             </div>
-            <p class="bento-subtitle-main" data-key="bk_new_subtitle">Daftarkan kontrak sewaan baharu untuk walk-in atau pelanggan korporat dengan pengiraan kos harian automatik dan pengeluaran invois rasmi.</p>
+            <p class="bento-subtitle-main" data-key="bk_new_subtitle">Daftarkan kontrak sewaan kenderaan walk-in atau korporat dengan pengiraan kos automatik dan integrasi inventori masa nyata.</p>
           </div>
           <div class="flex-center gap-10">
-            <button type="button" class="btn-outline-sm" onclick="window.location.href='bookings.html'">
-              <span class="material-icons-round fs-16">arrow_back</span> <span data-key="addcar_btn_cancel">Kembali ke Senarai</span>
-            </button>
+            <a href="bookings.html" class="btn-pill-secondary">
+              <span class="material-icons-round fs-16">arrow_back</span>
+              <span data-key="addcar_btn_cancel">Kembali ke Senarai</span>
+            </a>
           </div>
         </div>
       </div>
 
       <!-- CREATE BOOKING FORM BENTO -->
       <form id="new-booking-form" onsubmit="handleBookingSubmit(event)">
-        <div class="grid-2 gap-24">
-          <!-- CARD 1: BUTIRAN PELANGGAN -->
+        <div class="apple-bento-grid">
+          
+          <!-- KAD 1: MAKLUMAT PERIBADI PENYEWA -->
           <div class="card p-24 radius-24 reveal-onload">
-            <div class="card-header border-bottom-subtle pb-12 mb-18">
+            <div class="card-header border-bottom-subtle pb-12 mb-18 flex-between items-center">
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">person</span> Maklumat Peribadi Penyewa
+                <div class="circle-1-1 w-7 h-7 bg-primary-soft text-primary">
+                  <span class="material-icons-round fs-16">person</span>
+                </div>
+                Maklumat Peribadi Penyewa
               </h3>
+              <span class="fs-11 text-muted fw-600 bg-surface-2 px-8 py-4 radius-9999" id="nb-cust-source-badge">Pangkalan Data</span>
+            </div>
+
+            <!-- Customer Selection from Real DB (Strict Real Data Pipeline) -->
+            <div class="mb-16">
+              <label class="form-label fs-13 fw-600" for="nb-cust-select">Pilih Pelanggan Dari Sistem <span class="text-danger">*</span></label>
+              <div class="apple-select-wrap">
+                <div class="apple-input-wrap">
+                  <span class="material-icons-round apple-input-icon">account_circle</span>
+                  <select id="nb-cust-select" class="apple-form-input cursor-pointer" onchange="handleCustomerSelectChange()" required>
+                    <option value="" disabled selected>Memuatkan senarai pelanggan dari sistem...</option>
+                  </select>
+                </div>
+                <span class="material-icons-round apple-select-chevron">expand_more</span>
+              </div>
             </div>
 
             <div class="mb-16">
               <label class="form-label fs-13 fw-600" for="nb-cust-name">Nama Penuh (Seperti Dalam MyKad/Pasport) <span class="text-danger">*</span></label>
-              <input type="text" id="nb-cust-name" class="form-input radius-14" placeholder="cth: Ahmad Daniel bin Razak" required />
+              <div class="apple-input-wrap">
+                <span class="material-icons-round apple-input-icon">badge</span>
+                <input type="text" id="nb-cust-name" class="apple-form-input" placeholder="cth: Ahmad Daniel bin Razak" required />
+              </div>
             </div>
 
             <div class="grid-2 gap-14 mb-16">
               <div>
                 <label class="form-label fs-13 fw-600" for="nb-cust-email">Alamat Emel <span class="text-danger">*</span></label>
-                <input type="email" id="nb-cust-email" class="form-input radius-14" placeholder="ahmad@gmail.com" required />
+                <div class="apple-input-wrap">
+                  <span class="material-icons-round apple-input-icon">alternate_email</span>
+                  <input type="email" id="nb-cust-email" class="apple-form-input" placeholder="ahmad@gmail.com" required />
+                </div>
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="nb-cust-phone">Nombor Telefon Bimbit <span class="text-danger">*</span></label>
-                <input type="tel" id="nb-cust-phone" class="form-input radius-14 tabular-nums" placeholder="+60 12-345 6789" required />
+                <div class="apple-input-wrap">
+                  <span class="material-icons-round apple-input-icon">phone</span>
+                  <input type="tel" id="nb-cust-phone" class="apple-form-input tabular-nums" placeholder="+60 12-345 6789" required />
+                </div>
               </div>
             </div>
 
             <div>
               <label class="form-label fs-13 fw-600" for="nb-cust-ic">No. Kad Pengenalan (MyKad) / Pasport <span class="text-danger">*</span></label>
-              <input type="text" id="nb-cust-ic" class="form-input radius-14 tabular-nums" placeholder="000101-04-1234" required />
+              <div class="apple-input-wrap">
+                <span class="material-icons-round apple-input-icon">credit_card</span>
+                <input type="text" id="nb-cust-ic" class="apple-form-input tabular-nums" placeholder="000101-04-1234" required />
+              </div>
             </div>
           </div>
 
-          <!-- CARD 2: PILIHAN KENDERAAN -->
+          <!-- KAD 2: PEMILIHAN KENDERAAN & HAB PENGAMBILAN -->
           <div class="card p-24 radius-24 reveal-onload">
             <div class="card-header border-bottom-subtle pb-12 mb-18">
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">directions_car</span> Pemilihan Kereta
+                <div class="circle-1-1 w-7 h-7 bg-primary-soft text-primary">
+                  <span class="material-icons-round fs-16">directions_car</span>
+                </div>
+                Pemilihan Kenderaan Rasmi
               </h3>
             </div>
 
             <div class="mb-16">
-              <label class="form-label fs-13 fw-600" for="nb-car-select">Pilih Model Kereta Tersedia <span class="text-danger">*</span></label>
-              <select id="nb-car-select" class="form-input radius-14" onchange="updateVehicleDetails()" required>
-                <option value="180" data-car-name="Proton X50 1.5 TGDi" data-car-plate="VAB 4821">Proton X50 (SUV) - RM 180/hari (VAB 4821)</option>
-                <option value="110" data-car-name="Perodua Bezza 1.3X" data-car-plate="WUY 7741">Perodua Bezza (Sedan) - RM 110/hari (WUY 7741)</option>
-                <option value="130" data-car-name="Perodua Myvi 1.5 AV" data-car-plate="MCA 9912">Perodua Myvi (Hatchback) - RM 130/hari (MCA 9912)</option>
-                <option value="160" data-car-name="Perodua Alza 1.5 AV" data-car-plate="VBD 3390">Perodua Alza (MPV 7-Seater) - RM 160/hari (VBD 3390)</option>
-                <option value="220" data-car-name="Honda Civic 1.5 RS" data-car-plate="WB 8319 K">Honda Civic RS (Sedan) - RM 220/hari (WB 8319 K)</option>
-                <option value="280" data-car-name="Toyota Camry 2.5V" data-car-plate="JQR 5120">Toyota Camry (Executive) - RM 280/hari (JQR 5120)</option>
-                <option value="450" data-car-name="Toyota Vellfire 2.5" data-car-plate="VEE 1122">Toyota Vellfire (VIP Luxury) - RM 450/hari (VEE 1122)</option>
-              </select>
+              <label class="form-label fs-13 fw-600" for="nb-car-select">Pilih Model Kenderaan Tersedia <span class="text-danger">*</span></label>
+              <div class="apple-select-wrap">
+                <div class="apple-input-wrap">
+                  <span class="material-icons-round apple-input-icon">car_rental</span>
+                  <select id="nb-car-select" class="apple-form-input cursor-pointer" onchange="updateVehicleDetails()" required>
+                    <option value="" disabled selected>Memuatkan senarai kenderaan tersedia dari sistem...</option>
+                  </select>
+                </div>
+                <span class="material-icons-round apple-select-chevron">expand_more</span>
+              </div>
             </div>
 
             <div class="grid-2 gap-14 mb-16">
-              <div>
-                <label class="form-label fs-13 fw-600">Kadar Asas Harian</label>
-                <div class="fs-18 fw-800 text-primary tabular-nums" id="nb-rate-display">RM 180 / hari</div>
+              <div class="apple-metric-tile">
+                <div class="fs-12 text-muted fw-600 flex-center gap-6 justify-start mb-4">
+                  <span class="material-icons-round fs-15 text-primary">payments</span>
+                  <span>Kadar Asas Harian</span>
+                </div>
+                <div class="fs-18 fw-800 text-primary tabular-nums" id="nb-rate-display">RM -- / hari</div>
               </div>
-              <div>
-                <label class="form-label fs-13 fw-600">Deposit Keselamatan</label>
-                <div class="fs-18 fw-800 text-title tabular-nums">RM 200 (Escrow)</div>
+              <div class="apple-metric-tile">
+                <div class="fs-12 text-muted fw-600 flex-center gap-6 justify-start mb-4">
+                  <span class="material-icons-round fs-15 text-emerald">shield</span>
+                  <span>Deposit Keselamatan</span>
+                </div>
+                <div class="fs-18 fw-800 text-title tabular-nums">RM 200 <span class="fs-12 text-secondary fw-500">(Escrow)</span></div>
               </div>
             </div>
 
+            <!-- Single Location Depot (Strict Rule 6 Compliance) -->
             <div>
-              <label class="form-label fs-13 fw-600" for="nb-pickup-hub">Cawangan Lokasi Pengambilan</label>
-              <select id="nb-pickup-hub" class="form-input radius-14">
-                <option value="Cawangan Utama Melaka Sentral" selected>Cawangan Utama Melaka Sentral</option>
-                <option value="Cawangan Lapangan Terbang Melaka (MKZ)">Cawangan Lapangan Terbang Melaka (MKZ)</option>
-                <option value="Kiosk Jonker Point (Pusat Bandar)">Kiosk Jonker Point (Pusat Bandar)</option>
-                <option value="Pusat Servis Ayer Keroh">Pusat Servis Ayer Keroh</option>
-              </select>
+              <label class="form-label fs-13 fw-600">Hab Pengambilan &amp; Pemulangan Rasmi</label>
+              <div class="depot-location-card">
+                <div class="circle-1-1 w-9 h-9 bg-primary-soft text-primary">
+                  <span class="material-icons-round fs-18">location_on</span>
+                </div>
+                <div>
+                  <div class="fw-700 fs-14 text-title">Ibu Pejabat WeDRIVE (HQ Cyberjaya)</div>
+                  <div class="fs-12 text-secondary">Pusat operasi berpusat tunggal bagi serahan dan pemulangan kunci kenderaan.</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- CARD 3: TARIKH BERPASANGAN APPLE HIG -->
+          <!-- KAD 3: TEMPOH SEWAAN BERPASANGAN -->
           <div class="card p-24 radius-24 reveal-on-scroll">
             <div class="card-header border-bottom-subtle pb-12 mb-18">
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">date_range</span> Tempoh Sewaan Berpasangan
+                <div class="circle-1-1 w-7 h-7 bg-primary-soft text-primary">
+                  <span class="material-icons-round fs-16">date_range</span>
+                </div>
+                Tempoh Sewaan Berpasangan
               </h3>
             </div>
 
             <div class="grid-2 gap-14 mb-16">
               <div>
                 <label class="form-label fs-13 fw-600" for="nb-date-pickup">Tarikh Ambil Kenderaan <span class="text-danger">*</span></label>
-                <div class="input-wrap">
-                  <span class="material-icons-round fs-18">event</span>
-                  <input type="text" id="nb-date-pickup" class="form-input radius-14 tabular-nums" placeholder="Pilih Tarikh Ambil" required />
+                <div class="apple-input-wrap">
+                  <span class="material-icons-round apple-input-icon">event</span>
+                  <input type="text" id="nb-date-pickup" class="apple-form-input tabular-nums cursor-pointer" placeholder="Pilih Tarikh Ambil" required readonly />
                 </div>
               </div>
               <div>
                 <label class="form-label fs-13 fw-600" for="nb-date-return">Tarikh Pulang Kenderaan <span class="text-danger">*</span></label>
-                <div class="input-wrap">
-                  <span class="material-icons-round fs-18">event_available</span>
-                  <input type="text" id="nb-date-return" class="form-input radius-14 tabular-nums" placeholder="Pilih Tarikh Pulang" required />
+                <div class="apple-input-wrap">
+                  <span class="material-icons-round apple-input-icon">event_available</span>
+                  <input type="text" id="nb-date-return" class="apple-form-input tabular-nums cursor-pointer" placeholder="Pilih Tarikh Pulang" required readonly />
                 </div>
               </div>
             </div>
 
-            <div class="card p-14 radius-16 bg-surface-2 fs-13 border-subtle">
-              <div class="flex-between">
-                <span class="text-muted">Jumlah Kiraan Hari Sewaan:</span>
-                <strong class="text-primary tabular-nums fs-14" id="nb-days-display">1 Hari</strong>
+            <!-- SLEEK DURATION BANNER (Fixed Date Calculation Bug) -->
+            <div class="rental-days-banner flex-between items-center">
+              <div class="flex-center gap-10">
+                <div class="circle-1-1 w-8 h-8 bg-primary-soft text-primary">
+                  <span class="material-icons-round fs-16">timelapse</span>
+                </div>
+                <div>
+                  <div class="fs-12 text-muted fw-600">Tempoh Sewaan Berpasangan</div>
+                  <div class="fs-13 text-title fw-600" id="nb-dates-summary">Pilih tarikh untuk mengira tempoh</div>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="pill-badge-primary tabular-nums" id="nb-days-display">1 Hari</span>
               </div>
             </div>
           </div>
 
-          <!-- CARD 4: PERLINDUNGAN & SERVIS TAMBAHAN -->
+          <!-- KAD 4: PERLINDUNGAN & PILIHAN TAMBAHAN -->
           <div class="card p-24 radius-24 reveal-on-scroll">
             <div class="card-header border-bottom-subtle pb-12 mb-18">
               <h3 class="m-0 fs-16 fw-700 flex-center gap-8 text-title">
-                <span class="material-icons-round text-primary">shield</span> Perlindungan &amp; Pilihan Tambahan
+                <div class="circle-1-1 w-7 h-7 bg-primary-soft text-primary">
+                  <span class="material-icons-round fs-16">shield</span>
+                </div>
+                Perlindungan &amp; Pilihan Tambahan
               </h3>
             </div>
 
             <div class="flex-column gap-12">
-              <label class="card p-14 radius-16 bg-surface-2 flex-between cursor-pointer border-subtle hover-elevate transition-apple">
-                <div class="flex-center gap-10">
-                  <input type="checkbox" id="add-cdw" checked onchange="calculateBookingTotal()" />
+              <label class="apple-option-card">
+                <div class="flex-center gap-12">
+                  <input type="checkbox" id="add-cdw" class="apple-checkbox" checked onchange="calculateBookingTotal()" />
                   <div>
                     <div class="fw-700 fs-14 text-title">Perlindungan Komprehensif (CDW)</div>
                     <div class="fs-12 text-secondary">Liabiliti kerosakan sifar tanpa caj lebihan</div>
@@ -178,9 +532,9 @@
                 <strong class="text-primary tabular-nums fs-14">RM 35/hari</strong>
               </label>
 
-              <label class="card p-14 radius-16 bg-surface-2 flex-between cursor-pointer border-subtle hover-elevate transition-apple">
-                <div class="flex-center gap-10">
-                  <input type="checkbox" id="add-driver" onchange="calculateBookingTotal()" />
+              <label class="apple-option-card">
+                <div class="flex-center gap-12">
+                  <input type="checkbox" id="add-driver" class="apple-checkbox" onchange="calculateBookingTotal()" />
                   <div>
                     <div class="fw-700 fs-14 text-title">Pemandu Tambahan Berdaftar</div>
                     <div class="fs-12 text-secondary">Dua pemandu sah dalam perlindungan insurans</div>
@@ -189,9 +543,9 @@
                 <strong class="text-primary tabular-nums fs-14">RM 20/hari</strong>
               </label>
 
-              <label class="card p-14 radius-16 bg-surface-2 flex-between cursor-pointer border-subtle hover-elevate transition-apple">
-                <div class="flex-center gap-10">
-                  <input type="checkbox" id="add-baby" onchange="calculateBookingTotal()" />
+              <label class="apple-option-card">
+                <div class="flex-center gap-12">
+                  <input type="checkbox" id="add-baby" class="apple-checkbox" onchange="calculateBookingTotal()" />
                   <div>
                     <div class="fw-700 fs-14 text-title">Kerusi Keselamatan Bayi (ISOFIX)</div>
                     <div class="fs-12 text-secondary">Standard piawaian antarabangsa ECE R44</div>
@@ -201,33 +555,41 @@
               </label>
             </div>
           </div>
+
         </div>
 
-        <!-- SUMMARY CARD (Apple Bento Live Invoice) -->
+        <!-- APPLE BENTO LIVE INVOICE SUMMARY -->
         <div class="card p-24 radius-24 mt-24 reveal-on-scroll">
-          <div class="flex-between flex-wrap gap-16 items-center">
+          <div class="flex-between flex-wrap gap-20 items-center">
             <div>
-              <div class="fs-13 text-muted mb-4 fw-600">Pecahan Kiraan Invois Rasmi:</div>
+              <div class="fs-13 text-muted mb-6 fw-600 flex-center gap-6 justify-start">
+                <span class="material-icons-round fs-16 text-primary">receipt</span>
+                <span>Pecahan Kiraan Invois Rasmi</span>
+              </div>
               <div class="flex-center gap-20 flex-wrap fs-14">
-                <div>Kadar Sewaan (<span id="calc-days-label" class="tabular-nums">1 hari</span>): <strong id="calc-rental-subtotal" class="text-title tabular-nums">RM 180.00</strong></div>
-                <div>Perlindungan CDW / Ekstra: <strong id="calc-coverage-subtotal" class="text-title tabular-nums">RM 35.00</strong></div>
-                <div>Deposit Keselamatan: <strong class="text-emerald tabular-nums">RM 200.00</strong> (Dipulangkan)</div>
+                <div>Kadar Sewaan (<span id="calc-days-label" class="tabular-nums">1 hari</span>): <strong id="calc-rental-subtotal" class="text-title tabular-nums">RM 0.00</strong></div>
+                <div>Perlindungan CDW / Pilihan: <strong id="calc-coverage-subtotal" class="text-title tabular-nums">RM 35.00</strong></div>
+                <div>Deposit Keselamatan: <strong class="text-emerald tabular-nums">RM 200.00</strong> <span class="fs-12 text-muted">(Dipulangkan)</span></div>
               </div>
             </div>
             <div class="text-right">
               <div class="fs-12 text-muted fw-600">Jumlah Keseluruhan Perlu Dibayar</div>
-              <div class="fs-28 fw-800 text-primary tabular-nums" id="calc-grand-total">RM 415.00</div>
+              <div class="fs-28 fw-800 text-primary tabular-nums" id="calc-grand-total">RM 235.00</div>
+              <div class="fs-11 text-secondary mt-2">Termasuk deposit keselamatan RM 200 di akaun escrow</div>
             </div>
           </div>
         </div>
 
-        <!-- ACTION BAR -->
-        <div class="flex-between mt-24 p-20 card radius-24">
-          <span class="fs-13 text-muted">Kontrak sewaan kaunter akan didaftarkan sebagai <strong>Aktif</strong> dan resit rasmi dijana.</span>
+        <!-- ACTION BAR (Zero Duplicate Action Rule: Single Official Submit Button) -->
+        <div class="flex-between mt-24 p-20 card radius-24 items-center flex-wrap gap-14">
+          <div class="flex-center gap-8 text-secondary fs-13">
+            <span class="material-icons-round fs-18 text-emerald">verified</span>
+            <span>Kontrak sewaan kaunter akan didaftarkan sebagai status <strong>Aktif</strong> dan resit rasmi dijana.</span>
+          </div>
           <div class="flex-center gap-10">
-            <button type="button" class="btn-secondary" onclick="window.location.href='bookings.html'">Batal</button>
-            <button type="submit" class="btn-primary">
-              <span class="material-icons-round fs-16">check_circle</span> Sahkan &amp; Jana Kontrak
+            <button type="submit" id="btn-submit-booking" class="btn-pill-primary">
+              <span class="material-icons-round fs-18">check_circle</span>
+              <span>Sahkan &amp; Daftar Tempahan</span>
             </button>
           </div>
         </div>
@@ -237,6 +599,14 @@
       <div id="footer-placeholder" class="mt-32"></div>
     </div>
   </main>
+
+  <!-- UNIFIED PILL TOAST NOTIFICATION CONTAINER -->
+  <div id="new-booking-toast" class="unified-pill-toast">
+    <div class="circle-1-1 w-6 h-6 bg-primary text-white" id="toast-icon-wrap">
+      <span class="material-icons-round fs-14" id="toast-icon">check</span>
+    </div>
+    <span id="toast-message">Mesej status notifikasi</span>
+  </div>
 
   <script src="../../../shared/js/navbar-loader.js?v=5.4.0"></script>
   <script src="../../../shared/js/sidebar-loader.js?v=5.4.0"></script>
@@ -251,10 +621,346 @@
   <script src="../../js/admin-idle-timeout.js?v=5.2.77"></script>
 
   <script>
-    var fpPickup, fpReturn;
+    var fpPickup = null;
+    var fpReturn = null;
     var currentRate = 180;
     var rentalDays = 1;
 
+    /**
+     * Unified Pill Toast Notification
+     */
+    function showBookingToast(message, type) {
+      var toast = document.getElementById('new-booking-toast');
+      var icon = document.getElementById('toast-icon');
+      var iconWrap = document.getElementById('toast-icon-wrap');
+      var msg = document.getElementById('toast-message');
+      if (!toast || !msg) return;
+
+      msg.textContent = message;
+      if (type === 'error') {
+        iconWrap.style.background = '#FF3B30';
+        icon.textContent = 'error_outline';
+      } else if (type === 'warning') {
+        iconWrap.style.background = '#FF9500';
+        icon.textContent = 'warning';
+      } else {
+        iconWrap.style.background = '#34C759';
+        icon.textContent = 'check';
+      }
+
+      toast.classList.add('show');
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3200);
+    }
+
+    /**
+     * Robust Date Parsing (Handles both DD/MM/YYYY and YYYY-MM-DD)
+     */
+    function parseFlexibleDate(str) {
+      if (!str) return null;
+      str = str.trim();
+      if (str.indexOf('/') !== -1) {
+        var parts = str.split('/');
+        if (parts.length === 3) {
+          var d = parseInt(parts[0], 10);
+          var m = parseInt(parts[1], 10) - 1;
+          var y = parseInt(parts[2], 10);
+          return new Date(y, m, d);
+        }
+      } else if (str.indexOf('-') !== -1) {
+        var parts = str.split('-');
+        if (parts.length === 3) {
+          var y = parseInt(parts[0], 10);
+          var m = parseInt(parts[1], 10) - 1;
+          var d = parseInt(parts[2], 10);
+          return new Date(y, m, d);
+        }
+      }
+      return new Date(str);
+    }
+
+    var registeredCustomers = [];
+
+    /**
+     * Load Customers dynamically from Supabase PostgreSQL (Zero Fake Data)
+     */
+    async function loadRegisteredCustomers() {
+      var custSelect = document.getElementById('nb-cust-select');
+      if (!custSelect) return;
+
+      custSelect.innerHTML = '<option value="" disabled selected>Memuatkan senarai pelanggan dari sistem...</option>';
+
+      try {
+        var customers = [];
+        if (window.WeDriveAPI && typeof window.WeDriveAPI.getCustomers === 'function') {
+          customers = await window.WeDriveAPI.getCustomers();
+        } else if (window.supabaseClient) {
+          var res = await window.supabaseClient.from('customers').select('*').order('name', { ascending: true });
+          customers = res.data || [];
+        }
+
+        registeredCustomers = (customers || []).filter(function (c) {
+          return c && c.name && String(c.name).trim().length > 0;
+        });
+
+        custSelect.innerHTML = '';
+
+        var walkInOpt = document.createElement('option');
+        walkInOpt.value = 'walk_in';
+        walkInOpt.textContent = '+ Pelanggan Baharu (Pendaftaran Kaunter / Walk-in)';
+        custSelect.appendChild(walkInOpt);
+
+        if (registeredCustomers.length > 0) {
+          var groupOpt = document.createElement('optgroup');
+          groupOpt.label = 'Pelanggan Berdaftar (' + registeredCustomers.length + ')';
+
+          registeredCustomers.forEach(function (c) {
+            var opt = document.createElement('option');
+            opt.value = c.id;
+            opt.setAttribute('data-name', c.name || '');
+            opt.setAttribute('data-email', c.email || '');
+            opt.setAttribute('data-phone', c.phone || '');
+            opt.setAttribute('data-ic', c.ic || '');
+            opt.textContent = c.name + ' (' + (c.email || c.phone || 'ID: ' + c.id) + ')';
+            groupOpt.appendChild(opt);
+          });
+          custSelect.appendChild(groupOpt);
+        }
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var targetCustId = urlParams.get('customer_id') || urlParams.get('cust_id');
+        var targetEmail = urlParams.get('email');
+
+        if (targetCustId) {
+          for (var i = 0; i < custSelect.options.length; i++) {
+            if (String(custSelect.options[i].value) === String(targetCustId)) {
+              custSelect.selectedIndex = i;
+              break;
+            }
+          }
+        } else if (targetEmail) {
+          for (var j = 0; j < custSelect.options.length; j++) {
+            if ((custSelect.options[j].getAttribute('data-email') || '').toLowerCase() === targetEmail.toLowerCase()) {
+              custSelect.selectedIndex = j;
+              break;
+            }
+          }
+        } else if (registeredCustomers.length > 0) {
+          // Default to the first registered customer from the database
+          custSelect.selectedIndex = 1;
+        }
+
+        handleCustomerSelectChange();
+
+      } catch (err) {
+        console.error('[NewBooking] Gagal memuatkan pelanggan:', err);
+        custSelect.innerHTML = '<option value="walk_in">+ Pelanggan Baharu (Pendaftaran Kaunter / Walk-in)</option>';
+      }
+    }
+
+    /**
+     * Handle Customer Select Change
+     */
+    function handleCustomerSelectChange() {
+      var sel = document.getElementById('nb-cust-select');
+      var badge = document.getElementById('nb-cust-source-badge');
+      if (!sel) return;
+
+      var nameInput = document.getElementById('nb-cust-name');
+      var emailInput = document.getElementById('nb-cust-email');
+      var phoneInput = document.getElementById('nb-cust-phone');
+      var icInput = document.getElementById('nb-cust-ic');
+
+      var val = sel.value;
+      if (val === 'walk_in') {
+        nameInput.value = '';
+        emailInput.value = '';
+        phoneInput.value = '';
+        icInput.value = '';
+        nameInput.placeholder = 'cth: Ahmad Daniel bin Razak';
+        emailInput.placeholder = 'ahmad@gmail.com';
+        phoneInput.placeholder = '+60 12-345 6789';
+        icInput.placeholder = '000101-04-1234';
+        if (badge) {
+          badge.textContent = 'Daftar Manual';
+          badge.className = 'fs-11 text-secondary fw-600 bg-surface-2 px-8 py-4 radius-9999';
+        }
+      } else {
+        var opt = sel.selectedOptions[0];
+        if (opt) {
+          nameInput.value = opt.getAttribute('data-name') || '';
+          emailInput.value = opt.getAttribute('data-email') || '';
+          phoneInput.value = opt.getAttribute('data-phone') || '';
+          icInput.value = opt.getAttribute('data-ic') || '';
+        }
+        if (badge) {
+          badge.textContent = '✓ Rekod Pangkalan Data';
+          badge.className = 'fs-11 text-primary fw-600 bg-primary-soft px-8 py-4 radius-9999';
+        }
+      }
+    }
+
+    /**
+     * Load Available Vehicles dynamically from Supabase PostgreSQL (Zero Fake Data)
+     */
+    async function loadAvailableCars() {
+      var carSelect = document.getElementById('nb-car-select');
+      if (!carSelect) return;
+
+      carSelect.innerHTML = '<option value="" disabled selected>Memuatkan kenderaan tersedia dari sistem...</option>';
+
+      try {
+        var cars = [];
+        if (window.WeDriveAPI && typeof window.WeDriveAPI.getCars === 'function') {
+          cars = await window.WeDriveAPI.getCars();
+        } else if (window.supabaseClient) {
+          var res = await window.supabaseClient.from('cars').select('*').neq('status', 'Draft');
+          cars = res.data || [];
+        }
+
+        // Strictly filter for available cars with valid plate & status = 'Available'
+        var availableCars = (cars || []).filter(function (c) {
+          if (!c) return false;
+          var status = (c.status || '').trim().toLowerCase();
+          var isAvailable = status === 'available';
+          var notDraft = status !== 'draft';
+          var hasPlate = c.plate && String(c.plate).trim().length > 2;
+          return isAvailable && notDraft && hasPlate;
+        });
+
+        if (availableCars.length === 0) {
+          carSelect.innerHTML = '<option value="" disabled selected>Tiada kenderaan berstatus Tersedia pada masa ini</option>';
+          currentRate = 0;
+          document.getElementById('nb-rate-display').textContent = 'RM 0 / hari';
+          calculateBookingTotal();
+          return;
+        }
+
+        carSelect.innerHTML = '';
+        availableCars.forEach(function (car) {
+          var opt = document.createElement('option');
+          var price = parseFloat(car.price) || (parseFloat(String(car.rate || '').replace(/[^0-9.]/g, '')) || 180);
+          opt.value = car.id;
+          opt.setAttribute('data-car-id', car.id);
+          opt.setAttribute('data-car-name', car.name);
+          opt.setAttribute('data-car-plate', car.plate);
+          opt.setAttribute('data-car-rate', price);
+          opt.setAttribute('data-car-type', car.type || 'Kereta');
+
+          var typeLabel = (car.type || 'Kereta').toUpperCase();
+          opt.textContent = car.name + ' (' + typeLabel + ') - RM ' + price.toFixed(0) + '/hari (' + car.plate + ')';
+          carSelect.appendChild(opt);
+        });
+
+        // Pre-select if URL has parameter ?car_id= or ?car=
+        var urlParams = new URLSearchParams(window.location.search);
+        var targetCarId = urlParams.get('car_id') || urlParams.get('id');
+        var targetCarName = urlParams.get('car');
+        var selectedIdx = 0;
+
+        if (targetCarId) {
+          for (var i = 0; i < carSelect.options.length; i++) {
+            if (String(carSelect.options[i].value) === String(targetCarId)) {
+              selectedIdx = i;
+              break;
+            }
+          }
+        } else if (targetCarName) {
+          for (var j = 0; j < carSelect.options.length; j++) {
+            if (carSelect.options[j].text.toLowerCase().includes(targetCarName.toLowerCase())) {
+              selectedIdx = j;
+              break;
+            }
+          }
+        }
+
+        carSelect.selectedIndex = selectedIdx;
+        updateVehicleDetails();
+
+      } catch (err) {
+        console.error('[NewBooking] Gagal memuatkan kenderaan:', err);
+        carSelect.innerHTML = '<option value="" disabled selected>Ralat memuatkan kenderaan. Sila muat semula.</option>';
+      }
+    }
+
+    /**
+     * Update Vehicle Details & Reactive Calculation
+     */
+    function updateVehicleDetails() {
+      var sel = document.getElementById('nb-car-select');
+      if (!sel || !sel.selectedOptions || !sel.selectedOptions[0]) return;
+      var opt = sel.selectedOptions[0];
+      var rate = parseFloat(opt.getAttribute('data-car-rate')) || 180;
+      currentRate = rate;
+
+      var rateDisplay = document.getElementById('nb-rate-display');
+      if (rateDisplay) {
+        rateDisplay.textContent = 'RM ' + rate.toFixed(0) + ' / hari';
+      }
+      calculateBookingTotal();
+    }
+
+    /**
+     * Accurate Date Calculation & Live Invoice Total
+     */
+    function calculateBookingTotal() {
+      var days = 1;
+      var pickDate = fpPickup && fpPickup.selectedDates && fpPickup.selectedDates[0];
+      var retDate = fpReturn && fpReturn.selectedDates && fpReturn.selectedDates[0];
+
+      if (pickDate && retDate) {
+        var pTime = new Date(pickDate.getFullYear(), pickDate.getMonth(), pickDate.getDate()).getTime();
+        var rTime = new Date(retDate.getFullYear(), retDate.getMonth(), retDate.getDate()).getTime();
+        var diff = Math.round((rTime - pTime) / (1000 * 60 * 60 * 24));
+        days = Math.max(1, diff);
+      } else {
+        var pStr = (document.getElementById('nb-date-pickup').value || '').trim();
+        var rStr = (document.getElementById('nb-date-return').value || '').trim();
+        var pObj = parseFlexibleDate(pStr);
+        var rObj = parseFlexibleDate(rStr);
+        if (pObj && rObj) {
+          var diff2 = Math.round((rObj.getTime() - pObj.getTime()) / (1000 * 60 * 60 * 24));
+          days = Math.max(1, diff2);
+        }
+      }
+      rentalDays = days;
+
+      var rentalSubtotal = days * currentRate;
+
+      // Add-ons
+      var coverageDaily = 0;
+      if (document.getElementById('add-cdw') && document.getElementById('add-cdw').checked) coverageDaily += 35;
+      if (document.getElementById('add-driver') && document.getElementById('add-driver').checked) coverageDaily += 20;
+      if (document.getElementById('add-baby') && document.getElementById('add-baby').checked) coverageDaily += 15;
+
+      var coverageSubtotal = days * coverageDaily;
+      var depositAmount = 200; // Deposit Keselamatan Escrow WeDRIVE
+      var grandTotal = rentalSubtotal + coverageSubtotal + depositAmount;
+
+      var dayText = days + ' Hari';
+      document.getElementById('nb-days-display').textContent = dayText;
+      document.getElementById('calc-days-label').textContent = dayText.toLowerCase();
+      document.getElementById('calc-rental-subtotal').textContent = 'RM ' + rentalSubtotal.toFixed(2);
+      document.getElementById('calc-coverage-subtotal').textContent = 'RM ' + coverageSubtotal.toFixed(2);
+      document.getElementById('calc-grand-total').textContent = 'RM ' + grandTotal.toFixed(2);
+
+      // Update date summary text in duration banner
+      var summaryElem = document.getElementById('nb-dates-summary');
+      if (summaryElem) {
+        var pVal = document.getElementById('nb-date-pickup').value;
+        var rVal = document.getElementById('nb-date-return').value;
+        if (pVal && rVal) {
+          summaryElem.textContent = pVal + ' → ' + rVal;
+        } else {
+          summaryElem.textContent = 'Pilih tarikh untuk mengira tempoh';
+        }
+      }
+    }
+
+    /**
+     * Initialize Page & Flatpickr Paired Pickers
+     */
     function initNewBookingPage() {
       var urlParams = new URLSearchParams(window.location.search);
       var urlDate = urlParams.get('pickup') || urlParams.get('date');
@@ -268,7 +974,7 @@
           'nb-date-return',
           function () { calculateBookingTotal(); },
           [],
-          { dateFormat: 'Y-m-d' }
+          { dateFormat: 'd/m/Y' }
         );
         if (pickers) {
           fpPickup = pickers.pickup;
@@ -278,19 +984,11 @@
         }
       }
 
-      // Check if car param is supplied in URL
-      var urlCar = urlParams.get('car');
-      if (urlCar) {
-        var sel = document.getElementById('nb-car-select');
-        for (var i = 0; i < sel.options.length; i++) {
-          if (sel.options[i].text.toLowerCase().includes(urlCar.toLowerCase()) || sel.options[i].getAttribute('data-car-plate') === urlCar) {
-            sel.selectedIndex = i;
-            break;
-          }
-        }
-      }
+      // Load registered customers dynamically from Supabase (Zero Fake Data)
+      loadRegisteredCustomers();
 
-      updateVehicleDetails();
+      // Load cars dynamically from Supabase
+      loadAvailableCars();
     }
 
     if (document.readyState === 'loading') {
@@ -299,105 +997,112 @@
       initNewBookingPage();
     }
 
-    function handlePickupChange(dateStr) {
-      if (!dateStr) return;
-      var pickDate = new Date(dateStr);
-      var minReturn = new Date(pickDate);
-      minReturn.setDate(minReturn.getDate() + 1);
-
-      fpReturn.set('minDate', minReturn);
-      if (fpReturn.selectedDates[0] && fpReturn.selectedDates[0] <= pickDate) {
-        fpReturn.setDate(minReturn);
-      }
-      calculateBookingTotal();
-    }
-
-    function updateVehicleDetails() {
-      var sel = document.getElementById('nb-car-select');
-      var rate = parseInt(sel.value, 10) || 180;
-      currentRate = rate;
-      document.getElementById('nb-rate-display').textContent = 'RM ' + rate + ' / hari';
-      calculateBookingTotal();
-    }
-
-    function calculateBookingTotal() {
-      var pickStr = document.getElementById('nb-date-pickup').value;
-      var retStr = document.getElementById('nb-date-return').value;
-
-      var days = 1;
-      if (pickStr && retStr) {
-        var p = new Date(pickStr);
-        var r = new Date(retStr);
-        var diffTime = r - p;
-        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        days = Math.max(1, diffDays);
-      }
-      rentalDays = days;
-
-      var rentalSubtotal = days * currentRate;
-
-      // Add-ons
-      var coverageDaily = 0;
-      if (document.getElementById('add-cdw').checked) coverageDaily += 35;
-      if (document.getElementById('add-driver').checked) coverageDaily += 20;
-      if (document.getElementById('add-baby').checked) coverageDaily += 15;
-
-      var coverageSubtotal = days * coverageDaily;
-      var grandTotal = rentalSubtotal + coverageSubtotal + 200; // Deposit RM200
-
-      document.getElementById('nb-days-display').textContent = days + ' Hari';
-      document.getElementById('calc-days-label').textContent = days + ' hari';
-      document.getElementById('calc-rental-subtotal').textContent = 'RM ' + rentalSubtotal.toFixed(2);
-      document.getElementById('calc-coverage-subtotal').textContent = 'RM ' + coverageSubtotal.toFixed(2);
-      document.getElementById('calc-grand-total').textContent = 'RM ' + grandTotal.toFixed(2);
-    }
-
-    function handleBookingSubmit(e) {
+    /**
+     * Submit Booking to Supabase PostgreSQL & Local Cache
+     */
+    async function handleBookingSubmit(e) {
       e.preventDefault();
 
-      var custName = document.getElementById('nb-cust-name').value.trim();
-      var sel = document.getElementById('nb-car-select');
-      var selectedOpt = sel.options[sel.selectedIndex];
-      var carName = selectedOpt.getAttribute('data-car-name') || 'Proton X50';
-      var carPlate = selectedOpt.getAttribute('data-car-plate') || 'VAB 4821';
-      var grandTotal = document.getElementById('calc-grand-total').textContent;
+      var selCust = document.getElementById('nb-cust-select');
+      var selectedCustomerId = selCust ? selCust.value : null;
 
-      var newBooking = {
-        id: 'BK-2026-' + Math.floor(100 + Math.random() * 900),
-        customer_name: custName,
-        customer: custName,
-        email: document.getElementById('nb-cust-email').value.trim(),
-        phone: document.getElementById('nb-cust-phone').value.trim(),
-        ic_no: document.getElementById('nb-cust-ic').value.trim(),
-        car_name: carName,
+      var custName = document.getElementById('nb-cust-name').value.trim();
+      var custEmail = document.getElementById('nb-cust-email').value.trim();
+      var custPhone = document.getElementById('nb-cust-phone').value.trim();
+      var custIc = document.getElementById('nb-cust-ic').value.trim();
+
+      var sel = document.getElementById('nb-car-select');
+      if (!sel || !sel.value) {
+        showBookingToast('Sila pilih kenderaan yang sah terlebih dahulu.', 'warning');
+        return;
+      }
+      var selectedOpt = sel.selectedOptions[0];
+      var carId = parseInt(selectedOpt.value, 10);
+      var carName = selectedOpt.getAttribute('data-car-name') || 'Kenderaan WeDRIVE';
+      var carPlate = selectedOpt.getAttribute('data-car-plate') || 'VAB 4821';
+      var carRate = parseFloat(selectedOpt.getAttribute('data-car-rate')) || currentRate;
+
+      var pDateStr = document.getElementById('nb-date-pickup').value;
+      var rDateStr = document.getElementById('nb-date-return').value;
+
+      var grandTotalText = document.getElementById('calc-grand-total').textContent;
+      var grandTotalNum = parseFloat(grandTotalText.replace(/[^0-9.]/g, '')) || 0;
+
+      var bookingRef = 'BK-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+      var officialLocation = 'Ibu Pejabat WeDRIVE (HQ Cyberjaya)';
+
+      var bookingData = {
+        booking_id: bookingRef,
+        car_id: carId,
         car: carName,
         plate: carPlate,
-        pickup_date: document.getElementById('nb-date-pickup').value,
-        pickup: document.getElementById('nb-date-pickup').value,
-        return_date: document.getElementById('nb-date-return').value,
-        return: document.getElementById('nb-date-return').value,
-        location: document.getElementById('nb-pickup-hub').value,
-        total: grandTotal,
+        customer_id: (selectedCustomerId && selectedCustomerId !== 'walk_in') ? selectedCustomerId : null,
+        customer: custName,
+        email: custEmail,
+        phone: custPhone,
+        ic: custIc,
+        start_date: pDateStr,
+        end_date: rDateStr,
+        days: rentalDays,
+        daily: carRate,
+        total: grandTotalNum,
+        status: 'Active',
         payment: 'Paid',
-        status: 'Active'
+        type: 'Pendaftaran Kaunter',
+        pickup: officialLocation,
+        dropoff: officialLocation,
+        payment_type: 'full',
+        deposit_amount: 200,
+        balance_amount: 0,
+        refund_amount: 0,
+        refund_status: null
       };
 
-      // Save via WeDriveAPI / localStorage
+      var submitBtn = document.getElementById('btn-submit-booking');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="material-icons-round fs-16 animate-spin">sync</span> <span>Mendaftar Kontrak...</span>';
+      }
+
       try {
-        var existing = JSON.parse(localStorage.getItem('wedrive_custom_bookings') || '[]');
-        existing.unshift(newBooking);
-        localStorage.setItem('wedrive_custom_bookings', JSON.stringify(existing));
-      } catch (err) {
-        console.warn('LocalStorage save error:', err);
-      }
+        var apiResult = { success: true };
+        if (window.WeDriveAPI && typeof window.WeDriveAPI.createBooking === 'function') {
+          apiResult = await window.WeDriveAPI.createBooking(bookingData);
+        } else if (window.supabaseClient) {
+          var res = await window.supabaseClient.from('bookings').insert(bookingData).select().single();
+          if (res.error) throw res.error;
+        }
 
-      if (window.showToast) {
-        window.showToast('Tempahan ' + newBooking.id + ' berjaya didaftarkan untuk ' + custName + '!', 'success');
-      }
+        // Update car status to 'Rented' in Supabase
+        if (carId) {
+          if (window.WeDriveAPI && typeof window.WeDriveAPI.updateCarStatus === 'function') {
+            await window.WeDriveAPI.updateCarStatus(carId, 'Rented');
+          } else if (window.supabaseClient) {
+            await window.supabaseClient.from('cars').update({ status: 'Rented' }).eq('id', carId);
+          }
+        }
 
-      setTimeout(function () {
-        window.location.href = 'active-bookings.html';
-      }, 700);
+        // Sync local cache for immediate display
+        try {
+          var existing = JSON.parse(localStorage.getItem('wedrive_custom_bookings') || '[]');
+          existing.unshift(bookingData);
+          localStorage.setItem('wedrive_custom_bookings', JSON.stringify(existing));
+        } catch (storageErr) {}
+
+        showBookingToast('Tempahan ' + bookingRef + ' untuk ' + custName + ' berjaya didaftarkan!', 'success');
+
+        setTimeout(function () {
+          window.location.href = 'active-bookings.html';
+        }, 800);
+
+      } catch (submitErr) {
+        console.error('[NewBooking] Submit error:', submitErr);
+        showBookingToast('Ralat mendaftar tempahan: ' + (submitErr.message || 'Sila cuba lagi.'), 'error');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span class="material-icons-round fs-18">check_circle</span> <span>Sahkan &amp; Daftar Tempahan</span>';
+        }
+      }
     }
   </script>
 </body>
