@@ -265,7 +265,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
     <script src="../../../../shared/js/api.js?v=5.2.3"></script>
-    <script src="edit-car.js?v=6.18.0"></script>
+    <script src="edit-car.js?v=6.20.5"></script>
 
     <script>
         let currentCarId = null;
@@ -340,7 +340,7 @@
 
             // 360 Auto-detection
             const frameCount = Array.isArray(d.exterior_frames) ? d.exterior_frames.length : 0;
-            const has360 = frameCount > 0;
+            const has360 = Boolean(d.has_360 || d.exterior_360 || frameCount > 0);
             const badge360 = document.getElementById('finalBadge360');
             const status360Pill = document.getElementById('final360StatusPill');
             const urlText = document.getElementById('final360UrlText');
@@ -349,7 +349,9 @@
                 badge360.classList.remove('hidden');
                 status360Pill.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400';
                 status360Pill.textContent = 'Aktif & Dikesan';
-                urlText.textContent = `${frameCount} frame Cloudinary tersedia`;
+                urlText.textContent = frameCount > 0
+                    ? `${frameCount} frame Cloudinary tersedia`
+                    : 'Visual 360° Cloudinary tersedia';
             } else {
                 badge360.classList.add('hidden');
                 status360Pill.className = 'text-[11px] font-bold px-2 py-0.5 rounded-full bg-surface-2 text-secondary';

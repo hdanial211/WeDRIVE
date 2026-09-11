@@ -1,6 +1,6 @@
 /**
  * WeDRIVE - Customer and Guest Browse Module
- * Data is loaded through shared/js/api.js from shared/dummy/data.json.
+ * Data is loaded through shared/js/api.js from Supabase PostgreSQL.
  */
 
 (function () {
@@ -179,8 +179,9 @@
 
   function statusKey(car) {
     var rawStatus = String(car.status || '').toLowerCase();
-    if (rawStatus === 'maintenance' || rawStatus === 'inactive') return 'maintenance';
-    return 'available';
+    if (rawStatus === 'available') return 'available';
+    if (rawStatus === 'rented') return 'rented';
+    return 'maintenance';
   }
 
   function statusText(car) {

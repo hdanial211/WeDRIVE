@@ -6,7 +6,9 @@
  * technical specifications, equipment matrix, and telemetry health (Zero booking dependencies).
  */
 
-const IMG_BASE = '../../../../shared/model/';
+// car-detail.html is served from /admin/pages/car/car-detail/, so the local
+// production model root is three levels above the page directory.
+const IMG_BASE = '../../../shared/model/';
 let allCars = [];
 let activeCar = null;
 let currentMode = 'exterior'; // 'exterior' | 'interior' | 'gallery'
@@ -84,7 +86,12 @@ function findRegistryEntry(car) {
  */
 function carHasExterior360(car) {
   if (!car) return false;
-  if (car.has_360 === false && !car.exterior_360 && (!Array.isArray(car.exterior_frames) || !car.exterior_frames.length)) return false;
+  const localModel = findRegistryEntry(car);
+  // Some older rows have has_360=false even though their approved local
+  // shared/model entry contains the complete 200-frame exterior spin.
+  if (car.has_360 === false && !car.exterior_360 && (!Array.isArray(car.exterior_frames) || !car.exterior_frames.length)) {
+    return Boolean(localModel && localModel.entry && localModel.entry.sourceJson);
+  }
   if (Array.isArray(car.exterior_frames) && car.exterior_frames.length > 0) return true;
   if (car.exterior_360 && typeof car.exterior_360 === 'string' && car.exterior_360.trim().length > 5) {
     if (car.exterior_360.trim().startsWith('{')) {
@@ -97,7 +104,7 @@ function carHasExterior360(car) {
     if (/^https?:\/\//i.test(car.exterior_360)) return false;
     return true; // local shared/model path or Cloudinary manifest JSON
   }
-  if (findRegistryEntry(car) && car.has_360 !== false) return true;
+  if (localModel && localModel.entry && localModel.entry.sourceJson) return true;
   return false;
 }
 
@@ -106,7 +113,11 @@ function carHasExterior360(car) {
  */
 function carHasInterior360(car) {
   if (!car) return false;
-  if (car.has_360 === false && !car.interior_360) return false;
+  const localModel = findRegistryEntry(car);
+  // The local registry is the source of truth for downloaded cube-map faces.
+  if (car.has_360 === false && !car.interior_360) {
+    return Boolean(localModel && localModel.entry && localModel.entry.sourceJson);
+  }
     if (car.interior_360 && typeof car.interior_360 === 'string' && car.interior_360.trim().length > 5) {
         if (/^https?:\/\//i.test(car.interior_360)) return false;
         if (!car.interior_360.trim().startsWith('{')) return false;
@@ -115,7 +126,7 @@ function carHasInterior360(car) {
           return Object.values(faces).some(value => isAllowedProductionMedia(value));
         } catch (_) { return false; }
   }
-  if (findRegistryEntry(car) && car.has_360 !== false) return true;
+  if (localModel && localModel.entry && localModel.entry.sourceJson) return true;
   return false;
 }
 

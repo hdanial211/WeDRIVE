@@ -332,7 +332,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
     <script src="../../../../shared/js/api.js?v=5.2.3"></script>
-    <script src="edit-car.js?v=6.18.0"></script>
+    <script src="edit-car.js?v=6.20.5"></script>
 
     <script>
         let currentCarId = null;
@@ -542,7 +542,10 @@
             // 360 Auto-detection Badge
             const badge360 = document.getElementById('live360Badge');
             if (badge360) {
-                const has360 = Boolean(activeDraft && Array.isArray(activeDraft.exterior_frames) && activeDraft.exterior_frames.length > 0);
+                const frames = activeDraft && Array.isArray(activeDraft.exterior_frames)
+                    ? activeDraft.exterior_frames.filter(Boolean)
+                    : [];
+                const has360 = Boolean(activeDraft && (activeDraft.has_360 || activeDraft.exterior_360 || frames.length > 0));
                 if (has360) {
                     badge360.classList.remove('hidden');
                 } else {

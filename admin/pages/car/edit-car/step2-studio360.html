@@ -212,13 +212,17 @@
                             <div class="relative">
                                 <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-secondary material-icons-round fs-16">link</span>
                                 <input type="text" id="inputExteriorCdnUrl" readonly class="w-full pl-10 pr-10 py-3 rounded-xl bg-surface-2 border-subtle text-xs text-primary font-mono opacity-70 cursor-not-allowed" placeholder="Tiada URL CDN digunakan" />
-                                <button type="button" id="btnClear360" onclick="handleClear360()" class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-error transition-colors" title="Padam frame 360° Cloudinary">
+                                <button type="button" id="btnClear360" onclick="handleClear360()" class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-error transition-colors" title="Padam visual 360° (dua pengesahan diperlukan)" aria-label="Padam visual 360° dengan dua pengesahan">
                                     <span class="material-icons-round fs-16">cancel</span>
                                 </button>
                             </div>
                             <p class="text-[11px] text-secondary mt-1.5 leading-relaxed">
                                 💡 Frame 360° dibaca daripada <strong>exterior_frames</strong> Cloudinary. URL SpinCar/CDN tidak dipaparkan atau disimpan sebagai media.
                             </p>
+                            <div id="locked360Notice" class="mt-3 flex items-start gap-2 rounded-xl border border-purple-200 bg-purple-50/70 px-3 py-2.5 text-[11px] leading-relaxed text-purple-700 dark:border-purple-900/40 dark:bg-purple-950/20 dark:text-purple-300">
+                                <span class="material-icons-round text-sm shrink-0">lock</span>
+                                <span>Visual 360° yang telah disimpan adalah <strong>read-only</strong>. Sebarang perubahan atau pemadaman memerlukan dua pengesahan admin.</span>
+                            </div>
                         </div>
 
                         <!-- Live Status Preview -->
@@ -296,7 +300,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../../../shared/js/supabase-config.js?v=5.2.3"></script>
     <script src="../../../../shared/js/api.js?v=5.2.3"></script>
-    <script src="edit-car.js?v=6.18.0"></script>
+    <script src="edit-car.js?v=6.20.5"></script>
 
     <script>
         let currentCarId = null;
@@ -355,13 +359,21 @@
         }
 
         function update360StatusDisplay() {
-            const has360 = Boolean(activeDraft && Array.isArray(activeDraft.exterior_frames) && activeDraft.exterior_frames.length > 0);
+            const frames = activeDraft && Array.isArray(activeDraft.exterior_frames)
+                ? activeDraft.exterior_frames.filter(Boolean)
+                : [];
+            const has360 = Boolean(activeDraft && (activeDraft.has_360 || activeDraft.exterior_360 || frames.length > 0));
             const badge = document.getElementById('studioBadge360');
             const dot = document.getElementById('status360Dot');
             const title = document.getElementById('status360Title');
             const desc = document.getElementById('status360Desc');
             const tab360 = document.getElementById('tab360');
             const autoBadge = document.getElementById('autoDetectBadge');
+            const clearButton = document.getElementById('btnClear360');
+            const lockedNotice = document.getElementById('locked360Notice');
+
+            if (clearButton) clearButton.classList.toggle('hidden', !has360);
+            if (lockedNotice) lockedNotice.classList.toggle('hidden', !has360);
 
             if (has360) {
                 if (badge) badge.classList.remove('hidden');
@@ -373,7 +385,7 @@
                     title.className = 'text-xs font-bold text-purple-600 dark:text-purple-400';
                 }
                 if (desc) {
-                    desc.textContent = 'Lencana 360° View akan dipaparkan secara dinamik pada kad kenderaan.';
+                    desc.textContent = 'Visual 360° Cloudinary aktif dan dikunci. Tekan ikon padam hanya jika mahu ubah selepas dua pengesahan admin.';
                 }
                 if (autoBadge) {
                     autoBadge.className = 'text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400';
@@ -399,6 +411,17 @@
         }
 
         function handleClear360() {
+            const frames = Array.isArray(activeDraft && activeDraft.exterior_frames)
+                ? activeDraft.exterior_frames.filter(Boolean)
+                : [];
+            const has360 = Boolean(activeDraft && (activeDraft.has_360 || activeDraft.exterior_360 || frames.length > 0));
+            if (!has360) return;
+
+            if (!window.WeDriveEditCar.request360EditPermission(currentCarId)) {
+                window.WeDriveEditCar.showUnifiedPillToast('Perubahan visual 360° dibatalkan.', 'info');
+                return;
+            }
+
             const cdnInput = document.getElementById('inputExteriorCdnUrl');
             if (cdnInput) cdnInput.value = '';
             activeDraft.has360 = false;
@@ -436,7 +459,7 @@
                 const frames = Array.isArray(activeDraft.exterior_frames) ? activeDraft.exterior_frames.filter(Boolean) : [];
                 if (frames.length > 0) {
                     current360FrameIndex = Math.min(current360FrameIndex, frames.length - 1);
-                    frameImg.src = frames[current360FrameIndex];
+                    frameImg.src = window.WeDriveEditCar.resolveCarImg(frames[current360FrameIndex]);
                     frameImg.classList.remove('hidden');
                     emptyMsg.classList.add('hidden');
                     prev.classList.remove('hidden');
@@ -456,7 +479,7 @@
             if (!frames.length) return;
             current360FrameIndex = (current360FrameIndex + direction + frames.length) % frames.length;
             const frameImg = document.getElementById('edit360FrameImg');
-            if (frameImg) frameImg.src = frames[current360FrameIndex];
+            if (frameImg) frameImg.src = window.WeDriveEditCar.resolveCarImg(frames[current360FrameIndex]);
         }
 
         function renderThumbnails() {

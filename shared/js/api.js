@@ -168,16 +168,19 @@ window.WeDriveAPI = {
         }
     },
     /**
-     * Get the list of all available cars.
-     * Used in: index.html (Landing), customer.html (Dashboard), admin.html (Car)
+     * Get the public rental catalogue.
+     * Archived, Draft, Maintenance and other non-rentable records must never
+     * appear in customer/guest spotlight or browse cards. Archived rows may be
+     * retained for booking history, but they are not catalogue inventory.
      */
     getCars: async function () {
         var sb = window.supabaseClient;
         if (!sb) throw new Error('Supabase client is unavailable.');
-        var result = await sb.from('cars').select('*').neq('status', 'Draft');
+        var result = await sb.from('cars').select('*');
         if (result.error) throw result.error;
         return (result.data || []).filter(function(c) {
-            return !c.status || c.status.toLowerCase() !== 'draft';
+            var status = String(c.status || 'Available').trim().toLowerCase();
+            return status === 'available' || status === 'rented';
         });
     },
 

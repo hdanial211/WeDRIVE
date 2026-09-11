@@ -1,6 +1,6 @@
 /**
  * WeDRIVE Admin Edit Car - State & API Synchronization Manager
- * admin/pages/car/edit-car/edit-car.js (v6.18.0)
+ * admin/pages/car/edit-car/edit-car.js (v6.20.5)
  * 
  * Manages:
  * - Session draft lifecycle across Step 1 -> Step 2 -> Step 3
@@ -19,6 +19,53 @@
 
   function getStorageKey(id) {
     return 'wedrive_edit_car_' + id;
+  }
+
+  function get360PermissionKey(id) {
+    return 'wedrive_edit_360_permission_' + id;
+  }
+
+  function has360EditPermission(id) {
+    if (!id) return false;
+    try {
+      const raw = sessionStorage.getItem(get360PermissionKey(id));
+      const permission = raw ? JSON.parse(raw) : null;
+      return Boolean(permission && permission.grantedAt);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function request360EditPermission(id) {
+    if (!id || has360EditPermission(id)) return Boolean(id);
+
+    const firstConfirmation = window.confirm(
+      'Visual 360° yang telah disimpan dilindungi. Anda pasti mahu mengubah atau memadam visual 360° ini?'
+    );
+    if (!firstConfirmation) return false;
+
+    const secondConfirmation = window.confirm(
+      'Pengesahan kedua: perubahan ini akan menukar rekod visual 360° Cloudinary untuk kenderaan ini. Teruskan?'
+    );
+    if (!secondConfirmation) return false;
+
+    try {
+      sessionStorage.setItem(get360PermissionKey(id), JSON.stringify({ grantedAt: Date.now() }));
+    } catch (e) {
+      console.warn('[WeDRIVE EditCar] Could not persist 360 permission:', e);
+    }
+    return true;
+  }
+
+  function clear360EditPermission(id) {
+    if (!id) return;
+    sessionStorage.removeItem(get360PermissionKey(id));
+  }
+
+  function sameStringArray(left, right) {
+    const a = Array.isArray(left) ? left.filter(Boolean).map(String) : [];
+    const b = Array.isArray(right) ? right.filter(Boolean).map(String) : [];
+    return a.length === b.length && a.every((value, index) => value === b[index]);
   }
 
   function isAllowedCarMedia(value) {
@@ -142,6 +189,20 @@
               return { img: resolveCarImg(raw), raw: raw, title: title };
             });
           }
+          // Older session drafts may not have a media snapshot. Capture it once
+          // so an edit to an existing 360 asset can never happen silently.
+          parsed.original = parsed.original || {};
+          if (!Array.isArray(parsed.original.exterior_frames)) {
+            parsed.original.exterior_frames = Array.isArray(parsed.exterior_frames)
+              ? parsed.exterior_frames.filter(Boolean).slice()
+              : [];
+          }
+          if (!Object.prototype.hasOwnProperty.call(parsed.original, 'exterior_360')) {
+            parsed.original.exterior_360 = parsed.exterior_360 || null;
+          }
+          if (!Object.prototype.hasOwnProperty.call(parsed.original, 'interior_360')) {
+            parsed.original.interior_360 = parsed.interior_360 || null;
+          }
           return parsed;
         }
       } catch (e) {
@@ -208,7 +269,10 @@
         fuel: rawCar.fuel,
         seats: rawCar.seats,
         has_360: has360Initial,
-        images: rawCar.images || []
+        images: rawCar.images || [],
+        exterior_frames: exteriorFrames.slice(),
+        exterior_360: rawCar.exterior_360 || null,
+        interior_360: rawCar.interior_360 || null
       }
     };
 
@@ -228,6 +292,7 @@
   function clearCarDraft(carId) {
     if (!carId) return;
     sessionStorage.removeItem(getStorageKey(carId));
+    clear360EditPermission(carId);
   }
 
   function extractBrandFromName(name) {
@@ -273,6 +338,28 @@
     const exteriorFrames = Array.isArray(draft.exterior_frames)
       ? draft.exterior_frames.filter(function (url) { return typeof url === 'string' && url.trim(); })
       : [];
+
+    const original = draft.original || {};
+    const originalFrames = Array.isArray(original.exterior_frames)
+      ? original.exterior_frames.filter(Boolean)
+      : [];
+    const originalExterior360 = Object.prototype.hasOwnProperty.call(original, 'exterior_360')
+      ? (original.exterior_360 || null)
+      : null;
+    const originalInterior360 = Object.prototype.hasOwnProperty.call(original, 'interior_360')
+      ? (original.interior_360 || null)
+      : null;
+    const media360Changed = !sameStringArray(originalFrames, exteriorFrames)
+      || String(originalExterior360 || '') !== String(draft.exterior_360 || '')
+      || String(originalInterior360 || '') !== String(draft.interior_360 || '');
+    const originalHas360 = originalFrames.length > 0
+      || Boolean(originalExterior360)
+      || Boolean(originalInterior360)
+      || Boolean(original.has_360);
+    if (originalHas360 && media360Changed && !has360EditPermission(carId)) {
+      throw new Error('Visual 360° sedia ada dikunci. Gunakan butang perubahan dan lengkapkan dua pengesahan admin.');
+    }
+
     const has360Final = exteriorFrames.length > 0;
 
     function cleanImgForDb(src) {
@@ -394,6 +481,9 @@
     loadCarDraft,
     saveCarDraft,
     clearCarDraft,
+    has360EditPermission,
+    request360EditPermission,
+    clear360EditPermission,
     updateCarRecord,
     showUnifiedPillToast,
     resolveCarImg
