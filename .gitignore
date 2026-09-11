@@ -13,3 +13,6 @@ tests/blob-report/
 playwright-report/
 test-results/
 blob-report/
+graphify-out/cache/
+*.lock
+

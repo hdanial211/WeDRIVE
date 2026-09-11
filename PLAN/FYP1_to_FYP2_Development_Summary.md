@@ -7008,3 +7008,22 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
 - **Maklumat Git**:
   - Commit: `6.20.4 Polish admin UI aesthetics and Apple HIG responsive stat grid`
   - Tag Versi: `6.20.4`
+
+---
+
+## 34. [MINOR UPDATE] Perlindungan Keselamatan Aset 360° & Penapisan Katalog Awam Supabase
+- **Tarikh**: 11 September 2026
+- **Objektif**: Melaksanakan perlindungan dwi-pengesahan bagi penyuntingan aset visual 360° kenderaan serta menapis katalog awam agar kenderaan berstatus draf, arkib atau selenggaraan tidak dipamerkan dalam katalog sewaan.
+- **Perubahan Teras**:
+  1. **Kawalan Keselamatan Visual 360° (`edit-car.js` & `step2-studio360.html`)**:
+     - Mewujudkan kunci kebenaran dwi-pengesahan (`wedrive_edit_360_permission_`) sebelum visual 360° Cloudinary boleh dipadam atau diubah.
+     - Memaparkan notis amaran read-only (`#locked360Notice`) untuk aset 360° yang telah disimpan selamat.
+  2. **Integriti Katalog Sewaan (`shared/js/api.js` & `customer.js`)**:
+     - Menyaring fungsi `getCars()` agar hanya mengembalikan kenderaan berstatus `Available` atau `Rented` bagi tujuan penjelajahan awam dan sorotan papan pemuka.
+     - Mengemas kini pengesanan status kenderaan di modul pelanggan untuk membezakan secara tepat status sewaan dan selenggaraan.
+  3. **Penyeragaman Cache-Busting Versi 6.20.10**:
+     - Menyelaraskan query string aset skrip `?v=6.20.10` merentas seluruh halaman portal admin, pelanggan, dan pelawat.
+- **Maklumat Git**:
+  - Commit: `6.20.10 Secure 360 vehicle media editing with double confirmation and filter public rental catalogue`
+  - Tag Versi: `6.20.10`
+
