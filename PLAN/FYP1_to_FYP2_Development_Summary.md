@@ -7049,4 +7049,27 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.20.14 Refactor customer booking flow layout, fix dynamic date defaults, and update Figure 5.6 in FYP report`
   - Tag Versi: `6.20.14`
 
+---
+
+## 36. [PATCH] Penulisan Penuh Chapter 7: Conclusion & Integrasi Dokumen Tesis (v6.20.15)
+- **Tarikh**: 15 September 2026
+- **Objektif**: Menghasilkan penulisan ilmiah akademik penuh bagi Bab 7 (Chapter 7: Conclusion) mengikut format rasmi FTMK UTeM dan rujukan tesis PSM (`PSM reference.pdf`), menggantikan teks placeholder dalam templat Word `REPORT/REPORT FYP.docx`, mengemas kini Senarai Kandungan dan Senarai Jadual, serta mendokumentasikan pencapaian objektif projek secara menyeluruh.
+- **Perubahan Teras**:
+  1. **Penulisan Komprehensif Chapter 7 (`REPORT/chapters/10_Chapter7_Conclusion.md`)**:
+     - Menghasilkan 4 subtopik teras berasaskan piawaian FTMK:
+       - **7.1 Observation on Weaknesses and Strengths**: Menganalisis 6 kekuatan utama sistem (Pematuhan Apple HIG Bento Grid, Studio Visual 360°, AI Dwi-Model dengan failover automatik, Enjin Tempahan Bebas Konflik Hab Melaka, Keselamatan Supabase RLS, dan 100% lulus automasi Playwright), 4 kelemahan/had teknikal operasi (Kebergantungan API AI Awan, Kekangan Depot Tunggal Melaka, OCR berasaskan pelayar, dan Ketiadaan telematik IoT langsung dalam kereta), serta sintesis maklum balas 20 peserta UAT dengan skor SUS 86.5/100 (Gred A).
+       - **7.2 Propositions for Improvement**: Mengemukakan 4 cadangan penambahbaikan masa hadapan (Telematik IoT OBD-II & Buka Kunci BLE Telefon Pintar, Pembelajaran Mesin Ramalan Harga Dinamik, Aplikasi Mudah Alih Natif iOS/Android dengan Pas Luar Talian Apple/Google Wallet, dan Pengembangan Rangkaian Depot Antara Negeri).
+       - **7.3 Project Contribution**: Merumuskan sumbangan impak kepada Universiti/Fakulti (FTMK UTeM), Industri & Pengusaha Kereta Sewa Tempatan di Melaka, serta Pengguna Individu & Masyarakat, berserta rujukan silang ke Manual Pengguna Sistem di Lampiran A (Appendix A).
+       - **7.4 Conclusion**: Mengkaji semula pencapaian 3 objektif utama projek dari Bab 1 secara terperinci berserta Jadual 7.1 (Table 7.1: Project Objectives Achievement Matrix) dengan status pencapaian 100%, diakhiri dengan perenggan penutup impak mobiliti pintar di Malaysia.
+  2. **Integrasi & Pemformatan Dokumen Microsoft Word (`REPORT/REPORT FYP.docx`)**:
+     - Melalui skrip `build_ch7_docx.py`, menggantikan 17 perenggan placeholder draf (P2487-P2503) dengan penulisan ilmiah berformat standard FTMK (Heading 1, Heading 2, Heading 3, Times New Roman 12pt, langkauan 1.15, justified alignment).
+     - Membina dan memformatkan Jadual 7.1 (*Table 7.1: Project Objectives Achievement Matrix*) dengan sempadan kemas dan selang warna sel E2E.
+     - Mengemas kini Senarai Jadual (*List of Tables*) pada perenggan P348 dengan entri `Table 7.1: Project Objectives Achievement Matrix`.
+  3. **Penyelarasan Markdown Senarai Kandungan (`REPORT/chapters/02_Table_of_Contents.md`)**:
+     - Menambah seksyen Chapter 7 beserta subtopik 7.1, 7.2, 7.3, dan 7.4 sebelum seksyen Rujukan, serta menyelaraskan senarai jadual.
+- **Maklumat Git**:
+  - Commit: `6.20.15 Author Chapter 7 Conclusion and integrate with FYP thesis docx report`
+  - Tag Versi: `6.20.15`
+
+
 

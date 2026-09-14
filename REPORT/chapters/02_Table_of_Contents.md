@@ -97,7 +97,26 @@
 | 6.6.3 Qualitative Feedback & User Observations | 112 |
 | 6.7 Conclusion | 113 |
 | | |
-| **REFERENCES** | 114 |
+| **CHAPTER 7: CONCLUSION** | |
+| 7.1 Observation on Weaknesses and Strengths | 114 |
+| 7.1.1 Strengths of the System | 114 |
+| 7.1.2 Weaknesses and Technical Limitations | 116 |
+| 7.1.3 User and Evaluator Observations | 117 |
+| 7.2 Propositions for Improvement | 118 |
+| 7.2.1 Proposition 1: In-Vehicle IoT Telematics and Smart Keyless Access | 118 |
+| 7.2.2 Proposition 2: Predictive Machine Learning for Dynamic Pricing | 118 |
+| 7.2.3 Proposition 3: Native Mobile Application Ecosystem | 119 |
+| 7.2.4 Proposition 4: Nationwide Depot Network Expansion | 119 |
+| 7.3 Project Contribution | 120 |
+| 7.3.1 Contribution to the University and Faculty (FTMK, UTeM) | 120 |
+| 7.3.2 Contribution to Industry and Local Car Rental Operators | 121 |
+| 7.3.3 Contribution to Individual Users and Society | 121 |
+| 7.3.4 System Documentation and User Manual Reference | 122 |
+| 7.4 Conclusion | 122 |
+| 7.4.1 Evaluation of Project Objectives | 122 |
+| 7.4.2 Concluding Remarks | 123 |
+| | |
+| **REFERENCES** | 124 |
 
 ---
 
@@ -137,6 +156,7 @@
 | Table 6.13 | Ethical Cybersecurity Vulnerability Assessment & Remediation Matrix | 107 |
 | Table 6.14 | Defect Tracking & Resolution Log | 108 |
 | Table 6.15 | System Usability Scale (SUS) Evaluation Scores | 111 |
+| Table 7.1 | Project Objectives Achievement Matrix | 123 |
 
 ---
 
