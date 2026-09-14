@@ -10,7 +10,7 @@
   <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
-  <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.20.12" />
+  <link rel="stylesheet" href="../../../../shared/css/wedrive.css?v=6.20.14" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -35,24 +35,6 @@
     <div class="booking-grid">
       <!-- LEFT: Booking Form -->
       <div class="booking-left">
-        <!-- Selected Car -->
-        <section class="bk-card reveal-onload" id="car-summary-section">
-          <div class="car-summary">
-            <div class="car-summary-img">
-              <img src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg" alt="BMW 320i M Sport" onerror="this.onerror=null;this.src='../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg'" />
-            </div>
-            <div class="car-summary-info">
-              <div class="car-summary-head">
-                <div>
-                  <h2 id="booking-car-name">BMW 320i M Sport</h2>
-                  <span class="car-summary-tag">Sedan -- 2023 M Sport</span>
-                </div>
-              </div>
-              <p class="car-summary-price" id="booking-price-display">RM450<span class="car-price-unit">/day</span></p>
-            </div>
-          </div>
-        </section>
-
         <!-- Rental Details -->
         <section class="bk-card reveal-onload">
           <h3 class="bk-section-title">
@@ -134,9 +116,32 @@
             </label>
           </div>
         </section>
+      </div>
+
+      <!-- RIGHT: Sidebar -->
+      <aside class="booking-sidebar">
+        <div class="bk-card sidebar-car-visual">
+          <img src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg" alt="BMW 320i M Sport" onerror="this.onerror=null;this.src='../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg'" />
+          <span class="sidebar-badge">Available</span>
+          <div class="sidebar-car-header">
+            <div>
+              <h3 id="booking-car-name">BMW 320i M Sport</h3>
+              <span id="booking-car-subtitle" class="sidebar-car-subtitle car-summary-tag">Sedan • 2023 M Sport</span>
+            </div>
+            <div class="sidebar-car-price-box">
+              <span class="sidebar-car-price" id="booking-price-display">MYR 450<span class="car-price-unit">/day</span></span>
+            </div>
+          </div>
+          <div class="specs-grid">
+            <div class="spec-chip"><span class="material-icons-round">airline_seat_recline_extra</span><span>5 Seats</span></div>
+            <div class="spec-chip"><span class="material-icons-round">settings</span><span>Automatic</span></div>
+            <div class="spec-chip"><span class="material-icons-round">ev_station</span><span>Petrol</span></div>
+            <div class="spec-chip"><span class="material-icons-round">calendar_today</span><span>2023 Model</span></div>
+          </div>
+        </div>
 
         <!-- Payment Summary -->
-        <section class="bk-card reveal-onload">
+        <section class="bk-card reveal-onload rental-summary-card">
           <h3 class="bk-section-title" data-key="book_step_summary">Rental Summary</h3>
           <div class="payment-row"><span class="label" id="base-label">Base Rate (2 days)</span><span class="value" id="base-value">RM500.00</span></div>
           <div class="payment-row"><span class="label" id="addon-label">Add-ons (Full Insurance)</span><span class="value" id="addon-value">RM70.00</span></div>
@@ -152,20 +157,6 @@
             <span class="material-icons-round">arrow_forward</span>
           </button>
         </section>
-      </div>
-
-      <!-- RIGHT: Sidebar -->
-      <aside class="booking-sidebar">
-        <div class="bk-card sidebar-car-visual">
-          <img src="../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg" alt="BMW 320i M Sport" onerror="this.onerror=null;this.src='../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-125.jpg'" />
-          <span class="sidebar-badge">Available</span>
-          <div class="specs-grid">
-            <div class="spec-chip"><span class="material-icons-round">airline_seat_recline_extra</span><span>5 Seats</span></div>
-            <div class="spec-chip"><span class="material-icons-round">settings</span><span>Automatic</span></div>
-            <div class="spec-chip"><span class="material-icons-round">ev_station</span><span>Petrol</span></div>
-            <div class="spec-chip"><span class="material-icons-round">calendar_today</span><span>2023 Model</span></div>
-          </div>
-        </div>
 
         <div class="bk-card">
           <h4 class="bk-section-title" data-key="bk_policy">Rental Policy</h4>
@@ -178,14 +169,6 @@
             Need help? Contact support
             <span class="material-icons-round">support_agent</span>
           </a>
-        </div>
-
-        <div class="ai-insight">
-          <div class="ai-insight-header">
-            <span class="material-icons-round">bolt</span>
-            <span data-key="bk_ai_title">AI Recommendation</span>
-          </div>
-          <p data-key="bk_ai_msg">Based on your travel dates, this BMW is in high demand for business travel. We predict 91% occupancy this weekend. <strong>Book now to lock in this rate.</strong></p>
         </div>
       </aside>
     </div>
@@ -205,9 +188,9 @@
   <script src="../../../../shared/js/main.js?v=5.7.0"></script>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const carId = parseInt(urlParams.get('car')) || 4; 
-    const pickupDateStr = urlParams.get('pickup') || '2026-05-22';
-    const returnDateStr = urlParams.get('return') || '2026-05-23';
+    const carId = parseInt(urlParams.get('car')) || 1; 
+    let pickupDateStr = urlParams.get('pickup') || '';
+    let returnDateStr = urlParams.get('return') || '';
     const pickupLoc = 'Melaka Sentral';
 
     let currentCar = null;
@@ -255,6 +238,31 @@
       return dateStr;
     }
 
+    function findFirstAvailableRange(daysNeeded, disabledRanges) {
+      const start = new Date();
+      start.setHours(0, 0, 0, 0);
+      start.setDate(start.getDate() + 1);
+      for (let i = 0; i < 60; i++) {
+        const candidatePickup = new Date(start.getTime() + i * 86400000);
+        const candidateReturn = new Date(candidatePickup.getTime() + daysNeeded * 86400000);
+        let overlap = false;
+        if (disabledRanges && disabledRanges.length) {
+          for (const range of disabledRanges) {
+            const from = new Date(range.from).getTime();
+            const to = new Date(range.to).getTime();
+            if (candidatePickup.getTime() <= to && candidateReturn.getTime() >= from) {
+              overlap = true;
+              break;
+            }
+          }
+        }
+        if (!overlap) {
+          return { pickup: candidatePickup, return: candidateReturn };
+        }
+      }
+      return { pickup: start, return: new Date(start.getTime() + daysNeeded * 86400000) };
+    }
+
     async function initBookingPage() {
       if (window.WeDriveGetSettings) {
         try {
@@ -280,16 +288,21 @@
 
       if (currentCar) {
         basePrice = currentCar.price || currentCar.price_per_day || 120;
-        document.getElementById('booking-car-name').textContent = currentCar.name;
-        document.querySelector('.booking-sidebar .sidebar-badge').textContent = currentCar.status || 'Available';
+        const nameEl = document.getElementById('booking-car-name');
+        if (nameEl) nameEl.textContent = currentCar.name;
         
-        const typeLabel = currentCar.label || currentCar.type || 'Hatchback';
-        const carYear = currentCar.year || 2022;
+        const badgeEl = document.querySelector('.booking-sidebar .sidebar-badge');
+        if (badgeEl) badgeEl.textContent = currentCar.status || 'Available';
+        
+        const typeLabel = currentCar.label || currentCar.type || 'Sedan';
+        const carYear = currentCar.year || 2023;
         const carColor = currentCar.color || '';
-        document.querySelector('.car-summary-tag').textContent = `${typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1)} -- ${carYear} ${carColor}`;
+        const tagEl = document.querySelector('.car-summary-tag');
+        if (tagEl) tagEl.textContent = `${typeLabel.charAt(0).toUpperCase() + typeLabel.slice(1)} • ${carYear} ${carColor}`;
         
         const currency = currentSettings.currency || 'MYR';
-        document.getElementById('booking-price-display').innerHTML = `${currency}${basePrice}<span class="car-price-unit">/day</span>`;
+        const priceDisplay = document.getElementById('booking-price-display');
+        if (priceDisplay) priceDisplay.innerHTML = `${currency} ${basePrice}<span class="car-price-unit">/day</span>`;
         
         let imgUrl = '../../../../shared/model/Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res/frame-170.jpg';
         if (currentCar.images && currentCar.images.length > 0) {
@@ -298,8 +311,10 @@
           imgUrl = '../../../../shared/model/' + currentCar.image;
         }
         carImage = imgUrl;
-        document.querySelector('.car-summary-img img').src = imgUrl;
-        document.querySelector('.sidebar-car-visual img').src = imgUrl;
+        const sumImg = document.querySelector('.car-summary-img img');
+        if (sumImg) sumImg.src = imgUrl;
+        const sidebarImg = document.querySelector('.sidebar-car-visual img');
+        if (sidebarImg) sidebarImg.src = imgUrl;
 
         const specsChips = document.querySelectorAll('.specs-grid .spec-chip');
         if (specsChips.length >= 4) {
@@ -333,21 +348,34 @@
         }
       }
 
+      // Resolve valid dates
+      let pDate = parseDateStr(pickupDateStr);
+      let rDate = parseDateStr(returnDateStr);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (!pDate || pDate < today || !rDate || rDate <= pDate) {
+        const avail = findFirstAvailableRange(3, disabledDates);
+        pDate = avail.pickup;
+        rDate = avail.return;
+      }
+
       // Initialize flatpickr on bk-pickup-date and bk-return-date
       if (window.WeDriveCalendar) {
         bookingPickers = window.WeDriveCalendar.initPairedPickers('bk-pickup-date', 'bk-return-date', calculateBookingSummary, disabledDates);
         
-        if (pickupDateStr) {
-          const pDate = parseDateStr(pickupDateStr);
-          if (pDate) bookingPickers.pickup.setDate(pDate, true);
+        if (pDate) {
+          bookingPickers.pickup.setDate(pDate, true);
+          bookingPickers.pickup.close();
         }
-        if (returnDateStr) {
-          const rDate = parseDateStr(returnDateStr);
-          if (rDate) bookingPickers.return.setDate(rDate, true);
+        if (rDate) {
+          bookingPickers.return.setDate(rDate, true);
+          bookingPickers.return.close();
         }
+        calculateBookingSummary();
       } else {
-        document.getElementById('bk-pickup-date').value = formatDateForInput(pickupDateStr);
-        document.getElementById('bk-return-date').value = formatDateForInput(returnDateStr);
+        document.getElementById('bk-pickup-date').value = formatDateForInput(pDate);
+        document.getElementById('bk-return-date').value = formatDateForInput(rDate);
         calculateBookingSummary();
         document.getElementById('bk-pickup-date').addEventListener('change', calculateBookingSummary);
         document.getElementById('bk-return-date').addEventListener('change', calculateBookingSummary);

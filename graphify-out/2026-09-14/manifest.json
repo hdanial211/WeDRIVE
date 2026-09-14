@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   "admin/js/bookings.js": {
-    "mtime": 1789078061.2619936,
-    "seen": 1789399978.390502,
-    "ast_hash": "541f1a2b3eb1a9dc8c724d65befaedf8",
+    "mtime": 1788999592.8611155,
+    "seen": 1788999994.226964,
+    "ast_hash": "22fb90a9bdc2e15219dec2e67ea0489c",
     "semantic_hash": ""
   },
   "admin/js/calendar.js": {
@@ -24,21 +24,21 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1789081830.0258443,
-    "seen": 1789399978.390539,
-    "ast_hash": "fedc28e49b1ca8c8ec4e593b3635d4e1",
+    "mtime": 1789044980.2999165,
+    "seen": 1789046747.277689,
+    "ast_hash": "b404c5c08fc4c62c81cbc2de9c58276a",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
-    "mtime": 1789080813.0515099,
-    "seen": 1789399978.3905401,
-    "ast_hash": "3a0ff20a5f1fbb1c84b6eb22063c6ec1",
+    "mtime": 1789024212.6452863,
+    "seen": 1789025232.9180212,
+    "ast_hash": "a246fcd9878e70376354220367e98f93",
     "semantic_hash": ""
   },
   "admin/js/chatbot-admin.js": {
-    "mtime": 1789076813.2627206,
-    "seen": 1789399978.3905401,
-    "ast_hash": "6854ae69e11951961f4ed7c12bbdb732",
+    "mtime": 1788999633.22827,
+    "seen": 1788999994.226967,
+    "ast_hash": "a4b75523d870e099145d9b557fdbc5cc",
     "semantic_hash": ""
   },
   "admin/js/customers.js": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "admin/js/reports.js": {
-    "mtime": 1789078353.5143461,
-    "seen": 1789399978.390651,
-    "ast_hash": "e2882fc3d409bd5fd4f461b268b3fd27",
+    "mtime": 1788999697.2473931,
+    "seen": 1788999994.2269702,
+    "ast_hash": "3e064613086a948b93dd076d55e1e229",
     "semantic_hash": ""
   },
   "admin/js/settings.js": {
@@ -96,9 +96,9 @@
     "semantic_hash": "7c5d5241cc243593ca7fadcbac3ba264"
   },
   "customer/js/customer.js": {
-    "mtime": 1789082768.0684686,
-    "seen": 1789399978.390841,
-    "ast_hash": "77b097554433cfe574dad2553523e437",
+    "mtime": 1789003221.6570861,
+    "seen": 1789003486.667207,
+    "ast_hash": "b29c96951a323cc4bf0adae503e01bc5",
     "semantic_hash": ""
   },
   "customer/js/sidebar-loader.js": {
@@ -132,9 +132,9 @@
     "semantic_hash": "572d66e85091711b6ee76609573a8364"
   },
   "shared/js/api.js": {
-    "mtime": 1789396366.6011724,
-    "seen": 1789399978.391061,
-    "ast_hash": "d27b47465a5c966c3217338cd2d34867",
+    "mtime": 1789045974.2431006,
+    "seen": 1789046747.280719,
+    "ast_hash": "a9cf0e697d14c8df7883cb4b2e2ae6cc",
     "semantic_hash": ""
   },
   "shared/js/auth-guard.js": {
@@ -150,9 +150,9 @@
     "semantic_hash": ""
   },
   "shared/js/chatbot.js": {
-    "mtime": 1789074177.0125105,
-    "seen": 1789399978.391138,
-    "ast_hash": "28ae276244bea3ed8f2af4f26d090bd6",
+    "mtime": 1789023763.9248865,
+    "seen": 1789025232.918041,
+    "ast_hash": "fc0cc2d64019a8a208dea396a3550bbe",
     "semantic_hash": ""
   },
   "shared/js/email-service.js": {
@@ -168,9 +168,9 @@
     "semantic_hash": ""
   },
   "shared/js/navbar-loader.js": {
-    "mtime": 1789072842.6339931,
-    "seen": 1789399978.391209,
-    "ast_hash": "bda6b6a7b00054d2cda3fa04f5a9fd02",
+    "mtime": 1789026060.4812815,
+    "seen": 1789026251.7003179,
+    "ast_hash": "30ba0a757cd60d93f5941a6d8da76c9a",
     "semantic_hash": ""
   },
   "shared/js/promo-banner.js": {
@@ -180,15 +180,15 @@
     "semantic_hash": ""
   },
   "shared/js/search-popup.js": {
-    "mtime": 1789078454.233681,
-    "seen": 1789399978.391244,
+    "mtime": 1787654446.0550416,
+    "seen": 1787898737.194591,
     "ast_hash": "8cc939be4abefdbf6eea66a2c8466765",
     "semantic_hash": ""
   },
   "shared/js/sidebar-loader.js": {
-    "mtime": 1789077130.3104584,
-    "seen": 1789399978.3912451,
-    "ast_hash": "3843d9c45441ece434fe5f63652f311b",
+    "mtime": 1789015729.966324,
+    "seen": 1789016105.5787158,
+    "ast_hash": "23ef553146b6d48044181acdde513228",
     "semantic_hash": ""
   },
   "shared/js/supabase-config.js": {
@@ -204,40 +204,40 @@
     "semantic_hash": "d260508bf9d4fe24282e65e2c8db42fc"
   },
   "shared/js/vehicle-viewer.js": {
-    "mtime": 1789070729.6331244,
-    "seen": 1789399978.391317,
-    "ast_hash": "5f5741dc74b9c5f35a2416bdc6079eb9",
+    "mtime": 1788763273.281319,
+    "seen": 1788764152.7706082,
+    "ast_hash": "f76ac9c76fd6a8495206f8127abd8a8a",
     "semantic_hash": ""
   },
   "shared/lang/en.js": {
-    "mtime": 1789077649.6783574,
-    "seen": 1789399978.391318,
-    "ast_hash": "89ed45f6fd5c0d7115f8d63f4e1d672b",
+    "mtime": 1789026866.7107866,
+    "seen": 1789027949.594164,
+    "ast_hash": "a9557196a2b96f75c3c4a5249ad5a8e3",
     "semantic_hash": ""
   },
   "shared/lang/en.json": {
-    "mtime": 1789077649.679946,
-    "seen": 1789399978.391318,
-    "ast_hash": "2ba56f22fadccb5e0c03a9b90d53e50b",
+    "mtime": 1789023993.7002947,
+    "seen": 1789025232.918047,
+    "ast_hash": "03fe7cd83dedc907b2902b3d1e174b41",
     "semantic_hash": ""
   },
   "shared/lang/ms.js": {
-    "mtime": 1789077649.6808052,
-    "seen": 1789399978.391319,
-    "ast_hash": "998c438fb95aa601ba55510b3cc069a4",
+    "mtime": 1789026858.0834277,
+    "seen": 1789027949.594165,
+    "ast_hash": "7899f11c5b9d61a78e6cdbd7b7e2db5c",
     "semantic_hash": ""
   },
   "shared/lang/ms.json": {
-    "mtime": 1789077649.6817298,
-    "seen": 1789399978.39132,
-    "ast_hash": "6326db88f5c10528e8db50d6e4a35ce3",
+    "mtime": 1789023804.7872806,
+    "seen": 1789025232.918048,
+    "ast_hash": "0103bece11900cc0b2647475023c7b27",
     "semantic_hash": ""
   },
   "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/source.json": {
-    "mtime": 1789078856.9099965,
-    "seen": 1789399978.39132,
-    "ast_hash": "19c9f7a8c4fb85a15677b47840811bf9",
-    "semantic_hash": ""
+    "mtime": 1779082220.4998512,
+    "seen": 1787436189.091396,
+    "ast_hash": "2204b6c5dd0ae24c1c0393ef9c62c3c8",
+    "semantic_hash": "2204b6c5dd0ae24c1c0393ef9c62c3c8"
   },
   "shared/model/Hatchback/2017 Perodua AXIA G 1.0/source.json": {
     "mtime": 1779208712.5103784,
@@ -246,16 +246,16 @@
     "semantic_hash": "764915134656d2e530f15810ff422f53"
   },
   "shared/model/Hatchback/2022 Volkswagen Golf GTI 2.0/source.json": {
-    "mtime": 1789078879.8829522,
-    "seen": 1789399978.391365,
-    "ast_hash": "81955eec064ac860af020be4dadd99e2",
-    "semantic_hash": ""
+    "mtime": 1779082220.5030334,
+    "seen": 1787436189.091397,
+    "ast_hash": "7006a697a1584dec0c12fd4582a47016",
+    "semantic_hash": "7006a697a1584dec0c12fd4582a47016"
   },
   "shared/model/Hatchback/2025 Perodua AXIA AV 1.0/source.json": {
-    "mtime": 1789078879.7377315,
-    "seen": 1789399978.391366,
-    "ast_hash": "1f95a77b23344f70aa46691a3076a3ef",
-    "semantic_hash": ""
+    "mtime": 1779082220.5037606,
+    "seen": 1787436189.091398,
+    "ast_hash": "7f34af819d00b2ddb2332def0715a4e7",
+    "semantic_hash": "7f34af819d00b2ddb2332def0715a4e7"
   },
   "shared/model/MPV/2019 Toyota Alphard G S C Package 2.5/source.json": {
     "mtime": 1779208792.065229,
@@ -276,16 +276,16 @@
     "semantic_hash": "5f294dc05c8508371df08edc9c4490c3"
   },
   "shared/model/Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/source.json": {
-    "mtime": 1789078879.7380943,
-    "seen": 1789399978.3915079,
-    "ast_hash": "e4850c8890538e847a734873796bfc8e",
-    "semantic_hash": ""
+    "mtime": 1779082220.511568,
+    "seen": 1787436189.0914,
+    "ast_hash": "0c7e352714b1ed18848096b6ef48fdd1",
+    "semantic_hash": "0c7e352714b1ed18848096b6ef48fdd1"
   },
   "shared/model/registry.json": {
-    "mtime": 1789055228.0453799,
-    "seen": 1789399978.3915079,
-    "ast_hash": "c78253abd65b8732900fe4b47ab9f9ac",
-    "semantic_hash": ""
+    "mtime": 1787632837.9065151,
+    "seen": 1787898737.194601,
+    "ast_hash": "b121a624aa6a959d6a76972d1ee9001d",
+    "semantic_hash": "b121a624aa6a959d6a76972d1ee9001d"
   },
   "supabase/.temp/linked-project.json": {
     "mtime": 1781615733.9921224,
@@ -312,9 +312,9 @@
     "semantic_hash": "cf8126b54814f2b9ba7f016d6bba8797"
   },
   "admin/js/admin-idle-timeout.js": {
-    "mtime": 1789072842.6355784,
-    "seen": 1789399978.390392,
-    "ast_hash": "6112aa4faa38f1d6f07d8d6e38a0659c",
+    "mtime": 1787898631.9833782,
+    "seen": 1787898737.194571,
+    "ast_hash": "af80a1e4ead9a4fb7575b6aef4058f34",
     "semantic_hash": ""
   },
   "tests/e2e/01_auth.spec.js": {
@@ -342,9 +342,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/05_admin_idle_timeout.spec.js": {
-    "mtime": 1789419498.491709,
-    "seen": 1789420126.911654,
-    "ast_hash": "17afd4eea77e308981727576ff972a37",
+    "mtime": 1787898585.4864473,
+    "seen": 1787898737.194605,
+    "ast_hash": "854461781f4f11accc133aa5e1dd7755",
     "semantic_hash": ""
   },
   "tests/package.json": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1789419458.5794778,
-    "seen": 1789420126.914156,
-    "ast_hash": "db1155dd615196b8e270d121b4c5348b",
+    "mtime": 1789045252.3312156,
+    "seen": 1789046747.29329,
+    "ast_hash": "7553c67f2ea0a26b2715942d7c1113bb",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "REPORT/chapters/02_Table_of_Contents.md": {
-    "mtime": 1789395687.7420754,
-    "seen": 1789399978.39477,
-    "ast_hash": "90dd50b079e07f29f57e8dd5d49f6e7d",
+    "mtime": 1782083582.2978559,
+    "seen": 1787898737.194614,
+    "ast_hash": "b36873b682ef8455634ac2aa3bd35668",
     "semantic_hash": ""
   },
   "REPORT/chapters/03_Chapter1_Introduction.md": {
@@ -510,21 +510,21 @@
     "semantic_hash": ""
   },
   "admin/pages/car/car-detail/car-detail.html": {
-    "mtime": 1789081830.0273812,
-    "seen": 1789399978.396683,
-    "ast_hash": "388de7f84351fa220e4e908189752181",
+    "mtime": 1789029043.26,
+    "seen": 1789046747.2997382,
+    "ast_hash": "521b24dba427aec9f724f4fbcadef2a5",
     "semantic_hash": ""
   },
   "admin/pages/car/cars.html": {
-    "mtime": 1789082699.9577398,
-    "seen": 1789399978.396684,
-    "ast_hash": "28f0fde159d8f4238a17da89e3536abf",
+    "mtime": 1789021573.4327571,
+    "seen": 1789022426.771148,
+    "ast_hash": "960f4c8c71961b8c088b5dbcab6b5be9",
     "semantic_hash": ""
   },
   "admin/pages/chatbot/chatbot.html": {
-    "mtime": 1789076890.0691893,
-    "seen": 1789399978.3967319,
-    "ast_hash": "50d90b96921e15f5a9286091bc398452",
+    "mtime": 1789027082.1612213,
+    "seen": 1789027949.594274,
+    "ast_hash": "ec6c34257ca358754ff3c9bc814e3111",
     "semantic_hash": ""
   },
   "admin/pages/customer/customers.html": {
@@ -534,9 +534,9 @@
     "semantic_hash": ""
   },
   "admin/pages/dashboard/admin.html": {
-    "mtime": 1789078028.5636983,
-    "seen": 1789399978.396812,
-    "ast_hash": "9d2bf6f410b3542789ebaed7eca0d9a1",
+    "mtime": 1788908655.9870074,
+    "seen": 1788909335.13795,
+    "ast_hash": "8fdd997b3a9f3d6cea97316854b0ad3d",
     "semantic_hash": ""
   },
   "admin/pages/marketing/marketing.html": {
@@ -546,15 +546,15 @@
     "semantic_hash": ""
   },
   "admin/pages/report/reports.html": {
-    "mtime": 1789078218.4667892,
-    "seen": 1789399978.396953,
-    "ast_hash": "02a384f6bd72952f397abbe056fb81aa",
+    "mtime": 1788778092.252063,
+    "seen": 1788778407.2470558,
+    "ast_hash": "af9e9b83fa4b01e9ff17be3866668641",
     "semantic_hash": ""
   },
   "admin/pages/setting/settings.html": {
-    "mtime": 1789076709.9188673,
-    "seen": 1789399978.396954,
-    "ast_hash": "25e2a8a7564d9f0a93b7dd6b06494d84",
+    "mtime": 1789021210.6544921,
+    "seen": 1789022426.771157,
+    "ast_hash": "6821bb179b6a52d906af373688e300da",
     "semantic_hash": ""
   },
   "bin/ai-insights.html": {
@@ -582,63 +582,63 @@
     "semantic_hash": ""
   },
   "customer/pages/browse-cars/browse-cars.html": {
-    "mtime": 1789082661.1139784,
-    "seen": 1789399978.3971,
-    "ast_hash": "41e7dad71ba59c44c6cb27c9833cb170",
+    "mtime": 1788652726.9731205,
+    "seen": 1788653435.6837912,
+    "ast_hash": "ec4e984db365942ecd5fbdc473bb4555",
     "semantic_hash": ""
   },
   "customer/pages/car-details/booking/booking.html": {
-    "mtime": 1789419090.3001418,
-    "seen": 1789420126.9182878,
-    "ast_hash": "bee2657b21572a79b0894571e8f88062",
+    "mtime": 1788776299.5809002,
+    "seen": 1788776869.00111,
+    "ast_hash": "aa3dbb044e212c30d8667bee37f8785b",
     "semantic_hash": ""
   },
   "customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html": {
-    "mtime": 1789082768.0667377,
-    "seen": 1789399978.397102,
-    "ast_hash": "7015e3742b853e0564566613652e8c42",
+    "mtime": 1788776050.2704656,
+    "seen": 1788776869.001111,
+    "ast_hash": "a58b55e7535c0d0d68e9d8fc07c227fd",
     "semantic_hash": ""
   },
   "customer/pages/car-details/booking/payment/payment.html": {
-    "mtime": 1789082768.0660264,
-    "seen": 1789399978.397103,
-    "ast_hash": "02780af62ab034332ef7a5a6fa835205",
+    "mtime": 1788776615.7260392,
+    "seen": 1788776869.001111,
+    "ast_hash": "01f33bd452ff7bd8c44aeb3a494a859f",
     "semantic_hash": ""
   },
   "customer/pages/car-details/car-details.html": {
-    "mtime": 1789419859.0065062,
-    "seen": 1789420126.918394,
-    "ast_hash": "81b3ed5c3727dd3257f8ab68cf8c97ce",
+    "mtime": 1789020922.6775937,
+    "seen": 1789022426.7711859,
+    "ast_hash": "7ecdf821685c42d0bbba4a2b905e245e",
     "semantic_hash": ""
   },
   "customer/pages/dashboard/customer.html": {
-    "mtime": 1789082768.0626345,
-    "seen": 1789399978.397104,
-    "ast_hash": "11cd5ae538191c695b08690a53bcff96",
+    "mtime": 1788652719.8853884,
+    "seen": 1788653435.683798,
+    "ast_hash": "32a561360a919512ca9af91893a8b8a9",
     "semantic_hash": ""
   },
   "customer/pages/my-bookings/my-bookings.html": {
-    "mtime": 1789082768.059368,
-    "seen": 1789399978.397104,
-    "ast_hash": "587acf40aea6aae5cb80dd8c672a6c16",
+    "mtime": 1788455449.804005,
+    "seen": 1788455589.5908248,
+    "ast_hash": "c11a2d3d49736636d0693ca9f4c264a0",
     "semantic_hash": ""
   },
   "customer/pages/my-bookings/receipt/receipt.html": {
-    "mtime": 1789082768.06746,
-    "seen": 1789399978.397105,
-    "ast_hash": "7f00fe77a638c5315243cdd54b9fc9ad",
+    "mtime": 1788776627.1443613,
+    "seen": 1788776869.0011141,
+    "ast_hash": "a9f30cd9fbeda6377fdfe91878fae210",
     "semantic_hash": ""
   },
   "customer/pages/profile/profile.html": {
-    "mtime": 1789082768.0612059,
-    "seen": 1789399978.397105,
-    "ast_hash": "32a96277f9942713a9499847896b302b",
+    "mtime": 1788456414.1329079,
+    "seen": 1788456832.346817,
+    "ast_hash": "9b8149dda08678db9af4b72b018e2095",
     "semantic_hash": ""
   },
   "customer/pages/support/support.html": {
-    "mtime": 1789082768.0638347,
-    "seen": 1789399978.397106,
-    "ast_hash": "57d9e22edb56be1f1b2af36c315c51c8",
+    "mtime": 1788772862.2888634,
+    "seen": 1788773519.9021819,
+    "ast_hash": "98e34d3502dd1a349ce417ff06fd57d5",
     "semantic_hash": ""
   },
   "docs/APPLE_HIG_COMPLIANCE_AUDIT.md": {
@@ -774,27 +774,27 @@
     "semantic_hash": ""
   },
   "guest/pages/explore-melaka/explore-melaka.html": {
-    "mtime": 1789082661.1193924,
-    "seen": 1789399978.397949,
-    "ast_hash": "8a1ab3c00132913f884d4473872cd2b7",
+    "mtime": 1788209417.324048,
+    "seen": 1788210346.313091,
+    "ast_hash": "65825ce46e5cffdc42ab09551b57e65b",
     "semantic_hash": ""
   },
   "guest/pages/how-it-works/how-it-works.html": {
-    "mtime": 1789082661.1209502,
-    "seen": 1789399978.39795,
-    "ast_hash": "a71015af11347b9657d4fcfacdf15d80",
+    "mtime": 1788692584.2999983,
+    "seen": 1788694329.994794,
+    "ast_hash": "e8f8b170bcd308d6fcb58bb7abf377b3",
     "semantic_hash": ""
   },
   "guest/pages/pricing/pricing.html": {
-    "mtime": 1789082661.1171668,
-    "seen": 1789399978.397951,
-    "ast_hash": "bc47fcb8c99b6bf4b4b2bff2d4ba885f",
+    "mtime": 1788454029.8856223,
+    "seen": 1788455589.590911,
+    "ast_hash": "68686ae2f3a60356b50940e9e0ccce8c",
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1789081989.202751,
-    "seen": 1789399978.397984,
-    "ast_hash": "5bd30d4bff52eba31df40c6e5f7ec90a",
+    "mtime": 1788688082.6193051,
+    "seen": 1788688140.374322,
+    "ast_hash": "262707fb397fb5afa6342f2c0fd37830",
     "semantic_hash": ""
   },
   "shared/components/footer.html": {
@@ -11112,8 +11112,8 @@
     "semantic_hash": ""
   },
   "tests/e2e/06_bookings_filter.spec.js": {
-    "mtime": 1789399050.595214,
-    "seen": 1789399978.391775,
+    "mtime": 1788619271.537671,
+    "seen": 1788620312.906534,
     "ast_hash": "6c5da3658b89b2321a328fa8ca02837e",
     "semantic_hash": ""
   },
@@ -11148,9 +11148,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/10_admin_sidebar_pages.spec.js": {
-    "mtime": 1789073361.222573,
-    "seen": 1789399978.391885,
-    "ast_hash": "129c94e73e61b57a81bc039a55112444",
+    "mtime": 1788908872.8347602,
+    "seen": 1788909335.13786,
+    "ast_hash": "eaf660f68579a3734ce2d2a39b36e38c",
     "semantic_hash": ""
   },
   "admin/pages/booking/active-bookings.html": {
@@ -11166,15 +11166,15 @@
     "semantic_hash": ""
   },
   "admin/pages/car/available-cars.html": {
-    "mtime": 1789060207.0416648,
-    "seen": 1789399978.396682,
-    "ast_hash": "55831f425c2005ae21c00795f348a225",
+    "mtime": 1789021573.3198156,
+    "seen": 1789022426.771147,
+    "ast_hash": "2be0b6cc83e4fddea7678c1ef5e6fe56",
     "semantic_hash": ""
   },
   "admin/pages/car/rented-cars.html": {
-    "mtime": 1789060216.8179173,
-    "seen": 1789399978.3967319,
-    "ast_hash": "fbd99a6ed284f8e4d75a6138ce7458b6",
+    "mtime": 1789021573.3135939,
+    "seen": 1789022426.7711518,
+    "ast_hash": "3246ce00a12d16187b68469a27596940",
     "semantic_hash": ""
   },
   "admin/pages/customer/verifications.html": {
@@ -11214,9 +11214,9 @@
     "semantic_hash": ""
   },
   "admin/js/api-keys.js": {
-    "mtime": 1789075974.5477333,
-    "seen": 1789399978.390501,
-    "ast_hash": "526e8545e288e3960eddb39fd527539e",
+    "mtime": 1788999538.340904,
+    "seen": 1788999994.226963,
+    "ast_hash": "4cfaaf1b3c91af3a19ed46dcd78de8c3",
     "semantic_hash": ""
   },
   "tests/e2e/14_ai_key_vault_and_location.spec.js": {
@@ -11226,9 +11226,9 @@
     "semantic_hash": ""
   },
   "admin/pages/ai/api-keys.html": {
-    "mtime": 1789074314.088833,
-    "seen": 1789399978.3964689,
-    "ast_hash": "a843d9342cb93a0ddfb72fdb17ccfafb",
+    "mtime": 1788998387.2296822,
+    "seen": 1788998714.068678,
+    "ast_hash": "f98719ce7060da6d92a1e9de98c3fc00",
     "semantic_hash": ""
   },
   "tests/add_car_360_card_verified.png": {
@@ -11460,15 +11460,15 @@
     "semantic_hash": ""
   },
   "tests/e2e/16_car_detail_360_interior.spec.js": {
-    "mtime": 1789048914.2049737,
-    "seen": 1789399978.3919911,
-    "ast_hash": "787503777fb0bd816d1a4a69557ccf68",
+    "mtime": 1789044957.5647888,
+    "seen": 1789046747.286637,
+    "ast_hash": "154bd230615da4a037e9b98bd8fcfc3f",
     "semantic_hash": ""
   },
   "admin/js/add-car.js": {
-    "mtime": 1789059403.7126105,
-    "seen": 1789399978.390388,
-    "ast_hash": "2096892ac126054567563ba60611a56e",
+    "mtime": 1789002280.3447237,
+    "seen": 1789002703.110101,
+    "ast_hash": "9489b73c06cf911a99caa2eead4e7878",
     "semantic_hash": ""
   },
   "tests/e2e/17_add_car_stepper_and_carlist.spec.js": {
@@ -11478,9 +11478,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/18_full_system_bilingual_parity.spec.js": {
-    "mtime": 1789419871.8482544,
-    "seen": 1789420126.912066,
-    "ast_hash": "ac862d66ff7ae4f0f020c06ca105b302",
+    "mtime": 1788930047.9906163,
+    "seen": 1788930160.357758,
+    "ast_hash": "c229209c90a4d4b188f4f92c4e3d3228",
     "semantic_hash": ""
   },
   ".agents/rules/20_team_roles_and_responsibilities.md": {
@@ -11796,21 +11796,21 @@
     "semantic_hash": ""
   },
   "STITCH UI PREVIEW/7/preview-i18n.js": {
-    "mtime": 1789071039.1873877,
-    "seen": 1789399978.390382,
-    "ast_hash": "60b77a14eb9d1863e199d3b2258b80f3",
+    "mtime": 1788951936.3259254,
+    "seen": 1788967070.85869,
+    "ast_hash": "6664b67c53f14213fd557079f75176ac",
     "semantic_hash": ""
   },
   "STITCH UI PREVIEW/7/step4_pandangan_pelanggan_preview.html": {
-    "mtime": 1789071039.1882434,
-    "seen": 1789399978.3961658,
-    "ast_hash": "fcf6a5cddffedc6cc4747c1ceb084339",
+    "mtime": 1788952125.0053449,
+    "seen": 1788967070.8588202,
+    "ast_hash": "f34e804cfd1aa5c3c4d66083531cb35b",
     "semantic_hash": ""
   },
   "STITCH UI PREVIEW/7/step5_tempahan_pelanggan_preview.html": {
-    "mtime": 1789071258.7022736,
-    "seen": 1789399978.3961658,
-    "ast_hash": "0578e3e32d857a8a6d87530cc80e99c4",
+    "mtime": 1788952086.4184406,
+    "seen": 1788967070.8588202,
+    "ast_hash": "e640282ec7704d71d3ae27fe28d4dbe4",
     "semantic_hash": ""
   },
   "STITCH UI PREVIEW/7/card_spotlight_gempak.html": {
@@ -11826,69 +11826,69 @@
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/add-car-flow.js": {
-    "mtime": 1789071012.1544693,
-    "seen": 1789399978.390694,
-    "ast_hash": "7bdc15b1eeddccf762c1d120a5b06192",
+    "mtime": 1789024992.7620366,
+    "seen": 1789025232.918025,
+    "ast_hash": "12d8eb41534a27ffc946592557397164",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/preview-i18n.js": {
-    "mtime": 1789071012.1511319,
-    "seen": 1789399978.390694,
-    "ast_hash": "0434d1e0b898225b7ac92a706d226768",
+    "mtime": 1789002295.0587478,
+    "seen": 1789002703.110121,
+    "ast_hash": "75d78a3193be084ef573015eba84521a",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/index.html": {
-    "mtime": 1789072456.0499313,
-    "seen": 1789399978.396677,
-    "ast_hash": "c53b96d3fa79f3699c80c7bc6e29db2c",
+    "mtime": 1788999666.0857096,
+    "seen": 1788999994.227089,
+    "ast_hash": "06b3614982f420f3f4719f251c699412",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step1_spesifikasi.html": {
-    "mtime": 1789063304.145979,
-    "seen": 1789399978.396678,
-    "ast_hash": "3de2672b3a3eddf9f5fc133d3df2b1ed",
+    "mtime": 1789024970.7153258,
+    "seen": 1789025232.918144,
+    "ast_hash": "b99c14ffd0ad783e5ebce8ae4482d8c8",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step2_studio360.html": {
-    "mtime": 1789068689.094018,
-    "seen": 1789399978.396679,
-    "ast_hash": "f5613b9ed4be9ce919b991c3f4116686",
+    "mtime": 1789002077.682747,
+    "seen": 1789002703.110294,
+    "ast_hash": "dbaf7d3ae693ab2b384145a47e0e243a",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step3_pengesahan.html": {
-    "mtime": 1789070806.7164307,
-    "seen": 1789399978.3966799,
-    "ast_hash": "967d310b77223b210052dd80e916011f",
+    "mtime": 1789002040.5448387,
+    "seen": 1789002703.110295,
+    "ast_hash": "f7a10bf39d60b228859773419a1490f2",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step4_pandangan_pelanggan.html": {
-    "mtime": 1789078141.8008335,
-    "seen": 1789399978.3966799,
-    "ast_hash": "dd6ec158f48f13b84a2bb4eb99fedf88",
+    "mtime": 1789026961.0319264,
+    "seen": 1789027949.5942678,
+    "ast_hash": "fe9de8fe2a6705638f98ba58b0470b4f",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step5_tempahan.html": {
-    "mtime": 1789078141.8039894,
-    "seen": 1789399978.396681,
-    "ast_hash": "08c7b416b3350accb274f18d20c6a141",
+    "mtime": 1789026972.2943194,
+    "seen": 1789027949.5942678,
+    "ast_hash": "51fd8ba55314d594d78f473fa13c5bd4",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step2-studio360.js": {
-    "mtime": 1789068689.0921457,
-    "seen": 1789399978.3906949,
-    "ast_hash": "c555f75f9579eafa7c2f3e27d6116b23",
+    "mtime": 1789046327.5087276,
+    "seen": 1789046747.279534,
+    "ast_hash": "d1c0ef2efa6d8d7ad957164ca2f03b75",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step3-pengesahan.js": {
-    "mtime": 1789078141.8029306,
-    "seen": 1789399978.390696,
-    "ast_hash": "103f1c4bfcb6ed19ef32e852d7bceded",
+    "mtime": 1789044750.4091036,
+    "seen": 1789046747.279543,
+    "ast_hash": "1256b857ce8902c186e80494d91ae8e3",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/step4-pandangan-pelanggan.js": {
-    "mtime": 1789078168.6160746,
-    "seen": 1789399978.390696,
-    "ast_hash": "cecf88e23b6135bac4e595a3e26c3431",
+    "mtime": 1789017487.6411777,
+    "seen": 1789018861.4608371,
+    "ast_hash": "9cd8303ab3f942f5556cabfa625f6b07",
     "semantic_hash": ""
   },
   ".agents/rules/23_stitch_to_production_workflow.md": {
@@ -11898,15 +11898,15 @@
     "semantic_hash": ""
   },
   "shared/js/ai-vault.js": {
-    "mtime": 1789074276.6835966,
-    "seen": 1789399978.390986,
-    "ast_hash": "25769430a094e98e34ab77021486c753",
+    "mtime": 1789041905.1945946,
+    "seen": 1789046747.280542,
+    "ast_hash": "73044842e8fe52782647f5ede0eb4e28",
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/edit-car.js": {
-    "mtime": 1789081345.931209,
-    "seen": 1789399978.390697,
-    "ast_hash": "0a47520537e4825002122b8ed3616641",
+    "mtime": 1789026073.6170955,
+    "seen": 1789026251.700306,
+    "ast_hash": "bbccb5079ec7ada6a3558a24f1aa42d4",
     "semantic_hash": ""
   },
   "tests/e2e/19_edit_car_stepper.spec.js": {
@@ -11952,9 +11952,9 @@
     "semantic_hash": ""
   },
   "shared/model/bezza.png": {
-    "mtime": 1789399795.7563202,
-    "seen": 1789399978.48125,
-    "ast_hash": "c15c60ee8be38ca20972a6415c003a88",
+    "mtime": 1789041132.3695006,
+    "seen": 1789046747.393794,
+    "ast_hash": "91623669544cc09852c163e1319aef92",
     "semantic_hash": ""
   },
   ".agents/plugins/wedrive/agents/tester.md": {
@@ -11964,21 +11964,21 @@
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step1-specification.html": {
-    "mtime": 1789081362.5965436,
-    "seen": 1789399978.396729,
-    "ast_hash": "85c268481d91544ba49f4c95f6a2c98f",
+    "mtime": 1789027356.805929,
+    "seen": 1789027949.594271,
+    "ast_hash": "892a53df42d47f31c32c98cb65b09721",
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step2-studio360.html": {
-    "mtime": 1789081439.7141314,
-    "seen": 1789399978.3967302,
-    "ast_hash": "97170a5a3dd475564fc361a4b67d36c4",
+    "mtime": 1789027373.896415,
+    "seen": 1789027949.594272,
+    "ast_hash": "de254c1b0a486ce312dec126c897ad29",
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step3-confirmation.html": {
-    "mtime": 1789081391.8665402,
-    "seen": 1789399978.396731,
-    "ast_hash": "a791780898012900314823071d9ba8e5",
+    "mtime": 1789027389.3335147,
+    "seen": 1789027949.594272,
+    "ast_hash": "51c1e023b3c9db70bde4ec1cc07cbab3",
     "semantic_hash": ""
   },
   "scratch.js": {
@@ -11987,2836 +11987,16 @@
     "ast_hash": "35b1566095ba07abc03135aef7cdb50f",
     "semantic_hash": ""
   },
+  "tests/e2e/21_spincar_cdn_studio360.spec.js": {
+    "mtime": 1789045156.7857702,
+    "seen": 1789046747.287317,
+    "ast_hash": "6c948e5f41863655e3e21ddda4b18b4b",
+    "semantic_hash": ""
+  },
   "implementation_plan.md": {
     "mtime": 1789046083.532569,
     "seen": 1789046747.3041139,
     "ast_hash": "166ddb2ab1751fd251da3d8246c38a1f",
-    "semantic_hash": ""
-  },
-  "admin/js/ai-automation.js": {
-    "mtime": 1789076813.2631996,
-    "seen": 1789399978.390454,
-    "ast_hash": "127914bb3d120d1c36bfbaa123417c0b",
-    "semantic_hash": ""
-  },
-  "admin/js/event-planner.js": {
-    "mtime": 1789077280.2035055,
-    "seen": 1789399978.3905761,
-    "ast_hash": "0f6e2aa372677816bf3096d684d70b03",
-    "semantic_hash": ""
-  },
-  "package.json": {
-    "mtime": 1789053264.2123387,
-    "seen": 1789399978.390955,
-    "ast_hash": "903f1811d4fa175d390931ab0f71b059",
-    "semantic_hash": ""
-  },
-  "shared/js/car-draft-guard.js": {
-    "mtime": 1789072572.1816587,
-    "seen": 1789399978.391138,
-    "ast_hash": "2f05defe124bdab871b4281cb8a820fa",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/source.json": {
-    "mtime": 1789066332.1529586,
-    "seen": 1789399978.391454,
-    "ast_hash": "48a6f6f73059381ab622d9bc290ce052",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/source.json": {
-    "mtime": 1789057348.8267102,
-    "seen": 1789399978.391507,
-    "ast_hash": "0c107ce90e3c8ac68ad3a579085aa785",
-    "semantic_hash": ""
-  },
-  "supabase/functions/ai-automation/index.ts": {
-    "mtime": 1789077229.943433,
-    "seen": 1789399978.3915489,
-    "ast_hash": "73ea0f74b3b895fa7c5ad68a139e811d",
-    "semantic_hash": ""
-  },
-  "supabase/functions/cloudinary-admin/index.ts": {
-    "mtime": 1789072456.0514374,
-    "seen": 1789399978.39155,
-    "ast_hash": "b44e490d133814ff88b74685e46c2c9b",
-    "semantic_hash": ""
-  },
-  "tools/download-spincar-frames.js": {
-    "mtime": 1789068720.3256707,
-    "seen": 1789399978.392239,
-    "ast_hash": "370759b1b994b8d85bec2461b8e602b2",
-    "semantic_hash": ""
-  },
-  "tools/download-spincar-interior.js": {
-    "mtime": 1789078865.9365833,
-    "seen": 1789399978.39224,
-    "ast_hash": "69bae56773926a262ccc841f7ed4888f",
-    "semantic_hash": ""
-  },
-  ".agents/BRIEFING.md": {
-    "mtime": 1789384868.9956112,
-    "seen": 1789399978.392241,
-    "ast_hash": "c0f9ab62a68b8eece6478bc66977e437",
-    "semantic_hash": ""
-  },
-  ".agents/ORIGINAL_REQUEST.md": {
-    "mtime": 1789384649.7228453,
-    "seen": 1789399978.3922791,
-    "ast_hash": "aa2bbb96e5572aa8ef481410909c7237",
-    "semantic_hash": ""
-  },
-  ".agents/handoff.md": {
-    "mtime": 1789384874.01213,
-    "seen": 1789399978.392319,
-    "ast_hash": "ae243f91f752951e1e4db467d80bd844",
-    "semantic_hash": ""
-  },
-  "PLAN/360_FRAME_DOWNLOAD_METHOD.md": {
-    "mtime": 1789056912.402361,
-    "seen": 1789399978.394492,
-    "ast_hash": "65e4b41b42bd2b6fd973fe2cfa785581",
-    "semantic_hash": ""
-  },
-  "PLAN/CLOUDINARY_MODEL_FOLDER_PROMPT.md": {
-    "mtime": 1789067988.5131257,
-    "seen": 1789399978.3944929,
-    "ast_hash": "440d97629f9ffd913c19ff76e4b60f86",
-    "semantic_hash": ""
-  },
-  "PLAN/PRD_360_Visual_Pipeline.md": {
-    "mtime": 1789057177.0704143,
-    "seen": 1789399978.394495,
-    "ast_hash": "9e1225b789c2d0584bc4ddd9d13a0d69",
-    "semantic_hash": ""
-  },
-  "REPORT/chapters/08_Chapter5_Implementation.md": {
-    "mtime": 1789419351.6709714,
-    "seen": 1789420126.914706,
-    "ast_hash": "53610dccbe1ea49adc82cc67d6f53fe0",
-    "semantic_hash": ""
-  },
-  "REPORT/chapters/09_Chapter6_Testing.md": {
-    "mtime": 1789419367.1445954,
-    "seen": 1789420126.914707,
-    "ast_hash": "96e2d262e142bf4bea38e0057cb3ef2f",
-    "semantic_hash": ""
-  },
-  "admin/pages/ai/automation.html": {
-    "mtime": 1789076709.9132226,
-    "seen": 1789399978.39647,
-    "ast_hash": "4695613396e22e845d87552ff298881c",
-    "semantic_hash": ""
-  },
-  "admin/pages/ai/event-planner.html": {
-    "mtime": 1789077154.2192872,
-    "seen": 1789399978.396471,
-    "ast_hash": "b6c2fd0dcaae757395f24b435b1f536f",
-    "semantic_hash": ""
-  },
-  "shared/model/README.md": {
-    "mtime": 1789056912.4010336,
-    "seen": 1789399978.398061,
-    "ast_hash": "282dff8b93c48ce5a8b67606f4e32ed0",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.10_admin_document_ocr_verification.png": {
-    "mtime": 1789396423.0995,
-    "seen": 1789399978.3994,
-    "ast_hash": "9ef476cfc3579e81ec4f6dc8fd6def40",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.11_multi_model_ai_chatbot.png": {
-    "mtime": 1789396427.5014794,
-    "seen": 1789399978.399401,
-    "ast_hash": "32514315470944458d6d866acee6e3a5",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.12_playwright_test_execution_suite.png": {
-    "mtime": 1789395590.2630086,
-    "seen": 1789399978.399401,
-    "ast_hash": "45051eb6422b219b8dba74023f28bba7",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.1_software_dev_architecture.png": {
-    "mtime": 1789395571.1070042,
-    "seen": 1789399978.399402,
-    "ast_hash": "5bd0fba5aac6afd25bf39223f4da440a",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.2_git_flow_deployment.png": {
-    "mtime": 1789395571.1104424,
-    "seen": 1789399978.399402,
-    "ast_hash": "eda752cbb8855e2a88a3143e2aeb666a",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.3_account_authentication_interface.png": {
-    "mtime": 1789395643.0296168,
-    "seen": 1789399978.399403,
-    "ast_hash": "cee35d8b8a788f1cc05fe70f9516ac5c",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.4_guest_pricing_glider.png": {
-    "mtime": 1789395645.6910546,
-    "seen": 1789399978.399404,
-    "ast_hash": "e40a1ecde95b1d2547978530c643868e",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.5_customer_vehicle_catalogue_360.png": {
-    "mtime": 1789395649.1368153,
-    "seen": 1789399978.399405,
-    "ast_hash": "2ee2d3b224fe18f5e2eb678c0348a6c0",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.6_customer_booking_flow.png": {
-    "mtime": 1789419163.4336195,
-    "seen": 1789420126.9215071,
-    "ast_hash": "889622ed12c51ec40886b0ac2d76b59a",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.7_customer_qr_receipt.png": {
-    "mtime": 1789395656.9794466,
-    "seen": 1789399978.3994071,
-    "ast_hash": "ca31a0253f9b4c1603b691fc14f902ee",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.8_admin_operations_dashboard.png": {
-    "mtime": 1789396414.4836218,
-    "seen": 1789399978.3994071,
-    "ast_hash": "21b22bff0bb178cc55ba1962d9d57cbd",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 5.9_admin_vehicle_onboarding_stepper.png": {
-    "mtime": 1789396418.625624,
-    "seen": 1789399978.399408,
-    "ast_hash": "26c0db1dcc01652b81eb11148700eb3a",
-    "semantic_hash": ""
-  },
-  "REPORT/GAMBAR/Figure 6.1_testing_process_lifecycle.png": {
-    "mtime": 1789395552.637175,
-    "seen": 1789399978.39941,
-    "ast_hash": "eebba85b71c4c47849935db97919c94c",
-    "semantic_hash": ""
-  },
-  "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/interior/full-res/pano_b.jpg": {
-    "mtime": 1789078856.5479038,
-    "seen": 1789399978.413772,
-    "ast_hash": "baf86a4fda59da472b46c0da7e007205",
-    "semantic_hash": ""
-  },
-  "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/interior/full-res/pano_d.jpg": {
-    "mtime": 1789078856.640936,
-    "seen": 1789399978.413773,
-    "ast_hash": "a24c27008a244aecfd3748783db7f67b",
-    "semantic_hash": ""
-  },
-  "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/interior/full-res/pano_f.jpg": {
-    "mtime": 1789078856.5005574,
-    "seen": 1789399978.413774,
-    "ast_hash": "3c8fb58606602ddd2a5377fd6683b91c",
-    "semantic_hash": ""
-  },
-  "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/interior/full-res/pano_l.jpg": {
-    "mtime": 1789078856.6822128,
-    "seen": 1789399978.4137752,
-    "ast_hash": "5815be3aa5b912681dc143aeab7e0422",
-    "semantic_hash": ""
-  },
-  "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/interior/full-res/pano_r.jpg": {
-    "mtime": 1789078856.7185678,
-    "seen": 1789399978.413776,
-    "ast_hash": "55960a07105f304a9026083e3d5e0b91",
-    "semantic_hash": ""
-  },
-  "shared/model/Coupe/2018 Mercedes-Benz CLS350 AMG Line 2.0/interior/full-res/pano_u.jpg": {
-    "mtime": 1789078856.7898846,
-    "seen": 1789399978.4137769,
-    "ast_hash": "2bce434bff45d4e976bb9f5a19d55944",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2022 Volkswagen Golf GTI 2.0/interior/full-res/pano_b.jpg": {
-    "mtime": 1789078879.357628,
-    "seen": 1789399978.435343,
-    "ast_hash": "4895ada81841dc923fd095afd4266132",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2022 Volkswagen Golf GTI 2.0/interior/full-res/pano_d.jpg": {
-    "mtime": 1789078879.5512598,
-    "seen": 1789399978.435344,
-    "ast_hash": "a95804e5e7430d4cbd990d9b83e4d519",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2022 Volkswagen Golf GTI 2.0/interior/full-res/pano_f.jpg": {
-    "mtime": 1789078879.1968744,
-    "seen": 1789399978.435345,
-    "ast_hash": "c6934ed95433ca6668f381ce6df37580",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2022 Volkswagen Golf GTI 2.0/interior/full-res/pano_l.jpg": {
-    "mtime": 1789078879.7943487,
-    "seen": 1789399978.435346,
-    "ast_hash": "b836f4e11822390a3a04422f1ae32e43",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2022 Volkswagen Golf GTI 2.0/interior/full-res/pano_r.jpg": {
-    "mtime": 1789078879.8518283,
-    "seen": 1789399978.4353468,
-    "ast_hash": "219a9e2227a2677aa4396a6485175e20",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2022 Volkswagen Golf GTI 2.0/interior/full-res/pano_u.jpg": {
-    "mtime": 1789078879.8782015,
-    "seen": 1789399978.4353468,
-    "ast_hash": "0d62d321bf3821407db0970f016febad",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2025 Perodua AXIA AV 1.0/interior/full-res/pano_b.jpg": {
-    "mtime": 1789078879.357137,
-    "seen": 1789399978.444442,
-    "ast_hash": "cafff0f3dc5e260c4bf25ba007719fe0",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2025 Perodua AXIA AV 1.0/interior/full-res/pano_d.jpg": {
-    "mtime": 1789078879.446724,
-    "seen": 1789399978.444443,
-    "ast_hash": "d9b2629c7081a23210cc1a91f04cb327",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2025 Perodua AXIA AV 1.0/interior/full-res/pano_f.jpg": {
-    "mtime": 1789078879.2068322,
-    "seen": 1789399978.444445,
-    "ast_hash": "e74d6926752d4bdc1f96f8b087332d5b",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2025 Perodua AXIA AV 1.0/interior/full-res/pano_l.jpg": {
-    "mtime": 1789078879.5234647,
-    "seen": 1789399978.4444458,
-    "ast_hash": "08f57a42bf77cb930a44bf70fe2f66a3",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2025 Perodua AXIA AV 1.0/interior/full-res/pano_r.jpg": {
-    "mtime": 1789078879.6685176,
-    "seen": 1789399978.4444458,
-    "ast_hash": "9553af9be6752916ffd9ee84e4be7e52",
-    "semantic_hash": ""
-  },
-  "shared/model/Hatchback/2025 Perodua AXIA AV 1.0/interior/full-res/pano_u.jpg": {
-    "mtime": 1789078879.7226584,
-    "seen": 1789399978.444447,
-    "ast_hash": "a52e7558756dd4f22f66f050f0849524",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-000.jpg": {
-    "mtime": 1789066290.6461487,
-    "seen": 1789399978.46291,
-    "ast_hash": "985704983021c48281fd12309e7a7d5e",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-001.jpg": {
-    "mtime": 1789066290.6267185,
-    "seen": 1789399978.462911,
-    "ast_hash": "7716a2b9908a3acf41183f31dabeec79",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-002.jpg": {
-    "mtime": 1789066290.6483467,
-    "seen": 1789399978.462912,
-    "ast_hash": "b3675d86a51d65c484ce99135096971a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-003.jpg": {
-    "mtime": 1789066290.670856,
-    "seen": 1789399978.462914,
-    "ast_hash": "db8605b1352425a048cda14b6a362d36",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-004.jpg": {
-    "mtime": 1789066290.643836,
-    "seen": 1789399978.4629161,
-    "ast_hash": "b76742392aea65395e51278e2d615b55",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-005.jpg": {
-    "mtime": 1789066290.6659646,
-    "seen": 1789399978.462917,
-    "ast_hash": "8d03ad9654a09b5f6e3947b411fd428a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-006.jpg": {
-    "mtime": 1789066290.6937082,
-    "seen": 1789399978.462919,
-    "ast_hash": "2c08c352c0491f06613913846d54f7ce",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-007.jpg": {
-    "mtime": 1789066290.6937022,
-    "seen": 1789399978.46292,
-    "ast_hash": "451556aee5c56aa726f3c8c0e04ce9af",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-008.jpg": {
-    "mtime": 1789066293.3416393,
-    "seen": 1789399978.462921,
-    "ast_hash": "7a83f38ba5d07b0b5b722333a3d7cd67",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-009.jpg": {
-    "mtime": 1789066293.3300474,
-    "seen": 1789399978.462921,
-    "ast_hash": "edacb1a7bb25cc209d8a0eaa899be0b1",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-010.jpg": {
-    "mtime": 1789066293.391766,
-    "seen": 1789399978.462922,
-    "ast_hash": "38bf98cc954d115728d46fbbf4511557",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-011.jpg": {
-    "mtime": 1789066293.4096172,
-    "seen": 1789399978.462923,
-    "ast_hash": "94dbc1099c5609b8effcd09799d3d0b0",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-012.jpg": {
-    "mtime": 1789066293.344785,
-    "seen": 1789399978.462923,
-    "ast_hash": "f28a9c676f0b6b3ba259e2ec5e774bb8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-013.jpg": {
-    "mtime": 1789066293.4917564,
-    "seen": 1789399978.462924,
-    "ast_hash": "41e0100fabf4fecd03617bad44563d76",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-014.jpg": {
-    "mtime": 1789066293.6143143,
-    "seen": 1789399978.462925,
-    "ast_hash": "61cf953976d7694b21c2c7054d0ab2a3",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-015.jpg": {
-    "mtime": 1789066293.69349,
-    "seen": 1789399978.462925,
-    "ast_hash": "1b57bb66a94170ffb1573de95cb3c6cd",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-016.jpg": {
-    "mtime": 1789066294.5649326,
-    "seen": 1789399978.4629261,
-    "ast_hash": "96941ffbfca7be9c891ad1ff650c9a37",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-017.jpg": {
-    "mtime": 1789066294.5828185,
-    "seen": 1789399978.462927,
-    "ast_hash": "c5c27b9dce8bfee2ea74ad2c7e164b30",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-018.jpg": {
-    "mtime": 1789066294.6210482,
-    "seen": 1789399978.462927,
-    "ast_hash": "75eb1388e9baa3bde8b328afd7c18e79",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-019.jpg": {
-    "mtime": 1789066294.7890134,
-    "seen": 1789399978.462929,
-    "ast_hash": "f3957e76aa2d2d7ff3d628bf190a8a83",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-020.jpg": {
-    "mtime": 1789066294.7679918,
-    "seen": 1789399978.462929,
-    "ast_hash": "fee6b931121a900d617ddd63e88a2073",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-021.jpg": {
-    "mtime": 1789066294.7853284,
-    "seen": 1789399978.46293,
-    "ast_hash": "374b26532a27e4c80591148c3f64ce6f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-022.jpg": {
-    "mtime": 1789066294.9434881,
-    "seen": 1789399978.462931,
-    "ast_hash": "ea415415d0ca31a93ad427a5205f6bed",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-023.jpg": {
-    "mtime": 1789066294.8965225,
-    "seen": 1789399978.462931,
-    "ast_hash": "e19fde9f137e3e8e6e91a1da299daf4d",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-024.jpg": {
-    "mtime": 1789066295.6424215,
-    "seen": 1789399978.462933,
-    "ast_hash": "347faf19df1423b39d56e9e2d64cdea3",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-025.jpg": {
-    "mtime": 1789066295.5774674,
-    "seen": 1789399978.462933,
-    "ast_hash": "a601a34c4613ef9ca8a7e0bfe6027b77",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-026.jpg": {
-    "mtime": 1789066295.6480002,
-    "seen": 1789399978.462934,
-    "ast_hash": "23459d7d546c81026b1e3796edc153c1",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-027.jpg": {
-    "mtime": 1789066295.780314,
-    "seen": 1789399978.462935,
-    "ast_hash": "6734e983225b27223f7686602f4f80b8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-028.jpg": {
-    "mtime": 1789066295.9421546,
-    "seen": 1789399978.462935,
-    "ast_hash": "4849ee3d33c83eab9da28f9e3e938949",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-029.jpg": {
-    "mtime": 1789066295.8979986,
-    "seen": 1789399978.462937,
-    "ast_hash": "580423aab7980ec00049ee372a83b34a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-030.jpg": {
-    "mtime": 1789066295.948546,
-    "seen": 1789399978.462937,
-    "ast_hash": "e4ef2e8bf215f8e61f1a3b7df2f3d47d",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-031.jpg": {
-    "mtime": 1789066296.120544,
-    "seen": 1789399978.462938,
-    "ast_hash": "f351453da2c3f06128ceca42a7a3edc4",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-032.jpg": {
-    "mtime": 1789066296.4733155,
-    "seen": 1789399978.4629388,
-    "ast_hash": "4f29e3beb0204df615ec9c961e66bd99",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-033.jpg": {
-    "mtime": 1789066296.5380228,
-    "seen": 1789399978.4629388,
-    "ast_hash": "2c848d431e3de9318f324af8c2fc5b01",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-034.jpg": {
-    "mtime": 1789066296.6767385,
-    "seen": 1789399978.462941,
-    "ast_hash": "d40c7cf1efcd725ab0c6a238f8e786df",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-035.jpg": {
-    "mtime": 1789066296.7736225,
-    "seen": 1789399978.462942,
-    "ast_hash": "cc7eb5239cc9c4155dd8d52f73d4b417",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-036.jpg": {
-    "mtime": 1789066296.861236,
-    "seen": 1789399978.462943,
-    "ast_hash": "c9472112745417a696c87c556e82e20a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-037.jpg": {
-    "mtime": 1789066296.8910975,
-    "seen": 1789399978.462944,
-    "ast_hash": "da60c31992a466b663470f485f2b2466",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-038.jpg": {
-    "mtime": 1789066297.1867075,
-    "seen": 1789399978.462945,
-    "ast_hash": "31931c51889fc3fe427883bc78d52ab5",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-039.jpg": {
-    "mtime": 1789066297.2588334,
-    "seen": 1789399978.462946,
-    "ast_hash": "a8c05182470cbdda32f72b8272565d3a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-040.jpg": {
-    "mtime": 1789066297.4839475,
-    "seen": 1789399978.4629471,
-    "ast_hash": "c8aa965bd569832afff15d97bd94b6c0",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-041.jpg": {
-    "mtime": 1789066297.5144372,
-    "seen": 1789399978.462948,
-    "ast_hash": "7a51cf2d1e45382c4cf60f8c3aa23eac",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-042.jpg": {
-    "mtime": 1789066297.688906,
-    "seen": 1789399978.462949,
-    "ast_hash": "ef9e416d18c0b99ada0753c528094ba1",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-043.jpg": {
-    "mtime": 1789066297.783751,
-    "seen": 1789399978.46295,
-    "ast_hash": "6a3e936e0ae480d3bd8e777e4167a66f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-044.jpg": {
-    "mtime": 1789066297.9356427,
-    "seen": 1789399978.46295,
-    "ast_hash": "5637c0c46b063bb10ab7f42f73cf1a45",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-045.jpg": {
-    "mtime": 1789066297.9077108,
-    "seen": 1789399978.462951,
-    "ast_hash": "c0daf73e05d6cc1a75a983c4d52a5b51",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-046.jpg": {
-    "mtime": 1789066298.1950545,
-    "seen": 1789399978.462952,
-    "ast_hash": "0406d741c83c0fc17f807ed27effa1b5",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-047.jpg": {
-    "mtime": 1789066298.3418336,
-    "seen": 1789399978.462952,
-    "ast_hash": "2cfac9ef1e250ed26347f1fc3416cdc7",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-048.jpg": {
-    "mtime": 1789066298.4166644,
-    "seen": 1789399978.4629529,
-    "ast_hash": "6c24d20673ef2cf090c4738e71272315",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-049.jpg": {
-    "mtime": 1789066298.6624005,
-    "seen": 1789399978.462954,
-    "ast_hash": "56d0d7084484fe1d44f801e987ae79e9",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-050.jpg": {
-    "mtime": 1789066298.6716692,
-    "seen": 1789399978.462955,
-    "ast_hash": "2a2270289ab75f498c6b22ba5cdd1617",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-051.jpg": {
-    "mtime": 1789066298.9164147,
-    "seen": 1789399978.462955,
-    "ast_hash": "b6b6d083a90e34bfa8eda0b41a663443",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-052.jpg": {
-    "mtime": 1789066299.1375532,
-    "seen": 1789399978.462956,
-    "ast_hash": "7d58057f261a7ff4d32ed9c78e083f74",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-053.jpg": {
-    "mtime": 1789066299.2964098,
-    "seen": 1789399978.462956,
-    "ast_hash": "16aebfd86c1b5238796b71516ee5f75a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-054.jpg": {
-    "mtime": 1789066299.3552885,
-    "seen": 1789399978.4629571,
-    "ast_hash": "054f93a7c28dd86502417357c46ba082",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-055.jpg": {
-    "mtime": 1789066299.4871445,
-    "seen": 1789399978.462958,
-    "ast_hash": "674c1e86c77f599bb5b4f82059633b9c",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-056.jpg": {
-    "mtime": 1789066299.7776158,
-    "seen": 1789399978.462959,
-    "ast_hash": "b7523618515c4d3320debbcb8cfbc50b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-057.jpg": {
-    "mtime": 1789066299.8184233,
-    "seen": 1789399978.4629602,
-    "ast_hash": "590f999800d378b25e428a954213d0e2",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-058.jpg": {
-    "mtime": 1789066299.8959968,
-    "seen": 1789399978.462961,
-    "ast_hash": "2d27339a667c4a76cbcb8f5253409951",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-059.jpg": {
-    "mtime": 1789066299.969809,
-    "seen": 1789399978.462962,
-    "ast_hash": "6f4f1c3da63230701d81f247014d7c38",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-060.jpg": {
-    "mtime": 1789066300.3529935,
-    "seen": 1789399978.4629629,
-    "ast_hash": "488fbd0a6e4b49ff259190853cd8664b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-061.jpg": {
-    "mtime": 1789066300.3945117,
-    "seen": 1789399978.462964,
-    "ast_hash": "5d719c64ac9dd04f717b8d0f64852cbb",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-062.jpg": {
-    "mtime": 1789066300.477091,
-    "seen": 1789399978.462965,
-    "ast_hash": "4ddd0865cf50dca1bd5c93930fe2ed90",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-063.jpg": {
-    "mtime": 1789066300.586198,
-    "seen": 1789399978.462966,
-    "ast_hash": "05c755568081cccb852a1aeea7a64193",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-064.jpg": {
-    "mtime": 1789066300.7407176,
-    "seen": 1789399978.4629672,
-    "ast_hash": "c70ee0c3a7173d3cf72b94c4dc6d951c",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-065.jpg": {
-    "mtime": 1789066300.8121407,
-    "seen": 1789399978.462968,
-    "ast_hash": "d8e42529808587d84bd1bf471c493640",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-066.jpg": {
-    "mtime": 1789066300.864692,
-    "seen": 1789399978.462968,
-    "ast_hash": "8bd835cd122aa09022fc5bc7d5454a04",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-067.jpg": {
-    "mtime": 1789066301.2166471,
-    "seen": 1789399978.462969,
-    "ast_hash": "42fd36d3dd7e8c7730f8a33cf1d1b633",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-068.jpg": {
-    "mtime": 1789066301.3534925,
-    "seen": 1789399978.46297,
-    "ast_hash": "d4f7fc7827ce9dfcca1bfd674e7f5260",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-069.jpg": {
-    "mtime": 1789066301.3534503,
-    "seen": 1789399978.462971,
-    "ast_hash": "769f3cf45c1898ebbac6484d9ad85152",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-070.jpg": {
-    "mtime": 1789066301.5316532,
-    "seen": 1789399978.462971,
-    "ast_hash": "f9592f9873367da2fd6adf958478261f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-071.jpg": {
-    "mtime": 1789066301.684689,
-    "seen": 1789399978.462972,
-    "ast_hash": "f6a0e5735b934e8104fcc5d10dd70c72",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-072.jpg": {
-    "mtime": 1789066301.7120173,
-    "seen": 1789399978.4629729,
-    "ast_hash": "4092d6e30677c8a4de438b2d78d1f9b8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-073.jpg": {
-    "mtime": 1789066301.8262699,
-    "seen": 1789399978.4629738,
-    "ast_hash": "29e694e0f09ae5ee8ed416623df064e9",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-074.jpg": {
-    "mtime": 1789066302.0171766,
-    "seen": 1789399978.462975,
-    "ast_hash": "24f2ead4b77d8f15c0cedb1cd32c731f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-075.jpg": {
-    "mtime": 1789066302.2061784,
-    "seen": 1789399978.462975,
-    "ast_hash": "b9644cff461730039e71c8a2245d0274",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-076.jpg": {
-    "mtime": 1789066302.2877634,
-    "seen": 1789399978.462976,
-    "ast_hash": "9858ec35222962c51c829c8d82569b14",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-077.jpg": {
-    "mtime": 1789066302.3824756,
-    "seen": 1789399978.462977,
-    "ast_hash": "b996904871191a9231dd18f372e965d5",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-078.jpg": {
-    "mtime": 1789066302.480626,
-    "seen": 1789399978.4629781,
-    "ast_hash": "1a5e4098055b7dd8035ecbf55e802335",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-079.jpg": {
-    "mtime": 1789066302.6171558,
-    "seen": 1789399978.4629781,
-    "ast_hash": "02c1e9fdbef93f73b3b17705953401bd",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-080.jpg": {
-    "mtime": 1789066302.734083,
-    "seen": 1789399978.462979,
-    "ast_hash": "09c3d78046d03c43f1e444399cc9443b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-081.jpg": {
-    "mtime": 1789066302.7985034,
-    "seen": 1789399978.46298,
-    "ast_hash": "51fb3b32d6314d8cc49158778efb46bb",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-082.jpg": {
-    "mtime": 1789066303.0721104,
-    "seen": 1789399978.4629812,
-    "ast_hash": "e455e4e3930a0c496afaf7fed48b9ebb",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-083.jpg": {
-    "mtime": 1789066303.1640687,
-    "seen": 1789399978.462982,
-    "ast_hash": "cc853d905e7340729b8a77d576dbb9b6",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-084.jpg": {
-    "mtime": 1789066303.4517415,
-    "seen": 1789399978.462982,
-    "ast_hash": "f673e4a6376a3d817ef3700ea464cb0e",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-085.jpg": {
-    "mtime": 1789066303.540975,
-    "seen": 1789399978.462983,
-    "ast_hash": "71aba26a4c131c8127692c22d773ecb0",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-086.jpg": {
-    "mtime": 1789066303.5673287,
-    "seen": 1789399978.462985,
-    "ast_hash": "4a265d7f224536742bef1f1daae1aa4f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-087.jpg": {
-    "mtime": 1789066303.5303285,
-    "seen": 1789399978.462986,
-    "ast_hash": "227cd578a370d8a573aac38ae1792afe",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-088.jpg": {
-    "mtime": 1789066303.7467594,
-    "seen": 1789399978.462987,
-    "ast_hash": "f9d5bd4946f293994736c3d063ae5461",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-089.jpg": {
-    "mtime": 1789066303.825037,
-    "seen": 1789399978.4629881,
-    "ast_hash": "c65653f611534df042171fc3bbfd896e",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-090.jpg": {
-    "mtime": 1789066303.9285357,
-    "seen": 1789399978.4629881,
-    "ast_hash": "caa91bf9189972c1c407d8a174b228a6",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-091.jpg": {
-    "mtime": 1789066304.0630865,
-    "seen": 1789399978.46299,
-    "ast_hash": "30f5f44128541ccba8ed17055bbe3793",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-092.jpg": {
-    "mtime": 1789066304.313333,
-    "seen": 1789399978.46299,
-    "ast_hash": "d301d55b135070f662b2587aed844e91",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-093.jpg": {
-    "mtime": 1789066304.4123564,
-    "seen": 1789399978.462991,
-    "ast_hash": "32837fc7776d5669cfbdecd178e2519f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-094.jpg": {
-    "mtime": 1789066304.5048666,
-    "seen": 1789399978.462992,
-    "ast_hash": "add46174c63fd5c93fcac789fbdcc5c3",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-095.jpg": {
-    "mtime": 1789066304.6252217,
-    "seen": 1789399978.462993,
-    "ast_hash": "0082f2c907813b5cc3255856869c5cf8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-096.jpg": {
-    "mtime": 1789066304.7019994,
-    "seen": 1789399978.462993,
-    "ast_hash": "7a77e6269d7921f993416e7850ac6b89",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-097.jpg": {
-    "mtime": 1789066304.8029296,
-    "seen": 1789399978.4629939,
-    "ast_hash": "7562fb5a4a8cf0bdfe93dd234ce4da9c",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-098.jpg": {
-    "mtime": 1789066304.9377394,
-    "seen": 1789399978.462996,
-    "ast_hash": "4305c608f2b8b61a771ce13ea5502efe",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-099.jpg": {
-    "mtime": 1789066305.0320332,
-    "seen": 1789399978.462996,
-    "ast_hash": "fdfb90b64e6f8b8696dadee45077c641",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-100.jpg": {
-    "mtime": 1789066305.156497,
-    "seen": 1789399978.462997,
-    "ast_hash": "4b4c6cf29d080152ff162dde9e893144",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-101.jpg": {
-    "mtime": 1789066305.2860234,
-    "seen": 1789399978.462998,
-    "ast_hash": "89a340e9ac46c0d698f4c8de9237b5ea",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-102.jpg": {
-    "mtime": 1789066305.4441166,
-    "seen": 1789399978.462999,
-    "ast_hash": "50293ebc54162ab6cd98fca0ddced2ae",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-103.jpg": {
-    "mtime": 1789066305.5460186,
-    "seen": 1789399978.463,
-    "ast_hash": "067de04fda54df0500208c85d7beb78f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-104.jpg": {
-    "mtime": 1789066305.6931467,
-    "seen": 1789399978.463001,
-    "ast_hash": "b492e7534587570dd2081d6238a1742a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-105.jpg": {
-    "mtime": 1789066305.9229422,
-    "seen": 1789399978.4630022,
-    "ast_hash": "0be6147a528d7bc1792c7571a9aa344a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-106.jpg": {
-    "mtime": 1789066306.0210202,
-    "seen": 1789399978.4630022,
-    "ast_hash": "6cc41bac793b2a2a8d6a410bf0f7c2fb",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-107.jpg": {
-    "mtime": 1789066306.0873551,
-    "seen": 1789399978.463003,
-    "ast_hash": "630361ddc4e1a4c49e25ecaaa60437c2",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-108.jpg": {
-    "mtime": 1789066306.3042169,
-    "seen": 1789399978.463003,
-    "ast_hash": "b3563657aec7834e2a88277d579dc8f0",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-109.jpg": {
-    "mtime": 1789066306.372948,
-    "seen": 1789399978.4630039,
-    "ast_hash": "b898ed2362ae04c2c4dba7a23aa0b635",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-110.jpg": {
-    "mtime": 1789066306.4612737,
-    "seen": 1789399978.4630039,
-    "ast_hash": "829fc6f9926c495fdcdff8eb5cc19d0c",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-111.jpg": {
-    "mtime": 1789066306.543453,
-    "seen": 1789399978.4630048,
-    "ast_hash": "cce7ff5041d97dfe01638f34027541d6",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-112.jpg": {
-    "mtime": 1789066306.826092,
-    "seen": 1789399978.463006,
-    "ast_hash": "9cfcfb358bc53720783930a1a790a336",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-113.jpg": {
-    "mtime": 1789066306.915517,
-    "seen": 1789399978.463007,
-    "ast_hash": "e9e85b82669016ad2652dea839664cc0",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-114.jpg": {
-    "mtime": 1789066306.9555845,
-    "seen": 1789399978.463008,
-    "ast_hash": "5ad9da366eb2e0b139eba1e226c02724",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-115.jpg": {
-    "mtime": 1789066307.2292564,
-    "seen": 1789399978.463008,
-    "ast_hash": "e8ba79cc8428a8718a3b2fb77652a30a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-116.jpg": {
-    "mtime": 1789066307.3752418,
-    "seen": 1789399978.463009,
-    "ast_hash": "bb95bf45fa0be2fd06c1bc986d53ebfd",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-117.jpg": {
-    "mtime": 1789066307.3949437,
-    "seen": 1789399978.46301,
-    "ast_hash": "eb308e377bc0f93ff2adbbbf683035ec",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-118.jpg": {
-    "mtime": 1789066307.4827802,
-    "seen": 1789399978.463011,
-    "ast_hash": "1b1da11dfcff4e75e6ec25d69ab94c9e",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-119.jpg": {
-    "mtime": 1789066307.597835,
-    "seen": 1789399978.463011,
-    "ast_hash": "14c59b72fccb211b2bfa52a67021889b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-120.jpg": {
-    "mtime": 1789066307.7257311,
-    "seen": 1789399978.463012,
-    "ast_hash": "7a2ad2af1557ef35ffd299372d39243e",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-121.jpg": {
-    "mtime": 1789066307.8115075,
-    "seen": 1789399978.4630132,
-    "ast_hash": "fd6cd54b776ea1749095ba683e29d2a3",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-122.jpg": {
-    "mtime": 1789066308.4170146,
-    "seen": 1789399978.4630132,
-    "ast_hash": "2ec86bf8f77bfae4ea862425725000ac",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-123.jpg": {
-    "mtime": 1789066308.4703805,
-    "seen": 1789399978.463014,
-    "ast_hash": "a986c967dd1b1b7d15c133301556518c",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-124.jpg": {
-    "mtime": 1789066308.5744443,
-    "seen": 1789399978.4630148,
-    "ast_hash": "7e2e1e444324e6d5f9c0dba782a23d62",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-125.jpg": {
-    "mtime": 1789066308.5745177,
-    "seen": 1789399978.4630148,
-    "ast_hash": "d888050693b620d606dc46f3366d1b89",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-126.jpg": {
-    "mtime": 1789066308.8472536,
-    "seen": 1789399978.463016,
-    "ast_hash": "7f1a00735d04ff04c9c34e63cb2e170f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-127.jpg": {
-    "mtime": 1789066308.6424952,
-    "seen": 1789399978.463017,
-    "ast_hash": "9c7d9afc3e6ae88f1a0ee3519766d6ba",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-128.jpg": {
-    "mtime": 1789066308.715777,
-    "seen": 1789399978.463017,
-    "ast_hash": "a39060a69edf676541581d895a30ea09",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-129.jpg": {
-    "mtime": 1789066308.7797272,
-    "seen": 1789399978.463018,
-    "ast_hash": "b6480e3fe672a33a9741c1cb49c34984",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-130.jpg": {
-    "mtime": 1789066309.326059,
-    "seen": 1789399978.463019,
-    "ast_hash": "058ed8296a150b7c8bc4547d80a7ae20",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-131.jpg": {
-    "mtime": 1789066309.4412436,
-    "seen": 1789399978.463019,
-    "ast_hash": "95df62997cf262c0223ad9dd7731b585",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-132.jpg": {
-    "mtime": 1789066309.524796,
-    "seen": 1789399978.46302,
-    "ast_hash": "8ac18aa15b0287ff8e1ba452b5015b49",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-133.jpg": {
-    "mtime": 1789066309.462332,
-    "seen": 1789399978.463021,
-    "ast_hash": "5d2f4766ef7280d73c944e5a146f20c4",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-134.jpg": {
-    "mtime": 1789066309.6182039,
-    "seen": 1789399978.463021,
-    "ast_hash": "ed6157633eb38026682c97725ccc2d14",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-135.jpg": {
-    "mtime": 1789066309.648754,
-    "seen": 1789399978.463022,
-    "ast_hash": "4d702bd0548b23f83961503a1e4c1265",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-136.jpg": {
-    "mtime": 1789066309.7163703,
-    "seen": 1789399978.463022,
-    "ast_hash": "acf2eacaeb741b59bed9742d15a2b673",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-137.jpg": {
-    "mtime": 1789066309.7931356,
-    "seen": 1789399978.4630232,
-    "ast_hash": "ea67bad5944c4c43dc00f582b96fb56b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-138.jpg": {
-    "mtime": 1789066310.3857844,
-    "seen": 1789399978.4630241,
-    "ast_hash": "2b1c99119989833db71330e0a849d7c5",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-139.jpg": {
-    "mtime": 1789066310.4910579,
-    "seen": 1789399978.4630249,
-    "ast_hash": "b8cbbfde89084f221a0284ded41e6a90",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-140.jpg": {
-    "mtime": 1789066310.6090572,
-    "seen": 1789399978.4630249,
-    "ast_hash": "98958ad13e8f819bd51855229c5e984b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-141.jpg": {
-    "mtime": 1789066310.654059,
-    "seen": 1789399978.4630258,
-    "ast_hash": "66685cb11c1a935350bfaf0a9a141c5d",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-142.jpg": {
-    "mtime": 1789066310.76178,
-    "seen": 1789399978.4630258,
-    "ast_hash": "fbcb94f9c3f5b7c195ed45d47a1b75d5",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-143.jpg": {
-    "mtime": 1789066310.7601328,
-    "seen": 1789399978.463027,
-    "ast_hash": "50a0a2f6f03a2f7c04a802d3e55ae56b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-144.jpg": {
-    "mtime": 1789066311.0200655,
-    "seen": 1789399978.463028,
-    "ast_hash": "cb1c5242765019f9c9b14b2dd8eaa488",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-145.jpg": {
-    "mtime": 1789066311.1959445,
-    "seen": 1789399978.463029,
-    "ast_hash": "000cf9b1bb50818db08673af1dbda76e",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-146.jpg": {
-    "mtime": 1789066311.2769802,
-    "seen": 1789399978.463029,
-    "ast_hash": "9e884996c5b4ae188e707a44db9b719e",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-147.jpg": {
-    "mtime": 1789066311.368011,
-    "seen": 1789399978.46303,
-    "ast_hash": "0c7e1ebdd274c58df7609927b3dafce3",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-148.jpg": {
-    "mtime": 1789066311.5773327,
-    "seen": 1789399978.46303,
-    "ast_hash": "ce59e13ffe0e81d54a37a30329ca0a8f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-149.jpg": {
-    "mtime": 1789066311.6533704,
-    "seen": 1789399978.46303,
-    "ast_hash": "e0d6c7f74f5734387c1aa0ce3974f667",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-150.jpg": {
-    "mtime": 1789066311.710777,
-    "seen": 1789399978.463031,
-    "ast_hash": "79f278f720aa7b8ae7a2092220558ab4",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-151.jpg": {
-    "mtime": 1789066311.69674,
-    "seen": 1789399978.463032,
-    "ast_hash": "216e06bef5e6abf5108579f162c40da2",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-152.jpg": {
-    "mtime": 1789066311.9683056,
-    "seen": 1789399978.4630332,
-    "ast_hash": "67e110443b1f42433bf95cf9aa134013",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-153.jpg": {
-    "mtime": 1789066312.2696369,
-    "seen": 1789399978.4630332,
-    "ast_hash": "33e566a9b55f744de1f37d361fd5f3b8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-154.jpg": {
-    "mtime": 1789066312.3468485,
-    "seen": 1789399978.4630342,
-    "ast_hash": "86e059a2d5793bcbf20dae5e8510039b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-155.jpg": {
-    "mtime": 1789066312.4641206,
-    "seen": 1789399978.4630349,
-    "ast_hash": "d16fec7de34c99ba2c2a2d8c7dfc87e9",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-156.jpg": {
-    "mtime": 1789066312.6356294,
-    "seen": 1789399978.4630358,
-    "ast_hash": "145ad4b22bed44d57a91bc09aeb174ac",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-157.jpg": {
-    "mtime": 1789066312.7458508,
-    "seen": 1789399978.4630358,
-    "ast_hash": "af6acefb9852a2c15e00f5d36a6fe602",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-158.jpg": {
-    "mtime": 1789066312.7458339,
-    "seen": 1789399978.463037,
-    "ast_hash": "6d94ff87a9a2a12534e01db2481e0759",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-159.jpg": {
-    "mtime": 1789066312.8458383,
-    "seen": 1789399978.463037,
-    "ast_hash": "eea3e3c56f17b9e726ae5164001d28cd",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-160.jpg": {
-    "mtime": 1789066312.92051,
-    "seen": 1789399978.463038,
-    "ast_hash": "dcc49d2a988add1d019b67b29f199a86",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-161.jpg": {
-    "mtime": 1789066313.146264,
-    "seen": 1789399978.463039,
-    "ast_hash": "c40e108a17e203c511ff707d6d2aba81",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-162.jpg": {
-    "mtime": 1789066313.3045292,
-    "seen": 1789399978.46304,
-    "ast_hash": "26bb4e120ed6c27193b678f9ed914345",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-163.jpg": {
-    "mtime": 1789066313.506864,
-    "seen": 1789399978.46304,
-    "ast_hash": "5ce8e255ff8196c2b83730fcf92acd34",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-164.jpg": {
-    "mtime": 1789066313.5984871,
-    "seen": 1789399978.46304,
-    "ast_hash": "e67f569ff619739ee73710dac7903073",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-165.jpg": {
-    "mtime": 1789066313.7312448,
-    "seen": 1789399978.463041,
-    "ast_hash": "709e51ea4290d4c378bc7c61835c808f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-166.jpg": {
-    "mtime": 1789066313.7929273,
-    "seen": 1789399978.463042,
-    "ast_hash": "aa7f9f49c2bcaeb6d66676d39c495e4d",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-167.jpg": {
-    "mtime": 1789066313.8747053,
-    "seen": 1789399978.463042,
-    "ast_hash": "d4d7b724bd6085929981430ff4d5378a",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-168.jpg": {
-    "mtime": 1789066313.8746898,
-    "seen": 1789399978.463043,
-    "ast_hash": "522c8edd769891a24b63882567f76da3",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-169.jpg": {
-    "mtime": 1789066314.0407748,
-    "seen": 1789399978.463043,
-    "ast_hash": "e88ca0e04180a191039bc76313f3ed0b",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-170.jpg": {
-    "mtime": 1789066314.507504,
-    "seen": 1789399978.4630442,
-    "ast_hash": "bf5499eb6ff14611d435c3f4935cbf4d",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-171.jpg": {
-    "mtime": 1789066314.5924344,
-    "seen": 1789399978.4630442,
-    "ast_hash": "eb5a61c9f44841fe1249c9a9cf1ca19f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-172.jpg": {
-    "mtime": 1789066314.681687,
-    "seen": 1789399978.4630451,
-    "ast_hash": "043c0da0fa2bbee7318367a4dd43b6c8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-173.jpg": {
-    "mtime": 1789066314.7933853,
-    "seen": 1789399978.4630451,
-    "ast_hash": "f72352019ca666f453e23cc12173b507",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-174.jpg": {
-    "mtime": 1789066314.9612586,
-    "seen": 1789399978.4630458,
-    "ast_hash": "1a27b0e0dfe105a74a459a3cd88ffda5",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-175.jpg": {
-    "mtime": 1789066315.0447714,
-    "seen": 1789399978.4630458,
-    "ast_hash": "67eda7b9dda9b513066cb0a216c1d269",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-176.jpg": {
-    "mtime": 1789066315.0646818,
-    "seen": 1789399978.463047,
-    "ast_hash": "acf358f64ba9cd836f49bbfceebe1e99",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-177.jpg": {
-    "mtime": 1789066315.3648126,
-    "seen": 1789399978.463047,
-    "ast_hash": "0d22d9da3748df59fd944ded04447075",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-178.jpg": {
-    "mtime": 1789066315.4852753,
-    "seen": 1789399978.463048,
-    "ast_hash": "2f84ff3dd2fb7ddcb27e2f59a10998d6",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-179.jpg": {
-    "mtime": 1789066315.551951,
-    "seen": 1789399978.463048,
-    "ast_hash": "1434d2a8e45ff8ad910f91ddcf3216a8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-180.jpg": {
-    "mtime": 1789066315.6651893,
-    "seen": 1789399978.463049,
-    "ast_hash": "29ac18bd9e005c36da1e6d54be1959b0",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-181.jpg": {
-    "mtime": 1789066316.0454602,
-    "seen": 1789399978.46305,
-    "ast_hash": "6e9e1208184c3a2f5211052e88f95d8f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-182.jpg": {
-    "mtime": 1789066315.9482248,
-    "seen": 1789399978.46305,
-    "ast_hash": "a871550953dcef9058b64d97a05337c7",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-183.jpg": {
-    "mtime": 1789066316.1291728,
-    "seen": 1789399978.463051,
-    "ast_hash": "732531829304f08b7a3eadb2f458e224",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-184.jpg": {
-    "mtime": 1789066316.1378505,
-    "seen": 1789399978.463052,
-    "ast_hash": "79e428c3f9fabbacf61573b0ec8d78a8",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-185.jpg": {
-    "mtime": 1789066316.3376732,
-    "seen": 1789399978.463052,
-    "ast_hash": "5fbbfdb35e31eaafac3aed75efe0aae9",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-186.jpg": {
-    "mtime": 1789066316.392351,
-    "seen": 1789399978.463053,
-    "ast_hash": "6cb8f17c0ba29dcc3f20e01c5683d223",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-187.jpg": {
-    "mtime": 1789066316.506663,
-    "seen": 1789399978.463053,
-    "ast_hash": "3ae2c3cb6b30dd63c047fc325b84c0b1",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-188.jpg": {
-    "mtime": 1789066316.6261606,
-    "seen": 1789399978.4630542,
-    "ast_hash": "c3f88119e792fe9e4e20f4c8abd6b794",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-189.jpg": {
-    "mtime": 1789066316.854636,
-    "seen": 1789399978.4630542,
-    "ast_hash": "80f1406a30066c8736cbbbdd369137f6",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-190.jpg": {
-    "mtime": 1789066316.9112287,
-    "seen": 1789399978.4630551,
-    "ast_hash": "b94ed2e2562770c6da4b58ef4065677f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-191.jpg": {
-    "mtime": 1789066317.0610406,
-    "seen": 1789399978.4630558,
-    "ast_hash": "55b6e669408aeb92aed78d5506d1a247",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-192.jpg": {
-    "mtime": 1789066317.108494,
-    "seen": 1789399978.4630568,
-    "ast_hash": "a00deeebae09cd555cbfb9ffb8e98044",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-193.jpg": {
-    "mtime": 1789066317.342303,
-    "seen": 1789399978.4630568,
-    "ast_hash": "c18a2db3c4aa5f54a46100338d78ddfa",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-194.jpg": {
-    "mtime": 1789066317.4516428,
-    "seen": 1789399978.463058,
-    "ast_hash": "b58e1c6bbfb49759780794c5647f3510",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-195.jpg": {
-    "mtime": 1789066317.5805101,
-    "seen": 1789399978.463058,
-    "ast_hash": "e1b66727107d8906291fb67c2476de07",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-196.jpg": {
-    "mtime": 1789066317.6356533,
-    "seen": 1789399978.463059,
-    "ast_hash": "f4ac0c1f918e13f62e96a5de48abeb89",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-197.jpg": {
-    "mtime": 1789066317.9057178,
-    "seen": 1789399978.46306,
-    "ast_hash": "83bbcfad56a12d8ab1a5fbf06929b9e4",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-198.jpg": {
-    "mtime": 1789066318.0172908,
-    "seen": 1789399978.46306,
-    "ast_hash": "092f96b2eaa40791e0de8a86e733dcce",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/exterior/full-res/frame-199.jpg": {
-    "mtime": 1789066318.0434155,
-    "seen": 1789399978.463061,
-    "ast_hash": "5ce7b679271a387b9f1be33a3e4f7d65",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/interior/full-res/pano_b.jpg": {
-    "mtime": 1789066319.847435,
-    "seen": 1789399978.463062,
-    "ast_hash": "b951dc7d0aa1956c7aa0f28ce2c6823f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/interior/full-res/pano_d.jpg": {
-    "mtime": 1789066322.8002408,
-    "seen": 1789399978.463063,
-    "ast_hash": "a75fc865ad75d98762df3f405ce691b6",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/interior/full-res/pano_f.jpg": {
-    "mtime": 1789066319.2022839,
-    "seen": 1789399978.463063,
-    "ast_hash": "9ba47acb4de8e3fa5434108ed14676e3",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/interior/full-res/pano_l.jpg": {
-    "mtime": 1789066320.584581,
-    "seen": 1789399978.463064,
-    "ast_hash": "d894e3c6dfb2b6c20ce6b02945f1fe4f",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/interior/full-res/pano_r.jpg": {
-    "mtime": 1789066321.3481877,
-    "seen": 1789399978.4630651,
-    "ast_hash": "ee4d371bcf2493c32aeaf22fe9158fdf",
-    "semantic_hash": ""
-  },
-  "shared/model/SUV/2025 MINI Countryman S/interior/full-res/pano_u.jpg": {
-    "mtime": 1789066322.0624971,
-    "seen": 1789399978.4630651,
-    "ast_hash": "bd08c03d800003eb6a9d84f6b4f79b24",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-000.jpg": {
-    "mtime": 1789057305.4546807,
-    "seen": 1789399978.471905,
-    "ast_hash": "c1386fcff7f26742fc0dbc635e5c5eb8",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-001.jpg": {
-    "mtime": 1789057305.4649704,
-    "seen": 1789399978.471906,
-    "ast_hash": "f5f75f1a74bcbefd6a0f446b49a3f73b",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-002.jpg": {
-    "mtime": 1789057305.0032198,
-    "seen": 1789399978.471906,
-    "ast_hash": "6fd2ad087a4590ee512b80113d946d95",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-003.jpg": {
-    "mtime": 1789057305.1027133,
-    "seen": 1789399978.4719071,
-    "ast_hash": "fdc83d62efea8b39d9ecc33308a4720e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-004.jpg": {
-    "mtime": 1789057305.072881,
-    "seen": 1789399978.471908,
-    "ast_hash": "ea360de212c3bfee65bb7aadb9214ad1",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-005.jpg": {
-    "mtime": 1789057305.102715,
-    "seen": 1789399978.471908,
-    "ast_hash": "1d00ef7a9b5c5b97649aa9192d227b55",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-006.jpg": {
-    "mtime": 1789057305.0702856,
-    "seen": 1789399978.471909,
-    "ast_hash": "820db9ebadd94db6e5df22ade0426e58",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-007.jpg": {
-    "mtime": 1789057305.064015,
-    "seen": 1789399978.47191,
-    "ast_hash": "eba7ba92d59a0a9453b9fe8b8e531d16",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-008.jpg": {
-    "mtime": 1789057307.26782,
-    "seen": 1789399978.47191,
-    "ast_hash": "192ab213b775da00db6af7a92371dad1",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-009.jpg": {
-    "mtime": 1789057307.4114456,
-    "seen": 1789399978.471911,
-    "ast_hash": "239a3182a1c2947bed2efa416db7f294",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-010.jpg": {
-    "mtime": 1789057307.4318085,
-    "seen": 1789399978.471912,
-    "ast_hash": "39b5b38be8b0023fcfbe12ca8ee19b97",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-011.jpg": {
-    "mtime": 1789057307.422275,
-    "seen": 1789399978.471912,
-    "ast_hash": "0731a4719717905c72e11cb7c162814d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-012.jpg": {
-    "mtime": 1789057307.4292545,
-    "seen": 1789399978.4719129,
-    "ast_hash": "c8db6a8b3f0c0958cf2348f32ded341f",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-013.jpg": {
-    "mtime": 1789057307.6649253,
-    "seen": 1789399978.471914,
-    "ast_hash": "6dcca6e5c33a1ac9c6ef193a5e192762",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-014.jpg": {
-    "mtime": 1789057308.0786064,
-    "seen": 1789399978.471914,
-    "ast_hash": "faab08c7ec94fecad0e6c85d55a33741",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-015.jpg": {
-    "mtime": 1789057308.188912,
-    "seen": 1789399978.471915,
-    "ast_hash": "f36c5131985b8040fb87ef3fd7c495ce",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-016.jpg": {
-    "mtime": 1789057308.3841128,
-    "seen": 1789399978.471916,
-    "ast_hash": "add4f28ee02dc09a0667afe8f5413ec2",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-017.jpg": {
-    "mtime": 1789057308.3776376,
-    "seen": 1789399978.471916,
-    "ast_hash": "5b9a594b435e21e208bb6c264f51129c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-018.jpg": {
-    "mtime": 1789057308.483877,
-    "seen": 1789399978.4719172,
-    "ast_hash": "64ff99157c4539d5d4d037a9baf2b0d3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-019.jpg": {
-    "mtime": 1789057308.5897143,
-    "seen": 1789399978.471918,
-    "ast_hash": "7e52a5a7f84493655fc167b718adec7f",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-020.jpg": {
-    "mtime": 1789057308.7048242,
-    "seen": 1789399978.471918,
-    "ast_hash": "c9b978ccc8dc91b89c61c9f5d780694c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-021.jpg": {
-    "mtime": 1789057308.8202965,
-    "seen": 1789399978.471919,
-    "ast_hash": "bd184dcde9cb54679673bf603e7f17c1",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-022.jpg": {
-    "mtime": 1789057308.9625056,
-    "seen": 1789399978.471919,
-    "ast_hash": "c125dc1cdf0ebb21e067120b23c3f3ff",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-023.jpg": {
-    "mtime": 1789057309.0436654,
-    "seen": 1789399978.47192,
-    "ast_hash": "264e7301ceffe65aef0d42b0633e3d1d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-024.jpg": {
-    "mtime": 1789057309.1617115,
-    "seen": 1789399978.471921,
-    "ast_hash": "75320d30a142b30d3df6ad75f68ada14",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-025.jpg": {
-    "mtime": 1789057309.2694752,
-    "seen": 1789399978.471921,
-    "ast_hash": "aee19045eb8593c220f8d245765a0e2c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-026.jpg": {
-    "mtime": 1789057309.3146706,
-    "seen": 1789399978.471922,
-    "ast_hash": "9b76135ff98ae599ff72a032edfef19d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-027.jpg": {
-    "mtime": 1789057309.4156644,
-    "seen": 1789399978.4719229,
-    "ast_hash": "a304abf3d25211ec59d950bc3e389013",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-028.jpg": {
-    "mtime": 1789057309.6168256,
-    "seen": 1789399978.4719229,
-    "ast_hash": "c0143419ab3cd8c24bce87e2f29fe7ad",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-029.jpg": {
-    "mtime": 1789057309.6335928,
-    "seen": 1789399978.471924,
-    "ast_hash": "899c9cea672100847a8d1beecbca15e3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-030.jpg": {
-    "mtime": 1789057309.8029878,
-    "seen": 1789399978.471924,
-    "ast_hash": "fdbb9f5d97cb51bc092957c540e450c4",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-031.jpg": {
-    "mtime": 1789057309.852379,
-    "seen": 1789399978.471924,
-    "ast_hash": "0f9c289762f85fd71b67a31cd9ac435e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-032.jpg": {
-    "mtime": 1789057309.9776223,
-    "seen": 1789399978.471925,
-    "ast_hash": "98b01d09bff9f6bb255672c9b6b5fb62",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-033.jpg": {
-    "mtime": 1789057309.988919,
-    "seen": 1789399978.471926,
-    "ast_hash": "b911501801812d18f36c8b7aedbb847d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-034.jpg": {
-    "mtime": 1789057310.2566495,
-    "seen": 1789399978.471926,
-    "ast_hash": "324fff58d67dad515d8f686553b9ff6e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-035.jpg": {
-    "mtime": 1789057310.2768903,
-    "seen": 1789399978.471927,
-    "ast_hash": "540515c1d0572b2be673700af0950ddc",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-036.jpg": {
-    "mtime": 1789057310.439228,
-    "seen": 1789399978.471927,
-    "ast_hash": "769cf42a58e3765f62423f4270e5242e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-037.jpg": {
-    "mtime": 1789057310.5307362,
-    "seen": 1789399978.4719281,
-    "ast_hash": "30f3b192551abeab90f6c35c15ddb8c7",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-038.jpg": {
-    "mtime": 1789057310.669939,
-    "seen": 1789399978.4719281,
-    "ast_hash": "2965c3cd96ab8ab732fc15cef9621be4",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-039.jpg": {
-    "mtime": 1789057310.7549598,
-    "seen": 1789399978.4719281,
-    "ast_hash": "d17b1ff9341ccf2b2eb6bf3250b04292",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-040.jpg": {
-    "mtime": 1789057310.7496297,
-    "seen": 1789399978.471929,
-    "ast_hash": "2791e303f07828878afa257673805e28",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-041.jpg": {
-    "mtime": 1789057310.9505348,
-    "seen": 1789399978.47193,
-    "ast_hash": "72c85221bf18d59a6f60823e4890a05a",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-042.jpg": {
-    "mtime": 1789057310.973712,
-    "seen": 1789399978.47193,
-    "ast_hash": "83341b51777e03dff9735f4f351ad16e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-043.jpg": {
-    "mtime": 1789057311.1072962,
-    "seen": 1789399978.471931,
-    "ast_hash": "235145ab2537e86ffc3702cebb6a628f",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-044.jpg": {
-    "mtime": 1789057311.1969364,
-    "seen": 1789399978.471932,
-    "ast_hash": "33e466a8f15caaadffe43759add53d96",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-045.jpg": {
-    "mtime": 1789057311.3716805,
-    "seen": 1789399978.471932,
-    "ast_hash": "d998f95102c447cd9c25fd7e05c27869",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-046.jpg": {
-    "mtime": 1789057311.3981981,
-    "seen": 1789399978.471933,
-    "ast_hash": "291a5c812fa82a9d7398f350660b7cf4",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-047.jpg": {
-    "mtime": 1789057311.5949326,
-    "seen": 1789399978.4719338,
-    "ast_hash": "53b1e1a139b102e53f00b67a99e9b714",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-048.jpg": {
-    "mtime": 1789057311.7075672,
-    "seen": 1789399978.4719338,
-    "ast_hash": "1d84b579671a1c93839880f228ac9dfc",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-049.jpg": {
-    "mtime": 1789057311.8113742,
-    "seen": 1789399978.471935,
-    "ast_hash": "f8398653596f2e90e51be67c9e9ec291",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-050.jpg": {
-    "mtime": 1789057311.8871279,
-    "seen": 1789399978.471935,
-    "ast_hash": "c9389310e61875e7f9583da38b990e96",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-051.jpg": {
-    "mtime": 1789057312.0260918,
-    "seen": 1789399978.471936,
-    "ast_hash": "022fe491b4a929497c80e660931311d3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-052.jpg": {
-    "mtime": 1789057312.1060584,
-    "seen": 1789399978.471937,
-    "ast_hash": "ecfadc6c77d702e427760484941587b6",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-053.jpg": {
-    "mtime": 1789057312.2791889,
-    "seen": 1789399978.471937,
-    "ast_hash": "990f0940a7a6f2b90b64a600d313c6eb",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-054.jpg": {
-    "mtime": 1789057312.3656225,
-    "seen": 1789399978.4719381,
-    "ast_hash": "f3fc746046a0ea3ffe7dbc61c44dad3d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-055.jpg": {
-    "mtime": 1789057312.4954855,
-    "seen": 1789399978.4719381,
-    "ast_hash": "af79392f7906b717ea7f878b6f577bed",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-056.jpg": {
-    "mtime": 1789057312.5486336,
-    "seen": 1789399978.471939,
-    "ast_hash": "63ad2e56fc5b6bc5c20f630f635c3a31",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-057.jpg": {
-    "mtime": 1789057312.7834089,
-    "seen": 1789399978.47194,
-    "ast_hash": "d1d0609c9e9502666d0a50deb1b282ad",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-058.jpg": {
-    "mtime": 1789057312.805695,
-    "seen": 1789399978.4719412,
-    "ast_hash": "55336532326ac247c78628d43c410574",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-059.jpg": {
-    "mtime": 1789057312.9858038,
-    "seen": 1789399978.4719412,
-    "ast_hash": "a825bb4e44c09032bcfa9cc31042cc9d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-060.jpg": {
-    "mtime": 1789057313.0354817,
-    "seen": 1789399978.471942,
-    "ast_hash": "bd3fd5a425bdb297c9b85e1ac201d4ff",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-061.jpg": {
-    "mtime": 1789057313.2402866,
-    "seen": 1789399978.471943,
-    "ast_hash": "1c897cb2e3a8940e3285955c7a1accd2",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-062.jpg": {
-    "mtime": 1789057313.2339149,
-    "seen": 1789399978.471943,
-    "ast_hash": "7c9fd1ee28cc0d5a82fdb0bfc1c43a80",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-063.jpg": {
-    "mtime": 1789057313.2256143,
-    "seen": 1789399978.4719439,
-    "ast_hash": "42f19abc4b7c02b39b3e3f11fa7a4974",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-064.jpg": {
-    "mtime": 1789057313.6201928,
-    "seen": 1789399978.471945,
-    "ast_hash": "c94d2760e5d9667a3e423391cb2c2089",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-065.jpg": {
-    "mtime": 1789057313.5496666,
-    "seen": 1789399978.471945,
-    "ast_hash": "7ef298007ed3eb4e44f615610e99e1ee",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-066.jpg": {
-    "mtime": 1789057313.559133,
-    "seen": 1789399978.471946,
-    "ast_hash": "45722a8fe264197ac01a131cb41da230",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-067.jpg": {
-    "mtime": 1789057313.825635,
-    "seen": 1789399978.471947,
-    "ast_hash": "3bd5c0ff5462dd20085d06110a523382",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-068.jpg": {
-    "mtime": 1789057313.9629838,
-    "seen": 1789399978.471947,
-    "ast_hash": "eac035ab69697b9e995dee6b3f1ecd9e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-069.jpg": {
-    "mtime": 1789057313.967787,
-    "seen": 1789399978.4719481,
-    "ast_hash": "82c4c5926b27ad9a7a1a940162db6d3e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-070.jpg": {
-    "mtime": 1789057314.1050262,
-    "seen": 1789399978.4719481,
-    "ast_hash": "1fe1e5145c396dbce29ddfa2bcd4a366",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-071.jpg": {
-    "mtime": 1789057314.259343,
-    "seen": 1789399978.471949,
-    "ast_hash": "843ff774542b40e6d926d65df9a174a6",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-072.jpg": {
-    "mtime": 1789057314.4282084,
-    "seen": 1789399978.471949,
-    "ast_hash": "20e67171c4029edba653b203c2ea796d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-073.jpg": {
-    "mtime": 1789057314.4574783,
-    "seen": 1789399978.47195,
-    "ast_hash": "75cbe1d61a77b7d1cfa70b106ad32991",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-074.jpg": {
-    "mtime": 1789057314.5327568,
-    "seen": 1789399978.471951,
-    "ast_hash": "282dcb51cf8e9dba2a51a73143881af3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-075.jpg": {
-    "mtime": 1789057314.7775457,
-    "seen": 1789399978.471951,
-    "ast_hash": "4d69d0266d86803d342c649af7d23ba4",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-076.jpg": {
-    "mtime": 1789057315.069242,
-    "seen": 1789399978.471952,
-    "ast_hash": "38cc09c49512a330781f0e20263a03f2",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-077.jpg": {
-    "mtime": 1789057315.1089811,
-    "seen": 1789399978.471952,
-    "ast_hash": "d1b83d76d955e74b5e21609a3c786990",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-078.jpg": {
-    "mtime": 1789057315.0537062,
-    "seen": 1789399978.471953,
-    "ast_hash": "db5c798d0a6bcb9e0a5aff51dc9cef96",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-079.jpg": {
-    "mtime": 1789057315.4461832,
-    "seen": 1789399978.471953,
-    "ast_hash": "57e906e2743bd6e8f06139722822bd2a",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-080.jpg": {
-    "mtime": 1789057315.608012,
-    "seen": 1789399978.4719539,
-    "ast_hash": "3aefb4831dab8342730796e596c45742",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-081.jpg": {
-    "mtime": 1789057315.7190063,
-    "seen": 1789399978.471955,
-    "ast_hash": "0bc010f949699df0bdab00edb01db348",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-082.jpg": {
-    "mtime": 1789057315.8882494,
-    "seen": 1789399978.471955,
-    "ast_hash": "cbb43346e202c5d2aa7baa558d190214",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-083.jpg": {
-    "mtime": 1789057316.099974,
-    "seen": 1789399978.471956,
-    "ast_hash": "91d413d762394b91795af5baff591be9",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-084.jpg": {
-    "mtime": 1789057316.1193788,
-    "seen": 1789399978.471957,
-    "ast_hash": "314021a963e594c5d7a47b67e31f8401",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-085.jpg": {
-    "mtime": 1789057316.7330673,
-    "seen": 1789399978.471957,
-    "ast_hash": "b56715a0cd713212bb71ec7afe61914b",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-086.jpg": {
-    "mtime": 1789057317.1788821,
-    "seen": 1789399978.471958,
-    "ast_hash": "3987b92f8b248c02391dc98faf6043cb",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-087.jpg": {
-    "mtime": 1789057317.4432824,
-    "seen": 1789399978.471958,
-    "ast_hash": "2c06fc3e3512bc829474266354df3d2c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-088.jpg": {
-    "mtime": 1789057316.8255467,
-    "seen": 1789399978.471959,
-    "ast_hash": "79671077be8919672938b808629ce97d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-089.jpg": {
-    "mtime": 1789057317.2028875,
-    "seen": 1789399978.471959,
-    "ast_hash": "26a8b64cf1aa6e270c3f52600ffa78e7",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-090.jpg": {
-    "mtime": 1789057317.8225574,
-    "seen": 1789399978.47196,
-    "ast_hash": "447b2138c60def6864ddff5d73066c21",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-091.jpg": {
-    "mtime": 1789057317.669749,
-    "seen": 1789399978.47196,
-    "ast_hash": "5f821c59e60dd9a7f087cd78305b1a27",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-092.jpg": {
-    "mtime": 1789057318.0984085,
-    "seen": 1789399978.471961,
-    "ast_hash": "495eb3655e3eaa42426e7e35e92dcfa2",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-093.jpg": {
-    "mtime": 1789057318.032362,
-    "seen": 1789399978.471961,
-    "ast_hash": "9664fef8bb35a18190434e0fecdc9b00",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-094.jpg": {
-    "mtime": 1789057318.0984864,
-    "seen": 1789399978.4719622,
-    "ast_hash": "a625a69c33b1825050ed0a1260e3cb3f",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-095.jpg": {
-    "mtime": 1789057318.3636694,
-    "seen": 1789399978.4719622,
-    "ast_hash": "d03acae626b44a30422afd30bf319ecf",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-096.jpg": {
-    "mtime": 1789057318.8733568,
-    "seen": 1789399978.471963,
-    "ast_hash": "1243d8532d043e7ca5346b078740502c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-097.jpg": {
-    "mtime": 1789057318.626934,
-    "seen": 1789399978.471964,
-    "ast_hash": "63d73debb2207381a1a26fee2e0b5f10",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-098.jpg": {
-    "mtime": 1789057318.7212493,
-    "seen": 1789399978.471964,
-    "ast_hash": "d0ffc9f1afca7451d5399a294f8703c4",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-099.jpg": {
-    "mtime": 1789057318.7294014,
-    "seen": 1789399978.4719648,
-    "ast_hash": "ecf24e29827944f17c92891049053818",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-100.jpg": {
-    "mtime": 1789057319.181003,
-    "seen": 1789399978.4719648,
-    "ast_hash": "30a5632a3852065711681550b83d0d6b",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-101.jpg": {
-    "mtime": 1789057319.0459037,
-    "seen": 1789399978.471966,
-    "ast_hash": "3c56c424c57da20cd6dceb636125d05c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-102.jpg": {
-    "mtime": 1789057319.481906,
-    "seen": 1789399978.471966,
-    "ast_hash": "9781fb01022a37cdc20d83feb2da1de6",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-103.jpg": {
-    "mtime": 1789057319.4532154,
-    "seen": 1789399978.471967,
-    "ast_hash": "0c7a55e5b6c3a247965acde982e0cac7",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-104.jpg": {
-    "mtime": 1789057319.544373,
-    "seen": 1789399978.471968,
-    "ast_hash": "38a026030eab6ae0b30cc26980ed50a3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-105.jpg": {
-    "mtime": 1789057319.9156904,
-    "seen": 1789399978.471968,
-    "ast_hash": "4c056e4f514b4283a0c24d9977b9361c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-106.jpg": {
-    "mtime": 1789057319.792355,
-    "seen": 1789399978.4719691,
-    "ast_hash": "30c8a05127b52840caae94a1621dcafb",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-107.jpg": {
-    "mtime": 1789057319.9129148,
-    "seen": 1789399978.47197,
-    "ast_hash": "41f8877cd3d40cb4bcf04294980cb7d1",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-108.jpg": {
-    "mtime": 1789057319.91567,
-    "seen": 1789399978.471971,
-    "ast_hash": "8f94f592fd24f984760de043fd3f7eec",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-109.jpg": {
-    "mtime": 1789057320.3159082,
-    "seen": 1789399978.471971,
-    "ast_hash": "268e84821f2894ba6b0b57f067ae68aa",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-110.jpg": {
-    "mtime": 1789057320.2476902,
-    "seen": 1789399978.471972,
-    "ast_hash": "103cba557fa98a0d3f8441c3d20d5815",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-111.jpg": {
-    "mtime": 1789057320.452257,
-    "seen": 1789399978.471972,
-    "ast_hash": "5ff08de2b21ca5973ebd31de29fb1d03",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-112.jpg": {
-    "mtime": 1789057320.5827193,
-    "seen": 1789399978.4719732,
-    "ast_hash": "418cf5439a2bcf8942e34f4b3f660f18",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-113.jpg": {
-    "mtime": 1789057320.6002955,
-    "seen": 1789399978.471974,
-    "ast_hash": "258e6f720683cb487367f5e71d5512b3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-114.jpg": {
-    "mtime": 1789057320.8128612,
-    "seen": 1789399978.4719748,
-    "ast_hash": "94cff817ec131f835152101a416850a1",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-115.jpg": {
-    "mtime": 1789057320.7239628,
-    "seen": 1789399978.471976,
-    "ast_hash": "b142d5c83ab24066991f2dfb608f7127",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-116.jpg": {
-    "mtime": 1789057321.1730103,
-    "seen": 1789399978.471976,
-    "ast_hash": "e1fed9e83b934b06f95e7f7ed54febd9",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-117.jpg": {
-    "mtime": 1789057321.0108323,
-    "seen": 1789399978.471977,
-    "ast_hash": "7dd9c3346678ddb32fce05b5215c9488",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-118.jpg": {
-    "mtime": 1789057321.1165974,
-    "seen": 1789399978.471977,
-    "ast_hash": "17c50fd613d8a21e40efbe388a518b68",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-119.jpg": {
-    "mtime": 1789057321.1240523,
-    "seen": 1789399978.471978,
-    "ast_hash": "6a0c8bad1e97310e882014822b4ac674",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-120.jpg": {
-    "mtime": 1789057321.3769524,
-    "seen": 1789399978.471979,
-    "ast_hash": "f3a03d90a365b9c0cd447b7a4743defd",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-121.jpg": {
-    "mtime": 1789057321.636998,
-    "seen": 1789399978.471979,
-    "ast_hash": "a86499d55a3fc49c3b33f145b924ac10",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-122.jpg": {
-    "mtime": 1789057321.5558927,
-    "seen": 1789399978.47198,
-    "ast_hash": "a2154b3dceb8ece6c1932ad684a70dc9",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-123.jpg": {
-    "mtime": 1789057321.5052085,
-    "seen": 1789399978.47198,
-    "ast_hash": "288ec57cc0a855f7b547912aa4e1f7ca",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-124.jpg": {
-    "mtime": 1789057321.7206392,
-    "seen": 1789399978.471981,
-    "ast_hash": "a8e9d11ca7c209fcc6a2352c9adc2647",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-125.jpg": {
-    "mtime": 1789057321.9161575,
-    "seen": 1789399978.471981,
-    "ast_hash": "bb2140bcc2cab31443133b3810b200f4",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-126.jpg": {
-    "mtime": 1789057322.0338464,
-    "seen": 1789399978.471982,
-    "ast_hash": "4a4db57c451036790658b60b814105ec",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-127.jpg": {
-    "mtime": 1789057321.9367673,
-    "seen": 1789399978.471982,
-    "ast_hash": "50a7866ec3811e0cde33c745478528a8",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-128.jpg": {
-    "mtime": 1789057322.2194026,
-    "seen": 1789399978.4719832,
-    "ast_hash": "a9df041ad2c6551a2638062485d7a058",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-129.jpg": {
-    "mtime": 1789057322.274132,
-    "seen": 1789399978.4719832,
-    "ast_hash": "edd0b1c587dd4273a6d742d51342adb6",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-130.jpg": {
-    "mtime": 1789057322.585924,
-    "seen": 1789399978.4719841,
-    "ast_hash": "78255314a0bb6a60e713f6458aea76de",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-131.jpg": {
-    "mtime": 1789057322.3753154,
-    "seen": 1789399978.4719841,
-    "ast_hash": "2bdeb555edb49073f4555b5fa76045fe",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-132.jpg": {
-    "mtime": 1789057322.6759045,
-    "seen": 1789399978.4719849,
-    "ast_hash": "5f4a948cbd2991a8847dea3155a19a2a",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-133.jpg": {
-    "mtime": 1789057322.8728392,
-    "seen": 1789399978.4719858,
-    "ast_hash": "c6594e56a32b18a891763f5af8e73398",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-134.jpg": {
-    "mtime": 1789057322.9475374,
-    "seen": 1789399978.4719858,
-    "ast_hash": "eaa4429872e5f922b6dc6312e6b7ff20",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-135.jpg": {
-    "mtime": 1789057322.8772557,
-    "seen": 1789399978.471987,
-    "ast_hash": "0e389521b25860aab2c0fdcaa339a558",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-136.jpg": {
-    "mtime": 1789057323.1208344,
-    "seen": 1789399978.471987,
-    "ast_hash": "416431367f2a6645973ad45f75387b3b",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-137.jpg": {
-    "mtime": 1789057323.431565,
-    "seen": 1789399978.471988,
-    "ast_hash": "682712ffdd186280328990e38ce83408",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-138.jpg": {
-    "mtime": 1789057323.3280196,
-    "seen": 1789399978.471989,
-    "ast_hash": "39a8b00b457b089765d4da7186a0be89",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-139.jpg": {
-    "mtime": 1789057323.3832972,
-    "seen": 1789399978.471989,
-    "ast_hash": "ee102258f53f0a089294ce93a3ce3c36",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-140.jpg": {
-    "mtime": 1789057323.4492626,
-    "seen": 1789399978.47199,
-    "ast_hash": "31b2ce72b134ebe4ac01cc80dbc5e5d0",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-141.jpg": {
-    "mtime": 1789057323.5895207,
-    "seen": 1789399978.47199,
-    "ast_hash": "c74e0a5f3794732ce0e5fa4eb6cac3f5",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-142.jpg": {
-    "mtime": 1789057323.9112911,
-    "seen": 1789399978.471991,
-    "ast_hash": "80854e10a899708a497a12b96c10d398",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-143.jpg": {
-    "mtime": 1789057323.8502417,
-    "seen": 1789399978.471991,
-    "ast_hash": "4f08499d764f54413fe02ede9c255ec7",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-144.jpg": {
-    "mtime": 1789057323.9222243,
-    "seen": 1789399978.471992,
-    "ast_hash": "ba66f2ee8df313857d8ca29c28396377",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-145.jpg": {
-    "mtime": 1789057324.254735,
-    "seen": 1789399978.471993,
-    "ast_hash": "5540acca6694b5326d2a6c308835931b",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-146.jpg": {
-    "mtime": 1789057324.164922,
-    "seen": 1789399978.471993,
-    "ast_hash": "49dcaf4d602fa686c1bfa547042839f9",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-147.jpg": {
-    "mtime": 1789057324.3030136,
-    "seen": 1789399978.4719942,
-    "ast_hash": "0f5b1ef3a4ae8d69479a8bc4068b8846",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-148.jpg": {
-    "mtime": 1789057324.3100975,
-    "seen": 1789399978.4719942,
-    "ast_hash": "603490357ef471f21d59bfb40bb4acf9",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-149.jpg": {
-    "mtime": 1789057324.7284708,
-    "seen": 1789399978.4719949,
-    "ast_hash": "9260b66ce51449176880d934ee9f5d8d",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-150.jpg": {
-    "mtime": 1789057324.5233,
-    "seen": 1789399978.4719958,
-    "ast_hash": "f1e3cec4c026e00eb2d723c246fb3e0c",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-151.jpg": {
-    "mtime": 1789057324.7241468,
-    "seen": 1789399978.4719958,
-    "ast_hash": "1047b80a5b021396963f9ba29af66257",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-152.jpg": {
-    "mtime": 1789057324.9567463,
-    "seen": 1789399978.471997,
-    "ast_hash": "edcf45947faa957eba281089d9b4ea82",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-153.jpg": {
-    "mtime": 1789057325.194001,
-    "seen": 1789399978.471997,
-    "ast_hash": "0dc2454964a0b27abc4eb2dc016f082e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-154.jpg": {
-    "mtime": 1789057325.1405888,
-    "seen": 1789399978.471998,
-    "ast_hash": "e32574ed7869fe8be8e7a5000673a829",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-155.jpg": {
-    "mtime": 1789057325.307691,
-    "seen": 1789399978.471999,
-    "ast_hash": "f81f48d97af2c976f4a3a357c486fb53",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-156.jpg": {
-    "mtime": 1789057325.5134587,
-    "seen": 1789399978.471999,
-    "ast_hash": "b8cb2116aba1aaeee1791b2016f17fbf",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-157.jpg": {
-    "mtime": 1789057325.727527,
-    "seen": 1789399978.472,
-    "ast_hash": "381b1520ec324b790f35e855d55ec29b",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-158.jpg": {
-    "mtime": 1789057325.5134587,
-    "seen": 1789399978.472,
-    "ast_hash": "d0cb19f90f124d837607f5f410b96919",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-159.jpg": {
-    "mtime": 1789057325.7276378,
-    "seen": 1789399978.472001,
-    "ast_hash": "af025a30133cc0ce0f93e4eb5fea6897",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-160.jpg": {
-    "mtime": 1789057325.9375637,
-    "seen": 1789399978.472002,
-    "ast_hash": "567d4b62262751446a1e1f9c4a3a7485",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-161.jpg": {
-    "mtime": 1789057326.1903424,
-    "seen": 1789399978.472002,
-    "ast_hash": "e726c25f2dccc552e942c0a91d4fc2da",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-162.jpg": {
-    "mtime": 1789057326.1918764,
-    "seen": 1789399978.472003,
-    "ast_hash": "b1e713453f091b670884b6cba4827960",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-163.jpg": {
-    "mtime": 1789057326.2284493,
-    "seen": 1789399978.472003,
-    "ast_hash": "ea0a90e00cbf1b084d13e6a6e3614728",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-164.jpg": {
-    "mtime": 1789057326.3720853,
-    "seen": 1789399978.4720042,
-    "ast_hash": "8d4508ff4b773042f2814c772408f352",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-165.jpg": {
-    "mtime": 1789057326.533535,
-    "seen": 1789399978.4720042,
-    "ast_hash": "4f4aac12dc2f3d9738d1949ecbc11659",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-166.jpg": {
-    "mtime": 1789057326.5644023,
-    "seen": 1789399978.4720051,
-    "ast_hash": "8404ad33f5e197d90d66eaed49075078",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-167.jpg": {
-    "mtime": 1789057326.8496518,
-    "seen": 1789399978.4720051,
-    "ast_hash": "b075ee61dfcd7008ab6ae469fe0000af",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-168.jpg": {
-    "mtime": 1789057326.846494,
-    "seen": 1789399978.4720058,
-    "ast_hash": "1fea484fe77d703ba49132ae0d3b628e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-169.jpg": {
-    "mtime": 1789057327.0210993,
-    "seen": 1789399978.4720068,
-    "ast_hash": "5853430823ae2e76bd8e7efd77a09837",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-170.jpg": {
-    "mtime": 1789057327.0766203,
-    "seen": 1789399978.4720068,
-    "ast_hash": "5ad5f89ddd9fe2319420c23a96898dc8",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-171.jpg": {
-    "mtime": 1789057327.2782884,
-    "seen": 1789399978.472008,
-    "ast_hash": "d67ccea6d115bc73c43b06c48b6a5cfe",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-172.jpg": {
-    "mtime": 1789057327.342384,
-    "seen": 1789399978.472008,
-    "ast_hash": "8e880c8cdf7a87606c467ab937391aa1",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-173.jpg": {
-    "mtime": 1789057327.3069525,
-    "seen": 1789399978.472009,
-    "ast_hash": "a1d1a73016f7b9036cb16b9ef63326e0",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-174.jpg": {
-    "mtime": 1789057327.351489,
-    "seen": 1789399978.472009,
-    "ast_hash": "c5b242fca0a31b5dec84df75c4fe3204",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-175.jpg": {
-    "mtime": 1789057328.078311,
-    "seen": 1789399978.47201,
-    "ast_hash": "8e00a3ebf885562b944af7af1a306e87",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-176.jpg": {
-    "mtime": 1789057327.768397,
-    "seen": 1789399978.47201,
-    "ast_hash": "1b760135239189406070617cfa7bc670",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-177.jpg": {
-    "mtime": 1789057327.8312757,
-    "seen": 1789399978.472011,
-    "ast_hash": "f1c98f6044dd0fd268b246e454be0d71",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-178.jpg": {
-    "mtime": 1789057327.872702,
-    "seen": 1789399978.472011,
-    "ast_hash": "62615a6a8e37e271c8f35795dfdde4a7",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-179.jpg": {
-    "mtime": 1789057328.0703382,
-    "seen": 1789399978.472012,
-    "ast_hash": "d0850f1a9d99bd03a9ae3cc9b8035417",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-180.jpg": {
-    "mtime": 1789057328.3579996,
-    "seen": 1789399978.472012,
-    "ast_hash": "b0861a9e4957a61ec1b91df5865ab26f",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-181.jpg": {
-    "mtime": 1789057328.3160872,
-    "seen": 1789399978.472013,
-    "ast_hash": "689ee59f15f802a2d38541080198374a",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-182.jpg": {
-    "mtime": 1789057328.3906808,
-    "seen": 1789399978.4720142,
-    "ast_hash": "5da28232c4f4abc236a693708aa7a080",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-183.jpg": {
-    "mtime": 1789057328.7076485,
-    "seen": 1789399978.4720142,
-    "ast_hash": "c2debe5c1de193bfb89bf4c7546f2428",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-184.jpg": {
-    "mtime": 1789057328.7037222,
-    "seen": 1789399978.4720151,
-    "ast_hash": "7acfb626b3b74286ebed18f2c4b763dc",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-185.jpg": {
-    "mtime": 1789057328.8245728,
-    "seen": 1789399978.4720151,
-    "ast_hash": "e40785483d834828a4284565056a2d2e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-186.jpg": {
-    "mtime": 1789057328.9606378,
-    "seen": 1789399978.4720159,
-    "ast_hash": "51703649bfea1a688c5a7e8c842f31d5",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-187.jpg": {
-    "mtime": 1789057329.3651466,
-    "seen": 1789399978.4720159,
-    "ast_hash": "6be5895e1fc6cdf3bbee87dd471c10f2",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-188.jpg": {
-    "mtime": 1789057329.1070578,
-    "seen": 1789399978.4720168,
-    "ast_hash": "1a9c2292b5f149a0695ad544d6e020ab",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-189.jpg": {
-    "mtime": 1789057329.4202023,
-    "seen": 1789399978.472018,
-    "ast_hash": "79ec82fedbd3179c756cd55dc4bf2956",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-190.jpg": {
-    "mtime": 1789057329.4077013,
-    "seen": 1789399978.472018,
-    "ast_hash": "4e5ea639226e9b13f6a4e67edcb105ba",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-191.jpg": {
-    "mtime": 1789057329.732456,
-    "seen": 1789399978.472019,
-    "ast_hash": "e890ec97f2384972301a9e9b8b527005",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-192.jpg": {
-    "mtime": 1789057329.6962829,
-    "seen": 1789399978.472019,
-    "ast_hash": "0b2063c2340bb1c9d46ca90cc2052494",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-193.jpg": {
-    "mtime": 1789057329.9978383,
-    "seen": 1789399978.47202,
-    "ast_hash": "b3106554244e63ae05875123eef72339",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-194.jpg": {
-    "mtime": 1789057329.7371252,
-    "seen": 1789399978.47202,
-    "ast_hash": "bb4894de363fb32fb216941b92039f70",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-195.jpg": {
-    "mtime": 1789057330.1010556,
-    "seen": 1789399978.472021,
-    "ast_hash": "5383156e08ae2b998c2e893f598bb4f3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-196.jpg": {
-    "mtime": 1789057330.0362713,
-    "seen": 1789399978.472021,
-    "ast_hash": "bba67bc202039c5242e1310a200b3574",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-197.jpg": {
-    "mtime": 1789057330.1466486,
-    "seen": 1789399978.472022,
-    "ast_hash": "901561b189363222934f5d03e2d58d41",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-198.jpg": {
-    "mtime": 1789057330.4062095,
-    "seen": 1789399978.472022,
-    "ast_hash": "ba9031b107814f08ef9a7aef17acfd8e",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/exterior/full-res/frame-199.jpg": {
-    "mtime": 1789057330.3522646,
-    "seen": 1789399978.472023,
-    "ast_hash": "62473ebf02c3a688483b6523e8a76df8",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/interior/full-res/pano_b.jpg": {
-    "mtime": 1789057334.2773874,
-    "seen": 1789399978.472024,
-    "ast_hash": "4554055d22497cf9f190eadb577edffa",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/interior/full-res/pano_d.jpg": {
-    "mtime": 1789057336.4019482,
-    "seen": 1789399978.472024,
-    "ast_hash": "13428712de9969ac1323e5c8eb6e4592",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/interior/full-res/pano_f.jpg": {
-    "mtime": 1789057333.8054013,
-    "seen": 1789399978.4720252,
-    "ast_hash": "bfd02c7771956643febd8de7590be422",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/interior/full-res/pano_l.jpg": {
-    "mtime": 1789057334.7606428,
-    "seen": 1789399978.4720252,
-    "ast_hash": "151e595344822bfc48f4f3dd2ff11451",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/interior/full-res/pano_r.jpg": {
-    "mtime": 1789057335.332213,
-    "seen": 1789399978.4720252,
-    "ast_hash": "82c5f4237c71bde47d327ff4e35fe701",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2021 Toyota Hilux V Dual Cab 2.4/interior/full-res/pano_u.jpg": {
-    "mtime": 1789057335.8126335,
-    "seen": 1789399978.472026,
-    "ast_hash": "d8e08dfc259b887b27a4de8d957f08e0",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/interior/full-res/pano_b.jpg": {
-    "mtime": 1789078879.3434458,
-    "seen": 1789399978.481123,
-    "ast_hash": "0f9138d6cd77f5ca4c3898f09474a948",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/interior/full-res/pano_d.jpg": {
-    "mtime": 1789078879.4692783,
-    "seen": 1789399978.481125,
-    "ast_hash": "769b7dafb8d6e34016f626907c58eafa",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/interior/full-res/pano_f.jpg": {
-    "mtime": 1789078879.2075725,
-    "seen": 1789399978.4811258,
-    "ast_hash": "0bbd7ae36d3c98bd26170e099ef9f0be",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/interior/full-res/pano_l.jpg": {
-    "mtime": 1789078879.5494893,
-    "seen": 1789399978.481127,
-    "ast_hash": "a66341b224502450805e4cd4f8699c91",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/interior/full-res/pano_r.jpg": {
-    "mtime": 1789078879.6692834,
-    "seen": 1789399978.481127,
-    "ast_hash": "add27cd1189e71a9226a1afab02dd2a3",
-    "semantic_hash": ""
-  },
-  "shared/model/Truck/2022 Ford Ranger Raptor High Rider Dual Cab 2.0/interior/full-res/pano_u.jpg": {
-    "mtime": 1789078879.7226217,
-    "seen": 1789399978.481128,
-    "ast_hash": "07943050ab340c839875c18df14de52c",
-    "semantic_hash": ""
-  },
-  "tests/studio360-debug.png": {
-    "mtime": 1789048466.8252573,
-    "seen": 1789399978.481355,
-    "ast_hash": "01f25f9604132dbd0986bdc5e9df9506",
     "semantic_hash": ""
   }
 }

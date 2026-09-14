@@ -13,7 +13,8 @@ The overarching objective of this phase is to detect, isolate, and remediate dis
 
 This chapter is structured systematically to provide an exhaustive academic record of the testing phase. Section 6.2 outlines the formal test plan, delineating personnel organization, controlled testing environments, and chronological milestone schedules. Section 6.3 articulates the multi-tiered testing strategy, contrasting white-box and black-box paradigms and classifying testing tiers. Section 6.4 presents the detailed test design, encapsulating granular test case descriptions across all seven functional modules and establishing the realistic Malaysian test data matrix. Section 6.5 details the test execution results, providing empirical analysis of automated Playwright test suites, ethical AI security audits, and defect resolution logs. Section 6.6 documents the User Acceptance Testing methodology, demographic distributions, and SUS empirical scoring. Finally, Section 6.7 concludes the chapter with a synthesis of testing findings and verifies readiness for final deployment.
 
-> *[Figure 6.1: Chapter 6 Testing Process & Verification Lifecycle Outline - To be inserted]*
+![Figure 6.1: Chapter 6 Testing Process & Verification Lifecycle Outline](../GAMBAR/Figure%206.1_testing_process_lifecycle.png)
+*Figure 6.1: Chapter 6 Testing Process & Verification Lifecycle Outline*
 
 ---
 

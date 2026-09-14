@@ -342,9 +342,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/05_admin_idle_timeout.spec.js": {
-    "mtime": 1789419498.491709,
-    "seen": 1789420126.911654,
-    "ast_hash": "17afd4eea77e308981727576ff972a37",
+    "mtime": 1789399050.5944586,
+    "seen": 1789399978.391774,
+    "ast_hash": "854461781f4f11accc133aa5e1dd7755",
     "semantic_hash": ""
   },
   "tests/package.json": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1789419458.5794778,
-    "seen": 1789420126.914156,
-    "ast_hash": "db1155dd615196b8e270d121b4c5348b",
+    "mtime": 1789086357.6417449,
+    "seen": 1789399978.394494,
+    "ast_hash": "82c4e2a1ce57105b6ca7fd6ee6af5b77",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -588,9 +588,9 @@
     "semantic_hash": ""
   },
   "customer/pages/car-details/booking/booking.html": {
-    "mtime": 1789419090.3001418,
-    "seen": 1789420126.9182878,
-    "ast_hash": "bee2657b21572a79b0894571e8f88062",
+    "mtime": 1789397719.2574735,
+    "seen": 1789399978.3971012,
+    "ast_hash": "da26a3f84b8f5d267c08e74db20f51c4",
     "semantic_hash": ""
   },
   "customer/pages/car-details/booking/payment/booking-confirmed/booking-confirmed.html": {
@@ -606,9 +606,9 @@
     "semantic_hash": ""
   },
   "customer/pages/car-details/car-details.html": {
-    "mtime": 1789419859.0065062,
-    "seen": 1789420126.918394,
-    "ast_hash": "81b3ed5c3727dd3257f8ab68cf8c97ce",
+    "mtime": 1789082661.115769,
+    "seen": 1789399978.397103,
+    "ast_hash": "af88c6994627164230797ea30b0f1d6a",
     "semantic_hash": ""
   },
   "customer/pages/dashboard/customer.html": {
@@ -11478,9 +11478,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/18_full_system_bilingual_parity.spec.js": {
-    "mtime": 1789419871.8482544,
-    "seen": 1789420126.912066,
-    "ast_hash": "ac862d66ff7ae4f0f020c06ca105b302",
+    "mtime": 1788930047.9906163,
+    "seen": 1788930160.357758,
+    "ast_hash": "c229209c90a4d4b188f4f92c4e3d3228",
     "semantic_hash": ""
   },
   ".agents/rules/20_team_roles_and_responsibilities.md": {
@@ -12090,15 +12090,15 @@
     "semantic_hash": ""
   },
   "REPORT/chapters/08_Chapter5_Implementation.md": {
-    "mtime": 1789419351.6709714,
-    "seen": 1789420126.914706,
-    "ast_hash": "53610dccbe1ea49adc82cc67d6f53fe0",
+    "mtime": 1789395694.375648,
+    "seen": 1789399978.395031,
+    "ast_hash": "9746c4ecc8a6516c4f3df89903aaa6d3",
     "semantic_hash": ""
   },
   "REPORT/chapters/09_Chapter6_Testing.md": {
-    "mtime": 1789419367.1445954,
-    "seen": 1789420126.914707,
-    "ast_hash": "96e2d262e142bf4bea38e0057cb3ef2f",
+    "mtime": 1789392700.691503,
+    "seen": 1789399978.3950322,
+    "ast_hash": "6440035941503c16762b9bd6dfa34641",
     "semantic_hash": ""
   },
   "admin/pages/ai/automation.html": {
@@ -12168,9 +12168,9 @@
     "semantic_hash": ""
   },
   "REPORT/GAMBAR/Figure 5.6_customer_booking_flow.png": {
-    "mtime": 1789419163.4336195,
-    "seen": 1789420126.9215071,
-    "ast_hash": "889622ed12c51ec40886b0ac2d76b59a",
+    "mtime": 1789398566.6077752,
+    "seen": 1789399978.3994062,
+    "ast_hash": "7c0c0a8a5c5449cb88bceee2d1d4e240",
     "semantic_hash": ""
   },
   "REPORT/GAMBAR/Figure 5.7_customer_qr_receipt.png": {

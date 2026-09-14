@@ -248,11 +248,20 @@ test.describe('WeDRIVE Full System Bilingual Parity (EN & MS) Tests', () => {
         name: 'Admin Test',
         timestamp: Date.now()
       }));
+      sessionStorage.setItem('wedrive_car_draft_prompted_session', '1');
     });
 
     await page.goto('/admin/pages/car/add-car/step1_spesifikasi.html');
     await page.waitForLoadState('domcontentloaded');
     await page.waitForTimeout(400);
+
+    const draftDialog = page.locator('#wedrive-draft-guard');
+    if (await draftDialog.isVisible({ timeout: 1000 }).catch(() => false)) {
+      const laterBtn = page.getByRole('button', { name: 'Nanti', exact: true });
+      if (await laterBtn.isVisible().catch(() => false)) {
+        await laterBtn.click();
+      }
+    }
 
     const langBtn = page.locator('.lang-toggle').first();
     await expect(langBtn).toBeVisible();

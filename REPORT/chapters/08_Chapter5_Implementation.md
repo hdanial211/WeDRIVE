@@ -69,7 +69,8 @@ A distinguishing characteristic of the WeDRIVE engineering workflow is the utili
 - **Ethical AI Penetration Tester (`strix_security_guardian`)**: Conducted automated vulnerability scanning against OWASP Top 10 vulnerabilities, session hijacking, and PII leakage.
 - **Malay Linguistic Auditor (`bm_language_police`)**: Audited interface strings across `shared/lang/ms.json` to enforce Modern Malaysian Malay (Standard 2026) and eliminate blacklisted archaic terms (*Armada, Fleet, Wahana, Kabin*).
 
-> *[Figure 5.1: Software Development Environment & System Architecture Diagram - To be inserted]*
+![Figure 5.1: Software Development Environment & System Architecture Diagram](../GAMBAR/Figure%205.1_software_dev_architecture.png)
+*Figure 5.1: Software Development Environment & System Architecture Diagram*
 
 ---
 
@@ -115,7 +116,8 @@ Developer Commit & Tag -> GitHub Remote (hdanial211/WeDRIVE) -> Vercel Git Webho
 ```
 If a regression is identified in production, Git provides immediate rollback capabilities via `git revert <commit_hash>`, prompting Vercel to redeploy the previous stable commit within 30 seconds.
 
-> *[Figure 5.2: Git Flow & CI/CD Deployment Workflow - To be inserted]*
+![Figure 5.2: Git Flow & CI/CD Deployment Workflow](../GAMBAR/Figure%205.2_git_flow_deployment.png)
+*Figure 5.2: Git Flow & CI/CD Deployment Workflow*
 
 ---
 
@@ -204,7 +206,8 @@ The authentication module provides secure, frictionless entry into the WeDRIVE e
    - Client-side navigation guards evaluate active JWT tokens on protected pages. Unauthenticated access attempts to `/admin/*` or `/customer/*` are redirected to the login gateway.
    - For administrative security, an inactivity watchdog (`05_admin_idle_timeout.spec.js`) monitors mouse and keyboard events, triggering an automatic secure sign-out if the console remains idle for over 15 minutes.
 
-> *[Figure 5.3: Account Authentication Interface with Form Validation - To be inserted]*
+![Figure 5.3: Account Authentication Interface with Form Validation](../GAMBAR/Figure%205.3_account_authentication_interface.png)
+*Figure 5.3: Account Authentication Interface with Form Validation*
 
 ---
 
@@ -223,7 +226,8 @@ The guest module serves prospective customers seeking vehicle rental options acr
    - Displays available rental cars organized into distinct categories: Compact Hatchback, Executive Sedan, Premium SUV, and Multi-Purpose Vehicle (MPV).
    - Communicates WeDRIVE's corporate identity, insurance coverage parameters, and the mandatory Single Melaka HQ Depot Rule (pickup and return exclusively at Melaka Headquarters, with unrestricted driving permissions across Peninsular Malaysia).
 
-> *[Figure 5.4: Guest Landing Page and Interactive Pricing Glider - To be inserted]*
+![Figure 5.4: Guest Landing Page and Interactive Pricing Glider](../GAMBAR/Figure%205.4_guest_pricing_glider.png)
+*Figure 5.4: Guest Landing Page and Interactive Pricing Glider*
 
 ---
 
@@ -249,11 +253,14 @@ The customer portal represents the primary transactional engine of WeDRIVE, prov
    - The pass embeds an encrypted JSON payload containing `booking_id`, customer verification hash, and vehicle registration number, rendered via `qrcode.js`.
    - Depot staff scan the QR code upon vehicle pickup to verify customer identity and complete digital handover. The view includes a print-optimized stylesheet for generating official PDF receipts.
 
-> *[Figure 5.5: Customer Vehicle Catalogue and Interactive 360-Degree Turntable Viewer - To be inserted]*
+![Figure 5.5: Customer Vehicle Catalogue and Interactive 360-Degree Turntable Viewer](../GAMBAR/Figure%205.5_customer_vehicle_catalogue_360.png)
+*Figure 5.5: Customer Vehicle Catalogue and Interactive 360-Degree Turntable Viewer*
 
-> *[Figure 5.6: Customer Multi-Step Booking Flow and Rental Summary - To be inserted]*
+![Figure 5.6: Customer Multi-Step Booking Flow and Rental Summary](../GAMBAR/Figure%205.6_customer_booking_flow.png)
+*Figure 5.6: Customer Multi-Step Booking Flow and Rental Summary*
 
-> *[Figure 5.7: Customer Digital QR Pass and Rental Receipt View - To be inserted]*
+![Figure 5.7: Customer Digital QR Pass and Rental Receipt View](../GAMBAR/Figure%205.7_customer_qr_receipt.png)
+*Figure 5.7: Customer Digital QR Pass and Rental Receipt View*
 
 ---
 
@@ -277,9 +284,11 @@ The administrative portal empowers WeDRIVE operations personnel to oversee the r
    - Centralizes customer profiles, total bookings count, cumulative expenditure, and identity verification status.
    - Operations personnel inspect uploaded Malaysian Identity Cards (MyKad) and Driving Licenses, with options to approve or reject credentials with structured audit notes.
 
-> *[Figure 5.8: Admin Operations Dashboard and Vehicle Status Bento Grid - To be inserted]*
+![Figure 5.8: Admin Operations Dashboard and Vehicle Status Bento Grid](../GAMBAR/Figure%205.8_admin_operations_dashboard.png)
+*Figure 5.8: Admin Operations Dashboard and Vehicle Status Bento Grid*
 
-> *[Figure 5.9: Admin Modular Add/Edit Vehicle Onboarding Stepper - To be inserted]*
+![Figure 5.9: Admin Modular Add/Edit Vehicle Onboarding Stepper](../GAMBAR/Figure%205.9_admin_vehicle_onboarding_stepper.png)
+*Figure 5.9: Admin Modular Add/Edit Vehicle Onboarding Stepper*
 
 ---
 
@@ -300,9 +309,11 @@ The intelligent capabilities of WeDRIVE elevate the system beyond traditional ca
    - Manages automated customer re-engagement campaigns. The database schema includes `ai_campaigns` and `ai_notification_log` tables.
    - Scheduled tasks generate personalized seasonal promotion templates (e.g., Melaka Historical Heritage Trail, Festive Holiday Rentals) dispatched via Resend transactional email.
 
-> *[Figure 5.10: Admin Document OCR Verification Interface - To be inserted]*
+![Figure 5.10: Admin Document OCR Verification Interface](../GAMBAR/Figure%205.10_admin_document_ocr_verification.png)
+*Figure 5.10: Admin Document OCR Verification Interface*
 
-> *[Figure 5.11: Multi-Model AI Chatbot Interface with Fallback Mechanism - To be inserted]*
+![Figure 5.11: Multi-Model AI Chatbot Interface with Fallback Mechanism](../GAMBAR/Figure%205.11_multi_model_ai_chatbot.png)
+*Figure 5.11: Multi-Model AI Chatbot Interface with Fallback Mechanism*
 
 ---
 
@@ -363,7 +374,8 @@ To achieve publication-grade reliability, automated verification was embedded in
 3. **Graphify Knowledge Graph Integration (`graphify-out/`)**:
    A persistent code knowledge graph was constructed using Python Abstract Syntax Tree (AST) analysis. Graphify indexes all functions, variable bindings, and module dependencies, allowing multi-agent tooling to navigate the codebase with pinpoint accuracy without consuming excessive token context.
 
-> *[Figure 5.12: Playwright CLI Automated E2E Test Execution Suite - To be inserted]*
+![Figure 5.12: Playwright CLI Automated E2E Test Execution Suite](../GAMBAR/Figure%205.12_playwright_test_execution_suite.png)
+*Figure 5.12: Playwright CLI Automated E2E Test Execution Suite*
 
 ---
 

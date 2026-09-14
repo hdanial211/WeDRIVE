@@ -20,7 +20,7 @@ test.describe('Admin Session Inactivity Timeout Guardian Tests', () => {
   test('Renders 10m idle warning popup with 1m countdown and allows staying logged in', async ({ page }) => {
     // 1. Open Admin Dashboard
     await page.goto('http://localhost:8088/admin/pages/dashboard/admin.html');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // 2. Verify Admin Session Guardian is active
     await page.waitForFunction(() => typeof window.WeDriveAdminSession !== 'undefined');
@@ -54,7 +54,7 @@ test.describe('Admin Session Inactivity Timeout Guardian Tests', () => {
   test('Auto logs out and redirects to login page when countdown reaches 0', async ({ page }) => {
     // 1. Open Admin Dashboard
     await page.goto('http://localhost:8088/admin/pages/dashboard/admin.html');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     // 2. Verify Admin Session Guardian is active
     await page.waitForFunction(() => typeof window.WeDriveAdminSession !== 'undefined');

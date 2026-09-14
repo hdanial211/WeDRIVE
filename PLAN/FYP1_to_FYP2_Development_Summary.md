@@ -7027,3 +7027,26 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.20.10 Secure 360 vehicle media editing with double confirmation and filter public rental catalogue`
   - Tag Versi: `6.20.10`
 
+---
+
+## 35. [MINOR UPDATE] Penstrukturan Semula Aliran Tempahan Pelanggan & Penyempurnaan Gambar Rajah Bab 5 & 6 (v6.20.14)
+- **Tarikh**: 15 September 2026
+- **Objektif**: Menstruktur semula reka bentuk halaman tempahan pelanggan (`booking.html`) agar mengalir secara harmoni antara borang tarikh/tambahan (kiri) dan kad kenderaan serta ringkasan sewaan interaktif (kanan), menghapuskan kad kenderaan pendua, membetulkan pengesanan tarikh dinamik masa hadapan, serta menyempurnakan penyisipan visual Figure 5.6 dan pautan gambar rajah dalam Bab 5 & 6 Laporan FYP.
+- **Perubahan Teras**:
+  1. **Penstrukturan Semula Borang & Ringkasan Sewaan (`booking.html` & `wedrive.css`)**:
+     - Mematuhi *Zero Duplicate Actions Rule*: Menghapuskan kad pratonton kereta pendua di lajur kiri.
+     - Menyusun lajur kiri khusus untuk konfigurasi penyewa: Langkah 1 (Tarikh & Lokasi Hab Melaka Sentral berserta peta) dan Langkah 2 (Pilihan Perlindungan & Tambahan: Insurans Penuh, GPS, Kerusi Kanak-Kanak, Pemandu Tambahan).
+     - Menempatkan kad kenderaan berspesifikasi tinggi dan kad *Rental Summary* (Ringkasan Sewaan) di lajur kanan dengan butang tindakan rasmi *Confirm Booking* berbentuk kapsul pil (`border-radius: 9999px`).
+     - Menala susun atur visual agar muat sempurna dalam resolusi standard Apple MacBook 1440×900 tanpa limpahan atau penatalan terputus.
+  2. **Pembetulan Enjin Pemilihan Tarikh & Nilai Sebenar (`booking.html`)**:
+     - Membina fungsi pintar `findFirstAvailableRange(daysNeeded, disabledRanges)` yang secara dinamik mengenal pasti jendela tarikh sewaan masa hadapan yang sah dan belum ditempah, menghalang ralat tarikh lapuk atau nilai MYR 0.00.
+     - Menjamin pengiraan harga automatik (Kadar Asas 3 hari, Tambahan Insurans, Yuran Platform, dan Jumlah Bersih) berfungsi serta-merta semasa halaman dimuatkan.
+  3. **Penyisipan & Kemas Kini Gambar Rajah Laporan FYP (`REPORT FYP.docx` & Markdown Chapters)**:
+     - Mengambil syot skrin berkualiti tinggi Figure 5.6 (1440×900) yang memaparkan keseluruhan aliran tempahan dan ringkasan harga sewaan yang lengkap.
+     - Menyemat imej baharu terus ke dalam `REPORT/REPORT FYP.docx` pada perenggan Figure 5.6 (P2256).
+     - Mengemas kini pautan gambar rajah Figure 5.1 hingga 5.12 dalam `08_Chapter5_Implementation.md` dan Figure 6.1 dalam `09_Chapter6_Testing.md` daripada teks *To be inserted* kepada rujukan imej sebenar `../GAMBAR/...`.
+- **Maklumat Git**:
+  - Commit: `6.20.14 Refactor customer booking flow layout, fix dynamic date defaults, and update Figure 5.6 in FYP report`
+  - Tag Versi: `6.20.14`
+
+
