@@ -1,7 +1,7 @@
 # Graph Report - AI CAR RENTAL SYSTEM  (2026-09-15)
 
 ## Corpus Check
-- 175 files · ~26,559,011 words
+- 175 files · ~26,559,563 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4c7d778d`
+- Built from commit: `3378a9ba`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -101,7 +101,7 @@
 - shared/js/sidebar-loader.js
 - .fromJSON
 - Apple Human Interface Guidelines (HIG) Standard
-- lr
+- distanceToPoint
 - DESIGN.md
 - 2. Fail-Fail Yang Telah Dibersihkan & Dilaraskan
 - marketing-ai.js
@@ -202,7 +202,7 @@
 - ba
 - .getContext
 - BM Language Police Persona & Operating Guidelines
-- Ro
+- .subVectors
 -  [PATCH UPDATE] 200. Penyelarasan Ketepatan Sudut Studio 360° & Orientasi Pandangan Kereta Berasaskan 200 Bingkai Turntable Carsome, Penyingkiran Salah Label Hadapan/Belakang & Pengesahan Spektrum 3-Peranti Apple (v6.5.6)
 - .reset
 - add-car.js
@@ -225,9 +225,9 @@
 - .dot
 - $o
 - cloudinary-admin/index.ts
-- BRIEFING — 2026-09-14T19:21:10+08:00
+- BRIEFING — 2026-09-15T06:50:00+08:00
 - 360 Frame Download Method (without Puppeteer)
-- HANDOFF REPORT: WeDRIVE FYP 2 Final Thesis Report - Chapter 5 Implementation
+- HANDOFF REPORT: WeDRIVE FYP 2 Final Thesis Report - Chapter 7 Conclusion
 - .setHSL
 - devDependencies
 - .constructor
@@ -240,7 +240,7 @@
 - bc
 - ec
 - Il
-- Ml
+- fn
 - Nl
 - .invert
 - equals
@@ -291,8 +291,8 @@ Cohesion: 0.08
 Nodes (66): bootstrap(), buildPatternUrl(), buildPlaceholderInteriorSvg(), currentLang(), dispatchLanguageApplied(), escapeHtml(), fetchJson(), findControlsScope() (+58 more)
 
 ### Community 4 - "ve"
-Cohesion: 0.05
-Nodes (12): clampPoint(), expandByPoint(), expandByScalar(), getCenter(), getSize(), ie(), intersect(), isEmpty() (+4 more)
+Cohesion: 0.06
+Nodes (8): clampPoint(), expandByPoint(), ie(), intersect(), makeEmpty(), setFromPoints(), union(), ve()
 
 ### Community 5 - "2. Matriks Pemakaian 6 Kemahiran Teras WeDRIVE (.agents/skills/)"
 Cohesion: 0.15
@@ -307,8 +307,8 @@ Cohesion: 0.09
 Nodes (7): copy(), fo(), ih, ka(), i(), mo, ra()
 
 ### Community 12 - "dc"
-Cohesion: 0.07
-Nodes (13): ac(), cc(), dc(), hc(), ic(), jl(), _l(), lc() (+5 more)
+Cohesion: 0.08
+Nodes (12): ac(), cc(), dc(), ic(), jl(), lc(), rc(), sc() (+4 more)
 
 ### Community 14 - "car-detail.js"
 Cohesion: 0.08
@@ -438,6 +438,10 @@ Nodes (25): 10. Admin Customers Flow, 11. Admin Reports Flow, 12. Admin Marketin
 Cohesion: 0.11
 Nodes (18): 2.1 Introduction, 2.2.1 SOCAR Malaysia, 2.2.2 GoCar Malaysia, 2.2.3 Moovby, 2.2 Literature Review on Domain (Existing Platforms), 2.3 Comparison and Analysis of Existing Systems, 2.4.1 360-Degree Interactive Inspection Viewer, 2.4.2 Serverless BaaS and Real-Time Sync (Supabase & PostgreSQL) (+10 more)
 
+### Community 54 - "on"
+Cohesion: 0.10
+Nodes (3): expandByScalar(), gl, on
+
 ### Community 56 - "constructor"
 Cohesion: 0.13
 Nodes (28): m(), v(), constructor(), a(), ji(), o(), me(), c() (+20 more)
@@ -539,16 +543,12 @@ Cohesion: 0.33
 Nodes (7): detectActiveModule(), detectActiveSubItem(), loadSidebar(), renderContextualNav(), resolveBasePath(), resolveLinks(), setupMobileToggle()
 
 ### Community 84 - ".fromJSON"
-Cohesion: 0.18
-Nodes (13): bindSkeletons(), parse(), parseAnimations(), parseAsync(), parseGeometries(), parseImages(), parseImagesAsync(), parseMaterials() (+5 more)
+Cohesion: 0.16
+Nodes (13): bindSkeletons(), Ml, parse(), parseAnimations(), parseAsync(), parseGeometries(), parseImages(), parseImagesAsync() (+5 more)
 
 ### Community 85 - "Apple Human Interface Guidelines (HIG) Standard"
 Cohesion: 0.29
 Nodes (6): Apple Human Interface Guidelines (HIG) Standard, PILAR 4: COMPONENTS (KOMPONEN ANTARA MUKA), PILAR 5: INPUTS & INTERACTIONS (INTERAKSI & INPUT), PILAR 6: TECHNOLOGIES (TEKNOLOGI & CIRI KHUSUS), SENARAI SEMAK AUDIT & RUJUKAN SEBELUM SIAP, WeDRIVE Master Specification — Bahagian 2: Komponen, Interaksi & Teknologi (Pilar 4 – 6)
-
-### Community 87 - "lr"
-Cohesion: 0.09
-Nodes (3): distanceToPoint(), lr, ur
 
 ### Community 88 - "DESIGN.md"
 Cohesion: 0.15
@@ -755,11 +755,11 @@ Cohesion: 0.07
 Nodes (7): applyMatrix4(), br(), c(), li, translate(), vo, Xi
 
 ### Community 166 - "updateMatrixWorld"
-Cohesion: 0.20
-Nodes (3): nr, updateMatrixWorld(), wh
+Cohesion: 0.13
+Nodes (4): nr, Ro, updateMatrixWorld(), wh
 
 ### Community 167 - "vl"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (3): El, tl, vl()
 
 ### Community 169 - "2. Empat Domain Audit Keselamatan Utama"
@@ -803,8 +803,8 @@ Cohesion: 0.25
 Nodes (7): 1. Empat Domain Audit Keselamatan Mandatori, 1. Pengesahan Kredensial & Pengurusan Sesi (Auth & Session Security), 2. Perlindungan Data Peribadi Pelanggan (PII & Data Privacy), 2. Protokol Tindakan & Penampalan Serta-Merta, 3. Sanitasi Input & Pertahanan Suntikan (XSS & SQL Injection), 4. Titik Akhir AI & Pembendungan Rahsia (AI Guardrails & Zero Secrets), Strix Security Guardian Persona & Operating Guidelines
 
 ### Community 184 - ".setValues"
-Cohesion: 0.08
-Nodes (7): ko, oc(), pa(), pc(), qa, uc(), zc
+Cohesion: 0.05
+Nodes (11): hc(), ko, _l(), nc(), oc(), pa(), pc(), qa (+3 more)
 
 ### Community 185 - "Alur Kerja /prd_creator: Penjanaan PRD 6 Pilar Mandatori WeDRIVE"
 Cohesion: 0.40
@@ -830,6 +830,10 @@ Nodes (5): fe(), ge(), Vh, xa(), Ft()
 Cohesion: 0.33
 Nodes (5): 1. Senarai Hitam Mutlak (Zero Tolerance Blacklist), 2. Prinsip Bahasa Melayu Moden Kontemporari 2026, 2B. Mandatori Pusat Kamus Bahasa (Strict Single Source of Truth), 3. Alur Kerja Pemeriksaan Linguistik, BM Language Police Persona & Operating Guidelines
 
+### Community 194 - ".subVectors"
+Cohesion: 0.19
+Nodes (4): getCenter(), getSize(), isEmpty(), nn()
+
 ### Community 197 - "add-car.js"
 Cohesion: 0.14
 Nodes (11): initStep5BookingSimulation(), previewCarPhoto(), processExteriorFiles(), recalcBookingSimulation(), saveCarDraft(), show360Frame(), showToast(), triggerDraftSave() (+3 more)
@@ -852,7 +856,7 @@ Nodes (8): 1. Objektif dan skop, 2. Pengguna dan aliran, 3. Keperluan fungsian, 
 
 ### Community 204 - "toJSON"
 Cohesion: 0.06
-Nodes (8): _c, Do, fh, Ga, r(), Oh, ph, toJSON()
+Nodes (9): _c, Do, fh, Ga, r(), Oh, ph, toJSON() (+1 more)
 
 ### Community 205 - "ai-automation.js"
 Cohesion: 0.38
@@ -880,27 +884,27 @@ Nodes (8): generateAiCardLabel(), getLang(), hydrateCustomerCard(), init(), setA
 
 ### Community 212 - "Acceptance Criteria"
 Cohesion: 0.18
-Nodes (10): Acceptance Criteria, Codebase Fidelity, Content Completeness & Academic Rigor, Formatting & Synchronization, Initial Request — 2026-09-14T11:17:03Z, Original User Request, R1. Comprehensive Chapter 5 Academic Structure (Sections 5.1 to 5.5), R2. Strict Truth-to-Codebase & Architectural Consistency (+2 more)
+Nodes (10): Acceptance Criteria, Content Completeness & Academic Rigor, Initial Request — 2026-09-15T06:30:00Z, Original User Request, R1. Comprehensive Chapter 7 Academic Structure (Sections 7.1 to 7.4), R2. Strict Truth-to-Codebase & Architectural Consistency, R3. Word Document Integration & Table of Contents Synchronization, Requirements (+2 more)
 
 ### Community 214 - ".dot"
-Cohesion: 0.09
-Nodes (4): closestPointToPointParameter(), fn, nn(), te()
+Cohesion: 0.11
+Nodes (3): closestPointToPointParameter(), lr, te()
 
 ### Community 216 - "cloudinary-admin/index.ts"
 Cohesion: 0.33
 Nodes (8): cloudinaryFolderUrl(), cloudinaryResourcesUrl(), corsHeaders, createFolder(), deleteAssets(), deleteFolder(), deleteResourcesByPrefix(), normaliseFolder()
 
-### Community 217 - "BRIEFING — 2026-09-14T19:21:10+08:00"
+### Community 217 - "BRIEFING — 2026-09-15T06:50:00+08:00"
 Cohesion: 0.22
-Nodes (8): Artifact Index, BRIEFING — 2026-09-14T19:21:10+08:00, 🔒 Key Constraints, Mission, 🔒 My Identity, Project Status, User Context, Victory Audit Status
+Nodes (8): Artifact Index, BRIEFING — 2026-09-15T06:50:00+08:00, 🔒 Key Constraints, Mission, 🔒 My Identity, Project Status, User Context, Victory Audit Status
 
 ### Community 218 - "360 Frame Download Method (without Puppeteer)"
 Cohesion: 0.25
 Nodes (7): 360 Frame Download Method (without Puppeteer), Canonical folder rule, Cloudinary and local repository workflow, Important detail, Procedure, Why the old URL failed, Working result
 
-### Community 219 - "HANDOFF REPORT: WeDRIVE FYP 2 Final Thesis Report - Chapter 5 Implementation"
+### Community 219 - "HANDOFF REPORT: WeDRIVE FYP 2 Final Thesis Report - Chapter 7 Conclusion"
 Cohesion: 0.29
-Nodes (6): 1. Observation, 2. Logic Chain & Implementation Detail, 3. Caveats, 4. Conclusion, 5. Verification Method, HANDOFF REPORT: WeDRIVE FYP 2 Final Thesis Report - Chapter 5 Implementation
+Nodes (6): 1. Observation, 2. Logic Chain & Implementation Detail, 3. Caveats, 4. Conclusion, 5. Verification Method, HANDOFF REPORT: WeDRIVE FYP 2 Final Thesis Report - Chapter 7 Conclusion
 
 ### Community 220 - ".setHSL"
 Cohesion: 0.29
@@ -922,10 +926,6 @@ Nodes (7): s(), B(), G(), H(), O(), z(), re()
 Cohesion: 0.32
 Nodes (3): gc(), mc, l()
 
-### Community 234 - "Ml"
-Cohesion: 0.14
-Nodes (4): Ml, nc(), tc(), yl()
-
 ### Community 240 - "Wa"
 Cohesion: 0.29
 Nodes (5): getParameter(), Sr(), Wa(), h(), l()
@@ -940,9 +940,9 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Ue` connect `Ue` to `three.min.js`, `.multiplyScalar`, `.length`, `ae`?**
   _High betweenness centrality (0.024) - this node is a cross-community bridge._
-- **Why does `copy()` connect `copy` to `three.min.js`, `ve`, `ai`, `dc`, `clone`, `he`, `gi`, `da`, `tr`, `sl`, `.multiplyScalar`, `ll`, `applyMatrix4`, `updateMatrixWorld`, `vl`, `.constructor`, `.toArray`, `dr`, `on`, `constructor`, `.setValues`, `.setAttribute`, `Ro`, `cl`, `toJSON`, `.updateMatrix`, `kc`, `.fromJSON`, `.dot`, `lr`, `.setHSL`, `.constructor`, `.fromBufferAttribute`, `s`, `mc`, `Uo`, `.setStyle`, `bc`, `ec`, `Il`, `Ml`, `Nl`, `.invert`, `equals`, `fa`, `wc`, `Wa`?**
+- **Why does `copy()` connect `copy` to `three.min.js`, `ve`, `ai`, `dc`, `clone`, `he`, `gi`, `da`, `tr`, `sl`, `.multiplyScalar`, `ll`, `applyMatrix4`, `updateMatrixWorld`, `vl`, `.constructor`, `.toArray`, `dr`, `on`, `constructor`, `.setValues`, `.setAttribute`, `cl`, `toJSON`, `.updateMatrix`, `kc`, `.fromJSON`, `.dot`, `distanceToPoint`, `.setHSL`, `.constructor`, `.fromBufferAttribute`, `s`, `mc`, `Uo`, `.setStyle`, `bc`, `ec`, `Il`, `fn`, `Nl`, `.invert`, `equals`, `fa`, `wc`, `Wa`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
-- **Why does `gn` connect `gn` to `three.min.js`, `applyMatrix4`, `.length`, `updateMatrixWorld`, `copy`, `.invert`, `.constructor`, `.updateMatrix`, `toJSON`, `he`, `.fromJSON`, `.dot`, `constructor`, `.constructor`?**
+- **Why does `gn` connect `gn` to `three.min.js`, `.subVectors`, `applyMatrix4`, `.length`, `updateMatrixWorld`, `copy`, `.invert`, `.constructor`, `.updateMatrix`, `toJSON`, `he`, `.fromJSON`, `.dot`, `constructor`, `.constructor`?**
   _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **What connects `PREVIEW_I18N`, `allCars`, `allBookings` to the rest of the system?**
   _805 weakly-connected nodes found - possible documentation gaps or missing edges._

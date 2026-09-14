@@ -2,18 +2,16 @@ const { test, expect } = require('@playwright/test');
 
 test.describe('Admin Bookings Date Range Filter Tests', () => {
   test.beforeEach(async ({ page }) => {
-    // Inject valid admin session so Auth Guard permits access
+    // Inject valid admin session
     await page.addInitScript(() => {
-      if (window.location.pathname.includes('/admin/')) {
-        localStorage.setItem('wedrive_session', JSON.stringify({
-          id: 'admin-test-id',
-          email: 'admin@wedrive.my',
-          role: 'admin',
-          username: 'Admin Test',
-          name: 'Admin Test',
-          timestamp: Date.now()
-        }));
-      }
+      localStorage.setItem('wedrive_session', JSON.stringify({
+        id: 'admin-test-id',
+        email: 'admin@wedrive.my',
+        role: 'admin',
+        username: 'Admin Test',
+        name: 'Admin Test',
+        timestamp: Date.now()
+      }));
     });
   });
 
@@ -21,7 +19,7 @@ test.describe('Admin Bookings Date Range Filter Tests', () => {
     // 1. Open Admin Bookings Page
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('http://localhost:8088/admin/pages/booking/bookings.html');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     const customDateRow = page.locator('#custom-date-row');
     const chipAll = page.locator('#date-chip-all');
@@ -37,7 +35,6 @@ test.describe('Admin Bookings Date Range Filter Tests', () => {
     await expect(chipCustom).toHaveClass(/active/);
     await expect(chipAll).not.toHaveClass(/active/);
     await expect(customDateRow).toBeVisible();
-    await page.screenshot({ path: '/Users/hakim/.gemini/antigravity-ide/brain/73ad9e13-3aba-46b0-95d2-de16ccb8eb70/bookings_date_range_balanced.png' });
 
     // 4. Click This Month -> Custom Date Row is hidden
     await chipMonth.click();
@@ -58,7 +55,7 @@ test.describe('Admin Bookings Date Range Filter Tests', () => {
 
   test('Bookings table implements 10-records-per-page Apple pagination with numbered buttons', async ({ page }) => {
     await page.goto('http://localhost:8088/admin/pages/booking/bookings.html');
-    await page.waitForLoadState('networkidle');
+    await page.waitForLoadState('domcontentloaded');
 
     const pagination = page.locator('#bookings-pagination');
     await expect(pagination).toBeVisible();

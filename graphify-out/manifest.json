@@ -11112,9 +11112,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/06_bookings_filter.spec.js": {
-    "mtime": 1789399050.595214,
-    "seen": 1789399978.391775,
-    "ast_hash": "6c5da3658b89b2321a328fa8ca02837e",
+    "mtime": 1789426427.8393912,
+    "seen": 1789426504.548911,
+    "ast_hash": "44f3d0c4f1d746159e215f5b5b126a4c",
     "semantic_hash": ""
   },
   "tests/e2e/07_customer_my_bookings.spec.js": {
@@ -12054,21 +12054,21 @@
     "semantic_hash": ""
   },
   ".agents/BRIEFING.md": {
-    "mtime": 1789384868.9956112,
-    "seen": 1789399978.392241,
-    "ast_hash": "c0f9ab62a68b8eece6478bc66977e437",
+    "mtime": 1789426156.432118,
+    "seen": 1789426504.549535,
+    "ast_hash": "576e34522b60be4442754fa52b833279",
     "semantic_hash": ""
   },
   ".agents/ORIGINAL_REQUEST.md": {
-    "mtime": 1789384649.7228453,
-    "seen": 1789399978.3922791,
-    "ast_hash": "aa2bbb96e5572aa8ef481410909c7237",
+    "mtime": 1789426152.3220444,
+    "seen": 1789426504.549572,
+    "ast_hash": "32ecb9065938815fa26489a88e8be017",
     "semantic_hash": ""
   },
   ".agents/handoff.md": {
-    "mtime": 1789384874.01213,
-    "seen": 1789399978.392319,
-    "ast_hash": "ae243f91f752951e1e4db467d80bd844",
+    "mtime": 1789426162.6284456,
+    "seen": 1789426504.5496068,
+    "ast_hash": "a5c71d5ff4baf4c1e834aa008c4f20b7",
     "semantic_hash": ""
   },
   "PLAN/360_FRAME_DOWNLOAD_METHOD.md": {
@@ -14820,9 +14820,9 @@
     "semantic_hash": ""
   },
   "REPORT/chapters/10_Chapter7_Conclusion.md": {
-    "mtime": 1789425298.9543965,
-    "seen": 1789425353.628997,
-    "ast_hash": "2571aae4c889794b0c1661cefdf4cb88",
+    "mtime": 1789426184.2582216,
+    "seen": 1789426504.551958,
+    "ast_hash": "ffac1844dcd81cf2195f787df457c39a",
     "semantic_hash": ""
   }
 }

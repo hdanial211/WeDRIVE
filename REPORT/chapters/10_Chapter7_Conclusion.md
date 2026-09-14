@@ -44,7 +44,7 @@ Despite its comprehensive architectural foundation and successful empirical vali
 
 ### 7.1.3 User and Evaluator Observations
 
-The qualitative and quantitative findings gathered during the User Acceptance Testing (UAT) phase involving 20 diverse participants (comprising university students, local Melaka residents, inbound tourists, and fleet administrators) yielded positive evaluations that corroborate the system's operational viability:
+The qualitative and quantitative findings gathered during the User Acceptance Testing (UAT) phase involving 20 diverse participants (comprising university students, local Melaka residents, inbound tourists, and operations administrators) yielded positive evaluations that corroborate the system's operational viability:
 
 - **System Usability Scale (SUS) Score:** The platform attained a mean SUS score of **86.5 out of 100**, placing WeDRIVE comfortably within the **Grade A ("Excellent")** bracket. Participants praised the layout simplicity, immediate visual feedback, and seamless transition from vehicle browsing to final receipt generation.
 - **Visual Confidence & Transparency:** 95% of test participants remarked that the 360-degree turntable viewer and transparent price breakdown (separating base rent, optional child seat/GPS add-ons, and SST) instilled a sense of commercial trust that is absent from legacy rental websites.
@@ -62,14 +62,14 @@ To ensure the sustained commercial competitiveness and technological scalability
 The most transformative hardware proposition involves equipping the WeDRIVE rental vehicles with onboard Internet of Things (IoT) OBD-II telematics dongles and Bluetooth Low Energy (BLE) smart access controllers:
 
 - **Keyless Mobile Handover:** By integrating BLE smart relays with the vehicle's central locking mechanism, authorized customers who hold a valid, paid digital booking pass could unlock and start the vehicle directly via their smartphone when within 5 meters of the vehicle. This would eliminate physical key handovers at the depot counter, enabling true 24/7 contactless self-service pickup and drop-off.
-- **Automated Fleet Telematics:** The OBD-II dongle would transmit real-time telemetry—including GPS coordinates, fuel gauge percentage, odometer readings, tire pressure, and engine diagnostic trouble codes (DTC)—directly to the Supabase PostgreSQL backend via cellular IoT (NB-IoT/LTE-M). This would automate vehicle condition auditing upon return and trigger predictive maintenance tickets before mechanical failures occur.
+- **Automated Vehicle Telematics:** The OBD-II dongle would transmit real-time telemetry—including GPS coordinates, fuel gauge percentage, odometer readings, tire pressure, and engine diagnostic trouble codes (DTC)—directly to the Supabase PostgreSQL backend via cellular IoT (NB-IoT/LTE-M). This would automate vehicle condition auditing upon return and trigger predictive maintenance tickets before mechanical failures occur.
 
 ### 7.2.2 Proposition 2: Predictive Machine Learning for Dynamic Pricing & Demand Forecasting
 
 While the current system implements administrative seasonal price toggles, future iterations should incorporate automated machine learning models for dynamic tariff optimization:
 
 - **Predictive Demand Forecasting:** By training time-series forecasting models (e.g., Prophet or XGBoost) on historical Melaka tourism arrivals, public holiday calendars (e.g., Hari Raya, Chinese New Year, Melaka Historical City Day), and local hotel occupancy data, the system could predict vehicle demand spikes 30 to 60 days in advance.
-- **Algorithmic Yield Management:** The pricing engine would dynamically optimize daily rental tariffs based on real-time vehicle availability, competitor rate scraping, and booking velocity, maximizing fleet utilization and operator revenue while maintaining fair, transparent pricing for early-bird consumers.
+- **Algorithmic Yield Management:** The pricing engine would dynamically optimize daily rental tariffs based on real-time vehicle availability, competitor rate scraping, and booking velocity, maximizing vehicle utilization and operator revenue while maintaining fair, transparent pricing for early-bird consumers.
 
 ### 7.2.3 Proposition 3: Native Mobile Application Ecosystem with Offline Digital Pass
 
@@ -143,4 +143,4 @@ The project's success is substantiated by evaluating the degree of achievement f
 
 ### 7.4.2 Concluding Remarks
 
-In conclusion, WeDRIVE stands as a comprehensive, technically robust, and empirically validated solution that demonstrates the transformative potential of combining modern web engineering with generative artificial intelligence in the transportation domain. By bridging the gap between sophisticated fleet management and intuitive consumer experiences, WeDRIVE not only fulfills its academic mandate as a Bachelor of Computer Science Final Year Project but also lays a resilient foundation for the next generation of smart urban mobility in Malaysia.
+In conclusion, WeDRIVE stands as a comprehensive, technically robust, and empirically validated solution that demonstrates the transformative potential of combining modern web engineering with generative artificial intelligence in the transportation domain. By bridging the gap between sophisticated rental operations management and intuitive consumer experiences, WeDRIVE not only fulfills its academic mandate as a Bachelor of Computer Science Final Year Project but also lays a resilient foundation for the next generation of smart urban mobility in Malaysia.
