@@ -886,13 +886,26 @@ window.WeDriveAPI = {
         var sb = window.supabaseClient;
         if (!sb) return { data: null, error: new Error('Supabase client is unavailable.') };
         try {
+            // ── SINGLE DRAFT ENFORCEMENT ──────────────────────────────────────
+            // Strategy: UPDATE in-place if we know the Supabase ID.
+            // Otherwise, DELETE all existing Draft rows first (zero duplicate drafts),
+            // then INSERT exactly one. This guarantees exactly ONE draft at any time.
             if (draftData.supabase_draft_id && Number.isInteger(Number(draftData.supabase_draft_id))) {
                 var updateRes = await sb.from('cars').update(record).eq('id', Number(draftData.supabase_draft_id)).select();
                 if (updateRes.error) throw updateRes.error;
                 if (updateRes.data && updateRes.data.length > 0) {
                     return { data: updateRes.data[0], error: null };
                 }
+                // Row no longer exists (was deleted externally) — fall through to insert.
             }
+            // Delete ALL stale Draft rows before creating a fresh one.
+            // This is the definitive "one draft at a time" guard.
+            var deleteStale = await sb.from('cars').delete().eq('status', 'Draft');
+            if (deleteStale.error) {
+                // Non-fatal: log but continue — we still want to save the new draft.
+                console.warn('[WeDriveAPI] Could not purge stale drafts:', deleteStale.error.message);
+            }
+            // ─────────────────────────────────────────────────────────────────
             var insertRes = await sb.from('cars').insert([record]).select();
             if (insertRes.error) throw insertRes.error;
             return { data: insertRes.data ? insertRes.data[0] : record, error: null };
