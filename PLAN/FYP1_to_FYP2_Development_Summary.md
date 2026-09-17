@@ -7279,5 +7279,56 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.22.0 Expand Section 6.4.2 with 12 granular step-by-step test data execution modules matching PSM reference`
   - Tag Versi: `6.22.0`
 
+---
+
+## 42.1 [PATCH] Pembetulan Nama Pembangun & Penguji Utama kepada Muhammad Danial Hakim Bin Mohd Saofi (v6.22.1)
+- **Tarikh**: 17 September 2026
+- **Objektif**: Membetulkan nama calon/pembangun sistem kepada nama rasmi dan tepat **Muhammad Danial Hakim Bin Mohd Saofi** (No. Matrik: `B032320048`, Penyelia: `Mr. Muhammad Faiz Bin Supian`) merentasi keseluruhan dokumen laporan FYP, kod sumber pengujian, dan log pembangunan.
+- **Tindakan Pembaikan (Implementation)**:
+  1. Menggantikan semua rujukan lama 'Hisham' dalam dokumen `REPORT/REPORT FYP.docx` (blok metadata ujian 6.4.2.1 hingga 6.4.2.12, pengesahan, dan dedikasi).
+  2. Mengemas kini fail pengesahan dan log automasi kepada nama rasmi calon.
+- **Hasil Pengesahan**:
+  - Sifar insiden 'Hisham' dikesan dalam seluruh repositori dan dokumen.
+- **Maklumat Git**:
+  - Commit: `6.22.1 Correct lead developer and tester name to Muhammad Danial Hakim Bin Mohd Saofi`
+  - Tag Versi: `6.22.1`
+
+---
+
+## 43. [MINOR] Penyelarasan 100% Senarai Jadual (LOT), Penghapusan Istilah 'Armada' dalam Abstrak Bahasa Melayu & Penyatuan Metrik Pengujian Merentas Bab 1-7 (v6.23.0)
+- **Tarikh**: 17 September 2026
+- **Objektif**: Memenuhi arahan pengguna untuk menyelaraskan keseluruhan data dan tajuk jadual antara Senarai Jadual (*List of Tables - LOT*) di muka hadapan dengan badan teks Bab 1 hingga 7, menghapuskan istilah terlarang 'armada' dalam Abstrak Bahasa Melayu (P176), mengekalkan standard Bahasa Melayu Moden Kontemporari 2026 tanpa dipaksa menjadi bahasa Inggeris sepenuhnya (*"xnak fully english"*), dan menyatukan metrik pengujian Bab 7 dengan dapatan Bab 6.
+- **Latar Belakang & Analisis Audit Silang Bab**:
+  - Audit komprehensif mengesan sedikit ketidakselarasan pada Senarai Jadual di mana Jadual 6.3 (*Comparative Analysis of Testing Approaches in WeDRIVE*) tertinggal dalam LOT, menyebabkan anjakan penomboran tajuk jadual seterusnya (Jadual 6.4 hingga 6.15) dan kewujudan entri fantom penanda aras SUS.
+  - Perenggan 176 (ABSTRAK BM) menggunakan istilah 'pengurusan armada', yang bertentangan dengan piawaian projek dalam `11_language_standards.md`.
+  - Jadual 7.1 dalam Bab 7 masih merujuk metrik draf awal (*22/22 specs, 20 real users*) bukannya hasil muktamad Bab 6 (*19 test specifications, 39 test suites, 67 automated assertions, 15 real evaluators*).
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Penyelarasan Penuh Senarai Jadual (LOT - Muka Hadapan)**:
+     - Mendaftarkan secara rasmi `Table 6.3: Comparative Analysis of Testing Approaches in WeDRIVE` ke dalam LOT dengan pautan penanda buku `_Toc233762286`.
+     - Mengemas kini tajuk kesemua 20 entri jadual (Jadual 5.0 hingga 5.4, Jadual 6.1 hingga 6.15, dan Jadual 7.1) agar sepadan tepat dengan kapsyen rasmi teks badan.
+     - Membetulkan bilangan penilai dalam LOT Jadual 6.15 kepada `(N=15 Evaluators)` (sebelum ini tertulis `N=5`).
+     - Menghapuskan entri fantom `Table 6.15: System Usability Scale (SUS) Score Interpretation Benchmark` yang tidak wujud dalam badan dokumen.
+     - Menyisipkan teg penanda buku Word rasmi `_Toc233762294` pada Jadual 6.11 (`Table 6.11: Master Operational & Localization Test Parameters Matrix`) di dalam perenggan 2467 teks badan, menjadikan kesemua 34 jadual berpaut 100% secara dinamik.
+  2. **Penghapusan Istilah Terlarang 'Armada' dalam Abstrak Bahasa Melayu (P176)**:
+     - Menggantikan frasa `pengurusan armada yang komprehensif` kepada `pengurusan kenderaan sewaan yang komprehensif`.
+     - Mengekalkan perenggan ABSTRAK dalam Bahasa Melayu akademik yang fasih, jitu dan formal mengikut piawaian UTeM, memastikan dokumen mengekalkan dwibahasa rasmi (Abstrak BM dan Abstract BI) tanpa ditukar kepada bahasa Inggeris sepenuhnya.
+  3. **Penyelarasan Metrik Ujian Bab 7 (Jadual 7.1)**:
+     - Mengemas kini Baris Objektif 3 dalam Jadual 7.1:
+       - *Implementation Strategy*: `Executed multi-layered testing regimen comprising automated Playwright CLI E2E test suites (19 test specifications, 39 test suites, 67 assertions), ethical AI cybersecurity penetration testing (Strix Security Guardian), and User Acceptance Testing with 15 real evaluators.`
+       - *Empirical Verification*: `Automated test suite achieved a 100% pass rate across all 19 test specifications (67 automated assertions passed); zero critical/high security vulnerabilities; UAT evaluation with 15 evaluators yielded an outstanding SUS score of 86.5/100 (Grade A).`
+  4. **Ketepatan Model Kenderaan UAT (P2524)**:
+     - Memperhalusi rujukan kenderaan kepada `BMW 320i M Sport` selaras dengan pendaftaran model 360 dalam `shared/model/registry.json`.
+- **Hasil Pengesahan**:
+  - Kesemua 34 jadual dalam Senarai Jadual (LOT) kini bersepadu 100% dengan kapsyen teks badan (0 ketidakselarasan / mismatches).
+  - Kesemua 130 rajah dalam Senarai Rajah (LOF) bersepadu 100% dengan teks badan.
+  - Jumlah imej lukisan dalam dokumen kekal utuh tepat 135 imej, 63 jadual, dan 2,701 perenggan.
+  - Sifar perkataan 'armada' dikesan dalam teks sistem; istilah BM kekal autentik dan mematuhi standard 2026.
+  - Suite ujian automasi Playwright mencapai kadar kelulusan 100% (*100% Pass Rate*).
+  - Pengetahuan Graphify dikemas kini sepenuhnya (`graphify update .`).
+- **Maklumat Git**:
+  - Commit: `6.23.0 Synchronize all table captions in LOT, eliminate armada from BM abstract, and align UAT metrics across Chapters 1-7`
+  - Tag Versi: `6.23.0`
+
+
 
 
