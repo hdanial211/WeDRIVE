@@ -7097,6 +7097,94 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.20.16 Synchronize agent lifecycle artifacts, purge fleet terminology from Chapter 7, and update Graphify`
   - Tag Versi: `6.20.16`
 
+---
 
+## 38. [PATCH] Penyeragaman Mutlak Format Akademik Bab 5, 6, & 7 Mengikut Bab 1–4 Dokumen Tesis (v6.20.17)
+- **Tarikh**: 17 September 2026
+- **Objektif**: Menyelaras dan menyeragamkan keseluruhan format dokumen Word `REPORT/REPORT FYP.docx` bagi Bab 5 (Implementation), Bab 6 (Testing), dan Bab 7 (Conclusion) supaya 100% mematuhi gaya rasmi Bab 1–4 dan panduan penulisan UTeM FTMK (`FINAL REPORT FYP -TEMPLATE.docx`).
+- **Punca Ketidakselarasan Dikenal Pasti**:
+  1. **Nombor Bertindih (Double Numbering) pada Tajuk**: Gaya tajuk Word (`Heading 1`, `Heading 2`, `Heading 3`, `Heading 4`) telah mempunyai penomboran berbilang aras terbina (`numId=2`, `Chapter %1: `, `%1.%2\t`, `%1.%2.%3\t`, `%1.%2.%3.%4\t`). Teks asal pada Bab 5–7 mengandungi penomboran manual (cth. `CHAPTER 5: IMPLEMENTATION`, `5.1 Introduction`, `5.2.1 Hardware Specifications`), menyebabkan Word memaparkan nombor bertindih berganda (`Chapter 5: CHAPTER 5: IMPLEMENTATION`, `5.1 5.1 Introduction`). Bab 1–4 hanya meletakkan teks tajuk bersih tanpa nombor.
+  2. **Gaya Teks Claude / Web**: Sebanyak 366 perenggan asal Bab 5–7 menggunakan gaya `font-claude-response-body` dengan jajaran kiri (`LEFT`) dan langkauan baris sempit 1.15.
+  3. **Kapsyen Tidak Rasmi**: Kapsyen jadual dan rajah mengandungi asterisk markdown (`*`) dan tidak mewarisi gaya rasmi `Caption`.
+  4. **Pemisahan Halaman Awal Bab**: Bab 6 dan Bab 7 tidak mempunyai penanda `page_break_before = True`, menyebabkan bab baharu bercantum pada halaman yang sama dengan bab sebelumnya.
+- **Tindakan Pembaikan (Standardization Implementation)**:
+  1. **Penyingkiran Penomboran Manual pada Tajuk**:
+     - Membuang teks awalan nombor manual pada semua Heading 1, 2, 3, dan 4 di Bab 5–7 melalui skrip Python berautomasi (`scratch/standardize_ch567_format_v2.py`).
+     - Heading 1 bertukar kepada: `IMPLEMENTATION`, `TESTING`, `CONCLUSION`, `references`, `APPENDIX A`.
+     - Heading 2 bertukar kepada tajuk bersih: `Introduction`, `Software Development Environment Setup`, `Test Plan`, `Observation on Weaknesses and Strengths`, dll.
+     - Heading 3 dan 4 bertukar kepada tajuk bersih tanpa nombor, membolehkan Word memaparkan penomboran automatik tunggal yang kemas dan seragam 100% dengan Bab 1–4.
+  2. **Pembersihan Overrides & Penguatkuasaan Gaya Piawai**:
+     - Membuang overrides manual perenggan (`alignment`, `space_before`, `space_after`) pada tajuk supaya mewarisi tetapan rasmi daripada `styles.xml`.
+     - Menetapkan `page_break_before = True` pada semua Heading 1 (Bab 5, 6, 7, Rujukan, Lampiran A) supaya setiap bab bermula di bahagian atas muka surat baharu.
+  3. **Penyeragaman Teks Kandungan (Body Text) & Senarai**:
+     - Menukar 351 perenggan isi kandungan kepada gaya rasmi `Normal`, jajaran penuh `JUSTIFY`, langkauan baris `1.5`, jarak selepas `8pt` (memadankan Bab 1 P514), fon `Times New Roman 12pt` dan mengekalkan token kod pada `Courier New 10.5pt`.
+  4. **Penyeragaman Kapsyen (34 Kapsyen Rajah & Jadual)**:
+     - Menguatkuasakan gaya rasmi `Caption` berpusat (`CENTER`) bagi kesemua 13 Rajah dan 21 Jadual, membersihkan sebarang simbol asterisk, dan menetapkan `keep_with_next = True` pada kapsyen jadual.
+  5. **Pemformatan 21 Jadual (Jadual 18 hingga 38)**:
+     - Menjajarkan semua jadual ke tengah (`CENTER`), menetapkan langkauan padat 1.15 dalam sel dengan fon Times New Roman 10.5pt dan baris pengepala tebal (*bold*).
+- **Hasil Pengesahan**:
+  - Sifar (0) perenggan `font-claude-response-body` tertinggal dalam Bab 5–7.
+  - Sifar (0) nombor bertindih pada tajuk.
+  - 100% konsisten visual dan struktural antara Bab 1–4 dan Bab 5–7.
+- **Maklumat Git**:
+  - Commit: `6.20.17 Standardize academic formatting of Chapters 5, 6, and 7 to match Chapters 1-4`
+  - Tag Versi: `6.20.17`
 
+---
+
+## 39. [PATCH] Penyeragaman Mutlak Warna & Sempadan Semua Jadual Mengikut Format UTeM (D9D9D9 Header & Black Borders) (v6.20.18)
+- **Tarikh**: 17 September 2026
+- **Objektif**: Menyelaras warna latar belakang sel pengepala, corak lorekan sel kandungan, dan warna sempadan kesemua 24 jadual (Jadual 16 hingga 39) dalam `REPORT/REPORT FYP.docx` supaya 100% mematuhi format rasmi Jadual 6 hingga 15 (Jadual 2.1 – 4.1) dari Bab 1–4 dan templat UTeM FTMK.
+- **Punca Ketidakselarasan Dikenal Pasti**:
+  1. **Warna Pengepala Berbeza**: Jadual 6–15 di Bab 1–4 menggunakan lorekan kelabu rasmi Microsoft Word UTeM `#D9D9D9` (15% Gray). Manakala Jadual 19–39 di Bab 5–7 sebelum ini menggunakan lorekan web Tailwind slate `#E2E8F0` (kelabu kebiruan).
+  2. **Corak Lorekan Zebra Web**: Jadual Bab 5–7 menggunakan lorekan berbelang berselang-seli (`#FFFFFF` dan `#F8FAFC`). Sedangkan standard tesis rasmi Bab 1–4 menggunakan latar belakang bersih tanpa lorekan (`shd = None`).
+  3. **Warna & Ketebalan Sempadan**: Jadual Bab 1–4 menggunakan sempadan hitam pekat (`color="000000"` dengan ketebalan 0.75pt / `sz="6"` pada sempadan luar dan 0.5pt / `sz="4"` pada grid dalaman). Manakala Bab 5–7 menggunakan garisan kelabu pudar (`color="CCCCCC"`).
+- **Tindakan Pembaikan (Standardization Implementation)**:
+  1. Melaksanakan skrip Python automasi berpusat (`scratch/standardize_table_styling.py`) ke atas kesemua jadual dari Jadual 16 hingga 39 (termasuk Data Dictionary Bab 4 dan semua jadual Bab 5, 6, dan 7).
+  2. Menguatkuasakan lorekan pengepala `#D9D9D9` (`w:fill="D9D9D9"`) pada baris pertama setiap jadual, dengan fon Times New Roman 11pt tebal (*bold*) dan teks hitam pekat (`#000000`).
+  3. Menghapuskan semua lorekan belang zebra pada baris data, mengembalikan latar belakang putih/bersih (`shd = None`) yang seragam merentas semua sel data.
+  4. Menetapkan sempadan grid hitam pekat (`color="000000"`) pada setiap jadual: sempadan luar (atas, bawah, kiri, kanan) bersaiz 0.75pt (`sz="6"`) dan garisan pemisah dalaman bersaiz 0.5pt (`sz="4"`).
+  5. Menyelaras ruang penimbal dalaman sel (`tcMar`: atas/bawah 3pt [60 dxa], kiri/kanan 6pt [120 dxa]) dan jarak perenggan sel (`spacing before=2pt after=2pt`) dengan langkauan 1.15.
+- **Hasil Pengesahan**:
+  - Kesemua 34 jadual kandungan laporan (Jadual 6 hingga 39) kini disahkan 100% menggunakan `header_fill=D9D9D9`, `data_fill=None`, `border_col=000000`, dan `border_sz=6`.
+  - Konsistensi visual dan palet warna jadual di seluruh dokumen kini sempurna tanpa sebarang perbezaan antara bab awal dan bab akhir.
+- **Maklumat Git**:
+  - Commit: `6.20.18 Standardize table header shading to D9D9D9 and borders to solid black across all tables`
+  - Tag Versi: `6.20.18`
+
+---
+
+## 40. [PATCH] Penyeragaman Mutlak Format Senarai Rajah (LOF), Senarai Jadual (LOT) & Naratif Visual Bab 5–6 Mengikut Piawaian Bab 1–4 (v6.20.19)
+- **Tarikh**: 17 September 2026
+- **Objektif**: Menyelesaikan isu format visual dan struktur rajah (*Figures*) dalam `REPORT/REPORT FYP.docx` — menghapuskan ruang kosong tanpa titik pengisi pada Senarai Rajah (*List of Figures*) dan Senarai Jadual (*List of Tables*), serta menyelaraskan struktur naratif peletakan rajah dalam teks Bab 5 dan Bab 6 supaya 100% konsisten dengan piawaian Bab 1–4.
+- **Punca Ketidakselarasan Dikenal Pasti**:
+  1. **Ketiadaan Tab Titik Pengisi (`leader="dot"`)**: Dalam Senarai Rajah di bahagian hadapan, entri Bab 1–4 (Rajah 1.1 hingga 4.96) mempunyai tab `<w:tab w:val="right" w:leader="dot" w:pos="8211"/>` yang menghasilkan garisan titik kemas (`............................ 85`). Manakala entri Bab 5 dan 6 (Rajah 5.1 hingga 6.1) tidak mempunyai konfigurasi tab, mengakibatkan ruang kosong putih ternganga tanpa titik (*"macam kosong x ikut format macam kat atas"*).
+  2. **Isu Sama pada Senarai Jadual (LOT)**: Jadual 5.0 hingga 7.1 turut mengalami ketiadaan tab titik pengisi dan rujukan pautan hiperteks berbanding Jadual 2.1 hingga 4.4.
+  3. **Ketiadaan Penanda Buku (*Bookmarks*)**: Kapsyen rajah dan jadual dalam teks Bab 5–7 tidak mempunyai penanda buku `_Toc...` dan kod medan `PAGEREF`, menyebabkan pautan navigasi dalam dokumen tidak berfungsi.
+  4. **Penimbunan Rajah Bertindan (*Clustered Image Dump*)**: Dalam Bab 5, Rajah 5.5, 5.6, dan 5.7; Rajah 5.8 dan 5.9; serta Rajah 5.10 dan 5.11 diletakkan bertindan rapat di hujung teks tanpa perenggan pengenalan akademik naratif di antaranya, menjadikannya kelihatan seperti draf kosong/tidak kemas berbanding Bab 1–4.
+- **Tindakan Pembaikan (Standardization Implementation)**:
+  1. **Pengemaskinian Senarai Rajah & Senarai Jadual**:
+     - Mengemas kini gaya `TableofFigures` dalam `styles.xml` dengan takrifan tab bersyarat titik pengisi (`leader="dot"` pada `pos="8211"`).
+     - Membina semula kesemua entri Rajah 5.1 hingga 6.1 (P472–P484) dan Jadual 5.0 hingga 7.1 (P328–P348) dengan struktur XML rasmi Word mengandungi tab titik kanan, teks sebaris, dan medan `PAGEREF _Toc... \h`.
+  2. **Penjajaran & Penempatan Kontekstual Rajah Bab 5**:
+     - Memindahkan Rajah 5.5 (Studio 360) ke Subseksyen Penerokaan Kenderaan Pelanggan.
+     - Memindahkan Rajah 5.6 (Aliran Tempahan) ke Subseksyen *Booking Stepper*.
+     - Memindahkan Rajah 5.7 (Pas Digital QR) ke Subseksyen Pas & Resit Digital.
+     - Memindahkan Rajah 5.8 (Papan Pemuka Admin) ke Subseksyen Operasi Pentadbir.
+     - Memindahkan Rajah 5.9 (Pendaftaran Kereta) ke Subseksyen *Vehicle Onboarding Stepper*.
+     - Memindahkan Rajah 5.10 (Verifikasi OCR Dokumen) ke Subseksyen CRM Pelanggan.
+     - Memindahkan Rajah 5.11 (Pembantu AI Chatbot) ke Subseksyen Enjin AI Pintar.
+  3. **Perenggan Pengenalan Akademik Naratif Formal**:
+     - Menambah perenggan pengenalan akademik yang jelas sebelum setiap rajah bagi kesemua 13 rajah (Rajah 5.1 hingga Rajah 6.1) menyamai piawaian Bab 1–4.
+  4. **Penyisipan Penanda Buku Rasmi**:
+     - Menjana penanda buku `_Toc233762266` hingga `_Toc233762278` pada setiap perenggan kapsyen rajah dan `_Toc233762279` hingga `_Toc233762299` pada jadual.
+  5. **Integriti Media & Standard Bahasa**:
+     - Kesemua 125 imej dalam dokumen kekal 100% utuh tanpa sebarang herotan atau kehilangan resolusi.
+     - Menggantikan perkataan terlarang (*cabin* $\to$ *interior*) dan mengekalkan sifar perkataan senarai hitam (*armada, fleet, wahana, kabin, dsb.*).
+- **Hasil Pengesahan**:
+  - Senarai Rajah dan Senarai Jadual kini memaparkan garisan titik pengisi (`............................`) dan nombor muka surat dijajarkan rapat ke margin kanan merentas seluruh dokumen.
+  - Aliran perenggan dan visual Bab 5–6 kini mengalir lancar dan kemas menepati piawaian akademik Bab 1–4.
+- **Maklumat Git**:
+  - Commit: `6.20.19 Standardize List of Figures, List of Tables, and contextual figure layouts across Chapters 5 and 6`
+  - Tag Versi: `6.20.19`
 
