@@ -41,9 +41,11 @@ test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Syn
     expect(page.url()).toContain('step1_spesifikasi.html');
 
     // Fill valid plate and specifications
-    await page.selectOption('#inputBrand', 'Honda');
+    await page.fill('#inputBrand', 'Honda');
     await page.fill('#inputModel', 'Civic');
     await page.fill('#inputVariant', '1.5 TC-P');
+    await page.selectOption('#inputCategory', 'Sedan');
+    await page.fill('#inputYear', '2024');
     await page.fill('#inputPlate', 'WKL 9988');
 
     // Verify AI Auto Generate Button & Rates
@@ -83,12 +85,16 @@ test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Syn
     // Inject valid sample photo into draft
     await page.evaluate(() => {
       const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
-      draft.photos = ['https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800'];
-      draft.images = draft.photos;
+      const cloudUrl = 'https://res.cloudinary.com/gwd1bhcx/image/upload/v1789088254/model/sample.jpg';
+      draft.photos = [cloudUrl];
+      draft.images = [cloudUrl];
+      draft.cloudinary_gallery = [cloudUrl];
+      draft.supabase_images = [cloudUrl];
       localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
       if (window.studioDraft) {
         window.studioDraft.photos = draft.photos;
         window.studioDraft.images = draft.photos;
+        window.studioDraft.cloudinary_gallery = draft.cloudinary_gallery;
       }
     });
 
@@ -108,8 +114,10 @@ test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Syn
     await page.waitForLoadState('networkidle');
 
     const testPlate = 'WDR ' + Math.floor(1000 + Math.random() * 9000);
-    await page.selectOption('#inputBrand', 'Honda');
+    await page.fill('#inputBrand', 'Honda');
     await page.fill('#inputModel', 'City');
+    await page.selectOption('#inputCategory', 'Sedan');
+    await page.fill('#inputYear', '2024');
     await page.fill('#inputPlate', testPlate);
 
     // Save and advance to Step 2
@@ -120,12 +128,16 @@ test.describe('WeDRIVE Add Car 5-Step Modular Multi-Page Architecture & CRUD Syn
     // 2. Step 2: Inject valid photo payload to satisfy visual gatekeeper
     await page.evaluate(() => {
       const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
-      draft.photos = ['https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800'];
-      draft.images = draft.photos;
+      const cloudUrl = 'https://res.cloudinary.com/gwd1bhcx/image/upload/v1789088254/model/sample.jpg';
+      draft.photos = [cloudUrl];
+      draft.images = [cloudUrl];
+      draft.cloudinary_gallery = [cloudUrl];
+      draft.supabase_images = [cloudUrl];
       localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
       if (window.studioDraft) {
         window.studioDraft.photos = draft.photos;
         window.studioDraft.images = draft.photos;
+        window.studioDraft.cloudinary_gallery = draft.cloudinary_gallery;
       }
     });
 

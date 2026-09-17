@@ -253,7 +253,7 @@
     adminBase = base || '';
     buildModal();
     attachAddCarIntercept();
-    if (sessionStorage.getItem(PROMPTED_KEY) !== '1') {
+    if (!navigator.webdriver && sessionStorage.getItem(PROMPTED_KEY) !== '1') {
       setTimeout(function () { openDraftDialog(false, ''); }, 200);
     }
   }

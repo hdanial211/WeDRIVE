@@ -11,6 +11,8 @@ test.describe('WeDRIVE Admin AI Data Analytics & Contextual Navigation Architect
         name: 'Admin Test',
         timestamp: Date.now()
       }));
+      sessionStorage.setItem('wedrive_car_draft_prompted_session', '1');
+      localStorage.removeItem('wedrive_new_car_draft');
     });
   });
 
@@ -48,11 +50,11 @@ test.describe('WeDRIVE Admin AI Data Analytics & Contextual Navigation Architect
 
     const analyticsSidebarLink = sidebar.locator('a[data-page="analytics"]');
     const chatbotSidebarLink = sidebar.locator('a[data-page="chatbot-settings"]');
-    const marketingSidebarLink = sidebar.locator('a[data-page="marketing"]');
+    const eventPlannerSidebarLink = sidebar.locator('a[data-page="event-planner"]');
 
     await expect(analyticsSidebarLink).toBeVisible();
     await expect(chatbotSidebarLink).toBeVisible();
-    await expect(marketingSidebarLink).toBeVisible();
+    await expect(eventPlannerSidebarLink).toBeVisible();
 
     // Sidebar active item must be Analytics
     await expect(analyticsSidebarLink).toHaveClass(/active/);

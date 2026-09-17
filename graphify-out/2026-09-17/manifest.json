@@ -24,9 +24,9 @@
     "semantic_hash": ""
   },
   "admin/js/car-detail.js": {
-    "mtime": 1789652074.3567188,
-    "seen": 1789653760.818578,
-    "ast_hash": "ef089a1096da86e3f34049362f60ca1e",
+    "mtime": 1789081830.0258443,
+    "seen": 1789399978.390539,
+    "ast_hash": "fedc28e49b1ca8c8ec4e593b3635d4e1",
     "semantic_hash": ""
   },
   "admin/js/cars.js": {
@@ -11112,9 +11112,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/06_bookings_filter.spec.js": {
-    "mtime": 1789651506.2884676,
-    "seen": 1789653760.821803,
-    "ast_hash": "c3a9d0cd034ea392af7efea753724f2a",
+    "mtime": 1789426427.8393912,
+    "seen": 1789426504.548911,
+    "ast_hash": "44f3d0c4f1d746159e215f5b5b126a4c",
     "semantic_hash": ""
   },
   "tests/e2e/07_customer_my_bookings.spec.js": {
@@ -11136,9 +11136,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/09_admin_ai_analytics.spec.js": {
-    "mtime": 1789651736.3830168,
-    "seen": 1789653760.821883,
-    "ast_hash": "4b7de5240e5ed664549a2ec6a3cdefd8",
+    "mtime": 1788533910.4031448,
+    "seen": 1788535032.5185878,
+    "ast_hash": "e85b57fa6934f6bfc695ee9b1a6884a8",
     "semantic_hash": ""
   },
   "admin/pages/analytics/analytics.html": {
@@ -11148,9 +11148,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/10_admin_sidebar_pages.spec.js": {
-    "mtime": 1789652400.4551628,
-    "seen": 1789653760.821884,
-    "ast_hash": "df4b9a02268a3ef2df69a50bfd7185f9",
+    "mtime": 1789073361.222573,
+    "seen": 1789399978.391885,
+    "ast_hash": "129c94e73e61b57a81bc039a55112444",
     "semantic_hash": ""
   },
   "admin/pages/booking/active-bookings.html": {
@@ -11208,9 +11208,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/11_operations_lang.spec.js": {
-    "mtime": 1789651749.3653169,
-    "seen": 1789653760.821886,
-    "ast_hash": "645715b2d68efdee427629cb6e493b64",
+    "mtime": 1788614475.8576558,
+    "seen": 1788616440.2712011,
+    "ast_hash": "3476086547fb721b6a5f22e1407e5d2a",
     "semantic_hash": ""
   },
   "admin/js/api-keys.js": {
@@ -11460,9 +11460,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/16_car_detail_360_interior.spec.js": {
-    "mtime": 1789652194.9290187,
-    "seen": 1789653760.821971,
-    "ast_hash": "963bad09c69c588c6430e22d43f8c0f8",
+    "mtime": 1789048914.2049737,
+    "seen": 1789399978.3919911,
+    "ast_hash": "787503777fb0bd816d1a4a69557ccf68",
     "semantic_hash": ""
   },
   "admin/js/add-car.js": {
@@ -11472,9 +11472,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/17_add_car_stepper_and_carlist.spec.js": {
-    "mtime": 1789652842.1631227,
-    "seen": 1789653760.821973,
-    "ast_hash": "2a1efed715d083f596c1bda17d52a3d3",
+    "mtime": 1789002018.806144,
+    "seen": 1789002703.1101792,
+    "ast_hash": "87aaf58ac2cba00ad2c682d5c3b03ca7",
     "semantic_hash": ""
   },
   "tests/e2e/18_full_system_bilingual_parity.spec.js": {
@@ -11820,9 +11820,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/18_modular_add_car_flow.spec.js": {
-    "mtime": 1789653276.5907378,
-    "seen": 1789653760.822013,
-    "ast_hash": "a049014f814456a693bc889670513cb5",
+    "mtime": 1789024701.1728694,
+    "seen": 1789025232.918068,
+    "ast_hash": "6559d3ec2e2424c7157f2fb4b1d1bbae",
     "semantic_hash": ""
   },
   "admin/pages/car/add-car/add-car-flow.js": {
@@ -11910,9 +11910,9 @@
     "semantic_hash": ""
   },
   "tests/e2e/19_edit_car_stepper.spec.js": {
-    "mtime": 1789653435.845159,
-    "seen": 1789653760.8220139,
-    "ast_hash": "66e98e469ffbc7cff3630bde2985e74f",
+    "mtime": 1789027406.1503642,
+    "seen": 1789027949.594191,
+    "ast_hash": "7c0b6bdbc6836575ebfe151d961340b5",
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/index.html": {
@@ -11970,9 +11970,9 @@
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step2-studio360.html": {
-    "mtime": 1789653429.2329056,
-    "seen": 1789653760.8273149,
-    "ast_hash": "729b77e948a8c7125e8d5c1a48759b63",
+    "mtime": 1789081439.7141314,
+    "seen": 1789399978.3967302,
+    "ast_hash": "97170a5a3dd475564fc361a4b67d36c4",
     "semantic_hash": ""
   },
   "admin/pages/car/edit-car/step3-confirmation.html": {
@@ -12012,9 +12012,9 @@
     "semantic_hash": ""
   },
   "shared/js/car-draft-guard.js": {
-    "mtime": 1789651798.595311,
-    "seen": 1789653760.820174,
-    "ast_hash": "d1519f91a8f2da00fa84582b6c99aba9",
+    "mtime": 1789072572.1816587,
+    "seen": 1789399978.391138,
+    "ast_hash": "2f05defe124bdab871b4281cb8a820fa",
     "semantic_hash": ""
   },
   "shared/model/SUV/2025 MINI Countryman S/source.json": {

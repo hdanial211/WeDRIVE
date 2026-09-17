@@ -12,6 +12,8 @@ test.describe('WeDRIVE Operations Dashboard Bilingual Localization Tests', () =>
         timestamp: Date.now()
       }));
       localStorage.setItem('wedrive-lang', 'ms');
+      sessionStorage.setItem('wedrive_car_draft_prompted_session', '1');
+      localStorage.removeItem('wedrive_new_car_draft');
     });
   });
 

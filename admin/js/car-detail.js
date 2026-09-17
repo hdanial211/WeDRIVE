@@ -7,8 +7,8 @@
  */
 
 // car-detail.html is served from /admin/pages/car/car-detail/, so the local
-// production model root is three levels above the page directory.
-const IMG_BASE = '../../../shared/model/';
+// production model root is four levels above the page directory.
+const IMG_BASE = '../../../../shared/model/';
 let allCars = [];
 let activeCar = null;
 let currentMode = 'exterior'; // 'exterior' | 'interior' | 'gallery'

@@ -3,8 +3,12 @@ __MACOSX/
 *.zip
 node_modules/
 bin/
+scratch/
 REPORT/REPORT FYP.docx
 REPORT/REPORT FYP.pdf
+REPORT/REPORT_FYP_before_*.docx
+REPORT/~$*
+~$*
 
 tests/node_modules/
 tests/playwright-report/

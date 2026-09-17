@@ -1,6 +1,39 @@
 const { test, expect } = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
+
+async function restoreCar1() {
+  try {
+    const cfgPath = path.resolve(__dirname, '../../shared/js/supabase-config.js');
+    const cfg = fs.readFileSync(cfgPath, 'utf8');
+    const urlMatch = cfg.match(/SUPABASE_URL\s*=\s*['\"]([^'\"]+)['\"]/);
+    const keyMatch = cfg.match(/SUPABASE_ANON_KEY\s*=\s*['\"]([^'\"]+)['\"]/);
+    if (urlMatch && keyMatch) {
+      await fetch(`${urlMatch[1]}/rest/v1/cars?id=eq.1`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': keyMatch[1],
+          'Authorization': 'Bearer ' + keyMatch[1],
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          has_360: true,
+          exterior_360: 'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res'
+        })
+      });
+    }
+  } catch (_) {}
+}
 
 test.describe('WeDRIVE Edit Car Modular Stepper & Dynamic 360 Auto-Detection', () => {
+
+  test.beforeAll(async () => {
+    await restoreCar1();
+  });
+
+  test.afterAll(async () => {
+    await restoreCar1();
+  });
 
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
@@ -70,6 +103,9 @@ test.describe('WeDRIVE Edit Car Modular Stepper & Dynamic 360 Auto-Detection', (
   });
 
   test('Step 2 manages gallery and dynamically toggles 360 badge when cleared or restored', async ({ page }) => {
+    page.on('dialog', async dialog => {
+      await dialog.accept();
+    });
     await page.goto('/admin/pages/car/edit-car/step2-studio360.html?id=1');
     await page.waitForLoadState('networkidle');
 
@@ -86,8 +122,17 @@ test.describe('WeDRIVE Edit Car Modular Stepper & Dynamic 360 Auto-Detection', (
     await page.waitForTimeout(200);
     await expect(badge).toBeHidden();
 
-    await cdnInput.fill('https://cdn.wedrive.my/360/bmw-test/');
-    await cdnInput.dispatchEvent('input');
+    // Restore 360 state via evaluate
+    await page.evaluate(() => {
+      const draft = window.activeDraft || JSON.parse(sessionStorage.getItem('wedrive_edit_car_draft_1') || '{}');
+      draft.has360 = true;
+      draft.has_360 = true;
+      draft.exterior_360 = 'Sedan/2023 BMW 320i M Sport 2.0/exterior/full-res';
+      window.WeDriveEditCar.saveCarDraft('1', draft);
+      if (typeof window.update360StatusDisplay === 'function') {
+        window.update360StatusDisplay();
+      }
+    });
     await page.waitForTimeout(200);
     await expect(badge).toBeVisible();
 

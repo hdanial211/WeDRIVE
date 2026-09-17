@@ -12,6 +12,8 @@ test.describe('Admin Bookings Date Range Filter Tests', () => {
         name: 'Admin Test',
         timestamp: Date.now()
       }));
+      sessionStorage.setItem('wedrive_car_draft_prompted_session', '1');
+      localStorage.removeItem('wedrive_new_car_draft');
     });
   });
 

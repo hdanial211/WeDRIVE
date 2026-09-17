@@ -106,11 +106,12 @@ test.describe('WeDRIVE Admin Dedicated Sidebar Pages Architecture (v5.4.0)', () 
 
     // Click on Tambah Kereta Baharu
     await page.click('#admin-sidebar a[data-page="car-add"]');
-    const draftDialog = page.locator('#wedrive-draft-guard');
-    if (await draftDialog.isVisible({ timeout: 3000 }).catch(() => false)) {
-      const continueDraft = page.getByRole('button', { name: 'Sambung buat kereta', exact: true });
-      await expect(continueDraft).toHaveCount(1);
+    const continueDraft = page.getByRole('button', { name: 'Sambung buat kereta', exact: true });
+    try {
+      await continueDraft.waitFor({ state: 'visible', timeout: 6000 });
       await continueDraft.click();
+    } catch (_) {
+      // If no draft candidate, page navigates directly to add-car
     }
     await expect(page).toHaveURL(/.*\/admin\/pages\/car\/add-car\/(index\.html|step[1-5]_[^/]+\.html)$/);
 

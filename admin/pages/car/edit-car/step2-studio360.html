@@ -324,6 +324,7 @@
             }
 
             activeDraft = await window.WeDriveEditCar.loadCarDraft(currentCarId);
+            window.activeDraft = activeDraft;
             if (!activeDraft) {
                 alert('Ralat: Kenderaan tidak dijumpai.');
                 window.location.href = '../cars.html';
@@ -605,6 +606,7 @@
 
         document.getElementById('edit360Prev')?.addEventListener('click', () => navigateEdit360(-1));
         document.getElementById('edit360Next')?.addEventListener('click', () => navigateEdit360(1));
+        window.update360StatusDisplay = update360StatusDisplay;
     </script>
 </body>
 </html>

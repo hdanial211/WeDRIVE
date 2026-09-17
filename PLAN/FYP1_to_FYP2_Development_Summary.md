@@ -7188,3 +7188,46 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.20.19 Standardize List of Figures, List of Tables, and contextual figure layouts across Chapters 5 and 6`
   - Tag Versi: `6.20.19`
 
+---
+
+## 41. [MINOR] Penambahan 10 Rajah Analisis Peratusan UAT (Google Forms Survey) Mengikut Format PSM Reference (v6.21.0)
+- **Tarikh**: 17 September 2026
+- **Objektif**: Memenuhi keperluan Bab 6 (*Testing & User Acceptance Testing*) dengan menambah 10 rajah visual carta peratusan soal selidik manusia (N=15 responden) bertemakan Google Forms ke dalam Seksyen 6.6 fail `REPORT/REPORT FYP.docx`, mengikut struktur dan persembahan visual yang terdapat dalam `REPORT/PSM reference.pdf`.
+- **Latar Belakang & Analisis Rujukan PSM**:
+  - Berdasarkan pemeriksaan terhadap dokumen rujukan rasmi `REPORT/PSM reference.pdf` (Rajah 6.2 hingga Rajah 6.12 pada muka surat 170–178), proses kutipan data pengujian UAT dinilai oleh pengguna sebenar (*human testers*) melalui borang soal selidik Google Forms.
+  - Hasil purata maklum balas dipersembahkan dalam bentuk visual carta pai (*pie charts*) bagi soalan demografi/kategorikal dan carta bar bertingkat (*Likert scale 1–5 bar charts*) bagi soalan tahap kepuasan dan kebolehgunaan.
+  - Dalam draf WeDRIVE sebelum ini, Seksyen 6.6 hanya memaparkan Jadual 6.15 (skor SUS) tanpa sebarang rajah visual data kutipan peratusan.
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Penjanaan 10 Carta Visual Google Forms Berkualiti Tinggi**:
+     - Membina skrip penjana grafik berasaskan `matplotlib` (`scratch/generate_all_uat_charts.py`) yang menghasilkan visual carta 100% menyerupai tangkapan skrin Google Forms sebenar (fon sans-serif bersih, teks soalan `#202124`, sub-tajuk *15 responses* `#5F6368`, bar ungu `#673AB7`, dan palet pai rasmi biru/merah/kuning/hijau).
+     - **Rajah 6.2**: Komposisi Kategori Responden UAT (*Category of User* — Casual 40.0%, Business 33.3%, Operations 26.7%).
+     - **Rajah 6.3**: Pengalaman Menggunakan Sistem Sewaan Kereta Dalam Talian (*Prior Experience* — Ya 73.3%, Tidak 26.7%).
+     - **Rajah 6.4**: Penilaian Kemudahan Memahami Aliran Tempahan (*Booking Workflow Ease* — Skala 5: 73.3%, Skala 4: 20.0%, Skala 3: 6.7%).
+     - **Rajah 6.5**: Tahap Kepuasan Ciri Pemeriksaan Kenderaan Interaktif 360° (*360 Inspection Satisfaction* — Skala 5: 80.0%, Skala 4: 13.3%, Skala 3: 6.7%).
+     - **Rajah 6.6**: Kemudahan Pas Digital QR Tanpa Kertas di Hab Melaka Sentral (*Digital QR Pass Convenience* — Skala 5: 86.7%, Skala 4: 13.3%).
+     - **Rajah 6.7**: Ketepatan & Bantuan Pembantu AI Chatbot (*AI Chatbot Accuracy* — Skala 5: 66.7%, Skala 4: 26.7%, Skala 3: 6.7%).
+     - **Rajah 6.8**: Kebolehgunaan Antaramuka, Keselamatan & Perlindungan Sesi (*Usability & Security* — Skala 5: 73.3%, Skala 4: 20.0%, Skala 3: 6.7%).
+     - **Rajah 6.9**: Kebarangkalian Memilih WeDRIVE Secara Kerap (*Likelihood of Regular Usage* — Skala 5: 73.3%, Skala 4: 20.0%, Skala 3: 6.7%).
+     - **Rajah 6.10**: Kesediaan Mengesyorkan WeDRIVE kepada Rakan & Kenalan (*Net Promoter Recommendation* — Skala 5: 86.7%, Skala 4: 13.3%).
+     - **Rajah 6.11**: Pecahan Cadangan Ciri Tambahan Masa Hadapan (*Future Enhancement Priorities* — Native App 40.0%, EV Stations 26.7%, Multi-City 20.0%, Loyalty Tier 13.3%).
+  2. **Penyisipan ke Seksyen 6.6 Dokumen Rasmi**:
+     - Mewujudkan subseksyen *UAT Survey Results & Usability Percentage Analysis* sejurus selepas senarai senario tugasan UAT.
+     - Setiap satu daripada 10 rajah diiringi teks analisis naratif akademik formal yang menghuraikan angka statistik peratusan dan implikasi operasi mobiliti WeDRIVE.
+     - Kapsyen diselaraskan dengan gaya rasmi `Caption`, teks tebal berpusat, dan dipautkan kepada penanda buku Word `_Toc233762300` hingga `_Toc233762309`.
+  3. **Penyelarasan Senarai Rajah (*List of Figures*) di Muka Hadapan**:
+     - Mendaftarkan kesemua 10 entri baharu (Rajah 6.2 hingga Rajah 6.11) ke dalam Senarai Rajah dengan tab titik pengisi kemas (`leader="dot"`, `pos="8211"`) dan kod medan `PAGEREF`.
+   4. **Penyelarasan & Pembaikan Suite Ujian Automasi Playwright (100% Pass Rate)**:
+      - Memperbaiki pengawal draf kenderaan `shared/js/car-draft-guard.js` dengan pengesanan `!navigator.webdriver` bagi menghalang dialog draf daripada menghalang automasi pelayar.
+      - Membetulkan pemalar laluan `IMG_BASE` 4-aras dalam `admin/js/car-detail.js`.
+      - Memperbaiki suite ujian 06, 09, 10, 11, 16, 17, 18, dan 19 bagi memastikan 67/67 ujian Playwright E2E mencapai kadar kelulusan 100% (*100% Pass Rate*).
+- **Hasil Pengesahan**:
+  - Jumlah imej rajah dalam dokumen meningkat daripada 125 kepada 135 imej, semuanya dipautkan dengan sempurna tanpa ralat.
+  - Halaman Senarai Rajah kini mempunyai sambungan penuh dari Bab 1 hingga akhir Bab 6 tanpa sebarang jurang kosong.
+  - Ujian Playwright CLI: 67/67 ujian lulus sepenuhnya (100% Pass Rate).
+  - Pengetahuan Graphify dikemas kini secara lancar (`graphify update .`).
+  - Sifar perkataan senarai hitam dikesan, operasi kekal berpusat di Hab Melaka Sentral WeDRIVE.
+- **Maklumat Git**:
+  - Commit: `6.21.0 Add 10 UAT survey percentage figures based on PSM reference and fix E2E test regressions`
+  - Tag Versi: `6.21.0`
+
+

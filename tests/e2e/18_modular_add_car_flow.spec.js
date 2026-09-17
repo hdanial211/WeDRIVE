@@ -13,6 +13,7 @@ test.describe('WeDRIVE Modular Add Car Multi-Page Wizard Flow', () => {
         name: 'Admin Test',
         timestamp: Date.now()
       }));
+      sessionStorage.setItem('wedrive_car_draft_prompted_session', '1');
     });
   });
 
@@ -29,8 +30,10 @@ test.describe('WeDRIVE Modular Add Car Multi-Page Wizard Flow', () => {
     await page.evaluate(() => localStorage.removeItem('wedrive_new_car_draft'));
 
     // Verify Brand selection
-    await page.selectOption('#inputBrand', 'Honda');
+    await page.fill('#inputBrand', 'Honda');
     await page.fill('#inputModel', 'Civic');
+    await page.selectOption('#inputCategory', 'Sedan');
+    await page.fill('#inputYear', '2024');
     await page.fill('#inputPlate', 'WDD 8899');
 
     // Navigate to Step 2 via bottom dock
@@ -43,9 +46,17 @@ test.describe('WeDRIVE Modular Add Car Multi-Page Wizard Flow', () => {
     await expect(page).toHaveURL(/step2_studio360\.html/);
     await page.evaluate(() => {
       const draft = JSON.parse(localStorage.getItem('wedrive_new_car_draft') || '{}');
-      draft.photos = ['https://images.unsplash.com/photo-1590362891991-f776e747a588?w=800'];
-      draft.images = draft.photos;
+      const cloudUrl = 'https://res.cloudinary.com/gwd1bhcx/image/upload/v1789088254/model/sample.jpg';
+      draft.photos = [cloudUrl];
+      draft.images = [cloudUrl];
+      draft.cloudinary_gallery = [cloudUrl];
+      draft.supabase_images = [cloudUrl];
       localStorage.setItem('wedrive_new_car_draft', JSON.stringify(draft));
+      if (window.studioDraft) {
+        window.studioDraft.photos = draft.photos;
+        window.studioDraft.images = draft.photos;
+        window.studioDraft.cloudinary_gallery = draft.cloudinary_gallery;
+      }
     });
     const nextBtn2 = page.locator('a[href="step3_pengesahan.html"]').last();
     await expect(nextBtn2).toBeVisible();
