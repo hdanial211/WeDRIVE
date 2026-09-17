@@ -8,6 +8,10 @@ trigger: always_on
 
 - Susun semua file supaya kemas, tidak berselerak, dan mudah diselenggara.
 - File yang tidak digunakan WAJIB dipindahkan ke folder `bin/`.
+- **PANTANG LARANG MUTLAK INTEGRITI LAPORAN (STRICT ZERO-TOUCH ON REPORT FYP 3.docx):**
+  - **DILARANG SAMA SEKALI MENYENTUH, MENGUBAH, MENULIS SEMULA, ATAU MEMADAM FAIL `REPORT FYP 3.docx`** (dan sebarang fail laporan tesis pengguna).
+  - AI **DIHARAMKAN SEKERAS-KERASNYA** menjalankan sebarang skrip (`python-docx`, `rm`, `mv`, overwrite, regex) atau arahan terminal terhadap `REPORT/REPORT FYP 3.docx` tanpa arahan bertulis dan eksplisit daripada pengguna.
+  - Sebarang operasi pembersihan fail (`rm`, `clean`) DILARANG menyentuh folder `REPORT/` atau fail `.docx`.
 - Setiap kali menambah atau membuang file/folder, kemas kini: [06_code_and_backend.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/06_code_and_backend.md) dan [.agents/PROJECT_STRUCTURE.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/PROJECT_STRUCTURE.md) (Master) serta `docs/PROJECT_STRUCTURE.md`.
 - **Had Siling 12,000 Aksara Per Fail:** Semua fail peraturan (`.agents/rules/*.md`) dan dokumentasi WAJIB dihadkan kepada maksimum **12,000 aksara** per fail. AI bebas mencipta sehingga 20–30 fail modular bagi mendalami setiap domain tanpa limpahan saiz (Rujuk [12_max_content_limit.md](file:///Users/hakim/Library/Mobile%20Documents/com~apple~CloudDocs/SEM%20DEGREE/SEM%20KHAS%206/BITU3983%20PROJECT%20II(FYP%202)/AI%20CAR%20RENTAL%20SYSTEM/.agents/rules/12_max_content_limit.md)).
 

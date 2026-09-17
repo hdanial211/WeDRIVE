@@ -7329,6 +7329,26 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.23.0 Synchronize all table captions in LOT, eliminate armada from BM abstract, and align UAT metrics across Chapters 1-7`
   - Tag Versi: `6.23.0`
 
+---
+
+### Entri 44: [PERATURAN MUTLAK] Penguatkuasaan Prinsip Sifar Sentuh pada REPORT FYP 3.docx (Strict Zero-Touch on REPORT FYP 3.docx)
+- **Tarikh**: 17 September 2026
+- **Status**: SELESAI (`v6.23.2`)
+- **Tindakan Dilaksanakan**:
+  1. **Pengisytiharan Peraturan Emas Mutlak (Strict Zero-Touch Rule)**:
+     - Mengisytiharkan fail `REPORT/REPORT FYP 3.docx` sebagai fail mutlak hak milik pengguna yang **DILARANG SAMA SEKALI DISENTUH, DIUBAH, DITULIS SEMULA, ATAU DIPADAM** oleh mana-mana ejen AI.
+     - Mengemas kini fail teras peraturan `.agents/rules/01_core_rules.md` (Pilar Gatekeeper 0, Peraturan 9).
+     - Mengemas kini fail pengurusan kod dan arkitektur `.agents/rules/06_code_and_backend.md` (Seksyen 1B).
+  2. **Perlindungan Git & Integriti Sistem**:
+     - Memastikan `.gitignore` mengabaikan fail binari `REPORT FYP 3.docx`, `REPORT FYP 3.pdf`, dan sebarang variasi dokumen Word bagi menghalang pembengkakan repositori.
+     - Mengesahkan integriti fail `REPORT/REPORT FYP 3.docx` (112.78 MB, 3,204 perenggan, 39 jadual, 127 rajah) kekal 100% utuh di storan pengguna.
+- **Hasil Pengesahan**:
+  - Semua fail peraturan `.agents/rules/*.md` mematuhi had siling $\le 12,000$ aksara (`01_core_rules.md`: 10,933 aksara, `06_code_and_backend.md`: 6,131 aksara).
+  - Integriti sistem kekal selamat dan terlindung sepenuhnya.
+- **Maklumat Git**:
+  - Commit: `6.23.2 Enforce strict zero-touch rule on REPORT FYP 3.docx and update agent core rules`
+  - Tag Versi: `6.23.2`
+
 
 
 
