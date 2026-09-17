@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "PLAN/FYP1_to_FYP2_Development_Summary.md": {
-    "mtime": 1789651170.1592627,
-    "seen": 1789651236.22963,
-    "ast_hash": "42093cb4925927a6d8d22ecab8da1dd0",
+    "mtime": 1789654454.4983954,
+    "seen": 1789654592.288876,
+    "ast_hash": "f0dd149462ead1d38ea8be651e67c82f",
     "semantic_hash": ""
   },
   "REPORT/00_Title_and_Abstract.md": {
@@ -14823,156 +14823,6 @@
     "mtime": 1789426184.2582216,
     "seen": 1789426504.551958,
     "ast_hash": "ffac1844dcd81cf2195f787df457c39a",
-    "semantic_hash": ""
-  },
-  "scratch/standardize_ch567_format.py": {
-    "mtime": 1789632000.389436,
-    "seen": 1789633260.620269,
-    "ast_hash": "9aa5f24dee957a728682c1c93bbe579f",
-    "semantic_hash": ""
-  },
-  "scratch/standardize_ch567_format_v2.py": {
-    "mtime": 1789632209.4723523,
-    "seen": 1789633260.620275,
-    "ast_hash": "5f9b14216bb8910bbf26a7b2d23060db",
-    "semantic_hash": ""
-  },
-  "scratch/standardize_table_styling.py": {
-    "mtime": 1789632636.4868965,
-    "seen": 1789635525.0399842,
-    "ast_hash": "75836f9f52d5ae0ff5c146ae95ef0f1f",
-    "semantic_hash": ""
-  },
-  "scratch/test_figure_fix.py": {
-    "mtime": 1789634191.2914765,
-    "seen": 1789635525.039986,
-    "ast_hash": "d5403cfe372ab1dd36d8750a662165ce",
-    "semantic_hash": ""
-  },
-  "scratch/test_full_figure_fix.py": {
-    "mtime": 1789634276.085967,
-    "seen": 1789635525.039986,
-    "ast_hash": "896cb81644b5290a02d7020e401d1bce",
-    "semantic_hash": ""
-  },
-  "scratch/generate_all_uat_charts.py": {
-    "mtime": 1789651072.1893518,
-    "seen": 1789651236.224565,
-    "ast_hash": "de59bf5c72989e32a495085903bc5a92",
-    "semantic_hash": ""
-  },
-  "scratch/generate_test_bar.py": {
-    "mtime": 1789651041.43459,
-    "seen": 1789651236.224566,
-    "ast_hash": "6e0344bab492a400c71c1972a697f817",
-    "semantic_hash": ""
-  },
-  "scratch/generate_test_chart.py": {
-    "mtime": 1789651030.8784182,
-    "seen": 1789651236.224567,
-    "ast_hash": "ef1828e64df8e5661613a8f6653135be",
-    "semantic_hash": ""
-  },
-  "scratch/test_insert_uat_figures.py": {
-    "mtime": 1789651119.1118872,
-    "seen": 1789651236.224736,
-    "ast_hash": "d0a6ca0be8aca23bb59bc8144ac75ec8",
-    "semantic_hash": ""
-  },
-  "scratch/Image470.png": {
-    "mtime": 1789650990.4590273,
-    "seen": 1789651236.242075,
-    "ast_hash": "06d5f09e920eb168385fb0b8a22c5e4e",
-    "semantic_hash": ""
-  },
-  "scratch/Image473.png": {
-    "mtime": 1789650990.5028594,
-    "seen": 1789651236.2420769,
-    "ast_hash": "2ba41b6b3bb6cc03428fc07da1d9c53d",
-    "semantic_hash": ""
-  },
-  "scratch/Image474.png": {
-    "mtime": 1789650990.539423,
-    "seen": 1789651236.242078,
-    "ast_hash": "87417d69fa204b800ccce518ae105b1a",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_10_recommend_friend.png": {
-    "mtime": 1789651073.5218449,
-    "seen": 1789651236.242079,
-    "ast_hash": "a55275cf312ac4905e8f1068a71434b3",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_11_future_features.png": {
-    "mtime": 1789651073.5931268,
-    "seen": 1789651236.24208,
-    "ast_hash": "bd4938cacdc8b184f067f0371d023fc1",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_2_user_category.png": {
-    "mtime": 1789651072.994594,
-    "seen": 1789651236.242081,
-    "ast_hash": "8eedd1631dfa9dc9fb8c26b341568699",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_3_prior_experience.png": {
-    "mtime": 1789651073.048839,
-    "seen": 1789651236.242083,
-    "ast_hash": "5ba6cd4c75ccc6bff30ff992279a95b7",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_4_booking_flow_ease.png": {
-    "mtime": 1789651073.128022,
-    "seen": 1789651236.242084,
-    "ast_hash": "81d447d3fe2eb0be79db06096a4cfe59",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_5_360_inspection.png": {
-    "mtime": 1789651073.1933837,
-    "seen": 1789651236.2420852,
-    "ast_hash": "06e6e1ccb3e8ea2eacc1cc50a2c43aea",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_6_digital_qr_pass.png": {
-    "mtime": 1789651073.2606428,
-    "seen": 1789651236.242087,
-    "ast_hash": "cec2c18aec583f07e9f9428a4016a06e",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_7_ai_chatbot.png": {
-    "mtime": 1789651073.3254507,
-    "seen": 1789651236.2420878,
-    "ast_hash": "13049087a17e41102b664df206d67d41",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_8_user_friendly_safe.png": {
-    "mtime": 1789651073.3885171,
-    "seen": 1789651236.242089,
-    "ast_hash": "d8bf2baab0d27c8e8c89bf76b72386a7",
-    "semantic_hash": ""
-  },
-  "scratch/figures/fig6_9_regular_usage.png": {
-    "mtime": 1789651073.4512656,
-    "seen": 1789651236.24209,
-    "ast_hash": "fdc3b67f0a88b28e2d351b02c71b20e8",
-    "semantic_hash": ""
-  },
-  "scratch/sample_psm_chart.png": {
-    "mtime": 1789650972.6447217,
-    "seen": 1789651236.2420921,
-    "ast_hash": "06d5f09e920eb168385fb0b8a22c5e4e",
-    "semantic_hash": ""
-  },
-  "scratch/test_chart_bar.png": {
-    "mtime": 1789651042.1527092,
-    "seen": 1789651236.242093,
-    "ast_hash": "2884c182bd8c593371a27660ae449f1b",
-    "semantic_hash": ""
-  },
-  "scratch/test_chart_pie.png": {
-    "mtime": 1789651031.7218587,
-    "seen": 1789651236.242094,
-    "ast_hash": "3a8e9131c7cf83a6cea15782ba514714",
     "semantic_hash": ""
   }
 }

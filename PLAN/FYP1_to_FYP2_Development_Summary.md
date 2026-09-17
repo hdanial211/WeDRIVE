@@ -7230,4 +7230,54 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.21.0 Add 10 UAT survey percentage figures based on PSM reference and fix E2E test regressions`
   - Tag Versi: `6.21.0`
 
+---
+
+## 42. [MINOR] Penstrukturan Semula & Perluasan Seksyen 6.4.2 (Test Data) Mengikut Standard Langkah Demi Langkah PSM Reference (v6.22.0)
+- **Tarikh**: 17 September 2026
+- **Objektif**: Memenuhi arahan pengguna untuk menaiktaraf **Seksyen 6.4.2 (*Test Data*)** dalam `REPORT/REPORT FYP.docx` agar memaparkan pelaksanaan data ujian langkah demi langkah (*step-by-step*) secara terperinci merentas setiap modul fungsian WeDRIVE, menepati 100% format dan ketelitian dalam tesis rujukan UTeM `REPORT/PSM reference.pdf` (muka surat 136–164).
+- **Latar Belakang & Analisis Rujukan PSM**:
+  - Berdasarkan pemeriksaan terhadap dokumen rujukan rasmi `REPORT/PSM reference.pdf`, Seksyen 6.4.2 bukan sekadar satu matriks ringkasan umum, tetapi dipecahkan kepada sub-seksyen khusus bagi setiap halaman atau unit sistem (`6.4.2.1` hingga `6.4.2.15`).
+  - Setiap sub-seksyen dilengkapi **Blok Pengepala Metadata Pengujian Formal**:
+    ```text
+    System Name  : WeDRIVE (AI-Powered Car Rental System)    Version  : 2.0
+    Module/Unit  : [Nama Modul / Halaman]                    Revision : -
+    Process By   : Muhammad Danial Hakim Bin Hisham           Date     : [Tarikh Ogos 2026]
+    ```
+  - Diikuti oleh jadual pelaksanaan ujian **7-kolum terperinci langkah demi langkah**:
+    `Test ID | Test Scenario | Test Case | Test Steps | Test Data | Expected Result | Actual Result`
+  - Kolum *Test Steps* memperincikan tindakan bernombor (*1. Navigate to..., 2. Enter..., 3. Click...*).
+  - Kolum *Test Data* menyenaraikan input sebenar (*Full Name, Email, Plate, Duration, Depot*).
+  - Merangkumi kedua-dua senario negatif (medan kosong, format tidak sah, ralat kata laluan) dan senario positif (aliran kejayaan operasi dan pengesahan sesi).
+- **Tindakan Pembaikan (Implementation)**:
+  1. **Pengekalan Matriks Parameter Asas (Jadual 6.11)**:
+     - Mengemas kini perenggan pengenalan Seksyen 6.4.2 dengan naratif akademik tentang kepentingan *Test Data* dalam pengujian kotak hitam dan analisis nilai sempadan (*boundary value analysis*).
+     - Menamakan semula Jadual 6.11 kepada `Table 6.11: Master Operational & Localization Test Parameters Matrix` yang memuatkan pemalar persekitaran (Hab Melaka Sentral, kadar SST 8%, akaun ujian rasmi, dan kelas kenderaan).
+  2. **Penyisipan 12 Sub-Seksyen & Jadual Pelaksanaan Ujian 7-Kolum**:
+     - **6.4.2.1**: *Test Data for Customer Registration & KYC Identity Verification* (Pendaftaran pelanggan, validasi medan kosong, format emel, pemadanan kata laluan, dan pengesahan OCR MyKad).
+     - **6.4.2.2**: *Test Data for Customer Authentication & Login Page* (Log masuk emel tidak berdaftar, kata laluan salah, kelayakan kosong, dan kejayaan log masuk dengan `ahmad@wedrive.my`).
+     - **6.4.2.3**: *Test Data for Admin Authentication & Role-Based Route Guard* (Log masuk pentadbir `admin@wedrive.my`, sekatan kata laluan salah, dan pengawal laluan unauthenticated direct URL redirect).
+     - **6.4.2.4**: *Test Data for Vehicle Catalogue Browsing, Filtering & Search* (Penapisan kategori Sedan, carian kata kunci 'Civic', dan keadaan carian tiada hasil 'Lamborghini').
+     - **6.4.2.5**: *Test Data for Interactive 360° Exterior Turntable & Interior Panorama* (Pusingan 200 bingkai meja putar 60 FPS, sfera dalaman Three.js WebGL, dan pendedahan progresif aset).
+     - **6.4.2.6**: *Test Data for Customer Reservation Wizard & Dynamic Pricing Glider* (Kuncian tarikh bertindih, polisi ketat Hab Tunggal Melaka Sentral, pengiraan diskaun mingguan gelangsar harga, dan simpanan draf sesi).
+     - **6.4.2.7**: *Test Data for Payment Processing & Escrow Security Deposit* (Validasi CVV kad, pembayaran simulasi FPX Maybank2u, dan rekod cagaran deposit dalam status `held_in_escrow`).
+     - **6.4.2.8**: *Test Data for Digital QR Handover Pass & Receipt Verification* (Penjanaan matriks kod QR berkepadatan tinggi dan cetakan resit rasmi A4 tanpa elemen UI).
+     - **6.4.2.9**: *Test Data for Admin Vehicle Onboarding Wizard (Add Car)* (Validasi plat kenderaan Langkah 1, pemulihan draf auto-save selepas muat semula, dan penambahan kenderaan 5 langkah dengan imej Cloudinary).
+     - **6.4.2.10**: *Test Data for Admin Vehicle Inventory & Modification Management* (Penukaran status 'available' kepada 'maintenance' dan pengemaskinian kadar sewa harian).
+     - **6.4.2.11**: *Test Data for Admin Depot Operations & Booking Dispatch* (Penapisan tempahan menunggu pengesahan dan imbasan kod QR serahan kunci di Hab Melaka Sentral).
+     - **6.4.2.12**: *Test Data for Gemini Live AI Chatbot Assistant & Failover* (Pertanyaan inventori dalam Bahasa Melayu Moden 2026 dan peralihan automatik failover model pendua).
+  3. **Format Jadual & Tipografi Piawai UTeM**:
+     - Setiap jadual menggunakan lorekan tajuk `#D9D9D9`, sempadan hitam tunggal (`val="single" sz="4"`), fon Times New Roman, dan padding kemas (70 dxa atas/bawah, 80 dxa kiri/kanan).
+  4. **Penyelarasan Senarai Kandungan (*Table of Contents - TOC*)**:
+     - Mendaftarkan kesemua 12 sub-seksyen (`6.4.2.1` hingga `6.4.2.12`) ke dalam Senarai Kandungan di muka hadapan dengan gaya `toc 3`, tab titik pengisi, dan rujukan muka surat.
+  5. **Kestabilan Penomboran Jadual Bahagian Seterusnya**:
+     - Penomboran Jadual 6.12 (Playwright), 6.13 (Strix Security), 6.14 (Defect Log), dan 6.15 (SUS) dalam Seksyen 6.5 dan Senarai Jadual (LOT) kekal 100% konsisten dan tidak terjejas.
+- **Hasil Pengesahan**:
+  - Dokumen `REPORT/REPORT FYP.docx` kekal utuh dengan 135 imej rajah, 63 jadual keseluruhan (termasuk 24 jadual baharu blok metadata dan ujian 7-kolum), dan 2,701 perenggan.
+  - Aliran pengujian Bab 6 kini mempunyai tahap ketelitian akademik tertinggi yang setara dengan tesis rujukan PSM UTeM.
+  - Sifar perkataan senarai hitam dikesan, operasi kekal berpusat di Hab Melaka Sentral WeDRIVE.
+- **Maklumat Git**:
+  - Commit: `6.22.0 Expand Section 6.4.2 with 12 granular step-by-step test data execution modules matching PSM reference`
+  - Tag Versi: `6.22.0`
+
+
 
