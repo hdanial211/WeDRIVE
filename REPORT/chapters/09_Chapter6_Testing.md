@@ -29,7 +29,7 @@ To maintain rigorous accountability and objective evaluation, the testing organi
 
 | Tester ID | Personnel Name | Assigned Role | Core Responsibilities |
 |---|---|---|---|
-| **TP-01** | Muhammad Danial Hakim Bin Hisham | Lead System Developer & Coordinator | Overseeing test execution, managing Supabase backend staging, coordinating git release branches, and implementing code remediation. |
+| **TP-01** | Muhammad Danial Hakim Bin Mohd Saofi | Lead System Developer & Coordinator | Overseeing test execution, managing Supabase backend staging, coordinating git release branches, and implementing code remediation. |
 | **TP-02** | Autonomous QA Specialist (`tester`) | Universal Black-Box QA Tester | Executing pure UI browser-based validation via Chrome/Safari on live staging, clicking buttons step-by-step, validating Malaysian realistic data, and enforcing CRUD consistency. |
 | **TP-03** | Automated QA Guardian (`playwright_sentinel`) | Automated E2E Test Specialist | Authoring, maintaining, and running headless browser test specifications in `tests/e2e/`, diagnosing locator mismatches, and certifying 100% pass rates. |
 | **TP-04** | UI/UX HIG Auditor (`wedrive_ui_auditor`) | Apple HIG & Responsive Design Auditor | Performing viewport inspections across MacBook (1440px), iPad (820px), and iPhone (393px), validating tactile scale physics, and enforcing the Zero Oval Rule. |
