@@ -7369,6 +7369,25 @@ Status: Diselaraskan dan ditujah ke origin/main bersama tag versi 5.2.38.
   - Commit: `6.23.3 Backup full REPORT FYP 3 thesis document to GitHub in safe chunked parts`
   - Tag Versi: `6.23.3`
 
+---
+
+### Entri 46: Muat Naik Fail Tunggal Penuh REPORT FYP 3.docx via Git LFS (Single Full Document Backup)
+- **Tarikh**: 17 September 2026
+- **Status**: SELESAI (`v6.23.4`)
+- **Tindakan Dilaksanakan**:
+  1. **Konfigurasi Git LFS (Large File Storage)**:
+     - Memasang dan mengkonfigurasi `git-lfs` rasmi pada persekitaran pembangunan tempatan.
+     - Menjejaki fail tunggal `REPORT/REPORT FYP 3.docx` secara terus melalui Git LFS (`.gitattributes`).
+  2. **Muat Naik Dokumen Penuh Tunggal (112.78 MB)**:
+     - Mengemas kini `.gitignore` untuk membolehkan Git LFS menguruskan fail `REPORT FYP 3.docx`.
+     - Melakukan komit dan penolakan (*push*) terus ke cawangan utama `main` di GitHub, membolehkan pengguna memuat turun satu fail penuh terus tanpa cantuman manual.
+- **Hasil Pengesahan**:
+  - Objek LFS `03499f1` didaftarkan dan dipadankan tepat dengan SHA-256 dokumen asal.
+  - Repositori GitHub kini mengandungi fail tunggal rasmi `REPORT FYP 3.docx` dan bahagian sandaran pantas.
+- **Maklumat Git**:
+  - Commit: `6.23.4 Track and upload full single REPORT FYP 3.docx (112.78 MB) to GitHub using Git LFS`
+  - Tag Versi: `6.23.4`
+
 
 
 
